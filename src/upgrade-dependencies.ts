@@ -120,8 +120,12 @@ export class UpgradeDependencies extends Component {
 
     const task = this.createTask();
 
+    const branches = options.workflowOptions?.branches ?? [''];
+
     if (project.github && (options.workflow ?? true)) {
-      this.workflow = this.createWorkflow(task, project.github);
+      for (const branch of branches) {
+        this.workflow = this.createWorkflow(task, project.github, branch);
+      }
     }
   }
 
@@ -160,7 +164,7 @@ export class UpgradeDependencies extends Component {
     return task;
   }
 
-  private createWorkflow(task: Task, github: GitHub): GithubWorkflow {
+  private createWorkflow(task: Task, github: GitHub, branch: string): GithubWorkflow {
     const schedule = this.options.workflowOptions?.schedule ?? UpgradeDependenciesSchedule.DAILY;
 
     const workflow = github.addWorkflow(task.name);
@@ -170,7 +174,7 @@ export class UpgradeDependencies extends Component {
     };
     workflow.on(triggers);
 
-    const upgrade = this.createUpgrade(task);
+    const upgrade = this.createUpgrade(task, branch);
     const pr = this.createPr(workflow, upgrade);
 
     const jobs: Record<string, workflows.Job> = {};
@@ -181,7 +185,7 @@ export class UpgradeDependencies extends Component {
     return workflow;
   }
 
-  private createUpgrade(task: Task): Upgrade {
+  private createUpgrade(task: Task, branch: string): Upgrade {
 
     const build = this.options.workflowOptions?.rebuild ?? true;
     const patchFile = '.upgrade.tmp.patch';
@@ -200,6 +204,7 @@ export class UpgradeDependencies extends Component {
       {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
+        with: { ref: branch },
       },
       SET_GIT_IDENTITY_WORKFLOW_STEP,
       ...this._project.installWorkflowSteps,
@@ -250,6 +255,7 @@ export class UpgradeDependencies extends Component {
       patchFile: patchFile,
       build: build,
       buildConclusionOutput: conclusion,
+      ref: branch,
     };
   }
 
@@ -259,6 +265,7 @@ export class UpgradeDependencies extends Component {
     const workflowName = workflow.name;
     const branchName = `github-actions/${workflowName}`;
     const prStepId = 'create-pr';
+    const ref = '';
 
     const title = `chore(deps): ${this.pullRequestTitle}`;
     const description = [
@@ -277,6 +284,7 @@ export class UpgradeDependencies extends Component {
       {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
+        with: { ref },
       },
       SET_GIT_IDENTITY_WORKFLOW_STEP,
       {
@@ -353,6 +361,7 @@ export class UpgradeDependencies extends Component {
 }
 
 interface Upgrade {
+  readonly ref: string;
   readonly job: workflows.Job;
   readonly jobId: string;
   readonly patchFile: string;
@@ -420,6 +429,13 @@ export interface UpgradeDependenciesWorkflowOptions {
    * @default - defaults
    */
   readonly container?: workflows.ContainerOptions;
+
+  /**
+   * List of branches to create PR's for.
+   *
+   * @default - Only the default branch.
+   */
+  readonly branches?: string[];
 }
 
 /**
