@@ -4,13 +4,13 @@ import * as utils from '../util';
 
 export interface TagOptions {
   /**
-   * Path to version file housing the release version.
+   * Path to release tag file housing the release version.
    *
    * Relative to cwd.
    *
-   * @example `dist/version.txt`
+   * @example `dist/releaseTag.txt`
    */
-  readonly versionFile: string;
+  readonly releaseTagFile: string;
 
   /**
    * Path to release-specific changelog file.
@@ -37,22 +37,22 @@ export interface TagOptions {
 export async function tag(cwd: string, options: TagOptions) {
   const git = (cmd: string) => utils.exec(`git ${cmd}`, { cwd: cwd });
 
-  const versionFilePath = join(cwd, options.versionFile);
+  const releaseTagFilePath = join(cwd, options.releaseTagFile);
   const changelogFilePath = join(cwd, options.changelog);
 
-  if (!pathExists(versionFilePath)) {
-    throw new Error(`No version file present at ${versionFilePath}`);
+  if (!pathExists(releaseTagFilePath)) {
+    throw new Error(`No release tag file present at ${releaseTagFilePath}`);
   }
 
   if (!pathExists(changelogFilePath)) {
     throw new Error(`No changelog file present at ${changelogFilePath}`);
   }
 
-  let version = await utils.tryReadVersion(versionFilePath);
+  let releaseTag = (await utils.tryReadFile(releaseTagFilePath)).trim();
 
-  if (!version) {
-    throw new Error(`No version present in file at ${versionFilePath}`);
+  if (!releaseTag) {
+    throw new Error(`No version present in file at ${releaseTagFilePath}`);
   }
 
-  git(`tag v${version} -a -F ${changelogFilePath}`);
+  git(`tag ${releaseTag} -a -F ${changelogFilePath}`);
 }

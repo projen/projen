@@ -7,7 +7,7 @@
  *
  * Environment variables:
  *
- * - VERSION_FILE: Current release version file
+ * - RELEASE_TAG_FILE: Current release tag file
  * - CHANGELOG_FILE: Release changelog
  * - PROJECT_CHANGELOG_FILE: Project-level changelog
  *
@@ -16,10 +16,10 @@ import { updateChangelog, UpdateChangelogOptions } from './update-changelog';
 
 const inputChangelog = process.env.CHANGELOG;
 const outputChangelog = process.env.PROJECT_CHANGELOG_FILE;
-const versionFile = process.env.VERSION_FILE;
+const releaseTagFile = process.env.VERSION_FILE;
 
-if (!versionFile) {
-  throw new Error('VERSION_FILE is required');
+if (!releaseTagFile) {
+  throw new Error('RELEASE_TAG_FILE is required');
 }
 
 if (!inputChangelog) {
@@ -33,7 +33,7 @@ if (!outputChangelog) {
 const opts: UpdateChangelogOptions = {
   inputChangelog,
   outputChangelog,
-  versionFile,
+  releaseTagFile: releaseTagFile,
 };
 
 updateChangelog(process.cwd(), opts).catch((e: Error) => {

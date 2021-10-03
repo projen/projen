@@ -106,7 +106,7 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToGit(options: GitPublishOptions) {
-    const versionFile = options.versionFile;
+    const releaseTagFile = options.releaseTagFile;
     const changelog = options.changelogFile;
     const projectChangelogFile = options.projectChangelogFile;
     const gitBranch = options.gitBranch ?? 'main';
@@ -117,7 +117,7 @@ export class Publisher extends Component {
       description: 'Prepends the release changelog onto the project changelog, creates a release commit, and tags the release',
       env: {
         CHANGELOG: changelog,
-        VERSION_FILE: versionFile,
+        RELEASE_TAG_FILE: releaseTagFile,
         PROJECT_CHANGELOG_FILE: projectChangelogFile ?? '',
       },
     });

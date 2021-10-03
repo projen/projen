@@ -1,25 +1,24 @@
 /**
  * Generate an annotated release tag using version and changelog files.
  *
- * The tag will be normalized to the format "v<version>" where version comes
- * from the provided version file.
+ * The tag from the release tag from the release tag file will be used as is.
  *
  * The tag annotation message will be set to the content of the provided changelog
  * file.
  *
  * Environment variables:
  *
- * - VERSION_FILE: Version file containing the bumped release version
+ * - RELEASE_TAG_FILE: Release Tag file containing the bumped release tag
  * - CHANGELOG_FILE: Changelog to be used for tag annotation
  *
  */
 import { tag, TagOptions } from './tag-version';
 
 const changelog = process.env.CHANGELOG;
-const versionFile = process.env.VERSION_FILE;
+const releaseTagFile = process.env.RELEASE_TAG_FILE;
 
-if (!versionFile) {
-  throw new Error('VERSION_FILE is required');
+if (!releaseTagFile) {
+  throw new Error('RELEASE_TAG_FILE is required');
 }
 
 if (!changelog) {
@@ -28,7 +27,7 @@ if (!changelog) {
 
 const opts: TagOptions = {
   changelog,
-  versionFile,
+  releaseTagFile: releaseTagFile,
 };
 
 tag(process.cwd(), opts).catch((e: Error) => {

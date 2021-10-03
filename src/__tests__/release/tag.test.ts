@@ -10,28 +10,23 @@ import { execCapture } from '../../util';
 logging.disable();
 jest.setTimeout(1000 * 60); // 1min
 
-const DEFAULT_VERSION = '0.1.1';
-const DEFAULT_VERSION_FILE = 'version.txt';
+const DEFAULT_RELEASE_TAG = 'v0.1.1';
+const DEFAULT_RELEASE_TAG_FILE = 'releasetag.txt';
 const DEFAULT_CHANGELOG_CONTENT = 'foo bar baz';
 const DEFAULT_CHANGELOG = 'changelog.md';
 
 test('tag from bump artifacts', async () => {
   const result = await testTag();
-  expect(result.latestTag).toMatch(`v${DEFAULT_VERSION}`);
+  expect(result.latestTag).toMatch(`${DEFAULT_RELEASE_TAG}`);
   expect(result.latestTagAnnotation).toMatch(DEFAULT_CHANGELOG_CONTENT);
 });
 
-test('normalizes tag prefix', async () => {
-  const result = await testTag({ testOptions: { version: `v${DEFAULT_VERSION}` } });
-  expect(result.latestTag).toMatch(`v${DEFAULT_VERSION}`);
+test('empty release tag file', async () => {
+  await expect(testTag({ testOptions: { releaseTag: '' } })).rejects.toThrow();
 });
 
-test('empty version file', async () => {
-  await expect(testTag({ testOptions: { version: '' } })).rejects.toThrow();
-});
-
-test('missing version file', async () => {
-  await expect(testTag({ testOptions: { versionPath: 'bogus' } })).rejects.toThrow();
+test('missing release tag file', async () => {
+  await expect(testTag({ testOptions: { releaseTagPath: 'bogus' } })).rejects.toThrow();
 });
 
 test('missing changelog file', async () => {
@@ -41,20 +36,20 @@ test('missing changelog file', async () => {
 interface TestTagOpts {
   tagOptions?: Partial<TagOptions>;
   testOptions?: {
-    version?: string;
+    releaseTag?: string;
     changelogContent?: string;
     changelogPath?: string;
-    versionPath?: string;
+    releaseTagPath?: string;
   };
 }
 
 async function testTag(opts: TestTagOpts = {}) {
   const workdir = mkdtempSync(join(tmpdir(), 'tag-test-'));
-  const version = opts.testOptions?.version ?? DEFAULT_VERSION;
+  const releaseTag = opts.testOptions?.releaseTag ?? DEFAULT_RELEASE_TAG;
   const changelogContent =
     opts.testOptions?.changelogContent ?? DEFAULT_CHANGELOG_CONTENT;
   const changelog = opts.tagOptions?.changelog ?? DEFAULT_CHANGELOG;
-  const versionFile = opts.tagOptions?.versionFile ?? DEFAULT_VERSION_FILE;
+  const releaseTagFile = opts.tagOptions?.releaseTagFile ?? DEFAULT_RELEASE_TAG_FILE;
 
   const git = gitFunc(workdir);
   const getLatestTag = latestTagFunc(workdir);
@@ -65,14 +60,14 @@ async function testTag(opts: TestTagOpts = {}) {
   git('config user.email "you@example.com"');
   git('config user.name "Your Name"');
   git('config commit.gpgsign false');
-  await writeFile(join(workdir, opts.testOptions?.versionPath || '', versionFile), version);
+  await writeFile(join(workdir, opts.testOptions?.releaseTagPath || '', releaseTagFile), releaseTag);
   await writeFile(join(workdir, opts.testOptions?.changelogPath || '', changelog), changelogContent);
   git('add .');
   git('commit -m "chore: foo"');
 
   await tag(workdir, {
     changelog,
-    versionFile,
+    releaseTagFile,
   });
 
   const latestTag = await getLatestTag();
@@ -88,7 +83,7 @@ const gitFunc = (cwd: string) => (cmd: string) =>
   execSync(`git ${cmd}`, { cwd: cwd, stdio: 'inherit' });
 const latestTagFunc = (cwd: string) => () =>
   execCapture('git describe --tags --abbrev=0', { cwd: cwd }).toString();
-const tagAnnotationFunc = (cwd: string) => (version: string) =>
-  execCapture(`git tag -l --format='%(contents)' ${version}`, {
+const tagAnnotationFunc = (cwd: string) => (releaseTag: string) =>
+  execCapture(`git tag -l --format='%(contents)' ${releaseTag}`, {
     cwd: cwd,
   }).toString();
