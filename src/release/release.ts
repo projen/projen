@@ -21,7 +21,7 @@ export interface ReleaseProjectOptions {
    *
    * @default true
    *
-   * @deprecated Use `releaseTrigger` instead
+   * @deprecated Use `releaseTrigger: ReleaseTrigger.continuous()` instead
    */
   readonly releaseEveryCommit?: boolean;
 
@@ -30,14 +30,14 @@ export interface ReleaseProjectOptions {
    *
    * @default - no scheduled releases
    *
-   * @deprecated Use `releaseTrigger` instead
+   * @deprecated Use `releaseTrigger: ReleaseTrigger.scheduled()` instead
    */
   readonly releaseSchedule?: string;
 
   /**
    * The release trigger to use.
    *
-   * @default - Continuous releases
+   * @default - Continuous releases (`ReleaseTrigger.continuous()`)
    */
   readonly releaseTrigger?: ReleaseTrigger;
 

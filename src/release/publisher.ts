@@ -111,7 +111,7 @@ export class Publisher extends Component {
     const projectChangelogFile = options.projectChangelogFile;
     const gitBranch = options.gitBranch ?? 'main';
 
-    const taskName = (gitBranch == 'main' || gitBranch == 'master') ? 'publish:git' : `publish:git:${gitBranch}` ;
+    const taskName = (gitBranch === 'main' || gitBranch === 'master') ? 'publish:git' : `publish:git:${gitBranch}` ;
 
     const publishTask = this.project.addTask(taskName, {
       description: 'Prepends the release changelog onto the project changelog, creates a release commit, and tags the release',
