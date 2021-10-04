@@ -1,5 +1,78 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`deps upgrade commit can be signed 1`] = `
+Object {
+  "name": "Create Pull Request",
+  "needs": "upgrade",
+  "permissions": Object {
+    "checks": "write",
+    "contents": "write",
+    "pull-requests": "write",
+  },
+  "runs-on": "ubuntu-latest",
+  "steps": Array [
+    Object {
+      "name": "Checkout",
+      "uses": "actions/checkout@v2",
+    },
+    Object {
+      "name": "Set git identity",
+      "run": "git config user.name \\"github-actions\\"
+git config user.email \\"github-actions@github.com\\"",
+    },
+    Object {
+      "name": "Download patch",
+      "uses": "actions/download-artifact@v2",
+      "with": Object {
+        "name": ".upgrade.tmp.patch",
+        "path": "\${{ runner.temp }}",
+      },
+    },
+    Object {
+      "name": "Apply patch",
+      "run": "[ -s \${{ runner.temp }}/.upgrade.tmp.patch ] && git apply \${{ runner.temp }}/.upgrade.tmp.patch || echo \\"Empty patch. Skipping.\\"",
+    },
+    Object {
+      "id": "create-pr",
+      "name": "Create Pull Request",
+      "uses": "peter-evans/create-pull-request@v3",
+      "with": Object {
+        "author": "github-actions <github-actions@github.com>",
+        "body": "Upgrades project dependencies. See details in [workflow run].
+
+[Workflow Run]: https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
+
+------
+
+*Automatically created by projen via the \\"upgrade\\" workflow*",
+        "branch": "github-actions/upgrade",
+        "commit-message": "chore(deps): upgrade dependencies
+
+Upgrades project dependencies. See details in [workflow run].
+
+[Workflow Run]: https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}
+
+------
+
+*Automatically created by projen via the \\"upgrade\\" workflow*",
+        "committer": "github-actions <github-actions@github.com>",
+        "signoff": true,
+        "title": "chore(deps): upgrade dependencies",
+        "token": "\${{ secrets.GITHUB_TOKEN }}",
+      },
+    },
+    Object {
+      "env": Object {
+        "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
+      },
+      "if": "steps.create-pr.outputs.pull-request-url != ''",
+      "name": "Update status check",
+      "run": "curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H \\"Authorization: token \${GITHUB_TOKEN}\\" https://api.github.com/repos/\${{ github.repository }}/check-runs -d '{\\"name\\":\\"build\\",\\"head_sha\\":\\"github-actions/upgrade\\",\\"status\\":\\"completed\\",\\"conclusion\\":\\"\${{ needs.upgrade.outputs.conclusion }}\\",\\"output\\":{\\"title\\":\\"Created via the upgrade workflow.\\",\\"summary\\":\\"Action run URL: https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}\\"}}'",
+    },
+  ],
+}
+`;
+
 exports[`enable anti-tamper 1`] = `
 Array [
   Object {
@@ -8,7 +81,7 @@ Array [
   },
   Object {
     "name": "Set git identity",
-    "run": "git config user.name \\"Automation\\"
+    "run": "git config user.name \\"github-actions\\"
 git config user.email \\"github-actions@github.com\\"",
   },
   Object {
@@ -68,7 +141,7 @@ Array [
   },
   Object {
     "name": "Set git identity",
-    "run": "git config user.name \\"Automation\\"
+    "run": "git config user.name \\"github-actions\\"
 git config user.email \\"github-actions@github.com\\"",
   },
   Object {
