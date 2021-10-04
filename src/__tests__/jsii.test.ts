@@ -306,12 +306,6 @@ describe('superchain image is selected based on the node version', () => {
     expect(output['.github/workflows/build.yml']).toContain('image: jsii/superchain:1-buster-slim');
   });
 
-  test('10.x', () => {
-    const project = new TestJsiiProject({ ...opts, minNodeVersion: '10.12.1' });
-    const output = synthSnapshot(project);
-    expect(output['.github/workflows/build.yml']).toContain('image: jsii/superchain:1-buster-slim-node10');
-  });
-
   test('12.x', () => {
     const project = new TestJsiiProject({ ...opts, minNodeVersion: '12.22.1' });
     const output = synthSnapshot(project);
@@ -331,7 +325,8 @@ describe('superchain image is selected based on the node version', () => {
   });
 
   test('unsupported version', () => {
-    expect(() => new TestJsiiProject({ ...opts, minNodeVersion: '15.3.20' })).toThrow('No jsii/superchain image available for Node.js 15.x which is required when specifying minNodeVersion 15.3.20. Supported major versions 10.x, 12.x, 14.x and 16.x');
+    expect(() => new TestJsiiProject({ ...opts, minNodeVersion: '15.3.20' })).toThrow('No jsii/superchain image available for node 15.x. Supported node versions: 12.x,14.x,16.x');
+    expect(() => new TestJsiiProject({ ...opts, minNodeVersion: '10.2.3' })).toThrow('No jsii/superchain image available for node 10.x. Supported node versions: 12.x,14.x,16.x');
   });
 });
 

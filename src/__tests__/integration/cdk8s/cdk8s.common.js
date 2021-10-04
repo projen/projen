@@ -1,5 +1,5 @@
 exports.options = {
-  minNodeVersion: '10.17.0',
+  minNodeVersion: '12.7.0',
   repository: 'https://github.com/awslabs/cdk8s.git',
   authorName: 'Amazon Web Services',
   authorUrl: 'https://aws.amazon.com',
