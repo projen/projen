@@ -1225,7 +1225,19 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --upgrade --target=minor",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
+          },
+          Object {
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
+          },
+          Object {
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
+          },
+          Object {
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
+          },
+          Object {
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
             "exec": "yarn install --check-files",
@@ -2517,7 +2529,19 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
           },
           Object {
             "exec": "yarn install --check-files",
@@ -2538,7 +2562,19 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade-projen",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
           },
           Object {
             "exec": "yarn install --check-files",
@@ -3923,7 +3959,19 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
           },
           Object {
             "exec": "yarn install --check-files",
@@ -3944,7 +3992,19 @@ tsconfig.tsbuildinfo
         "name": "upgrade-projen",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
           },
           Object {
             "exec": "yarn install --check-files",
@@ -5161,7 +5221,19 @@ junit.xml
         "name": "upgrade",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
           },
           Object {
             "exec": "pnpm i",
@@ -5182,7 +5254,19 @@ junit.xml
         "name": "upgrade-projen",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --upgrade --target=minor --filter='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
+          },
+          Object {
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
           },
           Object {
             "exec": "pnpm i",
