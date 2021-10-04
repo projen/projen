@@ -132,7 +132,7 @@ export function directorySnapshot(root: string, options: DirectorySnapshotOption
   const output: SynthOutput = {};
 
   const files = glob.sync('**', {
-    ignore: options.excludeGlobs ?? [],
+    ignore: ['.git/**', ...(options.excludeGlobs ?? [])],
     cwd: root,
     nodir: true,
     dot: true,

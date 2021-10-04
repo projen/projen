@@ -9,7 +9,7 @@ const JSII_RELEASE_VERSION = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
 const ARTIFACTS_DOWNLOAD_DIR = 'dist';
-const JSII_RELEASE_IMAGE = 'jsii/superchain:node14';
+const JSII_RELEASE_IMAGE = 'jsii/superchain:1-buster-slim-node14';
 
 /**
  * Options for `Publisher`.

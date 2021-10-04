@@ -1,9 +1,11 @@
+import * as semver from 'semver';
 import { Eslint } from './eslint';
 import { JsiiDocgen } from './jsii-docgen';
 import { GoPublishOptions, MavenPublishOptions, PyPiPublishOptions, NugetPublishOptions } from './release';
 import { TypeScriptProject, TypeScriptProjectOptions } from './typescript';
 
-const DEFAULT_JSII_IMAGE = 'jsii/superchain:node14';
+const SUPERCHAIN_IMAGE = 'jsii/superchain:1-buster-slim';
+const SUPERCHAIN_NODE_VERSIONS = [12, 14, 16]; // supported jsii/superchain image tags: `1-buster-slim-nodeNN`
 
 const EMAIL_REGEX = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 const URL_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
@@ -145,7 +147,7 @@ export class JsiiProject extends TypeScriptProject {
 
       ...options,
 
-      workflowContainerImage: options.workflowContainerImage ?? DEFAULT_JSII_IMAGE,
+      workflowContainerImage: options.workflowContainerImage ?? determineSuperchainImage(options.minNodeVersion),
 
       // this is needed temporarily because our release workflows use the 'gh'
       // cli and its not yet available in jsii/superchain:node14
@@ -302,4 +304,27 @@ function parseAuthorAddress(options: JsiiProjectOptions) {
     }
   }
   return { authorEmail, authorUrl };
+}
+
+/**
+ * Determines the jsii/superchain image to use based on the minimum node
+ * version.
+ *
+ * @param minNodeVersion The minimum node version of the project. If not
+ * specified, v14.17.4 is used.
+ */
+function determineSuperchainImage(minNodeVersion?: string): string {
+  // the default image (`jsii/superchain:1-buster-slim`) will include the
+  // minimum supported node version of JSII (as of this writing it is 12.x).
+  if (!minNodeVersion) {
+    return SUPERCHAIN_IMAGE;
+  }
+
+  const major = semver.major(minNodeVersion);
+
+  if (!SUPERCHAIN_NODE_VERSIONS.includes(major)) {
+    throw new Error(`No jsii/superchain image available for node ${major}.x. Supported node versions: ${SUPERCHAIN_NODE_VERSIONS.map(m => `${m}.x`).join(',')}`);
+  }
+
+  return `${SUPERCHAIN_IMAGE}-node${major}`;
 }

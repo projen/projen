@@ -203,7 +203,7 @@ export class Release extends Component {
   private readonly releaseTrigger: ReleaseTrigger;
   private readonly preBuildSteps: JobStep[];
   private readonly containerImage?: string;
-  private readonly branches = new Array<ReleaseBranch>();
+  private readonly _branches = new Array<ReleaseBranch>();
   private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
@@ -271,7 +271,7 @@ export class Release extends Component {
       tagPrefix: options.releaseTagPrefix,
     };
 
-    this.branches.push(this.defaultBranch);
+    this._branches.push(this.defaultBranch);
 
     for (const [name, opts] of Object.entries(options.releaseBranches ?? {})) {
       this.addBranch(name, opts);
@@ -289,7 +289,7 @@ export class Release extends Component {
    * @param options Branch definition
    */
   public addBranch(branch: string, options: BranchOptions) {
-    if (this.branches.find(b => b.name === branch)) {
+    if (this._branches.find(b => b.name === branch)) {
       throw new Error(`The release branch ${branch} is already defined`);
     }
 
@@ -299,7 +299,7 @@ export class Release extends Component {
       throw new Error('you must specify "majorVersion" for the default branch when adding multiple release branches');
     }
 
-    this.branches.push({
+    this._branches.push({
       name: branch,
       ...options,
     });
@@ -317,13 +317,20 @@ export class Release extends Component {
 
   // render a workflow per branch and all the jobs to it
   public preSynthesize() {
-    for (const branch of this.branches) {
+    for (const branch of this._branches) {
       const workflow = this.createWorkflow(branch);
       if (workflow) {
         workflow.addJobs(this.publisher.render());
         workflow.addJobs(this.jobs);
       }
     }
+  }
+
+  /**
+   * Retrieve all release branch names
+   */
+  public get branches(): string[] {
+    return this._branches.map(b => b.name);
   }
 
   /**
