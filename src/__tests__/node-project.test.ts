@@ -237,7 +237,7 @@ describe('deps upgrade', () => {
 
     // make sure yarn upgrade all deps, including projen.
     const tasks = snapshot[Tasks.MANIFEST_FILE].tasks;
-    expect(tasks.upgrade.steps[2].exec).toStrictEqual('yarn upgrade');
+    expect(tasks.upgrade.steps[6].exec).toStrictEqual('yarn upgrade');
   });
 
   test('default - no projen secret', () => {

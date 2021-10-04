@@ -5335,7 +5335,8 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**workflows**🔹 | <code>boolean</code> | Are workflows enabled?
+**workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | All workflows.
+**workflowsEnabled**🔹 | <code>boolean</code> | Are workflows enabled?
 **mergify**?🔹 | <code>[github.Mergify](#projen-github-mergify)</code> | The `Mergify` configured on this repository.<br/>__*Optional*__
 
 ### Methods
@@ -5375,13 +5376,28 @@ __Returns__:
 
 #### addWorkflow(name)🔹 <a id="projen-github-github-addworkflow"></a>
 
-
+Adds a workflow to the project.
 
 ```ts
 addWorkflow(name: string): GithubWorkflow
 ```
 
-* **name** (<code>string</code>)  *No description*
+* **name** (<code>string</code>)  Name of the workflow.
+
+__Returns__:
+* <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code>
+
+#### tryFindWorkflow(name)🔹 <a id="projen-github-github-tryfindworkflow"></a>
+
+Finds a GitHub workflow by name.
+
+Returns `undefined` if the workflow cannot be found.
+
+```ts
+tryFindWorkflow(name: string): GithubWorkflow
+```
+
+* **name** (<code>string</code>)  The name of the GitHub workflow.
 
 __Returns__:
 * <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code>
@@ -5410,6 +5426,7 @@ new github.GithubWorkflow(github: GitHub, name: string, options?: GithubWorkflow
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **name** (<code>string</code>)  *No description*
 * **options** (<code>[github.GithubWorkflowOptions](#projen-github-githubworkflowoptions)</code>)  *No description*
+  * **concurrency** (<code>string</code>)  Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. __*Default*__: disabled
   * **force** (<code>boolean</code>)  Force the creation of the workflow even if `workflows` is disabled in `GitHub`. __*Default*__: false
 
 
@@ -5420,6 +5437,7 @@ new github.GithubWorkflow(github: GitHub, name: string, options?: GithubWorkflow
 Name | Type | Description 
 -----|------|-------------
 **name**🔹 | <code>string</code> | The name of the workflow.
+**concurrency**?🔹 | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.<br/>__*Default*__: disabled
 **file**?🔹 | <code>[YamlFile](#projen-yamlfile)</code> | The workflow YAML file.<br/>__*Optional*__
 
 ### Methods
@@ -11125,6 +11143,7 @@ Options for `GithubWorkflow`.
 
 Name | Type | Description 
 -----|------|-------------
+**concurrency**?🔹 | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.<br/>__*Default*__: disabled
 **force**?🔹 | <code>boolean</code> | Force the creation of the workflow even if `workflows` is disabled in `GitHub`.<br/>__*Default*__: false
 
 
