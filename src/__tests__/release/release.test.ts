@@ -1,6 +1,6 @@
 import * as YAML from 'yaml';
 import { JobPermission } from '../../github/workflows-model';
-import { Release } from '../../release';
+import { Release, ReleaseTrigger } from '../../release';
 import { synthSnapshot, TestProject } from '../util';
 
 test('minimal', () => {
@@ -162,6 +162,49 @@ test('publishers are added as jobs to all release workflows', () => {
     },
   });
   expect(wf2.jobs.release.steps.length).toBe(5);
+});
+
+test('manual releases do not generate a release workflow', () => {
+  // GIVEN
+  const project = new TestProject();
+  const task = project.addTask('build');
+
+  // WHEN
+  new Release(project, {
+    task: task,
+    versionFile: 'version.json',
+    branch: 'main',
+    releaseTrigger: ReleaseTrigger.manual(),
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  expect(outdir['.github/workflows/release.yml']).toBeUndefined();
+});
+
+test('releaseSchedule schedules releases', () => {
+  // GIVEN
+  const schedule = '0 17 * * *';
+  const project = new TestProject();
+  const task = project.addTask('build');
+
+  // WHEN
+  new Release(project, {
+    task: task,
+    versionFile: 'version.json',
+    branch: 'main',
+    releaseEveryCommit: false,
+    releaseSchedule: schedule,
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  const wf1 = YAML.parse(outdir['.github/workflows/release.yml']);
+  expect(wf1).toMatchObject({
+    on: {
+      schedule: expect.arrayContaining([{ cron: schedule }]),
+    },
+  });
 });
 
 test('addJobs() can be used to add arbitrary jobs to the release workflows', () => {

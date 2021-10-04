@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { Component } from '../component';
 import { GitHub, TaskWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
@@ -5,6 +6,7 @@ import { GitHubProject } from '../project';
 import { Task } from '../tasks';
 import { Version } from '../version';
 import { Publisher } from './publisher';
+import { ReleaseTrigger } from './release-trigger';
 
 const BUILD_JOBID = 'release';
 const GIT_REMOTE_STEPID = 'git_remote';
@@ -16,16 +18,28 @@ const LATEST_COMMIT_OUTPUT = 'latest_commit';
 export interface ReleaseProjectOptions {
   /**
    * Automatically release new versions every commit to one of branches in `releaseBranches`.
+   *
    * @default true
+   *
+   * @deprecated Use `releaseTrigger: ReleaseTrigger.continuous()` instead
    */
   readonly releaseEveryCommit?: boolean;
 
   /**
-    * CRON schedule to trigger new releases.
-    *
-    * @default - no scheduled releases
-    */
+   * CRON schedule to trigger new releases.
+   *
+   * @default - no scheduled releases
+   *
+   * @deprecated Use `releaseTrigger: ReleaseTrigger.scheduled()` instead
+   */
   readonly releaseSchedule?: string;
+
+  /**
+   * The release trigger to use.
+   *
+   * @default - Continuous releases (`ReleaseTrigger.continuous()`)
+   */
+  readonly releaseTrigger?: ReleaseTrigger;
 
   /**
    * A directory which will contain artifacts to be published to npm.
@@ -76,11 +90,11 @@ export interface ReleaseProjectOptions {
   readonly majorVersion?: number;
 
   /**
-    * Bump versions from the default branch as pre-releases (e.g. "beta",
-    * "alpha", "pre").
-    *
-    * @default - normal semantic versions
-    */
+   * Bump versions from the default branch as pre-releases (e.g. "beta",
+   * "alpha", "pre").
+   *
+   * @default - normal semantic versions
+   */
   readonly prerelease?: string;
 
   /**
@@ -186,8 +200,7 @@ export class Release extends Component {
   private readonly antitamper: boolean;
   private readonly artifactsDirectory: string;
   private readonly versionFile: string;
-  private readonly releaseSchedule?: string;
-  private readonly releaseEveryCommit: boolean;
+  private readonly releaseTrigger: ReleaseTrigger;
   private readonly preBuildSteps: JobStep[];
   private readonly containerImage?: string;
   private readonly _branches = new Array<ReleaseBranch>();
@@ -209,9 +222,22 @@ export class Release extends Component {
     this.antitamper = options.antitamper ?? true;
     this.artifactsDirectory = options.artifactsDirectory ?? 'dist';
     this.versionFile = options.versionFile;
-    this.releaseSchedule = options.releaseSchedule;
-    this.releaseEveryCommit = options.releaseEveryCommit ?? true;
+    this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
+
+    /**
+     * Use manual releases with no changelog if releaseEveryCommit is explicitly
+     * disabled and no other trigger is set.
+     *
+     * TODO: Remove this when releaseEveryCommit and releaseSchedule are removed
+     */
+    if (!((options.releaseEveryCommit ?? true) || options.releaseSchedule || options.releaseTrigger)) {
+      this.releaseTrigger = ReleaseTrigger.manual({ changelog: false });
+    }
+
+    if (options.releaseSchedule) {
+      this.releaseTrigger = ReleaseTrigger.scheduled({ schedule: options.releaseSchedule });
+    }
 
     this.version = new Version(project, {
       versionInputFile: this.versionFile,
@@ -230,9 +256,9 @@ export class Release extends Component {
     const githubRelease = options.githubRelease ?? true;
     if (githubRelease) {
       this.publisher.publishToGitHubReleases({
-        changelogFile: this.version.changelogFileName,
-        versionFile: this.version.versionFileName,
-        releaseTagFile: this.version.releaseTagFileName,
+        changelogFile: join(this.artifactsDirectory, this.version.changelogFileName),
+        versionFile: join(this.artifactsDirectory, this.version.versionFileName),
+        releaseTagFile: join(this.artifactsDirectory, this.version.releaseTagFileName),
       });
     }
 
@@ -354,6 +380,18 @@ export class Release extends Component {
     releaseTask.spawn(this.buildTask);
     releaseTask.spawn(this.version.unbumpTask);
 
+    if (this.releaseTrigger.isManual) {
+      const publishTask = this.publisher.publishToGit({
+        changelogFile: join(this.artifactsDirectory, this.version.changelogFileName),
+        versionFile: join(this.artifactsDirectory, this.version.versionFileName),
+        releaseTagFile: join(this.artifactsDirectory, this.version.releaseTagFileName),
+        projectChangelogFile: this.releaseTrigger.changelogPath,
+        gitBranch: branch.name,
+      });
+
+      releaseTask.spawn(publishTask);
+    }
+
     // anti-tamper check (fails if there were changes to committed files)
     // this will identify any non-committed files generated during build (e.g. test snapshots)
     if (this.antitamper) {
@@ -380,7 +418,7 @@ export class Release extends Component {
       },
     });
 
-    if (this.github) {
+    if (this.github && !this.releaseTrigger.isManual) {
       return new TaskWorkflow(this.github, {
         name: workflowName,
         jobId: BUILD_JOBID,
@@ -391,8 +429,8 @@ export class Release extends Component {
           },
         },
         triggers: {
-          schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
-          push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
+          schedule: this.releaseTrigger.schedule ? [{ cron: this.releaseTrigger.schedule }] : undefined,
+          push: this.releaseTrigger.isContinuous ? { branches: [branch.name] } : undefined,
         },
         container: this.containerImage ? { image: this.containerImage } : undefined,
         env: {

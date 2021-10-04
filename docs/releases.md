@@ -48,3 +48,24 @@ releaseBranches: {
   },
 }
 ```
+
+## Release Triggers
+
+If the project type supports it, then you can specify a `releaseTrigger`. You can use this to control whether
+or not your releases are automated as well as any unique artifacts associated with releases such as project-level
+changelogs.
+
+```js
+releaseTrigger: ReleaseTrigger.scheduled({ schedule: '0 17 * * *' }),
+```
+
+### Manual Releases
+
+```js
+releaseTrigger: ReleaseTrigger.manual(),
+```
+
+Using manual releases disables the generation of the github release workflow and provides an extra
+`publish:git` task which is triggered as part of the `release` task. `publish:git` will manage a
+project-level changelog, commit any changes, tag the release, and push any commits and tags to
+remote. 

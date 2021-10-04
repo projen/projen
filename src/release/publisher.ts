@@ -8,7 +8,7 @@ import { Project } from '../project';
 const JSII_RELEASE_VERSION = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
-const ARTIFACTS_DIR = 'dist';
+const ARTIFACTS_DOWNLOAD_DIR = 'dist';
 const JSII_RELEASE_IMAGE = 'jsii/superchain:1-buster-slim-node14';
 
 /**
@@ -99,12 +99,44 @@ export class Publisher extends Component {
   }
 
   /**
+   * Publish to git.
+   *
+   * This includes generating a project-level changelog and release tags.
+   *
+   * @param options Options
+   */
+  public publishToGit(options: GitPublishOptions) {
+    const releaseTagFile = options.releaseTagFile;
+    const changelog = options.changelogFile;
+    const projectChangelogFile = options.projectChangelogFile;
+    const gitBranch = options.gitBranch ?? 'main';
+
+    const taskName = (gitBranch === 'main' || gitBranch === 'master') ? 'publish:git' : `publish:git:${gitBranch}` ;
+
+    const publishTask = this.project.addTask(taskName, {
+      description: 'Prepends the release changelog onto the project changelog, creates a release commit, and tags the release',
+      env: {
+        CHANGELOG: changelog,
+        RELEASE_TAG_FILE: releaseTagFile,
+        PROJECT_CHANGELOG_FILE: projectChangelogFile ?? '',
+      },
+    });
+    if (projectChangelogFile) {
+      publishTask.builtin('release/update-changelog');
+    }
+    publishTask.builtin('release/tag-version');
+    publishTask.exec(`git push --follow-tags origin ${gitBranch}`);
+
+    return publishTask;
+  }
+
+  /**
    * Creates a GitHub Release.
    * @param options Options
    */
   public publishToGitHubReleases(options: GitHubReleasesPublishOptions) {
-    const changelogFile = `${ARTIFACTS_DIR}/${options.changelogFile}`;
-    const releaseTagFile = `${ARTIFACTS_DIR}/${options.releaseTagFile}`;
+    const changelogFile = options.changelogFile;
+    const releaseTagFile = options.releaseTagFile;
 
     // create a github release
     const releaseTag = `$(cat ${releaseTagFile})`;
@@ -296,7 +328,7 @@ export class Publisher extends Component {
         uses: 'actions/download-artifact@v2',
         with: {
           name: this.artifactName,
-          path: ARTIFACTS_DIR, // this must be "dist" for jsii-release
+          path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for jsii-release
         },
       },
       {
@@ -627,10 +659,7 @@ export interface GoPublishOptions {
   readonly gitCommitMessage?: string;
 }
 
-/**
- * Publishing options for GitHub releases.
- */
-export interface GitHubReleasesPublishOptions {
+interface VersionArtifactOptions {
   /**
    * The location of a text file (relative to `dist/`) that contains the version number.
    *
@@ -646,9 +675,31 @@ export interface GitHubReleasesPublishOptions {
   readonly releaseTagFile: string;
 
   /**
-   * The location of an .md file that includes the changelog for the release.
+   * The location of an .md file (relative to `dist/`) that includes the changelog for the release.
    *
    * @example changelog.md
    */
   readonly changelogFile: string;
+}
+
+/**
+ * Publishing options for GitHub releases.
+ */
+export interface GitHubReleasesPublishOptions extends VersionArtifactOptions { }
+
+/**
+ * Publishing options for Git releases
+ */
+export interface GitPublishOptions extends VersionArtifactOptions {
+  /**
+   * The location of an .md file that includes the project-level changelog.
+   */
+  readonly projectChangelogFile?: string;
+
+  /**
+   * Branch to push to.
+   *
+   * @default "main"
+   */
+  readonly gitBranch?: string;
 }

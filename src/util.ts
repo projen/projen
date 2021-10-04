@@ -281,3 +281,11 @@ export function kebabCaseKeys<T = unknown>(obj: T, recursive = true): T {
   }
   return result as any;
 }
+
+export async function tryReadFile(file: string) {
+  if (!(await fs.pathExists(file))) {
+    return '';
+  }
+
+  return fs.readFile(file, 'utf8');
+}
