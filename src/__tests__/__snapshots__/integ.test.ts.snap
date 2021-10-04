@@ -3553,7 +3553,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
-          node-version: 10.17.0
+          node-version: 12.7.0
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -3713,7 +3713,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^10.17.0",
+        "version": "^12.7.0",
       },
       Object {
         "name": "@typescript-eslint/eslint-plugin",
@@ -4322,7 +4322,7 @@ common.fixup(project);
 project.synth();
 ",
   "cdk8s.common.js": "exports.options = {
-  minNodeVersion: '10.17.0',
+  minNodeVersion: '12.7.0',
   repository: 'https://github.com/awslabs/cdk8s.git',
   authorName: 'Amazon Web Services',
   authorUrl: 'https://aws.amazon.com',
@@ -4453,7 +4453,7 @@ project.synth();
       "@types/fs-extra": "*",
       "@types/jest": "*",
       "@types/json-schema": "*",
-      "@types/node": "^10.17.0",
+      "@types/node": "^12.7.0",
       "@typescript-eslint/eslint-plugin": "*",
       "@typescript-eslint/parser": "*",
       "eslint": "*",
@@ -4469,7 +4469,7 @@ project.synth();
       "typescript": "*",
     },
     "engines": Object {
-      "node": ">= 10.17.0",
+      "node": ">= 12.7.0",
     },
     "jest": Object {
       "clearMocks": true,
