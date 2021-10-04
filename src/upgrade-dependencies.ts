@@ -93,14 +93,12 @@ export interface UpgradeDependenciesOptions {
 export class UpgradeDependencies extends Component {
 
   /**
-   * The workflow that executes the upgrade.
+   * The workflows that execute the upgrades. One workflow per branch.
    */
-  public readonly workflow?: GithubWorkflow;
+  public readonly workflows: GithubWorkflow[] = [];
 
   private readonly options: UpgradeDependenciesOptions;
-
   private readonly _project: NodeProject;
-
   private readonly pullRequestTitle: string;
 
   /**
@@ -117,18 +115,20 @@ export class UpgradeDependencies extends Component {
     this.ignoresProjen = this.options.ignoreProjen ?? true;
 
     project.addDevDeps('npm-check-updates@^11');
+  }
 
+  // create the upgrade task and a corresponding github workflow
+  // for each requested branch.
+  public preSynthesize() {
     const task = this.createTask();
+    if (this._project.github && (this.options.workflow ?? true)) {
+      // represents the default reopsitory branch.
+      // just like not specifying anything.
+      const defaultBranch = undefined;
 
-    // this will translate into the default branch of the repo
-    // just like not specifying anything.
-    const defaultBranch = undefined;
-
-    const branches = options.workflowOptions?.branches ?? [defaultBranch];
-
-    if (project.github && (options.workflow ?? true)) {
+      const branches = this.options.workflowOptions?.branches ?? (this._project.release?.branches ?? [defaultBranch]);
       for (const branch of branches) {
-        this.workflow = this.createWorkflow(task, project.github, branch);
+        this.workflows.push(this.createWorkflow(task, this._project.github, branch));
       }
     }
   }
@@ -437,7 +437,7 @@ export interface UpgradeDependenciesWorkflowOptions {
   /**
    * List of branches to create PR's for.
    *
-   * @default - Only the default branch.
+   * @default - All release branches configured for the project.
    */
   readonly branches?: string[];
 }

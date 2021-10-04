@@ -70,8 +70,8 @@ test('default options', () => {
   });
 
   const snapshot = synthSnapshot(project);
-  expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
-  expect(snapshot['.github/workflows/upgrade.yml']).toMatchSnapshot();
+  expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
+  expect(snapshot['.github/workflows/upgrade-main.yml']).toMatchSnapshot();
 });
 
 test('custom options', () => {
@@ -86,8 +86,47 @@ test('custom options', () => {
   });
 
   const snapshot = synthSnapshot(project);
-  expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
-  expect(snapshot['.github/workflows/upgrade.yml']).toMatchSnapshot();
+  expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
+  expect(snapshot['.github/workflows/upgrade-main.yml']).toMatchSnapshot();
+});
+
+test('branches default to release branches', () => {
+  const project = createProject({
+    projenUpgradeSecret: 'PROJEN_SECRET',
+    majorVersion: 1,
+    releaseBranches: {
+      branch1: { majorVersion: 2 },
+      branch2: { majorVersion: 3 },
+    },
+  });
+
+  const snapshot = synthSnapshot(project);
+  expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
+  expect(snapshot['.github/workflows/upgrade-main.yml']).toMatchSnapshot();
+  expect(snapshot['.github/workflows/upgrade-branch1.yml']).toBeDefined();
+  expect(snapshot['.github/workflows/upgrade-branch1.yml']).toMatchSnapshot();
+  expect(snapshot['.github/workflows/upgrade-branch2.yml']).toBeDefined();
+  expect(snapshot['.github/workflows/upgrade-branch2.yml']).toMatchSnapshot();
+});
+
+test('considers branches added post project instantiation', () => {
+  const project = createProject({
+    projenUpgradeSecret: 'PROJEN_SECRET',
+    majorVersion: 1,
+    releaseBranches: {
+      branch1: { majorVersion: 2 },
+    },
+  });
+
+  project.release?.addBranch('branch2', { majorVersion: 3 });
+
+  const snapshot = synthSnapshot(project);
+  expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
+  expect(snapshot['.github/workflows/upgrade-main.yml']).toMatchSnapshot();
+  expect(snapshot['.github/workflows/upgrade-branch1.yml']).toBeDefined();
+  expect(snapshot['.github/workflows/upgrade-branch1.yml']).toMatchSnapshot();
+  expect(snapshot['.github/workflows/upgrade-branch2.yml']).toBeDefined();
+  expect(snapshot['.github/workflows/upgrade-branch2.yml']).toMatchSnapshot();
 });
 
 test('can upgrade multiple branches', () => {
@@ -102,7 +141,9 @@ test('can upgrade multiple branches', () => {
   });
 
   const snapshot = synthSnapshot(project);
+  expect(snapshot['.github/workflows/upgrade-branch1.yml']).toBeDefined();
   expect(snapshot['.github/workflows/upgrade-branch1.yml']).toMatchSnapshot();
+  expect(snapshot['.github/workflows/upgrade-branch2.yml']).toBeDefined();
   expect(snapshot['.github/workflows/upgrade-branch2.yml']).toMatchSnapshot();
 
 });
