@@ -200,7 +200,7 @@ describe('deps upgrade', () => {
       autoApproveUpgrades: true,
     });
 
-    const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade.yml']);
+    const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade-main.yml']);
     expect(snapshot.jobs.pr.steps[4].with.labels).toStrictEqual(project.autoApprove?.label);
   });
 
@@ -211,7 +211,7 @@ describe('deps upgrade', () => {
       },
     });
 
-    const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade.yml']);
+    const snapshot = yaml.parse(synthSnapshot(project)['.github/workflows/upgrade-main.yml']);
     expect(snapshot.jobs.pr).toMatchSnapshot();
   });
 
@@ -232,8 +232,8 @@ describe('deps upgrade', () => {
   test('default - with projen secret', () => {
     const project = new TestNodeProject({ projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN' });
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
+    expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeUndefined();
 
     // make sure yarn upgrade all deps, including projen.
     const tasks = snapshot[Tasks.MANIFEST_FILE].tasks;
@@ -243,8 +243,8 @@ describe('deps upgrade', () => {
   test('default - no projen secret', () => {
     const project = new TestNodeProject();
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
+    expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeUndefined();
   });
 
   test('dependabot - with projen secret', () => {
@@ -254,7 +254,7 @@ describe('deps upgrade', () => {
     });
     const snapshot = synthSnapshot(project);
     expect(snapshot['.github/dependabot.yml']).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeDefined();
   });
 
   test('dependabot - no projen secret', () => {
@@ -263,7 +263,7 @@ describe('deps upgrade', () => {
     });
     const snapshot = synthSnapshot(project);
     expect(snapshot['.github/dependabot.yml']).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
+    expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeUndefined();
   });
 
   test('github actions - with projen secret', () => {
@@ -271,19 +271,19 @@ describe('deps upgrade', () => {
       projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
     });
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
+    expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeUndefined();
   });
 
   test('github actions - no projen secret', () => {
     const project = new TestNodeProject({});
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade.yml']).toBeDefined();
+    expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
 
     // note that in this case only the task is created, not the workflow
     const upgradeProjen = snapshot['.projen/tasks.json'].tasks['upgrade-projen'];
     expect(upgradeProjen).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen.yml']).toBeUndefined();
+    expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeUndefined();
   });
 
   test('throws when dependabot is configued with depsUpgrade', () => {
@@ -307,7 +307,7 @@ describe('deps upgrade', () => {
       },
     });
     const snapshot = synthSnapshot(project);
-    const upgrade = yaml.parse(snapshot['.github/workflows/upgrade.yml']);
+    const upgrade = yaml.parse(snapshot['.github/workflows/upgrade-main.yml']);
 
     // we expect the default auto-approve label to be applied
     expect(upgrade.jobs.pr.steps[4].with.labels).toEqual('auto-approve');
@@ -616,7 +616,7 @@ class TestNodeProject extends NodeProject {
       logging: {
         level: LogLevel.OFF,
       },
-      defaultReleaseBranch: 'master',
+      defaultReleaseBranch: 'main',
       ...options,
     });
   }

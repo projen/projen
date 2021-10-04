@@ -93,14 +93,12 @@ export interface UpgradeDependenciesOptions {
 export class UpgradeDependencies extends Component {
 
   /**
-   * The workflow that executes the upgrade.
+   * The workflows that execute the upgrades. One workflow per branch.
    */
-  public readonly workflow?: GithubWorkflow;
+  public readonly workflows: GithubWorkflow[] = [];
 
   private readonly options: UpgradeDependenciesOptions;
-
   private readonly _project: NodeProject;
-
   private readonly pullRequestTitle: string;
 
   /**
@@ -117,11 +115,21 @@ export class UpgradeDependencies extends Component {
     this.ignoresProjen = this.options.ignoreProjen ?? true;
 
     project.addDevDeps('npm-check-updates@^11');
+  }
 
+  // create the upgrade task and a corresponding github workflow
+  // for each requested branch.
+  public preSynthesize() {
     const task = this.createTask();
+    if (this._project.github && (this.options.workflow ?? true)) {
+      // represents the default reopsitory branch.
+      // just like not specifying anything.
+      const defaultBranch = undefined;
 
-    if (project.github && (options.workflow ?? true)) {
-      this.workflow = this.createWorkflow(task, project.github);
+      const branches = this.options.workflowOptions?.branches ?? (this._project.release?.branches ?? [defaultBranch]);
+      for (const branch of branches) {
+        this.workflows.push(this.createWorkflow(task, this._project.github, branch));
+      }
     }
   }
 
@@ -165,17 +173,18 @@ export class UpgradeDependencies extends Component {
     return task;
   }
 
-  private createWorkflow(task: Task, github: GitHub): GithubWorkflow {
+  private createWorkflow(task: Task, github: GitHub, branch?: string): GithubWorkflow {
     const schedule = this.options.workflowOptions?.schedule ?? UpgradeDependenciesSchedule.DAILY;
 
-    const workflow = github.addWorkflow(task.name);
+    const workflowName = `${task.name}${branch ? `-${branch.replace(/\//g, '-')}` : ''}`;
+    const workflow = github.addWorkflow(workflowName);
     const triggers: workflows.Triggers = {
       workflowDispatch: {},
       schedule: schedule.cron ? schedule.cron.map(e => ({ cron: e })) : undefined,
     };
     workflow.on(triggers);
 
-    const upgrade = this.createUpgrade(task);
+    const upgrade = this.createUpgrade(task, branch);
     const pr = this.createPr(workflow, upgrade);
 
     const jobs: Record<string, workflows.Job> = {};
@@ -186,7 +195,7 @@ export class UpgradeDependencies extends Component {
     return workflow;
   }
 
-  private createUpgrade(task: Task): Upgrade {
+  private createUpgrade(task: Task, branch?: string): Upgrade {
 
     const build = this.options.workflowOptions?.rebuild ?? true;
     const patchFile = '.upgrade.tmp.patch';
@@ -205,6 +214,7 @@ export class UpgradeDependencies extends Component {
       {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
+        with: branch ? { ref: branch } : undefined,
       },
       SET_GIT_IDENTITY_WORKFLOW_STEP,
       ...this._project.installWorkflowSteps,
@@ -255,6 +265,7 @@ export class UpgradeDependencies extends Component {
       patchFile: patchFile,
       build: build,
       buildConclusionOutput: conclusion,
+      ref: branch,
     };
   }
 
@@ -282,6 +293,7 @@ export class UpgradeDependencies extends Component {
       {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
+        with: upgrade.ref ? { ref: upgrade.ref } : undefined,
       },
       SET_GIT_IDENTITY_WORKFLOW_STEP,
       {
@@ -358,6 +370,7 @@ export class UpgradeDependencies extends Component {
 }
 
 interface Upgrade {
+  readonly ref?: string;
   readonly job: workflows.Job;
   readonly jobId: string;
   readonly patchFile: string;
@@ -425,6 +438,13 @@ export interface UpgradeDependenciesWorkflowOptions {
    * @default - defaults
    */
   readonly container?: workflows.ContainerOptions;
+
+  /**
+   * List of branches to create PR's for.
+   *
+   * @default - All release branches configured for the project.
+   */
+  readonly branches?: string[];
 }
 
 /**
