@@ -5320,7 +5320,8 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**workflows**🔹 | <code>boolean</code> | Are workflows enabled?
+**workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | All workflows.
+**workflowsEnabled**🔹 | <code>boolean</code> | Are workflows enabled?
 **mergify**?🔹 | <code>[github.Mergify](#projen-github-mergify)</code> | The `Mergify` configured on this repository.<br/>__*Optional*__
 
 ### Methods
@@ -5360,13 +5361,28 @@ __Returns__:
 
 #### addWorkflow(name)🔹 <a id="projen-github-github-addworkflow"></a>
 
-
+Adds a workflow to the project.
 
 ```ts
 addWorkflow(name: string): GithubWorkflow
 ```
 
-* **name** (<code>string</code>)  *No description*
+* **name** (<code>string</code>)  Name of the workflow.
+
+__Returns__:
+* <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code>
+
+#### tryFindWorkflow(name)🔹 <a id="projen-github-github-tryfindworkflow"></a>
+
+Finds a GitHub workflow by name.
+
+Returns `undefined` if the workflow cannot be found.
+
+```ts
+tryFindWorkflow(name: string): GithubWorkflow
+```
+
+* **name** (<code>string</code>)  The name of the GitHub workflow.
 
 __Returns__:
 * <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code>

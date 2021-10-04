@@ -46,7 +46,7 @@ export class GithubWorkflow extends Component {
 
     this.name = name;
 
-    const workflowsEnabled = github.workflows || options.force;
+    const workflowsEnabled = github.workflowsEnabled || options.force;
 
     if (workflowsEnabled) {
       this.file = new YamlFile(this.project, `.github/workflows/${name.toLocaleLowerCase()}.yml`, {
