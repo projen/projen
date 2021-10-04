@@ -291,6 +291,50 @@ test('docgen: true should just work', () => {
   expect(output['.projen/tasks.json'].tasks.docgen.steps[0].exec).toStrictEqual('jsii-docgen');
 });
 
+describe('superchain image is selected based on the node version', () => {
+  const opts = {
+    author: 'My name',
+    name: 'testproject',
+    authorAddress: 'https://foo.bar',
+    defaultReleaseBranch: 'main',
+    repositoryUrl: 'https://github.com/foo/bar.git',
+  };
+
+  test('defaults to 1-buster-slim without minNodeVersion', () => {
+    const project = new TestJsiiProject(opts);
+    const output = synthSnapshot(project);
+    expect(output['.github/workflows/build.yml']).toContain('image: jsii/superchain:1-buster-slim');
+  });
+
+  test('10.x', () => {
+    const project = new TestJsiiProject({ ...opts, minNodeVersion: '10.12.1' });
+    const output = synthSnapshot(project);
+    expect(output['.github/workflows/build.yml']).toContain('image: jsii/superchain:1-buster-slim-node10');
+  });
+
+  test('12.x', () => {
+    const project = new TestJsiiProject({ ...opts, minNodeVersion: '12.22.1' });
+    const output = synthSnapshot(project);
+    expect(output['.github/workflows/build.yml']).toContain('image: jsii/superchain:1-buster-slim-node12');
+  });
+
+  test('14.x', () => {
+    const project = new TestJsiiProject({ ...opts, minNodeVersion: '14.42.1' });
+    const output = synthSnapshot(project);
+    expect(output['.github/workflows/build.yml']).toContain('image: jsii/superchain:1-buster-slim-node14');
+  });
+
+  test('16.x', () => {
+    const project = new TestJsiiProject({ ...opts, minNodeVersion: '16.22.1' });
+    const output = synthSnapshot(project);
+    expect(output['.github/workflows/build.yml']).toContain('image: jsii/superchain:1-buster-slim-node16');
+  });
+
+  test('unsupported version', () => {
+    expect(() => new TestJsiiProject({ ...opts, minNodeVersion: '15.3.20' })).toThrow('No jsii/superchain image available for Node.js 15.x which is required when specifying minNodeVersion 15.3.20. Supported major versions 10.x, 12.x, 14.x and 16.x');
+  });
+});
+
 class TestJsiiProject extends JsiiProject {
   constructor(options: JsiiProjectOptions) {
     super({

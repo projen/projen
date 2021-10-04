@@ -1,9 +1,8 @@
+import * as semver from 'semver';
 import { Eslint } from './eslint';
 import { JsiiDocgen } from './jsii-docgen';
 import { GoPublishOptions, MavenPublishOptions, PyPiPublishOptions, NugetPublishOptions } from './release';
 import { TypeScriptProject, TypeScriptProjectOptions } from './typescript';
-
-const DEFAULT_JSII_IMAGE = 'jsii/superchain:node14';
 
 const EMAIL_REGEX = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 const URL_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
@@ -145,7 +144,7 @@ export class JsiiProject extends TypeScriptProject {
 
       ...options,
 
-      workflowContainerImage: options.workflowContainerImage ?? DEFAULT_JSII_IMAGE,
+      workflowContainerImage: options.workflowContainerImage ?? determineSuperchainImage(options.minNodeVersion),
 
       // this is needed temporarily because our release workflows use the 'gh'
       // cli and its not yet available in jsii/superchain:node14
@@ -302,4 +301,38 @@ function parseAuthorAddress(options: JsiiProjectOptions) {
     }
   }
   return { authorEmail, authorUrl };
+}
+
+/**
+ * Determines the jsii/superchain image to use based on the minimum node
+ * version.
+ *
+ * @param minNodeVersion The minimum node version of the project. If not
+ * specified, v14.17.4 is used.
+ */
+function determineSuperchainImage(minNodeVersion?: string): string {
+  const buster = 'jsii/superchain:1-buster-slim';
+
+  if (!minNodeVersion) {
+    return buster;
+  }
+
+  const major = semver.major(minNodeVersion);
+
+  switch (major) {
+    case 10:
+      return `${buster}-node10`;
+
+    case 12:
+      return `${buster}-node12`;
+
+    case 14:
+      return `${buster}-node14`;
+
+    case 16:
+      return `${buster}-node16`;
+
+    default:
+      throw new Error(`No jsii/superchain image available for Node.js ${major}.x which is required when specifying minNodeVersion ${minNodeVersion}. Supported major versions 10.x, 12.x, 14.x and 16.x`);
+  }
 }
