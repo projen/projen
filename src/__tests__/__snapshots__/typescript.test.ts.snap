@@ -40,7 +40,6 @@ junit.xml
 /dist/changelog.md
 /dist/version.txt
 !/.mergify.yml
-!/.github/workflows/upgrade.yml
 !/.github/pull_request_template.md
 !/test/
 !/tsconfig.json
@@ -52,6 +51,7 @@ junit.xml
 !/.eslintrc.json
 !/tsconfig.eslint.json
 !/.github/workflows/release.yml
+!/.github/workflows/upgrade-test.yml
 "
 `;
 
