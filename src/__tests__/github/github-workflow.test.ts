@@ -14,7 +14,7 @@ describe('github-workflow', () => {
     expect(snapshot[`.github/workflows/${workflowName}.yml`]).not.toContain('concurrency');
   });
 
-  test('Default concurrency set', () => {
+  test('concurrency set', () => {
     const concurrencyName = 'my-concurrency';
     const project = new TestProject();
 
