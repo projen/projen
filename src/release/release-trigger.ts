@@ -36,7 +36,7 @@ interface ReleaseTriggerOptions {
   readonly changelogPath?: string;
 
   /**
-   * Whether or not this is a continuous release.
+   * Continuous releases, which will release every commit.
    *
    * @default false
    */
@@ -62,12 +62,12 @@ export class ReleaseTrigger {
    *
    * Use this option if you want totally manual releases.
    *
-   * This will give you the same release task + a git publish command
-   * that will handle project-level changelog management and release
-   * tagging.
+   * This will give you a release task that, in addition to the normal
+   * release activities will trigger a `publish:git` task. This task will
+   * handle project-level changelog management, release tagging, and pushing
+   * these artifacts to origin.
    *
-   * To release you can run `yarn release` followed by `yarn publish:git`,
-   * then push the generated artifacts.
+   * Simply run `yarn release` to trigger a manual release.
    *
    * @param options release options
    */
