@@ -49,16 +49,6 @@ export interface ReleaseProjectOptions {
   readonly artifactsDirectory?: string;
 
   /**
-   * Project-level changelog file path.
-   *
-   * `publish:git` will write a project-level changelog to this file as part of
-   * git publication.
-   *
-   * @default "CHANGELOG.md"
-   */
-  readonly projectChangelogFile?: string;
-
-  /**
    * A set of workflow steps to execute in order to setup the workflow
    * container.
    */
