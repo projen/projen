@@ -5452,6 +5452,7 @@ new github.GithubWorkflow(github: GitHub, name: string, options?: GithubWorkflow
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **name** (<code>string</code>)  *No description*
 * **options** (<code>[github.GithubWorkflowOptions](#projen-github-githubworkflowoptions)</code>)  *No description*
+  * **concurrency** (<code>string</code>)  Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. __*Default*__: disabled
   * **force** (<code>boolean</code>)  Force the creation of the workflow even if `workflows` is disabled in `GitHub`. __*Default*__: false
 
 
@@ -5462,6 +5463,7 @@ new github.GithubWorkflow(github: GitHub, name: string, options?: GithubWorkflow
 Name | Type | Description 
 -----|------|-------------
 **name**🔹 | <code>string</code> | The name of the workflow.
+**concurrency**?🔹 | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.<br/>__*Default*__: disabled
 **file**?🔹 | <code>[YamlFile](#projen-yamlfile)</code> | The workflow YAML file.<br/>__*Optional*__
 
 ### Methods
@@ -11149,6 +11151,7 @@ Options for `GithubWorkflow`.
 
 Name | Type | Description 
 -----|------|-------------
+**concurrency**?🔹 | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.<br/>__*Default*__: disabled
 **force**?🔹 | <code>boolean</code> | Force the creation of the workflow even if `workflows` is disabled in `GitHub`.<br/>__*Default*__: false
 
 
