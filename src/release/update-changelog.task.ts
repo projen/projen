@@ -16,7 +16,7 @@ import { updateChangelog, UpdateChangelogOptions } from './update-changelog';
 
 const inputChangelog = process.env.CHANGELOG;
 const outputChangelog = process.env.PROJECT_CHANGELOG_FILE;
-const releaseTagFile = process.env.VERSION_FILE;
+const releaseTagFile = process.env.RELEASE_TAG_FILE;
 
 if (!releaseTagFile) {
   throw new Error('RELEASE_TAG_FILE is required');
