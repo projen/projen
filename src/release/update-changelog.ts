@@ -52,6 +52,10 @@ export async function updateChangelog(
 
   let releaseTag = (await utils.tryReadFile(releaseTagFile)).trim();
 
+  if (releaseTag.startsWith('v')) {
+    releaseTag = releaseTag.slice(1);
+  }
+
   if (!releaseTag) {
     throw new Error(
       `Unable to determine version from ${releaseTagFile}. Cannot proceed with changelog update. Did you run 'bump'?`,

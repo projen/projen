@@ -63,7 +63,7 @@ test('missing release tag throws an error', async () => {
 
 test('mismatched release tag and input changelog release tag throws an error', async () => {
   const releaseTag = 'v1.2.0';
-  const inputChangelogReleaseTag = 'v1.1.0';
+  const inputChangelogReleaseTag = '1.1.0';
 
   await expect(
     testUpdateChangelog({
