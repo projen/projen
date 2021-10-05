@@ -360,7 +360,7 @@ export class Release extends Component {
     }
 
     if (branch.tagPrefix) {
-      env.PREFIX = branch.tagPrefix;
+      env.RELEASE_TAG_PREFIX = branch.tagPrefix;
     }
 
     // the "release" task prepares a release but does not publish anything. the

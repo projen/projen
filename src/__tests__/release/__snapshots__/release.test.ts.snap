@@ -2129,8 +2129,8 @@ node_modules/
         "description": "Prepare a release from \\"firefox\\" branch",
         "env": Object {
           "MAJOR": "1",
-          "PREFIX": "firefox/",
           "RELEASE": "true",
+          "RELEASE_TAG_PREFIX": "firefox/",
         },
         "name": "release:firefox",
         "steps": Array [
@@ -2155,8 +2155,8 @@ node_modules/
         "description": "Prepare a release from \\"safari\\" branch",
         "env": Object {
           "MAJOR": "1",
-          "PREFIX": "safari/",
           "RELEASE": "true",
+          "RELEASE_TAG_PREFIX": "safari/",
         },
         "name": "release:safari",
         "steps": Array [
@@ -2929,8 +2929,8 @@ node_modules/
         "description": "Prepare a release from \\"10.x\\" branch",
         "env": Object {
           "MAJOR": "10",
-          "PREFIX": "prefix/",
           "RELEASE": "true",
+          "RELEASE_TAG_PREFIX": "prefix/",
         },
         "name": "release:10.x",
         "steps": Array [
