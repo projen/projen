@@ -85,12 +85,10 @@ export function discover(...moduleDirs: string[]) {
   const result = new Array<ProjectType>();
 
   for (const fqn of Object.keys(jsii)) {
-    const p = toProjectType(jsii, fqn);
-    if (!p) {
-      continue;
+    if (isProjectType(jsii, fqn)) {
+      const p = toProjectType(jsii, fqn);
+      result.push(p);
     }
-
-    result.push(p);
   }
 
   return result.sort((r1, r2) => r1.pjid.localeCompare(r2.pjid));
@@ -156,7 +154,7 @@ function discoverJsiiTypes(...moduleDirs: string[]) {
   return jsii;
 }
 
-export function resolveProjectType(projectFqn: string) {
+export function resolveProjectType(projectFqn: string): ProjectType {
   let [moduleName] = projectFqn.split('.');
   if (moduleName === 'projen') {
     moduleName = PROJEN_MODULE_ROOT;
@@ -175,9 +173,9 @@ export function resolveProjectType(projectFqn: string) {
   return toProjectType(jsii, projectFqn);
 }
 
-function toProjectType(jsii: JsiiTypes, fqn: string) {
+function toProjectType(jsii: JsiiTypes, fqn: string): ProjectType {
   if (!isProjectType(jsii, fqn)) {
-    return undefined;
+    throw new Error(`Fully qualified name "${fqn}" is not a valid project type.`);
   }
 
   const typeinfo = jsii[fqn];
@@ -303,6 +301,10 @@ function filterUndefined(obj: any) {
 
 function isProjectType(jsii: JsiiTypes, fqn: string) {
   const type = jsii[fqn];
+
+  if (!type) {
+    throw new Error(`Could not find project type with fqn "${fqn}" in  .jsii file.`);
+  }
 
   if (type.kind !== 'class') {
     return false;

@@ -33,6 +33,12 @@ export interface RenderProjectOptions {
    * @default false
    */
   readonly bootstrap?: boolean;
+
+  /**
+   * A list of fields to omit from the initial projenrc file.
+   * @default - none
+   */
+  readonly omitFromBootstrap?: string[];
 }
 
 /**
@@ -121,7 +127,11 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
 
   const bootstrap = opts.bootstrap ?? false;
   if (bootstrap) {
-    renders[PROJEN_NEW] = `${PROJEN_NEW}: ${JSON.stringify({ args: opts.args, fqn: opts.type.fqn, comments: opts.comments } as ProjenNew)},`;
+    const argsMap = opts.args;
+    for (const arg of (opts.omitFromBootstrap ?? [])) {
+      delete argsMap[arg];
+    }
+    renders[PROJEN_NEW] = `${PROJEN_NEW}: ${JSON.stringify({ args: argsMap, fqn: opts.type.fqn, comments: opts.comments } as ProjenNew)},`;
     optionsWithDefaults.push(PROJEN_NEW);
   }
 
