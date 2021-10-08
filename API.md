@@ -31,6 +31,7 @@ Name|Description
 [NodeProject](#projen-nodeproject)|Node.js project.
 [ObjectFile](#projen-objectfile)|Represents an Object file.
 [Project](#projen-project)|Base project.
+[Projects](#projen-projects)|Programmatic API for projen.
 [SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [SampleReadme](#projen-samplereadme)|Represents a README.md sample file. You are expected to manage this file after creation.
@@ -113,6 +114,7 @@ Name|Description
 [ConstructLibraryCdktfOptions](#projen-constructlibrarycdktfoptions)|*No description*
 [ConstructLibraryOptions](#projen-constructlibraryoptions)|*No description*
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
+[CreateProjectOptions](#projen-createprojectoptions)|*No description*
 [DevEnvironmentOptions](#projen-devenvironmentoptions)|Base options for configuring a container-based development environment.
 [DockerComposeBuild](#projen-dockercomposebuild)|Build arguments for creating a docker image.
 [DockerComposePortMappingOptions](#projen-dockercomposeportmappingoptions)|Options for port mappings.
@@ -3972,6 +3974,53 @@ tryFindObjectFile(filePath: string): ObjectFile
 
 __Returns__:
 * <code>[ObjectFile](#projen-objectfile)</code>
+
+
+
+## class Projects 🔹 <a id="projen-projects"></a>
+
+Programmatic API for projen.
+
+
+### Initializer
+
+
+
+
+```ts
+new Projects()
+```
+
+
+
+### Methods
+
+
+#### *static* createProject(options)🔹 <a id="projen-projects-createproject"></a>
+
+Creates a new project with defaults.
+
+This function creates the project type in-process (with in VM) and calls
+`.synth()` on it (if `options.synth` is not `false`).
+
+At the moment, it also generates a `.projenrc.js` file with the same code
+that was just executed. In the future, this will also be done by the project
+type, so we can easily support multiple languages of projenrc.
+
+```ts
+static createProject(options: CreateProjectOptions): void
+```
+
+* **options** (<code>[CreateProjectOptions](#projen-createprojectoptions)</code>)  *No description*
+  * **comments** (<code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code>)  Should we render commented-out default options in the projenrc file? 
+  * **dir** (<code>string</code>)  Directory that the project will be generated in. 
+  * **params** (<code>Map<string, any></code>)  Option values. 
+  * **post** (<code>boolean</code>)  Should we execute post synthesis hooks? 
+  * **projectFqn** (<code>string</code>)  Fully-qualified name of the project type (usually formatted as `module.ProjectType`). 
+  * **synth** (<code>boolean</code>)  Should we call `project.synth()` or instantiate the project (could still have side-effects) and render the .projenrc file. 
+
+
+
 
 
 
@@ -9469,6 +9518,24 @@ Name | Type | Description
 **functions**?🔹 | <code>number</code> | __*Optional*__
 **lines**?🔹 | <code>number</code> | __*Optional*__
 **statements**?🔹 | <code>number</code> | __*Optional*__
+
+
+
+## struct CreateProjectOptions 🔹 <a id="projen-createprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**comments**🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Should we render commented-out default options in the projenrc file?
+**dir**🔹 | <code>string</code> | Directory that the project will be generated in.
+**params**🔹 | <code>Map<string, any></code> | Option values.
+**post**🔹 | <code>boolean</code> | Should we execute post synthesis hooks?
+**projectFqn**🔹 | <code>string</code> | Fully-qualified name of the project type (usually formatted as `module.ProjectType`).
+**synth**🔹 | <code>boolean</code> | Should we call `project.synth()` or instantiate the project (could still have side-effects) and render the .projenrc file.
 
 
 
