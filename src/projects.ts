@@ -20,7 +20,7 @@ export interface CreateProjectOptions {
   /**
    * Option values.
    */
-  readonly params: Record<string, string>;
+  readonly params: Record<string, any>;
 
   /**
    * Should we render commented-out default options in the projenrc file?

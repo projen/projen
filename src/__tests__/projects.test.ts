@@ -53,6 +53,8 @@ describe('createProject', () => {
         name: 'test-project',
         defaultReleaseBranch: 'main',
         cdkVersion: '1.63.0',
+        transformerVersion: '1.77.15',
+        devDeps: ['cdk-appsync-project@1.1.3'],
       },
     });
 
