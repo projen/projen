@@ -46,7 +46,6 @@ describe('dependabot', () => {
       new Dependabot(project.github!, {});
       const snapshot = synthSnapshot(project);
       const dependabot = snapshot['.github/dependabot.yml'];
-      expect(dependabot).toBeDefined();
       expect(dependabot).toMatchSnapshot();
       expect(dependabot).toContain('ignore:');
       expect(dependabot).toContain('dependency-name: projen');
@@ -57,7 +56,6 @@ describe('dependabot', () => {
       new Dependabot(project.github!, { ignoreProjen: false });
       const snapshot = synthSnapshot(project);
       const dependabot = snapshot['.github/dependabot.yml'];
-      expect(dependabot).toBeDefined();
       expect(dependabot).toMatchSnapshot();
       expect(dependabot).not.toContain('ignore:');
       expect(dependabot).not.toContain('dependency-name: projen');
@@ -71,7 +69,6 @@ describe('dependabot', () => {
 
       const snapshot = synthSnapshot(project);
       const dependabot = snapshot['.github/dependabot.yml'];
-      expect(dependabot).toBeDefined();
       expect(dependabot).toMatchSnapshot();
       expect(dependabot).toContain('ignore');
       expect(dependabot).toContain('dependency-name: testlib');
@@ -87,7 +84,6 @@ describe('dependabot', () => {
 
       const snapshot = synthSnapshot(project);
       const dependabot = snapshot['.github/dependabot.yml'];
-      expect(dependabot).toBeDefined();
       expect(dependabot).toMatchSnapshot();
       expect(dependabot).toContain('ignore');
       expect(dependabot).toContain('dependency-name: testlib');
@@ -103,7 +99,6 @@ describe('dependabot', () => {
 
       const snapshot = synthSnapshot(project);
       const dependabot = snapshot['.github/dependabot.yml'];
-      expect(dependabot).toBeDefined();
       expect(dependabot).toMatchSnapshot();
       expect(dependabot).toContain('ignore');
       expect(dependabot).toContain('dependency-name: testlib');
