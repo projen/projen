@@ -156,6 +156,10 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
       },
     });
 
+    if (!options.cdkVersion) {
+      throw new Error('Required field cdkVersion is not specified.');
+    }
+
     this.cdkVersion = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
     this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;
 
