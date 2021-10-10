@@ -1727,7 +1727,7 @@ test('hello', () => {
       "inlineSourceMap": true,
       "inlineSources": true,
       "lib": Array [
-        "es2018",
+        "es2019",
       ],
       "module": "CommonJS",
       "noEmitOnError": false,
@@ -1742,7 +1742,7 @@ test('hello', () => {
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
-      "target": "ES2018",
+      "target": "ES2019",
     },
     "exclude": Array [
       "node_modules",
@@ -1762,7 +1762,7 @@ test('hello', () => {
       "inlineSourceMap": true,
       "inlineSources": true,
       "lib": Array [
-        "es2018",
+        "es2019",
       ],
       "module": "CommonJS",
       "noEmitOnError": false,
@@ -1777,7 +1777,7 @@ test('hello', () => {
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
-      "target": "ES2018",
+      "target": "ES2019",
     },
     "exclude": Array [
       "node_modules",
@@ -3180,7 +3180,7 @@ test('hello', () => {
       "inlineSourceMap": true,
       "inlineSources": true,
       "lib": Array [
-        "es2018",
+        "es2019",
       ],
       "module": "CommonJS",
       "noEmitOnError": false,
@@ -3195,7 +3195,7 @@ test('hello', () => {
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
-      "target": "ES2018",
+      "target": "ES2019",
     },
     "exclude": Array [
       "node_modules",
@@ -3215,7 +3215,7 @@ test('hello', () => {
       "inlineSourceMap": true,
       "inlineSources": true,
       "lib": Array [
-        "es2018",
+        "es2019",
       ],
       "module": "CommonJS",
       "noEmitOnError": false,
@@ -3230,7 +3230,7 @@ test('hello', () => {
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
-      "target": "ES2018",
+      "target": "ES2019",
     },
     "exclude": Array [
       "node_modules",
@@ -4564,7 +4564,7 @@ test('hello', () => {
       "inlineSourceMap": true,
       "inlineSources": true,
       "lib": Array [
-        "es2018",
+        "es2019",
       ],
       "module": "CommonJS",
       "noEmitOnError": false,
@@ -4579,7 +4579,7 @@ test('hello', () => {
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
-      "target": "ES2018",
+      "target": "ES2019",
     },
     "exclude": Array [
       "node_modules",
@@ -4599,7 +4599,7 @@ test('hello', () => {
       "inlineSourceMap": true,
       "inlineSources": true,
       "lib": Array [
-        "es2018",
+        "es2019",
       ],
       "module": "CommonJS",
       "noEmitOnError": false,
@@ -4614,7 +4614,7 @@ test('hello', () => {
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
-      "target": "ES2018",
+      "target": "ES2019",
     },
     "exclude": Array [
       "node_modules",
@@ -4634,7 +4634,7 @@ test('hello', () => {
       "inlineSourceMap": true,
       "inlineSources": true,
       "lib": Array [
-        "es2018",
+        "es2019",
       ],
       "module": "CommonJS",
       "noEmitOnError": false,
@@ -4651,7 +4651,7 @@ test('hello', () => {
       "strictNullChecks": true,
       "strictPropertyInitialization": true,
       "stripInternal": true,
-      "target": "ES2018",
+      "target": "ES2019",
     },
     "exclude": Array [],
     "include": Array [

@@ -112,6 +112,10 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.addDevDeps(this.formatModuleSpec('aws-cdk'));
     this.addCdkDependency('@aws-cdk/assert');
 
+    if (!this.cdkVersion) {
+      throw new Error('Required field cdkVersion is not specified.');
+    }
+
     const cdkMajorVersion = semver.minVersion(this.cdkVersion)?.major ?? 1;
     if (cdkMajorVersion < 2) {
       this.addCdkDependency('@aws-cdk/core');
