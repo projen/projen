@@ -28,7 +28,7 @@ export interface UpdateChangelogOptions {
   /**
    * Release version.
    */
-  releaseTagFile: string;
+  versionFile: string;
 }
 
 /**
@@ -47,27 +47,22 @@ export async function updateChangelog(
 ) {
   const inputChangelog = join(cwd, options.inputChangelog);
   const outputChangelog = join(cwd, options.outputChangelog);
-  const releaseTagFile = join(cwd, options.releaseTagFile);
+  const versionFile = join(cwd, options.versionFile);
 
+  let version = (await utils.tryReadFile(versionFile)).trim();
 
-  let releaseTag = (await utils.tryReadFile(releaseTagFile)).trim();
-
-  if (releaseTag.startsWith('v')) {
-    releaseTag = releaseTag.slice(1);
-  }
-
-  if (!releaseTag) {
+  if (!version) {
     throw new Error(
-      `Unable to determine version from ${releaseTagFile}. Cannot proceed with changelog update. Did you run 'bump'?`,
+      `Unable to determine version from ${versionFile}. Cannot proceed with changelog update. Did you run 'bump'?`,
     );
   }
 
   const inputChangelogContent = await readFile(inputChangelog, 'utf-8');
-  const changelogVersionSearchPattern = `[${releaseTag}]`;
+  const changelogVersionSearchPattern = `[${version}]`;
 
   if (!inputChangelogContent.includes(changelogVersionSearchPattern)) {
     throw new Error(
-      `Supplied version ${releaseTag} was not found in input changelog. You may want to check it's content.`,
+      `Supplied version ${version} was not found in input changelog. You may want to check it's content.`,
     );
   }
 
@@ -75,7 +70,7 @@ export async function updateChangelog(
 
   if (outputChangelogContent.indexOf(changelogVersionSearchPattern) > -1) {
     logging.info(
-      `Changelog already contains an entry for ${releaseTag}. Skipping changelog update.`,
+      `Changelog already contains an entry for ${version}. Skipping changelog update.`,
     );
     return;
   }
@@ -87,5 +82,5 @@ export async function updateChangelog(
     newChangelog,
   );
 
-  utils.exec(`git add ${outputChangelog} && git commit -m "chore(release): ${releaseTag}"`, { cwd });
+  utils.exec(`git add ${outputChangelog} && git commit -m "chore(release): ${version}"`, { cwd });
 }
