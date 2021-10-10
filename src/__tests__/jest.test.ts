@@ -11,7 +11,7 @@ const compilerOptionDefaults = {
   experimentalDecorators: true,
   inlineSourceMap: true,
   inlineSources: true,
-  lib: ['es2018'],
+  lib: ['es2019'],
   module: 'CommonJS',
   noEmitOnError: false,
   noFallthroughCasesInSwitch: true,
@@ -25,7 +25,7 @@ const compilerOptionDefaults = {
   strictNullChecks: true,
   strictPropertyInitialization: true,
   stripInternal: true,
-  target: 'ES2018',
+  target: 'ES2019',
 };
 
 test('Node Project Jest Defaults Configured', () => {
