@@ -153,7 +153,6 @@ test('projenrc.ts', () => {
   });
 
   const snapshot = synthSnapshot(prj);
-  expect(snapshot['.projenrc.ts']).toMatchSnapshot();
   expect(snapshot['.projen/tasks.json'].tasks.default).toStrictEqual({
     name: 'default',
     steps: [
