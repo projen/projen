@@ -43,13 +43,12 @@ junit.xml
 !/.github/pull_request_template.md
 !/test/
 !/tsconfig.json
+!/tsconfig.dev.json
 !/lib/
 /lib/**/*.js
 /lib/**/*.d.ts
 /dist/
-!/tsconfig.jest.json
 !/.eslintrc.json
-!/tsconfig.eslint.json
 !/.github/workflows/release.yml
 !/.github/workflows/upgrade-test.yml
 "
@@ -65,6 +64,7 @@ junit.xml
 /dist/version.txt
 /.mergify.yml
 /test/
+/tsconfig.dev.json
 !/lib/
 !/lib/**/*.js
 !/lib/**/*.d.ts
@@ -75,8 +75,6 @@ dist
 /.idea/
 /.projenrc.js
 tsconfig.tsbuildinfo
-/tsconfig.jest.json
 /.eslintrc.json
-/tsconfig.eslint.json
 "
 `;

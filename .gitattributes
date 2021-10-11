@@ -23,5 +23,5 @@
 /LICENSE                           	linguist-generated
 /package.json                      	linguist-generated
 /projen.bash                       	linguist-generated
-/tsconfig.eslint.json              	linguist-generated
+/tsconfig.dev.json                 	linguist-generated
 /yarn.lock                         	linguist-generated

@@ -214,6 +214,14 @@ test('projenrc-json creates external project type', () => {
   });
 });
 
+test('projenrc-ts creates typescript projenrc', () => {
+  withProjectDir(projectdir => {
+    execProjenCLI(projectdir, ['new', 'typescript', '--projenrc-ts', '--no-synth']);
+    const projenrc = directorySnapshot(projectdir)['.projenrc.ts'];
+    expect(projenrc).toMatchSnapshot();
+  });
+});
+
 describe('git', () => {
   test('--git (default) will initialize a git repo and create a commit', () => {
     withProjectDir(projectdir => {

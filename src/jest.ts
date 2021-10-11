@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as semver from 'semver';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
-import { TypescriptConfig, TypescriptConfigOptions } from './typescript-config';
+import { TypescriptConfig } from './typescript-config';
 
 const DEFAULT_TEST_REPORTS_DIR = 'test-reports';
 
@@ -516,9 +516,11 @@ export interface JestOptions {
    */
   readonly configFilePath?: string;
 
+  /**
+   * Jest configuration.
+   * @default - default jest configuration
+   */
   readonly jestConfig?: JestConfigOptions;
-
-  readonly typescriptConfig?: TypescriptConfigOptions;
 }
 
 export interface CoverageThreshold {
@@ -560,11 +562,15 @@ export class Jest {
   private readonly file?: JsonFile;
   private readonly reporters: JestReporter[];
   private readonly jestConfig?: JestConfigOptions;
-  private readonly typescriptConfig?: TypescriptConfigOptions;
   private _snapshotResolver: string | undefined;
 
   constructor(project: NodeProject, options: JestOptions = {}) {
     this.project = project;
+
+    // hard deprecation
+    if ((options as any).typescriptConfig) {
+      throw new Error('"jestOptions.typescriptConfig" is deprecated. Use "typescriptProject.tsconfigDev" instead');
+    }
 
     // Jest snapshot files are generated files!
     project.root.annotateGenerated('*.snap');
@@ -573,7 +579,6 @@ export class Jest {
     project.addDevDeps(jestDep);
 
     this.jestConfig = options.jestConfig;
-    this.typescriptConfig = options.typescriptConfig;
 
     this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ?? options.ignorePatterns ?? ['/node_modules/'];
     this.watchIgnorePatterns = this.jestConfig?.watchPathIgnorePatterns ?? ['/node_modules/'];
@@ -684,27 +689,11 @@ export class Jest {
   }
 
   /**
-   * Merges passed in typescript config options with jest configured typescript options from .projenrc
-   * Add Jest config settings for typescript options
-   * @param options TypescriptConfigOptions
+   * Configures jest for TypeScript.
+   *
+   * @param tsconfig The typescript config file.
    */
-  public generateTypescriptConfig(options: TypescriptConfigOptions) {
-    const tsconfig = new TypescriptConfig(this.project, {
-      fileName: options.fileName ?? 'tsconfig.jest.json',
-      include: [
-        ...options.include ? options.include : [],
-        ...this.typescriptConfig?.include ? this.typescriptConfig?.include : [],
-      ],
-      exclude: [
-        ...options.exclude ? options.exclude : [],
-        ...this.typescriptConfig?.exclude ? this.typescriptConfig?.exclude : [],
-      ],
-      compilerOptions: {
-        ...options.compilerOptions,
-        ...this.typescriptConfig?.compilerOptions,
-      },
-    });
-
+  public addTypeScriptSupport(tsconfig: TypescriptConfig) {
     this.config.preset = 'ts-jest';
 
     // only process .ts files
@@ -725,8 +714,6 @@ export class Jest {
       '@types/jest',
       'ts-jest',
     );
-
-    return tsconfig;
   }
 
   private configureTestCommand() {
