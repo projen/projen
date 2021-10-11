@@ -4,7 +4,7 @@ import { mkdtemp, synthSnapshot } from './util';
 
 describe('mergeTsconfigOptions', () => {
   test('merging includes', () => {
-    const mergedTsconfigOptions = mergeTsconfigOptions([
+    const mergedTsconfigOptions = mergeTsconfigOptions(
       {
         include: ['typescript.test.ts'],
         compilerOptions: {},
@@ -13,7 +13,7 @@ describe('mergeTsconfigOptions', () => {
         include: ['abc'],
         compilerOptions: {},
       },
-    ]);
+    );
 
     expect(mergedTsconfigOptions).toEqual(expect.objectContaining({
       include: ['typescript.test.ts', 'abc'],
@@ -21,7 +21,7 @@ describe('mergeTsconfigOptions', () => {
   });
 
   test('merging excludes', () => {
-    const mergedTsconfigOptions = mergeTsconfigOptions([
+    const mergedTsconfigOptions = mergeTsconfigOptions(
       {
         exclude: ['typescript.test.ts'],
         compilerOptions: {},
@@ -30,7 +30,7 @@ describe('mergeTsconfigOptions', () => {
         exclude: ['abc'],
         compilerOptions: {},
       },
-    ]);
+    );
 
     expect(mergedTsconfigOptions).toEqual(expect.objectContaining({
       exclude: ['typescript.test.ts', 'abc'],
@@ -38,7 +38,7 @@ describe('mergeTsconfigOptions', () => {
   });
 
   test('merging compilerOptions', () => {
-    const mergedTsconfigOptions = mergeTsconfigOptions([
+    const mergedTsconfigOptions = mergeTsconfigOptions(
       {
         compilerOptions: {
           esModuleInterop: false,
@@ -49,7 +49,7 @@ describe('mergeTsconfigOptions', () => {
           esModuleInterop: true,
         },
       },
-    ]);
+    );
 
     expect(mergedTsconfigOptions).toEqual(expect.objectContaining({
       compilerOptions: {
@@ -85,7 +85,7 @@ test('tsconfig prop is propagated to eslint and jest tsconfigs', () => {
     }),
   }));
 
-  expect(out['tsconfig.eslint.json']).toEqual(expect.objectContaining({
+  expect(out['tsconfig.dev.json']).toEqual(expect.objectContaining({
     include: expect.arrayContaining([
       PROJEN_RC,
       `${prj.srcdir}/**/*.ts`,
@@ -97,7 +97,7 @@ test('tsconfig prop is propagated to eslint and jest tsconfigs', () => {
     }),
   }));
 
-  expect(out['tsconfig.jest.json']).toEqual(expect.objectContaining({
+  expect(out['tsconfig.dev.json']).toEqual(expect.objectContaining({
     include: expect.arrayContaining([
       PROJEN_RC,
       `${prj.srcdir}/**/*.ts`,
@@ -126,4 +126,38 @@ test('sources and compiled output can be collocated', () => {
   expect(snapshot['.gitignore']).toMatchSnapshot();
   expect(snapshot['.npmignore']).toMatchSnapshot();
 
+});
+
+test('tsconfigDevFile can be used to control the name of the tsconfig dev file', () => {
+  const prj = new TypeScriptProject({
+    name: 'test',
+    outdir: mkdtemp(),
+    defaultReleaseBranch: 'test',
+    tsconfigDevFile: 'tsconfig.foo.json',
+    libdir: 'lib',
+    srcdir: 'lib',
+  });
+
+  expect(prj.tsconfigDev.fileName).toBe('tsconfig.foo.json');
+
+  const snapshot = synthSnapshot(prj);
+  expect(snapshot['tsconfig.foo.json']).not.toBeUndefined();
+});
+
+test('projenrc.ts', () => {
+  const prj = new TypeScriptProject({
+    name: 'test',
+    outdir: mkdtemp(),
+    defaultReleaseBranch: 'main',
+    projenrcTs: true,
+  });
+
+  const snapshot = synthSnapshot(prj);
+  expect(snapshot['.projenrc.ts']).toMatchSnapshot();
+  expect(snapshot['.projen/tasks.json'].tasks.default).toStrictEqual({
+    name: 'default',
+    steps: [
+      { exec: 'ts-node --project tsconfig.dev.json .projenrc.ts' },
+    ],
+  });
 });

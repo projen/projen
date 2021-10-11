@@ -8,6 +8,7 @@ logging.disable();
 const compilerOptionDefaults = {
   alwaysStrict: true,
   declaration: true,
+  esModuleInterop: true,
   experimentalDecorators: true,
   inlineSourceMap: true,
   inlineSources: true,
@@ -128,7 +129,7 @@ test('Typescript Project Jest Defaults Configured', () => {
   });
 
   const snapshot = synthSnapshot(project);
-  const jestTypescriptConfig = snapshot['tsconfig.jest.json'];
+  const jestTypescriptConfig = snapshot['tsconfig.dev.json'];
 
   expect(jestTypescriptConfig.compilerOptions).toBeTruthy();
   expect(jestTypescriptConfig.compilerOptions).toStrictEqual(compilerOptionDefaults);
@@ -139,7 +140,7 @@ test('Typescript Project Jest Defaults Configured', () => {
 
 test('Typescript Project Jest With Compiler Options', () => {
   const compilerOptions = {
-    esModuleInterop: true,
+    esModuleInterop: false,
     noImplicitAny: false,
   };
 
@@ -150,10 +151,8 @@ test('Typescript Project Jest With Compiler Options', () => {
     mergify: false,
     projenDevDependency: false,
     jest: true,
-    jestOptions: {
-      typescriptConfig: {
-        compilerOptions,
-      },
+    tsconfigDev: {
+      compilerOptions,
     },
     logging: {
       level: LogLevel.OFF,
@@ -166,10 +165,26 @@ test('Typescript Project Jest With Compiler Options', () => {
   };
 
   const snapshot = synthSnapshot(project);
-  const jestTypescriptConfig = snapshot['tsconfig.jest.json'];
+  const jestTypescriptConfig = snapshot['tsconfig.dev.json'];
 
   expect(jestTypescriptConfig.compilerOptions).toBeTruthy();
   expect(jestTypescriptConfig.compilerOptions).toStrictEqual(mergedCompilerOptions);
+});
+
+test('jestOptions.typeScriptCompilerOptions is deprecated', () => {
+  expect(() => new TypeScriptProject({
+    outdir: mkdtemp(),
+    name: 'test-typescript-project',
+    defaultReleaseBranch: 'master',
+    mergify: false,
+    projenDevDependency: false,
+    jestOptions: {
+      typescriptConfig: {
+        esModuleInterop: false,
+        noImplicitAny: false,
+      },
+    } as any,
+  })).toThrow('"jestOptions.typescriptConfig" is deprecated. Use "typescriptProject.tsconfigDev" instead');
 });
 
 test('testdir is under src', () => {
@@ -185,7 +200,6 @@ test('testdir is under src', () => {
 
   // THEN
   const files = synthSnapshot(project);
-  expect(files['tsconfig.jest.json']).toBeUndefined(); // no special tsconfig for jest in this case
   expect(files['package.json'].jest.testMatch).toStrictEqual(['**/lib/boom/bam/__tests/**/?(*.)+(spec|test).js?(x)']);
 });
 
