@@ -1,4 +1,3 @@
-import { version } from 'yargs';
 import { Component } from '../component';
 import { kebabCaseKeys } from '../util';
 import { YamlFile } from '../yaml';
@@ -326,7 +325,7 @@ export class Dependabot extends Component {
   public addIgnore(dependencyName: string, ...versions: string[]) {
     this.ignore.push({
       'dependency-name': dependencyName,
-      'versions': () => versions.length > 0 ? version : undefined,
+      'versions': () => versions.length > 0 ? versions : undefined,
     });
   }
 }

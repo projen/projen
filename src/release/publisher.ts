@@ -107,6 +107,7 @@ export class Publisher extends Component {
    */
   public publishToGit(options: GitPublishOptions) {
     const releaseTagFile = options.releaseTagFile;
+    const versionFile = options.versionFile;
     const changelog = options.changelogFile;
     const projectChangelogFile = options.projectChangelogFile;
     const gitBranch = options.gitBranch ?? 'main';
@@ -119,6 +120,7 @@ export class Publisher extends Component {
         CHANGELOG: changelog,
         RELEASE_TAG_FILE: releaseTagFile,
         PROJECT_CHANGELOG_FILE: projectChangelogFile ?? '',
+        VERSION_FILE: versionFile,
       },
     });
     if (projectChangelogFile) {

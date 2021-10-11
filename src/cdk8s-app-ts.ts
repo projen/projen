@@ -129,6 +129,10 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
       sampleCode: false,
     });
 
+    if (!options.cdk8sVersion) {
+      throw new Error('Required field cdk8sVersion is not specified.');
+    }
+
     // encode a hidden assumption further down the chain
     if (this.srcdir !== 'src') {
       throw new Error('sources are expected under the "src" directory');
