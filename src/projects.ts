@@ -18,24 +18,32 @@ export interface CreateProjectOptions {
   readonly projectFqn: string;
 
   /**
-   * Option values.
+   * Option values. Only JSON-like values can be passed in (strings,
+   * booleans, numbers, enums, arrays, and objects that are not
+   * derived from classes).
    */
-  readonly params: Record<string, any>;
+  readonly projectOptions: Record<string, any>;
 
   /**
    * Should we render commented-out default options in the projenrc file?
    * Does not apply to projenrc.json files.
+   *
+   * @default NewProjectOptionHints.FEATURED
    */
-  readonly comments: NewProjectOptionHints;
+  readonly optionHints?: NewProjectOptionHints;
 
   /**
    * Should we call `project.synth()` or instantiate the project (could still
    * have side-effects) and render the .projenrc file.
+   *
+   * @default true
    */
   readonly synth: boolean;
 
   /**
    * Should we execute post synthesis hooks? (usually package manager install).
+   *
+   * @default true
    */
   readonly post: boolean;
 }
@@ -57,6 +65,8 @@ export class Projects {
   public static createProject(options: CreateProjectOptions) {
     createProject(options);
   }
+
+  private constructor() {}
 }
 
 function createProject(opts: CreateProjectOptions) {
@@ -76,18 +86,18 @@ function createProject(opts: CreateProjectOptions) {
     }
   }
 
-  if (opts.params.outdir) {
+  if (opts.projectOptions.outdir) {
     throw new Error('Output directory of the project cannot be specified, use \'dir\' option instead.');
   }
-  opts.params.outdir = opts.dir;
+  opts.projectOptions.outdir = opts.dir;
 
   // pass the FQN of the project type to the project initializer so it can
   // generate the projenrc file.
   const { renderedOptions } = renderJavaScriptOptions({
     bootstrap: true,
-    comments: opts.comments,
+    comments: opts.optionHints ?? NewProjectOptionHints.FEATURED,
     type: projectType,
-    args: opts.params,
+    args: opts.projectOptions,
     omitFromBootstrap: ['outdir'],
   });
 
@@ -97,9 +107,11 @@ function createProject(opts: CreateProjectOptions) {
   const module = require(mod);
   const ctx = vm.createContext(module);
 
-  process.env.PROJEN_DISABLE_POST = (!opts.post).toString();
+  const synth = opts.synth ?? true;
+  const postSynth = opts.post ?? true;
+  process.env.PROJEN_DISABLE_POST = (!postSynth).toString();
   vm.runInContext([
     newProjectCode,
-    opts.synth ? 'project.synth();' : '',
+    synth ? 'project.synth();' : '',
   ].join('\n'), ctx);
 }

@@ -232,8 +232,8 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
   Projects.createProject({
     dir: baseDir,
     projectFqn: type.fqn,
-    params: props,
-    comments: args.comments ? NewProjectOptionHints.FEATURED : NewProjectOptionHints.NONE,
+    projectOptions: props,
+    optionHints: args.comments ? NewProjectOptionHints.FEATURED : NewProjectOptionHints.NONE,
     synth: args.synth,
     post: args.post,
   });

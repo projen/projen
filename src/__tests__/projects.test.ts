@@ -18,12 +18,12 @@ describe('createProject', () => {
 
     // WHEN
     Projects.createProject({
-      comments: NewProjectOptionHints.FEATURED,
+      optionHints: NewProjectOptionHints.FEATURED,
       dir: dir,
       post: true,
       synth: true,
       projectFqn: 'projen.TypeScriptProject',
-      params: {
+      projectOptions: {
         name: 'test-project',
         defaultReleaseBranch: 'main',
       },
@@ -44,12 +44,12 @@ describe('createProject', () => {
 
     // WHEN
     Projects.createProject({
-      comments: NewProjectOptionHints.FEATURED,
+      optionHints: NewProjectOptionHints.FEATURED,
       dir: dir,
       post: true,
       synth: true,
       projectFqn: 'cdk-appsync-project.AwsCdkAppSyncApp',
-      params: {
+      projectOptions: {
         name: 'test-project',
         defaultReleaseBranch: 'main',
         cdkVersion: '1.63.0',

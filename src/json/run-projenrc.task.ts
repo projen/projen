@@ -25,8 +25,8 @@ if (!type) {
 Projects.createProject({
   dir: '.',
   projectFqn: type,
-  params: json,
-  comments: NewProjectOptionHints.NONE,
+  projectOptions: json,
+  optionHints: NewProjectOptionHints.NONE,
   synth: true,
   post: false,
 });
