@@ -137,7 +137,7 @@ test('can choose from one of multiple external project types', () => {
   withProjectDir(projectdir => {
 
     // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', '@taimos/projen@0.0.121', 'taimos-ts-lib', '--no-post', MIN_NODE_VERSION_OPTION]);
+    execProjenCLI(projectdir, ['new', '--from', '@taimos/projen@0.0.126', 'taimos-ts-lib', '--no-post', MIN_NODE_VERSION_OPTION]);
 
     // patch the projen version in package.json to match the current version
     // otherwise, every bump would need to update these snapshots.
@@ -153,7 +153,7 @@ test('can choose from one of multiple external project types', () => {
       ],
     });
 
-    expect(actual['.projenrc.js']).toContain('@taimos/projen@0.0.121');
+    expect(actual['.projenrc.js']).toContain('@taimos/projen@0.0.126');
   });
 });
 
