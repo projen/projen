@@ -76,6 +76,12 @@ const project = new JsiiProject({
 
   autoApproveUpgrades: true,
   autoApproveOptions: { allowedUsernames: ['cdklabs-automation'], secret: 'GITHUB_TOKEN' },
+
+  depsUpgradeOptions: {
+    workflowOptions: {
+      secret: 'PROJEN_UPGRADE_TOKEN',
+    },
+  },
 });
 
 // this script is what we use as the projen command in this project
