@@ -1,9 +1,9 @@
-import { join } from 'path';
 import { Component } from '../component';
 import { GitHub, TaskWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { GitHubProject } from '../project';
 import { Task } from '../tasks';
+import { posixPathJoin } from '../util';
 import { Version } from '../version';
 import { Publisher } from './publisher';
 import { ReleaseTrigger } from './release-trigger';
@@ -256,9 +256,9 @@ export class Release extends Component {
     const githubRelease = options.githubRelease ?? true;
     if (githubRelease) {
       this.publisher.publishToGitHubReleases({
-        changelogFile: join(this.artifactsDirectory, this.version.changelogFileName),
-        versionFile: join(this.artifactsDirectory, this.version.versionFileName),
-        releaseTagFile: join(this.artifactsDirectory, this.version.releaseTagFileName),
+        changelogFile: posixPathJoin(this.artifactsDirectory, this.version.changelogFileName),
+        versionFile: posixPathJoin(this.artifactsDirectory, this.version.versionFileName),
+        releaseTagFile: posixPathJoin(this.artifactsDirectory, this.version.releaseTagFileName),
       });
     }
 
@@ -382,9 +382,9 @@ export class Release extends Component {
 
     if (this.releaseTrigger.isManual) {
       const publishTask = this.publisher.publishToGit({
-        changelogFile: join(this.artifactsDirectory, this.version.changelogFileName),
-        versionFile: join(this.artifactsDirectory, this.version.versionFileName),
-        releaseTagFile: join(this.artifactsDirectory, this.version.releaseTagFileName),
+        changelogFile: posixPathJoin(this.artifactsDirectory, this.version.changelogFileName),
+        versionFile: posixPathJoin(this.artifactsDirectory, this.version.versionFileName),
+        releaseTagFile: posixPathJoin(this.artifactsDirectory, this.version.releaseTagFileName),
         projectChangelogFile: this.releaseTrigger.changelogPath,
         gitBranch: branch.name,
       });
