@@ -289,7 +289,3 @@ export async function tryReadFile(file: string) {
 
   return fs.readFile(file, 'utf8');
 }
-
-export function posixPathJoin(...paths: string[]) {
-  return paths.join('/');
-}
