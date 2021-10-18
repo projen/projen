@@ -212,8 +212,9 @@ function renderCommentedOptionsInOrder(renders: Record<string, string>, options:
  * object in the form { js, import }.
  */
 function renderArgAsJavaScript(arg: any, option: inventory.ProjectOption) {
+  const simpleType = inventory.getSimpleTypeName(option.fullType);
   // devDeps added as an exception to handle bootstrapping projects from external modules
-  if (['string', 'number', 'boolean'].includes(option.type) || option.name === 'devDeps') {
+  if (['string', 'number', 'boolean'].includes(simpleType) || option.name === 'devDeps') {
     return { js: JSON.stringify(arg) };
   } else if (option.kind === 'enum') {
     if (!option.fqn) {

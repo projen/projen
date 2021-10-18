@@ -13,7 +13,8 @@ export interface ProjectOption {
   name: string;
   fqn?: string;
   switch: string;
-  type: string;
+  /** Full JSII type, e.g. { primitive: "string" } or { collection: { elementtype: { primitive: 'string' }, kind: 'map' } } */
+  fullType: any;
   kind?: string;
   parent: string;
   docs?: string;
@@ -240,15 +241,20 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         throw new Error(`duplicate option "${prop.name}" in ${fqn} (already declared in ${options[prop.name].parent})`);
       }
 
-      let typeName;
+      // let typeName;
+      // let jsiiKind;
+      // if (prop.type?.primitive) {
+      //   typeName = prop.type?.primitive; // e.g. 'string', 'boolean', 'number'
+      // } else if (prop.type?.fqn) {
+      //   typeName = prop.type?.fqn.split('.').pop(); // projen.NodeProjectOptions -> NodeProjectOptions
+      //   jsiiKind = jsii[prop.type?.fqn].kind; // e.g. 'class', 'interface', 'enum'
+      // } else { // any other types such as collection types
+      //   typeName = 'unknown';
+      // }
+
       let jsiiKind;
-      if (prop.type?.primitive) {
-        typeName = prop.type?.primitive; // e.g. 'string', 'boolean', 'number'
-      } else if (prop.type?.fqn) {
-        typeName = prop.type?.fqn.split('.').pop(); // projen.NodeProjectOptions -> NodeProjectOptions
+      if (prop.type?.fqn) {
         jsiiKind = jsii[prop.type?.fqn].kind; // e.g. 'class', 'interface', 'enum'
-      } else { // any other types such as collection types
-        typeName = 'unknown';
       }
 
       const isOptional = optional || prop.optional;
@@ -261,7 +267,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
       // if this is a mandatory option and we have a default value, it has to be JSON-parsable to the correct type
       if (!isOptional && defaultValue) {
         if (!prop.type?.primitive) {
-          throw new Error(`required option "${prop.name}" with a @default must use primitive types (string, number or boolean). type found is: ${typeName}`);
+          throw new Error(`required option "${prop.name}" with a @default must use primitive types (string, number or boolean). type found is: ${JSON.stringify(prop.type)}`);
         }
 
         checkDefaultIsParsable(prop.name, defaultValue, prop.type?.primitive);
@@ -273,7 +279,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         name: prop.name,
         fqn: prop.type?.fqn,
         docs: prop.docs.summary,
-        type: typeName,
+        fullType: prop.type,
         kind: jsiiKind,
         switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
         default: defaultValue,
@@ -286,6 +292,16 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
     for (const ifc of struct.interfaces ?? []) {
       addOptions(ifc);
     }
+  }
+}
+
+export function getSimpleTypeName(type: { primitive?: string; fqn?: string }): string {
+  if (type?.primitive) {
+    return type.primitive; // e.g. 'string', 'boolean', 'number'
+  } else if (type?.fqn) {
+    return type.fqn.split('.').pop()!; // projen.NodeProjectOptions -> NodeProjectOptions
+  } else { // any other types such as collection types
+    return 'unknown';
   }
 }
 

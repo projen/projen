@@ -26,7 +26,8 @@ class Command implements yargs.CommandModule {
           cargs.showHelpOnFail(false);
 
           for (const option of type.options ?? []) {
-            if (option.type !== 'string' && option.type !== 'number' && option.type !== 'boolean' && option.kind !== 'enum') {
+            const simpleType = inventory.getSimpleTypeName(option.fullType);
+            if (simpleType !== 'string' && simpleType !== 'number' && simpleType !== 'boolean' && option.kind !== 'enum') {
               continue; // we only support primitive and enum fields as command line options
             }
 
@@ -46,7 +47,7 @@ class Command implements yargs.CommandModule {
               }
             }
 
-            const argType = option.kind === 'enum' ? 'string' : option.type;
+            const argType = option.kind === 'enum' ? 'string' : simpleType;
 
             cargs.option(option.switch, {
               group: required ? 'Required:' : 'Optional:',
@@ -186,15 +187,16 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
   }
 
   for (const option of type.options ?? []) {
-    if (option.type !== 'string' && option.type !== 'number' && option.type !== 'boolean') {
+    const simpleType = inventory.getSimpleTypeName(option.fullType);
+    if (simpleType !== 'string' && simpleType !== 'number' && simpleType !== 'boolean') {
       continue; // we don't support non-primitive fields as command line options
     }
 
     if (args[option.name] !== undefined) {
-      if (option.type === 'number') {
+      if (simpleType === 'number') {
         args[option.name] = parseInt(args[option.name]);
         args[option.switch] = args[option.name];
-      } else if (option.type === 'boolean') {
+      } else if (simpleType === 'boolean') {
         const raw = args[option.name];
         const safe = typeof raw === 'string' ? isTruthy(raw) : raw;
         args[option.name] = safe;

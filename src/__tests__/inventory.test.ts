@@ -25,7 +25,7 @@ test('renderable default values simulation', () => {
     path: ['myOption'],
     name: 'myOption',
     switch: 'my-option',
-    type: 'boolean',
+    fullType: { primitive: 'boolean' },
     parent: 'MyModule',
   };
   expect(() => throwIfNotRenderable(baseOption)).not.toThrowError();
@@ -35,9 +35,9 @@ test('renderable default values simulation', () => {
   expect(() => throwIfNotRenderable({ ...baseOption, default: '2048' })).not.toThrowError();
   expect(() => throwIfNotRenderable({ ...baseOption, default: 'true' })).not.toThrowError();
 
-  expect(() => throwIfNotRenderable({ ...baseOption, default: 'MyEnum.OptionA', type: 'MyEnum' })).not.toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'MyEnum.OptionA', fullType: { fqn: 'projen.MyEnum' } })).not.toThrowError();
   expect(() => throwIfNotRenderable({ ...baseOption, default: 'MyEnum.OptionA' })).toThrowError();
-  expect(() => throwIfNotRenderable({ ...baseOption, default: 'MyEnum.OptionA', type: 'BaseEnum' })).toThrowError();
+  expect(() => throwIfNotRenderable({ ...baseOption, default: 'MyEnum.OptionA', fullType: { fqn: 'projen.BaseEnum' } })).toThrowError();
 
   expect(() => throwIfNotRenderable({ ...baseOption, default: '- current year' })).not.toThrowError();
   expect(() => throwIfNotRenderable({ ...baseOption, default: 'current year' })).toThrowError();
@@ -54,10 +54,11 @@ describe('all default values in docstrings are renderable JS values', () => {
 });
 
 function throwIfNotRenderable(option: inventory.ProjectOption) {
+  const simpleType = inventory.getSimpleTypeName(option.fullType);
   return (option.default === undefined) ||
     (option.default === 'undefined') ||
     (option.default.startsWith('$')) ||
     (option.default.startsWith('-')) ||
-    (option.type && option.default.startsWith(option.type)) ||
+    (option.default.startsWith(simpleType)) ||
     JSON.parse(option.default);
 };

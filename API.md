@@ -3993,17 +3993,6 @@ __Returns__:
 Programmatic API for projen.
 
 
-### Initializer
-
-
-
-
-```ts
-new Projects()
-```
-
-
-
 ### Methods
 
 
@@ -4023,12 +4012,12 @@ static createProject(options: CreateProjectOptions): void
 ```
 
 * **options** (<code>[CreateProjectOptions](#projen-createprojectoptions)</code>)  *No description*
-  * **comments** (<code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code>)  Should we render commented-out default options in the projenrc file? 
   * **dir** (<code>string</code>)  Directory that the project will be generated in. 
-  * **params** (<code>Map<string, any></code>)  Option values. 
   * **post** (<code>boolean</code>)  Should we execute post synthesis hooks? 
   * **projectFqn** (<code>string</code>)  Fully-qualified name of the project type (usually formatted as `module.ProjectType`). 
+  * **projectOptions** (<code>Map<string, any></code>)  Option values. 
   * **synth** (<code>boolean</code>)  Should we call `project.synth()` or instantiate the project (could still have side-effects) and render the .projenrc file. 
+  * **optionHints** (<code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code>)  Should we render commented-out default options in the projenrc file? __*Default*__: NewProjectOptionHints.FEATURED
 
 
 
@@ -9567,12 +9556,12 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**comments**🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Should we render commented-out default options in the projenrc file?
 **dir**🔹 | <code>string</code> | Directory that the project will be generated in.
-**params**🔹 | <code>Map<string, any></code> | Option values.
 **post**🔹 | <code>boolean</code> | Should we execute post synthesis hooks?
 **projectFqn**🔹 | <code>string</code> | Fully-qualified name of the project type (usually formatted as `module.ProjectType`).
+**projectOptions**🔹 | <code>Map<string, any></code> | Option values.
 **synth**🔹 | <code>boolean</code> | Should we call `project.synth()` or instantiate the project (could still have side-effects) and render the .projenrc file.
+**optionHints**?🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Should we render commented-out default options in the projenrc file?<br/>__*Default*__: NewProjectOptionHints.FEATURED
 
 
 
