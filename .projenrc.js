@@ -79,7 +79,7 @@ const project = new JsiiProject({
 
   depsUpgradeOptions: {
     workflowOptions: {
-      secret: 'PROJEN_UPGRADE_TOKEN',
+      secret: 'PROJEN_GITHUB_TOKEN',
     },
   },
 });
