@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`createProject creates a project and passes in JSON-like project options 1`] = `
-"const { EslintOptions, TypeScriptProject } = require('projen');
+"const { TypeScriptProject } = require('projen');
 const project = new TypeScriptProject({
   defaultReleaseBranch: \\"main\\",
   eslintOptions: {\\"dirs\\":[\\"src\\",\\"test\\"],\\"prettier\\":true,\\"aliasMap\\":{\\"@src\\":\\"./src\\",\\"@foo\\":\\"./src/foo\\"}},

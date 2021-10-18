@@ -221,30 +221,12 @@ function renderArgAsJavaScript(arg: any, option: inventory.ProjectOption) {
     const parts = option.fqn.split('.'); // -> ['projen', 'web', 'MyEnum']
     const enumChoice = String(arg).toUpperCase().replace(/-/g, '_'); // custom-value -> CUSTOM_VALUE
     const js = `${parts.slice(1).join('.')}.${enumChoice}`; // -> web.MyEnum.CUSTOM_VALUE
-    return { js, imports: gatherImports(option.fullType) };
+    const importName = parts[1]; // -> 'web'
+    return { js, imports: [importName] };
   } else if (option.jsonLike) {
-    return { js: JSON.stringify(arg), imports: gatherImports(option.fullType) };
+    return { js: JSON.stringify(arg), imports: [] };
   } else {
     throw new Error(`Unexpected option ${option.name} of kind: ${option.kind}`);
-  }
-}
-
-/**
- * Return a list of JS-specific import strings needed to render a value
- * of a given property type in projenrc.js.
- */
-function gatherImports(type: inventory.JsiiPropertyType): string[] {
-  // TODO - fix so that it only returns imports for enums (or enums within collections)
-  if (type.primitive) {
-    return [];
-  } else if (type.fqn) {
-    const parts = type.fqn.split('.'); // -> ['projen', 'submodule', 'MyClass']
-    const importName = parts[1]; // -> submodule or root-level type
-    return [importName];
-  } else if (type.collection) {
-    return gatherImports(type.collection.elementtype);
-  } else {
-    throw new Error(`Unexpected type value: ${type}`);
   }
 }
 
