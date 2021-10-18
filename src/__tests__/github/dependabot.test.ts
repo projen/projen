@@ -39,6 +39,74 @@ describe('dependabot', () => {
     expect(dependabot).toContain('registries');
     expect(dependabot).toContain(registryName);
   });
+
+  describe('ignoring', () => {
+    test('ignores projen by default', () => {
+      const project = createProject();
+      new Dependabot(project.github!, {});
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot['.github/dependabot.yml'];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain('ignore:');
+      expect(dependabot).toContain('dependency-name: projen');
+    });
+
+    test('ignore with ignoreProjen set to false', () => {
+      const project = createProject();
+      new Dependabot(project.github!, { ignoreProjen: false });
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot['.github/dependabot.yml'];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).not.toContain('ignore:');
+      expect(dependabot).not.toContain('dependency-name: projen');
+    });
+
+    test('ignore with no version', () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        ignore: [{ dependencyName: 'testlib' }],
+      });
+
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot['.github/dependabot.yml'];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain('ignore');
+      expect(dependabot).toContain('dependency-name: testlib');
+      expect(dependabot).not.toContain('versions');
+
+    });
+
+    test('ignore with a single version', () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        ignore: [{ dependencyName: 'testlib', versions: ['>10.x'] }],
+      });
+
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot['.github/dependabot.yml'];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain('ignore');
+      expect(dependabot).toContain('dependency-name: testlib');
+      expect(dependabot).toContain('versions');
+      expect(dependabot).toContain('>10.x');
+    });
+
+    test('ignore with multiple versions', () => {
+      const project = createProject();
+      new Dependabot(project.github!, {
+        ignore: [{ dependencyName: 'testlib', versions: ['10.x', '20.x'] }],
+      });
+
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot['.github/dependabot.yml'];
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain('ignore');
+      expect(dependabot).toContain('dependency-name: testlib');
+      expect(dependabot).toContain('versions');
+      expect(dependabot).toContain('10.x');
+      expect(dependabot).toContain('20.x');
+    });
+  });
 });
 
 type ProjectOptions = Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name'>;
