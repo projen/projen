@@ -240,6 +240,8 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
     post: args.post,
   });
 
+  exec('npm run eslint --if-present', { cwd: baseDir });
+
   if (args.git) {
     const git = (cmd: string) => exec(`git ${cmd}`, { cwd: baseDir });
     git('init');
