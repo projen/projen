@@ -21,6 +21,9 @@ export interface CreateProjectOptions {
    * Option values. Only JSON-like values can be passed in (strings,
    * booleans, numbers, enums, arrays, and objects that are not
    * derived from classes).
+   *
+   * Consult the API reference of the project type you are generating for
+   * information about what fields and types are available.
    */
   readonly projectOptions: Record<string, any>;
 
@@ -101,7 +104,10 @@ function createProject(opts: CreateProjectOptions) {
     omitFromBootstrap: ['outdir'],
   });
 
-  const newProjectCode = `const project = new ${projectType.typename}(${renderedOptions});`;
+  // generate a random variable name because jest tests appear to share
+  // VM contexts, causing duplicate identifier errors if this isn't unique
+  const varName = 'project' + Math.random().toString(36).slice(2);
+  const newProjectCode = `const ${varName} = new ${projectType.typename}(${renderedOptions});`;
 
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const module = require(mod);
@@ -112,6 +118,6 @@ function createProject(opts: CreateProjectOptions) {
   process.env.PROJEN_DISABLE_POST = (!postSynth).toString();
   vm.runInContext([
     newProjectCode,
-    synth ? 'project.synth();' : '',
+    synth ? `${varName}.synth();` : '',
   ].join('\n'), ctx);
 }

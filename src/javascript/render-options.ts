@@ -103,8 +103,7 @@ export function resolveNewProject(opts: any) {
 export function renderJavaScriptOptions(opts: RenderProjectOptions) {
   const renders: Record<string, string> = {};
   const optionsWithDefaults: string[] = [];
-  const useSingleQuotes = (str: string | undefined) => str?.replace(/"(.+)"/, '\'$1\'');
-  const imports = new Set();
+  const allImports = new Set();
 
   for (const option of opts.type.options) {
     if (option.deprecated) {
@@ -115,13 +114,15 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
 
     if (opts.args[optionName] !== undefined) {
       const arg = opts.args[optionName];
-      const { js, importName } = renderArgAsJavaScript(arg, option);
-      if (importName) imports.add(importName);
-      renders[optionName] = `${optionName}: ${useSingleQuotes(js)},`;
+      const { js, imports } = renderArgAsJavaScript(arg, option);
+      for (const importStr of imports) {
+        allImports.add(importStr);
+      }
+      renders[optionName] = `${optionName}: ${js},`; // ?
       optionsWithDefaults.push(optionName);
     } else {
       const defaultValue = option.default?.startsWith('-') ? undefined : (option.default ?? undefined);
-      renders[optionName] = `// ${optionName}: ${useSingleQuotes(defaultValue)},`;
+      renders[optionName] = `// ${optionName}: ${defaultValue},`;
     }
   }
 
@@ -163,7 +164,7 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
     result.pop();
   }
   result.push('}');
-  return { renderedOptions: result.join('\n'), imports };
+  return { renderedOptions: result.join('\n'), imports: allImports };
 }
 
 function renderCommentedOptionsByModule(renders: Record<string, string>, options: inventory.ProjectOption[]) {
@@ -205,28 +206,45 @@ function renderCommentedOptionsInOrder(renders: Record<string, string>, options:
 }
 
 /**
- * Renders a CLI argument as a basic JavaScript value. It must either be a
- * string, number, boolean, or enum.
+ * Renders a value as a JavaScript value, converting strings to enums where
+ * appropriate. The type must be JSON-like (string, number, boolean, array,
+ * enum, or JSON object).
  *
- * Returns a string and the name of any needed imports if needed as an
- * object in the form { js, import }.
+ * Returns a JavaScript expression as a string, and the names of any
+ * necessary imports.
  */
 function renderArgAsJavaScript(arg: any, option: inventory.ProjectOption) {
-  const simpleType = inventory.getSimpleTypeName(option.fullType);
-  // devDeps added as an exception to handle bootstrapping projects from external modules
-  if (['string', 'number', 'boolean'].includes(simpleType) || option.name === 'devDeps') {
-    return { js: JSON.stringify(arg) };
-  } else if (option.kind === 'enum') {
+  if (option.kind === 'enum') {
     if (!option.fqn) {
       throw new Error(`fqn field is missing from enum option ${option.name}`);
     }
     const parts = option.fqn.split('.'); // -> ['projen', 'web', 'MyEnum']
     const enumChoice = String(arg).toUpperCase().replace(/-/g, '_'); // custom-value -> CUSTOM_VALUE
     const js = `${parts.slice(1).join('.')}.${enumChoice}`; // -> web.MyEnum.CUSTOM_VALUE
-    const importName = parts[1]; // -> web
-    return { js, importName: importName };
+    return { js, imports: gatherImports(option.fullType) };
+  } else if (option.jsonLike) {
+    return { js: JSON.stringify(arg), imports: gatherImports(option.fullType) };
   } else {
     throw new Error(`Unexpected option ${option.name} of kind: ${option.kind}`);
+  }
+}
+
+/**
+ * Return a list of JS-specific import strings needed to render a value
+ * of a given property type in projenrc.js.
+ */
+function gatherImports(type: inventory.JsiiPropertyType): string[] {
+  // TODO - fix so that it only returns imports for enums (or enums within collections)
+  if (type.primitive) {
+    return [];
+  } else if (type.fqn) {
+    const parts = type.fqn.split('.'); // -> ['projen', 'submodule', 'MyClass']
+    const importName = parts[1]; // -> submodule or root-level type
+    return [importName];
+  } else if (type.collection) {
+    return gatherImports(type.collection.elementtype);
+  } else {
+    throw new Error(`Unexpected type value: ${type}`);
   }
 }
 

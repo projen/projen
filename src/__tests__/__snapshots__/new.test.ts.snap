@@ -23,8 +23,8 @@ public class projenrc {
 exports[`creating node project with enum-typed CLI arg 1`] = `
 "const { NodePackageManager, NodeProject } = require('projen');
 const project = new NodeProject({
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
   packageManager: NodePackageManager.NPM,
 
   // deps: [],                /* Runtime dependencies of this module. */
@@ -1563,9 +1563,9 @@ exports[`projen new awscdk-app-ts 1`] = `
 Object {
   ".projenrc.js": "const { AwsCdkTypeScriptApp } = require('projen');
 const project = new AwsCdkTypeScriptApp({
-  cdkVersion: '1.95.2',
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
+  cdkVersion: \\"1.95.2\\",
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
 
   // cdkDependencies: undefined,  /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") this app uses. */
   // deps: [],                    /* Runtime dependencies of this module. */
@@ -1582,12 +1582,12 @@ exports[`projen new awscdk-construct 1`] = `
 Object {
   ".projenrc.js": "const { AwsCdkConstructLibrary } = require('projen');
 const project = new AwsCdkConstructLibrary({
-  author: 'My User Name',
-  authorAddress: 'my@user.email.com',
-  cdkVersion: '1.95.2',
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
-  repositoryUrl: 'git@boom.com:foo/bar.git',
+  author: \\"My User Name\\",
+  authorAddress: \\"my@user.email.com\\",
+  cdkVersion: \\"1.95.2\\",
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
+  repositoryUrl: \\"git@boom.com:foo/bar.git\\",
 
   // cdkDependencies: undefined,      /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed? */
   // cdkTestDependencies: undefined,  /* AWS CDK modules required for testing. */
@@ -1605,9 +1605,9 @@ exports[`projen new cdk8s-app-ts 1`] = `
 Object {
   ".projenrc.js": "const { Cdk8sTypeScriptApp } = require('projen');
 const project = new Cdk8sTypeScriptApp({
-  cdk8sVersion: '1.0.0-beta.10',
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
+  cdk8sVersion: \\"1.0.0-beta.10\\",
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -1623,12 +1623,12 @@ exports[`projen new cdk8s-construct 1`] = `
 Object {
   ".projenrc.js": "const { ConstructLibraryCdk8s } = require('projen');
 const project = new ConstructLibraryCdk8s({
-  author: 'My User Name',
-  authorAddress: 'my@user.email.com',
-  cdk8sVersion: '1.0.0-beta.10',
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
-  repositoryUrl: 'git@boom.com:foo/bar.git',
+  author: \\"My User Name\\",
+  authorAddress: \\"my@user.email.com\\",
+  cdk8sVersion: \\"1.0.0-beta.10\\",
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
+  repositoryUrl: \\"git@boom.com:foo/bar.git\\",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -1644,12 +1644,12 @@ exports[`projen new cdktf-construct 1`] = `
 Object {
   ".projenrc.js": "const { ConstructLibraryCdktf } = require('projen');
 const project = new ConstructLibraryCdktf({
-  author: 'My User Name',
-  authorAddress: 'my@user.email.com',
-  cdktfVersion: '0.4.0',
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
-  repositoryUrl: 'git@boom.com:foo/bar.git',
+  author: \\"My User Name\\",
+  authorAddress: \\"my@user.email.com\\",
+  cdktfVersion: \\"0.4.0\\",
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
+  repositoryUrl: \\"git@boom.com:foo/bar.git\\",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -1684,11 +1684,11 @@ exports[`projen new jsii 1`] = `
 Object {
   ".projenrc.js": "const { JsiiProject } = require('projen');
 const project = new JsiiProject({
-  author: 'My User Name',
-  authorAddress: 'my@user.email.com',
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
-  repositoryUrl: 'git@boom.com:foo/bar.git',
+  author: \\"My User Name\\",
+  authorAddress: \\"my@user.email.com\\",
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
+  repositoryUrl: \\"git@boom.com:foo/bar.git\\",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -1704,8 +1704,8 @@ exports[`projen new nextjs 1`] = `
 Object {
   ".projenrc.js": "const { web } = require('projen');
 const project = new web.NextJsProject({
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -1722,8 +1722,8 @@ exports[`projen new nextjs-ts 1`] = `
 Object {
   ".projenrc.js": "const { web } = require('projen');
 const project = new web.NextJsTypeScriptProject({
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -1740,8 +1740,8 @@ exports[`projen new node 1`] = `
 Object {
   ".projenrc.js": "const { NodeProject } = require('projen');
 const project = new NodeProject({
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -1759,11 +1759,11 @@ exports[`projen new python 1`] = `
 Object {
   ".projenrc.js": "const { python } = require('projen');
 const project = new python.PythonProject({
-  authorEmail: 'my@user.email.com',
-  authorName: 'My User Name',
-  moduleName: 'my_project',
-  name: 'my-project',
-  version: '0.1.0',
+  authorEmail: \\"my@user.email.com\\",
+  authorName: \\"My User Name\\",
+  moduleName: \\"my_project\\",
+  name: \\"my-project\\",
+  version: \\"0.1.0\\",
 
   // deps: [],                /* List of runtime dependencies for this project. */
   // description: undefined,  /* A short description of the package. */
@@ -1782,8 +1782,8 @@ exports[`projen new react 1`] = `
 Object {
   ".projenrc.js": "const { web } = require('projen');
 const project = new web.ReactProject({
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -1799,8 +1799,8 @@ exports[`projen new react-ts 1`] = `
 Object {
   ".projenrc.js": "const { web } = require('projen');
 const project = new web.ReactTypeScriptProject({
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -1816,8 +1816,8 @@ exports[`projen new typescript 1`] = `
 Object {
   ".projenrc.js": "const { TypeScriptProject } = require('projen');
 const project = new TypeScriptProject({
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -1833,8 +1833,8 @@ exports[`projen new typescript-app 1`] = `
 Object {
   ".projenrc.js": "const { TypeScriptAppProject } = require('projen');
 const project = new TypeScriptAppProject({
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -1860,8 +1860,8 @@ Object {
 exports[`projenrc-ts creates typescript projenrc 1`] = `
 "import { TypeScriptProject } from 'projen';
 const project = new TypeScriptProject({
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
   projenrcTs: true,
 
   // deps: [],                /* Runtime dependencies of this module. */

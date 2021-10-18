@@ -1,68 +1,96 @@
-import * as fs from 'fs';
-import * as os from 'os';
-import * as path from 'path';
 import { NewProjectOptionHints } from '..';
 import { installPackage } from '../cli/util';
 import { Projects } from '../projects';
-import { directorySnapshot } from './util';
-
-let cwd = process.cwd();
-
-beforeEach(() => process.chdir(fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'))));
-afterEach(() => process.chdir(cwd));
+import { directorySnapshot, withProjectDir } from './util';
 
 describe('createProject', () => {
   test('creates a project in a directory', () => {
-    // GIVEN
-    const dir = process.cwd();
+    withProjectDir(projectdir => {
+      // GIVEN
+      process.chdir(projectdir);
 
-    // WHEN
-    Projects.createProject({
-      optionHints: NewProjectOptionHints.FEATURED,
-      dir: dir,
-      post: true,
-      synth: true,
-      projectFqn: 'projen.TypeScriptProject',
-      projectOptions: {
-        name: 'test-project',
-        defaultReleaseBranch: 'main',
-      },
-    });
+      // WHEN
+      Projects.createProject({
+        optionHints: NewProjectOptionHints.FEATURED,
+        dir: projectdir,
+        post: false,
+        synth: false,
+        projectFqn: 'projen.TypeScriptProject',
+        projectOptions: {
+          name: 'test-project',
+          defaultReleaseBranch: 'main',
+        },
+      });
 
-    // THEN
-    const snapshot = directorySnapshot(dir, {
-      excludeGlobs: ['node_modules/**'],
+      // THEN
+      const snapshot = directorySnapshot(projectdir, {
+        excludeGlobs: ['node_modules/**'],
+      });
+      expect(snapshot['.projenrc.js']).toMatchSnapshot();
     });
-    expect(snapshot['.projenrc.js']).toMatchSnapshot();
-    expect(snapshot['package.json']).toBeDefined();
+  });
+
+  test('creates a project and passes in JSON-like project options', () => {
+    withProjectDir(projectdir => {
+      // GIVEN
+      process.chdir(projectdir);
+
+      // WHEN
+      Projects.createProject({
+        optionHints: NewProjectOptionHints.FEATURED,
+        dir: projectdir,
+        post: false,
+        synth: false,
+        projectFqn: 'projen.TypeScriptProject',
+        projectOptions: {
+          name: 'test-project',
+          defaultReleaseBranch: 'main',
+          eslintOptions: {
+            dirs: ['src', 'test'],
+            prettier: true,
+            aliasMap: {
+              '@src': './src',
+              '@foo': './src/foo',
+            },
+          },
+        },
+      });
+
+      // THEN
+      const snapshot = directorySnapshot(projectdir, {
+        excludeGlobs: ['node_modules/**'],
+      });
+      expect(snapshot['.projenrc.js']).toMatchSnapshot();
+    });
   });
 
   test('creates a project from an external project type, if it\'s installed', () => {
-    // GIVEN
-    const dir = process.cwd();
-    installPackage(dir, 'cdk-appsync-project@1.1.3');
+    withProjectDir(projectdir => {
+      // GIVEN
+      process.chdir(projectdir);
+      installPackage(projectdir, 'cdk-appsync-project@1.1.3');
 
-    // WHEN
-    Projects.createProject({
-      optionHints: NewProjectOptionHints.FEATURED,
-      dir: dir,
-      post: true,
-      synth: true,
-      projectFqn: 'cdk-appsync-project.AwsCdkAppSyncApp',
-      projectOptions: {
-        name: 'test-project',
-        defaultReleaseBranch: 'main',
-        cdkVersion: '1.63.0',
-        transformerVersion: '1.77.15',
-        devDeps: ['cdk-appsync-project@1.1.3'],
-      },
-    });
+      // WHEN
+      Projects.createProject({
+        optionHints: NewProjectOptionHints.FEATURED,
+        dir: projectdir,
+        post: false,
+        synth: false,
+        projectFqn: 'cdk-appsync-project.AwsCdkAppSyncApp',
+        projectOptions: {
+          name: 'test-project',
+          defaultReleaseBranch: 'main',
+          cdkVersion: '1.63.0',
+          transformerVersion: '1.77.15',
+          devDeps: ['cdk-appsync-project@1.1.3'],
+        },
+      });
 
-    // THEN
-    const snapshot = directorySnapshot(dir, {
-      excludeGlobs: ['node_modules/**'],
+      // THEN
+      const snapshot = directorySnapshot(projectdir, {
+        excludeGlobs: ['node_modules/**'],
+      });
+      expect(snapshot['.projenrc.js']).toMatchSnapshot();
     });
-    expect(snapshot['.projenrc.js']).toMatchSnapshot();
-    expect(snapshot['package.json']).toBeDefined();
   });
 });

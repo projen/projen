@@ -1,3 +1,4 @@
+import * as cp from 'child_process';
 import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
@@ -152,6 +153,32 @@ export function directorySnapshot(root: string, options: DirectorySnapshotOption
   }
 
   return output;
+}
+
+export function withProjectDir(code: (workdir: string) => void, options: { git?: boolean } = {}) {
+  const outdir = mkdtemp();
+  try {
+    // create project under "my-project" so that basedir is deterministic
+    const projectdir = path.join(outdir, 'my-project');
+    fs.mkdirSync(projectdir);
+
+    const shell = (command: string) => cp.execSync(command, { cwd: projectdir });
+    if (options.git ?? true) {
+      shell('git init');
+      shell('git remote add origin git@boom.com:foo/bar.git');
+      shell('git config user.name "My User Name"');
+      shell('git config user.email "my@user.email.com"');
+    } else if (process.env.CI) {
+      // if "git" is set to "false", we still want to make sure global user is defined
+      // (relevant in CI context)
+      shell('git config user.name || git config --global user.name "My User Name"');
+      shell('git config user.email || git config --global user.email "my@user.email.com"');
+    }
+
+    code(projectdir);
+  } finally {
+    fs.removeSync(outdir);
+  }
 }
 
 /**

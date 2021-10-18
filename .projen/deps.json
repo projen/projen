@@ -63,11 +63,6 @@
       "type": "build"
     },
     {
-      "name": "jest-junit",
-      "version": "^12",
-      "type": "build"
-    },
-    {
       "name": "jsii",
       "type": "build"
     },

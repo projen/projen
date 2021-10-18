@@ -2,10 +2,10 @@
 // and compare against a golden snapshot.
 import { execSync } from 'child_process';
 import { join } from 'path';
-import { mkdirSync, pathExistsSync, removeSync } from 'fs-extra';
+import { pathExistsSync } from 'fs-extra';
 import * as inventory from '../inventory';
 import { execCapture } from '../util';
-import { directorySnapshot, execProjenCLI, mkdtemp, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject } from './util';
+import { directorySnapshot, execProjenCLI, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject, withProjectDir } from './util';
 
 const MIN_NODE_VERSION_OPTION = '--min-node-version=10.17.0';
 
@@ -237,29 +237,3 @@ describe('git', () => {
     }, { git: false });
   });
 });
-
-function withProjectDir(code: (workdir: string) => void, options: { git?: boolean } = {}) {
-  const outdir = mkdtemp();
-  try {
-    // create project under "my-project" so that basedir is deterministic
-    const projectdir = join(outdir, 'my-project');
-    mkdirSync(projectdir);
-
-    const shell = (command: string) => execSync(command, { cwd: projectdir });
-    if (options.git ?? true) {
-      shell('git init');
-      shell('git remote add origin git@boom.com:foo/bar.git');
-      shell('git config user.name "My User Name"');
-      shell('git config user.email "my@user.email.com"');
-    } else if (process.env.CI) {
-      // if "git" is set to "false", we still want to make sure global user is defined
-      // (relevant in CI context)
-      shell('git config user.name || git config --global user.name "My User Name"');
-      shell('git config user.email || git config --global user.email "my@user.email.com"');
-    }
-
-    code(projectdir);
-  } finally {
-    removeSync(outdir);
-  }
-}

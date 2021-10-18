@@ -16,6 +16,7 @@ export interface ProjectOption {
   /** Full JSII type, e.g. { primitive: "string" } or { collection: { elementtype: { primitive: 'string' }, kind: 'map' } } */
   fullType: any;
   kind?: string;
+  jsonLike?: JsiiPropertyType;
   parent: string;
   docs?: string;
   default?: string;
@@ -58,10 +59,7 @@ interface JsiiType {
       custom?: { [name: string]: string };
     };
     optional?: boolean;
-    type?: {
-      primitive?: string;
-      fqn?: string;
-    };
+    type?: JsiiPropertyType;
   }>;
   docs?: {
     summary?: string;
@@ -69,6 +67,15 @@ interface JsiiType {
     custom?: {
       pjid?: string;
     };
+  };
+}
+
+export interface JsiiPropertyType {
+  primitive?: string;
+  fqn?: string;
+  collection?: {
+    elementtype: JsiiPropertyType;
+    kind: string;
   };
 }
 
@@ -241,17 +248,6 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         throw new Error(`duplicate option "${prop.name}" in ${fqn} (already declared in ${options[prop.name].parent})`);
       }
 
-      // let typeName;
-      // let jsiiKind;
-      // if (prop.type?.primitive) {
-      //   typeName = prop.type?.primitive; // e.g. 'string', 'boolean', 'number'
-      // } else if (prop.type?.fqn) {
-      //   typeName = prop.type?.fqn.split('.').pop(); // projen.NodeProjectOptions -> NodeProjectOptions
-      //   jsiiKind = jsii[prop.type?.fqn].kind; // e.g. 'class', 'interface', 'enum'
-      // } else { // any other types such as collection types
-      //   typeName = 'unknown';
-      // }
-
       let jsiiKind;
       if (prop.type?.fqn) {
         jsiiKind = jsii[prop.type?.fqn].kind; // e.g. 'class', 'interface', 'enum'
@@ -281,6 +277,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         docs: prop.docs.summary,
         fullType: prop.type,
         kind: jsiiKind,
+        jsonLike: prop.type ? isJsonLike(jsii, prop.type) : undefined,
         switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
         default: defaultValue,
         optional: isOptional,
@@ -295,7 +292,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
   }
 }
 
-export function getSimpleTypeName(type: { primitive?: string; fqn?: string }): string {
+export function getSimpleTypeName(type: JsiiPropertyType): string {
   if (type?.primitive) {
     return type.primitive; // e.g. 'string', 'boolean', 'number'
   } else if (type?.fqn) {
@@ -303,6 +300,23 @@ export function getSimpleTypeName(type: { primitive?: string; fqn?: string }): s
   } else { // any other types such as collection types
     return 'unknown';
   }
+}
+
+/**
+ * Whether a value of this type is serializable into JSON.
+ */
+function isJsonLike(jsii: JsiiTypes, type: JsiiPropertyType): boolean {
+  if (type.primitive) {
+    return true;
+  } else if (type.fqn) {
+    const kind = jsii[type.fqn].kind;
+    if (['interface', 'enum'].includes(kind)) { // not 'class'
+      return true;
+    }
+  } else if (type.collection) {
+    return isJsonLike(jsii, type.collection.elementtype);
+  }
+  return false;
 }
 
 function filterUndefined(obj: any) {

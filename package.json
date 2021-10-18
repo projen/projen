@@ -56,7 +56,6 @@
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.2",
     "jest": "^27.2.5",
-    "jest-junit": "^12",
     "jsii": "^1.39.0",
     "jsii-diff": "^1.39.0",
     "jsii-docgen": "^1.8.110",
@@ -122,13 +121,7 @@
       "/src/"
     ],
     "reporters": [
-      "default",
-      [
-        "jest-junit",
-        {
-          "outputDirectory": "test-reports"
-        }
-      ]
+      "default"
     ],
     "snapshotResolver": "./.projen/jest-snapshot-resolver.js"
   },

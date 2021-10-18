@@ -54,6 +54,7 @@ const project = new JsiiProject({
   // makes it very hard to iterate with jest --watch
   jestOptions: {
     coverageText: false,
+    junitReporting: false,
   },
 
   publishToMaven: {
