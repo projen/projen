@@ -531,15 +531,6 @@ pull_request_rules:
       "test": Object {
         "description": "Run tests",
         "name": "test",
-        "steps": Array [
-          Object {
-            "spawn": "test:compile",
-          },
-        ],
-      },
-      "test:compile": Object {
-        "description": "compiles the test code",
-        "name": "test:compile",
       },
       "unbump": Object {
         "description": "Restores version to 0.0.0",
@@ -870,7 +861,6 @@ pull_request_rules:
       "server": "npx projen server",
       "telemetry": "npx projen telemetry",
       "test": "npx projen test",
-      "test:compile": "npx projen test:compile",
       "unbump": "npx projen unbump",
       "upgrade": "npx projen upgrade",
       "upgrade-projen": "npx projen upgrade-projen",

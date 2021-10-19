@@ -374,9 +374,6 @@ export class TypeScriptProject extends NodeProject {
         // test code does not take a dependency on "lib" and instead on "src".
         this.testTask.prependExec(`rm -fr ${this.libdir}/`);
       }
-
-      // compile test code
-      this.testCompileTask.exec(`tsc --noEmit --project ${this.tsconfigDev.fileName}`);
     }
 
     if (options.eslint ?? true) {

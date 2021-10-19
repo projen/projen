@@ -1167,22 +1167,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "rm -fr lib/",
           },
           Object {
-            "spawn": "test:compile",
-          },
-          Object {
             "exec": "jest --passWithNoTests --all --updateSnapshot --coverageProvider=v8",
           },
           Object {
             "spawn": "eslint",
-          },
-        ],
-      },
-      "test:compile": Object {
-        "description": "compiles the test code",
-        "name": "test:compile",
-        "steps": Array [
-          Object {
-            "exec": "tsc --noEmit --project tsconfig.dev.json",
           },
         ],
       },
@@ -1694,7 +1682,6 @@ project.synth();
       "publish:pypi": "npx projen publish:pypi",
       "release": "npx projen release",
       "test": "npx projen test",
-      "test:compile": "npx projen test:compile",
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "unbump": "npx projen unbump",
@@ -2446,9 +2433,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "rm -fr lib/",
           },
           Object {
-            "spawn": "test:compile",
-          },
-          Object {
             "exec": "jest --passWithNoTests --all",
           },
           Object {
@@ -2456,15 +2440,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
           Object {
             "exec": "yarn compile",
-          },
-        ],
-      },
-      "test:compile": Object {
-        "description": "compiles the test code",
-        "name": "test:compile",
-        "steps": Array [
-          Object {
-            "exec": "tsc --noEmit --project tsconfig.dev.json",
           },
         ],
       },
@@ -3110,7 +3085,6 @@ project.synth();
       "package": "npx projen package",
       "projen": "npx projen",
       "test": "npx projen test",
-      "test:compile": "npx projen test:compile",
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "upgrade": "npx projen upgrade",
@@ -3839,9 +3813,6 @@ tsconfig.tsbuildinfo
             "exec": "rm -fr lib/",
           },
           Object {
-            "spawn": "test:compile",
-          },
-          Object {
             "exec": "jest --passWithNoTests --all",
           },
           Object {
@@ -3849,15 +3820,6 @@ tsconfig.tsbuildinfo
           },
           Object {
             "exec": "yarn compile",
-          },
-        ],
-      },
-      "test:compile": Object {
-        "description": "compiles the test code",
-        "name": "test:compile",
-        "steps": Array [
-          Object {
-            "exec": "tsc --noEmit --project tsconfig.dev.json",
           },
         ],
       },
@@ -4458,7 +4420,6 @@ project.synth();
       "package": "npx projen package",
       "projen": "npx projen",
       "test": "npx projen test",
-      "test:compile": "npx projen test:compile",
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "upgrade": "npx projen upgrade",
@@ -5069,16 +5030,9 @@ junit.xml
         "name": "test",
         "steps": Array [
           Object {
-            "spawn": "test:compile",
-          },
-          Object {
             "exec": "jest --passWithNoTests --all --updateSnapshot",
           },
         ],
-      },
-      "test:compile": Object {
-        "description": "compiles the test code",
-        "name": "test:compile",
       },
       "test:update": Object {
         "description": "Update jest snapshots",
@@ -5461,7 +5415,6 @@ project.synth();
       "publish:github": "npx projen publish:github",
       "release": "npx projen release",
       "test": "npx projen test",
-      "test:compile": "npx projen test:compile",
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "unbump": "npx projen unbump",
