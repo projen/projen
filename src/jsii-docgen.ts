@@ -15,7 +15,7 @@ export class JsiiDocgen {
       exec: 'jsii-docgen',
     });
 
-    project.compileTask.spawn(docgen);
+    project.buildTask.spawn(docgen);
     project.gitignore.include('/API.md');
   }
 }

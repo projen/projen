@@ -38,9 +38,6 @@
       "steps": [
         {
           "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
-        },
-        {
-          "spawn": "docgen"
         }
       ]
     },
@@ -71,6 +68,9 @@
         },
         {
           "spawn": "package"
+        },
+        {
+          "spawn": "docgen"
         },
         {
           "spawn": "readme-macros"
