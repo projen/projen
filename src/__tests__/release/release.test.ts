@@ -1,7 +1,7 @@
 import * as YAML from 'yaml';
 import { JobPermission } from '../../github/workflows-model';
 import { Release } from '../../release';
-import { synthSnapshot, TestProject } from '../../test-utils';
+import { synthSnapshot, TestProject } from '../../_test-utils';
 
 test('minimal', () => {
   // GIVEN

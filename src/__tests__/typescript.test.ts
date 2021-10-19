@@ -1,5 +1,5 @@
 import { PROJEN_RC } from '../common';
-import { mkdtemp, synthSnapshot } from '../test-utils';
+import { mkdtemp, synthSnapshot } from '../_test-utils';
 import { mergeTsconfigOptions, TypeScriptProject } from '../typescript';
 
 describe('mergeTsconfigOptions', () => {

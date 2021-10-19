@@ -1,6 +1,6 @@
 import { LogLevel } from '../../logger';
 import { NodeProject, NodeProjectOptions } from '../../node-project';
-import { mkdtemp, synthSnapshot } from '../../test-utils';
+import { mkdtemp, synthSnapshot } from '../../_test-utils';
 
 describe('mergify', () => {
   test('default', () => {

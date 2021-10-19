@@ -1,5 +1,5 @@
 import { JsonFile } from '../json';
-import { TestProject } from '../test-utils';
+import { TestProject } from '../_test-utils';
 import { decamelizeKeysRecursively, dedupArray, deepMerge, isTruthy, getFilePermissions, formatAsPythonModule } from '../util';
 
 describe('decamelizeRecursively', () => {

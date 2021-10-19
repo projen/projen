@@ -1,7 +1,7 @@
 import { AwsCdkConstructLibrary, AwsCdkConstructLibraryOptions } from '../awscdk-construct';
 import { LogLevel } from '../logger';
 import { NpmAccess } from '../node-package';
-import { mkdtemp, synthSnapshot } from '../test-utils';
+import { mkdtemp, synthSnapshot } from '../_test-utils';
 
 describe('constructs dependency selection', () => {
   test('user-selected', () => {

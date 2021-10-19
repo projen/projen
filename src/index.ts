@@ -26,6 +26,7 @@ export * from './project';
 export * from './readme';
 export * from './sample-file';
 export * from './semver';
+export * from './testing';
 export * from './textfile';
 export * from './toml';
 export * from './typescript';

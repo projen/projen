@@ -7,7 +7,7 @@ import { NodePackage, NodePackageManager, NpmAccess } from '../node-package';
 import { DependenciesUpgradeMechanism } from '../node-project';
 import { Project } from '../project';
 import { Tasks } from '../tasks';
-import { mkdtemp, synthSnapshot, TestProject } from '../test-utils';
+import { mkdtemp, synthSnapshot, TestProject } from '../_test-utils';
 
 logging.disable();
 

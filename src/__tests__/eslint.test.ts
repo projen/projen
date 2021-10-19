@@ -1,6 +1,6 @@
 import { Eslint, NodeProject } from '..';
 import { LogLevel } from '../logger';
-import { mkdtemp, synthSnapshot } from '../test-utils';
+import { mkdtemp, synthSnapshot } from '../_test-utils';
 
 test('devdirs', () => {
   // GIVEN

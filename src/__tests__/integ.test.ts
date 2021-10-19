@@ -1,7 +1,7 @@
 import { join, dirname, basename } from 'path';
 import { copySync } from 'fs-extra';
 import { glob } from 'glob';
-import { mkdtemp, directorySnapshot, execProjenCLI, sanitizeOutput } from '../test-utils';
+import { mkdtemp, directorySnapshot, execProjenCLI, sanitizeOutput } from '../_test-utils';
 
 const samples = join(__dirname, '..', '..', 'src', '__tests__', 'integration');
 const files = glob.sync('**/*.projenrc.js', { cwd: samples });

@@ -4,7 +4,7 @@ import { execSync } from 'child_process';
 import { join } from 'path';
 import { mkdirSync, pathExistsSync, removeSync } from 'fs-extra';
 import * as inventory from '../inventory';
-import { directorySnapshot, execProjenCLI, mkdtemp, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject } from '../test-utils';
+import { directorySnapshot, execProjenCLI, mkdtemp, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject } from '../_test-utils';
 import { execCapture } from '../util';
 
 for (const type of inventory.discover()) {

@@ -1,6 +1,6 @@
 import { AutoApprove } from '../../github/auto-approve';
 import { NodeProject, NodeProjectOptions } from '../../node-project';
-import { mkdtemp, synthSnapshot } from '../../test-utils';
+import { mkdtemp, synthSnapshot } from '../../_test-utils';
 
 describe('auto-approve', () => {
   test('default', () => {

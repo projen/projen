@@ -1,7 +1,7 @@
 import { NodeProject, UpgradeDependenciesSchedule } from '..';
 import { DependenciesUpgradeMechanism, NodeProjectOptions } from '../node-project';
 import { Tasks } from '../tasks';
-import { mkdtemp, synthSnapshot } from '../test-utils';
+import { mkdtemp, synthSnapshot } from '../_test-utils';
 
 test('upgrades command includes all dependencies', () => {
 

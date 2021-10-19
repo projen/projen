@@ -2,7 +2,7 @@ import { join } from 'path';
 import { writeFileSync } from 'fs-extra';
 import { LogLevel } from '../logger';
 import { Project } from '../project';
-import { directorySnapshot, execProjenCLI, mkdtemp } from '../test-utils';
+import { directorySnapshot, execProjenCLI, mkdtemp } from '../_test-utils';
 
 const MOCK_PROJENRC = "new (require('projen').Project)({ name: 'foo' }).synth()";
 

@@ -1,5 +1,5 @@
 import * as logging from '../logging';
-import { synthSnapshot, TestProject } from '../test-utils';
+import { synthSnapshot, TestProject } from '../_test-utils';
 
 logging.disable();
 

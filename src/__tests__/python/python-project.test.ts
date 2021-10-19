@@ -1,6 +1,6 @@
 import { LogLevel } from '../../logger';
 import { PythonProject, PythonProjectOptions } from '../../python';
-import { mkdtemp, synthSnapshot } from '../../test-utils';
+import { mkdtemp, synthSnapshot } from '../../_test-utils';
 
 test('defaults', () => {
   const p = new TestPythonProject();

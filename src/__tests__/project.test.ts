@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { JsonFile, Project, TextFile } from '..';
-import { TestProject } from '../test-utils';
+import { TestProject } from '../_test-utils';
 
 test('file paths are relative to the project outdir', () => {
   // GIVEN

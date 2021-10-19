@@ -1,6 +1,6 @@
 import * as INI from 'ini';
 import { IniFile } from '..';
-import { synthSnapshot, TestProject } from '../test-utils';
+import { synthSnapshot, TestProject } from '../_test-utils';
 
 test('ini object can be mutated before synthesis', () => {
   const prj = new TestProject();

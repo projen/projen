@@ -1,5 +1,5 @@
 import { LogLevel } from '../../logger';
-import { mkdtemp, synthSnapshot } from '../../test-utils';
+import { mkdtemp, synthSnapshot } from '../../_test-utils';
 import { ReactProject, ReactProjectOptions } from '../../web';
 
 test('defaults', () => {

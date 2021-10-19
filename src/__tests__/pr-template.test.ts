@@ -1,5 +1,5 @@
 import { GitHub } from '../github';
-import { synthSnapshot, TestProject } from '../test-utils';
+import { synthSnapshot, TestProject } from '../_test-utils';
 
 const PULL_REQUEST_TEMPLATE_FILE = '.github/pull_request_template.md';
 

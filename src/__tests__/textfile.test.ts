@@ -1,5 +1,5 @@
 import { TextFile } from '..';
-import { synthSnapshot, TestProject } from '../test-utils';
+import { synthSnapshot, TestProject } from '../_test-utils';
 
 test('empty file', () => {
   // GIVEN
