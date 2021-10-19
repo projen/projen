@@ -502,16 +502,9 @@ pull_request_rules:
         "name": "test",
         "steps": Array [
           Object {
-            "spawn": "test:compile",
-          },
-          Object {
             "exec": "react-scripts test --watchAll=false",
           },
         ],
-      },
-      "test:compile": Object {
-        "description": "compiles the test code",
-        "name": "test:compile",
       },
       "unbump": Object {
         "description": "Restores version to 0.0.0",
@@ -850,7 +843,6 @@ pull_request_rules:
       "publish:github": "npx projen publish:github",
       "release": "npx projen release",
       "test": "npx projen test",
-      "test:compile": "npx projen test:compile",
       "unbump": "npx projen unbump",
       "upgrade": "npx projen upgrade",
       "upgrade-projen": "npx projen upgrade-projen",

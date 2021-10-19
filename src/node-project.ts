@@ -333,11 +333,6 @@ export class NodeProject extends GitHubProject {
   public readonly testTask: Task;
 
   /**
-   * Compiles the test code.
-   */
-  public readonly testCompileTask: Task;
-
-  /**
    * The task responsible for a full release build. It spawns: compile + test + release + package
    */
   public readonly buildTask: Task;
@@ -450,15 +445,9 @@ export class NodeProject extends GitHubProject {
       description: 'Only compile',
     });
 
-    this.testCompileTask = this.addTask('test:compile', {
-      description: 'compiles the test code',
-    });
-
     this.testTask = this.addTask('test', {
       description: 'Run tests',
     });
-
-    this.testTask.spawn(this.testCompileTask);
 
     this.buildTask = this.addTask('build', {
       description: 'Full release build (test+compile)',
