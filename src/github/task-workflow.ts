@@ -1,5 +1,5 @@
 import { Task } from '../tasks';
-import { SET_GIT_IDENTITY_WORKFLOW_STEP } from './constants';
+import { DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from './constants';
 import { GitHub } from './github';
 import { GithubWorkflow } from './workflows';
 import { ContainerOptions, Job, JobPermissions, JobStep, JobStepOutput, Triggers } from './workflows-model';
@@ -95,6 +95,11 @@ export interface TaskWorkflowOptions {
    * @default {}
    */
   readonly outputs?: { [name: string]: JobStepOutput };
+
+  /**
+   * The git identity to use in this workflow.
+   */
+  readonly gitIdentity?: GitIdentity;
 }
 
 /**
@@ -126,6 +131,7 @@ export class TaskWorkflow extends GithubWorkflow {
     const checkoutWith = options.checkoutWith ? { with: options.checkoutWith } : {};
     const preBuildSteps = options.preBuildSteps ?? [];
     const postBuildSteps = options.postBuildSteps ?? [];
+    const gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
 
     if (options.artifactsDirectory) {
       postBuildSteps.push({
@@ -159,7 +165,7 @@ export class TaskWorkflow extends GithubWorkflow {
         },
 
         // sets git identity so we can push later
-        SET_GIT_IDENTITY_WORKFLOW_STEP,
+        setGitIdentityStep(gitIdentity),
 
         ...preBuildSteps,
 
@@ -175,4 +181,19 @@ export class TaskWorkflow extends GithubWorkflow {
 
     this.addJobs({ [this.jobId]: job });
   }
+}
+
+/**
+ * Represents the git identity.
+ */
+ export interface GitIdentity {
+  /**
+   * The name of the user.
+   */
+  readonly name: string;
+
+  /**
+   * The email address of the git user.
+   */
+  readonly email: string;
 }

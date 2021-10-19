@@ -314,6 +314,24 @@ describe('deps upgrade', () => {
 
   });
 
+  test('git identity of the upgrade workflow is customizable', () => {
+    const project = new TestNodeProject({
+      workflowGitIdentity: {
+        name: 'hey',
+        email: 'there@foo.com',
+      }
+    });
+
+    const snapshot = synthSnapshot(project);
+    const upgrade = yaml.parse(snapshot['.github/workflows/upgrade-main.yml']);
+
+    // we expect the default auto-approve label to be applied
+    expect(upgrade.jobs.pr.steps[1]).toStrictEqual({
+      name: 'Set git identity',
+      run: 'git config user.name "hey"\ngit config user.email "there@foo.com"',
+    });
+  });
+
 });
 
 describe('npm publishing options', () => {
@@ -607,6 +625,24 @@ test('using GitHub npm registry will default npm secret to GITHUB_TOKEN', () => 
 function packageJson(project: Project) {
   return synthSnapshot(project)['package.json'];
 }
+
+test('workflowGitIdentity can be used to customize the git identity used in build workflows', () => {
+  // GIVEN
+  const project = new TestNodeProject({
+    workflowGitIdentity: {
+      name: 'heya',
+      email: 'there@z.com'
+    }
+  });
+
+  // THEN
+  const output = synthSnapshot(project);
+  const buildWorkflow = yaml.parse(output['.github/workflows/build.yml']);
+  expect(buildWorkflow.jobs.build.steps[1]).toStrictEqual({
+    name: 'Set git identity',
+    run: 'git config user.name "heya"\ngit config user.email "there@z.com"',
+  });
+});
 
 class TestNodeProject extends NodeProject {
   constructor(options: Partial<NodeProjectOptions> = {}) {

@@ -2,6 +2,7 @@ import { NodeProject, UpgradeDependenciesSchedule } from '..';
 import { NodeProjectOptions } from '../node-project';
 import { Tasks } from '../tasks';
 import { mkdtemp, synthSnapshot } from './util';
+import * as yaml from 'yaml';
 
 test('upgrades command includes all dependencies', () => {
 
@@ -146,6 +147,30 @@ test('can upgrade multiple branches', () => {
   expect(snapshot['.github/workflows/upgrade-branch2.yml']).toBeDefined();
   expect(snapshot['.github/workflows/upgrade-branch2.yml']).toMatchSnapshot();
 
+});
+
+test('git identity can be customized', () => {
+
+  const project = createProject({
+    depsUpgradeOptions: {
+      workflowOptions: {
+        gitIdentity: {
+          name: 'Foo Bar',
+          email: 'foo@bar.com'
+        }
+      }
+    },
+  });
+
+  const snapshot = synthSnapshot(project);
+  const upgrade = yaml.parse(snapshot['.github/workflows/upgrade-main.yml']);
+  expect(upgrade.jobs.upgrade.steps[1]).toEqual({
+    name: 'Set git identity',
+    run: [
+      'git config user.name \"Foo Bar\"',
+      'git config user.email \"foo@bar.com\"',
+    ].join('\n')
+  });
 });
 
 function createProject(options: Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name' | 'dependenciesUpgrade'> = {}): NodeProject {
