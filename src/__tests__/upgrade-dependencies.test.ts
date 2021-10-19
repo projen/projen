@@ -1,8 +1,8 @@
+import * as yaml from 'yaml';
 import { NodeProject, UpgradeDependenciesSchedule } from '..';
 import { NodeProjectOptions } from '../node-project';
 import { Tasks } from '../tasks';
 import { mkdtemp, synthSnapshot } from './util';
-import * as yaml from 'yaml';
 
 test('upgrades command includes all dependencies', () => {
 
@@ -156,9 +156,9 @@ test('git identity can be customized', () => {
       workflowOptions: {
         gitIdentity: {
           name: 'Foo Bar',
-          email: 'foo@bar.com'
-        }
-      }
+          email: 'foo@bar.com',
+        },
+      },
     },
   });
 
@@ -169,7 +169,7 @@ test('git identity can be customized', () => {
     run: [
       'git config user.name \"Foo Bar\"',
       'git config user.email \"foo@bar.com\"',
-    ].join('\n')
+    ].join('\n'),
   });
 });
 

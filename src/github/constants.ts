@@ -21,5 +21,5 @@ export function setGitIdentityStep(id: GitIdentity): workflow.JobStep {
       `git config user.name "${id.name}"`,
       `git config user.email "${id.email}"`,
     ].join('\n'),
-  }
+  };
 };

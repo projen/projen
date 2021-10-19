@@ -319,7 +319,7 @@ describe('deps upgrade', () => {
       workflowGitIdentity: {
         name: 'hey',
         email: 'there@foo.com',
-      }
+      },
     });
 
     const snapshot = synthSnapshot(project);
@@ -631,8 +631,8 @@ test('workflowGitIdentity can be used to customize the git identity used in buil
   const project = new TestNodeProject({
     workflowGitIdentity: {
       name: 'heya',
-      email: 'there@z.com'
-    }
+      email: 'there@z.com',
+    },
   });
 
   // THEN

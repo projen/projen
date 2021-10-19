@@ -111,7 +111,7 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
 
   /**
    * The git identity to use in workflows.
-   * 
+   *
    * @default - GitHub Actions
    */
   readonly workflowGitIdentity?: GitIdentity;

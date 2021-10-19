@@ -452,7 +452,7 @@ export interface UpgradeDependenciesWorkflowOptions {
    * The git identity to use for commits.
    * @default "github-actions@github.com"
    */
-   readonly gitIdentity?: GitIdentity;
+  readonly gitIdentity?: GitIdentity;
 }
 
 /**

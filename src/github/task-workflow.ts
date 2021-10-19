@@ -186,7 +186,7 @@ export class TaskWorkflow extends GithubWorkflow {
 /**
  * Represents the git identity.
  */
- export interface GitIdentity {
+export interface GitIdentity {
   /**
    * The name of the user.
    */
