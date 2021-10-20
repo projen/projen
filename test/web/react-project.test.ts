@@ -1,6 +1,5 @@
-import { LogLevel } from '../../src/logger';
 import { ReactProject, ReactProjectOptions } from '../../src/web';
-import { mkdtemp, synthSnapshot } from '../util';
+import { synthSnapshot } from '../util';
 
 test('defaults', () => {
   const p = new TestReactProject();
@@ -54,8 +53,6 @@ class TestReactProject extends ReactProject {
       ...options,
       clobber: false,
       name: 'test-nextjs-project',
-      outdir: mkdtemp(),
-      logging: { level: LogLevel.OFF },
       defaultReleaseBranch: 'main',
     });
   }

@@ -1,7 +1,6 @@
 import { AwsCdkConstructLibrary, AwsCdkConstructLibraryOptions } from '../src/awscdk-construct';
-import { LogLevel } from '../src/logger';
 import { NpmAccess } from '../src/node-package';
-import { mkdtemp, synthSnapshot } from './util';
+import { synthSnapshot } from './util';
 
 describe('constructs dependency selection', () => {
   test('user-selected', () => {
@@ -72,10 +71,6 @@ const defaultOptions = {
 class TestProject extends AwsCdkConstructLibrary {
   constructor(options: Omit<AwsCdkConstructLibraryOptions, keyof typeof defaultOptions>) {
     super({
-      outdir: mkdtemp(),
-      logging: {
-        level: LogLevel.OFF,
-      },
       ...defaultOptions,
       ...options,
     });

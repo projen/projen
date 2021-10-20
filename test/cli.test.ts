@@ -1,6 +1,5 @@
 import { join } from 'path';
 import { writeFileSync } from 'fs-extra';
-import { LogLevel } from '../src/logger';
 import { Project } from '../src/project';
 import { directorySnapshot, execProjenCLI, mkdtemp } from './util';
 
@@ -27,11 +26,10 @@ test('running "projen" with no arguments will execute .projenrc.js', () => {
 });
 
 test('running "projen" for projects with a "default" task will execute it', () => {
-  const workdir = mkdtemp();
-  const project = new Project({ outdir: workdir, name: 'my-project', logging: { level: LogLevel.OFF } });
+  const project = new Project({ name: 'my-project' });
   project.addTask(Project.DEFAULT_TASK, { exec: 'echo "foo" > bar.txt' });
   project.synth();
 
-  execProjenCLI(workdir);
-  expect(directorySnapshot(workdir)['bar.txt']).toStrictEqual('foo\n');
+  execProjenCLI(project.outdir);
+  expect(directorySnapshot(project.outdir)['bar.txt']).toStrictEqual('foo\n');
 });

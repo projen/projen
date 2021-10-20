@@ -1,7 +1,6 @@
 import { ConstructLibraryCdktf, ConstructLibraryCdktfOptions } from '../src/cdktf-construct';
-import { LogLevel } from '../src/logger';
 import { NpmAccess } from '../src/node-package';
-import { mkdtemp, synthSnapshot } from './util';
+import { synthSnapshot } from './util';
 
 describe('constructs dependency selection', () => {
   test('user-selected', () => {
@@ -32,10 +31,6 @@ const defaultOptions = {
 class TestProject extends ConstructLibraryCdktf {
   constructor(options: Omit<ConstructLibraryCdktfOptions, keyof typeof defaultOptions>) {
     super({
-      outdir: mkdtemp(),
-      logging: {
-        level: LogLevel.OFF,
-      },
       ...defaultOptions,
       ...options,
     });

@@ -1,13 +1,10 @@
 import { Eslint, NodeProject } from '../src';
-import { LogLevel } from '../src/logger';
-import { mkdtemp, synthSnapshot } from './util';
+import { synthSnapshot } from './util';
 
 test('devdirs', () => {
   // GIVEN
   const project = new NodeProject({
-    outdir: mkdtemp(),
     name: 'test',
-    logging: { level: LogLevel.OFF },
     defaultReleaseBranch: 'master',
   });
 
@@ -25,9 +22,7 @@ describe('prettier', () => {
   test('snapshot', () => {
     // GIVEN
     const project = new NodeProject({
-      outdir: mkdtemp(),
       name: 'test',
-      logging: { level: LogLevel.OFF },
       defaultReleaseBranch: 'master',
     });
 
@@ -45,9 +40,7 @@ describe('prettier', () => {
   test('error on formatting when enabled', () => {
     // GIVEN
     const project = new NodeProject({
-      outdir: mkdtemp(),
       name: 'test',
-      logging: { level: LogLevel.OFF },
       defaultReleaseBranch: 'master',
     });
 
@@ -66,9 +59,7 @@ describe('alias', () => {
   test('custom config', () => {
     // GIVEN
     const project = new NodeProject({
-      outdir: mkdtemp(),
       name: 'test',
-      logging: { level: LogLevel.OFF },
       defaultReleaseBranch: 'master',
     });
 

@@ -1,4 +1,4 @@
-import { Jest, NodeProject, TypeScriptProject, LogLevel } from '../src';
+import { Jest, NodeProject, TypeScriptProject } from '../src';
 import { PROJEN_RC } from '../src/common';
 import * as logging from '../src/logging';
 import { mkdtemp, synthSnapshot } from './util';
@@ -31,15 +31,11 @@ const compilerOptionDefaults = {
 
 test('Node Project Jest Defaults Configured', () => {
   const project = new NodeProject({
-    outdir: mkdtemp(),
     name: 'test-node-project',
     mergify: false,
     projenDevDependency: false,
     defaultReleaseBranch: 'master',
     jest: true,
-    logging: {
-      level: LogLevel.OFF,
-    },
   });
 
   expect(project.jest?.config).toBeTruthy();
@@ -57,7 +53,6 @@ test('Node Project Jest Defaults Configured', () => {
 
 test('Node Project Jest With Options Configured', () => {
   const project = new NodeProject({
-    outdir: mkdtemp(),
     name: 'test-node-project',
     defaultReleaseBranch: 'master',
     mergify: false,
@@ -69,9 +64,6 @@ test('Node Project Jest With Options Configured', () => {
         bail: 5,
         notify: false,
       },
-    },
-    logging: {
-      level: LogLevel.OFF,
     },
   });
 
@@ -86,7 +78,6 @@ test('Node Project Jest With Options Configured', () => {
 
 test('Node Project Jest With Path Configured', () => {
   const project = new NodeProject({
-    outdir: mkdtemp(),
     name: 'test-node-project',
     defaultReleaseBranch: 'master',
     mergify: false,
@@ -99,9 +90,6 @@ test('Node Project Jest With Path Configured', () => {
         bail: 5,
         notify: false,
       },
-    },
-    logging: {
-      level: LogLevel.OFF,
     },
   });
 
@@ -117,15 +105,11 @@ test('Node Project Jest With Path Configured', () => {
 test('Typescript Project Jest Defaults Configured', () => {
   // WHEN
   const project = new TypeScriptProject({
-    outdir: mkdtemp(),
     name: 'test-typescript-project',
     defaultReleaseBranch: 'master',
     mergify: false,
     projenDevDependency: false,
     jest: true,
-    logging: {
-      level: LogLevel.OFF,
-    },
   });
 
   const snapshot = synthSnapshot(project);
@@ -145,7 +129,6 @@ test('Typescript Project Jest With Compiler Options', () => {
   };
 
   const project = new TypeScriptProject({
-    outdir: mkdtemp(),
     name: 'test-typescript-project',
     defaultReleaseBranch: 'master',
     mergify: false,
@@ -153,9 +136,6 @@ test('Typescript Project Jest With Compiler Options', () => {
     jest: true,
     tsconfigDev: {
       compilerOptions,
-    },
-    logging: {
-      level: LogLevel.OFF,
     },
   });
 
@@ -173,7 +153,6 @@ test('Typescript Project Jest With Compiler Options', () => {
 
 test('jestOptions.typeScriptCompilerOptions is deprecated', () => {
   expect(() => new TypeScriptProject({
-    outdir: mkdtemp(),
     name: 'test-typescript-project',
     defaultReleaseBranch: 'master',
     mergify: false,
@@ -190,9 +169,7 @@ test('jestOptions.typeScriptCompilerOptions is deprecated', () => {
 test('testdir is under src', () => {
   // WHEN
   const project = new TypeScriptProject({
-    outdir: mkdtemp(),
     defaultReleaseBranch: 'master',
-    logging: { level: LogLevel.OFF },
     name: 'test-typescript-project',
     srcdir: 'mysrc',
     testdir: 'mysrc/boom/bam/__tests',
@@ -209,9 +186,6 @@ test('addTestMatch() can be used to add patterns', () => {
     outdir: mkdtemp(),
     defaultReleaseBranch: 'master',
     name: 'test',
-    logging: {
-      level: LogLevel.OFF,
-    },
   });
   const jest = new Jest(project, { jestConfig: { testMatch: [] } });
 
