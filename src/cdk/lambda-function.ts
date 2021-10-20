@@ -21,14 +21,16 @@ export interface LambdaFunctionOptions {
   /**
    * The name of the generated TypeScript source file.
    *
-   * @default - The name of the entrypoint file, without the `.lambda` extension.
+   * @default - The name of the entrypoint file, with the `-function.ts` suffix
+   * instead of `.lambda.ts`.
    */
   readonly constructFile?: string;
 
   /**
    * The name of the generated `lambda.Function` subclass.
    *
-   * @default - A pascal cased version of the name of the entrypoint file, with the extension removed.
+   * @default - A pascal cased version of the name of the entrypoint file, with
+   * the extension `Function` (e.g. `ResizeImageFunction`).
    */
   readonly constructName?: string;
 
@@ -88,7 +90,7 @@ export class LambdaFunction extends Component {
     }
 
     const basePath = join(dirname(entrypoint), basename(entrypoint, EXT));
-    const constructFile = options.constructFile ?? `${basePath}.ts`;
+    const constructFile = options.constructFile ?? `${basePath}-function.ts`;
     const constructFilePath = join(project.srcdir, constructFile);
 
     if (extname(constructFilePath) !== '.ts') {
@@ -98,7 +100,7 @@ export class LambdaFunction extends Component {
     const bundledirName = `${basePath}.bundle`;
 
     // type names
-    const constructName = options.constructName ?? pascal(basename(basePath));
+    const constructName = options.constructName ?? pascal(basename(basePath)) + 'Function';
     const propsType = `${constructName}Props`;
 
     const src = new SourceCode(project, constructFilePath);

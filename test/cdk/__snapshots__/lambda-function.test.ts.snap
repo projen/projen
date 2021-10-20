@@ -7,16 +7,16 @@ import * as lambda from '@aws-cdk/aws-lambda';
 import { Construct } from '@aws-cdk/core';
 
 /**
- * Props for Hello
+ * Props for HelloFunction
  */
-export interface HelloProps extends lambda.FunctionOptions {
+export interface HelloFunctionProps extends lambda.FunctionOptions {
 }
 
 /**
  * An AWS Lambda function which executes hello.
  */
-export class Hello extends lambda.Function {
-  constructor(scope: Construct, id: string, props?: HelloProps) {
+export class HelloFunction extends lambda.Function {
+  constructor(scope: Construct, id: string, props?: HelloFunctionProps) {
     super(scope, id, {
       description: 'hello.lambda.ts',
       ...props,

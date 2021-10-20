@@ -17,7 +17,7 @@ describe('bundled function', () => {
     });
 
     const snapshot = synthSnapshot(project);
-    generatedSource = snapshot['src/hello.ts'];
+    generatedSource = snapshot['src/hello-function.ts'];
     tasks = snapshot['.projen/tasks.json'].tasks;
   });
 
@@ -111,7 +111,7 @@ test('runtime can be used to customize the lambda runtime and esbuild target', (
   });
 
   const snapshot = synthSnapshot(project);
-  const generatedSource = snapshot['src/hello.ts'];
+  const generatedSource = snapshot['src/hello-function.ts'];
   const tasks = snapshot['.projen/tasks.json'].tasks;
   expect(generatedSource).toContain('runtime: lambda.Runtime.NODEJS_12_X,');
   expect(tasks['bundle:hello']).toEqual({
