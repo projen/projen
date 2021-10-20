@@ -47,7 +47,8 @@ Name|Description
 [Version](#projen-version)|*No description*
 [XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|Represents a YAML file.
-[cdk.BundledLambdaFunction](#projen-cdk-bundledlambdafunction)|Generates a pre-bundled AWS Lambda function construct from handler code.
+[cdk.LambdaFunction](#projen-cdk-lambdafunction)|Generates a pre-bundled AWS Lambda function construct from handler code.
+[cdk.LambdaFunctionRuntime](#projen-cdk-lambdafunctionruntime)|The runtime for the AWS Lambda function.
 [deps.Dependencies](#projen-deps-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
 [git.GitAttributesFile](#projen-git-gitattributesfile)|Assign attributes to file names in a git repository.
 [github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
@@ -167,7 +168,7 @@ Name|Description
 [VersionOptions](#projen-versionoptions)|Options for `Version`.
 [XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
 [YamlFileOptions](#projen-yamlfileoptions)|Options for `JsonFile`.
-[cdk.BundledLambdaFunctionOptions](#projen-cdk-bundledlambdafunctionoptions)|Options for `LambdaBundle`.
+[cdk.LambdaFunctionOptions](#projen-cdk-lambdafunctionoptions)|Options for `LambdaFunction`.
 [deps.Dependency](#projen-deps-dependency)|Represents a project dependency.
 [deps.DependencyCoordinates](#projen-deps-dependencycoordinates)|Coordinates of the dependency (name and version).
 [deps.DepsManifest](#projen-deps-depsmanifest)|*No description*
@@ -5078,7 +5079,7 @@ __Returns__:
 
 
 
-## class BundledLambdaFunction 🔹 <a id="projen-cdk-bundledlambdafunction"></a>
+## class LambdaFunction 🔹 <a id="projen-cdk-lambdafunction"></a>
 
 Generates a pre-bundled AWS Lambda function construct from handler code.
 
@@ -5101,14 +5102,15 @@ __Extends__: [Component](#projen-component)
 Defines a pre-bundled AWS Lambda function construct from handler code.
 
 ```ts
-new cdk.BundledLambdaFunction(project: TypeScriptProject, options: BundledLambdaFunctionOptions)
+new cdk.LambdaFunction(project: TypeScriptProject, options: LambdaFunctionOptions)
 ```
 
 * **project** (<code>[TypeScriptProject](#projen-typescriptproject)</code>)  The project to use.
-* **options** (<code>[cdk.BundledLambdaFunctionOptions](#projen-cdk-bundledlambdafunctionoptions)</code>)  Options.
+* **options** (<code>[cdk.LambdaFunctionOptions](#projen-cdk-lambdafunctionoptions)</code>)  Options.
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function). 
   * **constructFile** (<code>string</code>)  The name of the generated TypeScript source file. __*Default*__: The name of the entrypoint file, without the `.lambda` extension.
   * **constructName** (<code>string</code>)  The name of the generated `lambda.Function` subclass. __*Default*__: A pascal cased version of the name of the entrypoint file, with the extension removed.
+  * **runtime** (<code>[cdk.LambdaFunctionRuntime](#projen-cdk-lambdafunctionruntime)</code>)  The node.js version to target. __*Default*__: LambdaFunctionRuntime.NODEJS_14_X
 
 
 
@@ -5118,6 +5120,27 @@ new cdk.BundledLambdaFunction(project: TypeScriptProject, options: BundledLambda
 Name | Type | Description 
 -----|------|-------------
 **bundleTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+
+
+
+## class LambdaFunctionRuntime 🔹 <a id="projen-cdk-lambdafunctionruntime"></a>
+
+The runtime for the AWS Lambda function.
+
+__Submodule__: cdk
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**esbuildTarget**🔹 | <code>string</code> | The esbuild setting to use.
+**functionRuntime**🔹 | <code>string</code> | The aws-lambda.Runtime member name to use.
+*static* **NODEJS_10_X**🔹 | <code>[cdk.LambdaFunctionRuntime](#projen-cdk-lambdafunctionruntime)</code> | Node.js 10.x.
+*static* **NODEJS_12_X**🔹 | <code>[cdk.LambdaFunctionRuntime](#projen-cdk-lambdafunctionruntime)</code> | Node.js 12.x.
+*static* **NODEJS_14_X**🔹 | <code>[cdk.LambdaFunctionRuntime](#projen-cdk-lambdafunctionruntime)</code> | Node.js 14.x.
 
 
 
@@ -11239,10 +11262,10 @@ Name | Type | Description
 
 
 
-## struct BundledLambdaFunctionOptions 🔹 <a id="projen-cdk-bundledlambdafunctionoptions"></a>
+## struct LambdaFunctionOptions 🔹 <a id="projen-cdk-lambdafunctionoptions"></a>
 
 
-Options for `LambdaBundle`.
+Options for `LambdaFunction`.
 
 
 
@@ -11251,6 +11274,7 @@ Name | Type | Description
 **entrypoint**🔹 | <code>string</code> | A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function).
 **constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, without the `.lambda` extension.
 **constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension removed.
+**runtime**?🔹 | <code>[cdk.LambdaFunctionRuntime](#projen-cdk-lambdafunctionruntime)</code> | The node.js version to target.<br/>__*Default*__: LambdaFunctionRuntime.NODEJS_14_X
 
 
 
