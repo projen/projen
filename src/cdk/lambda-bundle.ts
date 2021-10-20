@@ -3,6 +3,7 @@ import { pascal } from 'case';
 import { Component } from '../component';
 import { FileBase } from '../file';
 import { SourceCode } from '../source-code';
+import { Task } from '../tasks';
 import { TypeScriptProject } from '../typescript';
 
 const EXT = '.lambda.ts';
@@ -53,6 +54,10 @@ export interface BundledLambdaFunctionOptions {
  * which is bound to the bundled handle through an asset.
  */
 export class BundledLambdaFunction extends Component {
+  private readonly typescriptProject: TypeScriptProject;
+
+  public readonly bundleTask: Task;
+
   /**
    * Defines a pre-bundled AWS Lambda function construct from handler code.
    *
@@ -61,6 +66,8 @@ export class BundledLambdaFunction extends Component {
    */
   constructor(project: TypeScriptProject, options: BundledLambdaFunctionOptions) {
     super(project);
+
+    this.typescriptProject = project;
 
     // make sure entrypoint is within the source directory
     if (!options.entrypoint.startsWith(project.srcdir)) {
@@ -123,15 +130,24 @@ export class BundledLambdaFunction extends Component {
       ].join(' '),
     });
 
-    console.error(`${basePath}: construct "${constructName}" under "${constructFilePath}"`);
-    console.error(`${basePath}: bundle task "${bundle.name}"`);
+    this.project.logger.info(`${basePath}: construct "${constructName}" generated under "${constructFilePath}"`);
+    this.project.logger.info(`${basePath}: bundle task "${bundle.name}"`);
 
     // add this function to the bundle task
-    let bundleTask = project.tasks.tryFind('bundle');
+    this.projectBundleTask.spawn(bundle);
+    this.bundleTask = bundle;;
+  }
+
+  /**
+   * Returns the project-level "bundle" task.
+   */
+  private get projectBundleTask(): Task {
+    let bundleTask = this.project.tasks.tryFind('bundle');
     if (!bundleTask) {
-      bundleTask = project.addTask('bundle', { description: 'Bundle assets' });
-      project.compileTask.spawn(bundleTask);
+      bundleTask = this.project.addTask('bundle', { description: 'Bundle assets' });
+      this.typescriptProject.compileTask.spawn(bundleTask);
     }
-    bundleTask.spawn(bundle);
+
+    return bundleTask;
   }
 }
