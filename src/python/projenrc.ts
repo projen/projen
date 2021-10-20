@@ -1,13 +1,11 @@
 import { dirname, join } from 'path';
+import { snake } from 'case';
 import { existsSync, mkdirpSync, writeFileSync } from 'fs-extra';
 import { PROJEN_VERSION } from '../common';
 import { Component } from '../component';
 import { DependencyType } from '../deps';
 import { readJsiiManifest } from '../inventory';
 import { Project } from '../project';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const decamelize = require('decamelize');
 
 /**
  * Options for `Projenrc`.
@@ -126,7 +124,7 @@ function renderPythonOptions(indent: number, optionFqns: Record<string, string>,
 }
 
 function toPythonProperty(prop: string) {
-  return decamelize(prop);
+  return snake(prop);
 }
 
 function toPythonValue(value: any, name: string, optionFqns: Record<string, string>) {

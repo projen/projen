@@ -1,9 +1,8 @@
 import * as child_process from 'child_process';
 import * as path from 'path';
+import { lower } from 'case';
 import * as fs from 'fs-extra';
 import * as logging from './logging';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const decamelize = require('decamelize');
 
 const MAX_BUFFER = 10 * 1024 * 1024;
 
@@ -142,7 +141,7 @@ export function decamelizeKeysRecursively(input: any, opt?: DecamelizeRecursivel
     const mappedObject: Record<string, any> = {};
     for (const [key, value] of Object.entries(input)) {
       const transformedKey = shouldDecamelize([...path_, key], value)
-        ? decamelize(key, separator)
+        ? lower(key, separator)
         : key;
 
       mappedObject[transformedKey] = decamelizeKeysRecursively(value, {
@@ -277,7 +276,7 @@ export function kebabCaseKeys<T = unknown>(obj: T, recursive = true): T {
     if (recursive) {
       v = kebabCaseKeys(v, recursive);
     }
-    result[decamelize(k).replace(/_/mg, '-')] = v;
+    result[lower(k, '-')] = v;
   }
   return result as any;
 }

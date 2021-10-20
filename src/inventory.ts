@@ -1,8 +1,7 @@
 import * as path from 'path';
+import { snake } from 'case';
 import * as fs from 'fs-extra';
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const decamelize = require('decamelize');
 const PROJEN_MODULE_ROOT = path.join(__dirname, '..');
 const PROJECT_BASE_FQN = 'projen.Project';
 
@@ -186,7 +185,7 @@ function toProjectType(jsii: JsiiTypes, fqn: string) {
   const typename = fqn.substring(fqn.indexOf('.') + 1);
 
   const docsurl = `https://github.com/projen/projen/blob/main/API.md#projen-${typename.toLocaleLowerCase().replace(/\./g, '-')}`;
-  let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
+  let pjid = typeinfo.docs?.custom?.pjid ?? snake(typename).replace(/_project$/, '');
   return {
     moduleName: typeinfo.assembly,
     typename,
@@ -277,7 +276,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         docs: prop.docs.summary,
         type: typeName,
         kind: jsiiKind,
-        switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
+        switch: propPath.map(p => snake(p).replace(/_/g, '-')).join('-'),
         default: defaultValue,
         optional: isOptional,
         featured: prop.docs?.custom?.featured === 'true',
@@ -344,6 +343,6 @@ function checkDefaultIsParsable(prop: string, value: string, type: string) {
     }
 
   } catch (e) {
-    throw new Error(`unable to JSON.parse() value "${value}" specified as @default for mandatory option "${prop}": ${e.message}`);
+    throw new Error(`unable to JSON.parse() value "${value}" specified as @default for mandatory option "${prop}": ${(e as any).message}`);
   }
 }
