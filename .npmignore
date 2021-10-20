@@ -6,7 +6,7 @@ junit.xml
 /dist/changelog.md
 /dist/version.txt
 /.mergify.yml
-/src/__tests__/
+/test/
 /tsconfig.dev.json
 /src/
 !/lib/
@@ -19,7 +19,6 @@ dist
 /.idea/
 /.projenrc.js
 tsconfig.tsbuildinfo
-/lib/__tests__/
 /.eslintrc.json
 !.jsii
 /projen.bash

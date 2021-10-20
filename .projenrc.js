@@ -8,12 +8,11 @@ const project = new JsiiProject({
   authorEmail: 'benisrae@amazon.com',
   stability: 'experimental',
 
+
   pullRequestTemplateContents: [
     '---',
     'By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.',
   ],
-
-  testdir: 'src/__tests__',
 
   bundledDeps: [
     'yaml',
@@ -50,6 +49,9 @@ const project = new JsiiProject({
   devContainer: true,
   // since this is projen, we need to always compile before we run
   projenCommand: '/bin/bash ./projen.bash',
+
+  // cli tests need projen to be compiled
+  compileBeforeTest: true,
 
   // makes it very hard to iterate with jest --watch
   jestOptions: {
@@ -100,7 +102,7 @@ new TextFile(project, 'projen.bash', {
 });
 project.npmignore.exclude('/projen.bash');
 
-project.addExcludeFromCleanup('src/__tests__/**');
+project.addExcludeFromCleanup('test/**'); // because snapshots include the projen marker...
 project.gitignore.include('templates/**');
 
 // expand markdown macros in readme

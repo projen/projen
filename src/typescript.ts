@@ -104,7 +104,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
    * Compile the code before running tests.
    *
-   * @default - if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
+   * @default - if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false`.
    */
   readonly compileBeforeTest?: boolean;
 
