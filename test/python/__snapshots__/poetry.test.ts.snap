@@ -253,11 +253,11 @@ exclude = [ \\"my_package/excluded.py\\" ]
   [tool.poetry.extras]
   cli = [ \\"package1\\", \\"package2\\" ]
 
-[tool.poetry.plugins.\\"blogtool.parsers\\"]
-\\".rst\\" = \\"some_module:SomeClass\\"
+[tool.poetry.plugins.blogtool-parsers]
+-rst = \\"some_module:SomeClass\\"
 
   [tool.poetry.urls]
-  \\"bug tracker\\" = \\"https://github.com/test-python-project/issues\\"
+  bug-tracker = \\"https://github.com/test-python-project/issues\\"
 
   [tool.poetry.dependencies]
   package1 = \\"0.0.1\\"

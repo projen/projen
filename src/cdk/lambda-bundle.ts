@@ -36,22 +36,20 @@ export interface BundledLambdaFunctionOptions {
 /**
  * Generates a pre-bundled AWS Lambda function construct from handler code.
  *
- * @example
- *
  * To use this, create an AWS Lambda handler file under your source tree with
  * the `.lambda.ts` extension and add a `BundledLambdaFunction` component to
  * your typescript project pointing to this entrypoint.
- *
- * ```ts
- * new BundledLambdaFunction(myProject, {
- *   entrypoint: 'src/foo.lambda.ts'
- * });
- * ```
  *
  * This will add a task to your "compile" step which will use `esbuild` to bundle
  * the handler code into the build directory. It will also generate a file `src/foo.ts`
  * with a custom AWS construct called `Foo` which extends `@aws-cdk/aws-lambda.Function`
  * which is bound to the bundled handle through an asset.
+ *
+ * @example
+ *
+ * new BundledLambdaFunction(myProject, {
+ *   entrypoint: 'src/foo.lambda.ts'
+ * });
  */
 export class BundledLambdaFunction extends Component {
   private readonly typescriptProject: TypeScriptProject;
@@ -100,9 +98,15 @@ export class BundledLambdaFunction extends Component {
     src.line('import * as lambda from \'@aws-cdk/aws-lambda\';');
     src.line('import { Construct } from \'@aws-cdk/core\';');
     src.line();
+    src.line('/**');
+    src.line(` * Props for ${constructName}`);
+    src.line(' */');
     src.open(`export interface ${propsType} extends lambda.FunctionOptions {`);
     src.close('}');
     src.line();
+    src.line('/**');
+    src.line(` * An AWS Lambda function which executes ${basePath}.`);
+    src.line(' */');
     src.open(`export class ${constructName} extends lambda.Function {`);
     src.open(`constructor(scope: Construct, id: string, props?: ${propsType}) {`);
     src.open('super(scope, id, {');
