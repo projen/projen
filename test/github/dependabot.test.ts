@@ -1,6 +1,6 @@
 import { Dependabot, DependabotRegistryType } from '../../src/github';
 import { NodeProject, NodeProjectOptions } from '../../src/node-project';
-import { mkdtemp, synthSnapshot } from '../util';
+import { synthSnapshot } from '../util';
 
 describe('dependabot', () => {
   test('default', () => {
@@ -112,7 +112,6 @@ describe('dependabot', () => {
 type ProjectOptions = Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name'>;
 function createProject(options: ProjectOptions = {}): NodeProject {
   return new NodeProject({
-    outdir: mkdtemp(),
     defaultReleaseBranch: 'main',
     name: 'node-project',
     ...options,

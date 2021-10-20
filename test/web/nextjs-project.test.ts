@@ -1,6 +1,5 @@
-import { LogLevel } from '../../src/logger';
 import { NextJsProject, NextJsProjectOptions } from '../../src/web';
-import { mkdtemp, synthSnapshot } from '../util';
+import { synthSnapshot } from '../util';
 
 test('defaults', () => {
   const p = new TestNextJsProject();
@@ -20,8 +19,6 @@ class TestNextJsProject extends NextJsProject {
       ...options,
       clobber: false,
       name: 'test-nextjs-project',
-      outdir: mkdtemp(),
-      logging: { level: LogLevel.OFF },
       defaultReleaseBranch: 'main',
     });
   }

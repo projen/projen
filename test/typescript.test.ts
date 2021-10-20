@@ -1,6 +1,6 @@
 import { PROJEN_RC } from '../src/common';
 import { mergeTsconfigOptions, TypeScriptProject } from '../src/typescript';
-import { mkdtemp, synthSnapshot } from './util';
+import { synthSnapshot } from './util';
 
 describe('mergeTsconfigOptions', () => {
   test('merging includes', () => {
@@ -63,7 +63,6 @@ describe('mergeTsconfigOptions', () => {
 test('tsconfig prop is propagated to eslint and jest tsconfigs', () => {
   const prj = new TypeScriptProject({
     name: 'test',
-    outdir: mkdtemp(),
     defaultReleaseBranch: 'test',
     tsconfig: {
       include: ['typescript.test.ts'],
@@ -114,7 +113,6 @@ test('sources and compiled output can be collocated', () => {
 
   const prj = new TypeScriptProject({
     name: 'test',
-    outdir: mkdtemp(),
     defaultReleaseBranch: 'test',
     libdir: 'lib',
     srcdir: 'lib',
@@ -131,7 +129,6 @@ test('sources and compiled output can be collocated', () => {
 test('tsconfigDevFile can be used to control the name of the tsconfig dev file', () => {
   const prj = new TypeScriptProject({
     name: 'test',
-    outdir: mkdtemp(),
     defaultReleaseBranch: 'test',
     tsconfigDevFile: 'tsconfig.foo.json',
     libdir: 'lib',
@@ -147,7 +144,6 @@ test('tsconfigDevFile can be used to control the name of the tsconfig dev file',
 test('projenrc.ts', () => {
   const prj = new TypeScriptProject({
     name: 'test',
-    outdir: mkdtemp(),
     defaultReleaseBranch: 'main',
     projenrcTs: true,
   });

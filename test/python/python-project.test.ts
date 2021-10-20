@@ -1,6 +1,5 @@
-import { LogLevel } from '../../src/logger';
 import { PythonProject, PythonProjectOptions } from '../../src/python';
-import { mkdtemp, synthSnapshot } from '../util';
+import { synthSnapshot } from '../util';
 
 test('defaults', () => {
   const p = new TestPythonProject();
@@ -56,8 +55,6 @@ class TestPythonProject extends PythonProject {
       authorName: 'First Last',
       authorEmail: 'email@example.com',
       version: '0.1.0',
-      outdir: mkdtemp(),
-      logging: { level: LogLevel.OFF },
     });
   }
 }

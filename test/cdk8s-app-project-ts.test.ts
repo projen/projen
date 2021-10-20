@@ -1,9 +1,8 @@
-import { Cdk8sTypeScriptAppOptions, Cdk8sTypeScriptApp } from '../src/cdk8s-app-ts';
-import { LogLevel } from '../src/logger';
-import { synthSnapshot, mkdtemp } from './util';
+import { Cdk8sTypeScriptApp } from '../src/cdk8s-app-ts';
+import { synthSnapshot } from './util';
 
 test ('test if cdk8s synth is possible', () => {
-  const project = new TestCdk8sAppProject({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: '1.0.0-beta.18',
     name: 'project',
     defaultReleaseBranch: 'main',
@@ -50,7 +49,7 @@ test ('test if cdk8s synth is possible', () => {
 });
 
 test ('constructs version undefined', () => {
-  const project = new TestCdk8sAppProject({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: '1.0.0-beta.11',
     name: 'project',
     defaultReleaseBranch: 'main',
@@ -69,7 +68,7 @@ test ('constructs version undefined', () => {
 });
 
 test ('constructs version pinning', () => {
-  const project = new TestCdk8sAppProject({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: '1.0.0-beta.18',
     name: 'project',
     defaultReleaseBranch: 'main',
@@ -88,7 +87,7 @@ test ('constructs version pinning', () => {
 });
 
 test ('cdk8sPlusVersion undefined', () => {
-  const project = new TestCdk8sAppProject({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: '1.0.0-beta.11',
     name: 'project',
     defaultReleaseBranch: 'main',
@@ -106,7 +105,7 @@ test ('cdk8sPlusVersion undefined', () => {
 });
 
 test ('cdk8sPlusVersion defined', () => {
-  const project = new TestCdk8sAppProject({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: '1.0.0-beta.11',
     name: 'project',
     defaultReleaseBranch: 'main',
@@ -125,7 +124,7 @@ test ('cdk8sPlusVersion defined', () => {
 });
 
 test ('cdk8sPlusVersion pinning', () => {
-  const project = new TestCdk8sAppProject({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: '1.0.0-beta.11',
     name: 'project',
     defaultReleaseBranch: 'main',
@@ -143,15 +142,3 @@ test ('cdk8sPlusVersion pinning', () => {
     'constructs': '^3.3.75',
   });
 });
-
-class TestCdk8sAppProject extends Cdk8sTypeScriptApp {
-  constructor(options: Cdk8sTypeScriptAppOptions) {
-    super({
-      outdir: mkdtemp(),
-      logging: {
-        level: LogLevel.OFF,
-      },
-      ...options,
-    });
-  }
-}

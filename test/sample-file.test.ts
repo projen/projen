@@ -1,7 +1,7 @@
 import * as path from 'path';
-import { LogLevel, Project, ProjectOptions } from '../src';
+import { Project, ProjectOptions } from '../src';
 import { SampleDir, SampleFile } from '../src/sample-file';
-import { mkdtemp, synthSnapshot } from './util';
+import { synthSnapshot } from './util';
 
 
 test('sample file from text contents', () => {
@@ -79,13 +79,8 @@ test('sample directory from source with overwritten files', () => {
 
 export class TestProject extends Project {
   constructor(options: Omit<ProjectOptions, 'name'> = {}) {
-    const tmpdir = mkdtemp();
     super({
       name: 'my-project',
-      outdir: tmpdir,
-      logging: {
-        level: LogLevel.OFF,
-      },
       ...options,
     });
   }

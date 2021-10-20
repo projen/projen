@@ -1,10 +1,9 @@
 import { AwsCdkTypeScriptApp } from '../src/awscdk-app-ts';
-import { mkdtemp, synthSnapshot } from './util';
+import { synthSnapshot } from './util';
 
 describe('cdkVersion is >= 2.0.0', () => {
   test('use "aws-cdk-lib" the constructs at ^10.0.5', () => {
     const project = new AwsCdkTypeScriptApp({
-      outdir: mkdtemp(),
       cdkVersion: '2.0.0-rc.1',
       defaultReleaseBranch: 'main',
       name: 'test',
