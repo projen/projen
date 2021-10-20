@@ -9,9 +9,9 @@ import { TypeScriptProject } from '../typescript';
 const EXT = '.lambda.ts';
 
 /**
- * Options for `LambdaBundle`.
+ * Options for `LambdaFunction`.
  */
-export interface BundledLambdaFunctionOptions {
+export interface LambdaFunctionOptions {
   /**
    * A path from the project root directory to a TypeScript file which contains
    * the AWS Lambda handler entrypoint (exports a `handler` function).
@@ -31,6 +31,13 @@ export interface BundledLambdaFunctionOptions {
    * @default - A pascal cased version of the name of the entrypoint file, with the extension removed.
    */
   readonly constructName?: string;
+
+  /**
+   * The node.js version to target.
+   *
+   * @default LambdaFunctionRuntime.NODEJS_14_X
+   */
+  readonly runtime?: LambdaFunctionRuntime;
 }
 
 /**
@@ -51,7 +58,7 @@ export interface BundledLambdaFunctionOptions {
  *   entrypoint: 'src/foo.lambda.ts'
  * });
  */
-export class BundledLambdaFunction extends Component {
+export class LambdaFunction extends Component {
   private readonly typescriptProject: TypeScriptProject;
 
   public readonly bundleTask: Task;
@@ -62,8 +69,10 @@ export class BundledLambdaFunction extends Component {
    * @param project The project to use
    * @param options Options
    */
-  constructor(project: TypeScriptProject, options: BundledLambdaFunctionOptions) {
+  constructor(project: TypeScriptProject, options: LambdaFunctionOptions) {
     super(project);
+
+    const runtime = options.runtime ?? LambdaFunctionRuntime.NODEJS_14_X;
 
     this.typescriptProject = project;
 
@@ -112,7 +121,7 @@ export class BundledLambdaFunction extends Component {
     src.open('super(scope, id, {');
     src.line(`description: '${entrypoint}',`);
     src.line('...props,');
-    src.line('runtime: lambda.Runtime.NODEJS_14_X,');
+    src.line(`runtime: lambda.Runtime.${runtime.functionRuntime},`);
     src.line('handler: \'index.handler\',');
     src.line(`code: lambda.Code.fromAsset(path.join(__dirname, '${bundledirName}')),`);
     src.close('});');
@@ -127,7 +136,7 @@ export class BundledLambdaFunction extends Component {
         'esbuild',
         '--bundle',
         entry,
-        '--target="node14"',
+        `--target="${runtime.esbuildTarget}"`,
         '--platform="node"',
         `--outfile="${outfile}"`,
         '--external:aws-sdk',
@@ -153,5 +162,37 @@ export class BundledLambdaFunction extends Component {
     }
 
     return bundleTask;
+  }
+}
+
+/**
+ * The runtime for the AWS Lambda function.
+ */
+export class LambdaFunctionRuntime {
+  /**
+   * Node.js 10.x
+   */
+  public static readonly NODEJS_10_X = new LambdaFunctionRuntime('NODEJS_10_X', 'node10');
+
+  /**
+   * Node.js 12.x
+   */
+  public static readonly NODEJS_12_X = new LambdaFunctionRuntime('NODEJS_12_X', 'node12');
+
+  /**
+   * Node.js 14.x
+   */
+  public static readonly NODEJS_14_X = new LambdaFunctionRuntime('NODEJS_14_X', 'node14');
+
+  private constructor(
+    /**
+     * The aws-lambda.Runtime member name to use.
+     */
+    public readonly functionRuntime: string,
+
+    /**
+     * The esbuild setting to use.
+     */
+    public readonly esbuildTarget: string) {
   }
 }
