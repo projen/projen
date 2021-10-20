@@ -5108,8 +5108,8 @@ new cdk.LambdaFunction(project: TypeScriptProject, options: LambdaFunctionOption
 * **project** (<code>[TypeScriptProject](#projen-typescriptproject)</code>)  The project to use.
 * **options** (<code>[cdk.LambdaFunctionOptions](#projen-cdk-lambdafunctionoptions)</code>)  Options.
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function). 
-  * **constructFile** (<code>string</code>)  The name of the generated TypeScript source file. __*Default*__: The name of the entrypoint file, without the `.lambda` extension.
-  * **constructName** (<code>string</code>)  The name of the generated `lambda.Function` subclass. __*Default*__: A pascal cased version of the name of the entrypoint file, with the extension removed.
+  * **constructFile** (<code>string</code>)  The name of the generated TypeScript source file. __*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
+  * **constructName** (<code>string</code>)  The name of the generated `lambda.Function` subclass. __*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
   * **runtime** (<code>[cdk.LambdaFunctionRuntime](#projen-cdk-lambdafunctionruntime)</code>)  The node.js version to target. __*Default*__: LambdaFunctionRuntime.NODEJS_14_X
 
 
@@ -11272,8 +11272,8 @@ Options for `LambdaFunction`.
 Name | Type | Description 
 -----|------|-------------
 **entrypoint**🔹 | <code>string</code> | A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function).
-**constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, without the `.lambda` extension.
-**constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension removed.
+**constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
+**constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
 **runtime**?🔹 | <code>[cdk.LambdaFunctionRuntime](#projen-cdk-lambdafunctionruntime)</code> | The node.js version to target.<br/>__*Default*__: LambdaFunctionRuntime.NODEJS_14_X
 
 
