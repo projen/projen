@@ -1,6 +1,5 @@
-import { LogLevel } from '../../src/logger';
 import { NodeProject, NodeProjectOptions } from '../../src/node-project';
-import { mkdtemp, synthSnapshot } from '../util';
+import { synthSnapshot } from '../util';
 
 describe('mergify', () => {
   test('default', () => {
@@ -35,12 +34,8 @@ describe('mergify', () => {
 type ProjectOptions = Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name'>;
 function createProject(options: ProjectOptions = {}): NodeProject {
   return new NodeProject({
-    outdir: mkdtemp(),
     defaultReleaseBranch: 'main',
     name: 'node-project',
-    logging: {
-      level: LogLevel.OFF,
-    },
     ...options,
   });
 }

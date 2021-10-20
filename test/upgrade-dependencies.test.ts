@@ -2,7 +2,7 @@ import * as yaml from 'yaml';
 import { NodeProject, UpgradeDependenciesSchedule } from '../src';
 import { NodeProjectOptions } from '../src/node-project';
 import { Tasks } from '../src/tasks';
-import { mkdtemp, synthSnapshot } from './util';
+import { synthSnapshot } from './util';
 
 test('upgrades command includes all dependencies', () => {
 
@@ -175,7 +175,6 @@ test('git identity can be customized', () => {
 
 function createProject(options: Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name' | 'dependenciesUpgrade'> = {}): NodeProject {
   return new NodeProject({
-    outdir: mkdtemp(),
     defaultReleaseBranch: 'main',
     name: 'node-project',
     ...options,

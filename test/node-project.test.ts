@@ -1,12 +1,12 @@
 import * as yaml from 'yaml';
-import { NodeProject, NodeProjectOptions, LogLevel } from '../src';
+import { NodeProject, NodeProjectOptions } from '../src';
 import { DependencyType } from '../src/deps';
 import { JobPermission } from '../src/github/workflows-model';
 import * as logging from '../src/logging';
 import { NodePackage, NodePackageManager, NpmAccess } from '../src/node-package';
 import { Project } from '../src/project';
 import { Tasks } from '../src/tasks';
-import { mkdtemp, synthSnapshot, TestProject } from './util';
+import { synthSnapshot, TestProject } from './util';
 
 logging.disable();
 
@@ -647,11 +647,7 @@ test('workflowGitIdentity can be used to customize the git identity used in buil
 class TestNodeProject extends NodeProject {
   constructor(options: Partial<NodeProjectOptions> = {}) {
     super({
-      outdir: mkdtemp(),
       name: 'test-node-project',
-      logging: {
-        level: LogLevel.OFF,
-      },
       defaultReleaseBranch: 'main',
       ...options,
     });

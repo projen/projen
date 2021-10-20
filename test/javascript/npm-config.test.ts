@@ -1,7 +1,6 @@
 import { NpmConfig } from '../../src/javascript/npm-config';
-import { LogLevel } from '../../src/logger';
 import { NodeProject, NodeProjectOptions } from '../../src/node-project';
-import { mkdtemp, synthSnapshot } from '../util';
+import { synthSnapshot } from '../util';
 
 test('registry is handled correctly', () => {
   const prj = new TestNodeProject({
@@ -63,11 +62,7 @@ test('generic prop is set correctly', () => {
 class TestNodeProject extends NodeProject {
   constructor(options: Partial<NodeProjectOptions> = {}) {
     super({
-      outdir: mkdtemp(),
       name: 'test-node-project',
-      logging: {
-        level: LogLevel.OFF,
-      },
       defaultReleaseBranch: 'master',
       ...options,
     });

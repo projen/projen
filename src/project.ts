@@ -1,3 +1,5 @@
+import { mkdtempSync, realpathSync } from 'fs';
+import { tmpdir } from 'os';
 import * as path from 'path';
 import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
@@ -150,23 +152,7 @@ export class Project {
     this.parent = options.parent;
     this.excludeFromCleanup = [];
 
-    if (this.parent && options.outdir && path.isAbsolute(options.outdir)) {
-      throw new Error('"outdir" must be a relative path');
-    }
-
-    let outdir;
-    if (options.parent) {
-      if (!options.outdir) {
-        throw new Error('"outdir" must be specified for subprojects');
-      }
-
-      outdir = path.join(options.parent.outdir, options.outdir);
-    } else {
-      outdir = options.outdir ?? '.';
-    }
-
-    this.outdir = path.resolve(outdir);
-
+    this.outdir = this.determineOutdir(options.outdir);
     this.root = this.parent ? this.parent.root : this;
 
     // must happen after this.outdir, this.parent and this.root are initialized
@@ -441,6 +427,38 @@ export class Project {
     }
 
     this.subprojects.push(subproject);
+  }
+
+  /**
+   * Resolves the project's output directory.
+   */
+  private determineOutdir(outdirOption?: string) {
+    if (this.parent && outdirOption && path.isAbsolute(outdirOption)) {
+      throw new Error('"outdir" must be a relative path');
+    }
+
+    // if this is a subproject, it is relative to the parent
+    if (this.parent) {
+      if (!outdirOption) {
+        throw new Error('"outdir" must be specified for subprojects');
+      }
+
+      return path.resolve(this.parent.outdir, outdirOption);
+    }
+
+    // if this is running inside a test, use a temp directory (unless cwd is aleady under tmp)
+    if (process.env.JEST_WORKER_ID) {
+      const realCwd = realpathSync(process.cwd());
+      const realTmp = realpathSync(tmpdir());
+
+      if (realCwd.startsWith(realTmp)) {
+        return realCwd;
+      }
+
+      return mkdtempSync(path.join(tmpdir(), 'projen.'));
+    }
+
+    return path.resolve('.');
   }
 }
 

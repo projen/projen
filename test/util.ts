@@ -2,7 +2,7 @@ import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { glob } from 'glob';
-import { LogLevel, Project } from '../src';
+import { Project } from '../src';
 import * as logging from '../src/logging';
 import { GitHubProject, GitHubProjectOptions } from '../src/project';
 import { Task } from '../src/tasks';
@@ -14,14 +14,9 @@ logging.disable(); // no logging during tests
 
 export class TestProject extends GitHubProject {
   constructor(options: Omit<GitHubProjectOptions, 'name'> = {}) {
-    const tmpdir = mkdtemp();
     super({
       name: 'my-project',
-      outdir: tmpdir,
       clobber: false,
-      logging: {
-        level: LogLevel.OFF,
-      },
       ...options,
     });
   }
