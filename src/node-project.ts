@@ -1,5 +1,6 @@
 import { PROJEN_DIR, PROJEN_RC } from './common';
-import { AutoMerge, DependabotOptions, TaskWorkflow } from './github';
+import { AutoMerge, DependabotOptions, GitIdentity, TaskWorkflow } from './github';
+import { DEFAULT_GITHUB_ACTIONS_USER } from './github/constants';
 import { MergifyOptions } from './github/mergify';
 import { JobPermission, JobStep } from './github/workflows-model';
 import { IgnoreFile } from './ignore-file';
@@ -107,6 +108,13 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * @default "yarn install --frozen-lockfile && yarn projen"
    */
   readonly workflowBootstrapSteps?: any[];
+
+  /**
+   * The git identity to use in workflows.
+   *
+   * @default - GitHub Actions
+   */
+  readonly workflowGitIdentity?: GitIdentity;
 
   /**
    * Automatically release to npm when new versions are introduced.
@@ -419,12 +427,14 @@ export class NodeProject extends GitHubProject {
   }
 
   private readonly workflowBootstrapSteps: JobStep[];
+  private readonly workflowGitIdentity: GitIdentity;
 
   constructor(options: NodeProjectOptions) {
     super(options);
 
     this.package = new NodePackage(this, options);
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
+    this.workflowGitIdentity = options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
@@ -609,6 +619,7 @@ export class NodeProject extends GitHubProject {
 
       if (this.github) {
         this.buildWorkflow = new TaskWorkflow(this.github, {
+          gitIdentity: this.workflowGitIdentity,
           name: 'build',
           jobId: buildJobId,
           triggers: {
@@ -724,7 +735,7 @@ export class NodeProject extends GitHubProject {
     }
 
     if (depsUpgrade) {
-      const defaultOptions = {
+      const defaultOptions: UpgradeDependenciesOptions = {
         // if projen secret is defined we can also upgrade projen here.
         ignoreProjen: !options.projenUpgradeSecret,
         workflowOptions: {
@@ -734,6 +745,7 @@ export class NodeProject extends GitHubProject {
             image: options.workflowContainerImage,
           } : undefined,
           labels: autoApproveLabel(depsAutoApprove),
+          gitIdentity: this.workflowGitIdentity,
         },
       };
       const upgradeDependencies = new UpgradeDependencies(this, deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}]));
@@ -754,6 +766,7 @@ export class NodeProject extends GitHubProject {
           container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
           secret: options.projenUpgradeSecret,
           labels: autoApproveLabel(projenAutoApprove),
+          gitIdentity: this.workflowGitIdentity,
         },
       });
     }

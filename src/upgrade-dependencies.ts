@@ -1,6 +1,6 @@
 import { Component } from './component';
-import { GitHub, GithubWorkflow, workflows } from './github';
-import { GITHUB_ACTIONS_USER, SET_GIT_IDENTITY_WORKFLOW_STEP } from './github/constants';
+import { GitHub, GithubWorkflow, GitIdentity, workflows } from './github';
+import { DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from './github/constants';
 import { NodeProject } from './node-project';
 import { Task } from './tasks';
 
@@ -84,7 +84,6 @@ export interface UpgradeDependenciesOptions {
    * @default true
    */
   readonly signoff?: boolean;
-
 }
 
 /**
@@ -106,6 +105,8 @@ export class UpgradeDependencies extends Component {
    */
   public readonly ignoresProjen: boolean;
 
+  private readonly gitIdentity: GitIdentity;
+
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
 
@@ -113,6 +114,7 @@ export class UpgradeDependencies extends Component {
     this.options = options;
     this.pullRequestTitle = options.pullRequestTitle ?? 'upgrade dependencies';
     this.ignoresProjen = this.options.ignoreProjen ?? true;
+    this.gitIdentity = options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
 
     project.addDevDeps('npm-check-updates@^11');
   }
@@ -216,7 +218,7 @@ export class UpgradeDependencies extends Component {
         uses: 'actions/checkout@v2',
         with: branch ? { ref: branch } : undefined,
       },
-      SET_GIT_IDENTITY_WORKFLOW_STEP,
+      setGitIdentityStep(this.gitIdentity),
       ...this._project.installWorkflowSteps,
       {
         name: 'Upgrade dependencies',
@@ -287,7 +289,7 @@ export class UpgradeDependencies extends Component {
       `*Automatically created by projen via the "${workflow.name}" workflow*`,
     ].join('\n');
 
-    const comitter = `${GITHUB_ACTIONS_USER.name} <${GITHUB_ACTIONS_USER.email}>`;
+    const comitter = `${this.gitIdentity.name} <${this.gitIdentity.email}>`;
 
     const steps: workflows.JobStep[] = [
       {
@@ -295,7 +297,7 @@ export class UpgradeDependencies extends Component {
         uses: 'actions/checkout@v2',
         with: upgrade.ref ? { ref: upgrade.ref } : undefined,
       },
-      SET_GIT_IDENTITY_WORKFLOW_STEP,
+      setGitIdentityStep(this.gitIdentity),
       {
         name: 'Download patch',
         uses: 'actions/download-artifact@v2',
@@ -445,6 +447,12 @@ export interface UpgradeDependenciesWorkflowOptions {
    * @default - All release branches configured for the project.
    */
   readonly branches?: string[];
+
+  /**
+   * The git identity to use for commits.
+   * @default "github-actions@github.com"
+   */
+  readonly gitIdentity?: GitIdentity;
 }
 
 /**

@@ -1,3 +1,4 @@
+import { GitIdentity } from '.';
 import * as workflow from './workflows-model';
 
 /**
@@ -5,7 +6,7 @@ import * as workflow from './workflows-model';
  *
  * Use this when you need to perform a commit as part of your workflow.
  */
-export const GITHUB_ACTIONS_USER = {
+export const DEFAULT_GITHUB_ACTIONS_USER: GitIdentity = {
   name: 'github-actions',
   email: 'github-actions@github.com',
 };
@@ -13,10 +14,12 @@ export const GITHUB_ACTIONS_USER = {
 /**
  * Workflow flow to configure git with the github actions identity.
  */
-export const SET_GIT_IDENTITY_WORKFLOW_STEP: workflow.JobStep = {
-  name: 'Set git identity',
-  run: [
-    `git config user.name "${GITHUB_ACTIONS_USER.name}"`,
-    `git config user.email "${GITHUB_ACTIONS_USER.email}"`,
-  ].join('\n'),
+export function setGitIdentityStep(id: GitIdentity): workflow.JobStep {
+  return {
+    name: 'Set git identity',
+    run: [
+      `git config user.name "${id.name}"`,
+      `git config user.email "${id.email}"`,
+    ].join('\n'),
+  };
 };
