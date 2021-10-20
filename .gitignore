@@ -41,12 +41,11 @@ junit.xml
 /dist/version.txt
 !/.mergify.yml
 !/.github/pull_request_template.md
-!/src/__tests__/
+!/test/
 !/tsconfig.dev.json
 !/src/
 /lib
 /dist/
-!/.projen/jest-snapshot-resolver.js
 !/.eslintrc.json
 .jsii
 tsconfig.json
