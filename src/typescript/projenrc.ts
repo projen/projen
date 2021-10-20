@@ -10,6 +10,14 @@ export interface ProjenrcOptions {
    * @default ".projenrc.ts"
    */
   readonly filename?: string;
+
+  /**
+   * A directory tree that may contain *.ts files that can be referenced from
+   * your projenrc typescript file.
+   *
+   * @default "projenrc"
+   */
+  readonly projenCodeDir?: string;
 }
 
 /**
@@ -23,20 +31,27 @@ export class Projenrc extends Component {
 
     this.rcfile = options.filename ?? '.projenrc.ts';
 
-    // tell eslint to take .projenrc.ts into account as a dev-dependency
+    const projensrc = options.projenCodeDir ?? 'projenrc';
+
+    // tell eslint to take .projenrc.ts and *.ts files under `projen` into account as a dev-dependency
+    project.tsconfigDev.addInclude(this.rcfile);
     project.eslint?.allowDevDeps(this.rcfile);
     project.eslint?.addIgnorePattern(`!${this.rcfile}`);
-    project.tsconfigEslint?.addInclude(this.rcfile);
+
+    project.tsconfigDev.addInclude(`${projensrc}/**/*.ts`);
+    project.eslint?.allowDevDeps(`${projensrc}/**/*.ts`);
+    project.eslint?.addIgnorePattern(`!${projensrc}/**/*.ts`);
 
     // this is the task projen executes when running `projen` without a
     // specific task (if this task is not defined, projen falls back to
     // running "node .projenrc.js").
     project.addDevDeps('ts-node@^9');
 
-    // use the --skip-project flag to ensure ts-node doesn't use the
-    // tsconfig.json settings intended for the project's source code
-    // see: https://github.com/projen/projen/issues/948
-    project.addTask(TypeScriptProject.DEFAULT_TASK, { exec: `ts-node --skip-project ${this.rcfile}` });
+    // we use "tsconfig.dev.json" here to allow projen source files to reside
+    // anywhere in the project tree.
+    project.addTask(TypeScriptProject.DEFAULT_TASK, {
+      exec: `ts-node --project ${project.tsconfigDev.fileName} ${this.rcfile}`,
+    });
 
     this.generateProjenrc();
   }

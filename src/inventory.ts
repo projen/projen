@@ -105,12 +105,19 @@ export function discover(...moduleDirs: string[]) {
  */
 function discoverJsiiTypes(...moduleDirs: string[]) {
   const jsii: JsiiTypes = {};
+  const discoveredManifests: Array<string> = [];
 
   const discoverJsii = (dir: string) => {
     const jsiiFile = path.join(dir, '.jsii');
     if (!fs.existsSync(jsiiFile)) { return; } // no jsii manifest
 
     const manifest = fs.readJsonSync(jsiiFile);
+
+    if (discoveredManifests.includes(manifest.fingerprint)) {
+      return;
+    }
+    discoveredManifests.push(manifest.fingerprint);
+
     for (const [fqn, type] of Object.entries(manifest.types as JsiiTypes)) {
       jsii[fqn] = {
         ...type,
@@ -178,7 +185,7 @@ function toProjectType(jsii: JsiiTypes, fqn: string) {
   // projen.web.ReactProject -> web.ReactProject
   const typename = fqn.substring(fqn.indexOf('.') + 1);
 
-  const docsurl = `https://github.com/projen/projen/blob/master/API.md#projen-${typename.toLocaleLowerCase().replace(/\./g, '-')}`;
+  const docsurl = `https://github.com/projen/projen/blob/main/API.md#projen-${typename.toLocaleLowerCase().replace(/\./g, '-')}`;
   let pjid = typeinfo.docs?.custom?.pjid ?? decamelize(typename).replace(/_project$/, '');
   return {
     moduleName: typeinfo.assembly,

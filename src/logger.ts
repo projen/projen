@@ -35,7 +35,10 @@ export class Logger extends Component {
   constructor(project: Project, options: LoggerOptions = {}) {
     super(project);
 
-    this.level = options.level ?? LogLevel.INFO;
+    // if we are running inside a test, default to no logs
+    const defaultLevel = process.env.JEST_WORKER_ID ? LogLevel.OFF : LogLevel.INFO;
+
+    this.level = options.level ?? defaultLevel;
     this.usePrefix = options.usePrefix ?? false;
   }
 

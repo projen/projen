@@ -12,6 +12,7 @@
  * - MAJOR: major version number NN to filter (tags are filtered by "vNN."
  *   prefix). if not specified, the last major version is selected
  * - CHANGELOG: name of changelog file to create
+ * - RELEASE_TAG_PREFIX: (optional) a prefix to apply to the release tag
  *
  */
 import { bump, BumpOptions } from './bump-version';
@@ -21,6 +22,8 @@ const prerelease = process.env.PRERELEASE;
 const major = process.env.MAJOR;
 const changelog = process.env.CHANGELOG;
 const bumpFile = process.env.BUMPFILE;
+const releaseTagFile = process.env.RELEASETAG;
+const prefix = process.env.RELEASE_TAG_PREFIX;
 
 if (!versionFile) {
   throw new Error('OUTFILE is required');
@@ -34,6 +37,10 @@ if (!bumpFile) {
   throw new Error('BUMPFILE is required');
 }
 
+if (!releaseTagFile) {
+  throw new Error('RELEASETAG is required');
+}
+
 const majorVersion = (major == null || major === '') ? undefined : parseInt(major);
 if (majorVersion === NaN) {
   throw new Error(`MAJOR must be a number: ${majorVersion}`);
@@ -45,6 +52,8 @@ const opts: BumpOptions = {
   majorVersion: majorVersion,
   prerelease: prerelease,
   bumpFile: bumpFile,
+  releaseTagFile: releaseTagFile,
+  tagPrefix: prefix,
 };
 
 bump(process.cwd(), opts).catch((e: Error) => {

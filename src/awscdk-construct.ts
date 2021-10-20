@@ -122,8 +122,8 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
  *   // jsii publishing
  *
  *   java: {
- *     javaPackage: 'com.github.eladb.watchful',
- *     mavenGroupId: 'com.github.eladb',
+ *     javaPackage: 'io.github.cdklabs.watchful',
+ *     mavenGroupId: 'io.github.cdklabs',
  *     mavenArtifactId: 'cdk-watchful'
  *   },
  *   python: {
@@ -155,6 +155,10 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
         pinnedDevDependency: false,
       },
     });
+
+    if (!options.cdkVersion) {
+      throw new Error('Required field cdkVersion is not specified.');
+    }
 
     this.cdkVersion = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
     this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;

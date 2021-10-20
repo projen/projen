@@ -22,10 +22,14 @@ export class ConstructLibraryCdktf extends ConstructLibrary {
   constructor(options: ConstructLibraryCdktfOptions) {
     super(options);
 
+    if (!options.cdktfVersion) {
+      throw new Error('Required field cdktfVersion is not specified.');
+    }
+
     const ver = options.cdktfVersion;
 
     this.addPeerDeps(
-      'constructs@^3.3.75',
+      'constructs@^10',
       `cdktf@^${ver}`,
     );
   }

@@ -9,7 +9,7 @@
 /.github/workflows/build.yml       	linguist-generated
 /.github/workflows/release.yml     	linguist-generated
 /.github/workflows/stale.yml       	linguist-generated
-/.github/workflows/upgrade.yml     	linguist-generated
+/.github/workflows/upgrade-main.yml	linguist-generated
 /.gitignore                        	linguist-generated
 /.gitpod.yml                       	linguist-generated
 /.markdownlint.json                	linguist-generated
@@ -17,11 +17,10 @@
 /.npmignore                        	linguist-generated
 /.projen/**                        	linguist-generated
 /.projen/deps.json                 	linguist-generated
-/.projen/jest-snapshot-resolver.js 	linguist-generated
 /.projen/tasks.json                	linguist-generated
 /.vscode/launch.json               	linguist-generated
 /LICENSE                           	linguist-generated
 /package.json                      	linguist-generated
 /projen.bash                       	linguist-generated
-/tsconfig.eslint.json              	linguist-generated
+/tsconfig.dev.json                 	linguist-generated
 /yarn.lock                         	linguist-generated
