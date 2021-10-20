@@ -968,6 +968,9 @@ tsconfig.tsbuildinfo
           Object {
             "spawn": "package",
           },
+          Object {
+            "spawn": "docgen",
+          },
         ],
       },
       "bump": Object {
@@ -1035,9 +1038,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "steps": Array [
           Object {
             "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies",
-          },
-          Object {
-            "spawn": "docgen",
           },
         ],
       },
@@ -2381,9 +2381,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "steps": Array [
           Object {
             "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies",
-          },
-          Object {
-            "spawn": "docgen",
           },
           Object {
             "exec": "cp src/_loadurl.js lib/",
