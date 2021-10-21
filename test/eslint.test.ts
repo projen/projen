@@ -1,5 +1,5 @@
 import { Eslint, NodeProject } from '../src';
-import { synthSnapshot } from './util';
+import { synthSnapshot } from '../src/util/synth';
 
 test('devdirs', () => {
   // GIVEN

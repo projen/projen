@@ -2,13 +2,13 @@ import * as os from 'os';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import { glob } from 'glob';
-import { Project } from '../src';
-import * as logging from '../src/logging';
-import { GitHubProject, GitHubProjectOptions } from '../src/project';
-import { Task } from '../src/tasks';
-import { exec } from '../src/util';
+import { Project } from '../';
+import * as logging from '../logging';
+import { GitHubProject, GitHubProjectOptions } from '../project';
+import { Task } from '../tasks';
+import { exec } from '../util';
 
-const PROJEN_CLI = require.resolve('../lib/cli/index.js');
+const PROJEN_CLI = require.resolve('../../lib/cli/index.js');
 
 logging.disable(); // no logging during tests
 

@@ -4,7 +4,7 @@ import { DevEnvironmentDockerImage } from '../src/dev-env';
 import { FileBase } from '../src/file';
 import { Gitpod, GitpodOpenIn, GitpodOpenMode } from '../src/gitpod';
 import * as logging from '../src/logging';
-import { synthSnapshot, TestProject } from './util';
+import { synthSnapshot, TestProject } from '../src/util/synth';
 
 // This is duplicated vs exported
 const GITPOD_FILE = '.gitpod.yml';

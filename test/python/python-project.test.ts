@@ -1,5 +1,5 @@
 import { PythonProject, PythonProjectOptions } from '../../src/python';
-import { synthSnapshot } from '../util';
+import { synthSnapshot } from '../../src/util/synth';
 
 test('defaults', () => {
   const p = new TestPythonProject();

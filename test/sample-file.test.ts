@@ -1,7 +1,7 @@
 import * as path from 'path';
 import { Project, ProjectOptions } from '../src';
 import { SampleDir, SampleFile } from '../src/sample-file';
-import { synthSnapshot } from './util';
+import { synthSnapshot } from '../src/util/synth';
 
 
 test('sample file from text contents', () => {

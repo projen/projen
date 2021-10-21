@@ -1,5 +1,5 @@
 import { AwsCdkTypeScriptApp } from '../src/awscdk-app-ts';
-import { synthSnapshot } from './util';
+import { synthSnapshot } from '../src/util/synth';
 
 describe('cdkVersion is >= 2.0.0', () => {
   test('use "aws-cdk-lib" the constructs at ^10.0.5', () => {
