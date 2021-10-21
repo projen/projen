@@ -1,6 +1,6 @@
 import { Dependabot, DependabotRegistryType } from '../../src/github';
 import { NodeProject, NodeProjectOptions } from '../../src/node-project';
-import { synthSnapshot } from '../util';
+import { synthSnapshot } from '../../src/util/synth';
 
 describe('dependabot', () => {
   test('default', () => {

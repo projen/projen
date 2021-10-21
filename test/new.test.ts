@@ -5,7 +5,7 @@ import { join } from 'path';
 import { mkdirSync, pathExistsSync, removeSync } from 'fs-extra';
 import * as inventory from '../src/inventory';
 import { execCapture } from '../src/util';
-import { directorySnapshot, execProjenCLI, mkdtemp, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject } from './util';
+import { directorySnapshot, execProjenCLI, mkdtemp, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject } from '../src/util/synth';
 
 const MIN_NODE_VERSION_OPTION = '--min-node-version=10.17.0';
 
