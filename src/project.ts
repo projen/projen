@@ -458,7 +458,7 @@ export class Project {
       return mkdtempSync(path.join(tmpdir(), 'projen.'));
     }
 
-    return path.resolve(outdirOption || '.');
+    return path.resolve(outdirOption ?? '.');
   }
 }
 
