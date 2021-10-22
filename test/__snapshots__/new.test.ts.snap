@@ -1736,6 +1736,22 @@ project.synth();",
 }
 `;
 
+exports[`projen new node --outdir path/to/mydir 1`] = `
+"const { NodeProject } = require('projen');
+const project = new NodeProject({
+  defaultReleaseBranch: 'main',
+  name: 'my-project',
+  outdir: 'path/to/mydir',
+
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
+});
+project.synth();"
+`;
+
 exports[`projen new node 1`] = `
 Object {
   ".projenrc.js": "const { NodeProject } = require('projen');
