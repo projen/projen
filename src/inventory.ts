@@ -309,7 +309,7 @@ function getSimpleTypeName(type: JsiiPropertyType): string {
  * Whether a value of this type is serializable into JSON.
  */
 function isJsonLike(jsii: JsiiTypes, type: JsiiPropertyType): boolean {
-  if (type.primitive) {
+  if (type.primitive) { // string, boolean, number, any
     return true;
   } else if (type.fqn) {
     const kind = jsii[type.fqn].kind;
