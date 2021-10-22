@@ -16,9 +16,9 @@ export interface ProjectOption {
   /** Simple type name, e.g. "string", "boolean", "number", "EslintOptions", "MyEnum". Collections are "unknown" */
   simpleType: string;
   /** Full JSII type, e.g. { primitive: "string" } or { collection: { elementtype: { primitive: 'string' }, kind: 'map' } } */
-  fullType: any;
+  fullType: JsiiPropertyType;
   kind?: 'class' | 'enum' | 'interface';
-  jsonLike?: JsiiPropertyType;
+  jsonLike?: boolean;
   parent: string;
   docs?: string;
   default?: string;

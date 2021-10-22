@@ -18,7 +18,7 @@ export interface CreateProjectOptions {
   readonly projectFqn: string;
 
   /**
-   * Option values. Only JSON-like values can be passed in (strings,
+   * Project options. Only JSON-like values can be passed in (strings,
    * booleans, numbers, enums, arrays, and objects that are not
    * derived from classes).
    *
@@ -89,8 +89,9 @@ function createProject(opts: CreateProjectOptions) {
     }
   }
 
+  // "dir" is exposed as a top-level option to require users to specify a value for it,
   if (opts.projectOptions.outdir) {
-    throw new Error('Output directory of the project cannot be specified, use \'dir\' option instead.');
+    throw new Error('"outdir" cannot be specified in projectOptions - use the top-level "dir" option instead.');
   }
   opts.projectOptions.outdir = opts.dir;
 

@@ -118,7 +118,7 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
       for (const importStr of imports) {
         allImports.add(importStr);
       }
-      renders[optionName] = `${optionName}: ${js},`; // ?
+      renders[optionName] = `${optionName}: ${js},`;
       optionsWithDefaults.push(optionName);
     } else {
       const defaultValue = option.default?.startsWith('-') ? undefined : (option.default ?? undefined);
@@ -128,11 +128,10 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
 
   const bootstrap = opts.bootstrap ?? false;
   if (bootstrap) {
-    const argsMap = opts.args;
     for (const arg of (opts.omitFromBootstrap ?? [])) {
-      delete argsMap[arg];
+      delete opts.args[arg];
     }
-    renders[PROJEN_NEW] = `${PROJEN_NEW}: ${JSON.stringify({ args: argsMap, fqn: opts.type.fqn, comments: opts.comments } as ProjenNew)},`;
+    renders[PROJEN_NEW] = `${PROJEN_NEW}: ${JSON.stringify({ args: opts.args, fqn: opts.type.fqn, comments: opts.comments } as ProjenNew)},`;
     optionsWithDefaults.push(PROJEN_NEW);
   }
 
@@ -221,7 +220,7 @@ function renderArgAsJavaScript(arg: any, option: inventory.ProjectOption) {
     const parts = option.fqn.split('.'); // -> ['projen', 'web', 'MyEnum']
     const enumChoice = String(arg).toUpperCase().replace(/-/g, '_'); // custom-value -> CUSTOM_VALUE
     const js = `${parts.slice(1).join('.')}.${enumChoice}`; // -> web.MyEnum.CUSTOM_VALUE
-    const importName = parts[1]; // -> 'web'
+    const importName = parts[1]; // -> web
     return { js, imports: [importName] };
   } else if (option.jsonLike) {
     return { js: JSON.stringify(arg), imports: [] };
