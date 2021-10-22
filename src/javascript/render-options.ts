@@ -225,7 +225,7 @@ function renderArgAsJavaScript(arg: any, option: inventory.ProjectOption) {
   } else if (option.jsonLike) {
     return { js: JSON.stringify(arg), imports: [] };
   } else {
-    throw new Error(`Unexpected option ${option.name} of kind: ${option.kind}`);
+    throw new Error(`Unexpected option ${option.name} - cannot render a value for this option because it does not have a JSON-like type.`);
   }
 }
 
