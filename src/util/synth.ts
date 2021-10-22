@@ -150,7 +150,8 @@ export function directorySnapshot(root: string, options: DirectorySnapshotOption
   return output;
 }
 
-export function withProjectDir(code: (workdir: string) => void, options: { git?: boolean } = {}) {
+export function withProjectDir(code: (workdir: string) => void, options: { git?: boolean; chdir?: boolean } = {}) {
+  const origDir = process.cwd();
   const outdir = mkdtemp();
   try {
     // create project under "my-project" so that basedir is deterministic
@@ -170,8 +171,13 @@ export function withProjectDir(code: (workdir: string) => void, options: { git?:
       shell('git config user.email || git config --global user.email "my@user.email.com"');
     }
 
+    if (options.chdir ?? false) {
+      process.chdir(projectdir);
+    }
+
     code(projectdir);
   } finally {
+    process.chdir(origDir);
     fs.removeSync(outdir);
   }
 }
