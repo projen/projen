@@ -13,9 +13,11 @@ export interface ProjectOption {
   name: string;
   fqn?: string;
   switch: string;
+  /** Simple type name, e.g. "string", "boolean", "number", "EslintOptions", "MyEnum". Collections are "unknown" */
+  simpleType: string;
   /** Full JSII type, e.g. { primitive: "string" } or { collection: { elementtype: { primitive: 'string' }, kind: 'map' } } */
   fullType: any;
-  kind?: string;
+  kind?: 'class' | 'enum' | 'interface';
   jsonLike?: JsiiPropertyType;
   parent: string;
   docs?: string;
@@ -275,6 +277,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         name: prop.name,
         fqn: prop.type?.fqn,
         docs: prop.docs.summary,
+        simpleType: prop.type ? getSimpleTypeName(prop.type) : 'unknown',
         fullType: prop.type,
         kind: jsiiKind,
         jsonLike: prop.type ? isJsonLike(jsii, prop.type) : undefined,
@@ -292,7 +295,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
   }
 }
 
-export function getSimpleTypeName(type: JsiiPropertyType): string {
+function getSimpleTypeName(type: JsiiPropertyType): string {
   if (type?.primitive) {
     return type.primitive; // e.g. 'string', 'boolean', 'number'
   } else if (type?.fqn) {
