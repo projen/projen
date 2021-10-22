@@ -106,7 +106,11 @@ function createProject(opts: CreateProjectOptions) {
   });
 
   // generate a random variable name because jest tests appear to share
-  // VM contexts, causing duplicate identifier errors if this isn't unique
+  // VM contexts, causing
+  //
+  // > SyntaxError: Identifier 'project' has already been declared
+  //
+  // errors if this isn't unique
   const varName = 'project' + Math.random().toString(36).slice(2);
   const newProjectCode = `const ${varName} = new ${projectType.typename}(${renderedOptions});`;
 
