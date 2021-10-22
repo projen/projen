@@ -63,6 +63,11 @@
       "type": "build"
     },
     {
+      "name": "jest-junit",
+      "version": "^12",
+      "type": "build"
+    },
+    {
       "name": "jsii",
       "type": "build"
     },
@@ -94,6 +99,10 @@
     {
       "name": "standard-version",
       "version": "^9",
+      "type": "build"
+    },
+    {
+      "name": "ts-jest",
       "type": "build"
     },
     {

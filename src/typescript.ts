@@ -104,7 +104,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
    * Compile the code before running tests.
    *
-   * @default - if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
+   * @default - if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false`.
    */
   readonly compileBeforeTest?: boolean;
 
@@ -374,9 +374,6 @@ export class TypeScriptProject extends NodeProject {
         // test code does not take a dependency on "lib" and instead on "src".
         this.testTask.prependExec(`rm -fr ${this.libdir}/`);
       }
-
-      // compile test code
-      this.testCompileTask.exec(`tsc --noEmit --project ${this.tsconfigDev.fileName}`);
     }
 
     if (options.eslint ?? true) {

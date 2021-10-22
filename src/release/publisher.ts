@@ -1,6 +1,6 @@
 import { Component } from '../component';
 import { workflows } from '../github';
-import { GITHUB_ACTIONS_USER } from '../github/constants';
+import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { JobPermission, JobPermissions } from '../github/workflows-model';
 import { defaultNpmToken } from '../node-package';
 import { Project } from '../project';
@@ -289,8 +289,8 @@ export class Publisher extends Component {
       env: {
         GITHUB_REPO: options.githubRepo,
         GIT_BRANCH: options.gitBranch,
-        GIT_USER_NAME: options.gitUserName ?? GITHUB_ACTIONS_USER.name,
-        GIT_USER_EMAIL: options.gitUserEmail ?? GITHUB_ACTIONS_USER.email,
+        GIT_USER_NAME: options.gitUserName ?? DEFAULT_GITHUB_ACTIONS_USER.name,
+        GIT_USER_EMAIL: options.gitUserEmail ?? DEFAULT_GITHUB_ACTIONS_USER.email,
         GIT_COMMIT_MESSAGE: options.gitCommitMessage,
       },
       workflowEnv: {
