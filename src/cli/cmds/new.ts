@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as fs from 'fs-extra';
 import * as yargs from 'yargs';
 import * as inventory from '../../inventory';
 import { NewProjectOptionHints } from '../../option-hints';
@@ -240,7 +241,9 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
     post: args.post,
   });
 
-  exec('npm run eslint --if-present', { cwd: baseDir });
+  if (fs.existsSync(path.join(baseDir, 'package.json')) && args.post) {
+    exec('npm run eslint --if-present', { cwd: baseDir });
+  }
 
   if (args.git) {
     const git = (cmd: string) => exec(`git ${cmd}`, { cwd: baseDir });
