@@ -162,7 +162,7 @@ In order to synthesize, run: `pj synth`, which will compile your test code and
 execute this program.
 
 By default, `projenrc.java` is placed under the `test` scope (and
-`com.github.eladb/projen` test dependency is added). This ensures that
+`io.github.cdklabs/projen` test dependency is added). This ensures that
 application code does not take a dependency on projen code. You can change this
 behavior by setting the `testScope` option to `false`.
 
