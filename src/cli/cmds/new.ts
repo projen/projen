@@ -231,7 +231,7 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
   const props = commandLineToProps(baseDir, type, args);
 
   Projects.createProject({
-    dir: baseDir,
+    dir: props.outdir ?? baseDir,
     projectFqn: type.fqn,
     projectOptions: props,
     optionHints: args.comments ? NewProjectOptionHints.FEATURED : NewProjectOptionHints.NONE,

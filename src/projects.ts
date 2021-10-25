@@ -41,14 +41,14 @@ export interface CreateProjectOptions {
    *
    * @default true
    */
-  readonly synth: boolean;
+  readonly synth?: boolean;
 
   /**
    * Should we execute post synthesis hooks? (usually package manager install).
    *
    * @default true
    */
-  readonly post: boolean;
+  readonly post?: boolean;
 }
 
 /**
@@ -89,10 +89,7 @@ function createProject(opts: CreateProjectOptions) {
     }
   }
 
-  // "dir" is exposed as a top-level option to require users to specify a value for it,
-  if (opts.projectOptions.outdir) {
-    throw new Error('"outdir" cannot be specified in projectOptions - use the top-level "dir" option instead.');
-  }
+  // "dir" is exposed as a top-level option to require users to specify a value for it
   opts.projectOptions.outdir = opts.dir;
 
   // pass the FQN of the project type to the project initializer so it can
