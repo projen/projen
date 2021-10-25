@@ -6,8 +6,6 @@ be used to create new projects within scripts and other contexts.
 
 ## Example
 
-Consider the following script:
-
 ```js
 const { Projects } = require('projen');
 
@@ -33,10 +31,11 @@ Projects.createProject({
 });
 ```
 
-This creates a new TypeScript project at `/path/to/mydir` in my file system. The
-`.projenrc.ts` file it generates comes pre-included with options specified,
-including complex values for fields that cannot normally be provided through the
-CLI, like `eslintOptions` (because the field requires an object value).
+This script creates a new TypeScript project at `/path/to/mydir` in my file
+system. The `.projenrc.ts` file it generates comes pre-included with options
+specified, including complex values for fields that cannot normally be provided
+through the CLI, like `eslintOptions` (because the field requires an object
+value).
 
 In the above example, the provided option `post: false` was also added to
 disable post-installation steps such as installing NPM dependencies.
@@ -45,8 +44,8 @@ disable post-installation steps such as installing NPM dependencies.
 project type, otherwise the project may not synthesize properly.
 
 It is also possible to use this for installing external project types.
-Currently, this requires you to install the package so that it can be used
-by the script.
+Currently, this requires you to install the package so that it can be used by
+projen.
 
 ```js
 Projects.createProject({
