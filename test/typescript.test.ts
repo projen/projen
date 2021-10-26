@@ -152,7 +152,7 @@ test('projenrc.ts', () => {
   expect(snapshot['.projen/tasks.json'].tasks.default).toStrictEqual({
     name: 'default',
     steps: [
-      { exec: 'ts-node --project tsconfig.dev.json .projenrc.ts' },
+      { exec: 'ts-eager .projenrc.ts' },
     ],
   });
 });
