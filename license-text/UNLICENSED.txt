@@ -1,0 +1,2 @@
+Copyright © $copyright_period $copyright_owner
+All rights reserved.
