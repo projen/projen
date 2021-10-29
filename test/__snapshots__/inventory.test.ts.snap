@@ -227,7 +227,7 @@ Array [
         "type": "unknown",
       },
       Object {
-        "default": "\\"1.95.2\\"",
+        "default": "\\"v1.129.0\\"",
         "docs": "AWS CDK version to use.",
         "featured": true,
         "name": "cdkVersion",
@@ -1974,7 +1974,7 @@ Array [
         "type": "unknown",
       },
       Object {
-        "default": "\\"1.95.2\\"",
+        "default": "\\"v1.129.0\\"",
         "docs": "Minimum target version this library is tested against.",
         "featured": true,
         "name": "cdkVersion",
