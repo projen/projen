@@ -29,6 +29,23 @@ describe('mergify', () => {
     expect(snapshot['.mergify.yml']).toContain('- "#approved-reviews-by>=3"');
     expect(snapshot['.mergify.yml']).toMatchSnapshot();
   });
+
+  test('without conventional commit', () => {
+    // GIVEN
+    const project = createProject({
+      githubOptions: {
+        mergifyOptions: {
+          conventionalCommits: false,
+        },
+      },
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    expect(snapshot['.mergify.yml']).toBeDefined();
+    expect(snapshot['.mergify.yml']).not.toContain('Conventional Commit');
+    expect(snapshot['.mergify.yml']).toMatchSnapshot();
+  });
 });
 
 type ProjectOptions = Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name'>;

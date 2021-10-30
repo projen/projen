@@ -36,6 +36,15 @@ export interface MergifyRule {
 
 export interface MergifyOptions {
   readonly rules?: MergifyRule[];
+
+  /**
+   * Include an item in the pull request check list that enforces
+   * pull request titles follow Conventional Commits.
+   *
+   * @default true
+   * @see https://www.conventionalcommits.org/
+   */
+  readonly conventionalCommits?: boolean;
 }
 
 export class Mergify extends Component {
@@ -48,6 +57,31 @@ export class Mergify extends Component {
 
     for (const rule of options.rules ?? []) {
       this.addRule(rule);
+    }
+
+    if (options.conventionalCommits ?? true) {
+      this.addRule({
+        name: 'Conventional Commit',
+        conditions: [
+          'title~=^(fix|feat|docs|style|refactor|perf|test|build|ci|chore|revert|release)(?:\\(.+\\))?:',
+        ],
+        actions: {
+          post_check: {
+            title: [
+              '{% if check_succeed %}',
+              'Title follows Conventional Commit',
+              '{% else %}',
+              'Title does not follow Conventional Commit',
+              '{% endif %}',
+            ].join('\n'),
+            summary: [
+              '{% if not check_succeed %}',
+              'Your pull request title must follow [Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/).',
+              '{% endif %}',
+            ].join('\n'),
+          },
+        },
+      });
     }
   }
 
