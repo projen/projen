@@ -5372,6 +5372,7 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for Mergify. __*Default*__: default options
   * **workflows** (<code>boolean</code>)  Enables GitHub workflows. __*Default*__: true
 
 
@@ -5566,6 +5567,7 @@ new github.Mergify(github: GitHub, options?: MergifyOptions)
 
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **options** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  *No description*
+  * **conventionalCommits** (<code>boolean</code>)  Include an item in the pull request check list that enforces pull request titles follow Conventional Commits. __*Default*__: true
   * **rules** (<code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code>)  *No description* __*Optional*__
 
 
@@ -11333,6 +11335,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for Mergify.<br/>__*Default*__: default options
 **workflows**?🔹 | <code>boolean</code> | Enables GitHub workflows.<br/>__*Default*__: true
 
 
@@ -11390,6 +11393,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**conventionalCommits**?🔹 | <code>boolean</code> | Include an item in the pull request check list that enforces pull request titles follow Conventional Commits.<br/>__*Default*__: true
 **rules**?🔹 | <code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code> | __*Optional*__
 
 
