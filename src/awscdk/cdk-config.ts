@@ -25,9 +25,9 @@ export interface CdkConfigCommonOptions {
    * To protect you against unintended changes that affect your security posture,
    * the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.
    *
-   * @default CdkApprovalLevel.BROADENING
+   * @default ApprovalLevel.BROADENING
    */
-  readonly requireApproval?: CdkApprovalLevel;
+  readonly requireApproval?: ApprovalLevel;
 
   /**
    * cdk.out directory.
@@ -91,7 +91,10 @@ export class CdkConfig extends Component {
   }
 }
 
-export enum CdkApprovalLevel {
+/**
+ * Which approval is required when deploying CDK apps.
+ */
+export enum ApprovalLevel {
   /**
    * Approval is never required
    */
