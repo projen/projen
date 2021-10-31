@@ -1559,6 +1559,27 @@ const project = new AwsCdkAppSyncApp({
 project.synth();"
 `;
 
+exports[`projen new awscdk-app-java 1`] = `
+Object {
+  "src/test/java/projenrc.java": "import io.github.cdklabs.projen.awscdk.AwsCdkJavaApp;
+import io.github.cdklabs.projen.awscdk.AwsCdkJavaAppOptions;
+
+public class projenrc {
+    public static void main(String[] args) {
+        AwsCdkJavaApp project = new AwsCdkJavaApp(AwsCdkJavaAppOptions.builder()
+            .artifactId(\\"my-app\\")
+            .cdkVersion(\\"1.130.0\\")
+            .groupId(\\"org.acme\\")
+            .mainClass(\\"org.acme.App\\")
+            .name(\\"my-project\\")
+            .version(\\"0.1.0\\")
+            .build());
+        project.synth();
+    }
+}",
+}
+`;
+
 exports[`projen new awscdk-app-ts 1`] = `
 Object {
   ".projenrc.js": "const { AwsCdkTypeScriptApp } = require(\\"projen\\");
