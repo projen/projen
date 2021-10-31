@@ -1568,7 +1568,7 @@ public class projenrc {
     public static void main(String[] args) {
         AwsCdkJavaApp project = new AwsCdkJavaApp(AwsCdkJavaAppOptions.builder()
             .artifactId(\\"my-app\\")
-            .cdkVersion(\\"1.130.0\\")
+            .cdkVersion(\\"^1.130.0\\")
             .groupId(\\"org.acme\\")
             .mainClass(\\"org.acme.App\\")
             .name(\\"my-project\\")
