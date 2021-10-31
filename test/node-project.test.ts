@@ -6,7 +6,7 @@ import * as logging from '../src/logging';
 import { NodePackage, NodePackageManager, NpmAccess } from '../src/node-package';
 import { Project } from '../src/project';
 import { Tasks } from '../src/tasks';
-import { synthSnapshot, TestProject } from './util';
+import { synthSnapshot, TestProject } from '../src/util/synth';
 
 logging.disable();
 

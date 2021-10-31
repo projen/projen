@@ -1,5 +1,5 @@
 import { JsiiProject } from '../src';
-import { synthSnapshot } from './util';
+import { synthSnapshot } from '../src/util/synth';
 
 describe('author', () => {
   test('authorEmail and authorAddress can be the same value', () => {

@@ -2,10 +2,10 @@
 // and compare against a golden snapshot.
 import { execSync } from 'child_process';
 import { join } from 'path';
-import { mkdirSync, pathExistsSync, removeSync } from 'fs-extra';
+import { pathExistsSync } from 'fs-extra';
 import * as inventory from '../src/inventory';
 import { execCapture } from '../src/util';
-import { directorySnapshot, execProjenCLI, mkdtemp, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject } from './util';
+import { directorySnapshot, execProjenCLI, sanitizeOutput, synthSnapshot, synthSnapshotWithPost, TestProject, withProjectDir } from '../src/util/synth';
 
 const MIN_NODE_VERSION_OPTION = '--min-node-version=10.17.0';
 
@@ -222,6 +222,22 @@ test('projenrc-ts creates typescript projenrc', () => {
   });
 });
 
+test('projen new node --outdir path/to/mydir', () => {
+  withProjectDir(projectdir => {
+    // GIVEN
+    const shell = (command: string) => execSync(command, { cwd: projectdir });
+    shell(`mkdir -p ${join('path', 'to', 'mydir')}`);
+
+    // WHEN
+    execProjenCLI(projectdir, ['new', 'node', '--outdir', 'path/to/mydir']);
+
+    // THEN
+    const targetDirSnapshot = directorySnapshot(join(projectdir, 'path', 'to', 'mydir'), { excludeGlobs: ['node_modules/**'] });
+    expect(targetDirSnapshot['.projenrc.js']).toMatchSnapshot();
+    expect(targetDirSnapshot['package.json']).toBeDefined();
+  });
+});
+
 describe('git', () => {
   test('--git (default) will initialize a git repo and create a commit', () => {
     withProjectDir(projectdir => {
@@ -237,29 +253,3 @@ describe('git', () => {
     }, { git: false });
   });
 });
-
-function withProjectDir(code: (workdir: string) => void, options: { git?: boolean } = {}) {
-  const outdir = mkdtemp();
-  try {
-    // create project under "my-project" so that basedir is deterministic
-    const projectdir = join(outdir, 'my-project');
-    mkdirSync(projectdir);
-
-    const shell = (command: string) => execSync(command, { cwd: projectdir });
-    if (options.git ?? true) {
-      shell('git init');
-      shell('git remote add origin git@boom.com:foo/bar.git');
-      shell('git config user.name "My User Name"');
-      shell('git config user.email "my@user.email.com"');
-    } else if (process.env.CI) {
-      // if "git" is set to "false", we still want to make sure global user is defined
-      // (relevant in CI context)
-      shell('git config user.name || git config --global user.name "My User Name"');
-      shell('git config user.email || git config --global user.email "my@user.email.com"');
-    }
-
-    code(projectdir);
-  } finally {
-    removeSync(outdir);
-  }
-}

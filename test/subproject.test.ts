@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { Project, TextFile, ProjectOptions } from '../src';
 import { PROJEN_MARKER } from '../src/common';
-import { TestProject } from './util';
+import { TestProject } from '../src/util/synth';
 
 test('composing projects declaratively', () => {
   const comp = new TestProject();

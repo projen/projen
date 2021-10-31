@@ -23,6 +23,7 @@ export * from './node-project';
 export * from './object-file';
 export * from './option-hints';
 export * from './project';
+export * from './projects';
 export * from './readme';
 export * from './sample-file';
 export * from './semver';

@@ -12,8 +12,12 @@ export interface ProjectOption {
   name: string;
   fqn?: string;
   switch: string;
-  type: string;
-  kind?: string;
+  /** Simple type name, e.g. "string", "boolean", "number", "EslintOptions", "MyEnum". Collections are "unknown" */
+  simpleType: string;
+  /** Full JSII type, e.g. { primitive: "string" } or { collection: { elementtype: { primitive: 'string' }, kind: 'map' } } */
+  fullType: JsiiPropertyType;
+  kind?: 'class' | 'enum' | 'interface';
+  jsonLike?: boolean;
   parent: string;
   docs?: string;
   default?: string;
@@ -56,10 +60,7 @@ interface JsiiType {
       custom?: { [name: string]: string };
     };
     optional?: boolean;
-    type?: {
-      primitive?: string;
-      fqn?: string;
-    };
+    type?: JsiiPropertyType;
   }>;
   docs?: {
     summary?: string;
@@ -67,6 +68,15 @@ interface JsiiType {
     custom?: {
       pjid?: string;
     };
+  };
+}
+
+export interface JsiiPropertyType {
+  primitive?: string;
+  fqn?: string;
+  collection?: {
+    elementtype: JsiiPropertyType;
+    kind: string;
   };
 }
 
@@ -84,12 +94,10 @@ export function discover(...moduleDirs: string[]) {
   const result = new Array<ProjectType>();
 
   for (const fqn of Object.keys(jsii)) {
-    const p = toProjectType(jsii, fqn);
-    if (!p) {
-      continue;
+    if (isProjectType(jsii, fqn)) {
+      const p = toProjectType(jsii, fqn);
+      result.push(p);
     }
-
-    result.push(p);
   }
 
   return result.sort((r1, r2) => r1.pjid.localeCompare(r2.pjid));
@@ -155,7 +163,7 @@ function discoverJsiiTypes(...moduleDirs: string[]) {
   return jsii;
 }
 
-export function resolveProjectType(projectFqn: string) {
+export function resolveProjectType(projectFqn: string): ProjectType {
   let [moduleName] = projectFqn.split('.');
   if (moduleName === 'projen') {
     moduleName = PROJEN_MODULE_ROOT;
@@ -174,9 +182,9 @@ export function resolveProjectType(projectFqn: string) {
   return toProjectType(jsii, projectFqn);
 }
 
-function toProjectType(jsii: JsiiTypes, fqn: string) {
+function toProjectType(jsii: JsiiTypes, fqn: string): ProjectType {
   if (!isProjectType(jsii, fqn)) {
-    return undefined;
+    throw new Error(`Fully qualified name "${fqn}" is not a valid project type.`);
   }
 
   const typeinfo = jsii[fqn];
@@ -241,15 +249,9 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         throw new Error(`duplicate option "${prop.name}" in ${fqn} (already declared in ${options[prop.name].parent})`);
       }
 
-      let typeName;
       let jsiiKind;
-      if (prop.type?.primitive) {
-        typeName = prop.type?.primitive; // e.g. 'string', 'boolean', 'number'
-      } else if (prop.type?.fqn) {
-        typeName = prop.type?.fqn.split('.').pop(); // projen.NodeProjectOptions -> NodeProjectOptions
+      if (prop.type?.fqn) {
         jsiiKind = jsii[prop.type?.fqn].kind; // e.g. 'class', 'interface', 'enum'
-      } else { // any other types such as collection types
-        typeName = 'unknown';
       }
 
       const isOptional = optional || prop.optional;
@@ -262,7 +264,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
       // if this is a mandatory option and we have a default value, it has to be JSON-parsable to the correct type
       if (!isOptional && defaultValue) {
         if (!prop.type?.primitive) {
-          throw new Error(`required option "${prop.name}" with a @default must use primitive types (string, number or boolean). type found is: ${typeName}`);
+          throw new Error(`required option "${prop.name}" with a @default must use primitive types (string, number or boolean). type found is: ${JSON.stringify(prop.type)}`);
         }
 
         checkDefaultIsParsable(prop.name, defaultValue, prop.type?.primitive);
@@ -274,9 +276,11 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         name: prop.name,
         fqn: prop.type?.fqn,
         docs: prop.docs.summary,
-        type: typeName,
+        simpleType: prop.type ? getSimpleTypeName(prop.type) : 'unknown',
+        fullType: prop.type,
         kind: jsiiKind,
-        switch: propPath.map(p => snake(p).replace(/_/g, '-')).join('-'),
+        jsonLike: prop.type ? isJsonLike(jsii, prop.type) : undefined,
+        switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
         default: defaultValue,
         optional: isOptional,
         featured: prop.docs?.custom?.featured === 'true',
@@ -288,6 +292,33 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
       addOptions(ifc);
     }
   }
+}
+
+function getSimpleTypeName(type: JsiiPropertyType): string {
+  if (type?.primitive) {
+    return type.primitive; // e.g. 'string', 'boolean', 'number'
+  } else if (type?.fqn) {
+    return type.fqn.split('.').pop()!; // projen.NodeProjectOptions -> NodeProjectOptions
+  } else { // any other types such as collection types
+    return 'unknown';
+  }
+}
+
+/**
+ * Whether a value of this type is serializable into JSON.
+ */
+function isJsonLike(jsii: JsiiTypes, type: JsiiPropertyType): boolean {
+  if (type.primitive) { // string, boolean, number, any
+    return true;
+  } else if (type.fqn) {
+    const kind = jsii[type.fqn].kind;
+    if (['interface', 'enum'].includes(kind)) { // not 'class'
+      return true;
+    }
+  } else if (type.collection) {
+    return isJsonLike(jsii, type.collection.elementtype);
+  }
+  return false;
 }
 
 function filterUndefined(obj: any) {
@@ -302,6 +333,10 @@ function filterUndefined(obj: any) {
 
 function isProjectType(jsii: JsiiTypes, fqn: string) {
   const type = jsii[fqn];
+
+  if (!type) {
+    throw new Error(`Could not find project type with fqn "${fqn}" in  .jsii file.`);
+  }
 
   if (type.kind !== 'class') {
     return false;

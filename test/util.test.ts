@@ -1,6 +1,6 @@
 import { JsonFile } from '../src/json';
 import { decamelizeKeysRecursively, dedupArray, deepMerge, isTruthy, getFilePermissions, formatAsPythonModule } from '../src/util';
-import { TestProject } from './util';
+import { TestProject } from '../src/util/synth';
 
 describe('decamelizeRecursively', () => {
   test('decamel recurses an object structure', () => {

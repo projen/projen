@@ -452,13 +452,13 @@ export class Project {
       const realTmp = realpathSync(tmpdir());
 
       if (realCwd.startsWith(realTmp)) {
-        return realCwd;
+        return path.resolve(realCwd, outdirOption ?? '.');
       }
 
       return mkdtempSync(path.join(tmpdir(), 'projen.'));
     }
 
-    return path.resolve('.');
+    return path.resolve(outdirOption ?? '.');
   }
 }
 
