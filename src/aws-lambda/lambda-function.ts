@@ -1,17 +1,39 @@
 import { basename, dirname, extname, join, relative } from 'path';
 import { pascal } from 'case';
+import { Eslint, Project } from '..';
 import { Component } from '../component';
 import { FileBase } from '../file';
+import { Bundler } from '../javascript/bundler';
 import { SourceCode } from '../source-code';
 import { Task } from '../tasks';
-import { TypeScriptProject } from '../typescript';
-
-const EXT = '.lambda.ts';
+import { TYPESCRIPT_LAMBDA_EXT } from './consts';
 
 /**
- * Options for `LambdaFunction`.
+ * Common options for `Function`. Applies to all functions in
+ * auto-discovery.
  */
-export interface LambdaFunctionOptions {
+export interface FunctionCommonOptions {
+  /**
+   * The node.js version to target.
+   *
+   * @default Runtime.NODEJS_14_X
+   */
+  readonly runtime?: Runtime;
+
+  /**
+   * Names of modules which should not be included in the bundle.
+   *
+   * @default - by default, the "aws-sdk" module will be excluded from the
+   * bundle. Note that if you use this option you will need to add "aws-sdk"
+   * explicitly.
+   */
+  readonly externals?: string[];
+}
+
+/**
+ * Options for `Function`.
+ */
+export interface FunctionOptions extends FunctionCommonOptions {
   /**
    * A path from the project root directory to a TypeScript file which contains
    * the AWS Lambda handler entrypoint (exports a `handler` function).
@@ -35,34 +57,39 @@ export interface LambdaFunctionOptions {
   readonly constructName?: string;
 
   /**
-   * The node.js version to target.
-   *
-   * @default LambdaFunctionRuntime.NODEJS_14_X
+   * Project source directory tree (where .ts files live).
    */
-  readonly runtime?: LambdaFunctionRuntime;
+  readonly srcdir: string;
+
+  /**
+    * JavaScript output directory (where .js files go).
+    */
+  readonly libdir: string;
 }
 
 /**
  * Generates a pre-bundled AWS Lambda function construct from handler code.
  *
  * To use this, create an AWS Lambda handler file under your source tree with
- * the `.lambda.ts` extension and add a `BundledLambdaFunction` component to
- * your typescript project pointing to this entrypoint.
+ * the `.lambda.ts` extension and add a `LambdaFunction` component to your
+ * typescript project pointing to this entrypoint.
  *
- * This will add a task to your "compile" step which will use `esbuild` to bundle
- * the handler code into the build directory. It will also generate a file `src/foo.ts`
- * with a custom AWS construct called `Foo` which extends `@aws-cdk/aws-lambda.Function`
- * which is bound to the bundled handle through an asset.
+ * This will add a task to your "compile" step which will use `esbuild` to
+ * bundle the handler code into the build directory. It will also generate a
+ * file `src/foo-function.ts` with a custom AWS construct called `FooFunction`
+ * which extends `@aws-cdk/aws-lambda.Function` which is bound to the bundled
+ * handle through an asset.
  *
  * @example
  *
- * new BundledLambdaFunction(myProject, {
- *   entrypoint: 'src/foo.lambda.ts'
- * });
+ *new LambdaFunction(myProject, {
+ *  entrypoint: 'src/foo.lambda.ts'
+ *});
  */
-export class LambdaFunction extends Component {
-  private readonly typescriptProject: TypeScriptProject;
-
+export class Function extends Component {
+  /**
+   * The bundle task for this function.
+   */
   public readonly bundleTask: Task;
 
   /**
@@ -71,27 +98,35 @@ export class LambdaFunction extends Component {
    * @param project The project to use
    * @param options Options
    */
-  constructor(project: TypeScriptProject, options: LambdaFunctionOptions) {
+  constructor(project: Project, options: FunctionOptions) {
     super(project);
 
-    const runtime = options.runtime ?? LambdaFunctionRuntime.NODEJS_14_X;
+    const bundler = Bundler.of(project);
+    if (!bundler) {
+      throw new Error('No bundler found. Please add a Bundler component to your project.');
+    }
 
-    this.typescriptProject = project;
+    const runtime = options.runtime ?? Runtime.NODEJS_14_X;
 
     // make sure entrypoint is within the source directory
-    if (!options.entrypoint.startsWith(project.srcdir)) {
-      throw new Error(`${options.entrypoint} must be under ${project.srcdir}`);
+    if (!options.entrypoint.startsWith(options.srcdir)) {
+      throw new Error(`${options.entrypoint} must be under ${options.srcdir}`);
     }
 
-    const entrypoint = relative(project.srcdir, options.entrypoint);
+    // allow Lambda handler code to import dev-deps since they are only needed
+    // during bundling
+    const eslint = Eslint.of(project);
+    eslint?.allowDevDeps(options.entrypoint);
 
-    if (!entrypoint.endsWith(EXT)) {
-      throw new Error(`${entrypoint} must have a ${EXT} extension`);
+    const entrypoint = relative(options.srcdir, options.entrypoint);
+
+    if (!entrypoint.endsWith(TYPESCRIPT_LAMBDA_EXT)) {
+      throw new Error(`${entrypoint} must have a ${TYPESCRIPT_LAMBDA_EXT} extension`);
     }
 
-    const basePath = join(dirname(entrypoint), basename(entrypoint, EXT));
+    const basePath = join(dirname(entrypoint), basename(entrypoint, TYPESCRIPT_LAMBDA_EXT));
     const constructFile = options.constructFile ?? `${basePath}-function.ts`;
-    const constructFilePath = join(project.srcdir, constructFile);
+    const constructFilePath = join(options.srcdir, constructFile);
 
     if (extname(constructFilePath) !== '.ts') {
       throw new Error(`Construct file name "${constructFile}" must have a .ts extension`);
@@ -130,61 +165,42 @@ export class LambdaFunction extends Component {
     src.close('}');
     src.close('}');
 
-    const entry = join(project.srcdir, entrypoint);
-    const outfile = join(project.libdir, bundledirName, 'index.js');
-    const bundle = project.addTask(`bundle:${basePath}`, {
-      description: `Create an AWS Lambda bundle from ${entry}`,
-      exec: [
-        'esbuild',
-        '--bundle',
-        entry,
-        `--target="${runtime.esbuildTarget}"`,
-        '--platform="node"',
-        `--outfile="${outfile}"`,
-        '--external:aws-sdk',
-      ].join(' '),
+    const entry = join(options.srcdir, entrypoint);
+    const outfile = join(options.libdir, bundledirName, 'index.js');
+
+    this.bundleTask = bundler.addBundle(basePath, {
+      entrypoint: entry,
+      outfile: outfile,
+      target: runtime.esbuildTarget,
+      platform: runtime.esbuildPlatform,
+      externals: options.externals ?? ['aws-sdk'],
     });
 
     this.project.logger.info(`${basePath}: construct "${constructName}" generated under "${constructFilePath}"`);
-    this.project.logger.info(`${basePath}: bundle task "${bundle.name}"`);
-
-    // add this function to the bundle task
-    this.projectBundleTask.spawn(bundle);
-    this.bundleTask = bundle;;
-  }
-
-  /**
-   * Returns the project-level "bundle" task.
-   */
-  private get projectBundleTask(): Task {
-    let bundleTask = this.project.tasks.tryFind('bundle');
-    if (!bundleTask) {
-      bundleTask = this.project.addTask('bundle', { description: 'Bundle assets' });
-      this.typescriptProject.compileTask.spawn(bundleTask);
-    }
-
-    return bundleTask;
+    this.project.logger.info(`${basePath}: bundle task "${this.bundleTask.name}"`);
   }
 }
 
 /**
  * The runtime for the AWS Lambda function.
  */
-export class LambdaFunctionRuntime {
+export class Runtime {
   /**
    * Node.js 10.x
    */
-  public static readonly NODEJS_10_X = new LambdaFunctionRuntime('NODEJS_10_X', 'node10');
+  public static readonly NODEJS_10_X = new Runtime('NODEJS_10_X', 'node10');
 
   /**
    * Node.js 12.x
    */
-  public static readonly NODEJS_12_X = new LambdaFunctionRuntime('NODEJS_12_X', 'node12');
+  public static readonly NODEJS_12_X = new Runtime('NODEJS_12_X', 'node12');
 
   /**
    * Node.js 14.x
    */
-  public static readonly NODEJS_14_X = new LambdaFunctionRuntime('NODEJS_14_X', 'node14');
+  public static readonly NODEJS_14_X = new Runtime('NODEJS_14_X', 'node14');
+
+  public readonly esbuildPlatform = 'node';
 
   private constructor(
     /**

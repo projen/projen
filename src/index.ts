@@ -49,4 +49,4 @@ export * as typescript from './typescript/index'; // <-- we also have typescript
 export * as javascript from './javascript';
 export * as release from './release';
 export * as git from './git';
-export * as cdk from './cdk';
+export * as aws_lambda from './aws-lambda';

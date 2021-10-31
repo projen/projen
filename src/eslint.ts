@@ -1,3 +1,4 @@
+import { Project } from '.';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { JsonFile } from './json';
@@ -77,7 +78,19 @@ export interface EslintOverride {
   readonly rules: { [rule: string]: any };
 }
 
+/**
+ * Represents eslint configuration.
+ */
 export class Eslint extends Component {
+
+  /**
+   * Returns the singletone Eslint component of a project or undefined if there is none.
+   */
+  public static of(project: Project): Eslint | undefined {
+    const isEslint = (c: Component): c is Eslint => c instanceof Eslint;
+    return project.components.find(isEslint);
+  }
+
   /**
    * eslint rules.
    */
@@ -98,7 +111,7 @@ export class Eslint extends Component {
    */
   public readonly ignorePatterns: string[];
 
-  private readonly _allowDevDeps: string[];
+  private readonly _allowDevDeps: Set<string>;
 
   constructor(project: NodeProject, options: EslintOptions) {
     super(project);
@@ -130,7 +143,7 @@ export class Eslint extends Component {
     const dirs = [...options.dirs, ...devdirs];
     const fileExtensions = options.fileExtensions ?? ['.ts'];
 
-    this._allowDevDeps = (devdirs ?? []).map(dir => `**/${dir}/**`);
+    this._allowDevDeps = new Set((devdirs ?? []).map(dir => `**/${dir}/**`));
 
     const lintProjenRc = options.lintProjenRc ?? true;
 
@@ -370,10 +383,10 @@ export class Eslint extends Component {
    * @param pattern glob pattern.
    */
   public allowDevDeps(pattern: string) {
-    this._allowDevDeps.push(pattern);
+    this._allowDevDeps.add(pattern);
   }
 
   private renderDevDepsAllowList() {
-    return this._allowDevDeps;
+    return Array.from(this._allowDevDeps);
   }
 }

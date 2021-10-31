@@ -1,0 +1,1 @@
+export const TYPESCRIPT_LAMBDA_EXT = '.lambda.ts';

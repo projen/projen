@@ -4,7 +4,7 @@ import { DEFAULT_GITHUB_ACTIONS_USER } from './github/constants';
 import { MergifyOptions } from './github/mergify';
 import { JobPermission, JobStep } from './github/workflows-model';
 import { IgnoreFile } from './ignore-file';
-import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
+import { Bundler, BundlerCommonOptions, Projenrc, ProjenrcOptions } from './javascript';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
 import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
@@ -289,6 +289,11 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * @default - default options
    */
   readonly projenrcJsOptions?: ProjenrcOptions;
+
+  /**
+   * Options for `Bundler`.
+   */
+  readonly bundlerOptions?: BundlerCommonOptions;
 }
 
 /**
@@ -426,6 +431,8 @@ export class NodeProject extends GitHubProject {
     return this.package.manifest;
   }
 
+  public readonly bundler: Bundler;
+
   private readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
 
@@ -461,6 +468,12 @@ export class NodeProject extends GitHubProject {
 
     this.buildTask = this.addTask('build', {
       description: 'Full release build (test+compile)',
+    });
+
+    // add a bundler component - this enables things like Lambda bundling and in the future web bundling.
+    this.bundler = new Bundler(this, {
+      parentTask: this.compileTask,
+      ...options.bundlerOptions,
     });
 
     // first, execute projen as the first thing during build
