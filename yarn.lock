@@ -1423,9 +1423,9 @@ camelcase@^6.2.0:
   integrity sha512-c7wVvbw3f37nuobQNtgsgG9POC9qMbNuMQmTCqZv23b6MIz0fcYpBiOlv9gEN/hdLdnZTDQhg6e9Dq5M1vKvfg==
 
 caniuse-lite@^1.0.30001271:
-  version "1.0.30001272"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001272.tgz#8e9790ff995e9eb6e1f4c45cd07ddaa87cddbb14"
-  integrity sha512-DV1j9Oot5dydyH1v28g25KoVm7l8MTxazwuiH3utWiAS6iL/9Nh//TGwqFEeqqN8nnWYQ8HHhUq+o4QPt9kvYw==
+  version "1.0.30001274"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001274.tgz#26ca36204d15b17601ba6fc35dbdad950a647cc7"
+  integrity sha512-+Nkvv0fHyhISkiMIjnyjmf5YJcQ1IQHZN6U9TLUMroWR38FNwpsC51Gb68yueafX1V6ifOisInSgP9WJFS13ew==
 
 case@^1.6.3:
   version "1.6.3"
@@ -4365,10 +4365,10 @@ map-obj@^4.0.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-markmac@^0.1.74:
-  version "0.1.74"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.74.tgz#8b32ca12e3a9a336be26cd6d35d3c115f7281e5f"
-  integrity sha512-uVtazkEdYazh3eVrnq5Fl7s0HadvT5ZPYak0QLwTyGGytFa65yZA+O2VfCo6BzrRImNQYI82yMHJ50mlt2GrKw==
+markmac@^0.1.75:
+  version "0.1.75"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.75.tgz#04c6e06f9ef62e5c0b9dacb01d2e421bab424b12"
+  integrity sha512-PHTH5/vpuI9C4H4+PJXL9ioglV0FTCWkG1f83AqXYwqS/uh7GM7J1vcIfPViqada9iS94nxBWe38fsrvPx4ugw==
 
 mdurl@~1.0.1:
   version "1.0.1"
