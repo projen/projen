@@ -84,9 +84,26 @@ Array [
         "switch": "cdk-dependencies",
       },
       Object {
-        "default": "\\"1.130.0\\"",
-        "docs": "AWS CDK version to use.",
-        "featured": true,
+        "default": "\\"cdk.out\\"",
+        "docs": "cdk.out directory.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "cdkout",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "cdkout",
+        ],
+        "simpleType": "string",
+        "switch": "cdkout",
+      },
+      Object {
+        "default": "\\"^1.130.0\\"",
+        "docs": "AWS CDK version to use (you can use semantic versioning).",
+        "featured": false,
         "fullType": Object {
           "primitive": "string",
         },
@@ -98,23 +115,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "cdk-version",
-      },
-      Object {
-        "default": "false",
-        "docs": "Use pinned version instead of caret version for CDK.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "cdkVersionPinning",
-        "optional": true,
-        "parent": "AwsCdkJavaAppOptions",
-        "path": Array [
-          "cdkVersionPinning",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-version-pinning",
       },
       Object {
         "default": "true",
@@ -167,7 +167,7 @@ Array [
         "jsonLike": true,
         "name": "context",
         "optional": true,
-        "parent": "AwsCdkJavaAppOptions",
+        "parent": "CdkConfigCommonOptions",
         "path": Array [
           "context",
         ],
@@ -256,7 +256,7 @@ Array [
         "jsonLike": true,
         "name": "featureFlags",
         "optional": true,
-        "parent": "AwsCdkJavaAppOptions",
+        "parent": "CdkConfigCommonOptions",
         "path": Array [
           "featureFlags",
         ],
@@ -623,15 +623,15 @@ Array [
         "default": "CdkApprovalLevel.BROADENING",
         "docs": "To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.",
         "featured": false,
-        "fqn": "projen.CdkApprovalLevel",
+        "fqn": "projen.awscdk.CdkApprovalLevel",
         "fullType": Object {
-          "fqn": "projen.CdkApprovalLevel",
+          "fqn": "projen.awscdk.CdkApprovalLevel",
         },
         "jsonLike": true,
         "kind": "enum",
         "name": "requireApproval",
         "optional": true,
-        "parent": "AwsCdkJavaAppOptions",
+        "parent": "CdkConfigCommonOptions",
         "path": Array [
           "requireApproval",
         ],
@@ -1090,6 +1090,23 @@ Array [
         "switch": "cdk-dependencies",
       },
       Object {
+        "default": "\\"cdk.out\\"",
+        "docs": "cdk.out directory.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "cdkout",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "cdkout",
+        ],
+        "simpleType": "string",
+        "switch": "cdkout",
+      },
+      Object {
         "default": "\\"1.95.2\\"",
         "docs": "AWS CDK version to use.",
         "featured": true,
@@ -1191,6 +1208,7 @@ Array [
         "switch": "compile-before-test",
       },
       Object {
+        "default": "- no additional context",
         "docs": "Additional context to include in \`cdk.json\`.",
         "featured": false,
         "fullType": Object {
@@ -1204,7 +1222,7 @@ Array [
         "jsonLike": true,
         "name": "context",
         "optional": true,
-        "parent": "AwsCdkTypeScriptAppOptions",
+        "parent": "CdkConfigCommonOptions",
         "path": Array [
           "context",
         ],
@@ -1530,6 +1548,23 @@ Array [
         ],
         "simpleType": "EslintOptions",
         "switch": "eslint-options",
+      },
+      Object {
+        "default": "true",
+        "docs": "Include all feature flags in cdk.json.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "featureFlags",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "featureFlags",
+        ],
+        "simpleType": "boolean",
+        "switch": "feature-flags",
       },
       Object {
         "default": "true",
@@ -2746,15 +2781,15 @@ Array [
         "default": "CdkApprovalLevel.BROADENING",
         "docs": "To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.",
         "featured": false,
-        "fqn": "projen.CdkApprovalLevel",
+        "fqn": "projen.awscdk.CdkApprovalLevel",
         "fullType": Object {
-          "fqn": "projen.CdkApprovalLevel",
+          "fqn": "projen.awscdk.CdkApprovalLevel",
         },
         "jsonLike": true,
         "kind": "enum",
         "name": "requireApproval",
         "optional": true,
-        "parent": "AwsCdkTypeScriptAppOptions",
+        "parent": "CdkConfigCommonOptions",
         "path": Array [
           "requireApproval",
         ],

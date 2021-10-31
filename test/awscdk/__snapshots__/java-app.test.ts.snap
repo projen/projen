@@ -19,6 +19,7 @@ Object {
     "@aws-cdk/core:stackRelativeExports": true,
     "aws-cdk:enableDiffNoFail": true,
   },
+  "output": "cdk.out",
 }
 `;
 

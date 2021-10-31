@@ -6,7 +6,7 @@ test('simple', () => {
   const p = new awscdk.AwsCdkJavaApp({
     artifactId: 'my-app',
     groupId: 'org.acme',
-    cdkVersion: '1.130.0',
+    cdkVersion: '^1.130.0',
     mainClass: 'org.acme.App',
     name: 'my-app',
     version: '0.1.0',
@@ -34,7 +34,7 @@ test('mainClass', () => {
   const p = new awscdk.AwsCdkJavaApp({
     artifactId: 'my-app',
     groupId: 'org.acme',
-    cdkVersion: '1.130.0',
+    cdkVersion: '^1.130.0',
     mainClass: 'org.acme.jojo.MyApp',
     name: 'my-app',
     version: '0.1.0',
@@ -48,7 +48,7 @@ test('deps', () => {
   const p = new awscdk.AwsCdkJavaApp({
     artifactId: 'my-app',
     groupId: 'org.acme',
-    cdkVersion: '1.120.0',
+    cdkVersion: '^1.120.0',
     mainClass: 'org.acme.jojo.MyApp',
     name: 'my-app',
     version: '0.1.0',
