@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { TypeScriptProject } from '../../src';
 import * as aws_lambda from '../../src/aws-lambda';
-import { synthSnapshot } from '../util';
+import { Testing } from '../../src/testing';
 
 describe('bundled function', () => {
   let generatedSource: string;
@@ -17,7 +17,7 @@ describe('bundled function', () => {
       libdir: project.libdir,
     });
 
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     generatedSource = snapshot['src/hello-function.ts'];
     tasks = snapshot['.projen/tasks.json'].tasks;
   });
@@ -87,7 +87,7 @@ test('constructFile and constructName can be used to customize the generated con
     srcdir: project.srcdir,
   });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   const generatedSource = snapshot['src/my-construct.ts'];
   expect(generatedSource).toMatchSnapshot();
 });
@@ -102,7 +102,7 @@ test('runtime can be used to customize the lambda runtime and esbuild target', (
     srcdir: project.srcdir,
   });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   const generatedSource = snapshot['src/hello-function.ts'];
   const tasks = snapshot['.projen/tasks.json'].tasks;
   expect(generatedSource).toContain('runtime: lambda.Runtime.NODEJS_12_X,');
@@ -122,7 +122,7 @@ test('eslint allows handlers to import dev dependencies', () => {
   new aws_lambda.Function(project, { entrypoint: join('src', 'hello.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
   new aws_lambda.Function(project, { entrypoint: join('src', 'world.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot['.eslintrc.json'].rules['import/no-extraneous-dependencies']).toStrictEqual([
     'error', {
       devDependencies: ['**/test/**', '**/build-tools/**', 'src/hello.lambda.ts', 'src/world.lambda.ts'],
@@ -137,7 +137,7 @@ test('esbuild dependency is added', () => {
   new aws_lambda.Function(project, { entrypoint: join('src', 'hello.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
   new aws_lambda.Function(project, { entrypoint: join('src', 'world.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   const deps = snapshot['.projen/deps.json'].dependencies;
   expect(deps.filter((d: any) => d.name === 'esbuild').length).toEqual(1);
 });
@@ -147,7 +147,7 @@ test('multiple functions', () => {
   new aws_lambda.Function(project, { entrypoint: join('src', 'hello.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
   new aws_lambda.Function(project, { entrypoint: join('src', 'world.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot['src/hello-function.ts']).toMatchSnapshot();
   expect(snapshot['src/world-function.ts']).toMatchSnapshot();
 });
@@ -168,7 +168,7 @@ test('auto-discover', () => {
     srcdir: project.srcdir,
   });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot['src/hello-function.ts']).toMatchSnapshot();
   expect(snapshot['src/subdir/world-function.ts']).toMatchSnapshot();
   expect(snapshot['src/subdir/jangy-function.ts']).toMatchSnapshot();

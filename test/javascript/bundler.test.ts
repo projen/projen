@@ -1,6 +1,6 @@
 import { NodeProject } from '../../src';
 import { Bundler } from '../../src/javascript';
-import { synthSnapshot } from '../util';
+import { Testing } from '../../src/testing';
 
 test('node projects have a bundler', () => {
   const p = new NodeProject({
@@ -43,7 +43,7 @@ test('bundler.addBundle() defines a bundle', () => {
     externals: ['aws-sdk', 'request'],
   });
 
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
   const tasks = snapshot['.projen/tasks.json'].tasks;
 
   // aggregated "bundle" task spawns all bundle tasks
@@ -91,7 +91,7 @@ test('no specific esbuild version by default', () => {
     target: 'node12',
   });
 
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
   const deps = snapshot['.projen/deps.json'].dependencies;
 
   expect(deps.find((d: any) => d.name === 'esbuild')).toStrictEqual({
@@ -116,7 +116,7 @@ test('esbuildVersion can be used to specify version requirement for "esbuild"', 
     target: 'node12',
   });
 
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
   const deps = snapshot['.projen/deps.json'].dependencies;
 
   expect(deps.find((d: any) => d.name === 'esbuild')).toStrictEqual({
