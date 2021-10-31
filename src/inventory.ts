@@ -280,7 +280,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         fullType: prop.type,
         kind: jsiiKind,
         jsonLike: prop.type ? isJsonLike(jsii, prop.type) : undefined,
-        switch: propPath.map(p => decamelize(p).replace(/_/g, '-')).join('-'),
+        switch: propPath.map(p => snake(p).replace(/_/g, '-')).join('-'),
         default: defaultValue,
         optional: isOptional,
         featured: prop.docs?.custom?.featured === 'true',
