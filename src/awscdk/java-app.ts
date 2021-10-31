@@ -1,4 +1,6 @@
+import { join } from 'path';
 import * as semver from 'semver';
+import { SampleDir } from '..';
 import { JavaProject, JavaProjectOptions } from '../java';
 import { CdkConfig, CdkConfigCommonOptions } from './cdk-config';
 import { CdkTasks } from './cdk-tasks';
@@ -46,7 +48,7 @@ export class AwsCdkJavaApp extends JavaProject {
   public readonly cdkConfig: CdkConfig;
 
   /**
-   * The name of the main class of the java app.
+   * The full name of the main class of the java app (package.Class).
    */
   public readonly mainClass: string;
 
@@ -55,10 +57,30 @@ export class AwsCdkJavaApp extends JavaProject {
    */
   public readonly cdkTasks: CdkTasks;
 
+  /**
+   * The name of the Java package that includes the main class.
+   */
+  public readonly mainPackage: string;
+
+  /**
+   * The name of the Java class with the static `main()` method.
+   */
+  public readonly mainClassName: string;
+
   constructor(options: AwsCdkJavaAppOptions) {
-    super(options);
+    const mainClassComponents = options.mainClass.split('.');
+    const mainPackage = mainClassComponents.slice(0, -1);
+    const mainClassName = mainClassComponents[mainClassComponents.length - 1];
+
+    super({
+      ...options,
+      sample: false,
+      sampleJavaPackage: mainPackage.join('.'),
+    });
 
     this.mainClass = options.mainClass;
+    this.mainPackage = mainPackage.join('.');
+    this.mainClassName = mainClassName;
     this.cdkVersion = options.cdkVersion;
 
     if (!this.cdkVersion) {
@@ -74,14 +96,14 @@ export class AwsCdkJavaApp extends JavaProject {
     this.addCdkDependency(...options.cdkDependencies ?? []);
 
     this.cdkTasks = new CdkTasks(this);
-
-    // add synth to the build
     this.buildTask.spawn(this.cdkTasks.synth);
 
     this.cdkConfig = new CdkConfig(this, {
       app: `mvn exec:java --quiet -Dexec.mainClass=${this.mainClass}`,
       ...options,
     });
+
+    this.addSample();
   }
 
   /**
@@ -93,5 +115,28 @@ export class AwsCdkJavaApp extends JavaProject {
     for (const m of modules) {
       this.addDependency(`software.amazon.awscdk/${m}@${this.cdkVersion}`);
     }
+  }
+
+  private addSample() {
+    const pkg = this.mainPackage.split('.');
+    const javaFile = `${this.mainClassName}.java`;
+    new SampleDir(this, join('src', 'main', 'java', ...pkg), {
+      files: {
+        [javaFile]: [
+          `package ${pkg.join('.')};`,
+          '',
+          'import software.amazon.awscdk.core.App;',
+          'import software.amazon.awscdk.core.Stack;',
+          '',
+          `public class ${this.mainClassName} {`,
+          '  public static void main(final String[] args) {',
+          '    App app = new App();',
+          '    new Stack(app, "MyStack");',
+          '    app.synth();',
+          '  }',
+          '}',
+        ].join('\n'),
+      },
+    });
   }
 }

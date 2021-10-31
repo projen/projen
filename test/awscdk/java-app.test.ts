@@ -2,12 +2,12 @@ import * as xml from 'xmlbuilder2';
 import { awscdk } from '../../src';
 import { Testing } from '../../src/testing';
 
-test('simple', () => {
+test('happy flow', () => {
   const p = new awscdk.AwsCdkJavaApp({
     artifactId: 'my-app',
     groupId: 'org.acme',
     cdkVersion: '^1.130.0',
-    mainClass: 'org.acme.App',
+    mainClass: 'org.bacme.BoomApp',
     name: 'my-app',
     version: '0.1.0',
   });
@@ -22,12 +22,13 @@ test('simple', () => {
     'cdk.json',
     'pom.xml',
     'README.md',
-    'src/main/java/org/acme/Main.java',
-    'src/test/java/org/acme/MyTest.java',
+    'src/main/java/org/bacme/BoomApp.java',
+    'src/test/java/org/bacme/MyTest.java',
   ]);
   expect(snapshot['cdk.json']).toMatchSnapshot();
   expect(snapshot['pom.xml']).toMatchSnapshot();
-  expect(snapshot['cdk.json'].app).toStrictEqual('mvn exec:java --quiet -Dexec.mainClass=org.acme.App');
+  expect(snapshot['src/test/java/org/bacme/MyTest.java']).toMatchSnapshot();
+  expect(snapshot['cdk.json'].app).toStrictEqual('mvn exec:java --quiet -Dexec.mainClass=org.bacme.BoomApp');
 });
 
 test('mainClass', () => {

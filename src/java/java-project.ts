@@ -10,7 +10,7 @@ import { Projenrc as ProjenrcJava, ProjenrcOptions } from './projenrc';
 /**
  * Options for `JavaProject`.
  */
-export interface JavaProjectOptions extends GitHubProjectOptions, PomOptions {
+export interface JavaProjectCommonOptions extends GitHubProjectOptions, PomOptions {
   /**
    * Final artifact output directory.
    *
@@ -71,17 +71,6 @@ export interface JavaProjectOptions extends GitHubProjectOptions, PomOptions {
   readonly compileOptions?: MavenCompileOptions;
 
   /**
-   * Include sample code and test if the relevant directories don't exist.
-   */
-  readonly sample?: boolean;
-
-  /**
-   * The java package to use for the code sample.
-   * @default "org.acme"
-   */
-  readonly sampleJavaPackage?: string;
-
-  /**
    * Use projenrc in java.
    *
    * This will install `projen` as a java dependency and will add a `synth` task which
@@ -96,6 +85,22 @@ export interface JavaProjectOptions extends GitHubProjectOptions, PomOptions {
    * @default - default options
    */
   readonly projenrcJavaOptions?: ProjenrcOptions;
+}
+
+/**
+ * Options for `JavaProject`.
+ */
+export interface JavaProjectOptions extends JavaProjectCommonOptions {
+  /**
+   * Include sample code and test if the relevant directories don't exist.
+   */
+  readonly sample?: boolean;
+
+  /**
+    * The java package to use for the code sample.
+    * @default "org.acme"
+    */
+  readonly sampleJavaPackage?: string;
 }
 
 /**
