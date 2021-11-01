@@ -60,6 +60,11 @@ export interface EslintOptions {
    * @default undefined
    */
   readonly aliasExtensions?: string[];
+
+  /**
+   * Always try to resolve types under `<root>@types` directory even it doesn't contain any source code
+   */
+  readonly typescriptAlwaysTryTypes?: boolean;
 }
 
 /**
@@ -331,6 +336,7 @@ export class Eslint extends Component {
           node: {},
           typescript: {
             project: tsconfig,
+            ...( options.typescriptAlwaysTryTypes && { alwaysTryTypes: true } ),
           },
         },
       },
