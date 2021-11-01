@@ -83,3 +83,20 @@ describe('alias', () => {
   });
 
 });
+
+test('tsAlwaysTryTypes', () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: 'test',
+    defaultReleaseBranch: 'master',
+  });
+
+  // WHEN
+  const eslint = new Eslint(project, {
+    dirs: ['mysrc'],
+    tsAlwaysTryTypes: true,
+  });
+
+  // THEN
+  expect(eslint.config.settings['import/resolver'].typescript).toHaveProperty('alwaysTryTypes', true);
+});

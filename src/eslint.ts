@@ -60,6 +60,13 @@ export interface EslintOptions {
    * @default undefined
    */
   readonly aliasExtensions?: string[];
+
+  /**
+   * Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.
+   * This prevents `import/no-unresolved` eslint errors when importing a `@types/*` module that would otherwise remain unresolved.
+   * @default true
+   */
+  readonly tsAlwaysTryTypes?: boolean;
 }
 
 /**
@@ -331,6 +338,7 @@ export class Eslint extends Component {
           node: {},
           typescript: {
             project: tsconfig,
+            ...( options.tsAlwaysTryTypes !== false && { alwaysTryTypes: true } ),
           },
         },
       },
