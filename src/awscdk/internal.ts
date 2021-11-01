@@ -16,3 +16,8 @@ export const FEATURE_FLAGS = [
   '@aws-cdk/aws-lambda:recognizeVersionProps',
   '@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021',
 ];
+
+/**
+ * Suffix for AWS Lambda handlers.
+ */
+export const TYPESCRIPT_LAMBDA_EXT = '.lambda.ts';

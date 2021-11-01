@@ -1,14 +1,14 @@
 import { join } from 'path';
 import * as glob from 'glob';
-import { Function, FunctionCommonOptions } from '.';
-import { Project } from '..';
 import { Component } from '../component';
-import { TYPESCRIPT_LAMBDA_EXT } from './consts';
+import { Project } from '../project';
+import { TYPESCRIPT_LAMBDA_EXT } from './internal';
+import { LambdaFunction, LambdaFunctionCommonOptions } from './lambda-function';
 
 /**
  * Options for `AutoDiscover`.
  */
-export interface AutoDiscoverOptions extends FunctionCommonOptions {
+export interface AutoDiscoverOptions extends LambdaFunctionCommonOptions {
   /**
    * Project source tree (relative to project output directory).
    */
@@ -39,7 +39,7 @@ export class AutoDiscover extends Component {
     });
 
     for (const entrypoint of entrypoints) {
-      new Function(this.project, {
+      new LambdaFunction(this.project, {
         entrypoint: join(this.options.srcdir, entrypoint),
         ...this.options,
       });

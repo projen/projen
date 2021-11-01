@@ -1,5 +1,5 @@
 import * as semver from 'semver';
-import * as aws_lambda from './aws-lambda';
+import { AutoDiscover, LambdaFunctionCommonOptions } from './awscdk';
 import { ConstructLibrary, ConstructLibraryOptions } from './construct-lib';
 
 /**
@@ -85,7 +85,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
     *
     * @default - default options
     */
-  readonly lambdaOptions?: aws_lambda.FunctionCommonOptions;
+  readonly lambdaOptions?: LambdaFunctionCommonOptions;
 }
 
 /**
@@ -147,7 +147,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
 
     const lambdaAutoDiscover = options.lambdaAutoDiscover ?? true;
     if (lambdaAutoDiscover) {
-      new aws_lambda.AutoDiscover(this, {
+      new AutoDiscover(this, {
         srcdir: this.srcdir,
         libdir: this.libdir,
         ...options.lambdaOptions,

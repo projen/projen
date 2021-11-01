@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
-import { aws_lambda } from '../src';
+import { awscdk } from '../src';
 import { AwsCdkConstructLibrary, AwsCdkConstructLibraryOptions } from '../src/awscdk-construct';
 import { NpmAccess } from '../src/node-package';
 import { synthSnapshot } from '../src/util/synth';
@@ -67,7 +67,7 @@ describe('lambda functions', () => {
       cdkVersion: '1.100.0',
       libdir: 'liblib',
       lambdaOptions: {
-        runtime: aws_lambda.Runtime.NODEJS_10_X,
+        runtime: awscdk.LambdaRuntime.NODEJS_10_X,
         externals: ['foo', 'bar'],
       },
     });

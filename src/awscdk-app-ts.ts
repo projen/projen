@@ -1,9 +1,8 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as semver from 'semver';
-import * as aws_lambda from './aws-lambda';
+import { CdkTasks, AutoDiscover, LambdaFunctionCommonOptions } from './awscdk';
 import { CdkConfig, CdkConfigCommonOptions } from './awscdk/cdk-config';
-import { CdkTasks } from './awscdk/cdk-tasks';
 import { Component } from './component';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
 
@@ -41,14 +40,6 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions, Cd
   readonly appEntrypoint?: string;
 
   /**
-   * To protect you against unintended changes that affect your security posture,
-   * the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.
-   *
-   * @default CdkApprovalLevel.BROADENING
-   */
-  readonly requireApproval?: CdkApprovalLevel;
-
-  /**
    * Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler
    * in your source tree. If this is disabled, you either need to explicitly
    * call `aws_lambda.Function.autoDiscover()` or define a `new
@@ -63,7 +54,7 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions, Cd
    *
    * @default - default options
    */
-  readonly lambdaOptions?: aws_lambda.FunctionCommonOptions;
+  readonly lambdaOptions?: LambdaFunctionCommonOptions;
 }
 
 /**
@@ -162,7 +153,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     const lambdaAutoDiscover = options.lambdaAutoDiscover ?? true;
     if (lambdaAutoDiscover) {
-      new aws_lambda.AutoDiscover(this, {
+      new AutoDiscover(this, {
         srcdir: this.srcdir,
         libdir: this.libdir,
         ...options.lambdaOptions,

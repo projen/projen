@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { TypeScriptProject } from '../../src';
-import * as aws_lambda from '../../src/aws-lambda';
+import * as awscdk from '../../src/awscdk';
 import { Testing } from '../../src/testing';
 
 describe('bundled function', () => {
@@ -11,7 +11,7 @@ describe('bundled function', () => {
   beforeEach(() => {
     const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
 
-    new aws_lambda.Function(project, {
+    new awscdk.LambdaFunction(project, {
       entrypoint: join('src', 'hello.lambda.ts'),
       srcdir: project.srcdir,
       libdir: project.libdir,
@@ -60,7 +60,7 @@ describe('bundled function', () => {
 
 test('fails if entrypoint does not have the .lambda suffix', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
-  expect(() => new aws_lambda.Function(project, {
+  expect(() => new awscdk.LambdaFunction(project, {
     entrypoint: join('src', 'hello-no-lambda.ts'),
     libdir: project.libdir,
     srcdir: project.srcdir,
@@ -69,7 +69,7 @@ test('fails if entrypoint does not have the .lambda suffix', () => {
 
 test('fails if entrypoint is not under the source tree', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
-  expect(() => new aws_lambda.Function(project, {
+  expect(() => new awscdk.LambdaFunction(project, {
     entrypoint: join('boom', 'hello-no-lambda.ts'),
     libdir: project.libdir,
     srcdir: project.srcdir,
@@ -79,7 +79,7 @@ test('fails if entrypoint is not under the source tree', () => {
 test('constructFile and constructName can be used to customize the generated construct', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
 
-  new aws_lambda.Function(project, {
+  new awscdk.LambdaFunction(project, {
     entrypoint: join('src', 'hello.lambda.ts'),
     constructFile: 'my-construct.ts',
     constructName: 'MyConstruct',
@@ -95,9 +95,9 @@ test('constructFile and constructName can be used to customize the generated con
 test('runtime can be used to customize the lambda runtime and esbuild target', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
 
-  new aws_lambda.Function(project, {
+  new awscdk.LambdaFunction(project, {
     entrypoint: join('src', 'hello.lambda.ts'),
-    runtime: aws_lambda.Runtime.NODEJS_12_X,
+    runtime: awscdk.LambdaRuntime.NODEJS_12_X,
     libdir: project.libdir,
     srcdir: project.srcdir,
   });
@@ -119,8 +119,8 @@ test('runtime can be used to customize the lambda runtime and esbuild target', (
 
 test('eslint allows handlers to import dev dependencies', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
-  new aws_lambda.Function(project, { entrypoint: join('src', 'hello.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
-  new aws_lambda.Function(project, { entrypoint: join('src', 'world.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
 
   const snapshot = Testing.synth(project);
   expect(snapshot['.eslintrc.json'].rules['import/no-extraneous-dependencies']).toStrictEqual([
@@ -134,8 +134,8 @@ test('eslint allows handlers to import dev dependencies', () => {
 
 test('esbuild dependency is added', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
-  new aws_lambda.Function(project, { entrypoint: join('src', 'hello.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
-  new aws_lambda.Function(project, { entrypoint: join('src', 'world.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
 
   const snapshot = Testing.synth(project);
   const deps = snapshot['.projen/deps.json'].dependencies;
@@ -144,8 +144,8 @@ test('esbuild dependency is added', () => {
 
 test('multiple functions', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
-  new aws_lambda.Function(project, { entrypoint: join('src', 'hello.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
-  new aws_lambda.Function(project, { entrypoint: join('src', 'world.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts'), libdir: project.libdir, srcdir: project.srcdir });
 
   const snapshot = Testing.synth(project);
   expect(snapshot['src/hello-function.ts']).toMatchSnapshot();
@@ -162,8 +162,8 @@ test('auto-discover', () => {
   writeFileSync(join(srcdir, 'subdir', 'world.lambda.ts'), 'export function handler() {}');
   writeFileSync(join(srcdir, 'subdir', 'jangy.lambda.ts'), 'export function handler() {}');
 
-  new aws_lambda.AutoDiscover(project, {
-    runtime: aws_lambda.Runtime.NODEJS_12_X,
+  new awscdk.AutoDiscover(project, {
+    runtime: awscdk.LambdaRuntime.NODEJS_12_X,
     libdir: project.libdir,
     srcdir: project.srcdir,
   });

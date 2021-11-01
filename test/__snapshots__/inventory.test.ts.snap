@@ -1769,9 +1769,9 @@ Array [
         "default": "- default options",
         "docs": "Common options for all AWS Lambda functions.",
         "featured": false,
-        "fqn": "projen.aws_lambda.FunctionCommonOptions",
+        "fqn": "projen.awscdk.LambdaFunctionCommonOptions",
         "fullType": Object {
-          "fqn": "projen.aws_lambda.FunctionCommonOptions",
+          "fqn": "projen.awscdk.LambdaFunctionCommonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -1781,7 +1781,7 @@ Array [
         "path": Array [
           "lambdaOptions",
         ],
-        "simpleType": "FunctionCommonOptions",
+        "simpleType": "LambdaFunctionCommonOptions",
         "switch": "lambda-options",
       },
       Object {
@@ -4255,9 +4255,9 @@ added, set to the exact version configrued here.",
         "default": "- default options",
         "docs": "Common options for all AWS Lambda functions.",
         "featured": false,
-        "fqn": "projen.aws_lambda.FunctionCommonOptions",
+        "fqn": "projen.awscdk.LambdaFunctionCommonOptions",
         "fullType": Object {
-          "fqn": "projen.aws_lambda.FunctionCommonOptions",
+          "fqn": "projen.awscdk.LambdaFunctionCommonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -4267,7 +4267,7 @@ added, set to the exact version configrued here.",
         "path": Array [
           "lambdaOptions",
         ],
-        "simpleType": "FunctionCommonOptions",
+        "simpleType": "LambdaFunctionCommonOptions",
         "switch": "lambda-options",
       },
       Object {

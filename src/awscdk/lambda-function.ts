@@ -6,19 +6,19 @@ import { FileBase } from '../file';
 import { Bundler } from '../javascript/bundler';
 import { SourceCode } from '../source-code';
 import { Task } from '../tasks';
-import { TYPESCRIPT_LAMBDA_EXT } from './consts';
+import { TYPESCRIPT_LAMBDA_EXT } from './internal';
 
 /**
- * Common options for `Function`. Applies to all functions in
+ * Common options for `LambdaFunction`. Applies to all functions in
  * auto-discovery.
  */
-export interface FunctionCommonOptions {
+export interface LambdaFunctionCommonOptions {
   /**
    * The node.js version to target.
    *
    * @default Runtime.NODEJS_14_X
    */
-  readonly runtime?: Runtime;
+  readonly runtime?: LambdaRuntime;
 
   /**
    * Names of modules which should not be included in the bundle.
@@ -33,7 +33,7 @@ export interface FunctionCommonOptions {
 /**
  * Options for `Function`.
  */
-export interface FunctionOptions extends FunctionCommonOptions {
+export interface LambdaFunctionOptions extends LambdaFunctionCommonOptions {
   /**
    * A path from the project root directory to a TypeScript file which contains
    * the AWS Lambda handler entrypoint (exports a `handler` function).
@@ -86,7 +86,7 @@ export interface FunctionOptions extends FunctionCommonOptions {
  *  entrypoint: 'src/foo.lambda.ts'
  *});
  */
-export class Function extends Component {
+export class LambdaFunction extends Component {
   /**
    * The bundle task for this function.
    */
@@ -98,7 +98,7 @@ export class Function extends Component {
    * @param project The project to use
    * @param options Options
    */
-  constructor(project: Project, options: FunctionOptions) {
+  constructor(project: Project, options: LambdaFunctionOptions) {
     super(project);
 
     const bundler = Bundler.of(project);
@@ -106,7 +106,7 @@ export class Function extends Component {
       throw new Error('No bundler found. Please add a Bundler component to your project.');
     }
 
-    const runtime = options.runtime ?? Runtime.NODEJS_14_X;
+    const runtime = options.runtime ?? LambdaRuntime.NODEJS_14_X;
 
     // make sure entrypoint is within the source directory
     if (!options.entrypoint.startsWith(options.srcdir)) {
@@ -184,21 +184,21 @@ export class Function extends Component {
 /**
  * The runtime for the AWS Lambda function.
  */
-export class Runtime {
+export class LambdaRuntime {
   /**
    * Node.js 10.x
    */
-  public static readonly NODEJS_10_X = new Runtime('NODEJS_10_X', 'node10');
+  public static readonly NODEJS_10_X = new LambdaRuntime('NODEJS_10_X', 'node10');
 
   /**
    * Node.js 12.x
    */
-  public static readonly NODEJS_12_X = new Runtime('NODEJS_12_X', 'node12');
+  public static readonly NODEJS_12_X = new LambdaRuntime('NODEJS_12_X', 'node12');
 
   /**
    * Node.js 14.x
    */
-  public static readonly NODEJS_14_X = new Runtime('NODEJS_14_X', 'node14');
+  public static readonly NODEJS_14_X = new LambdaRuntime('NODEJS_14_X', 'node14');
 
   public readonly esbuildPlatform = 'node';
 
