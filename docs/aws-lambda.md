@@ -66,11 +66,13 @@ The `lambdaOptions` option can be used to configure all AWS Lambda functions in 
 These are the defaults:
 
 ```ts
+const { awscdk } = require('projen');
+
 new AwsCdkConstructLibrary({
   // ...
   lambdaOptions: {
     // target node.js runtime
-    runtime: aws_lambda.Runtime.NODEJS_14_X,
+    runtime: awscdk.LambdaRuntime.NODEJS_14_X,
 
     // list of node modules to exclude from the bundle
     externals: [ 'aws-sdk' ]
@@ -83,14 +85,16 @@ new AwsCdkConstructLibrary({
 As mentioned above, an AWS Lambda function will be created for every
 `.lambda.ts` file in your source tree, to disable auto-discovery, set
 `lambdaAutoDiscover` to `false` and then you can manually add
-`aws_lambda.Function` to your project:
+`awscdk.LambdaFunction` to your project:
 
 ```ts
+const { awscdk } = require('projen');
+
 const p = new AwsCdkTypeScriptApp({
   lambdaAutoDiscover: false
 });
 
-new aws_lambda.Function(p, {
+new awscdk.LambdaFunction(p, {
   srcdir: p.srcdir,
   libdir: p.libdir,
   entrypoint: 'src/foo.lambda.ts', // .lambda.ts extension is still required
