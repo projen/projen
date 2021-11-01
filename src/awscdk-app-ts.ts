@@ -1,8 +1,8 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as semver from 'semver';
+import { CdkTasks, AutoDiscover, LambdaFunctionCommonOptions } from './awscdk';
 import { CdkConfig, CdkConfigCommonOptions } from './awscdk/cdk-config';
-import { CdkTasks } from './awscdk/cdk-tasks';
 import { Component } from './component';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
 
@@ -38,6 +38,22 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions, Cd
    * @default "main.ts"
    */
   readonly appEntrypoint?: string;
+
+  /**
+   * Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler
+   * in your source tree. If this is disabled, you can manually add an
+   * `awscdk.AutoDiscover` component to your project.
+   *
+   * @default true
+   */
+  readonly lambdaAutoDiscover?: boolean;
+
+  /**
+   * Common options for all AWS Lambda functions.
+   *
+   * @default - default options
+   */
+  readonly lambdaOptions?: LambdaFunctionCommonOptions;
 }
 
 /**
@@ -132,6 +148,15 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.addDevDeps('ts-node@^9');
     if (options.sampleCode ?? true) {
       new SampleCode(this, cdkMajorVersion);
+    }
+
+    const lambdaAutoDiscover = options.lambdaAutoDiscover ?? true;
+    if (lambdaAutoDiscover) {
+      new AutoDiscover(this, {
+        srcdir: this.srcdir,
+        libdir: this.libdir,
+        lambdaOptions: options.lambdaOptions,
+      });
     }
   }
 
