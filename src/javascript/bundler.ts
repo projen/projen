@@ -96,12 +96,25 @@ export class Bundler extends Component {
       args.push(`--external:${x}`);
     }
 
+    const sourcemap = options.sourcemap ?? true;
+    if (sourcemap) {
+      args.push('--sourcemap');
+    }
+
     const bundle = this.project.addTask(`bundle:${name}`, {
       description: `Create a JavaScript bundle from ${options.entrypoint}`,
       exec: args.join(' '),
     });
 
     this.bundleTask.spawn(bundle);
+
+    const watch = options.watchTask ?? true;
+    if (watch) {
+      this.project.addTask(`bundle:${name}:watch`, {
+        description: `Continuously update the JavaScript bundle from ${options.entrypoint}`,
+        exec: `${args.join(' ')} --watch`,
+      });
+    }
 
     return bundle;
   }
@@ -148,6 +161,24 @@ export interface BundleOptions {
    * code in node at run time from a package that cannot be bundled. For
    * example, the fsevents package contains a native extension, which esbuild
    * doesn't support.
+   *
+   * @default []
    */
   readonly externals?: string[];
+
+  /**
+   * Include a source map in the bundle.
+   *
+   * @default true
+   */
+  readonly sourcemap?: boolean;
+
+  /**
+   * In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will
+   * invoke the same esbuild command with the `--watch` flag. This can be used
+   * to continusouly watch for changes.
+   *
+   * @default true
+   */
+  readonly watchTask?: boolean;
 }

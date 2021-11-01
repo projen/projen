@@ -65,7 +65,7 @@ test('bundler.addBundle() defines a bundle', () => {
     description: 'Create a JavaScript bundle from ./src/index.ts',
     name: 'bundle:hello',
     steps: [
-      { exec: 'esbuild --bundle ./src/index.ts --target="node12" --platform="node" --outfile="./lib/foo.js"' },
+      { exec: 'esbuild --bundle ./src/index.ts --target="node12" --platform="node" --outfile="./lib/foo.js" --sourcemap' },
     ],
   });
 
@@ -73,7 +73,7 @@ test('bundler.addBundle() defines a bundle', () => {
     description: 'Create a JavaScript bundle from ./src/world.ts',
     name: 'bundle:world',
     steps: [
-      { exec: 'esbuild --bundle ./src/world.ts --target="node14" --platform="node" --outfile="./lib/aaaa.js" --external:aws-sdk --external:request' },
+      { exec: 'esbuild --bundle ./src/world.ts --target="node14" --platform="node" --outfile="./lib/aaaa.js" --external:aws-sdk --external:request --sourcemap' },
     ],
   });
 });
@@ -123,5 +123,82 @@ test('esbuildVersion can be used to specify version requirement for "esbuild"', 
     name: 'esbuild',
     type: 'build',
     version: '^3',
+  });
+});
+
+test('sourcemaps can be disabled', () => {
+  const p = new NodeProject({
+    name: 'test',
+    defaultReleaseBranch: 'main',
+  });
+
+  p.bundler.addBundle('hello', {
+    entrypoint: './src/index.ts',
+    outfile: './lib/foo.js',
+    platform: 'node',
+    target: 'node12',
+    sourcemap: false,
+  });
+
+  const snapshot = Testing.synth(p);
+  const tasks = snapshot['.projen/tasks.json'].tasks;
+
+  expect(tasks['bundle:hello']).toStrictEqual({
+    description: 'Create a JavaScript bundle from ./src/index.ts',
+    name: 'bundle:hello',
+    steps: [
+      {
+        exec: 'esbuild --bundle ./src/index.ts --target="node12" --platform="node" --outfile="./lib/foo.js"',
+      },
+    ],
+  });
+});
+
+describe('bundle:watch', () => {
+  test('a bundle:xyz:watch task is added by default', () => {
+    const p = new NodeProject({
+      name: 'test',
+      defaultReleaseBranch: 'main',
+    });
+
+    p.bundler.addBundle('hello', {
+      entrypoint: './src/index.ts',
+      outfile: './lib/foo.js',
+      platform: 'node',
+      target: 'node12',
+    });
+
+    const snapshot = Testing.synth(p);
+    const tasks = snapshot['.projen/tasks.json'].tasks;
+
+    expect(tasks['bundle:hello:watch']).toStrictEqual({
+      description: 'Continuously update the JavaScript bundle from ./src/index.ts',
+      name: 'bundle:hello:watch',
+      steps: [
+        {
+          exec: 'esbuild --bundle ./src/index.ts --target="node12" --platform="node" --outfile="./lib/foo.js" --sourcemap --watch',
+        },
+      ],
+    });
+  });
+
+  test('watch can be disabled', () => {
+    const p = new NodeProject({
+      name: 'test',
+      defaultReleaseBranch: 'main',
+    });
+
+    p.bundler.addBundle('hello', {
+      entrypoint: './src/index.ts',
+      outfile: './lib/foo.js',
+      platform: 'node',
+      target: 'node12',
+      watchTask: false,
+    });
+
+    const snapshot = Testing.synth(p);
+    const tasks = snapshot['.projen/tasks.json'].tasks;
+
+    expect(tasks['bundle:hello:watch']).toBeUndefined();
   });
 });

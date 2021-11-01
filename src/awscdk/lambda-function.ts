@@ -132,7 +132,7 @@ export class LambdaFunction extends Component {
       throw new Error(`Construct file name "${constructFile}" must have a .ts extension`);
     }
 
-    const bundledirName = `${basePath}.bundle`;
+    const bundledirName = `${basePath}.lambda.bundle`;
 
     // type names
     const constructName = options.constructName ?? pascal(basename(basePath)) + 'Function';
@@ -160,7 +160,7 @@ export class LambdaFunction extends Component {
     src.line('...props,');
     src.line(`runtime: lambda.Runtime.${runtime.functionRuntime},`);
     src.line('handler: \'index.handler\',');
-    src.line(`code: lambda.Code.fromAsset(path.join(__dirname, '${bundledirName}')),`);
+    src.line(`code: lambda.Code.fromAsset(path.join(__dirname, '${basename(bundledirName)}')),`);
     src.close('});');
     src.close('}');
     src.close('}');
