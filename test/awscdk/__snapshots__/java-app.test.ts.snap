@@ -131,7 +131,7 @@ exports[`happy flow 2`] = `
         <dependency>
             <groupId>io.github.cdklabs</groupId>
             <artifactId>projen</artifactId>
-            <version>0.0.0</version>
+            <version>99.99.99</version>
             <scope>test</scope>
         </dependency>
         <dependency>
