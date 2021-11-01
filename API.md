@@ -670,7 +670,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **appEntrypoint** (<code>string</code>)  The CDK app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") this app uses. __*Optional*__
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Default*__: false
-  * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. __*Default*__: true
+  * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Common options for all AWS Lambda functions. __*Default*__: default options
 
 
@@ -5128,10 +5128,9 @@ new awscdk.AutoDiscover(project: Project, options: AutoDiscoverOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[awscdk.AutoDiscoverOptions](#projen-awscdk-autodiscoveroptions)</code>)  *No description*
-  * **externals** (<code>Array<string></code>)  Names of modules which should not be included in the bundle. __*Default*__: by default, the "aws-sdk" module will be excluded from the bundle. Note that if you use this option you will need to add "aws-sdk" explicitly.
-  * **runtime** (<code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code>)  The node.js version to target. __*Default*__: Runtime.NODEJS_14_X
   * **libdir** (<code>string</code>)  Output directory (where .js files go). 
   * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
+  * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for auto-discovery of AWS Lambda functions. __*Optional*__
 
 
 ### Methods
@@ -6438,7 +6437,9 @@ addBundle(name: string, options: BundleOptions): Task
   * **outfile** (<code>string</code>)  This option sets the output file name for the build operation. 
   * **platform** (<code>string</code>)  esbuild platform. 
   * **target** (<code>string</code>)  esbuild target. 
-  * **externals** (<code>Array<string></code>)  You can mark a file or a package as external to exclude it from your build. __*Optional*__
+  * **externals** (<code>Array<string></code>)  You can mark a file or a package as external to exclude it from your build. __*Default*__: []
+  * **sourcemap** (<code>boolean</code>)  Include a source map in the bundle. __*Default*__: true
+  * **watchTask** (<code>boolean</code>)  In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag. __*Default*__: true
 
 __Returns__:
 * <code>[tasks.Task](#projen-tasks-task)</code>
@@ -9076,7 +9077,7 @@ Name | Type | Description
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
-**lambdaAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler.<br/>__*Default*__: true
+**lambdaAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
 **lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Common options for all AWS Lambda functions.<br/>__*Default*__: default options
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
@@ -11626,8 +11627,7 @@ Name | Type | Description
 -----|------|-------------
 **libdir**🔹 | <code>string</code> | Output directory (where .js files go).
 **srcdir**🔹 | <code>string</code> | Project source tree (relative to project output directory).
-**externals**?🔹 | <code>Array<string></code> | Names of modules which should not be included in the bundle.<br/>__*Default*__: by default, the "aws-sdk" module will be excluded from the bundle. Note that if you use this option you will need to add "aws-sdk" explicitly.
-**runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
+**lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Options for auto-discovery of AWS Lambda functions.<br/>__*Optional*__
 
 
 
@@ -12269,7 +12269,9 @@ Name | Type | Description
 **outfile**🔹 | <code>string</code> | This option sets the output file name for the build operation.
 **platform**🔹 | <code>string</code> | esbuild platform.
 **target**🔹 | <code>string</code> | esbuild target.
-**externals**?🔹 | <code>Array<string></code> | You can mark a file or a package as external to exclude it from your build.<br/>__*Optional*__
+**externals**?🔹 | <code>Array<string></code> | You can mark a file or a package as external to exclude it from your build.<br/>__*Default*__: []
+**sourcemap**?🔹 | <code>boolean</code> | Include a source map in the bundle.<br/>__*Default*__: true
+**watchTask**?🔹 | <code>boolean</code> | In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag.<br/>__*Default*__: true
 
 
 

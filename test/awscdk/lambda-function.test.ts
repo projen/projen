@@ -40,7 +40,7 @@ describe('bundled function', () => {
       name: 'bundle:hello',
       steps: [
         {
-          exec: 'esbuild --bundle src/hello.lambda.ts --target="node14" --platform="node" --outfile="lib/hello.bundle/index.js" --external:aws-sdk',
+          exec: 'esbuild --bundle src/hello.lambda.ts --target="node14" --platform="node" --outfile="lib/hello.lambda.bundle/index.js" --external:aws-sdk --sourcemap',
         },
       ],
     });
@@ -111,7 +111,7 @@ test('runtime can be used to customize the lambda runtime and esbuild target', (
     name: 'bundle:hello',
     steps: [
       {
-        exec: 'esbuild --bundle src/hello.lambda.ts --target="node12" --platform="node" --outfile="lib/hello.bundle/index.js" --external:aws-sdk',
+        exec: 'esbuild --bundle src/hello.lambda.ts --target="node12" --platform="node" --outfile="lib/hello.lambda.bundle/index.js" --external:aws-sdk --sourcemap',
       },
     ],
   });
@@ -163,9 +163,11 @@ test('auto-discover', () => {
   writeFileSync(join(srcdir, 'subdir', 'jangy.lambda.ts'), 'export function handler() {}');
 
   new awscdk.AutoDiscover(project, {
-    runtime: awscdk.LambdaRuntime.NODEJS_12_X,
     libdir: project.libdir,
     srcdir: project.srcdir,
+    lambdaOptions: {
+      runtime: awscdk.LambdaRuntime.NODEJS_12_X,
+    },
   });
 
   const snapshot = Testing.synth(project);

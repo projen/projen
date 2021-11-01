@@ -80,7 +80,7 @@ describe('lambda functions', () => {
     const snapshot = synthSnapshot(project);
     expect(snapshot['src/my-function.ts']).not.toBeUndefined();
     expect(snapshot['.projen/tasks.json'].tasks['bundle:my'].steps).toStrictEqual([
-      { exec: 'esbuild --bundle src/my.lambda.ts --target="node10" --platform="node" --outfile="liblib/my.bundle/index.js" --external:foo --external:bar' },
+      { exec: 'esbuild --bundle src/my.lambda.ts --target="node10" --platform="node" --outfile="liblib/my.lambda.bundle/index.js" --external:foo --external:bar --sourcemap' },
     ]);
   });
 

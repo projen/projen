@@ -40,10 +40,9 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions, Cd
   readonly appEntrypoint?: string;
 
   /**
-   * Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler
-   * in your source tree. If this is disabled, you either need to explicitly
-   * call `aws_lambda.Function.autoDiscover()` or define a `new
-   * aws_lambda.Function()` for each handler.
+   * Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler
+   * in your source tree. If this is disabled, you can manually add an
+   * `awscdk.AutoDiscover` component to your project.
    *
    * @default true
    */
@@ -156,7 +155,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       new AutoDiscover(this, {
         srcdir: this.srcdir,
         libdir: this.libdir,
-        ...options.lambdaOptions,
+        lambdaOptions: options.lambdaOptions,
       });
     }
   }

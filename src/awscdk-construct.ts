@@ -150,7 +150,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
       new AutoDiscover(this, {
         srcdir: this.srcdir,
         libdir: this.libdir,
-        ...options.lambdaOptions,
+        lambdaOptions: options.lambdaOptions,
       });
     }
   }
