@@ -174,5 +174,20 @@ test('auto-discover', () => {
   expect(snapshot['src/hello-function.ts']).toMatchSnapshot();
   expect(snapshot['src/subdir/world-function.ts']).toMatchSnapshot();
   expect(snapshot['src/subdir/jangy-function.ts']).toMatchSnapshot();
-  expect(snapshot['.projen/tasks.json']).toMatchSnapshot();
+  const tasks = snapshot['.projen/tasks.json'].tasks;
+  expect(tasks.bundle).toMatchSnapshot();
+
+  const expected = [
+    'bundle:hello',
+    'bundle:hello:watch',
+    'bundle:subdir/jangy',
+    'bundle:subdir/jangy:watch',
+    'bundle:subdir/world',
+    'bundle:subdir/world:watch',
+  ];
+
+  for (const name of expected) {
+    expect(tasks[name]).not.toBeUndefined();
+    expect(tasks[name]).toMatchSnapshot();
+  }
 });

@@ -82,9 +82,11 @@ export interface LambdaFunctionOptions extends LambdaFunctionCommonOptions {
  *
  * @example
  *
- *new LambdaFunction(myProject, {
- *  entrypoint: 'src/foo.lambda.ts'
- *});
+ * new LambdaFunction(myProject, {
+ *   entrypoint: 'src/foo.lambda.ts',
+ *   srcdir: myProject.srcdir,
+ *   libdir: myProject.libdir,
+ * });
  */
 export class LambdaFunction extends Component {
   /**

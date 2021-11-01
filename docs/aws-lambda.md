@@ -83,7 +83,7 @@ new AwsCdkConstructLibrary({
 ## Auto-discovery
 
 As mentioned above, an AWS Lambda function will be created for every
-`.lambda.ts` file in your source tree, to disable auto-discovery, set
+`.lambda.ts` file in your source tree. To disable auto-discovery, set
 `lambdaAutoDiscover` to `false` and then you can manually add
 `awscdk.LambdaFunction` to your project:
 
