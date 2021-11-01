@@ -1,6 +1,6 @@
 import * as child_process from 'child_process';
 import * as path from 'path';
-import { lower } from 'case';
+import * as Case from 'case';
 import * as fs from 'fs-extra';
 import * as logging from './logging';
 
@@ -141,7 +141,7 @@ export function decamelizeKeysRecursively(input: any, opt?: DecamelizeRecursivel
     const mappedObject: Record<string, any> = {};
     for (const [key, value] of Object.entries(input)) {
       const transformedKey = shouldDecamelize([...path_, key], value)
-        ? lower(key, separator)
+        ? decamelize(key, separator)
         : key;
 
       mappedObject[transformedKey] = decamelizeKeysRecursively(value, {
@@ -276,7 +276,7 @@ export function kebabCaseKeys<T = unknown>(obj: T, recursive = true): T {
     if (recursive) {
       v = kebabCaseKeys(v, recursive);
     }
-    result[lower(k, '-')] = v;
+    result[decamelize(k).replace(/_/mg, '-')] = v;
   }
   return result as any;
 }
@@ -288,3 +288,11 @@ export async function tryReadFile(file: string) {
 
   return fs.readFile(file, 'utf8');
 }
+
+function decamelize(s: string, sep: string = '_') {
+  if (Case.of(s) === 'camel') {
+    return Case.lower(s, sep);
+  } else {
+    return s;
+  }
+};
