@@ -21,4 +21,7 @@ packageJson.addOverride('description', 'the next generation of logging!');
 packageJson.addOverride('keywords', ['experimental', 'web', 'productivity', 'exciting']);
 packageJson.addOverride('author.name', 'A. Mused');
 packageJson.addDeletionOverride('author.organization');
+
+// Use array indices to override specific array elements
+packageJson.addOverride('bundledDependencies.3', 'react');
 ```

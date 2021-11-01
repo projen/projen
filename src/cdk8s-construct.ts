@@ -85,6 +85,10 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
   constructor(options: ConstructLibraryCdk8sOptions) {
     super(options);
 
+    if (!options.cdk8sVersion) {
+      throw new Error('Required field cdk8sVersion is not specified.');
+    }
+
     this.cdk8sVersion = options.cdk8sVersionPinning ? options.cdk8sVersion : `^${options.cdk8sVersion}`;
 
     if (options.constructsVersion) {

@@ -3,6 +3,7 @@ import { Component } from './component';
 import { JsonFile } from './json';
 import { NodeProject } from './node-project';
 
+
 export interface EslintOptions {
   /**
    * Path to `tsconfig.json` which should be used by eslint.
@@ -47,6 +48,25 @@ export interface EslintOptions {
    * @default false
    */
   readonly prettier?: boolean;
+
+  /**
+   * Enable import alias for module paths
+   * @default undefined
+   */
+  readonly aliasMap?: { [key: string]: string };
+
+  /**
+   * Enable import alias for module paths
+   * @default undefined
+   */
+  readonly aliasExtensions?: string[];
+
+  /**
+   * Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.
+   * This prevents `import/no-unresolved` eslint errors when importing a `@types/*` module that would otherwise remain unresolved.
+   * @default true
+   */
+  readonly tsAlwaysTryTypes?: boolean;
 }
 
 /**
@@ -106,6 +126,10 @@ export class Eslint extends Component {
         'eslint-plugin-prettier',
         'eslint-config-prettier',
       );
+    }
+
+    if (options.aliasMap) {
+      project.addDevDeps('eslint-import-resolver-alias');
     }
 
     const devdirs = options.devdirs ?? [];
@@ -305,9 +329,16 @@ export class Eslint extends Component {
           '@typescript-eslint/parser': ['.ts', '.tsx'],
         },
         'import/resolver': {
+          ...( options.aliasMap && {
+            alias: {
+              map: Object.entries(options.aliasMap).map(([k, v]) => [k, v]),
+              extensions: options.aliasExtensions,
+            },
+          }),
           node: {},
           typescript: {
             project: tsconfig,
+            ...( options.tsAlwaysTryTypes !== false && { alwaysTryTypes: true } ),
           },
         },
       },

@@ -38,23 +38,13 @@
       "steps": [
         {
           "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
-        },
-        {
-          "spawn": "docgen"
         }
       ]
-    },
-    "test:compile": {
-      "name": "test:compile",
-      "description": "compiles the test code"
     },
     "test": {
       "name": "test",
       "description": "Run tests",
       "steps": [
-        {
-          "spawn": "test:compile"
-        },
         {
           "exec": "jest --passWithNoTests --all --updateSnapshot"
         },
@@ -78,6 +68,9 @@
         },
         {
           "spawn": "package"
+        },
+        {
+          "spawn": "docgen"
         },
         {
           "spawn": "readme-macros"
@@ -108,7 +101,8 @@
       "env": {
         "OUTFILE": "package.json",
         "CHANGELOG": "dist/changelog.md",
-        "BUMPFILE": "dist/version.txt"
+        "BUMPFILE": "dist/version.txt",
+        "RELEASETAG": "dist/releasetag.txt"
       },
       "steps": [
         {
@@ -123,7 +117,8 @@
       "env": {
         "OUTFILE": "package.json",
         "CHANGELOG": "dist/changelog.md",
-        "BUMPFILE": "dist/version.txt"
+        "BUMPFILE": "dist/version.txt",
+        "RELEASETAG": "dist/releasetag.txt"
       },
       "steps": [
         {
@@ -135,32 +130,13 @@
       "name": "publish:github",
       "description": "Publish this package to GitHub Releases",
       "requiredEnv": [
-        "GITHUB_TOKEN"
+        "GITHUB_TOKEN",
+        "GITHUB_REPOSITORY",
+        "GITHUB_REF"
       ],
       "steps": [
         {
-          "exec": "gh release create v$(cat dist/version.txt) -R ${{ github.repository }} -F dist/changelog.md -t v$(cat dist/version.txt)"
-        }
-      ]
-    },
-    "upgrade": {
-      "name": "upgrade",
-      "description": "upgrade dependencies",
-      "env": {
-        "CI": "0"
-      },
-      "steps": [
-        {
-          "exec": "npm-check-updates --upgrade --target=minor --reject='projen'"
-        },
-        {
-          "exec": "yarn install --check-files"
-        },
-        {
-          "exec": "yarn upgrade @types/fs-extra @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli eslint eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema markmac npm-check-updates standard-version typescript @iarna/toml chalk decamelize fs-extra glob ini semver shx xmlbuilder2 yaml yargs"
-        },
-        {
-          "exec": "/bin/bash ./projen.bash"
+          "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \"Release.tag_name already exists\" $errout; then cat $errout; exit $exitcode; fi"
         }
       ]
     },
@@ -195,7 +171,7 @@
       "description": "Runs eslint against the codebase",
       "steps": [
         {
-          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src src/__tests__ build-tools .projenrc.js"
+          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js"
         }
       ]
     },
@@ -227,6 +203,9 @@
     "publish:maven": {
       "name": "publish:maven",
       "description": "Publish this package to Maven Central",
+      "env": {
+        "MAVEN_ENDPOINT": "https://s01.oss.sonatype.org"
+      },
       "requiredEnv": [
         "MAVEN_GPG_PRIVATE_KEY",
         "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE",
@@ -316,6 +295,39 @@
         },
         {
           "exec": "git diff --ignore-space-at-eol --exit-code"
+        }
+      ]
+    },
+    "upgrade": {
+      "name": "upgrade",
+      "description": "upgrade dependencies",
+      "env": {
+        "CI": "0"
+      },
+      "steps": [
+        {
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'"
+        },
+        {
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'"
+        },
+        {
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'"
+        },
+        {
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'"
+        },
+        {
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'"
+        },
+        {
+          "exec": "yarn install --check-files"
+        },
+        {
+          "exec": "yarn upgrade @types/fs-extra @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli eslint eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema markmac npm-check-updates standard-version ts-jest typescript @iarna/toml chalk decamelize fs-extra glob ini semver shx xmlbuilder2 yaml yargs"
+        },
+        {
+          "exec": "/bin/bash ./projen.bash"
         }
       ]
     }

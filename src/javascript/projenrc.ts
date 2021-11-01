@@ -54,7 +54,7 @@ export class Projenrc extends Component {
     imports.add(importName);
 
     const lines = new Array<string>();
-    lines.push(`const { ${[...imports].sort().join(', ')} } = require('${moduleName}');`);
+    lines.push(`const { ${[...imports].sort().join(', ')} } = require("${moduleName}");`);
     lines.push();
     lines.push(`const project = new ${className}(${renderedOptions});`);
     lines.push();

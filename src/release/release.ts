@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { Component } from '../component';
 import { GitHub, TaskWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
@@ -5,6 +6,7 @@ import { GitHubProject } from '../project';
 import { Task } from '../tasks';
 import { Version } from '../version';
 import { Publisher } from './publisher';
+import { ReleaseTrigger } from './release-trigger';
 
 const BUILD_JOBID = 'release';
 const GIT_REMOTE_STEPID = 'git_remote';
@@ -16,16 +18,28 @@ const LATEST_COMMIT_OUTPUT = 'latest_commit';
 export interface ReleaseProjectOptions {
   /**
    * Automatically release new versions every commit to one of branches in `releaseBranches`.
+   *
    * @default true
+   *
+   * @deprecated Use `releaseTrigger: ReleaseTrigger.continuous()` instead
    */
   readonly releaseEveryCommit?: boolean;
 
   /**
-    * CRON schedule to trigger new releases.
-    *
-    * @default - no scheduled releases
-    */
+   * CRON schedule to trigger new releases.
+   *
+   * @default - no scheduled releases
+   *
+   * @deprecated Use `releaseTrigger: ReleaseTrigger.scheduled()` instead
+   */
   readonly releaseSchedule?: string;
+
+  /**
+   * The release trigger to use.
+   *
+   * @default - Continuous releases (`ReleaseTrigger.continuous()`)
+   */
+  readonly releaseTrigger?: ReleaseTrigger;
 
   /**
    * A directory which will contain artifacts to be published to npm.
@@ -76,11 +90,11 @@ export interface ReleaseProjectOptions {
   readonly majorVersion?: number;
 
   /**
-    * Bump versions from the default branch as pre-releases (e.g. "beta",
-    * "alpha", "pre").
-    *
-    * @default - normal semantic versions
-    */
+   * Bump versions from the default branch as pre-releases (e.g. "beta",
+   * "alpha", "pre").
+   *
+   * @default - normal semantic versions
+   */
   readonly prerelease?: string;
 
   /**
@@ -102,6 +116,35 @@ export interface ReleaseProjectOptions {
    * `addBranch()` to add additional branches.
    */
   readonly releaseBranches?: { [name: string]: BranchOptions };
+
+  /**
+   * Create a github issue on every failed publishing task.
+   *
+   * @default false
+   */
+  readonly releaseFailureIssue?: boolean;
+
+  /**
+   * The label to apply to issues indicating publish failures.
+   * Only applies if `releaseFailureIssue` is true.
+   *
+   * @default "failed-release"
+   */
+  readonly releaseFailureIssueLabel?: string;
+
+  /**
+   * Automatically add the given prefix to release tags.
+   * Useful if you are releasing on multiple branches with overlapping
+   * version numbers.
+   *
+   * Note: this prefix is used to detect the latest tagged version
+   * when bumping, so if you change this on a project with an existing version
+   * history, you may need to manually tag your latest release
+   * with the new prefix.
+   *
+   * @default - no prefix
+   */
+  readonly releaseTagPrefix?: string;
 }
 
 /**
@@ -157,11 +200,10 @@ export class Release extends Component {
   private readonly antitamper: boolean;
   private readonly artifactsDirectory: string;
   private readonly versionFile: string;
-  private readonly releaseSchedule?: string;
-  private readonly releaseEveryCommit: boolean;
+  private readonly releaseTrigger: ReleaseTrigger;
   private readonly preBuildSteps: JobStep[];
   private readonly containerImage?: string;
-  private readonly branches = new Array<ReleaseBranch>();
+  private readonly _branches = new Array<ReleaseBranch>();
   private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
@@ -180,9 +222,22 @@ export class Release extends Component {
     this.antitamper = options.antitamper ?? true;
     this.artifactsDirectory = options.artifactsDirectory ?? 'dist';
     this.versionFile = options.versionFile;
-    this.releaseSchedule = options.releaseSchedule;
-    this.releaseEveryCommit = options.releaseEveryCommit ?? true;
+    this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
+
+    /**
+     * Use manual releases with no changelog if releaseEveryCommit is explicitly
+     * disabled and no other trigger is set.
+     *
+     * TODO: Remove this when releaseEveryCommit and releaseSchedule are removed
+     */
+    if (!((options.releaseEveryCommit ?? true) || options.releaseSchedule || options.releaseTrigger)) {
+      this.releaseTrigger = ReleaseTrigger.manual({ changelog: false });
+    }
+
+    if (options.releaseSchedule) {
+      this.releaseTrigger = ReleaseTrigger.scheduled({ schedule: options.releaseSchedule });
+    }
 
     this.version = new Version(project, {
       versionInputFile: this.versionFile,
@@ -194,13 +249,16 @@ export class Release extends Component {
       condition: `needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`,
       buildJobId: BUILD_JOBID,
       jsiiReleaseVersion: options.jsiiReleaseVersion,
+      failureIssue: options.releaseFailureIssue,
+      failureIssueLabel: options.releaseFailureIssueLabel,
     });
 
     const githubRelease = options.githubRelease ?? true;
     if (githubRelease) {
       this.publisher.publishToGitHubReleases({
-        changelogFile: this.version.changelogFileName,
-        versionFile: this.version.versionFileName,
+        changelogFile: path.posix.join(this.artifactsDirectory, this.version.changelogFileName),
+        versionFile: path.posix.join(this.artifactsDirectory, this.version.versionFileName),
+        releaseTagFile: path.posix.join(this.artifactsDirectory, this.version.releaseTagFileName),
       });
     }
 
@@ -210,9 +268,10 @@ export class Release extends Component {
       prerelease: options.prerelease,
       majorVersion: options.majorVersion,
       workflowName: options.releaseWorkflowName ?? 'release',
+      tagPrefix: options.releaseTagPrefix,
     };
 
-    this.branches.push(this.defaultBranch);
+    this._branches.push(this.defaultBranch);
 
     for (const [name, opts] of Object.entries(options.releaseBranches ?? {})) {
       this.addBranch(name, opts);
@@ -230,7 +289,7 @@ export class Release extends Component {
    * @param options Branch definition
    */
   public addBranch(branch: string, options: BranchOptions) {
-    if (this.branches.find(b => b.name === branch)) {
+    if (this._branches.find(b => b.name === branch)) {
       throw new Error(`The release branch ${branch} is already defined`);
     }
 
@@ -240,7 +299,7 @@ export class Release extends Component {
       throw new Error('you must specify "majorVersion" for the default branch when adding multiple release branches');
     }
 
-    this.branches.push({
+    this._branches.push({
       name: branch,
       ...options,
     });
@@ -258,13 +317,20 @@ export class Release extends Component {
 
   // render a workflow per branch and all the jobs to it
   public preSynthesize() {
-    for (const branch of this.branches) {
+    for (const branch of this._branches) {
       const workflow = this.createWorkflow(branch);
       if (workflow) {
         workflow.addJobs(this.publisher.render());
         workflow.addJobs(this.jobs);
       }
     }
+  }
+
+  /**
+   * Retrieve all release branch names
+   */
+  public get branches(): string[] {
+    return this._branches.map(b => b.name);
   }
 
   /**
@@ -293,6 +359,10 @@ export class Release extends Component {
       env.PRERELEASE = branch.prerelease;
     }
 
+    if (branch.tagPrefix) {
+      env.RELEASE_TAG_PREFIX = branch.tagPrefix;
+    }
+
     // the "release" task prepares a release but does not publish anything. the
     // output of the release task is: `dist`, `.version.txt`, and
     // `.changelog.md`. this is what publish tasks expect.
@@ -309,6 +379,18 @@ export class Release extends Component {
     releaseTask.spawn(this.version.bumpTask);
     releaseTask.spawn(this.buildTask);
     releaseTask.spawn(this.version.unbumpTask);
+
+    if (this.releaseTrigger.isManual) {
+      const publishTask = this.publisher.publishToGit({
+        changelogFile: path.posix.join(this.artifactsDirectory, this.version.changelogFileName),
+        versionFile: path.posix.join(this.artifactsDirectory, this.version.versionFileName),
+        releaseTagFile: path.posix.join(this.artifactsDirectory, this.version.releaseTagFileName),
+        projectChangelogFile: this.releaseTrigger.changelogPath,
+        gitBranch: branch.name,
+      });
+
+      releaseTask.spawn(publishTask);
+    }
 
     // anti-tamper check (fails if there were changes to committed files)
     // this will identify any non-committed files generated during build (e.g. test snapshots)
@@ -336,7 +418,7 @@ export class Release extends Component {
       },
     });
 
-    if (this.github) {
+    if (this.github && !this.releaseTrigger.isManual) {
       return new TaskWorkflow(this.github, {
         name: workflowName,
         jobId: BUILD_JOBID,
@@ -347,8 +429,8 @@ export class Release extends Component {
           },
         },
         triggers: {
-          schedule: this.releaseSchedule ? [{ cron: this.releaseSchedule }] : undefined,
-          push: (this.releaseEveryCommit) ? { branches: [branch.name] } : undefined,
+          schedule: this.releaseTrigger.schedule ? [{ cron: this.releaseTrigger.schedule }] : undefined,
+          push: this.releaseTrigger.isContinuous ? { branches: [branch.name] } : undefined,
         },
         container: this.containerImage ? { image: this.containerImage } : undefined,
         env: {
@@ -393,6 +475,20 @@ export interface BranchOptions {
    * @default - normal releases
    */
   readonly prerelease?: string;
+
+  /**
+   * Automatically add the given prefix to release tags.
+   * Useful if you are releasing on multiple branches with overlapping
+   * version numbers.
+   *
+   * Note: this prefix is used to detect the latest tagged version
+   * when bumping, so if you change this on a project with an existing version
+   * history, you may need to manually tag your latest release
+   * with the new prefix.
+   *
+   * @default - no prefix
+   */
+  readonly tagPrefix?: string;
 }
 
 interface ReleaseBranch extends Partial<BranchOptions> {

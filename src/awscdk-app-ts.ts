@@ -1,25 +1,12 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as semver from 'semver';
+import { CdkConfig, CdkConfigCommonOptions } from './awscdk/cdk-config';
+import { CdkTasks } from './awscdk/cdk-tasks';
 import { Component } from './component';
-import { JsonFile } from './json';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
 
-export enum CdkApprovalLevel {
-  /**
-   * Approval is never required
-   */
-  NEVER = 'never',
-  /**
-   * Requires approval on any IAM or security-group-related change
-   */
-  ANY_CHANGE = 'any-change',
-  /**
-   * Requires approval when IAM statements or traffic rules are added; removals don't require approval
-   */
-  BROADENING = 'broadening',
-}
-export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
+export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions, CdkConfigCommonOptions {
   /**
    * AWS CDK version to use.
    *
@@ -45,26 +32,12 @@ export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions {
   readonly cdkDependencies?: string[];
 
   /**
-   * Additional context to include in `cdk.json`.
-   */
-  readonly context?: { [key: string]: string };
-
-  /**
    * The CDK app's entrypoint (relative to the source directory, which is
    * "src" by default).
    *
    * @default "main.ts"
    */
   readonly appEntrypoint?: string;
-
-  /**
-   * To protect you against unintended changes that affect your security posture,
-   * the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.
-   *
-   * @default CdkApprovalLevel.BROADENING
-   */
-  readonly requireApproval?: CdkApprovalLevel;
-
 }
 
 /**
@@ -79,14 +52,19 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
   public readonly cdkVersion: string;
 
   /**
-   * Contents of `cdk.json`.
-   */
-  public readonly cdkConfig: any;
-
-  /**
    * The CDK app entrypoint
    */
   public readonly appEntrypoint: string;
+
+  /**
+   * Common CDK tasks.
+   */
+  public readonly cdkTasks: CdkTasks;
+
+  /**
+   * cdk.json configuration.
+   */
+  public readonly cdkConfig: CdkConfig;
 
   constructor(options: AwsCdkTypeScriptAppOptions) {
     super({
@@ -112,6 +90,10 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.addDevDeps(this.formatModuleSpec('aws-cdk'));
     this.addCdkDependency('@aws-cdk/assert');
 
+    if (!this.cdkVersion) {
+      throw new Error('Required field cdkVersion is not specified.');
+    }
+
     const cdkMajorVersion = semver.minVersion(this.cdkVersion)?.major ?? 1;
     if (cdkMajorVersion < 2) {
       this.addCdkDependency('@aws-cdk/core');
@@ -122,25 +104,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.addCdkDependency(...options.cdkDependencies ?? []);
 
-    const synth = this.addTask('synth', {
-      description: 'Synthesizes your cdk app into cdk.out (part of "yarn build")',
-      exec: 'cdk synth',
-    });
-
-    this.addTask('deploy', {
-      description: 'Deploys your CDK app to the AWS cloud',
-      exec: 'cdk deploy',
-    });
-
-    this.addTask('destroy', {
-      description: 'Destroys your cdk app in the AWS cloud',
-      exec: 'cdk destroy',
-    });
-
-    this.addTask('diff', {
-      description: 'Diffs the currently deployed app against your code',
-      exec: 'cdk diff',
-    });
+    this.cdkTasks = new CdkTasks(this);
 
     // no compile step because we do all of it in typescript directly
     this.compileTask.reset();
@@ -148,37 +112,24 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.removeScript('watch'); // because we use ts-node
 
     // add synth to the build
-    this.buildTask.spawn(synth);
+    this.buildTask.spawn(this.cdkTasks.synth);
 
-    this.cdkConfig = {
+
+    this.cdkConfig = new CdkConfig(this, {
       app: `npx ts-node --prefer-ts-exts ${path.posix.join(this.srcdir, this.appEntrypoint)}`,
-    };
+      ...options,
+    });
 
-    if (options.context) {
-      this.cdkConfig.context = { ...options.context };
-    }
-
-    if (options.requireApproval) {
-      this.cdkConfig.requireApproval = options.requireApproval;
-    }
-
-    this.gitignore.exclude('cdk.out/');
-    this.gitignore.exclude('.cdk.staging/');
     this.gitignore.exclude('.parcel-cache/');
 
-    this.npmignore?.exclude('cdk.out/');
+    this.npmignore?.exclude(`${this.cdkConfig.cdkout}/`);
     this.npmignore?.exclude('.cdk.staging/');
 
     if (this.tsconfig) {
-      this.tsconfig.exclude.push('cdk.out');
+      this.tsconfig.exclude.push(this.cdkConfig.cdkout);
     }
 
     this.addDevDeps('ts-node@^9');
-
-    new JsonFile(this, 'cdk.json', {
-      obj: this.cdkConfig,
-    });
-
     if (options.sampleCode ?? true) {
       new SampleCode(this, cdkMajorVersion);
     }
