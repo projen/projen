@@ -84,7 +84,7 @@ describe('alias', () => {
 
 });
 
-test('typescriptAlwaysTryTypes', () => {
+test('tsAlwaysTryTypes', () => {
   // GIVEN
   const project = new NodeProject({
     name: 'test',
@@ -94,7 +94,7 @@ test('typescriptAlwaysTryTypes', () => {
   // WHEN
   const eslint = new Eslint(project, {
     dirs: ['mysrc'],
-    typescriptAlwaysTryTypes: true,
+    tsAlwaysTryTypes: true,
   });
 
   // THEN
