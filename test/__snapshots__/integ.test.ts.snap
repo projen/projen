@@ -227,6 +227,7 @@ Object {
       "import/resolver": Object {
         "node": Object {},
         "typescript": Object {
+          "alwaysTryTypes": true,
           "project": "./tsconfig.dev.json",
         },
       },
@@ -1968,6 +1969,7 @@ Object {
       "import/resolver": Object {
         "node": Object {},
         "typescript": Object {
+          "alwaysTryTypes": true,
           "project": "./tsconfig.dev.json",
         },
       },
@@ -3369,6 +3371,7 @@ Object {
       "import/resolver": Object {
         "node": Object {},
         "typescript": Object {
+          "alwaysTryTypes": true,
           "project": "./tsconfig.dev.json",
         },
       },

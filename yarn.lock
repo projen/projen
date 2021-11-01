@@ -4360,10 +4360,10 @@ map-obj@^4.0.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-markmac@^0.1.75:
-  version "0.1.75"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.75.tgz#04c6e06f9ef62e5c0b9dacb01d2e421bab424b12"
-  integrity sha512-PHTH5/vpuI9C4H4+PJXL9ioglV0FTCWkG1f83AqXYwqS/uh7GM7J1vcIfPViqada9iS94nxBWe38fsrvPx4ugw==
+markmac@^0.1.76:
+  version "0.1.76"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.76.tgz#e016612d5afd95a5beef06b98c3c495109effcb6"
+  integrity sha512-wR4kbITpZonMkK4YsJePY8UP6JkZsFtExQA92Tpu254X+8+xkCGnO6ZvPd0cHYjNAMtfga8Weh4pGBw/N0s5SA==
 
 mdurl@~1.0.1:
   version "1.0.1"
@@ -4561,9 +4561,9 @@ neo-async@^2.6.0:
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
 
 node-fetch@^2.6.0:
-  version "2.6.5"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.5.tgz#42735537d7f080a7e5f78b6c549b7146be1742fd"
-  integrity sha512-mmlIVHJEu5rnIxgEgez6b9GgWXbkZj5YZ7fx+2r94a2E+Uirsp6HsPTPlomfdHtpt/B0cdKviwkoaM6pyvUOpQ==
+  version "2.6.6"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.6.tgz#1751a7c01834e8e1697758732e9efb6eeadfaf89"
+  integrity sha512-Z8/6vRlTUChSdIgMa51jxQ4lrw/Jy5SOW10ObaA47/RElsAN2c5Pn8bTgFGWn/ibwzXTE8qwr1Yzx28vsecXEA==
   dependencies:
     whatwg-url "^5.0.0"
 
