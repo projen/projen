@@ -1,9 +1,8 @@
 import * as child_process from 'child_process';
 import * as path from 'path';
+import * as Case from 'case';
 import * as fs from 'fs-extra';
 import * as logging from './logging';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const decamelize = require('decamelize');
 
 const MAX_BUFFER = 10 * 1024 * 1024;
 
@@ -289,3 +288,11 @@ export async function tryReadFile(file: string) {
 
   return fs.readFile(file, 'utf8');
 }
+
+function decamelize(s: string, sep: string = '_') {
+  if (Case.of(s) === 'camel') {
+    return Case.lower(s, sep);
+  } else {
+    return s;
+  }
+};

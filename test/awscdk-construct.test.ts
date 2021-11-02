@@ -1,3 +1,6 @@
+import { mkdirSync, writeFileSync } from 'fs';
+import { join } from 'path';
+import { awscdk } from '../src';
 import { AwsCdkConstructLibrary, AwsCdkConstructLibraryOptions } from '../src/awscdk-construct';
 import { NpmAccess } from '../src/node-package';
 import { synthSnapshot } from '../src/util/synth';
@@ -54,6 +57,48 @@ describe('constructs dependency selection', () => {
     expect(snapshot['package.json']?.peerDependencies?.constructs).toBe('*');
     expect(snapshot['package.json']?.devDependencies?.constructs).toBeUndefined();
     expect(snapshot['package.json']?.dependencies?.constructs).toBeUndefined();
+  });
+});
+
+describe('lambda functions', () => {
+  test('are auto-discovered by default', () => {
+    // GIVEN
+    const project = new TestProject({
+      cdkVersion: '1.100.0',
+      libdir: 'liblib',
+      lambdaOptions: {
+        runtime: awscdk.LambdaRuntime.NODEJS_10_X,
+        externals: ['foo', 'bar'],
+      },
+    });
+
+    // WHEN
+    mkdirSync(join(project.outdir, project.srcdir));
+    writeFileSync(join(project.outdir, project.srcdir, 'my.lambda.ts'), '// dummy');
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    expect(snapshot['src/my-function.ts']).not.toBeUndefined();
+    expect(snapshot['.projen/tasks.json'].tasks['bundle:my'].steps).toStrictEqual([
+      { exec: 'esbuild --bundle src/my.lambda.ts --target="node10" --platform="node" --outfile="liblib/my.lambda.bundle/index.js" --external:foo --external:bar --sourcemap' },
+    ]);
+  });
+
+  test('auto-discover can be disabled', () => {
+    // GIVEN
+    const project = new TestProject({
+      cdkVersion: '1.100.0',
+      lambdaAutoDiscover: false,
+    });
+
+    // WHEN
+    mkdirSync(join(project.outdir, project.srcdir));
+    writeFileSync(join(project.outdir, project.srcdir, 'my.lambda.ts'), '// dummy');
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    expect(snapshot['src/my-function.ts']).toBeUndefined();
+    expect(snapshot['.projen/tasks.json'].tasks['bundle:my']).toBeUndefined();
   });
 });
 
