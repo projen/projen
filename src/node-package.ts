@@ -7,6 +7,7 @@ import { Component } from './component';
 import { DependencyType } from './deps';
 import { JsonFile } from './json';
 import { Project } from './project';
+import { isAwsCodeArtifactRegistry } from './release/publisher';
 import { Task } from './tasks';
 import { exec, isTruthy, sorted, writeFile } from './util';
 
@@ -290,6 +291,31 @@ export interface NodePackageOptions {
    * @default "NPM_TOKEN"
    */
   readonly npmTokenSecret?: string;
+
+  /**
+   * Options for publishing npm package to AWS CodeArtifact.
+   *
+   * @default - undefined
+   */
+  readonly codeArtifactOptions?: CodeArtifactOptions;
+}
+
+export interface CodeArtifactOptions {
+  /**
+   * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
+   * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
+   *
+   * @default "AWS_ACCESS_KEY_ID"
+   */
+  readonly accessKeyIdSecret?: string;
+
+  /**
+    * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
+    * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
+    *
+    * @default "AWS_SECRET_ACCESS_KEY"
+    */
+  readonly secretAccessKeySecret?: string;
 }
 
 /**
@@ -362,7 +388,14 @@ export class NodePackage extends Component {
   /**
    * GitHub secret which contains the NPM token to use when publishing packages.
    */
-  public readonly npmTokenSecret: string;
+  public readonly npmTokenSecret?: string;
+
+  /**
+   * Options for publishing npm package to AWS CodeArtifact.
+   *
+   * @default - undefined
+   */
+  readonly codeArtifactOptions?: CodeArtifactOptions;
 
   /**
    * npm package access level.
@@ -394,12 +427,15 @@ export class NodePackage extends Component {
 
     this.project.annotateGenerated(`/${this.lockFile}`);
 
-    const { npmDistTag, npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret } = this.parseNpmOptions(options);
+    const {
+      npmDistTag, npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret, codeArtifactOptions,
+    } = this.parseNpmOptions(options);
     this.npmDistTag = npmDistTag;
     this.npmAccess = npmAccess;
     this.npmRegistry = npmRegistry;
     this.npmRegistryUrl = npmRegistryUrl;
     this.npmTokenSecret = npmTokenSecret;
+    this.codeArtifactOptions = codeArtifactOptions;
 
     this.processDeps(options);
 
@@ -728,12 +764,33 @@ export class NodePackage extends Component {
       throw new Error(`"npmAccess" cannot be RESTRICTED for non-scoped npm package "${this.packageName}"`);
     }
 
+    const isAwsCodeArtifact = isAwsCodeArtifactRegistry(npmRegistryUrl);
+    if (isAwsCodeArtifact) {
+      if (options.npmTokenSecret) {
+        throw new Error('"npmTokenSecret" must not be specified when publishing AWS CodeArtifact.');
+      }
+    } else {
+      if (options.codeArtifactOptions?.accessKeyIdSecret || options.codeArtifactOptions?.secretAccessKeySecret) {
+        throw new Error('"codeArtifactOptions.accessKeyIdSecret" and "codeArtifactOptions.secretAccessKeySecret" must only be specified when publishing AWS CodeArtifact.');
+      }
+    }
+
+    // apply defaults for AWS CodeArtifact
+    let codeArtifactOptions: CodeArtifactOptions | undefined;
+    if (isAwsCodeArtifact) {
+      codeArtifactOptions = {
+        accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID',
+        secretAccessKeySecret: options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY',
+      };
+    }
+
     return {
       npmDistTag: options.npmDistTag ?? DEFAULT_NPM_TAG,
       npmAccess,
       npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname!),
       npmRegistryUrl: npmr.href,
       npmTokenSecret: defaultNpmToken(options.npmTokenSecret, npmr.hostname),
+      codeArtifactOptions,
     };
   }
 
@@ -1080,6 +1137,11 @@ function defaultNpmAccess(packageName: string) {
 }
 
 export function defaultNpmToken(npmToken: string | undefined, registry: string | undefined) {
+  // if we are publishing to AWS CdodeArtifact, no NPM_TOKEN used (will be requested using AWS CLI later).
+  if (isAwsCodeArtifactRegistry(registry)) {
+    return undefined;
+  }
+
   // if we are publishing to GitHub Packages, default to GITHUB_TOKEN.
   const isGitHubPackages = registry === GITHUB_PACKAGES_REGISTRY;
   return npmToken ?? (isGitHubPackages ? DEFAULT_GITHUB_TOKEN_SECRET : DEFAULT_NPM_TOKEN_SECRET);
