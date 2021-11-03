@@ -1054,7 +1054,7 @@ export class NodePackage extends Component {
 
   private renderScripts() {
     const result: any = {};
-    for (const task of this.project.tasks.all) {
+    for (const task of this.project.tasks.all.sort((x, y) => x.name.localeCompare(y.name))) {
       result[task.name] = this.npmScriptForTask(task);
     }
 

@@ -1,5 +1,45 @@
 {
   "tasks": {
+    "build": {
+      "name": "build",
+      "description": "Full release build (test+compile)",
+      "steps": [
+        {
+          "exec": "/bin/bash ./projen.bash"
+        },
+        {
+          "spawn": "compile"
+        },
+        {
+          "spawn": "test"
+        },
+        {
+          "spawn": "package"
+        },
+        {
+          "spawn": "docgen"
+        },
+        {
+          "spawn": "readme-macros"
+        }
+      ]
+    },
+    "bump": {
+      "name": "bump",
+      "description": "Bumps version based on latest git tag and generates a changelog entry",
+      "env": {
+        "OUTFILE": "package.json",
+        "CHANGELOG": "dist/changelog.md",
+        "BUMPFILE": "dist/version.txt",
+        "RELEASETAG": "dist/releasetag.txt"
+      },
+      "steps": [
+        {
+          "builtin": "release/bump-version"
+        }
+      ],
+      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
+    },
     "clobber": {
       "name": "clobber",
       "description": "hard resets to HEAD of origin and cleans the local repo",
@@ -32,6 +72,15 @@
       ],
       "condition": "git diff --exit-code > /dev/null"
     },
+    "compat": {
+      "name": "compat",
+      "description": "Perform API compatibility check against latest version",
+      "steps": [
+        {
+          "exec": "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)"
+        }
+      ]
+    },
     "compile": {
       "name": "compile",
       "description": "Only compile",
@@ -41,88 +90,57 @@
         }
       ]
     },
-    "test": {
-      "name": "test",
-      "description": "Run tests",
+    "contributors:update": {
+      "name": "contributors:update",
       "steps": [
         {
-          "exec": "jest --passWithNoTests --all --updateSnapshot"
-        },
-        {
-          "spawn": "eslint"
+          "exec": "all-contributors check | grep \"Missing contributors\" -A 1 | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"[bot]\" | xargs -n1 -I{} all-contributors add {} code"
         }
       ]
     },
-    "build": {
-      "name": "build",
-      "description": "Full release build (test+compile)",
+    "default": {
+      "name": "default",
       "steps": [
         {
-          "exec": "/bin/bash ./projen.bash"
-        },
-        {
-          "spawn": "compile"
-        },
-        {
-          "spawn": "test"
-        },
-        {
-          "spawn": "package"
-        },
-        {
-          "spawn": "docgen"
-        },
-        {
-          "spawn": "readme-macros"
+          "exec": "node .projenrc.js"
         }
       ]
     },
-    "test:watch": {
-      "name": "test:watch",
-      "description": "Run jest in watch mode",
+    "devenv:setup": {
+      "name": "devenv:setup",
       "steps": [
         {
-          "exec": "jest --watch"
+          "exec": "yarn install"
+        },
+        {
+          "spawn": "build"
         }
       ]
     },
-    "test:update": {
-      "name": "test:update",
-      "description": "Update jest snapshots",
+    "docgen": {
+      "name": "docgen",
+      "description": "Generate API.md from .jsii manifest",
       "steps": [
         {
-          "exec": "jest --updateSnapshot"
+          "exec": "jsii-docgen"
         }
       ]
     },
-    "bump": {
-      "name": "bump",
-      "description": "Bumps version based on latest git tag and generates a changelog entry",
-      "env": {
-        "OUTFILE": "package.json",
-        "CHANGELOG": "dist/changelog.md",
-        "BUMPFILE": "dist/version.txt",
-        "RELEASETAG": "dist/releasetag.txt"
-      },
+    "eslint": {
+      "name": "eslint",
+      "description": "Runs eslint against the codebase",
       "steps": [
         {
-          "builtin": "release/bump-version"
+          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js"
         }
-      ],
-      "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
+      ]
     },
-    "unbump": {
-      "name": "unbump",
-      "description": "Restores version to 0.0.0",
-      "env": {
-        "OUTFILE": "package.json",
-        "CHANGELOG": "dist/changelog.md",
-        "BUMPFILE": "dist/version.txt",
-        "RELEASETAG": "dist/releasetag.txt"
-      },
+    "package": {
+      "name": "package",
+      "description": "Create an npm tarball",
       "steps": [
         {
-          "builtin": "release/reset-version"
+          "exec": "jsii-pacmak"
         }
       ]
     },
@@ -137,66 +155,6 @@
       "steps": [
         {
           "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \"Release.tag_name already exists\" $errout; then cat $errout; exit $exitcode; fi"
-        }
-      ]
-    },
-    "default": {
-      "name": "default",
-      "steps": [
-        {
-          "exec": "node .projenrc.js"
-        }
-      ]
-    },
-    "watch": {
-      "name": "watch",
-      "description": "Watch & compile in the background",
-      "steps": [
-        {
-          "exec": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies"
-        }
-      ]
-    },
-    "package": {
-      "name": "package",
-      "description": "Create an npm tarball",
-      "steps": [
-        {
-          "exec": "jsii-pacmak"
-        }
-      ]
-    },
-    "eslint": {
-      "name": "eslint",
-      "description": "Runs eslint against the codebase",
-      "steps": [
-        {
-          "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js"
-        }
-      ]
-    },
-    "compat": {
-      "name": "compat",
-      "description": "Perform API compatibility check against latest version",
-      "steps": [
-        {
-          "exec": "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)"
-        }
-      ]
-    },
-    "publish:npm": {
-      "name": "publish:npm",
-      "description": "Publish this package to npm",
-      "env": {
-        "NPM_DIST_TAG": "latest",
-        "NPM_REGISTRY": "registry.npmjs.org"
-      },
-      "requiredEnv": [
-        "NPM_TOKEN"
-      ],
-      "steps": [
-        {
-          "exec": "npx -p jsii-release@latest jsii-release-npm"
         }
       ]
     },
@@ -219,6 +177,22 @@
         }
       ]
     },
+    "publish:npm": {
+      "name": "publish:npm",
+      "description": "Publish this package to npm",
+      "env": {
+        "NPM_DIST_TAG": "latest",
+        "NPM_REGISTRY": "registry.npmjs.org"
+      },
+      "requiredEnv": [
+        "NPM_TOKEN"
+      ],
+      "steps": [
+        {
+          "exec": "npx -p jsii-release@latest jsii-release-npm"
+        }
+      ]
+    },
     "publish:pypi": {
       "name": "publish:pypi",
       "description": "Publish this package to PyPI",
@@ -229,15 +203,6 @@
       "steps": [
         {
           "exec": "npx -p jsii-release@latest jsii-release-pypi"
-        }
-      ]
-    },
-    "docgen": {
-      "name": "docgen",
-      "description": "Generate API.md from .jsii manifest",
-      "steps": [
-        {
-          "exec": "jsii-docgen"
         }
       ]
     },
@@ -252,25 +217,6 @@
         },
         {
           "exec": "rm README.md.bak"
-        }
-      ]
-    },
-    "devenv:setup": {
-      "name": "devenv:setup",
-      "steps": [
-        {
-          "exec": "yarn install"
-        },
-        {
-          "spawn": "build"
-        }
-      ]
-    },
-    "contributors:update": {
-      "name": "contributors:update",
-      "steps": [
-        {
-          "exec": "all-contributors check | grep \"Missing contributors\" -A 1 | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"[bot]\" | xargs -n1 -I{} all-contributors add {} code"
         }
       ]
     },
@@ -295,6 +241,51 @@
         },
         {
           "exec": "git diff --ignore-space-at-eol --exit-code"
+        }
+      ]
+    },
+    "test": {
+      "name": "test",
+      "description": "Run tests",
+      "steps": [
+        {
+          "exec": "jest --passWithNoTests --all --updateSnapshot"
+        },
+        {
+          "spawn": "eslint"
+        }
+      ]
+    },
+    "test:update": {
+      "name": "test:update",
+      "description": "Update jest snapshots",
+      "steps": [
+        {
+          "exec": "jest --updateSnapshot"
+        }
+      ]
+    },
+    "test:watch": {
+      "name": "test:watch",
+      "description": "Run jest in watch mode",
+      "steps": [
+        {
+          "exec": "jest --watch"
+        }
+      ]
+    },
+    "unbump": {
+      "name": "unbump",
+      "description": "Restores version to 0.0.0",
+      "env": {
+        "OUTFILE": "package.json",
+        "CHANGELOG": "dist/changelog.md",
+        "BUMPFILE": "dist/version.txt",
+        "RELEASETAG": "dist/releasetag.txt"
+      },
+      "steps": [
+        {
+          "builtin": "release/reset-version"
         }
       ]
     },
@@ -328,6 +319,15 @@
         },
         {
           "exec": "/bin/bash ./projen.bash"
+        }
+      ]
+    },
+    "watch": {
+      "name": "watch",
+      "description": "Watch & compile in the background",
+      "steps": [
+        {
+          "exec": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies"
         }
       ]
     }
