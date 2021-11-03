@@ -18,11 +18,6 @@ export interface AutoDiscoverOptions {
    * Project source tree (relative to project output directory).
    */
   readonly srcdir: string;
-
-  /**
-    * Output directory (where .js files go).
-    */
-  readonly libdir: string;
 }
 
 /**
@@ -45,7 +40,6 @@ export class AutoDiscover extends Component {
 
     for (const entrypoint of entrypoints) {
       new LambdaFunction(this.project, {
-        libdir: this.options.libdir,
         srcdir: this.options.srcdir,
         entrypoint: join(this.options.srcdir, entrypoint),
         ...this.options.lambdaOptions,

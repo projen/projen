@@ -154,7 +154,6 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     if (lambdaAutoDiscover) {
       new AutoDiscover(this, {
         srcdir: this.srcdir,
-        libdir: this.libdir,
         lambdaOptions: options.lambdaOptions,
       });
     }

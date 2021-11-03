@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { Component } from '../component';
 import { DependencyType } from '../deps';
 import { Project } from '../project';
@@ -13,21 +14,23 @@ export interface BundlerCommonOptions {
    * @default - no specific version (implies latest)
    */
   readonly esbuildVersion?: string;
+
+  /**
+   * Output directory for all bundles.
+   * @default "assets"
+   */
+  readonly bundledir?: string;
 }
 
 /**
  * Options for `Bundler`.
  */
 export interface BundlerOptions extends BundlerCommonOptions {
-  /**
-   * A parent task that will spawn the "bundle" task (usually "compile").
-   */
-  readonly parentTask: Task;
 }
 
 /**
  * Adds support for bundling JavaScript applications and dependencies into a
- * single file.
+ * single file. In the future, this will also supports bundling websites.
  */
 export class Bundler extends Component {
   /**
@@ -42,33 +45,45 @@ export class Bundler extends Component {
   }
 
   private _task: Task | undefined;
-  private readonly parentTask: Task;
 
+  /**
+   * The semantic version requirement for `esbuild` (if defined).
+   */
   public readonly esbuildVersion: string | undefined;
+
+  /**
+   * Root bundle directory.
+   */
+  public readonly bundledir: string;
 
   /**
    * Creates a `Bundler`.
    */
-  constructor(project: Project, options: BundlerOptions) {
+  constructor(project: Project, options: BundlerOptions = {}) {
     super(project);
 
     this.esbuildVersion = options.esbuildVersion;
-    this.parentTask = options.parentTask;
+    this.bundledir = options.bundledir ?? 'assets';
+
+    const ignoreEntry = `/${this.bundledir}/`;
+    project.addGitIgnore(ignoreEntry);
+    project.addPackageIgnore(`!${ignoreEntry}`); // include in tarball
   }
 
   /**
-   * Gets or creates the singleton "bundle" task of the project.
+   * The singleton "bundle" task of the project.
    */
   public get bundleTask(): Task {
     if (!this._task) {
       const dep = this.esbuildVersion ? `esbuild@${this.esbuildVersion}` : 'esbuild';
       this.project.deps.addDependency(dep, DependencyType.BUILD);
 
-      this._task = this.project.addTask('bundle', {
-        description: 'Bundle assets',
-      });
+      const task = this.project.tasks.tryFind('bundle');
+      if (!task) {
+        throw new Error('Could not find "bundle" task in project');
+      }
 
-      this.parentTask.spawn(this._task);
+      this._task = task;
     }
 
     return this._task;
@@ -82,14 +97,16 @@ export class Bundler extends Component {
    * `bundle:$name`).
    * @param options Bundling options
    */
-  public addBundle(name: string, options: BundleOptions): Task {
+  public addBundle(name: string, options: BundleOptions): Bundle {
+    const outfile = join(this.bundledir, name, 'index.js');
+
     const args = [
       'esbuild',
       '--bundle',
       options.entrypoint,
       `--target="${options.target}"`,
       `--platform="${options.platform}"`,
-      `--outfile="${options.outfile}"`,
+      `--outfile="${outfile}"`,
     ];
 
     for (const x of options.externals ?? []) {
@@ -101,23 +118,45 @@ export class Bundler extends Component {
       args.push('--sourcemap');
     }
 
-    const bundle = this.project.addTask(`bundle:${name}`, {
+    const bundleTask = this.project.addTask(`bundle:${name}`, {
       description: `Create a JavaScript bundle from ${options.entrypoint}`,
       exec: args.join(' '),
     });
 
-    this.bundleTask.spawn(bundle);
+    this.bundleTask.spawn(bundleTask);
 
+    let watchTask;
     const watch = options.watchTask ?? true;
     if (watch) {
-      this.project.addTask(`bundle:${name}:watch`, {
+      watchTask = this.project.addTask(`bundle:${name}:watch`, {
         description: `Continuously update the JavaScript bundle from ${options.entrypoint}`,
         exec: `${args.join(' ')} --watch`,
       });
     }
 
-    return bundle;
+    return {
+      bundleTask: bundleTask,
+      watchTask: watchTask,
+      outfile: outfile,
+    };
   }
+}
+
+export interface Bundle {
+  /**
+   * The task that produces this bundle.
+   */
+  readonly bundleTask: Task;
+
+  /**
+   * The "watch" task for this bundle.
+   */
+  readonly watchTask?: Task;
+
+  /**
+   * Location of the output file (relative to project root).
+   */
+  readonly outfile: string;
 }
 
 /**
@@ -142,11 +181,6 @@ export interface BundleOptions {
    * @example "node"
    */
   readonly platform: string;
-
-  /**
-   * This option sets the output file name for the build operation.
-   */
-  readonly outfile: string;
 
   /**
    * You can mark a file or a package as external to exclude it from your build.

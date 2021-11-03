@@ -5,7 +5,6 @@ import { Component } from '../component';
 import { FileBase } from '../file';
 import { Bundler } from '../javascript/bundler';
 import { SourceCode } from '../source-code';
-import { Task } from '../tasks';
 import { TYPESCRIPT_LAMBDA_EXT } from './internal';
 
 /**
@@ -60,11 +59,6 @@ export interface LambdaFunctionOptions extends LambdaFunctionCommonOptions {
    * Project source directory tree (where .ts files live).
    */
   readonly srcdir: string;
-
-  /**
-    * JavaScript output directory (where .js files go).
-    */
-  readonly libdir: string;
 }
 
 /**
@@ -89,11 +83,6 @@ export interface LambdaFunctionOptions extends LambdaFunctionCommonOptions {
  * });
  */
 export class LambdaFunction extends Component {
-  /**
-   * The bundle task for this function.
-   */
-  public readonly bundleTask: Task;
-
   /**
    * Defines a pre-bundled AWS Lambda function construct from handler code.
    *
@@ -134,11 +123,23 @@ export class LambdaFunction extends Component {
       throw new Error(`Construct file name "${constructFile}" must have a .ts extension`);
     }
 
-    const bundledirName = `${basePath}.lambda.bundle`;
-
     // type names
     const constructName = options.constructName ?? pascal(basename(basePath)) + 'Function';
     const propsType = `${constructName}Props`;
+
+    const entry = join(options.srcdir, entrypoint);
+    const bundle = bundler.addBundle(basePath, {
+      entrypoint: entry,
+      target: runtime.esbuildTarget,
+      platform: runtime.esbuildPlatform,
+      externals: options.externals ?? ['aws-sdk'],
+    });
+
+    // bundle.outfile => `./assets/foo/bar/baz/foo-function/index.js`
+    // constructFilePath => `./src/foo/bar/baz/foo-function.ts`
+
+    const outfile = join(project.outdir, bundle.outfile);
+    const relativeOutfile = relative(join(project.outdir, constructFilePath), outfile);
 
     const src = new SourceCode(project, constructFilePath);
     src.line(`// ${FileBase.PROJEN_MARKER}`);
@@ -162,24 +163,17 @@ export class LambdaFunction extends Component {
     src.line('...props,');
     src.line(`runtime: lambda.Runtime.${runtime.functionRuntime},`);
     src.line('handler: \'index.handler\',');
-    src.line(`code: lambda.Code.fromAsset(path.join(__dirname, '${basename(bundledirName)}')),`);
+    src.line(`code: lambda.Code.fromAsset(path.join(__dirname, '${relativeOutfile}', '${basename(relativeOutfile)}')),`);
     src.close('});');
     src.close('}');
     src.close('}');
 
-    const entry = join(options.srcdir, entrypoint);
-    const outfile = join(options.libdir, bundledirName, 'index.js');
-
-    this.bundleTask = bundler.addBundle(basePath, {
-      entrypoint: entry,
-      outfile: outfile,
-      target: runtime.esbuildTarget,
-      platform: runtime.esbuildPlatform,
-      externals: options.externals ?? ['aws-sdk'],
-    });
 
     this.project.logger.info(`${basePath}: construct "${constructName}" generated under "${constructFilePath}"`);
-    this.project.logger.info(`${basePath}: bundle task "${this.bundleTask.name}"`);
+    this.project.logger.info(`${basePath}: bundle task "${bundle.bundleTask.name}"`);
+    if (bundle.watchTask) {
+      this.project.logger.info(`${basePath}: bundle watch task "${bundle.watchTask.name}"`);
+    }
   }
 }
 

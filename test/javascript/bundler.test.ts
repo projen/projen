@@ -13,13 +13,13 @@ test('node projects have a bundler', () => {
   expect(p.deps.all.find(d => d.name === 'esbuild')).toBeUndefined(); // no "esbuild" dependency
 });
 
-test('The main "bundle" task is not created unless a bundle is added', () => {
+test('The main "bundle" task is empty by default', () => {
   const p = new NodeProject({
     name: 'test',
     defaultReleaseBranch: 'main',
   });
 
-  expect(p.tasks.all.find(t => t.name === 'bundle')).toBeUndefined();
+  expect(p.tasks.all.find(t => t.name === 'bundle')?.steps.length).toBe(0);
 });
 
 test('bundler.addBundle() defines a bundle', () => {
@@ -28,52 +28,49 @@ test('bundler.addBundle() defines a bundle', () => {
     defaultReleaseBranch: 'main',
   });
 
-  p.bundler.addBundle('hello', {
+  const hello = p.bundler.addBundle('hello', {
     entrypoint: './src/index.ts',
-    outfile: './lib/foo.js',
     platform: 'node',
     target: 'node12',
   });
 
-  p.bundler.addBundle('world', {
-    entrypoint: './src/world.ts',
-    outfile: './lib/aaaa.js',
+  const world = p.bundler.addBundle('foo/world', {
+    entrypoint: './src/foo/world.ts',
     platform: 'node',
     target: 'node14',
     externals: ['aws-sdk', 'request'],
   });
 
+  // THEN
   const snapshot = Testing.synth(p);
   const tasks = snapshot['.projen/tasks.json'].tasks;
 
+  expect(hello.outfile).toStrictEqual('assets/hello/index.js');
+  expect(world.outfile).toStrictEqual('assets/foo/world/index.js');
+
   // aggregated "bundle" task spawns all bundle tasks
   expect(tasks.bundle).toStrictEqual({
-    description: 'Bundle assets',
+    description: 'Prepare assets',
     name: 'bundle',
     steps: [
       { spawn: 'bundle:hello' },
-      { spawn: 'bundle:world' },
+      { spawn: 'bundle:foo/world' },
     ],
   });
-
-  // "compile" task spawns the aggregate "bundle" task
-  expect(tasks.compile.steps).toStrictEqual([{
-    spawn: 'bundle',
-  }]);
 
   expect(tasks['bundle:hello']).toStrictEqual({
     description: 'Create a JavaScript bundle from ./src/index.ts',
     name: 'bundle:hello',
     steps: [
-      { exec: 'esbuild --bundle ./src/index.ts --target="node12" --platform="node" --outfile="./lib/foo.js" --sourcemap' },
+      { exec: 'esbuild --bundle ./src/index.ts --target="node12" --platform="node" --outfile="assets/hello/index.js" --sourcemap' },
     ],
   });
 
-  expect(tasks['bundle:world']).toStrictEqual({
-    description: 'Create a JavaScript bundle from ./src/world.ts',
-    name: 'bundle:world',
+  expect(tasks['bundle:foo/world']).toStrictEqual({
+    description: 'Create a JavaScript bundle from ./src/foo/world.ts',
+    name: 'bundle:foo/world',
     steps: [
-      { exec: 'esbuild --bundle ./src/world.ts --target="node14" --platform="node" --outfile="./lib/aaaa.js" --external:aws-sdk --external:request --sourcemap' },
+      { exec: 'esbuild --bundle ./src/foo/world.ts --target="node14" --platform="node" --outfile="assets/foo/world/index.js" --external:aws-sdk --external:request --sourcemap' },
     ],
   });
 });
@@ -86,7 +83,6 @@ test('no specific esbuild version by default', () => {
 
   p.bundler.addBundle('hello', {
     entrypoint: './src/index.ts',
-    outfile: './lib/foo.js',
     platform: 'node',
     target: 'node12',
   });
@@ -111,7 +107,6 @@ test('esbuildVersion can be used to specify version requirement for "esbuild"', 
 
   p.bundler.addBundle('hello', {
     entrypoint: './src/index.ts',
-    outfile: './lib/foo.js',
     platform: 'node',
     target: 'node12',
   });
@@ -134,7 +129,6 @@ test('sourcemaps can be disabled', () => {
 
   p.bundler.addBundle('hello', {
     entrypoint: './src/index.ts',
-    outfile: './lib/foo.js',
     platform: 'node',
     target: 'node12',
     sourcemap: false,
@@ -148,7 +142,7 @@ test('sourcemaps can be disabled', () => {
     name: 'bundle:hello',
     steps: [
       {
-        exec: 'esbuild --bundle ./src/index.ts --target="node12" --platform="node" --outfile="./lib/foo.js"',
+        exec: 'esbuild --bundle ./src/index.ts --target="node12" --platform="node" --outfile="assets/hello/index.js"',
       },
     ],
   });
@@ -163,7 +157,6 @@ describe('bundle:watch', () => {
 
     p.bundler.addBundle('hello', {
       entrypoint: './src/index.ts',
-      outfile: './lib/foo.js',
       platform: 'node',
       target: 'node12',
     });
@@ -176,7 +169,7 @@ describe('bundle:watch', () => {
       name: 'bundle:hello:watch',
       steps: [
         {
-          exec: 'esbuild --bundle ./src/index.ts --target="node12" --platform="node" --outfile="./lib/foo.js" --sourcemap --watch',
+          exec: 'esbuild --bundle ./src/index.ts --target="node12" --platform="node" --outfile="assets/hello/index.js" --sourcemap --watch',
         },
       ],
     });
@@ -190,7 +183,6 @@ describe('bundle:watch', () => {
 
     p.bundler.addBundle('hello', {
       entrypoint: './src/index.ts',
-      outfile: './lib/foo.js',
       platform: 'node',
       target: 'node12',
       watchTask: false,
@@ -201,4 +193,23 @@ describe('bundle:watch', () => {
 
     expect(tasks['bundle:hello:watch']).toBeUndefined();
   });
+});
+
+test('bundledir controls the root output directory', () => {
+  const p = new NodeProject({
+    name: 'test',
+    defaultReleaseBranch: 'main',
+    bundlerOptions: {
+      bundledir: 'resources',
+    },
+  });
+
+  const bundle = p.bundler.addBundle('hello', {
+    entrypoint: './src/index.ts',
+    platform: 'node',
+    target: 'node12',
+    watchTask: false,
+  });
+
+  expect(bundle.outfile).toStrictEqual('resources/hello/index.js');
 });
