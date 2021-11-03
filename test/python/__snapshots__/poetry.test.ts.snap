@@ -156,7 +156,36 @@ cython_debug/
       "VIRTUAL_ENV": "$(poetry env info -p)",
     },
     "tasks": Object {
+      "build": Object {
+        "description": "Full release build",
+        "name": "build",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+          Object {
+            "spawn": "precompile",
+          },
+          Object {
+            "spawn": "compile",
+          },
+          Object {
+            "spawn": "postcompile",
+          },
+          Object {
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "package",
+          },
+        ],
+      },
+      "compile": Object {
+        "description": "Only compile",
+        "name": "compile",
+      },
       "default": Object {
+        "description": "Synthesize project files",
         "name": "default",
         "steps": Array [
           Object {
@@ -174,13 +203,21 @@ cython_debug/
         ],
       },
       "package": Object {
-        "description": "Creates source archive and wheel for distribution.",
+        "description": "Creates the distribution package",
         "name": "package",
         "steps": Array [
           Object {
             "exec": "poetry build",
           },
         ],
+      },
+      "postcompile": Object {
+        "description": "Runs after successful compilation",
+        "name": "postcompile",
+      },
+      "precompile": Object {
+        "description": "Prepare the project for compilation",
+        "name": "precompile",
       },
       "publish": Object {
         "description": "Uploads the package to PyPI.",
@@ -201,7 +238,7 @@ cython_debug/
         ],
       },
       "test": Object {
-        "description": "Runs tests",
+        "description": "Run tests",
         "name": "test",
         "steps": Array [
           Object {

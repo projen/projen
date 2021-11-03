@@ -19,10 +19,7 @@ export interface BundlerCommonOptions {
  * Options for `Bundler`.
  */
 export interface BundlerOptions extends BundlerCommonOptions {
-  /**
-   * A parent task that will spawn the "bundle" task (usually "compile").
-   */
-  readonly parentTask: Task;
+
 }
 
 /**
@@ -42,18 +39,16 @@ export class Bundler extends Component {
   }
 
   private _task: Task | undefined;
-  private readonly parentTask: Task;
 
   public readonly esbuildVersion: string | undefined;
 
   /**
    * Creates a `Bundler`.
    */
-  constructor(project: Project, options: BundlerOptions) {
+  constructor(project: Project, options: BundlerOptions = {}) {
     super(project);
 
     this.esbuildVersion = options.esbuildVersion;
-    this.parentTask = options.parentTask;
   }
 
   /**
@@ -68,7 +63,7 @@ export class Bundler extends Component {
         description: 'Bundle assets',
       });
 
-      this.parentTask.spawn(this._task);
+      this.project.precompileTask.spawn(this._task);
     }
 
     return this._task;

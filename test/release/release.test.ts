@@ -6,11 +6,10 @@ import { synthSnapshot, TestProject } from '../../src/util/synth';
 test('minimal', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
 
   // WHEN
   new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
   });
@@ -22,11 +21,10 @@ test('minimal', () => {
 test('with major version filter', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
 
   // WHEN
   new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: '10.x',
     majorVersion: 10,
@@ -42,11 +40,10 @@ test('with major version filter', () => {
 test('with release tag prefix', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
 
   // WHEN
   new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: '10.x',
     majorVersion: 10,
@@ -63,9 +60,9 @@ test('with release tag prefix', () => {
 test('addBranch() can be used for additional release branches', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
+
   const release = new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
     majorVersion: 1,
@@ -86,9 +83,9 @@ test('addBranch() can be used for additional release branches', () => {
 test('if multiple branches are defined, the default branch requires a "majorVersion"', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
+
   const release = new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
   });
@@ -103,9 +100,9 @@ test('if multiple branches are defined, the default branch requires a "majorVers
 test('publisher (defaults)', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
+
   const release = new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
   });
@@ -126,9 +123,9 @@ test('publisher (defaults)', () => {
 test('publishers are added as jobs to all release workflows', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
+
   const release = new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
     majorVersion: 1,
@@ -167,11 +164,10 @@ test('publishers are added as jobs to all release workflows', () => {
 test('manual releases do not generate a release workflow', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
 
   // WHEN
   new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
     releaseTrigger: ReleaseTrigger.manual(),
@@ -186,11 +182,10 @@ test('releaseSchedule schedules releases', () => {
   // GIVEN
   const schedule = '0 17 * * *';
   const project = new TestProject();
-  const task = project.addTask('build');
 
   // WHEN
   new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
     releaseEveryCommit: false,
@@ -210,9 +205,9 @@ test('releaseSchedule schedules releases', () => {
 test('addJobs() can be used to add arbitrary jobs to the release workflows', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
+
   const release = new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
     majorVersion: 0,
@@ -240,11 +235,10 @@ test('addJobs() can be used to add arbitrary jobs to the release workflows', () 
 test('majorVersion can be 0', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
 
   // WHEN
   new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'goo.json',
     branch: 'main',
     majorVersion: 0,
@@ -259,11 +253,10 @@ test('majorVersion can be 0', () => {
 test('prerelease can be specified per branch', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
 
   // WHEN
   const release = new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'goo.json',
     branch: 'main',
     majorVersion: 0,
@@ -281,11 +274,10 @@ test('prerelease can be specified per branch', () => {
 test('releaseBranches can be use to define additional branches', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
 
   // WHEN
   new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'goo.json',
     branch: 'main',
     majorVersion: 1,
@@ -302,11 +294,10 @@ test('releaseBranches can be use to define additional branches', () => {
 test('releaseBranches can be defined with different tag prefixes to the same major version', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
 
   // WHEN
   new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'goo.json',
     branch: 'firefox',
     majorVersion: 1,
@@ -324,11 +315,10 @@ test('releaseBranches can be defined with different tag prefixes to the same maj
 test('releaseBranches as an array throws an error since type was changed', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
 
   // WHEN
   expect(() => new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'goo.json',
     branch: 'main',
     majorVersion: 1,
@@ -339,9 +329,9 @@ test('releaseBranches as an array throws an error since type was changed', () =>
 test('github packages are supported by npm', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
+
   const release = new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
   });
@@ -359,9 +349,9 @@ test('github packages are supported by npm', () => {
 test('can enable issue creation on failed releases with a custom label', () => {
 
   const project = new TestProject();
-  const task = project.addTask('build');
+
   const release = new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
     releaseFailureIssue: true,
@@ -375,15 +365,14 @@ test('can enable issue creation on failed releases with a custom label', () => {
 
   const outdir = synthSnapshot(project);
   expect(outdir['.github/workflows/release.yml']).toMatchSnapshot();
-
 });
 
 test('AWS CodeArtifact is supported by npm', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
+
   const release = new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
   });
@@ -401,9 +390,9 @@ test('AWS CodeArtifact is supported by npm', () => {
 test('AWS CodeArtifact is supported by npm with AWS access keys', () => {
   // GIVEN
   const project = new TestProject();
-  const task = project.addTask('build');
+
   const release = new Release(project, {
-    task: task,
+    task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
   });

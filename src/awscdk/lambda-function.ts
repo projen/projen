@@ -178,8 +178,8 @@ export class LambdaFunction extends Component {
       externals: options.externals ?? ['aws-sdk'],
     });
 
-    this.project.logger.info(`${basePath}: construct "${constructName}" generated under "${constructFilePath}"`);
-    this.project.logger.info(`${basePath}: bundle task "${this.bundleTask.name}"`);
+    this.project.logger.verbose(`${basePath}: construct "${constructName}" generated under "${constructFilePath}"`);
+    this.project.logger.verbose(`${basePath}: bundle task "${this.bundleTask.name}"`);
   }
 }
 

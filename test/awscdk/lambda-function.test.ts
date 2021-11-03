@@ -46,12 +46,11 @@ describe('bundled function', () => {
     });
   });
 
-  test('spawns the bundle task as part of compilation', () => {
-    expect(tasks.compile).toEqual({
-      description: 'Only compile',
-      name: 'compile',
+  test('spawns the bundle task as part of pre-compilation', () => {
+    expect(tasks.precompile).toEqual({
+      description: 'Prepare the project for compilation',
+      name: 'precompile',
       steps: [
-        { exec: 'tsc --build' },
         { spawn: 'bundle' },
       ],
     });

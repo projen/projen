@@ -402,14 +402,26 @@ pull_request_rules:
     },
     "tasks": Object {
       "build": Object {
-        "description": "Full release build (test+compile)",
+        "description": "Full release build",
         "name": "build",
         "steps": Array [
           Object {
-            "exec": "npx projen",
+            "spawn": "default",
           },
           Object {
-            "exec": "react-scripts build",
+            "spawn": "precompile",
+          },
+          Object {
+            "spawn": "compile",
+          },
+          Object {
+            "spawn": "postcompile",
+          },
+          Object {
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "package",
           },
         ],
       },
@@ -432,8 +444,14 @@ pull_request_rules:
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
+        "steps": Array [
+          Object {
+            "exec": "react-scripts build",
+          },
+        ],
       },
       "default": Object {
+        "description": "Synthesize project files",
         "name": "default",
         "steps": Array [
           Object {
@@ -458,6 +476,18 @@ pull_request_rules:
             "exec": "react-scripts eject",
           },
         ],
+      },
+      "package": Object {
+        "description": "Creates the distribution package",
+        "name": "package",
+      },
+      "postcompile": Object {
+        "description": "Runs after successful compilation",
+        "name": "postcompile",
+      },
+      "precompile": Object {
+        "description": "Prepare the project for compilation",
+        "name": "precompile",
       },
       "publish:github": Object {
         "description": "Publish this package to GitHub Releases",
@@ -839,6 +869,9 @@ pull_request_rules:
       "default": "npx projen default",
       "dev": "npx projen dev",
       "eject": "npx projen eject",
+      "package": "npx projen package",
+      "postcompile": "npx projen postcompile",
+      "precompile": "npx projen precompile",
       "projen": "npx projen",
       "publish:github": "npx projen publish:github",
       "release": "npx projen release",

@@ -2,25 +2,25 @@
   "tasks": {
     "build": {
       "name": "build",
-      "description": "Full release build (test+compile)",
+      "description": "Full release build",
       "steps": [
         {
-          "exec": "/bin/bash ./projen.bash"
+          "spawn": "default"
+        },
+        {
+          "spawn": "precompile"
         },
         {
           "spawn": "compile"
+        },
+        {
+          "spawn": "postcompile"
         },
         {
           "spawn": "test"
         },
         {
           "spawn": "package"
-        },
-        {
-          "spawn": "docgen"
-        },
-        {
-          "spawn": "readme-macros"
         }
       ]
     },
@@ -100,6 +100,7 @@
     },
     "default": {
       "name": "default",
+      "description": "Synthesize project files",
       "steps": [
         {
           "exec": "node .projenrc.js"
@@ -137,12 +138,28 @@
     },
     "package": {
       "name": "package",
-      "description": "Create an npm tarball",
+      "description": "Creates the distribution package",
       "steps": [
         {
           "exec": "jsii-pacmak"
         }
       ]
+    },
+    "postcompile": {
+      "name": "postcompile",
+      "description": "Runs after successful compilation",
+      "steps": [
+        {
+          "spawn": "docgen"
+        },
+        {
+          "spawn": "readme-macros"
+        }
+      ]
+    },
+    "precompile": {
+      "name": "precompile",
+      "description": "Prepare the project for compilation"
     },
     "publish:github": {
       "name": "publish:github",

@@ -3,7 +3,7 @@ import { tmpdir } from 'os';
 import * as path from 'path';
 import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
-import { PROJEN_VERSION } from './common';
+import { IS_TEST_RUN, PROJEN_VERSION } from './common';
 import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
@@ -74,6 +74,26 @@ export interface ProjectOptions {
     * @default - default options
     */
   readonly projenrcJsonOptions?: ProjenrcOptions;
+
+  /**
+   * Execute `projen` as the first step of the `build` task to synthesize
+   * project files. This applies both to local builds and to CI builds.
+   *
+   * Disabling this feature is NOT RECOMMENDED and means that manual changes to
+   * synthesized project files will be persisted.
+   *
+   * @default true
+   */
+  readonly projenDuringBuild?: boolean;
+
+  /**
+   * The shell command to use in order to run the projen CLI.
+   *
+   * Can be used to customize in special environments.
+   *
+   * @default "npx projen"
+   */
+  readonly projenCommand?: string;
 }
 
 /**
@@ -140,6 +160,46 @@ export class Project {
    */
   public readonly newProject?: NewProject;
 
+  /**
+   * This is the "default" task, the one that executes "projen".
+   */
+  public readonly defaultTask: Task;
+
+  /**
+   * Pre-compile task.
+   */
+  public readonly precompileTask: Task;
+
+  /**
+    * Compiles the code. By default for node.js projects this task is empty.
+    */
+  public readonly compileTask: Task;
+
+  /**
+   * Post-compile task.
+   */
+  public readonly postcompileTask: Task;
+
+  /**
+    * Tests the code.
+    */
+  public readonly testTask: Task;
+
+  /**
+    * The task responsible for a full release build. It spawns: compile + test + release + package
+    */
+  public readonly buildTask: Task;
+
+  /**
+    * The "package" task.
+    */
+  public readonly packageTask: Task;
+
+  /**
+   * The command to use in order to run the projen CLI.
+   */
+  public readonly projenCommand: string;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -151,6 +211,7 @@ export class Project {
     this.name = options.name;
     this.parent = options.parent;
     this.excludeFromCleanup = [];
+    this.projenCommand = options.projenCommand ?? 'npx projen';
 
     this.outdir = this.determineOutdir(options.outdir);
     this.root = this.parent ? this.parent.root : this;
@@ -171,6 +232,52 @@ export class Project {
     // oh no: tasks depends on gitignore so it has to be initialized after
     // smells like dep injectionn but god forbid.
     this.tasks = new Tasks(this);
+
+
+    this.defaultTask = this.addTask(Project.DEFAULT_TASK, {
+      description: 'Synthesize project files',
+    });
+
+    this.precompileTask = this.addTask('precompile', {
+      description: 'Prepare the project for compilation',
+    });
+
+    this.compileTask = this.addTask('compile', {
+      description: 'Only compile',
+    });
+
+    this.postcompileTask = this.addTask('postcompile', {
+      description: 'Runs after successful compilation',
+    });
+
+    this.testTask = this.addTask('test', {
+      description: 'Run tests',
+    });
+
+    this.packageTask = this.addTask('package', {
+      description: 'Creates the distribution package',
+    });
+
+    this.buildTask = this.addTask('build', {
+      description: 'Full release build',
+    });
+
+    // first, execute the default task (projen synthesis) as the first thing
+    // during build. skip for sub-projects (i.e. "parent" is defined) since
+    // synthing the root project will include the subprojects.
+    if ((options.projenDuringBuild ?? true) && !this.parent) {
+      this.buildTask.spawn(this.defaultTask);
+    }
+
+    this.buildTask.spawn(this.precompileTask);
+    this.buildTask.spawn(this.compileTask);
+    this.buildTask.spawn(this.postcompileTask);
+    this.buildTask.spawn(this.testTask);
+    this.buildTask.spawn(this.packageTask);
+
+    // do not allow additional build phases
+    this.buildTask.lock();
+
     this.deps = new Dependencies(this);
 
     this.logger = new Logger(this, options.logging);
@@ -350,7 +457,7 @@ export class Project {
    */
   public synth(): void {
     const outdir = this.outdir;
-    this.logger.info('Synthesizing project...');
+    this.logger.debug('Synthesizing project...');
 
     this.preSynthesize();
 
@@ -384,7 +491,7 @@ export class Project {
       this.postSynthesize();
     }
 
-    this.logger.info('Synthesis complete');
+    this.logger.debug('Synthesis complete');
   }
 
   /**
@@ -447,7 +554,7 @@ export class Project {
     }
 
     // if this is running inside a test, use a temp directory (unless cwd is aleady under tmp)
-    if (process.env.JEST_WORKER_ID) {
+    if (IS_TEST_RUN) {
       const realCwd = realpathSync(process.cwd());
       const realTmp = realpathSync(tmpdir());
 

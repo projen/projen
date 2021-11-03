@@ -954,23 +954,26 @@ tsconfig.tsbuildinfo
     },
     "tasks": Object {
       "build": Object {
-        "description": "Full release build (test+compile)",
+        "description": "Full release build",
         "name": "build",
         "steps": Array [
           Object {
-            "exec": "npx projen",
+            "spawn": "default",
           },
           Object {
-            "spawn": "test",
+            "spawn": "precompile",
           },
           Object {
             "spawn": "compile",
           },
           Object {
-            "spawn": "package",
+            "spawn": "postcompile",
           },
           Object {
-            "spawn": "docgen",
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "package",
           },
         ],
       },
@@ -1043,6 +1046,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "default": Object {
+        "description": "Synthesize project files",
         "name": "default",
         "steps": Array [
           Object {
@@ -1069,13 +1073,26 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "package": Object {
-        "description": "Create an npm tarball",
+        "description": "Creates the distribution package",
         "name": "package",
         "steps": Array [
           Object {
             "exec": "jsii-pacmak",
           },
         ],
+      },
+      "postcompile": Object {
+        "description": "Runs after successful compilation",
+        "name": "postcompile",
+        "steps": Array [
+          Object {
+            "spawn": "docgen",
+          },
+        ],
+      },
+      "precompile": Object {
+        "description": "Prepare the project for compilation",
+        "name": "precompile",
       },
       "publish:github": Object {
         "description": "Publish this package to GitHub Releases",
@@ -1164,9 +1181,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "description": "Run tests",
         "name": "test",
         "steps": Array [
-          Object {
-            "exec": "rm -fr lib/",
-          },
           Object {
             "exec": "jest --passWithNoTests --all --updateSnapshot --coverageProvider=v8",
           },
@@ -1676,6 +1690,8 @@ project.synth();
       "docgen": "npx projen docgen",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
+      "postcompile": "npx projen postcompile",
+      "precompile": "npx projen precompile",
       "projen": "npx projen",
       "publish:github": "npx projen publish:github",
       "publish:maven": "npx projen publish:maven",
@@ -2326,11 +2342,26 @@ tsconfig.tsbuildinfo
     },
     "tasks": Object {
       "build": Object {
-        "description": "Full release build (test+compile)",
+        "description": "Full release build",
         "name": "build",
         "steps": Array [
           Object {
+            "spawn": "default",
+          },
+          Object {
+            "spawn": "precompile",
+          },
+          Object {
             "spawn": "compile",
+          },
+          Object {
+            "spawn": "postcompile",
+          },
+          Object {
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "package",
           },
         ],
       },
@@ -2390,6 +2421,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "default": Object {
+        "description": "Synthesize project files",
         "name": "default",
         "steps": Array [
           Object {
@@ -2416,7 +2448,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
       "package": Object {
-        "description": "Create an npm tarball",
+        "description": "Creates the distribution package",
         "name": "package",
         "steps": Array [
           Object {
@@ -2424,13 +2456,23 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
+      "postcompile": Object {
+        "description": "Runs after successful compilation",
+        "name": "postcompile",
+        "steps": Array [
+          Object {
+            "spawn": "docgen",
+          },
+        ],
+      },
+      "precompile": Object {
+        "description": "Prepare the project for compilation",
+        "name": "precompile",
+      },
       "test": Object {
         "description": "Run tests",
         "name": "test",
         "steps": Array [
-          Object {
-            "exec": "rm -fr lib/",
-          },
           Object {
             "exec": "jest --passWithNoTests --all",
           },
@@ -2872,9 +2914,6 @@ exports.fixup = project => {
   // repo it means \\"compile\\"
   project.setScript('build', 'yarn compile');
 
-  project.buildTask.reset();
-  project.buildTask.spawn(project.compileTask);
-
   // // add \\"compile\\" after test because the test command deletes lib/ and we run tests *after* build in this repo.
   project.addTestCommand('yarn compile');
 
@@ -3082,6 +3121,8 @@ project.synth();
       "docgen": "npx projen docgen",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
+      "postcompile": "npx projen postcompile",
+      "precompile": "npx projen precompile",
       "projen": "npx projen",
       "test": "npx projen test",
       "test:update": "npx projen test:update",
@@ -3724,11 +3765,26 @@ tsconfig.tsbuildinfo
     },
     "tasks": Object {
       "build": Object {
-        "description": "Full release build (test+compile)",
+        "description": "Full release build",
         "name": "build",
         "steps": Array [
           Object {
+            "spawn": "default",
+          },
+          Object {
+            "spawn": "precompile",
+          },
+          Object {
             "spawn": "compile",
+          },
+          Object {
+            "spawn": "postcompile",
+          },
+          Object {
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "package",
           },
         ],
       },
@@ -3774,6 +3830,7 @@ tsconfig.tsbuildinfo
         ],
       },
       "default": Object {
+        "description": "Synthesize project files",
         "name": "default",
         "steps": Array [
           Object {
@@ -3791,7 +3848,7 @@ tsconfig.tsbuildinfo
         ],
       },
       "package": Object {
-        "description": "Create an npm tarball",
+        "description": "Creates the distribution package",
         "name": "package",
         "steps": Array [
           Object {
@@ -3805,13 +3862,18 @@ tsconfig.tsbuildinfo
           },
         ],
       },
+      "postcompile": Object {
+        "description": "Runs after successful compilation",
+        "name": "postcompile",
+      },
+      "precompile": Object {
+        "description": "Prepare the project for compilation",
+        "name": "precompile",
+      },
       "test": Object {
         "description": "Run tests",
         "name": "test",
         "steps": Array [
-          Object {
-            "exec": "rm -fr lib/",
-          },
           Object {
             "exec": "jest --passWithNoTests --all",
           },
@@ -4235,9 +4297,6 @@ exports.fixup = project => {
   // repo it means \\"compile\\"
   project.setScript('build', 'yarn compile');
 
-  project.buildTask.reset();
-  project.buildTask.spawn(project.compileTask);
-
   // // add \\"compile\\" after test because the test command deletes lib/ and we run tests *after* build in this repo.
   project.addTestCommand('yarn compile');
 
@@ -4418,6 +4477,8 @@ project.synth();
       "default": "npx projen default",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
+      "postcompile": "npx projen postcompile",
+      "precompile": "npx projen precompile",
       "projen": "npx projen",
       "test": "npx projen test",
       "test:update": "npx projen test:update",
@@ -4919,11 +4980,26 @@ junit.xml
     },
     "tasks": Object {
       "build": Object {
-        "description": "Full release build (test+compile)",
+        "description": "Full release build",
         "name": "build",
         "steps": Array [
           Object {
-            "exec": "npx projen",
+            "spawn": "default",
+          },
+          Object {
+            "spawn": "precompile",
+          },
+          Object {
+            "spawn": "compile",
+          },
+          Object {
+            "spawn": "postcompile",
+          },
+          Object {
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "package",
           },
         ],
       },
@@ -4980,12 +5056,25 @@ junit.xml
         "name": "compile",
       },
       "default": Object {
+        "description": "Synthesize project files",
         "name": "default",
         "steps": Array [
           Object {
             "exec": "node .projenrc.js",
           },
         ],
+      },
+      "package": Object {
+        "description": "Creates the distribution package",
+        "name": "package",
+      },
+      "postcompile": Object {
+        "description": "Runs after successful compilation",
+        "name": "postcompile",
+      },
+      "precompile": Object {
+        "description": "Prepare the project for compilation",
+        "name": "precompile",
       },
       "publish:github": Object {
         "description": "Publish this package to GitHub Releases",
@@ -5411,6 +5500,9 @@ project.synth();
       "clobber": "npx projen clobber",
       "compile": "npx projen compile",
       "default": "npx projen default",
+      "package": "npx projen package",
+      "postcompile": "npx projen postcompile",
+      "precompile": "npx projen precompile",
       "projen": "npx projen",
       "publish:github": "npx projen publish:github",
       "release": "npx projen release",

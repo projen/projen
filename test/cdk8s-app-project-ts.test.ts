@@ -24,20 +24,9 @@ test ('test if cdk8s synth is possible', () => {
     exec: 'cdk8s synth',
   }]);
 
-  // expect build step to contain synth
-  expect(output['.projen/tasks.json'].tasks.build.steps).toStrictEqual([
-    {
-      exec: 'npx projen',
-    },
-    {
-      spawn: 'test',
-    },
-    {
-      spawn: 'compile',
-    },
-    {
-      spawn: 'synth',
-    },
+  // expect postcompile step to contain synth
+  expect(output['.projen/tasks.json'].tasks.postcompile.steps).toStrictEqual([
+    { spawn: 'synth' },
   ]);
 
   expect(output['package.json'].dependencies).toStrictEqual({

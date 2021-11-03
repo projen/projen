@@ -597,8 +597,8 @@ test('projenDuringBuild can be used to disable "projen synth" during build', () 
 
   const buildTaskEnabled = synthSnapshot(enabled)['.projen/tasks.json'].tasks.build;
   const buildTaskDisabled = synthSnapshot(disabled)['.projen/tasks.json'].tasks.build;
-  expect(buildTaskEnabled.steps[0].exec).toEqual('npx projen');
-  expect(buildTaskDisabled.steps).toBeUndefined();
+  expect(buildTaskEnabled.steps[0].spawn).toEqual('default');
+  expect(buildTaskDisabled.steps[0].spawn).toEqual('precompile');
 });
 
 test('projen synth is only executed for subprojects', () => {
@@ -613,13 +613,27 @@ test('projen synth is only executed for subprojects', () => {
   const rootBuildTask = snapshot['.projen/tasks.json'].tasks.build;
   const childBuildTask = snapshot['child/.projen/tasks.json'].tasks.build;
   expect(rootBuildTask).toStrictEqual({
-    description: 'Full release build (test+compile)',
+    description: 'Full release build',
     name: 'build',
-    steps: [{ exec: 'npx projen' }],
+    steps: [
+      { spawn: 'default' },
+      { spawn: 'precompile' },
+      { spawn: 'compile' },
+      { spawn: 'postcompile' },
+      { spawn: 'test' },
+      { spawn: 'package' },
+    ],
   });
   expect(childBuildTask).toStrictEqual({
-    description: 'Full release build (test+compile)',
+    description: 'Full release build',
     name: 'build',
+    steps: [
+      { spawn: 'precompile' },
+      { spawn: 'compile' },
+      { spawn: 'postcompile' },
+      { spawn: 'test' },
+      { spawn: 'package' },
+    ],
   });
 });
 

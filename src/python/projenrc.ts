@@ -45,8 +45,7 @@ export class Projenrc extends Component {
     project.deps.addDependency(`projen@${projenVersion}`, DependencyType.DEVENV);
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
-    const defaultTask = project.addTask(Project.DEFAULT_TASK, { description: 'Synthesize the project' });
-    defaultTask.exec('python projenrc.py');
+    project.defaultTask.exec('python projenrc.py');
 
     // if this is a new project, generate a skeleton for projenrc.py
     this.generateProjenrc();

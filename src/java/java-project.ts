@@ -1,5 +1,4 @@
 import { GitHubProject, GitHubProjectOptions } from '../project';
-import { Task } from '../tasks';
 import { Junit, JunitOptions } from './junit';
 import { MavenCompile, MavenCompileOptions } from './maven-compile';
 import { MavenPackaging, MavenPackagingOptions } from './maven-packaging';
@@ -139,11 +138,6 @@ export class JavaProject extends GitHubProject {
    */
   public readonly distdir: string;
 
-  /**
-   * The primary build task.
-   */
-  public readonly buildTask: Task;
-
   constructor(options: JavaProjectOptions) {
     super(options);
 
@@ -186,10 +180,6 @@ export class JavaProject extends GitHubProject {
         ],
       },
     });
-
-    const buildTask = this.addTask('build', { description: 'Full CI build' });
-    buildTask.spawn(this.packaging.task);
-    this.buildTask = buildTask;
 
     for (const dep of options.deps ?? []) {
       this.addDependency(dep);

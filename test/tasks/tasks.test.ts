@@ -2,9 +2,9 @@ import { Project } from '../../src';
 import { Tasks, TasksManifest, TaskStep } from '../../src/tasks';
 import { TestProject, synthSnapshot } from '../../src/util/synth';
 
-test('no tasks, no tasks file', () => {
+test('default tasks', () => {
   const p = new TestProject();
-  expect(synthTasksManifest(p)).toBeUndefined();
+  expect(synthTasksManifest(p)).toMatchSnapshot();
 });
 
 test('empty task', () => {
@@ -30,7 +30,6 @@ test('remove task', () => {
   const task = p.addTask('task1');
   p.addTask('task2');
   const removeTask = p.removeTask('task1');
-
 
   // THEN
   expect(removeTask).toEqual(task);
@@ -334,9 +333,41 @@ test('"requiredEnv" can be used to specify required environment variables', () =
   });
 });
 
+test('lock() can be used to disallow modifications', () => {
+  const p = new TestProject();
+  const t = p.addTask('t1');
+  const t2 = p.addTask('t2');
+  t.exec('echo hello');
+  t.exec('echo world');
+
+  t.lock();
+
+  const error = 'Task "t1" is locked for changes';
+
+  expect(() => t.reset()).toThrow(error);
+  expect(() => t.exec('boom')).toThrow(error);
+  expect(() => t.prependExec('pre')).toThrow(error);
+  expect(() => t.spawn(t2)).toThrow(error);
+  expect(() => t.prependSpawn(t2)).toThrow(error);
+  expect(() => t.builtin('damn')).toThrow(error);
+  expect(() => t.env('Foo', 'bar')).toThrow(error);
+  expect(() => t.say('hoho')).toThrow(error);
+  expect(() => t.prependSay('hoho')).toThrow(error);
+});
+
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {
   const manifest = synthTasksManifest(p);
   delete manifest['//'];
+
+  // delete all standard tasks
+  delete manifest.tasks.build;
+  delete manifest.tasks.precompile;
+  delete manifest.tasks.compile;
+  delete manifest.tasks.postcompile;
+  delete manifest.tasks.test;
+  delete manifest.tasks.default;
+  delete manifest.tasks.package;
+
   expect(manifest).toStrictEqual(toStrictEqual);
 }
 

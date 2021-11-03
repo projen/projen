@@ -155,15 +155,6 @@ export interface NodePackageOptions {
   readonly scripts?: { [name: string]: string };
 
   /**
-   * The shell command to use in order to run the projen CLI.
-   *
-   * Can be used to customize in special environments.
-   *
-   * @default "npx projen"
-   */
-  readonly projenCommand?: string;
-
-  /**
    * The Node Package Manager used to execute scripts
    *
    * @default NodePackageManager.YARN
@@ -334,11 +325,6 @@ export class NodePackage extends Component {
   public readonly entrypoint: string;
 
   /**
-   * The command to use in order to run the projen CLI.
-   */
-  public readonly projenCommand: string;
-
-  /**
    * Allow project to take library dependencies.
    */
   public readonly allowLibraryDependencies: boolean;
@@ -418,7 +404,6 @@ export class NodePackage extends Component {
     super(project);
 
     this.packageName = options.packageName ?? project.name;
-    this.projenCommand = options.projenCommand ?? 'npx projen';
     this.peerDependencyOptions = options.peerDependencyOptions ?? {};
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.packageManager = options.packageManager ?? NodePackageManager.YARN;
@@ -718,6 +703,13 @@ export class NodePackage extends Component {
     exec(this.renderInstallCommand(this.isAutomatedBuild), { cwd: outdir });
 
     this.resolveDepsAndWritePackageJson(outdir);
+  }
+
+  /**
+   * The command which executes "projen".
+   */
+  public get projenCommand() {
+    return this.project.projenCommand;
   }
 
   /**

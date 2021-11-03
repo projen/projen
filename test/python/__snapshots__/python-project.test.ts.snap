@@ -148,7 +148,36 @@ cython_debug/
       "VIRTUAL_ENV": "$(echo $PWD/.env)",
     },
     "tasks": Object {
+      "build": Object {
+        "description": "Full release build",
+        "name": "build",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+          Object {
+            "spawn": "precompile",
+          },
+          Object {
+            "spawn": "compile",
+          },
+          Object {
+            "spawn": "postcompile",
+          },
+          Object {
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "package",
+          },
+        ],
+      },
+      "compile": Object {
+        "description": "Only compile",
+        "name": "compile",
+      },
       "default": Object {
+        "description": "Synthesize project files",
         "name": "default",
         "steps": Array [
           Object {
@@ -171,8 +200,20 @@ cython_debug/
           },
         ],
       },
+      "package": Object {
+        "description": "Creates the distribution package",
+        "name": "package",
+      },
+      "postcompile": Object {
+        "description": "Runs after successful compilation",
+        "name": "postcompile",
+      },
+      "precompile": Object {
+        "description": "Prepare the project for compilation",
+        "name": "precompile",
+      },
       "test": Object {
-        "description": "Runs tests",
+        "description": "Run tests",
         "name": "test",
         "steps": Array [
           Object {
@@ -388,7 +429,36 @@ cython_debug/
       "VIRTUAL_ENV": "$(echo $PWD/.env)",
     },
     "tasks": Object {
+      "build": Object {
+        "description": "Full release build",
+        "name": "build",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+          Object {
+            "spawn": "precompile",
+          },
+          Object {
+            "spawn": "compile",
+          },
+          Object {
+            "spawn": "postcompile",
+          },
+          Object {
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "package",
+          },
+        ],
+      },
+      "compile": Object {
+        "description": "Only compile",
+        "name": "compile",
+      },
       "default": Object {
+        "description": "Synthesize project files",
         "name": "default",
         "steps": Array [
           Object {
@@ -411,8 +481,20 @@ cython_debug/
           },
         ],
       },
+      "package": Object {
+        "description": "Creates the distribution package",
+        "name": "package",
+      },
+      "postcompile": Object {
+        "description": "Runs after successful compilation",
+        "name": "postcompile",
+      },
+      "precompile": Object {
+        "description": "Prepare the project for compilation",
+        "name": "precompile",
+      },
       "test": Object {
-        "description": "Runs tests",
+        "description": "Run tests",
         "name": "test",
         "steps": Array [
           Object {
@@ -630,7 +712,36 @@ cython_debug/
       "VIRTUAL_ENV": "$(echo $PWD/.env)",
     },
     "tasks": Object {
+      "build": Object {
+        "description": "Full release build",
+        "name": "build",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+          Object {
+            "spawn": "precompile",
+          },
+          Object {
+            "spawn": "compile",
+          },
+          Object {
+            "spawn": "postcompile",
+          },
+          Object {
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "package",
+          },
+        ],
+      },
+      "compile": Object {
+        "description": "Only compile",
+        "name": "compile",
+      },
       "default": Object {
+        "description": "Synthesize project files",
         "name": "default",
         "steps": Array [
           Object {
@@ -653,8 +764,20 @@ cython_debug/
           },
         ],
       },
+      "package": Object {
+        "description": "Creates the distribution package",
+        "name": "package",
+      },
+      "postcompile": Object {
+        "description": "Runs after successful compilation",
+        "name": "postcompile",
+      },
+      "precompile": Object {
+        "description": "Prepare the project for compilation",
+        "name": "precompile",
+      },
       "test": Object {
-        "description": "Runs tests",
+        "description": "Run tests",
         "name": "test",
         "steps": Array [
           Object {
@@ -848,7 +971,36 @@ cython_debug/
       "VIRTUAL_ENV": "$(echo $PWD/.env)",
     },
     "tasks": Object {
+      "build": Object {
+        "description": "Full release build",
+        "name": "build",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+          Object {
+            "spawn": "precompile",
+          },
+          Object {
+            "spawn": "compile",
+          },
+          Object {
+            "spawn": "postcompile",
+          },
+          Object {
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "package",
+          },
+        ],
+      },
+      "compile": Object {
+        "description": "Only compile",
+        "name": "compile",
+      },
       "default": Object {
+        "description": "Synthesize project files",
         "name": "default",
         "steps": Array [
           Object {
@@ -870,6 +1022,22 @@ cython_debug/
             "exec": "pip install -r requirements-dev.txt",
           },
         ],
+      },
+      "package": Object {
+        "description": "Creates the distribution package",
+        "name": "package",
+      },
+      "postcompile": Object {
+        "description": "Runs after successful compilation",
+        "name": "postcompile",
+      },
+      "precompile": Object {
+        "description": "Prepare the project for compilation",
+        "name": "precompile",
+      },
+      "test": Object {
+        "description": "Run tests",
+        "name": "test",
       },
     },
   },

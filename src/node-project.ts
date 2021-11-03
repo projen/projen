@@ -221,17 +221,6 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
   readonly projenUpgradeSchedule?: string[];
 
   /**
-   * Execute `projen` as the first step of the `build` task to synthesize
-   * project files. This applies both to local builds and to CI builds.
-   *
-   * Disabling this feature is NOT RECOMMENDED and means that manual changes to
-   * synthesized project files will be persisted.
-   *
-   * @default true
-   */
-  readonly projenDuringBuild?: boolean;
-
-  /**
    * Defines an .npmignore file. Normally this is only needed for libraries that
    * are packaged as tarballs.
    *
@@ -336,21 +325,6 @@ export class NodeProject extends GitHubProject {
   public get entrypoint(): string { return this.package.entrypoint; }
 
   /**
-   * Compiles the code. By default for node.js projects this task is empty.
-   */
-  public readonly compileTask: Task;
-
-  /**
-   * Tests the code.
-   */
-  public readonly testTask: Task;
-
-  /**
-   * The task responsible for a full release build. It spawns: compile + test + release + package
-   */
-  public readonly buildTask: Task;
-
-  /**
    * Automatic PR merges.
    */
   public readonly autoMerge?: AutoMerge;
@@ -420,11 +394,6 @@ export class NodeProject extends GitHubProject {
   public readonly jest?: Jest;
 
   /**
-   * The command to use in order to run the projen CLI.
-   */
-  public get projenCommand(): string { return this.package.projenCommand; }
-
-  /**
    * @deprecated use `package.addField(x, y)`
    */
   public get manifest() {
@@ -458,32 +427,6 @@ export class NodeProject extends GitHubProject {
     // add PATH for all tasks which includes the project's npm .bin list
     this.tasks.addEnvironment('PATH', '$(npx -c "node -e \\\"console.log(process.env.PATH)\\\"")');
 
-    this.compileTask = this.addTask('compile', {
-      description: 'Only compile',
-    });
-
-    this.testTask = this.addTask('test', {
-      description: 'Run tests',
-    });
-
-    this.buildTask = this.addTask('build', {
-      description: 'Full release build (test+compile)',
-    });
-
-    // add a bundler component - this enables things like Lambda bundling and in the future web bundling.
-    this.bundler = new Bundler(this, {
-      parentTask: this.compileTask,
-      ...options.bundlerOptions,
-    });
-
-    // first, execute projen as the first thing during build
-    if (options.projenDuringBuild ?? true) {
-      // skip for sub-projects (i.e. "parent" is defined) since synthing the
-      // root project will include the subprojects.
-      if (!this.parent) {
-        this.buildTask.exec(this.projenCommand);
-      }
-    }
 
     this.addLicense(options);
 
@@ -796,6 +739,9 @@ export class NodeProject extends GitHubProject {
     if (projenrcJs) {
       new Projenrc(this, options.projenrcJsOptions);
     }
+
+    // add a bundler component - this enables things like Lambda bundling and in the future web bundling.
+    this.bundler = new Bundler(this, options.bundlerOptions);
   }
 
   public addBins(bins: Record<string, string>) {
@@ -845,16 +791,6 @@ export class NodeProject extends GitHubProject {
   public addTestCommand(...commands: string[]) {
     for (const c of commands) {
       this.testTask.exec(c);
-    }
-  }
-
-  /**
-   * DEPRECATED
-   * @deprecated use `project.buildTask.exec()`
-   */
-  public addBuildCommand(...commands: string[]) {
-    for (const c of commands) {
-      this.buildTask.exec(c);
     }
   }
 
