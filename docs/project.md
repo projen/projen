@@ -1,7 +1,7 @@
 # Projects
 
 This section describes common behaviors for all projen projects. It is
-implemented as part of the `Project` base type, from which all project projects
+implemented as part of the `Project` base type, from which all projen projects
 are derived.
 
 ## Build Tasks
