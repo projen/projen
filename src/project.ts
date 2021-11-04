@@ -8,7 +8,7 @@ import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
 import { GitAttributesFile } from './git/gitattributes';
-import { AutoApprove, AutoApproveOptions, AutoMergeOptions, GitHub, GitHubOptions } from './github';
+import { AutoApprove, AutoApproveOptions, AutoMergeOptions, GitHub, GitHubOptions, MergifyOptions } from './github';
 import { Stale, StaleOptions } from './github/stale';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
@@ -559,6 +559,14 @@ export interface GitHubProjectOptions extends ProjectOptions {
   readonly mergify?: boolean;
 
   /**
+   * Options for mergify
+   *
+   * @default - default options
+   * @deprecated use `githubOptions.mergifyOptions` instead
+   */
+  readonly mergifyOptions?: MergifyOptions;
+
+  /**
    * Add a VSCode development environment (used for GitHub Codespaces)
    *
    * @default false
@@ -673,6 +681,7 @@ export class GitHubProject extends Project {
     const github = options.github ?? (this.parent ? false : true);
     this.github = github ? new GitHub(this, {
       mergify: options.mergify,
+      mergifyOptions: options.mergifyOptions,
       ...options.githubOptions,
     }) : undefined;
 
