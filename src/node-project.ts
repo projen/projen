@@ -1,7 +1,6 @@
 import { PROJEN_DIR, PROJEN_RC } from './common';
 import { AutoMerge, DependabotOptions, GitIdentity, TaskWorkflow } from './github';
 import { DEFAULT_GITHUB_ACTIONS_USER } from './github/constants';
-import { MergifyOptions } from './github/mergify';
 import { JobPermission, JobStep } from './github/workflows-model';
 import { IgnoreFile } from './ignore-file';
 import { Bundler, BundlerCommonOptions, Projenrc, ProjenrcOptions } from './javascript';
@@ -158,13 +157,6 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * @default - default options
    */
   readonly depsUpgradeOptions?: UpgradeDependenciesOptions;
-
-  /**
-   * Options for mergify
-   *
-   * @default - default options
-   */
-  readonly mergifyOptions?: MergifyOptions;
 
   /**
    * Periodically submits a pull request for projen upgrades (executes `yarn

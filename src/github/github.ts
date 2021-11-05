@@ -1,7 +1,7 @@
 import { Component } from '../component';
 import { Project } from '../project';
 import { Dependabot, DependabotOptions } from './dependabot';
-import { Mergify } from './mergify';
+import { Mergify, MergifyOptions } from './mergify';
 import { PullRequestTemplate } from './pr-template';
 import { GithubWorkflow } from './workflows';
 
@@ -12,6 +12,13 @@ export interface GitHubOptions {
    * @default true
    */
   readonly mergify?: boolean;
+
+  /**
+   * Options for Mergify.
+   *
+   * @default - default options
+   */
+  readonly mergifyOptions?: MergifyOptions;
 
   /**
    * Enables GitHub workflows. If this is set to `false`, workflows will not be created.
@@ -42,7 +49,7 @@ export class GitHub extends Component {
     this._workflows = {};
 
     if (options.mergify ?? true) {
-      this.mergify = new Mergify(this);
+      this.mergify = new Mergify(this, options.mergifyOptions);
     }
   }
 
