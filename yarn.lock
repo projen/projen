@@ -734,6 +734,13 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/conventional-changelog-config-spec@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@types/conventional-changelog-config-spec/-/conventional-changelog-config-spec-2.1.1.tgz#806b17d7887320a3b2bb854dda8f2791dc472383"
+  integrity sha512-w0izw32zTHC+3Mk3XeuCx2KM9AX3J9ri+PDlMZF78zYcXImZNjPbZgxa/2L6+/zpjebtqg8rZYOGijWTn3JlAQ==
+  dependencies:
+    "@types/json-schema" "*"
+
 "@types/fs-extra@^8":
   version "8.1.2"
   resolved "https://registry.yarnpkg.com/@types/fs-extra/-/fs-extra-8.1.2.tgz#7125cc2e4bdd9bd2fc83005ffdb1d0ba00cca61f"
@@ -788,7 +795,7 @@
     jest-diff "^27.0.0"
     pretty-format "^27.0.0"
 
-"@types/json-schema@^7.0.7":
+"@types/json-schema@*", "@types/json-schema@^7.0.7":
   version "7.0.9"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
   integrity sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==
@@ -1690,7 +1697,7 @@ conventional-changelog-codemirror@^2.0.8:
   dependencies:
     q "^1.5.1"
 
-conventional-changelog-config-spec@2.1.0:
+conventional-changelog-config-spec@2.1.0, conventional-changelog-config-spec@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/conventional-changelog-config-spec/-/conventional-changelog-config-spec-2.1.0.tgz#874a635287ef8b581fd8558532bf655d4fb59f2d"
   integrity sha512-IpVePh16EbbB02V+UA+HQnnPIohgXvJRxHcS5+Uwk4AT5LjzCZJm5sp/yqs5C6KZJ1jMsV4paEV13BN1pvDuxQ==

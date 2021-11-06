@@ -1,4 +1,5 @@
 import { dirname, join } from 'path';
+import { Config } from 'conventional-changelog-config-spec';
 import { mkdirp, pathExists, readFile, remove, writeFile } from 'fs-extra';
 import * as logging from '../logging';
 import { exec, execCapture } from '../util';
@@ -51,6 +52,12 @@ export interface BumpOptions {
    * version found with this prefix.
    */
   readonly tagPrefix?: string;
+
+  /**
+   * Conguration values that would append to versionrc file or overwrite values
+   * coming to that from default one.
+   */
+  readonly versionrcOptions?: Config;
 }
 
 /**
@@ -102,25 +109,7 @@ export async function bump(cwd: string, options: BumpOptions) {
 
   // create a standard-version configuration file
   const rcfile = join(cwd, '.versionrc.json');
-  await writeFile(rcfile, JSON.stringify({
-    packageFiles: [{
-      filename: versionFile,
-      type: 'json',
-    }],
-    bumpFiles: [{
-      filename: versionFile,
-      type: 'json',
-    }],
-    commitAll: false,
-    infile: changelogFile,
-    prerelease: prerelease,
-    header: '',
-    skip: {
-      commit: true,
-      tag: true,
-      bump: skipBump,
-    },
-  }, undefined, 2));
+  await generateVersionrcFile(rcfile, versionFile, changelogFile, skipBump, prerelease, options.versionrcOptions);
 
   const cmd = ['npx', 'standard-version@^9'];
   if (isFirstRelease) {
@@ -179,6 +168,37 @@ interface LatestTagOptions {
    * A prefix applied to all tags.
    */
   readonly prefix: string;
+}
+
+function generateVersionrcFile(
+  rcfile: string,
+  versionFile: string,
+  changelogFile: string,
+  skipBump: boolean,
+  prerelease?: string, configOptions?: Config,
+) {
+  return writeFile(rcfile, JSON.stringify({
+    ...{
+      packageFiles: [{
+        filename: versionFile,
+        type: 'json',
+      }],
+      bumpFiles: [{
+        filename: versionFile,
+        type: 'json',
+      }],
+      commitAll: false,
+      infile: changelogFile,
+      prerelease: prerelease,
+      header: '',
+      skip: {
+        commit: true,
+        tag: true,
+        bump: skipBump,
+      },
+      ...configOptions,
+    },
+  }, undefined, 2));
 }
 
 /**

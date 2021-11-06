@@ -42,6 +42,7 @@
     "organization": false
   },
   "devDependencies": {
+    "@types/conventional-changelog-config-spec": "^2.1.1",
     "@types/fs-extra": "^8",
     "@types/glob": "^7.2.0",
     "@types/ini": "^1.3.31",
@@ -73,6 +74,7 @@
     "@iarna/toml": "^2.2.5",
     "case": "^1.6.3",
     "chalk": "^4.1.2",
+    "conventional-changelog-config-spec": "^2.1.0",
     "fs-extra": "^9.1.0",
     "glob": "^7",
     "ini": "^2.0.0",
@@ -86,6 +88,7 @@
     "@iarna/toml",
     "case",
     "chalk",
+    "conventional-changelog-config-spec",
     "fs-extra",
     "glob",
     "ini",
