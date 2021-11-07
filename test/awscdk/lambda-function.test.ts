@@ -47,9 +47,9 @@ describe('bundled function', () => {
   });
 
   test('spawns the bundle task as part of pre-compilation', () => {
-    expect(tasks.precompile).toEqual({
+    expect(tasks['pre-compile']).toEqual({
       description: 'Prepare the project for compilation',
-      name: 'precompile',
+      name: 'pre-compile',
       steps: [
         { spawn: 'bundle' },
       ],

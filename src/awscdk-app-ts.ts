@@ -128,7 +128,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.removeScript('watch'); // because we use ts-node
 
     // add synth to the build
-    this.postcompileTask.spawn(this.cdkTasks.synth);
+    this.postCompileTask.spawn(this.cdkTasks.synth);
 
     this.cdkConfig = new CdkConfig(this, {
       app: `npx ts-node --prefer-ts-exts ${path.posix.join(this.srcdir, this.appEntrypoint)}`,

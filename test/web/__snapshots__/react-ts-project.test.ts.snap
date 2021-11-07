@@ -373,13 +373,13 @@ tsconfig.tsbuildinfo
             "spawn": "default",
           },
           Object {
-            "spawn": "precompile",
+            "spawn": "pre-compile",
           },
           Object {
             "spawn": "compile",
           },
           Object {
-            "spawn": "postcompile",
+            "spawn": "post-compile",
           },
           Object {
             "spawn": "test",
@@ -429,13 +429,13 @@ tsconfig.tsbuildinfo
         "description": "Creates the distribution package",
         "name": "package",
       },
-      "postcompile": Object {
+      "post-compile": Object {
         "description": "Runs after successful compilation",
-        "name": "postcompile",
+        "name": "post-compile",
       },
-      "precompile": Object {
+      "pre-compile": Object {
         "description": "Prepare the project for compilation",
-        "name": "precompile",
+        "name": "pre-compile",
       },
       "test": Object {
         "description": "Run tests",
@@ -776,8 +776,8 @@ tsconfig.tsbuildinfo
       "dev": "npx projen dev",
       "eject": "npx projen eject",
       "package": "npx projen package",
-      "postcompile": "npx projen postcompile",
-      "precompile": "npx projen precompile",
+      "post-compile": "npx projen post-compile",
+      "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "test": "npx projen test",
       "upgrade": "npx projen upgrade",

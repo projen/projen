@@ -12,13 +12,13 @@ Object {
           "spawn": "default",
         },
         Object {
-          "spawn": "precompile",
+          "spawn": "pre-compile",
         },
         Object {
           "spawn": "compile",
         },
         Object {
-          "spawn": "postcompile",
+          "spawn": "post-compile",
         },
         Object {
           "spawn": "test",
@@ -40,13 +40,13 @@ Object {
       "description": "Creates the distribution package",
       "name": "package",
     },
-    "postcompile": Object {
+    "post-compile": Object {
       "description": "Runs after successful compilation",
-      "name": "postcompile",
+      "name": "post-compile",
     },
-    "precompile": Object {
+    "pre-compile": Object {
       "description": "Prepare the project for compilation",
-      "name": "precompile",
+      "name": "pre-compile",
     },
     "test": Object {
       "description": "Run tests",

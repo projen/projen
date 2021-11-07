@@ -586,21 +586,6 @@ test('mutableBuild will push changes to PR branches', () => {
   expect(workflow.jobs.build.steps).toMatchSnapshot();
 });
 
-test('projenDuringBuild can be used to disable "projen synth" during build', () => {
-  const enabled = new TestNodeProject({
-    projenDuringBuild: true,
-  });
-
-  const disabled = new TestNodeProject({
-    projenDuringBuild: false,
-  });
-
-  const buildTaskEnabled = synthSnapshot(enabled)['.projen/tasks.json'].tasks.build;
-  const buildTaskDisabled = synthSnapshot(disabled)['.projen/tasks.json'].tasks.build;
-  expect(buildTaskEnabled.steps[0].spawn).toEqual('default');
-  expect(buildTaskDisabled.steps[0].spawn).toEqual('precompile');
-});
-
 test('projen synth is only executed for subprojects', () => {
   // GIVEN
   const root = new TestNodeProject();
@@ -617,9 +602,9 @@ test('projen synth is only executed for subprojects', () => {
     name: 'build',
     steps: [
       { spawn: 'default' },
-      { spawn: 'precompile' },
+      { spawn: 'pre-compile' },
       { spawn: 'compile' },
-      { spawn: 'postcompile' },
+      { spawn: 'post-compile' },
       { spawn: 'test' },
       { spawn: 'package' },
     ],
@@ -628,9 +613,9 @@ test('projen synth is only executed for subprojects', () => {
     description: 'Full release build',
     name: 'build',
     steps: [
-      { spawn: 'precompile' },
+      { spawn: 'pre-compile' },
       { spawn: 'compile' },
-      { spawn: 'postcompile' },
+      { spawn: 'post-compile' },
       { spawn: 'test' },
       { spawn: 'package' },
     ],

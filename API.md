@@ -31,6 +31,7 @@ Name|Description
 [NodeProject](#projen-nodeproject)|Node.js project.
 [ObjectFile](#projen-objectfile)|Represents an Object file.
 [Project](#projen-project)|Base project.
+[ProjectBuild](#projen-projectbuild)|Manages a standard build process for all projects.
 [Projects](#projen-projects)|Programmatic API for projen.
 [SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
@@ -3752,8 +3753,8 @@ new Project(options: ProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**buildTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The task responsible for a full release build.
-**compileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Compiles the code.
+**buildTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**compileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 **components**🔹 | <code>Array<[Component](#projen-component)></code> | Returns all the components within this project.
 **defaultTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | This is the "default" task, the one that executes "projen".
 **deps**🔹 | <code>[deps.Dependencies](#projen-deps-dependencies)</code> | Project dependencies.
@@ -3763,13 +3764,14 @@ Name | Type | Description
 **logger**🔹 | <code>[Logger](#projen-logger)</code> | Logging utilities.
 **name**🔹 | <code>string</code> | Project name.
 **outdir**🔹 | <code>string</code> | Absolute output directory of this project.
-**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The "package" task.
-**postcompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Post-compile task.
-**precompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Pre-compile task.
+**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**postCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**preCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**projectBuild**🔹 | <code>[ProjectBuild](#projen-projectbuild)</code> | Manages the build process of the project.
 **projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
 **tasks**🔹 | <code>[tasks.Tasks](#projen-tasks-tasks)</code> | Project tasks.
-**testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Tests the code.
+**testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 **newProject**?🔹 | <code>[NewProject](#projen-newproject)</code> | The options used when this project is bootstrapped via `projen new`.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 *static* **DEFAULT_TASK**🔹 | <code>string</code> | The name of the default task (the task executed when `projen` is run without arguments).
@@ -3986,6 +3988,47 @@ tryFindObjectFile(filePath: string): ObjectFile
 
 __Returns__:
 * <code>[ObjectFile](#projen-objectfile)</code>
+
+
+
+## class ProjectBuild 🔹 <a id="projen-projectbuild"></a>
+
+Manages a standard build process for all projects.
+
+Build spawns these tasks in order:
+1. default
+2. pre-compile
+3. compile
+4. post-compile
+5. test
+6. package
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new ProjectBuild(project: Project)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**buildTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The task responsible for a full release build.
+**compileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Compiles the code.
+**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The "package" task.
+**postCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Post-compile task.
+**preCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Pre-compile task.
+**testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Tests the code.
 
 
 

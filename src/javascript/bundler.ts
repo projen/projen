@@ -63,7 +63,7 @@ export class Bundler extends Component {
         description: 'Bundle assets',
       });
 
-      this.project.precompileTask.spawn(this._task);
+      this.project.preCompileTask.spawn(this._task);
     }
 
     return this._task;

@@ -361,9 +361,9 @@ function expectManifest(p: Project, toStrictEqual: TasksManifest) {
 
   // delete all standard tasks
   delete manifest.tasks.build;
-  delete manifest.tasks.precompile;
+  delete manifest.tasks['pre-compile'];
   delete manifest.tasks.compile;
-  delete manifest.tasks.postcompile;
+  delete manifest.tasks['post-compile'];
   delete manifest.tasks.test;
   delete manifest.tasks.default;
   delete manifest.tasks.package;

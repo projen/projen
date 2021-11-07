@@ -57,7 +57,7 @@ test('bundler.addBundle() defines a bundle', () => {
   });
 
   // "compile" task spawns the aggregate "bundle" task
-  expect(tasks.precompile.steps).toStrictEqual([{
+  expect(tasks['pre-compile'].steps).toStrictEqual([{
     spawn: 'bundle',
   }]);
 

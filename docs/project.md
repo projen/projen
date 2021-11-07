@@ -13,15 +13,16 @@ the `Project` base class.
 The `build` task spawns a set of sub-tasks which represent the various build phases:
 
 * `default` - this task is responsible to execute your projenrc and synthesize all project files.
-* `precompile` - runs before compilation (ie. bundle assets)
+* `pre-compile` - runs before compilation (eg. bundle assets)
 * `compile` - compile your code (if needed)
-* `postcompile` - runs immediately after a successful compilation
+* `post-compile` - runs immediately after a successful compilation
 * `test` - runs tests
 * `package` - creates a distribution package
 
-To extend the build process, components and projects can use `project.xxxTask`
-and interact with the `Task` object (i.e. `project.postcompileTask.exec("echo
-hi")` will execute `echo hi` after compilation).
+To extend the build process, components and projects can use
+`project.projectBuild.xxxTask` and interact with the `Task` object (i.e.
+`project.projectBuild.postCompileTask.exec("echo hi")` will execute `echo hi` after
+compilation).
 
 > NOTE: the `build` task is locked. This means that any attempt to extend it
 > (i.e. call `spawn`, `exec`, `reset`, etc) will throw an exception. Instead of

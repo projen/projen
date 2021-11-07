@@ -8,13 +8,13 @@
           "spawn": "default"
         },
         {
-          "spawn": "precompile"
+          "spawn": "pre-compile"
         },
         {
           "spawn": "compile"
         },
         {
-          "spawn": "postcompile"
+          "spawn": "post-compile"
         },
         {
           "spawn": "test"
@@ -145,8 +145,8 @@
         }
       ]
     },
-    "postcompile": {
-      "name": "postcompile",
+    "post-compile": {
+      "name": "post-compile",
       "description": "Runs after successful compilation",
       "steps": [
         {
@@ -157,8 +157,8 @@
         }
       ]
     },
-    "precompile": {
-      "name": "precompile",
+    "pre-compile": {
+      "name": "pre-compile",
       "description": "Prepare the project for compilation"
     },
     "publish:github": {

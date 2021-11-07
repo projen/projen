@@ -96,7 +96,7 @@ export class AwsCdkJavaApp extends JavaProject {
     this.addCdkDependency(...options.cdkDependencies ?? []);
 
     this.cdkTasks = new CdkTasks(this);
-    this.postcompileTask.spawn(this.cdkTasks.synth);
+    this.postCompileTask.spawn(this.cdkTasks.synth);
 
     this.cdkConfig = new CdkConfig(this, {
       app: `mvn exec:java --quiet -Dexec.mainClass=${this.mainClass}`,

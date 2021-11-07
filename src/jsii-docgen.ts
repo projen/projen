@@ -16,7 +16,7 @@ export class JsiiDocgen {
     });
 
     // spawn docgen after compilation (requires the .jsii manifest).
-    project.postcompileTask.spawn(docgen);
+    project.postCompileTask.spawn(docgen);
     project.gitignore.include('/API.md');
   }
 }

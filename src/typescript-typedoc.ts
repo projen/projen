@@ -13,6 +13,6 @@ export class TypedocDocgen {
     });
 
     // spawn after a successful compile
-    project.postcompileTask.spawn(docgen);
+    project.postCompileTask.spawn(docgen);
   }
 }

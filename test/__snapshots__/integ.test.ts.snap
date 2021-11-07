@@ -961,13 +961,13 @@ tsconfig.tsbuildinfo
             "spawn": "default",
           },
           Object {
-            "spawn": "precompile",
+            "spawn": "pre-compile",
           },
           Object {
             "spawn": "compile",
           },
           Object {
-            "spawn": "postcompile",
+            "spawn": "post-compile",
           },
           Object {
             "spawn": "test",
@@ -1081,18 +1081,18 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
-      "postcompile": Object {
+      "post-compile": Object {
         "description": "Runs after successful compilation",
-        "name": "postcompile",
+        "name": "post-compile",
         "steps": Array [
           Object {
             "spawn": "docgen",
           },
         ],
       },
-      "precompile": Object {
+      "pre-compile": Object {
         "description": "Prepare the project for compilation",
-        "name": "precompile",
+        "name": "pre-compile",
       },
       "publish:github": Object {
         "description": "Publish this package to GitHub Releases",
@@ -1690,8 +1690,8 @@ project.synth();
       "docgen": "npx projen docgen",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
-      "postcompile": "npx projen postcompile",
-      "precompile": "npx projen precompile",
+      "post-compile": "npx projen post-compile",
+      "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "publish:github": "npx projen publish:github",
       "publish:maven": "npx projen publish:maven",
@@ -2349,13 +2349,13 @@ tsconfig.tsbuildinfo
             "spawn": "default",
           },
           Object {
-            "spawn": "precompile",
+            "spawn": "pre-compile",
           },
           Object {
             "spawn": "compile",
           },
           Object {
-            "spawn": "postcompile",
+            "spawn": "post-compile",
           },
           Object {
             "spawn": "test",
@@ -2456,18 +2456,18 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
-      "postcompile": Object {
+      "post-compile": Object {
         "description": "Runs after successful compilation",
-        "name": "postcompile",
+        "name": "post-compile",
         "steps": Array [
           Object {
             "spawn": "docgen",
           },
         ],
       },
-      "precompile": Object {
+      "pre-compile": Object {
         "description": "Prepare the project for compilation",
-        "name": "precompile",
+        "name": "pre-compile",
       },
       "test": Object {
         "description": "Run tests",
@@ -3121,8 +3121,8 @@ project.synth();
       "docgen": "npx projen docgen",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
-      "postcompile": "npx projen postcompile",
-      "precompile": "npx projen precompile",
+      "post-compile": "npx projen post-compile",
+      "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "test": "npx projen test",
       "test:update": "npx projen test:update",
@@ -3772,13 +3772,13 @@ tsconfig.tsbuildinfo
             "spawn": "default",
           },
           Object {
-            "spawn": "precompile",
+            "spawn": "pre-compile",
           },
           Object {
             "spawn": "compile",
           },
           Object {
-            "spawn": "postcompile",
+            "spawn": "post-compile",
           },
           Object {
             "spawn": "test",
@@ -3862,13 +3862,13 @@ tsconfig.tsbuildinfo
           },
         ],
       },
-      "postcompile": Object {
+      "post-compile": Object {
         "description": "Runs after successful compilation",
-        "name": "postcompile",
+        "name": "post-compile",
       },
-      "precompile": Object {
+      "pre-compile": Object {
         "description": "Prepare the project for compilation",
-        "name": "precompile",
+        "name": "pre-compile",
       },
       "test": Object {
         "description": "Run tests",
@@ -4477,8 +4477,8 @@ project.synth();
       "default": "npx projen default",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
-      "postcompile": "npx projen postcompile",
-      "precompile": "npx projen precompile",
+      "post-compile": "npx projen post-compile",
+      "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "test": "npx projen test",
       "test:update": "npx projen test:update",
@@ -4987,13 +4987,13 @@ junit.xml
             "spawn": "default",
           },
           Object {
-            "spawn": "precompile",
+            "spawn": "pre-compile",
           },
           Object {
             "spawn": "compile",
           },
           Object {
-            "spawn": "postcompile",
+            "spawn": "post-compile",
           },
           Object {
             "spawn": "test",
@@ -5068,13 +5068,13 @@ junit.xml
         "description": "Creates the distribution package",
         "name": "package",
       },
-      "postcompile": Object {
+      "post-compile": Object {
         "description": "Runs after successful compilation",
-        "name": "postcompile",
+        "name": "post-compile",
       },
-      "precompile": Object {
+      "pre-compile": Object {
         "description": "Prepare the project for compilation",
-        "name": "precompile",
+        "name": "pre-compile",
       },
       "publish:github": Object {
         "description": "Publish this package to GitHub Releases",
@@ -5501,8 +5501,8 @@ project.synth();
       "compile": "npx projen compile",
       "default": "npx projen default",
       "package": "npx projen package",
-      "postcompile": "npx projen postcompile",
-      "precompile": "npx projen precompile",
+      "post-compile": "npx projen post-compile",
+      "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "publish:github": "npx projen publish:github",
       "release": "npx projen release",
