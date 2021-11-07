@@ -102,13 +102,6 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   readonly disableTsconfig?: boolean;
 
   /**
-   * Compile the code before running tests.
-   *
-   * @default - if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false`.
-   */
-  readonly compileBeforeTest?: boolean;
-
-  /**
    * Generate one-time sample in `src/` and `test/` if there are no files there.
    * @default true
    */
@@ -177,11 +170,6 @@ export class TypeScriptProject extends NodeProject {
    */
   public readonly watchTask: Task;
 
-  /**
-   * The "package" task (or undefined if `package` is set to `false`).
-   */
-  public readonly packageTask?: Task;
-
   constructor(options: TypeScriptProjectOptions) {
     super({
       ...options,
@@ -219,27 +207,10 @@ export class TypeScriptProject extends NodeProject {
     // the javascript files and not let jest compile it for us.
     const compiledTests = this.testdir.startsWith(this.srcdir + path.posix.sep);
 
-    // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
-    const compileBeforeTest = options.compileBeforeTest ?? compiledTests;
-
-    if (compileBeforeTest) {
-      this.buildTask.spawn(this.compileTask);
-      this.buildTask.spawn(this.testTask);
-    } else {
-      this.buildTask.spawn(this.testTask);
-      this.buildTask.spawn(this.compileTask);
-    }
-
     if (options.package ?? true) {
-      this.packageTask = this.addTask('package', {
-        description: 'Create an npm tarball',
-      });
-
       this.packageTask.exec('mkdir -p dist/js');
       this.packageTask.exec(`${this.package.packageManager} pack`);
       this.packageTask.exec('mv *.tgz dist/js/');
-
-      this.buildTask.spawn(this.packageTask);
     }
 
     if (options.entrypointTypes || this.entrypoint !== '') {
@@ -366,14 +337,6 @@ export class TypeScriptProject extends NodeProject {
       // create a tsconfig for jest that does NOT include outDir and rootDir and
       // includes both "src" and "test" as inputs.
       this.jest.addTypeScriptSupport(this.tsconfigDev);
-
-      // if we test before compilation, remove the lib/ directory before running
-      // tests so that we get a clean slate for testing.
-      if (!compileBeforeTest) {
-        // make sure to delete "lib" *before* running tests to ensure that
-        // test code does not take a dependency on "lib" and instead on "src".
-        this.testTask.prependExec(`rm -fr ${this.libdir}/`);
-      }
     }
 
     if (options.eslint ?? true) {

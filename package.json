@@ -20,6 +20,8 @@
     "docgen": "/bin/bash ./projen.bash docgen",
     "eslint": "/bin/bash ./projen.bash eslint",
     "package": "/bin/bash ./projen.bash package",
+    "post-compile": "/bin/bash ./projen.bash post-compile",
+    "pre-compile": "/bin/bash ./projen.bash pre-compile",
     "publish:github": "/bin/bash ./projen.bash publish:github",
     "publish:maven": "/bin/bash ./projen.bash publish:maven",
     "publish:npm": "/bin/bash ./projen.bash publish:npm",

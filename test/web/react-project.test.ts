@@ -33,7 +33,7 @@ test('rewire replaces react-scripts', () => {
     expect(task.steps[task.steps.length - 1].exec).toEqual(script);
   }
 
-  assertExec('build', 'react-app-rewired build');
+  assertExec('compile', 'react-app-rewired build');
   assertExec('test', 'react-app-rewired test --watchAll=false');
   assertExec('dev', 'react-app-rewired start');
   assertExec('eject', 'react-scripts eject');

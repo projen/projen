@@ -586,21 +586,6 @@ test('mutableBuild will push changes to PR branches', () => {
   expect(workflow.jobs.build.steps).toMatchSnapshot();
 });
 
-test('projenDuringBuild can be used to disable "projen synth" during build', () => {
-  const enabled = new TestNodeProject({
-    projenDuringBuild: true,
-  });
-
-  const disabled = new TestNodeProject({
-    projenDuringBuild: false,
-  });
-
-  const buildTaskEnabled = synthSnapshot(enabled)['.projen/tasks.json'].tasks.build;
-  const buildTaskDisabled = synthSnapshot(disabled)['.projen/tasks.json'].tasks.build;
-  expect(buildTaskEnabled.steps[0].exec).toEqual('npx projen');
-  expect(buildTaskDisabled.steps).toBeUndefined();
-});
-
 test('projen synth is only executed for subprojects', () => {
   // GIVEN
   const root = new TestNodeProject();
@@ -613,13 +598,27 @@ test('projen synth is only executed for subprojects', () => {
   const rootBuildTask = snapshot['.projen/tasks.json'].tasks.build;
   const childBuildTask = snapshot['child/.projen/tasks.json'].tasks.build;
   expect(rootBuildTask).toStrictEqual({
-    description: 'Full release build (test+compile)',
+    description: 'Full release build',
     name: 'build',
-    steps: [{ exec: 'npx projen' }],
+    steps: [
+      { spawn: 'default' },
+      { spawn: 'pre-compile' },
+      { spawn: 'compile' },
+      { spawn: 'post-compile' },
+      { spawn: 'test' },
+      { spawn: 'package' },
+    ],
   });
   expect(childBuildTask).toStrictEqual({
-    description: 'Full release build (test+compile)',
+    description: 'Full release build',
     name: 'build',
+    steps: [
+      { spawn: 'pre-compile' },
+      { spawn: 'compile' },
+      { spawn: 'post-compile' },
+      { spawn: 'test' },
+      { spawn: 'package' },
+    ],
   });
 });
 

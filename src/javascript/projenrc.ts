@@ -2,7 +2,6 @@ import { existsSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { Component } from '../component';
 import { renderJavaScriptOptions } from '../javascript/render-options';
-import { NodeProject } from '../node-project';
 import { Project } from '../project';
 export interface ProjenrcOptions {
   /**
@@ -24,7 +23,7 @@ export class Projenrc extends Component {
     this.rcfile = options.filename ?? '.projenrc.js';
 
     // this is the task projen executes when running `projen`
-    project.addTask(NodeProject.DEFAULT_TASK, { exec: `node ${this.rcfile}` });
+    project.defaultTask.exec(`node ${this.rcfile}`);
 
     this.generateProjenrc();
   }

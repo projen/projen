@@ -71,9 +71,8 @@ export class Projenrc extends Component {
     pom.addPlugin('org.codehaus.mojo/exec-maven-plugin@3.0.0');
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
-    const defaultTask = project.addTask(Project.DEFAULT_TASK, { description: 'Synthesize the project' });
-    defaultTask.exec(`mvn ${compileGoal} --quiet`);
-    defaultTask.exec(`mvn exec:java --quiet -Dexec.mainClass=${this.className}${execOpts}`);
+    project.defaultTask.exec(`mvn ${compileGoal} --quiet`);
+    project.defaultTask.exec(`mvn exec:java --quiet -Dexec.mainClass=${this.className}${execOpts}`);
 
     // if this is a new project, generate a skeleton for projenrc.java
     this.generateProjenrc();
