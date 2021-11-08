@@ -227,7 +227,7 @@ Array [
         "type": "unknown",
       },
       Object {
-        "default": "\\"v1.129.0\\"",
+        "default": "\\"1.129.0\\"",
         "docs": "AWS CDK version to use.",
         "featured": true,
         "name": "cdkVersion",
