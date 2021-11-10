@@ -150,6 +150,7 @@ test('projenrc.ts', () => {
 
   const snapshot = synthSnapshot(prj);
   expect(snapshot['.projen/tasks.json'].tasks.default).toStrictEqual({
+    description: 'Synthesize project files',
     name: 'default',
     steps: [
       { exec: 'ts-node --project tsconfig.dev.json .projenrc.ts' },

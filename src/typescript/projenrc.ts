@@ -49,9 +49,7 @@ export class Projenrc extends Component {
 
     // we use "tsconfig.dev.json" here to allow projen source files to reside
     // anywhere in the project tree.
-    project.addTask(TypeScriptProject.DEFAULT_TASK, {
-      exec: `ts-node --project ${project.tsconfigDev.fileName} ${this.rcfile}`,
-    });
+    project.defaultTask.exec(`ts-node --project ${project.tsconfigDev.fileName} ${this.rcfile}`);
 
     this.generateProjenrc();
   }
@@ -81,7 +79,7 @@ export class Projenrc extends Component {
     imports.add(importName);
 
     const lines = new Array<string>();
-    lines.push(`import { ${[...imports].sort().join(', ')} } from '${moduleName}';`);
+    lines.push(`import { ${[...imports].sort().join(', ')} } from "${moduleName}";`);
     lines.push();
     lines.push(`const project = new ${className}(${renderedOptions});`);
     lines.push();

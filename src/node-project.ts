@@ -1,10 +1,9 @@
 import { PROJEN_DIR, PROJEN_RC } from './common';
 import { AutoMerge, DependabotOptions, GitIdentity, TaskWorkflow } from './github';
 import { DEFAULT_GITHUB_ACTIONS_USER } from './github/constants';
-import { MergifyOptions } from './github/mergify';
 import { JobPermission, JobStep } from './github/workflows-model';
 import { IgnoreFile } from './ignore-file';
-import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
+import { Bundler, BundlerCommonOptions, Projenrc, ProjenrcOptions } from './javascript';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
 import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
@@ -160,13 +159,6 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
   readonly depsUpgradeOptions?: UpgradeDependenciesOptions;
 
   /**
-   * Options for mergify
-   *
-   * @default - default options
-   */
-  readonly mergifyOptions?: MergifyOptions;
-
-  /**
    * Periodically submits a pull request for projen upgrades (executes `yarn
    * projen:upgrade`).
    *
@@ -219,17 +211,6 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    @default [ "0 6 * * *" ]
    */
   readonly projenUpgradeSchedule?: string[];
-
-  /**
-   * Execute `projen` as the first step of the `build` task to synthesize
-   * project files. This applies both to local builds and to CI builds.
-   *
-   * Disabling this feature is NOT RECOMMENDED and means that manual changes to
-   * synthesized project files will be persisted.
-   *
-   * @default true
-   */
-  readonly projenDuringBuild?: boolean;
 
   /**
    * Defines an .npmignore file. Normally this is only needed for libraries that
@@ -289,6 +270,11 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * @default - default options
    */
   readonly projenrcJsOptions?: ProjenrcOptions;
+
+  /**
+   * Options for `Bundler`.
+   */
+  readonly bundlerOptions?: BundlerCommonOptions;
 }
 
 /**
@@ -329,21 +315,6 @@ export class NodeProject extends GitHubProject {
    * @deprecated use `package.entrypoint`
    */
   public get entrypoint(): string { return this.package.entrypoint; }
-
-  /**
-   * Compiles the code. By default for node.js projects this task is empty.
-   */
-  public readonly compileTask: Task;
-
-  /**
-   * Tests the code.
-   */
-  public readonly testTask: Task;
-
-  /**
-   * The task responsible for a full release build. It spawns: compile + test + release + package
-   */
-  public readonly buildTask: Task;
 
   /**
    * Automatic PR merges.
@@ -415,16 +386,13 @@ export class NodeProject extends GitHubProject {
   public readonly jest?: Jest;
 
   /**
-   * The command to use in order to run the projen CLI.
-   */
-  public get projenCommand(): string { return this.package.projenCommand; }
-
-  /**
    * @deprecated use `package.addField(x, y)`
    */
   public get manifest() {
     return this.package.manifest;
   }
+
+  public readonly bundler: Bundler;
 
   private readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
@@ -451,26 +419,6 @@ export class NodeProject extends GitHubProject {
     // add PATH for all tasks which includes the project's npm .bin list
     this.tasks.addEnvironment('PATH', '$(npx -c "node -e \\\"console.log(process.env.PATH)\\\"")');
 
-    this.compileTask = this.addTask('compile', {
-      description: 'Only compile',
-    });
-
-    this.testTask = this.addTask('test', {
-      description: 'Run tests',
-    });
-
-    this.buildTask = this.addTask('build', {
-      description: 'Full release build (test+compile)',
-    });
-
-    // first, execute projen as the first thing during build
-    if (options.projenDuringBuild ?? true) {
-      // skip for sub-projects (i.e. "parent" is defined) since synthing the
-      // root project will include the subprojects.
-      if (!this.parent) {
-        this.buildTask.exec(this.projenCommand);
-      }
-    }
 
     this.addLicense(options);
 
@@ -676,6 +624,10 @@ export class NodeProject extends GitHubProject {
           distTag: this.package.npmDistTag,
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,
+          codeArtifactOptions: {
+            accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret,
+            secretAccessKeySecret: options.codeArtifactOptions?.secretAccessKeySecret,
+          },
         });
       }
 
@@ -779,6 +731,9 @@ export class NodeProject extends GitHubProject {
     if (projenrcJs) {
       new Projenrc(this, options.projenrcJsOptions);
     }
+
+    // add a bundler component - this enables things like Lambda bundling and in the future web bundling.
+    this.bundler = new Bundler(this, options.bundlerOptions);
   }
 
   public addBins(bins: Record<string, string>) {
@@ -828,16 +783,6 @@ export class NodeProject extends GitHubProject {
   public addTestCommand(...commands: string[]) {
     for (const c of commands) {
       this.testTask.exec(c);
-    }
-  }
-
-  /**
-   * DEPRECATED
-   * @deprecated use `project.buildTask.exec()`
-   */
-  public addBuildCommand(...commands: string[]) {
-    for (const c of commands) {
-      this.buildTask.exec(c);
     }
   }
 

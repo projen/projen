@@ -1,6 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-import decamelize = require('decamelize');
-
+import { snake } from 'case';
 import { Component } from '../component';
 import { kebabCaseKeys } from '../util';
 import { YamlFile } from '../yaml';
@@ -126,7 +124,7 @@ function snakeCaseKeys<T = unknown>(obj: T): T {
     if (typeof v === 'object' && v != null) {
       v = snakeCaseKeys(v);
     }
-    result[decamelize(k)] = v;
+    result[snake(k)] = v;
   }
   return result as any;
 }

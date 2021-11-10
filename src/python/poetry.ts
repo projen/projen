@@ -14,7 +14,6 @@ import { PythonProject } from './python-project';
  */
 export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPythonPackaging {
   public readonly installTask: Task;
-  public readonly packageTask: Task;
   public readonly publishTask: Task;
 
   /**
@@ -33,10 +32,7 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
     this.project.tasks.addEnvironment('VIRTUAL_ENV', '$(poetry env info -p)');
     this.project.tasks.addEnvironment('PATH', '$(echo $(poetry env info -p)/bin:$PATH)');
 
-    this.packageTask = project.addTask('package', {
-      description: 'Creates source archive and wheel for distribution.',
-      exec: 'poetry build',
-    });
+    project.packageTask.exec('poetry build');
 
     this.publishTestTask = project.addTask('publish:test', {
       description: 'Uploads the package against a test PyPI endpoint.',

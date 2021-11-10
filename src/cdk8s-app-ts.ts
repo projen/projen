@@ -194,12 +194,11 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
     this.gitignore.include('cdk8s.yaml');
 
     // add synth to the build
-    this.buildTask.spawn(synth);
+    this.postCompileTask.spawn(synth);
 
     if (options.sampleCode ?? true) {
       new SampleCode(this);
     }
-
   }
 
 }

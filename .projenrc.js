@@ -18,7 +18,7 @@ const project = new JsiiProject({
     'yaml',
     'fs-extra',
     'yargs',
-    'decamelize',
+    'case',
     'glob@^7',
     'semver',
     'chalk',
@@ -110,7 +110,7 @@ const macros = project.addTask('readme-macros');
 macros.exec('mv README.md README.md.bak');
 macros.exec('cat README.md.bak | markmac > README.md');
 macros.exec('rm README.md.bak');
-project.buildTask.spawn(macros);
+project.postCompileTask.spawn(macros);
 
 new JsonFile(project, '.markdownlint.json', {
   obj: {

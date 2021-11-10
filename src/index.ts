@@ -23,6 +23,8 @@ export * from './node-project';
 export * from './object-file';
 export * from './option-hints';
 export * from './project';
+export * from './project-build';
+export * from './projects';
 export * from './readme';
 export * from './sample-file';
 export * from './semver';
@@ -49,3 +51,4 @@ export * as typescript from './typescript/index'; // <-- we also have typescript
 export * as javascript from './javascript';
 export * as release from './release';
 export * as git from './git';
+export * as awscdk from './awscdk';

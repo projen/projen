@@ -210,7 +210,7 @@ export class NextComponent extends Component {
       exec: 'next dev',
     });
 
-    project.buildTask.exec('next build');
+    project.compileTask.exec('next build');
 
     project.addTask('export', {
       description: 'Exports the application for production deployment',

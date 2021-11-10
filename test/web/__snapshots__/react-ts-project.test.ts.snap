@@ -366,28 +366,40 @@ tsconfig.tsbuildinfo
     },
     "tasks": Object {
       "build": Object {
-        "description": "Full release build (test+compile)",
+        "description": "Full release build",
         "name": "build",
         "steps": Array [
           Object {
-            "exec": "npx projen",
+            "spawn": "default",
           },
           Object {
-            "spawn": "test",
+            "spawn": "pre-compile",
           },
           Object {
             "spawn": "compile",
           },
           Object {
-            "exec": "react-scripts build",
+            "spawn": "post-compile",
+          },
+          Object {
+            "spawn": "test",
+          },
+          Object {
+            "spawn": "package",
           },
         ],
       },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
+        "steps": Array [
+          Object {
+            "exec": "react-scripts build",
+          },
+        ],
       },
       "default": Object {
+        "description": "Synthesize project files",
         "name": "default",
         "steps": Array [
           Object {
@@ -412,6 +424,18 @@ tsconfig.tsbuildinfo
             "exec": "react-scripts eject",
           },
         ],
+      },
+      "package": Object {
+        "description": "Creates the distribution package",
+        "name": "package",
+      },
+      "post-compile": Object {
+        "description": "Runs after successful compilation",
+        "name": "post-compile",
+      },
+      "pre-compile": Object {
+        "description": "Prepare the project for compilation",
+        "name": "pre-compile",
       },
       "test": Object {
         "description": "Run tests",
@@ -751,6 +775,9 @@ tsconfig.tsbuildinfo
       "default": "npx projen default",
       "dev": "npx projen dev",
       "eject": "npx projen eject",
+      "package": "npx projen package",
+      "post-compile": "npx projen post-compile",
+      "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "test": "npx projen test",
       "upgrade": "npx projen upgrade",

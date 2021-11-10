@@ -8,7 +8,6 @@ import { SetupPy } from './setuppy';
  * Manages packaging through setuptools with a setup.py script.
  */
 export class Setuptools extends Component implements IPythonPackaging {
-  public readonly packageTask: Task;
   public readonly publishTask: Task;
 
   /**
@@ -22,10 +21,7 @@ export class Setuptools extends Component implements IPythonPackaging {
     project.addDevDependency('wheel@0.36.2');
     project.addDevDependency('twine@3.3.0');
 
-    this.packageTask = project.addTask('package', {
-      description: 'Creates source archive and wheel for distribution.',
-      exec: 'python setup.py sdist bdist_wheel',
-    });
+    project.packageTask.exec('python setup.py sdist bdist_wheel');
 
     this.publishTestTask = project.addTask('publish:test', {
       description: 'Uploads the package against a test PyPI endpoint.',
