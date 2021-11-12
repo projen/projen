@@ -2121,9 +2121,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.3.886:
-  version "1.3.894"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.894.tgz#54554ecb40d40ddac7241c4a42887e86180015d8"
-  integrity sha512-WY8pA4irAZ4cm/Pr7YFPtPLVqj3nU6d0SbfoHF6M7HZNONfPdAnYAarumqQ75go2LuN72uO9wGuCEqnfya/ytg==
+  version "1.3.895"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.895.tgz#9b0f8f2e32d8283bbb200156fd5d8dfd775f31ed"
+  integrity sha512-9Ww3fB8CWctjqHwkOt7DQbMZMpal2x2reod+/lU4b9axO1XJEDUpPMBxs7YnjLhhqpKXIIB5SRYN/B4K0QpvyQ==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -4355,10 +4355,10 @@ map-obj@^4.0.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-markmac@^0.1.86:
-  version "0.1.86"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.86.tgz#41de7047867481770cda6fe5508faab4943fd935"
-  integrity sha512-ceC3Nqmy2gINivt5TIHuQk7iVGEUaCavN8+8ZfFTuk7hAYJ1YAYbMFzNzdycQ9z3Q8ih6/ePX+MptcNbJjxB5g==
+markmac@^0.1.87:
+  version "0.1.87"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.87.tgz#5283d1d66c246d1d79312a7879d2d3b16f6c9e29"
+  integrity sha512-6kvMLITAfcheKhY34snMepVBjsKk7Y3MbV7nLaORt/btGyKhWfTlsvlO03ASLztUF48IoAOyj8co8pooyEpimQ==
 
 mdurl@~1.0.1:
   version "1.0.1"
