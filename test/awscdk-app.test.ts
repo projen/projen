@@ -46,8 +46,8 @@ describe('lambda functions', () => {
     // THEN
     const snapshot = synthSnapshot(project);
     expect(snapshot['src/my-function.ts']).not.toBeUndefined();
-    expect(snapshot['.projen/tasks.json'].tasks['bundle:my'].steps).toStrictEqual([
-      { exec: 'esbuild --bundle src/my.lambda.ts --target="node10" --platform="node" --outfile="assets/my/index.js" --external:foo --external:bar --sourcemap' },
+    expect(snapshot['.projen/tasks.json'].tasks['bundle:src/my'].steps).toStrictEqual([
+      { exec: 'esbuild --bundle src/my.lambda.ts --target="node10" --platform="node" --outfile="assets/src/my/index.js" --external:foo --external:bar --sourcemap' },
     ]);
   });
 
@@ -67,6 +67,6 @@ describe('lambda functions', () => {
     // THEN
     const snapshot = synthSnapshot(project);
     expect(snapshot['src/my-function.ts']).toBeUndefined();
-    expect(snapshot['.projen/tasks.json'].tasks['bundle:my']).toBeUndefined();
+    expect(snapshot['.projen/tasks.json'].tasks['bundle:src/my']).toBeUndefined();
   });
 });

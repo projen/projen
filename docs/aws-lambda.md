@@ -74,8 +74,10 @@ new AwsCdkConstructLibrary({
     // target node.js runtime
     runtime: awscdk.LambdaRuntime.NODEJS_14_X,
 
-    // list of node modules to exclude from the bundle
-    externals: [ 'aws-sdk' ]
+    bundlingOptions: {
+      // list of node modules to exclude from the bundle
+      externals: [ 'aws-sdk' ]
+    }
   }
 });
 ```
@@ -95,8 +97,6 @@ const p = new AwsCdkTypeScriptApp({
 });
 
 new awscdk.LambdaFunction(p, {
-  srcdir: p.srcdir,
-  libdir: p.libdir,
   entrypoint: 'src/foo.lambda.ts', // .lambda.ts extension is still required
   runtime: aws_lambda.Runtime.NODEJS_12_X,
 });

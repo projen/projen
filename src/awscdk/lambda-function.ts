@@ -37,11 +37,16 @@ export interface LambdaFunctionOptions extends LambdaFunctionCommonOptions {
   /**
    * A path from the project root directory to a TypeScript file which contains
    * the AWS Lambda handler entrypoint (exports a `handler` function).
+   *
+   * This is relative to the root directory of the project.
+   *
+   * @example "src/subdir/foo.lambda.ts"
    */
   readonly entrypoint: string;
 
   /**
-   * The name of the generated TypeScript source file.
+   * The name of the generated TypeScript source file. This file should also be
+   * under the source tree.
    *
    * @default - The name of the entrypoint file, with the `-function.ts` suffix
    * instead of `.lambda.ts`.
@@ -55,11 +60,6 @@ export interface LambdaFunctionOptions extends LambdaFunctionCommonOptions {
    * the extension `Function` (e.g. `ResizeImageFunction`).
    */
   readonly constructName?: string;
-
-  /**
-   * Project source directory tree (where .ts files live).
-   */
-  readonly srcdir: string;
 }
 
 /**
@@ -78,9 +78,8 @@ export interface LambdaFunctionOptions extends LambdaFunctionCommonOptions {
  * @example
  *
  * new LambdaFunction(myProject, {
- *   entrypoint: 'src/foo.lambda.ts',
  *   srcdir: myProject.srcdir,
- *   libdir: myProject.libdir,
+ *   entrypoint: 'src/foo.lambda.ts',
  * });
  */
 export class LambdaFunction extends Component {
@@ -100,17 +99,12 @@ export class LambdaFunction extends Component {
 
     const runtime = options.runtime ?? LambdaRuntime.NODEJS_14_X;
 
-    // make sure entrypoint is within the source directory
-    if (!options.entrypoint.startsWith(options.srcdir)) {
-      throw new Error(`${options.entrypoint} must be under ${options.srcdir}`);
-    }
-
     // allow Lambda handler code to import dev-deps since they are only needed
     // during bundling
     const eslint = Eslint.of(project);
     eslint?.allowDevDeps(options.entrypoint);
 
-    const entrypoint = relative(options.srcdir, options.entrypoint);
+    const entrypoint = options.entrypoint;
 
     if (!entrypoint.endsWith(TYPESCRIPT_LAMBDA_EXT)) {
       throw new Error(`${entrypoint} must have a ${TYPESCRIPT_LAMBDA_EXT} extension`);
@@ -118,9 +112,8 @@ export class LambdaFunction extends Component {
 
     const basePath = join(dirname(entrypoint), basename(entrypoint, TYPESCRIPT_LAMBDA_EXT));
     const constructFile = options.constructFile ?? `${basePath}-function.ts`;
-    const constructFilePath = join(options.srcdir, constructFile);
 
-    if (extname(constructFilePath) !== '.ts') {
+    if (extname(constructFile) !== '.ts') {
       throw new Error(`Construct file name "${constructFile}" must have a .ts extension`);
     }
 
@@ -128,8 +121,7 @@ export class LambdaFunction extends Component {
     const constructName = options.constructName ?? pascal(basename(basePath)) + 'Function';
     const propsType = `${constructName}Props`;
 
-    const entry = join(options.srcdir, entrypoint);
-    const bundle = bundler.addBundle(basePath, entry, {
+    const bundle = bundler.addBundle(entrypoint, {
       target: runtime.esbuildTarget,
       platform: runtime.esbuildPlatform,
       ...options.bundlingOptions,
@@ -142,10 +134,10 @@ export class LambdaFunction extends Component {
     //  - outfileAbs => `/project-outdir/assets/foo/bar/baz/foo-function/index.js`
     //  - constructAbs => `/project-outdir/src/foo/bar/baz/foo-function.ts`
     const outfileAbs = join(project.outdir, bundle.outfile);
-    const constructAbs = join(project.outdir, constructFilePath);
+    const constructAbs = join(project.outdir, constructFile);
     const relativeOutfile = relative(dirname(constructAbs), dirname(outfileAbs));
 
-    const src = new SourceCode(project, constructFilePath);
+    const src = new SourceCode(project, constructFile);
     src.line(`// ${FileBase.PROJEN_MARKER}`);
     src.line('import * as path from \'path\';');
     src.line('import * as lambda from \'@aws-cdk/aws-lambda\';');
@@ -172,7 +164,7 @@ export class LambdaFunction extends Component {
     src.close('}');
     src.close('}');
 
-    this.project.logger.verbose(`${basePath}: construct "${constructName}" generated under "${constructFilePath}"`);
+    this.project.logger.verbose(`${basePath}: construct "${constructName}" generated under "${constructFile}"`);
     this.project.logger.verbose(`${basePath}: bundle task "${bundle.bundleTask.name}"`);
     if (bundle.watchTask) {
       this.project.logger.verbose(`${basePath}: bundle watch task "${bundle.watchTask.name}"`);

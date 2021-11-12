@@ -1,5 +1,6 @@
 import { NodeProject } from '../../src';
 import { Bundler } from '../../src/javascript';
+import { renderBundleName } from '../../src/javascript/util';
 import { Testing } from '../../src/testing';
 
 test('node projects have a bundler', () => {
@@ -28,17 +29,16 @@ test('bundler.addBundle() defines a bundle', () => {
     defaultReleaseBranch: 'main',
   });
 
-  const hello = p.bundler.addBundle('hello', {
-    entrypoint: './src/index.ts',
+  const hello = p.bundler.addBundle('./src/hello.ts', {
     platform: 'node',
     target: 'node12',
   });
 
-  const world = p.bundler.addBundle('foo/world', {
-    entrypoint: './src/foo/world.ts',
+  const world = p.bundler.addBundle('./src/foo/world.ts', {
     platform: 'node',
     target: 'node14',
     externals: ['aws-sdk', 'request'],
+    sourcemap: true,
   });
 
   // THEN
@@ -64,10 +64,10 @@ test('bundler.addBundle() defines a bundle', () => {
   }]);
 
   expect(tasks['bundle:hello']).toStrictEqual({
-    description: 'Create a JavaScript bundle from ./src/index.ts',
+    description: 'Create a JavaScript bundle from ./src/hello.ts',
     name: 'bundle:hello',
     steps: [
-      { exec: 'esbuild --bundle ./src/index.ts --target="node12" --platform="node" --outfile="assets/hello/index.js" --sourcemap' },
+      { exec: 'esbuild --bundle ./src/hello.ts --target="node12" --platform="node" --outfile="assets/hello/index.js"' },
     ],
   });
 
@@ -86,8 +86,7 @@ test('no specific esbuild version by default', () => {
     defaultReleaseBranch: 'main',
   });
 
-  p.bundler.addBundle('hello', {
-    entrypoint: './src/index.ts',
+  p.bundler.addBundle('./src/index.ts', {
     platform: 'node',
     target: 'node12',
   });
@@ -110,8 +109,7 @@ test('esbuildVersion can be used to specify version requirement for "esbuild"', 
     },
   });
 
-  p.bundler.addBundle('hello', {
-    entrypoint: './src/index.ts',
+  p.bundler.addBundle('./src/index.ts', {
     platform: 'node',
     target: 'node12',
   });
@@ -132,8 +130,7 @@ test('sourcemaps can be disabled', () => {
     defaultReleaseBranch: 'main',
   });
 
-  p.bundler.addBundle('hello', {
-    entrypoint: './src/index.ts',
+  p.bundler.addBundle('./src/hello.ts', {
     platform: 'node',
     target: 'node12',
     sourcemap: false,
@@ -143,11 +140,11 @@ test('sourcemaps can be disabled', () => {
   const tasks = snapshot['.projen/tasks.json'].tasks;
 
   expect(tasks['bundle:hello']).toStrictEqual({
-    description: 'Create a JavaScript bundle from ./src/index.ts',
+    description: 'Create a JavaScript bundle from ./src/hello.ts',
     name: 'bundle:hello',
     steps: [
       {
-        exec: 'esbuild --bundle ./src/index.ts --target="node12" --platform="node" --outfile="assets/hello/index.js"',
+        exec: 'esbuild --bundle ./src/hello.ts --target="node12" --platform="node" --outfile="assets/hello/index.js"',
       },
     ],
   });
@@ -160,8 +157,7 @@ describe('bundle:watch', () => {
       defaultReleaseBranch: 'main',
     });
 
-    p.bundler.addBundle('hello', {
-      entrypoint: './src/index.ts',
+    p.bundler.addBundle('./src/hello.ts', {
       platform: 'node',
       target: 'node12',
     });
@@ -170,11 +166,11 @@ describe('bundle:watch', () => {
     const tasks = snapshot['.projen/tasks.json'].tasks;
 
     expect(tasks['bundle:hello:watch']).toStrictEqual({
-      description: 'Continuously update the JavaScript bundle from ./src/index.ts',
+      description: 'Continuously update the JavaScript bundle from ./src/hello.ts',
       name: 'bundle:hello:watch',
       steps: [
         {
-          exec: 'esbuild --bundle ./src/index.ts --target="node12" --platform="node" --outfile="assets/hello/index.js" --sourcemap --watch',
+          exec: 'esbuild --bundle ./src/hello.ts --target="node12" --platform="node" --outfile="assets/hello/index.js" --watch',
         },
       ],
     });
@@ -186,8 +182,7 @@ describe('bundle:watch', () => {
       defaultReleaseBranch: 'main',
     });
 
-    p.bundler.addBundle('hello', {
-      entrypoint: './src/index.ts',
+    p.bundler.addBundle('./src/index.ts', {
       platform: 'node',
       target: 'node12',
       watchTask: false,
@@ -205,16 +200,21 @@ test('bundledir controls the root output directory', () => {
     name: 'test',
     defaultReleaseBranch: 'main',
     bundlerOptions: {
-      bundledir: 'resources',
+      assetsDir: 'resources',
     },
   });
 
-  const bundle = p.bundler.addBundle('hello', {
-    entrypoint: './src/index.ts',
+  const bundle = p.bundler.addBundle('./src/hello.ts', {
     platform: 'node',
     target: 'node12',
     watchTask: false,
   });
 
   expect(bundle.outfile).toStrictEqual('resources/hello/index.js');
+});
+
+test('renderBundleName', () => {
+  expect(renderBundleName('src/foo.lambda.ts')).toBe('foo.lambda');
+  expect(renderBundleName('nosrc/foo.lambda.ts')).toBe('nosrc/foo.lambda');
+  expect(renderBundleName('src/bar/foo.lambda.ts')).toBe('bar/foo.lambda');
 });

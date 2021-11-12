@@ -3,6 +3,7 @@ import { Component } from '../component';
 import { DependencyType } from '../deps';
 import { Project } from '../project';
 import { Task } from '../tasks';
+import { renderBundleName } from './util';
 
 /**
  * Options for `Bundler`.
@@ -19,7 +20,7 @@ export interface BundlerOptions {
     * Output directory for all bundles.
     * @default "assets"
     */
-  readonly assetsdir?: string;
+  readonly assetsDir?: string;
 
   /**
     * Default bundling options. These are used unless explicitly set when calling `addBundle()`.
@@ -63,7 +64,7 @@ export class Bundler extends Component {
     super(project);
 
     this.esbuildVersion = options.esbuildVersion;
-    this.bundledir = options.assetsdir ?? 'assets';
+    this.bundledir = options.assetsDir ?? 'assets';
     this.defaults = options.defaults ?? {};
 
     const ignoreEntry = `/${this.bundledir}/`;
@@ -98,7 +99,8 @@ export class Bundler extends Component {
    * `bundle:$name`).
    * @param options Bundling options
    */
-  public addBundle(name: string, entrypoint: string, options: AddBundleOptions): Bundle {
+  public addBundle(entrypoint: string, options: AddBundleOptions): Bundle {
+    const name = renderBundleName(entrypoint);
 
     // apply defaults and then override with options.
     const resolvedOptions = {
@@ -223,3 +225,4 @@ export interface AddBundleOptions extends BundlingOptions {
     */
   readonly platform: string;
 }
+

@@ -36,7 +36,6 @@ export class AutoDiscover extends Component {
 
     for (const entrypoint of entrypoints) {
       new LambdaFunction(this.project, {
-        srcdir: options.srcdir,
         entrypoint: join(options.srcdir, entrypoint),
         ...options.lambdaOptions,
       });

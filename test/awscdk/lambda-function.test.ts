@@ -15,13 +15,12 @@ describe('bundled function', () => {
       name: 'hello',
       defaultReleaseBranch: 'main',
       bundlerOptions: {
-        bundledir: 'my-assets',
+        assetsDir: 'my-assets',
       },
     });
 
     new awscdk.LambdaFunction(project, {
       entrypoint: join('src', 'hello.lambda.ts'),
-      srcdir: project.srcdir,
     });
 
     const snapshot = Testing.synth(project);
@@ -70,16 +69,7 @@ test('fails if entrypoint does not have the .lambda suffix', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
   expect(() => new awscdk.LambdaFunction(project, {
     entrypoint: join('src', 'hello-no-lambda.ts'),
-    srcdir: project.srcdir,
   })).toThrow('hello-no-lambda.ts must have a .lambda.ts extension');
-});
-
-test('fails if entrypoint is not under the source tree', () => {
-  const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
-  expect(() => new awscdk.LambdaFunction(project, {
-    entrypoint: join('boom', 'hello-no-lambda.ts'),
-    srcdir: project.srcdir,
-  })).toThrow('boom/hello-no-lambda.ts must be under src');
 });
 
 test('constructFile and constructName can be used to customize the generated construct', () => {
@@ -89,7 +79,6 @@ test('constructFile and constructName can be used to customize the generated con
     entrypoint: join('src', 'hello.lambda.ts'),
     constructFile: 'my-construct.ts',
     constructName: 'MyConstruct',
-    srcdir: project.srcdir,
   });
 
   const snapshot = Testing.synth(project);
@@ -103,7 +92,6 @@ test('runtime can be used to customize the lambda runtime and esbuild target', (
   new awscdk.LambdaFunction(project, {
     entrypoint: join('src', 'hello.lambda.ts'),
     runtime: awscdk.LambdaRuntime.NODEJS_12_X,
-    srcdir: project.srcdir,
   });
 
   const snapshot = Testing.synth(project);
@@ -123,8 +111,8 @@ test('runtime can be used to customize the lambda runtime and esbuild target', (
 
 test('eslint allows handlers to import dev dependencies', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
-  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts'), srcdir: project.srcdir });
-  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts'), srcdir: project.srcdir });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts') });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts') });
 
   const snapshot = Testing.synth(project);
   expect(snapshot['.eslintrc.json'].rules['import/no-extraneous-dependencies']).toStrictEqual([
@@ -138,8 +126,8 @@ test('eslint allows handlers to import dev dependencies', () => {
 
 test('esbuild dependency is added', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
-  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts'), srcdir: project.srcdir });
-  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts'), srcdir: project.srcdir });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts') });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts') });
 
   const snapshot = Testing.synth(project);
   const deps = snapshot['.projen/deps.json'].dependencies;
@@ -148,8 +136,8 @@ test('esbuild dependency is added', () => {
 
 test('multiple functions', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
-  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts'), srcdir: project.srcdir });
-  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts'), srcdir: project.srcdir });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts') });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts') });
 
   const snapshot = Testing.synth(project);
   expect(snapshot['src/hello-function.ts']).toMatchSnapshot();
