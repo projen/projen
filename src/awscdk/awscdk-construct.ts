@@ -10,7 +10,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   /**
    * Minimum target version this library is tested against.
    *
-   * @default "1.129.0"
+   * @default "2.0.0"
    * @featured
    */
   readonly cdkVersion: string;
@@ -23,9 +23,8 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
    * - For CDK 2.x, the default is "10.0.5"
    * - Otherwise, the default is "*"
    *
-   * @default - When the default behavior is used, the dependency on `constructs` will only
-   * be added as a `peerDependency`. Otherwise, a `devDependency` will also be
-   * added, set to the exact version configrued here.
+   * @default - When the default behavior is used, the dependency on `constructs` will
+   * be added as both a `peerDependency` and a `devDependency`.
    */
   readonly constructsVersion?: string;
 
@@ -42,6 +41,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   /**
    * Which AWS CDK modules (those that start with "@aws-cdk/") does this library
    * require when consumed?
+   *
    * @featured
    */
   readonly cdkDependencies?: string[];
@@ -61,9 +61,21 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
 
   /**
    * Install the @aws-cdk/assert library?
-   * @default true
+   *
+   * @depricated - use cdkAssertions instead
+   * @default false
    */
   readonly cdkAssert?: boolean;
+
+  /**
+   * Install the @aws-cdk/assertions library?
+   *
+   * Only needed for CDK 1.x. If using CDK 2.x then
+   * assertions is already included in 'aws-cdk-lib'
+   *
+   * @default true
+   */
+  readonly cdkAssertions?: boolean;
 
   /**
    * AWS CDK modules required for testing.
@@ -120,31 +132,48 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
     if (!options.cdkVersion) {
       throw new Error('Required field cdkVersion is not specified.');
     }
-
     this.cdkVersion = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
+    const cdkMajorVersion = semver.minVersion(this.cdkVersion)?.major ?? 2;
+
     this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;
 
-    const cdkMajorVersion = semver.minVersion(this.cdkVersion)?.major ?? 1;
     if (options.constructsVersion) {
+      const constructsMajorVersion = semver.minVersion(options.constructsVersion)?.major;
+      if (constructsMajorVersion !== undefined &&
+        constructsMajorVersion < 10 && cdkMajorVersion === 2) {
+        throw new Error('CDK 2.x requires constructs version >= 10');
+      }
       this.addPeerDeps(`constructs@^${options.constructsVersion}`);
       this.addDevDeps(`constructs@${options.constructsVersion}`);
     } else if (cdkMajorVersion === 1) {
+      if (options.cdkAssert) {
+        this.addDevDeps(this.formatModuleSpec('@aws-cdk/assert'));
+      }
+      if (options.cdkAssertions ?? true) {
+        this.addDevDeps(this.formatModuleSpec('@aws-cdk/assertions'));
+      }
       // CDK 1.x is built on constructs 3.x
       this.addPeerDeps('constructs@^3.2.27');
-    } else if (cdkMajorVersion == 2) {
+    } else if (cdkMajorVersion === 2) {
       // CDK 2.x is built on constructs 10.x
       this.addPeerDeps('constructs@^10.0.5');
+      this.addDevDeps('constructs@^10.0.5');
+      this.addPeerDeps(`aws-cdk-lib@${this.cdkVersion}`);
+      this.addDevDeps(`aws-cdk-lib@${this.cdkVersion}`);
+
+      options.cdkDependencies?.forEach(dep => {
+        if (!dep.endsWith('-alpha')) {
+          throw new Error('cdkDependencies for CDK 2.x should only include alpha packages');
+        }
+      });
     } else {
       // Otherwise, let the user manage which version they use
       this.addPeerDeps('constructs');
     }
 
-    if (options.cdkAssert ?? true) {
-      this.addDevDeps(this.formatModuleSpec('@aws-cdk/assert'));
-    }
-
     this.addCdkDependencies(...options.cdkDependencies ?? []);
     this.addCdkTestDependencies(...options.cdkTestDependencies ?? []);
+
 
     const lambdaAutoDiscover = options.lambdaAutoDiscover ?? true;
     if (lambdaAutoDiscover) {

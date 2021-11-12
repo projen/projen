@@ -99,7 +99,7 @@ Object {
 const project = new awscdk.AwsCdkConstructLibrary({
   author: \\"My User Name\\",
   authorAddress: \\"my@user.email.com\\",
-  cdkVersion: \\"1.129.0\\",
+  cdkVersion: \\"2.0.0\\",
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
   repositoryUrl: \\"git@boom.com:foo/bar.git\\",
