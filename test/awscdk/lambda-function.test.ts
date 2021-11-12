@@ -56,27 +56,8 @@ describe('bundled function', () => {
     });
   });
 
-  test('spawns the bundle task as part of build', () => {
-    expect(tasks.build).toEqual({
-      description: 'Full release build',
-      name: 'build',
-      steps: [
-        { spawn: 'default' },
-      ],
-    });
-  });
-
   test('spawns the bundle task as part of pre-compilation', () => {
-    expect(tasks['pre-compile']).toEqual({
-      description: 'Prepare the project for compilation',
-      name: 'pre-compile',
-      steps: [
-        { spawn: 'bundle' },
-        { spawn: 'compile' },
-        { spawn: 'test' },
-        { spawn: 'package' },
-      ],
-    });
+    expect(tasks['pre-compile'].steps).toStrictEqual([{ spawn: 'bundle' }]);
   });
 
   test('includes the bundle directory inside the node package but not commit to source control', () => {

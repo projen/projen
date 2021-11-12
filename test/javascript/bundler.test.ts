@@ -13,13 +13,13 @@ test('node projects have a bundler', () => {
   expect(p.deps.all.find(d => d.name === 'esbuild')).toBeUndefined(); // no "esbuild" dependency
 });
 
-test('The main "bundle" task is empty by default', () => {
+test('There is no bundle task by default', () => {
   const p = new NodeProject({
     name: 'test',
     defaultReleaseBranch: 'main',
   });
 
-  expect(p.tasks.all.find(t => t.name === 'bundle')?.steps.length).toBe(0);
+  expect(p.tasks.tryFind('bundle')).toBeUndefined();
 });
 
 test('bundler.addBundle() defines a bundle', () => {

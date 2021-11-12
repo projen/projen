@@ -71,19 +71,18 @@ export class Bundler extends Component {
   }
 
   /**
-   * The singleton "bundle" task of the project.
+   * Gets or creates the singleton "bundle" task of the project.
+   *
+   * If the project doesn't have a "bundle" task, it will be created and spawned
+   * during the pre-compile phase.
    */
   public get bundleTask(): Task {
     if (!this._task) {
       const dep = this.esbuildVersion ? `esbuild@${this.esbuildVersion}` : 'esbuild';
       this.project.deps.addDependency(dep, DependencyType.BUILD);
-
-      const task = this.project.tasks.tryFind('bundle');
-      if (!task) {
-        throw new Error('Could not find "bundle" task in project');
-      }
-
-      this._task = task;
+      this._task = this.project.tasks.addTask('bundle', {
+        description: 'Prepare assets',
+      });
       this.project.preCompileTask.spawn(this._task);
     }
 

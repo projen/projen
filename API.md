@@ -211,6 +211,7 @@ Name|Description
 [java.PluginOptions](#projen-java-pluginoptions)|Options for Maven plugins.
 [java.PomOptions](#projen-java-pomoptions)|Options for `Pom`.
 [java.ProjenrcOptions](#projen-java-projenrcoptions)|Options for `Projenrc`.
+[javascript.Bundle](#projen-javascript-bundle)|*No description*
 [javascript.BundleOptions](#projen-javascript-bundleoptions)|Options for bundling.
 [javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)|Common options for `Bundler`.
 [javascript.BundlerOptions](#projen-javascript-bundleroptions)|Options for `Bundler`.
@@ -5169,7 +5170,6 @@ new awscdk.AutoDiscover(project: Project, options: AutoDiscoverOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[awscdk.AutoDiscoverOptions](#projen-awscdk-autodiscoveroptions)</code>)  *No description*
-  * **libdir** (<code>string</code>)  Output directory (where .js files go). 
   * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
   * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for auto-discovery of AWS Lambda functions. __*Optional*__
 
@@ -5389,19 +5389,10 @@ new awscdk.LambdaFunction(project: Project, options: LambdaFunctionOptions)
   * **externals** (<code>Array<string></code>)  Names of modules which should not be included in the bundle. __*Default*__: by default, the "aws-sdk" module will be excluded from the bundle. Note that if you use this option you will need to add "aws-sdk" explicitly.
   * **runtime** (<code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code>)  The node.js version to target. __*Default*__: Runtime.NODEJS_14_X
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function). 
-  * **libdir** (<code>string</code>)  JavaScript output directory (where .js files go). 
   * **srcdir** (<code>string</code>)  Project source directory tree (where .ts files live). 
   * **constructFile** (<code>string</code>)  The name of the generated TypeScript source file. __*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
   * **constructName** (<code>string</code>)  The name of the generated `lambda.Function` subclass. __*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**bundleTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The bundle task for this function.
 
 
 
@@ -6421,6 +6412,8 @@ Name | Type | Description
 
 Adds support for bundling JavaScript applications and dependencies into a single file.
 
+In the future, this will also supports bundling websites.
+
 __Submodule__: javascript
 
 __Extends__: [Component](#projen-component)
@@ -6436,6 +6429,7 @@ new javascript.Bundler(project: Project, options?: BundlerOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  *No description*
+  * **bundledir** (<code>string</code>)  Output directory for all bundles. __*Default*__: "assets"
   * **esbuildVersion** (<code>string</code>)  The semantic version requirement for `esbuild`. __*Default*__: no specific version (implies latest)
 
 
@@ -6445,8 +6439,9 @@ new javascript.Bundler(project: Project, options?: BundlerOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**bundleTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Gets or creates the singleton "bundle" task of the project.
-**esbuildVersion**?🔹 | <code>string</code> | __*Optional*__
+**bundleTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The singleton "bundle" task of the project.
+**bundledir**🔹 | <code>string</code> | Root bundle directory.
+**esbuildVersion**?🔹 | <code>string</code> | The semantic version requirement for `esbuild` (if defined).<br/>__*Optional*__
 
 ### Methods
 
@@ -6456,13 +6451,12 @@ Name | Type | Description
 Adds a task to the project which bundles a specific entrypoint and all of its dependencies into a single javascript output file.
 
 ```ts
-addBundle(name: string, options: BundleOptions): Task
+addBundle(name: string, options: BundleOptions): Bundle
 ```
 
 * **name** (<code>string</code>)  The name of the artifact (the task will be named `bundle:$name`).
 * **options** (<code>[javascript.BundleOptions](#projen-javascript-bundleoptions)</code>)  Bundling options.
   * **entrypoint** (<code>string</code>)  The entrypoint of the code you wish to bundle. 
-  * **outfile** (<code>string</code>)  This option sets the output file name for the build operation. 
   * **platform** (<code>string</code>)  esbuild platform. 
   * **target** (<code>string</code>)  esbuild target. 
   * **externals** (<code>Array<string></code>)  You can mark a file or a package as external to exclude it from your build. __*Default*__: []
@@ -6470,7 +6464,7 @@ addBundle(name: string, options: BundleOptions): Task
   * **watchTask** (<code>boolean</code>)  In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag. __*Default*__: true
 
 __Returns__:
-* <code>[tasks.Task](#projen-tasks-task)</code>
+* <code>[javascript.Bundle](#projen-javascript-bundle)</code>
 
 #### *static* of(project)🔹 <a id="projen-javascript-bundler-of"></a>
 
@@ -11680,7 +11674,6 @@ Options for `AutoDiscover`.
 
 Name | Type | Description 
 -----|------|-------------
-**libdir**🔹 | <code>string</code> | Output directory (where .js files go).
 **srcdir**🔹 | <code>string</code> | Project source tree (relative to project output directory).
 **lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Options for auto-discovery of AWS Lambda functions.<br/>__*Optional*__
 
@@ -11803,7 +11796,6 @@ Options for `Function`.
 Name | Type | Description 
 -----|------|-------------
 **entrypoint**🔹 | <code>string</code> | A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function).
-**libdir**🔹 | <code>string</code> | JavaScript output directory (where .js files go).
 **srcdir**🔹 | <code>string</code> | Project source directory tree (where .ts files live).
 **constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
 **constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
@@ -12318,6 +12310,22 @@ Name | Type | Description
 
 
 
+## struct Bundle 🔹 <a id="projen-javascript-bundle"></a>
+
+__Obtainable from__: [Bundler](#projen-javascript-bundler).[addBundle](#projen-javascript-bundler#projen-javascript-bundler-addbundle)()
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**bundleTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The task that produces this bundle.
+**outfile**🔹 | <code>string</code> | Location of the output file (relative to project root).
+**watchTask**?🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The "watch" task for this bundle.<br/>__*Optional*__
+
+
+
 ## struct BundleOptions 🔹 <a id="projen-javascript-bundleoptions"></a>
 
 
@@ -12328,7 +12336,6 @@ Options for bundling.
 Name | Type | Description 
 -----|------|-------------
 **entrypoint**🔹 | <code>string</code> | The entrypoint of the code you wish to bundle.
-**outfile**🔹 | <code>string</code> | This option sets the output file name for the build operation.
 **platform**🔹 | <code>string</code> | esbuild platform.
 **target**🔹 | <code>string</code> | esbuild target.
 **externals**?🔹 | <code>Array<string></code> | You can mark a file or a package as external to exclude it from your build.<br/>__*Default*__: []
@@ -12346,6 +12353,7 @@ Common options for `Bundler`.
 
 Name | Type | Description 
 -----|------|-------------
+**bundledir**?🔹 | <code>string</code> | Output directory for all bundles.<br/>__*Default*__: "assets"
 **esbuildVersion**?🔹 | <code>string</code> | The semantic version requirement for `esbuild`.<br/>__*Default*__: no specific version (implies latest)
 
 
@@ -12359,6 +12367,7 @@ Options for `Bundler`.
 
 Name | Type | Description 
 -----|------|-------------
+**bundledir**?🔹 | <code>string</code> | Output directory for all bundles.<br/>__*Default*__: "assets"
 **esbuildVersion**?🔹 | <code>string</code> | The semantic version requirement for `esbuild`.<br/>__*Default*__: no specific version (implies latest)
 
 

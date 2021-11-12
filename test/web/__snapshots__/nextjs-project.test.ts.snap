@@ -333,6 +333,7 @@ jspm_packages/
 /dist/version.txt
 !/.mergify.yml
 !/.github/pull_request_template.md
+/assets/
 !/tailwind.config.json
 !/postcss.config.json
 /.next/
@@ -361,6 +362,7 @@ pull_request_rules:
 /dist/changelog.md
 /dist/version.txt
 /.mergify.yml
+!/assets/
 /tailwind.config.json
 /postcss.config.json
 /.next/
