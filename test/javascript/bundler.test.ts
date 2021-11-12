@@ -58,6 +58,11 @@ test('bundler.addBundle() defines a bundle', () => {
     ],
   });
 
+  // "compile" task spawns the aggregate "bundle" task
+  expect(tasks['pre-compile'].steps).toStrictEqual([{
+    spawn: 'bundle',
+  }]);
+
   expect(tasks['bundle:hello']).toStrictEqual({
     description: 'Create a JavaScript bundle from ./src/index.ts',
     name: 'bundle:hello',

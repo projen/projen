@@ -169,10 +169,10 @@ export class LambdaFunction extends Component {
     src.close('}');
 
 
-    this.project.logger.info(`${basePath}: construct "${constructName}" generated under "${constructFilePath}"`);
-    this.project.logger.info(`${basePath}: bundle task "${bundle.bundleTask.name}"`);
+    this.project.logger.verbose(`${basePath}: construct "${constructName}" generated under "${constructFilePath}"`);
+    this.project.logger.verbose(`${basePath}: bundle task "${bundle.bundleTask.name}"`);
     if (bundle.watchTask) {
-      this.project.logger.info(`${basePath}: bundle watch task "${bundle.watchTask.name}"`);
+      this.project.logger.verbose(`${basePath}: bundle watch task "${bundle.watchTask.name}"`);
     }
   }
 }

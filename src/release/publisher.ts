@@ -10,6 +10,7 @@ const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
 const ARTIFACTS_DOWNLOAD_DIR = 'dist';
 const JSII_RELEASE_IMAGE = 'jsii/superchain:1-buster-slim-node14';
+const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
 
 /**
  * Options for `Publisher`.
@@ -183,6 +184,8 @@ export class Publisher extends Component {
    */
   public publishToNpm(options: NpmPublishOptions = {}) {
     const isGitHubPackages = options.registry?.startsWith(GITHUB_PACKAGES_REGISTRY);
+    const isAwsCodeArtifact = isAwsCodeArtifactRegistry(options.registry);
+    const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
 
     this.addPublishJob({
       name: 'npm',
@@ -198,7 +201,10 @@ export class Publisher extends Component {
         packages: isGitHubPackages ? JobPermission.WRITE : undefined,
       },
       workflowEnv: {
-        NPM_TOKEN: secret(defaultNpmToken(options.npmTokenSecret, options.registry)),
+        NPM_TOKEN: npmToken ? secret(npmToken) : undefined,
+        // if we are publishing to AWS CodeArtifact, pass AWS access keys that will be used to generate NPM_TOKEN using AWS CLI.
+        AWS_ACCESS_KEY_ID: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID') : undefined,
+        AWS_SECRET_ACCESS_KEY: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY') : undefined,
       },
     });
   }
@@ -476,6 +482,31 @@ export interface NpmPublishOptions {
    * @default - "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
    */
   readonly npmTokenSecret?: string;
+
+  /**
+   * Options for publishing npm package to AWS CodeArtifact.
+   *
+   * @default - undefined
+   */
+  readonly codeArtifactOptions?: CodeArtifactOptions;
+}
+
+export interface CodeArtifactOptions {
+  /**
+   * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
+   * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+   *
+   * @default "AWS_ACCESS_KEY_ID"
+   */
+  readonly accessKeyIdSecret?: string;
+
+  /**
+    * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
+    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+    *
+    * @default "AWS_SECRET_ACCESS_KEY"
+    */
+  readonly secretAccessKeySecret?: string;
 }
 
 /**
@@ -682,6 +713,15 @@ interface VersionArtifactOptions {
    * @example changelog.md
    */
   readonly changelogFile: string;
+}
+
+/**
+ * Evaluates if the `registryUrl` is a AWS CodeArtifact registry.
+ * @param registryUrl url of registry
+ * @returns true for AWS CodeArtifact
+ */
+export function isAwsCodeArtifactRegistry(registryUrl: string | undefined) {
+  return registryUrl && AWS_CODEARTIFACT_REGISTRY_REGEX.test(registryUrl);
 }
 
 /**

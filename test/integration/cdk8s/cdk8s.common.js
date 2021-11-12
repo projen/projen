@@ -27,9 +27,6 @@ exports.fixup = project => {
   // repo it means "compile"
   project.setScript('build', 'yarn compile');
 
-  project.buildTask.reset();
-  project.buildTask.spawn(project.compileTask);
-
   // // add "compile" after test because the test command deletes lib/ and we run tests *after* build in this repo.
   project.addTestCommand('yarn compile');
 

@@ -15,6 +15,7 @@ const project = new JsiiProject({
   ],
 
   bundledDeps: [
+    'conventional-changelog-config-spec',
     'yaml',
     'fs-extra',
     'yargs',
@@ -29,6 +30,7 @@ const project = new JsiiProject({
   ],
 
   devDeps: [
+    '@types/conventional-changelog-config-spec',
     '@types/fs-extra@^8',
     '@types/yargs',
     '@types/glob',
@@ -110,7 +112,7 @@ const macros = project.addTask('readme-macros');
 macros.exec('mv README.md README.md.bak');
 macros.exec('cat README.md.bak | markmac > README.md');
 macros.exec('rm README.md.bak');
-project.buildTask.spawn(macros);
+project.postCompileTask.spawn(macros);
 
 new JsonFile(project, '.markdownlint.json', {
   obj: {

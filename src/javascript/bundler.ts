@@ -84,6 +84,7 @@ export class Bundler extends Component {
       }
 
       this._task = task;
+      this.project.preCompileTask.spawn(this._task);
     }
 
     return this._task;

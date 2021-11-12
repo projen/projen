@@ -1,6 +1,5 @@
 import { Component } from '../component';
 import { SampleDir } from '../sample-file';
-import { Task } from '../tasks';
 import { PythonProject } from './python-project';
 
 export interface PytestOptions {
@@ -25,8 +24,6 @@ export interface PytestOptions {
 }
 
 export class Pytest extends Component {
-  public readonly testTask: Task;
-
   constructor(project: PythonProject, options: PytestOptions = {}) {
     super(project);
 
@@ -34,13 +31,10 @@ export class Pytest extends Component {
 
     project.addDevDependency(`pytest@${version}`);
 
-    this.testTask = project.addTask('test', {
-      description: 'Runs tests',
-      exec: [
-        'pytest',
-        ...(options.maxFailures ? [`--maxfail=${options.maxFailures}`] : []),
-      ].join(' '),
-    });
+    project.testTask.exec([
+      'pytest',
+      ...(options.maxFailures ? [`--maxfail=${options.maxFailures}`] : []),
+    ].join(' '));
 
     new SampleDir(project, 'tests', {
       files: {

@@ -1,6 +1,5 @@
 import { Component } from '../component';
 import { Project } from '../project';
-import { Task } from '../tasks';
 import { Pom } from './pom';
 
 /**
@@ -36,11 +35,6 @@ export interface MavenPackagingOptions {
  * Configures a maven project to produce a .jar archive with sources and javadocs.
  */
 export class MavenPackaging extends Component {
-  /**
-   * The "package" task.
-   */
-  public readonly task: Task;
-
   constructor(project: Project, pom: Pom, options: MavenPackagingOptions = {}) {
     super(project);
 
@@ -89,12 +83,12 @@ export class MavenPackaging extends Component {
     };
 
     const distdir = options.distdir ?? 'dist/java';
-    this.task = project.addTask('package', {
-      description: `Creates a java deployment package under ${distdir}`,
-      env,
-    });
-    this.task.exec(`mkdir -p ${distdir}`);
-    this.task.exec(`mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${distdir}`);
+
+    for (const [k, v] of Object.entries(env)) {
+      this.project.packageTask.env(k, v);
+    }
+    this.project.packageTask.exec(`mkdir -p ${distdir}`);
+    this.project.packageTask.exec(`mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${distdir}`);
 
     project.gitignore.exclude(distdir);
   }

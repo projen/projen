@@ -1,6 +1,5 @@
 import { Component } from '../component';
 import { Project } from '../project';
-import { Task } from '../tasks';
 import { Pom } from './pom';
 
 /**
@@ -26,8 +25,6 @@ export interface MavenCompileOptions {
  * Adds the maven-compiler plugin to a POM file and the `compile` task.
  */
 export class MavenCompile extends Component {
-  public readonly compileTask: Task;
-
   constructor(project: Project, pom: Pom, options: MavenCompileOptions = {}) {
     super(project);
 
@@ -40,9 +37,6 @@ export class MavenCompile extends Component {
       },
     });
 
-    this.compileTask = project.addTask('compile', {
-      description: 'Compile the main source files',
-      exec: 'mvn compiler:compile',
-    });
+    project.compileTask.exec('mvn compiler:compile');
   }
 }

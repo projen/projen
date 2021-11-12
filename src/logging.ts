@@ -1,12 +1,15 @@
 import * as chalk from 'chalk';
+import { IS_TEST_RUN } from './common';
+
+export const ICON = '👾'; //'✨';
 
 // disable logs if running inside a test
-let enabled = process.env.JEST_WORKER_ID ? false : true;
+let enabled = IS_TEST_RUN ? false : true;
 
 function log(isError: boolean, color: chalk.ChalkFunction, ...text: any[]) {
   // errors are always emitted, even if logs are disabled
   if (!enabled && !isError) { return; }
-  console.error(`🤖 ${color(...text)}`);
+  console.error(`${ICON} ${color(...text)}`);
 }
 
 export function debug(...text: any[]) {
