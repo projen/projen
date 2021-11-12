@@ -120,7 +120,7 @@ export class Bundler extends Component {
       args.push(`--external:${x}`);
     }
 
-    const sourcemap = resolvedOptions.sourcemap ?? true;
+    const sourcemap = resolvedOptions.sourcemap ?? false;
     if (sourcemap) {
       args.push('--sourcemap');
     }
@@ -191,7 +191,7 @@ export interface BundlingOptions {
   /**
    * Include a source map in the bundle.
    *
-   * @default true
+   * @default false
    */
   readonly sourcemap?: boolean;
 
