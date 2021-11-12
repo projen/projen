@@ -6,6 +6,7 @@ junit.xml
 /dist/changelog.md
 /dist/version.txt
 /.mergify.yml
+!/assets/
 /test/
 /tsconfig.dev.json
 /src/

@@ -6439,7 +6439,7 @@ new javascript.Bundler(project: Project, options?: BundlerOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**bundleTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The singleton "bundle" task of the project.
+**bundleTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Gets or creates the singleton "bundle" task of the project.
 **bundledir**🔹 | <code>string</code> | Root bundle directory.
 **esbuildVersion**?🔹 | <code>string</code> | The semantic version requirement for `esbuild` (if defined).<br/>__*Optional*__
 
