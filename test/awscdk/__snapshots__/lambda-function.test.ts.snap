@@ -22,7 +22,7 @@ export class HelloFunction extends lambda.Function {
       ...props,
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/hello/index.js', 'index.js')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello')),
     });
   }
 }"
@@ -50,7 +50,7 @@ export class WorldFunction extends lambda.Function {
       ...props,
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../../assets/subdir/world/index.js', 'index.js')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/subdir/world')),
     });
   }
 }"
@@ -78,7 +78,7 @@ export class JangyFunction extends lambda.Function {
       ...props,
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../../assets/subdir/jangy/index.js', 'index.js')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/subdir/jangy')),
     });
   }
 }"
@@ -196,7 +196,7 @@ export class HelloFunction extends lambda.Function {
       ...props,
       runtime: lambda.Runtime.NODEJS_14_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../my-assets/hello/index.js', 'index.js')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../my-assets/hello')),
     });
   }
 }"
@@ -224,7 +224,7 @@ export class MyConstruct extends lambda.Function {
       ...props,
       runtime: lambda.Runtime.NODEJS_14_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/hello/index.js', 'index.js')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello')),
     });
   }
 }"
@@ -252,7 +252,7 @@ export class HelloFunction extends lambda.Function {
       ...props,
       runtime: lambda.Runtime.NODEJS_14_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/hello/index.js', 'index.js')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello')),
     });
   }
 }"
@@ -280,7 +280,7 @@ export class WorldFunction extends lambda.Function {
       ...props,
       runtime: lambda.Runtime.NODEJS_14_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/world/index.js', 'index.js')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../assets/world')),
     });
   }
 }"

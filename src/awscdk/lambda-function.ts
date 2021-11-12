@@ -3,7 +3,7 @@ import { pascal } from 'case';
 import { Eslint, Project } from '..';
 import { Component } from '../component';
 import { FileBase } from '../file';
-import { Bundler } from '../javascript/bundler';
+import { Bundler, BundlingOptions } from '../javascript/bundler';
 import { SourceCode } from '../source-code';
 import { TYPESCRIPT_LAMBDA_EXT } from './internal';
 
@@ -20,13 +20,14 @@ export interface LambdaFunctionCommonOptions {
   readonly runtime?: LambdaRuntime;
 
   /**
-   * Names of modules which should not be included in the bundle.
+   * Bundling options for this AWS Lambda function.
    *
-   * @default - by default, the "aws-sdk" module will be excluded from the
-   * bundle. Note that if you use this option you will need to add "aws-sdk"
-   * explicitly.
+   * If not specified the default bundling options specified for the project
+   * `Bundler` instance will be used.
+   *
+   * @default - defaults
    */
-  readonly externals?: string[];
+  readonly bundlingOptions?: BundlingOptions;
 }
 
 /**
@@ -128,18 +129,21 @@ export class LambdaFunction extends Component {
     const propsType = `${constructName}Props`;
 
     const entry = join(options.srcdir, entrypoint);
-    const bundle = bundler.addBundle(basePath, {
-      entrypoint: entry,
+    const bundle = bundler.addBundle(basePath, entry, {
       target: runtime.esbuildTarget,
       platform: runtime.esbuildPlatform,
-      externals: options.externals ?? ['aws-sdk'],
+      ...options.bundlingOptions,
     });
 
-    // bundle.outfile => `./assets/foo/bar/baz/foo-function/index.js`
-    // constructFilePath => `./src/foo/bar/baz/foo-function.ts`
-
-    const outfile = join(project.outdir, bundle.outfile);
-    const relativeOutfile = relative(join(project.outdir, constructFilePath), outfile);
+    // calculate the relative path between the directory containing the
+    // generated construct source file to the directory containing the bundle
+    // index.js by resolving them as absolute paths first.
+    // e.g:
+    //  - outfileAbs => `/project-outdir/assets/foo/bar/baz/foo-function/index.js`
+    //  - constructAbs => `/project-outdir/src/foo/bar/baz/foo-function.ts`
+    const outfileAbs = join(project.outdir, bundle.outfile);
+    const constructAbs = join(project.outdir, constructFilePath);
+    const relativeOutfile = relative(dirname(constructAbs), dirname(outfileAbs));
 
     const src = new SourceCode(project, constructFilePath);
     src.line(`// ${FileBase.PROJEN_MARKER}`);
@@ -163,11 +167,10 @@ export class LambdaFunction extends Component {
     src.line('...props,');
     src.line(`runtime: lambda.Runtime.${runtime.functionRuntime},`);
     src.line('handler: \'index.handler\',');
-    src.line(`code: lambda.Code.fromAsset(path.join(__dirname, '${relativeOutfile}', '${basename(relativeOutfile)}')),`);
+    src.line(`code: lambda.Code.fromAsset(path.join(__dirname, '${relativeOutfile}')),`);
     src.close('});');
     src.close('}');
     src.close('}');
-
 
     this.project.logger.verbose(`${basePath}: construct "${constructName}" generated under "${constructFilePath}"`);
     this.project.logger.verbose(`${basePath}: bundle task "${bundle.bundleTask.name}"`);

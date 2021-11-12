@@ -25,24 +25,20 @@ export interface AutoDiscoverOptions {
  * the source directory of the project.
  */
 export class AutoDiscover extends Component {
-  private readonly options: AutoDiscoverOptions;
+
 
   constructor(project: Project, options: AutoDiscoverOptions) {
     super(project);
 
-    this.options = options;
-  }
-
-  public preSynthesize() {
     const entrypoints = glob.sync(`**/*${TYPESCRIPT_LAMBDA_EXT}`, {
-      cwd: join(this.project.outdir, this.options.srcdir),
+      cwd: join(this.project.outdir, options.srcdir),
     });
 
     for (const entrypoint of entrypoints) {
       new LambdaFunction(this.project, {
-        srcdir: this.options.srcdir,
-        entrypoint: join(this.options.srcdir, entrypoint),
-        ...this.options.lambdaOptions,
+        srcdir: options.srcdir,
+        entrypoint: join(options.srcdir, entrypoint),
+        ...options.lambdaOptions,
       });
     }
   }

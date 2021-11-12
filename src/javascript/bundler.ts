@@ -5,9 +5,9 @@ import { Project } from '../project';
 import { Task } from '../tasks';
 
 /**
- * Common options for `Bundler`.
+ * Options for `Bundler`.
  */
-export interface BundlerCommonOptions {
+export interface BundlerOptions {
   /**
    * The semantic version requirement for `esbuild`.
    *
@@ -16,16 +16,15 @@ export interface BundlerCommonOptions {
   readonly esbuildVersion?: string;
 
   /**
-   * Output directory for all bundles.
-   * @default "assets"
-   */
-  readonly bundledir?: string;
-}
+    * Output directory for all bundles.
+    * @default "assets"
+    */
+  readonly assetsdir?: string;
 
-/**
- * Options for `Bundler`.
- */
-export interface BundlerOptions extends BundlerCommonOptions {
+  /**
+    * Default bundling options. These are used unless explicitly set when calling `addBundle()`.
+    */
+  readonly defaults?: BundlingOptions;
 }
 
 /**
@@ -44,8 +43,6 @@ export class Bundler extends Component {
     return project.components.find(isBundler);
   }
 
-  private _task: Task | undefined;
-
   /**
    * The semantic version requirement for `esbuild` (if defined).
    */
@@ -56,6 +53,9 @@ export class Bundler extends Component {
    */
   public readonly bundledir: string;
 
+  private _task: Task | undefined;
+  private readonly defaults: BundlingOptions;
+
   /**
    * Creates a `Bundler`.
    */
@@ -63,7 +63,8 @@ export class Bundler extends Component {
     super(project);
 
     this.esbuildVersion = options.esbuildVersion;
-    this.bundledir = options.bundledir ?? 'assets';
+    this.bundledir = options.assetsdir ?? 'assets';
+    this.defaults = options.defaults ?? {};
 
     const ignoreEntry = `/${this.bundledir}/`;
     project.addGitIgnore(ignoreEntry);
@@ -97,39 +98,45 @@ export class Bundler extends Component {
    * `bundle:$name`).
    * @param options Bundling options
    */
-  public addBundle(name: string, options: BundleOptions): Bundle {
-    const outfile = join(this.bundledir, name, 'index.js');
+  public addBundle(name: string, entrypoint: string, options: AddBundleOptions): Bundle {
 
+    // apply defaults and then override with options.
+    const resolvedOptions = {
+      ...this.defaults,
+      ...options,
+    };
+
+    const outfile = join(this.bundledir, name, 'index.js');
     const args = [
       'esbuild',
       '--bundle',
-      options.entrypoint,
-      `--target="${options.target}"`,
-      `--platform="${options.platform}"`,
+      entrypoint,
+      `--target="${resolvedOptions.target}"`,
+      `--platform="${resolvedOptions.platform}"`,
       `--outfile="${outfile}"`,
     ];
 
-    for (const x of options.externals ?? []) {
+    for (const x of resolvedOptions.externals ?? []) {
       args.push(`--external:${x}`);
     }
 
-    const sourcemap = options.sourcemap ?? true;
+    const sourcemap = resolvedOptions.sourcemap ?? true;
     if (sourcemap) {
       args.push('--sourcemap');
     }
 
     const bundleTask = this.project.addTask(`bundle:${name}`, {
-      description: `Create a JavaScript bundle from ${options.entrypoint}`,
+      description: `Create a JavaScript bundle from ${entrypoint}`,
       exec: args.join(' '),
     });
 
     this.bundleTask.spawn(bundleTask);
 
     let watchTask;
-    const watch = options.watchTask ?? true;
+    const watch = resolvedOptions.watchTask ?? true;
     if (watch) {
       watchTask = this.project.addTask(`bundle:${name}:watch`, {
-        description: `Continuously update the JavaScript bundle from ${options.entrypoint}`,
+        description: `Continuously update the JavaScript bundle from ${entrypoint}`,
         exec: `${args.join(' ')} --watch`,
       });
     }
@@ -162,26 +169,7 @@ export interface Bundle {
 /**
  * Options for bundling.
  */
-export interface BundleOptions {
-  /**
-   * The entrypoint of the code you wish to bundle.
-   */
-  readonly entrypoint: string;
-
-  /**
-   * esbuild target.
-   *
-   * @example "node12"
-   */
-  readonly target: string;
-
-  /**
-   * esbuild platform.
-   *
-   * @example "node"
-   */
-  readonly platform: string;
-
+export interface BundlingOptions {
   /**
    * You can mark a file or a package as external to exclude it from your build.
    * Instead of being bundled, the import will be preserved (using require for
@@ -215,4 +203,23 @@ export interface BundleOptions {
    * @default true
    */
   readonly watchTask?: boolean;
+}
+
+/**
+ * Options for `addBundle()`.
+ */
+export interface AddBundleOptions extends BundlingOptions {
+  /**
+   * esbuild target.
+   *
+   * @example "node12"
+   */
+  readonly target: string;
+
+  /**
+    * esbuild platform.
+    *
+    * @example "node"
+    */
+  readonly platform: string;
 }

@@ -3,7 +3,7 @@ import { join } from 'path';
 import { awscdk } from '../src';
 import { AwsCdkConstructLibrary, AwsCdkConstructLibraryOptions } from '../src/awscdk-construct';
 import { NpmAccess } from '../src/node-package';
-import { synthSnapshot } from '../src/util/synth';
+import { mkdtemp, synthSnapshot } from '../src/util/synth';
 
 describe('constructs dependency selection', () => {
   test('user-selected', () => {
@@ -63,18 +63,19 @@ describe('constructs dependency selection', () => {
 describe('lambda functions', () => {
   test('are auto-discovered by default', () => {
     // GIVEN
+    const outdir = mkdtemp();
+    mkdirSync(join(outdir, 'src'));
+    writeFileSync(join(outdir, 'src', 'my.lambda.ts'), '// dummy');
+
     const project = new TestProject({
       cdkVersion: '1.100.0',
       libdir: 'liblib',
+      outdir: outdir,
       lambdaOptions: {
         runtime: awscdk.LambdaRuntime.NODEJS_10_X,
         externals: ['foo', 'bar'],
       },
     });
-
-    // WHEN
-    mkdirSync(join(project.outdir, project.srcdir));
-    writeFileSync(join(project.outdir, project.srcdir, 'my.lambda.ts'), '// dummy');
 
     // THEN
     const snapshot = synthSnapshot(project);

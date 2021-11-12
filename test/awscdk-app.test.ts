@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { awscdk } from '../src';
 import { AwsCdkTypeScriptApp } from '../src/awscdk-app-ts';
-import { synthSnapshot } from '../src/util/synth';
+import { mkdtemp, synthSnapshot } from '../src/util/synth';
 
 describe('cdkVersion is >= 2.0.0', () => {
   test('use "aws-cdk-lib" the constructs at ^10.0.5', () => {
@@ -25,20 +25,23 @@ describe('cdkVersion is >= 2.0.0', () => {
 describe('lambda functions', () => {
   test('are auto-discovered by default', () => {
     // GIVEN
+    const outdir = mkdtemp();
+    mkdirSync(join(outdir, 'src'));
+    writeFileSync(join(outdir, 'src', 'my.lambda.ts'), '// dummy');
+
     const project = new AwsCdkTypeScriptApp({
       name: 'hello',
+      outdir: outdir,
       defaultReleaseBranch: 'main',
       cdkVersion: '1.100.0',
       libdir: 'liblib',
       lambdaOptions: {
         runtime: awscdk.LambdaRuntime.NODEJS_10_X,
-        externals: ['foo', 'bar'],
+        bundlingOptions: {
+          externals: ['foo', 'bar'],
+        },
       },
     });
-
-    // WHEN
-    mkdirSync(join(project.outdir, project.srcdir));
-    writeFileSync(join(project.outdir, project.srcdir, 'my.lambda.ts'), '// dummy');
 
     // THEN
     const snapshot = synthSnapshot(project);
