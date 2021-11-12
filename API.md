@@ -401,6 +401,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -611,6 +612,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -788,6 +790,7 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -1018,6 +1021,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -1172,6 +1176,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -1339,6 +1344,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -1513,6 +1519,7 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -2585,6 +2592,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -3338,6 +3346,7 @@ new NodeProject(options: NodeProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -4502,6 +4511,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -4642,6 +4652,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -4782,6 +4793,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -5028,6 +5040,7 @@ new Version(project: Project, options: VersionOptions)
 * **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
   * **artifactsDirectory** (<code>string</code>)  The name of the directory into which `changelog.md` and `version.txt` files are emitted. 
   * **versionInputFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration for versionrc file used by standard-release. __*Optional*__
 
 
 
@@ -7399,6 +7412,7 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **branch** (<code>string</code>)  The default branch name to release from. 
   * **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The task to execute in order to create the release artifacts. 
@@ -8243,6 +8257,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -8382,6 +8397,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -8594,6 +8610,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -8774,6 +8791,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -9022,6 +9040,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -9164,6 +9183,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -9319,6 +9339,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -9488,6 +9509,7 @@ Name | Type | Description
 **tsconfigDev**?⚠️ | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?⚠️ | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?⚠️ | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?⚠️ | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?⚠️ | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -9640,6 +9662,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -9787,6 +9810,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -9933,6 +9957,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -10767,6 +10792,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -11027,6 +11053,7 @@ Name | Type | Description
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -11394,6 +11421,7 @@ Name | Type | Description
 **tsconfigDev**?⚠️ | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?⚠️ | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?⚠️ | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?⚠️ | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?⚠️ | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -11526,6 +11554,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -11600,6 +11629,7 @@ Name | Type | Description
 -----|------|-------------
 **artifactsDirectory**🔹 | <code>string</code> | The name of the directory into which `changelog.md` and `version.txt` files are emitted.
 **versionInputFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration for versionrc file used by standard-release.<br/>__*Optional*__
 
 
 
@@ -12977,6 +13007,7 @@ Name | Type | Description
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 
 
@@ -13005,6 +13036,7 @@ Name | Type | Description
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 
 
@@ -13355,6 +13387,7 @@ Name | Type | Description
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **tailwind**?🔹 | <code>boolean</code> | Setup Tailwind CSS as a PostCSS plugin.<br/>__*Default*__: true
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -13489,6 +13522,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -13636,6 +13670,7 @@ Name | Type | Description
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -13798,6 +13833,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
