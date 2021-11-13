@@ -15,6 +15,7 @@ test('happy flow', () => {
   const snapshot = Testing.synth(p);
   expect(Object.keys(snapshot)).toStrictEqual([
     '.gitattributes',
+    '.github/workflows/semantic-pr.yml',
     '.github/workflows/stale.yml',
     '.gitignore',
     '.projen/deps.json',
