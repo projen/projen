@@ -6,7 +6,7 @@
 !/.devcontainer.json
 !/.github/workflows/auto-approve.yml
 !/.github/workflows/stale.yml
-!/.github/workflows/pr-linter.yml
+!/.github/workflows/semantic-pr.yml
 !/package.json
 !/LICENSE
 !/.npmignore
