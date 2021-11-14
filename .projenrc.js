@@ -25,7 +25,6 @@ const project = new JsiiProject({
     'chalk',
     '@iarna/toml',
     'xmlbuilder2',
-    'hash-string',
     'ini',
     'shx',
   ],

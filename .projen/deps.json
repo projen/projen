@@ -139,10 +139,6 @@
       "type": "bundled"
     },
     {
-      "name": "hash-string",
-      "type": "bundled"
-    },
-    {
       "name": "ini",
       "type": "bundled"
     },

@@ -6414,7 +6414,6 @@ new javascript.Bundler(project: Project, options?: BundlerOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  *No description*
   * **assetsDir** (<code>string</code>)  Output directory for all bundles. __*Default*__: "assets"
-  * **defaults** (<code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code>)  Default bundling options. __*Optional*__
   * **esbuildVersion** (<code>string</code>)  The semantic version requirement for `esbuild`. __*Default*__: no specific version (implies latest)
 
 
@@ -6431,20 +6430,19 @@ Name | Type | Description
 ### Methods
 
 
-#### addBundle(name, options)🔹 <a id="projen-javascript-bundler-addbundle"></a>
+#### addBundle(entrypoint, options)🔹 <a id="projen-javascript-bundler-addbundle"></a>
 
 Adds a task to the project which bundles a specific entrypoint and all of its dependencies into a single javascript output file.
 
 ```ts
-addBundle(name: string, options: AddBundleOptions): Bundle
+addBundle(entrypoint: string, options: AddBundleOptions): Bundle
 ```
 
-* **name** (<code>string</code>)  The name of the artifact (the task will be named `bundle:$name`).
+* **entrypoint** (<code>string</code>)  *No description*
 * **options** (<code>[javascript.AddBundleOptions](#projen-javascript-addbundleoptions)</code>)  Bundling options.
   * **externals** (<code>Array<string></code>)  You can mark a file or a package as external to exclude it from your build. __*Default*__: []
   * **sourcemap** (<code>boolean</code>)  Include a source map in the bundle. __*Default*__: false
   * **watchTask** (<code>boolean</code>)  In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag. __*Default*__: true
-  * **entrypoint** (<code>string</code>)  Entrypoint file for bundling. 
   * **platform** (<code>string</code>)  esbuild platform. 
   * **target** (<code>string</code>)  esbuild target. 
 
@@ -12303,7 +12301,6 @@ Options for `addBundle()`.
 
 Name | Type | Description 
 -----|------|-------------
-**entrypoint**🔹 | <code>string</code> | Entrypoint file for bundling.
 **platform**🔹 | <code>string</code> | esbuild platform.
 **target**🔹 | <code>string</code> | esbuild target.
 **externals**?🔹 | <code>Array<string></code> | You can mark a file or a package as external to exclude it from your build.<br/>__*Default*__: []
@@ -12338,7 +12335,6 @@ Options for `Bundler`.
 Name | Type | Description 
 -----|------|-------------
 **assetsDir**?🔹 | <code>string</code> | Output directory for all bundles.<br/>__*Default*__: "assets"
-**defaults**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Default bundling options.<br/>__*Optional*__
 **esbuildVersion**?🔹 | <code>string</code> | The semantic version requirement for `esbuild`.<br/>__*Default*__: no specific version (implies latest)
 
 
