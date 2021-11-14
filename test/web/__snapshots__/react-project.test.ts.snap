@@ -319,7 +319,6 @@ jspm_packages/
 /dist/version.txt
 !/.mergify.yml
 !/.github/pull_request_template.md
-/assets/
 /build/
 !/.github/workflows/release.yml
 !/.github/workflows/upgrade-main.yml
@@ -346,7 +345,6 @@ pull_request_rules:
 /dist/changelog.md
 /dist/version.txt
 /.mergify.yml
-!/assets/
 /build/
 ",
   ".projen/deps.json": Object {

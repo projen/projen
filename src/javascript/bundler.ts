@@ -60,9 +60,6 @@ export class Bundler extends Component {
     this.esbuildVersion = options.esbuildVersion;
     this.bundledir = options.assetsDir ?? 'assets';
 
-    const ignoreEntry = `/${this.bundledir}/`;
-    project.addGitIgnore(ignoreEntry);
-    project.addPackageIgnore(`!${ignoreEntry}`); // include in tarball
   }
 
   /**
@@ -73,8 +70,7 @@ export class Bundler extends Component {
    */
   public get bundleTask(): Task {
     if (!this._task) {
-      const dep = this.esbuildVersion ? `esbuild@${this.esbuildVersion}` : 'esbuild';
-      this.project.deps.addDependency(dep, DependencyType.BUILD);
+      this.addBundlingSupport();
       this._task = this.project.tasks.addTask('bundle', {
         description: 'Prepare assets',
       });
@@ -135,6 +131,19 @@ export class Bundler extends Component {
       watchTask: watchTask,
       outfile: outfile,
     };
+  }
+
+  /**
+   * Add bundling support to a project. This is called implicitly when
+   * `bundleTask` is referenced first. It adds the dependency on `esbuild`,
+   * gitignore/npmignore, etc.
+   */
+  private addBundlingSupport() {
+    const ignoreEntry = `/${this.bundledir}/`;
+    this.project.addGitIgnore(ignoreEntry);
+    this.project.addPackageIgnore(`!${ignoreEntry}`); // include in tarball
+    const dep = this.esbuildVersion ? `esbuild@${this.esbuildVersion}` : 'esbuild';
+    this.project.deps.addDependency(dep, DependencyType.BUILD);
   }
 }
 

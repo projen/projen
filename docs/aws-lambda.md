@@ -76,7 +76,8 @@ new AwsCdkConstructLibrary({
 
     bundlingOptions: {
       // list of node modules to exclude from the bundle
-      externals: [ 'aws-sdk' ]
+      externals: [ 'aws-sdk' ],
+      sourcemap: true,
     }
   }
 });
