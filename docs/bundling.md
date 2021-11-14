@@ -11,14 +11,6 @@ To customize, use `bundlerOptions`:
 const project = new NodeProject({
   esbuildVersion: '^0.13.13', // default to "latest"
   assetsDir: 'resources', // defaults to "assets"
-
-  // default bundling options. these can be overridden in
-  // subsequent calls to `addBundle()`.
-  defaults: {
-    externals: ['aws-sdk'], // modules not to include in bundles
-    sourcemap: true, // default is false
-    watchTask: false, // should we create a "bundle:watch" task for each bundle
-  }
 });
 ```
 
@@ -29,6 +21,10 @@ project.bundler.addBundle('name-of-bundle', {
   entrypoint: 'src/foo.ts',
   target: 'node14',
   platform: 'node',
-  externals: ['request']
+  bundlingOptions: {
+    externals: ['aws-sdk'], // modules not to include in bundles
+    sourcemap: true, // default is false
+    watchTask: false, // should we create a "bundle:watch" task for each bundle
+  }
 });
 ```
