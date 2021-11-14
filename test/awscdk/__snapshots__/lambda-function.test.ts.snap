@@ -22,7 +22,7 @@ export class HelloFunction extends lambda.Function {
       ...props,
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../assets/src/hello')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello.lambda')),
     });
   }
 }"
@@ -50,7 +50,7 @@ export class WorldFunction extends lambda.Function {
       ...props,
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/src/subdir/world')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/subdir/world.lambda')),
     });
   }
 }"
@@ -78,7 +78,7 @@ export class JangyFunction extends lambda.Function {
       ...props,
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/src/subdir/jangy')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/subdir/jangy.lambda')),
     });
   }
 }"
@@ -90,13 +90,13 @@ Object {
   "name": "bundle",
   "steps": Array [
     Object {
-      "spawn": "bundle:src/hello",
+      "spawn": "bundle:hello.lambda",
     },
     Object {
-      "spawn": "bundle:src/subdir/jangy",
+      "spawn": "bundle:subdir/jangy.lambda",
     },
     Object {
-      "spawn": "bundle:src/subdir/world",
+      "spawn": "bundle:subdir/world.lambda",
     },
   ],
 }
@@ -105,10 +105,10 @@ Object {
 exports[`auto-discover 5`] = `
 Object {
   "description": "Create a JavaScript bundle from src/hello.lambda.ts",
-  "name": "bundle:hello",
+  "name": "bundle:hello.lambda",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/hello.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/hello/index.js\\" --external:aws-sdk --sourcemap",
+      "exec": "esbuild --bundle src/hello.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/hello.lambda/index.js\\" --external:aws-sdk",
     },
   ],
 }
@@ -117,10 +117,10 @@ Object {
 exports[`auto-discover 6`] = `
 Object {
   "description": "Continuously update the JavaScript bundle from src/hello.lambda.ts",
-  "name": "bundle:hello:watch",
+  "name": "bundle:hello.lambda:watch",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/hello.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/hello/index.js\\" --external:aws-sdk --sourcemap --watch",
+      "exec": "esbuild --bundle src/hello.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/hello.lambda/index.js\\" --external:aws-sdk --watch",
     },
   ],
 }
@@ -129,10 +129,10 @@ Object {
 exports[`auto-discover 7`] = `
 Object {
   "description": "Create a JavaScript bundle from src/subdir/jangy.lambda.ts",
-  "name": "bundle:subdir/jangy",
+  "name": "bundle:subdir/jangy.lambda",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/jangy/index.js\\" --external:aws-sdk --sourcemap",
+      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/jangy.lambda/index.js\\" --external:aws-sdk",
     },
   ],
 }
@@ -141,10 +141,10 @@ Object {
 exports[`auto-discover 8`] = `
 Object {
   "description": "Continuously update the JavaScript bundle from src/subdir/jangy.lambda.ts",
-  "name": "bundle:subdir/jangy:watch",
+  "name": "bundle:subdir/jangy.lambda:watch",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/jangy/index.js\\" --external:aws-sdk --sourcemap --watch",
+      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/jangy.lambda/index.js\\" --external:aws-sdk --watch",
     },
   ],
 }
@@ -153,10 +153,10 @@ Object {
 exports[`auto-discover 9`] = `
 Object {
   "description": "Create a JavaScript bundle from src/subdir/world.lambda.ts",
-  "name": "bundle:subdir/world",
+  "name": "bundle:subdir/world.lambda",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/world/index.js\\" --external:aws-sdk --sourcemap",
+      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/world.lambda/index.js\\" --external:aws-sdk",
     },
   ],
 }
@@ -165,10 +165,10 @@ Object {
 exports[`auto-discover 10`] = `
 Object {
   "description": "Continuously update the JavaScript bundle from src/subdir/world.lambda.ts",
-  "name": "bundle:subdir/world:watch",
+  "name": "bundle:subdir/world.lambda:watch",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/world/index.js\\" --external:aws-sdk --sourcemap --watch",
+      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/world.lambda/index.js\\" --external:aws-sdk --watch",
     },
   ],
 }
@@ -196,7 +196,7 @@ export class HelloFunction extends lambda.Function {
       ...props,
       runtime: lambda.Runtime.NODEJS_14_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../my-assets/src/hello')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../my-assets/hello.lambda')),
     });
   }
 }"
@@ -226,7 +226,7 @@ export class HelloFunction extends lambda.Function {
       ...props,
       runtime: lambda.Runtime.NODEJS_14_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../assets/src/hello')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello.lambda')),
     });
   }
 }"
@@ -254,7 +254,7 @@ export class WorldFunction extends lambda.Function {
       ...props,
       runtime: lambda.Runtime.NODEJS_14_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../assets/src/world')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../assets/world.lambda')),
     });
   }
 }"

@@ -72,20 +72,21 @@ describe('lambda functions', () => {
       libdir: 'liblib',
       outdir: outdir,
       bundlerOptions: {
-        defaults: {
-          externals: ['foo', 'bar'],
-        },
+        assetsDir: 'resources',
       },
       lambdaOptions: {
         runtime: awscdk.LambdaRuntime.NODEJS_10_X,
+        bundlingOptions: {
+          externals: ['foo', 'bar'],
+        },
       },
     });
 
     // THEN
     const snapshot = synthSnapshot(project);
     expect(snapshot['src/my-function.ts']).not.toBeUndefined();
-    expect(snapshot['.projen/tasks.json'].tasks['bundle:src/my'].steps).toStrictEqual([
-      { exec: 'esbuild --bundle src/my.lambda.ts --target="node10" --platform="node" --outfile="assets/src/my/index.js" --external:foo --external:bar --sourcemap' },
+    expect(snapshot['.projen/tasks.json'].tasks['bundle:my.lambda'].steps).toStrictEqual([
+      { exec: 'esbuild --bundle src/my.lambda.ts --target="node10" --platform="node" --outfile="resources/my.lambda/index.js" --external:foo --external:bar' },
     ]);
   });
 

@@ -39,17 +39,17 @@ describe('bundled function', () => {
     expect(tasks.bundle).toEqual({
       description: 'Prepare assets',
       name: 'bundle',
-      steps: [{ spawn: 'bundle:hello' }],
+      steps: [{ spawn: 'bundle:hello.lambda' }],
     });
   });
 
   test('creates a specific bundle task for this function', () => {
-    expect(tasks['bundle:hello']).toEqual({
+    expect(tasks['bundle:hello.lambda']).toEqual({
       description: 'Create a JavaScript bundle from src/hello.lambda.ts',
-      name: 'bundle:hello',
+      name: 'bundle:hello.lambda',
       steps: [
         {
-          exec: 'esbuild --bundle src/hello.lambda.ts --target="node14" --platform="node" --outfile="my-assets/hello/index.js" --external:aws-sdk --sourcemap',
+          exec: 'esbuild --bundle src/hello.lambda.ts --target="node14" --platform="node" --outfile="my-assets/hello.lambda/index.js" --external:aws-sdk',
         },
       ],
     });
@@ -98,12 +98,12 @@ test('runtime can be used to customize the lambda runtime and esbuild target', (
   const generatedSource = snapshot['src/hello-function.ts'];
   const tasks = snapshot['.projen/tasks.json'].tasks;
   expect(generatedSource).toContain('runtime: lambda.Runtime.NODEJS_12_X,');
-  expect(tasks['bundle:hello']).toEqual({
+  expect(tasks['bundle:hello.lambda']).toEqual({
     description: 'Create a JavaScript bundle from src/hello.lambda.ts',
-    name: 'bundle:hello',
+    name: 'bundle:hello.lambda',
     steps: [
       {
-        exec: 'esbuild --bundle src/hello.lambda.ts --target="node12" --platform="node" --outfile="assets/hello/index.js" --external:aws-sdk --sourcemap',
+        exec: 'esbuild --bundle src/hello.lambda.ts --target="node12" --platform="node" --outfile="assets/hello.lambda/index.js" --external:aws-sdk',
       },
     ],
   });
@@ -169,12 +169,12 @@ test('auto-discover', () => {
   expect(tasks.bundle).toMatchSnapshot();
 
   const expected = [
-    'bundle:hello',
-    'bundle:hello:watch',
-    'bundle:subdir/jangy',
-    'bundle:subdir/jangy:watch',
-    'bundle:subdir/world',
-    'bundle:subdir/world:watch',
+    'bundle:hello.lambda',
+    'bundle:hello.lambda:watch',
+    'bundle:subdir/jangy.lambda',
+    'bundle:subdir/jangy.lambda:watch',
+    'bundle:subdir/world.lambda',
+    'bundle:subdir/world.lambda:watch',
   ];
 
   for (const name of expected) {

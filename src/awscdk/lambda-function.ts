@@ -124,6 +124,7 @@ export class LambdaFunction extends Component {
     const bundle = bundler.addBundle(entrypoint, {
       target: runtime.esbuildTarget,
       platform: runtime.esbuildPlatform,
+      externals: ['aws-sdk'],
       ...options.bundlingOptions,
     });
 

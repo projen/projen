@@ -21,11 +21,6 @@ export interface BundlerOptions {
     * @default "assets"
     */
   readonly assetsDir?: string;
-
-  /**
-    * Default bundling options. These are used unless explicitly set when calling `addBundle()`.
-    */
-  readonly defaults?: BundlingOptions;
 }
 
 /**
@@ -55,7 +50,6 @@ export class Bundler extends Component {
   public readonly bundledir: string;
 
   private _task: Task | undefined;
-  private readonly defaults: BundlingOptions;
 
   /**
    * Creates a `Bundler`.
@@ -65,7 +59,6 @@ export class Bundler extends Component {
 
     this.esbuildVersion = options.esbuildVersion;
     this.bundledir = options.assetsDir ?? 'assets';
-    this.defaults = options.defaults ?? {};
 
     const ignoreEntry = `/${this.bundledir}/`;
     project.addGitIgnore(ignoreEntry);
@@ -102,27 +95,21 @@ export class Bundler extends Component {
   public addBundle(entrypoint: string, options: AddBundleOptions): Bundle {
     const name = renderBundleName(entrypoint);
 
-    // apply defaults and then override with options.
-    const resolvedOptions = {
-      ...this.defaults,
-      ...options,
-    };
-
     const outfile = join(this.bundledir, name, 'index.js');
     const args = [
       'esbuild',
       '--bundle',
       entrypoint,
-      `--target="${resolvedOptions.target}"`,
-      `--platform="${resolvedOptions.platform}"`,
+      `--target="${options.target}"`,
+      `--platform="${options.platform}"`,
       `--outfile="${outfile}"`,
     ];
 
-    for (const x of resolvedOptions.externals ?? []) {
+    for (const x of options.externals ?? []) {
       args.push(`--external:${x}`);
     }
 
-    const sourcemap = resolvedOptions.sourcemap ?? false;
+    const sourcemap = options.sourcemap ?? false;
     if (sourcemap) {
       args.push('--sourcemap');
     }
@@ -135,7 +122,7 @@ export class Bundler extends Component {
     this.bundleTask.spawn(bundleTask);
 
     let watchTask;
-    const watch = resolvedOptions.watchTask ?? true;
+    const watch = options.watchTask ?? true;
     if (watch) {
       watchTask = this.project.addTask(`bundle:${name}:watch`, {
         description: `Continuously update the JavaScript bundle from ${entrypoint}`,
