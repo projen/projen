@@ -41,7 +41,6 @@ junit.xml
 /dist/version.txt
 !/.mergify.yml
 !/.github/pull_request_template.md
-/assets/
 !/test/
 !/tsconfig.dev.json
 !/src/
