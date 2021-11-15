@@ -4362,10 +4362,10 @@ map-obj@^4.0.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-markmac@^0.1.89:
-  version "0.1.89"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.89.tgz#34d4bf0b8e0788d6962246f6d71f747efd4d95de"
-  integrity sha512-68RAmF9a6ViiC5/i9m7kZETkFLZ/zSva/Mj4d7UB/f6RlZytcS+FxYeDvUyaQ3A4AH5FDVDBnhIydbEe2qJqLw==
+markmac@^0.1.90:
+  version "0.1.90"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.90.tgz#f3bf7d29dd34e9180e77df4634989bf63014ce26"
+  integrity sha512-zTu8FhrukjWeyZLvDTMiOlcTjgFcnqw5sNf9isNENaaUw4yRRuh3zYElu1hRoE/uPSUyEjFlTPzRcfYA4CH44Q==
 
 mdurl@~1.0.1:
   version "1.0.1"
@@ -5668,9 +5668,9 @@ spdx-expression-parse@^3.0.0:
     spdx-license-ids "^3.0.0"
 
 spdx-license-ids@^3.0.0:
-  version "3.0.10"
-  resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.10.tgz#0d9becccde7003d6c658d487dd48a32f0bf3014b"
-  integrity sha512-oie3/+gKf7QtpitB0LYLETe+k8SifzsX4KixvpOsbI6S0kRiRQ5MKOio8eMSAKQ17N06+wdEOXRiId+zOxo0hA==
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.11.tgz#50c0d8c40a14ec1bf449bae69a0ea4685a9d9f95"
+  integrity sha512-Ctl2BrFiM0X3MANYgj3CkygxhRmr9mi6xhejbdO960nF6EDJApTYpn0BQnDKlnNBULKiCN1n3w9EBkHK8ZWg+g==
 
 spdx-license-list@^6.4.0:
   version "6.4.0"
