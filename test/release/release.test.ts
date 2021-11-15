@@ -410,3 +410,27 @@ test('AWS CodeArtifact is supported by npm with AWS access keys', () => {
   const outdir = synthSnapshot(project);
   expect(outdir).toMatchSnapshot();
 });
+
+test('AWS CodeArtifact is supported with role to assume', () => {
+  // GIVEN
+  const project = new TestProject();
+  const roleArn = 'role-arn';
+
+  const release = new Release(project, {
+    task: project.buildTask,
+    versionFile: 'version.json',
+    branch: 'main',
+  });
+
+  // WHEN
+  release.publisher.publishToNpm({
+    registry: 'my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+    codeArtifactOptions: {
+      roleToAssume: roleArn,
+    },
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  expect(outdir).toMatchSnapshot();
+});

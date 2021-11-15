@@ -486,14 +486,14 @@ describe('npm publishing options', () => {
           accessKeyIdSecret: 'INVALID_AWS_ACCESS_KEY_ID',
         },
       });
-    }).toThrow('"codeArtifactOptions.accessKeyIdSecret" and "codeArtifactOptions.secretAccessKeySecret" must only be specified when publishing AWS CodeArtifact.');
+    }).toThrow('codeArtifactOptions must only be specified when publishing AWS CodeArtifact.');
     expect(() => {
       new NodePackage(project, {
         codeArtifactOptions: {
           secretAccessKeySecret: 'INVALID_AWS_SECRET_ACCESS_KEY',
         },
       });
-    }).toThrow('"codeArtifactOptions.accessKeyIdSecret" and "codeArtifactOptions.secretAccessKeySecret" must only be specified when publishing AWS CodeArtifact.');
+    }).toThrow('codeArtifactOptions must only be specified when publishing AWS CodeArtifact.');
   });
 
   test('AWS CodeArtifact registry role to assume', () => {
