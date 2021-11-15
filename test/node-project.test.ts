@@ -496,6 +496,23 @@ describe('npm publishing options', () => {
     }).toThrow('"codeArtifactOptions.accessKeyIdSecret" and "codeArtifactOptions.secretAccessKeySecret" must only be specified when publishing AWS CodeArtifact.');
   });
 
+  test('AWS CodeArtifact registry role to assume', () => {
+    // GIVEN
+    const project = new TestProject();
+    const roleArn = 'role-arn';
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      npmRegistryUrl: 'https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+      codeArtifactOptions: {
+        roleToAssume: roleArn,
+      },
+    });
+
+    // THEN
+    expect(npm.codeArtifactOptions?.roleToAssume).toStrictEqual(roleArn);
+  });
+
   test('deprecated npmRegistry can be used instead of npmRegistryUrl and then https:// is assumed', () => {
     // GIVEN
     const project = new TestProject();

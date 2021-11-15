@@ -307,6 +307,14 @@ export interface CodeArtifactOptions {
     * @default "AWS_SECRET_ACCESS_KEY"
     */
   readonly secretAccessKeySecret?: string;
+
+  /**
+    * ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact
+    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+    *
+    * @default undefined
+    */
+  readonly roleToAssume?: string;
 }
 
 /**

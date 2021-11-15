@@ -627,6 +627,7 @@ export class NodeProject extends GitHubProject {
           codeArtifactOptions: {
             accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret,
             secretAccessKeySecret: options.codeArtifactOptions?.secretAccessKeySecret,
+            roleToAssume: options.codeArtifactOptions?.roleToAssume,
           },
         });
       }
