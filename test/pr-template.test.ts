@@ -5,7 +5,7 @@ const PULL_REQUEST_TEMPLATE_FILE = '.github/pull_request_template.md';
 
 test('default', () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new TestProject({ github: false });
   const github = new GitHub(project);
 
   // WHEN
@@ -17,7 +17,7 @@ test('default', () => {
 
 test('custom content', () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new TestProject({ github: false });
   const github = new GitHub(project);
 
   // WHEN

@@ -5,8 +5,8 @@ exports[`sources and compiled output can be collocated 1`] = `
 !/.gitattributes
 !/.projen/tasks.json
 !/.projen/deps.json
+!/.github/workflows/pull-request-lint.yml
 !/.github/workflows/stale.yml
-!/.github/workflows/semantic-pr.yml
 !/package.json
 !/LICENSE
 !/.npmignore

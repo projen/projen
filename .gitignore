@@ -2,11 +2,11 @@
 !/.gitattributes
 !/.projen/tasks.json
 !/.projen/deps.json
+!/.github/workflows/pull-request-lint.yml
 !/.gitpod.yml
 !/.devcontainer.json
 !/.github/workflows/auto-approve.yml
 !/.github/workflows/stale.yml
-!/.github/workflows/semantic-pr.yml
 !/package.json
 !/LICENSE
 !/.npmignore

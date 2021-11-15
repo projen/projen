@@ -9,7 +9,6 @@ import { Dependencies } from './deps';
 import { FileBase } from './file';
 import { GitAttributesFile } from './git/gitattributes';
 import { AutoApprove, AutoApproveOptions, AutoMergeOptions, GitHub, GitHubOptions, MergifyOptions } from './github';
-import { SemanticPullRequest, SemanticPullRequestOptions } from './github/semantic-pr';
 import { Stale, StaleOptions } from './github/stale';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
@@ -662,20 +661,6 @@ export interface GitHubProjectOptions extends ProjectOptions {
    * @default true
    */
   readonly stale?: boolean;
-
-  /**
-   * Enforce Conventional Commits through a pull request linter.
-   *
-   * @default true
-   */
-  readonly semanticPr?: boolean;
-
-  /**
-   * Options for semantic PR linter.
-   *
-   * @default - see defaults in `SemanticPullRequestOptions`
-   */
-  readonly semanticPrOptions?: SemanticPullRequestOptions;
 }
 
 /**
@@ -759,11 +744,6 @@ export class GitHubProject extends Project {
     const stale = options.stale ?? true;
     if (stale && this.github) {
       new Stale(this.github, options.staleOptions);
-    }
-
-    const semanticPr = options.semanticPr ?? true;
-    if (semanticPr && this.github) {
-      new SemanticPullRequest(this.github, options.semanticPrOptions);
     }
   }
 
