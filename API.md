@@ -63,6 +63,7 @@ Name|Description
 [github.GitHub](#projen-github-github)|*No description*
 [github.GithubWorkflow](#projen-github-githubworkflow)|Workflow for GitHub.
 [github.Mergify](#projen-github-mergify)|*No description*
+[github.PullRequestLint](#projen-github-pullrequestlint)|Configure validations to run on GitHub pull requests.
 [github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
 [github.Stale](#projen-github-stale)|Warns and then closes issues and PRs that have had no activity for a specified amount of time.
 [github.TaskWorkflow](#projen-github-taskworkflow)|A GitHub workflow for common build tasks within a project.
@@ -197,7 +198,9 @@ Name|Description
 [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
+[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)|Options for PullRequestLint.
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
+[github.SemanticTitleOptions](#projen-github-semantictitleoptions)|Options for linting that PR titles follow Conventional Commits.
 [github.StaleBehavior](#projen-github-stalebehavior)|Stale behavior.
 [github.StaleOptions](#projen-github-staleoptions)|Options for `Stale`.
 [github.TaskWorkflowOptions](#projen-github-taskworkflowoptions)|*No description*
@@ -5724,6 +5727,8 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 * **options** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for Mergify. __*Default*__: default options
+  * **pullRequestLint** (<code>boolean</code>)  Add a workflow that performs basic checks for pull requests, like validating that PRs follow Conventional Commits. __*Default*__: true
+  * **pullRequestLintOptions** (<code>[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)</code>)  Options for configuring a pull request linter. __*Default*__: see defaults in `PullRequestLintOptions`
   * **workflows** (<code>boolean</code>)  Enables GitHub workflows. __*Default*__: true
 
 
@@ -5938,6 +5943,33 @@ addRule(rule: MergifyRule): void
   * **name** (<code>string</code>)  The name of the rule. 
 
 
+
+
+
+
+## class PullRequestLint 🔹 <a id="projen-github-pullrequestlint"></a>
+
+Configure validations to run on GitHub pull requests.
+
+Only generates a file if at least one linter is configured.
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.PullRequestLint(github: GitHub, options?: PullRequestLintOptions)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **options** (<code>[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)</code>)  *No description*
+  * **semanticTitle** (<code>boolean</code>)  Validate that pull request titles follow Conventional Commits. __*Default*__: true
+  * **semanticTitleOptions** (<code>[github.SemanticTitleOptions](#projen-github-semantictitleoptions)</code>)  Options for validating the conventional commit title linter. __*Default*__: title must start with "feat", "fix", or "chore"
 
 
 
@@ -11952,6 +11984,8 @@ Name | Type | Description
 -----|------|-------------
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for Mergify.<br/>__*Default*__: default options
+**pullRequestLint**?🔹 | <code>boolean</code> | Add a workflow that performs basic checks for pull requests, like validating that PRs follow Conventional Commits.<br/>__*Default*__: true
+**pullRequestLintOptions**?🔹 | <code>[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)</code> | Options for configuring a pull request linter.<br/>__*Default*__: see defaults in `PullRequestLintOptions`
 **workflows**?🔹 | <code>boolean</code> | Enables GitHub workflows.<br/>__*Default*__: true
 
 
@@ -12028,6 +12062,20 @@ Name | Type | Description
 
 
 
+## struct PullRequestLintOptions 🔹 <a id="projen-github-pullrequestlintoptions"></a>
+
+
+Options for PullRequestLint.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**semanticTitle**?🔹 | <code>boolean</code> | Validate that pull request titles follow Conventional Commits.<br/>__*Default*__: true
+**semanticTitleOptions**?🔹 | <code>[github.SemanticTitleOptions](#projen-github-semantictitleoptions)</code> | Options for validating the conventional commit title linter.<br/>__*Default*__: title must start with "feat", "fix", or "chore"
+
+
+
 ## struct PullRequestTemplateOptions 🔹 <a id="projen-github-pullrequesttemplateoptions"></a>
 
 
@@ -12038,6 +12086,20 @@ Options for `PullRequestTemplate`.
 Name | Type | Description 
 -----|------|-------------
 **lines**?🔹 | <code>Array<string></code> | The contents of the template.<br/>__*Default*__: a standard default template will be created.
+
+
+
+## struct SemanticTitleOptions 🔹 <a id="projen-github-semantictitleoptions"></a>
+
+
+Options for linting that PR titles follow Conventional Commits.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**requireScope**?🔹 | <code>boolean</code> | Configure that a scope must always be provided.<br/>__*Default*__: false
+**types**?🔹 | <code>Array<string></code> | Configure a list of commit types that are allowed.<br/>__*Default*__: ["feat", "fix", "chore"]
 
 
 
