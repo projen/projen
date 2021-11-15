@@ -1584,9 +1584,9 @@ exports[`projen new awscdk-app-ts 1`] = `
 Object {
   ".projenrc.js": "const { AwsCdkTypeScriptApp } = require(\\"projen\\");
 const project = new AwsCdkTypeScriptApp({
-  cdkVersion: '1.129.0',
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
+  cdkVersion: \\"1.129.0\\",
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
 
   // cdkDependencies: undefined,  /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") this app uses. */
   // deps: [],                    /* Runtime dependencies of this module. */
@@ -1603,12 +1603,12 @@ exports[`projen new awscdk-construct 1`] = `
 Object {
   ".projenrc.js": "const { AwsCdkConstructLibrary } = require(\\"projen\\");
 const project = new AwsCdkConstructLibrary({
-  author: 'My User Name',
-  authorAddress: 'my@user.email.com',
-  cdkVersion: '1.129.0',
-  defaultReleaseBranch: 'main',
-  name: 'my-project',
-  repositoryUrl: 'git@boom.com:foo/bar.git',
+  author: \\"My User Name\\",
+  authorAddress: \\"my@user.email.com\\",
+  cdkVersion: \\"1.129.0\\",
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
+  repositoryUrl: \\"git@boom.com:foo/bar.git\\",
 
   // cdkDependencies: undefined,      /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed? */
   // cdkTestDependencies: undefined,  /* AWS CDK modules required for testing. */
