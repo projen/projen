@@ -13,16 +13,16 @@ export interface HelloFunctionProps extends lambda.FunctionOptions {
 }
 
 /**
- * An AWS Lambda function which executes hello.
+ * An AWS Lambda function which executes src/hello.
  */
 export class HelloFunction extends lambda.Function {
   constructor(scope: Construct, id: string, props?: HelloFunctionProps) {
     super(scope, id, {
-      description: 'hello.lambda.ts',
+      description: 'src/hello.lambda.ts',
       ...props,
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, 'hello.lambda.bundle')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello.lambda')),
     });
   }
 }"
@@ -41,16 +41,16 @@ export interface WorldFunctionProps extends lambda.FunctionOptions {
 }
 
 /**
- * An AWS Lambda function which executes subdir/world.
+ * An AWS Lambda function which executes src/subdir/world.
  */
 export class WorldFunction extends lambda.Function {
   constructor(scope: Construct, id: string, props?: WorldFunctionProps) {
     super(scope, id, {
-      description: 'subdir/world.lambda.ts',
+      description: 'src/subdir/world.lambda.ts',
       ...props,
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, 'world.lambda.bundle')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/subdir/world.lambda')),
     });
   }
 }"
@@ -69,16 +69,16 @@ export interface JangyFunctionProps extends lambda.FunctionOptions {
 }
 
 /**
- * An AWS Lambda function which executes subdir/jangy.
+ * An AWS Lambda function which executes src/subdir/jangy.
  */
 export class JangyFunction extends lambda.Function {
   constructor(scope: Construct, id: string, props?: JangyFunctionProps) {
     super(scope, id, {
-      description: 'subdir/jangy.lambda.ts',
+      description: 'src/subdir/jangy.lambda.ts',
       ...props,
       runtime: lambda.Runtime.NODEJS_12_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, 'jangy.lambda.bundle')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../assets/subdir/jangy.lambda')),
     });
   }
 }"
@@ -86,17 +86,17 @@ export class JangyFunction extends lambda.Function {
 
 exports[`auto-discover 4`] = `
 Object {
-  "description": "Bundle assets",
+  "description": "Prepare assets",
   "name": "bundle",
   "steps": Array [
     Object {
-      "spawn": "bundle:hello",
+      "spawn": "bundle:hello.lambda",
     },
     Object {
-      "spawn": "bundle:subdir/jangy",
+      "spawn": "bundle:subdir/jangy.lambda",
     },
     Object {
-      "spawn": "bundle:subdir/world",
+      "spawn": "bundle:subdir/world.lambda",
     },
   ],
 }
@@ -105,10 +105,10 @@ Object {
 exports[`auto-discover 5`] = `
 Object {
   "description": "Create a JavaScript bundle from src/hello.lambda.ts",
-  "name": "bundle:hello",
+  "name": "bundle:hello.lambda",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/hello.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"lib/hello.lambda.bundle/index.js\\" --external:aws-sdk --sourcemap",
+      "exec": "esbuild --bundle src/hello.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/hello.lambda/index.js\\" --external:aws-sdk",
     },
   ],
 }
@@ -117,10 +117,10 @@ Object {
 exports[`auto-discover 6`] = `
 Object {
   "description": "Continuously update the JavaScript bundle from src/hello.lambda.ts",
-  "name": "bundle:hello:watch",
+  "name": "bundle:hello.lambda:watch",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/hello.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"lib/hello.lambda.bundle/index.js\\" --external:aws-sdk --sourcemap --watch",
+      "exec": "esbuild --bundle src/hello.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/hello.lambda/index.js\\" --external:aws-sdk --watch",
     },
   ],
 }
@@ -129,10 +129,10 @@ Object {
 exports[`auto-discover 7`] = `
 Object {
   "description": "Create a JavaScript bundle from src/subdir/jangy.lambda.ts",
-  "name": "bundle:subdir/jangy",
+  "name": "bundle:subdir/jangy.lambda",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"lib/subdir/jangy.lambda.bundle/index.js\\" --external:aws-sdk --sourcemap",
+      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/jangy.lambda/index.js\\" --external:aws-sdk",
     },
   ],
 }
@@ -141,10 +141,10 @@ Object {
 exports[`auto-discover 8`] = `
 Object {
   "description": "Continuously update the JavaScript bundle from src/subdir/jangy.lambda.ts",
-  "name": "bundle:subdir/jangy:watch",
+  "name": "bundle:subdir/jangy.lambda:watch",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"lib/subdir/jangy.lambda.bundle/index.js\\" --external:aws-sdk --sourcemap --watch",
+      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/jangy.lambda/index.js\\" --external:aws-sdk --watch",
     },
   ],
 }
@@ -153,10 +153,10 @@ Object {
 exports[`auto-discover 9`] = `
 Object {
   "description": "Create a JavaScript bundle from src/subdir/world.lambda.ts",
-  "name": "bundle:subdir/world",
+  "name": "bundle:subdir/world.lambda",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"lib/subdir/world.lambda.bundle/index.js\\" --external:aws-sdk --sourcemap",
+      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/world.lambda/index.js\\" --external:aws-sdk",
     },
   ],
 }
@@ -165,10 +165,10 @@ Object {
 exports[`auto-discover 10`] = `
 Object {
   "description": "Continuously update the JavaScript bundle from src/subdir/world.lambda.ts",
-  "name": "bundle:subdir/world:watch",
+  "name": "bundle:subdir/world.lambda:watch",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"lib/subdir/world.lambda.bundle/index.js\\" --external:aws-sdk --sourcemap --watch",
+      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/world.lambda/index.js\\" --external:aws-sdk --watch",
     },
   ],
 }
@@ -187,48 +187,22 @@ export interface HelloFunctionProps extends lambda.FunctionOptions {
 }
 
 /**
- * An AWS Lambda function which executes hello.
+ * An AWS Lambda function which executes src/hello.
  */
 export class HelloFunction extends lambda.Function {
   constructor(scope: Construct, id: string, props?: HelloFunctionProps) {
     super(scope, id, {
-      description: 'hello.lambda.ts',
+      description: 'src/hello.lambda.ts',
       ...props,
       runtime: lambda.Runtime.NODEJS_14_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, 'hello.lambda.bundle')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../my-assets/hello.lambda')),
     });
   }
 }"
 `;
 
-exports[`constructFile and constructName can be used to customize the generated construct 1`] = `
-"// ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
-import * as path from 'path';
-import * as lambda from '@aws-cdk/aws-lambda';
-import { Construct } from '@aws-cdk/core';
-
-/**
- * Props for MyConstruct
- */
-export interface MyConstructProps extends lambda.FunctionOptions {
-}
-
-/**
- * An AWS Lambda function which executes hello.
- */
-export class MyConstruct extends lambda.Function {
-  constructor(scope: Construct, id: string, props?: MyConstructProps) {
-    super(scope, id, {
-      description: 'hello.lambda.ts',
-      ...props,
-      runtime: lambda.Runtime.NODEJS_14_X,
-      handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, 'hello.lambda.bundle')),
-    });
-  }
-}"
-`;
+exports[`constructFile and constructName can be used to customize the generated construct 1`] = `undefined`;
 
 exports[`multiple functions 1`] = `
 "// ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
@@ -243,16 +217,16 @@ export interface HelloFunctionProps extends lambda.FunctionOptions {
 }
 
 /**
- * An AWS Lambda function which executes hello.
+ * An AWS Lambda function which executes src/hello.
  */
 export class HelloFunction extends lambda.Function {
   constructor(scope: Construct, id: string, props?: HelloFunctionProps) {
     super(scope, id, {
-      description: 'hello.lambda.ts',
+      description: 'src/hello.lambda.ts',
       ...props,
       runtime: lambda.Runtime.NODEJS_14_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, 'hello.lambda.bundle')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../assets/hello.lambda')),
     });
   }
 }"
@@ -271,16 +245,16 @@ export interface WorldFunctionProps extends lambda.FunctionOptions {
 }
 
 /**
- * An AWS Lambda function which executes world.
+ * An AWS Lambda function which executes src/world.
  */
 export class WorldFunction extends lambda.Function {
   constructor(scope: Construct, id: string, props?: WorldFunctionProps) {
     super(scope, id, {
-      description: 'world.lambda.ts',
+      description: 'src/world.lambda.ts',
       ...props,
       runtime: lambda.Runtime.NODEJS_14_X,
       handler: 'index.handler',
-      code: lambda.Code.fromAsset(path.join(__dirname, 'world.lambda.bundle')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../assets/world.lambda')),
     });
   }
 }"
