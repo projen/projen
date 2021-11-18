@@ -1,4 +1,4 @@
-import * as path from 'path';
+import { basename, dirname, extname, join, relative } from 'path';
 import { pascal } from 'case';
 import { Eslint, Project } from '..';
 import { Component } from '../component';
@@ -6,8 +6,6 @@ import { FileBase } from '../file';
 import { Bundler, BundlingOptions } from '../javascript/bundler';
 import { SourceCode } from '../source-code';
 import { TYPESCRIPT_LAMBDA_EXT } from './internal';
-
-const { basename, dirname, extname, join, relative } = path.posix;
 
 /**
  * Common options for `LambdaFunction`. Applies to all functions in
