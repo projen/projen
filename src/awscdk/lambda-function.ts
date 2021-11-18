@@ -151,7 +151,7 @@ export class LambdaFunction extends Component {
     src.close('}');
     src.line();
     src.line('/**');
-    src.line(` * An AWS Lambda function which executes ${basePath}.`);
+    src.line(` * An AWS Lambda function which executes ${convertToPosixPath(basePath)}.`);
     src.line(' */');
     src.open(`export class ${constructName} extends lambda.Function {`);
     src.open(`constructor(scope: Construct, id: string, props?: ${propsType}) {`);
