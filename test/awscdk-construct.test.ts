@@ -15,7 +15,7 @@ describe('constructs dependency selection', () => {
 
     // THEN
     expect(snapshot['package.json']?.peerDependencies?.constructs).toBe('^42.1337.0-ultimate');
-    expect(snapshot['package.json']?.devDependencies?.constructs).toBe('42.1337.0-ultimate');
+    expect(snapshot['package.json']?.devDependencies?.constructs).toBeUndefined();
     expect(snapshot['package.json']?.dependencies?.constructs).toBeUndefined();
   });
 
@@ -45,8 +45,8 @@ describe('constructs dependency selection', () => {
     // THEN
     expect(snapshot['package.json']?.peerDependencies?.constructs).toMatch(/^\^10./);
     expect(snapshot['package.json']?.peerDependencies['aws-cdk-lib']).toMatch(/^\^2./);
-    expect(snapshot['package.json']?.devDependencies?.constructs).toMatch(/^\^10./);
-    expect(snapshot['package.json']?.devDependencies['aws-cdk-lib']).toMatch(/^\^2./);
+    expect(snapshot['package.json']?.devDependencies?.constructs).toMatch(/^10./);
+    expect(snapshot['package.json']?.devDependencies['aws-cdk-lib']).toMatch(/^2./);
     expect(snapshot['package.json']?.devDependencies['@aws-cdk/assertions']).toBeUndefined();
     expect(snapshot['package.json']?.dependencies?.constructs).toBeUndefined();
   });
@@ -75,7 +75,7 @@ describe('constructs dependency selection', () => {
 
     // THEN
     expect(snapshot['package.json']?.peerDependencies?.constructs).toBe('*');
-    expect(snapshot['package.json']?.devDependencies?.constructs).toBeUndefined();
+    expect(snapshot['package.json']?.devDependencies?.constructs).toBe('*');
     expect(snapshot['package.json']?.dependencies?.constructs).toBeUndefined();
   });
 });
