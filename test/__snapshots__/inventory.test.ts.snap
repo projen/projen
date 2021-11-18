@@ -1162,7 +1162,7 @@ Array [
         "switch": "cdkout",
       },
       Object {
-        "default": "\\"1.95.2\\"",
+        "default": "\\"1.129.0\\"",
         "docs": "AWS CDK version to use.",
         "featured": true,
         "fullType": Object {
@@ -3603,7 +3603,7 @@ Array [
         "switch": "cdk-test-dependencies",
       },
       Object {
-        "default": "\\"1.95.2\\"",
+        "default": "\\"1.129.0\\"",
         "docs": "Minimum target version this library is tested against.",
         "featured": true,
         "fullType": Object {
