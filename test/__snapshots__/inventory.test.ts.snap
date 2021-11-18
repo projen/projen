@@ -3581,7 +3581,7 @@ Array [
         "switch": "cdk-test-dependencies",
       },
       Object {
-        "default": "\\"v1.129.0\\"",
+        "default": "\\"1.129.0\\"",
         "docs": "Minimum target version this library is tested against.",
         "featured": true,
         "fullType": Object {
