@@ -145,6 +145,14 @@ export interface ReleaseProjectOptions {
    * @default - no prefix
    */
   readonly releaseTagPrefix?: string;
+
+  /**
+   * Custom configuration used when creating changelog with standard-version package.
+   * Given values either append to default configuration or overwrite values in it.
+   *
+   * @default - standard configuration applicable for GitHub repositories
+   */
+  readonly versionrcOptions?: Record<string, any>;
 }
 
 /**
@@ -242,6 +250,7 @@ export class Release extends Component {
     this.version = new Version(project, {
       versionInputFile: this.versionFile,
       artifactsDirectory: this.artifactsDirectory,
+      versionrcOptions: options.versionrcOptions,
     });
 
     this.publisher = new Publisher(project, {

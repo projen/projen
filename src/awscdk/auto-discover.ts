@@ -18,11 +18,6 @@ export interface AutoDiscoverOptions {
    * Project source tree (relative to project output directory).
    */
   readonly srcdir: string;
-
-  /**
-    * Output directory (where .js files go).
-    */
-  readonly libdir: string;
 }
 
 /**
@@ -30,25 +25,19 @@ export interface AutoDiscoverOptions {
  * the source directory of the project.
  */
 export class AutoDiscover extends Component {
-  private readonly options: AutoDiscoverOptions;
+
 
   constructor(project: Project, options: AutoDiscoverOptions) {
     super(project);
 
-    this.options = options;
-  }
-
-  public preSynthesize() {
     const entrypoints = glob.sync(`**/*${TYPESCRIPT_LAMBDA_EXT}`, {
-      cwd: join(this.project.outdir, this.options.srcdir),
+      cwd: join(this.project.outdir, options.srcdir),
     });
 
     for (const entrypoint of entrypoints) {
       new LambdaFunction(this.project, {
-        libdir: this.options.libdir,
-        srcdir: this.options.srcdir,
-        entrypoint: join(this.options.srcdir, entrypoint),
-        ...this.options.lambdaOptions,
+        entrypoint: join(options.srcdir, entrypoint),
+        ...options.lambdaOptions,
       });
     }
   }

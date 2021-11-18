@@ -3,7 +3,7 @@ import { AutoMerge, DependabotOptions, GitIdentity, TaskWorkflow } from './githu
 import { DEFAULT_GITHUB_ACTIONS_USER } from './github/constants';
 import { JobPermission, JobStep } from './github/workflows-model';
 import { IgnoreFile } from './ignore-file';
-import { Bundler, BundlerCommonOptions, Projenrc, ProjenrcOptions } from './javascript';
+import { Bundler, BundlerOptions, Projenrc, ProjenrcOptions } from './javascript';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
 import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
@@ -274,7 +274,7 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
   /**
    * Options for `Bundler`.
    */
-  readonly bundlerOptions?: BundlerCommonOptions;
+  readonly bundlerOptions?: BundlerOptions;
 }
 
 /**
@@ -627,6 +627,7 @@ export class NodeProject extends GitHubProject {
           codeArtifactOptions: {
             accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret,
             secretAccessKeySecret: options.codeArtifactOptions?.secretAccessKeySecret,
+            roleToAssume: options.codeArtifactOptions?.roleToAssume,
           },
         });
       }

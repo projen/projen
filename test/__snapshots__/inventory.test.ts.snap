@@ -1108,9 +1108,9 @@ Array [
       Object {
         "docs": "Options for \`Bundler\`.",
         "featured": false,
-        "fqn": "projen.javascript.BundlerCommonOptions",
+        "fqn": "projen.javascript.BundlerOptions",
         "fullType": Object {
-          "fqn": "projen.javascript.BundlerCommonOptions",
+          "fqn": "projen.javascript.BundlerOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -1120,7 +1120,7 @@ Array [
         "path": Array [
           "bundlerOptions",
         ],
-        "simpleType": "BundlerCommonOptions",
+        "simpleType": "BundlerOptions",
         "switch": "bundler-options",
       },
       Object {
@@ -3071,6 +3071,28 @@ Array [
         "switch": "typescript-version",
       },
       Object {
+        "default": "- standard configuration applicable for GitHub repositories",
+        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "versionrcOptions",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "versionrcOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "versionrc-options",
+      },
+      Object {
         "default": "true",
         "docs": "Enable VSCode integration.",
         "featured": false,
@@ -3470,9 +3492,9 @@ Array [
       Object {
         "docs": "Options for \`Bundler\`.",
         "featured": false,
-        "fqn": "projen.javascript.BundlerCommonOptions",
+        "fqn": "projen.javascript.BundlerOptions",
         "fullType": Object {
-          "fqn": "projen.javascript.BundlerCommonOptions",
+          "fqn": "projen.javascript.BundlerOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -3482,7 +3504,7 @@ Array [
         "path": Array [
           "bundlerOptions",
         ],
-        "simpleType": "BundlerCommonOptions",
+        "simpleType": "BundlerOptions",
         "switch": "bundler-options",
       },
       Object {
@@ -5650,6 +5672,28 @@ added, set to the exact version configrued here.",
         "switch": "typescript-version",
       },
       Object {
+        "default": "- standard configuration applicable for GitHub repositories",
+        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "versionrcOptions",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "versionrcOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "versionrc-options",
+      },
+      Object {
         "default": "true",
         "docs": "Enable VSCode integration.",
         "featured": false,
@@ -6034,9 +6078,9 @@ added, set to the exact version configrued here.",
       Object {
         "docs": "Options for \`Bundler\`.",
         "featured": false,
-        "fqn": "projen.javascript.BundlerCommonOptions",
+        "fqn": "projen.javascript.BundlerOptions",
         "fullType": Object {
-          "fqn": "projen.javascript.BundlerCommonOptions",
+          "fqn": "projen.javascript.BundlerOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -6046,7 +6090,7 @@ added, set to the exact version configrued here.",
         "path": Array [
           "bundlerOptions",
         ],
-        "simpleType": "BundlerCommonOptions",
+        "simpleType": "BundlerOptions",
         "switch": "bundler-options",
       },
       Object {
@@ -7967,6 +8011,28 @@ added, set to the exact version configrued here.",
         "switch": "typescript-version",
       },
       Object {
+        "default": "- standard configuration applicable for GitHub repositories",
+        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "versionrcOptions",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "versionrcOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "versionrc-options",
+      },
+      Object {
         "default": "true",
         "docs": "Enable VSCode integration.",
         "featured": false,
@@ -8366,9 +8432,9 @@ added, set to the exact version configrued here.",
       Object {
         "docs": "Options for \`Bundler\`.",
         "featured": false,
-        "fqn": "projen.javascript.BundlerCommonOptions",
+        "fqn": "projen.javascript.BundlerOptions",
         "fullType": Object {
-          "fqn": "projen.javascript.BundlerCommonOptions",
+          "fqn": "projen.javascript.BundlerOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -8378,7 +8444,7 @@ added, set to the exact version configrued here.",
         "path": Array [
           "bundlerOptions",
         ],
-        "simpleType": "BundlerCommonOptions",
+        "simpleType": "BundlerOptions",
         "switch": "bundler-options",
       },
       Object {
@@ -10483,6 +10549,28 @@ added, set to the exact version configrued here.",
         "switch": "typescript-version",
       },
       Object {
+        "default": "- standard configuration applicable for GitHub repositories",
+        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "versionrcOptions",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "versionrcOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "versionrc-options",
+      },
+      Object {
         "default": "true",
         "docs": "Enable VSCode integration.",
         "featured": false,
@@ -10882,9 +10970,9 @@ added, set to the exact version configrued here.",
       Object {
         "docs": "Options for \`Bundler\`.",
         "featured": false,
-        "fqn": "projen.javascript.BundlerCommonOptions",
+        "fqn": "projen.javascript.BundlerOptions",
         "fullType": Object {
-          "fqn": "projen.javascript.BundlerCommonOptions",
+          "fqn": "projen.javascript.BundlerOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -10894,7 +10982,7 @@ added, set to the exact version configrued here.",
         "path": Array [
           "bundlerOptions",
         ],
-        "simpleType": "BundlerCommonOptions",
+        "simpleType": "BundlerOptions",
         "switch": "bundler-options",
       },
       Object {
@@ -12914,6 +13002,28 @@ added, set to the exact version configrued here.",
         "switch": "typescript-version",
       },
       Object {
+        "default": "- standard configuration applicable for GitHub repositories",
+        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "versionrcOptions",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "versionrcOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "versionrc-options",
+      },
+      Object {
         "default": "true",
         "docs": "Enable VSCode integration.",
         "featured": false,
@@ -14002,9 +14112,9 @@ added, set to the exact version configrued here.",
       Object {
         "docs": "Options for \`Bundler\`.",
         "featured": false,
-        "fqn": "projen.javascript.BundlerCommonOptions",
+        "fqn": "projen.javascript.BundlerOptions",
         "fullType": Object {
-          "fqn": "projen.javascript.BundlerCommonOptions",
+          "fqn": "projen.javascript.BundlerOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -14014,7 +14124,7 @@ added, set to the exact version configrued here.",
         "path": Array [
           "bundlerOptions",
         ],
-        "simpleType": "BundlerCommonOptions",
+        "simpleType": "BundlerOptions",
         "switch": "bundler-options",
       },
       Object {
@@ -15999,6 +16109,28 @@ added, set to the exact version configrued here.",
         "switch": "typescript-version",
       },
       Object {
+        "default": "- standard configuration applicable for GitHub repositories",
+        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "versionrcOptions",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "versionrcOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "versionrc-options",
+      },
+      Object {
         "default": "true",
         "docs": "Enable VSCode integration.",
         "featured": false,
@@ -16383,9 +16515,9 @@ added, set to the exact version configrued here.",
       Object {
         "docs": "Options for \`Bundler\`.",
         "featured": false,
-        "fqn": "projen.javascript.BundlerCommonOptions",
+        "fqn": "projen.javascript.BundlerOptions",
         "fullType": Object {
-          "fqn": "projen.javascript.BundlerCommonOptions",
+          "fqn": "projen.javascript.BundlerOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -16395,7 +16527,7 @@ added, set to the exact version configrued here.",
         "path": Array [
           "bundlerOptions",
         ],
-        "simpleType": "BundlerCommonOptions",
+        "simpleType": "BundlerOptions",
         "switch": "bundler-options",
       },
       Object {
@@ -17936,6 +18068,28 @@ added, set to the exact version configrued here.",
         "switch": "tailwind",
       },
       Object {
+        "default": "- standard configuration applicable for GitHub repositories",
+        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "versionrcOptions",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "versionrcOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "versionrc-options",
+      },
+      Object {
         "default": "true",
         "docs": "Enable VSCode integration.",
         "featured": false,
@@ -18320,9 +18474,9 @@ added, set to the exact version configrued here.",
       Object {
         "docs": "Options for \`Bundler\`.",
         "featured": false,
-        "fqn": "projen.javascript.BundlerCommonOptions",
+        "fqn": "projen.javascript.BundlerOptions",
         "fullType": Object {
-          "fqn": "projen.javascript.BundlerCommonOptions",
+          "fqn": "projen.javascript.BundlerOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -18332,7 +18486,7 @@ added, set to the exact version configrued here.",
         "path": Array [
           "bundlerOptions",
         ],
-        "simpleType": "BundlerCommonOptions",
+        "simpleType": "BundlerOptions",
         "switch": "bundler-options",
       },
       Object {
@@ -20135,6 +20289,28 @@ added, set to the exact version configrued here.",
         "switch": "typescript-version",
       },
       Object {
+        "default": "- standard configuration applicable for GitHub repositories",
+        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "versionrcOptions",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "versionrcOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "versionrc-options",
+      },
+      Object {
         "default": "true",
         "docs": "Enable VSCode integration.",
         "featured": false,
@@ -20502,9 +20678,9 @@ added, set to the exact version configrued here.",
       Object {
         "docs": "Options for \`Bundler\`.",
         "featured": false,
-        "fqn": "projen.javascript.BundlerCommonOptions",
+        "fqn": "projen.javascript.BundlerOptions",
         "fullType": Object {
-          "fqn": "projen.javascript.BundlerCommonOptions",
+          "fqn": "projen.javascript.BundlerOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -20514,7 +20690,7 @@ added, set to the exact version configrued here.",
         "path": Array [
           "bundlerOptions",
         ],
-        "simpleType": "BundlerCommonOptions",
+        "simpleType": "BundlerOptions",
         "switch": "bundler-options",
       },
       Object {
@@ -22004,6 +22180,28 @@ added, set to the exact version configrued here.",
         "switch": "stale-options",
       },
       Object {
+        "default": "- standard configuration applicable for GitHub repositories",
+        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "versionrcOptions",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "versionrcOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "versionrc-options",
+      },
+      Object {
         "default": "true",
         "docs": "Enable VSCode integration.",
         "featured": false,
@@ -23284,9 +23482,9 @@ added, set to the exact version configrued here.",
       Object {
         "docs": "Options for \`Bundler\`.",
         "featured": false,
-        "fqn": "projen.javascript.BundlerCommonOptions",
+        "fqn": "projen.javascript.BundlerOptions",
         "fullType": Object {
-          "fqn": "projen.javascript.BundlerCommonOptions",
+          "fqn": "projen.javascript.BundlerOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -23296,7 +23494,7 @@ added, set to the exact version configrued here.",
         "path": Array [
           "bundlerOptions",
         ],
-        "simpleType": "BundlerCommonOptions",
+        "simpleType": "BundlerOptions",
         "switch": "bundler-options",
       },
       Object {
@@ -24842,6 +25040,28 @@ added, set to the exact version configrued here.",
         "switch": "stale-options",
       },
       Object {
+        "default": "- standard configuration applicable for GitHub repositories",
+        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "versionrcOptions",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "versionrcOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "versionrc-options",
+      },
+      Object {
         "default": "true",
         "docs": "Enable VSCode integration.",
         "featured": false,
@@ -25209,9 +25429,9 @@ added, set to the exact version configrued here.",
       Object {
         "docs": "Options for \`Bundler\`.",
         "featured": false,
-        "fqn": "projen.javascript.BundlerCommonOptions",
+        "fqn": "projen.javascript.BundlerOptions",
         "fullType": Object {
-          "fqn": "projen.javascript.BundlerCommonOptions",
+          "fqn": "projen.javascript.BundlerOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -25221,7 +25441,7 @@ added, set to the exact version configrued here.",
         "path": Array [
           "bundlerOptions",
         ],
-        "simpleType": "BundlerCommonOptions",
+        "simpleType": "BundlerOptions",
         "switch": "bundler-options",
       },
       Object {
@@ -27029,6 +27249,28 @@ added, set to the exact version configrued here.",
         "switch": "typescript-version",
       },
       Object {
+        "default": "- standard configuration applicable for GitHub repositories",
+        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "versionrcOptions",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "versionrcOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "versionrc-options",
+      },
+      Object {
         "default": "true",
         "docs": "Enable VSCode integration.",
         "featured": false,
@@ -27396,9 +27638,9 @@ added, set to the exact version configrued here.",
       Object {
         "docs": "Options for \`Bundler\`.",
         "featured": false,
-        "fqn": "projen.javascript.BundlerCommonOptions",
+        "fqn": "projen.javascript.BundlerOptions",
         "fullType": Object {
-          "fqn": "projen.javascript.BundlerCommonOptions",
+          "fqn": "projen.javascript.BundlerOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -27408,7 +27650,7 @@ added, set to the exact version configrued here.",
         "path": Array [
           "bundlerOptions",
         ],
-        "simpleType": "BundlerCommonOptions",
+        "simpleType": "BundlerOptions",
         "switch": "bundler-options",
       },
       Object {
@@ -29192,6 +29434,28 @@ added, set to the exact version configrued here.",
         ],
         "simpleType": "string",
         "switch": "typescript-version",
+      },
+      Object {
+        "default": "- standard configuration applicable for GitHub repositories",
+        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "versionrcOptions",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "versionrcOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "versionrc-options",
       },
       Object {
         "default": "true",
@@ -29561,9 +29825,9 @@ added, set to the exact version configrued here.",
       Object {
         "docs": "Options for \`Bundler\`.",
         "featured": false,
-        "fqn": "projen.javascript.BundlerCommonOptions",
+        "fqn": "projen.javascript.BundlerOptions",
         "fullType": Object {
-          "fqn": "projen.javascript.BundlerCommonOptions",
+          "fqn": "projen.javascript.BundlerOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -29573,7 +29837,7 @@ added, set to the exact version configrued here.",
         "path": Array [
           "bundlerOptions",
         ],
-        "simpleType": "BundlerCommonOptions",
+        "simpleType": "BundlerOptions",
         "switch": "bundler-options",
       },
       Object {
@@ -31357,6 +31621,28 @@ added, set to the exact version configrued here.",
         ],
         "simpleType": "string",
         "switch": "typescript-version",
+      },
+      Object {
+        "default": "- standard configuration applicable for GitHub repositories",
+        "docs": "Custom configuration used when creating changelog with standard-version package.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "versionrcOptions",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "versionrcOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "versionrc-options",
       },
       Object {
         "default": "true",

@@ -486,8 +486,9 @@ export class Project {
       return path.resolve(this.parent.outdir, outdirOption);
     }
 
-    // if this is running inside a test, use a temp directory (unless cwd is aleady under tmp)
-    if (IS_TEST_RUN) {
+    // if this is running inside a test and outdir is not explicitly set
+    // use a temp directory (unless cwd is aleady under tmp)
+    if (IS_TEST_RUN && !outdirOption) {
       const realCwd = realpathSync(process.cwd());
       const realTmp = realpathSync(tmpdir());
 

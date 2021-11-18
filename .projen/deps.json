@@ -1,6 +1,10 @@
 {
   "dependencies": [
     {
+      "name": "@types/conventional-changelog-config-spec",
+      "type": "build"
+    },
+    {
       "name": "@types/fs-extra",
       "version": "^8",
       "type": "build"
@@ -119,6 +123,10 @@
     },
     {
       "name": "chalk",
+      "type": "bundled"
+    },
+    {
+      "name": "conventional-changelog-config-spec",
       "type": "bundled"
     },
     {

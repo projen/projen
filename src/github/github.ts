@@ -3,6 +3,7 @@ import { Project } from '../project';
 import { Dependabot, DependabotOptions } from './dependabot';
 import { Mergify, MergifyOptions } from './mergify';
 import { PullRequestTemplate } from './pr-template';
+import { PullRequestLint, PullRequestLintOptions } from './pull-request-lint';
 import { GithubWorkflow } from './workflows';
 
 export interface GitHubOptions {
@@ -26,6 +27,21 @@ export interface GitHubOptions {
    * @default true
    */
   readonly workflows?: boolean;
+
+  /**
+   * Add a workflow that performs basic checks for pull requests, like
+   * validating that PRs follow Conventional Commits.
+   *
+   * @default true
+   */
+  readonly pullRequestLint?: boolean;
+
+  /**
+   * Options for configuring a pull request linter.
+   *
+   * @default - see defaults in `PullRequestLintOptions`
+   */
+  readonly pullRequestLintOptions?: PullRequestLintOptions;
 }
 
 export class GitHub extends Component {
@@ -50,6 +66,10 @@ export class GitHub extends Component {
 
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this, options.mergifyOptions);
+    }
+
+    if (options.pullRequestLint ?? true) {
+      new PullRequestLint(this, options.pullRequestLintOptions);
     }
   }
 

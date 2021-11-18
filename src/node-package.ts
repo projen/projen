@@ -307,6 +307,14 @@ export interface CodeArtifactOptions {
     * @default "AWS_SECRET_ACCESS_KEY"
     */
   readonly secretAccessKeySecret?: string;
+
+  /**
+    * ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact
+    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+    *
+    * @default undefined
+    */
+  readonly roleToAssume?: string;
 }
 
 /**
@@ -762,8 +770,10 @@ export class NodePackage extends Component {
         throw new Error('"npmTokenSecret" must not be specified when publishing AWS CodeArtifact.');
       }
     } else {
-      if (options.codeArtifactOptions?.accessKeyIdSecret || options.codeArtifactOptions?.secretAccessKeySecret) {
-        throw new Error('"codeArtifactOptions.accessKeyIdSecret" and "codeArtifactOptions.secretAccessKeySecret" must only be specified when publishing AWS CodeArtifact.');
+      if (options.codeArtifactOptions?.accessKeyIdSecret ||
+        options.codeArtifactOptions?.secretAccessKeySecret ||
+        options.codeArtifactOptions?.roleToAssume) {
+        throw new Error('codeArtifactOptions must only be specified when publishing AWS CodeArtifact.');
       }
     }
 
@@ -773,6 +783,7 @@ export class NodePackage extends Component {
       codeArtifactOptions = {
         accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID',
         secretAccessKeySecret: options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY',
+        roleToAssume: options.codeArtifactOptions?.roleToAssume,
       };
     }
 

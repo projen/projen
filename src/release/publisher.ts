@@ -205,6 +205,7 @@ export class Publisher extends Component {
         // if we are publishing to AWS CodeArtifact, pass AWS access keys that will be used to generate NPM_TOKEN using AWS CLI.
         AWS_ACCESS_KEY_ID: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID') : undefined,
         AWS_SECRET_ACCESS_KEY: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY') : undefined,
+        AWS_ROLE_TO_ASSUME: isAwsCodeArtifact ? options.codeArtifactOptions?.roleToAssume : undefined,
       },
     });
   }
@@ -507,6 +508,14 @@ export interface CodeArtifactOptions {
     * @default "AWS_SECRET_ACCESS_KEY"
     */
   readonly secretAccessKeySecret?: string;
+
+  /**
+    * ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact
+    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+    *
+    * @default undefined
+    */
+  readonly roleToAssume?: string;
 }
 
 /**

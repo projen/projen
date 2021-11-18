@@ -15,6 +15,7 @@ const project = new JsiiProject({
   ],
 
   bundledDeps: [
+    'conventional-changelog-config-spec',
     'yaml',
     'fs-extra',
     'yargs',
@@ -29,6 +30,7 @@ const project = new JsiiProject({
   ],
 
   devDeps: [
+    '@types/conventional-changelog-config-spec',
     '@types/fs-extra@^8',
     '@types/yargs',
     '@types/glob',

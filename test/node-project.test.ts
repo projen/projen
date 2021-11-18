@@ -486,14 +486,31 @@ describe('npm publishing options', () => {
           accessKeyIdSecret: 'INVALID_AWS_ACCESS_KEY_ID',
         },
       });
-    }).toThrow('"codeArtifactOptions.accessKeyIdSecret" and "codeArtifactOptions.secretAccessKeySecret" must only be specified when publishing AWS CodeArtifact.');
+    }).toThrow('codeArtifactOptions must only be specified when publishing AWS CodeArtifact.');
     expect(() => {
       new NodePackage(project, {
         codeArtifactOptions: {
           secretAccessKeySecret: 'INVALID_AWS_SECRET_ACCESS_KEY',
         },
       });
-    }).toThrow('"codeArtifactOptions.accessKeyIdSecret" and "codeArtifactOptions.secretAccessKeySecret" must only be specified when publishing AWS CodeArtifact.');
+    }).toThrow('codeArtifactOptions must only be specified when publishing AWS CodeArtifact.');
+  });
+
+  test('AWS CodeArtifact registry role to assume', () => {
+    // GIVEN
+    const project = new TestProject();
+    const roleArn = 'role-arn';
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      npmRegistryUrl: 'https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+      codeArtifactOptions: {
+        roleToAssume: roleArn,
+      },
+    });
+
+    // THEN
+    expect(npm.codeArtifactOptions?.roleToAssume).toStrictEqual(roleArn);
   });
 
   test('deprecated npmRegistry can be used instead of npmRegistryUrl and then https:// is assumed', () => {

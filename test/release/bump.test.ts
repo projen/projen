@@ -159,6 +159,19 @@ test('bump fails due to crossing major version', async () => {
   await expect(promise).rejects.toThrow(/bump failed: this branch is configured to only publish v1 releases - bump resulted in 2.0.0/);
 });
 
+test('customization to versionrc reflects to changelog', async () => {
+  const commits = [
+    { message: 'first version', tag: 'v1.1.0' },
+    { message: 'fix: bug' },
+  ];
+  const result = await testBump({
+    options: { versionrcOptions: { compareUrlFormat: 'testCompareUrl' } },
+    commits,
+  });
+
+  await expect(result.changelog).toContain('testCompareUrl');
+});
+
 //----------------------------------------------------------------------------------------------------------------------------------
 
 async function testBump(opts: { options?: Partial<BumpOptions>; commits?: { message: string; tag?: string }[] } = { }) {

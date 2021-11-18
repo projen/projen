@@ -63,6 +63,7 @@ Name|Description
 [github.GitHub](#projen-github-github)|*No description*
 [github.GithubWorkflow](#projen-github-githubworkflow)|Workflow for GitHub.
 [github.Mergify](#projen-github-mergify)|*No description*
+[github.PullRequestLint](#projen-github-pullrequestlint)|Configure validations to run on GitHub pull requests.
 [github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
 [github.Stale](#projen-github-stale)|Warns and then closes issues and PRs that have had no activity for a specified amount of time.
 [github.TaskWorkflow](#projen-github-taskworkflow)|A GitHub workflow for common build tasks within a project.
@@ -197,7 +198,9 @@ Name|Description
 [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
+[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)|Options for PullRequestLint.
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
+[github.SemanticTitleOptions](#projen-github-semantictitleoptions)|Options for linting that PR titles follow Conventional Commits.
 [github.StaleBehavior](#projen-github-stalebehavior)|Stale behavior.
 [github.StaleOptions](#projen-github-staleoptions)|Options for `Stale`.
 [github.TaskWorkflowOptions](#projen-github-taskworkflowoptions)|*No description*
@@ -211,9 +214,10 @@ Name|Description
 [java.PluginOptions](#projen-java-pluginoptions)|Options for Maven plugins.
 [java.PomOptions](#projen-java-pomoptions)|Options for `Pom`.
 [java.ProjenrcOptions](#projen-java-projenrcoptions)|Options for `Projenrc`.
-[javascript.BundleOptions](#projen-javascript-bundleoptions)|Options for bundling.
-[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)|Common options for `Bundler`.
+[javascript.AddBundleOptions](#projen-javascript-addbundleoptions)|Options for `addBundle()`.
+[javascript.Bundle](#projen-javascript-bundle)|*No description*
 [javascript.BundlerOptions](#projen-javascript-bundleroptions)|Options for `Bundler`.
+[javascript.BundlingOptions](#projen-javascript-bundlingoptions)|Options for bundling.
 [javascript.NpmConfigOptions](#projen-javascript-npmconfigoptions)|Options to configure the local NPM config.
 [javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)|*No description*
 [json.ProjenrcOptions](#projen-json-projenrcoptions)|*No description*
@@ -401,12 +405,13 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -611,12 +616,13 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -788,12 +794,13 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -1018,12 +1025,13 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -1172,12 +1180,13 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -1339,12 +1348,13 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -1513,12 +1523,13 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -2585,12 +2596,13 @@ new JsiiProject(options: JsiiProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -3338,12 +3350,13 @@ new NodeProject(options: NodeProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -4502,12 +4515,13 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -4642,12 +4656,13 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -4782,12 +4797,13 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -5028,6 +5044,7 @@ new Version(project: Project, options: VersionOptions)
 * **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
   * **artifactsDirectory** (<code>string</code>)  The name of the directory into which `changelog.md` and `version.txt` files are emitted. 
   * **versionInputFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration for versionrc file used by standard-release. __*Optional*__
 
 
 
@@ -5156,24 +5173,8 @@ new awscdk.AutoDiscover(project: Project, options: AutoDiscoverOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[awscdk.AutoDiscoverOptions](#projen-awscdk-autodiscoveroptions)</code>)  *No description*
-  * **libdir** (<code>string</code>)  Output directory (where .js files go). 
   * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
   * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for auto-discovery of AWS Lambda functions. __*Optional*__
-
-
-### Methods
-
-
-#### preSynthesize()🔹 <a id="projen-awscdk-autodiscover-presynthesize"></a>
-
-Called before synthesis.
-
-```ts
-preSynthesize(): void
-```
-
-
-
 
 
 
@@ -5373,22 +5374,12 @@ new awscdk.LambdaFunction(project: Project, options: LambdaFunctionOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  The project to use.
 * **options** (<code>[awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)</code>)  Options.
-  * **externals** (<code>Array<string></code>)  Names of modules which should not be included in the bundle. __*Default*__: by default, the "aws-sdk" module will be excluded from the bundle. Note that if you use this option you will need to add "aws-sdk" explicitly.
+  * **bundlingOptions** (<code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code>)  Bundling options for this AWS Lambda function. __*Default*__: defaults
   * **runtime** (<code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code>)  The node.js version to target. __*Default*__: Runtime.NODEJS_14_X
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function). 
-  * **libdir** (<code>string</code>)  JavaScript output directory (where .js files go). 
-  * **srcdir** (<code>string</code>)  Project source directory tree (where .ts files live). 
   * **constructFile** (<code>string</code>)  The name of the generated TypeScript source file. __*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
   * **constructName** (<code>string</code>)  The name of the generated `lambda.Function` subclass. __*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**bundleTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The bundle task for this function.
 
 
 
@@ -5711,6 +5702,8 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 * **options** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for Mergify. __*Default*__: default options
+  * **pullRequestLint** (<code>boolean</code>)  Add a workflow that performs basic checks for pull requests, like validating that PRs follow Conventional Commits. __*Default*__: true
+  * **pullRequestLintOptions** (<code>[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)</code>)  Options for configuring a pull request linter. __*Default*__: see defaults in `PullRequestLintOptions`
   * **workflows** (<code>boolean</code>)  Enables GitHub workflows. __*Default*__: true
 
 
@@ -5925,6 +5918,33 @@ addRule(rule: MergifyRule): void
   * **name** (<code>string</code>)  The name of the rule. 
 
 
+
+
+
+
+## class PullRequestLint 🔹 <a id="projen-github-pullrequestlint"></a>
+
+Configure validations to run on GitHub pull requests.
+
+Only generates a file if at least one linter is configured.
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.PullRequestLint(github: GitHub, options?: PullRequestLintOptions)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **options** (<code>[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)</code>)  *No description*
+  * **semanticTitle** (<code>boolean</code>)  Validate that pull request titles follow Conventional Commits. __*Default*__: true
+  * **semanticTitleOptions** (<code>[github.SemanticTitleOptions](#projen-github-semantictitleoptions)</code>)  Options for validating the conventional commit title linter. __*Default*__: title must start with "feat", "fix", or "chore"
 
 
 
@@ -6408,6 +6428,8 @@ Name | Type | Description
 
 Adds support for bundling JavaScript applications and dependencies into a single file.
 
+In the future, this will also supports bundling websites.
+
 __Submodule__: javascript
 
 __Extends__: [Component](#projen-component)
@@ -6423,6 +6445,7 @@ new javascript.Bundler(project: Project, options?: BundlerOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  *No description*
+  * **assetsDir** (<code>string</code>)  Output directory for all bundles. __*Default*__: "assets"
   * **esbuildVersion** (<code>string</code>)  The semantic version requirement for `esbuild`. __*Default*__: no specific version (implies latest)
 
 
@@ -6433,31 +6456,30 @@ new javascript.Bundler(project: Project, options?: BundlerOptions)
 Name | Type | Description 
 -----|------|-------------
 **bundleTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Gets or creates the singleton "bundle" task of the project.
-**esbuildVersion**?🔹 | <code>string</code> | __*Optional*__
+**bundledir**🔹 | <code>string</code> | Root bundle directory.
+**esbuildVersion**?🔹 | <code>string</code> | The semantic version requirement for `esbuild` (if defined).<br/>__*Optional*__
 
 ### Methods
 
 
-#### addBundle(name, options)🔹 <a id="projen-javascript-bundler-addbundle"></a>
+#### addBundle(entrypoint, options)🔹 <a id="projen-javascript-bundler-addbundle"></a>
 
 Adds a task to the project which bundles a specific entrypoint and all of its dependencies into a single javascript output file.
 
 ```ts
-addBundle(name: string, options: BundleOptions): Task
+addBundle(entrypoint: string, options: AddBundleOptions): Bundle
 ```
 
-* **name** (<code>string</code>)  The name of the artifact (the task will be named `bundle:$name`).
-* **options** (<code>[javascript.BundleOptions](#projen-javascript-bundleoptions)</code>)  Bundling options.
-  * **entrypoint** (<code>string</code>)  The entrypoint of the code you wish to bundle. 
-  * **outfile** (<code>string</code>)  This option sets the output file name for the build operation. 
+* **entrypoint** (<code>string</code>)  *No description*
+* **options** (<code>[javascript.AddBundleOptions](#projen-javascript-addbundleoptions)</code>)  Bundling options.
+  * **externals** (<code>Array<string></code>)  You can mark a file or a package as external to exclude it from your build. __*Default*__: []
+  * **sourcemap** (<code>boolean</code>)  Include a source map in the bundle. __*Default*__: false
+  * **watchTask** (<code>boolean</code>)  In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag. __*Default*__: true
   * **platform** (<code>string</code>)  esbuild platform. 
   * **target** (<code>string</code>)  esbuild target. 
-  * **externals** (<code>Array<string></code>)  You can mark a file or a package as external to exclude it from your build. __*Default*__: []
-  * **sourcemap** (<code>boolean</code>)  Include a source map in the bundle. __*Default*__: true
-  * **watchTask** (<code>boolean</code>)  In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag. __*Default*__: true
 
 __Returns__:
-* <code>[tasks.Task](#projen-tasks-task)</code>
+* <code>[javascript.Bundle](#projen-javascript-bundle)</code>
 
 #### *static* of(project)🔹 <a id="projen-javascript-bundler-of"></a>
 
@@ -7399,6 +7421,7 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **branch** (<code>string</code>)  The default branch name to release from. 
   * **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The task to execute in order to create the release artifacts. 
@@ -8243,12 +8266,13 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -8382,12 +8406,13 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -8594,12 +8619,13 @@ new web.ReactProject(options: ReactProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -8774,12 +8800,13 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -8905,7 +8932,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?🔹 | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **cdkAssert**?🔹 | <code>boolean</code> | Install the @aws-cdk/assert library?<br/>__*Default*__: true
 **cdkDependencies**?🔹 | <code>Array<string></code> | Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed?<br/>__*Optional*__
@@ -9022,6 +9049,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -9058,7 +9086,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?🔹 | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **cdkDependencies**?🔹 | <code>Array<string></code> | Which AWS CDK modules (those that start with "@aws-cdk/") this app uses.<br/>__*Optional*__
 **cdkVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Default*__: false
 **cdkout**?🔹 | <code>string</code> | cdk.out directory.<br/>__*Default*__: "cdk.out"
@@ -9164,6 +9192,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -9214,7 +9243,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?🔹 | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **cdk8sCliVersion**?🔹 | <code>string</code> | cdk8s-cli version.<br/>__*Default*__: "cdk8sVersion"
 **cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s-cli.<br/>__*Default*__: false
 **cdk8sPlusVersion**?🔹 | <code>string</code> | cdk8s-plus-17 version.<br/>__*Default*__: "cdk8sVersion"
@@ -9319,6 +9348,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -9337,6 +9367,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **accessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**roleToAssume**?🔹 | <code>string</code> | ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).<br/>__*Default*__: undefined
 **secretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 
 
@@ -9371,7 +9402,7 @@ Name | Type | Description
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?⚠️ | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?⚠️ | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?⚠️ | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **catalog**?⚠️ | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **cdkAssert**?⚠️ | <code>boolean</code> | Install the @aws-cdk/assert library?<br/>__*Default*__: true
 **cdkDependencies**?⚠️ | <code>Array<string></code> | Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed?<br/>__*Optional*__
@@ -9488,6 +9519,7 @@ Name | Type | Description
 **tsconfigDev**?⚠️ | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?⚠️ | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?⚠️ | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?⚠️ | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?⚠️ | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -9526,7 +9558,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?🔹 | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **cdk8sPlusVersion**?🔹 | <code>string</code> | cdk8s-plus-17 version.<br/>__*Default*__: "cdk8sVersion"
 **cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
@@ -9640,6 +9672,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -9678,7 +9711,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?🔹 | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
@@ -9787,6 +9820,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -9824,7 +9858,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?🔹 | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
@@ -9933,6 +9967,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -10659,7 +10694,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?🔹 | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
@@ -10767,6 +10802,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -10946,7 +10982,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?🔹 | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
@@ -11027,6 +11063,7 @@ Name | Type | Description
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -11296,7 +11333,7 @@ Name | Type | Description
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?⚠️ | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?⚠️ | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?⚠️ | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?⚠️ | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?⚠️ | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
@@ -11394,6 +11431,7 @@ Name | Type | Description
 **tsconfigDev**?⚠️ | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?⚠️ | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?⚠️ | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?⚠️ | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?⚠️ | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -11428,7 +11466,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?🔹 | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
@@ -11526,6 +11564,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -11600,6 +11639,7 @@ Name | Type | Description
 -----|------|-------------
 **artifactsDirectory**🔹 | <code>string</code> | The name of the directory into which `changelog.md` and `version.txt` files are emitted.
 **versionInputFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration for versionrc file used by standard-release.<br/>__*Optional*__
 
 
 
@@ -11650,7 +11690,6 @@ Options for `AutoDiscover`.
 
 Name | Type | Description 
 -----|------|-------------
-**libdir**🔹 | <code>string</code> | Output directory (where .js files go).
 **srcdir**🔹 | <code>string</code> | Project source tree (relative to project output directory).
 **lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Options for auto-discovery of AWS Lambda functions.<br/>__*Optional*__
 
@@ -11758,7 +11797,7 @@ auto-discovery.
 
 Name | Type | Description 
 -----|------|-------------
-**externals**?🔹 | <code>Array<string></code> | Names of modules which should not be included in the bundle.<br/>__*Default*__: by default, the "aws-sdk" module will be excluded from the bundle. Note that if you use this option you will need to add "aws-sdk" explicitly.
+**bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda function.<br/>__*Default*__: defaults
 **runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
 
 
@@ -11773,11 +11812,9 @@ Options for `Function`.
 Name | Type | Description 
 -----|------|-------------
 **entrypoint**🔹 | <code>string</code> | A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function).
-**libdir**🔹 | <code>string</code> | JavaScript output directory (where .js files go).
-**srcdir**🔹 | <code>string</code> | Project source directory tree (where .ts files live).
+**bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda function.<br/>__*Default*__: defaults
 **constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
 **constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
-**externals**?🔹 | <code>Array<string></code> | Names of modules which should not be included in the bundle.<br/>__*Default*__: by default, the "aws-sdk" module will be excluded from the bundle. Note that if you use this option you will need to add "aws-sdk" explicitly.
 **runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
 
 
@@ -11922,6 +11959,8 @@ Name | Type | Description
 -----|------|-------------
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for Mergify.<br/>__*Default*__: default options
+**pullRequestLint**?🔹 | <code>boolean</code> | Add a workflow that performs basic checks for pull requests, like validating that PRs follow Conventional Commits.<br/>__*Default*__: true
+**pullRequestLintOptions**?🔹 | <code>[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)</code> | Options for configuring a pull request linter.<br/>__*Default*__: see defaults in `PullRequestLintOptions`
 **workflows**?🔹 | <code>boolean</code> | Enables GitHub workflows.<br/>__*Default*__: true
 
 
@@ -11998,6 +12037,20 @@ Name | Type | Description
 
 
 
+## struct PullRequestLintOptions 🔹 <a id="projen-github-pullrequestlintoptions"></a>
+
+
+Options for PullRequestLint.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**semanticTitle**?🔹 | <code>boolean</code> | Validate that pull request titles follow Conventional Commits.<br/>__*Default*__: true
+**semanticTitleOptions**?🔹 | <code>[github.SemanticTitleOptions](#projen-github-semantictitleoptions)</code> | Options for validating the conventional commit title linter.<br/>__*Default*__: title must start with "feat", "fix", or "chore"
+
+
+
 ## struct PullRequestTemplateOptions 🔹 <a id="projen-github-pullrequesttemplateoptions"></a>
 
 
@@ -12008,6 +12061,20 @@ Options for `PullRequestTemplate`.
 Name | Type | Description 
 -----|------|-------------
 **lines**?🔹 | <code>Array<string></code> | The contents of the template.<br/>__*Default*__: a standard default template will be created.
+
+
+
+## struct SemanticTitleOptions 🔹 <a id="projen-github-semantictitleoptions"></a>
+
+
+Options for linting that PR titles follow Conventional Commits.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**requireScope**?🔹 | <code>boolean</code> | Configure that a scope must always be provided.<br/>__*Default*__: false
+**types**?🔹 | <code>Array<string></code> | Configure a list of commit types that are allowed.<br/>__*Default*__: ["feat", "fix", "chore"]
 
 
 
@@ -12288,35 +12355,36 @@ Name | Type | Description
 
 
 
-## struct BundleOptions 🔹 <a id="projen-javascript-bundleoptions"></a>
+## struct AddBundleOptions 🔹 <a id="projen-javascript-addbundleoptions"></a>
 
 
-Options for bundling.
+Options for `addBundle()`.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**entrypoint**🔹 | <code>string</code> | The entrypoint of the code you wish to bundle.
-**outfile**🔹 | <code>string</code> | This option sets the output file name for the build operation.
 **platform**🔹 | <code>string</code> | esbuild platform.
 **target**🔹 | <code>string</code> | esbuild target.
 **externals**?🔹 | <code>Array<string></code> | You can mark a file or a package as external to exclude it from your build.<br/>__*Default*__: []
-**sourcemap**?🔹 | <code>boolean</code> | Include a source map in the bundle.<br/>__*Default*__: true
+**sourcemap**?🔹 | <code>boolean</code> | Include a source map in the bundle.<br/>__*Default*__: false
 **watchTask**?🔹 | <code>boolean</code> | In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag.<br/>__*Default*__: true
 
 
 
-## struct BundlerCommonOptions 🔹 <a id="projen-javascript-bundlercommonoptions"></a>
+## struct Bundle 🔹 <a id="projen-javascript-bundle"></a>
+
+__Obtainable from__: [Bundler](#projen-javascript-bundler).[addBundle](#projen-javascript-bundler#projen-javascript-bundler-addbundle)()
 
 
-Common options for `Bundler`.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**esbuildVersion**?🔹 | <code>string</code> | The semantic version requirement for `esbuild`.<br/>__*Default*__: no specific version (implies latest)
+**bundleTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The task that produces this bundle.
+**outfile**🔹 | <code>string</code> | Location of the output file (relative to project root).
+**watchTask**?🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The "watch" task for this bundle.<br/>__*Optional*__
 
 
 
@@ -12329,7 +12397,23 @@ Options for `Bundler`.
 
 Name | Type | Description 
 -----|------|-------------
+**assetsDir**?🔹 | <code>string</code> | Output directory for all bundles.<br/>__*Default*__: "assets"
 **esbuildVersion**?🔹 | <code>string</code> | The semantic version requirement for `esbuild`.<br/>__*Default*__: no specific version (implies latest)
+
+
+
+## struct BundlingOptions 🔹 <a id="projen-javascript-bundlingoptions"></a>
+
+
+Options for bundling.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**externals**?🔹 | <code>Array<string></code> | You can mark a file or a package as external to exclude it from your build.<br/>__*Default*__: []
+**sourcemap**?🔹 | <code>boolean</code> | Include a source map in the bundle.<br/>__*Default*__: false
+**watchTask**?🔹 | <code>boolean</code> | In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag.<br/>__*Default*__: true
 
 
 
@@ -12735,6 +12819,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **accessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**roleToAssume**?🔹 | <code>string</code> | ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).<br/>__*Default*__: undefined
 **secretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 
 
@@ -12977,6 +13062,7 @@ Name | Type | Description
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 
 
@@ -13005,6 +13091,7 @@ Name | Type | Description
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 
 
@@ -13271,7 +13358,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?🔹 | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
@@ -13355,6 +13442,7 @@ Name | Type | Description
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **tailwind**?🔹 | <code>boolean</code> | Setup Tailwind CSS as a PostCSS plugin.<br/>__*Default*__: true
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -13390,7 +13478,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?🔹 | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
@@ -13489,6 +13577,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -13552,7 +13641,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?🔹 | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
@@ -13636,6 +13725,7 @@ Name | Type | Description
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
@@ -13699,7 +13789,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
-**bundlerOptions**?🔹 | <code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code> | Options for `Bundler`.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
@@ -13798,6 +13888,7 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
