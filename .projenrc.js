@@ -7,7 +7,14 @@ const project = new JsiiProject({
   authorName: 'Elad Ben-Israel',
   authorEmail: 'benisrae@amazon.com',
   stability: 'experimental',
-
+  keywords: [
+    'scaffolding',
+    'cicd',
+    'project',
+    'management',
+    'generator',
+    'cdk',
+  ],
 
   pullRequestTemplateContents: [
     '---',
