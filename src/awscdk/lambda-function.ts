@@ -1,4 +1,4 @@
-import { basename, dirname, extname, join, relative, sep, posix } from 'path';
+import { sep, posix } from 'path';
 import { pascal } from 'case';
 import { Eslint, Project } from '..';
 import { Component } from '../component';
@@ -6,6 +6,8 @@ import { FileBase } from '../file';
 import { Bundler, BundlingOptions } from '../javascript/bundler';
 import { SourceCode } from '../source-code';
 import { TYPESCRIPT_LAMBDA_EXT } from './internal';
+
+const { basename, dirname, extname, join, relative } = posix;
 
 /**
  * Common options for `LambdaFunction`. Applies to all functions in
@@ -104,14 +106,16 @@ export class LambdaFunction extends Component {
     const eslint = Eslint.of(project);
     eslint?.allowDevDeps(options.entrypoint);
 
-    const entrypoint = options.entrypoint;
+    const entrypoint = convertToPosixPath(options.entrypoint);
 
     if (!entrypoint.endsWith(TYPESCRIPT_LAMBDA_EXT)) {
       throw new Error(`${entrypoint} must have a ${TYPESCRIPT_LAMBDA_EXT} extension`);
     }
 
     const basePath = join(dirname(entrypoint), basename(entrypoint, TYPESCRIPT_LAMBDA_EXT));
-    const constructFile = options.constructFile ?? `${basePath}-function.ts`;
+    const constructFile = options.constructFile
+      ? convertToPosixPath(options.constructFile)
+      : `${basePath}-function.ts`;
 
     if (extname(constructFile) !== '.ts') {
       throw new Error(`Construct file name "${constructFile}" must have a .ts extension`);
@@ -134,8 +138,9 @@ export class LambdaFunction extends Component {
     // e.g:
     //  - outfileAbs => `/project-outdir/assets/foo/bar/baz/foo-function/index.js`
     //  - constructAbs => `/project-outdir/src/foo/bar/baz/foo-function.ts`
-    const outfileAbs = join(project.outdir, bundle.outfile);
-    const constructAbs = join(project.outdir, constructFile);
+    const posixOutdir = convertToPosixPath(project.outdir);
+    const outfileAbs = join(posixOutdir, convertToPosixPath(bundle.outfile));
+    const constructAbs = join(posixOutdir, constructFile);
     const relativeOutfile = relative(dirname(constructAbs), dirname(outfileAbs));
 
     const src = new SourceCode(project, constructFile);
