@@ -1,4 +1,4 @@
-import { basename, dirname, extname, join, relative } from 'path';
+import { basename, dirname, extname, join, relative, sep, posix } from 'path';
 import { pascal } from 'case';
 import { Eslint, Project } from '..';
 import { Component } from '../component';
@@ -151,16 +151,16 @@ export class LambdaFunction extends Component {
     src.close('}');
     src.line();
     src.line('/**');
-    src.line(` * An AWS Lambda function which executes ${basePath}.`);
+    src.line(` * An AWS Lambda function which executes ${convertToPosixPath(basePath)}.`);
     src.line(' */');
     src.open(`export class ${constructName} extends lambda.Function {`);
     src.open(`constructor(scope: Construct, id: string, props?: ${propsType}) {`);
     src.open('super(scope, id, {');
-    src.line(`description: '${entrypoint}',`);
+    src.line(`description: '${convertToPosixPath(entrypoint)}',`);
     src.line('...props,');
     src.line(`runtime: lambda.Runtime.${runtime.functionRuntime},`);
     src.line('handler: \'index.handler\',');
-    src.line(`code: lambda.Code.fromAsset(path.join(__dirname, '${relativeOutfile}')),`);
+    src.line(`code: lambda.Code.fromAsset(path.join(__dirname, '${convertToPosixPath(relativeOutfile)}')),`);
     src.close('});');
     src.close('}');
     src.close('}');
@@ -205,4 +205,11 @@ export class LambdaRuntime {
      */
     public readonly esbuildTarget: string) {
   }
+}
+
+/**
+ * Converts the given path string to posix if it wasn't already.
+ */
+function convertToPosixPath(p: string) {
+  return p.split(sep).join(posix.sep);
 }
