@@ -1067,7 +1067,7 @@ export class NodePackage extends Component {
 
   private npmScriptForTask(task: Task) {
     if (this.project.tasks.engine === TasksEngine.MAKE) {
-      return `${this.projenCommand} ${sanitizeTaskName(task.name)}`;
+      return `make ${sanitizeTaskName(task.name)}`;
     } else {
       return `${this.projenCommand} ${task.name}`;
     }

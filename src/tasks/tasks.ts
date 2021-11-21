@@ -171,23 +171,35 @@ export class Tasks extends Component {
   private renderTaskAsRecipe(task: Task): string[] {
     const recipe: string[] = [];
 
-    recipe.push(`@echo 🤖 Running task ${green(task.name)}...`);
+    recipe.push(`@>&2 echo 🤖 Running task ${green(task.name)}...`);
+
+    recipe.push('set -e'); // ensure task fails if any step fails
+
+    const taskCwd = task._renderSpec().cwd ?? '$(ROOT)';
+
+    if (task.condition) {
+      recipe.push(`cd ${taskCwd}`);
+      recipe.push(`${sanitizeCommand(task.condition)} || { >&2 echo "condition exited with non-zero - exiting" && exit 0; }`);
+    }
 
     const env = this.getFullEnvironment(task);
     for (const [key, value] of Object.entries(env)) {
       if (value === undefined) { // values may be undefined
         // do nothing
-      // } else if (value.startsWith('$(') && value.endsWith(')')) {
-      //   const query = value.substring(2, value.length - 1);
-      //   recipe.push(`${key}=$$(${sanitizeCommand(query)})`);
       } else {
         recipe.push(`${key}=${sanitizeCommand(value)}`);
       }
     }
 
     for (const step of task.steps) {
+      if (step.cwd) {
+        recipe.push(`cd ${step.cwd}`);
+      } else {
+        recipe.push(`cd ${taskCwd}`);
+      }
+
       if (step.say) {
-        recipe.push(`echo ${sanitizeCommand(step.say)}`);
+        recipe.push(`>&2 echo ${sanitizeCommand(step.say)}`);
       }
 
       if (step.spawn) {
@@ -198,11 +210,8 @@ export class Tasks extends Component {
         recipe.push(this.renderBuiltin(step.builtin));
       }
 
-      const execs = step.exec ? [step.exec] : [];
-
-      for (let exec of execs) {
-        exec = resolve(exec);
-
+      if (step.exec) {
+        const exec = resolve(step.exec);
         let command = exec;
         const cwd = step.cwd;
         if (cwd) {
@@ -212,7 +221,7 @@ export class Tasks extends Component {
       }
     }
 
-    recipe.push(`echo 🤖 Finished task ${green(task.name)}.`);
+    recipe.push(`>&2 echo 🤖 Finished task ${green(task.name)}.`);
     return recipe;
   }
 
@@ -246,7 +255,8 @@ export class Tasks extends Component {
 
     // in Makefiles, each line in a recipe is run as a new child process
     // adding this special target will export variables to child processes
-    makefile.addPrelude('.EXPORT_ALL_VARIABLES:');
+    // makefile.addPrelude('.EXPORT_ALL_VARIABLES:');
+    makefile.addPrelude('ROOT := $(dir $(firstword $(MAKEFILE_LIST)))');
   }
 
   private renderBuiltin(builtin: string) {
