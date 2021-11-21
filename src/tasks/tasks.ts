@@ -177,21 +177,21 @@ export class Tasks extends Component {
     for (const [key, value] of Object.entries(env)) {
       if (value === undefined) { // values may be undefined
         // do nothing
-      } else if (value.startsWith('$(') && value.endsWith(')')) {
-        const query = value.substring(2, value.length - 1);
-        recipe.push(`@export ${key}=$(shell ${sanitizeCommand(query)})`);
+      // } else if (value.startsWith('$(') && value.endsWith(')')) {
+      //   const query = value.substring(2, value.length - 1);
+      //   recipe.push(`${key}=$$(${sanitizeCommand(query)})`);
       } else {
-        recipe.push(`@export ${key}=${sanitizeCommand(value)}`);
+        recipe.push(`${key}=${sanitizeCommand(value)}`);
       }
     }
 
     for (const step of task.steps) {
       if (step.say) {
-        recipe.push(`@echo ${sanitizeCommand(step.say)}`);
+        recipe.push(`echo ${sanitizeCommand(step.say)}`);
       }
 
       if (step.spawn) {
-        recipe.push(`@make ${sanitizeTaskName(step.spawn)}`);
+        recipe.push(`make ${sanitizeTaskName(step.spawn)}`);
       }
 
       if (step.builtin) {
@@ -212,7 +212,7 @@ export class Tasks extends Component {
       }
     }
 
-    recipe.push(`@echo 🤖 Finished task ${green(task.name)}.`);
+    recipe.push(`echo 🤖 Finished task ${green(task.name)}.`);
     return recipe;
   }
 
@@ -222,7 +222,7 @@ export class Tasks extends Component {
     for (let [name, task] of Object.entries(tasks)) {
       makefile.addRule({
         targets: [sanitizeTaskName(name)],
-        recipe: this.renderTaskAsRecipe(task),
+        recipe: this.renderTaskAsRecipe(task).map((step) => `${step} ;\\`),
         description: task.description ?? 'No description',
         phony: true,
       });
@@ -231,7 +231,7 @@ export class Tasks extends Component {
     if (!('help' in this._tasks)) {
       makefile.addRule({
         targets: ['help'],
-        recipe: [sanitizeCommand('@echo "\\033[1;39mCOMMANDS:\\033[0m"; grep -E \'^[a-zA-Z_-]+:.*?## .*$$\' $(MAKEFILE_LIST) | sort | awk \'BEGIN {FS = ":.*?## "}; {printf "\t\\033[32m%-30s\\033[0m %s\n", $$1, $$2}\'')],
+        recipe: ['@echo "\\033[1;39mCOMMANDS:\\033[0m"; grep -E \'^[a-zA-Z_-]+:.*?## .*$$\' $(MAKEFILE_LIST) | sort | awk \'BEGIN {FS = ":.*?## "}; {printf "\\t\\033[32m%-30s\\033[0m %s\\n", $$1, $$2}\''],
         description: 'Show help messages for make targets',
         phony: true,
       });
@@ -270,5 +270,9 @@ function sanitizeCommand(value: string) {
   // we do not want "\n" or "\t" in commands to generate actual new lines or tabs in Makefiles
   value = value.replace(/\n/g, '\\n');
   value = value.replace(/\t/g, '\\t');
+
+  // $(command) and $VAR have special meanings in Makefiles and get handled by
+  // the Makefile preprocessor - so we escape them as $$(command) and $$VAR
+  value = value.replace(/\$/g, '$$$$');
   return value;
 }

@@ -4364,10 +4364,10 @@ map-obj@^4.0.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-markmac@^0.1.95:
-  version "0.1.95"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.95.tgz#7230d088c229988498bb675d7df819cef97a8ddc"
-  integrity sha512-yvfVvNqtZthBF3yLUcDVcvbGOdUhZHwI7m32kI9bcmzADSpbfEj2DUJ/cAk0ZVRbrt5M/x822EshNeeK3z8axQ==
+markmac@^0.1.97:
+  version "0.1.97"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.97.tgz#887bd52edfc39f686d710de970c76b9ec8342c60"
+  integrity sha512-b5sc0sYs7+KibB/qWLjNRAaWcyWFNRoN3LBz5saoMmEdX5KeLAnWlNgVKwxmn9S5QESCwbfUYBebtf3gKPrS0A==
 
 mdurl@~1.0.1:
   version "1.0.1"
