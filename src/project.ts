@@ -1,12 +1,14 @@
+import { mkdtempSync, realpathSync } from 'fs';
+import { tmpdir } from 'os';
 import * as path from 'path';
 import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
-import { PROJEN_VERSION } from './common';
+import { IS_TEST_RUN, PROJEN_VERSION } from './common';
 import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
 import { GitAttributesFile } from './git/gitattributes';
-import { AutoApprove, AutoApproveOptions, AutoMergeOptions, GitHub, GitHubOptions } from './github';
+import { AutoApprove, AutoApproveOptions, AutoMergeOptions, GitHub, GitHubOptions, MergifyOptions } from './github';
 import { Stale, StaleOptions } from './github/stale';
 import { Gitpod } from './gitpod';
 import { IgnoreFile } from './ignore-file';
@@ -17,6 +19,7 @@ import { Projenrc, ProjenrcOptions } from './json/index';
 import { Logger, LoggerOptions } from './logger';
 import { ObjectFile } from './object-file';
 import { NewProjectOptionHints } from './option-hints';
+import { ProjectBuild as ProjectBuild } from './project-build';
 import { SampleReadme, SampleReadmeProps } from './readme';
 import { Task, TaskOptions } from './tasks';
 import { Tasks, TasksOptions } from './tasks/tasks';
@@ -77,6 +80,15 @@ export interface ProjectOptions {
     * @default - default options
     */
   readonly projenrcJsonOptions?: ProjenrcOptions;
+
+  /**
+   * The shell command to use in order to run the projen CLI.
+   *
+   * Can be used to customize in special environments.
+   *
+   * @default "npx projen"
+   */
+  readonly projenCommand?: string;
 }
 
 /**
@@ -143,6 +155,21 @@ export class Project {
    */
   public readonly newProject?: NewProject;
 
+  /**
+   * The command to use in order to run the projen CLI.
+   */
+  public readonly projenCommand: string;
+
+  /**
+   * This is the "default" task, the one that executes "projen".
+   */
+  public readonly defaultTask: Task;
+
+  /**
+   * Manages the build process of the project.
+   */
+  public readonly projectBuild: ProjectBuild;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -154,24 +181,9 @@ export class Project {
     this.name = options.name;
     this.parent = options.parent;
     this.excludeFromCleanup = [];
+    this.projenCommand = options.projenCommand ?? 'npx projen';
 
-    if (this.parent && options.outdir && path.isAbsolute(options.outdir)) {
-      throw new Error('"outdir" must be a relative path');
-    }
-
-    let outdir;
-    if (options.parent) {
-      if (!options.outdir) {
-        throw new Error('"outdir" must be specified for subprojects');
-      }
-
-      outdir = path.join(options.parent.outdir, options.outdir);
-    } else {
-      outdir = options.outdir ?? '.';
-    }
-
-    this.outdir = path.resolve(outdir);
-
+    this.outdir = this.determineOutdir(options.outdir);
     this.root = this.parent ? this.parent.root : this;
 
     // must happen after this.outdir, this.parent and this.root are initialized
@@ -190,6 +202,13 @@ export class Project {
     // oh no: tasks depends on gitignore so it has to be initialized after
     // smells like dep injectionn but god forbid.
     this.tasks = new Tasks(this, options.tasksOptions);
+
+    this.defaultTask = this.tasks.addTask(Project.DEFAULT_TASK, {
+      description: 'Synthesize project files',
+    });
+
+    this.projectBuild = new ProjectBuild(this);
+
     this.deps = new Dependencies(this);
 
     this.logger = new Logger(this, options.logging);
@@ -236,6 +255,13 @@ export class Project {
   public removeTask(name: string) {
     return this.tasks.removeTask(name);
   }
+
+  public get buildTask() { return this.projectBuild.buildTask; }
+  public get compileTask() { return this.projectBuild.compileTask; }
+  public get testTask() { return this.projectBuild.testTask; }
+  public get preCompileTask() { return this.projectBuild.preCompileTask; }
+  public get postCompileTask() { return this.projectBuild.postCompileTask; }
+  public get packageTask() { return this.projectBuild.packageTask; }
 
   /**
    * Finds a file at the specified relative path within this project and all
@@ -369,7 +395,7 @@ export class Project {
    */
   public synth(): void {
     const outdir = this.outdir;
-    this.logger.info('Synthesizing project...');
+    this.logger.debug('Synthesizing project...');
 
     this.preSynthesize();
 
@@ -403,7 +429,7 @@ export class Project {
       this.postSynthesize();
     }
 
-    this.logger.info('Synthesis complete');
+    this.logger.debug('Synthesis complete');
   }
 
   /**
@@ -446,6 +472,39 @@ export class Project {
     }
 
     this.subprojects.push(subproject);
+  }
+
+  /**
+   * Resolves the project's output directory.
+   */
+  private determineOutdir(outdirOption?: string) {
+    if (this.parent && outdirOption && path.isAbsolute(outdirOption)) {
+      throw new Error('"outdir" must be a relative path');
+    }
+
+    // if this is a subproject, it is relative to the parent
+    if (this.parent) {
+      if (!outdirOption) {
+        throw new Error('"outdir" must be specified for subprojects');
+      }
+
+      return path.resolve(this.parent.outdir, outdirOption);
+    }
+
+    // if this is running inside a test and outdir is not explicitly set
+    // use a temp directory (unless cwd is aleady under tmp)
+    if (IS_TEST_RUN && !outdirOption) {
+      const realCwd = realpathSync(process.cwd());
+      const realTmp = realpathSync(tmpdir());
+
+      if (realCwd.startsWith(realTmp)) {
+        return path.resolve(realCwd, outdirOption ?? '.');
+      }
+
+      return mkdtempSync(path.join(tmpdir(), 'projen.'));
+    }
+
+    return path.resolve(outdirOption ?? '.');
   }
 }
 
@@ -544,6 +603,14 @@ export interface GitHubProjectOptions extends ProjectOptions {
    * @deprecated use `githubOptions.mergify` instead
    */
   readonly mergify?: boolean;
+
+  /**
+   * Options for mergify
+   *
+   * @default - default options
+   * @deprecated use `githubOptions.mergifyOptions` instead
+   */
+  readonly mergifyOptions?: MergifyOptions;
 
   /**
    * Add a VSCode development environment (used for GitHub Codespaces)
@@ -660,6 +727,7 @@ export class GitHubProject extends Project {
     const github = options.github ?? (this.parent ? false : true);
     this.github = github ? new GitHub(this, {
       mergify: options.mergify,
+      mergifyOptions: options.mergifyOptions,
       ...options.githubOptions,
     }) : undefined;
 

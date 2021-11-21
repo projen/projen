@@ -1,6 +1,10 @@
 {
   "dependencies": [
     {
+      "name": "@types/conventional-changelog-config-spec",
+      "type": "build"
+    },
+    {
       "name": "@types/fs-extra",
       "version": "^8",
       "type": "build"
@@ -19,7 +23,7 @@
     },
     {
       "name": "@types/node",
-      "version": "^10.17.0",
+      "version": "^12.7.0",
       "type": "build"
     },
     {
@@ -102,6 +106,10 @@
       "type": "build"
     },
     {
+      "name": "ts-jest",
+      "type": "build"
+    },
+    {
       "name": "typescript",
       "type": "build"
     },
@@ -110,11 +118,15 @@
       "type": "bundled"
     },
     {
+      "name": "case",
+      "type": "bundled"
+    },
+    {
       "name": "chalk",
       "type": "bundled"
     },
     {
-      "name": "decamelize",
+      "name": "conventional-changelog-config-spec",
       "type": "bundled"
     },
     {

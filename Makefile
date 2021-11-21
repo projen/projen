@@ -6,14 +6,15 @@
 all: default
 
 .PHONY: build
-build:                        ## Full release build (test+compile)
+build:                        ## Full release build
 	@echo 🤖 Running task \\033[32mbuild\\033[0m...
 	@export PATH=$(shell npx -c "node -e \"console.log(process.env.PATH)\"")
-	/bin/bash ./projen.bash
+	@make default
+	@make pre-compile
 	@make compile
+	@make post-compile
 	@make test
 	@make package
-	@make readme-macros
 	@echo 🤖 Finished task \\033[32mbuild\\033[0m.
 
 .PHONY: bump
@@ -23,6 +24,7 @@ bump:                         ## Bumps version based on latest git tag and gener
 	@export OUTFILE=package.json
 	@export CHANGELOG=dist/changelog.md
 	@export BUMPFILE=dist/version.txt
+	@export RELEASETAG=dist/releasetag.txt
 	node lib/release/bump-version.task.js
 	@echo 🤖 Finished task \\033[32mbump\\033[0m.
 
@@ -51,7 +53,6 @@ compile:                      ## Only compile
 	@echo 🤖 Running task \\033[32mcompile\\033[0m...
 	@export PATH=$(shell npx -c "node -e \"console.log(process.env.PATH)\"")
 	jsii --silence-warnings=reserved-word --no-fix-peer-dependencies
-	@make docgen
 	@echo 🤖 Finished task \\033[32mcompile\\033[0m.
 
 .PHONY: contributors-update
@@ -62,7 +63,7 @@ contributors-update:          ## No description
 	@echo 🤖 Finished task \\033[32mcontributors:update\\033[0m.
 
 .PHONY: default
-default:                      ## No description
+default:                      ## Synthesize project files
 	@echo 🤖 Running task \\033[32mdefault\\033[0m...
 	@export PATH=$(shell npx -c "node -e \"console.log(process.env.PATH)\"")
 	node .projenrc.js
@@ -87,21 +88,35 @@ docgen:                       ## Generate API.md from .jsii manifest
 eslint:                       ## Runs eslint against the codebase
 	@echo 🤖 Running task \\033[32meslint\\033[0m...
 	@export PATH=$(shell npx -c "node -e \"console.log(process.env.PATH)\"")
-	eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src src/__tests__ build-tools .projenrc.js
+	eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js
 	@echo 🤖 Finished task \\033[32meslint\\033[0m.
 
 .PHONY: package
-package:                      ## Create an npm tarball
+package:                      ## Creates the distribution package
 	@echo 🤖 Running task \\033[32mpackage\\033[0m...
 	@export PATH=$(shell npx -c "node -e \"console.log(process.env.PATH)\"")
 	jsii-pacmak
 	@echo 🤖 Finished task \\033[32mpackage\\033[0m.
 
+.PHONY: post-compile
+post-compile:                 ## Runs after successful compilation
+	@echo 🤖 Running task \\033[32mpost-compile\\033[0m...
+	@export PATH=$(shell npx -c "node -e \"console.log(process.env.PATH)\"")
+	@make docgen
+	@make readme-macros
+	@echo 🤖 Finished task \\033[32mpost-compile\\033[0m.
+
+.PHONY: pre-compile
+pre-compile:                  ## Prepare the project for compilation
+	@echo 🤖 Running task \\033[32mpre-compile\\033[0m...
+	@export PATH=$(shell npx -c "node -e \"console.log(process.env.PATH)\"")
+	@echo 🤖 Finished task \\033[32mpre-compile\\033[0m.
+
 .PHONY: publish-github
 publish-github:               ## Publish this package to GitHub Releases
 	@echo 🤖 Running task \\033[32mpublish:github\\033[0m...
 	@export PATH=$(shell npx -c "node -e \"console.log(process.env.PATH)\"")
-	errout=$(mktemp); gh release create v$(cat dist/version.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t v$(cat dist/version.txt) 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
+	errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
 	@echo 🤖 Finished task \\033[32mpublish:github\\033[0m.
 
 .PHONY: publish-maven
@@ -153,16 +168,9 @@ release:                      ## Prepare a release from "main" branch
 test:                         ## Run tests
 	@echo 🤖 Running task \\033[32mtest\\033[0m...
 	@export PATH=$(shell npx -c "node -e \"console.log(process.env.PATH)\"")
-	@make test-compile
 	jest --passWithNoTests --all --updateSnapshot
 	@make eslint
 	@echo 🤖 Finished task \\033[32mtest\\033[0m.
-
-.PHONY: test-compile
-test-compile:                 ## compiles the test code
-	@echo 🤖 Running task \\033[32mtest:compile\\033[0m...
-	@export PATH=$(shell npx -c "node -e \"console.log(process.env.PATH)\"")
-	@echo 🤖 Finished task \\033[32mtest:compile\\033[0m.
 
 .PHONY: test-update
 test-update:                  ## Update jest snapshots
@@ -185,6 +193,7 @@ unbump:                       ## Restores version to 0.0.0
 	@export OUTFILE=package.json
 	@export CHANGELOG=dist/changelog.md
 	@export BUMPFILE=dist/version.txt
+	@export RELEASETAG=dist/releasetag.txt
 	node lib/release/reset-version.task.js
 	@echo 🤖 Finished task \\033[32munbump\\033[0m.
 
@@ -193,9 +202,13 @@ upgrade:                      ## upgrade dependencies
 	@echo 🤖 Running task \\033[32mupgrade\\033[0m...
 	@export PATH=$(shell npx -c "node -e \"console.log(process.env.PATH)\"")
 	@export CI=0
-	npm-check-updates --upgrade --target=minor --reject='projen'
+	npm-check-updates --dep dev --upgrade --target=minor --reject='projen'
+	npm-check-updates --dep optional --upgrade --target=minor --reject='projen'
+	npm-check-updates --dep peer --upgrade --target=minor --reject='projen'
+	npm-check-updates --dep prod --upgrade --target=minor --reject='projen'
+	npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'
 	yarn install --check-files
-	yarn upgrade @types/fs-extra @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli eslint eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema markmac npm-check-updates standard-version typescript @iarna/toml chalk decamelize fs-extra glob ini semver shx xmlbuilder2 yaml yargs
+	yarn upgrade @types/conventional-changelog-config-spec @types/fs-extra @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli eslint eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema markmac npm-check-updates standard-version ts-jest typescript @iarna/toml case chalk conventional-changelog-config-spec fs-extra glob ini semver shx xmlbuilder2 yaml yargs
 	/bin/bash ./projen.bash
 	@echo 🤖 Finished task \\033[32mupgrade\\033[0m.
 

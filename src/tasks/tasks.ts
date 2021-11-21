@@ -148,7 +148,7 @@ export class Tasks extends Component {
 
   private renderTasksToJson() {
     const tasks: { [name: string]: TaskSpec } = {};
-    for (const task of Object.values(this._tasks)) {
+    for (const task of Object.values(this._tasks).sort((x, y) => x.name.localeCompare(y.name))) {
       tasks[task.name] = task._renderSpec();
     }
 

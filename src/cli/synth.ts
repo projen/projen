@@ -79,7 +79,7 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
 
       throw new Error('Unable to find a task named "default"');
     } catch (e) {
-      logging.error(`Synthesis failed: ${e.message}`);
+      logging.error(`Synthesis failed: ${(e as any).message}`);
       return false;
     }
   }
@@ -119,7 +119,11 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
       fs.symlinkSync(projenModule, projenModulePath, (os.platform() === 'win32') ? 'junction' : null);
     }
 
-    spawnSync(process.execPath, [rcfile], { stdio: 'inherit' });
+    const ret = spawnSync(process.execPath, [rcfile], { stdio: ['inherit', 'inherit', 'pipe'] });
+    if (ret.status !== 0) {
+      throw new Error(`Synthesis failed: ${ret.error}`);
+    }
+
     return true;
   }
 }

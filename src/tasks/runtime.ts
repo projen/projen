@@ -71,6 +71,12 @@ class RunTask {
     this.workdir = task.cwd ?? this.runtime.workdir;
 
     this.parents = parents;
+
+    if (!task.steps || task.steps.length === 0) {
+      this.logDebug(chalk.gray('No actions have been specified for this task.'));
+      return;
+    }
+
     this.env = this.resolveEnvironment(parents);
 
     const envlogs = [];
@@ -81,17 +87,12 @@ class RunTask {
     }
 
     if (envlogs.length) {
-      this.log(chalk.gray(`${chalk.underline('env')}: ${envlogs.join(' ')}`));
+      this.logDebug(chalk.gray(`${chalk.underline('env')}: ${envlogs.join(' ')}`));
     }
 
     // evaluate condition
     if (!this.evalCondition(task)) {
       this.log('condition exited with non-zero - skipping');
-      return;
-    }
-
-    if (!task.steps || task.steps.length === 0) {
-      logging.verbose(this.fmtLog('No actions have been specified for this task.'));
       return;
     }
 
@@ -232,6 +233,10 @@ class RunTask {
 
   private log(...args: any[]) {
     logging.verbose(this.fmtLog(...args));
+  }
+
+  private logDebug(...args: any[]) {
+    logging.debug(this.fmtLog(...args));
   }
 
   private fmtLog(...args: any[]) {

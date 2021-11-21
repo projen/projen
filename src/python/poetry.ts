@@ -2,7 +2,7 @@ import { Component } from '../component';
 import { DependencyType } from '../deps';
 import { Task, TaskRuntime } from '../tasks';
 import { TomlFile } from '../toml';
-import { exec, execOrUndefined } from '../util';
+import { decamelizeKeysRecursively, exec, execOrUndefined } from '../util';
 import { IPythonDeps } from './python-deps';
 import { IPythonEnv } from './python-env';
 import { IPythonPackaging, PythonPackagingOptions } from './python-packaging';
@@ -14,7 +14,6 @@ import { PythonProject } from './python-project';
  */
 export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPythonPackaging {
   public readonly installTask: Task;
-  public readonly packageTask: Task;
   public readonly publishTask: Task;
 
   /**
@@ -33,13 +32,7 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
     this.project.tasks.addEnvironment('VIRTUAL_ENV', '$(poetry env info -p)');
     this.project.tasks.addEnvironment('PATH', '$(echo $(poetry env info -p)/bin:$PATH)');
 
-    // declare the python versions for which the package is compatible
-    this.addDependency('python@^3.6');
-
-    this.packageTask = project.addTask('package', {
-      description: 'Creates source archive and wheel for distribution.',
-      exec: 'poetry build',
-    });
+    project.packageTask.exec('poetry build');
 
     this.publishTestTask = project.addTask('publish:test', {
       description: 'Uploads the package against a test PyPI endpoint.',
@@ -78,10 +71,18 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
 
   private synthDependencies() {
     const dependencies: { [key: string]: any } = {};
+    let pythonDefined: boolean = false;
     for (const pkg of this.project.deps.all) {
+      if (pkg.name === 'python') {
+        pythonDefined = true;
+      }
       if (pkg.type === DependencyType.RUNTIME) {
         dependencies[pkg.name] = pkg.version;
       }
+    }
+    if (!pythonDefined) {
+      // Python version must be defined for poetry projects. Default to ^3.6.
+      dependencies.python = '^3.6';
     }
     return dependencies;
   }
@@ -142,7 +143,10 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
   }
 }
 
-
+/**
+ * Poetry-specific options.
+ * @see https://python-poetry.org/docs/pyproject/
+ */
 export interface PoetryPyprojectOptionsWithoutDeps {
   /**
    * Name of the package (required).
@@ -212,7 +216,7 @@ export interface PoetryPyprojectOptionsWithoutDeps {
   /**
    * A list of packages and modules to include in the final distribution.
    */
-  readonly packages?: string[];
+  readonly packages?: any[];
 
   /**
    * A list of patterns that will be included in the final package.
@@ -231,8 +235,34 @@ export interface PoetryPyprojectOptionsWithoutDeps {
    * The scripts or executables that will be installed when installing the package.
    */
   readonly scripts?: { [key: string]: any };
+
+  /**
+   * Source registries from which packages are retrieved.
+   */
+  readonly source?: any[];
+
+  /**
+   * Package extras
+   */
+  readonly extras?: { [key: string]: string[] };
+
+  /**
+   * Plugins. Must be specified as a table.
+   * @see https://toml.io/en/v1.0.0#table
+   */
+  readonly plugins?: any;
+
+  /**
+   * Project custom URLs, in addition to homepage, repository and documentation.
+   * E.g. "Bug Tracker"
+   */
+  readonly urls?: { [key: string]: string };
 }
 
+/**
+ * Poetry-specific options.
+ * @see https://python-poetry.org/docs/pyproject/
+ */
 export interface PoetryPyprojectOptions extends PoetryPyprojectOptionsWithoutDeps {
   /**
    * A list of dependencies for the project.
@@ -262,6 +292,8 @@ export class PoetryPyproject extends Component {
   constructor(project: PythonProject, options: PoetryPyprojectOptions) {
     super(project);
 
+    const decamelisedOptions = decamelizeKeysRecursively(options, { separator: '-' });
+
     this.file = new TomlFile(project, 'pyproject.toml', {
       omitEmpty: false,
       obj: {
@@ -271,24 +303,7 @@ export class PoetryPyproject extends Component {
         },
         'tool': {
           poetry: {
-            'name': options.name,
-            'version': options.version,
-            'description': options.description,
-            'license': options.license,
-            'authors': options.authors,
-            'maintainers': options.maintainers,
-            'readme': options.readme,
-            'homepage': options.homepage,
-            'repository': options.repository,
-            'documentation': options.documentation,
-            'keywords': options.keywords,
-            'classifiers': options.classifiers,
-            'packages': options.packages,
-            'include': options.include,
-            'exclude': options.exclude,
-            'dependencies': options.dependencies,
-            'dev-dependencies': options.devDependencies,
-            'scripts': options.scripts,
+            ...decamelisedOptions,
           },
         },
       },
