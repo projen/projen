@@ -8,6 +8,7 @@ test('default tasks', () => {
 });
 
 test('empty task', () => {
+  // GIVEN
   const p = new TestProject();
 
   // WHEN
@@ -24,6 +25,7 @@ test('empty task', () => {
 });
 
 test('remove task', () => {
+  // GIVEN
   const p = new TestProject();
 
   // WHEN
@@ -43,6 +45,7 @@ test('remove task', () => {
 });
 
 test('re-add removed task', () => {
+  // GIVEN
   const p = new TestProject();
 
   // WHEN
@@ -67,6 +70,7 @@ test('re-add removed task', () => {
 });
 
 test('throw when removing a dependent task', () => {
+  // GIVEN
   const p = new TestProject();
 
   // WHEN
@@ -80,12 +84,15 @@ test('throw when removing a dependent task', () => {
 });
 
 test('remove already removed task', () => {
+  // GIVEN
   const p = new TestProject();
 
+  // THEN
   expect(p.removeTask('task1')).toBe(undefined);
 });
 
 test('multiple "exec" commands', () => {
+  // GIVEN
   const p = new TestProject();
 
   // WHEN
@@ -291,11 +298,13 @@ test('"condition" can be used to define a command that will determine if a task 
 });
 
 test('"builtin" can be used to execute builtin commands', () => {
+  // GIVEN
   const p = new TestProject();
   const task = p.addTask('foo', {
     condition: 'false',
   });
 
+  // WHEN
   task.builtin('my/builtin');
   task.builtin('your/builtin');
 
@@ -315,7 +324,10 @@ test('"builtin" can be used to execute builtin commands', () => {
 });
 
 test('"requiredEnv" can be used to specify required environment variables', () => {
+  // GIVEN
   const p = new TestProject();
+
+  // WHEN
   p.addTask('foo', {
     requiredEnv: ['MISSING1', 'MISSING2', 'NOT_MISSING'],
   });

@@ -9,7 +9,7 @@ import { JsonFile } from './json';
 import { Project } from './project';
 import { isAwsCodeArtifactRegistry } from './release/publisher';
 import { sanitizeTaskName, Task, TasksEngine } from './tasks';
-import { exec, sorted, isTruthy, writeFile } from './util';
+import { exec, isTruthy, sorted, writeFile } from './util';
 
 const UNLICENSED = 'UNLICENSED';
 const DEFAULT_NPM_REGISTRY_URL = 'https://registry.npmjs.org/';
