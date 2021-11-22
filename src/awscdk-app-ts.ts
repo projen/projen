@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as semver from 'semver';
-import { CdkTasks, AutoDiscover, LambdaFunctionCommonOptions } from './awscdk';
+import { AutoDiscover, CdkTasks, LambdaFunctionCommonOptions } from './awscdk';
 import { CdkConfig, CdkConfigCommonOptions } from './awscdk/cdk-config';
 import { Component } from './component';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
@@ -132,6 +132,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.cdkConfig = new CdkConfig(this, {
       app: `npx ts-node --prefer-ts-exts ${path.posix.join(this.srcdir, this.appEntrypoint)}`,
+      featureFlags: cdkMajorVersion < 2,
       ...options,
     });
 
@@ -176,6 +177,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
 class SampleCode extends Component {
   private readonly appProject: AwsCdkTypeScriptApp;
+
   constructor(project: AwsCdkTypeScriptApp, private readonly cdkMajorVersion: number) {
     super(project);
     this.appProject = project;

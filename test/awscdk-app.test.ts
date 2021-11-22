@@ -19,6 +19,16 @@ describe('cdkVersion is >= 2.0.0', () => {
     });
     expect(snap['src/main.ts'].indexOf('import { App, Stack, StackProps } from \'aws-cdk-lib\'')).not.toEqual(-1);
   });
+
+  test('empty context', () => {
+    const project = new AwsCdkTypeScriptApp({
+      cdkVersion: '2.0.0-rc.1',
+      defaultReleaseBranch: 'main',
+      name: 'test',
+    });
+    const snap = synthSnapshot(project);
+    expect(snap['cdk.json'].context).toBeUndefined();
+  });
 });
 
 
