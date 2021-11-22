@@ -93,7 +93,7 @@ test('"builtin" can be used to execute builtin commands', () => {
   });
 
   // WHEN
-  task.builtin('__tests__/tasks/fixtures/builtin-example');
+  task.builtin('tasks/builtin-example');
 
   // THEN
   const makefile = synthMakefile(p) as string;
