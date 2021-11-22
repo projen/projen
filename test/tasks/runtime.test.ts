@@ -211,7 +211,7 @@ describe.each([TasksEngine.PROJEN_RUNTIME, TasksEngine.MAKE])('using engine %s',
       task.say('hello, world');
 
       // THEN
-      expect(executeTask(p, 'say', engine).stderr).toEqual(['hello, world']);
+      expect(executeTask(p, 'say', engine).stderr).toEqual(expect.arrayContaining(['hello, world']));
     });
 
   });

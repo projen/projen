@@ -187,7 +187,8 @@ export class Tasks extends Component {
       if (value === undefined) { // values may be undefined
         // do nothing
       } else {
-        recipe.push(`${key}=${sanitizeCommand(value)}`);
+        // variable must be exported for sub-tasks to inherit this variable
+        recipe.push(`export ${key}=${sanitizeCommand(value)}`);
       }
     }
 
@@ -256,7 +257,7 @@ export class Tasks extends Component {
     // in Makefiles, each line in a recipe is run as a new child process
     // adding this special target will export variables to child processes
     // makefile.addPrelude('.EXPORT_ALL_VARIABLES:');
-    makefile.addPrelude('ROOT := $(dir $(firstword $(MAKEFILE_LIST)))');
+    makefile.addPrelude('ROOT := $(abspath $(dir $(firstword $(MAKEFILE_LIST))))');
   }
 
   private renderBuiltin(builtin: string) {
