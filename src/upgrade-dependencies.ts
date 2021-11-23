@@ -84,7 +84,33 @@ export interface UpgradeDependenciesOptions {
    * @default true
    */
   readonly signoff?: boolean;
+
+  /**
+   * The steps to run prior to upgrade commands
+   *
+   * @default []
+   */
+  readonly preUpgradeSteps?: TaskCommandStep[];
 }
+
+/**
+ * Task command step definition
+ */
+export interface TaskCommandStep {
+  /**
+   * Type of the step say/exec/builtin
+   *
+   */
+  readonly stepType: StepCommandType;
+
+  /**
+   * command name
+   *
+   */
+  readonly command: string;
+}
+
+export type StepCommandType = 'say' | 'exec' | 'builtin';
 
 /**
  * Upgrade node project dependencies.
@@ -148,6 +174,9 @@ export class UpgradeDependencies extends Component {
     if (this.ignoresProjen) {
       exclude.push('projen');
     }
+
+    const preUpgradeSteps = this.options.preUpgradeSteps ?? [];
+    preUpgradeSteps.forEach(step => task[step.stepType](step.command) );
 
     for (const dep of ['dev', 'optional', 'peer', 'prod', 'bundle']) {
 

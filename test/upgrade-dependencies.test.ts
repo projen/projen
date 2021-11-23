@@ -1,5 +1,5 @@
 import * as yaml from 'yaml';
-import { NodeProject, UpgradeDependenciesSchedule } from '../src';
+import { NodeProject, TaskCommandStep, UpgradeDependenciesSchedule } from '../src';
 import { NodeProjectOptions } from '../src/node-project';
 import { Tasks } from '../src/tasks';
 import { synthSnapshot } from '../src/util/synth';
@@ -171,6 +171,33 @@ test('git identity can be customized', () => {
       'git config user.email \"foo@bar.com\"',
     ].join('\n'),
   });
+});
+
+
+test('upgrades command includes preUpgradeCommands in options', () => {
+  const firstStep: TaskCommandStep = {
+    command: 'first-command',
+    stepType: 'exec',
+  };
+  const secondStep: TaskCommandStep = {
+    command: 'second-command',
+    stepType: 'say',
+  };
+
+  const project = createProject({
+    depsUpgradeOptions: {
+      preUpgradeSteps: [
+        firstStep,
+        secondStep,
+      ],
+    },
+  });
+
+
+  const tasks = synthSnapshot(project)[Tasks.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[0]).toEqual({ exec: firstStep.command });
+  expect(tasks.upgrade.steps[1]).toEqual({ say: secondStep.command });
+
 });
 
 function createProject(options: Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name' | 'dependenciesUpgrade'> = {}): NodeProject {
