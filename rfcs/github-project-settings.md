@@ -1,5 +1,7 @@
 # External GitHub Repository Settings (RFC #1014)
 
+> **Author**: [@eladb](https://github.com/eladb), **Status**: Draft
+
 Projen is great for managing project-related configuration that is modeled in files within the git repository. Much of GitHub's configuration (such as issue 
 templates, workflows, etc) is managed through files under `.github` and to that extend, projen lends itself well to maintain these files.
 
