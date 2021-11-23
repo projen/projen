@@ -8,6 +8,7 @@ export * from './mergify';
 export * from './auto-merge';
 export * from './auto-approve';
 export * from './stale';
+export * from './pull-request-lint';
 
 export * from './task-workflow';
 

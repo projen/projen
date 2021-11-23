@@ -1,5 +1,6 @@
 import { Component } from '../component';
 import { workflows } from '../github';
+import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { JobPermission, JobPermissions } from '../github/workflows-model';
 import { defaultNpmToken } from '../node-package';
 import { Project } from '../project';
@@ -7,8 +8,9 @@ import { Project } from '../project';
 const JSII_RELEASE_VERSION = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
-const ARTIFACTS_DIR = 'dist';
-const JSII_RELEASE_IMAGE = 'jsii/superchain';
+const ARTIFACTS_DOWNLOAD_DIR = 'dist';
+const JSII_RELEASE_IMAGE = 'jsii/superchain:1-buster-slim-node14';
+const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
 
 /**
  * Options for `Publisher`.
@@ -43,6 +45,21 @@ export interface PublisherOptions {
    * @default "latest"
    */
   readonly jsiiReleaseVersion?: string;
+
+  /**
+   * Create an issue when a publish task fails.
+   *
+   * @default false
+   */
+  readonly failureIssue?: boolean;
+
+  /**
+   * The label to apply to the issue marking failed publish tasks.
+   * Only applies if `failureIssue` is true.
+   *
+   * @default "failed-release"
+   */
+  readonly failureIssueLabel?: string;
 }
 
 /**
@@ -56,6 +73,9 @@ export class Publisher extends Component {
   public readonly jsiiReleaseVersion: string;
   public readonly condition?: string;
 
+  private readonly failureIssue: boolean;
+  private readonly failureIssueLabel: string;
+
   // the jobs to add to the release workflow
   private readonly jobs: { [name: string]: workflows.Job } = {};
 
@@ -66,6 +86,9 @@ export class Publisher extends Component {
     this.artifactName = options.artifactName;
     this.jsiiReleaseVersion = options.jsiiReleaseVersion ?? JSII_RELEASE_VERSION;
     this.condition = options.condition;
+
+    this.failureIssue = options.failureIssue ?? false;
+    this.failureIssueLabel = options.failureIssueLabel ?? 'failed-release';
   }
 
   /**
@@ -77,15 +100,68 @@ export class Publisher extends Component {
   }
 
   /**
+   * Publish to git.
+   *
+   * This includes generating a project-level changelog and release tags.
+   *
+   * @param options Options
+   */
+  public publishToGit(options: GitPublishOptions) {
+    const releaseTagFile = options.releaseTagFile;
+    const versionFile = options.versionFile;
+    const changelog = options.changelogFile;
+    const projectChangelogFile = options.projectChangelogFile;
+    const gitBranch = options.gitBranch ?? 'main';
+
+    const taskName = (gitBranch === 'main' || gitBranch === 'master') ? 'publish:git' : `publish:git:${gitBranch}` ;
+
+    const publishTask = this.project.addTask(taskName, {
+      description: 'Prepends the release changelog onto the project changelog, creates a release commit, and tags the release',
+      env: {
+        CHANGELOG: changelog,
+        RELEASE_TAG_FILE: releaseTagFile,
+        PROJECT_CHANGELOG_FILE: projectChangelogFile ?? '',
+        VERSION_FILE: versionFile,
+      },
+    });
+    if (projectChangelogFile) {
+      publishTask.builtin('release/update-changelog');
+    }
+    publishTask.builtin('release/tag-version');
+    publishTask.exec(`git push --follow-tags origin ${gitBranch}`);
+
+    return publishTask;
+  }
+
+  /**
    * Creates a GitHub Release.
    * @param options Options
    */
   public publishToGitHubReleases(options: GitHubReleasesPublishOptions) {
-    const versionFile = `${ARTIFACTS_DIR}/${options.versionFile}`;
-    const changelogFile = `${ARTIFACTS_DIR}/${options.changelogFile}`;
+    const changelogFile = options.changelogFile;
+    const releaseTagFile = options.releaseTagFile;
 
     // create a github release
-    const getVersion = `v$(cat ${versionFile})`;
+    const releaseTag = `$(cat ${releaseTagFile})`;
+
+    const ghRelease = [
+      `gh release create ${releaseTag}`,
+      '-R $GITHUB_REPOSITORY',
+      `-F ${changelogFile}`,
+      `-t ${releaseTag}`,
+      '--target $GITHUB_REF',
+    ].join(' ');
+
+    // release script that does not error when re-releasing a given version
+    const idempotentRelease = [
+      'errout=$(mktemp);',
+      `${ghRelease} 2> $errout && true;`,
+      'exitcode=$?;',
+      'if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then',
+      'cat $errout;',
+      'exit $exitcode;',
+      'fi',
+    ].join(' ');
 
     this.addPublishJob({
       name: 'github',
@@ -95,13 +171,10 @@ export class Publisher extends Component {
       },
       workflowEnv: {
         GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+        GITHUB_REPOSITORY: '${{ github.repository }}',
+        GITHUB_REF: '${{ github.ref }}',
       },
-      run: [
-        `gh release create ${getVersion}`,
-        '-R ${{ github.repository }}',
-        `-F ${changelogFile}`,
-        `-t ${getVersion}`,
-      ].join(' '),
+      run: idempotentRelease,
     });
   }
 
@@ -111,6 +184,8 @@ export class Publisher extends Component {
    */
   public publishToNpm(options: NpmPublishOptions = {}) {
     const isGitHubPackages = options.registry?.startsWith(GITHUB_PACKAGES_REGISTRY);
+    const isAwsCodeArtifact = isAwsCodeArtifactRegistry(options.registry);
+    const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
 
     this.addPublishJob({
       name: 'npm',
@@ -126,7 +201,11 @@ export class Publisher extends Component {
         packages: isGitHubPackages ? JobPermission.WRITE : undefined,
       },
       workflowEnv: {
-        NPM_TOKEN: secret(defaultNpmToken(options.npmTokenSecret, options.registry)),
+        NPM_TOKEN: npmToken ? secret(npmToken) : undefined,
+        // if we are publishing to AWS CodeArtifact, pass AWS access keys that will be used to generate NPM_TOKEN using AWS CLI.
+        AWS_ACCESS_KEY_ID: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID') : undefined,
+        AWS_SECRET_ACCESS_KEY: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY') : undefined,
+        AWS_ROLE_TO_ASSUME: isAwsCodeArtifact ? options.codeArtifactOptions?.roleToAssume : undefined,
       },
     });
   }
@@ -217,8 +296,8 @@ export class Publisher extends Component {
       env: {
         GITHUB_REPO: options.githubRepo,
         GIT_BRANCH: options.gitBranch,
-        GIT_USER_NAME: options.gitUserName ?? 'GitHub Actions',
-        GIT_USER_EMAIL: options.gitUserEmail ?? 'github-actions@github.com',
+        GIT_USER_NAME: options.gitUserName ?? DEFAULT_GITHUB_ACTIONS_USER.name,
+        GIT_USER_EMAIL: options.gitUserEmail ?? DEFAULT_GITHUB_ACTIONS_USER.email,
         GIT_COMMIT_MESSAGE: options.gitCommitMessage,
       },
       workflowEnv: {
@@ -252,31 +331,60 @@ export class Publisher extends Component {
       exec: opts.run,
     });
 
+    const steps: any[] = [
+      {
+        name: 'Download build artifacts',
+        uses: 'actions/download-artifact@v2',
+        with: {
+          name: this.artifactName,
+          path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for jsii-release
+        },
+      },
+      {
+        name: 'Release',
+        // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
+        run: opts.run,
+        env: jobEnv,
+      },
+    ];
+
+    const perms = opts.permissions ?? { contents: JobPermission.READ };
+
+    if (this.failureIssue) {
+      steps.push(...[
+        {
+          name: 'Extract Version',
+          if: '${{ failure() }}',
+          id: 'extract-version',
+          run: 'echo "::set-output name=VERSION::$(cat dist/version.txt)"',
+        },
+        {
+          name: 'Create Issue',
+          if: '${{ failure() }}',
+          uses: 'imjohnbo/issue-bot@v3',
+          with: {
+            labels: this.failureIssueLabel,
+            title: `Publishing v\${{ steps.extract-version.outputs.VERSION }} to ${opts.registryName} failed`,
+            body: 'See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}',
+          },
+          env: {
+            GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+          },
+        },
+      ]);
+      Object.assign(perms, { issues: JobPermission.WRITE });
+    }
+
     const job = {
       name: `Publish to ${opts.registryName}`,
-      permissions: opts.permissions ? opts.permissions : { contents: JobPermission.READ },
+      permissions: perms,
       if: this.condition,
       needs: [this.buildJobId],
       runsOn: 'ubuntu-latest',
       container: opts.containerImage ? {
         image: opts.containerImage,
       } : undefined,
-      steps: [
-        {
-          name: 'Download build artifacts',
-          uses: 'actions/download-artifact@v2',
-          with: {
-            name: this.artifactName,
-            path: ARTIFACTS_DIR, // this must be "dist" for jsii-release
-          },
-        },
-        {
-          name: 'Release',
-          // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
-          run: opts.run,
-          env: jobEnv,
-        },
-      ],
+      steps,
     };
 
     this.jobs[jobname] = job;
@@ -375,6 +483,39 @@ export interface NpmPublishOptions {
    * @default - "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
    */
   readonly npmTokenSecret?: string;
+
+  /**
+   * Options for publishing npm package to AWS CodeArtifact.
+   *
+   * @default - undefined
+   */
+  readonly codeArtifactOptions?: CodeArtifactOptions;
+}
+
+export interface CodeArtifactOptions {
+  /**
+   * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
+   * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+   *
+   * @default "AWS_ACCESS_KEY_ID"
+   */
+  readonly accessKeyIdSecret?: string;
+
+  /**
+    * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
+    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+    *
+    * @default "AWS_SECRET_ACCESS_KEY"
+    */
+  readonly secretAccessKeySecret?: string;
+
+  /**
+    * ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact
+    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+    *
+    * @default undefined
+    */
+  readonly roleToAssume?: string;
 }
 
 /**
@@ -542,7 +683,7 @@ export interface GoPublishOptions {
 
   /**
    * The user name to use for the release git commit.
-   * @default "GitHub Actions"
+   * @default "github-actions"
    */
   readonly gitUserName?: string;
 
@@ -560,10 +701,7 @@ export interface GoPublishOptions {
   readonly gitCommitMessage?: string;
 }
 
-/**
- * Publishing options for GitHub releases.
- */
-export interface GitHubReleasesPublishOptions {
+interface VersionArtifactOptions {
   /**
    * The location of a text file (relative to `dist/`) that contains the version number.
    *
@@ -572,9 +710,47 @@ export interface GitHubReleasesPublishOptions {
   readonly versionFile: string;
 
   /**
-   * The location of an .md file that includes the changelog for the release.
+   * The location of a text file (relative to `dist/`) that contains the release tag.
+   *
+   * @example releasetag.txt
+   */
+  readonly releaseTagFile: string;
+
+  /**
+   * The location of an .md file (relative to `dist/`) that includes the changelog for the release.
    *
    * @example changelog.md
    */
   readonly changelogFile: string;
+}
+
+/**
+ * Evaluates if the `registryUrl` is a AWS CodeArtifact registry.
+ * @param registryUrl url of registry
+ * @returns true for AWS CodeArtifact
+ */
+export function isAwsCodeArtifactRegistry(registryUrl: string | undefined) {
+  return registryUrl && AWS_CODEARTIFACT_REGISTRY_REGEX.test(registryUrl);
+}
+
+/**
+ * Publishing options for GitHub releases.
+ */
+export interface GitHubReleasesPublishOptions extends VersionArtifactOptions { }
+
+/**
+ * Publishing options for Git releases
+ */
+export interface GitPublishOptions extends VersionArtifactOptions {
+  /**
+   * The location of an .md file that includes the project-level changelog.
+   */
+  readonly projectChangelogFile?: string;
+
+  /**
+   * Branch to push to.
+   *
+   * @default "main"
+   */
+  readonly gitBranch?: string;
 }

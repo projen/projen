@@ -1,6 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-import decamelize = require('decamelize');
-
+import { snake } from 'case';
 import { Component } from '../component';
 import { kebabCaseKeys } from '../util';
 import { YamlFile } from '../yaml';
@@ -8,6 +6,9 @@ import { GitHub } from './github';
 
 import * as workflows from './workflows-model';
 
+/**
+ * Options for `GithubWorkflow`.
+ */
 export interface GithubWorkflowOptions {
   /**
    * Force the creation of the workflow even if `workflows` is disabled in `GitHub`.
@@ -15,15 +16,38 @@ export interface GithubWorkflowOptions {
    * @default false
    */
   readonly force?: boolean;
+  /**
+   * Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. Currently in beta.
+   *
+   * @default - disabled
+   * @see https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#concurrency
+   */
+  readonly concurrency?: string;
 }
 
 /**
  * Workflow for GitHub.
+ *
  * A workflow is a configurable automated process made up of one or more jobs.
+ *
  * @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
  */
 export class GithubWorkflow extends Component {
+  /**
+   * The name of the workflow.
+   */
   public readonly name: string;
+  /**
+   * Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.
+   *
+   * @default disabled
+   * @experimental
+   */
+  public readonly concurrency?: string;
+
+  /**
+   * The workflow YAML file.
+   */
   public readonly file: YamlFile | undefined;
 
   private events: workflows.Triggers = { };
@@ -33,8 +57,9 @@ export class GithubWorkflow extends Component {
     super(github.project);
 
     this.name = name;
+    this.concurrency = options.concurrency;
 
-    const workflowsEnabled = github.workflows || options.force;
+    const workflowsEnabled = github.workflowsEnabled || options.force;
 
     if (workflowsEnabled) {
       this.file = new YamlFile(this.project, `.github/workflows/${name.toLocaleLowerCase()}.yml`, {
@@ -43,6 +68,11 @@ export class GithubWorkflow extends Component {
     }
   }
 
+  /**
+   * Add events to triggers the workflow.
+   *
+   * @param events The event(s) to trigger the workflow.
+   */
   public on(events: workflows.Triggers) {
     this.events = {
       ...this.events,
@@ -50,6 +80,11 @@ export class GithubWorkflow extends Component {
     };
   }
 
+  /**
+   * Add jobs to the workflow.
+   *
+   * @param jobs Jobs to add.
+   */
   public addJobs(jobs: Record<string, workflows.Job>) {
     // verify that job has a "permissions" statement to ensure workflow can
     // operate in repos with default tokens set to readonly
@@ -69,6 +104,7 @@ export class GithubWorkflow extends Component {
     return {
       name: this.name,
       on: snakeCaseKeys(this.events),
+      concurrency: this.concurrency,
       jobs: renderJobs(this.jobs),
     };
   }
@@ -88,7 +124,7 @@ function snakeCaseKeys<T = unknown>(obj: T): T {
     if (typeof v === 'object' && v != null) {
       v = snakeCaseKeys(v);
     }
-    result[decamelize(k)] = v;
+    result[snake(k)] = v;
   }
   return result as any;
 }

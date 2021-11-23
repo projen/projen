@@ -1,13 +1,11 @@
 import { dirname, join } from 'path';
+import { snake } from 'case';
 import { existsSync, mkdirpSync, writeFileSync } from 'fs-extra';
 import { PROJEN_VERSION } from '../common';
 import { Component } from '../component';
 import { DependencyType } from '../deps';
 import { readJsiiManifest } from '../inventory';
 import { Project } from '../project';
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const decamelize = require('decamelize');
 
 /**
  * Options for `Projenrc`.
@@ -47,8 +45,7 @@ export class Projenrc extends Component {
     project.deps.addDependency(`projen@${projenVersion}`, DependencyType.DEVENV);
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
-    const defaultTask = project.addTask(Project.DEFAULT_TASK, { description: 'Synthesize the project' });
-    defaultTask.exec('python projenrc.py');
+    project.defaultTask.exec('python projenrc.py');
 
     // if this is a new project, generate a skeleton for projenrc.py
     this.generateProjenrc();
@@ -126,7 +123,7 @@ function renderPythonOptions(indent: number, optionFqns: Record<string, string>,
 }
 
 function toPythonProperty(prop: string) {
-  return decamelize(prop);
+  return snake(prop);
 }
 
 function toPythonValue(value: any, name: string, optionFqns: Record<string, string>) {

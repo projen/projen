@@ -56,7 +56,7 @@ It will also ensure that the workflow token has write permissions for Packages.
 
 **npm**
 ```ts
-publisher.publishToNpm({ 
+publisher.publishToNpm({
   registry: 'npm.pkg.github.com'
   // also sets npmTokenSecret
 })
@@ -70,3 +70,45 @@ publisher.publishToMaven({
   // disables mavenGpgPrivateKeySecret, mavenGpgPrivateKeyPassphrase, mavenStagingProfileId
 })
 ```
+
+## Publishing to AWS CodeArtifact
+
+The NPM target comes with dynamic defaults that support AWS CodeArtifact.
+If the respective registry URL is detected to be AWS CodeArtifact, other relevant options will automatically be set to fitting values.
+The authentication will done using [AWS CLI](https://docs.aws.amazon.com/codeartifact/latest/ug/tokens-authentication.html). It is neccessary to provide AWS IAM CLI `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` in GitHub Secrets.
+
+**npm**
+```ts
+publisher.publishToNpm({ 
+  registry: 'my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+});
+```
+
+The names of the GitHub Secrets can be overridden if different names should be used.
+```ts
+publisher.publishToNpm({ 
+  registry: 'my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+  codeArtifactOptions: {
+    accessKeyIdSecret: 'CUSTOM_AWS_ACCESS_KEY_ID',
+    secretAccessKeySecret: 'CUSTOM_AWS_SECRET_ACCESS_KEY',
+  },
+});
+```
+## Handling Failures
+
+You can instruct the publisher to create GitHub issues for publish failures:
+
+```ts
+const publisher = new Publisher(project, {
+  workflow: releaseWorkflow,
+  buildJobId: 'my-build-job',
+  artifactName: 'dist',
+  issueOnFailure: true,
+  failureIssueLabel: 'failed-release'
+});
+```
+
+This will create an issue labeled with the `failed-release` label for every individual failed publish task.
+For example, if Nuget publishing failed for a specific version, it will create an issue titled *Publishing v1.0.4 to Nuget gallery failed*.
+
+This can be helpful to keep track of failed releases as well as integrate with third-party ticketing systems by querying issues labeled with `failed-release`.

@@ -38,8 +38,8 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   readonly testdir?: string;
 
   /**
-   *
    * Setup eslint.
+   *
    * @default true
    */
   readonly eslint?: boolean;
@@ -76,8 +76,22 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
 
   /**
    * Custom TSConfig
+   * @default - default options
    */
   readonly tsconfig?: TypescriptConfigOptions;
+
+  /**
+   * Custom tsconfig options for the development tsconfig.json file (used for testing).
+   * @default - use the production tsconfig options
+   */
+  readonly tsconfigDev?: TypescriptConfigOptions;
+
+  /**
+   * The name of the development tsconfig.json file.
+   *
+   * @default "tsconfig.dev.json"
+   */
+  readonly tsconfigDevFile?: string;
 
   /**
    * Do not generate a `tsconfig.json` file (used by jsii projects since
@@ -86,13 +100,6 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * @default false
    */
   readonly disableTsconfig?: boolean;
-
-  /**
-   * Compile the code before running tests.
-   *
-   * @default - if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
-   */
-  readonly compileBeforeTest?: boolean;
 
   /**
    * Generate one-time sample in `src/` and `test/` if there are no files there.
@@ -139,6 +146,11 @@ export class TypeScriptProject extends NodeProject {
   public readonly tsconfig?: TypescriptConfig;
 
   /**
+   * A typescript configuration file which covers all files (sources, tests, projen).
+   */
+  public readonly tsconfigDev: TypescriptConfig;
+
+  /**
    * The directory in which the .ts sources reside.
    */
   public readonly srcdir: string;
@@ -157,11 +169,6 @@ export class TypeScriptProject extends NodeProject {
    * The "watch" task.
    */
   public readonly watchTask: Task;
-
-  /**
-   * The "package" task (or undefined if `package` is set to `false`).
-   */
-  public readonly packageTask?: Task;
 
   constructor(options: TypeScriptProjectOptions) {
     super({
@@ -200,27 +207,10 @@ export class TypeScriptProject extends NodeProject {
     // the javascript files and not let jest compile it for us.
     const compiledTests = this.testdir.startsWith(this.srcdir + path.posix.sep);
 
-    // by default, we first run tests (jest compiles the typescript in the background) and only then we compile.
-    const compileBeforeTest = options.compileBeforeTest ?? compiledTests;
-
-    if (compileBeforeTest) {
-      this.buildTask.spawn(this.compileTask);
-      this.buildTask.spawn(this.testTask);
-    } else {
-      this.buildTask.spawn(this.testTask);
-      this.buildTask.spawn(this.compileTask);
-    }
-
     if (options.package ?? true) {
-      this.packageTask = this.addTask('package', {
-        description: 'Create an npm tarball',
-      });
-
       this.packageTask.exec('mkdir -p dist/js');
       this.packageTask.exec(`${this.package.packageManager} pack`);
       this.packageTask.exec('mv *.tgz dist/js/');
-
-      this.buildTask.spawn(this.packageTask);
     }
 
     if (options.entrypointTypes || this.entrypoint !== '') {
@@ -231,10 +221,11 @@ export class TypeScriptProject extends NodeProject {
     const compilerOptionDefaults: TypeScriptCompilerOptions = {
       alwaysStrict: true,
       declaration: true,
+      esModuleInterop: true,
       experimentalDecorators: true,
       inlineSourceMap: true,
       inlineSources: true,
-      lib: ['es2018'],
+      lib: ['es2019'],
       module: 'CommonJS',
       noEmitOnError: false,
       noFallthroughCasesInSwitch: true,
@@ -248,22 +239,35 @@ export class TypeScriptProject extends NodeProject {
       strictNullChecks: true,
       strictPropertyInitialization: true,
       stripInternal: true,
-      target: 'ES2018',
+      target: 'ES2019',
     };
 
     if (!options.disableTsconfig) {
-      const baseTsconfig: TypescriptConfigOptions = {
+      this.tsconfig = new TypescriptConfig(this, mergeTsconfigOptions({
         include: [`${this.srcdir}/**/*.ts`],
+        // exclude: ['node_modules'], // TODO: shouldn't we exclude node_modules?
         compilerOptions: {
           rootDir: this.srcdir,
           outDir: this.libdir,
           ...compilerOptionDefaults,
         },
-      };
-
-      this.tsconfig = new TypescriptConfig(this,
-        mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
+      }, options.tsconfig));
     }
+
+    const tsconfigDevFile = options.tsconfigDevFile ?? 'tsconfig.dev.json';
+    this.tsconfigDev = new TypescriptConfig(this, mergeTsconfigOptions({
+      fileName: tsconfigDevFile,
+      include: [
+        PROJEN_RC,
+        `${this.srcdir}/**/*.ts`,
+        `${this.testdir}/**/*.ts`,
+      ],
+      exclude: ['node_modules'],
+      compilerOptions: compilerOptionDefaults,
+    }, options.tsconfig, options.tsconfigDev));
+
+    this.gitignore.include(`/${this.srcdir}/`);
+    this.npmignore?.exclude(`/${this.srcdir}/`);
 
     if (this.srcdir !== this.libdir) {
       // separated, can ignore the entire libdir
@@ -275,9 +279,6 @@ export class TypeScriptProject extends NodeProject {
     }
 
     this.npmignore?.include(`/${this.libdir}/`);
-
-    this.gitignore.include(`/${this.srcdir}/`);
-    this.npmignore?.exclude(`/${this.srcdir}/`);
 
     this.npmignore?.include(`/${this.libdir}/**/*.js`);
     this.npmignore?.include(`/${this.libdir}/**/*.d.ts`);
@@ -333,66 +334,28 @@ export class TypeScriptProject extends NodeProject {
       this.jest.addTestMatch('**\/__tests__/**\/*.ts?(x)');
       this.jest.addTestMatch('**\/?(*.)+(spec|test).ts?(x)');
 
-      const baseTsconfig: TypescriptConfigOptions = {
-        fileName: 'tsconfig.jest.json',
-        include: [
-          PROJEN_RC,
-          `${this.srcdir}/**/*.ts`,
-          `${this.testdir}/**/*.ts`,
-        ],
-        exclude: [
-          'node_modules',
-        ],
-        compilerOptions: compilerOptionDefaults,
-      };
-
       // create a tsconfig for jest that does NOT include outDir and rootDir and
       // includes both "src" and "test" as inputs.
-      const tsconfig = this.jest.generateTypescriptConfig(
-        mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
-
-      // if we test before compilation, remove the lib/ directory before running
-      // tests so that we get a clean slate for testing.
-      if (!compileBeforeTest) {
-        // make sure to delete "lib" *before* running tests to ensure that
-        // test code does not take a dependency on "lib" and instead on "src".
-        this.testTask.prependExec(`rm -fr ${this.libdir}/`);
-      }
-
-      // compile test code
-      this.testCompileTask.exec(`tsc --noEmit --project ${tsconfig.fileName}`);
+      this.jest.addTypeScriptSupport(this.tsconfigDev);
     }
 
     if (options.eslint ?? true) {
       this.eslint = new Eslint(this, {
-        tsconfigPath: './tsconfig.eslint.json',
+        tsconfigPath: `./${this.tsconfigDev.fileName}`,
         dirs: [this.srcdir],
         devdirs: [this.testdir, 'build-tools'],
         fileExtensions: ['.ts', '.tsx'],
         ...options.eslintOptions,
       });
 
-      const baseTsconfig = {
-        fileName: 'tsconfig.eslint.json',
-        include: [
-          PROJEN_RC,
-          `${this.srcdir}/**/*.ts`,
-          `${this.testdir}/**/*.ts`,
-        ],
-        exclude: [
-          'node_modules',
-        ],
-        compilerOptions: compilerOptionDefaults,
-      };
-
-      this.tsconfigEslint = new TypescriptConfig(this, mergeTsconfigOptions([baseTsconfig, options.tsconfig]));
+      this.tsconfigEslint = this.tsconfigDev;
     }
 
     const tsver = options.typescriptVersion ? `@${options.typescriptVersion}` : '';
 
     this.addDevDeps(
       `typescript${tsver}`,
-      `@types/node@^${this.package.minNodeVersion ?? '10.17.0'}`, // install the minimum version to ensure compatibility
+      `@types/node@^${this.package.minNodeVersion ?? '14.17.0'}`, // install the minimum version to ensure compatibility
     );
 
     // generate sample code in `src` and `lib` if these directories are empty or non-existent.
@@ -476,7 +439,7 @@ export interface TypeScriptLibraryProjectOptions extends TypeScriptProjectOption
 /**
  * @internal
  */
-export function mergeTsconfigOptions(options: (TypescriptConfigOptions | undefined)[]): TypescriptConfigOptions {
+export function mergeTsconfigOptions(...options: (TypescriptConfigOptions | undefined)[]): TypescriptConfigOptions {
   const definedOptions = options.filter(Boolean) as TypescriptConfigOptions[];
   return definedOptions.reduce<TypescriptConfigOptions>((previous, current) => ({
     ...previous,

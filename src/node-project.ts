@@ -1,21 +1,22 @@
 import { PROJEN_DIR, PROJEN_RC } from './common';
-import { AutoMerge, DependabotOptions, TaskWorkflow } from './github';
-import { MergifyOptions } from './github/mergify';
+import { AutoMerge, DependabotOptions, GitIdentity, TaskWorkflow } from './github';
+import { DEFAULT_GITHUB_ACTIONS_USER } from './github/constants';
 import { JobPermission, JobStep } from './github/workflows-model';
 import { IgnoreFile } from './ignore-file';
-import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
+import { Bundler, BundlerOptions, Projenrc, ProjenrcOptions } from './javascript';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
 import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
-import { Project, ProjectOptions } from './project';
+import { GitHubProject, GitHubProjectOptions } from './project';
 import { Release, ReleaseProjectOptions, Publisher } from './release';
 import { Task } from './tasks';
 import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from './upgrade-dependencies';
+import { deepMerge } from './util';
 import { Version } from './version';
 
 const PROJEN_SCRIPT = 'projen';
 
-export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, ReleaseProjectOptions {
+export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOptions, ReleaseProjectOptions {
   /**
    * License copyright owner.
    *
@@ -108,6 +109,13 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   readonly workflowBootstrapSteps?: any[];
 
   /**
+   * The git identity to use in workflows.
+   *
+   * @default - GitHub Actions
+   */
+  readonly workflowGitIdentity?: GitIdentity;
+
+  /**
    * Automatically release to npm when new versions are introduced.
    * @default false
    */
@@ -121,9 +129,9 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   readonly workflowNodeVersion?: string;
 
   /**
-   * Include dependabot configuration.
+   * Use dependabot to handle dependency upgrades.
+   * Cannot be used in conjunction with `depsUpgrade`.
    *
-   * @deprecated - use `depsUpgrade: DependenciesUpgradeMechanism.dependabot()`
    * @default false
    */
   readonly dependabot?: boolean;
@@ -131,24 +139,24 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   /**
    * Options for dependabot.
    *
-   * @deprecated - use `depsUpgrade: DependenciesUpgradeMechanism.dependabot()`
    * @default - default options
    */
   readonly dependabotOptions?: DependabotOptions;
 
   /**
-   * How to handle dependency upgrades.
+   * Use github workflows to handle dependency upgrades.
+   * Cannot be used in conjunction with `dependabot`.
    *
-   * @default - DependenciesUpgradeMechanism.dependabot if dependabot is true, otherwise a DependenciesUpgradeMechanism.githubWorkflow configured from other passed-in NodeProjectOptions
+   * @default true
    */
-  readonly depsUpgrade?: DependenciesUpgradeMechanism;
+  readonly depsUpgrade?: boolean;
 
   /**
-   * Options for mergify
+   * Options for depsUpgrade.
    *
    * @default - default options
    */
-  readonly mergifyOptions?: MergifyOptions;
+  readonly depsUpgradeOptions?: UpgradeDependenciesOptions;
 
   /**
    * Periodically submits a pull request for projen upgrades (executes `yarn
@@ -205,17 +213,6 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
   readonly projenUpgradeSchedule?: string[];
 
   /**
-   * Execute `projen` as the first step of the `build` task to synthesize
-   * project files. This applies both to local builds and to CI builds.
-   *
-   * Disabling this feature is NOT RECOMMENDED and means that manual changes to
-   * synthesized project files will be persisted.
-   *
-   * @default true
-   */
-  readonly projenDuringBuild?: boolean;
-
-  /**
    * Defines an .npmignore file. Normally this is only needed for libraries that
    * are packaged as tarballs.
    *
@@ -241,7 +238,7 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
    *
    * @default - default content
    */
-  readonly pullRequestTemplateContents?: string;
+  readonly pullRequestTemplateContents?: string[];
 
   /**
    * Additional entries to .gitignore
@@ -273,6 +270,11 @@ export interface NodeProjectOptions extends ProjectOptions, NodePackageOptions, 
    * @default - default options
    */
   readonly projenrcJsOptions?: ProjenrcOptions;
+
+  /**
+   * Options for `Bundler`.
+   */
+  readonly bundlerOptions?: BundlerOptions;
 }
 
 /**
@@ -293,7 +295,7 @@ export enum AutoRelease {
 /**
  * Node.js project
  */
-export class NodeProject extends Project {
+export class NodeProject extends GitHubProject {
   /**
    * API for managing the node package.
    */
@@ -313,26 +315,6 @@ export class NodeProject extends Project {
    * @deprecated use `package.entrypoint`
    */
   public get entrypoint(): string { return this.package.entrypoint; }
-
-  /**
-   * Compiles the code. By default for node.js projects this task is empty.
-   */
-  public readonly compileTask: Task;
-
-  /**
-   * Tests the code.
-   */
-  public readonly testTask: Task;
-
-  /**
-   * Compiles the test code.
-   */
-  public readonly testCompileTask: Task;
-
-  /**
-   * The task responsible for a full release build. It spawns: compile + test + release + package
-   */
-  public readonly buildTask: Task;
 
   /**
    * Automatic PR merges.
@@ -404,24 +386,23 @@ export class NodeProject extends Project {
   public readonly jest?: Jest;
 
   /**
-   * The command to use in order to run the projen CLI.
-   */
-  public get projenCommand(): string { return this.package.projenCommand; }
-
-  /**
    * @deprecated use `package.addField(x, y)`
    */
   public get manifest() {
     return this.package.manifest;
   }
 
+  public readonly bundler: Bundler;
+
   private readonly workflowBootstrapSteps: JobStep[];
+  private readonly workflowGitIdentity: GitIdentity;
 
   constructor(options: NodeProjectOptions) {
     super(options);
 
     this.package = new NodePackage(this, options);
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
+    this.workflowGitIdentity = options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
@@ -438,32 +419,6 @@ export class NodeProject extends Project {
     // add PATH for all tasks which includes the project's npm .bin list
     this.tasks.addEnvironment('PATH', '$(npx -c "node -e \\\"console.log(process.env.PATH)\\\"")');
 
-    this.compileTask = this.addTask('compile', {
-      description: 'Only compile',
-    });
-
-    this.testCompileTask = this.addTask('test:compile', {
-      description: 'compiles the test code',
-    });
-
-    this.testTask = this.addTask('test', {
-      description: 'Run tests',
-    });
-
-    this.testTask.spawn(this.testCompileTask);
-
-    this.buildTask = this.addTask('build', {
-      description: 'Full release build (test+compile)',
-    });
-
-    // first, execute projen as the first thing during build
-    if (options.projenDuringBuild ?? true) {
-      // skip for sub-projects (i.e. "parent" is defined) since synthing the
-      // root project will include the subprojects.
-      if (!this.parent) {
-        this.buildTask.exec(this.projenCommand);
-      }
-    }
 
     this.addLicense(options);
 
@@ -522,7 +477,7 @@ export class NodeProject extends Project {
       this.jest = new Jest(this, options.jestOptions);
     }
 
-    if (options.buildWorkflow ?? (this.parent ? false : true)) {
+    if (buildEnabled) {
       const branch = '${{ github.event.pull_request.head.ref }}';
       const repo = '${{ github.event.pull_request.head.repo.full_name }}';
       const buildJobId = 'build';
@@ -612,6 +567,7 @@ export class NodeProject extends Project {
 
       if (this.github) {
         this.buildWorkflow = new TaskWorkflow(this.github, {
+          gitIdentity: this.workflowGitIdentity,
           name: 'build',
           jobId: buildJobId,
           triggers: {
@@ -668,6 +624,11 @@ export class NodeProject extends Project {
           distTag: this.package.npmDistTag,
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,
+          codeArtifactOptions: {
+            accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret,
+            secretAccessKeySecret: options.codeArtifactOptions?.secretAccessKeySecret,
+            roleToAssume: options.codeArtifactOptions?.roleToAssume,
+          },
         });
       }
 
@@ -693,7 +654,10 @@ export class NodeProject extends Project {
       });
     }
 
-    if (options.dependabot !== undefined && options.depsUpgrade) {
+    const dependabot = options.dependabot ?? false;
+    const depsUpgrade = options.depsUpgrade ?? !dependabot;
+
+    if (dependabot && depsUpgrade) {
       throw new Error("'dependabot' cannot be configured together with 'depsUpgrade'");
     }
 
@@ -714,9 +678,17 @@ export class NodeProject extends Project {
 
     const autoApproveLabel = (condition: boolean) => (condition && this.autoApprove?.label) ? [this.autoApprove.label] : undefined;
 
-    const defaultDependenciesUpgrade = (options.dependabot ?? false)
-      ? DependenciesUpgradeMechanism.dependabot({ labels: autoApproveLabel(depsAutoApprove) })
-      : DependenciesUpgradeMechanism.githubWorkflow({
+    let ignoresProjen;
+    if (dependabot) {
+      const defaultOptions = {
+        labels: autoApproveLabel(depsAutoApprove),
+      };
+      const dependabotConf = this.github?.addDependabot(deepMerge([defaultOptions, options.dependabotOptions ?? {}]));
+      ignoresProjen = dependabotConf?.ignoresProjen;
+    }
+
+    if (depsUpgrade) {
+      const defaultOptions: UpgradeDependenciesOptions = {
         // if projen secret is defined we can also upgrade projen here.
         ignoreProjen: !options.projenUpgradeSecret,
         workflowOptions: {
@@ -726,13 +698,15 @@ export class NodeProject extends Project {
             image: options.workflowContainerImage,
           } : undefined,
           labels: autoApproveLabel(depsAutoApprove),
+          gitIdentity: this.workflowGitIdentity,
         },
-      });
+      };
+      const upgradeDependencies = new UpgradeDependencies(this, deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}]));
+      ignoresProjen = upgradeDependencies.ignoresProjen;
+    }
 
-    const dependenciesUpgrade = options.depsUpgrade ?? defaultDependenciesUpgrade;
-    dependenciesUpgrade.bind(this);
-
-    if (dependenciesUpgrade.ignoresProjen && this.package.packageName !== 'projen') {
+    // create a dedicated workflow to upgrade projen itself if needed
+    if (ignoresProjen && this.package.packageName !== 'projen') {
 
       new UpgradeDependencies(this, {
         include: ['projen'],
@@ -745,6 +719,7 @@ export class NodeProject extends Project {
           container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
           secret: options.projenUpgradeSecret,
           labels: autoApproveLabel(projenAutoApprove),
+          gitIdentity: this.workflowGitIdentity,
         },
       });
     }
@@ -757,6 +732,9 @@ export class NodeProject extends Project {
     if (projenrcJs) {
       new Projenrc(this, options.projenrcJsOptions);
     }
+
+    // add a bundler component - this enables things like Lambda bundling and in the future web bundling.
+    this.bundler = new Bundler(this, options.bundlerOptions);
   }
 
   public addBins(bins: Record<string, string>) {
@@ -810,16 +788,6 @@ export class NodeProject extends Project {
   }
 
   /**
-   * DEPRECATED
-   * @deprecated use `project.buildTask.exec()`
-   */
-  public addBuildCommand(...commands: string[]) {
-    for (const c of commands) {
-      this.buildTask.exec(c);
-    }
-  }
-
-  /**
    * Directly set fields in `package.json`.
    * @param fields The fields to set
    */
@@ -848,6 +816,14 @@ export class NodeProject extends Project {
         name: 'Setup Node.js',
         uses: 'actions/setup-node@v2.2.0',
         with: { 'node-version': this.nodeVersion },
+      });
+    }
+
+    if (this.package.packageManager === NodePackageManager.PNPM) {
+      install.push({
+        name: 'Setup pnpm',
+        uses: 'pnpm/action-setup@v2.0.1',
+        with: { version: '6.14.7' }, // current latest. Should probably become tunable.
       });
     }
 
@@ -1000,47 +976,4 @@ export class NodeProject extends Project {
 export interface NodeWorkflowSteps {
   readonly antitamper: any[];
   readonly install: any[];
-}
-
-/**
- * Dependencies upgrade mechanism.
- */
-export class DependenciesUpgradeMechanism {
-
-  /**
-   * Disable.
-   */
-  public static readonly NONE = new DependenciesUpgradeMechanism((_: NodeProject) => ({}), true);
-
-  /**
-   * Upgrade via dependabot.
-   */
-  public static dependabot(options: DependabotOptions = {}) {
-    return new DependenciesUpgradeMechanism((project: NodeProject) => {
-      project.github?.addDependabot(options);
-    }, options.ignoreProjen);
-  }
-
-  /**
-   * Upgrade via a custom github workflow.
-   */
-  public static githubWorkflow(options: UpgradeDependenciesOptions = {}) {
-    return new DependenciesUpgradeMechanism((project: NodeProject) => {
-      new UpgradeDependencies(project, options);
-    }, options.ignoreProjen);
-  }
-
-  private constructor(
-    private readonly binder: (project: NodeProject) => void,
-    private readonly _ignoresProjen?: boolean) {}
-
-  public get ignoresProjen(): boolean {
-    // we ignore projen by default because it requires 'workflow' permissions to run.
-    // nor depenedabot nor the default github token has those permissions.
-    return this._ignoresProjen ?? true;
-  }
-
-  public bind(project: NodeProject) {
-    this.binder(project);
-  }
 }

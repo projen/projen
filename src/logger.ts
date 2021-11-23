@@ -1,9 +1,9 @@
 import * as chalk from 'chalk';
+import { IS_TEST_RUN } from './common';
 import { Component } from './component';
+import { ICON } from './logging';
 import { Project } from './project';
 import { isTruthy } from './util';
-
-const ICON = '✨';
 
 /**
  * Options for logging utilities.
@@ -35,7 +35,10 @@ export class Logger extends Component {
   constructor(project: Project, options: LoggerOptions = {}) {
     super(project);
 
-    this.level = options.level ?? LogLevel.INFO;
+    // if we are running inside a test, default to no logs
+    const defaultLevel = IS_TEST_RUN ? LogLevel.OFF : LogLevel.INFO;
+
+    this.level = options.level ?? defaultLevel;
     this.usePrefix = options.usePrefix ?? false;
   }
 

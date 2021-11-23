@@ -1,9 +1,8 @@
 import * as child_process from 'child_process';
 import * as path from 'path';
+import * as Case from 'case';
 import * as fs from 'fs-extra';
 import * as logging from './logging';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const decamelize = require('decamelize');
 
 const MAX_BUFFER = 10 * 1024 * 1024;
 
@@ -11,7 +10,7 @@ const MAX_BUFFER = 10 * 1024 * 1024;
  * Executes a command with STDOUT > STDERR.
  */
 export function exec(command: string, options: { cwd: string }): void {
-  logging.verbose(command);
+  logging.debug(command);
   child_process.execSync(command, {
     stdio: ['inherit', process.stderr, 'pipe'], // "pipe" for STDERR means it appears in exceptions
     maxBuffer: MAX_BUFFER,
@@ -23,7 +22,7 @@ export function exec(command: string, options: { cwd: string }): void {
  * Executes command and returns STDOUT. If the command fails (non-zero), throws an error.
  */
 export function execCapture(command: string, options: { cwd: string }) {
-  logging.verbose(command);
+  logging.debug(command);
   return child_process.execSync(command, {
     stdio: ['inherit', 'pipe', 'pipe'], // "pipe" for STDERR means it appears in exceptions
     maxBuffer: MAX_BUFFER,
@@ -199,7 +198,7 @@ export function deepMerge(objects: Array<Obj<any> | undefined>, destructive: boo
       if (isObject(value)) {
         // if the value at the target is not an object, override it with an
         // object so we can continue the recursion
-        if (!isObject(target[key])) {
+        if (typeof(target[key]) !== 'object') {
           target[key] = value;
         }
         mergeOne(target[key], value);
@@ -208,7 +207,7 @@ export function deepMerge(objects: Array<Obj<any> | undefined>, destructive: boo
         // eventual value we assigned is `undefined`, and there are no
         // sibling concrete values alongside, so we can delete this tree.
         const output = target[key];
-        if (isObject(output) && Object.keys(output).length === 0 && destructive) {
+        if (typeof(output) === 'object' && Object.keys(output).length === 0 && destructive) {
           delete target[key];
         }
       } else if (value === undefined && destructive) {
@@ -281,3 +280,19 @@ export function kebabCaseKeys<T = unknown>(obj: T, recursive = true): T {
   }
   return result as any;
 }
+
+export async function tryReadFile(file: string) {
+  if (!(await fs.pathExists(file))) {
+    return '';
+  }
+
+  return fs.readFile(file, 'utf8');
+}
+
+function decamelize(s: string, sep: string = '_') {
+  if (Case.of(s) === 'camel') {
+    return Case.lower(s, sep);
+  } else {
+    return s;
+  }
+};

@@ -23,12 +23,8 @@ export class Projenrc extends Component {
     this.rcfile = options.filename ?? '.projenrc.json';
 
     // this is the task projen executes when running `projen`
-    const task = project.addTask(Project.DEFAULT_TASK, {
-      env: {
-        FILENAME: this.rcfile,
-      },
-    });
-    task.builtin('json/run-projenrc');
+    project.defaultTask.env('FILENAME', this.rcfile);
+    project.defaultTask.builtin('json/run-projenrc');
 
     this.generateProjenrc();
   }
