@@ -167,6 +167,7 @@ Name|Description
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
 [SampleReadmeProps](#projen-samplereadmeprops)|SampleReadme Properties.
 [SourceCodeOptions](#projen-sourcecodeoptions)|Options for `SourceCodeFile`.
+[TaskCommandStep](#projen-taskcommandstep)|Task command step definition.
 [TextFileOptions](#projen-textfileoptions)|Options for `TextFile`.
 [TomlFileOptions](#projen-tomlfileoptions)|Options for `TomlFile`.
 [TypeScriptCompilerOptions](#projen-typescriptcompileroptions)|*No description*
@@ -4956,6 +4957,7 @@ new UpgradeDependencies(project: NodeProject, options?: UpgradeDependenciesOptio
   * **exclude** (<code>Array<string></code>)  List of package names to exclude during the upgrade. __*Default*__: Nothing is excluded.
   * **ignoreProjen** (<code>boolean</code>)  Whether or not to ignore projen upgrades. __*Default*__: true
   * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
+  * **preUpgradeSteps** (<code>Array<[TaskCommandStep](#projen-taskcommandstep)></code>)  The steps to run prior to upgrade commands. __*Default*__: []
   * **pullRequestTitle** (<code>string</code>)  Title of the pull request to use (should be all lower-case). __*Default*__: "upgrade dependencies"
   * **signoff** (<code>boolean</code>)  Add Signed-off-by line by the committer at the end of the commit log message. __*Default*__: true
   * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade".
@@ -11222,6 +11224,20 @@ Name | Type | Description
 
 
 
+## struct TaskCommandStep 🔹 <a id="projen-taskcommandstep"></a>
+
+
+Task command step definition.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**command**🔹 | <code>string</code> | command name.
+**stepType**🔹 | <code>string</code> | Type of the step say/exec/builtin.
+
+
+
 ## struct TextFileOptions 🔹 <a id="projen-textfileoptions"></a>
 
 
@@ -11601,6 +11617,7 @@ Name | Type | Description
 **exclude**?🔹 | <code>Array<string></code> | List of package names to exclude during the upgrade.<br/>__*Default*__: Nothing is excluded.
 **ignoreProjen**?🔹 | <code>boolean</code> | Whether or not to ignore projen upgrades.<br/>__*Default*__: true
 **include**?🔹 | <code>Array<string></code> | List of package names to include during the upgrade.<br/>__*Default*__: Everything is included.
+**preUpgradeSteps**?🔹 | <code>Array<[TaskCommandStep](#projen-taskcommandstep)></code> | The steps to run prior to upgrade commands.<br/>__*Default*__: []
 **pullRequestTitle**?🔹 | <code>string</code> | Title of the pull request to use (should be all lower-case).<br/>__*Default*__: "upgrade dependencies"
 **signoff**?🔹 | <code>boolean</code> | Add Signed-off-by line by the committer at the end of the commit log message.<br/>__*Default*__: true
 **taskName**?🔹 | <code>string</code> | The name of the task that will be created.<br/>__*Default*__: "upgrade".
