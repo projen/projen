@@ -6470,7 +6470,7 @@ Adds a task to the project which bundles a specific entrypoint and all of its de
 addBundle(entrypoint: string, options: AddBundleOptions): Bundle
 ```
 
-* **entrypoint** (<code>string</code>)  *No description*
+* **entrypoint** (<code>string</code>)  The relative path of the artifact within the project.
 * **options** (<code>[javascript.AddBundleOptions](#projen-javascript-addbundleoptions)</code>)  Bundling options.
   * **externals** (<code>Array<string></code>)  You can mark a file or a package as external to exclude it from your build. __*Default*__: []
   * **sourcemap** (<code>boolean</code>)  Include a source map in the bundle. __*Default*__: false

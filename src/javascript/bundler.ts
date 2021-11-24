@@ -84,8 +84,7 @@ export class Bundler extends Component {
    * Adds a task to the project which bundles a specific entrypoint and all of
    * its dependencies into a single javascript output file.
    *
-   * @param name The name of the artifact (the task will be named
-   * `bundle:$name`).
+   * @param entrypoint The relative path of the artifact within the project
    * @param options Bundling options
    */
   public addBundle(entrypoint: string, options: AddBundleOptions): Bundle {
