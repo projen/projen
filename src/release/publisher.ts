@@ -1,5 +1,5 @@
 import { Component } from '../component';
-import { workflows } from '../github';
+import { IJobProvider, workflows } from '../github';
 import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { JobPermission, JobPermissions } from '../github/workflows-model';
 import { defaultNpmToken } from '../node-package';
@@ -67,7 +67,7 @@ export interface PublisherOptions {
  *
  * Under the hood, it uses https://github.com/aws/jsii-release
  */
-export class Publisher extends Component {
+export class Publisher extends Component implements IJobProvider {
   public readonly buildJobId: string;
   public readonly artifactName: string;
   public readonly jsiiReleaseVersion: string;
@@ -77,7 +77,7 @@ export class Publisher extends Component {
   private readonly failureIssueLabel: string;
 
   // the jobs to add to the release workflow
-  private readonly jobs: { [name: string]: workflows.Job } = {};
+  private readonly _jobs: { [name: string]: workflows.Job } = {};
 
   constructor(project: Project, options: PublisherOptions) {
     super(project);
@@ -96,7 +96,11 @@ export class Publisher extends Component {
    * @returns GitHub workflow jobs
    */
   public render(): Record<string, workflows.Job> {
-    return { ...this.jobs };
+    return { ...this._jobs };
+  }
+
+  public get jobs(): Record<string, workflows.Job> {
+    return { ...this._jobs };
   }
 
   /**
@@ -308,7 +312,7 @@ export class Publisher extends Component {
 
   private addPublishJob(opts: PublishJobOptions) {
     const jobname = `release_${opts.name}`;
-    if (jobname in this.jobs) {
+    if (jobname in this._jobs) {
       throw new Error(`Duplicate job with name "${jobname}"`);
     }
 
@@ -387,7 +391,7 @@ export class Publisher extends Component {
       steps,
     };
 
-    this.jobs[jobname] = job;
+    this._jobs[jobname] = job;
   }
 
   private jsiiReleaseCommand(command: string) {

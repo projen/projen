@@ -46,15 +46,19 @@ export class GithubWorkflow extends Component {
   public readonly concurrency?: string;
 
   /**
-   * The workflow YAML file.
+   * The workflow YAML file. May not exist if `workflowsEnabled` is false on `GitHub`.
    */
   public readonly file: YamlFile | undefined;
 
   private events: workflows.Triggers = { };
   private jobs: Record<string, workflows.Job> = { };
+  private _providers = new Array<IJobProvider>();
 
   constructor(github: GitHub, name: string, options: GithubWorkflowOptions = {}) {
     super(github.project);
+
+    // register to catch duplicate workflow name errors early
+    github._registerWorkflow(name, this);
 
     this.name = name;
     this.concurrency = options.concurrency;
@@ -100,12 +104,28 @@ export class GithubWorkflow extends Component {
     };
   }
 
+  /** @internal */
+  public _addJobsFromProvider(provider: IJobProvider) {
+    this._providers.push(provider);
+  }
+
   private renderWorkflow() {
+    const allJobs = { ...this.jobs };
+
+    for (const provider of this._providers) {
+      for (const [name, job] of Object.entries(provider.jobs)) {
+        if (name in allJobs) {
+          throw new Error(`A job named ${name} already exists in workflow ${this.name}`);
+        }
+        allJobs[name] = job;
+      }
+    }
+
     return {
       name: this.name,
       on: snakeCaseKeys(this.events),
       concurrency: this.concurrency,
-      jobs: renderJobs(this.jobs),
+      jobs: renderJobs(allJobs),
     };
   }
 }
@@ -207,4 +227,11 @@ function arrayOrScalar<T>(arr: T[] | undefined): T | T[] | undefined {
     return arr[0];
   }
   return arr;
+}
+
+export interface IJobProvider {
+  /**
+   * A collection of jobs that may be dynamically generated.
+   */
+  readonly jobs: Record<string, workflows.Job>;
 }

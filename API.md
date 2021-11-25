@@ -284,6 +284,7 @@ Name|Description
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
 [IResolvable](#projen-iresolvable)|*No description*
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
+[github.IJobProvider](#projen-github-ijobprovider)|*No description*
 [python.IPackageProvider](#projen-python-ipackageprovider)|*No description*
 [python.IPythonDeps](#projen-python-ipythondeps)|*No description*
 [python.IPythonEnv](#projen-python-ipythonenv)|*No description*
@@ -7211,6 +7212,7 @@ Implements GitHub jobs for publishing modules to package managers.
 
 Under the hood, it uses https://github.com/aws/jsii-release
 
+__Implements__: [github.IJobProvider](#projen-github-ijobprovider)
 __Submodule__: release
 
 __Extends__: [Component](#projen-component)
@@ -7242,6 +7244,7 @@ Name | Type | Description
 -----|------|-------------
 **artifactName**🔹 | <code>string</code> | <span></span>
 **buildJobId**🔹 | <code>string</code> | <span></span>
+**jobs**🔹 | <code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code> | A collection of jobs that may be dynamically generated.
 **jsiiReleaseVersion**🔹 | <code>string</code> | <span></span>
 **condition**?🔹 | <code>string</code> | __*Optional*__
 
@@ -7472,18 +7475,6 @@ addJobs(jobs: Map<string, Job>): void
 ```
 
 * **jobs** (<code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>)  The jobs to add (name => job).
-
-
-
-
-#### preSynthesize()🔹 <a id="projen-release-release-presynthesize"></a>
-
-Called before synthesis.
-
-```ts
-preSynthesize(): void
-```
-
 
 
 
@@ -11990,6 +11981,21 @@ Name | Type | Description
 -----|------|-------------
 **concurrency**?🔹 | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.<br/>__*Default*__: disabled
 **force**?🔹 | <code>boolean</code> | Force the creation of the workflow even if `workflows` is disabled in `GitHub`.<br/>__*Default*__: false
+
+
+
+## interface IJobProvider 🔹 <a id="projen-github-ijobprovider"></a>
+
+__Implemented by__: [release.Publisher](#projen-release-publisher)
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**jobs**🔹 | <code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code> | A collection of jobs that may be dynamically generated.
 
 
 

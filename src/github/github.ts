@@ -80,17 +80,21 @@ export class GitHub extends Component {
     return Object.values(this._workflows);
   }
 
+  /** @internal */
+  public _registerWorkflow(name: string, workflow: GithubWorkflow) {
+    if (this._workflows[name]) {
+      throw new Error(`A workflow with the name ${name} already exists.`);
+    }
+    this._workflows[name] = workflow;
+  }
+
   /**
    * Adds a workflow to the project.
    * @param name Name of the workflow
    * @returns a GithubWorkflow instance
    */
   public addWorkflow(name: string) {
-    if (this._workflows[name]) {
-      throw new Error(`A workflow with the name ${name} already exists.`);
-    }
     const workflow = new GithubWorkflow(this, name);
-    this._workflows[name] = workflow;
     return workflow;
   }
 
