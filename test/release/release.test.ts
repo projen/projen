@@ -434,3 +434,23 @@ test('AWS CodeArtifact is supported with role to assume', () => {
   const outdir = synthSnapshot(project);
   expect(outdir).toMatchSnapshot();
 });
+
+test('can be modified with escape hatches', () => {
+  // GIVEN
+  const project = new TestProject();
+  new Release(project, {
+    task: project.buildTask,
+    versionFile: 'version.json',
+    branch: 'main',
+  });
+
+  // WHEN
+  project.github!.tryFindWorkflow('release')!.file!.addOverride('jobs.release.env.FOO', 'VALUE1');
+  project.github!.tryFindWorkflow('release')!.file!.addOverride('jobs.release_github.env.BAR', 'VALUE2');
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  expect(outdir['.github/workflows/release.yml']).toContain('FOO: VALUE1');
+  expect(outdir['.github/workflows/release.yml']).toContain('BAR: VALUE2');
+  expect(outdir).toMatchSnapshot();
+});

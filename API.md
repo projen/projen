@@ -284,6 +284,7 @@ Name|Description
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
 [IResolvable](#projen-iresolvable)|*No description*
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
+[github.IJobProvider](#projen-github-ijobprovider)|*No description*
 [python.IPackageProvider](#projen-python-ipackageprovider)|*No description*
 [python.IPythonDeps](#projen-python-ipythondeps)|*No description*
 [python.IPythonEnv](#projen-python-ipythonenv)|*No description*
@@ -5834,6 +5835,22 @@ addJobs(jobs: Map<string, Job>): void
 
 
 
+#### addJobsLater(provider)🔹 <a id="projen-github-githubworkflow-addjobslater"></a>
+
+Add jobs from a dynamic source.
+
+Useful if a component creates jobs that
+may not be all available until project synthesis time.
+
+```ts
+addJobsLater(provider: IJobProvider): void
+```
+
+* **provider** (<code>[github.IJobProvider](#projen-github-ijobprovider)</code>)  Source of jobs.
+
+
+
+
 #### on(events)🔹 <a id="projen-github-githubworkflow-on"></a>
 
 Add events to triggers the workflow.
@@ -7211,6 +7228,7 @@ Implements GitHub jobs for publishing modules to package managers.
 
 Under the hood, it uses https://github.com/aws/jsii-release
 
+__Implements__: [github.IJobProvider](#projen-github-ijobprovider)
 __Submodule__: release
 
 __Extends__: [Component](#projen-component)
@@ -7371,12 +7389,12 @@ publishToPyPi(options?: PyPiPublishOptions): void
 
 
 
-#### render()🔹 <a id="projen-release-publisher-render"></a>
+#### renderJobs()🔹 <a id="projen-release-publisher-renderjobs"></a>
 
 Renders a set of workflow jobs for all the publishers.
 
 ```ts
-render(): Map<string, Job>
+renderJobs(): Map<string, Job>
 ```
 
 
@@ -7472,18 +7490,6 @@ addJobs(jobs: Map<string, Job>): void
 ```
 
 * **jobs** (<code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>)  The jobs to add (name => job).
-
-
-
-
-#### preSynthesize()🔹 <a id="projen-release-release-presynthesize"></a>
-
-Called before synthesis.
-
-```ts
-preSynthesize(): void
-```
-
 
 
 
@@ -11990,6 +11996,28 @@ Name | Type | Description
 -----|------|-------------
 **concurrency**?🔹 | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.<br/>__*Default*__: disabled
 **force**?🔹 | <code>boolean</code> | Force the creation of the workflow even if `workflows` is disabled in `GitHub`.<br/>__*Default*__: false
+
+
+
+## interface IJobProvider 🔹 <a id="projen-github-ijobprovider"></a>
+
+__Implemented by__: [release.Publisher](#projen-release-publisher)
+
+
+### Methods
+
+
+#### renderJobs()🔹 <a id="projen-github-ijobprovider-renderjobs"></a>
+
+Generates a collection of named GitHub workflow jobs.
+
+```ts
+renderJobs(): Map<string, Job>
+```
+
+
+__Returns__:
+* <code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>
 
 
 

@@ -124,7 +124,7 @@ export class UpgradeDependencies extends Component {
   public preSynthesize() {
     const task = this.createTask();
     if (this._project.github && (this.options.workflow ?? true)) {
-      // represents the default reopsitory branch.
+      // represents the default repository branch.
       // just like not specifying anything.
       const defaultBranch = undefined;
 

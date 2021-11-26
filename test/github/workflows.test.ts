@@ -33,7 +33,7 @@ test('throws when adding workflow with existing name', () => {
   });
 
   // THEN
-  expect(() => p.github?.addWorkflow('stale')).toThrow(/A workflow with the name stale already exists/);
+  expect(() => p.github?.addWorkflow('stale')).toThrow(/there is already a file under/);
 });
 
 test('tryFind valid workflow', () => {

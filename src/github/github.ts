@@ -56,13 +56,10 @@ export class GitHub extends Component {
    */
   public readonly workflowsEnabled: boolean;
 
-  private readonly _workflows: { [name: string]: GithubWorkflow };
-
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
 
     this.workflowsEnabled = options.workflows ?? true;
-    this._workflows = {};
 
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this, options.mergifyOptions);
@@ -76,8 +73,9 @@ export class GitHub extends Component {
   /**
    * All workflows.
    */
-  public get workflows() {
-    return Object.values(this._workflows);
+  public get workflows(): GithubWorkflow[] {
+    const isWorkflow = (c: Component): c is GithubWorkflow => c instanceof GithubWorkflow;
+    return this.project.components.filter(isWorkflow).sort((w1, w2) => w1.name.localeCompare(w2.name));
   }
 
   /**
@@ -86,11 +84,7 @@ export class GitHub extends Component {
    * @returns a GithubWorkflow instance
    */
   public addWorkflow(name: string) {
-    if (this._workflows[name]) {
-      throw new Error(`A workflow with the name ${name} already exists.`);
-    }
     const workflow = new GithubWorkflow(this, name);
-    this._workflows[name] = workflow;
     return workflow;
   }
 
@@ -107,6 +101,6 @@ export class GitHub extends Component {
    * @param name The name of the GitHub workflow
    */
   public tryFindWorkflow(name: string): undefined | GithubWorkflow {
-    return this._workflows[name];
+    return this.workflows.find(w => w.name === name);
   }
 }
