@@ -57,9 +57,6 @@ export class GithubWorkflow extends Component {
   constructor(github: GitHub, name: string, options: GithubWorkflowOptions = {}) {
     super(github.project);
 
-    // register to catch duplicate workflow name errors early
-    github._registerWorkflow(name, this);
-
     this.name = name;
     this.concurrency = options.concurrency;
 
