@@ -12009,7 +12009,7 @@ __Implemented by__: [release.Publisher](#projen-release-publisher)
 
 #### renderJobs()🔹 <a id="projen-github-ijobprovider-renderjobs"></a>
 
-A collection of jobs that may be dynamically generated.
+Generates a collection of named GitHub workflow jobs.
 
 ```ts
 renderJobs(): Map<string, Job>

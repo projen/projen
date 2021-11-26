@@ -233,7 +233,7 @@ function arrayOrScalar<T>(arr: T[] | undefined): T | T[] | undefined {
 
 export interface IJobProvider {
   /**
-   * A collection of jobs that may be dynamically generated.
+   * Generates a collection of named GitHub workflow jobs.
    */
   renderJobs(): Record<string, workflows.Job>;
 }
