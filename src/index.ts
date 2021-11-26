@@ -1,5 +1,3 @@
-export * from './awscdk-app-ts';
-export * from './awscdk-construct';
 export * from './cdk8s-app-ts';
 export * from './cdk8s-construct';
 export * from './cdktf-construct';

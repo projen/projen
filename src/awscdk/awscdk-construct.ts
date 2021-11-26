@@ -1,6 +1,7 @@
 import * as semver from 'semver';
-import { AutoDiscover, LambdaFunctionCommonOptions } from './awscdk';
-import { ConstructLibrary, ConstructLibraryOptions } from './construct-lib';
+import { ConstructLibrary, ConstructLibraryOptions } from '../construct-lib';
+import { AutoDiscover } from './auto-discover';
+import { LambdaFunctionCommonOptions } from './lambda-function';
 
 /**
  * Options for the construct-lib-aws project.
