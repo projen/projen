@@ -95,11 +95,7 @@ export class Publisher extends Component implements IJobProvider {
    * Renders a set of workflow jobs for all the publishers.
    * @returns GitHub workflow jobs
    */
-  public render(): Record<string, workflows.Job> {
-    return { ...this._jobs };
-  }
-
-  public get jobs(): Record<string, workflows.Job> {
+  public renderJobs(): Record<string, workflows.Job> {
     return { ...this._jobs };
   }
 

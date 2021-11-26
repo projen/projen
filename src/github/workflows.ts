@@ -101,8 +101,13 @@ export class GithubWorkflow extends Component {
     };
   }
 
-  /** @internal */
-  public _addJobsFromProvider(provider: IJobProvider) {
+  /**
+   * Add jobs from a dynamic source. Useful if a component creates jobs that
+   * may not be all available until project synthesis time.
+   *
+   * @param provider Source of jobs
+   */
+  public addJobsLater(provider: IJobProvider) {
     this._providers.push(provider);
   }
 
@@ -110,7 +115,7 @@ export class GithubWorkflow extends Component {
     const allJobs = { ...this.jobs };
 
     for (const provider of this._providers) {
-      for (const [name, job] of Object.entries(provider.jobs)) {
+      for (const [name, job] of Object.entries(provider.renderJobs())) {
         if (name in allJobs) {
           throw new Error(`A job named ${name} already exists in workflow ${this.name}`);
         }
@@ -230,5 +235,5 @@ export interface IJobProvider {
   /**
    * A collection of jobs that may be dynamically generated.
    */
-  readonly jobs: Record<string, workflows.Job>;
+  renderJobs(): Record<string, workflows.Job>;
 }

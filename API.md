@@ -5835,6 +5835,22 @@ addJobs(jobs: Map<string, Job>): void
 
 
 
+#### addJobsLater(provider)🔹 <a id="projen-github-githubworkflow-addjobslater"></a>
+
+Add jobs from a dynamic source.
+
+Useful if a component creates jobs that
+may not be all available until project synthesis time.
+
+```ts
+addJobsLater(provider: IJobProvider): void
+```
+
+* **provider** (<code>[github.IJobProvider](#projen-github-ijobprovider)</code>)  Source of jobs.
+
+
+
+
 #### on(events)🔹 <a id="projen-github-githubworkflow-on"></a>
 
 Add events to triggers the workflow.
@@ -7244,7 +7260,6 @@ Name | Type | Description
 -----|------|-------------
 **artifactName**🔹 | <code>string</code> | <span></span>
 **buildJobId**🔹 | <code>string</code> | <span></span>
-**jobs**🔹 | <code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code> | A collection of jobs that may be dynamically generated.
 **jsiiReleaseVersion**🔹 | <code>string</code> | <span></span>
 **condition**?🔹 | <code>string</code> | __*Optional*__
 
@@ -7374,12 +7389,12 @@ publishToPyPi(options?: PyPiPublishOptions): void
 
 
 
-#### render()🔹 <a id="projen-release-publisher-render"></a>
+#### renderJobs()🔹 <a id="projen-release-publisher-renderjobs"></a>
 
 Renders a set of workflow jobs for all the publishers.
 
 ```ts
-render(): Map<string, Job>
+renderJobs(): Map<string, Job>
 ```
 
 
@@ -11989,13 +12004,20 @@ Name | Type | Description
 __Implemented by__: [release.Publisher](#projen-release-publisher)
 
 
+### Methods
 
-### Properties
+
+#### renderJobs()🔹 <a id="projen-github-ijobprovider-renderjobs"></a>
+
+A collection of jobs that may be dynamically generated.
+
+```ts
+renderJobs(): Map<string, Job>
+```
 
 
-Name | Type | Description 
------|------|-------------
-**jobs**🔹 | <code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code> | A collection of jobs that may be dynamically generated.
+__Returns__:
+* <code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>
 
 
 

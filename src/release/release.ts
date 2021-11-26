@@ -284,8 +284,8 @@ export class Release extends Component {
 
     const defaultWorkflow = this.createWorkflow(this.defaultBranch);
     if (defaultWorkflow) {
-      defaultWorkflow._addJobsFromProvider(this.publisher);
-      defaultWorkflow._addJobsFromProvider({ jobs: this.jobs });
+      defaultWorkflow.addJobsLater(this.publisher);
+      defaultWorkflow.addJobsLater({ renderJobs: () => this.jobs });
     }
 
     for (const [name, opts] of Object.entries(options.releaseBranches ?? {})) {
@@ -323,8 +323,8 @@ export class Release extends Component {
 
     const workflow = this.createWorkflow(branchOptions);
     if (workflow) {
-      workflow._addJobsFromProvider(this.publisher);
-      workflow._addJobsFromProvider({ jobs: this.jobs });
+      workflow.addJobsLater(this.publisher);
+      workflow.addJobsLater({ renderJobs: () => this.jobs });
     }
   }
 
