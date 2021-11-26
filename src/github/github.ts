@@ -101,12 +101,6 @@ export class GitHub extends Component {
    * @param name The name of the GitHub workflow
    */
   public tryFindWorkflow(name: string): undefined | GithubWorkflow {
-    for (const workflow of this.workflows) {
-      if (workflow.name === name) {
-        return workflow;
-      }
-    }
-
-    return undefined;
+    return this.workflows.find(w => w.name === name);
   }
 }
