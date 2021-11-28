@@ -1924,9 +1924,9 @@ dateformat@^3.0.0:
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
 
 debug@4, debug@^4.0.1, debug@^4.1.0, debug@^4.1.1, debug@^4.3.1:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"
-  integrity sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw==
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.3.tgz#04266e0b70a98d4462e6e288e38259213332b664"
+  integrity sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q==
   dependencies:
     ms "2.1.2"
 
@@ -4364,10 +4364,10 @@ map-obj@^4.0.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-markmac@^0.1.102:
-  version "0.1.102"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.102.tgz#e3f1276485fc49d31dd35edad9e0b52f0c3e30e0"
-  integrity sha512-9NoYKE0k3zSvNdAyIxAMBWSOJFiE+l/k8omBgBQQRrWWTg2Ucv5ZmwG8NRJFS02aEpgeSw9XTeWbjTz201xwrQ==
+markmac@^0.1.103:
+  version "0.1.103"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.103.tgz#12e25160dbd4fa39cd975446a2468a55993a1a5c"
+  integrity sha512-2WKdS4vGuMBhPulCSVF2oyCFuSvgv75+lGpv2/AoAGTxy7TQ84FM+dtxlvZ7T+Uq97Cl6RqxwIwl28gw8EMoAg==
 
 mdurl@~1.0.1:
   version "1.0.1"
