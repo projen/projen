@@ -120,8 +120,11 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
     }
 
     const ret = spawnSync(process.execPath, [rcfile], { stdio: ['inherit', 'inherit', 'pipe'] });
-    if (ret.status !== 0) {
+    if (ret.error) {
       throw new Error(`Synthesis failed: ${ret.error}`);
+    } else if (ret.status !== 0) {
+      logging.error(ret.stderr.toString());
+      throw new Error(`Synthesis failed: calling "${process.execPath} ${rcfile}" exited with status=${ret.status}`);
     }
 
     return true;
