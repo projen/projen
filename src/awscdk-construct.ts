@@ -149,6 +149,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
     if (lambdaAutoDiscover) {
       new AutoDiscover(this, {
         srcdir: this.srcdir,
+        testdir: this.testdir,
         lambdaOptions: options.lambdaOptions,
       });
     }

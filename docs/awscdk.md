@@ -95,37 +95,34 @@ new awscdk.LambdaFunction(p, {
 });
 ```
 
-## Integration Snapshot Tests (NOT IMPLEMENTED YET)
+## Integration Snapshot Tests
 
-Files in the test tree with the `.integ.ts` suffix are recognized as
+Files in the `test/` tree with the `.integ.ts` suffix are recognized as
 *integration snapshot tests*.
 
-Each test is a simple app (e.g. calls `app.synth()`) which exercises certain
+Each test is a simple CDK app (e.g. calls `app.synth()`) which exercises certain
 construct(s) within the project. A test is considered passing if the app can be
 successfully deployed.
 
-During build, integration test apps are synthesized and their output is compared
-to a committed *snapshot*. If the output is the same, the test has passed,
-otherwise the build will fail.
+To create/update the snapshot, developers are expected to execute the task
+`integ:NAME:deploy` with AWS credentials for their personal development
+environment. This task will deploy the test app to their account. Upon
+successful deployment (i.e. the test passed), the snapshot will be captured and
+stored under a directory called `xxx.integ.snapshot` next to the test
+entrypoint. This directory should be committed to the repository.
 
-To create/update the snapshot, developers need to manually execute the task
-`integ:NAME:deploy` with AWS credentials in their environment. This task will
-`cdk deploy` the test app to their development account and if deployment
-succeeded (i.e. the test passed), it will take a snapshot of the output and add
-it to the repository under a `xxx.integ.snapshot` directory. This directory
-should be committed to the repository.
+During builds (either local or within a workflow), the task `integ:NAME:assert`
+will be executed. This task synthesizes the test app and compares the output to
+the captured snapshot. The build will fail if the output differs.
 
-In addition to the `integ:NAME:deploy` task, for each integration test, the
-following set of tasks are created:
+For each integration test, the following set of tasks are created:
 
-* `integ:NAME:deploy` - deploys & destroys the test app and updates the snapshot.
-* `integ:NAME:destroy` - destroys a previously deployed test app.
-* `integ:NAME:assert` - synthesizes the test app and compares it with the
-  snapshot (this is the task that runs during build).
-* `integ:NAME:snapshot` - synthesizes the test app and updates the snapshot
-  (bypasses the deployment).
-* `integ:NAME:watch` - starts `cdk watch` for the test app (monitors all source
-  files and bundles).
+|Task|Description|
+|----|-----------|
+|`integ:NAME:deploy`|Deploys & destroys the test app and updates the snapshot.|
+|`integ:NAME:assert`|Synthesizes the test app and compares it with the snapshot (this is the task that runs during build)|
+|`integ:NAME:snapshot`|Synthesizes the test app and updates the snapshot (not recommended to use because it bypasses deployment).|
+|`integ:NAME:destroy`|Destroys a previously deployed test app.|
 
 ### Writing test assertions
 

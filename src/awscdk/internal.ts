@@ -21,3 +21,8 @@ export const FEATURE_FLAGS = [
  * Suffix for AWS Lambda handlers.
  */
 export const TYPESCRIPT_LAMBDA_EXT = '.lambda.ts';
+
+/**
+ * Suffix for integration tests.
+ */
+export const TYPESCRIPT_INTEG_EXT = '.integ.ts';

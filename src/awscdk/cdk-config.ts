@@ -35,6 +35,20 @@ export interface CdkConfigCommonOptions {
    * @default "cdk.out"
    */
   readonly cdkout?: string;
+
+  /**
+   * Glob patterns to include in `cdk watch`.
+   *
+   * @default []
+   */
+  readonly watchIncludes?: string[];
+
+  /**
+   * Glob patterns to exclude from `cdk watch`.
+   *
+   * @default []
+   */
+  readonly watchExcludes?: string[];
 }
 
 /**
@@ -83,6 +97,10 @@ export class CdkConfig extends Component {
         context: context,
         requireApproval: options.requireApproval,
         output: this.cdkout,
+        watch: {
+          include: options.watchIncludes ?? [],
+          exclude: options.watchExcludes ?? [],
+        },
       },
     });
 

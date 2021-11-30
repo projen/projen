@@ -1,8 +1,9 @@
 import { join } from 'path';
 import * as glob from 'glob';
+import { IntegrationTest } from '.';
 import { Component } from '../component';
 import { Project } from '../project';
-import { TYPESCRIPT_LAMBDA_EXT } from './internal';
+import { TYPESCRIPT_INTEG_EXT, TYPESCRIPT_LAMBDA_EXT } from './internal';
 import { LambdaFunction, LambdaFunctionCommonOptions } from './lambda-function';
 
 /**
@@ -18,6 +19,11 @@ export interface AutoDiscoverOptions {
    * Project source tree (relative to project output directory).
    */
   readonly srcdir: string;
+
+  /**
+   * Test source tree.
+   */
+  readonly testdir: string;
 }
 
 /**
@@ -30,6 +36,11 @@ export class AutoDiscover extends Component {
   constructor(project: Project, options: AutoDiscoverOptions) {
     super(project);
 
+    this.autoDiscoverLambdaFunctions(options);
+    this.autoDiscoverIntegrationTests(options);
+  }
+
+  private autoDiscoverLambdaFunctions(options: AutoDiscoverOptions) {
     const entrypoints = glob.sync(`**/*${TYPESCRIPT_LAMBDA_EXT}`, {
       cwd: join(this.project.outdir, options.srcdir),
     });
@@ -41,4 +52,17 @@ export class AutoDiscover extends Component {
       });
     }
   }
+
+  private autoDiscoverIntegrationTests(options: AutoDiscoverOptions) {
+    const entrypoints = glob.sync(`**/*${TYPESCRIPT_INTEG_EXT}`, {
+      cwd: join(this.project.outdir, options.testdir),
+    });
+
+    for (const entrypoint of entrypoints) {
+      new IntegrationTest(this.project, {
+        entrypoint: join(options.testdir, entrypoint),
+      });
+    }
+  }
+
 }
