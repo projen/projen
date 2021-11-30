@@ -1,4 +1,4 @@
-const { JsiiProject, JsonFile, TextFile } = require('./lib');
+const { JsiiProject, JsonFile, TextFile, NodePackageManager } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',
@@ -184,5 +184,12 @@ project.npmignore.exclude('/VISION.md');
 project.npmignore.exclude('/SECURITY.md');
 project.npmignore.exclude('/.gitattributes');
 project.npmignore.exclude('/.gitpod.yml');
+
+// Workaround for @types/jsdom issues due to upgrade to jest@27.4.0 as mentioned in https://github.com/projen/projen/issues/1264#issuecomment-982365744
+if (project.package.packageManager === NodePackageManager.YARN) {
+  project.package.addField('resolutions', {
+    'jest-environment-jsdom': '27.3.1',
+  });
+}
 
 project.synth();
