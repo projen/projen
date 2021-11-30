@@ -815,6 +815,50 @@ Array [
         "simpleType": "boolean",
         "switch": "vscode",
       },
+      Object {
+        "default": "[]",
+        "docs": "Glob patterns to exclude from \`cdk watch\`.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "watchExcludes",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "watchExcludes",
+        ],
+        "simpleType": "unknown",
+        "switch": "watch-excludes",
+      },
+      Object {
+        "default": "[]",
+        "docs": "Glob patterns to include in \`cdk watch\`.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "watchIncludes",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "watchIncludes",
+        ],
+        "simpleType": "unknown",
+        "switch": "watch-includes",
+      },
     ],
     "pjid": "awscdk-app-java",
     "typename": "awscdk.AwsCdkJavaApp",
@@ -3108,6 +3152,50 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "vscode",
+      },
+      Object {
+        "default": "[]",
+        "docs": "Glob patterns to exclude from \`cdk watch\`.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "watchExcludes",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "watchExcludes",
+        ],
+        "simpleType": "unknown",
+        "switch": "watch-excludes",
+      },
+      Object {
+        "default": "[]",
+        "docs": "Glob patterns to include in \`cdk watch\`.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "watchIncludes",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "watchIncludes",
+        ],
+        "simpleType": "unknown",
+        "switch": "watch-includes",
       },
       Object {
         "default": "\\"yarn install --frozen-lockfile && yarn projen\\"",

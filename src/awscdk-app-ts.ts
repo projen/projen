@@ -133,6 +133,20 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.cdkConfig = new CdkConfig(this, {
       app: `npx ts-node --prefer-ts-exts ${path.posix.join(this.srcdir, this.appEntrypoint)}`,
       featureFlags: cdkMajorVersion < 2,
+      watchIncludes: [
+        `${this.srcdir}/**/*.ts`,
+        `${this.testdir}/**/*.ts`,
+      ],
+      watchExcludes: [
+        'README.md',
+        'cdk*.json',
+        '**/*.d.ts',
+        '**/*.js',
+        'tsconfig.json',
+        'package*.json',
+        'yarn.lock',
+        'node_modules',
+      ],
       ...options,
     });
 
@@ -154,6 +168,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     if (lambdaAutoDiscover) {
       new AutoDiscover(this, {
         srcdir: this.srcdir,
+        testdir: this.testdir,
         lambdaOptions: options.lambdaOptions,
       });
     }
