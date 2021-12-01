@@ -69,9 +69,7 @@ export class IntegrationTest extends Component {
 
     const app = `ts-node ${entry}`;
 
-    try {
-      project.deps.getDependency('ts-node');
-    } catch (e) {
+    if (!project.deps.tryGetDependency('ts-node')) {
       throw new Error('ts-node dependency is required for integration tests.');
     }
 

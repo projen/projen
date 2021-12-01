@@ -96,6 +96,27 @@ export class Dependencies extends Component {
   }
 
   /**
+   * Returns a dependency by name, or undefined.
+   *
+   * Returns undefined if the dependency does not exist with that name OR
+   * there is more than one dependency type for this dependency.
+   *
+   * @param name The name of the dependency
+   * @param type The dependency type. If this dependency is defined only for a
+   * single type, this argument can be omitted.
+   *
+   * @returns a copy (cannot be modified)
+   */
+  public tryGetDependency(name: string, type?: DependencyType): Dependency | undefined {
+    try {
+      return this.getDependency(name, type);
+    } catch (err) {
+      this.project.logger.warn(`tryGetDependency: ${(err as Error).message}`);
+      return undefined;
+    }
+  }
+
+  /**
    * Adds a dependency to this project.
    * @param spec The dependency spec in the format `MODULE[@VERSION]` where
    * `MODULE` is the package-manager-specific module name and `VERSION` is an
