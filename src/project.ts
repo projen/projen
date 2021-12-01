@@ -215,6 +215,13 @@ export class Project {
     if (projenrcJson) {
       new Projenrc(this, options.projenrcJsonOptions);
     }
+
+    new JsonFile(this, Project.FILE_MANIFEST, {
+      omitEmpty: true,
+      obj: {
+        files: this.files.filter(f => f.readonly).map(f => f.path.replace(/\\/g, "/"))
+      }
+    })
   }
 
   /**
@@ -400,12 +407,6 @@ export class Project {
     for (const comp of this._components) {
       comp.preSynthesize();
     }
-
-    new JsonFile(this, Project.FILE_MANIFEST, {
-      obj: {
-        files: this.files.filter(f => f.readonly).map(f => f.path.replace(/\\/g, "/"))
-      }
-    })
 
     // we exclude all subproject directories to ensure that when subproject.synth()
     // gets called below after cleanup(), subproject generated files are left intact
