@@ -2,6 +2,7 @@
 !/.gitattributes
 !/.projen/tasks.json
 !/.projen/deps.json
+!/.projen/files.json
 !/.github/workflows/pull-request-lint.yml
 !/.gitpod.yml
 !/.devcontainer.json
@@ -57,4 +58,3 @@ tsconfig.json
 !/.markdownlint.json
 !/.vscode/launch.json
 !/.github/workflows/upgrade-main.yml
-!/.projen/files.json

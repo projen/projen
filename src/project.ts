@@ -218,9 +218,9 @@ export class Project {
 
     new JsonFile(this, Project.FILE_MANIFEST, {
       omitEmpty: true,
-      obj: {
+      obj: () => ({
         files: this.files.filter(f => f.readonly).map(f => f.path.replace(/\\/g, "/"))
-      }
+      })
     })
   }
 
