@@ -39,6 +39,14 @@ describe('manual release', () => {
       expect(releaseTrigger.changelogPath).toBeUndefined();
     });
   });
+
+  describe('with git push flags', () => {
+    test('equals values provided', () => {
+      releaseTrigger = ReleaseTrigger.manual({ gitPushFlags: ['-o', 'ci.skip'] });
+
+      expect(releaseTrigger.gitPushFlags).toEqual(['-o', 'ci.skip']);
+    });
+  });
 });
 
 describe('continuous release', () => {
