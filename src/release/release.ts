@@ -399,6 +399,7 @@ export class Release extends Component {
         releaseTagFile: path.posix.join(this.artifactsDirectory, this.version.releaseTagFileName),
         projectChangelogFile: this.releaseTrigger.changelogPath,
         gitBranch: branch.name,
+        gitPushFlags: this.releaseTrigger.gitPushFlags
       });
 
       releaseTask.spawn(publishTask);

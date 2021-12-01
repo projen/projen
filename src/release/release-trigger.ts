@@ -29,7 +29,7 @@ export interface ManualReleaseOptions {
   /**
    * Additional git push flags 
    */
-   readonly gitPushFlags?: string[]
+  readonly gitPushFlags?: string[]
 }
 
 interface ReleaseTriggerOptions {
@@ -90,6 +90,7 @@ export class ReleaseTrigger {
 
     return new ReleaseTrigger({
       changelogPath: changelogPath,
+      gitPushFlags: options.gitPushFlags
     });
   }
 
