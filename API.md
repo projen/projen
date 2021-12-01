@@ -5534,6 +5534,23 @@ removeDependency(name: string, type?: DependencyType): void
 
 
 
+#### tryGetDependency(name, type?)🔹 <a id="projen-deps-dependencies-trygetdependency"></a>
+
+Returns a dependency by name, or undefined.
+
+Returns undefined if the dependency does not exist with that name OR
+there is more than one dependency type for this dependency.
+
+```ts
+tryGetDependency(name: string, type?: DependencyType): Dependency
+```
+
+* **name** (<code>string</code>)  The name of the dependency.
+* **type** (<code>[deps.DependencyType](#projen-deps-dependencytype)</code>)  The dependency type.
+
+__Returns__:
+* <code>[deps.Dependency](#projen-deps-dependency)</code>
+
 #### *static* parseDependency(spec)🔹 <a id="projen-deps-dependencies-parsedependency"></a>
 
 Returns the coordinates of a dependency spec.
@@ -11910,7 +11927,7 @@ Name | Type | Description
 
 ## struct Dependency 🔹 <a id="projen-deps-dependency"></a>
 
-__Obtainable from__: [Dependencies](#projen-deps-dependencies).[addDependency](#projen-deps-dependencies#projen-deps-dependencies-adddependency)(), [Dependencies](#projen-deps-dependencies).[getDependency](#projen-deps-dependencies#projen-deps-dependencies-getdependency)(), [JavaProject](#projen-java-javaproject).[addPlugin](#projen-java-javaproject#projen-java-javaproject-addplugin)(), [Pom](#projen-java-pom).[addPlugin](#projen-java-pom#projen-java-pom-addplugin)()
+__Obtainable from__: [Dependencies](#projen-deps-dependencies).[addDependency](#projen-deps-dependencies#projen-deps-dependencies-adddependency)(), [Dependencies](#projen-deps-dependencies).[getDependency](#projen-deps-dependencies#projen-deps-dependencies-getdependency)(), [Dependencies](#projen-deps-dependencies).[tryGetDependency](#projen-deps-dependencies#projen-deps-dependencies-trygetdependency)(), [JavaProject](#projen-java-javaproject).[addPlugin](#projen-java-javaproject#projen-java-javaproject-addplugin)(), [Pom](#projen-java-pom).[addPlugin](#projen-java-pom#projen-java-pom-addplugin)()
 
 Represents a project dependency.
 
