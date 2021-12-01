@@ -28,7 +28,8 @@ export interface AutoDiscoverOptions {
 
 /**
  * Automatically creates a `LambdaFunction` for all `.lambda.ts` files under
- * the source directory of the project.
+ * the source directory, and integration test tasks for each `.integ.ts` file
+ * under the source directory.
  */
 export class AutoDiscover extends Component {
 

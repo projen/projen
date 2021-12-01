@@ -49,7 +49,7 @@ Name|Description
 [Version](#projen-version)|*No description*
 [XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|Represents a YAML file.
-[awscdk.AutoDiscover](#projen-awscdk-autodiscover)|Automatically creates a `LambdaFunction` for all `.lambda.ts` files under the source directory of the project.
+[awscdk.AutoDiscover](#projen-awscdk-autodiscover)|Automatically creates a `LambdaFunction` for all `.lambda.ts` files under the source directory, and integration test tasks for each `.integ.ts` file under the source directory.
 [awscdk.AwsCdkJavaApp](#projen-awscdk-awscdkjavaapp)|AWS CDK app in Java.
 [awscdk.CdkConfig](#projen-awscdk-cdkconfig)|Represents cdk.json file.
 [awscdk.CdkTasks](#projen-awscdk-cdktasks)|Adds standard AWS CDK tasks to your project.
@@ -5162,7 +5162,7 @@ __Returns__:
 
 ## class AutoDiscover 🔹 <a id="projen-awscdk-autodiscover"></a>
 
-Automatically creates a `LambdaFunction` for all `.lambda.ts` files under the source directory of the project.
+Automatically creates a `LambdaFunction` for all `.lambda.ts` files under the source directory, and integration test tasks for each `.integ.ts` file under the source directory.
 
 __Submodule__: awscdk
 
