@@ -46,7 +46,20 @@ export abstract class FileBase extends Component {
   /**
    * The file path, relative to the project root.
    */
-  public readonly path: string;
+   public readonly path: string;
+
+  /**
+  * 
+  */
+  private _contentWritten: boolean;
+
+  /**
+  * 
+  */
+  public get contentWritten() : boolean
+  {
+      return this._contentWritten;
+  }
 
   /**
    * Indicates if the file should be read-only or read-write.
@@ -70,6 +83,7 @@ export abstract class FileBase extends Component {
     this.readonly = options.readonly ?? true;
     this.executable = options.executable ?? false;
     this.path = filePath;
+    this._contentWritten = false;
 
     const globPattern = `/${this.path}`;
     const committed = options.committed ?? true;
@@ -119,6 +133,8 @@ export abstract class FileBase extends Component {
       readonly: this.readonly,
       executable: this.executable,
     });
+
+    this._contentWritten = true;
   }
 }
 

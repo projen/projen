@@ -1,9 +1,10 @@
-import { mkdtempSync, realpathSync } from 'fs';
+import { existsSync, mkdtempSync, readFileSync, realpathSync } from 'fs';
+import { removeSync } from 'fs-extra';
 import { tmpdir } from 'os';
 import * as path from 'path';
 import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
-import { IS_TEST_RUN, PROJEN_VERSION } from './common';
+import { IS_TEST_RUN, PROJEN_DIR, PROJEN_VERSION } from './common';
 import { Component } from './component';
 import { Dependencies } from './deps';
 import { FileBase } from './file';
@@ -95,6 +96,8 @@ export class Project {
    * this task should synthesize the project files.
    */
   public static readonly DEFAULT_TASK = 'default';
+
+  public static readonly FILE_MANIFEST = path.posix.join(PROJEN_DIR, 'files.json');
 
   /**
    * Project name.
@@ -405,7 +408,23 @@ export class Project {
     }
 
     // delete all generated files before we start synthesizing new ones
-    cleanup(outdir, this.excludeFromCleanup);
+    const fileManifestPath = path.resolve(this.outdir, Project.FILE_MANIFEST)
+    if(existsSync(fileManifestPath)) {
+      const fileFile = JSON.parse(readFileSync(fileManifestPath, 'utf-8'))
+      fileFile.files.forEach((file: string) => {
+        removeSync(file);
+      });
+    } else {
+      cleanup(outdir, this.excludeFromCleanup);
+    }
+    
+
+    const managedFiles = this.files.filter(f => f.readonly).map(f => f.path.replace(/\\/g, "/"));
+    new JsonFile(this, Project.FILE_MANIFEST, {
+      obj: {
+        files: managedFiles
+      }
+    })
 
     for (const subproject of this.subprojects) {
       subproject.synth();
