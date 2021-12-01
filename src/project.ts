@@ -415,11 +415,11 @@ export class Project {
     }
 
     // delete all generated files before we start synthesizing new ones
-    const fileManifestPath = path.resolve(this.outdir, Project.FILE_MANIFEST)
+    const fileManifestPath = path.resolve(this.outdir, Project.FILE_MANIFEST);
     if(existsSync(fileManifestPath)) {
       const fileFile = JSON.parse(readFileSync(fileManifestPath, 'utf-8'))
       fileFile.files.forEach((file: string) => {
-        removeSync(file);
+        removeSync(path.resolve(this.outdir, file));
       });
     } else {
       cleanup(outdir, this.excludeFromCleanup);
