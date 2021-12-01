@@ -140,7 +140,7 @@ export class ReleaseTrigger {
   /**
    * Additional git push flags for manual releases
    */
-  readonly gitPushFlags?: string[]
+  public readonly gitPushFlags?: string[]
 
   private constructor(options: ReleaseTriggerOptions = {}) {
     this.isContinuous = options.continuous ?? false;
