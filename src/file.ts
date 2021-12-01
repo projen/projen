@@ -46,19 +46,18 @@ export abstract class FileBase extends Component {
   /**
    * The file path, relative to the project root.
    */
-   public readonly path: string;
+  public readonly path: string;
 
   /**
-  * 
+  *
   */
   private _contentWritten: boolean;
 
   /**
-  * 
+  *
   */
-  public get contentWritten() : boolean
-  {
-      return this._contentWritten;
+  public get contentWritten() : boolean {
+    return this._contentWritten;
   }
 
   /**

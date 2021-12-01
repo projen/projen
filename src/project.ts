@@ -1,7 +1,7 @@
 import { existsSync, mkdtempSync, readFileSync, realpathSync } from 'fs';
-import { removeSync } from 'fs-extra';
 import { tmpdir } from 'os';
 import * as path from 'path';
+import { removeSync } from 'fs-extra';
 import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
 import { IS_TEST_RUN, PROJEN_DIR, PROJEN_VERSION } from './common';
@@ -219,9 +219,9 @@ export class Project {
     new JsonFile(this, Project.FILE_MANIFEST, {
       omitEmpty: true,
       obj: () => ({
-        files: this.files.filter(f => f.readonly).map(f => f.path.replace(/\\/g, "/"))
-      })
-    })
+        files: this.files.filter(f => f.readonly).map(f => f.path.replace(/\\/g, '/')),
+      }),
+    });
   }
 
   /**
@@ -416,8 +416,8 @@ export class Project {
 
     // delete all generated files before we start synthesizing new ones
     const fileManifestPath = path.resolve(this.outdir, Project.FILE_MANIFEST);
-    if(existsSync(fileManifestPath)) {
-      const fileFile = JSON.parse(readFileSync(fileManifestPath, 'utf-8'))
+    if (existsSync(fileManifestPath)) {
+      const fileFile = JSON.parse(readFileSync(fileManifestPath, 'utf-8'));
       fileFile.files.forEach((file: string) => {
         removeSync(path.resolve(this.outdir, file));
       });

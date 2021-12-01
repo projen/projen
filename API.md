@@ -2007,6 +2007,7 @@ new FileBase(project: Project, filePath: string, options?: FileBaseOptions)
 Name | Type | Description 
 -----|------|-------------
 **absolutePath**🔹 | <code>string</code> | The absolute path of this file.
+**contentWritten**🔹 | <code>boolean</code> | <span></span>
 **executable**🔹 | <code>boolean</code> | Indicates if the file should be marked as executable.
 **path**🔹 | <code>string</code> | The file path, relative to the project root.
 **readonly**🔹 | <code>boolean</code> | Indicates if the file should be read-only or read-write.
@@ -3783,6 +3784,7 @@ Name | Type | Description
 **newProject**?🔹 | <code>[NewProject](#projen-newproject)</code> | The options used when this project is bootstrapped via `projen new`.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 *static* **DEFAULT_TASK**🔹 | <code>string</code> | The name of the default task (the task executed when `projen` is run without arguments).
+*static* **FILE_MANIFEST**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
