@@ -112,6 +112,7 @@ export class Publisher extends Component implements IJobProvider {
     const changelog = options.changelogFile;
     const projectChangelogFile = options.projectChangelogFile;
     const gitBranch = options.gitBranch ?? 'main';
+    const gitPushFlags = options.gitPushFlags ?? [];
 
     const taskName = (gitBranch === 'main' || gitBranch === 'master') ? 'publish:git' : `publish:git:${gitBranch}` ;
 
@@ -128,7 +129,9 @@ export class Publisher extends Component implements IJobProvider {
       publishTask.builtin('release/update-changelog');
     }
     publishTask.builtin('release/tag-version');
-    publishTask.exec(`git push --follow-tags origin ${gitBranch}`);
+
+    const flags = ['--follow-tags', ...gitPushFlags].join(' ');
+    publishTask.exec(`git push ${flags} origin ${gitBranch}`);
 
     return publishTask;
   }
@@ -753,4 +756,9 @@ export interface GitPublishOptions extends VersionArtifactOptions {
    * @default "main"
    */
   readonly gitBranch?: string;
+
+  /**
+   * Additional git push flags 
+   */
+  readonly gitPushFlags?: string[]
 }

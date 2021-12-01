@@ -25,6 +25,11 @@ export interface ManualReleaseOptions {
    * @default 'CHANGELOG.md'
    */
   readonly changelogPath?: string;
+
+  /**
+   * Additional git push flags 
+   */
+   readonly gitPushFlags?: string[]
 }
 
 interface ReleaseTriggerOptions {
@@ -50,6 +55,11 @@ interface ReleaseTriggerOptions {
    * @example '0 17 * * *' - every day at 5 pm
    */
   readonly schedule?: string;
+
+  /**
+   * Additional git push flags 
+   */
+  readonly gitPushFlags?: string[]
 }
 
 /**
@@ -126,10 +136,16 @@ export class ReleaseTrigger {
    */
   public readonly isContinuous: boolean;
 
+  /**
+   * Additional git push flags for manual releases
+   */
+  readonly gitPushFlags?: string[]
+
   private constructor(options: ReleaseTriggerOptions = {}) {
     this.isContinuous = options.continuous ?? false;
     this.schedule = options.schedule;
     this.changelogPath = options.changelogPath;
+    this.gitPushFlags = options.gitPushFlags;
   }
 
   /**
