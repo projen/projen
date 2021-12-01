@@ -401,6 +401,12 @@ export class Project {
       comp.preSynthesize();
     }
 
+    new JsonFile(this, Project.FILE_MANIFEST, {
+      obj: {
+        files: this.files.filter(f => f.readonly).map(f => f.path.replace(/\\/g, "/"))
+      }
+    })
+
     // we exclude all subproject directories to ensure that when subproject.synth()
     // gets called below after cleanup(), subproject generated files are left intact
     for (const subproject of this.subprojects) {
@@ -417,14 +423,6 @@ export class Project {
     } else {
       cleanup(outdir, this.excludeFromCleanup);
     }
-    
-
-    const managedFiles = this.files.filter(f => f.readonly).map(f => f.path.replace(/\\/g, "/"));
-    new JsonFile(this, Project.FILE_MANIFEST, {
-      obj: {
-        files: managedFiles
-      }
-    })
 
     for (const subproject of this.subprojects) {
       subproject.synth();
