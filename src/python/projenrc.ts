@@ -3,7 +3,7 @@ import { snake } from 'case';
 import { existsSync, mkdirpSync, writeFileSync } from 'fs-extra';
 import { PROJEN_VERSION } from '../common';
 import { Component } from '../component';
-import { DependencyType } from '../deps';
+import { DependencyType } from '../dependencies';
 import { readJsiiManifest } from '../inventory';
 import { Project } from '../project';
 

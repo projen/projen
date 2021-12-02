@@ -5,7 +5,7 @@ import { cleanup } from './cleanup';
 import { Clobber } from './clobber';
 import { IS_TEST_RUN, PROJEN_VERSION } from './common';
 import { Component } from './component';
-import { Dependencies } from './deps';
+import { Dependencies } from './dependencies';
 import { FileBase } from './file';
 import { GitAttributesFile } from './git/gitattributes';
 import { AutoApprove, AutoApproveOptions, AutoMergeOptions, GitHub, GitHubOptions, MergifyOptions } from './github';

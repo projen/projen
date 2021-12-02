@@ -1,6 +1,6 @@
 import { resolve } from '../_resolve';
 import { Component } from '../component';
-import { Dependencies, DependencyCoordinates, DependencyType } from '../deps';
+import { Dependencies, DependencyCoordinates, DependencyType } from '../dependencies';
 import { Project } from '../project';
 import { toMavenVersionRange } from '../util/semver';
 import { XmlFile } from '../xmlfile';

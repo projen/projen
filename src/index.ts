@@ -4,6 +4,7 @@ export * from './cdktf-construct';
 export * from './component';
 export * from './construct-lib';
 export * from './dev-env';
+export * from './dependencies';
 export * from './docker-compose';
 export * from './eslint';
 export * from './file';
@@ -41,7 +42,6 @@ export * as tasks from './tasks';
 export * as web from './web';
 export * as github from './github';
 export * as vscode from './vscode';
-export * as deps from './deps';
 export * as json from './json/index'; // <-- we also have json.ts
 export * as java from './java';
 export * as python from './python';

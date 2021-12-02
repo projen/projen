@@ -1,5 +1,5 @@
 import { Component } from '../component';
-import { DependencyType } from '../deps';
+import { DependencyType } from '../dependencies';
 import { Task, TaskRuntime } from '../tasks';
 import { TomlFile } from '../toml';
 import { decamelizeKeysRecursively, exec, execOrUndefined } from '../util';

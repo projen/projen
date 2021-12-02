@@ -1,4 +1,4 @@
-import { Dependency } from '../deps';
+import { Dependency } from '../dependencies';
 import { Task } from '../tasks';
 
 export interface IPythonDeps {

@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { Component } from '../component';
-import { DependencyType } from '../deps';
+import { DependencyType } from '../dependencies';
 import { Project } from '../project';
 import { Task } from '../tasks';
 import { renderBundleName } from './util';

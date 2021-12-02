@@ -4,7 +4,7 @@ import { accessSync, constants, existsSync, readdirSync, readJsonSync } from 'fs
 import * as semver from 'semver';
 import { resolve as resolveJson } from './_resolve';
 import { Component } from './component';
-import { DependencyType } from './deps';
+import { DependencyType } from './dependencies';
 import { JsonFile } from './json';
 import { Project } from './project';
 import { isAwsCodeArtifactRegistry } from './release/publisher';

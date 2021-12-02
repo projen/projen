@@ -1,4 +1,4 @@
-import { Dependencies, DependencyCoordinates } from '../deps';
+import { Dependencies, DependencyCoordinates } from '../dependencies';
 import { FileBase, IResolver } from '../file';
 import { Project } from '../project';
 import { toPythonVersionRange } from '../util/semver';
