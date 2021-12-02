@@ -4,8 +4,8 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import { glob } from 'glob';
 import { Project } from '../';
+import { GitHubProject, GitHubProjectOptions } from '../github';
 import * as logging from '../logging';
-import { GitHubProject, GitHubProjectOptions } from '../project';
 import { Task } from '../tasks';
 import { exec } from '../util';
 

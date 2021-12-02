@@ -1,5 +1,6 @@
+import { GitHubProject, GitHubProjectOptions } from '../github';
 import { Projenrc as ProjenrcJavaScript } from '../javascript';
-import { GitHubProject, GitHubProjectOptions, ProjectType } from '../project';
+import { ProjectType } from '../project';
 import { Pip } from './pip';
 import { Poetry } from './poetry';
 import { Projenrc as ProjenrcPython, ProjenrcOptions } from './projenrc';

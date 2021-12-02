@@ -1,8 +1,7 @@
 import * as path from 'path';
 import { Component } from '../component';
-import { GitHub, TaskWorkflow } from '../github';
+import { GitHub, GitHubProject, TaskWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
-import { GitHubProject } from '../project';
 import { Task } from '../tasks';
 import { Version } from '../version';
 import { Publisher } from './publisher';
