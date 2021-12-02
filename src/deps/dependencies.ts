@@ -81,18 +81,14 @@ export class Dependencies extends Component {
    * @returns a copy (cannot be modified)
    */
   public getDependency(name: string, type?: DependencyType): Dependency {
-    const idx = this.tryGetDependencyIndex(name, type);
-    if (idx === -1) {
+    const dep = this.tryGetDependency(name, type);
+    if (!dep) {
       const msg = type
         ? `there is no ${type} dependency defined on "${name}"`
         : `there is no dependency defined on "${name}"`;
-
       throw new Error(msg);
     }
-
-    return {
-      ...normalizeDep(this._deps[idx]),
-    };
+    return dep;
   }
 
   /**
@@ -108,12 +104,14 @@ export class Dependencies extends Component {
    * @returns a copy (cannot be modified)
    */
   public tryGetDependency(name: string, type?: DependencyType): Dependency | undefined {
-    try {
-      return this.getDependency(name, type);
-    } catch (err) {
-      this.project.logger.warn(`tryGetDependency: ${(err as Error).message}`);
+    const idx = this.tryGetDependencyIndex(name, type);
+    if (idx === -1) {
       return undefined;
     }
+
+    return {
+      ...normalizeDep(this._deps[idx]),
+    };
   }
 
   /**
