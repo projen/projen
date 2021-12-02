@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { awscdk } from '../src';
-import { AwsCdkConstructLibrary, AwsCdkConstructLibraryOptions } from '../src/awscdk-construct';
+import { AwsCdkConstructLibrary, AwsCdkConstructLibraryOptions } from '../src/awscdk';
 import { NpmAccess } from '../src/node-package';
 import { mkdtemp, synthSnapshot } from '../src/util/synth';
 

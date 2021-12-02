@@ -1,4 +1,4 @@
-import { DependencyType } from '../../src/deps';
+import { DependencyType } from '../../src/dependencies';
 import { Pom, PomOptions } from '../../src/java';
 import { synthSnapshot, TestProject } from '../../src/util/synth';
 

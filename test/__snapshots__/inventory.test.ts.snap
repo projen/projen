@@ -865,8 +865,8 @@ Array [
   },
   Object {
     "docs": "AWS CDK app in TypeScript.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-awscdktypescriptapp",
-    "fqn": "projen.AwsCdkTypeScriptApp",
+    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-awscdk-awscdktypescriptapp",
+    "fqn": "projen.awscdk.AwsCdkTypeScriptApp",
     "moduleName": "projen",
     "options": Array [
       Object {
@@ -3274,12 +3274,12 @@ Array [
       },
     ],
     "pjid": "awscdk-app-ts",
-    "typename": "AwsCdkTypeScriptApp",
+    "typename": "awscdk.AwsCdkTypeScriptApp",
   },
   Object {
     "docs": "AWS CDK construct library project.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-awscdkconstructlibrary",
-    "fqn": "projen.AwsCdkConstructLibrary",
+    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-awscdk-awscdkconstructlibrary",
+    "fqn": "projen.awscdk.AwsCdkConstructLibrary",
     "moduleName": "projen",
     "options": Array [
       Object {
@@ -5875,7 +5875,7 @@ added, set to the exact version configrued here.",
       },
     ],
     "pjid": "awscdk-construct",
-    "typename": "AwsCdkConstructLibrary",
+    "typename": "awscdk.AwsCdkConstructLibrary",
   },
   Object {
     "docs": "CDK8s app in TypeScript.",

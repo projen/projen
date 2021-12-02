@@ -1,9 +1,9 @@
-import { awscdk, AwsCdkTypeScriptApp } from '../../src';
+import { awscdk } from '../../src';
 import { Testing } from '../../src/testing';
 
 describe('IntegrationTest', () => {
   // GIVEN
-  const project = new AwsCdkTypeScriptApp({ name: 'test', defaultReleaseBranch: 'main', cdkVersion: '1.134.0' });
+  const project = new awscdk.AwsCdkTypeScriptApp({ name: 'test', defaultReleaseBranch: 'main', cdkVersion: '1.134.0' });
 
   // WHEN
   new awscdk.IntegrationTest(project, {
