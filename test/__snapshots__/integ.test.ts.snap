@@ -745,10 +745,12 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
+        "version": "^5",
       },
       Object {
         "name": "@typescript-eslint/parser",
         "type": "build",
+        "version": "^5",
       },
       Object {
         "name": "aws-sdk",
@@ -1600,8 +1602,8 @@ project.synth();
       "@aws-cdk/assert": "^1.75.0",
       "@types/jest": "*",
       "@types/node": "^14.0.0",
-      "@typescript-eslint/eslint-plugin": "*",
-      "@typescript-eslint/parser": "*",
+      "@typescript-eslint/eslint-plugin": "^5",
+      "@typescript-eslint/parser": "^5",
       "aws-sdk": "*",
       "eslint": "^8",
       "eslint-import-resolver-node": "*",
@@ -2301,10 +2303,12 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
+        "version": "^5",
       },
       Object {
         "name": "@typescript-eslint/parser",
         "type": "build",
+        "version": "^5",
       },
       Object {
         "name": "constructs",
@@ -3074,8 +3078,8 @@ project.synth();
       "@types/json-stable-stringify": "*",
       "@types/node": "^12.7.0",
       "@types/yaml": "*",
-      "@typescript-eslint/eslint-plugin": "*",
-      "@typescript-eslint/parser": "*",
+      "@typescript-eslint/eslint-plugin": "^5",
+      "@typescript-eslint/parser": "^5",
       "constructs": "*",
       "eslint": "^8",
       "eslint-import-resolver-node": "*",
@@ -3751,10 +3755,12 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
+        "version": "^5",
       },
       Object {
         "name": "@typescript-eslint/parser",
         "type": "build",
+        "version": "^5",
       },
       Object {
         "name": "eslint-import-resolver-node",
@@ -4494,8 +4500,8 @@ project.synth();
       "@types/jest": "*",
       "@types/json-schema": "*",
       "@types/node": "^12.7.0",
-      "@typescript-eslint/eslint-plugin": "*",
-      "@typescript-eslint/parser": "*",
+      "@typescript-eslint/eslint-plugin": "^5",
+      "@typescript-eslint/parser": "^5",
       "eslint": "^8",
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
