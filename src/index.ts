@@ -8,6 +8,7 @@ export * from './dependencies';
 export * from './docker-compose';
 export * from './eslint';
 export * from './file';
+export * from './gitattributes';
 export * from './gitpod';
 export * from './ignore-file';
 export * from './ini';
@@ -48,5 +49,4 @@ export * as python from './python';
 export * as typescript from './typescript/index'; // <-- we also have typescript.ts
 export * as javascript from './javascript';
 export * as release from './release';
-export * as git from './git';
 export * as awscdk from './awscdk';

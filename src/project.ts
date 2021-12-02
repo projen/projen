@@ -7,7 +7,7 @@ import { IS_TEST_RUN, PROJEN_VERSION } from './common';
 import { Component } from './component';
 import { Dependencies } from './dependencies';
 import { FileBase } from './file';
-import { GitAttributesFile } from './git/gitattributes';
+import { GitAttributesFile } from './gitattributes';
 import { AutoApprove, AutoApproveOptions, AutoMergeOptions, GitHub, GitHubOptions, MergifyOptions } from './github';
 import { Stale, StaleOptions } from './github/stale';
 import { Gitpod } from './gitpod';
