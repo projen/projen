@@ -50,7 +50,7 @@ const project = new JsiiProject({
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: '12.7.0',
-  workflowNodeVersion: '12.13.0', // required by jest
+  workflowNodeVersion: '12.22.0', // required by @typescript-eslint/eslint-plugin@5.5.0
 
   codeCov: true,
   defaultReleaseBranch: 'main',
