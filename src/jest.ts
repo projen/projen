@@ -554,7 +554,7 @@ export class Jest {
    */
   public readonly config: any;
 
-  private readonly testMatch: string[]
+  private readonly testMatch: string[];
   private readonly ignorePatterns: string[];
   private readonly watchIgnorePatterns: string[];
   private readonly coverageReporters: string[];

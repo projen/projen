@@ -106,7 +106,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   /**
    * Whether CDK dependencies are added as normal dependencies (and peer dependencies).
    */
-  public readonly cdkDependenciesAsDeps: boolean
+  public readonly cdkDependenciesAsDeps: boolean;
 
   constructor(options: AwsCdkConstructLibraryOptions) {
     super({

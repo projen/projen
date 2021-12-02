@@ -32,7 +32,7 @@ export class Task {
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
   private readonly cwd?: string;
-  private readonly requiredEnv?: string[]
+  private readonly requiredEnv?: string[];
   private _locked: boolean;
 
   constructor(name: string, props: TaskOptions = { }) {
