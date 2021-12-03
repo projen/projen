@@ -9,7 +9,6 @@ export * from './auto-merge';
 export * from './auto-approve';
 export * from './stale';
 export * from './pull-request-lint';
-export * from './upgrade-dependencies';
 
 export * from './task-workflow';
 

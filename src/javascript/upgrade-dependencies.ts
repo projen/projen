@@ -1,8 +1,8 @@
-import { GitHub, GithubWorkflow, GitIdentity, workflows } from '.';
 import { Component } from '../component';
+import { GitHub, GithubWorkflow, GitIdentity, workflows } from '../github';
+import { DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from '../github/constants';
 import { NodeProject } from '../javascript';
 import { Task } from '../task';
-import { DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from './constants';
 
 function context(value: string) {
   return `\${{ ${value} }}`;
