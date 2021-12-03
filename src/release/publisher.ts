@@ -129,7 +129,7 @@ export class Publisher extends Component implements IJobProvider {
     }
     publishTask.builtin('release/tag-version');
     
-    if (options.gitPushCommand !== null) {
+    if (options.gitPushCommand !== '') {
       const gitPushCommand = options.gitPushCommand || `git push --follow-tags origin ${gitBranch}`;
       publishTask.exec(gitPushCommand);
     }
@@ -761,7 +761,7 @@ export interface GitPublishOptions extends VersionArtifactOptions {
   /**
    * Override git-push command. 
    * 
-   * Set to null to disable pushing.
+   * Set to an empty string to disable pushing.
    */
-  readonly gitPushCommand?: string | null;
+  readonly gitPushCommand?: string;
 }

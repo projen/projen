@@ -29,9 +29,9 @@ export interface ManualReleaseOptions {
   /**
    * Override git-push command. 
    * 
-   * Set to null to disable pushing.
+   * Set to an empty string to disable pushing.
    */
-  readonly gitPushCommand?: string | null;
+  readonly gitPushCommand?: string;
 }
 
 interface ReleaseTriggerOptions {
@@ -61,9 +61,9 @@ interface ReleaseTriggerOptions {
   /**
    * Override git-push command. 
    * 
-   * Set to null to disable pushing.
+   * Set to an empty string to disable pushing.
    */
-  readonly gitPushCommand?: string | null;
+  readonly gitPushCommand?: string;
 }
 
 /**
@@ -82,7 +82,7 @@ export class ReleaseTrigger {
    * these artifacts to origin. 
    * 
    * The command used for pushing can be customised by specifying 
-   * `gitPushCommand`. Set to null to disable pushing entirely.
+   * `gitPushCommand`. Set to an empty string to disable pushing entirely.
    *
    * Simply run `yarn release` to trigger a manual release.
    *
@@ -147,9 +147,9 @@ export class ReleaseTrigger {
   /**
    * Override git-push command used when releasing manually. 
    * 
-   * Set to null to disable pushing.
+   * Set to an empty string to disable pushing.
    */
-  public readonly gitPushCommand?: string | null;
+  public readonly gitPushCommand?: string;
 
   private constructor(options: ReleaseTriggerOptions = {}) {
     this.isContinuous = options.continuous ?? false;
