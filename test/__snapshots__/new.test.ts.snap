@@ -21,11 +21,11 @@ public class projenrc {
 `;
 
 exports[`creating node project with enum-typed CLI arg 1`] = `
-"const { NodePackageManager, NodeProject } = require(\\"projen\\");
-const project = new NodeProject({
+"const { javascript } = require(\\"projen\\");
+const project = new javascript.NodeProject({
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
-  packageManager: NodePackageManager.NPM,
+  packageManager: javascript.NodePackageManager.NPM,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
@@ -1624,8 +1624,8 @@ project.synth();",
 
 exports[`projen new cdk8s-app-ts 1`] = `
 Object {
-  ".projenrc.js": "const { Cdk8sTypeScriptApp } = require(\\"projen\\");
-const project = new Cdk8sTypeScriptApp({
+  ".projenrc.js": "const { cdk8s } = require(\\"projen\\");
+const project = new cdk8s.Cdk8sTypeScriptApp({
   cdk8sVersion: \\"1.0.0-beta.10\\",
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
@@ -1642,8 +1642,8 @@ project.synth();",
 
 exports[`projen new cdk8s-construct 1`] = `
 Object {
-  ".projenrc.js": "const { ConstructLibraryCdk8s } = require(\\"projen\\");
-const project = new ConstructLibraryCdk8s({
+  ".projenrc.js": "const { cdk8s } = require(\\"projen\\");
+const project = new cdk8s.ConstructLibraryCdk8s({
   author: \\"My User Name\\",
   authorAddress: \\"my@user.email.com\\",
   cdk8sVersion: \\"1.0.0-beta.10\\",
@@ -1663,8 +1663,8 @@ project.synth();",
 
 exports[`projen new cdktf-construct 1`] = `
 Object {
-  ".projenrc.js": "const { ConstructLibraryCdktf } = require(\\"projen\\");
-const project = new ConstructLibraryCdktf({
+  ".projenrc.js": "const { cdktf } = require(\\"projen\\");
+const project = new cdktf.ConstructLibraryCdktf({
   author: \\"My User Name\\",
   authorAddress: \\"my@user.email.com\\",
   cdktfVersion: \\"0.4.0\\",
@@ -1703,8 +1703,8 @@ public class projenrc {
 
 exports[`projen new jsii 1`] = `
 Object {
-  ".projenrc.js": "const { JsiiProject } = require(\\"projen\\");
-const project = new JsiiProject({
+  ".projenrc.js": "const { cdk } = require(\\"projen\\");
+const project = new cdk.JsiiProject({
   author: \\"My User Name\\",
   authorAddress: \\"my@user.email.com\\",
   defaultReleaseBranch: \\"main\\",
@@ -1758,8 +1758,8 @@ project.synth();",
 `;
 
 exports[`projen new node --outdir path/to/mydir 1`] = `
-"const { NodeProject } = require(\\"projen\\");
-const project = new NodeProject({
+"const { javascript } = require(\\"projen\\");
+const project = new javascript.NodeProject({
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
 
@@ -1774,8 +1774,8 @@ project.synth();"
 
 exports[`projen new node 1`] = `
 Object {
-  ".projenrc.js": "const { NodeProject } = require(\\"projen\\");
-const project = new NodeProject({
+  ".projenrc.js": "const { javascript } = require(\\"projen\\");
+const project = new javascript.NodeProject({
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
 
@@ -1850,8 +1850,8 @@ project.synth();",
 
 exports[`projen new typescript 1`] = `
 Object {
-  ".projenrc.js": "const { TypeScriptProject } = require(\\"projen\\");
-const project = new TypeScriptProject({
+  ".projenrc.js": "const { typescript } = require(\\"projen\\");
+const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
 
@@ -1867,8 +1867,8 @@ project.synth();",
 
 exports[`projen new typescript-app 1`] = `
 Object {
-  ".projenrc.js": "const { TypeScriptAppProject } = require(\\"projen\\");
-const project = new TypeScriptAppProject({
+  ".projenrc.js": "const { typescript } = require(\\"projen\\");
+const project = new typescript.TypeScriptAppProject({
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
 
@@ -1889,13 +1889,13 @@ Object {
   "defaultReleaseBranch": "main",
   "name": "my-project",
   "projenrcJson": true,
-  "type": "projen.NodeProject",
+  "type": "projen.javascript.NodeProject",
 }
 `;
 
 exports[`projenrc-ts creates typescript projenrc 1`] = `
-"import { TypeScriptProject } from \\"projen\\";
-const project = new TypeScriptProject({
+"import { typescript } from \\"projen\\";
+const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
   projenrcTs: true,

@@ -11,7 +11,6 @@ export * from './json';
 export * from './logger';
 export * from './license';
 export * from './makefile';
-export * from './node-package';
 export * from './object-file';
 export * from './option-hints';
 export * from './project';

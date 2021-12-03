@@ -5,13 +5,13 @@ import { JobPermission, JobStep } from '../github/workflows-model';
 import { IgnoreFile } from '../ignore-file';
 import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from '../javascript';
 import { License } from '../license';
-import { NodePackage, NodePackageManager, NodePackageOptions } from '../node-package';
 import { Release, ReleaseProjectOptions, Publisher } from '../release';
 import { Task } from '../task';
 import { deepMerge } from '../util';
 import { Version } from '../version';
 import { Bundler, BundlerOptions } from './bundler';
 import { Jest, JestOptions } from './jest';
+import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
 import { Projenrc, ProjenrcOptions } from './projenrc';
 
 const PROJEN_SCRIPT = 'projen';
@@ -294,6 +294,8 @@ export enum AutoRelease {
 
 /**
  * Node.js project
+ *
+ * @pjid node
  */
 export class NodeProject extends GitHubProject {
   /**

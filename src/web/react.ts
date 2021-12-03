@@ -1,8 +1,7 @@
 import * as path from 'path';
 import { Component } from '../component';
 import { FileBase, FileBaseOptions, IResolver } from '../file';
-import { NodeProject, NodeProjectOptions } from '../javascript';
-import { TypeScriptJsxMode, TypeScriptModuleResolution } from '../javascript/typescript-config';
+import { NodeProject, NodeProjectOptions, TypeScriptJsxMode, TypeScriptModuleResolution } from '../javascript';
 import { SampleDir } from '../sample-file';
 import { SourceCode } from '../source-code';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';

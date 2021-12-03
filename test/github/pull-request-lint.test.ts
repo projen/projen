@@ -1,5 +1,5 @@
 import { PullRequestLint } from '../../src/github/pull-request-lint';
-import { NodeProject, NodeProjectOptions } from '../../src/node-project';
+import { NodeProject, NodeProjectOptions } from '../../src/javascript';
 import { synthSnapshot } from '../../src/util/synth';
 
 test('default', () => {

@@ -3,8 +3,7 @@ import { pascal } from 'case';
 import { Project } from '..';
 import { Component } from '../component';
 import { FileBase } from '../file';
-import { Eslint } from '../javascript';
-import { Bundler, BundlingOptions } from '../javascript/bundler';
+import { Bundler, BundlingOptions, Eslint } from '../javascript';
 import { SourceCode } from '../source-code';
 import { TYPESCRIPT_LAMBDA_EXT } from './internal';
 

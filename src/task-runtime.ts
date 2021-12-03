@@ -290,7 +290,7 @@ class RunTask {
   }
 
   private renderBuiltin(builtin: string) {
-    const moduleRoot = dirname(require.resolve('../../package.json'));
+    const moduleRoot = dirname(require.resolve('../package.json'));
     const program = require.resolve(join(moduleRoot, 'lib', `${builtin}.task.js`));
     return `${process.execPath} ${program}`;
   }

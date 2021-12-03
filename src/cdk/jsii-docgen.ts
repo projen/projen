@@ -1,4 +1,4 @@
-import { JsiiProject } from './cdk/jsii-project';
+import { JsiiProject } from '.';
 
 /**
  * Creates an API.md file based on the jsii manifest:

@@ -1,8 +1,8 @@
 import * as semver from 'semver';
-import { Eslint } from '../javascript/eslint';
-import { JsiiDocgen } from '../jsii-docgen';
+import { Eslint } from '../javascript';
 import { GoPublishOptions, MavenPublishOptions, PyPiPublishOptions, NugetPublishOptions } from '../release';
 import { TypeScriptProject, TypeScriptProjectOptions } from '../typescript';
+import { JsiiDocgen } from './jsii-docgen';
 
 const SUPERCHAIN_IMAGE = 'jsii/superchain:1-buster-slim';
 const SUPERCHAIN_NODE_VERSIONS = [12, 14, 16]; // supported jsii/superchain image tags: `1-buster-slim-nodeNN`
@@ -133,6 +133,8 @@ export interface JsiiGoTarget extends GoPublishOptions {
 
 /**
  * Multi-language jsii library project
+ *
+ * @pjid jsii
  */
 export class JsiiProject extends TypeScriptProject {
   public readonly eslint?: Eslint;

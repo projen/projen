@@ -12,7 +12,7 @@ describe('createProject', () => {
         dir: projectdir,
         post: false,
         synth: false,
-        projectFqn: 'projen.TypeScriptProject',
+        projectFqn: 'projen.typescript.TypeScriptProject',
         projectOptions: {
           name: 'test-project',
           defaultReleaseBranch: 'main',
@@ -35,7 +35,7 @@ describe('createProject', () => {
         dir: projectdir,
         post: false,
         synth: false,
-        projectFqn: 'projen.TypeScriptProject',
+        projectFqn: 'projen.typescript.TypeScriptProject',
         projectOptions: {
           name: 'test-project',
           defaultReleaseBranch: 'main',

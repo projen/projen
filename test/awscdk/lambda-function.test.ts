@@ -1,8 +1,8 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import * as awscdk from '../../src/awscdk';
-import { TypeScriptProject } from '../../src/misc1';
 import { Testing } from '../../src/testing';
+import { TypeScriptProject } from '../../src/typescript';
 
 describe('bundled function', () => {
   let generatedSource: string;

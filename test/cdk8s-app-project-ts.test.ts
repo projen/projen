@@ -1,4 +1,4 @@
-import { Cdk8sTypeScriptApp } from '../src/cdk8s-app-ts';
+import { Cdk8sTypeScriptApp } from '../src/cdk8s';
 import { synthSnapshot } from '../src/util/synth';
 
 test ('test if cdk8s synth is possible', () => {

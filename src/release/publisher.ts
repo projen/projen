@@ -2,7 +2,7 @@ import { Component } from '../component';
 import { IJobProvider, workflows } from '../github';
 import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { JobPermission, JobPermissions } from '../github/workflows-model';
-import { defaultNpmToken } from '../node-package';
+import { defaultNpmToken } from '../javascript/node-package';
 import { Project } from '../project';
 
 const JSII_RELEASE_VERSION = 'latest';
