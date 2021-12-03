@@ -1,4 +1,4 @@
-import { NodeProject } from '../javascript';
+import { NodeProject } from '.';
 import { JsonFile } from '../json';
 
 export interface TypescriptConfigOptions {

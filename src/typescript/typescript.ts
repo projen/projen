@@ -3,11 +3,11 @@ import { PROJEN_DIR, PROJEN_RC } from '../common';
 import { Component } from '../component';
 import { NodeProject, NodeProjectOptions } from '../javascript';
 import { Eslint, EslintOptions } from '../javascript/eslint';
+import { TypeScriptCompilerOptions, TypescriptConfig, TypescriptConfigOptions } from '../javascript/typescript-config';
 import { SampleDir } from '../sample-file';
 import { Task } from '../task';
 import { TextFile } from '../textfile';
 import { Projenrc as ProjenrcTs, ProjenrcOptions as ProjenrcTsOptions } from '../typescript/projenrc';
-import { TypeScriptCompilerOptions, TypescriptConfig, TypescriptConfigOptions } from '../typescript/typescript-config';
 import { TypedocDocgen } from '../typescript/typescript-typedoc';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
