@@ -1,7 +1,7 @@
 import { existsSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
-import { Component } from '../component';
-import { Project } from '../project';
+import { Component } from './component';
+import { Project } from './project';
 
 export interface ProjenrcOptions {
   /**
@@ -24,7 +24,7 @@ export class Projenrc extends Component {
 
     // this is the task projen executes when running `projen`
     project.defaultTask.env('FILENAME', this.rcfile);
-    project.defaultTask.builtin('json/run-projenrc');
+    project.defaultTask.builtin('run-projenrc-json');
 
     this.generateProjenrc();
   }

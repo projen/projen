@@ -1,6 +1,7 @@
-import { Jest, NodeProject, TypeScriptProject } from '../src';
 import { PROJEN_RC } from '../src/common';
+import { Jest } from '../src/javascript';
 import * as logging from '../src/logging';
+import { NodeProject, TypeScriptProject } from '../src/misc1';
 import { mkdtemp, synthSnapshot } from '../src/util/synth';
 
 logging.disable();

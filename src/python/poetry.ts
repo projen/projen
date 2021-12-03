@@ -1,6 +1,7 @@
 import { Component } from '../component';
 import { DependencyType } from '../dependencies';
-import { Task, TaskRuntime } from '../tasks';
+import { Task } from '../task';
+import { TaskRuntime } from '../task-runtime';
 import { TomlFile } from '../toml';
 import { decamelizeKeysRecursively, exec, execOrUndefined } from '../util';
 import { IPythonDeps } from './python-deps';

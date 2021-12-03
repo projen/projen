@@ -1,4 +1,4 @@
-import { JsiiProject } from '../src';
+import { JsiiProject } from '../src/cdk';
 import { synthSnapshot } from '../src/util/synth';
 
 describe('author', () => {

@@ -1,5 +1,5 @@
 import * as semver from 'semver';
-import { Eslint } from '../eslint';
+import { Eslint } from '../javascript/eslint';
 import { JsiiDocgen } from '../jsii-docgen';
 import { GoPublishOptions, MavenPublishOptions, PyPiPublishOptions, NugetPublishOptions } from '../release';
 import { TypeScriptProject, TypeScriptProjectOptions } from '../typescript';

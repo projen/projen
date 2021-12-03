@@ -5,7 +5,7 @@ import * as fs from 'fs-extra';
 import { PROJEN_RC } from '../common';
 import * as logging from '../logging';
 import { Project } from '../project';
-import { TaskRuntime } from '../tasks';
+import { TaskRuntime } from '../task-runtime';
 
 const projenModule = path.dirname(require.resolve('../../package.json'));
 

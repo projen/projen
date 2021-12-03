@@ -1,6 +1,6 @@
 import { Component } from './component';
 import { Project } from './project';
-import { Task } from './tasks';
+import { Task } from './task';
 
 /**
  * Manages a standard build process for all projects.

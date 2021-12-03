@@ -1,8 +1,9 @@
 import { basename, dirname, extname, join, relative, sep, posix } from 'path';
 import { pascal } from 'case';
-import { Eslint, Project } from '..';
+import { Project } from '..';
 import { Component } from '../component';
 import { FileBase } from '../file';
+import { Eslint } from '../javascript';
 import { Bundler, BundlingOptions } from '../javascript/bundler';
 import { SourceCode } from '../source-code';
 import { TYPESCRIPT_LAMBDA_EXT } from './internal';

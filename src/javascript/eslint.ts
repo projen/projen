@@ -1,8 +1,8 @@
-import { Project } from '.';
-import { PROJEN_RC } from './common';
-import { Component } from './component';
-import { JsonFile } from './json';
-import { NodeProject } from './node-project';
+import { Project } from '..';
+import { PROJEN_RC } from '../common';
+import { Component } from '../component';
+import { NodeProject } from '../javascript';
+import { JsonFile } from '../json';
 
 
 export interface EslintOptions {

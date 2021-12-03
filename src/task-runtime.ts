@@ -4,8 +4,8 @@ import { platform } from 'os';
 import { dirname, join, resolve } from 'path';
 import { format } from 'util';
 import * as chalk from 'chalk';
-import * as logging from '../logging';
-import { TasksManifest, TaskSpec } from './model';
+import * as logging from './logging';
+import { TasksManifest, TaskSpec } from './task-model';
 import { Tasks } from './tasks';
 
 const ENV_TRIM_LEN = 20;

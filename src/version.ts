@@ -1,7 +1,7 @@
 import { posix } from 'path';
 import { Component } from './component';
 import { Project } from './project';
-import { Task } from './tasks';
+import { Task } from './task';
 
 /**
  * Options for `Version`.

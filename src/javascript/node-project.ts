@@ -1,17 +1,17 @@
-import { PROJEN_DIR, PROJEN_RC } from './common';
-import { AutoMerge, DependabotOptions, GitHubProject, GitHubProjectOptions, GitIdentity, TaskWorkflow } from './github';
-import { DEFAULT_GITHUB_ACTIONS_USER } from './github/constants';
-import { JobPermission, JobStep } from './github/workflows-model';
-import { IgnoreFile } from './ignore-file';
-import { Bundler, BundlerOptions, Projenrc, ProjenrcOptions } from './javascript';
-import { Jest, JestOptions } from './jest';
-import { License } from './license';
-import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
-import { Release, ReleaseProjectOptions, Publisher } from './release';
-import { Task } from './tasks';
-import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from './upgrade-dependencies';
-import { deepMerge } from './util';
-import { Version } from './version';
+import { PROJEN_DIR, PROJEN_RC } from '../common';
+import { AutoMerge, DependabotOptions, GitHubProject, GitHubProjectOptions, GitIdentity, TaskWorkflow } from '../github';
+import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
+import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from '../github/upgrade-dependencies';
+import { JobPermission, JobStep } from '../github/workflows-model';
+import { IgnoreFile } from '../ignore-file';
+import { Bundler, BundlerOptions, Projenrc, ProjenrcOptions } from '../javascript';
+import { Jest, JestOptions } from '../javascript/jest';
+import { License } from '../license';
+import { NodePackage, NodePackageManager, NodePackageOptions } from '../node-package';
+import { Release, ReleaseProjectOptions, Publisher } from '../release';
+import { Task } from '../task';
+import { deepMerge } from '../util';
+import { Version } from '../version';
 
 const PROJEN_SCRIPT = 'projen';
 

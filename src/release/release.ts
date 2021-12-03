@@ -2,7 +2,7 @@ import * as path from 'path';
 import { Component } from '../component';
 import { GitHub, GitHubProject, TaskWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
-import { Task } from '../tasks';
+import { Task } from '../task';
 import { Version } from '../version';
 import { Publisher } from './publisher';
 import { ReleaseTrigger } from './release-trigger';

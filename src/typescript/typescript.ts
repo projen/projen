@@ -1,14 +1,14 @@
 import * as path from 'path';
-import { PROJEN_DIR, PROJEN_RC } from './common';
-import { Component } from './component';
-import { Eslint, EslintOptions } from './eslint';
-import { NodeProject, NodeProjectOptions } from './node-project';
-import { SampleDir } from './sample-file';
-import { Task } from './tasks';
-import { TextFile } from './textfile';
-import { TypeScriptCompilerOptions, TypescriptConfig, TypescriptConfigOptions } from './typescript-config';
-import { TypedocDocgen } from './typescript-typedoc';
-import { Projenrc, ProjenrcOptions as ProjenrcTsOptions } from './typescript/projenrc';
+import { PROJEN_DIR, PROJEN_RC } from '../common';
+import { Component } from '../component';
+import { NodeProject, NodeProjectOptions } from '../javascript';
+import { Eslint, EslintOptions } from '../javascript/eslint';
+import { SampleDir } from '../sample-file';
+import { Task } from '../task';
+import { TextFile } from '../textfile';
+import { Projenrc as ProjenrcTs, ProjenrcOptions as ProjenrcTsOptions } from '../typescript/projenrc';
+import { TypeScriptCompilerOptions, TypescriptConfig, TypescriptConfigOptions } from '../typescript/typescript-config';
+import { TypedocDocgen } from '../typescript/typescript-typedoc';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
@@ -370,7 +370,7 @@ export class TypeScriptProject extends NodeProject {
 
     const projenrcTypeScript = options.projenrcTs ?? false;
     if (projenrcTypeScript) {
-      new Projenrc(this, options.projenrcTsOptions);
+      new ProjenrcTs(this, options.projenrcTsOptions);
     }
   }
 }

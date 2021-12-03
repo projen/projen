@@ -1,7 +1,7 @@
 import { basename, dirname, join } from 'path';
 import { Component } from '../component';
 import { Project } from '../project';
-import { Task } from '../tasks';
+import { Task } from '../task';
 import { FEATURE_FLAGS, TYPESCRIPT_INTEG_EXT } from './internal';
 
 export interface IntegrationTestCommonOptions {

@@ -8,7 +8,7 @@ import { DependencyType } from './dependencies';
 import { JsonFile } from './json';
 import { Project } from './project';
 import { isAwsCodeArtifactRegistry } from './release/publisher';
-import { Task } from './tasks';
+import { Task } from './task';
 import { exec, isTruthy, sorted, writeFile } from './util';
 
 const UNLICENSED = 'UNLICENSED';

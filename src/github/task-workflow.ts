@@ -1,4 +1,4 @@
-import { Task } from '../tasks';
+import { Task } from '../task';
 import { DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from './constants';
 import { GitHub } from './github';
 import { GithubWorkflow } from './workflows';

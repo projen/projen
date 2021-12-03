@@ -1,8 +1,8 @@
 import * as path from 'path';
 import * as semver from 'semver';
-import { JsonFile } from './json';
-import { NodeProject } from './node-project';
-import { TypescriptConfig } from './typescript-config';
+import { NodeProject } from '../javascript';
+import { JsonFile } from '../json';
+import { TypescriptConfig } from '../typescript/typescript-config';
 
 const DEFAULT_TEST_REPORTS_DIR = 'test-reports';
 

@@ -6,7 +6,7 @@ import { glob } from 'glob';
 import { Project } from '../';
 import { GitHubProject, GitHubProjectOptions } from '../github';
 import * as logging from '../logging';
-import { Task } from '../tasks';
+import { Task } from '../task';
 import { exec } from '../util';
 
 const PROJEN_CLI = require.resolve('../../lib/cli/index.js');

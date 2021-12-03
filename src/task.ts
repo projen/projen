@@ -1,4 +1,4 @@
-import { TaskCommonOptions, TaskSpec, TaskStep, TaskStepOptions } from './model';
+import { TaskCommonOptions, TaskSpec, TaskStep, TaskStepOptions } from './task-model';
 
 export interface TaskOptions extends TaskCommonOptions {
   /**

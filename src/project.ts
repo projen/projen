@@ -11,13 +11,13 @@ import { IgnoreFile } from './ignore-file';
 import * as inventory from './inventory';
 import { resolveNewProject } from './javascript/render-options';
 import { JsonFile } from './json';
-import { Projenrc, ProjenrcOptions } from './json/index';
 import { Logger, LoggerOptions } from './logger';
 import { ObjectFile } from './object-file';
 import { NewProjectOptionHints } from './option-hints';
 import { ProjectBuild as ProjectBuild } from './project-build';
-import { Task, TaskOptions } from './tasks';
-import { Tasks } from './tasks/tasks';
+import { Projenrc, ProjenrcOptions } from './projenrc-json';
+import { Task, TaskOptions } from './task';
+import { Tasks } from './tasks';
 import { isTruthy } from './util';
 
 /**

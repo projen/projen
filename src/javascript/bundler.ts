@@ -2,7 +2,7 @@ import { join } from 'path';
 import { Component } from '../component';
 import { DependencyType } from '../dependencies';
 import { Project } from '../project';
-import { Task } from '../tasks';
+import { Task } from '../task';
 import { renderBundleName } from './util';
 
 /**
