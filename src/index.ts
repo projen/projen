@@ -1,8 +1,4 @@
-export * from './cdk8s-app-ts';
-export * from './cdk8s-construct';
-export * from './cdktf-construct';
 export * from './component';
-export * from './construct-lib';
 export * from './dev-env';
 export * from './dependencies';
 export * from './docker-compose';
@@ -13,7 +9,6 @@ export * from './gitpod';
 export * from './ignore-file';
 export * from './ini';
 export * from './jest';
-export * from './jsii-project';
 export * from './json';
 export * from './logger';
 export * from './license';
@@ -50,3 +45,6 @@ export * as typescript from './typescript/index'; // <-- we also have typescript
 export * as javascript from './javascript';
 export * as release from './release';
 export * as awscdk from './awscdk';
+export * as cdk8s from './cdk8s';
+export * as cdktf from './cdktf';
+export * as constructs from './constructs';

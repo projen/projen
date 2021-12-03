@@ -1,8 +1,8 @@
 
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { Component } from './component';
-import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
+import { Component } from '../component';
+import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';
 
 export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**

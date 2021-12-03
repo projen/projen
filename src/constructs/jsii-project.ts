@@ -1,8 +1,8 @@
 import * as semver from 'semver';
-import { Eslint } from './eslint';
-import { JsiiDocgen } from './jsii-docgen';
-import { GoPublishOptions, MavenPublishOptions, PyPiPublishOptions, NugetPublishOptions } from './release';
-import { TypeScriptProject, TypeScriptProjectOptions } from './typescript';
+import { Eslint } from '../eslint';
+import { JsiiDocgen } from '../jsii-docgen';
+import { GoPublishOptions, MavenPublishOptions, PyPiPublishOptions, NugetPublishOptions } from '../release';
+import { TypeScriptProject, TypeScriptProjectOptions } from '../typescript';
 
 const SUPERCHAIN_IMAGE = 'jsii/superchain:1-buster-slim';
 const SUPERCHAIN_NODE_VERSIONS = [12, 14, 16]; // supported jsii/superchain image tags: `1-buster-slim-nodeNN`

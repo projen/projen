@@ -1,4 +1,4 @@
-import { ConstructLibrary, ConstructLibraryOptions } from './construct-lib';
+import { ConstructLibrary, ConstructLibraryOptions } from '../constructs/construct-lib';
 
 export interface ConstructLibraryCdktfOptions extends ConstructLibraryOptions {
   /**

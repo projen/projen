@@ -1,5 +1,5 @@
 import * as semver from 'semver';
-import { ConstructLibrary, ConstructLibraryOptions } from '../construct-lib';
+import { ConstructLibrary, ConstructLibraryOptions } from '../constructs/construct-lib';
 import { AutoDiscover } from './auto-discover';
 import { LambdaFunctionCommonOptions } from './lambda-function';
 
