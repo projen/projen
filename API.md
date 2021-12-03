@@ -857,6 +857,7 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
   * **cdk8sCliVersion** (<code>string</code>)  cdk8s-cli version. __*Default*__: "cdk8sVersion"
   * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s-cli. __*Default*__: false
+  * **cdk8sPlusVersion** (<code>string</code>)  cdk8s-plus-17 version. __*Default*__: "cdk8sVersion"
   * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
@@ -871,6 +872,7 @@ Name | Type | Description
 -----|------|-------------
 **appEntrypoint**🔹 | <code>string</code> | The CDK8s app entrypoint.
 **cdk8sCliVersion**🔹 | <code>string</code> | The cdk8s-cli version this app is using.
+**cdk8sPlusVersion**🔹 | <code>string</code> | The cdk8s-plus-17 version this app is using.
 **cdk8sVersion**🔹 | <code>string</code> | The CDK8s version this app is using.
 **constructsVersion**🔹 | <code>string</code> | The constructs version this app is using.
 
@@ -1420,6 +1422,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
   * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
+  * **cdk8sPlusVersion** (<code>string</code>)  cdk8s-plus-17 version. __*Default*__: "cdk8sVersion"
   * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
@@ -1432,6 +1435,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**cdk8sPlusVersion**🔹 | <code>string</code> | The cdk8s-plus-17 version this app is using.
 **cdk8sVersion**🔹 | <code>string</code> | The CDK8s version this app is using.
 **constructsVersion**🔹 | <code>string</code> | The constructs version this app is using.
 
@@ -7324,6 +7328,7 @@ publishToGit(options: GitPublishOptions): Task
   * **releaseTagFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the release tag. 
   * **versionFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the version number. 
   * **gitBranch** (<code>string</code>)  Branch to push to. __*Default*__: "main"
+  * **gitPushFlags** (<code>Array<string></code>)  Additional git push flags. __*Optional*__
   * **projectChangelogFile** (<code>string</code>)  The location of an .md file that includes the project-level changelog. __*Optional*__
 
 __Returns__:
@@ -7558,6 +7563,7 @@ Name | Type | Description
 **isContinuous**🔹 | <code>boolean</code> | Whether or not this is a continuous release.
 **isManual**🔹 | <code>boolean</code> | Whether or not this is a manual release trigger.
 **changelogPath**?🔹 | <code>string</code> | Project-level changelog file path.<br/>__*Optional*__
+**gitPushFlags**?🔹 | <code>Array<string></code> | Additional git push flags for manual releases.<br/>__*Optional*__
 **schedule**?🔹 | <code>string</code> | Cron schedule for releases.<br/>__*Optional*__
 
 ### Methods
@@ -7597,6 +7603,7 @@ static manual(options?: ManualReleaseOptions): ReleaseTrigger
 * **options** (<code>[release.ManualReleaseOptions](#projen-release-manualreleaseoptions)</code>)  release options.
   * **changelog** (<code>boolean</code>)  Maintain a project-level changelog. __*Default*__: true
   * **changelogPath** (<code>string</code>)  Project-level changelog file path. __*Default*__: 'CHANGELOG.md'
+  * **gitPushFlags** (<code>Array<string></code>)  Additional git push flags. __*Optional*__
 
 __Returns__:
 * <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>
@@ -9297,6 +9304,7 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **cdk8sCliVersion**?🔹 | <code>string</code> | cdk8s-cli version.<br/>__*Default*__: "cdk8sVersion"
 **cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s-cli.<br/>__*Default*__: false
+**cdk8sPlusVersion**?🔹 | <code>string</code> | cdk8s-plus-17 version.<br/>__*Default*__: "cdk8sVersion"
 **cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
@@ -9610,6 +9618,7 @@ Name | Type | Description
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
+**cdk8sPlusVersion**?🔹 | <code>string</code> | cdk8s-plus-17 version.<br/>__*Default*__: "cdk8sVersion"
 **cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
@@ -12957,6 +12966,7 @@ Name | Type | Description
 **releaseTagFile**🔹 | <code>string</code> | The location of a text file (relative to `dist/`) that contains the release tag.
 **versionFile**🔹 | <code>string</code> | The location of a text file (relative to `dist/`) that contains the version number.
 **gitBranch**?🔹 | <code>string</code> | Branch to push to.<br/>__*Default*__: "main"
+**gitPushFlags**?🔹 | <code>Array<string></code> | Additional git push flags.<br/>__*Optional*__
 **projectChangelogFile**?🔹 | <code>string</code> | The location of an .md file that includes the project-level changelog.<br/>__*Optional*__
 
 
@@ -13054,6 +13064,7 @@ Name | Type | Description
 -----|------|-------------
 **changelog**?🔹 | <code>boolean</code> | Maintain a project-level changelog.<br/>__*Default*__: true
 **changelogPath**?🔹 | <code>string</code> | Project-level changelog file path.<br/>__*Default*__: 'CHANGELOG.md'
+**gitPushFlags**?🔹 | <code>Array<string></code> | Additional git push flags.<br/>__*Optional*__
 
 
 

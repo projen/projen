@@ -128,7 +128,7 @@ export class Publisher extends Component implements IJobProvider {
       publishTask.builtin('release/update-changelog');
     }
     publishTask.builtin('release/tag-version');
-    
+
     if (options.gitPushCommand !== '') {
       const gitPushCommand = options.gitPushCommand || `git push --follow-tags origin ${gitBranch}`;
       publishTask.exec(gitPushCommand);
@@ -757,10 +757,10 @@ export interface GitPublishOptions extends VersionArtifactOptions {
    * @default "main"
    */
   readonly gitBranch?: string;
-  
+
   /**
-   * Override git-push command. 
-   * 
+   * Override git-push command.
+   *
    * Set to an empty string to disable pushing.
    */
   readonly gitPushCommand?: string;
