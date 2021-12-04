@@ -16,21 +16,6 @@ const project = new typescript.TypeScriptProject({
 project.synth();"
 `;
 
-exports[`createProject creates a project from an external project type, if it's installed 1`] = `
-"const { TaimosTypescriptLibrary } = require(\\"@taimos/projen\\");
-const project = new TaimosTypescriptLibrary({
-  defaultReleaseBranch: \\"main\\",
-  name: \\"test-project\\",
-
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
-});
-project.synth();"
-`;
-
 exports[`createProject creates a project in a directory 1`] = `
 "const { typescript } = require(\\"projen\\");
 const project = new typescript.TypeScriptProject({
