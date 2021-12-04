@@ -1,6 +1,6 @@
-const { JsiiProject, JsonFile, TextFile, NodePackageManager } = require('./lib');
+const { cdk, JsonFile, TextFile } = require('./lib');
 
-const project = new JsiiProject({
+const project = new cdk.JsiiProject({
   name: 'projen',
   description: 'CDK for software projects',
   repository: 'https://github.com/projen/projen.git',

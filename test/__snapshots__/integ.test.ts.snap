@@ -5357,12 +5357,12 @@ junit.xml
       },
     },
   },
-  ".projenrc.js": "const { NodeProject, NodePackageManager } = require(\\"projen\\");
+  ".projenrc.js": "const { javascript } = require(\\"projen\\");
 
-const project = new NodeProject({
+const project = new javascript.NodeProject({
   name: \\"pnpm-project\\",
 
-  packageManager: NodePackageManager.PNPM,
+  packageManager: javascript.NodePackageManager.PNPM,
   defaultReleaseBranch: 'master',
 
   deps: [\\"esbuild\\"],

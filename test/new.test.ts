@@ -40,39 +40,13 @@ test('post-synthesis option disabled', () => {
   expect(synthSnapshot(project)['.postsynth']).toBeUndefined();
 });
 
-test('projen new --from external', () => {
-  withProjectDir(projectdir => {
-
-    // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.3', '--no-post', MIN_NODE_VERSION_OPTION]);
-
-    // patch the projen version in package.json to match the current version
-    // otherwise, every bump would need to update these snapshots.
-    sanitizeOutput(projectdir);
-
-    // compare generated .projenrc.js to the snapshot
-    const actual = directorySnapshot(projectdir, {
-      excludeGlobs: [
-        '.git/**',
-        '.github/**',
-        'node_modules/**',
-        'yarn.lock',
-      ],
-    });
-
-    expect(actual).toMatchSnapshot();
-    expect(actual['schema.graphql']).toBeDefined();
-
-  });
-});
-
 test('projen new --from external tarball', () => {
   withProjectDir(projectdir => {
     const shell = (command: string) => execSync(command, { cwd: projectdir });
-    // downloads cdk-appsync-project-1.1.3.tgz
-    shell('npm pack cdk-appsync-project@1.1.3');
+    // downloads external module
+    shell('npm pack @taimos/projen@0.0.127');
 
-    execProjenCLI(projectdir, ['new', '--from', './cdk-appsync-project-1.1.3.tgz', '--no-post', MIN_NODE_VERSION_OPTION]);
+    execProjenCLI(projectdir, ['new', '--from', './taimos-projen-0.0.127.tgz', 'taimos-ts-lib', '--no-post', MIN_NODE_VERSION_OPTION]);
 
     // patch the projen version in package.json to match the current version
     // otherwise, every bump would need to update these snapshots.
@@ -90,13 +64,12 @@ test('projen new --from external tarball', () => {
 
     expect(actual['package.json']).toMatchSnapshot();
     expect(actual['.projenrc.js']).toMatchSnapshot();
-    expect(actual['schema.graphql']).toBeDefined();
   });
 });
 
 test('projen new --from external dist tag', () => {
   withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@latest', '--no-post', MIN_NODE_VERSION_OPTION]);
+    execProjenCLI(projectdir, ['new', '--from', '@taimos/projen@latest', 'taimos-ts-lib', '--no-post', MIN_NODE_VERSION_OPTION]);
 
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
@@ -109,15 +82,14 @@ test('projen new --from external dist tag', () => {
     });
 
     // Not doing a snapshot test because @latest is used
-    expect(actual['schema.graphql']).toBeDefined();
+    expect(actual['.projenrc.js']).toBeDefined();
   });
 });
 
 test('options are not overwritten when creating from external project types', () => {
   withProjectDir(projectdir => {
 
-    // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.3', '--no-synth', '--cdk-version', '1.63.0', MIN_NODE_VERSION_OPTION]);
+    execProjenCLI(projectdir, ['new', '--from', '@taimos/projen@0.0.127', 'taimos-ts-lib', '--no-synth', '--typescript-version', '4.3.0', MIN_NODE_VERSION_OPTION]);
 
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
@@ -129,14 +101,13 @@ test('options are not overwritten when creating from external project types', ()
       ],
     });
 
-    expect(actual['.projenrc.js']).toContain('cdkVersion: \'1.63.0\'');
+    expect(actual['.projenrc.js']).toContain('typescriptVersion: \"4.3.0\"');
   });
 });
 
 test('can choose from one of multiple external project types', () => {
   withProjectDir(projectdir => {
 
-    // execute `projen new --from cdk-appsync-project` in the project directory
     execProjenCLI(projectdir, ['new', '--from', '@taimos/projen@0.0.126', 'taimos-ts-lib', '--no-post', MIN_NODE_VERSION_OPTION]);
 
     // patch the projen version in package.json to match the current version
@@ -205,10 +176,8 @@ test('projenrc-json creates node-project', () => {
 
 test('projenrc-json creates external project type', () => {
   withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.3', '--cdk-version', '1.63.0', '--projenrc-json', '--no-synth', MIN_NODE_VERSION_OPTION]);
+    execProjenCLI(projectdir, ['new', '--from', '@taimos/projen@0.0.127', 'taimos-ts-lib', '--projenrc-json', '--no-synth', MIN_NODE_VERSION_OPTION]);
 
-    // exclude node_modules to work around bug where node_modules is generated AND one of the
-    // dependencies includes a file with .json extension that isn't valid JSON
     const projenrc = directorySnapshot(projectdir, { excludeGlobs: ['node_modules/**'] })['.projenrc.json'];
     expect(projenrc).toMatchSnapshot();
   });
