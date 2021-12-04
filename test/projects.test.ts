@@ -61,7 +61,7 @@ describe('createProject', () => {
   test('creates a project from an external project type, if it\'s installed', () => {
     withProjectDir(projectdir => {
       // GIVEN
-      installPackage(projectdir, '@taimos/projen@0.0.127');
+      installPackage(projectdir, 'cdk-appsync-project@1.1.3');
 
       // WHEN
       Projects.createProject({
@@ -69,10 +69,13 @@ describe('createProject', () => {
         dir: projectdir,
         post: false,
         synth: false,
-        projectFqn: '@taimos/projen.TaimosTypescriptLibrary',
+        projectFqn: 'cdk-appsync-project.AwsCdkAppSyncApp',
         projectOptions: {
           name: 'test-project',
           defaultReleaseBranch: 'main',
+          cdkVersion: '1.63.0',
+          transformerVersion: '1.77.15',
+          devDeps: ['cdk-appsync-project@1.1.3'],
         },
       });
 
