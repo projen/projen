@@ -19,6 +19,8 @@
     "devenv:setup": "/bin/bash ./projen.bash devenv:setup",
     "docgen": "/bin/bash ./projen.bash docgen",
     "eslint": "/bin/bash ./projen.bash eslint",
+    "integ": "/bin/bash ./projen.bash integ",
+    "integ:python-compat": "/bin/bash ./projen.bash integ:python-compat",
     "package": "/bin/bash ./projen.bash package",
     "post-compile": "/bin/bash ./projen.bash post-compile",
     "pre-compile": "/bin/bash ./projen.bash pre-compile",

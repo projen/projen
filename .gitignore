@@ -56,4 +56,5 @@ tsconfig.json
 !templates/**
 !/.markdownlint.json
 !/.vscode/launch.json
+!/.github/workflows/integ.yml
 !/.github/workflows/upgrade-main.yml

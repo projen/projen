@@ -136,6 +136,26 @@
         }
       ]
     },
+    "integ": {
+      "name": "integ",
+      "steps": [
+        {
+          "spawn": "build"
+        },
+        {
+          "spawn": "integ:python-compat"
+        }
+      ]
+    },
+    "integ:python-compat": {
+      "name": "integ:python-compat",
+      "description": "Checks that projen's submodule structure does not cause import failures for python. Expects python to be installed and projen to be fully built.",
+      "steps": [
+        {
+          "exec": "scripts/python-compat.sh"
+        }
+      ]
+    },
     "package": {
       "name": "package",
       "description": "Creates the distribution package",
