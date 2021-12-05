@@ -7324,6 +7324,7 @@ publishToGit(options: GitPublishOptions): Task
   * **releaseTagFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the release tag. 
   * **versionFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the version number. 
   * **gitBranch** (<code>string</code>)  Branch to push to. __*Default*__: "main"
+  * **gitPushCommand** (<code>string</code>)  Override git-push command. __*Optional*__
   * **projectChangelogFile** (<code>string</code>)  The location of an .md file that includes the project-level changelog. __*Optional*__
 
 __Returns__:
@@ -7558,6 +7559,7 @@ Name | Type | Description
 **isContinuous**🔹 | <code>boolean</code> | Whether or not this is a continuous release.
 **isManual**🔹 | <code>boolean</code> | Whether or not this is a manual release trigger.
 **changelogPath**?🔹 | <code>string</code> | Project-level changelog file path.<br/>__*Optional*__
+**gitPushCommand**?🔹 | <code>string</code> | Override git-push command used when releasing manually.<br/>__*Optional*__
 **schedule**?🔹 | <code>string</code> | Cron schedule for releases.<br/>__*Optional*__
 
 ### Methods
@@ -7588,6 +7590,9 @@ release activities will trigger a `publish:git` task. This task will
 handle project-level changelog management, release tagging, and pushing
 these artifacts to origin.
 
+The command used for pushing can be customised by specifying
+`gitPushCommand`. Set to an empty string to disable pushing entirely.
+
 Simply run `yarn release` to trigger a manual release.
 
 ```ts
@@ -7597,6 +7602,7 @@ static manual(options?: ManualReleaseOptions): ReleaseTrigger
 * **options** (<code>[release.ManualReleaseOptions](#projen-release-manualreleaseoptions)</code>)  release options.
   * **changelog** (<code>boolean</code>)  Maintain a project-level changelog. __*Default*__: true
   * **changelogPath** (<code>string</code>)  Project-level changelog file path. __*Default*__: 'CHANGELOG.md'
+  * **gitPushCommand** (<code>string</code>)  Override git-push command. __*Optional*__
 
 __Returns__:
 * <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>
@@ -12957,6 +12963,7 @@ Name | Type | Description
 **releaseTagFile**🔹 | <code>string</code> | The location of a text file (relative to `dist/`) that contains the release tag.
 **versionFile**🔹 | <code>string</code> | The location of a text file (relative to `dist/`) that contains the version number.
 **gitBranch**?🔹 | <code>string</code> | Branch to push to.<br/>__*Default*__: "main"
+**gitPushCommand**?🔹 | <code>string</code> | Override git-push command.<br/>__*Optional*__
 **projectChangelogFile**?🔹 | <code>string</code> | The location of an .md file that includes the project-level changelog.<br/>__*Optional*__
 
 
@@ -13054,6 +13061,7 @@ Name | Type | Description
 -----|------|-------------
 **changelog**?🔹 | <code>boolean</code> | Maintain a project-level changelog.<br/>__*Default*__: true
 **changelogPath**?🔹 | <code>string</code> | Project-level changelog file path.<br/>__*Default*__: 'CHANGELOG.md'
+**gitPushCommand**?🔹 | <code>string</code> | Override git-push command.<br/>__*Optional*__
 
 
 

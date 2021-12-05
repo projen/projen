@@ -39,6 +39,14 @@ describe('manual release', () => {
       expect(releaseTrigger.changelogPath).toBeUndefined();
     });
   });
+
+  describe('with custom git-push command', () => {
+    test('has custom git-push command', () => {
+      releaseTrigger = ReleaseTrigger.manual({ gitPushCommand: 'git push --follow-tags -o ci.skip origin main' });
+
+      expect(releaseTrigger.gitPushCommand).toEqual('git push --follow-tags -o ci.skip origin main');
+    });
+  });
 });
 
 describe('continuous release', () => {
