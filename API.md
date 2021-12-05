@@ -6933,16 +6933,50 @@ __Extends__: [github.GitHubProject](#projen-github-githubproject)
 new python.PythonProject(options: PythonProjectOptions)
 ```
 
-* **options** (<code>[release.GitPublishOptions](#projen-release-gitpublishoptions)</code>)  Options.
-  * **changelogFile** (<code>string</code>)  The location of an .md file (relative to `dist/`) that includes the changelog for the release. 
-  * **releaseTagFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the release tag. 
-  * **versionFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the version number. 
-  * **gitBranch** (<code>string</code>)  Branch to push to. __*Default*__: "main"
-  * **gitPushCommand** (<code>string</code>)  Override git-push command. __*Optional*__
-  * **projectChangelogFile** (<code>string</code>)  The location of an .md file that includes the project-level changelog. __*Optional*__
-
-__Returns__:
-* <code>[tasks.Task](#projen-tasks-task)</code>
+* **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
+  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
+  * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
+  * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
+  * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
+  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **github** (<code>boolean</code>)  Enable GitHub integration. __*Default*__: true
+  * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
+  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
+  * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
+  * **authorEmail** (<code>string</code>)  Author's e-mail. 
+  * **authorName** (<code>string</code>)  Author's name. 
+  * **version** (<code>string</code>)  Version of the package. 
+  * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
+  * **description** (<code>string</code>)  A short description of the package. __*Optional*__
+  * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
+  * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
+  * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
+  * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
+  * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
+  * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
+  * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
+  * **poetry** (<code>boolean</code>)  Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. __*Default*__: false
+  * **projenrcPython** (<code>boolean</code>)  Use projenrc in python. __*Default*__: false
+  * **projenrcPythonOptions** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  Options related to projenrc in python. __*Default*__: default options
+  * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
+  * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
+  * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true if the project type is library
+  * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true
+  * **venvOptions** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  Venv options. __*Default*__: defaults
 
 
 
@@ -7111,13 +7145,6 @@ new python.SetupPy(project: PythonProject, options: SetupPyOptions)
   * **packages** (<code>Array<string></code>)  List of submodules to be packaged. __*Optional*__
   * **version** (<code>string</code>)  Manually specify package version. __*Optional*__
 
-Name | Type | Description 
------|------|-------------
-**isContinuous**🔹 | <code>boolean</code> | Whether or not this is a continuous release.
-**isManual**🔹 | <code>boolean</code> | Whether or not this is a manual release trigger.
-**changelogPath**?🔹 | <code>string</code> | Project-level changelog file path.<br/>__*Optional*__
-**gitPushCommand**?🔹 | <code>string</code> | Override git-push command used when releasing manually.<br/>__*Optional*__
-**schedule**?🔹 | <code>string</code> | Cron schedule for releases.<br/>__*Optional*__
 
 ### Methods
 
@@ -7139,18 +7166,12 @@ __Returns__:
 
 ## class Setuptools 🔹 <a id="projen-python-setuptools"></a>
 
-The command used for pushing can be customised by specifying
-`gitPushCommand`. Set to an empty string to disable pushing entirely.
-
-Simply run `yarn release` to trigger a manual release.
+Manages packaging through setuptools with a setup.py script.
 
 __Implements__: [python.IPythonPackaging](#projen-python-ipythonpackaging)
 __Submodule__: python
 
-* **options** (<code>[release.ManualReleaseOptions](#projen-release-manualreleaseoptions)</code>)  release options.
-  * **changelog** (<code>boolean</code>)  Maintain a project-level changelog. __*Default*__: true
-  * **changelogPath** (<code>string</code>)  Project-level changelog file path. __*Default*__: 'CHANGELOG.md'
-  * **gitPushCommand** (<code>string</code>)  Override git-push command. __*Optional*__
+__Extends__: [Component](#projen-component)
 
 ### Initializer
 
@@ -7284,6 +7305,7 @@ publishToGit(options: GitPublishOptions): Task
   * **releaseTagFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the release tag. 
   * **versionFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the version number. 
   * **gitBranch** (<code>string</code>)  Branch to push to. __*Default*__: "main"
+  * **gitPushCommand** (<code>string</code>)  Override git-push command. __*Optional*__
   * **projectChangelogFile** (<code>string</code>)  The location of an .md file that includes the project-level changelog. __*Optional*__
 
 __Returns__:
@@ -7518,6 +7540,7 @@ Name | Type | Description
 **isContinuous**🔹 | <code>boolean</code> | Whether or not this is a continuous release.
 **isManual**🔹 | <code>boolean</code> | Whether or not this is a manual release trigger.
 **changelogPath**?🔹 | <code>string</code> | Project-level changelog file path.<br/>__*Optional*__
+**gitPushCommand**?🔹 | <code>string</code> | Override git-push command used when releasing manually.<br/>__*Optional*__
 **schedule**?🔹 | <code>string</code> | Cron schedule for releases.<br/>__*Optional*__
 
 ### Methods
@@ -7548,6 +7571,9 @@ release activities will trigger a `publish:git` task. This task will
 handle project-level changelog management, release tagging, and pushing
 these artifacts to origin.
 
+The command used for pushing can be customised by specifying
+`gitPushCommand`. Set to an empty string to disable pushing entirely.
+
 Simply run `yarn release` to trigger a manual release.
 
 ```ts
@@ -7557,6 +7583,7 @@ static manual(options?: ManualReleaseOptions): ReleaseTrigger
 * **options** (<code>[release.ManualReleaseOptions](#projen-release-manualreleaseoptions)</code>)  release options.
   * **changelog** (<code>boolean</code>)  Maintain a project-level changelog. __*Default*__: true
   * **changelogPath** (<code>string</code>)  Project-level changelog file path. __*Default*__: 'CHANGELOG.md'
+  * **gitPushCommand** (<code>string</code>)  Override git-push command. __*Optional*__
 
 __Returns__:
 * <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>
