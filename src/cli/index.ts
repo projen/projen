@@ -1,7 +1,7 @@
 import { resolve } from 'path';
 import * as yargs from 'yargs';
 import { PROJEN_RC, PROJEN_VERSION } from '../common';
-import { TaskRuntime } from '../tasks';
+import { TaskRuntime } from '../task-runtime';
 import { synth } from './synth';
 import { discoverTaskCommands } from './tasks';
 

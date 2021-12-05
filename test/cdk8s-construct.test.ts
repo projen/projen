@@ -1,4 +1,4 @@
-import { ConstructLibraryCdk8s } from '../src/cdk8s-construct';
+import { ConstructLibraryCdk8s } from '../src/cdk8s';
 import { synthSnapshot } from '../src/util/synth';
 
 test ('constructs version defined', () => {

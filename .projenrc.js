@@ -1,6 +1,7 @@
-const { JsiiProject, JsonFile, TextFile, NodePackageManager } = require('./lib');
+const { cdk, github, JsonFile, TextFile } = require('./lib');
+const { workflows } = require('./lib/github');
 
-const project = new JsiiProject({
+const project = new cdk.JsiiProject({
   name: 'projen',
   description: 'CDK for software projects',
   repository: 'https://github.com/projen/projen.git',
@@ -184,5 +185,42 @@ project.npmignore.exclude('/VISION.md');
 project.npmignore.exclude('/SECURITY.md');
 project.npmignore.exclude('/.gitattributes');
 project.npmignore.exclude('/.gitpod.yml');
+
+// integ test
+const pythonCompatTask = project.addTask('integ:python-compat', {
+  exec: 'scripts/python-compat.sh',
+  description: 'Checks that projen\'s submodule structure does not cause import failures for python. Expects python to be installed and projen to be fully built.',
+});
+const integTask = project.addTask('integ');
+integTask.spawn(project.buildTask);
+integTask.spawn(pythonCompatTask);
+
+new github.TaskWorkflow(project.github, {
+  name: 'integ',
+  jobId: 'integ',
+  triggers: {
+    pullRequest: {},
+    workflowDispatch: {},
+  },
+  env: {
+    CI: 'true',
+  },
+  permissions: {
+    contents: workflows.JobPermission.READ,
+  },
+
+  preBuildSteps: [
+    ...project.installWorkflowSteps, // install dependencies for projen
+    {
+      name: 'Set up Python 3.x',
+      uses: 'actions/setup-python@v2',
+      with: {
+        'python-version': '3.x',
+      },
+    },
+  ],
+
+  task: integTask,
+});
 
 project.synth();

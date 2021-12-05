@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`createProject creates a project and passes in JSON-like project options 1`] = `
-"const { TypeScriptProject } = require(\\"projen\\");
-const project = new TypeScriptProject({
+"const { typescript } = require(\\"projen\\");
+const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: \\"main\\",
   eslintOptions: {\\"dirs\\":[\\"src\\",\\"test\\"],\\"prettier\\":true,\\"aliasMap\\":{\\"@src\\":\\"./src\\",\\"@foo\\":\\"./src/foo\\"}},
   name: \\"test-project\\",
@@ -16,28 +16,9 @@ const project = new TypeScriptProject({
 project.synth();"
 `;
 
-exports[`createProject creates a project from an external project type, if it's installed 1`] = `
-"const { AwsCdkAppSyncApp } = require('cdk-appsync-project');
-const project = new AwsCdkAppSyncApp({
-  cdkVersion: '1.63.0',
-  defaultReleaseBranch: 'main',
-  devDeps: ['cdk-appsync-project@1.1.3'],
-  name: 'test-project',
-  transformerVersion: '1.77.15',
-
-  // cdkDependencies: undefined,        /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") this app uses. */
-  // deps: [],                          /* Runtime dependencies of this module. */
-  // description: undefined,            /* The description is just a string that helps people understand the purpose of the package. */
-  // packageName: undefined,            /* The \\"name\\" in package.json. */
-  // projectType: ProjectType.UNKNOWN,  /* Which type of project this is (library/app). */
-  // releaseWorkflow: undefined,        /* Define a GitHub workflow for releasing from \\"main\\" when new versions are bumped. */
-});
-project.synth();"
-`;
-
 exports[`createProject creates a project in a directory 1`] = `
-"const { TypeScriptProject } = require(\\"projen\\");
-const project = new TypeScriptProject({
+"const { typescript } = require(\\"projen\\");
+const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: \\"main\\",
   name: \\"test-project\\",
 

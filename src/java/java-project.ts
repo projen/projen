@@ -1,4 +1,4 @@
-import { GitHubProject, GitHubProjectOptions } from '../project';
+import { GitHubProject, GitHubProjectOptions } from '../github';
 import { Junit, JunitOptions } from './junit';
 import { MavenCompile, MavenCompileOptions } from './maven-compile';
 import { MavenPackaging, MavenPackagingOptions } from './maven-packaging';

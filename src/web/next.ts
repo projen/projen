@@ -1,8 +1,7 @@
 import { Component } from '../component';
-import { NodeProject, NodeProjectOptions } from '../node-project';
+import { NodeProject, NodeProjectOptions, TypeScriptJsxMode, TypeScriptModuleResolution } from '../javascript';
 import { SampleDir, SampleFile } from '../sample-file';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';
-import { TypeScriptJsxMode, TypeScriptModuleResolution } from '../typescript-config';
 import { deepMerge } from '../util';
 import { PostCss } from './postcss';
 

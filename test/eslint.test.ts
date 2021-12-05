@@ -1,4 +1,4 @@
-import { Eslint, NodeProject } from '../src';
+import { Eslint, NodeProject } from '../src/javascript';
 import { synthSnapshot } from '../src/util/synth';
 
 test('devdirs', () => {

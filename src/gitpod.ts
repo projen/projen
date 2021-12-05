@@ -1,7 +1,7 @@
 import { Component } from './component';
 import { IDevEnvironment, DevEnvironmentOptions, DevEnvironmentDockerImage } from './dev-env';
 import { Project } from './project';
-import { Task } from './tasks';
+import { Task } from './task';
 import { YamlFile } from './yaml';
 
 /**

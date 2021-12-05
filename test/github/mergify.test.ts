@@ -1,4 +1,4 @@
-import { NodeProject, NodeProjectOptions } from '../../src/node-project';
+import { NodeProject, NodeProjectOptions } from '../../src/javascript';
 import { synthSnapshot } from '../../src/util/synth';
 
 describe('mergify', () => {

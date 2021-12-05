@@ -1,8 +1,8 @@
-const { JsiiProject, Semver } = require('projen');
+const { cdk } = require('projen');
 
 const common = require('./cdk8s.common');
 
-const project = new JsiiProject({
+const project = new cdk.JsiiProject({
   name: 'cdk8s',
   description: 'Cloud Development Kit for Kubernetes',
   defaultReleaseBranch: 'master',

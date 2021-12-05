@@ -1,4 +1,4 @@
-import { ConstructLibrary, ConstructLibraryOptions } from './construct-lib';
+import { ConstructLibrary, ConstructLibraryOptions } from '../cdk';
 
 export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
   /**

@@ -1,9 +1,9 @@
-const { NodeProject, NodePackageManager } = require("projen");
+const { javascript } = require("projen");
 
-const project = new NodeProject({
+const project = new javascript.NodeProject({
   name: "pnpm-project",
 
-  packageManager: NodePackageManager.PNPM,
+  packageManager: javascript.NodePackageManager.PNPM,
   defaultReleaseBranch: 'master',
 
   deps: ["esbuild"],

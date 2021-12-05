@@ -1,5 +1,5 @@
-import { IResolver, FileBase } from '../file';
-import { Project } from '../project';
+import { IResolver, FileBase } from './file';
+import { Project } from './project';
 
 /**
  * Assign attributes to file names in a git repository.

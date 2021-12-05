@@ -1,10 +1,10 @@
 import * as path from 'path';
-import { PROJEN_DIR } from '../common';
-import { Component } from '../component';
-import { JsonFile } from '../json';
-import { Project } from '../project';
-import { TasksManifest, TaskSpec } from './model';
+import { PROJEN_DIR } from './common';
+import { Component } from './component';
+import { JsonFile } from './json';
+import { Project } from './project';
 import { Task, TaskOptions } from './task';
+import { TasksManifest, TaskSpec } from './task-model';
 
 /**
  * Defines project tasks.

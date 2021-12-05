@@ -1,7 +1,7 @@
 import * as chalk from 'chalk';
 import * as yargs from 'yargs';
 import * as logging from '../logging';
-import { TaskRuntime } from '../tasks';
+import { TaskRuntime } from '../task-runtime';
 
 /**
  * Reads .projen/tasks.json and adds CLI commands for all tasks.

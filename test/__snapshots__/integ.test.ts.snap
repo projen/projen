@@ -1300,9 +1300,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       },
     },
   },
-  ".projenrc.js": "const { ConstructLibraryAws, Semver } = require('projen');
+  ".projenrc.js": "const { awscdk, Semver } = require('projen');
 
-const project = new ConstructLibraryAws({
+const project = new awscdk.ConstructLibraryAws({
   name: 'cdk-watchful',
   description: 'Watching your CDK apps since 2019',
   defaultReleaseBranch: 'master',
@@ -2647,11 +2647,11 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       },
     },
   },
-  ".projenrc.js": "const { JsiiProject, Semver } = require('projen');
+  ".projenrc.js": "const { cdk } = require('projen');
 
 const common = require('./cdk8s.common');
 
-const project = new JsiiProject({
+const project = new cdk.JsiiProject({
   name: 'cdk8s',
   description: 'Cloud Development Kit for Kubernetes',
   defaultReleaseBranch: 'master',
@@ -2911,11 +2911,11 @@ project.synth();
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "cdk8s-cli.projenrc.js": "const { TypeScriptLibraryProject, Semver } = require('projen');
+  "cdk8s-cli.projenrc.js": "const { typescript } = require('projen');
 
 const common = require('./cdk8s.common');
 
-const project = new TypeScriptLibraryProject({
+const project = new typescript.TypeScriptLibraryProject({
   name: 'cdk8s-cli',
   description: 'CDK for Kubernetes CLI',
   defaultReleaseBranch: 'master',
@@ -2992,11 +2992,11 @@ exports.fixup = project => {
   delete project.manifest.scripts.release;
 };
 ",
-  "cdk8s.projenrc.js": "const { JsiiProject, Semver } = require('projen');
+  "cdk8s.projenrc.js": "const { cdk } = require('projen');
 
 const common = require('./cdk8s.common');
 
-const project = new JsiiProject({
+const project = new cdk.JsiiProject({
   name: 'cdk8s',
   description: 'Cloud Development Kit for Kubernetes',
   defaultReleaseBranch: 'master',
@@ -4082,11 +4082,11 @@ tsconfig.tsbuildinfo
       },
     },
   },
-  ".projenrc.js": "const { TypeScriptLibraryProject, Semver } = require('projen');
+  ".projenrc.js": "const { typescript } = require('projen');
 
 const common = require('./cdk8s.common');
 
-const project = new TypeScriptLibraryProject({
+const project = new typescript.TypeScriptLibraryProject({
   name: 'cdk8s-cli',
   description: 'CDK for Kubernetes CLI',
   defaultReleaseBranch: 'master',
@@ -4328,11 +4328,11 @@ project.synth();
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "cdk8s-cli.projenrc.js": "const { TypeScriptLibraryProject, Semver } = require('projen');
+  "cdk8s-cli.projenrc.js": "const { typescript } = require('projen');
 
 const common = require('./cdk8s.common');
 
-const project = new TypeScriptLibraryProject({
+const project = new typescript.TypeScriptLibraryProject({
   name: 'cdk8s-cli',
   description: 'CDK for Kubernetes CLI',
   defaultReleaseBranch: 'master',
@@ -4409,11 +4409,11 @@ exports.fixup = project => {
   delete project.manifest.scripts.release;
 };
 ",
-  "cdk8s.projenrc.js": "const { JsiiProject, Semver } = require('projen');
+  "cdk8s.projenrc.js": "const { cdk } = require('projen');
 
 const common = require('./cdk8s.common');
 
-const project = new JsiiProject({
+const project = new cdk.JsiiProject({
   name: 'cdk8s',
   description: 'Cloud Development Kit for Kubernetes',
   defaultReleaseBranch: 'master',
@@ -5357,12 +5357,12 @@ junit.xml
       },
     },
   },
-  ".projenrc.js": "const { NodeProject, NodePackageManager } = require(\\"projen\\");
+  ".projenrc.js": "const { javascript } = require(\\"projen\\");
 
-const project = new NodeProject({
+const project = new javascript.NodeProject({
   name: \\"pnpm-project\\",
 
-  packageManager: NodePackageManager.PNPM,
+  packageManager: javascript.NodePackageManager.PNPM,
   defaultReleaseBranch: 'master',
 
   deps: [\\"esbuild\\"],

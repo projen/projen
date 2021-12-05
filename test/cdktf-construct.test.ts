@@ -1,5 +1,5 @@
-import { ConstructLibraryCdktf, ConstructLibraryCdktfOptions } from '../src/cdktf-construct';
-import { NpmAccess } from '../src/node-package';
+import { ConstructLibraryCdktf, ConstructLibraryCdktfOptions } from '../src/cdktf';
+import { NpmAccess } from '../src/javascript';
 import { synthSnapshot } from '../src/util/synth';
 
 describe('constructs dependency selection', () => {

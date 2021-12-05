@@ -2,7 +2,7 @@ import { Component } from '../component';
 import { DevEnvironmentDockerImage, DevEnvironmentOptions, IDevEnvironment } from '../dev-env';
 import { JsonFile } from '../json';
 import { Project } from '../project';
-import { Task } from '../tasks';
+import { Task } from '../task';
 
 /**
   * Relative path of devcontainer file to generate

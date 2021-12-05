@@ -1,6 +1,5 @@
 import * as yaml from 'yaml';
-import { NodeProject, UpgradeDependenciesSchedule } from '../src';
-import { NodeProjectOptions } from '../src/node-project';
+import { NodeProject, NodeProjectOptions, UpgradeDependenciesSchedule } from '../src/javascript';
 import { Tasks } from '../src/tasks';
 import { synthSnapshot } from '../src/util/synth';
 

@@ -1,8 +1,8 @@
 import { existsSync, writeFileSync } from 'fs';
 import { resolve } from 'path';
 import { Component } from '../component';
-import { renderJavaScriptOptions } from '../javascript/render-options';
 import { Project } from '../project';
+import { renderJavaScriptOptions } from './render-options';
 export interface ProjenrcOptions {
   /**
    * The name of the projenrc file.

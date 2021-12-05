@@ -1,4 +1,4 @@
-import { Task } from '../tasks';
+import { Task } from '../task';
 import { PoetryPyprojectOptionsWithoutDeps } from './poetry';
 
 export interface IPythonPackaging {

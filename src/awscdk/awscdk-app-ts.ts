@@ -1,10 +1,12 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as semver from 'semver';
-import { AutoDiscover, CdkTasks, LambdaFunctionCommonOptions } from './awscdk';
-import { CdkConfig, CdkConfigCommonOptions } from './awscdk/cdk-config';
-import { Component } from './component';
-import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
+import { Component } from '../component';
+import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';
+import { AutoDiscover } from './auto-discover';
+import { CdkConfig, CdkConfigCommonOptions } from './cdk-config';
+import { CdkTasks } from './cdk-tasks';
+import { LambdaFunctionCommonOptions } from './lambda-function';
 
 export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions, CdkConfigCommonOptions {
   /**
