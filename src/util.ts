@@ -1,9 +1,8 @@
 import * as child_process from 'child_process';
 import * as path from 'path';
+import * as Case from 'case';
 import * as fs from 'fs-extra';
 import * as logging from './logging';
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const decamelize = require('decamelize');
 
 const MAX_BUFFER = 10 * 1024 * 1024;
 
@@ -11,7 +10,7 @@ const MAX_BUFFER = 10 * 1024 * 1024;
  * Executes a command with STDOUT > STDERR.
  */
 export function exec(command: string, options: { cwd: string }): void {
-  logging.verbose(command);
+  logging.debug(command);
   child_process.execSync(command, {
     stdio: ['inherit', process.stderr, 'pipe'], // "pipe" for STDERR means it appears in exceptions
     maxBuffer: MAX_BUFFER,
@@ -23,7 +22,7 @@ export function exec(command: string, options: { cwd: string }): void {
  * Executes command and returns STDOUT. If the command fails (non-zero), throws an error.
  */
 export function execCapture(command: string, options: { cwd: string }) {
-  logging.verbose(command);
+  logging.debug(command);
   return child_process.execSync(command, {
     stdio: ['inherit', 'pipe', 'pipe'], // "pipe" for STDERR means it appears in exceptions
     maxBuffer: MAX_BUFFER,
@@ -289,3 +288,11 @@ export async function tryReadFile(file: string) {
 
   return fs.readFile(file, 'utf8');
 }
+
+function decamelize(s: string, sep: string = '_') {
+  if (Case.of(s) === 'camel') {
+    return Case.lower(s, sep);
+  } else {
+    return s;
+  }
+};

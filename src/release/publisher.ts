@@ -1,6 +1,6 @@
 import { Component } from '../component';
-import { workflows } from '../github';
-import { GITHUB_ACTIONS_USER } from '../github/constants';
+import { IJobProvider, workflows } from '../github';
+import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { JobPermission, JobPermissions } from '../github/workflows-model';
 import { defaultNpmToken } from '../node-package';
 import { Project } from '../project';
@@ -10,6 +10,7 @@ const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
 const ARTIFACTS_DOWNLOAD_DIR = 'dist';
 const JSII_RELEASE_IMAGE = 'jsii/superchain:1-buster-slim-node14';
+const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
 
 /**
  * Options for `Publisher`.
@@ -66,7 +67,7 @@ export interface PublisherOptions {
  *
  * Under the hood, it uses https://github.com/aws/jsii-release
  */
-export class Publisher extends Component {
+export class Publisher extends Component implements IJobProvider {
   public readonly buildJobId: string;
   public readonly artifactName: string;
   public readonly jsiiReleaseVersion: string;
@@ -76,7 +77,7 @@ export class Publisher extends Component {
   private readonly failureIssueLabel: string;
 
   // the jobs to add to the release workflow
-  private readonly jobs: { [name: string]: workflows.Job } = {};
+  private readonly _jobs: { [name: string]: workflows.Job } = {};
 
   constructor(project: Project, options: PublisherOptions) {
     super(project);
@@ -94,8 +95,8 @@ export class Publisher extends Component {
    * Renders a set of workflow jobs for all the publishers.
    * @returns GitHub workflow jobs
    */
-  public render(): Record<string, workflows.Job> {
-    return { ...this.jobs };
+  public renderJobs(): Record<string, workflows.Job> {
+    return { ...this._jobs };
   }
 
   /**
@@ -183,6 +184,8 @@ export class Publisher extends Component {
    */
   public publishToNpm(options: NpmPublishOptions = {}) {
     const isGitHubPackages = options.registry?.startsWith(GITHUB_PACKAGES_REGISTRY);
+    const isAwsCodeArtifact = isAwsCodeArtifactRegistry(options.registry);
+    const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
 
     this.addPublishJob({
       name: 'npm',
@@ -198,7 +201,11 @@ export class Publisher extends Component {
         packages: isGitHubPackages ? JobPermission.WRITE : undefined,
       },
       workflowEnv: {
-        NPM_TOKEN: secret(defaultNpmToken(options.npmTokenSecret, options.registry)),
+        NPM_TOKEN: npmToken ? secret(npmToken) : undefined,
+        // if we are publishing to AWS CodeArtifact, pass AWS access keys that will be used to generate NPM_TOKEN using AWS CLI.
+        AWS_ACCESS_KEY_ID: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID') : undefined,
+        AWS_SECRET_ACCESS_KEY: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY') : undefined,
+        AWS_ROLE_TO_ASSUME: isAwsCodeArtifact ? options.codeArtifactOptions?.roleToAssume : undefined,
       },
     });
   }
@@ -289,8 +296,8 @@ export class Publisher extends Component {
       env: {
         GITHUB_REPO: options.githubRepo,
         GIT_BRANCH: options.gitBranch,
-        GIT_USER_NAME: options.gitUserName ?? GITHUB_ACTIONS_USER.name,
-        GIT_USER_EMAIL: options.gitUserEmail ?? GITHUB_ACTIONS_USER.email,
+        GIT_USER_NAME: options.gitUserName ?? DEFAULT_GITHUB_ACTIONS_USER.name,
+        GIT_USER_EMAIL: options.gitUserEmail ?? DEFAULT_GITHUB_ACTIONS_USER.email,
         GIT_COMMIT_MESSAGE: options.gitCommitMessage,
       },
       workflowEnv: {
@@ -301,7 +308,7 @@ export class Publisher extends Component {
 
   private addPublishJob(opts: PublishJobOptions) {
     const jobname = `release_${opts.name}`;
-    if (jobname in this.jobs) {
+    if (jobname in this._jobs) {
       throw new Error(`Duplicate job with name "${jobname}"`);
     }
 
@@ -380,7 +387,7 @@ export class Publisher extends Component {
       steps,
     };
 
-    this.jobs[jobname] = job;
+    this._jobs[jobname] = job;
   }
 
   private jsiiReleaseCommand(command: string) {
@@ -476,6 +483,39 @@ export interface NpmPublishOptions {
    * @default - "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
    */
   readonly npmTokenSecret?: string;
+
+  /**
+   * Options for publishing npm package to AWS CodeArtifact.
+   *
+   * @default - undefined
+   */
+  readonly codeArtifactOptions?: CodeArtifactOptions;
+}
+
+export interface CodeArtifactOptions {
+  /**
+   * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
+   * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+   *
+   * @default "AWS_ACCESS_KEY_ID"
+   */
+  readonly accessKeyIdSecret?: string;
+
+  /**
+    * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
+    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+    *
+    * @default "AWS_SECRET_ACCESS_KEY"
+    */
+  readonly secretAccessKeySecret?: string;
+
+  /**
+    * ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact
+    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+    *
+    * @default undefined
+    */
+  readonly roleToAssume?: string;
 }
 
 /**
@@ -682,6 +722,15 @@ interface VersionArtifactOptions {
    * @example changelog.md
    */
   readonly changelogFile: string;
+}
+
+/**
+ * Evaluates if the `registryUrl` is a AWS CodeArtifact registry.
+ * @param registryUrl url of registry
+ * @returns true for AWS CodeArtifact
+ */
+export function isAwsCodeArtifactRegistry(registryUrl: string | undefined) {
+  return registryUrl && AWS_CODEARTIFACT_REGISTRY_REGEX.test(registryUrl);
 }
 
 /**

@@ -27,7 +27,8 @@
     "import/resolver": {
       "node": {},
       "typescript": {
-        "project": "./tsconfig.dev.json"
+        "project": "./tsconfig.dev.json",
+        "alwaysTryTypes": true
       }
     }
   },
@@ -143,7 +144,7 @@
       "error",
       {
         "devDependencies": [
-          "**/src/__tests__/**",
+          "**/test/**",
           "**/build-tools/**"
         ],
         "optionalDependencies": false,

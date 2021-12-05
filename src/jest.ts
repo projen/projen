@@ -554,7 +554,7 @@ export class Jest {
    */
   public readonly config: any;
 
-  private readonly testMatch: string[]
+  private readonly testMatch: string[];
   private readonly ignorePatterns: string[];
   private readonly watchIgnorePatterns: string[];
   private readonly coverageReporters: string[];
@@ -615,7 +615,7 @@ export class Jest {
         { outputDirectory: reportsDir },
       ]);
 
-      project.addDevDeps('jest-junit@^12');
+      project.addDevDeps('jest-junit@^13');
 
       project.gitignore.exclude(
         '# jest-junit artifacts',

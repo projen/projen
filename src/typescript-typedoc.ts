@@ -12,6 +12,7 @@ export class TypedocDocgen {
       exec: `typedoc ${project.srcdir} --disableSources --out ${project.docsDirectory}`,
     });
 
-    project.buildTask.spawn(docgen);
+    // spawn after a successful compile
+    project.postCompileTask.spawn(docgen);
   }
 }

@@ -1,3 +1,4 @@
+import { Project } from '.';
 import { PROJEN_RC } from './common';
 import { Component } from './component';
 import { JsonFile } from './json';
@@ -60,6 +61,13 @@ export interface EslintOptions {
    * @default undefined
    */
   readonly aliasExtensions?: string[];
+
+  /**
+   * Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.
+   * This prevents `import/no-unresolved` eslint errors when importing a `@types/*` module that would otherwise remain unresolved.
+   * @default true
+   */
+  readonly tsAlwaysTryTypes?: boolean;
 }
 
 /**
@@ -77,7 +85,19 @@ export interface EslintOverride {
   readonly rules: { [rule: string]: any };
 }
 
+/**
+ * Represents eslint configuration.
+ */
 export class Eslint extends Component {
+
+  /**
+   * Returns the singletone Eslint component of a project or undefined if there is none.
+   */
+  public static of(project: Project): Eslint | undefined {
+    const isEslint = (c: Component): c is Eslint => c instanceof Eslint;
+    return project.components.find(isEslint);
+  }
+
   /**
    * eslint rules.
    */
@@ -98,15 +118,15 @@ export class Eslint extends Component {
    */
   public readonly ignorePatterns: string[];
 
-  private readonly _allowDevDeps: string[];
+  private readonly _allowDevDeps: Set<string>;
 
   constructor(project: NodeProject, options: EslintOptions) {
     super(project);
 
     project.addDevDeps(
-      'eslint',
-      '@typescript-eslint/eslint-plugin',
-      '@typescript-eslint/parser',
+      'eslint@^8',
+      '@typescript-eslint/eslint-plugin@^5',
+      '@typescript-eslint/parser@^5',
       'eslint-import-resolver-node',
       'eslint-import-resolver-typescript',
       'eslint-plugin-import',
@@ -130,7 +150,7 @@ export class Eslint extends Component {
     const dirs = [...options.dirs, ...devdirs];
     const fileExtensions = options.fileExtensions ?? ['.ts'];
 
-    this._allowDevDeps = (devdirs ?? []).map(dir => `**/${dir}/**`);
+    this._allowDevDeps = new Set((devdirs ?? []).map(dir => `**/${dir}/**`));
 
     const lintProjenRc = options.lintProjenRc ?? true;
 
@@ -331,6 +351,7 @@ export class Eslint extends Component {
           node: {},
           typescript: {
             project: tsconfig,
+            ...( options.tsAlwaysTryTypes !== false && { alwaysTryTypes: true } ),
           },
         },
       },
@@ -370,10 +391,10 @@ export class Eslint extends Component {
    * @param pattern glob pattern.
    */
   public allowDevDeps(pattern: string) {
-    this._allowDevDeps.push(pattern);
+    this._allowDevDeps.add(pattern);
   }
 
   private renderDevDepsAllowList() {
-    return this._allowDevDeps;
+    return Array.from(this._allowDevDeps);
   }
 }

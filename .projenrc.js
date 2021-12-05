@@ -1,4 +1,4 @@
-const { JsiiProject, JsonFile, TextFile } = require('./lib');
+const { JsiiProject, JsonFile, TextFile, NodePackageManager } = require('./lib');
 
 const project = new JsiiProject({
   name: 'projen',
@@ -7,19 +7,26 @@ const project = new JsiiProject({
   authorName: 'Elad Ben-Israel',
   authorEmail: 'benisrae@amazon.com',
   stability: 'experimental',
+  keywords: [
+    'scaffolding',
+    'cicd',
+    'project',
+    'management',
+    'generator',
+    'cdk',
+  ],
 
   pullRequestTemplateContents: [
     '---',
     'By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.',
   ],
 
-  testdir: 'src/__tests__',
-
   bundledDeps: [
+    'conventional-changelog-config-spec',
     'yaml',
     'fs-extra',
     'yargs',
-    'decamelize',
+    'case',
     'glob@^7',
     'semver',
     'chalk',
@@ -30,6 +37,7 @@ const project = new JsiiProject({
   ],
 
   devDeps: [
+    '@types/conventional-changelog-config-spec',
     '@types/fs-extra@^8',
     '@types/yargs',
     '@types/glob',
@@ -42,7 +50,7 @@ const project = new JsiiProject({
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: '12.7.0',
-  workflowNodeVersion: '12.13.0', // required by jest
+  workflowNodeVersion: '12.22.0', // required by @typescript-eslint/eslint-plugin@5.5.0
 
   codeCov: true,
   defaultReleaseBranch: 'main',
@@ -50,6 +58,9 @@ const project = new JsiiProject({
   devContainer: true,
   // since this is projen, we need to always compile before we run
   projenCommand: '/bin/bash ./projen.bash',
+
+  // cli tests need projen to be compiled
+  compileBeforeTest: true,
 
   // makes it very hard to iterate with jest --watch
   jestOptions: {
@@ -79,7 +90,7 @@ const project = new JsiiProject({
 
   depsUpgradeOptions: {
     workflowOptions: {
-      secret: 'PROJEN_UPGRADE_TOKEN',
+      secret: 'PROJEN_GITHUB_TOKEN',
     },
   },
 });
@@ -100,7 +111,7 @@ new TextFile(project, 'projen.bash', {
 });
 project.npmignore.exclude('/projen.bash');
 
-project.addExcludeFromCleanup('src/__tests__/**');
+project.addExcludeFromCleanup('test/**'); // because snapshots include the projen marker...
 project.gitignore.include('templates/**');
 
 // expand markdown macros in readme
@@ -108,7 +119,7 @@ const macros = project.addTask('readme-macros');
 macros.exec('mv README.md README.md.bak');
 macros.exec('cat README.md.bak | markmac > README.md');
 macros.exec('rm README.md.bak');
-project.buildTask.spawn(macros);
+project.postCompileTask.spawn(macros);
 
 new JsonFile(project, '.markdownlint.json', {
   obj: {

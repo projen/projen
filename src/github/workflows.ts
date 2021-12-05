@@ -1,6 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-import decamelize = require('decamelize');
-
+import { snake } from 'case';
 import { Component } from '../component';
 import { kebabCaseKeys } from '../util';
 import { YamlFile } from '../yaml';
@@ -48,12 +46,13 @@ export class GithubWorkflow extends Component {
   public readonly concurrency?: string;
 
   /**
-   * The workflow YAML file.
+   * The workflow YAML file. May not exist if `workflowsEnabled` is false on `GitHub`.
    */
   public readonly file: YamlFile | undefined;
 
   private events: workflows.Triggers = { };
   private jobs: Record<string, workflows.Job> = { };
+  private _providers = new Array<IJobProvider>();
 
   constructor(github: GitHub, name: string, options: GithubWorkflowOptions = {}) {
     super(github.project);
@@ -102,12 +101,33 @@ export class GithubWorkflow extends Component {
     };
   }
 
+  /**
+   * Add jobs from a dynamic source. Useful if a component creates jobs that
+   * may not be all available until project synthesis time.
+   *
+   * @param provider Source of jobs
+   */
+  public addJobsLater(provider: IJobProvider) {
+    this._providers.push(provider);
+  }
+
   private renderWorkflow() {
+    const allJobs = { ...this.jobs };
+
+    for (const provider of this._providers) {
+      for (const [name, job] of Object.entries(provider.renderJobs())) {
+        if (name in allJobs) {
+          throw new Error(`A job named ${name} already exists in workflow ${this.name}`);
+        }
+        allJobs[name] = job;
+      }
+    }
+
     return {
       name: this.name,
       on: snakeCaseKeys(this.events),
       concurrency: this.concurrency,
-      jobs: renderJobs(this.jobs),
+      jobs: renderJobs(allJobs),
     };
   }
 }
@@ -126,7 +146,7 @@ function snakeCaseKeys<T = unknown>(obj: T): T {
     if (typeof v === 'object' && v != null) {
       v = snakeCaseKeys(v);
     }
-    result[decamelize(k)] = v;
+    result[snake(k)] = v;
   }
   return result as any;
 }
@@ -209,4 +229,11 @@ function arrayOrScalar<T>(arr: T[] | undefined): T | T[] | undefined {
     return arr[0];
   }
   return arr;
+}
+
+export interface IJobProvider {
+  /**
+   * Generates a collection of named GitHub workflow jobs.
+   */
+  renderJobs(): Record<string, workflows.Job>;
 }

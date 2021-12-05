@@ -220,7 +220,7 @@ export class ReactComponent extends Component {
       exec: `${reactScripts} start`,
     });
 
-    project.buildTask.exec(`${reactScripts} build`);
+    project.compileTask.exec(`${reactScripts} build`);
 
     project.addTask('eject', {
       description: 'Ejects your React application from react-scripts',

@@ -1,9 +1,9 @@
 import { PROJEN_DIR, PROJEN_RC } from './common';
-import { AutoMerge, DependabotOptions, TaskWorkflow } from './github';
-import { MergifyOptions } from './github/mergify';
+import { AutoMerge, DependabotOptions, GitIdentity, TaskWorkflow } from './github';
+import { DEFAULT_GITHUB_ACTIONS_USER } from './github/constants';
 import { JobPermission, JobStep } from './github/workflows-model';
 import { IgnoreFile } from './ignore-file';
-import { Projenrc, ProjenrcOptions } from './javascript/projenrc';
+import { Bundler, BundlerOptions, Projenrc, ProjenrcOptions } from './javascript';
 import { Jest, JestOptions } from './jest';
 import { License } from './license';
 import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
@@ -109,6 +109,13 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
   readonly workflowBootstrapSteps?: any[];
 
   /**
+   * The git identity to use in workflows.
+   *
+   * @default - GitHub Actions
+   */
+  readonly workflowGitIdentity?: GitIdentity;
+
+  /**
    * Automatically release to npm when new versions are introduced.
    * @default false
    */
@@ -150,13 +157,6 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * @default - default options
    */
   readonly depsUpgradeOptions?: UpgradeDependenciesOptions;
-
-  /**
-   * Options for mergify
-   *
-   * @default - default options
-   */
-  readonly mergifyOptions?: MergifyOptions;
 
   /**
    * Periodically submits a pull request for projen upgrades (executes `yarn
@@ -211,17 +211,6 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    @default [ "0 6 * * *" ]
    */
   readonly projenUpgradeSchedule?: string[];
-
-  /**
-   * Execute `projen` as the first step of the `build` task to synthesize
-   * project files. This applies both to local builds and to CI builds.
-   *
-   * Disabling this feature is NOT RECOMMENDED and means that manual changes to
-   * synthesized project files will be persisted.
-   *
-   * @default true
-   */
-  readonly projenDuringBuild?: boolean;
 
   /**
    * Defines an .npmignore file. Normally this is only needed for libraries that
@@ -281,6 +270,11 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * @default - default options
    */
   readonly projenrcJsOptions?: ProjenrcOptions;
+
+  /**
+   * Options for `Bundler`.
+   */
+  readonly bundlerOptions?: BundlerOptions;
 }
 
 /**
@@ -321,26 +315,6 @@ export class NodeProject extends GitHubProject {
    * @deprecated use `package.entrypoint`
    */
   public get entrypoint(): string { return this.package.entrypoint; }
-
-  /**
-   * Compiles the code. By default for node.js projects this task is empty.
-   */
-  public readonly compileTask: Task;
-
-  /**
-   * Tests the code.
-   */
-  public readonly testTask: Task;
-
-  /**
-   * Compiles the test code.
-   */
-  public readonly testCompileTask: Task;
-
-  /**
-   * The task responsible for a full release build. It spawns: compile + test + release + package
-   */
-  public readonly buildTask: Task;
 
   /**
    * Automatic PR merges.
@@ -412,24 +386,23 @@ export class NodeProject extends GitHubProject {
   public readonly jest?: Jest;
 
   /**
-   * The command to use in order to run the projen CLI.
-   */
-  public get projenCommand(): string { return this.package.projenCommand; }
-
-  /**
    * @deprecated use `package.addField(x, y)`
    */
   public get manifest() {
     return this.package.manifest;
   }
 
+  public readonly bundler: Bundler;
+
   private readonly workflowBootstrapSteps: JobStep[];
+  private readonly workflowGitIdentity: GitIdentity;
 
   constructor(options: NodeProjectOptions) {
     super(options);
 
     this.package = new NodePackage(this, options);
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
+    this.workflowGitIdentity = options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
@@ -446,32 +419,6 @@ export class NodeProject extends GitHubProject {
     // add PATH for all tasks which includes the project's npm .bin list
     this.tasks.addEnvironment('PATH', '$(npx -c "node -e \\\"console.log(process.env.PATH)\\\"")');
 
-    this.compileTask = this.addTask('compile', {
-      description: 'Only compile',
-    });
-
-    this.testCompileTask = this.addTask('test:compile', {
-      description: 'compiles the test code',
-    });
-
-    this.testTask = this.addTask('test', {
-      description: 'Run tests',
-    });
-
-    this.testTask.spawn(this.testCompileTask);
-
-    this.buildTask = this.addTask('build', {
-      description: 'Full release build (test+compile)',
-    });
-
-    // first, execute projen as the first thing during build
-    if (options.projenDuringBuild ?? true) {
-      // skip for sub-projects (i.e. "parent" is defined) since synthing the
-      // root project will include the subprojects.
-      if (!this.parent) {
-        this.buildTask.exec(this.projenCommand);
-      }
-    }
 
     this.addLicense(options);
 
@@ -620,6 +567,7 @@ export class NodeProject extends GitHubProject {
 
       if (this.github) {
         this.buildWorkflow = new TaskWorkflow(this.github, {
+          gitIdentity: this.workflowGitIdentity,
           name: 'build',
           jobId: buildJobId,
           triggers: {
@@ -676,6 +624,11 @@ export class NodeProject extends GitHubProject {
           distTag: this.package.npmDistTag,
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,
+          codeArtifactOptions: {
+            accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret,
+            secretAccessKeySecret: options.codeArtifactOptions?.secretAccessKeySecret,
+            roleToAssume: options.codeArtifactOptions?.roleToAssume,
+          },
         });
       }
 
@@ -735,7 +688,7 @@ export class NodeProject extends GitHubProject {
     }
 
     if (depsUpgrade) {
-      const defaultOptions = {
+      const defaultOptions: UpgradeDependenciesOptions = {
         // if projen secret is defined we can also upgrade projen here.
         ignoreProjen: !options.projenUpgradeSecret,
         workflowOptions: {
@@ -745,6 +698,7 @@ export class NodeProject extends GitHubProject {
             image: options.workflowContainerImage,
           } : undefined,
           labels: autoApproveLabel(depsAutoApprove),
+          gitIdentity: this.workflowGitIdentity,
         },
       };
       const upgradeDependencies = new UpgradeDependencies(this, deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}]));
@@ -765,6 +719,7 @@ export class NodeProject extends GitHubProject {
           container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
           secret: options.projenUpgradeSecret,
           labels: autoApproveLabel(projenAutoApprove),
+          gitIdentity: this.workflowGitIdentity,
         },
       });
     }
@@ -777,6 +732,9 @@ export class NodeProject extends GitHubProject {
     if (projenrcJs) {
       new Projenrc(this, options.projenrcJsOptions);
     }
+
+    // add a bundler component - this enables things like Lambda bundling and in the future web bundling.
+    this.bundler = new Bundler(this, options.bundlerOptions);
   }
 
   public addBins(bins: Record<string, string>) {
@@ -826,16 +784,6 @@ export class NodeProject extends GitHubProject {
   public addTestCommand(...commands: string[]) {
     for (const c of commands) {
       this.testTask.exec(c);
-    }
-  }
-
-  /**
-   * DEPRECATED
-   * @deprecated use `project.buildTask.exec()`
-   */
-  public addBuildCommand(...commands: string[]) {
-    for (const c of commands) {
-      this.buildTask.exec(c);
     }
   }
 

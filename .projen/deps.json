@@ -1,6 +1,10 @@
 {
   "dependencies": [
     {
+      "name": "@types/conventional-changelog-config-spec",
+      "type": "build"
+    },
+    {
       "name": "@types/fs-extra",
       "version": "^8",
       "type": "build"
@@ -32,18 +36,16 @@
     },
     {
       "name": "@typescript-eslint/eslint-plugin",
+      "version": "^5",
       "type": "build"
     },
     {
       "name": "@typescript-eslint/parser",
+      "version": "^5",
       "type": "build"
     },
     {
       "name": "all-contributors-cli",
-      "type": "build"
-    },
-    {
-      "name": "eslint",
       "type": "build"
     },
     {
@@ -59,12 +61,17 @@
       "type": "build"
     },
     {
+      "name": "eslint",
+      "version": "^8",
+      "type": "build"
+    },
+    {
       "name": "jest",
       "type": "build"
     },
     {
       "name": "jest-junit",
-      "version": "^12",
+      "version": "^13",
       "type": "build"
     },
     {
@@ -102,6 +109,10 @@
       "type": "build"
     },
     {
+      "name": "ts-jest",
+      "type": "build"
+    },
+    {
       "name": "typescript",
       "type": "build"
     },
@@ -110,11 +121,15 @@
       "type": "bundled"
     },
     {
+      "name": "case",
+      "type": "bundled"
+    },
+    {
       "name": "chalk",
       "type": "bundled"
     },
     {
-      "name": "decamelize",
+      "name": "conventional-changelog-config-spec",
       "type": "bundled"
     },
     {

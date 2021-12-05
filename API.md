@@ -15,7 +15,7 @@ Name|Description
 [DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)|Options for specifying the Docker image of the container.
 [DockerCompose](#projen-dockercompose)|Create a docker-compose YAML file.
 [DockerComposeService](#projen-dockercomposeservice)|A docker-compose service.
-[Eslint](#projen-eslint)|*No description*
+[Eslint](#projen-eslint)|Represents eslint configuration.
 [FileBase](#projen-filebase)|*No description*
 [GitHubProject](#projen-githubproject)|GitHub-based project.
 [Gitpod](#projen-gitpod)|The Gitpod component which emits .gitpod.yml.
@@ -31,6 +31,8 @@ Name|Description
 [NodeProject](#projen-nodeproject)|Node.js project.
 [ObjectFile](#projen-objectfile)|Represents an Object file.
 [Project](#projen-project)|Base project.
+[ProjectBuild](#projen-projectbuild)|Manages a standard build process for all projects.
+[Projects](#projen-projects)|Programmatic API for projen.
 [SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [SampleReadme](#projen-samplereadme)|Represents a README.md sample file. You are expected to manage this file after creation.
@@ -47,6 +49,13 @@ Name|Description
 [Version](#projen-version)|*No description*
 [XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|Represents a YAML file.
+[awscdk.AutoDiscover](#projen-awscdk-autodiscover)|Automatically creates a `LambdaFunction` for all `.lambda.ts` files under the source directory of the project.
+[awscdk.AwsCdkJavaApp](#projen-awscdk-awscdkjavaapp)|AWS CDK app in Java.
+[awscdk.CdkConfig](#projen-awscdk-cdkconfig)|Represents cdk.json file.
+[awscdk.CdkTasks](#projen-awscdk-cdktasks)|Adds standard AWS CDK tasks to your project.
+[awscdk.IntegrationTest](#projen-awscdk-integrationtest)|Cloud integration tests.
+[awscdk.LambdaFunction](#projen-awscdk-lambdafunction)|Generates a pre-bundled AWS Lambda function construct from handler code.
+[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)|The runtime for the AWS Lambda function.
 [deps.Dependencies](#projen-deps-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
 [git.GitAttributesFile](#projen-git-gitattributesfile)|Assign attributes to file names in a git repository.
 [github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
@@ -55,6 +64,7 @@ Name|Description
 [github.GitHub](#projen-github-github)|*No description*
 [github.GithubWorkflow](#projen-github-githubworkflow)|Workflow for GitHub.
 [github.Mergify](#projen-github-mergify)|*No description*
+[github.PullRequestLint](#projen-github-pullrequestlint)|Configure validations to run on GitHub pull requests.
 [github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
 [github.Stale](#projen-github-stale)|Warns and then closes issues and PRs that have had no activity for a specified amount of time.
 [github.TaskWorkflow](#projen-github-taskworkflow)|A GitHub workflow for common build tasks within a project.
@@ -65,6 +75,7 @@ Name|Description
 [java.MavenSample](#projen-java-mavensample)|Java code sample.
 [java.Pom](#projen-java-pom)|A Project Object Model or POM is the fundamental unit of work in Maven.
 [java.Projenrc](#projen-java-projenrc)|Allows writing projenrc files in java.
+[javascript.Bundler](#projen-javascript-bundler)|Adds support for bundling JavaScript applications and dependencies into a single file.
 [javascript.NpmConfig](#projen-javascript-npmconfig)|File representing the local NPM config in .npmrc.
 [javascript.Projenrc](#projen-javascript-projenrc)|Sets up a javascript project to use TypeScript for projenrc.
 [json.Projenrc](#projen-json-projenrc)|Sets up a project to use JSON for projenrc.
@@ -108,11 +119,13 @@ Name|Description
 [AwsCdkTypeScriptAppOptions](#projen-awscdktypescriptappoptions)|*No description*
 [Catalog](#projen-catalog)|*No description*
 [Cdk8sTypeScriptAppOptions](#projen-cdk8stypescriptappoptions)|*No description*
+[CodeArtifactOptions](#projen-codeartifactoptions)|*No description*
 [ConstructLibraryAwsOptions](#projen-constructlibraryawsoptions)|*No description*
 [ConstructLibraryCdk8sOptions](#projen-constructlibrarycdk8soptions)|*No description*
 [ConstructLibraryCdktfOptions](#projen-constructlibrarycdktfoptions)|*No description*
 [ConstructLibraryOptions](#projen-constructlibraryoptions)|*No description*
 [CoverageThreshold](#projen-coveragethreshold)|*No description*
+[CreateProjectOptions](#projen-createprojectoptions)|*No description*
 [DevEnvironmentOptions](#projen-devenvironmentoptions)|Base options for configuring a container-based development environment.
 [DockerComposeBuild](#projen-dockercomposebuild)|Build arguments for creating a docker image.
 [DockerComposePortMappingOptions](#projen-dockercomposeportmappingoptions)|Options for port mappings.
@@ -166,6 +179,14 @@ Name|Description
 [VersionOptions](#projen-versionoptions)|Options for `Version`.
 [XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
 [YamlFileOptions](#projen-yamlfileoptions)|Options for `JsonFile`.
+[awscdk.AutoDiscoverOptions](#projen-awscdk-autodiscoveroptions)|Options for `AutoDiscover`.
+[awscdk.AwsCdkJavaAppOptions](#projen-awscdk-awscdkjavaappoptions)|*No description*
+[awscdk.CdkConfigCommonOptions](#projen-awscdk-cdkconfigcommonoptions)|Common options for `cdk.json`.
+[awscdk.CdkConfigOptions](#projen-awscdk-cdkconfigoptions)|Options for `CdkJson`.
+[awscdk.IntegrationTestCommonOptions](#projen-awscdk-integrationtestcommonoptions)|*No description*
+[awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)|Options for `IntegrationTest`.
+[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)|Common options for `LambdaFunction`.
+[awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)|Options for `Function`.
 [deps.Dependency](#projen-deps-dependency)|Represents a project dependency.
 [deps.DependencyCoordinates](#projen-deps-dependencycoordinates)|Coordinates of the dependency (name and version).
 [deps.DepsManifest](#projen-deps-depsmanifest)|*No description*
@@ -175,14 +196,18 @@ Name|Description
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
 [github.DependabotRegistry](#projen-github-dependabotregistry)|Use to add private registry support for dependabot.
 [github.GitHubOptions](#projen-github-githuboptions)|*No description*
+[github.GitIdentity](#projen-github-gitidentity)|Represents the git identity.
 [github.GithubWorkflowOptions](#projen-github-githubworkflowoptions)|Options for `GithubWorkflow`.
 [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
+[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)|Options for PullRequestLint.
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
+[github.SemanticTitleOptions](#projen-github-semantictitleoptions)|Options for linting that PR titles follow Conventional Commits.
 [github.StaleBehavior](#projen-github-stalebehavior)|Stale behavior.
 [github.StaleOptions](#projen-github-staleoptions)|Options for `Stale`.
 [github.TaskWorkflowOptions](#projen-github-taskworkflowoptions)|*No description*
+[java.JavaProjectCommonOptions](#projen-java-javaprojectcommonoptions)|Options for `JavaProject`.
 [java.JavaProjectOptions](#projen-java-javaprojectoptions)|Options for `JavaProject`.
 [java.JunitOptions](#projen-java-junitoptions)|Options for `Junit`.
 [java.MavenCompileOptions](#projen-java-mavencompileoptions)|Options for `MavenCompile`.
@@ -192,6 +217,10 @@ Name|Description
 [java.PluginOptions](#projen-java-pluginoptions)|Options for Maven plugins.
 [java.PomOptions](#projen-java-pomoptions)|Options for `Pom`.
 [java.ProjenrcOptions](#projen-java-projenrcoptions)|Options for `Projenrc`.
+[javascript.AddBundleOptions](#projen-javascript-addbundleoptions)|Options for `addBundle()`.
+[javascript.Bundle](#projen-javascript-bundle)|*No description*
+[javascript.BundlerOptions](#projen-javascript-bundleroptions)|Options for `Bundler`.
+[javascript.BundlingOptions](#projen-javascript-bundlingoptions)|Options for bundling.
 [javascript.NpmConfigOptions](#projen-javascript-npmconfigoptions)|Options to configure the local NPM config.
 [javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)|*No description*
 [json.ProjenrcOptions](#projen-json-projenrcoptions)|*No description*
@@ -207,6 +236,7 @@ Name|Description
 [python.SetupPyOptions](#projen-python-setuppyoptions)|Fields to pass in the setup() function of setup.py.
 [python.VenvOptions](#projen-python-venvoptions)|Options for venv.
 [release.BranchOptions](#projen-release-branchoptions)|Options for a release branch.
+[release.CodeArtifactOptions](#projen-release-codeartifactoptions)|*No description*
 [release.GitHubReleasesPublishOptions](#projen-release-githubreleasespublishoptions)|Publishing options for GitHub releases.
 [release.GitPublishOptions](#projen-release-gitpublishoptions)|Publishing options for Git releases.
 [release.GoPublishOptions](#projen-release-gopublishoptions)|*No description*
@@ -257,6 +287,7 @@ Name|Description
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
 [IResolvable](#projen-iresolvable)|*No description*
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
+[github.IJobProvider](#projen-github-ijobprovider)|*No description*
 [python.IPackageProvider](#projen-python-ipackageprovider)|*No description*
 [python.IPythonDeps](#projen-python-ipythondeps)|*No description*
 [python.IPythonEnv](#projen-python-ipythonenv)|*No description*
@@ -268,7 +299,6 @@ Name|Description
 Name|Description
 ----|-----------
 [AutoRelease](#projen-autorelease)|Automatic bump modes.
-[CdkApprovalLevel](#projen-cdkapprovallevel)|*No description*
 [DockerComposeProtocol](#projen-dockercomposeprotocol)|Network protocol for port mapping.
 [GitpodOnOpen](#projen-gitpodonopen)|What to do when a service on a port is detected.
 [GitpodOpenIn](#projen-gitpodopenin)|Configure where in the IDE the terminal should be opened.
@@ -282,6 +312,7 @@ Name|Description
 [Stability](#projen-stability)|*No description*
 [TypeScriptJsxMode](#projen-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [TypeScriptModuleResolution](#projen-typescriptmoduleresolution)|Determines how modules get resolved.
+[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)|Which approval is required when deploying CDK apps.
 [deps.DependencyType](#projen-deps-dependencytype)|Type of dependency.
 [github.DependabotRegistryType](#projen-github-dependabotregistrytype)|Each configuration type requires you to provide particular settings.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
@@ -297,64 +328,6 @@ AWS CDK construct library project.
 A multi-language (jsii) construct library which vends constructs designed to
 use within the AWS CDK with a friendly workflow and automatic publishing to
 the construct catalog.
-
-```ts
-const project = new ConstructLibraryAws({
-   name: 'cdk-watchful',
-   description: 'Watching your CDK apps since 2019',
-   jsiiVersion: Semver.caret('1.7.0'),
-   authorName: 'Elad Ben-Israel',
-   authorEmail: 'elad.benisrael@gmail.com',
-   repository: 'https://github.com/eladb/cdk-watchful.git',
-   keywords: [
-     "cloudwatch",
-     "monitoring"
-   ],
-
-   catalog: {
-     twitter: 'emeshbi'
-   },
-
-   // creates PRs for projen upgrades
-   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
-
-   cdkVersion: '1.54.0',
-   cdkDependencies: [
-     "@aws-cdk/aws-apigateway",
-     "@aws-cdk/aws-cloudwatch",
-     "@aws-cdk/aws-cloudwatch-actions",
-     "@aws-cdk/aws-dynamodb",
-     "@aws-cdk/aws-ecs",
-     "@aws-cdk/aws-ecs-patterns",
-     "@aws-cdk/aws-elasticloadbalancingv2",
-     "@aws-cdk/aws-events",
-     "@aws-cdk/aws-events-targets",
-     "@aws-cdk/aws-lambda",
-     "@aws-cdk/aws-rds",
-     "@aws-cdk/aws-sns",
-     "@aws-cdk/aws-sns-subscriptions",
-     "@aws-cdk/aws-sqs",
-     "@aws-cdk/core"
-   ],
-   devDependencies: {
-     "aws-sdk": Semver.caret("2.708.0")
-   },
-
-   // jsii publishing
-
-   java: {
-     javaPackage: 'io.github.cdklabs.watchful',
-     mavenGroupId: 'io.github.cdklabs',
-     mavenArtifactId: 'cdk-watchful'
-   },
-   python: {
-     distName: 'cdk-watchful',
-     module: 'cdk_watchful'
-   }
-});
-
-project.synth();
-```
 
 __Extends__: [ConstructLibrary](#projen-constructlibrary)
 
@@ -372,6 +345,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -382,6 +356,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -395,6 +370,7 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -414,7 +390,6 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -434,11 +409,13 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -450,12 +427,10 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -468,8 +443,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
@@ -508,6 +483,8 @@ new AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  Minimum target version of constructs being tested against. If not provided, the default value depends on the configured `cdkVersion`:. __*Default*__: When the default behavior is used, the dependency on `constructs` will only be added as a `peerDependency`. Otherwise, a `devDependency` will also be added, set to the exact version configrued here.
+  * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. __*Default*__: true
+  * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Common options for all AWS Lambda functions. __*Default*__: default options
 
 
 
@@ -579,6 +556,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -589,6 +567,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -602,6 +581,7 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -621,7 +601,6 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -641,11 +620,13 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -657,12 +638,10 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -675,8 +654,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
@@ -694,12 +673,18 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **tsconfigDev** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom tsconfig options for the development tsconfig.json file (used for testing). __*Default*__: use the production tsconfig options
   * **tsconfigDevFile** (<code>string</code>)  The name of the development tsconfig.json file. __*Default*__: "tsconfig.dev.json"
   * **typescriptVersion** (<code>string</code>)  TypeScript version to use. __*Default*__: "latest"
+  * **cdkout** (<code>string</code>)  cdk.out directory. __*Default*__: "cdk.out"
+  * **context** (<code>Map<string, string></code>)  Additional context to include in `cdk.json`. __*Default*__: no additional context
+  * **featureFlags** (<code>boolean</code>)  Include all feature flags in cdk.json. __*Default*__: true
+  * **requireApproval** (<code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code>)  To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. __*Default*__: ApprovalLevel.BROADENING
+  * **watchExcludes** (<code>Array<string></code>)  Glob patterns to exclude from `cdk watch`. __*Default*__: []
+  * **watchIncludes** (<code>Array<string></code>)  Glob patterns to include in `cdk watch`. __*Default*__: []
   * **cdkVersion** (<code>string</code>)  AWS CDK version to use. 
   * **appEntrypoint** (<code>string</code>)  The CDK app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules (those that start with "@aws-cdk/") this app uses. __*Optional*__
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Default*__: false
-  * **context** (<code>Map<string, string></code>)  Additional context to include in `cdk.json`. __*Optional*__
-  * **requireApproval** (<code>[CdkApprovalLevel](#projen-cdkapprovallevel)</code>)  To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. __*Default*__: CdkApprovalLevel.BROADENING
+  * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
+  * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Common options for all AWS Lambda functions. __*Default*__: default options
 
 
 
@@ -709,7 +694,8 @@ new AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 Name | Type | Description 
 -----|------|-------------
 **appEntrypoint**🔹 | <code>string</code> | The CDK app entrypoint.
-**cdkConfig**🔹 | <code>any</code> | Contents of `cdk.json`.
+**cdkConfig**🔹 | <code>[awscdk.CdkConfig](#projen-awscdk-cdkconfig)</code> | cdk.json configuration.
+**cdkTasks**🔹 | <code>[awscdk.CdkTasks](#projen-awscdk-cdktasks)</code> | Common CDK tasks.
 **cdkVersion**🔹 | <code>string</code> | The CDK version this app is using.
 
 ### Methods
@@ -750,6 +736,7 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -760,6 +747,7 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -773,6 +761,7 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -792,7 +781,6 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -812,11 +800,13 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -828,12 +818,10 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -846,8 +834,8 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
@@ -869,7 +857,6 @@ new Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
   * **cdk8sCliVersion** (<code>string</code>)  cdk8s-cli version. __*Default*__: "cdk8sVersion"
   * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s-cli. __*Default*__: false
-  * **cdk8sPlusVersion** (<code>string</code>)  cdk8s-plus-17 version. __*Default*__: "cdk8sVersion"
   * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
@@ -884,7 +871,6 @@ Name | Type | Description
 -----|------|-------------
 **appEntrypoint**🔹 | <code>string</code> | The CDK8s app entrypoint.
 **cdk8sCliVersion**🔹 | <code>string</code> | The cdk8s-cli version this app is using.
-**cdk8sPlusVersion**🔹 | <code>string</code> | The cdk8s-plus-17 version this app is using.
 **cdk8sVersion**🔹 | <code>string</code> | The CDK8s version this app is using.
 **constructsVersion**🔹 | <code>string</code> | The constructs version this app is using.
 
@@ -979,6 +965,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -989,6 +976,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -1002,6 +990,7 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -1021,7 +1010,6 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -1041,11 +1029,13 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -1057,12 +1047,10 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -1075,8 +1063,8 @@ new ConstructLibrary(options: ConstructLibraryOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
@@ -1132,6 +1120,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -1142,6 +1131,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -1155,6 +1145,7 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -1174,7 +1165,6 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -1194,11 +1184,13 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -1210,12 +1202,10 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -1228,8 +1218,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
@@ -1268,6 +1258,8 @@ new ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  Minimum target version of constructs being tested against. If not provided, the default value depends on the configured `cdkVersion`:. __*Default*__: When the default behavior is used, the dependency on `constructs` will only be added as a `peerDependency`. Otherwise, a `devDependency` will also be added, set to the exact version configrued here.
+  * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. __*Default*__: true
+  * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Common options for all AWS Lambda functions. __*Default*__: default options
 
 
 
@@ -1296,6 +1288,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -1306,6 +1299,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -1319,6 +1313,7 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -1338,7 +1333,6 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -1358,11 +1352,13 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -1374,12 +1370,10 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -1392,8 +1386,8 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
@@ -1426,7 +1420,6 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **catalog** (<code>[Catalog](#projen-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
   * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
-  * **cdk8sPlusVersion** (<code>string</code>)  cdk8s-plus-17 version. __*Default*__: "cdk8sVersion"
   * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
@@ -1439,7 +1432,6 @@ new ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**cdk8sPlusVersion**🔹 | <code>string</code> | The cdk8s-plus-17 version this app is using.
 **cdk8sVersion**🔹 | <code>string</code> | The CDK8s version this app is using.
 **constructsVersion**🔹 | <code>string</code> | The constructs version this app is using.
 
@@ -1469,6 +1461,7 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -1479,6 +1472,7 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -1492,6 +1486,7 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -1511,7 +1506,6 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -1531,11 +1525,13 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -1547,12 +1543,10 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -1565,8 +1559,8 @@ new ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
@@ -1866,7 +1860,7 @@ addVolume(volume: IDockerComposeVolumeBinding): void
 
 ## class Eslint 🔹 <a id="projen-eslint"></a>
 
-
+Represents eslint configuration.
 
 __Extends__: [Component](#projen-component)
 
@@ -1889,6 +1883,7 @@ new Eslint(project: NodeProject, options: EslintOptions)
   * **ignorePatterns** (<code>Array<string></code>)  List of file patterns that should not be linted, using the same syntax as .gitignore patterns. __*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
   * **lintProjenRc** (<code>boolean</code>)  Should we lint .projenrc.js. __*Default*__: true
   * **prettier** (<code>boolean</code>)  Enable prettier for code formatting. __*Default*__: false
+  * **tsAlwaysTryTypes** (<code>boolean</code>)  Always try to resolve types under `<root>@types` directory even it doesn't contain any source code. __*Default*__: true
   * **tsconfigPath** (<code>string</code>)  Path to `tsconfig.json` which should be used by eslint. __*Default*__: "./tsconfig.json"
 
 
@@ -1959,6 +1954,19 @@ allowDevDeps(pattern: string): void
 
 
 
+
+#### *static* of(project)🔹 <a id="projen-eslint-of"></a>
+
+Returns the singletone Eslint component of a project or undefined if there is none.
+
+```ts
+static of(project: Project): Eslint
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+__Returns__:
+* <code>[Eslint](#projen-eslint)</code>
 
 
 
@@ -2050,6 +2058,7 @@ new GitHubProject(options: GitHubProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -2060,6 +2069,7 @@ new GitHubProject(options: GitHubProjectOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -2524,6 +2534,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -2534,6 +2545,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -2547,6 +2559,7 @@ new JsiiProject(options: JsiiProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -2566,7 +2579,6 @@ new JsiiProject(options: JsiiProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -2586,11 +2598,13 @@ new JsiiProject(options: JsiiProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -2602,12 +2616,10 @@ new JsiiProject(options: JsiiProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -2620,8 +2632,8 @@ new JsiiProject(options: JsiiProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
@@ -2994,6 +3006,7 @@ new NodePackage(project: Project, options?: NodePackageOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -3013,7 +3026,6 @@ new NodePackage(project: Project, options?: NodePackageOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -3036,13 +3048,14 @@ Name | Type | Description
 **npmDistTag**🔹 | <code>string</code> | npm distribution tag.
 **npmRegistry**🔹 | <code>string</code> | The npm registry host (e.g. `registry.npmjs.org`).
 **npmRegistryUrl**🔹 | <code>string</code> | npm registry (e.g. `https://registry.npmjs.org`). Use `npmRegistryHost` to get just the host name.
-**npmTokenSecret**🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.
 **packageManager**🔹 | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
 **packageName**🔹 | <code>string</code> | The name of the npm package.
-**projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
+**projenCommand**🔹 | <code>string</code> | The command which executes "projen".
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **license**?🔹 | <code>string</code> | The SPDX license of this module.<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Default*__: no maximum.
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Default*__: no minimum
+**npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Optional*__
 
 ### Methods
 
@@ -3275,6 +3288,7 @@ new NodeProject(options: NodeProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -3285,6 +3299,7 @@ new NodeProject(options: NodeProjectOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -3298,6 +3313,7 @@ new NodeProject(options: NodeProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -3317,7 +3333,6 @@ new NodeProject(options: NodeProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -3337,11 +3352,13 @@ new NodeProject(options: NodeProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -3353,12 +3370,10 @@ new NodeProject(options: NodeProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -3371,6 +3386,7 @@ new NodeProject(options: NodeProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
 
 
@@ -3382,8 +3398,7 @@ Name | Type | Description
 -----|------|-------------
 **allowLibraryDependencies**⚠️ | <code>boolean</code> | <span></span>
 **antitamper**🔹 | <code>boolean</code> | Indicates if workflows have anti-tamper checks.
-**buildTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The task responsible for a full release build.
-**compileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Compiles the code.
+**bundler**🔹 | <code>[javascript.Bundler](#projen-javascript-bundler)</code> | <span></span>
 **entrypoint**⚠️ | <code>string</code> | <span></span>
 **installWorkflowSteps**🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | <span></span>
 **manifest**⚠️ | <code>any</code> | <span></span>
@@ -3391,10 +3406,7 @@ Name | Type | Description
 **npmRegistry**⚠️ | <code>string</code> | <span></span>
 **package**🔹 | <code>[NodePackage](#projen-nodepackage)</code> | API for managing the node package.
 **packageManager**⚠️ | <code>[NodePackageManager](#projen-nodepackagemanager)</code> | The package manager to use.
-**projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
-**testCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Compiles the test code.
-**testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Tests the code.
 **autoMerge**?🔹 | <code>[github.AutoMerge](#projen-github-automerge)</code> | Automatic PR merges.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>[github.TaskWorkflow](#projen-github-taskworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **buildWorkflowJobId**?🔹 | <code>string</code> | __*Optional*__
@@ -3417,19 +3429,6 @@ addBins(bins: Map<string, string>): void
 ```
 
 * **bins** (<code>Map<string, string></code>)  *No description*
-
-
-
-
-#### addBuildCommand(...commands)⚠️ <a id="projen-nodeproject-addbuildcommand"></a>
-
-DEPRECATED.
-
-```ts
-addBuildCommand(...commands: string[]): void
-```
-
-* **commands** (<code>string</code>)  *No description*
 
 
 
@@ -3747,6 +3746,7 @@ new Project(options: ProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
 
@@ -3757,7 +3757,10 @@ new Project(options: ProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**buildTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**compileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 **components**🔹 | <code>Array<[Component](#projen-component)></code> | Returns all the components within this project.
+**defaultTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | This is the "default" task, the one that executes "projen".
 **deps**🔹 | <code>[deps.Dependencies](#projen-deps-dependencies)</code> | Project dependencies.
 **files**🔹 | <code>Array<[FileBase](#projen-filebase)></code> | All files in this project.
 **gitattributes**🔹 | <code>[git.GitAttributesFile](#projen-git-gitattributesfile)</code> | The .gitattributes file for this repository.
@@ -3765,8 +3768,14 @@ Name | Type | Description
 **logger**🔹 | <code>[Logger](#projen-logger)</code> | Logging utilities.
 **name**🔹 | <code>string</code> | Project name.
 **outdir**🔹 | <code>string</code> | Absolute output directory of this project.
+**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**postCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**preCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
+**projectBuild**🔹 | <code>[ProjectBuild](#projen-projectbuild)</code> | Manages the build process of the project.
+**projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
 **tasks**🔹 | <code>[tasks.Tasks](#projen-tasks-tasks)</code> | Project tasks.
+**testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
 **newProject**?🔹 | <code>[NewProject](#projen-newproject)</code> | The options used when this project is bootstrapped via `projen new`.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 *static* **DEFAULT_TASK**🔹 | <code>string</code> | The name of the default task (the task executed when `projen` is run without arguments).
@@ -3983,6 +3992,83 @@ tryFindObjectFile(filePath: string): ObjectFile
 
 __Returns__:
 * <code>[ObjectFile](#projen-objectfile)</code>
+
+
+
+## class ProjectBuild 🔹 <a id="projen-projectbuild"></a>
+
+Manages a standard build process for all projects.
+
+Build spawns these tasks in order:
+1. default
+2. pre-compile
+3. compile
+4. post-compile
+5. test
+6. package
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new ProjectBuild(project: Project)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**buildTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The task responsible for a full release build.
+**compileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Compiles the code.
+**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The "package" task.
+**postCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Post-compile task.
+**preCompileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Pre-compile task.
+**testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Tests the code.
+
+
+
+## class Projects 🔹 <a id="projen-projects"></a>
+
+Programmatic API for projen.
+
+
+### Methods
+
+
+#### *static* createProject(options)🔹 <a id="projen-projects-createproject"></a>
+
+Creates a new project with defaults.
+
+This function creates the project type in-process (with in VM) and calls
+`.synth()` on it (if `options.synth` is not `false`).
+
+At the moment, it also generates a `.projenrc.js` file with the same code
+that was just executed. In the future, this will also be done by the project
+type, so we can easily support multiple languages of projenrc.
+
+```ts
+static createProject(options: CreateProjectOptions): void
+```
+
+* **options** (<code>[CreateProjectOptions](#projen-createprojectoptions)</code>)  *No description*
+  * **dir** (<code>string</code>)  Directory that the project will be generated in. 
+  * **projectFqn** (<code>string</code>)  Fully-qualified name of the project type (usually formatted as `module.ProjectType`). 
+  * **projectOptions** (<code>Map<string, any></code>)  Project options. 
+  * **optionHints** (<code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code>)  Should we render commented-out default options in the projenrc file? __*Default*__: NewProjectOptionHints.FEATURED
+  * **post** (<code>boolean</code>)  Should we execute post synthesis hooks? __*Default*__: true
+  * **synth** (<code>boolean</code>)  Should we call `project.synth()` or instantiate the project (could still have side-effects) and render the .projenrc file. __*Default*__: true
+
+
+
 
 
 
@@ -4367,6 +4453,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -4377,6 +4464,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -4390,6 +4478,7 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -4409,7 +4498,6 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -4429,11 +4517,13 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -4445,12 +4535,10 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -4463,8 +4551,8 @@ new TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
@@ -4506,6 +4594,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -4516,6 +4605,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -4529,6 +4619,7 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -4548,7 +4639,6 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -4568,11 +4658,13 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -4584,12 +4676,10 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -4602,8 +4692,8 @@ new TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
@@ -4645,6 +4735,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -4655,6 +4746,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -4668,6 +4760,7 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -4687,7 +4780,6 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -4707,11 +4799,13 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -4723,12 +4817,10 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -4741,8 +4833,8 @@ new TypeScriptProject(options: TypeScriptProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
@@ -4776,7 +4868,6 @@ Name | Type | Description
 **watchTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The "watch" task.
 **docgen**?🔹 | <code>boolean</code> | __*Optional*__
 **eslint**?🔹 | <code>[Eslint](#projen-eslint)</code> | __*Optional*__
-**packageTask**?🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The "package" task (or undefined if `package` is set to `false`).<br/>__*Optional*__
 **tsconfig**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | __*Optional*__
 **tsconfigEslint**?🔹 | <code>[TypescriptConfig](#projen-typescriptconfig)</code> | __*Optional*__
 
@@ -4955,6 +5046,7 @@ new Version(project: Project, options: VersionOptions)
 * **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
   * **artifactsDirectory** (<code>string</code>)  The name of the directory into which `changelog.md` and `version.txt` files are emitted. 
   * **versionInputFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration for versionrc file used by standard-release. __*Optional*__
 
 
 
@@ -5061,6 +5153,299 @@ protected synthesizeContent(resolver: IResolver): string
 
 __Returns__:
 * <code>string</code>
+
+
+
+## class AutoDiscover 🔹 <a id="projen-awscdk-autodiscover"></a>
+
+Automatically creates a `LambdaFunction` for all `.lambda.ts` files under the source directory of the project.
+
+__Submodule__: awscdk
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.AutoDiscover(project: Project, options: AutoDiscoverOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.AutoDiscoverOptions](#projen-awscdk-autodiscoveroptions)</code>)  *No description*
+  * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
+  * **testdir** (<code>string</code>)  Test source tree. 
+  * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for auto-discovery of AWS Lambda functions. __*Optional*__
+
+
+
+
+## class AwsCdkJavaApp 🔹 <a id="projen-awscdk-awscdkjavaapp"></a>
+
+AWS CDK app in Java.
+
+__Submodule__: awscdk
+
+__Extends__: [java.JavaProject](#projen-java-javaproject)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.AwsCdkJavaApp(options: AwsCdkJavaAppOptions)
+```
+
+* **options** (<code>[awscdk.AwsCdkJavaAppOptions](#projen-awscdk-awscdkjavaappoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
+  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
+  * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
+  * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
+  * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
+  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **github** (<code>boolean</code>)  Enable GitHub integration. __*Default*__: true
+  * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
+  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
+  * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
+  * **artifactId** (<code>string</code>)  The artifactId is generally the name that the project is known by. 
+  * **groupId** (<code>string</code>)  This is generally unique amongst an organization or a project. 
+  * **version** (<code>string</code>)  This is the last piece of the naming puzzle. 
+  * **description** (<code>string</code>)  Description of a project is always good. __*Default*__: undefined
+  * **packaging** (<code>string</code>)  Project packaging format. __*Default*__: "jar"
+  * **url** (<code>string</code>)  The URL, like the name, is not required. __*Default*__: undefined
+  * **compileOptions** (<code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code>)  Compile options. __*Default*__: defaults
+  * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
+  * **distdir** (<code>string</code>)  Final artifact output directory. __*Default*__: "dist/java"
+  * **junit** (<code>boolean</code>)  Include junit tests. __*Default*__: true
+  * **junitOptions** (<code>[java.JunitOptions](#projen-java-junitoptions)</code>)  junit options. __*Default*__: defaults
+  * **packagingOptions** (<code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code>)  Packaging options. __*Default*__: defaults
+  * **projenrcJava** (<code>boolean</code>)  Use projenrc in java. __*Default*__: true
+  * **projenrcJavaOptions** (<code>[java.ProjenrcOptions](#projen-java-projenrcoptions)</code>)  Options related to projenrc in java. __*Default*__: default options
+  * **testDeps** (<code>Array<string></code>)  List of test dependencies for this project. __*Default*__: []
+  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Optional*__
+  * **sampleJavaPackage** (<code>string</code>)  The java package to use for the code sample. __*Default*__: "org.acme"
+  * **cdkout** (<code>string</code>)  cdk.out directory. __*Default*__: "cdk.out"
+  * **context** (<code>Map<string, string></code>)  Additional context to include in `cdk.json`. __*Default*__: no additional context
+  * **featureFlags** (<code>boolean</code>)  Include all feature flags in cdk.json. __*Default*__: true
+  * **requireApproval** (<code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code>)  To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. __*Default*__: ApprovalLevel.BROADENING
+  * **watchExcludes** (<code>Array<string></code>)  Glob patterns to exclude from `cdk watch`. __*Default*__: []
+  * **watchIncludes** (<code>Array<string></code>)  Glob patterns to include in `cdk watch`. __*Default*__: []
+  * **cdkVersion** (<code>string</code>)  AWS CDK version to use (you can use semantic versioning). 
+  * **mainClass** (<code>string</code>)  The name of the Java class with the static `main()` method. 
+  * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDK modules this app uses. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdkConfig**🔹 | <code>[awscdk.CdkConfig](#projen-awscdk-cdkconfig)</code> | The `cdk.json` file.
+**cdkTasks**🔹 | <code>[awscdk.CdkTasks](#projen-awscdk-cdktasks)</code> | CDK tasks.
+**cdkVersion**🔹 | <code>string</code> | The CDK version this app is using.
+**mainClass**🔹 | <code>string</code> | The full name of the main class of the java app (package.Class).
+**mainClassName**🔹 | <code>string</code> | The name of the Java class with the static `main()` method.
+**mainPackage**🔹 | <code>string</code> | The name of the Java package that includes the main class.
+
+### Methods
+
+
+#### addCdkDependency(...modules)🔹 <a id="projen-awscdk-awscdkjavaapp-addcdkdependency"></a>
+
+Adds an AWS CDK module dependencies.
+
+```ts
+addCdkDependency(...modules: string[]): void
+```
+
+* **modules** (<code>string</code>)  The list of modules to depend on (e.g. "core", "aws-lambda", etc).
+
+
+
+
+
+
+## class CdkConfig 🔹 <a id="projen-awscdk-cdkconfig"></a>
+
+Represents cdk.json file.
+
+__Submodule__: awscdk
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.CdkConfig(project: Project, options: CdkConfigOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.CdkConfigOptions](#projen-awscdk-cdkconfigoptions)</code>)  *No description*
+  * **cdkout** (<code>string</code>)  cdk.out directory. __*Default*__: "cdk.out"
+  * **context** (<code>Map<string, string></code>)  Additional context to include in `cdk.json`. __*Default*__: no additional context
+  * **featureFlags** (<code>boolean</code>)  Include all feature flags in cdk.json. __*Default*__: true
+  * **requireApproval** (<code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code>)  To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. __*Default*__: ApprovalLevel.BROADENING
+  * **watchExcludes** (<code>Array<string></code>)  Glob patterns to exclude from `cdk watch`. __*Default*__: []
+  * **watchIncludes** (<code>Array<string></code>)  Glob patterns to include in `cdk watch`. __*Default*__: []
+  * **app** (<code>string</code>)  The command line to execute in order to synthesize the CDK application (language specific). 
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdkout**🔹 | <code>string</code> | Name of the cdk.out directory.
+**json**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | Represents the JSON file.
+
+
+
+## class CdkTasks 🔹 <a id="projen-awscdk-cdktasks"></a>
+
+Adds standard AWS CDK tasks to your project.
+
+__Submodule__: awscdk
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.CdkTasks(project: Project)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**deploy**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Deploys your app.
+**destroy**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Destroys all the stacks.
+**diff**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Diff against production.
+**synth**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Synthesizes your app.
+
+
+
+## class IntegrationTest 🔹 <a id="projen-awscdk-integrationtest"></a>
+
+Cloud integration tests.
+
+__Submodule__: awscdk
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.IntegrationTest(project: Project, options: IntegrationTestOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)</code>)  *No description*
+  * **destroyAfterDeploy** (<code>boolean</code>)  Destroy the test app after a successful deployment. __*Default*__: true
+  * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the integration test app. 
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**assertTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Synthesizes the integration test and compares against a local copy (runs during build).
+**deployTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Deploy the integration test and update the snapshot upon success.
+**destroyTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Destroys a deployed stack.
+**snapshotTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Just update snapshot (without deployment).
+**watchTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The watch task.
+
+
+
+## class LambdaFunction 🔹 <a id="projen-awscdk-lambdafunction"></a>
+
+Generates a pre-bundled AWS Lambda function construct from handler code.
+
+To use this, create an AWS Lambda handler file under your source tree with
+the `.lambda.ts` extension and add a `LambdaFunction` component to your
+typescript project pointing to this entrypoint.
+
+This will add a task to your "compile" step which will use `esbuild` to
+bundle the handler code into the build directory. It will also generate a
+file `src/foo-function.ts` with a custom AWS construct called `FooFunction`
+which extends `@aws-cdk/aws-lambda.Function` which is bound to the bundled
+handle through an asset.
+
+__Submodule__: awscdk
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+Defines a pre-bundled AWS Lambda function construct from handler code.
+
+```ts
+new awscdk.LambdaFunction(project: Project, options: LambdaFunctionOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  The project to use.
+* **options** (<code>[awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)</code>)  Options.
+  * **bundlingOptions** (<code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code>)  Bundling options for this AWS Lambda function. __*Default*__: defaults
+  * **runtime** (<code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code>)  The node.js version to target. __*Default*__: Runtime.NODEJS_14_X
+  * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function). 
+  * **constructFile** (<code>string</code>)  The name of the generated TypeScript source file. __*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
+  * **constructName** (<code>string</code>)  The name of the generated `lambda.Function` subclass. __*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
+
+
+
+
+## class LambdaRuntime 🔹 <a id="projen-awscdk-lambdaruntime"></a>
+
+The runtime for the AWS Lambda function.
+
+__Submodule__: awscdk
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**esbuildPlatform**🔹 | <code>string</code> | <span></span>
+**esbuildTarget**🔹 | <code>string</code> | The esbuild setting to use.
+**functionRuntime**🔹 | <code>string</code> | The aws-lambda.Runtime member name to use.
+*static* **NODEJS_10_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 10.x.
+*static* **NODEJS_12_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 12.x.
+*static* **NODEJS_14_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 14.x.
 
 
 
@@ -5360,6 +5745,9 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  *No description*
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for Mergify. __*Default*__: default options
+  * **pullRequestLint** (<code>boolean</code>)  Add a workflow that performs basic checks for pull requests, like validating that PRs follow Conventional Commits. __*Default*__: true
+  * **pullRequestLintOptions** (<code>[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)</code>)  Options for configuring a pull request linter. __*Default*__: see defaults in `PullRequestLintOptions`
   * **workflows** (<code>boolean</code>)  Enables GitHub workflows. __*Default*__: true
 
 
@@ -5490,6 +5878,22 @@ addJobs(jobs: Map<string, Job>): void
 
 
 
+#### addJobsLater(provider)🔹 <a id="projen-github-githubworkflow-addjobslater"></a>
+
+Add jobs from a dynamic source.
+
+Useful if a component creates jobs that
+may not be all available until project synthesis time.
+
+```ts
+addJobsLater(provider: IJobProvider): void
+```
+
+* **provider** (<code>[github.IJobProvider](#projen-github-ijobprovider)</code>)  Source of jobs.
+
+
+
+
 #### on(events)🔹 <a id="projen-github-githubworkflow-on"></a>
 
 Add events to triggers the workflow.
@@ -5578,6 +5982,33 @@ addRule(rule: MergifyRule): void
 
 
 
+## class PullRequestLint 🔹 <a id="projen-github-pullrequestlint"></a>
+
+Configure validations to run on GitHub pull requests.
+
+Only generates a file if at least one linter is configured.
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.PullRequestLint(github: GitHub, options?: PullRequestLintOptions)
+```
+
+* **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
+* **options** (<code>[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)</code>)  *No description*
+  * **semanticTitle** (<code>boolean</code>)  Validate that pull request titles follow Conventional Commits. __*Default*__: true
+  * **semanticTitleOptions** (<code>[github.SemanticTitleOptions](#projen-github-semantictitleoptions)</code>)  Options for validating the conventional commit title linter. __*Default*__: title must start with "feat", "fix", or "chore"
+
+
+
+
 ## class PullRequestTemplate 🔹 <a id="projen-github-pullrequesttemplate"></a>
 
 Template for GitHub pull requests.
@@ -5660,6 +6091,7 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
   * **condition** (<code>string</code>)  Adds an 'if' condition to the workflow. __*Optional*__
   * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  *No description* __*Default*__: default image
   * **env** (<code>Map<string, string></code>)  Workflow environment variables. __*Default*__: {}
+  * **gitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in this workflow. __*Optional*__
   * **jobId** (<code>string</code>)  The primary job id. __*Default*__: "build"
   * **outputs** (<code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code>)  Mapping of job output names to values/expressions. __*Default*__: {}
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Actions to run after the main build step. __*Default*__: not set
@@ -5700,6 +6132,7 @@ new java.JavaProject(options: JavaProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -5710,6 +6143,7 @@ new java.JavaProject(options: JavaProjectOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -5729,9 +6163,9 @@ new java.JavaProject(options: JavaProjectOptions)
   * **packagingOptions** (<code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code>)  Packaging options. __*Default*__: defaults
   * **projenrcJava** (<code>boolean</code>)  Use projenrc in java. __*Default*__: true
   * **projenrcJavaOptions** (<code>[java.ProjenrcOptions](#projen-java-projenrcoptions)</code>)  Options related to projenrc in java. __*Default*__: default options
+  * **testDeps** (<code>Array<string></code>)  List of test dependencies for this project. __*Default*__: []
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Optional*__
   * **sampleJavaPackage** (<code>string</code>)  The java package to use for the code sample. __*Default*__: "org.acme"
-  * **testDeps** (<code>Array<string></code>)  List of test dependencies for this project. __*Default*__: []
 
 
 
@@ -5848,14 +6282,6 @@ new java.MavenCompile(project: Project, pom: Pom, options?: MavenCompileOptions)
 
 
 
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**compileTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-
-
 
 ## class MavenPackaging 🔹 <a id="projen-java-mavenpackaging"></a>
 
@@ -5882,14 +6308,6 @@ new java.MavenPackaging(project: Project, pom: Pom, options?: MavenPackagingOpti
   * **javadocsExclude** (<code>Array<string></code>)  Exclude source files from docs. __*Default*__: []
   * **sources** (<code>boolean</code>)  Include sources jar in package. __*Default*__: true
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**task**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The "package" task.
 
 
 
@@ -6063,6 +6481,78 @@ new java.Projenrc(project: Project, pom: Pom, options?: ProjenrcOptions)
 Name | Type | Description 
 -----|------|-------------
 **className**🔹 | <code>string</code> | The name of the java class that includes the projen entrypoint.
+
+
+
+## class Bundler 🔹 <a id="projen-javascript-bundler"></a>
+
+Adds support for bundling JavaScript applications and dependencies into a single file.
+
+In the future, this will also supports bundling websites.
+
+__Submodule__: javascript
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+Creates a `Bundler`.
+
+```ts
+new javascript.Bundler(project: Project, options?: BundlerOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  *No description*
+  * **assetsDir** (<code>string</code>)  Output directory for all bundles. __*Default*__: "assets"
+  * **esbuildVersion** (<code>string</code>)  The semantic version requirement for `esbuild`. __*Default*__: no specific version (implies latest)
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**bundleTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | Gets or creates the singleton "bundle" task of the project.
+**bundledir**🔹 | <code>string</code> | Root bundle directory.
+**esbuildVersion**?🔹 | <code>string</code> | The semantic version requirement for `esbuild` (if defined).<br/>__*Optional*__
+
+### Methods
+
+
+#### addBundle(entrypoint, options)🔹 <a id="projen-javascript-bundler-addbundle"></a>
+
+Adds a task to the project which bundles a specific entrypoint and all of its dependencies into a single javascript output file.
+
+```ts
+addBundle(entrypoint: string, options: AddBundleOptions): Bundle
+```
+
+* **entrypoint** (<code>string</code>)  The relative path of the artifact within the project.
+* **options** (<code>[javascript.AddBundleOptions](#projen-javascript-addbundleoptions)</code>)  Bundling options.
+  * **externals** (<code>Array<string></code>)  You can mark a file or a package as external to exclude it from your build. __*Default*__: []
+  * **sourcemap** (<code>boolean</code>)  Include a source map in the bundle. __*Default*__: false
+  * **watchTask** (<code>boolean</code>)  In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag. __*Default*__: true
+  * **platform** (<code>string</code>)  esbuild platform. 
+  * **target** (<code>string</code>)  esbuild target. 
+
+__Returns__:
+* <code>[javascript.Bundle](#projen-javascript-bundle)</code>
+
+#### *static* of(project)🔹 <a id="projen-javascript-bundler-of"></a>
+
+Returns the `Bundler` instance associated with a project or `undefined` if there is no Bundler.
+
+```ts
+static of(project: Project): Bundler
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  The project.
+
+__Returns__:
+* <code>[javascript.Bundler](#projen-javascript-bundler)</code>
 
 
 
@@ -6280,7 +6770,6 @@ new python.Poetry(project: PythonProject, options: PythonPackagingOptions)
 Name | Type | Description 
 -----|------|-------------
 **installTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that installs and updates dependencies.
-**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that packages the project for distribution.
 **publishTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to a package repository.
 **publishTestTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to the Test PyPI repository.
 
@@ -6445,14 +6934,6 @@ new python.Pytest(project: PythonProject, options?: PytestOptions)
 
 
 
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**testTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-
-
 
 ## class PythonProject 🔹 <a id="projen-python-pythonproject"></a>
 
@@ -6476,6 +6957,7 @@ new python.PythonProject(options: PythonProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -6486,6 +6968,7 @@ new python.PythonProject(options: PythonProjectOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -6737,7 +7220,6 @@ new python.Setuptools(project: PythonProject, options: PythonPackagingOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that packages the project for distribution.
 **publishTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to a package repository.
 **publishTestTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to the Test PyPI repository.
 
@@ -6789,6 +7271,7 @@ Implements GitHub jobs for publishing modules to package managers.
 
 Under the hood, it uses https://github.com/aws/jsii-release
 
+__Implements__: [github.IJobProvider](#projen-github-ijobprovider)
 __Submodule__: release
 
 __Extends__: [Component](#projen-component)
@@ -6911,6 +7394,7 @@ publishToNpm(options?: NpmPublishOptions): void
 ```
 
 * **options** (<code>[release.NpmPublishOptions](#projen-release-npmpublishoptions)</code>)  Options.
+  * **codeArtifactOptions** (<code>[release.CodeArtifactOptions](#projen-release-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **distTag** (<code>string</code>)  Tags can be used to provide an alias instead of version numbers. __*Default*__: "latest"
   * **npmTokenSecret** (<code>string</code>)  GitHub secret which contains the NPM token to use when publishing packages. __*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
   * **registry** (<code>string</code>)  The domain name of the npm package registry. __*Default*__: "registry.npmjs.org"
@@ -6948,12 +7432,12 @@ publishToPyPi(options?: PyPiPublishOptions): void
 
 
 
-#### render()🔹 <a id="projen-release-publisher-render"></a>
+#### renderJobs()🔹 <a id="projen-release-publisher-renderjobs"></a>
 
 Renders a set of workflow jobs for all the publishers.
 
 ```ts
-render(): Map<string, Job>
+renderJobs(): Map<string, Job>
 ```
 
 
@@ -6998,6 +7482,7 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **branch** (<code>string</code>)  The default branch name to release from. 
   * **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The task to execute in order to create the release artifacts. 
@@ -7048,18 +7533,6 @@ addJobs(jobs: Map<string, Job>): void
 ```
 
 * **jobs** (<code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>)  The jobs to add (name => job).
-
-
-
-
-#### preSynthesize()🔹 <a id="projen-release-release-presynthesize"></a>
-
-Called before synthesis.
-
-```ts
-preSynthesize(): void
-```
-
 
 
 
@@ -7233,6 +7706,18 @@ exec(command: string, options?: TaskStepOptions): void
 * **options** (<code>[tasks.TaskStepOptions](#projen-tasks-taskstepoptions)</code>)  Options.
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+
+
+
+
+#### lock()🔹 <a id="projen-tasks-task-lock"></a>
+
+Forbid additional changes to this task.
+
+```ts
+lock(): void
+```
+
 
 
 
@@ -7766,6 +8251,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -7776,6 +8262,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -7789,6 +8276,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -7808,7 +8296,6 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -7828,11 +8315,13 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -7844,12 +8333,10 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -7862,6 +8349,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `pages/` and `public/` if there are no files there. __*Default*__: true
   * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
@@ -7903,6 +8391,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -7913,6 +8402,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -7926,6 +8416,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -7945,7 +8436,6 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -7965,11 +8455,13 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -7981,12 +8473,10 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -7999,8 +8489,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
@@ -8114,6 +8604,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -8124,6 +8615,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -8137,6 +8629,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -8156,7 +8649,6 @@ new web.ReactProject(options: ReactProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -8176,11 +8668,13 @@ new web.ReactProject(options: ReactProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -8192,12 +8686,10 @@ new web.ReactProject(options: ReactProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -8210,6 +8702,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **rewire** (<code>Map<string, any></code>)  Rewire webpack configuration. __*Default*__: No rewired config.
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `public/` if there are no files there. __*Default*__: true
@@ -8292,6 +8785,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
@@ -8302,6 +8796,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -8315,6 +8810,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
   * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
   * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
   * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
@@ -8334,7 +8830,6 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
@@ -8354,11 +8849,13 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
   * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -8370,12 +8867,10 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenDuringBuild** (<code>boolean</code>)  Execute `projen` as the first step of the `build` task to synthesize project files. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
   * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
@@ -8388,8 +8883,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
   * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **compileBeforeTest** (<code>boolean</code>)  Compile the code before running tests. __*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
   * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
   * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
@@ -8486,6 +8981,7 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **cdkAssert**?🔹 | <code>boolean</code> | Install the @aws-cdk/assert library?<br/>__*Default*__: true
 **cdkDependencies**?🔹 | <code>Array<string></code> | Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed?<br/>__*Optional*__
@@ -8493,11 +8989,11 @@ Name | Type | Description
 **cdkTestDependencies**?🔹 | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
 **cdkVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
-**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **constructsVersion**?🔹 | <code>string</code> | Minimum target version of constructs being tested against. If not provided, the default value depends on the configured `cdkVersion`:.<br/>__*Default*__: When the default behavior is used, the dependency on `constructs` will only be added as a `peerDependency`. Otherwise, a `devDependency` will also be added, set to the exact version configrued here.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -8527,6 +9023,8 @@ Name | Type | Description
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**lambdaAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler.<br/>__*Default*__: true
+**lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Common options for all AWS Lambda functions.<br/>__*Default*__: default options
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
@@ -8534,7 +9032,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -8556,7 +9054,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -8601,9 +9098,11 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -8636,13 +9135,15 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **cdkDependencies**?🔹 | <code>Array<string></code> | Which AWS CDK modules (those that start with "@aws-cdk/") this app uses.<br/>__*Optional*__
 **cdkVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Default*__: false
+**cdkout**?🔹 | <code>string</code> | cdk.out directory.<br/>__*Default*__: "cdk.out"
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
-**context**?🔹 | <code>Map<string, string></code> | Additional context to include in `cdk.json`.<br/>__*Optional*__
+**context**?🔹 | <code>Map<string, string></code> | Additional context to include in `cdk.json`.<br/>__*Default*__: no additional context
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -8660,6 +9161,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[EslintOptions](#projen-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -8669,6 +9171,8 @@ Name | Type | Description
 **jestOptions**?🔹 | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**lambdaAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
+**lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Common options for all AWS Lambda functions.<br/>__*Default*__: default options
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?🔹 | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
@@ -8676,7 +9180,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -8698,7 +9202,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -8726,7 +9229,7 @@ Name | Type | Description
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
-**requireApproval**?🔹 | <code>[CdkApprovalLevel](#projen-cdkapprovallevel)</code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: CdkApprovalLevel.BROADENING
+**requireApproval**?🔹 | <code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: ApprovalLevel.BROADENING
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
@@ -8738,9 +9241,13 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
+**watchExcludes**?🔹 | <code>Array<string></code> | Glob patterns to exclude from `cdk watch`.<br/>__*Default*__: []
+**watchIncludes**?🔹 | <code>Array<string></code> | Glob patterns to include in `cdk watch`.<br/>__*Default*__: []
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -8787,15 +9294,15 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **cdk8sCliVersion**?🔹 | <code>string</code> | cdk8s-cli version.<br/>__*Default*__: "cdk8sVersion"
 **cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s-cli.<br/>__*Default*__: false
-**cdk8sPlusVersion**?🔹 | <code>string</code> | cdk8s-plus-17 version.<br/>__*Default*__: "cdk8sVersion"
 **cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.2.34"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -8831,7 +9338,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -8853,7 +9360,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -8892,10 +9398,27 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
+
+
+
+## struct CodeArtifactOptions 🔹 <a id="projen-codeartifactoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**accessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**roleToAssume**?🔹 | <code>string</code> | ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).<br/>__*Default*__: undefined
+**secretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
 
 
 
@@ -8929,6 +9452,7 @@ Name | Type | Description
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?⚠️ | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?⚠️ | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **catalog**?⚠️ | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **cdkAssert**?⚠️ | <code>boolean</code> | Install the @aws-cdk/assert library?<br/>__*Default*__: true
 **cdkDependencies**?⚠️ | <code>Array<string></code> | Which AWS CDK modules (those that start with "@aws-cdk/") does this library require when consumed?<br/>__*Optional*__
@@ -8936,11 +9460,11 @@ Name | Type | Description
 **cdkTestDependencies**?⚠️ | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
 **cdkVersionPinning**?⚠️ | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Default*__: false
 **clobber**?⚠️ | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?⚠️ | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?⚠️ | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **compat**?⚠️ | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?⚠️ | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
-**compileBeforeTest**?⚠️ | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **constructsVersion**?⚠️ | <code>string</code> | Minimum target version of constructs being tested against. If not provided, the default value depends on the configured `cdkVersion`:.<br/>__*Default*__: When the default behavior is used, the dependency on `constructs` will only be added as a `peerDependency`. Otherwise, a `devDependency` will also be added, set to the exact version configrued here.
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -8970,6 +9494,8 @@ Name | Type | Description
 **jestOptions**?⚠️ | <code>[JestOptions](#projen-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?⚠️ | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
+**lambdaAutoDiscover**?⚠️ | <code>boolean</code> | Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler.<br/>__*Default*__: true
+**lambdaOptions**?⚠️ | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Common options for all AWS Lambda functions.<br/>__*Default*__: default options
 **libdir**?⚠️ | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
 **license**?⚠️ | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
 **licensed**?⚠️ | <code>boolean</code> | Indicates if a license should be added.<br/>__*Default*__: true
@@ -8999,7 +9525,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?⚠️ | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?⚠️ | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?⚠️ | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?⚠️ | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?⚠️ | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -9044,9 +9569,11 @@ Name | Type | Description
 **tsconfigDev**?⚠️ | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?⚠️ | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?⚠️ | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?⚠️ | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?⚠️ | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?⚠️ | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -9081,16 +9608,16 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
-**cdk8sPlusVersion**?🔹 | <code>string</code> | cdk8s-plus-17 version.<br/>__*Default*__: "cdk8sVersion"
 **cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
-**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.2.34"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -9128,7 +9655,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -9150,7 +9677,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -9195,9 +9721,11 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -9232,13 +9760,14 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
-**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -9274,7 +9803,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -9296,7 +9825,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -9341,9 +9869,11 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -9377,13 +9907,14 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **catalog**?🔹 | <code>[Catalog](#projen-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
-**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -9419,7 +9950,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -9441,7 +9972,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -9486,9 +10016,11 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -9506,6 +10038,24 @@ Name | Type | Description
 **functions**?🔹 | <code>number</code> | __*Optional*__
 **lines**?🔹 | <code>number</code> | __*Optional*__
 **statements**?🔹 | <code>number</code> | __*Optional*__
+
+
+
+## struct CreateProjectOptions 🔹 <a id="projen-createprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**dir**🔹 | <code>string</code> | Directory that the project will be generated in.
+**projectFqn**🔹 | <code>string</code> | Fully-qualified name of the project type (usually formatted as `module.ProjectType`).
+**projectOptions**🔹 | <code>Map<string, any></code> | Project options.
+**optionHints**?🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Should we render commented-out default options in the projenrc file?<br/>__*Default*__: NewProjectOptionHints.FEATURED
+**post**?🔹 | <code>boolean</code> | Should we execute post synthesis hooks?<br/>__*Default*__: true
+**synth**?🔹 | <code>boolean</code> | Should we call `project.synth()` or instantiate the project (could still have side-effects) and render the .projenrc file.<br/>__*Default*__: true
 
 
 
@@ -9652,6 +10202,7 @@ Name | Type | Description
 **ignorePatterns**?🔹 | <code>Array<string></code> | List of file patterns that should not be linted, using the same syntax as .gitignore patterns.<br/>__*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
 **lintProjenRc**?🔹 | <code>boolean</code> | Should we lint .projenrc.js.<br/>__*Default*__: true
 **prettier**?🔹 | <code>boolean</code> | Enable prettier for code formatting.<br/>__*Default*__: false
+**tsAlwaysTryTypes**?🔹 | <code>boolean</code> | Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.<br/>__*Default*__: true
 **tsconfigPath**?🔹 | <code>string</code> | Path to `tsconfig.json` which should be used by eslint.<br/>__*Default*__: "./tsconfig.json"
 
 
@@ -9705,9 +10256,11 @@ Name | Type | Description
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
@@ -10190,12 +10743,13 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
-**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -10231,7 +10785,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -10253,7 +10807,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -10298,9 +10851,11 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -10423,6 +10978,7 @@ Name | Type | Description
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | The description is just a string that helps people understand the purpose of the package.<br/>__*Optional*__
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
@@ -10442,7 +10998,6 @@ Name | Type | Description
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **peerDependencyOptions**?🔹 | <code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
-**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
@@ -10476,7 +11031,9 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -10505,7 +11062,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -10526,7 +11083,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -10556,9 +11112,11 @@ Name | Type | Description
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -10622,6 +11180,7 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 
@@ -10823,10 +11382,11 @@ Name | Type | Description
 **bin**?⚠️ | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?⚠️ | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?⚠️ | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?⚠️ | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?⚠️ | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?⚠️ | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?⚠️ | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**compileBeforeTest**?⚠️ | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?⚠️ | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -10882,7 +11442,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?⚠️ | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?⚠️ | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?⚠️ | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?⚠️ | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?⚠️ | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -10921,9 +11480,11 @@ Name | Type | Description
 **tsconfigDev**?⚠️ | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?⚠️ | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?⚠️ | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?⚠️ | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?⚠️ | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?⚠️ | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -10954,10 +11515,11 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -10991,7 +11553,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -11013,7 +11575,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -11052,9 +11613,11 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -11106,6 +11669,7 @@ Name | Type | Description
 -----|------|-------------
 **branches**?🔹 | <code>Array<string></code> | List of branches to create PR's for.<br/>__*Default*__: All release branches configured for the project.
 **container**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Job container options.<br/>__*Default*__: defaults
+**gitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use for commits.<br/>__*Default*__: "github-actions
 **labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: no labels.
 **rebuild**?🔹 | <code>boolean</code> | Execute 'build' after the upgrade.<br/>__*Default*__: true
 **schedule**?🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: UpgradeDependenciesSchedule.DAILY
@@ -11124,6 +11688,7 @@ Name | Type | Description
 -----|------|-------------
 **artifactsDirectory**🔹 | <code>string</code> | The name of the directory into which `changelog.md` and `version.txt` files are emitted.
 **versionInputFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration for versionrc file used by standard-release.<br/>__*Optional*__
 
 
 
@@ -11162,6 +11727,178 @@ Name | Type | Description
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
+## struct AutoDiscoverOptions 🔹 <a id="projen-awscdk-autodiscoveroptions"></a>
+
+
+Options for `AutoDiscover`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**srcdir**🔹 | <code>string</code> | Project source tree (relative to project output directory).
+**testdir**🔹 | <code>string</code> | Test source tree.
+**lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Options for auto-discovery of AWS Lambda functions.<br/>__*Optional*__
+
+
+
+## struct AwsCdkJavaAppOptions 🔹 <a id="projen-awscdk-awscdkjavaappoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**artifactId**🔹 | <code>string</code> | The artifactId is generally the name that the project is known by.
+**cdkVersion**🔹 | <code>string</code> | AWS CDK version to use (you can use semantic versioning).
+**groupId**🔹 | <code>string</code> | This is generally unique amongst an organization or a project.
+**mainClass**🔹 | <code>string</code> | The name of the Java class with the static `main()` method.
+**name**🔹 | <code>string</code> | This is the name of your project.
+**version**🔹 | <code>string</code> | This is the last piece of the naming puzzle.
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
+**autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**cdkDependencies**?🔹 | <code>Array<string></code> | Which AWS CDK modules this app uses.<br/>__*Optional*__
+**cdkout**?🔹 | <code>string</code> | cdk.out directory.<br/>__*Default*__: "cdk.out"
+**clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
+**context**?🔹 | <code>Map<string, string></code> | Additional context to include in `cdk.json`.<br/>__*Default*__: no additional context
+**deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**distdir**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
+**featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
+**github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
+**githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
+**junit**?🔹 | <code>boolean</code> | Include junit tests.<br/>__*Default*__: true
+**junitOptions**?🔹 | <code>[java.JunitOptions](#projen-java-junitoptions)</code> | junit options.<br/>__*Default*__: defaults
+**logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**packaging**?🔹 | <code>string</code> | Project packaging format.<br/>__*Default*__: "jar"
+**packagingOptions**?🔹 | <code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code> | Packaging options.<br/>__*Default*__: defaults
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+**projenrcJava**?🔹 | <code>boolean</code> | Use projenrc in java.<br/>__*Default*__: true
+**projenrcJavaOptions**?🔹 | <code>[java.ProjenrcOptions](#projen-java-projenrcoptions)</code> | Options related to projenrc in java.<br/>__*Default*__: default options
+**projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
+**projenrcJsonOptions**?🔹 | <code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
+**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**requireApproval**?🔹 | <code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: ApprovalLevel.BROADENING
+**sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Optional*__
+**sampleJavaPackage**?🔹 | <code>string</code> | The java package to use for the code sample.<br/>__*Default*__: "org.acme"
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
+**testDeps**?🔹 | <code>Array<string></code> | List of test dependencies for this project.<br/>__*Default*__: []
+**url**?🔹 | <code>string</code> | The URL, like the name, is not required.<br/>__*Default*__: undefined
+**vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
+**watchExcludes**?🔹 | <code>Array<string></code> | Glob patterns to exclude from `cdk watch`.<br/>__*Default*__: []
+**watchIncludes**?🔹 | <code>Array<string></code> | Glob patterns to include in `cdk watch`.<br/>__*Default*__: []
+
+
+
+## struct CdkConfigCommonOptions 🔹 <a id="projen-awscdk-cdkconfigcommonoptions"></a>
+
+
+Common options for `cdk.json`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdkout**?🔹 | <code>string</code> | cdk.out directory.<br/>__*Default*__: "cdk.out"
+**context**?🔹 | <code>Map<string, string></code> | Additional context to include in `cdk.json`.<br/>__*Default*__: no additional context
+**featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
+**requireApproval**?🔹 | <code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: ApprovalLevel.BROADENING
+**watchExcludes**?🔹 | <code>Array<string></code> | Glob patterns to exclude from `cdk watch`.<br/>__*Default*__: []
+**watchIncludes**?🔹 | <code>Array<string></code> | Glob patterns to include in `cdk watch`.<br/>__*Default*__: []
+
+
+
+## struct CdkConfigOptions 🔹 <a id="projen-awscdk-cdkconfigoptions"></a>
+
+
+Options for `CdkJson`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**app**🔹 | <code>string</code> | The command line to execute in order to synthesize the CDK application (language specific).
+**cdkout**?🔹 | <code>string</code> | cdk.out directory.<br/>__*Default*__: "cdk.out"
+**context**?🔹 | <code>Map<string, string></code> | Additional context to include in `cdk.json`.<br/>__*Default*__: no additional context
+**featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
+**requireApproval**?🔹 | <code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: ApprovalLevel.BROADENING
+**watchExcludes**?🔹 | <code>Array<string></code> | Glob patterns to exclude from `cdk watch`.<br/>__*Default*__: []
+**watchIncludes**?🔹 | <code>Array<string></code> | Glob patterns to include in `cdk watch`.<br/>__*Default*__: []
+
+
+
+## struct IntegrationTestCommonOptions 🔹 <a id="projen-awscdk-integrationtestcommonoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**destroyAfterDeploy**?🔹 | <code>boolean</code> | Destroy the test app after a successful deployment.<br/>__*Default*__: true
+
+
+
+## struct IntegrationTestOptions 🔹 <a id="projen-awscdk-integrationtestoptions"></a>
+
+
+Options for `IntegrationTest`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**entrypoint**🔹 | <code>string</code> | A path from the project root directory to a TypeScript file which contains the integration test app.
+**destroyAfterDeploy**?🔹 | <code>boolean</code> | Destroy the test app after a successful deployment.<br/>__*Default*__: true
+
+
+
+## struct LambdaFunctionCommonOptions 🔹 <a id="projen-awscdk-lambdafunctioncommonoptions"></a>
+
+
+Common options for `LambdaFunction`.
+
+Applies to all functions in
+auto-discovery.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda function.<br/>__*Default*__: defaults
+**runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
+
+
+
+## struct LambdaFunctionOptions 🔹 <a id="projen-awscdk-lambdafunctionoptions"></a>
+
+
+Options for `Function`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**entrypoint**🔹 | <code>string</code> | A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function).
+**bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda function.<br/>__*Default*__: defaults
+**constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
+**constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
+**runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
 
 
 
@@ -11304,7 +12041,24 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
+**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for Mergify.<br/>__*Default*__: default options
+**pullRequestLint**?🔹 | <code>boolean</code> | Add a workflow that performs basic checks for pull requests, like validating that PRs follow Conventional Commits.<br/>__*Default*__: true
+**pullRequestLintOptions**?🔹 | <code>[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)</code> | Options for configuring a pull request linter.<br/>__*Default*__: see defaults in `PullRequestLintOptions`
 **workflows**?🔹 | <code>boolean</code> | Enables GitHub workflows.<br/>__*Default*__: true
+
+
+
+## struct GitIdentity 🔹 <a id="projen-github-gitidentity"></a>
+
+
+Represents the git identity.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**email**🔹 | <code>string</code> | The email address of the git user.
+**name**🔹 | <code>string</code> | The name of the user.
 
 
 
@@ -11319,6 +12073,28 @@ Name | Type | Description
 -----|------|-------------
 **concurrency**?🔹 | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.<br/>__*Default*__: disabled
 **force**?🔹 | <code>boolean</code> | Force the creation of the workflow even if `workflows` is disabled in `GitHub`.<br/>__*Default*__: false
+
+
+
+## interface IJobProvider 🔹 <a id="projen-github-ijobprovider"></a>
+
+__Implemented by__: [release.Publisher](#projen-release-publisher)
+
+
+### Methods
+
+
+#### renderJobs()🔹 <a id="projen-github-ijobprovider-renderjobs"></a>
+
+Generates a collection of named GitHub workflow jobs.
+
+```ts
+renderJobs(): Map<string, Job>
+```
+
+
+__Returns__:
+* <code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>
 
 
 
@@ -11366,6 +12142,20 @@ Name | Type | Description
 
 
 
+## struct PullRequestLintOptions 🔹 <a id="projen-github-pullrequestlintoptions"></a>
+
+
+Options for PullRequestLint.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**semanticTitle**?🔹 | <code>boolean</code> | Validate that pull request titles follow Conventional Commits.<br/>__*Default*__: true
+**semanticTitleOptions**?🔹 | <code>[github.SemanticTitleOptions](#projen-github-semantictitleoptions)</code> | Options for validating the conventional commit title linter.<br/>__*Default*__: title must start with "feat", "fix", or "chore"
+
+
+
 ## struct PullRequestTemplateOptions 🔹 <a id="projen-github-pullrequesttemplateoptions"></a>
 
 
@@ -11376,6 +12166,20 @@ Options for `PullRequestTemplate`.
 Name | Type | Description 
 -----|------|-------------
 **lines**?🔹 | <code>Array<string></code> | The contents of the template.<br/>__*Default*__: a standard default template will be created.
+
+
+
+## struct SemanticTitleOptions 🔹 <a id="projen-github-semantictitleoptions"></a>
+
+
+Options for linting that PR titles follow Conventional Commits.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**requireScope**?🔹 | <code>boolean</code> | Configure that a scope must always be provided.<br/>__*Default*__: false
+**types**?🔹 | <code>Array<string></code> | Configure a list of commit types that are allowed.<br/>__*Default*__: ["feat", "fix", "chore"]
 
 
 
@@ -11428,12 +12232,61 @@ Name | Type | Description
 **condition**?🔹 | <code>string</code> | Adds an 'if' condition to the workflow.<br/>__*Optional*__
 **container**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | __*Default*__: default image
 **env**?🔹 | <code>Map<string, string></code> | Workflow environment variables.<br/>__*Default*__: {}
+**gitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in this workflow.<br/>__*Optional*__
 **jobId**?🔹 | <code>string</code> | The primary job id.<br/>__*Default*__: "build"
 **outputs**?🔹 | <code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code> | Mapping of job output names to values/expressions.<br/>__*Default*__: {}
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Actions to run after the main build step.<br/>__*Default*__: not set
 **preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to run before the main build step.<br/>__*Default*__: not set
 **preCheckoutSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Initial steps to run before the source code checkout.<br/>__*Default*__: not set
 **triggers**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | The triggers for the workflow.<br/>__*Default*__: by default workflows can only be triggered by manually.
+
+
+
+## struct JavaProjectCommonOptions 🔹 <a id="projen-java-javaprojectcommonoptions"></a>
+
+
+Options for `JavaProject`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**artifactId**🔹 | <code>string</code> | The artifactId is generally the name that the project is known by.
+**groupId**🔹 | <code>string</code> | This is generally unique amongst an organization or a project.
+**name**🔹 | <code>string</code> | This is the name of your project.
+**version**🔹 | <code>string</code> | This is the last piece of the naming puzzle.
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
+**autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
+**deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**distdir**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
+**github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
+**githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
+**junit**?🔹 | <code>boolean</code> | Include junit tests.<br/>__*Default*__: true
+**junitOptions**?🔹 | <code>[java.JunitOptions](#projen-java-junitoptions)</code> | junit options.<br/>__*Default*__: defaults
+**logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**packaging**?🔹 | <code>string</code> | Project packaging format.<br/>__*Default*__: "jar"
+**packagingOptions**?🔹 | <code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code> | Packaging options.<br/>__*Default*__: defaults
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+**projenrcJava**?🔹 | <code>boolean</code> | Use projenrc in java.<br/>__*Default*__: true
+**projenrcJavaOptions**?🔹 | <code>[java.ProjenrcOptions](#projen-java-projenrcoptions)</code> | Options related to projenrc in java.<br/>__*Default*__: default options
+**projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
+**projenrcJsonOptions**?🔹 | <code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
+**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
+**testDeps**?🔹 | <code>Array<string></code> | List of test dependencies for this project.<br/>__*Default*__: []
+**url**?🔹 | <code>string</code> | The URL, like the name, is not required.<br/>__*Default*__: undefined
+**vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 
 
 
@@ -11465,11 +12318,13 @@ Name | Type | Description
 **junitOptions**?🔹 | <code>[java.JunitOptions](#projen-java-junitoptions)</code> | junit options.<br/>__*Default*__: defaults
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **packaging**?🔹 | <code>string</code> | Project packaging format.<br/>__*Default*__: "jar"
 **packagingOptions**?🔹 | <code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code> | Packaging options.<br/>__*Default*__: defaults
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenrcJava**?🔹 | <code>boolean</code> | Use projenrc in java.<br/>__*Default*__: true
 **projenrcJavaOptions**?🔹 | <code>[java.ProjenrcOptions](#projen-java-projenrcoptions)</code> | Options related to projenrc in java.<br/>__*Default*__: default options
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
@@ -11602,6 +12457,68 @@ Name | Type | Description
 **className**?🔹 | <code>string</code> | The name of the Java class which contains the `main()` method for projen.<br/>__*Default*__: "projenrc"
 **projenVersion**?🔹 | <code>string</code> | The projen version to use.<br/>__*Default*__: current version
 **testScope**?🔹 | <code>boolean</code> | Defines projenrc under the test scope instead of the main scope, which is reserved to the app.<br/>__*Default*__: true
+
+
+
+## struct AddBundleOptions 🔹 <a id="projen-javascript-addbundleoptions"></a>
+
+
+Options for `addBundle()`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**platform**🔹 | <code>string</code> | esbuild platform.
+**target**🔹 | <code>string</code> | esbuild target.
+**externals**?🔹 | <code>Array<string></code> | You can mark a file or a package as external to exclude it from your build.<br/>__*Default*__: []
+**sourcemap**?🔹 | <code>boolean</code> | Include a source map in the bundle.<br/>__*Default*__: false
+**watchTask**?🔹 | <code>boolean</code> | In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag.<br/>__*Default*__: true
+
+
+
+## struct Bundle 🔹 <a id="projen-javascript-bundle"></a>
+
+__Obtainable from__: [Bundler](#projen-javascript-bundler).[addBundle](#projen-javascript-bundler#projen-javascript-bundler-addbundle)()
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**bundleTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The task that produces this bundle.
+**outfile**🔹 | <code>string</code> | Location of the output file (relative to project root).
+**watchTask**?🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The "watch" task for this bundle.<br/>__*Optional*__
+
+
+
+## struct BundlerOptions 🔹 <a id="projen-javascript-bundleroptions"></a>
+
+
+Options for `Bundler`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**assetsDir**?🔹 | <code>string</code> | Output directory for all bundles.<br/>__*Default*__: "assets"
+**esbuildVersion**?🔹 | <code>string</code> | The semantic version requirement for `esbuild`.<br/>__*Default*__: no specific version (implies latest)
+
+
+
+## struct BundlingOptions 🔹 <a id="projen-javascript-bundlingoptions"></a>
+
+
+Options for bundling.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**externals**?🔹 | <code>Array<string></code> | You can mark a file or a package as external to exclude it from your build.<br/>__*Default*__: []
+**sourcemap**?🔹 | <code>boolean</code> | Include a source map in the bundle.<br/>__*Default*__: false
+**watchTask**?🔹 | <code>boolean</code> | In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag.<br/>__*Default*__: true
 
 
 
@@ -11747,7 +12664,6 @@ __Implemented by__: [python.Poetry](#projen-python-poetry), [python.Setuptools](
 
 Name | Type | Description 
 -----|------|-------------
-**packageTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that packages the project for distribution.
 **publishTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | A task that uploads the package to a package repository.
 
 
@@ -11903,12 +12819,14 @@ Name | Type | Description
 **license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
 **poetry**?🔹 | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.<br/>__*Default*__: false
 **poetryOptions**?🔹 | <code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code> | Additional options to set for poetry if using poetry.<br/>__*Optional*__
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in python.<br/>__*Default*__: false
@@ -11996,6 +12914,21 @@ Name | Type | Description
 
 
 
+## struct CodeArtifactOptions 🔹 <a id="projen-release-codeartifactoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**accessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**roleToAssume**?🔹 | <code>string</code> | ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).<br/>__*Default*__: undefined
+**secretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
+
+
+
 ## struct GitHubReleasesPublishOptions 🔹 <a id="projen-release-githubreleasespublishoptions"></a>
 
 
@@ -12075,6 +13008,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**codeArtifactOptions**?⚠️ | <code>[release.CodeArtifactOptions](#projen-release-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **distTag**?⚠️ | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmTokenSecret**?⚠️ | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
 **registry**?⚠️ | <code>string</code> | The domain name of the npm package registry.<br/>__*Default*__: "registry.npmjs.org"
@@ -12152,6 +13086,7 @@ Options for npm release.
 
 Name | Type | Description 
 -----|------|-------------
+**codeArtifactOptions**?🔹 | <code>[release.CodeArtifactOptions](#projen-release-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **distTag**?🔹 | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
 **registry**?🔹 | <code>string</code> | The domain name of the npm package registry.<br/>__*Default*__: "registry.npmjs.org"
@@ -12232,6 +13167,7 @@ Name | Type | Description
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 
 
@@ -12260,6 +13196,7 @@ Name | Type | Description
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 
 
@@ -12526,7 +13463,9 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -12555,7 +13494,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -12576,7 +13515,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -12609,9 +13547,11 @@ Name | Type | Description
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **tailwind**?🔹 | <code>boolean</code> | Setup Tailwind CSS as a PostCSS plugin.<br/>__*Default*__: true
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -12643,10 +13583,11 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -12680,7 +13621,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -12702,7 +13643,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -12742,9 +13682,11 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -12804,7 +13746,9 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -12833,7 +13777,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -12854,7 +13798,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -12887,9 +13830,11 @@ Name | Type | Description
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -12949,10 +13894,11 @@ Name | Type | Description
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>boolean</code> | Define a GitHub workflow for building PRs.<br/>__*Default*__: true if not a subproject
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
+**bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**codeArtifactOptions**?🔹 | <code>[CodeArtifactOptions](#projen-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**compileBeforeTest**?🔹 | <code>boolean</code> | Compile the code before running tests.<br/>__*Default*__: if `testdir` is under `src/**`, the default is `true`, otherwise the default is `false.
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -12986,7 +13932,7 @@ Name | Type | Description
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[NpmAccess](#projen-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -13008,7 +13954,6 @@ Name | Type | Description
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
-**projenDuringBuild**?🔹 | <code>boolean</code> | Execute `projen` as the first step of the `build` task to synthesize project files.<br/>__*Default*__: true
 **projenUpgradeAutoMerge**?⚠️ | <code>boolean</code> | Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: false
 **projenUpgradeSchedule**?🔹 | <code>Array<string></code> | Customize the projenUpgrade schedule in cron expression.<br/>__*Default*__: [ "0 6 * * *" ]
 **projenUpgradeSecret**?🔹 | <code>string</code> | Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`).<br/>__*Default*__: no automatic projen upgrade pull requests
@@ -13048,9 +13993,11 @@ Name | Type | Description
 **tsconfigDev**?🔹 | <code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code> | Custom tsconfig options for the development tsconfig.json file (used for testing).<br/>__*Default*__: use the production tsconfig options
 **tsconfigDevFile**?🔹 | <code>string</code> | The name of the development tsconfig.json file.<br/>__*Default*__: "tsconfig.dev.json"
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
+**versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 
 
@@ -13076,17 +14023,6 @@ Name | Description
 -----|-----
 **EVERY_COMMIT** 🔹|Automatically bump & release a new version for every commit to "main".
 **DAILY** 🔹|Automatically bump & release a new version on a daily basis.
-
-
-## enum CdkApprovalLevel 🔹 <a id="projen-cdkapprovallevel"></a>
-
-
-
-Name | Description
------|-----
-**NEVER** 🔹|Approval is never required.
-**ANY_CHANGE** 🔹|Requires approval on any IAM or security-group-related change.
-**BROADENING** 🔹|Requires approval when IAM statements or traffic rules are added;
 
 
 ## enum DockerComposeProtocol 🔹 <a id="projen-dockercomposeprotocol"></a>
@@ -13238,6 +14174,17 @@ Name | Description
 -----|-----
 **CLASSIC** 🔹|TypeScript's former default resolution strategy.
 **NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
+
+
+## enum ApprovalLevel 🔹 <a id="projen-awscdk-approvallevel"></a>
+
+Which approval is required when deploying CDK apps.
+
+Name | Description
+-----|-----
+**NEVER** 🔹|Approval is never required.
+**ANY_CHANGE** 🔹|Requires approval on any IAM or security-group-related change.
+**BROADENING** 🔹|Requires approval when IAM statements or traffic rules are added;
 
 
 ## enum DependencyType 🔹 <a id="projen-deps-dependencytype"></a>

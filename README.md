@@ -8,7 +8,7 @@
 
 # projen
 
-![projen logo](/logo/projen.svg)
+![projen logo](./logo/projen.svg)
 
 
 Define and maintain complex project configuration through code.
@@ -46,6 +46,7 @@ Currently supported project types (use `npx projen new` without a type for a
 list):
 
 <!-- <macro exec="node ./scripts/readme-projects.js"> -->
+* [awscdk-app-java](https://github.com/projen/projen/blob/main/API.md#projen-awscdk-awscdkjavaapp) - AWS CDK app in Java.
 * [awscdk-app-ts](https://github.com/projen/projen/blob/main/API.md#projen-awscdktypescriptapp) - AWS CDK app in TypeScript.
 * [awscdk-construct](https://github.com/projen/projen/blob/main/API.md#projen-awscdkconstructlibrary) - AWS CDK construct library project.
 * [cdk8s-app-ts](https://github.com/projen/projen/blob/main/API.md#projen-cdk8stypescriptapp) - CDK8s app in TypeScript.

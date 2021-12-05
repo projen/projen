@@ -32,13 +32,15 @@ export class Task {
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
   private readonly cwd?: string;
-  private readonly requiredEnv?: string[]
+  private readonly requiredEnv?: string[];
+  private _locked: boolean;
 
   constructor(name: string, props: TaskOptions = { }) {
     this.name = name;
     this.description = props.description;
     this.condition = props.condition;
     this.cwd = props.cwd;
+    this._locked = false;
 
     this._env = props.env ?? {};
     this._steps = [];
@@ -50,10 +52,19 @@ export class Task {
   }
 
   /**
+   * Forbid additional changes to this task.
+   */
+  public lock() {
+    this._locked = true;
+  }
+
+  /**
    * Reset the task so it no longer has any commands.
    * @param command the first command to add to the task after it was cleared.
   */
   public reset(command?: string, options: TaskStepOptions = { }) {
+    this.assertUnlocked();
+
     while (this._steps.length) {
       this._steps.shift();
     }
@@ -69,6 +80,7 @@ export class Task {
    * @param options Options
    */
   public exec(command: string, options: TaskStepOptions = { }) {
+    this.assertUnlocked();
     this._steps.push({ exec: command, ...options });
   }
 
@@ -84,6 +96,7 @@ export class Task {
    * `release/resolve-version`).
    */
   public builtin(name: string) {
+    this.assertUnlocked();
     this._steps.push({ builtin: name });
   }
 
@@ -93,6 +106,7 @@ export class Task {
    * @param options Options
    */
   public say(message: string, options: TaskStepOptions = { }) {
+    this.assertUnlocked();
     this._steps.push({ say: message, ...options });
   }
 
@@ -103,6 +117,7 @@ export class Task {
    * @deprecated use `prependExec()`
    */
   public prepend(shell: string, options: TaskStepOptions = {}) {
+    this.assertUnlocked();
     this.prependExec(shell, options);
   }
 
@@ -111,6 +126,7 @@ export class Task {
    * @param subtask The subtask to execute.
    */
   public spawn(subtask: Task, options: TaskStepOptions = {}) {
+    this.assertUnlocked();
     this._steps.push({ spawn: subtask.name, ...options });
   }
 
@@ -119,6 +135,7 @@ export class Task {
    * @param shell The command to add.
    */
   public prependExec(shell: string, options: TaskStepOptions = {}) {
+    this.assertUnlocked();
     this._steps.unshift({
       exec: shell,
       ...options,
@@ -130,6 +147,7 @@ export class Task {
    * @param subtask The subtask to execute.
    */
   public prependSpawn(subtask: Task, options: TaskStepOptions = {}) {
+    this.assertUnlocked();
     this._steps.unshift({
       spawn: subtask.name,
       ...options,
@@ -141,6 +159,7 @@ export class Task {
    * @param message Your message
    */
   public prependSay(message: string, options: TaskStepOptions = {}) {
+    this.assertUnlocked();
     this._steps.unshift({
       say: message,
       ...options,
@@ -155,6 +174,7 @@ export class Task {
    * environment variable.
    */
   public env(name: string, value: string) {
+    this.assertUnlocked();
     this._env[name] = value;
   }
 
@@ -180,5 +200,11 @@ export class Task {
       condition: this.condition,
       cwd: this.cwd,
     };
+  }
+
+  private assertUnlocked() {
+    if (this._locked) {
+      throw new Error(`Task "${this.name}" is locked for changes`);
+    }
   }
 }
