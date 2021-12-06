@@ -10,7 +10,7 @@ export interface Job {
    *
    * @example "ubuntu-latest"
    */
-  readonly runsOn: string;
+  readonly runsOn: string | string[];
 
   /**
    * A job contains a sequence of tasks called steps. Steps can run commands,

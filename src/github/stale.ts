@@ -22,6 +22,12 @@ export interface StaleOptions {
    * stale after 60 days and closed within 7 days.
    */
   readonly issues?: StaleBehavior;
+
+  /**
+   * Github Runner selection label(s)
+   * @default "ubuntu-latest"
+   */
+  readonly runsOn?: string | string[];
 }
 
 /**
@@ -95,7 +101,7 @@ export class Stale extends Component {
 
     stale.addJobs({
       stale: {
-        runsOn: 'ubuntu-latest',
+        runsOn: options.runsOn ?? 'ubuntu-latest',
         permissions: {
           issues: JobPermission.WRITE,
           pullRequests: JobPermission.WRITE,

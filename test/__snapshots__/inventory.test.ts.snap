@@ -3272,6 +3272,36 @@ Array [
         "simpleType": "string",
         "switch": "workflow-node-version",
       },
+      Object {
+        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "featured": false,
+        "fullType": Object {
+          "union": Object {
+            "types": Array [
+              Object {
+                "primitive": "string",
+              },
+              Object {
+                "collection": Object {
+                  "elementtype": Object {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+            ],
+          },
+        },
+        "jsonLike": false,
+        "name": "workflowRunsOn",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "workflowRunsOn",
+        ],
+        "simpleType": "unknown",
+        "switch": "workflow-runs-on",
+      },
     ],
     "pjid": "awscdk-app-ts",
     "typename": "awscdk.AwsCdkTypeScriptApp",
@@ -5873,6 +5903,36 @@ added, set to the exact version configrued here.",
         "simpleType": "string",
         "switch": "workflow-node-version",
       },
+      Object {
+        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "featured": false,
+        "fullType": Object {
+          "union": Object {
+            "types": Array [
+              Object {
+                "primitive": "string",
+              },
+              Object {
+                "collection": Object {
+                  "elementtype": Object {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+            ],
+          },
+        },
+        "jsonLike": false,
+        "name": "workflowRunsOn",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "workflowRunsOn",
+        ],
+        "simpleType": "unknown",
+        "switch": "workflow-runs-on",
+      },
     ],
     "pjid": "awscdk-construct",
     "typename": "awscdk.AwsCdkConstructLibrary",
@@ -8194,6 +8254,36 @@ added, set to the exact version configrued here.",
         ],
         "simpleType": "string",
         "switch": "workflow-node-version",
+      },
+      Object {
+        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "featured": false,
+        "fullType": Object {
+          "union": Object {
+            "types": Array [
+              Object {
+                "primitive": "string",
+              },
+              Object {
+                "collection": Object {
+                  "elementtype": Object {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+            ],
+          },
+        },
+        "jsonLike": false,
+        "name": "workflowRunsOn",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "workflowRunsOn",
+        ],
+        "simpleType": "unknown",
+        "switch": "workflow-runs-on",
       },
     ],
     "pjid": "cdk8s-app-ts",
@@ -10716,6 +10806,36 @@ added, set to the exact version configrued here.",
         "simpleType": "string",
         "switch": "workflow-node-version",
       },
+      Object {
+        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "featured": false,
+        "fullType": Object {
+          "union": Object {
+            "types": Array [
+              Object {
+                "primitive": "string",
+              },
+              Object {
+                "collection": Object {
+                  "elementtype": Object {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+            ],
+          },
+        },
+        "jsonLike": false,
+        "name": "workflowRunsOn",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "workflowRunsOn",
+        ],
+        "simpleType": "unknown",
+        "switch": "workflow-runs-on",
+      },
     ],
     "pjid": "cdk8s-construct",
     "typename": "cdk8s.ConstructLibraryCdk8s",
@@ -13168,6 +13288,36 @@ added, set to the exact version configrued here.",
         ],
         "simpleType": "string",
         "switch": "workflow-node-version",
+      },
+      Object {
+        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "featured": false,
+        "fullType": Object {
+          "union": Object {
+            "types": Array [
+              Object {
+                "primitive": "string",
+              },
+              Object {
+                "collection": Object {
+                  "elementtype": Object {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+            ],
+          },
+        },
+        "jsonLike": false,
+        "name": "workflowRunsOn",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "workflowRunsOn",
+        ],
+        "simpleType": "unknown",
+        "switch": "workflow-runs-on",
       },
     ],
     "pjid": "cdktf-construct",
@@ -16276,6 +16426,36 @@ added, set to the exact version configrued here.",
         "simpleType": "string",
         "switch": "workflow-node-version",
       },
+      Object {
+        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "featured": false,
+        "fullType": Object {
+          "union": Object {
+            "types": Array [
+              Object {
+                "primitive": "string",
+              },
+              Object {
+                "collection": Object {
+                  "elementtype": Object {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+            ],
+          },
+        },
+        "jsonLike": false,
+        "name": "workflowRunsOn",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "workflowRunsOn",
+        ],
+        "simpleType": "unknown",
+        "switch": "workflow-runs-on",
+      },
     ],
     "pjid": "jsii",
     "typename": "cdk.JsiiProject",
@@ -18234,6 +18414,36 @@ added, set to the exact version configrued here.",
         ],
         "simpleType": "string",
         "switch": "workflow-node-version",
+      },
+      Object {
+        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "featured": false,
+        "fullType": Object {
+          "union": Object {
+            "types": Array [
+              Object {
+                "primitive": "string",
+              },
+              Object {
+                "collection": Object {
+                  "elementtype": Object {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+            ],
+          },
+        },
+        "jsonLike": false,
+        "name": "workflowRunsOn",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "workflowRunsOn",
+        ],
+        "simpleType": "unknown",
+        "switch": "workflow-runs-on",
       },
     ],
     "pjid": "nextjs",
@@ -20456,6 +20666,36 @@ added, set to the exact version configrued here.",
         "simpleType": "string",
         "switch": "workflow-node-version",
       },
+      Object {
+        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "featured": false,
+        "fullType": Object {
+          "union": Object {
+            "types": Array [
+              Object {
+                "primitive": "string",
+              },
+              Object {
+                "collection": Object {
+                  "elementtype": Object {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+            ],
+          },
+        },
+        "jsonLike": false,
+        "name": "workflowRunsOn",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "workflowRunsOn",
+        ],
+        "simpleType": "unknown",
+        "switch": "workflow-runs-on",
+      },
     ],
     "pjid": "nextjs-ts",
     "typename": "web.NextJsTypeScriptProject",
@@ -22346,6 +22586,36 @@ added, set to the exact version configrued here.",
         ],
         "simpleType": "string",
         "switch": "workflow-node-version",
+      },
+      Object {
+        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "featured": false,
+        "fullType": Object {
+          "union": Object {
+            "types": Array [
+              Object {
+                "primitive": "string",
+              },
+              Object {
+                "collection": Object {
+                  "elementtype": Object {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+            ],
+          },
+        },
+        "jsonLike": false,
+        "name": "workflowRunsOn",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "workflowRunsOn",
+        ],
+        "simpleType": "unknown",
+        "switch": "workflow-runs-on",
       },
     ],
     "pjid": "node",
@@ -25207,6 +25477,36 @@ added, set to the exact version configrued here.",
         "simpleType": "string",
         "switch": "workflow-node-version",
       },
+      Object {
+        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "featured": false,
+        "fullType": Object {
+          "union": Object {
+            "types": Array [
+              Object {
+                "primitive": "string",
+              },
+              Object {
+                "collection": Object {
+                  "elementtype": Object {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+            ],
+          },
+        },
+        "jsonLike": false,
+        "name": "workflowRunsOn",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "workflowRunsOn",
+        ],
+        "simpleType": "unknown",
+        "switch": "workflow-runs-on",
+      },
     ],
     "pjid": "react",
     "typename": "web.ReactProject",
@@ -27416,6 +27716,36 @@ added, set to the exact version configrued here.",
         "simpleType": "string",
         "switch": "workflow-node-version",
       },
+      Object {
+        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "featured": false,
+        "fullType": Object {
+          "union": Object {
+            "types": Array [
+              Object {
+                "primitive": "string",
+              },
+              Object {
+                "collection": Object {
+                  "elementtype": Object {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+            ],
+          },
+        },
+        "jsonLike": false,
+        "name": "workflowRunsOn",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "workflowRunsOn",
+        ],
+        "simpleType": "unknown",
+        "switch": "workflow-runs-on",
+      },
     ],
     "pjid": "react-ts",
     "typename": "web.ReactTypeScriptProject",
@@ -29603,6 +29933,36 @@ added, set to the exact version configrued here.",
         "simpleType": "string",
         "switch": "workflow-node-version",
       },
+      Object {
+        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "featured": false,
+        "fullType": Object {
+          "union": Object {
+            "types": Array [
+              Object {
+                "primitive": "string",
+              },
+              Object {
+                "collection": Object {
+                  "elementtype": Object {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+            ],
+          },
+        },
+        "jsonLike": false,
+        "name": "workflowRunsOn",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "workflowRunsOn",
+        ],
+        "simpleType": "unknown",
+        "switch": "workflow-runs-on",
+      },
     ],
     "pjid": "typescript",
     "typename": "typescript.TypeScriptProject",
@@ -31789,6 +32149,36 @@ added, set to the exact version configrued here.",
         ],
         "simpleType": "string",
         "switch": "workflow-node-version",
+      },
+      Object {
+        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "featured": false,
+        "fullType": Object {
+          "union": Object {
+            "types": Array [
+              Object {
+                "primitive": "string",
+              },
+              Object {
+                "collection": Object {
+                  "elementtype": Object {
+                    "primitive": "string",
+                  },
+                  "kind": "array",
+                },
+              },
+            ],
+          },
+        },
+        "jsonLike": false,
+        "name": "workflowRunsOn",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "workflowRunsOn",
+        ],
+        "simpleType": "unknown",
+        "switch": "workflow-runs-on",
       },
     ],
     "pjid": "typescript-app",

@@ -151,7 +151,14 @@ export interface ReleaseProjectOptions {
    *
    * @default - standard configuration applicable for GitHub repositories
    */
+
   readonly versionrcOptions?: Record<string, any>;
+
+  /**
+   * Github Runner selection label(s)
+   * '@default "ubuntu-latest"
+   */
+  readonly workflowRunsOn?: string | string[];
 }
 
 /**
@@ -214,6 +221,7 @@ export class Release extends Component {
   private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
+  private readonly workflowRunsOn?: string | string[];
 
   constructor(project: GitHubProject, options: ReleaseOptions) {
     super(project);
@@ -231,6 +239,7 @@ export class Release extends Component {
     this.versionFile = options.versionFile;
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
+    this.workflowRunsOn = options.workflowRunsOn;
 
     /**
      * Use manual releases with no changelog if releaseEveryCommit is explicitly
@@ -259,6 +268,7 @@ export class Release extends Component {
       jsiiReleaseVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
       failureIssueLabel: options.releaseFailureIssueLabel,
+      workflowRunsOn: options.workflowRunsOn,
     });
 
     const githubRelease = options.githubRelease ?? true;
@@ -459,6 +469,7 @@ export class Release extends Component {
         preBuildSteps,
         task: releaseTask,
         postBuildSteps,
+        runsOn: this.workflowRunsOn,
       });
     } else {
       return undefined;

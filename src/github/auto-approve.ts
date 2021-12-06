@@ -31,6 +31,12 @@ export interface AutoApproveOptions {
    * `NodeProjectOptions`, then you must use a different token here.
    */
   readonly secret: string;
+
+  /**
+   * Github Runner selection label(s)
+   * @default "ubuntu-latest"
+   */
+  readonly runsOn?: string | string[];
 }
 
 /**
@@ -53,7 +59,7 @@ export class AutoApprove extends Component {
     }
 
     const approveJob: Job = {
-      runsOn: 'ubuntu-latest',
+      runsOn: options.runsOn ?? 'ubuntu-latest',
       permissions: {
         pullRequests: JobPermission.WRITE,
       },
