@@ -486,7 +486,7 @@ export interface Triggers {
    * Runs your workflow anytime the discussion_comment event occurs. More than one activity type triggers this event.
    * @see https://docs.github.com/en/graphql/guides/using-the-graphql-api-for-discussions
    */
-  readonly discussionCommentOptions?: DiscussionCommentOptions;
+  readonly discussionComment?: DiscussionCommentOptions;
 
   /**
    * Runs your workflow anytime when someone forks a repository, which

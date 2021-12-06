@@ -4878,7 +4878,7 @@ on(events: Triggers): void
   * **deployment** (<code>[github.workflows.DeploymentOptions](#projen-github-workflows-deploymentoptions)</code>)  Runs your workflow anytime someone creates a deployment, which triggers the deployment event. __*Optional*__
   * **deploymentStatus** (<code>[github.workflows.DeploymentStatusOptions](#projen-github-workflows-deploymentstatusoptions)</code>)  Runs your workflow anytime a third party provides a deployment status, which triggers the deployment_status event. __*Optional*__
   * **discussion** (<code>[github.workflows.DiscussionOptions](#projen-github-workflows-discussionoptions)</code>)  Runs your workflow anytime the discussion event occurs. __*Optional*__
-  * **discussionCommentOptions** (<code>[github.workflows.DiscussionCommentOptions](#projen-github-workflows-discussioncommentoptions)</code>)  Runs your workflow anytime the discussion_comment event occurs. __*Optional*__
+  * **discussionComment** (<code>[github.workflows.DiscussionCommentOptions](#projen-github-workflows-discussioncommentoptions)</code>)  Runs your workflow anytime the discussion_comment event occurs. __*Optional*__
   * **fork** (<code>[github.workflows.ForkOptions](#projen-github-workflows-forkoptions)</code>)  Runs your workflow anytime when someone forks a repository, which triggers the fork event. __*Optional*__
   * **gollum** (<code>[github.workflows.GollumOptions](#projen-github-workflows-gollumoptions)</code>)  Runs your workflow when someone creates or updates a Wiki page, which triggers the gollum event. __*Optional*__
   * **issueComment** (<code>[github.workflows.IssueCommentOptions](#projen-github-workflows-issuecommentoptions)</code>)  Runs your workflow anytime the issue_comment event occurs. __*Optional*__
