@@ -462,15 +462,15 @@ test('manual release with custom git-push', () => {
     task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
-    releaseTrigger: ReleaseTrigger.manual({ gitPushCommand: 'git push --follow-tags -o ci.skip origin main' })
+    releaseTrigger: ReleaseTrigger.manual({ gitPushCommand: 'git push --follow-tags -o ci.skip origin main' }),
   });
 
   // THEN
   const outdir = synthSnapshot(project);
-  const steps = outdir['.projen/tasks.json']['tasks']['publish:git']['steps'];
+  const steps = outdir['.projen/tasks.json'].tasks['publish:git'].steps;
   expect(steps).toEqual(
     expect.arrayContaining([
-      expect.objectContaining({ exec: 'git push --follow-tags -o ci.skip origin main' })
-    ])
+      expect.objectContaining({ exec: 'git push --follow-tags -o ci.skip origin main' }),
+    ]),
   );
 });
