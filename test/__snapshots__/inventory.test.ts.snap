@@ -3616,6 +3616,7 @@ Array [
       },
       Object {
         "default": "false",
+        "deprecated": true,
         "docs": "Install the @aws-cdk/assert library?",
         "featured": false,
         "fullType": Object {
@@ -3650,7 +3651,7 @@ Array [
       },
       Object {
         "docs": "Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed?",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {

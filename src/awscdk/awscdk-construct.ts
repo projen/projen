@@ -64,7 +64,7 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions {
   /**
    * Install the @aws-cdk/assert library?
    *
-   * @depricated - use cdkAssertions instead
+   * @deprecated - use cdkAssertions instead
    * @default false
    */
   readonly cdkAssert?: boolean;
