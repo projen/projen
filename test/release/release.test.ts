@@ -454,3 +454,23 @@ test('can be modified with escape hatches', () => {
   expect(outdir['.github/workflows/release.yml']).toContain('BAR: VALUE2');
   expect(outdir).toMatchSnapshot();
 });
+
+test('manual release with custom git-push', () => {
+  // GIVEN
+  const project = new TestProject();
+  new Release(project, {
+    task: project.buildTask,
+    versionFile: 'version.json',
+    branch: 'main',
+    releaseTrigger: ReleaseTrigger.manual({ gitPushCommand: 'git push --follow-tags -o ci.skip origin main' })
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  const steps = outdir['.projen/tasks.json']['tasks']['publish:git']['steps'];
+  expect(steps).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({ exec: 'git push --follow-tags -o ci.skip origin main' })
+    ])
+  );
+});
