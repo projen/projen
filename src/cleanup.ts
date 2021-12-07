@@ -1,16 +1,27 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import { existsSync, readFileSync } from 'fs-extra';
 import * as glob from 'glob';
 import { PROJEN_MARKER } from './common';
 import * as logging from './logging';
 
+export const FILE_MANIFEST = '.projen/files.json';
+
 export function cleanup(dir: string, exclude: string[]) {
-  try {
-    for (const f of findGeneratedFiles(dir, exclude)) {
-      fs.removeSync(f);
+  const fileManifestPath = path.resolve(dir, FILE_MANIFEST);
+  if (existsSync(fileManifestPath)) {
+    const fileFile = JSON.parse(readFileSync(fileManifestPath, 'utf-8'));
+    fileFile.files.forEach((file: string) => {
+      fs.removeSync(path.resolve(dir, file));
+    });
+  } else {
+    try {
+      for (const f of findGeneratedFiles(dir, exclude)) {
+        fs.removeSync(f);
+      }
+    } catch (e) {
+      logging.warn(`warning: failed to clean up generated files: ${e.stack}`);
     }
-  } catch (e) {
-    logging.warn(`warning: failed to clean up generated files: ${e.stack}`);
   }
 }
 
