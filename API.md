@@ -470,6 +470,24 @@ removeDependency(name: string, type?: DependencyType): void
 
 
 
+#### tryGetDependency(name, type?)🔹 <a id="projen-dependencies-trygetdependency"></a>
+
+Returns a dependency by name.
+
+Returns `undefined` if there is no dependency defined by that name or if
+`type` is not provided and there is more then one dependency type for this
+dependency.
+
+```ts
+tryGetDependency(name: string, type?: DependencyType): Dependency
+```
+
+* **name** (<code>string</code>)  The name of the dependency.
+* **type** (<code>[DependencyType](#projen-dependencytype)</code>)  The dependency type.
+
+__Returns__:
+* <code>[Dependency](#projen-dependency)</code>
+
 #### *static* parseDependency(spec)🔹 <a id="projen-dependencies-parsedependency"></a>
 
 Returns the coordinates of a dependency spec.
@@ -9075,7 +9093,7 @@ Name | Type | Description
 
 ## struct Dependency 🔹 <a id="projen-dependency"></a>
 
-__Obtainable from__: [JavaProject](#projen-java-javaproject).[addPlugin](#projen-java-javaproject#projen-java-javaproject-addplugin)(), [Pom](#projen-java-pom).[addPlugin](#projen-java-pom#projen-java-pom-addplugin)(), [Dependencies](#projen-dependencies).[addDependency](#projen-dependencies#projen-dependencies-adddependency)(), [Dependencies](#projen-dependencies).[getDependency](#projen-dependencies#projen-dependencies-getdependency)()
+__Obtainable from__: [JavaProject](#projen-java-javaproject).[addPlugin](#projen-java-javaproject#projen-java-javaproject-addplugin)(), [Pom](#projen-java-pom).[addPlugin](#projen-java-pom#projen-java-pom-addplugin)(), [Dependencies](#projen-dependencies).[addDependency](#projen-dependencies#projen-dependencies-adddependency)(), [Dependencies](#projen-dependencies).[getDependency](#projen-dependencies#projen-dependencies-getdependency)(), [Dependencies](#projen-dependencies).[tryGetDependency](#projen-dependencies#projen-dependencies-trygetdependency)()
 
 Represents a project dependency.
 
