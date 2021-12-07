@@ -2812,6 +2812,7 @@ new awscdk.AutoDiscover(project: Project, options: AutoDiscoverOptions)
 * **options** (<code>[awscdk.AutoDiscoverOptions](#projen-awscdk-autodiscoveroptions)</code>)  *No description*
   * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
   * **testdir** (<code>string</code>)  Test source tree. 
+  * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
   * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for auto-discovery of AWS Lambda functions. __*Optional*__
 
 
@@ -3573,6 +3574,7 @@ new awscdk.IntegrationTest(project: Project, options: IntegrationTestOptions)
 * **options** (<code>[awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)</code>)  *No description*
   * **destroyAfterDeploy** (<code>boolean</code>)  Destroy the test app after a successful deployment. __*Default*__: true
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the integration test app. 
+  * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use when running integration test cdk apps. 
 
 
 
@@ -9934,6 +9936,7 @@ Name | Type | Description
 -----|------|-------------
 **srcdir**🔹 | <code>string</code> | Project source tree (relative to project output directory).
 **testdir**🔹 | <code>string</code> | Test source tree.
+**tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
 **lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Options for auto-discovery of AWS Lambda functions.<br/>__*Optional*__
 
 
@@ -10514,6 +10517,7 @@ Options for `IntegrationTest`.
 Name | Type | Description 
 -----|------|-------------
 **entrypoint**🔹 | <code>string</code> | A path from the project root directory to a TypeScript file which contains the integration test app.
+**tsconfigPath**🔹 | <code>string</code> | The path of the tsconfig.json file to use when running integration test cdk apps.
 **destroyAfterDeploy**?🔹 | <code>boolean</code> | Destroy the test app after a successful deployment.<br/>__*Default*__: true
 
 
