@@ -8,6 +8,7 @@ describe('IntegrationTest', () => {
   // WHEN
   new awscdk.IntegrationTest(project, {
     entrypoint: 'test/foo.integ.ts',
+    tsconfigPath: project.tsconfigDev.fileName,
   });
 
   // THEN

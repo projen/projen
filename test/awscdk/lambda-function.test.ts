@@ -157,6 +157,7 @@ test('auto-discover', () => {
   new awscdk.AutoDiscover(project, {
     srcdir: project.srcdir,
     testdir: project.testdir,
+    tsconfigPath: project.tsconfigDev.fileName,
     lambdaOptions: {
       runtime: awscdk.LambdaRuntime.NODEJS_12_X,
     },
