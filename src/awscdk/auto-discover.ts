@@ -24,6 +24,11 @@ export interface AutoDiscoverOptions {
    * Test source tree.
    */
   readonly testdir: string;
+
+  /**
+   * Path to the tsconfig file to use for integration tests.
+   */
+  readonly tsconfigPath: string;
 }
 
 /**
@@ -61,6 +66,7 @@ export class AutoDiscover extends Component {
     for (const entrypoint of entrypoints) {
       new IntegrationTest(this.project, {
         entrypoint: join(options.testdir, entrypoint),
+        tsconfigPath: options.tsconfigPath,
       });
     }
   }
