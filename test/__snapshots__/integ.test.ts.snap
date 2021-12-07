@@ -747,17 +747,15 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
+        "version": "^5",
       },
       Object {
         "name": "@typescript-eslint/parser",
         "type": "build",
+        "version": "^5",
       },
       Object {
         "name": "aws-sdk",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint",
         "type": "build",
       },
       Object {
@@ -773,13 +771,18 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
+        "name": "eslint",
+        "type": "build",
+        "version": "^8",
+      },
+      Object {
         "name": "jest",
         "type": "build",
       },
       Object {
         "name": "jest-junit",
         "type": "build",
-        "version": "^12",
+        "version": "^13",
       },
       Object {
         "name": "jsii",
@@ -1319,9 +1322,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       },
     },
   },
-  ".projenrc.js": "const { ConstructLibraryAws, Semver } = require('projen');
+  ".projenrc.js": "const { awscdk, Semver } = require('projen');
 
-const project = new ConstructLibraryAws({
+const project = new awscdk.ConstructLibraryAws({
   name: 'cdk-watchful',
   description: 'Watching your CDK apps since 2019',
   defaultReleaseBranch: 'master',
@@ -1621,15 +1624,15 @@ project.synth();
       "@aws-cdk/assert": "^1.75.0",
       "@types/jest": "*",
       "@types/node": "^14.0.0",
-      "@typescript-eslint/eslint-plugin": "*",
-      "@typescript-eslint/parser": "*",
+      "@typescript-eslint/eslint-plugin": "^5",
+      "@typescript-eslint/parser": "^5",
       "aws-sdk": "*",
-      "eslint": "*",
+      "eslint": "^8",
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
       "jest": "*",
-      "jest-junit": "^12",
+      "jest-junit": "^13",
       "jsii": "*",
       "jsii-diff": "*",
       "jsii-docgen": "*",
@@ -2324,17 +2327,15 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
+        "version": "^5",
       },
       Object {
         "name": "@typescript-eslint/parser",
         "type": "build",
+        "version": "^5",
       },
       Object {
         "name": "constructs",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint",
         "type": "build",
       },
       Object {
@@ -2350,13 +2351,18 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
+        "name": "eslint",
+        "type": "build",
+        "version": "^8",
+      },
+      Object {
         "name": "jest",
         "type": "build",
       },
       Object {
         "name": "jest-junit",
         "type": "build",
-        "version": "^12",
+        "version": "^13",
       },
       Object {
         "name": "jsii",
@@ -2630,7 +2636,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade @types/follow-redirects @types/jest @types/json-stable-stringify @types/node @types/yaml @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema json-schema-to-typescript npm-check-updates ts-jest typescript fast-json-patch follow-redirects json-stable-stringify yaml constructs",
+            "exec": "yarn upgrade @types/follow-redirects @types/jest @types/json-stable-stringify @types/node @types/yaml @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema json-schema-to-typescript npm-check-updates ts-jest typescript fast-json-patch follow-redirects json-stable-stringify yaml constructs",
           },
           Object {
             "exec": "npx projen",
@@ -2681,11 +2687,11 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       },
     },
   },
-  ".projenrc.js": "const { JsiiProject, Semver } = require('projen');
+  ".projenrc.js": "const { cdk } = require('projen');
 
 const common = require('./cdk8s.common');
 
-const project = new JsiiProject({
+const project = new cdk.JsiiProject({
   name: 'cdk8s',
   description: 'Cloud Development Kit for Kubernetes',
   defaultReleaseBranch: 'master',
@@ -2945,11 +2951,11 @@ project.synth();
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "cdk8s-cli.projenrc.js": "const { TypeScriptLibraryProject, Semver } = require('projen');
+  "cdk8s-cli.projenrc.js": "const { typescript } = require('projen');
 
 const common = require('./cdk8s.common');
 
-const project = new TypeScriptLibraryProject({
+const project = new typescript.TypeScriptLibraryProject({
   name: 'cdk8s-cli',
   description: 'CDK for Kubernetes CLI',
   defaultReleaseBranch: 'master',
@@ -3026,11 +3032,11 @@ exports.fixup = project => {
   delete project.manifest.scripts.release;
 };
 ",
-  "cdk8s.projenrc.js": "const { JsiiProject, Semver } = require('projen');
+  "cdk8s.projenrc.js": "const { cdk } = require('projen');
 
 const common = require('./cdk8s.common');
 
-const project = new JsiiProject({
+const project = new cdk.JsiiProject({
   name: 'cdk8s',
   description: 'Cloud Development Kit for Kubernetes',
   defaultReleaseBranch: 'master',
@@ -3112,15 +3118,15 @@ project.synth();
       "@types/json-stable-stringify": "*",
       "@types/node": "^12.7.0",
       "@types/yaml": "*",
-      "@typescript-eslint/eslint-plugin": "*",
-      "@typescript-eslint/parser": "*",
+      "@typescript-eslint/eslint-plugin": "^5",
+      "@typescript-eslint/parser": "^5",
       "constructs": "*",
-      "eslint": "*",
+      "eslint": "^8",
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
       "jest": "*",
-      "jest-junit": "^12",
+      "jest-junit": "^13",
       "jsii": "*",
       "jsii-diff": "*",
       "jsii-docgen": "*",
@@ -3791,14 +3797,12 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@typescript-eslint/eslint-plugin",
         "type": "build",
+        "version": "^5",
       },
       Object {
         "name": "@typescript-eslint/parser",
         "type": "build",
-      },
-      Object {
-        "name": "eslint",
-        "type": "build",
+        "version": "^5",
       },
       Object {
         "name": "eslint-import-resolver-node",
@@ -3813,13 +3817,18 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
+        "name": "eslint",
+        "type": "build",
+        "version": "^8",
+      },
+      Object {
         "name": "jest",
         "type": "build",
       },
       Object {
         "name": "jest-junit",
         "type": "build",
-        "version": "^12",
+        "version": "^13",
       },
       Object {
         "name": "json-schema",
@@ -4082,7 +4091,7 @@ tsconfig.tsbuildinfo
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade @types/fs-extra @types/jest @types/json-schema @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import jest jest-junit json-schema npm-check-updates ts-jest typescript @types/node cdk8s codemaker colors constructs fs-extra jsii-pacmak jsii-srcmak json2jsii sscaff yaml yargs",
+            "exec": "yarn upgrade @types/fs-extra @types/jest @types/json-schema @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit json-schema npm-check-updates ts-jest typescript @types/node cdk8s codemaker colors constructs fs-extra jsii-pacmak jsii-srcmak json2jsii sscaff yaml yargs",
           },
           Object {
             "exec": "npx projen",
@@ -4133,11 +4142,11 @@ tsconfig.tsbuildinfo
       },
     },
   },
-  ".projenrc.js": "const { TypeScriptLibraryProject, Semver } = require('projen');
+  ".projenrc.js": "const { typescript } = require('projen');
 
 const common = require('./cdk8s.common');
 
-const project = new TypeScriptLibraryProject({
+const project = new typescript.TypeScriptLibraryProject({
   name: 'cdk8s-cli',
   description: 'CDK for Kubernetes CLI',
   defaultReleaseBranch: 'master',
@@ -4379,11 +4388,11 @@ project.synth();
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "cdk8s-cli.projenrc.js": "const { TypeScriptLibraryProject, Semver } = require('projen');
+  "cdk8s-cli.projenrc.js": "const { typescript } = require('projen');
 
 const common = require('./cdk8s.common');
 
-const project = new TypeScriptLibraryProject({
+const project = new typescript.TypeScriptLibraryProject({
   name: 'cdk8s-cli',
   description: 'CDK for Kubernetes CLI',
   defaultReleaseBranch: 'master',
@@ -4460,11 +4469,11 @@ exports.fixup = project => {
   delete project.manifest.scripts.release;
 };
 ",
-  "cdk8s.projenrc.js": "const { JsiiProject, Semver } = require('projen');
+  "cdk8s.projenrc.js": "const { cdk } = require('projen');
 
 const common = require('./cdk8s.common');
 
-const project = new JsiiProject({
+const project = new cdk.JsiiProject({
   name: 'cdk8s',
   description: 'Cloud Development Kit for Kubernetes',
   defaultReleaseBranch: 'master',
@@ -4551,14 +4560,14 @@ project.synth();
       "@types/jest": "*",
       "@types/json-schema": "*",
       "@types/node": "^12.7.0",
-      "@typescript-eslint/eslint-plugin": "*",
-      "@typescript-eslint/parser": "*",
-      "eslint": "*",
+      "@typescript-eslint/eslint-plugin": "^5",
+      "@typescript-eslint/parser": "^5",
+      "eslint": "^8",
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
       "jest": "*",
-      "jest-junit": "^12",
+      "jest-junit": "^13",
       "json-schema": "*",
       "npm-check-updates": "^11",
       "projen": "*",
@@ -5137,7 +5146,7 @@ junit.xml
       Object {
         "name": "jest-junit",
         "type": "build",
-        "version": "^12",
+        "version": "^13",
       },
       Object {
         "name": "npm-check-updates",
@@ -5429,12 +5438,12 @@ junit.xml
       },
     },
   },
-  ".projenrc.js": "const { NodeProject, NodePackageManager } = require(\\"projen\\");
+  ".projenrc.js": "const { javascript } = require(\\"projen\\");
 
-const project = new NodeProject({
+const project = new javascript.NodeProject({
   name: \\"pnpm-project\\",
 
-  packageManager: NodePackageManager.PNPM,
+  packageManager: javascript.NodePackageManager.PNPM,
   defaultReleaseBranch: 'master',
 
   deps: [\\"esbuild\\"],
@@ -5657,7 +5666,7 @@ project.synth();
     "devDependencies": Object {
       "aws-sdk": "*",
       "jest": "*",
-      "jest-junit": "^12",
+      "jest-junit": "^13",
       "npm-check-updates": "^11",
       "projen": "*",
       "standard-version": "^9",

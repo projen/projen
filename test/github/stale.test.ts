@@ -32,6 +32,16 @@ test('customizations', () => {
   expect(synthSnapshot(project)['.github/workflows/stale.yml']).toMatchSnapshot();
 });
 
+test('with custom runner', () => {
+  const project = new TestProject({
+    staleOptions: {
+      runsOn: ['self-hosted'],
+    },
+  });
+
+  expect(synthSnapshot(project)['.github/workflows/stale.yml']).toContain('runs-on: self-hosted');
+});
+
 describe('renderBehavior()', () => {
 
   test('defaults', () => {

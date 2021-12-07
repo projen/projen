@@ -1,9 +1,8 @@
 import * as path from 'path';
 import { Component } from '../component';
-import { GitHub, TaskWorkflow } from '../github';
+import { GitHub, GitHubProject, TaskWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
-import { GitHubProject } from '../project';
-import { Task } from '../tasks';
+import { Task } from '../task';
 import { Version } from '../version';
 import { Publisher } from './publisher';
 import { ReleaseTrigger } from './release-trigger';
@@ -153,6 +152,12 @@ export interface ReleaseProjectOptions {
    * @default - standard configuration applicable for GitHub repositories
    */
   readonly versionrcOptions?: Record<string, any>;
+
+  /**
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
+   */
+  readonly workflowRunsOn?: string[];
 }
 
 /**
@@ -215,6 +220,7 @@ export class Release extends Component {
   private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
+  private readonly workflowRunsOn?: string[];
 
   constructor(project: GitHubProject, options: ReleaseOptions) {
     super(project);
@@ -232,6 +238,7 @@ export class Release extends Component {
     this.versionFile = options.versionFile;
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
+    this.workflowRunsOn = options.workflowRunsOn;
 
     /**
      * Use manual releases with no changelog if releaseEveryCommit is explicitly
@@ -260,6 +267,7 @@ export class Release extends Component {
       jsiiReleaseVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
       failureIssueLabel: options.releaseFailureIssueLabel,
+      workflowRunsOn: options.workflowRunsOn,
     });
 
     const githubRelease = options.githubRelease ?? true;
@@ -399,6 +407,7 @@ export class Release extends Component {
         releaseTagFile: path.posix.join(this.artifactsDirectory, this.version.releaseTagFileName),
         projectChangelogFile: this.releaseTrigger.changelogPath,
         gitBranch: branch.name,
+        gitPushCommand: this.releaseTrigger.gitPushCommand,
       });
 
       releaseTask.spawn(publishTask);
@@ -459,6 +468,7 @@ export class Release extends Component {
         preBuildSteps,
         task: releaseTask,
         postBuildSteps,
+        runsOn: this.workflowRunsOn,
       });
     } else {
       return undefined;

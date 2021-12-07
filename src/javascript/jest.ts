@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as semver from 'semver';
-import { JsonFile } from './json';
-import { NodeProject } from './node-project';
+import { NodeProject } from '../javascript';
+import { JsonFile } from '../json';
 import { TypescriptConfig } from './typescript-config';
 
 const DEFAULT_TEST_REPORTS_DIR = 'test-reports';
@@ -554,7 +554,7 @@ export class Jest {
    */
   public readonly config: any;
 
-  private readonly testMatch: string[]
+  private readonly testMatch: string[];
   private readonly ignorePatterns: string[];
   private readonly watchIgnorePatterns: string[];
   private readonly coverageReporters: string[];
@@ -615,7 +615,7 @@ export class Jest {
         { outputDirectory: reportsDir },
       ]);
 
-      project.addDevDeps('jest-junit@^12');
+      project.addDevDeps('jest-junit@^13');
 
       project.gitignore.exclude(
         '# jest-junit artifacts',

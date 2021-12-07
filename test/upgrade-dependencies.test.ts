@@ -1,6 +1,5 @@
 import * as yaml from 'yaml';
-import { NodeProject, UpgradeDependenciesSchedule } from '../src';
-import { NodeProjectOptions } from '../src/node-project';
+import { NodeProject, NodeProjectOptions, UpgradeDependenciesSchedule } from '../src/javascript';
 import { Tasks } from '../src/tasks';
 import { synthSnapshot } from '../src/util/synth';
 
@@ -171,6 +170,23 @@ test('git identity can be customized', () => {
       'git config user.email \"foo@bar.com\"',
     ].join('\n'),
   });
+});
+
+
+test('github runner can be customized', () => {
+
+  const project = createProject({
+    depsUpgradeOptions: {
+      workflowOptions: {
+        runsOn: ['self-hosted'],
+      },
+    },
+  });
+
+  const snapshot = synthSnapshot(project);
+  const upgrade = yaml.parse(snapshot['.github/workflows/upgrade-main.yml']);
+  expect(upgrade.jobs.upgrade['runs-on']).toEqual('self-hosted');
+  expect(upgrade.jobs.pr['runs-on']).toEqual('self-hosted');
 });
 
 function createProject(options: Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name' | 'dependenciesUpgrade'> = {}): NodeProject {

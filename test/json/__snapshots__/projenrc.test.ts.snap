@@ -134,7 +134,7 @@ node_modules/
         "name": "default",
         "steps": Array [
           Object {
-            "builtin": "json/run-projenrc",
+            "builtin": "run-projenrc-json",
           },
         ],
       },
@@ -289,7 +289,7 @@ node_modules/
         "name": "default",
         "steps": Array [
           Object {
-            "builtin": "json/run-projenrc",
+            "builtin": "run-projenrc-json",
           },
         ],
       },
@@ -322,7 +322,7 @@ node_modules/
         "enabled": false,
       },
     },
-    "type": "projen.TypeScriptProject",
+    "type": "projen.typescript.TypeScriptProject",
   },
   "README.md": "# replace this",
 }

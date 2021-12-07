@@ -1,9 +1,8 @@
 import * as yaml from 'yaml';
-import { NodeProject, NodeProjectOptions } from '../src';
-import { DependencyType } from '../src/deps';
+import { DependencyType } from '../src/dependencies';
 import { JobPermission } from '../src/github/workflows-model';
+import { NodeProject, NodeProjectOptions, NodePackage, NodePackageManager, NpmAccess } from '../src/javascript';
 import * as logging from '../src/logging';
-import { NodePackage, NodePackageManager, NpmAccess } from '../src/node-package';
 import { Project } from '../src/project';
 import { Tasks } from '../src/tasks';
 import { synthSnapshot, TestProject } from '../src/util/synth';
@@ -540,7 +539,7 @@ test('extend github release workflow', () => {
       permissions: {
         contents: JobPermission.READ,
       },
-      runsOn: 'ubuntu-latest',
+      runsOn: ['ubuntu-latest'],
       env: {
         CI: 'true',
       },

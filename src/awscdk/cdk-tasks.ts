@@ -1,6 +1,6 @@
 import { Component } from '../component';
 import { Project } from '../project';
-import { Task } from '../tasks';
+import { Task } from '../task';
 
 /**
  * Adds standard AWS CDK tasks to your project.

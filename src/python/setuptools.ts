@@ -1,5 +1,5 @@
 import { Component } from '../component';
-import { Task } from '../tasks';
+import { Task } from '../task';
 import { IPythonPackaging, PythonPackagingOptions } from './python-packaging';
 import { PythonProject } from './python-project';
 import { SetupPy } from './setuppy';

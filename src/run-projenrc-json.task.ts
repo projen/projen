@@ -8,8 +8,8 @@
  *   Defaults to `.projenrc.json`.
  */
 import * as fs from 'fs-extra';
-import { NewProjectOptionHints } from '../option-hints';
-import { Projects } from '../projects';
+import { NewProjectOptionHints } from './option-hints';
+import { Projects } from './projects';
 
 let filename = process.env.PROJENRC_FILE;
 

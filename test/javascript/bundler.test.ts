@@ -1,5 +1,4 @@
-import { NodeProject } from '../../src';
-import { Bundler } from '../../src/javascript';
+import { Bundler, NodeProject } from '../../src/javascript';
 import { renderBundleName } from '../../src/javascript/util';
 import { Testing } from '../../src/testing';
 

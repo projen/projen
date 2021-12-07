@@ -1,14 +1,11 @@
 import * as path from 'path';
-import { PROJEN_DIR, PROJEN_RC } from './common';
-import { Component } from './component';
-import { Eslint, EslintOptions } from './eslint';
-import { NodeProject, NodeProjectOptions } from './node-project';
-import { SampleDir } from './sample-file';
-import { Task } from './tasks';
-import { TextFile } from './textfile';
-import { TypeScriptCompilerOptions, TypescriptConfig, TypescriptConfigOptions } from './typescript-config';
-import { TypedocDocgen } from './typescript-typedoc';
-import { Projenrc, ProjenrcOptions as ProjenrcTsOptions } from './typescript/projenrc';
+import { PROJEN_DIR, PROJEN_RC } from '../common';
+import { Component } from '../component';
+import { Eslint, EslintOptions, NodeProject, NodeProjectOptions, TypeScriptCompilerOptions, TypescriptConfig, TypescriptConfigOptions } from '../javascript';
+import { SampleDir } from '../sample-file';
+import { Task } from '../task';
+import { TextFile } from '../textfile';
+import { Projenrc as ProjenrcTs, ProjenrcOptions as ProjenrcTsOptions, TypedocDocgen } from '../typescript';
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
@@ -318,6 +315,7 @@ export class TypeScriptProject extends NodeProject {
       };
 
       const resolver = new TextFile(this, path.posix.join(PROJEN_DIR, 'jest-snapshot-resolver.js'));
+      resolver.addLine(`// ${TextFile.PROJEN_MARKER}`);
       resolver.addLine('const path = require("path");');
       resolver.addLine(`const libtest = "${libtest}";`);
       resolver.addLine(`const srctest= "${srctest}";`);
@@ -369,7 +367,7 @@ export class TypeScriptProject extends NodeProject {
 
     const projenrcTypeScript = options.projenrcTs ?? false;
     if (projenrcTypeScript) {
-      new Projenrc(this, options.projenrcTsOptions);
+      new ProjenrcTs(this, options.projenrcTsOptions);
     }
   }
 }

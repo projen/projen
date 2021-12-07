@@ -3,7 +3,7 @@ import { EOL } from 'os';
 import { basename, join } from 'path';
 import { mkdirpSync } from 'fs-extra';
 import { Project } from '../../src';
-import { TaskRuntime } from '../../src/tasks';
+import { TaskRuntime } from '../../src/task-runtime';
 import { TestProject } from '../../src/util/synth';
 
 test('minimal case (just a shell command)', () => {
@@ -189,7 +189,7 @@ describe('say', () => {
 test('builtin tasks are scripts embedded inside projen', () => {
   const p = new TestProject();
   const task = p.addTask('boom');
-  task.builtin('tasks/builtin-example');
+  task.builtin('builtin-example');
   p.synth();
 
   const lines = executeTask(p, 'boom');

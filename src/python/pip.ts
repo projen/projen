@@ -1,6 +1,7 @@
 import { Component } from '../component';
-import { Dependency, DependencyType } from '../deps';
-import { Task, TaskRuntime } from '../tasks';
+import { Dependency, DependencyType } from '../dependencies';
+import { Task } from '../task';
+import { TaskRuntime } from '../task-runtime';
 import { IPackageProvider, IPythonDeps } from './python-deps';
 import { PythonProject } from './python-project';
 import { RequirementsFile } from './requirements-file';

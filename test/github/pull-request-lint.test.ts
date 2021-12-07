@@ -1,5 +1,5 @@
 import { PullRequestLint } from '../../src/github/pull-request-lint';
-import { NodeProject, NodeProjectOptions } from '../../src/node-project';
+import { NodeProject, NodeProjectOptions } from '../../src/javascript';
 import { synthSnapshot } from '../../src/util/synth';
 
 test('default', () => {
@@ -49,6 +49,20 @@ describe('semantic titles', () => {
     const snapshot = synthSnapshot(project);
     expect(snapshot['.github/workflows/pull-request-lint.yml']).toMatchSnapshot();
   });
+});
+
+test('with custom runner', () => {
+  // GIVEN
+  const project = createProject();
+
+  // WHEN
+  new PullRequestLint(project.github!, {
+    runsOn: ['self-hosted'],
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  expect(snapshot['.github/workflows/pull-request-lint.yml']).toContain('runs-on: self-hosted');
 });
 
 type ProjectOptions = Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name'>;

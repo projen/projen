@@ -1,5 +1,5 @@
+import { NodeProject, NodeProjectOptions } from '../../src/javascript';
 import { NpmConfig } from '../../src/javascript/npm-config';
-import { NodeProject, NodeProjectOptions } from '../../src/node-project';
 import { synthSnapshot } from '../../src/util/synth';
 
 test('registry is handled correctly', () => {

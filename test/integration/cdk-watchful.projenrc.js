@@ -1,6 +1,6 @@
-const { ConstructLibraryAws, Semver } = require('projen');
+const { awscdk, Semver } = require('projen');
 
-const project = new ConstructLibraryAws({
+const project = new awscdk.ConstructLibraryAws({
   name: 'cdk-watchful',
   description: 'Watching your CDK apps since 2019',
   defaultReleaseBranch: 'master',

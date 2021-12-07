@@ -1,6 +1,7 @@
-const { JsiiProject, JsonFile, TextFile, NodePackageManager } = require('./lib');
+const { cdk, github, JsonFile, TextFile } = require('./lib');
+const { workflows } = require('./lib/github');
 
-const project = new JsiiProject({
+const project = new cdk.JsiiProject({
   name: 'projen',
   description: 'CDK for software projects',
   repository: 'https://github.com/projen/projen.git',
@@ -50,7 +51,7 @@ const project = new JsiiProject({
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: '12.7.0',
-  workflowNodeVersion: '12.13.0', // required by jest
+  workflowNodeVersion: '12.22.0', // required by @typescript-eslint/eslint-plugin@5.5.0
 
   codeCov: true,
   defaultReleaseBranch: 'main',
@@ -185,11 +186,41 @@ project.npmignore.exclude('/SECURITY.md');
 project.npmignore.exclude('/.gitattributes');
 project.npmignore.exclude('/.gitpod.yml');
 
-// Workaround for @types/jsdom issues due to upgrade to jest@27.4.0 as mentioned in https://github.com/projen/projen/issues/1264#issuecomment-982365744
-if (project.package.packageManager === NodePackageManager.YARN) {
-  project.package.addField('resolutions', {
-    'jest-environment-jsdom': '27.3.1',
-  });
-}
+// integ test
+const pythonCompatTask = project.addTask('integ:python-compat', {
+  exec: 'scripts/python-compat.sh',
+  description: 'Checks that projen\'s submodule structure does not cause import failures for python. Expects python to be installed and projen to be fully built.',
+});
+const integTask = project.addTask('integ');
+integTask.spawn(project.buildTask);
+integTask.spawn(pythonCompatTask);
+
+new github.TaskWorkflow(project.github, {
+  name: 'integ',
+  jobId: 'integ',
+  triggers: {
+    pullRequest: {},
+    workflowDispatch: {},
+  },
+  env: {
+    CI: 'true',
+  },
+  permissions: {
+    contents: workflows.JobPermission.READ,
+  },
+
+  preBuildSteps: [
+    ...project.installWorkflowSteps, // install dependencies for projen
+    {
+      name: 'Set up Python 3.x',
+      uses: 'actions/setup-python@v2',
+      with: {
+        'python-version': '3.x',
+      },
+    },
+  ],
+
+  task: integTask,
+});
 
 project.synth();

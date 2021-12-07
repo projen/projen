@@ -1,7 +1,7 @@
 import { join } from 'path';
 import { existsSync, readFileSync } from 'fs-extra';
 import { Project } from '../src';
-import { Dependencies, DependencyType } from '../src/deps';
+import { Dependencies, DependencyType } from '../src/dependencies';
 import { TestProject } from '../src/util/synth';
 
 test('no dependencies, no manifest', () => {
@@ -252,6 +252,20 @@ describe('getDependency()', () => {
     expect(() => p.deps.getDependency('zoo', DependencyType.BUILD)).toThrow(/there is no build dependency defined on \"zoo\"/);
   });
 
+});
+
+test('tryGetDependency() returns undefined if there is no dep', () => {
+  // GIVEN
+  const p = new TestProject();
+
+  // WHEN
+  p.deps.addDependency('zoo', DependencyType.RUNTIME);
+
+  // THEN
+  expect(p.deps.tryGetDependency('zoo')).toStrictEqual({ name: 'zoo', type: 'runtime' });
+  expect(p.deps.tryGetDependency('zoo', DependencyType.RUNTIME)).toStrictEqual({ name: 'zoo', type: 'runtime' });
+  expect(p.deps.tryGetDependency('zoo', DependencyType.BUILD)).toBeUndefined();
+  expect(p.deps.tryGetDependency('boo')).toBeUndefined();
 });
 
 function depsManifest(p: Project) {

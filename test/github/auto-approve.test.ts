@@ -1,5 +1,5 @@
 import { AutoApprove } from '../../src/github/auto-approve';
-import { NodeProject, NodeProjectOptions } from '../../src/node-project';
+import { NodeProject, NodeProjectOptions } from '../../src/javascript';
 import { synthSnapshot } from '../../src/util/synth';
 
 describe('auto-approve', () => {
@@ -41,6 +41,19 @@ describe('auto-approve', () => {
     const snapshot = synthSnapshot(project);
 
     expect(snapshot['.github/workflows/auto-approve.yml']).toMatchSnapshot();
+  });
+
+  test('with custom runner', () => {
+    const project = createProject();
+
+    new AutoApprove(project.github!, {
+      secret: 'MY_SECRET',
+      runsOn: ['self-hosted'],
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot['.github/workflows/auto-approve.yml']).toContain('runs-on: self-hosted');
   });
 });
 

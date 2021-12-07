@@ -1,18 +1,18 @@
-import { PROJEN_DIR, PROJEN_RC } from './common';
-import { AutoMerge, DependabotOptions, GitIdentity, TaskWorkflow } from './github';
-import { DEFAULT_GITHUB_ACTIONS_USER } from './github/constants';
-import { JobPermission, JobStep } from './github/workflows-model';
-import { IgnoreFile } from './ignore-file';
-import { Bundler, BundlerOptions, Projenrc, ProjenrcOptions } from './javascript';
+import { PROJEN_DIR, PROJEN_RC } from '../common';
+import { AutoMerge, DependabotOptions, GitHubProject, GitHubProjectOptions, GitIdentity, TaskWorkflow } from '../github';
+import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
+import { JobPermission, JobStep } from '../github/workflows-model';
+import { IgnoreFile } from '../ignore-file';
+import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from '../javascript';
+import { License } from '../license';
+import { Release, ReleaseProjectOptions, Publisher } from '../release';
+import { Task } from '../task';
+import { deepMerge } from '../util';
+import { Version } from '../version';
+import { Bundler, BundlerOptions } from './bundler';
 import { Jest, JestOptions } from './jest';
-import { License } from './license';
 import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
-import { GitHubProject, GitHubProjectOptions } from './project';
-import { Release, ReleaseProjectOptions, Publisher } from './release';
-import { Task } from './tasks';
-import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from './upgrade-dependencies';
-import { deepMerge } from './util';
-import { Version } from './version';
+import { Projenrc, ProjenrcOptions } from './projenrc';
 
 const PROJEN_SCRIPT = 'projen';
 
@@ -294,6 +294,8 @@ export enum AutoRelease {
 
 /**
  * Node.js project
+ *
+ * @pjid node
  */
 export class NodeProject extends GitHubProject {
   /**

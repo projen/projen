@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { awscdk } from '../src';
-import { AwsCdkTypeScriptApp } from '../src/awscdk-app-ts';
+import { AwsCdkTypeScriptApp } from '../src/awscdk';
 import { mkdtemp, synthSnapshot } from '../src/util/synth';
 
 describe('cdkVersion is >= 2.0.0', () => {

@@ -1,8 +1,8 @@
 
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import { Component } from './component';
-import { TypeScriptAppProject, TypeScriptProjectOptions } from './typescript';
+import { Component } from '../component';
+import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';
 
 export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
@@ -20,14 +20,6 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
    */
 
   readonly constructsVersion?: string;
-
-  /**
-   * cdk8s-plus-17 version
-   *
-   * @default "cdk8sVersion"
-   */
-
-  readonly cdk8sPlusVersion?: string;
 
   /**
    * cdk8s-cli version
@@ -107,12 +99,6 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
   public readonly constructsVersion: string;
 
   /**
-   * The cdk8s-plus-17 version this app is using.
-   */
-
-  public readonly cdk8sPlusVersion: string;
-
-  /**
    * The cdk8s-cli version this app is using.
    */
 
@@ -147,12 +133,6 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
 
     this.cdk8sVersion = options.cdk8sVersionPinning ? options.cdk8sVersion : `^${options.cdk8sVersion}`;
 
-    if (!! options.cdk8sPlusVersion) {
-      this.cdk8sPlusVersion = options.cdk8sPlusVersionPinning ? options.cdk8sPlusVersion : `^${options.cdk8sPlusVersion}`;
-    } else {
-      this.cdk8sPlusVersion = this.cdk8sVersion;
-    }
-
     if (options.constructsVersion) {
       this.constructsVersion = options.constructsVersionPinning ? options.constructsVersion: `^${options.constructsVersion}`;
     } else {
@@ -170,14 +150,12 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
     this.addDeps(
       `cdk8s@${this.cdk8sVersion}`,
       `constructs@${this.constructsVersion}`,
-      `cdk8s-plus-17@${this.cdk8sPlusVersion}`,
     );
     this.addDevDeps(
       'ts-node@^9',
       `cdk8s-cli@${this.cdk8sCliVersion}`,
       `cdk8s@${this.cdk8sVersion}`,
       `constructs@${this.constructsVersion}`,
-      `cdk8s-plus-17@${this.cdk8sPlusVersion}`,
     );
 
     const synth = this.addTask('synth', {

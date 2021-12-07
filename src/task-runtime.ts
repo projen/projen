@@ -4,8 +4,8 @@ import { platform } from 'os';
 import { dirname, join, resolve } from 'path';
 import { format } from 'util';
 import * as chalk from 'chalk';
-import * as logging from '../logging';
-import { TasksManifest, TaskSpec } from './model';
+import * as logging from './logging';
+import { TasksManifest, TaskSpec } from './task-model';
 import { Tasks } from './tasks';
 
 const ENV_TRIM_LEN = 20;
@@ -290,7 +290,7 @@ class RunTask {
   }
 
   private renderBuiltin(builtin: string) {
-    const moduleRoot = dirname(require.resolve('../../package.json'));
+    const moduleRoot = dirname(require.resolve('../package.json'));
     const program = require.resolve(join(moduleRoot, 'lib', `${builtin}.task.js`));
     return `${process.execPath} ${program}`;
   }

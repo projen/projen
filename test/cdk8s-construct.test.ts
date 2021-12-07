@@ -1,4 +1,4 @@
-import { ConstructLibraryCdk8s } from '../src/cdk8s-construct';
+import { ConstructLibraryCdk8s } from '../src/cdk8s';
 import { synthSnapshot } from '../src/util/synth';
 
 test ('constructs version defined', () => {
@@ -17,9 +17,8 @@ test ('constructs version defined', () => {
 
 
   expect(output['package.json'].peerDependencies).toStrictEqual({
-    'cdk8s': '^1.0.0-beta.18',
-    'cdk8s-plus-17': '^1.0.0-beta.18',
-    'constructs': '^3.3.75',
+    cdk8s: '^1.0.0-beta.18',
+    constructs: '^3.3.75',
   });
 
 });
@@ -38,9 +37,8 @@ test ('constructs version undefined', () => {
   const output = synthSnapshot(project);
 
   expect(output['package.json'].peerDependencies).toStrictEqual({
-    'cdk8s': '^1.0.0-beta.11',
-    'cdk8s-plus-17': '^1.0.0-beta.11',
-    'constructs': '^3.2.34',
+    cdk8s: '^1.0.0-beta.11',
+    constructs: '^3.2.34',
   });
 
 
@@ -62,9 +60,8 @@ test ('constructs version pinning', () => {
   const output = synthSnapshot(project);
 
   expect(output['package.json'].peerDependencies).toStrictEqual({
-    'cdk8s': '^1.0.0-beta.18',
-    'cdk8s-plus-17': '^1.0.0-beta.18',
-    'constructs': '3.3.75',
+    cdk8s: '^1.0.0-beta.18',
+    constructs: '3.3.75',
   });
 
 });
@@ -84,53 +81,7 @@ test ('cdk8sPlusVersion undefined', () => {
   const output = synthSnapshot(project);
 
   expect(output['package.json'].peerDependencies).toStrictEqual({
-    'cdk8s': '^1.0.0-beta.11',
-    'cdk8s-plus-17': '^1.0.0-beta.11',
-    'constructs': '^3.3.75',
-  });
-});
-
-test ('cdk8sPlusVersion defined', () => {
-  const project = new ConstructLibraryCdk8s({
-    cdk8sVersion: '1.0.0-beta.11',
-    name: 'project',
-    defaultReleaseBranch: 'main',
-    cdk8sPlusVersion: '1.0.0-beta.10',
-    releaseWorkflow: true,
-    repositoryUrl: 'github.com/test/test',
-    author: 'test',
-    authorAddress: 'test@test.com',
-    constructsVersion: '3.3.75',
-  });
-
-  const output = synthSnapshot(project);
-
-  expect(output['package.json'].peerDependencies).toStrictEqual({
-    'cdk8s': '^1.0.0-beta.11',
-    'cdk8s-plus-17': '^1.0.0-beta.10',
-    'constructs': '^3.3.75',
-  });
-});
-
-test ('cdk8sPlusVersion pinning', () => {
-  const project = new ConstructLibraryCdk8s({
-    cdk8sVersion: '1.0.0-beta.11',
-    name: 'project',
-    defaultReleaseBranch: 'main',
-    cdk8sPlusVersion: '1.0.0-beta.10',
-    cdk8sPlusVersionPinning: true,
-    releaseWorkflow: true,
-    repositoryUrl: 'github.com/test/test',
-    author: 'test',
-    authorAddress: 'test@test.com',
-    constructsVersion: '3.3.75',
-  });
-
-  const output = synthSnapshot(project);
-
-  expect(output['package.json'].peerDependencies).toStrictEqual({
-    'cdk8s': '^1.0.0-beta.11',
-    'cdk8s-plus-17': '1.0.0-beta.10',
-    'constructs': '^3.3.75',
+    cdk8s: '^1.0.0-beta.11',
+    constructs: '^3.3.75',
   });
 });

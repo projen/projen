@@ -1,6 +1,7 @@
 import * as semver from 'semver';
-import { AutoDiscover, LambdaFunctionCommonOptions } from './awscdk';
-import { ConstructLibrary, ConstructLibraryOptions } from './construct-lib';
+import { ConstructLibrary, ConstructLibraryOptions } from '../cdk';
+import { AutoDiscover } from './auto-discover';
+import { LambdaFunctionCommonOptions } from './lambda-function';
 
 /**
  * Options for the construct-lib-aws project.
@@ -106,7 +107,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   /**
    * Whether CDK dependencies are added as normal dependencies (and peer dependencies).
    */
-  public readonly cdkDependenciesAsDeps: boolean
+  public readonly cdkDependenciesAsDeps: boolean;
 
   constructor(options: AwsCdkConstructLibraryOptions) {
     super({
@@ -151,6 +152,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
         srcdir: this.srcdir,
         testdir: this.testdir,
         lambdaOptions: options.lambdaOptions,
+        tsconfigPath: this.tsconfigDev.fileName,
       });
     }
   }
