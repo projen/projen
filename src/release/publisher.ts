@@ -1,7 +1,7 @@
 import { Component } from '../component';
 import { IJobProvider, workflows } from '../github';
 import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
-import { JobPermission, JobPermissions } from '../github/workflows-model';
+import { Job, JobPermission, JobPermissions } from '../github/workflows-model';
 import { defaultNpmToken } from '../javascript/node-package';
 import { Project } from '../project';
 
@@ -60,6 +60,12 @@ export interface PublisherOptions {
    * @default "failed-release"
    */
   readonly failureIssueLabel?: string;
+
+  /**
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
+   */
+  readonly workflowRunsOn?: string[];
 }
 
 /**
@@ -75,6 +81,7 @@ export class Publisher extends Component implements IJobProvider {
 
   private readonly failureIssue: boolean;
   private readonly failureIssueLabel: string;
+  private readonly runsOn: string[];
 
   // the jobs to add to the release workflow
   private readonly _jobs: { [name: string]: workflows.Job } = {};
@@ -89,6 +96,7 @@ export class Publisher extends Component implements IJobProvider {
 
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? 'failed-release';
+    this.runsOn = options.workflowRunsOn ?? ['ubuntu-latest'];
   }
 
   /**
@@ -379,12 +387,12 @@ export class Publisher extends Component implements IJobProvider {
       Object.assign(perms, { issues: JobPermission.WRITE });
     }
 
-    const job = {
+    const job: Job = {
       name: `Publish to ${opts.registryName}`,
       permissions: perms,
       if: this.condition,
       needs: [this.buildJobId],
-      runsOn: 'ubuntu-latest',
+      runsOn: this.runsOn,
       container: opts.containerImage ? {
         image: opts.containerImage,
       } : undefined,

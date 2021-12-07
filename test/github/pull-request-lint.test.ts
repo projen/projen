@@ -51,6 +51,20 @@ describe('semantic titles', () => {
   });
 });
 
+test('with custom runner', () => {
+  // GIVEN
+  const project = createProject();
+
+  // WHEN
+  new PullRequestLint(project.github!, {
+    runsOn: ['self-hosted'],
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  expect(snapshot['.github/workflows/pull-request-lint.yml']).toContain('runs-on: self-hosted');
+});
+
 type ProjectOptions = Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name'>;
 function createProject(options: ProjectOptions = {}): NodeProject {
   return new NodeProject({

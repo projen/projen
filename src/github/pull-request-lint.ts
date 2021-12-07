@@ -19,6 +19,12 @@ export interface PullRequestLintOptions {
    * @default - title must start with "feat", "fix", or "chore"
    */
   readonly semanticTitleOptions?: SemanticTitleOptions;
+
+  /**
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
+   */
+  readonly runsOn?: string[];
 }
 
 /**
@@ -59,7 +65,7 @@ export class PullRequestLint extends Component {
 
       const validateJob: Job = {
         name: 'Validate PR title',
-        runsOn: 'ubuntu-latest',
+        runsOn: options.runsOn ?? ['ubuntu-latest'],
         permissions: {
           pullRequests: JobPermission.WRITE,
         },

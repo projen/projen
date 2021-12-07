@@ -219,7 +219,7 @@ test('addJobs() can be used to add arbitrary jobs to the release workflows', () 
   // WHEN
   release.addJobs({
     random_job: {
-      runsOn: 'foo',
+      runsOn: ['foo'],
       permissions: {
         actions: JobPermission.NONE,
       },
@@ -473,4 +473,30 @@ test('manual release with custom git-push', () => {
       expect.objectContaining({ exec: 'git push --follow-tags -o ci.skip origin main' }),
     ]),
   );
+});
+
+test('publisher can use custom github runner', () => {
+  // GIVEN
+  const project = new TestProject();
+
+  const release = new Release(project, {
+    task: project.buildTask,
+    versionFile: 'version.json',
+    branch: 'main',
+    workflowRunsOn: ['self-hosted'],
+  });
+
+  // WHEN
+  release.publisher.publishToGo();
+  release.publisher.publishToMaven();
+  release.publisher.publishToNpm();
+  release.publisher.publishToNuget();
+  release.publisher.publishToPyPi();
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  const workflow = YAML.parse(outdir['.github/workflows/release.yml']);
+  for ( let job of Object.keys(workflow.jobs) ) {
+    expect(workflow.jobs[job]['runs-on']).toEqual('self-hosted');
+  }
 });

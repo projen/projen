@@ -172,6 +172,23 @@ test('git identity can be customized', () => {
   });
 });
 
+
+test('github runner can be customized', () => {
+
+  const project = createProject({
+    depsUpgradeOptions: {
+      workflowOptions: {
+        runsOn: ['self-hosted'],
+      },
+    },
+  });
+
+  const snapshot = synthSnapshot(project);
+  const upgrade = yaml.parse(snapshot['.github/workflows/upgrade-main.yml']);
+  expect(upgrade.jobs.upgrade['runs-on']).toEqual('self-hosted');
+  expect(upgrade.jobs.pr['runs-on']).toEqual('self-hosted');
+});
+
 function createProject(options: Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name' | 'dependenciesUpgrade'> = {}): NodeProject {
   return new NodeProject({
     defaultReleaseBranch: 'main',
