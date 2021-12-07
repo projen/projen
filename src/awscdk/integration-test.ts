@@ -73,9 +73,9 @@ export class IntegrationTest extends Component {
     const actualdir = join(dir, '.tmp', `${name}.integ`, 'synth.cdk.out');
     const snapshotdir = join(dir, `${name}.integ.snapshot`);
 
-    const app = `ts-node ${entry} -P ${options.tsconfigPath}`;
+    const app = `ts-node -P ${options.tsconfigPath} ${entry}`;
 
-    if (!project.deps.getDependency('ts-node')) {
+    if (!project.deps.tryGetDependency('ts-node')) {
       project.deps.addDependency('ts-node', DependencyType.BUILD);
     }
 
