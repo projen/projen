@@ -57,7 +57,7 @@ test('with custom runner', () => {
 
   // WHEN
   new PullRequestLint(project.github!, {
-    runsOn: 'self-hosted',
+    runsOn: ['self-hosted'],
   });
 
   // THEN

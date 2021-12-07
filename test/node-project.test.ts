@@ -539,7 +539,7 @@ test('extend github release workflow', () => {
       permissions: {
         contents: JobPermission.READ,
       },
-      runsOn: 'ubuntu-latest',
+      runsOn: ['ubuntu-latest'],
       env: {
         CI: 'true',
       },

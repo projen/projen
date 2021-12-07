@@ -8,9 +8,9 @@ export interface Job {
    * The type of machine to run the job on. The machine can be either a
    * GitHub-hosted runner or a self-hosted runner.
    *
-   * @example "ubuntu-latest"
+   * @example ["ubuntu-latest"]
    */
-  readonly runsOn: string | string[];
+  readonly runsOn: string[];
 
   /**
    * A job contains a sequence of tasks called steps. Steps can run commands,

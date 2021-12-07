@@ -219,7 +219,7 @@ test('addJobs() can be used to add arbitrary jobs to the release workflows', () 
   // WHEN
   release.addJobs({
     random_job: {
-      runsOn: 'foo',
+      runsOn: ['foo'],
       permissions: {
         actions: JobPermission.NONE,
       },
@@ -483,7 +483,7 @@ test('publisher can use custom github runner', () => {
     task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
-    workflowRunsOn: 'self-hosted',
+    workflowRunsOn: ['self-hosted'],
   });
 
   // WHEN

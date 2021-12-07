@@ -48,7 +48,7 @@ describe('auto-approve', () => {
 
     new AutoApprove(project.github!, {
       secret: 'MY_SECRET',
-      runsOn: 'self-hosted',
+      runsOn: ['self-hosted'],
     });
 
     const snapshot = synthSnapshot(project);

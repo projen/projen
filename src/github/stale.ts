@@ -24,10 +24,10 @@ export interface StaleOptions {
   readonly issues?: StaleBehavior;
 
   /**
-   * Github Runner selection label(s)
-   * @default "ubuntu-latest"
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string | string[];
+  readonly runsOn?: string[];
 }
 
 /**
@@ -101,7 +101,7 @@ export class Stale extends Component {
 
     stale.addJobs({
       stale: {
-        runsOn: options.runsOn ?? 'ubuntu-latest',
+        runsOn: options.runsOn ?? ['ubuntu-latest'],
         permissions: {
           issues: JobPermission.WRITE,
           pullRequests: JobPermission.WRITE,

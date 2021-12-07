@@ -62,10 +62,10 @@ export interface PublisherOptions {
   readonly failureIssueLabel?: string;
 
   /**
-   * Github Runner selection label(s)
-   * @default "ubuntu-latest"
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
    */
-  readonly workflowRunsOn?: string | string[];
+  readonly workflowRunsOn?: string[];
 }
 
 /**
@@ -81,7 +81,7 @@ export class Publisher extends Component implements IJobProvider {
 
   private readonly failureIssue: boolean;
   private readonly failureIssueLabel: string;
-  private readonly runsOn: string | string[];
+  private readonly runsOn: string[];
 
   // the jobs to add to the release workflow
   private readonly _jobs: { [name: string]: workflows.Job } = {};
@@ -96,7 +96,7 @@ export class Publisher extends Component implements IJobProvider {
 
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? 'failed-release';
-    this.runsOn = options.workflowRunsOn ?? 'ubuntu-latest';
+    this.runsOn = options.workflowRunsOn ?? ['ubuntu-latest'];
   }
 
   /**

@@ -151,14 +151,13 @@ export interface ReleaseProjectOptions {
    *
    * @default - standard configuration applicable for GitHub repositories
    */
-
   readonly versionrcOptions?: Record<string, any>;
 
   /**
-   * Github Runner selection label(s)
-   * '@default "ubuntu-latest"
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
    */
-  readonly workflowRunsOn?: string | string[];
+  readonly workflowRunsOn?: string[];
 }
 
 /**
@@ -221,7 +220,7 @@ export class Release extends Component {
   private readonly jobs: Record<string, Job> = {};
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
-  private readonly workflowRunsOn?: string | string[];
+  private readonly workflowRunsOn?: string[];
 
   constructor(project: GitHubProject, options: ReleaseOptions) {
     super(project);

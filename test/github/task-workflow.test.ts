@@ -53,7 +53,7 @@ describe('task-workflow', () => {
       name: 'task-workflow',
       task,
       permissions: {},
-      runsOn: 'self-hosted',
+      runsOn: ['self-hosted'],
     });
 
     const snapshot = synthSnapshot(project);

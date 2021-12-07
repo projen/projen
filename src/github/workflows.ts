@@ -95,6 +95,13 @@ export class GithubWorkflow extends Component {
       }
     }
 
+    // verify that job has a "runsOn" statement to ensure a worker can be selected appropriately
+    for (const [id, job] of Object.entries(jobs)) {
+      if (job.runsOn.length === 0) {
+        throw new Error(`${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`);
+      }
+    }
+
     this.jobs = {
       ...this.jobs,
       ...jobs,
@@ -163,7 +170,7 @@ function renderJobs(jobs: Record<string, workflows.Job>) {
     return {
       'name': job.name,
       'needs': arrayOrScalar(job.needs),
-      'runs-on': job.runsOn,
+      'runs-on': arrayOrScalar(job.runsOn),
       'permissions': kebabCaseKeys(job.permissions),
       'environment': job.environment,
       'concurrency': job.concurrency,

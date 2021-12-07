@@ -199,7 +199,7 @@ export class UpgradeDependencies extends Component {
   private createUpgrade(task: Task, branch?: string): Upgrade {
 
     const build = this.options.workflowOptions?.rebuild ?? true;
-    const runsOn = this.options.workflowOptions?.runsOn ?? 'ubuntu-latest';
+    const runsOn = this.options.workflowOptions?.runsOn ?? ['ubuntu-latest'];
     const patchFile = '.upgrade.tmp.patch';
     const buildStepId = 'build';
     const conclusion = 'conclusion';
@@ -259,7 +259,7 @@ export class UpgradeDependencies extends Component {
         name: 'Upgrade',
         container: this.options.workflowOptions?.container,
         permissions: permissions,
-        runsOn: runsOn ?? 'ubuntu-latest',
+        runsOn: runsOn ?? ['ubuntu-latest'],
         outputs: outputs,
         steps: steps,
       },
@@ -274,7 +274,7 @@ export class UpgradeDependencies extends Component {
   private createPr(workflow: GithubWorkflow, upgrade: Upgrade): PR {
 
     const customToken = this.options.workflowOptions?.secret ? context(`secrets.${this.options.workflowOptions.secret}`) : undefined;
-    const runsOn = this.options.workflowOptions?.runsOn ?? 'ubuntu-latest';
+    const runsOn = this.options.workflowOptions?.runsOn ?? ['ubuntu-latest'];
     const workflowName = workflow.name;
     const branchName = `github-actions/${workflowName}`;
     const prStepId = 'create-pr';
@@ -364,7 +364,7 @@ export class UpgradeDependencies extends Component {
           pullRequests: workflows.JobPermission.WRITE,
           checks: writeChecksPermission ? workflows.JobPermission.WRITE : undefined,
         },
-        runsOn: runsOn ?? 'ubuntu-latest',
+        runsOn: runsOn ?? ['ubuntu-latest'],
         steps: steps,
       },
       jobId: 'pr',
@@ -456,10 +456,10 @@ export interface UpgradeDependenciesWorkflowOptions {
   readonly gitIdentity?: GitIdentity;
 
   /**
-   * Github Runner selection label(s)
-   * @default "ubuntu-latest"
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string | string[];
+  readonly runsOn?: string[];
 }
 
 /**

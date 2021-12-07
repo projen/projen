@@ -3273,26 +3273,18 @@ Array [
         "switch": "workflow-node-version",
       },
       Object {
-        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "default": "[\\"ubuntu-latest\\"]",
+        "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": Object {
-          "union": Object {
-            "types": Array [
-              Object {
-                "primitive": "string",
-              },
-              Object {
-                "collection": Object {
-                  "elementtype": Object {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-            ],
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -5904,26 +5896,18 @@ added, set to the exact version configrued here.",
         "switch": "workflow-node-version",
       },
       Object {
-        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "default": "[\\"ubuntu-latest\\"]",
+        "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": Object {
-          "union": Object {
-            "types": Array [
-              Object {
-                "primitive": "string",
-              },
-              Object {
-                "collection": Object {
-                  "elementtype": Object {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-            ],
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -8256,26 +8240,18 @@ added, set to the exact version configrued here.",
         "switch": "workflow-node-version",
       },
       Object {
-        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "default": "[\\"ubuntu-latest\\"]",
+        "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": Object {
-          "union": Object {
-            "types": Array [
-              Object {
-                "primitive": "string",
-              },
-              Object {
-                "collection": Object {
-                  "elementtype": Object {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-            ],
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -10807,26 +10783,18 @@ added, set to the exact version configrued here.",
         "switch": "workflow-node-version",
       },
       Object {
-        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "default": "[\\"ubuntu-latest\\"]",
+        "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": Object {
-          "union": Object {
-            "types": Array [
-              Object {
-                "primitive": "string",
-              },
-              Object {
-                "collection": Object {
-                  "elementtype": Object {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-            ],
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -13290,26 +13258,18 @@ added, set to the exact version configrued here.",
         "switch": "workflow-node-version",
       },
       Object {
-        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "default": "[\\"ubuntu-latest\\"]",
+        "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": Object {
-          "union": Object {
-            "types": Array [
-              Object {
-                "primitive": "string",
-              },
-              Object {
-                "collection": Object {
-                  "elementtype": Object {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-            ],
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -16427,26 +16387,18 @@ added, set to the exact version configrued here.",
         "switch": "workflow-node-version",
       },
       Object {
-        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "default": "[\\"ubuntu-latest\\"]",
+        "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": Object {
-          "union": Object {
-            "types": Array [
-              Object {
-                "primitive": "string",
-              },
-              Object {
-                "collection": Object {
-                  "elementtype": Object {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-            ],
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -18416,26 +18368,18 @@ added, set to the exact version configrued here.",
         "switch": "workflow-node-version",
       },
       Object {
-        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "default": "[\\"ubuntu-latest\\"]",
+        "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": Object {
-          "union": Object {
-            "types": Array [
-              Object {
-                "primitive": "string",
-              },
-              Object {
-                "collection": Object {
-                  "elementtype": Object {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-            ],
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -20667,26 +20611,18 @@ added, set to the exact version configrued here.",
         "switch": "workflow-node-version",
       },
       Object {
-        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "default": "[\\"ubuntu-latest\\"]",
+        "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": Object {
-          "union": Object {
-            "types": Array [
-              Object {
-                "primitive": "string",
-              },
-              Object {
-                "collection": Object {
-                  "elementtype": Object {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-            ],
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -22588,26 +22524,18 @@ added, set to the exact version configrued here.",
         "switch": "workflow-node-version",
       },
       Object {
-        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "default": "[\\"ubuntu-latest\\"]",
+        "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": Object {
-          "union": Object {
-            "types": Array [
-              Object {
-                "primitive": "string",
-              },
-              Object {
-                "collection": Object {
-                  "elementtype": Object {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-            ],
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -25478,26 +25406,18 @@ added, set to the exact version configrued here.",
         "switch": "workflow-node-version",
       },
       Object {
-        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "default": "[\\"ubuntu-latest\\"]",
+        "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": Object {
-          "union": Object {
-            "types": Array [
-              Object {
-                "primitive": "string",
-              },
-              Object {
-                "collection": Object {
-                  "elementtype": Object {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-            ],
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -27717,26 +27637,18 @@ added, set to the exact version configrued here.",
         "switch": "workflow-node-version",
       },
       Object {
-        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "default": "[\\"ubuntu-latest\\"]",
+        "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": Object {
-          "union": Object {
-            "types": Array [
-              Object {
-                "primitive": "string",
-              },
-              Object {
-                "collection": Object {
-                  "elementtype": Object {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-            ],
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -29934,26 +29846,18 @@ added, set to the exact version configrued here.",
         "switch": "workflow-node-version",
       },
       Object {
-        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "default": "[\\"ubuntu-latest\\"]",
+        "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": Object {
-          "union": Object {
-            "types": Array [
-              Object {
-                "primitive": "string",
-              },
-              Object {
-                "collection": Object {
-                  "elementtype": Object {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-            ],
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",
@@ -32151,26 +32055,18 @@ added, set to the exact version configrued here.",
         "switch": "workflow-node-version",
       },
       Object {
-        "docs": "Github Runner selection label(s) '@default \\"ubuntu-latest\\".",
+        "default": "[\\"ubuntu-latest\\"]",
+        "docs": "Github Runner selection labels.",
         "featured": false,
         "fullType": Object {
-          "union": Object {
-            "types": Array [
-              Object {
-                "primitive": "string",
-              },
-              Object {
-                "collection": Object {
-                  "elementtype": Object {
-                    "primitive": "string",
-                  },
-                  "kind": "array",
-                },
-              },
-            ],
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
           },
         },
-        "jsonLike": false,
+        "jsonLike": true,
         "name": "workflowRunsOn",
         "optional": true,
         "parent": "ReleaseProjectOptions",

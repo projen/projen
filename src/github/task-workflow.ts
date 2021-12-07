@@ -101,10 +101,10 @@ export interface TaskWorkflowOptions {
   readonly gitIdentity?: GitIdentity;
 
   /**
-   * Github Runner selection label(s)
-   * @default "ubuntu-latest"
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string | string[];
+  readonly runsOn?: string[];
 }
 
 /**
@@ -153,7 +153,7 @@ export class TaskWorkflow extends GithubWorkflow {
     }
 
     const job: Job = {
-      runsOn: options.runsOn ?? 'ubuntu-latest',
+      runsOn: options.runsOn ?? ['ubuntu-latest'],
       container: options.container,
       env: options.env,
       permissions: options.permissions,

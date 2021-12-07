@@ -178,7 +178,7 @@ test('github runner can be customized', () => {
   const project = createProject({
     depsUpgradeOptions: {
       workflowOptions: {
-        runsOn: 'self-hosted',
+        runsOn: ['self-hosted'],
       },
     },
   });

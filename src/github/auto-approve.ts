@@ -33,10 +33,10 @@ export interface AutoApproveOptions {
   readonly secret: string;
 
   /**
-   * Github Runner selection label(s)
-   * @default "ubuntu-latest"
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
    */
-  readonly runsOn?: string | string[];
+  readonly runsOn?: string[];
 }
 
 /**
@@ -59,7 +59,7 @@ export class AutoApprove extends Component {
     }
 
     const approveJob: Job = {
-      runsOn: options.runsOn ?? 'ubuntu-latest',
+      runsOn: options.runsOn ?? ['ubuntu-latest'],
       permissions: {
         pullRequests: JobPermission.WRITE,
       },

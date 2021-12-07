@@ -35,7 +35,7 @@ test('customizations', () => {
 test('with custom runner', () => {
   const project = new TestProject({
     staleOptions: {
-      runsOn: 'self-hosted',
+      runsOn: ['self-hosted'],
     },
   });
 
