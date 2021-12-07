@@ -426,7 +426,20 @@ export interface Triggers {
   readonly repositoryDispatch?: RepositoryDispatchOptions;
   //#endregion
 
+  //#region Workflow reuse events
+  /**
+   * Can be called from another workflow
+   * @see https://docs.github.com/en/actions/learn-github-actions/reusing-workflows
+   */
+  readonly workflowCall?: WorkflowCallOptions;
+  //#endregion
+
   //#region Webhook events
+  /**
+   * Runs your workflow anytime the branch_protection_rule event occurs.
+   */
+  readonly branchProtectionRule?: BranchProtectionRuleOptions;
+
   /**
    * Runs your workflow anytime the check_run event occurs.
    */
@@ -462,6 +475,18 @@ export interface Triggers {
    * commit SHA may not have a Git ref.
    */
   readonly deploymentStatus?: DeploymentStatusOptions;
+
+  /**
+   * Runs your workflow anytime the discussion event occurs. More than one activity type triggers this event.
+   * @see https://docs.github.com/en/graphql/guides/using-the-graphql-api-for-discussions
+   */
+  readonly discussion?: DiscussionOptions;
+
+  /**
+   * Runs your workflow anytime the discussion_comment event occurs. More than one activity type triggers this event.
+   * @see https://docs.github.com/en/graphql/guides/using-the-graphql-api-for-discussions
+   */
+  readonly discussionComment?: DiscussionCommentOptions;
 
   /**
    * Runs your workflow anytime when someone forks a repository, which
@@ -619,6 +644,18 @@ export interface RepositoryDispatchOptions {
 }
 
 /**
+ * Branch Protection Rule options
+ */
+export interface BranchProtectionRuleOptions {
+  /**
+   * Which activity types to trigger on.
+   *
+   * @defaults - all activity types
+   */
+  readonly types?: Array<'created' | 'edited' | 'deleted'>;
+}
+
+/**
  * Check run options.
  */
 export interface CheckRunOptions {
@@ -640,6 +677,30 @@ export interface CheckSuiteOptions {
    * @defaults - all activity types
    */
   readonly types?: Array<'completed' | 'requested' | 'rerequested'>;
+}
+
+/**
+ * Discussion options
+ */
+export interface DiscussionOptions {
+  /**
+   * Which activity types to trigger on.
+   *
+   * @defaults - all activity types
+   */
+  readonly types?: Array<'created' | 'edited' | 'transferred' | 'pinned' | 'unpinned' | 'labeled' | 'unlabeled' | 'locked' | 'unlocked' | 'category_changed' | 'answered' | 'unanswered'>;
+}
+
+/**
+ * Discussion comment options
+ */
+export interface DiscussionCommentOptions {
+  /**
+   * Which activity types to trigger on.
+   *
+   * @defaults - all activity types
+   */
+  readonly types?: Array<'created' | 'edited' | 'deleted'>;
 }
 
 /**
@@ -865,6 +926,11 @@ export interface WorkflowRunOptions {
  * The Workflow dispatch event accepts no options.
  */
 export interface WorkflowDispatchOptions { }
+
+/**
+ * The Workflow Call event accepts no options.
+ */
+export interface WorkflowCallOptions { }
 
 /**
  * The Create event accepts no options.

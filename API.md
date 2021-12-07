@@ -4870,12 +4870,15 @@ on(events: Triggers): void
 ```
 
 * **events** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  The event(s) to trigger the workflow.
+  * **branchProtectionRule** (<code>[github.workflows.BranchProtectionRuleOptions](#projen-github-workflows-branchprotectionruleoptions)</code>)  Runs your workflow anytime the branch_protection_rule event occurs. __*Optional*__
   * **checkRun** (<code>[github.workflows.CheckRunOptions](#projen-github-workflows-checkrunoptions)</code>)  Runs your workflow anytime the check_run event occurs. __*Optional*__
   * **checkSuite** (<code>[github.workflows.CheckSuiteOptions](#projen-github-workflows-checksuiteoptions)</code>)  Runs your workflow anytime the check_suite event occurs. __*Optional*__
   * **create** (<code>[github.workflows.CreateOptions](#projen-github-workflows-createoptions)</code>)  Runs your workflow anytime someone creates a branch or tag, which triggers the create event. __*Optional*__
   * **delete** (<code>[github.workflows.DeleteOptions](#projen-github-workflows-deleteoptions)</code>)  Runs your workflow anytime someone deletes a branch or tag, which triggers the delete event. __*Optional*__
   * **deployment** (<code>[github.workflows.DeploymentOptions](#projen-github-workflows-deploymentoptions)</code>)  Runs your workflow anytime someone creates a deployment, which triggers the deployment event. __*Optional*__
   * **deploymentStatus** (<code>[github.workflows.DeploymentStatusOptions](#projen-github-workflows-deploymentstatusoptions)</code>)  Runs your workflow anytime a third party provides a deployment status, which triggers the deployment_status event. __*Optional*__
+  * **discussion** (<code>[github.workflows.DiscussionOptions](#projen-github-workflows-discussionoptions)</code>)  Runs your workflow anytime the discussion event occurs. __*Optional*__
+  * **discussionComment** (<code>[github.workflows.DiscussionCommentOptions](#projen-github-workflows-discussioncommentoptions)</code>)  Runs your workflow anytime the discussion_comment event occurs. __*Optional*__
   * **fork** (<code>[github.workflows.ForkOptions](#projen-github-workflows-forkoptions)</code>)  Runs your workflow anytime when someone forks a repository, which triggers the fork event. __*Optional*__
   * **gollum** (<code>[github.workflows.GollumOptions](#projen-github-workflows-gollumoptions)</code>)  Runs your workflow when someone creates or updates a Wiki page, which triggers the gollum event. __*Optional*__
   * **issueComment** (<code>[github.workflows.IssueCommentOptions](#projen-github-workflows-issuecommentoptions)</code>)  Runs your workflow anytime the issue_comment event occurs. __*Optional*__
@@ -4898,6 +4901,7 @@ on(events: Triggers): void
   * **schedule** (<code>Array<[github.workflows.CronScheduleOptions](#projen-github-workflows-cronscheduleoptions)></code>)  You can schedule a workflow to run at specific UTC times using POSIX cron syntax. __*Optional*__
   * **status** (<code>[github.workflows.StatusOptions](#projen-github-workflows-statusoptions)</code>)  Runs your workflow anytime the status of a Git commit changes, which triggers the status event. __*Optional*__
   * **watch** (<code>[github.workflows.WatchOptions](#projen-github-workflows-watchoptions)</code>)  Runs your workflow anytime the watch event occurs. __*Optional*__
+  * **workflowCall** (<code>[github.workflows.WorkflowCallOptions](#projen-github-workflows-workflowcalloptions)</code>)  Can be called from another workflow. __*Optional*__
   * **workflowDispatch** (<code>[github.workflows.WorkflowDispatchOptions](#projen-github-workflows-workflowdispatchoptions)</code>)  You can configure custom-defined input properties, default input values, and required inputs for the event directly in your workflow. __*Optional*__
   * **workflowRun** (<code>[github.workflows.WorkflowRunOptions](#projen-github-workflows-workflowrunoptions)</code>)  This event occurs when a workflow run is requested or completed, and allows you to execute a workflow based on the finished result of another workflow. __*Optional*__
 
