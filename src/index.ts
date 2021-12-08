@@ -25,6 +25,7 @@ export * from './task';
 export * from './tasks';
 export * from './task-model';
 export * from './task-runtime';
+export * from './testing';
 export * from './textfile';
 export * from './toml';
 export * from './version';

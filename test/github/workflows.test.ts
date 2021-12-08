@@ -1,5 +1,5 @@
 import { Project } from '../../src/project';
-import { synthSnapshot, TestProject } from '../../src/util/synth';
+import { synthSnapshot, TestProject } from '../util';
 
 test('no workflow', () => {
   // GIVEN

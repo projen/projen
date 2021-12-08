@@ -1,6 +1,6 @@
 import { DependencyType } from '../../src/dependencies';
 import { Pom, PomOptions } from '../../src/java';
-import { synthSnapshot, TestProject } from '../../src/util/synth';
+import { synthSnapshot, TestProject } from '../util';
 
 test('group/artifact/version', () => {
   const pom = new TestPom({

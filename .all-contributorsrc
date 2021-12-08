@@ -540,6 +540,42 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "willdady",
+      "name": "Will Dady",
+      "avatar_url": "https://avatars.githubusercontent.com/u/204259?v=4",
+      "profile": "https://willdady.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "msessa",
+      "name": "Matteo Sessa",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1912143?v=4",
+      "profile": "https://github.com/msessa",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Hi-Fi",
+      "name": "Juho Saarinen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1499780?v=4",
+      "profile": "https://github.com/Hi-Fi",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "njlynch",
+      "name": "Nick Lynch",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1376292?v=4",
+      "profile": "https://github.com/njlynch",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

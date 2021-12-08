@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { awscdk } from '../src';
 import { AwsCdkTypeScriptApp } from '../src/awscdk';
-import { mkdtemp, synthSnapshot } from '../src/util/synth';
+import { mkdtemp, synthSnapshot } from './util';
 
 describe('cdkVersion is >= 2.0.0', () => {
   test('use "aws-cdk-lib" the constructs at ^10.0.5', () => {

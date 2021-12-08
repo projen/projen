@@ -39,11 +39,10 @@ export class GitAttributesFile extends FileBase {
       return undefined;
     }
 
-    const maxLen = Math.max(...entries.map(([glob]) => glob.length));
     return [
       `# ${FileBase.PROJEN_MARKER}`,
       '',
-      ...entries.map(([name, attributes]) => `${name.padEnd(maxLen, ' ')}\t${Array.from(attributes).join(' ')}`),
+      ...entries.map(([name, attributes]) => `${name} ${Array.from(attributes).join(' ')}`),
     ].join('\n');
   }
 }

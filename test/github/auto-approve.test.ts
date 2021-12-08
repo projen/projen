@@ -1,6 +1,6 @@
 import { AutoApprove } from '../../src/github/auto-approve';
 import { NodeProject, NodeProjectOptions } from '../../src/javascript';
-import { synthSnapshot } from '../../src/util/synth';
+import { synthSnapshot } from '../util';
 
 describe('auto-approve', () => {
   test('default', () => {

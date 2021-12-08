@@ -1,6 +1,6 @@
 import { JavaProject, JavaProjectOptions } from '../../src/java/java-project';
 import { renderProjenNewOptions } from '../../src/javascript/render-options';
-import { synthSnapshot } from '../../src/util/synth';
+import { synthSnapshot } from '../util';
 
 test('defaults', () => {
   const p = new TestJavaProject();

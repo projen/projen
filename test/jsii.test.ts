@@ -1,5 +1,5 @@
 import { JsiiProject } from '../src/cdk';
-import { synthSnapshot } from '../src/util/synth';
+import { synthSnapshot } from './util';
 
 describe('author', () => {
   test('authorEmail and authorAddress can be the same value', () => {

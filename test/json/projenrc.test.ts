@@ -1,6 +1,6 @@
 import { renderProjenNewOptions } from '../../src/javascript/render-options';
 import { Projenrc } from '../../src/projenrc-json';
-import { synthSnapshot, TestProject } from '../../src/util/synth';
+import { synthSnapshot, TestProject } from '../util';
 
 test('projenrc.json default project', () => {
   // GIVEN
