@@ -1,6 +1,6 @@
 import { ObjectFile } from '../src';
 import { JsonFile } from '../src/json';
-import { synthSnapshot, TestProject } from '../src/util/synth';
+import { synthSnapshot, TestProject } from './util';
 
 class ChildObjectFile extends ObjectFile {}
 

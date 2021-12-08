@@ -1,6 +1,6 @@
 import { NewProjectOptionHints } from '../src/option-hints';
 import { Projects } from '../src/projects';
-import { directorySnapshot, withProjectDir } from '../src/util/synth';
+import { directorySnapshot, withProjectDir } from './util';
 
 describe('createProject', () => {
   test('creates a project in a directory', () => {

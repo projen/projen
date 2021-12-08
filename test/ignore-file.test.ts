@@ -1,5 +1,5 @@
 import { IgnoreFile } from '../src';
-import { synthSnapshot, TestProject } from '../src/util/synth';
+import { synthSnapshot, TestProject } from './util';
 
 test('ignorefile synthesizes correctly', () => {
   // GIVEN

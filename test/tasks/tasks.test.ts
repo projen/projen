@@ -1,7 +1,7 @@
 import { Project } from '../../src';
 import { TasksManifest, TaskStep } from '../../src/task-model';
 import { Tasks } from '../../src/tasks';
-import { TestProject, synthSnapshot } from '../../src/util/synth';
+import { TestProject, synthSnapshot } from '../util';
 
 test('default tasks', () => {
   const p = new TestProject();

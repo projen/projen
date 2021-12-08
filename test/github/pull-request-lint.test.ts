@@ -1,6 +1,6 @@
 import { PullRequestLint } from '../../src/github/pull-request-lint';
 import { NodeProject, NodeProjectOptions } from '../../src/javascript';
-import { synthSnapshot } from '../../src/util/synth';
+import { synthSnapshot } from '../util';
 
 test('default', () => {
   // GIVEN

@@ -1,5 +1,5 @@
 import { GithubWorkflow } from '../../src/github/workflows';
-import { synthSnapshot, TestProject } from '../../src/util/synth';
+import { synthSnapshot, TestProject } from '../util';
 
 describe('github-workflow', () => {
   const workflowName = 'test-workflow';

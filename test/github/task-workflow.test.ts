@@ -1,6 +1,6 @@
 import { TaskWorkflow } from '../../src/github/task-workflow';
 import { Task } from '../../src/task';
-import { synthSnapshot, TestProject } from '../../src/util/synth';
+import { synthSnapshot, TestProject } from '../util';
 
 describe('task-workflow', () => {
   test('default', () => {
