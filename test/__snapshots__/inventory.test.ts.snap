@@ -3650,6 +3650,7 @@ Array [
         "switch": "cdk-assertions",
       },
       Object {
+        "deprecated": true,
         "docs": "Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed?",
         "featured": false,
         "fullType": Object {
@@ -3672,6 +3673,7 @@ Array [
       },
       Object {
         "default": "true",
+        "deprecated": true,
         "docs": "If this is enabled (default), all modules declared in \`cdkDependencies\` will be also added as normal \`dependencies\` (as well as \`peerDependencies\`).",
         "featured": false,
         "fullType": Object {
@@ -3688,6 +3690,7 @@ Array [
         "switch": "cdk-dependencies-as-deps",
       },
       Object {
+        "deprecated": true,
         "docs": "AWS CDK modules required for testing.",
         "featured": true,
         "fullType": Object {

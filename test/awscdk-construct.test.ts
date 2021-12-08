@@ -8,13 +8,13 @@ import { mkdtemp, synthSnapshot } from '../src/util/synth';
 describe('constructs dependency selection', () => {
   test('user-selected', () => {
     // GIVEN
-    const project = new TestProject({ cdkVersion: '1.100.0', constructsVersion: '42.1337.0-ultimate' });
+    const project = new TestProject({ cdkVersion: '1.100.0', constructsVersion: '9.1337.0-ultimate' });
 
     // WHEN
     const snapshot = synthSnapshot(project);
 
     // THEN
-    expect(snapshot['package.json']?.peerDependencies?.constructs).toBe('^42.1337.0-ultimate');
+    expect(snapshot['package.json']?.peerDependencies?.constructs).toBe('^9.1337.0-ultimate');
     expect(snapshot['package.json']?.devDependencies?.constructs).toBeUndefined();
     expect(snapshot['package.json']?.dependencies?.constructs).toBeUndefined();
   });
@@ -58,11 +58,32 @@ describe('constructs dependency selection', () => {
     })).toThrow(/CDK 2.x requires constructs version >= 10/);
   });
 
-  test('for cdk 2.x, throws if non-alpha cdkDependencies provided', () => {
+  test('for cdk 2.x, throws if cdkDependencies provided', () => {
     expect(() => new TestProject({
       cdkVersion: '2.0.0-alpha.5',
       cdkDependencies: ['@aws-cdk/aws-lambda'],
-    })).toThrow(/cdkDependencies for CDK 2.x should only include alpha packages/);
+    })).toThrow(/cdkDependencies is not used for CDK 2.x. Use "peerDeps" instead/);
+  });
+
+  test('for cdk 2.x, throws if cdkTestDependencies provided', () => {
+    expect(() => new TestProject({
+      cdkVersion: '2.0.0-alpha.5',
+      cdkTestDependencies: ['@aws-cdk/aws-lambda'],
+    })).toThrow(/cdkTestDependencies is not used for CDK 2.x. Use "devDeps" instead/);
+  });
+
+  test('for cdk 2.x, throws if cdkDependenciesAsDeps provided', () => {
+    expect(() => new TestProject({
+      cdkVersion: '2.0.0-alpha.5',
+      cdkDependenciesAsDeps: true,
+    })).toThrow(/cdkDependenciesAsDeps is not used for CDK 2.x/);
+  });
+
+  test('for cdk 2.x, throws if cdkAssert provided', () => {
+    expect(() => new TestProject({
+      cdkVersion: '2.0.0-alpha.5',
+      cdkAssert: true,
+    })).toThrow(/cdkAssert is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib/);
   });
 
 
