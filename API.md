@@ -31,6 +31,7 @@ Name|Description
 [Task](#projen-task)|A task that can be performed on the project.
 [TaskRuntime](#projen-taskruntime)|The runtime component of the tasks engine.
 [Tasks](#projen-tasks)|Defines project tasks.
+[Testing](#projen-testing)|A Testing static class with a .synth helper for getting a snapshots of construct outputs. Useful for snapshot testing with Jest.
 [TextFile](#projen-textfile)|A text file.
 [TomlFile](#projen-tomlfile)|Represents a TOML file.
 [Version](#projen-version)|*No description*
@@ -2576,6 +2577,29 @@ tryFind(name: string): Task
 
 __Returns__:
 * <code>[Task](#projen-task)</code>
+
+
+
+## class Testing 🔹 <a id="projen-testing"></a>
+
+A Testing static class with a .synth helper for getting a snapshots of construct outputs. Useful for snapshot testing with Jest.
+
+
+### Methods
+
+
+#### *static* synth(project)🔹 <a id="projen-testing-synth"></a>
+
+Produces a simple JS object that represents the contents of the projects with field names being file paths.
+
+```ts
+static synth(project: Project): Map<string, any>
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  the project to produce a snapshot for.
+
+__Returns__:
+* <code>Map<string, any></code>
 
 
 
