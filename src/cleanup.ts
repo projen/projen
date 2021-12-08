@@ -9,18 +9,18 @@ export const FILE_MANIFEST = `${PROJEN_DIR}/files.json`;
 
 export function cleanup(dir: string, exclude: string[]) {
   const fileManifestPath = path.resolve(dir, FILE_MANIFEST);
-  if (existsSync(fileManifestPath)) {
-    try {
-      const fileFile = JSON.parse(readFileSync(fileManifestPath, 'utf-8'));
-      for (const file of fileFile.files) {
-        fs.removeSync(path.resolve(dir, file));
+  try {
+    if (existsSync(fileManifestPath)) {
+        const fileFile = JSON.parse(readFileSync(fileManifestPath, 'utf-8'));
+        for (const file of fileFile.files) {
+          fs.removeSync(path.resolve(dir, file));
+        }
       }
-      return;
-    } catch (e) {
-      logging.warn(`warning: failed to clean up generated files using file manifest: ${e.stack}`);
-    }
+  } catch (e) {
+    logging.warn(`warning: failed to clean up generated files using file manifest: ${e.stack}`);
   }
 
+  // manifest file is invalid or not present
   try {
     for (const f of findGeneratedFiles(dir, exclude)) {
       fs.removeSync(f);
