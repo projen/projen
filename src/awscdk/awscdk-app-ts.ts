@@ -172,6 +172,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
         srcdir: this.srcdir,
         testdir: this.testdir,
         lambdaOptions: options.lambdaOptions,
+        tsconfigPath: this.tsconfigDev.fileName,
       });
     }
   }

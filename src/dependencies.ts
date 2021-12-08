@@ -80,13 +80,35 @@ export class Dependencies extends Component {
    * @returns a copy (cannot be modified)
    */
   public getDependency(name: string, type?: DependencyType): Dependency {
-    const idx = this.tryGetDependencyIndex(name, type);
-    if (idx === -1) {
+    const dep = this.tryGetDependency(name, type);
+    if (!dep) {
       const msg = type
         ? `there is no ${type} dependency defined on "${name}"`
         : `there is no dependency defined on "${name}"`;
 
       throw new Error(msg);
+    }
+
+    return dep;
+  }
+
+  /**
+   * Returns a dependency by name.
+   *
+   * Returns `undefined` if there is no dependency defined by that name or if
+   * `type` is not provided and there is more then one dependency type for this
+   * dependency.
+   *
+   * @param name The name of the dependency
+   * @param type The dependency type. If this dependency is defined only for a
+   * single type, this argument can be omitted.
+   *
+   * @returns a copy (cannot be modified) or undefined if there is no match
+   */
+  public tryGetDependency(name: string, type?: DependencyType): Dependency | undefined {
+    const idx = this.tryGetDependencyIndex(name, type);
+    if (idx === -1) {
+      return undefined;
     }
 
     return {

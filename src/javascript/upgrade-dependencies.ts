@@ -17,7 +17,6 @@ const DEFAULT_TOKEN = context('secrets.GITHUB_TOKEN');
 const REPO = context('github.repository');
 const RUN_ID = context('github.run_id');
 const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
-const UBUNTU_LATEST = 'ubuntu-latest';
 
 /**
  * Options for `UpgradeDependencies`.
@@ -200,6 +199,7 @@ export class UpgradeDependencies extends Component {
   private createUpgrade(task: Task, branch?: string): Upgrade {
 
     const build = this.options.workflowOptions?.rebuild ?? true;
+    const runsOn = this.options.workflowOptions?.runsOn ?? ['ubuntu-latest'];
     const patchFile = '.upgrade.tmp.patch';
     const buildStepId = 'build';
     const conclusion = 'conclusion';
@@ -259,7 +259,7 @@ export class UpgradeDependencies extends Component {
         name: 'Upgrade',
         container: this.options.workflowOptions?.container,
         permissions: permissions,
-        runsOn: UBUNTU_LATEST,
+        runsOn: runsOn ?? ['ubuntu-latest'],
         outputs: outputs,
         steps: steps,
       },
@@ -274,6 +274,7 @@ export class UpgradeDependencies extends Component {
   private createPr(workflow: GithubWorkflow, upgrade: Upgrade): PR {
 
     const customToken = this.options.workflowOptions?.secret ? context(`secrets.${this.options.workflowOptions.secret}`) : undefined;
+    const runsOn = this.options.workflowOptions?.runsOn ?? ['ubuntu-latest'];
     const workflowName = workflow.name;
     const branchName = `github-actions/${workflowName}`;
     const prStepId = 'create-pr';
@@ -363,7 +364,7 @@ export class UpgradeDependencies extends Component {
           pullRequests: workflows.JobPermission.WRITE,
           checks: writeChecksPermission ? workflows.JobPermission.WRITE : undefined,
         },
-        runsOn: UBUNTU_LATEST,
+        runsOn: runsOn ?? ['ubuntu-latest'],
         steps: steps,
       },
       jobId: 'pr',
@@ -453,6 +454,12 @@ export interface UpgradeDependenciesWorkflowOptions {
    * @default "github-actions@github.com"
    */
   readonly gitIdentity?: GitIdentity;
+
+  /**
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
+   */
+  readonly runsOn?: string[];
 }
 
 /**

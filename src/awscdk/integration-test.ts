@@ -1,5 +1,6 @@
 import { basename, dirname, join } from 'path';
 import { Component } from '../component';
+import { DependencyType } from '../dependencies';
 import { Project } from '../project';
 import { Task } from '../task';
 import { FEATURE_FLAGS, TYPESCRIPT_INTEG_EXT } from './internal';
@@ -26,6 +27,11 @@ export interface IntegrationTestOptions extends IntegrationTestCommonOptions {
    * @example "test/subdir/foo.integ.ts"
    */
   readonly entrypoint: string;
+
+  /**
+   * The path of the tsconfig.json file to use when running integration test cdk apps.
+   */
+  readonly tsconfigPath: string;
 }
 
 /**
@@ -67,10 +73,10 @@ export class IntegrationTest extends Component {
     const actualdir = join(dir, '.tmp', `${name}.integ`, 'synth.cdk.out');
     const snapshotdir = join(dir, `${name}.integ.snapshot`);
 
-    const app = `ts-node ${entry}`;
+    const app = `ts-node -P ${options.tsconfigPath} ${entry}`;
 
-    if (!project.deps.getDependency('ts-node')) {
-      throw new Error('ts-node dependency is required for integration tests.');
+    if (!project.deps.tryGetDependency('ts-node')) {
+      project.deps.addDependency('ts-node', DependencyType.BUILD);
     }
 
     const opts = [

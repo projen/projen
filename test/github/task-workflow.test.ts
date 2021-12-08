@@ -45,6 +45,36 @@ describe('task-workflow', () => {
       permissions: {},
     })).toThrow(/Trigger \"issueComment\" should not be used due to a security concern/);
   });
+
+  test('with custom runner', () => {
+    const project = new TestProject();
+
+    new TaskWorkflow(project.github!, {
+      name: 'task-workflow',
+      task,
+      permissions: {},
+      runsOn: ['self-hosted'],
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot['.github/workflows/task-workflow.yml']).toContain('runs-on: self-hosted');
+  });
+
+  test('with custom runner, multiple labels', () => {
+    const project = new TestProject();
+
+    new TaskWorkflow(project.github!, {
+      name: 'task-workflow',
+      task,
+      permissions: {},
+      runsOn: ['self-hosted', 'ubuntu-18.04'],
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot['.github/workflows/task-workflow.yml']).toMatch(/runs-on:\n\s+- self-hosted\n\s+- ubuntu-18\.04/m);
+  });
 });
 
 const task = new Task('gh-workflow-test', {

@@ -36,6 +36,24 @@ test('throws when adding workflow with existing name', () => {
   expect(() => p.github?.addWorkflow('stale')).toThrow(/there is already a file under/);
 });
 
+test('throws when adding workflow with adding a job with no runners specified', () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  // WHEN
+  const workflow = p.github?.addWorkflow('my-workflow');
+
+  // THEN
+  expect(() => workflow?.addJobs({
+    job1: {
+      permissions: {},
+      steps: [],
+      runsOn: [],
+    },
+  })).toThrow(/at least one runner selector labels must be provided/);
+});
+
 test('tryFind valid workflow', () => {
   // GIVEN
   const p = new TestProject();

@@ -1,5 +1,7 @@
 import { awscdk } from '../../src';
+import { IntegrationTest } from '../../src/awscdk';
 import { Testing } from '../../src/testing';
+import { TypeScriptProject } from '../../src/typescript';
 
 describe('IntegrationTest', () => {
   // GIVEN
@@ -8,6 +10,7 @@ describe('IntegrationTest', () => {
   // WHEN
   new awscdk.IntegrationTest(project, {
     entrypoint: 'test/foo.integ.ts',
+    tsconfigPath: project.tsconfigDev.fileName,
   });
 
   // THEN
@@ -57,5 +60,22 @@ describe('IntegrationTest', () => {
       expect(actualTaskNames).toContain(t);
       expect(output['.projen/tasks.json'].tasks[t]).toMatchSnapshot();
     }
+  });
+});
+
+test('installs ts-node if needed', () => {
+  const project = new TypeScriptProject({
+    name: 'test',
+    defaultReleaseBranch: 'main',
+  });
+
+  new IntegrationTest(project, {
+    entrypoint: 'test/foo.integ.ts',
+    tsconfigPath: project.tsconfigDev.fileName,
+  });
+
+  expect(project.deps.getDependency('ts-node')).toStrictEqual({
+    name: 'ts-node',
+    type: 'build',
   });
 });

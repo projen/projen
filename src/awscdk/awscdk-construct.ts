@@ -200,6 +200,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
         srcdir: this.srcdir,
         testdir: this.testdir,
         lambdaOptions: options.lambdaOptions,
+        tsconfigPath: this.tsconfigDev.fileName,
       });
     }
   }
