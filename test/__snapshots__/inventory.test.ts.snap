@@ -3637,7 +3637,8 @@ Array [
         "switch": "catalog",
       },
       Object {
-        "default": "true",
+        "default": "false",
+        "deprecated": true,
         "docs": "Install the @aws-cdk/assert library?",
         "featured": false,
         "fullType": Object {
@@ -3654,8 +3655,26 @@ Array [
         "switch": "cdk-assert",
       },
       Object {
+        "default": "true",
+        "docs": "Install the @aws-cdk/assertions library?",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "cdkAssertions",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": Array [
+          "cdkAssertions",
+        ],
+        "simpleType": "boolean",
+        "switch": "cdk-assertions",
+      },
+      Object {
+        "deprecated": true,
         "docs": "Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed?",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
@@ -3676,6 +3695,7 @@ Array [
       },
       Object {
         "default": "true",
+        "deprecated": true,
         "docs": "If this is enabled (default), all modules declared in \`cdkDependencies\` will be also added as normal \`dependencies\` (as well as \`peerDependencies\`).",
         "featured": false,
         "fullType": Object {
@@ -3692,6 +3712,7 @@ Array [
         "switch": "cdk-dependencies-as-deps",
       },
       Object {
+        "deprecated": true,
         "docs": "AWS CDK modules required for testing.",
         "featured": true,
         "fullType": Object {
@@ -3713,7 +3734,7 @@ Array [
         "switch": "cdk-test-dependencies",
       },
       Object {
-        "default": "\\"1.129.0\\"",
+        "default": "\\"2.0.0\\"",
         "docs": "Minimum target version this library is tested against.",
         "featured": true,
         "fullType": Object {
@@ -3850,9 +3871,8 @@ Array [
         "switch": "compat-ignore",
       },
       Object {
-        "default": "- When the default behavior is used, the dependency on \`constructs\` will only
-be added as a \`peerDependency\`. Otherwise, a \`devDependency\` will also be
-added, set to the exact version configrued here.",
+        "default": "- When the default behavior is used, the dependency on \`constructs\` will
+be added as both a \`peerDependency\` and a \`devDependency\`.",
         "docs": "Minimum target version of constructs being tested against. If not provided, the default value depends on the configured \`cdkVersion\`:.",
         "featured": false,
         "fullType": Object {
