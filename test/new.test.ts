@@ -5,7 +5,7 @@ import { join } from 'path';
 import { pathExistsSync } from 'fs-extra';
 import * as inventory from '../src/inventory';
 import { execCapture } from '../src/util';
-import { directorySnapshot, execProjenCLI, synthSnapshot, synthSnapshotWithPost, TestProject, withProjectDir } from '../src/util/synth';
+import { directorySnapshot, execProjenCLI, synthSnapshot, synthSnapshotWithPost, TestProject, withProjectDir } from './util';
 
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {

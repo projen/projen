@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { JsonFile, Project, TextFile } from '../src';
-import { TestProject } from '../src/util/synth';
+import { TestProject } from './util';
 
 test('file paths are relative to the project outdir', () => {
   // GIVEN

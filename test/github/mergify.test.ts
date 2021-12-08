@@ -1,5 +1,5 @@
 import { NodeProject, NodeProjectOptions } from '../../src/javascript';
-import { synthSnapshot } from '../../src/util/synth';
+import { synthSnapshot } from '../util';
 
 describe('mergify', () => {
   test('default', () => {

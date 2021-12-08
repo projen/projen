@@ -1,6 +1,6 @@
 import { NodeProject, NodeProjectOptions } from '../../src/javascript';
 import { NpmConfig } from '../../src/javascript/npm-config';
-import { synthSnapshot } from '../../src/util/synth';
+import { synthSnapshot } from '../util';
 
 test('registry is handled correctly', () => {
   const prj = new TestNodeProject({

@@ -1,7 +1,7 @@
 import * as yaml from 'yaml';
 import { NodeProject, NodeProjectOptions, UpgradeDependenciesSchedule } from '../src/javascript';
 import { Tasks } from '../src/tasks';
-import { synthSnapshot } from '../src/util/synth';
+import { synthSnapshot } from './util';
 
 test('upgrades command includes all dependencies', () => {
 
