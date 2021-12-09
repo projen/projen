@@ -9,23 +9,6 @@ export const FILE_MANIFEST = `${PROJEN_DIR}/files.json`;
 
 export function cleanup(dir: string, exclude: string[]) {
   try {
-    const fileManifestPath = path.resolve(dir, FILE_MANIFEST);
-    if (existsSync(fileManifestPath)) {
-      const fileManifest = JSON.parse(readFileSync(fileManifestPath, 'utf-8'));
-      if (fileManifest.files) {
-        for (const file of fileManifest.files) {
-          fs.removeSync(path.resolve(dir, file));
-        }
-
-        return;
-      }
-    }
-  } catch (e) {
-    logging.warn(`warning: failed to clean up generated files using file manifest: ${e.stack}`);
-  }
-
-  // manifest file is invalid or not present
-  try {
     for (const f of findGeneratedFiles(dir, exclude)) {
       fs.removeSync(f);
     }
@@ -35,9 +18,14 @@ export function cleanup(dir: string, exclude: string[]) {
 }
 
 function findGeneratedFiles(dir: string, exclude: string[]) {
+  let files = getFilesFromManifest(dir);
+  if (files.length > 0) {
+    return files;
+  }
+
   const ignore = [...readGitIgnore(dir), 'node_modules/**', ...exclude, '.git/**'];
 
-  const files = glob.sync('**', {
+  files = glob.sync('**', {
     ignore,
     cwd: dir,
     dot: true,
@@ -57,6 +45,22 @@ function findGeneratedFiles(dir: string, exclude: string[]) {
   }
 
   return generated;
+}
+
+function getFilesFromManifest(dir: string): string[] {
+  try {
+    const fileManifestPath = path.resolve(dir, FILE_MANIFEST);
+    if (existsSync(fileManifestPath)) {
+      const fileManifest = JSON.parse(readFileSync(fileManifestPath, 'utf-8'));
+      if (fileManifest.files) {
+        return fileManifest.files.map((f: string) => path.resolve(dir, f));
+      }
+    }
+  } catch (e) {
+    logging.warn(`warning: unable to get files to clean from file manifest: ${e.stack}`);
+  }
+
+  return [];
 }
 
 function readGitIgnore(dir: string) {

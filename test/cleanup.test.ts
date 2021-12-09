@@ -1,6 +1,6 @@
 import { join } from 'path';
 import { readJsonSync } from 'fs-extra';
-import { DependencyType, FileBase, TextFile } from '../src';
+import { DependencyType, FileBase, SampleFile, TextFile } from '../src';
 import { cleanup, FILE_MANIFEST } from '../src/cleanup';
 import { directorySnapshot, TestProject } from './util';
 
@@ -8,25 +8,30 @@ test('cleanup uses cache file', () => {
   // GIVEN
   const p = new TestProject();
   p.deps.addDependency('test', DependencyType.BUILD);
-  new TextFile(p, 'foo/bar.txt');
+  const textFile = new TextFile(p, 'foo/bar.txt');
+  new SampleFile(p, 'sample.txt', {
+    contents: FileBase.PROJEN_MARKER,
+  });
 
   // WHEN
   p.synth();
 
-  const preDirSnapshot = directorySnapshot(p.outdir, { excludeContent: true });
+  const preDirSnapshot = directorySnapshot(p.outdir, { omitContents: true });
   const preFiles = Object.keys(preDirSnapshot);
 
   const fileList: string[] = readJsonSync(join(p.outdir, FILE_MANIFEST)).files;
 
   cleanup(p.outdir, []);
 
-  const postDirSnapshot = directorySnapshot(p.outdir, { excludeContent: true });
+  const postDirSnapshot = directorySnapshot(p.outdir, { omitContents: true });
   const postFiles = Object.keys(postDirSnapshot);
 
   const deletedFiles = preFiles.filter(f => !postFiles.includes(f));
 
   // THEN
   expect(deletedFiles).toEqual(fileList);
+  expect(deletedFiles).toContain(textFile.path);
+  expect(deletedFiles).not.toContain('sample.txt');
   expect(deletedFiles).toMatchSnapshot();
 });
 
@@ -47,12 +52,12 @@ test('cleanup falls back to greedy method', () => {
   // WHEN
   p.synth();
 
-  const preDirSnapshot = directorySnapshot(p.outdir, { excludeContent: true });
+  const preDirSnapshot = directorySnapshot(p.outdir, { omitContents: true });
   const preFiles = Object.keys(preDirSnapshot);
 
   cleanup(p.outdir, []);
 
-  const postDirSnapshot = directorySnapshot(p.outdir, { excludeContent: true });
+  const postDirSnapshot = directorySnapshot(p.outdir, { omitContents: true });
   const postFiles = Object.keys(postDirSnapshot);
 
   const deletedFiles = preFiles.filter(f => !postFiles.includes(f));
