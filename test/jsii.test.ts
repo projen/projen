@@ -67,7 +67,10 @@ describe('maven repository options', () => {
         'MAVEN_USERNAME',
         'MAVEN_STAGING_PROFILE_ID',
       ],
-      steps: [{ exec: 'npx -p jsii-release@latest jsii-release-maven' }],
+      steps: [
+        { exec: 'test "$(git branch --show-current)" = "master"' },
+        { exec: 'npx -p jsii-release@latest jsii-release-maven' },
+      ],
     });
 
     const workflow = outdir['.github/workflows/release.yml'];
@@ -109,7 +112,10 @@ describe('maven repository options', () => {
         'MAVEN_USERNAME',
         'MAVEN_STAGING_PROFILE_ID',
       ],
-      steps: [{ exec: 'npx -p jsii-release@latest jsii-release-maven' }],
+      steps: [
+        { exec: 'test "$(git branch --show-current)" = "master"' },
+        { exec: 'npx -p jsii-release@latest jsii-release-maven' },
+      ],
     });
 
     const workflow = outdir['.github/workflows/release.yml'];
@@ -150,7 +156,10 @@ describe('maven repository options', () => {
         'MAVEN_PASSWORD',
         'MAVEN_USERNAME',
       ],
-      steps: [{ exec: 'npx -p jsii-release@latest jsii-release-maven' }],
+      steps: [
+        { exec: 'test "$(git branch --show-current)" = "master"' },
+        { exec: 'npx -p jsii-release@latest jsii-release-maven' },
+      ],
     });
 
     const workflow = outdir['.github/workflows/release.yml'];

@@ -1,5 +1,5 @@
+import { BranchOptions } from '.';
 import { Component } from '../component';
-import { IJobProvider, workflows } from '../github';
 import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { Job, JobPermission, JobPermissions } from '../github/workflows-model';
 import { defaultNpmToken } from '../javascript/node-package';
@@ -73,7 +73,7 @@ export interface PublisherOptions {
  *
  * Under the hood, it uses https://github.com/aws/jsii-release
  */
-export class Publisher extends Component implements IJobProvider {
+export class Publisher extends Component {
   public readonly buildJobId: string;
   public readonly artifactName: string;
   public readonly jsiiReleaseVersion: string;
@@ -83,8 +83,8 @@ export class Publisher extends Component implements IJobProvider {
   private readonly failureIssueLabel: string;
   private readonly runsOn: string[];
 
-  // the jobs to add to the release workflow
-  private readonly _jobs: { [name: string]: workflows.Job } = {};
+  // functions that create jobs associated with a specific branch
+  private readonly _jobFactories: PublishJobFactory[] = [];
 
   constructor(project: Project, options: PublisherOptions) {
     super(project);
@@ -100,11 +100,24 @@ export class Publisher extends Component implements IJobProvider {
   }
 
   /**
-   * Renders a set of workflow jobs for all the publishers.
-   * @returns GitHub workflow jobs
+   * Called by `Release` to add the publishing jobs to a release workflow
+   * associated with a specific branch.
+   * @param branch The branch name
+   * @param options Branch options
+   *
+   * @internal
    */
-  public renderJobs(): Record<string, workflows.Job> {
-    return { ...this._jobs };
+  public _renderJobsForBranch(branch: string, options: Partial<BranchOptions>): Record<string, Job> {
+    let jobs: Record<string, Job> = {};
+
+    for (const factory of this._jobFactories) {
+      jobs = {
+        ...jobs,
+        ...factory(branch, options),
+      };
+    }
+
+    return jobs;
   }
 
   /**
@@ -175,18 +188,20 @@ export class Publisher extends Component implements IJobProvider {
       'fi',
     ].join(' ');
 
-    this.addPublishJob({
-      name: 'github',
-      registryName: 'GitHub Releases',
-      permissions: {
-        contents: JobPermission.WRITE,
-      },
-      workflowEnv: {
-        GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-        GITHUB_REPOSITORY: '${{ github.repository }}',
-        GITHUB_REF: '${{ github.ref }}',
-      },
-      run: idempotentRelease,
+    this.addPublishJob(() => {
+      return {
+        name: 'github',
+        registryName: 'GitHub Releases',
+        permissions: {
+          contents: JobPermission.WRITE,
+        },
+        workflowEnv: {
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+          GITHUB_REPOSITORY: '${{ github.repository }}',
+          GITHUB_REF: '${{ github.ref }}',
+        },
+        run: idempotentRelease,
+      };
     });
   }
 
@@ -199,26 +214,36 @@ export class Publisher extends Component implements IJobProvider {
     const isAwsCodeArtifact = isAwsCodeArtifactRegistry(options.registry);
     const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
 
-    this.addPublishJob({
-      name: 'npm',
-      run: this.jsiiReleaseCommand('jsii-release-npm'),
-      containerImage: JSII_RELEASE_IMAGE,
-      registryName: 'npm',
-      env: {
-        NPM_DIST_TAG: options.distTag,
-        NPM_REGISTRY: options.registry,
-      },
-      permissions: {
-        contents: JobPermission.READ,
-        packages: isGitHubPackages ? JobPermission.WRITE : undefined,
-      },
-      workflowEnv: {
-        NPM_TOKEN: npmToken ? secret(npmToken) : undefined,
-        // if we are publishing to AWS CodeArtifact, pass AWS access keys that will be used to generate NPM_TOKEN using AWS CLI.
-        AWS_ACCESS_KEY_ID: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID') : undefined,
-        AWS_SECRET_ACCESS_KEY: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY') : undefined,
-        AWS_ROLE_TO_ASSUME: isAwsCodeArtifact ? options.codeArtifactOptions?.roleToAssume : undefined,
-      },
+    if (options.distTag) {
+      this.project.logger.warn('The `distTag` option is deprecated. Use the npmDistTag option instead.');
+    }
+
+    this.addPublishJob((_branch, branchOptions) => {
+      if (branchOptions.npmDistTag && options.distTag) {
+        throw new Error('cannot set branch-level npmDistTag and npmDistTag in publishToNpm()');
+      }
+
+      return {
+        name: 'npm',
+        run: this.jsiiReleaseCommand('jsii-release-npm'),
+        containerImage: JSII_RELEASE_IMAGE,
+        registryName: 'npm',
+        env: {
+          NPM_DIST_TAG: branchOptions.npmDistTag ?? options.distTag ?? 'latest',
+          NPM_REGISTRY: options.registry,
+        },
+        permissions: {
+          contents: JobPermission.READ,
+          packages: isGitHubPackages ? JobPermission.WRITE : undefined,
+        },
+        workflowEnv: {
+          NPM_TOKEN: npmToken ? secret(npmToken) : undefined,
+          // if we are publishing to AWS CodeArtifact, pass AWS access keys that will be used to generate NPM_TOKEN using AWS CLI.
+          AWS_ACCESS_KEY_ID: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID') : undefined,
+          AWS_SECRET_ACCESS_KEY: isAwsCodeArtifact ? secret(options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY') : undefined,
+          AWS_ROLE_TO_ASSUME: isAwsCodeArtifact ? options.codeArtifactOptions?.roleToAssume : undefined,
+        },
+      };
     });
   }
 
@@ -227,7 +252,7 @@ export class Publisher extends Component implements IJobProvider {
    * @param options Options
    */
   public publishToNuget(options: NugetPublishOptions = {}) {
-    this.addPublishJob({
+    this.addPublishJob((_branch, _branchOptions) => ({
       name: 'nuget',
       containerImage: JSII_RELEASE_IMAGE,
       run: this.jsiiReleaseCommand('jsii-release-nuget'),
@@ -235,7 +260,7 @@ export class Publisher extends Component implements IJobProvider {
       workflowEnv: {
         NUGET_API_KEY: secret(options.nugetApiKeySecret ?? 'NUGET_API_KEY'),
       },
-    });
+    }));
   }
 
   /**
@@ -251,7 +276,7 @@ export class Publisher extends Component implements IJobProvider {
       throw new Error('publishing to GitHub Packages requires the "mavenServerId" to be "github"');
     }
 
-    this.addPublishJob({
+    this.addPublishJob((_branch, _branchOptions) => ({
       name: 'maven',
       registryName: 'Maven Central',
       containerImage: JSII_RELEASE_IMAGE,
@@ -272,7 +297,7 @@ export class Publisher extends Component implements IJobProvider {
         contents: JobPermission.READ,
         packages: isGitHubPackages ? JobPermission.WRITE : undefined,
       },
-    });
+    }));
   }
 
   /**
@@ -280,7 +305,7 @@ export class Publisher extends Component implements IJobProvider {
    * @param options Options
    */
   public publishToPyPi(options: PyPiPublishOptions = {}) {
-    this.addPublishJob({
+    this.addPublishJob((_branch, _branchOptions) => ({
       name: 'pypi',
       registryName: 'PyPI',
       run: this.jsiiReleaseCommand('jsii-release-pypi'),
@@ -292,7 +317,7 @@ export class Publisher extends Component implements IJobProvider {
         TWINE_USERNAME: secret(options.twineUsernameSecret ?? 'TWINE_USERNAME'),
         TWINE_PASSWORD: secret(options.twinePasswordSecret ?? 'TWINE_PASSWORD'),
       },
-    });
+    }));
   }
 
   /**
@@ -300,7 +325,7 @@ export class Publisher extends Component implements IJobProvider {
    * @param options Options
    */
   public publishToGo(options: GoPublishOptions = {}) {
-    this.addPublishJob({
+    this.addPublishJob((_branch, _branchOptions) => ({
       name: 'golang',
       run: this.jsiiReleaseCommand('jsii-release-golang'),
       containerImage: JSII_RELEASE_IMAGE,
@@ -315,91 +340,101 @@ export class Publisher extends Component implements IJobProvider {
       workflowEnv: {
         GITHUB_TOKEN: secret(options.githubTokenSecret ?? 'GO_GITHUB_TOKEN'),
       },
-    });
+    }));
   }
 
-  private addPublishJob(opts: PublishJobOptions) {
-    const jobname = `release_${opts.name}`;
-    if (jobname in this._jobs) {
-      throw new Error(`Duplicate job with name "${jobname}"`);
-    }
+  private addPublishJob(factory: (branch: string, branchOptions: Partial<BranchOptions>) => PublishJobOptions) {
+    this._jobFactories.push((branch, branchOptions) => {
+      const opts = factory(branch, branchOptions);
+      const jobname = `release_${opts.name}`;
+      if (jobname in this._jobFactories) {
+        throw new Error(`Duplicate job with name "${jobname}"`);
+      }
 
-    const requiredEnv = new Array<string>();
+      const requiredEnv = new Array<string>();
 
-    // jobEnv is the env we pass to the github job (task environment + secrets/expressions).
-    const jobEnv: Record<string, string> = { ...opts.env };
-    const workflowEnvEntries = Object.entries(opts.workflowEnv ?? {})
-      .filter(([_, value]) => value != undefined) as string[][];
-    for (const [name, expression] of workflowEnvEntries) {
-      requiredEnv.push(name);
-      jobEnv[name] = expression;
-    }
+      // jobEnv is the env we pass to the github job (task environment + secrets/expressions).
+      const jobEnv: Record<string, string> = { ...opts.env };
+      const workflowEnvEntries = Object.entries(opts.workflowEnv ?? {})
+        .filter(([_, value]) => value != undefined) as string[][];
+      for (const [name, expression] of workflowEnvEntries) {
+        requiredEnv.push(name);
+        jobEnv[name] = expression;
+      }
 
-    // define a task which can be used through `projen publish:xxx`.
-    this.project.addTask(`publish:${opts.name.toLocaleLowerCase()}`, {
-      description: `Publish this package to ${opts.registryName}`,
-      env: opts.env,
-      requiredEnv: requiredEnv,
-      exec: opts.run,
-    });
+      const branchSuffix = (branch === 'main' || branch === 'master') ? '' : `:${branch}`;
 
-    const steps: any[] = [
-      {
-        name: 'Download build artifacts',
-        uses: 'actions/download-artifact@v2',
-        with: {
-          name: this.artifactName,
-          path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for jsii-release
-        },
-      },
-      {
-        name: 'Release',
-        // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
-        run: opts.run,
-        env: jobEnv,
-      },
-    ];
+      // define a task which can be used through `projen publish:xxx`.
+      const task = this.project.addTask(`publish:${opts.name.toLocaleLowerCase()}${branchSuffix}`, {
+        description: `Publish this package to ${opts.registryName}`,
+        env: opts.env,
+        requiredEnv: requiredEnv,
+      });
 
-    const perms = opts.permissions ?? { contents: JobPermission.READ };
+      // first verify that we are on the correct branch
+      task.exec(`test "$(git branch --show-current)" = "${branch}"`);
 
-    if (this.failureIssue) {
-      steps.push(...[
+      // run commands
+      task.exec(opts.run);
+
+      const steps: any[] = [
         {
-          name: 'Extract Version',
-          if: '${{ failure() }}',
-          id: 'extract-version',
-          run: 'echo "::set-output name=VERSION::$(cat dist/version.txt)"',
-        },
-        {
-          name: 'Create Issue',
-          if: '${{ failure() }}',
-          uses: 'imjohnbo/issue-bot@v3',
+          name: 'Download build artifacts',
+          uses: 'actions/download-artifact@v2',
           with: {
-            labels: this.failureIssueLabel,
-            title: `Publishing v\${{ steps.extract-version.outputs.VERSION }} to ${opts.registryName} failed`,
-            body: 'See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}',
-          },
-          env: {
-            GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+            name: this.artifactName,
+            path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for jsii-release
           },
         },
-      ]);
-      Object.assign(perms, { issues: JobPermission.WRITE });
-    }
+        {
+          name: 'Release',
+          // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
+          run: opts.run,
+          env: jobEnv,
+        },
+      ];
 
-    const job: Job = {
-      name: `Publish to ${opts.registryName}`,
-      permissions: perms,
-      if: this.condition,
-      needs: [this.buildJobId],
-      runsOn: this.runsOn,
-      container: opts.containerImage ? {
-        image: opts.containerImage,
-      } : undefined,
-      steps,
-    };
+      const perms = opts.permissions ?? { contents: JobPermission.READ };
 
-    this._jobs[jobname] = job;
+      if (this.failureIssue) {
+        steps.push(...[
+          {
+            name: 'Extract Version',
+            if: '${{ failure() }}',
+            id: 'extract-version',
+            run: 'echo "::set-output name=VERSION::$(cat dist/version.txt)"',
+          },
+          {
+            name: 'Create Issue',
+            if: '${{ failure() }}',
+            uses: 'imjohnbo/issue-bot@v3',
+            with: {
+              labels: this.failureIssueLabel,
+              title: `Publishing v\${{ steps.extract-version.outputs.VERSION }} to ${opts.registryName} failed`,
+              body: 'See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}',
+            },
+            env: {
+              GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+            },
+          },
+        ]);
+        Object.assign(perms, { issues: JobPermission.WRITE });
+      }
+
+      return {
+        [jobname]: {
+          name: `Publish to ${opts.registryName}`,
+          permissions: perms,
+          if: this.condition,
+          needs: [this.buildJobId],
+          runsOn: this.runsOn,
+          container: opts.containerImage ? {
+            image: opts.containerImage,
+          } : undefined,
+          steps,
+        },
+      };
+    });
   }
 
   private jsiiReleaseCommand(command: string) {
@@ -473,6 +508,7 @@ export interface NpmPublishOptions {
    * The `next` tag is used by some projects to identify the upcoming version.
    *
    * @default "latest"
+   * @deprecated Use `npmDistTag` for each release branch instead.
    */
   readonly distTag?: string;
 
@@ -773,3 +809,5 @@ export interface GitPublishOptions extends VersionArtifactOptions {
    */
   readonly gitPushCommand?: string;
 }
+
+type PublishJobFactory = (branch: string, branchOptions: Partial<BranchOptions>) => Record<string, Job>;

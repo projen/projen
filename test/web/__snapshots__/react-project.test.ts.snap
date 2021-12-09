@@ -530,6 +530,9 @@ pull_request_rules:
         ],
         "steps": Array [
           Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
+          Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],

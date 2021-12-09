@@ -500,3 +500,91 @@ test('publisher can use custom github runner', () => {
     expect(workflow.jobs[job]['runs-on']).toEqual('self-hosted');
   }
 });
+
+describe('npmDistTag', () => {
+  test('determines npm dist-tag used in the workflow', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const release = new Release(project, {
+      releaseBranches: {
+        'main-3': { majorVersion: 3, npmDistTag: 'latest-3' },
+      },
+      branch: 'main',
+      majorVersion: 1,
+      task: project.buildTask,
+      versionFile: 'version.json',
+    });
+
+    release.publisher.publishToNpm();
+
+    // THEN
+    const files = synthSnapshot(project);
+    const main = YAML.parse(files['.github/workflows/release.yml']);
+    const main3 = YAML.parse(files['.github/workflows/release-main-3.yml']);
+    expect(main.jobs.release_npm.steps[1].env).toStrictEqual({
+      NPM_DIST_TAG: 'latest',
+      NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
+    });
+    expect(main3.jobs.release_npm.steps[1].env).toStrictEqual({
+      NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
+      NPM_DIST_TAG: 'latest-3',
+    });
+  });
+
+  test('the dist-tag for the default branch is set at the root', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const release = new Release(project, {
+      releaseBranches: {
+        'main-3': { majorVersion: 3, npmDistTag: 'latest-3' },
+      },
+      branch: 'main',
+      majorVersion: 1,
+      npmDistTag: 'main-tag',
+      task: project.buildTask,
+      versionFile: 'version.json',
+    });
+
+    release.publisher.publishToNpm();
+
+    // THEN
+    const files = synthSnapshot(project);
+    const main = YAML.parse(files['.github/workflows/release.yml']);
+    const main3 = YAML.parse(files['.github/workflows/release-main-3.yml']);
+    expect(main.jobs.release_npm.steps[1].env).toStrictEqual({
+      NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
+      NPM_DIST_TAG: 'main-tag',
+    });
+    expect(main3.jobs.release_npm.steps[1].env).toStrictEqual({
+      NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
+      NPM_DIST_TAG: 'latest-3',
+    });
+
+
+  });
+
+  test('if branch-level dist-tag is set, then publishToNpm cannot specify dist-tag', () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const release = new Release(project, {
+      releaseBranches: {
+        'main-3': { majorVersion: 3, npmDistTag: 'latest-3' },
+      },
+      branch: 'main',
+      majorVersion: 1,
+      task: project.buildTask,
+      versionFile: 'version.json',
+    });
+
+    release.publisher.publishToNpm({ distTag: 'next' });
+
+    expect(() => project.synth()).toThrow(/cannot set branch-level npmDistTag and npmDistTag in publishToNpm/);
+  });
+});
+

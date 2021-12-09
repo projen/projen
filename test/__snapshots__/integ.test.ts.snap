@@ -1138,6 +1138,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
         "steps": Array [
           Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"master\\"",
+          },
+          Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],
@@ -1153,6 +1156,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           "MAVEN_STAGING_PROFILE_ID",
         ],
         "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"master\\"",
+          },
           Object {
             "exec": "npx -p jsii-release@latest jsii-release-maven",
           },
@@ -1170,6 +1176,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
         "steps": Array [
           Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"master\\"",
+          },
+          Object {
             "exec": "npx -p jsii-release@latest jsii-release-npm",
           },
         ],
@@ -1182,6 +1191,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           "TWINE_PASSWORD",
         ],
         "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"master\\"",
+          },
           Object {
             "exec": "npx -p jsii-release@latest jsii-release-pypi",
           },
@@ -5218,6 +5230,9 @@ junit.xml
           "GITHUB_REF",
         ],
         "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"master\\"",
+          },
           Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
