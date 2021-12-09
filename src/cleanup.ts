@@ -8,14 +8,18 @@ import * as logging from './logging';
 export const FILE_MANIFEST = `${PROJEN_DIR}/files.json`;
 
 export function cleanup(dir: string, exclude: string[]) {
-  const fileManifestPath = path.resolve(dir, FILE_MANIFEST);
   try {
+    const fileManifestPath = path.resolve(dir, FILE_MANIFEST);
     if (existsSync(fileManifestPath)) {
-        const fileFile = JSON.parse(readFileSync(fileManifestPath, 'utf-8'));
-        for (const file of fileFile.files) {
+      const fileManifest = JSON.parse(readFileSync(fileManifestPath, 'utf-8'));
+      if (fileManifest.files) {
+        for (const file of fileManifest.files) {
           fs.removeSync(path.resolve(dir, file));
         }
+
+        return;
       }
+    }
   } catch (e) {
     logging.warn(`warning: failed to clean up generated files using file manifest: ${e.stack}`);
   }

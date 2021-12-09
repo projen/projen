@@ -249,6 +249,7 @@ Object {
 /.npmignore linguist-generated
 /.projen/** linguist-generated
 /.projen/deps.json linguist-generated
+/.projen/files.json linguist-generated
 /.projen/tasks.json linguist-generated
 /LICENSE linguist-generated
 /package.json linguist-generated
@@ -2058,6 +2059,7 @@ Object {
 /.npmignore linguist-generated
 /.projen/** linguist-generated
 /.projen/deps.json linguist-generated
+/.projen/files.json linguist-generated
 /.projen/tasks.json linguist-generated
 /LICENSE linguist-generated
 /package.json linguist-generated
@@ -3536,6 +3538,7 @@ Object {
 /.npmignore linguist-generated
 /.projen/** linguist-generated
 /.projen/deps.json linguist-generated
+/.projen/files.json linguist-generated
 /.projen/tasks.json linguist-generated
 /LICENSE linguist-generated
 /package.json linguist-generated
@@ -4749,6 +4752,7 @@ Object {
 /.npmignore linguist-generated
 /.projen/** linguist-generated
 /.projen/deps.json linguist-generated
+/.projen/files.json linguist-generated
 /.projen/tasks.json linguist-generated
 /LICENSE linguist-generated
 /package.json linguist-generated
