@@ -1128,77 +1128,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
       },
-      "publish:github": Object {
-        "description": "Publish this package to GitHub Releases",
-        "name": "publish:github",
-        "requiredEnv": Array [
-          "GITHUB_TOKEN",
-          "GITHUB_REPOSITORY",
-          "GITHUB_REF",
-        ],
-        "steps": Array [
-          Object {
-            "exec": "test \\"$(git branch --show-current)\\" = \\"master\\"",
-          },
-          Object {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
-          },
-        ],
-      },
-      "publish:maven": Object {
-        "description": "Publish this package to Maven Central",
-        "name": "publish:maven",
-        "requiredEnv": Array [
-          "MAVEN_GPG_PRIVATE_KEY",
-          "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE",
-          "MAVEN_PASSWORD",
-          "MAVEN_USERNAME",
-          "MAVEN_STAGING_PROFILE_ID",
-        ],
-        "steps": Array [
-          Object {
-            "exec": "test \\"$(git branch --show-current)\\" = \\"master\\"",
-          },
-          Object {
-            "exec": "npx -p jsii-release@latest jsii-release-maven",
-          },
-        ],
-      },
-      "publish:npm": Object {
-        "description": "Publish this package to npm",
-        "env": Object {
-          "NPM_DIST_TAG": "latest",
-          "NPM_REGISTRY": "registry.npmjs.org",
-        },
-        "name": "publish:npm",
-        "requiredEnv": Array [
-          "NPM_TOKEN",
-        ],
-        "steps": Array [
-          Object {
-            "exec": "test \\"$(git branch --show-current)\\" = \\"master\\"",
-          },
-          Object {
-            "exec": "npx -p jsii-release@latest jsii-release-npm",
-          },
-        ],
-      },
-      "publish:pypi": Object {
-        "description": "Publish this package to PyPI",
-        "name": "publish:pypi",
-        "requiredEnv": Array [
-          "TWINE_USERNAME",
-          "TWINE_PASSWORD",
-        ],
-        "steps": Array [
-          Object {
-            "exec": "test \\"$(git branch --show-current)\\" = \\"master\\"",
-          },
-          Object {
-            "exec": "npx -p jsii-release@latest jsii-release-pypi",
-          },
-        ],
-      },
       "release": Object {
         "description": "Prepare a release from \\"master\\" branch",
         "env": Object {
@@ -1739,10 +1668,6 @@ project.synth();
       "post-compile": "npx projen post-compile",
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
-      "publish:github": "npx projen publish:github",
-      "publish:maven": "npx projen publish:maven",
-      "publish:npm": "npx projen publish:npm",
-      "publish:pypi": "npx projen publish:pypi",
       "release": "npx projen release",
       "test": "npx projen test",
       "test:update": "npx projen test:update",
@@ -5221,23 +5146,6 @@ junit.xml
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
       },
-      "publish:github": Object {
-        "description": "Publish this package to GitHub Releases",
-        "name": "publish:github",
-        "requiredEnv": Array [
-          "GITHUB_TOKEN",
-          "GITHUB_REPOSITORY",
-          "GITHUB_REF",
-        ],
-        "steps": Array [
-          Object {
-            "exec": "test \\"$(git branch --show-current)\\" = \\"master\\"",
-          },
-          Object {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
-          },
-        ],
-      },
       "release": Object {
         "description": "Prepare a release from \\"master\\" branch",
         "env": Object {
@@ -5652,7 +5560,6 @@ project.synth();
       "post-compile": "npx projen post-compile",
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
-      "publish:github": "npx projen publish:github",
       "release": "npx projen release",
       "test": "npx projen test",
       "test:update": "npx projen test:update",

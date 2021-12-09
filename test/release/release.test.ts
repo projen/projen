@@ -12,6 +12,7 @@ test('minimal', () => {
     task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
+    publishTasks: true, // to increase coverage
   });
 
   const outdir = synthSnapshot(project);
@@ -29,6 +30,7 @@ test('with major version filter', () => {
     branch: '10.x',
     majorVersion: 10,
     releaseWorkflowName: 'release',
+    publishTasks: true, // to increase coverage
   });
 
   // THEN
@@ -49,6 +51,7 @@ test('with release tag prefix', () => {
     majorVersion: 10,
     releaseTagPrefix: 'prefix/',
     releaseWorkflowName: 'release',
+    publishTasks: true, // to increase coverage
   });
 
   // THEN
@@ -66,6 +69,7 @@ test('addBranch() can be used for additional release branches', () => {
     versionFile: 'version.json',
     branch: 'main',
     majorVersion: 1,
+    publishTasks: true, // to increase coverage
   });
 
   // WHEN
@@ -88,6 +92,7 @@ test('if multiple branches are defined, the default branch requires a "majorVers
     task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
+    publishTasks: true, // to increase coverage
   });
 
   // WHEN
@@ -105,6 +110,7 @@ test('publisher (defaults)', () => {
     task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
+    publishTasks: true,
   });
 
   // WHEN
@@ -129,6 +135,7 @@ test('publishers are added as jobs to all release workflows', () => {
     versionFile: 'version.json',
     branch: 'main',
     majorVersion: 1,
+    publishTasks: true, // to increase coverage
   });
 
   // WHEN
@@ -171,6 +178,7 @@ test('manual releases do not generate a release workflow', () => {
     versionFile: 'version.json',
     branch: 'main',
     releaseTrigger: ReleaseTrigger.manual(),
+    publishTasks: true, // to increase coverage
   });
 
   // THEN
@@ -190,6 +198,7 @@ test('releaseSchedule schedules releases', () => {
     branch: 'main',
     releaseEveryCommit: false,
     releaseSchedule: schedule,
+    publishTasks: true, // to increase coverage
   });
 
   // THEN
@@ -211,6 +220,7 @@ test('addJobs() can be used to add arbitrary jobs to the release workflows', () 
     versionFile: 'version.json',
     branch: 'main',
     majorVersion: 0,
+    publishTasks: true, // to increase coverage
   });
 
   release.addBranch('foo', { majorVersion: 4, workflowName: 'foo-workflow' });
@@ -242,6 +252,7 @@ test('majorVersion can be 0', () => {
     versionFile: 'goo.json',
     branch: 'main',
     majorVersion: 0,
+    publishTasks: true, // to increase coverage
   });
 
   // THEN
@@ -260,6 +271,7 @@ test('prerelease can be specified per branch', () => {
     versionFile: 'goo.json',
     branch: 'main',
     majorVersion: 0,
+    publishTasks: true, // to increase coverage
   });
 
   release.addBranch('10.x', { majorVersion: 10, prerelease: 'pre' });
@@ -285,6 +297,7 @@ test('releaseBranches can be use to define additional branches', () => {
       '3.x': { majorVersion: 3 },
       'next': { majorVersion: 4, prerelease: 'pre' },
     },
+    publishTasks: true, // to increase coverage
   });
 
   const outdir = synthSnapshot(project);
@@ -306,6 +319,7 @@ test('releaseBranches can be defined with different tag prefixes to the same maj
     releaseBranches: {
       safari: { majorVersion: 1, tagPrefix: 'safari/' },
     },
+    publishTasks: true, // to increase coverage
   });
 
   const outdir = synthSnapshot(project);
@@ -334,6 +348,7 @@ test('github packages are supported by npm', () => {
     task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
+    publishTasks: true, // to increase coverage
   });
 
   // WHEN
@@ -356,6 +371,7 @@ test('can enable issue creation on failed releases with a custom label', () => {
     branch: 'main',
     releaseFailureIssue: true,
     releaseFailureIssueLabel: 'custom-label',
+    publishTasks: true, // to increase coverage
   });
 
   // WHEN
@@ -375,6 +391,7 @@ test('AWS CodeArtifact is supported by npm', () => {
     task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
+    publishTasks: true, // to increase coverage
   });
 
   // WHEN
@@ -395,6 +412,7 @@ test('AWS CodeArtifact is supported by npm with AWS access keys', () => {
     task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
+    publishTasks: true, // to increase coverage
   });
 
   // WHEN
@@ -420,6 +438,7 @@ test('AWS CodeArtifact is supported with role to assume', () => {
     task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
+    publishTasks: true, // to increase coverage
   });
 
   // WHEN
@@ -442,6 +461,7 @@ test('can be modified with escape hatches', () => {
     task: project.buildTask,
     versionFile: 'version.json',
     branch: 'main',
+    publishTasks: true, // to increase coverage
   });
 
   // WHEN
@@ -463,6 +483,7 @@ test('manual release with custom git-push', () => {
     versionFile: 'version.json',
     branch: 'main',
     releaseTrigger: ReleaseTrigger.manual({ gitPushCommand: 'git push --follow-tags -o ci.skip origin main' }),
+    publishTasks: true, // to increase coverage
   });
 
   // THEN
@@ -484,6 +505,7 @@ test('publisher can use custom github runner', () => {
     versionFile: 'version.json',
     branch: 'main',
     workflowRunsOn: ['self-hosted'],
+    publishTasks: true, // to increase coverage
   });
 
   // WHEN
@@ -515,6 +537,7 @@ describe('npmDistTag', () => {
       majorVersion: 1,
       task: project.buildTask,
       versionFile: 'version.json',
+      publishTasks: true, // to increase coverage
     });
 
     release.publisher.publishToNpm();
@@ -547,6 +570,7 @@ describe('npmDistTag', () => {
       npmDistTag: 'main-tag',
       task: project.buildTask,
       versionFile: 'version.json',
+      publishTasks: true, // to increase coverage
     });
 
     release.publisher.publishToNpm();
@@ -580,6 +604,7 @@ describe('npmDistTag', () => {
       majorVersion: 1,
       task: project.buildTask,
       versionFile: 'version.json',
+      publishTasks: true, // to increase coverage
     });
 
     release.publisher.publishToNpm({ distTag: 'next' });
@@ -588,3 +613,26 @@ describe('npmDistTag', () => {
   });
 });
 
+test('if publishTasks is disabled, no publish tasks are created', () => {
+  // GIVEN
+  const project = new TestProject();
+
+  const release = new Release(project, {
+    task: project.buildTask,
+    versionFile: 'version.json',
+    branch: 'main',
+    workflowRunsOn: ['self-hosted'],
+  });
+
+  // WHEN
+  release.publisher.publishToGo();
+  release.publisher.publishToMaven();
+  release.publisher.publishToNpm();
+  release.publisher.publishToNuget();
+  release.publisher.publishToPyPi();
+
+  // THEN
+  const files = synthSnapshot(project);
+  const tasks = files['.projen/tasks.json'].tasks;
+  expect(Object.keys(tasks).filter(t => t.startsWith('publish:')).length).toBe(0);
+});

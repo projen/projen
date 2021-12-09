@@ -66,6 +66,16 @@ export interface PublisherOptions {
    * @default ["ubuntu-latest"]
    */
   readonly workflowRunsOn?: string[];
+
+  /**
+   * Define publishing tasks that can be executed manually as well as workflows.
+   *
+   * Normally, publishing only happens within automated workflows. Enable this
+   * in order to create a publishing task for each publishing activity.
+   *
+   * @default false
+   */
+  readonly publishTasks?: boolean;
 }
 
 /**
@@ -82,6 +92,7 @@ export class Publisher extends Component {
   private readonly failureIssue: boolean;
   private readonly failureIssueLabel: string;
   private readonly runsOn: string[];
+  private readonly publishTasks: boolean;
 
   // functions that create jobs associated with a specific branch
   private readonly _jobFactories: PublishJobFactory[] = [];
@@ -97,6 +108,7 @@ export class Publisher extends Component {
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? 'failed-release';
     this.runsOn = options.workflowRunsOn ?? ['ubuntu-latest'];
+    this.publishTasks = options.publishTasks ?? false;
   }
 
   /**
@@ -362,20 +374,23 @@ export class Publisher extends Component {
         jobEnv[name] = expression;
       }
 
-      const branchSuffix = (branch === 'main' || branch === 'master') ? '' : `:${branch}`;
+      if (this.publishTasks) {
+        const branchSuffix = (branch === 'main' || branch === 'master') ? '' : `:${branch}`;
 
-      // define a task which can be used through `projen publish:xxx`.
-      const task = this.project.addTask(`publish:${opts.name.toLocaleLowerCase()}${branchSuffix}`, {
-        description: `Publish this package to ${opts.registryName}`,
-        env: opts.env,
-        requiredEnv: requiredEnv,
-      });
+        // define a task which can be used through `projen publish:xxx`.
+        const task = this.project.addTask(`publish:${opts.name.toLocaleLowerCase()}${branchSuffix}`, {
+          description: `Publish this package to ${opts.registryName}`,
+          env: opts.env,
+          requiredEnv: requiredEnv,
+        });
 
-      // first verify that we are on the correct branch
-      task.exec(`test "$(git branch --show-current)" = "${branch}"`);
+        // first verify that we are on the correct branch
+        task.exec(`test "$(git branch --show-current)" = "${branch}"`);
 
-      // run commands
-      task.exec(opts.run);
+        // run commands
+        task.exec(opts.run);
+      }
+
 
       const steps: any[] = [
         {

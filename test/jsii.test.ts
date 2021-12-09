@@ -53,6 +53,7 @@ describe('maven repository options', () => {
         mavenArtifactId: 'cdk-watchful',
       },
       defaultReleaseBranch: 'master',
+      publishTasks: true,
     });
 
     const outdir = synthSnapshot(project);
@@ -95,6 +96,7 @@ describe('maven repository options', () => {
         mavenEndpoint: 'https://s01.oss.sonatype.org',
       },
       defaultReleaseBranch: 'master',
+      publishTasks: true,
     });
 
     const outdir = synthSnapshot(project);
@@ -141,6 +143,7 @@ describe('maven repository options', () => {
         mavenRepositoryUrl: 'https://maven.pkg.github.com/eladb',
       },
       defaultReleaseBranch: 'master',
+      publishTasks: true,
     });
 
     const outdir = synthSnapshot(project);
@@ -185,6 +188,7 @@ describe('maven repository options', () => {
         mavenRepositoryUrl: 'https://maven.pkg.github.com/eladb',
       },
       defaultReleaseBranch: 'master',
+      publishTasks: true,
     })).toThrow('publishing to GitHub Packages requires the "mavenServerId" to be "github"');
   });
 });
@@ -201,6 +205,7 @@ describe('publish to go', () => {
         moduleName: 'github.com/foo/bar',
       },
       defaultReleaseBranch: 'master',
+      publishTasks: true,
     });
 
     const output = synthSnapshot(project);
@@ -222,6 +227,7 @@ describe('publish to go', () => {
       author: 'My Name',
       name: 'testproject',
       defaultReleaseBranch: 'main',
+      publishTasks: true,
     });
 
     const output = synthSnapshot(project);
@@ -237,6 +243,7 @@ describe('publish to go', () => {
       name: 'testproject',
       defaultReleaseBranch: 'main',
       releaseToNpm: true,
+      publishTasks: true,
     });
 
     const output = synthSnapshot(project);
@@ -252,6 +259,7 @@ describe('publish to go', () => {
       name: 'testproject',
       defaultReleaseBranch: 'main',
       releaseToNpm: false,
+      publishTasks: true,
     });
 
     const output = synthSnapshot(project);
@@ -294,6 +302,7 @@ test('docgen: true should just work', () => {
     defaultReleaseBranch: 'main',
     repositoryUrl: 'https://github.com/foo/bar.git',
     docgen: true,
+    publishTasks: true,
   });
 
   const output = synthSnapshot(project);

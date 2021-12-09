@@ -168,6 +168,16 @@ export interface ReleaseProjectOptions {
    * @default ["ubuntu-latest"]
    */
   readonly workflowRunsOn?: string[];
+
+  /**
+   * Define publishing tasks that can be executed manually as well as workflows.
+   *
+   * Normally, publishing only happens within automated workflows. Enable this
+   * in order to create a publishing task for each publishing activity.
+   *
+   * @default false
+   */
+  readonly publishTasks?: boolean;
 }
 
 /**
@@ -278,6 +288,7 @@ export class Release extends Component {
       failureIssue: options.releaseFailureIssue,
       failureIssueLabel: options.releaseFailureIssueLabel,
       workflowRunsOn: options.workflowRunsOn,
+      publishTasks: options.publishTasks,
     });
 
     const githubRelease = options.githubRelease ?? true;
