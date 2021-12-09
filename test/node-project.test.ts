@@ -345,7 +345,6 @@ describe('npm publishing options', () => {
 
     // THEN
     expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
-    expect(npm.npmDistTag).toStrictEqual('latest');
     expect(npm.npmRegistry).toStrictEqual('registry.npmjs.org');
     expect(npm.npmRegistryUrl).toStrictEqual('https://registry.npmjs.org/');
     expect(npm.npmTokenSecret).toStrictEqual('NPM_TOKEN');
@@ -388,14 +387,12 @@ describe('npm publishing options', () => {
     // WHEN
     const npm = new NodePackage(project, {
       packageName: 'scoped@my-package',
-      npmDistTag: 'next',
       npmRegistryUrl: 'https://foo.bar',
       npmAccess: NpmAccess.PUBLIC,
       npmTokenSecret: 'GITHUB_TOKEN',
     });
 
     // THEN
-    expect(npm.npmDistTag).toStrictEqual('next');
     expect(npm.npmRegistry).toStrictEqual('foo.bar');
     expect(npm.npmRegistryUrl).toStrictEqual('https://foo.bar/');
     expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
@@ -403,7 +400,6 @@ describe('npm publishing options', () => {
     expect(packageJson(project).publishConfig).toStrictEqual({
       access: 'public',
       registry: 'https://foo.bar/',
-      tag: 'next',
     });
   });
 

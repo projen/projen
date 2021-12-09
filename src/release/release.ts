@@ -1,6 +1,6 @@
 import * as path from 'path';
 import { Component } from '../component';
-import { GitHub, GitHubProject, TaskWorkflow } from '../github';
+import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from '../github';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { Task } from '../task';
 import { Version } from '../version';
@@ -97,6 +97,16 @@ export interface ReleaseProjectOptions {
   readonly prerelease?: string;
 
   /**
+   * The npmDistTag to use when publishing from the default branch.
+   *
+   * To set the npm dist-tag for release branches, set the `npmDistTag` property
+   * for each branch.
+   *
+   * @default "latest"
+   */
+  readonly npmDistTag?: string;
+
+  /**
    * The name of the default release workflow.
    *
    * @default "Release"
@@ -158,6 +168,16 @@ export interface ReleaseProjectOptions {
    * @default ["ubuntu-latest"]
    */
   readonly workflowRunsOn?: string[];
+
+  /**
+   * Define publishing tasks that can be executed manually as well as workflows.
+   *
+   * Normally, publishing only happens within automated workflows. Enable this
+   * in order to create a publishing task for each publishing activity.
+   *
+   * @default false
+   */
+  readonly publishTasks?: boolean;
 }
 
 /**
@@ -268,6 +288,7 @@ export class Release extends Component {
       failureIssue: options.releaseFailureIssue,
       failureIssueLabel: options.releaseFailureIssueLabel,
       workflowRunsOn: options.workflowRunsOn,
+      publishTasks: options.publishTasks,
     });
 
     const githubRelease = options.githubRelease ?? true;
@@ -279,22 +300,14 @@ export class Release extends Component {
       });
     }
 
-    // add the default branch
-    this.defaultBranch = {
-      name: options.branch,
+    // add the default branch (we need the internal method which does not require majorVersion)
+    this.defaultBranch = this._addBranch(options.branch, {
       prerelease: options.prerelease,
       majorVersion: options.majorVersion,
       workflowName: options.releaseWorkflowName ?? 'release',
       tagPrefix: options.releaseTagPrefix,
-    };
-
-    this._branches.push(this.defaultBranch);
-
-    const defaultWorkflow = this.createWorkflow(this.defaultBranch);
-    if (defaultWorkflow) {
-      defaultWorkflow.addJobsLater(this.publisher);
-      defaultWorkflow.addJobsLater({ renderJobs: () => this.jobs });
-    }
+      npmDistTag: options.npmDistTag,
+    });
 
     for (const [name, opts] of Object.entries(options.releaseBranches ?? {})) {
       this.addBranch(name, opts);
@@ -312,27 +325,49 @@ export class Release extends Component {
    * @param options Branch definition
    */
   public addBranch(branch: string, options: BranchOptions) {
+    this._addBranch(branch, options);
+  }
+
+  /**
+   * Adds a release branch.
+   *
+   * It is a git branch from which releases are published. If a project has more than one release
+   * branch, we require that `majorVersion` is also specified for the primary branch in order to
+   * ensure branches always release the correct version.
+   *
+   * @param branch The branch to monitor (e.g. `main`, `v2.x`)
+   * @param options Branch definition
+   */
+  private _addBranch(branch: string, options: Partial<BranchOptions>): ReleaseBranch {
     if (this._branches.find(b => b.name === branch)) {
       throw new Error(`The release branch ${branch} is already defined`);
     }
 
     // if we add a branch, we require that the default branch will also define a
     // major version.
-    if (this.defaultBranch.majorVersion === undefined) {
+    if (this.defaultBranch && options.majorVersion && this.defaultBranch.majorVersion === undefined) {
       throw new Error('you must specify "majorVersion" for the default branch when adding multiple release branches');
     }
 
-    const branchOptions = {
+    const releaseBranch: ReleaseBranch = {
       name: branch,
       ...options,
+      workflow: this.createWorkflow(branch, options),
     };
 
-    this._branches.push(branchOptions);
+    this._branches.push(releaseBranch);
 
-    const workflow = this.createWorkflow(branchOptions);
-    if (workflow) {
-      workflow.addJobsLater(this.publisher);
-      workflow.addJobsLater({ renderJobs: () => this.jobs });
+    return releaseBranch;
+  }
+
+  public preSynthesize() {
+    for (const branch of this._branches) {
+      if (!branch.workflow) {
+        continue;
+      }
+
+      branch.workflow.addJobs(this.publisher._renderJobsForBranch(branch.name, branch));
+      branch.workflow.addJobs(this.jobs);
     }
   }
 
@@ -356,8 +391,8 @@ export class Release extends Component {
   /**
    * @returns a workflow or `undefined` if github integration is disabled.
    */
-  private createWorkflow(branch: ReleaseBranch): TaskWorkflow | undefined {
-    const workflowName = branch.workflowName ?? `release-${branch.name}`;
+  private createWorkflow(branchName: string, branch: Partial<BranchOptions>): TaskWorkflow | undefined {
+    const workflowName = branch.workflowName ?? `release-${branchName}`;
 
     // to avoid race conditions between two commits trying to release the same
     // version, we check if the head sha is identical to the remote sha. if
@@ -389,9 +424,9 @@ export class Release extends Component {
 
     // if this is the release for "main" or "master", just call it "release".
     // otherwise, "release:BRANCH"
-    const releaseTaskName = (branch.name === 'main' || branch.name === 'master') ? 'release' : `release:${branch.name}`;
+    const releaseTaskName = (branchName === 'main' || branchName === 'master') ? 'release' : `release:${branchName}`;
     const releaseTask = this.project.addTask(releaseTaskName, {
-      description: `Prepare a release from "${branch.name}" branch`,
+      description: `Prepare a release from "${branchName}" branch`,
       env,
     });
 
@@ -406,7 +441,7 @@ export class Release extends Component {
         versionFile: path.posix.join(this.artifactsDirectory, this.version.versionFileName),
         releaseTagFile: path.posix.join(this.artifactsDirectory, this.version.releaseTagFileName),
         projectChangelogFile: this.releaseTrigger.changelogPath,
-        gitBranch: branch.name,
+        gitBranch: branchName,
         gitPushCommand: this.releaseTrigger.gitPushCommand,
       });
 
@@ -451,7 +486,7 @@ export class Release extends Component {
         },
         triggers: {
           schedule: this.releaseTrigger.schedule ? [{ cron: this.releaseTrigger.schedule }] : undefined,
-          push: this.releaseTrigger.isContinuous ? { branches: [branch.name] } : undefined,
+          push: this.releaseTrigger.isContinuous ? { branches: [branchName] } : undefined,
         },
         container: this.containerImage ? { image: this.containerImage } : undefined,
         env: {
@@ -511,8 +546,16 @@ export interface BranchOptions {
    * @default - no prefix
    */
   readonly tagPrefix?: string;
+
+  /**
+   * The npm distribution tag to use for this branch.
+   *
+   * @default "latest"
+   */
+  readonly npmDistTag?: string;
 }
 
 interface ReleaseBranch extends Partial<BranchOptions> {
+  readonly workflow?: GithubWorkflow;
   readonly name: string;
 }
