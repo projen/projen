@@ -16,14 +16,14 @@ test('cleanup uses cache file', () => {
   // WHEN
   p.synth();
 
-  const preDirSnapshot = directorySnapshot(p.outdir, { omitContents: true });
+  const preDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const preFiles = Object.keys(preDirSnapshot);
 
   const fileList: string[] = readJsonSync(join(p.outdir, FILE_MANIFEST)).files;
 
   cleanup(p.outdir, []);
 
-  const postDirSnapshot = directorySnapshot(p.outdir, { omitContents: true });
+  const postDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const postFiles = Object.keys(postDirSnapshot);
 
   const deletedFiles = preFiles.filter(f => !postFiles.includes(f));
@@ -52,12 +52,12 @@ test('cleanup falls back to greedy method', () => {
   // WHEN
   p.synth();
 
-  const preDirSnapshot = directorySnapshot(p.outdir, { omitContents: true });
+  const preDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const preFiles = Object.keys(preDirSnapshot);
 
   cleanup(p.outdir, []);
 
-  const postDirSnapshot = directorySnapshot(p.outdir, { omitContents: true });
+  const postDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const postFiles = Object.keys(postDirSnapshot);
 
   const deletedFiles = preFiles.filter(f => !postFiles.includes(f));

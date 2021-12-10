@@ -56,7 +56,7 @@ export interface DirectorySnapshotOptions {
    *
    * @default false include file content
    */
-  readonly omitContents?: boolean;
+  readonly onlyFileNames?: boolean;
 }
 
 export function directorySnapshot(root: string, options: DirectorySnapshotOptions = {}) {
@@ -73,7 +73,7 @@ export function directorySnapshot(root: string, options: DirectorySnapshotOption
     const filePath = path.join(root, file);
 
     let content;
-    if (!options.omitContents) {
+    if (!options.onlyFileNames) {
       if (path.extname(filePath) === '.json') {
         content = fs.readJsonSync(filePath);
       } else {

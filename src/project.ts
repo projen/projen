@@ -210,6 +210,7 @@ export class Project {
     new JsonFile(this, FILE_MANIFEST, {
       omitEmpty: true,
       obj: () => ({
+        // replace `\` with `/` to ensure paths match across platforms
         files: this.files.filter(f => f.readonly).map(f => f.path.replace(/\\/g, '/')),
       }),
     });
