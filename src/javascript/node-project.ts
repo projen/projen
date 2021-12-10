@@ -594,12 +594,28 @@ export class NodeProject extends GitHubProject {
     if (release) {
       this.addDevDeps(Version.STANDARD_VERSION);
 
+      // run codecov if enabled or a secret token name is passed in
+      // AND jest must be configured
+      const postBuildSteps = options.postBuildSteps ?? [];
+      if ((options.codeCov || options.codeCovTokenSecret) && this.jest?.config) {
+        postBuildSteps.unshift({
+          name: 'Upload coverage to Codecov',
+          uses: 'codecov/codecov-action@v1',
+          with: options.codeCovTokenSecret ? {
+            token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
+            directory: this.jest.config.coverageDirectory,
+          } : {
+            directory: this.jest.config.coverageDirectory,
+          },
+        });
+      }
+
       this.release = new Release(this, {
         versionFile: 'package.json', // this is where "version" is set after bump
         task: this.buildTask,
         branch: options.defaultReleaseBranch ?? 'main',
         ...options,
-
+        postBuildSteps,
         releaseWorkflowSetupSteps: [
           ...this.installWorkflowSteps,
           ...options.releaseWorkflowSetupSteps ?? [],
