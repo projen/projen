@@ -13,7 +13,6 @@ import { exec, isTruthy, sorted, writeFile } from '../util';
 
 const UNLICENSED = 'UNLICENSED';
 const DEFAULT_NPM_REGISTRY_URL = 'https://registry.npmjs.org/';
-const DEFAULT_NPM_TAG = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
 const DEFAULT_NPM_TOKEN_SECRET = 'NPM_TOKEN';
 const DEFAULT_GITHUB_TOKEN_SECRET = 'GITHUB_TOKEN';
@@ -234,24 +233,6 @@ export interface NodePackageOptions {
   readonly licensed?: boolean;
 
   /**
-   * Tags can be used to provide an alias instead of version numbers.
-   *
-   * For example, a project might choose to have multiple streams of development
-   * and use a different tag for each stream, e.g., stable, beta, dev, canary.
-   *
-   * By default, the `latest` tag is used by npm to identify the current version
-   * of a package, and `npm install <pkg>` (without any `@<version>` or `@<tag>`
-   * specifier) installs the latest tag. Typically, projects only use the
-   * `latest` tag for stable release versions, and use other tags for unstable
-   * versions such as prereleases.
-   *
-   * The `next` tag is used by some projects to identify the upcoming version.
-   *
-   * @default "latest"
-   */
-  readonly npmDistTag?: string;
-
-  /**
    * The base URL of the npm package registry.
    *
    * Must be a URL (e.g. start with "https://" or "http://")
@@ -365,11 +346,6 @@ export class NodePackage extends Component {
   public readonly license?: string;
 
   /**
-   * npm distribution tag
-   */
-  public readonly npmDistTag: string;
-
-  /**
    * npm registry (e.g. `https://registry.npmjs.org`). Use `npmRegistryHost` to get just the host name.
    */
   public readonly npmRegistryUrl: string;
@@ -421,9 +397,8 @@ export class NodePackage extends Component {
     this.project.annotateGenerated(`/${this.lockFile}`);
 
     const {
-      npmDistTag, npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret, codeArtifactOptions,
+      npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret, codeArtifactOptions,
     } = this.parseNpmOptions(options);
-    this.npmDistTag = npmDistTag;
     this.npmAccess = npmAccess;
     this.npmRegistry = npmRegistry;
     this.npmRegistryUrl = npmRegistryUrl;
@@ -788,7 +763,6 @@ export class NodePackage extends Component {
     }
 
     return {
-      npmDistTag: options.npmDistTag ?? DEFAULT_NPM_TAG,
       npmAccess,
       npmRegistry: npmr.hostname + this.renderNpmRegistryPath(npmr.pathname!),
       npmRegistryUrl: npmr.href,
@@ -1005,7 +979,6 @@ export class NodePackage extends Component {
     // omit values if they are the same as the npm defaults
     return resolveJson({
       registry: this.npmRegistryUrl !== DEFAULT_NPM_REGISTRY_URL ? this.npmRegistryUrl : undefined,
-      tag: this.npmDistTag !== DEFAULT_NPM_TAG ? this.npmDistTag : undefined,
       access: this.npmAccess !== defaultNpmAccess(this.packageName) ? this.npmAccess : undefined,
     }, { omitEmpty: true });
   }

@@ -541,20 +541,6 @@ pull_request_rules:
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
       },
-      "publish:github": Object {
-        "description": "Publish this package to GitHub Releases",
-        "name": "publish:github",
-        "requiredEnv": Array [
-          "GITHUB_TOKEN",
-          "GITHUB_REPOSITORY",
-          "GITHUB_REF",
-        ],
-        "steps": Array [
-          Object {
-            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
-          },
-        ],
-      },
       "release": Object {
         "description": "Prepare a release from \\"main\\" branch",
         "env": Object {
@@ -925,7 +911,6 @@ pull_request_rules:
       "post-compile": "npx projen post-compile",
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
-      "publish:github": "npx projen publish:github",
       "release": "npx projen release",
       "test": "npx projen test",
       "unbump": "npx projen unbump",

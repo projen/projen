@@ -361,16 +361,6 @@ export class NodeProject extends GitHubProject {
   public readonly antitamper: boolean;
 
   /**
-   * @deprecated use `package.npmDistTag`
-   */
-  protected readonly npmDistTag: string;
-
-  /**
-   * @deprecated use `package.npmRegistry`
-   */
-  protected readonly npmRegistry: string;
-
-  /**
    * The package manager to use.
    *
    * @deprecated use `package.packageManager`
@@ -423,9 +413,6 @@ export class NodeProject extends GitHubProject {
 
 
     this.addLicense(options);
-
-    this.npmDistTag = this.package.npmDistTag;
-    this.npmRegistry = this.package.npmRegistry;
 
     if (options.npmignoreEnabled ?? true) {
       this.npmignore = new IgnoreFile(this, '.npmignore');
@@ -623,7 +610,6 @@ export class NodeProject extends GitHubProject {
 
       if (options.releaseToNpm ?? false) {
         this.release.publisher.publishToNpm({
-          distTag: this.package.npmDistTag,
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,
           codeArtifactOptions: {

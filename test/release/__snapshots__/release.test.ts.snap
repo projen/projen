@@ -119,6 +119,7 @@ jobs:
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
+          NPM_DIST_TAG: latest
           NPM_REGISTRY: my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/
           AWS_ACCESS_KEY_ID: \${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: \${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -256,6 +257,9 @@ node_modules/
         ],
         "steps": Array [
           Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
+          Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],
@@ -263,6 +267,7 @@ node_modules/
       "publish:npm": Object {
         "description": "Publish this package to npm",
         "env": Object {
+          "NPM_DIST_TAG": "latest",
           "NPM_REGISTRY": "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
         },
         "name": "publish:npm",
@@ -271,6 +276,9 @@ node_modules/
           "AWS_SECRET_ACCESS_KEY",
         ],
         "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
           Object {
             "exec": "npx -p jsii-release@latest jsii-release-npm",
           },
@@ -444,6 +452,7 @@ jobs:
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
+          NPM_DIST_TAG: latest
           NPM_REGISTRY: my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/
           AWS_ACCESS_KEY_ID: \${{ secrets.OTHER_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: \${{ secrets.OTHER_AWS_SECRET_ACCESS_KEY }}
@@ -581,6 +590,9 @@ node_modules/
         ],
         "steps": Array [
           Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
+          Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],
@@ -588,6 +600,7 @@ node_modules/
       "publish:npm": Object {
         "description": "Publish this package to npm",
         "env": Object {
+          "NPM_DIST_TAG": "latest",
           "NPM_REGISTRY": "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
         },
         "name": "publish:npm",
@@ -596,6 +609,9 @@ node_modules/
           "AWS_SECRET_ACCESS_KEY",
         ],
         "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
           Object {
             "exec": "npx -p jsii-release@latest jsii-release-npm",
           },
@@ -769,6 +785,7 @@ jobs:
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
+          NPM_DIST_TAG: latest
           NPM_REGISTRY: my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/
           AWS_ACCESS_KEY_ID: \${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: \${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -907,6 +924,9 @@ node_modules/
         ],
         "steps": Array [
           Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
+          Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],
@@ -914,6 +934,7 @@ node_modules/
       "publish:npm": Object {
         "description": "Publish this package to npm",
         "env": Object {
+          "NPM_DIST_TAG": "latest",
           "NPM_REGISTRY": "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
         },
         "name": "publish:npm",
@@ -923,6 +944,9 @@ node_modules/
           "AWS_ROLE_TO_ASSUME",
         ],
         "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
           Object {
             "exec": "npx -p jsii-release@latest jsii-release-npm",
           },
@@ -1341,6 +1365,43 @@ node_modules/
           "GITHUB_REF",
         ],
         "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
+          Object {
+            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
+          },
+        ],
+      },
+      "publish:github:10.x": Object {
+        "description": "Publish this package to GitHub Releases",
+        "name": "publish:github:10.x",
+        "requiredEnv": Array [
+          "GITHUB_TOKEN",
+          "GITHUB_REPOSITORY",
+          "GITHUB_REF",
+        ],
+        "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"10.x\\"",
+          },
+          Object {
+            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
+          },
+        ],
+      },
+      "publish:github:2.x": Object {
+        "description": "Publish this package to GitHub Releases",
+        "name": "publish:github:2.x",
+        "requiredEnv": Array [
+          "GITHUB_TOKEN",
+          "GITHUB_REPOSITORY",
+          "GITHUB_REF",
+        ],
+        "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"2.x\\"",
+          },
           Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
@@ -1796,6 +1857,26 @@ node_modules/
         ],
         "steps": Array [
           Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
+          Object {
+            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
+          },
+        ],
+      },
+      "publish:github:foo": Object {
+        "description": "Publish this package to GitHub Releases",
+        "name": "publish:github:foo",
+        "requiredEnv": Array [
+          "GITHUB_TOKEN",
+          "GITHUB_REPOSITORY",
+          "GITHUB_REF",
+        ],
+        "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"foo\\"",
+          },
+          Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],
@@ -1808,6 +1889,25 @@ node_modules/
           "TWINE_PASSWORD",
         ],
         "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
+          Object {
+            "exec": "npx -p jsii-release@latest jsii-release-pypi",
+          },
+        ],
+      },
+      "publish:pypi:foo": Object {
+        "description": "Publish this package to PyPI",
+        "name": "publish:pypi:foo",
+        "requiredEnv": Array [
+          "TWINE_USERNAME",
+          "TWINE_PASSWORD",
+        ],
+        "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"foo\\"",
+          },
           Object {
             "exec": "npx -p jsii-release@latest jsii-release-pypi",
           },
@@ -2126,6 +2226,9 @@ node_modules/
         ],
         "steps": Array [
           Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
+          Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],
@@ -2275,6 +2378,7 @@ jobs:
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
+          NPM_DIST_TAG: latest
           NPM_REGISTRY: npm.pkg.github.com
           NPM_TOKEN: \${{ secrets.GITHUB_TOKEN }}
       - name: Extract Version
@@ -2416,6 +2520,7 @@ jobs:
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
+          NPM_DIST_TAG: latest
           NPM_REGISTRY: npm.pkg.github.com
           NPM_TOKEN: \${{ secrets.GITHUB_TOKEN }}
     container:
@@ -2552,6 +2657,9 @@ node_modules/
         ],
         "steps": Array [
           Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
+          Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],
@@ -2559,6 +2667,7 @@ node_modules/
       "publish:npm": Object {
         "description": "Publish this package to npm",
         "env": Object {
+          "NPM_DIST_TAG": "latest",
           "NPM_REGISTRY": "npm.pkg.github.com",
         },
         "name": "publish:npm",
@@ -2566,6 +2675,9 @@ node_modules/
           "NPM_TOKEN",
         ],
         "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
           Object {
             "exec": "npx -p jsii-release@latest jsii-release-npm",
           },
@@ -2758,6 +2870,9 @@ Object {
         "GITHUB_REF",
       ],
       "steps": Array [
+        Object {
+          "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+        },
         Object {
           "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
         },
@@ -3046,6 +3161,9 @@ node_modules/
         ],
         "steps": Array [
           Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
+          Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],
@@ -3239,6 +3357,26 @@ Object {
         "GITHUB_REF",
       ],
       "steps": Array [
+        Object {
+          "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+        },
+        Object {
+          "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
+        },
+      ],
+    },
+    "publish:github:10.x": Object {
+      "description": "Publish this package to GitHub Releases",
+      "name": "publish:github:10.x",
+      "requiredEnv": Array [
+        "GITHUB_TOKEN",
+        "GITHUB_REPOSITORY",
+        "GITHUB_REF",
+      ],
+      "steps": Array [
+        Object {
+          "exec": "test \\"$(git branch --show-current)\\" = \\"10.x\\"",
+        },
         Object {
           "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
         },
@@ -3440,6 +3578,7 @@ jobs:
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
+          NPM_DIST_TAG: latest
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
     container:
       image: jsii/superchain:1-buster-slim-node14
@@ -3559,6 +3698,9 @@ Object {
       ],
       "steps": Array [
         Object {
+          "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+        },
+        Object {
           "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
         },
       ],
@@ -3574,6 +3716,9 @@ Object {
         "GITHUB_TOKEN",
       ],
       "steps": Array [
+        Object {
+          "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+        },
         Object {
           "exec": "npx -p jsii-release@latest jsii-release-golang",
         },
@@ -3591,17 +3736,26 @@ Object {
       ],
       "steps": Array [
         Object {
+          "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+        },
+        Object {
           "exec": "npx -p jsii-release@latest jsii-release-maven",
         },
       ],
     },
     "publish:npm": Object {
       "description": "Publish this package to npm",
+      "env": Object {
+        "NPM_DIST_TAG": "latest",
+      },
       "name": "publish:npm",
       "requiredEnv": Array [
         "NPM_TOKEN",
       ],
       "steps": Array [
+        Object {
+          "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+        },
         Object {
           "exec": "npx -p jsii-release@latest jsii-release-npm",
         },
@@ -3615,6 +3769,9 @@ Object {
       ],
       "steps": Array [
         Object {
+          "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+        },
+        Object {
           "exec": "npx -p jsii-release@latest jsii-release-nuget",
         },
       ],
@@ -3627,6 +3784,9 @@ Object {
         "TWINE_PASSWORD",
       ],
       "steps": Array [
+        Object {
+          "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+        },
         Object {
           "exec": "npx -p jsii-release@latest jsii-release-pypi",
         },
@@ -3969,15 +4129,35 @@ node_modules/
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
       },
-      "publish:github": Object {
+      "publish:github:firefox": Object {
         "description": "Publish this package to GitHub Releases",
-        "name": "publish:github",
+        "name": "publish:github:firefox",
         "requiredEnv": Array [
           "GITHUB_TOKEN",
           "GITHUB_REPOSITORY",
           "GITHUB_REF",
         ],
         "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"firefox\\"",
+          },
+          Object {
+            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
+          },
+        ],
+      },
+      "publish:github:safari": Object {
+        "description": "Publish this package to GitHub Releases",
+        "name": "publish:github:safari",
+        "requiredEnv": Array [
+          "GITHUB_TOKEN",
+          "GITHUB_REPOSITORY",
+          "GITHUB_REF",
+        ],
+        "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"safari\\"",
+          },
           Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
@@ -4425,6 +4605,43 @@ node_modules/
         ],
         "steps": Array [
           Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
+          },
+          Object {
+            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
+          },
+        ],
+      },
+      "publish:github:3.x": Object {
+        "description": "Publish this package to GitHub Releases",
+        "name": "publish:github:3.x",
+        "requiredEnv": Array [
+          "GITHUB_TOKEN",
+          "GITHUB_REPOSITORY",
+          "GITHUB_REF",
+        ],
+        "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"3.x\\"",
+          },
+          Object {
+            "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
+          },
+        ],
+      },
+      "publish:github:next": Object {
+        "description": "Publish this package to GitHub Releases",
+        "name": "publish:github:next",
+        "requiredEnv": Array [
+          "GITHUB_TOKEN",
+          "GITHUB_REPOSITORY",
+          "GITHUB_REF",
+        ],
+        "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"next\\"",
+          },
+          Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
         ],
@@ -4755,15 +4972,18 @@ node_modules/
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
       },
-      "publish:github": Object {
+      "publish:github:10.x": Object {
         "description": "Publish this package to GitHub Releases",
-        "name": "publish:github",
+        "name": "publish:github:10.x",
         "requiredEnv": Array [
           "GITHUB_TOKEN",
           "GITHUB_REPOSITORY",
           "GITHUB_REF",
         ],
         "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"10.x\\"",
+          },
           Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
@@ -5044,15 +5264,18 @@ node_modules/
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
       },
-      "publish:github": Object {
+      "publish:github:10.x": Object {
         "description": "Publish this package to GitHub Releases",
-        "name": "publish:github",
+        "name": "publish:github:10.x",
         "requiredEnv": Array [
           "GITHUB_TOKEN",
           "GITHUB_REPOSITORY",
           "GITHUB_REF",
         ],
         "steps": Array [
+          Object {
+            "exec": "test \\"$(git branch --show-current)\\" = \\"10.x\\"",
+          },
           Object {
             "exec": "errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi",
           },
