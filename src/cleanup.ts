@@ -1,8 +1,11 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
+import { existsSync, readFileSync } from 'fs-extra';
 import * as glob from 'glob';
-import { PROJEN_MARKER } from './common';
+import { PROJEN_DIR, PROJEN_MARKER } from './common';
 import * as logging from './logging';
+
+export const FILE_MANIFEST = `${PROJEN_DIR}/files.json`;
 
 export function cleanup(dir: string, exclude: string[]) {
   try {
@@ -15,9 +18,14 @@ export function cleanup(dir: string, exclude: string[]) {
 }
 
 function findGeneratedFiles(dir: string, exclude: string[]) {
+  let files = getFilesFromManifest(dir);
+  if (files.length > 0) {
+    return files;
+  }
+
   const ignore = [...readGitIgnore(dir), 'node_modules/**', ...exclude, '.git/**'];
 
-  const files = glob.sync('**', {
+  files = glob.sync('**', {
     ignore,
     cwd: dir,
     dot: true,
@@ -37,6 +45,22 @@ function findGeneratedFiles(dir: string, exclude: string[]) {
   }
 
   return generated;
+}
+
+function getFilesFromManifest(dir: string): string[] {
+  try {
+    const fileManifestPath = path.resolve(dir, FILE_MANIFEST);
+    if (existsSync(fileManifestPath)) {
+      const fileManifest = JSON.parse(readFileSync(fileManifestPath, 'utf-8'));
+      if (fileManifest.files) {
+        return fileManifest.files.map((f: string) => path.resolve(dir, f));
+      }
+    }
+  } catch (e) {
+    logging.warn(`warning: unable to get files to clean from file manifest: ${e.stack}`);
+  }
+
+  return [];
 }
 
 function readGitIgnore(dir: string) {

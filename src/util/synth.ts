@@ -49,6 +49,14 @@ export interface DirectorySnapshotOptions {
    * @default [] include all files
    */
   readonly excludeGlobs?: string[];
+
+  /**
+   * Only snapshot the names of files and not their contents.
+   * The value for a path will be `true` if it exists.
+   *
+   * @default false include file content
+   */
+  readonly onlyFileNames?: boolean;
 }
 
 export function directorySnapshot(root: string, options: DirectorySnapshotOptions = {}) {
@@ -65,10 +73,14 @@ export function directorySnapshot(root: string, options: DirectorySnapshotOption
     const filePath = path.join(root, file);
 
     let content;
-    if (path.extname(filePath) === '.json') {
-      content = fs.readJsonSync(filePath);
+    if (!options.onlyFileNames) {
+      if (path.extname(filePath) === '.json') {
+        content = fs.readJsonSync(filePath);
+      } else {
+        content = fs.readFileSync(filePath, 'utf-8');
+      }
     } else {
-      content = fs.readFileSync(filePath, 'utf-8');
+      content = true;
     }
 
     output[file] = content;
