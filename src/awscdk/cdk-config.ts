@@ -37,6 +37,15 @@ export interface CdkConfigCommonOptions {
   readonly cdkout?: string;
 
   /**
+   * A command to execute before synthesis. This command will be called when
+   * running `cdk synth` or when `cdk watch` identifies a change in your source
+   * code before redeployment.
+   *
+   * @default - no build command
+   */
+  readonly buildCommand?: string;
+
+  /**
    * Glob patterns to include in `cdk watch`.
    *
    * @default []
@@ -97,6 +106,7 @@ export class CdkConfig extends Component {
         context: context,
         requireApproval: options.requireApproval,
         output: this.cdkout,
+        build: options.buildCommand,
         watch: {
           include: options.watchIncludes ?? [],
           exclude: options.watchExcludes ?? [],

@@ -19,11 +19,6 @@ export class Task {
   public readonly name: string;
 
   /**
-   * The description of the task.
-   */
-  public readonly description?: string;
-
-  /**
    * A command to execute which determines if the task should be skipped. If it
    * returns a zero exit code, the task will not be executed.
    */
@@ -34,10 +29,11 @@ export class Task {
   private readonly cwd?: string;
   private readonly requiredEnv?: string[];
   private _locked: boolean;
+  private _description?: string;
 
   constructor(name: string, props: TaskOptions = { }) {
     this.name = name;
-    this.description = props.description;
+    this._description = props.description;
     this.condition = props.condition;
     this.cwd = props.cwd;
     this._locked = false;
@@ -56,6 +52,20 @@ export class Task {
    */
   public lock() {
     this._locked = true;
+  }
+
+  /**
+   * Returns the description of this task.
+   */
+  public get description(): string | undefined {
+    return this._description;
+  }
+
+  /**
+   * Sets the description of this task.
+   */
+  public set description(desc: string | undefined) {
+    this._description = desc;
   }
 
   /**

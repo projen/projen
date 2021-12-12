@@ -21,6 +21,13 @@ export interface BundlerOptions {
     * @default "assets"
     */
   readonly assetsDir?: string;
+
+  /**
+   * Install the `bundle` command as a pre-compile phase.
+   *
+   * @default true
+   */
+  readonly addToPreCompile?: boolean;
 }
 
 /**
@@ -50,6 +57,7 @@ export class Bundler extends Component {
   public readonly bundledir: string;
 
   private _task: Task | undefined;
+  private readonly addToPreCompile: boolean;
 
   /**
    * Creates a `Bundler`.
@@ -59,7 +67,7 @@ export class Bundler extends Component {
 
     this.esbuildVersion = options.esbuildVersion;
     this.bundledir = options.assetsDir ?? 'assets';
-
+    this.addToPreCompile = options.addToPreCompile ?? true;
   }
 
   /**
@@ -74,7 +82,11 @@ export class Bundler extends Component {
       this._task = this.project.tasks.addTask('bundle', {
         description: 'Prepare assets',
       });
-      this.project.preCompileTask.spawn(this._task);
+
+      // install the bundle task into the pre-compile phase.
+      if (this.addToPreCompile) {
+        this.project.preCompileTask.spawn(this._task);
+      }
     }
 
     return this._task;

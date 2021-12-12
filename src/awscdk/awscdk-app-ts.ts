@@ -88,6 +88,13 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     super({
       ...options,
       sampleCode: false,
+      bundlerOptions: {
+        ...options.bundlerOptions,
+
+        // we invoke the "bundle" task as part of the build step in cdk.json so
+        // we don't want it to be added to the pre-compile phase.
+        addToPreCompile: false,
+      },
     });
 
     // encode a hidden assumption further down the chain
@@ -122,19 +129,23 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.addCdkDependency(...options.cdkDependencies ?? []);
 
-    this.cdkTasks = new CdkTasks(this);
-
     // no compile step because we do all of it in typescript directly
     this.compileTask.reset();
 
-    this.removeScript('watch'); // because we use ts-node
+    this.cdkTasks = new CdkTasks(this);
 
     // add synth to the build
     this.postCompileTask.spawn(this.cdkTasks.synth);
 
+    const tsConfigFile = this.tsconfig?.fileName;
+    if (!tsConfigFile) {
+      throw new Error('Expecting tsconfig.json');
+    }
+
     this.cdkConfig = new CdkConfig(this, {
-      app: `npx ts-node --prefer-ts-exts ${path.posix.join(this.srcdir, this.appEntrypoint)}`,
+      app: `npx ts-node -P ${tsConfigFile} --prefer-ts-exts ${path.posix.join(this.srcdir, this.appEntrypoint)}`,
       featureFlags: cdkMajorVersion < 2,
+      buildCommand: this.runTaskCommand(this.bundler.bundleTask),
       watchIncludes: [
         `${this.srcdir}/**/*.ts`,
         `${this.testdir}/**/*.ts`,
