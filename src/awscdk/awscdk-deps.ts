@@ -15,15 +15,10 @@ export interface AwsCdkDepsCommonOptions {
   readonly cdkVersion: string;
 
   /**
-    * Minimum target version of constructs being tested against. If not provided,
-    * the default value depends on the configured `cdkVersion`:
+    * Version requirement for the `constructs` library.
     *
-    * - For CDK 1.x, the default is "3.2.27"
-    * - For CDK 2.x, the default is "10.0.5"
-    * - Otherwise, the default is "*"
-    *
-    * @default - When the default behavior is used, the dependency on `constructs` will
-    * be added as both a `peerDependency` and a `devDependency`.
+    * @default - for CDK 1.x the default is "^3.2.27", for CDK 2.x the default
+    * is "^10.0.5".
     */
   readonly constructsVersion?: string;
 
@@ -33,8 +28,7 @@ export interface AwsCdkDepsCommonOptions {
     * You can use this to prevent yarn to mix versions for your CDK dependencies and to prevent auto-updates.
     * If you use experimental features this will let you define the moment you include breaking changes.
     *
-    * @default false
-    * @deprecated To pin your CDK version just set `cdkVersion` to a pinned version.
+    * @deprecated Not supported any more: to pin your CDK version just set `cdkVersion` to a pinned version.
     */
   readonly cdkVersionPinning?: boolean;
 
@@ -133,7 +127,7 @@ export class AwsCdkDeps extends Component {
     this.cdkVersion = cdkVersion;
     this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;
 
-    const defaultConstructsVersion = cdkMajorVersion === 1 ? '3.2.27' : '10.0.5';
+    const defaultConstructsVersion = cdkMajorVersion === 1 ? '^3.2.27' : '^10.0.5';
     const constructsVersion = options.constructsVersion ?? defaultConstructsVersion;
     const constructsMajorVersion = semver.minVersion(constructsVersion)?.major;
     if (!constructsMajorVersion) {
@@ -183,7 +177,7 @@ export class AwsCdkDeps extends Component {
         throw new Error(`Unsupported AWS CDK major version ${cdkMajorVersion}.x`);
     }
 
-    this.addRuntimeDeps(`constructs@^${constructsVersion}`);
+    this.addRuntimeDeps(`constructs@${constructsVersion}`);
   }
 
   /**

@@ -8,7 +8,7 @@ import { mkdtemp, synthSnapshot } from '../util';
 describe('constructs dependency selection', () => {
   test('user-selected', () => {
     // GIVEN
-    const project = new TestProject({ cdkVersion: '1.100.0', constructsVersion: '9.1337.0-ultimate' });
+    const project = new TestProject({ cdkVersion: '1.100.0', constructsVersion: '^9.1337.0-ultimate' });
 
     // WHEN
     const snapshot = synthSnapshot(project);

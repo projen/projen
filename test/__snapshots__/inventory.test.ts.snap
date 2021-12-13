@@ -1332,7 +1332,6 @@ Array [
         "switch": "cdk-version",
       },
       Object {
-        "default": "false",
         "deprecated": true,
         "docs": "Use pinned version instead of caret version for CDK.",
         "featured": false,
@@ -1420,9 +1419,9 @@ Array [
         "switch": "code-cov-token-secret",
       },
       Object {
-        "default": "- When the default behavior is used, the dependency on \`constructs\` will
-be added as both a \`peerDependency\` and a \`devDependency\`.",
-        "docs": "Minimum target version of constructs being tested against. If not provided, the default value depends on the configured \`cdkVersion\`:.",
+        "default": "- for CDK 1.x the default is \\"^3.2.27\\", for CDK 2.x the default
+is \\"^10.0.5\\".",
+        "docs": "Version requirement for the \`constructs\` library.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -3896,7 +3895,6 @@ be added as both a \`peerDependency\` and a \`devDependency\`.",
         "switch": "cdk-version",
       },
       Object {
-        "default": "false",
         "deprecated": true,
         "docs": "Use pinned version instead of caret version for CDK.",
         "featured": false,
@@ -4018,9 +4016,9 @@ be added as both a \`peerDependency\` and a \`devDependency\`.",
         "switch": "compat-ignore",
       },
       Object {
-        "default": "- When the default behavior is used, the dependency on \`constructs\` will
-be added as both a \`peerDependency\` and a \`devDependency\`.",
-        "docs": "Minimum target version of constructs being tested against. If not provided, the default value depends on the configured \`cdkVersion\`:.",
+        "default": "- for CDK 1.x the default is \\"^3.2.27\\", for CDK 2.x the default
+is \\"^10.0.5\\".",
+        "docs": "Version requirement for the \`constructs\` library.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
