@@ -53,7 +53,11 @@ export class AutoMerge extends Component {
         method: 'squash',
 
         // use PR title+body as the commit message
-        commit_message: 'title+body',
+        commit_message_template: [
+          '{{ title }} (#{{ number }})',
+          '',
+          '{{ body }}',
+        ].join('\n'),
 
         // update PR branch so it's up-to-date before merging
         strict: 'smart',

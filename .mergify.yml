@@ -5,7 +5,10 @@ pull_request_rules:
     actions:
       merge:
         method: squash
-        commit_message: title+body
+        commit_message_template: |-
+          {{ title }} (#{{ number }})
+
+          {{ body }}
         strict: smart
         strict_method: merge
       delete_head_branch: {}
