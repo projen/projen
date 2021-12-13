@@ -356,6 +356,21 @@ test('lock() can be used to disallow modifications', () => {
   expect(() => t.prependSay('hoho')).toThrow(error);
 });
 
+test('it is possible to edit the description', () => {
+  const p = new TestProject();
+  const t1 = p.addTask('t1');
+  const t2 = p.addTask('t2', { description: 'my description' });
+
+  // WHEN
+  t1.description = 'hello';
+  t2.description = 'world';
+
+  // THEN
+  const files = synthSnapshot(p);
+  expect(files['.projen/tasks.json'].tasks.t1.description).toBe('hello');
+  expect(files['.projen/tasks.json'].tasks.t2.description).toBe('world');
+});
+
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {
   const manifest = synthTasksManifest(p);
   delete manifest['//'];

@@ -80,3 +80,39 @@ describe('lambda functions', () => {
     expect(snapshot['.projen/tasks.json'].tasks['bundle:src/my']).toBeUndefined();
   });
 });
+
+describe('watch', () => {
+
+  let project: AwsCdkTypeScriptApp;
+  let files: Record<string, any>;
+
+  beforeEach(() => {
+    project = new AwsCdkTypeScriptApp({
+      name: 'hello',
+      defaultReleaseBranch: 'main',
+      cdkVersion: '1.100.0',
+    });
+
+    files = synthSnapshot(project);
+  });
+
+  it('adds a "watch" task', () => {
+    expect(files['.projen/tasks.json'].tasks.watch).toStrictEqual({
+      name: 'watch',
+      description: 'Watches changes in your source code and rebuilds and deploys to the current account',
+      steps: [
+        { exec: 'cdk deploy --hotswap' },
+        { exec: 'cdk watch' },
+      ],
+    });
+  });
+
+  it('configures the "build" option in cdk.json to bundle lambda functions', () => {
+    expect(files['cdk.json'].build).toStrictEqual('npx projen bundle');
+  });
+
+  it('removes the "bundle" task from pre-compile', () => {
+    expect(files['.projen/tasks.json'].tasks['pre-compile'].steps).toBeUndefined();
+  });
+
+});

@@ -29,12 +29,18 @@ export async function handler(event: any) {
 }
 ```
 
-Now, after you run `npx projen` and you'll notice that a new file
-`src/resize-image-function.ts` has been added to your project. This is a
-generated source file which exports a construct named `ResizeImageFunction`.
-This construct is a subclass of `@aws-cdk/aws-lambda.Function`, bound to your
-specific handler. This means that you don't need to specify neither the `code`
-nor the `runtime` options when you add it to your app:
+Now run:
+
+```sh
+$ npx projen
+```
+
+You'll notice that a new file `src/resize-image-function.ts` has been added to
+your project. This is a generated source file which exports a construct named
+`ResizeImageFunction`. This construct is a subclass of
+`@aws-cdk/aws-lambda.Function`, bound to your specific handler. This means that
+you don't need to specify neither the `code` nor the `runtime` options when you
+add it to your app:
 
 ```ts
 import { ResizeImageFunction } from './resize-image-function.ts';
@@ -156,14 +162,35 @@ new AfterCreate(stack, 'RunAssertions', {
 });
 ```
 
-## Watch (NOT IMPLEMENTED YET)
+## Watch
 
 > Only relevant for app projects
 
-The `watch` command will use `cdk watch` in order to trigger deployments (with
-opportunistic hot-swapping) when source files or bundles are changed. `cdk.json`
-will automatically be configured to watch both source code changes and bundles,
-and rebuild bundles as needed.`
+The `watch` command will use [cdk watch] in order to trigger deployments (with
+opportunistic hot-swapping) when source files or asset bundles are updated.
+`cdk.json` will automatically be configured to watch both source code changes
+and bundles, and rebuild bundles as needed.
+
+[cdk watch]: https://aws.amazon.com/blogs/developer/increasing-development-speed-with-cdk-watch/
+
+To start watching, set up your environment with AWS credentials and `AWS_REGION`
+pointing to your development AWS account and execute:
+
+```sh
+npx projen watch
+```
+
+This will:
+
+* Bundle your assets (if you have any).
+* Perform an initial deployment of your app into your development environment.
+* Start watching for changes.
+
+If you change a source file in your project, this change will be picked up by
+`cdk watch`, assets will be re-bundled and a hotswap deployment will be
+performed. For example, if you only change some AWS Lambda code, the CDK CLI
+will simply update the AWS Lambda service with the location of your new code
+bundle instead of going through an AWS CloudFormation deployment.
 
 ## Roadmap
 

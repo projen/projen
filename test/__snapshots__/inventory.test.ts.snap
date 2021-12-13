@@ -63,6 +63,23 @@ Array [
         "switch": "auto-merge-options",
       },
       Object {
+        "default": "- no build command",
+        "docs": "A command to execute before synthesis.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildCommand",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "buildCommand",
+        ],
+        "simpleType": "string",
+        "switch": "build-command",
+      },
+      Object {
         "docs": "Which AWS CDK modules this app uses.",
         "featured": true,
         "fullType": Object {
@@ -1110,6 +1127,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "default": "- no build command",
+        "docs": "A command to execute before synthesis.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildCommand",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "buildCommand",
+        ],
+        "simpleType": "string",
+        "switch": "build-command",
       },
       Object {
         "default": "- true if not a subproject",
