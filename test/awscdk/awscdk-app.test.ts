@@ -114,3 +114,17 @@ describe('watch', () => {
   });
 
 });
+
+test('CDK v1 usage', () => {
+  const project = new awscdk.AwsCdkTypeScriptApp({
+    cdkVersion: '^1.126.0',
+    defaultReleaseBranch: 'main',
+    name: 'test',
+  });
+
+  const snap = synthSnapshot(project);
+  expect(snap['package.json'].dependencies).toStrictEqual({
+    '@aws-cdk/core': '^1.126.0',
+    'constructs': '^3.2.27',
+  });
+});

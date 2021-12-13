@@ -8,14 +8,14 @@ import { Project } from '../project';
  */
 export interface AwsCdkDepsCommonOptions {
   /**
-   * Version requirement for the the AWS CDK.
+   * Semantic version requirement for the the AWS CDK libraries.
    *
    * @default "^2"
    */
   readonly cdkVersion: string;
 
   /**
-    * Version requirement for the `constructs` library.
+    * Semantic version requirement for the `constructs` library.
     *
     * @default - for CDK 1.x the default is "^3.2.27", for CDK 2.x the default
     * is "^10.0.5".
@@ -28,7 +28,7 @@ export interface AwsCdkDepsCommonOptions {
     * You can use this to prevent yarn to mix versions for your CDK dependencies and to prevent auto-updates.
     * If you use experimental features this will let you define the moment you include breaking changes.
     *
-    * @deprecated Not supported any more: to pin your CDK version just set `cdkVersion` to a pinned version.
+    * @deprecated Not supported: to pin your CDK version just set `cdkVersion` to a pinned version.
     */
   readonly cdkVersionPinning?: boolean;
 
@@ -36,7 +36,7 @@ export interface AwsCdkDepsCommonOptions {
     * Which AWS CDK modules (those that start with "@aws-cdk/") does this library
     * require when consumed?
     *
-    * @deprecated - For CDK 2.x use 'peerDeps' instead
+    * @deprecated For CDK 2.x use 'peerDeps' instead
     */
   readonly cdkDependencies?: string[];
 
@@ -50,14 +50,14 @@ export interface AwsCdkDepsCommonOptions {
     * they are present during development.
     *
     * @default true
-    * @deprecated - Not used for CDK 2.x
+    * @deprecated Not used for CDK 2.x
     */
   readonly cdkDependenciesAsDeps?: boolean;
 
   /**
     * Install the @aws-cdk/assert library?
     *
-    * @deprecated - use cdkAssertions instead
+    * @deprecated Use `cdkAssertions` instead
     * @default false
     */
   readonly cdkAssert?: boolean;
@@ -75,10 +75,7 @@ export interface AwsCdkDepsCommonOptions {
   /**
     * AWS CDK modules required for testing.
     *
-    *
-    *
-    * @featured
-    * @deprecated - For CDK 2.x use 'devDeps' instead
+    * @deprecated For CDK 2.x use 'devDeps' instead
     */
   readonly cdkTestDependencies?: string[];
 }
@@ -146,6 +143,7 @@ export class AwsCdkDeps extends Component {
         if (constructsMajorVersion !== undefined && constructsMajorVersion >= 10) {
           throw new Error('CDK 1.x requires constructs version < 10');
         }
+        this.addCdkDependencies('@aws-cdk/core');
         this.addCdkDependencies(...options.cdkDependencies ?? []);
         this.addCdkTestDependencies(...options.cdkTestDependencies ?? []);
         break;
