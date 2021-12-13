@@ -87,7 +87,7 @@ export interface NodePackageOptions {
 
   /**
    * List of dependencies to bundle into this module. These modules will be
-   * added both to the `dependencies` section and `peerDependencies` section of
+   * added both to the `dependencies` section and `bundledDependencies` section of
    * your `package.json`.
    *
    * The recommendation is to only specify the module name here (e.g.
