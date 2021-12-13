@@ -115,7 +115,7 @@ export class UpgradeDependencies extends Component {
     this.ignoresProjen = this.options.ignoreProjen ?? true;
     this.gitIdentity = options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
 
-    project.addDevDeps('npm-check-updates@^11');
+    project.addDevDeps('npm-check-updates@^12');
   }
 
   // create the upgrade task and a corresponding github workflow

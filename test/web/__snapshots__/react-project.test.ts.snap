@@ -398,7 +398,7 @@ pull_request_rules:
       Object {
         "name": "npm-check-updates",
         "type": "build",
-        "version": "^11",
+        "version": "^12",
       },
       Object {
         "name": "projen",
@@ -886,7 +886,7 @@ pull_request_rules:
       "@testing-library/jest-dom": "*",
       "@testing-library/react": "*",
       "@testing-library/user-event": "*",
-      "npm-check-updates": "^11",
+      "npm-check-updates": "^12",
       "projen": "*",
       "standard-version": "^9",
     },
