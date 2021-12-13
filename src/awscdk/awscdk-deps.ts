@@ -97,6 +97,11 @@ export class AwsCdkDeps extends Component {
   public readonly cdkVersion: string;
 
   /**
+   * The semantic version requirement of `constructs`.
+   */
+  public readonly constructsVersion: string;
+
+  /**
    * Whether CDK dependencies are added as normal dependencies (and peer dependencies).
    * @deprecated Not used for CDK 2.x
    */
@@ -105,77 +110,42 @@ export class AwsCdkDeps extends Component {
   /**
    * The major version of the AWX CDK (e.g. 1, 2, ...)
    */
-  public readonly majorVersion: number;
+  public readonly cdkMajorVersion: number;
 
   private readonly dependencyType: DependencyType;
 
   constructor(project: Project, options: AwsCdkDepsOptions) {
     super(project);
 
-    const cdkVersion = options.cdkVersion;
-    const cdkMajorVersion = semver.minVersion(cdkVersion)?.major ?? 2;
-
     if (options.cdkVersionPinning) {
       throw new Error('"cdkVersionPinning" is deprecated, set "cdkVersion" to a pinned version');
     }
 
-    this.dependencyType = options.dependencyType;
-    this.majorVersion = cdkMajorVersion;
-    this.cdkVersion = cdkVersion;
+    if (semver.valid(options.cdkVersion)) {
+      this.project.logger.warn(`NOTICE: "cdkVersion" is now a version range and is currently pinned to ${options.cdkVersion}. We recommend setting it to "^${options.cdkVersion}".`);
+    }
+
+    if (semver.valid(options.constructsVersion)) {
+      this.project.logger.warn(`NOTICE: "constructsVersion" is now a version range and is currently pinned to ${options.constructsVersion}. We recommend setting it to "^${options.constructsVersion}".`);
+    }
+
     this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;
+    this.cdkVersion = options.cdkVersion;
+    this.dependencyType = options.dependencyType;
 
-    const defaultConstructsVersion = cdkMajorVersion === 1 ? '^3.2.27' : '^10.0.5';
-    const constructsVersion = options.constructsVersion ?? defaultConstructsVersion;
-    const constructsMajorVersion = semver.minVersion(constructsVersion)?.major;
-    if (!constructsMajorVersion) {
-      throw new Error(`Cannot determine major version of constructs version '${constructsVersion}'`);
+    const mv = semver.minVersion(this.cdkVersion)?.major;
+    if (!mv) {
+      throw new Error(`Unable to determine CDK major version for ${mv}`);
     }
+    this.cdkMajorVersion = mv;
 
-    switch (cdkMajorVersion) {
-      case 1:
-        if (options.cdkAssert) {
-          this.addDevDeps(this.formatModuleSpec('@aws-cdk/assert'));
-        }
-        if (options.cdkAssertions ?? true) {
-          this.addDevDeps(this.formatModuleSpec('@aws-cdk/assertions'));
-        }
-        // CDK 1.x is built on constructs 3.x
-        if (constructsMajorVersion !== undefined && constructsMajorVersion >= 10) {
-          throw new Error('CDK 1.x requires constructs version < 10');
-        }
-        this.addCdkDependencies('@aws-cdk/core');
-        this.addCdkDependencies(...options.cdkDependencies ?? []);
-        this.addCdkTestDependencies(...options.cdkTestDependencies ?? []);
-        break;
+    const defaultConstructsVersion = this.cdkMajorVersion === 1 ? '^3.2.27' : '^10.0.5';
+    this.constructsVersion = options.constructsVersion ?? defaultConstructsVersion;
 
-      case 2:
-        if (options.cdkAssert !== undefined) {
-          throw new Error('cdkAssert is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib');
-        }
-        if (options.cdkDependencies !== undefined) {
-          throw new Error('cdkDependencies is not used for CDK 2.x. Use "peerDeps" instead');
-        }
-        if (options.cdkDependenciesAsDeps !== undefined) {
-          throw new Error('cdkDependenciesAsDeps is not used for CDK 2.x');
-        }
-        if (options.cdkTestDependencies !== undefined) {
-          throw new Error('cdkTestDependencies is not used for CDK 2.x. Use "devDeps" instead');
-        }
-
-        // CDK 2.x requires constructs ^10
-        if (constructsMajorVersion !== 10) {
-          throw new Error('CDK 2.x requires constructs 10.x');
-        }
-
-        this.addRuntimeDeps(`aws-cdk-lib@${this.cdkVersion}`);
-
-        break;
-
-      default:
-        throw new Error(`Unsupported AWS CDK major version ${cdkMajorVersion}.x`);
-    }
-
-    this.addRuntimeDeps(`constructs@${constructsVersion}`);
+    this.addCdkDependency(options);
+    this.addRuntimeDeps(`constructs@${this.constructsVersion}`);
+    this.addCdkDependencies(...options.cdkDependencies ?? []);
+    this.addCdkTestDependencies(...options.cdkTestDependencies ?? []);
   }
 
   /**
@@ -190,9 +160,10 @@ export class AwsCdkDeps extends Component {
    * See `cdkDependenciesAsDeps` for changing the default behavior.
    *
    * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
+   * @deprecated not supported for CDK v2, use `deps` (for apps) or `peerDeps` (for libraries) instead
    */
   public addCdkDependencies(...deps: string[]) {
-    if (this.majorVersion !== 1) {
+    if (deps.length > 0 && this.cdkMajorVersion !== 1) {
       throw new Error('addCdkDependencies() is not supported for CDK 2.x and above, use addDeps() or addPeerDeps() instead');
     }
 
@@ -210,13 +181,60 @@ export class AwsCdkDeps extends Component {
    * Adds CDK modules as test dependencies.
    *
    * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
+   * @deprecated not supported for CDK v2, use `devDeps` instead
    */
   public addCdkTestDependencies(...deps: string[]) {
-    if (this.majorVersion !== 1) {
+    if (deps.length > 0 && this.cdkMajorVersion !== 1) {
       throw new Error('addCdkTestDependencies() is not supported for CDK 2.x and above, use addDevDeps() instead');
     }
 
     this.addDevDeps(...deps.map(m => this.formatModuleSpec(m)));
+  }
+
+  private addCdkDependency(options: AwsCdkDepsOptions) {
+    const constructsMajorVersion = semver.minVersion(this.constructsVersion)?.major;
+    if (!constructsMajorVersion) {
+      throw new Error(`Cannot determine major version of constructs version '${this.constructsVersion}'`);
+    }
+
+    switch (this.cdkMajorVersion) {
+      case 1:
+        if (options.cdkAssert) {
+          this.addDevDeps(this.formatModuleSpec('@aws-cdk/assert'));
+        }
+        if (options.cdkAssertions ?? true) {
+          this.addDevDeps(this.formatModuleSpec('@aws-cdk/assertions'));
+        }
+        if (constructsMajorVersion !== 3) {
+          throw new Error('AWS CDK 1.x requires constructs 3.x');
+        }
+
+        this.addCdkDependencies('@aws-cdk/core');
+        break;
+
+      case 2:
+        if (options.cdkAssert !== undefined) {
+          throw new Error('cdkAssert is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib');
+        }
+        if (options.cdkDependencies !== undefined) {
+          throw new Error('cdkDependencies is not used for CDK 2.x. Use "peerDeps" instead');
+        }
+        if (options.cdkDependenciesAsDeps !== undefined) {
+          throw new Error('cdkDependenciesAsDeps is not used for CDK 2.x');
+        }
+        if (options.cdkTestDependencies !== undefined) {
+          throw new Error('cdkTestDependencies is not used for CDK 2.x. Use "devDeps" instead');
+        }
+        if (constructsMajorVersion !== 10) {
+          throw new Error('AWS CDK 2.x requires constructs 10.x');
+        }
+
+        this.addRuntimeDeps(`aws-cdk-lib@${this.cdkVersion}`);
+        break;
+
+      default:
+        throw new Error(`Unsupported AWS CDK major version ${this.cdkMajorVersion}.x`);
+    }
   }
 
   private formatModuleSpec(module: string): string {

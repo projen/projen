@@ -149,7 +149,7 @@ export class LambdaFunction extends Component {
     src.line(`// ${FileBase.PROJEN_MARKER}`);
     src.line('import * as path from \'path\';');
 
-    if (cdkDeps.majorVersion === 1) {
+    if (cdkDeps.cdkMajorVersion === 1) {
       src.line('import * as lambda from \'@aws-cdk/aws-lambda\';');
       src.line('import { Construct } from \'@aws-cdk/core\';');
       cdkDeps.addCdkDependencies('@aws-cdk/aws-lambda');

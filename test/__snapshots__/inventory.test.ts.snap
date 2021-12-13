@@ -1296,7 +1296,7 @@ Array [
       Object {
         "deprecated": true,
         "docs": "AWS CDK modules required for testing.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
@@ -1317,7 +1317,7 @@ Array [
       },
       Object {
         "default": "\\"^2\\"",
-        "docs": "Version requirement for the the AWS CDK.",
+        "docs": "Semantic version requirement for the the AWS CDK libraries.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -1421,7 +1421,7 @@ Array [
       Object {
         "default": "- for CDK 1.x the default is \\"^3.2.27\\", for CDK 2.x the default
 is \\"^10.0.5\\".",
-        "docs": "Version requirement for the \`constructs\` library.",
+        "docs": "Semantic version requirement for the \`constructs\` library.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -3859,7 +3859,7 @@ is \\"^10.0.5\\".",
       Object {
         "deprecated": true,
         "docs": "AWS CDK modules required for testing.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
@@ -3880,7 +3880,7 @@ is \\"^10.0.5\\".",
       },
       Object {
         "default": "\\"^2\\"",
-        "docs": "Version requirement for the the AWS CDK.",
+        "docs": "Semantic version requirement for the the AWS CDK libraries.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -4018,7 +4018,7 @@ is \\"^10.0.5\\".",
       Object {
         "default": "- for CDK 1.x the default is \\"^3.2.27\\", for CDK 2.x the default
 is \\"^10.0.5\\".",
-        "docs": "Version requirement for the \`constructs\` library.",
+        "docs": "Semantic version requirement for the \`constructs\` library.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",

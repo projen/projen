@@ -8,17 +8,16 @@ import { mkdtemp, synthSnapshot } from '../util';
 describe('constructs dependency selection', () => {
   test('user-selected', () => {
     // GIVEN
-    const project = new TestProject({ cdkVersion: '1.100.0', constructsVersion: '^9.1337.0-ultimate' });
+    const project = new TestProject({ cdkVersion: '1.100.0', constructsVersion: '^3.1337.0-ultimate' });
 
     // WHEN
     const snapshot = synthSnapshot(project);
 
     // THEN
-    expect(snapshot['package.json']?.peerDependencies?.constructs).toBe('^9.1337.0-ultimate');
+    expect(snapshot['package.json']?.peerDependencies?.constructs).toBe('^3.1337.0-ultimate');
     expect(snapshot['package.json']?.devDependencies?.constructs).toBeUndefined();
     expect(snapshot['package.json']?.dependencies?.constructs).toBeUndefined();
   });
-
 
   test('for cdk 1.x', () => {
     // GIVEN

@@ -100,7 +100,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.cdkConfig = new CdkConfig(this, {
       app: `npx ts-node -P ${tsConfigFile} --prefer-ts-exts ${path.posix.join(this.srcdir, this.appEntrypoint)}`,
-      featureFlags: this.cdkDeps.majorVersion < 2,
+      featureFlags: this.cdkDeps.cdkMajorVersion < 2,
       buildCommand: this.runTaskCommand(this.bundler.bundleTask),
       watchIncludes: [
         `${this.srcdir}/**/*.ts`,
@@ -130,7 +130,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.addDevDeps('ts-node@^9');
     if (options.sampleCode ?? true) {
-      new SampleCode(this, this.cdkDeps.majorVersion);
+      new SampleCode(this, this.cdkDeps.cdkMajorVersion);
     }
 
     const lambdaAutoDiscover = options.lambdaAutoDiscover ?? true;
