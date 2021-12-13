@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
+import * as YAML from 'yaml';
 import { awscdk } from '../../src';
 import { AwsCdkConstructLibrary, AwsCdkConstructLibraryOptions } from '../../src/awscdk';
 import { NpmAccess } from '../../src/javascript';
@@ -138,6 +139,36 @@ describe('lambda functions', () => {
     const snapshot = synthSnapshot(project);
     expect(snapshot['src/my-function.ts']).toBeUndefined();
     expect(snapshot['.projen/tasks.json'].tasks['bundle:my']).toBeUndefined();
+  });
+});
+
+describe('workflow container image', () => {
+  it('uses jsii/superchain:1-buster-slim for cdk v1', () => {
+    const project = new TestProject({ cdkVersion: '^1.100.0' });
+    const snapshot = synthSnapshot(project);
+    const buildWorkflow = YAML.parse(snapshot['.github/workflows/build.yml']);
+    expect(buildWorkflow.jobs.build.container.image).toStrictEqual('jsii/superchain:1-buster-slim');
+  });
+
+  it('uses jsii/superchain:1-buster-slim-node14 for cdk v2', () => {
+    const project = new TestProject({ cdkVersion: '^2.12.0' });
+    const snapshot = synthSnapshot(project);
+    const buildWorkflow = YAML.parse(snapshot['.github/workflows/build.yml']);
+    expect(buildWorkflow.jobs.build.container.image).toStrictEqual('jsii/superchain:1-buster-slim-node14');
+  });
+
+  it('uses the user-defined image if specified', () => {
+    const project = new TestProject({ cdkVersion: '^2.12.0', workflowContainerImage: 'my-custom-image' });
+    const snapshot = synthSnapshot(project);
+    const buildWorkflow = YAML.parse(snapshot['.github/workflows/build.yml']);
+    expect(buildWorkflow.jobs.build.container.image).toStrictEqual('my-custom-image');
+  });
+
+  it('determines an image if minNodeVersion is set', () => {
+    const project = new TestProject({ cdkVersion: '^2.12.0', minNodeVersion: '16.0.0' });
+    const snapshot = synthSnapshot(project);
+    const buildWorkflow = YAML.parse(snapshot['.github/workflows/build.yml']);
+    expect(buildWorkflow.jobs.build.container.image).toStrictEqual('jsii/superchain:1-buster-slim-node16');
   });
 });
 
