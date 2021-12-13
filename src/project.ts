@@ -1,7 +1,7 @@
 import { mkdtempSync, realpathSync } from 'fs';
 import { tmpdir } from 'os';
 import * as path from 'path';
-import { cleanup } from './cleanup';
+import { cleanup, FILE_MANIFEST } from './cleanup';
 import { IS_TEST_RUN, PROJEN_VERSION } from './common';
 import { Component } from './component';
 import { Dependencies } from './dependencies';
@@ -206,6 +206,14 @@ export class Project {
     if (projenrcJson) {
       new Projenrc(this, options.projenrcJsonOptions);
     }
+
+    new JsonFile(this, FILE_MANIFEST, {
+      omitEmpty: true,
+      obj: () => ({
+        // replace `\` with `/` to ensure paths match across platforms
+        files: this.files.filter(f => f.readonly).map(f => f.path.replace(/\\/g, '/')),
+      }),
+    });
   }
 
   /**

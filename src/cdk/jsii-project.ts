@@ -209,7 +209,6 @@ export class JsiiProject extends TypeScriptProject {
 
     if (options.releaseToNpm != false) {
       this.publisher?.publishToNpm({
-        distTag: this.package.npmDistTag,
         registry: this.package.npmRegistry,
         npmTokenSecret: this.package.npmTokenSecret,
       });

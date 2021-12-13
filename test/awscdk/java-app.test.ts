@@ -19,6 +19,7 @@ test('happy flow', () => {
     '.github/workflows/stale.yml',
     '.gitignore',
     '.projen/deps.json',
+    '.projen/files.json',
     '.projen/tasks.json',
     'cdk.json',
     'pom.xml',
