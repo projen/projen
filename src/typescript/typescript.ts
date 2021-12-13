@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as semver from 'semver';
 import { PROJEN_DIR, PROJEN_RC } from '../common';
 import { Component } from '../component';
 import { Eslint, EslintOptions, NodeProject, NodeProjectOptions, TypeScriptCompilerOptions, TypescriptConfig, TypescriptConfigOptions } from '../javascript';
@@ -353,7 +354,16 @@ export class TypeScriptProject extends NodeProject {
 
     this.addDevDeps(
       `typescript${tsver}`,
-      `@types/node@^${this.package.minNodeVersion ?? '14.17.0'}`, // install the minimum version to ensure compatibility
+      // @types/node versions numbers match the node runtime versions' major.minor, however, new
+      // releases are only created when API changes are included in a node release... We might for
+      // example have dependencies that require `node >= 12.22`, but as 12.21 and 12.22 did not
+      // include API changes, `@types/node@12.20.x` is the "correct" version to use. As it is not
+      // possible to easily determine the correct version to use, we pick up the latest version.
+      //
+      // Additionally, we default to tracking the 12.x line, as the current earliest LTS release of
+      // node is 12.x, so this is what corresponds to the broadest compatibility with supported node
+      // runtimes.
+      `@types/node@^${semver.major(this.package.minNodeVersion ?? '12.0.0')}`,
     );
 
     // generate sample code in `src` and `lib` if these directories are empty or non-existent.
