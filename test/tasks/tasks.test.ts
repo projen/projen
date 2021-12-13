@@ -356,7 +356,7 @@ test('lock() can be used to disallow modifications', () => {
   expect(() => t.prependSay('hoho')).toThrow(error);
 });
 
-test('it is possible to edit the descriptio', () => {
+test('it is possible to edit the description', () => {
   const p = new TestProject();
   const t1 = p.addTask('t1');
   const t2 = p.addTask('t2', { description: 'my description' });
