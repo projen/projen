@@ -211,22 +211,22 @@ app.synth();`;
     const testImports = new Array<string>();
     if (this.cdkMajorVersion < 2) {
       testImports.push('import { App } from \'@aws-cdk/core\';');
+      testImports.push('import { Template } from \'@aws-cdk/assertions\';');
     } else {
       testImports.push('import { App } from \'aws-cdk-lib\';');
+      testImports.push('import { Template } from \'aws-cdk-lib/assertions\';');
     }
 
-
     const appEntrypointName = path.basename(this.appProject.appEntrypoint, '.ts');
-    const testCode = `import '@aws-cdk/assert/jest';
-${testImports.join('\n')}
+    const testCode = `${testImports.join('\n')}
 import { MyStack } from '../src/${appEntrypointName}';
 
 test('Snapshot', () => {
   const app = new App();
   const stack = new MyStack(app, 'test');
 
-  expect(stack).not.toHaveResource('AWS::S3::Bucket');
-  expect(app.synth().getStackArtifact(stack.artifactId).template).toMatchSnapshot();
+  const template = Template.fromStack(stack);
+  expect(template.toJSON()).toMatchSnapshot();
 });`;
 
     fs.mkdirpSync(testdir);
