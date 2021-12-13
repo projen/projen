@@ -348,7 +348,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^12.13.0",
+        "version": "^12",
       },
       Object {
         "name": "@types/react",
@@ -820,7 +820,7 @@ tsconfig.tsbuildinfo
       "tailwindcss": "*",
     },
     "devDependencies": Object {
-      "@types/node": "^12.13.0",
+      "@types/node": "^12",
       "@types/react": "*",
       "@types/react-dom": "*",
       "npm-check-updates": "^12",

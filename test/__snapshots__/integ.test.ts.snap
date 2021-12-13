@@ -745,7 +745,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^14.0.0",
+        "version": "^14",
       },
       Object {
         "name": "@typescript-eslint/eslint-plugin",
@@ -1567,7 +1567,7 @@ project.synth();
     "devDependencies": Object {
       "@aws-cdk/assertions": "^1.75.0",
       "@types/jest": "*",
-      "@types/node": "^14.0.0",
+      "@types/node": "^14",
       "@typescript-eslint/eslint-plugin": "^5",
       "@typescript-eslint/parser": "^5",
       "aws-sdk": "*",
@@ -2258,7 +2258,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^12.7.0",
+        "version": "^12",
       },
       Object {
         "name": "@types/yaml",
@@ -3056,7 +3056,7 @@ project.synth();
       "@types/follow-redirects": "*",
       "@types/jest": "*",
       "@types/json-stable-stringify": "*",
-      "@types/node": "^12.7.0",
+      "@types/node": "^12",
       "@types/yaml": "*",
       "@typescript-eslint/eslint-plugin": "^5",
       "@typescript-eslint/parser": "^5",
@@ -3732,7 +3732,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^12.7.0",
+        "version": "^12",
       },
       Object {
         "name": "@typescript-eslint/eslint-plugin",
@@ -4499,7 +4499,7 @@ project.synth();
       "@types/fs-extra": "*",
       "@types/jest": "*",
       "@types/json-schema": "*",
-      "@types/node": "^12.7.0",
+      "@types/node": "^12",
       "@typescript-eslint/eslint-plugin": "^5",
       "@typescript-eslint/parser": "^5",
       "eslint": "^8",
