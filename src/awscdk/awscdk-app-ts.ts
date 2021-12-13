@@ -1,38 +1,15 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
-import * as semver from 'semver';
 import { Component } from '../component';
+import { DependencyType } from '../dependencies';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';
 import { AutoDiscover } from './auto-discover';
+import { AwsCdkDeps, AwsCdkDepsCommonOptions } from './awscdk-deps';
 import { CdkConfig, CdkConfigCommonOptions } from './cdk-config';
 import { CdkTasks } from './cdk-tasks';
 import { LambdaFunctionCommonOptions } from './lambda-function';
 
-export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions, CdkConfigCommonOptions {
-  /**
-   * AWS CDK version to use.
-   *
-   * @default "1.129.0"
-   * @featured
-   */
-  readonly cdkVersion: string;
-
-  /**
-   * Use pinned version instead of caret version for CDK.
-   *
-   * You can use this to prevent yarn to mix versions for your CDK dependencies and to prevent auto-updates.
-   * If you use experimental features this will let you define the moment you include breaking changes.
-   *
-   * @default false
-   */
-  readonly cdkVersionPinning?: boolean;
-
-  /**
-   * Which AWS CDK modules (those that start with "@aws-cdk/") this app uses.
-   * @featured
-   */
-  readonly cdkDependencies?: string[];
-
+export interface AwsCdkTypeScriptAppOptions extends TypeScriptProjectOptions, CdkConfigCommonOptions, AwsCdkDepsCommonOptions {
   /**
    * The CDK app's entrypoint (relative to the source directory, which is
    * "src" by default).
@@ -67,7 +44,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
   /**
    * The CDK version this app is using.
    */
-  public readonly cdkVersion: string;
+  public get cdkVersion() { return this.cdkDeps.cdkVersion; }
 
   /**
    * The CDK app entrypoint
@@ -84,6 +61,8 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
    */
   public readonly cdkConfig: CdkConfig;
 
+  public readonly cdkDeps: AwsCdkDeps;
+
   constructor(options: AwsCdkTypeScriptAppOptions) {
     super({
       ...options,
@@ -97,27 +76,14 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       },
     });
 
+    this.cdkDeps = new AwsCdkDeps(this, {
+      dependencyType: DependencyType.RUNTIME,
+      ...options,
+    });
     this.appEntrypoint = options.appEntrypoint ?? 'main.ts';
 
-    this.cdkVersion = options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`;
-
     // CLI
-    this.addDevDeps(this.formatModuleSpec('aws-cdk'));
-    this.addCdkDependency('@aws-cdk/assert');
-
-    if (!this.cdkVersion) {
-      throw new Error('Required field cdkVersion is not specified.');
-    }
-
-    const cdkMajorVersion = semver.minVersion(this.cdkVersion)?.major ?? 1;
-    if (cdkMajorVersion < 2) {
-      this.addCdkDependency('@aws-cdk/core');
-    } else {
-      this.addCdkDependency('aws-cdk-lib');
-      this.addDeps('constructs@^10.0.5');
-    }
-
-    this.addCdkDependency(...options.cdkDependencies ?? []);
+    this.addDevDeps(`aws-cdk@${this.cdkDeps.cdkVersion}`);
 
     // no compile step because we do all of it in typescript directly
     this.compileTask.reset();
@@ -134,7 +100,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.cdkConfig = new CdkConfig(this, {
       app: `npx ts-node -P ${tsConfigFile} --prefer-ts-exts ${path.posix.join(this.srcdir, this.appEntrypoint)}`,
-      featureFlags: cdkMajorVersion < 2,
+      featureFlags: this.cdkDeps.majorVersion < 2,
       buildCommand: this.runTaskCommand(this.bundler.bundleTask),
       watchIncludes: [
         `${this.srcdir}/**/*.ts`,
@@ -164,7 +130,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 
     this.addDevDeps('ts-node@^9');
     if (options.sampleCode ?? true) {
-      new SampleCode(this, cdkMajorVersion);
+      new SampleCode(this, this.cdkDeps.majorVersion);
     }
 
     const lambdaAutoDiscover = options.lambdaAutoDiscover ?? true;
@@ -174,6 +140,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
         testdir: this.testdir,
         lambdaOptions: options.lambdaOptions,
         tsconfigPath: this.tsconfigDev.fileName,
+        cdkDeps: this.cdkDeps,
       });
     }
   }
@@ -183,14 +150,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
    * @param modules The list of modules to depend on
    */
   public addCdkDependency(...modules: string[]) {
-    if (modules.length === 0) {
-      return;
-    }
-    this.addDeps(...modules.map(m => this.formatModuleSpec(m)));
-  }
-
-  private formatModuleSpec(module: string): string {
-    return `${module}@${this.cdkVersion}`;
+    return this.cdkDeps.addCdkDependencies(...modules);
   }
 }
 

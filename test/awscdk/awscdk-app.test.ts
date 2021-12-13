@@ -1,19 +1,17 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
-import { awscdk } from '../src';
-import { AwsCdkTypeScriptApp } from '../src/awscdk';
-import { mkdtemp, synthSnapshot } from './util';
+import { awscdk } from '../../src';
+import { mkdtemp, synthSnapshot } from '../util';
 
 describe('cdkVersion is >= 2.0.0', () => {
   test('use "aws-cdk-lib" the constructs at ^10.0.5', () => {
-    const project = new AwsCdkTypeScriptApp({
-      cdkVersion: '2.0.0-rc.1',
+    const project = new awscdk.AwsCdkTypeScriptApp({
+      cdkVersion: '^2.0.0-rc.1',
       defaultReleaseBranch: 'main',
       name: 'test',
     });
     const snap = synthSnapshot(project);
     expect(snap['package.json'].dependencies).toStrictEqual({
-      '@aws-cdk/assert': '^2.0.0-rc.1',
       'aws-cdk-lib': '^2.0.0-rc.1',
       'constructs': '^10.0.5',
     });
@@ -21,7 +19,7 @@ describe('cdkVersion is >= 2.0.0', () => {
   });
 
   test('empty context', () => {
-    const project = new AwsCdkTypeScriptApp({
+    const project = new awscdk.AwsCdkTypeScriptApp({
       cdkVersion: '2.0.0-rc.1',
       defaultReleaseBranch: 'main',
       name: 'test',
@@ -39,7 +37,7 @@ describe('lambda functions', () => {
     mkdirSync(join(outdir, 'src'));
     writeFileSync(join(outdir, 'src', 'my.lambda.ts'), '// dummy');
 
-    const project = new AwsCdkTypeScriptApp({
+    const project = new awscdk.AwsCdkTypeScriptApp({
       name: 'hello',
       outdir: outdir,
       defaultReleaseBranch: 'main',
@@ -63,7 +61,7 @@ describe('lambda functions', () => {
 
   test('auto-discover can be disabled', () => {
     // GIVEN
-    const project = new AwsCdkTypeScriptApp({
+    const project = new awscdk.AwsCdkTypeScriptApp({
       name: 'hello',
       defaultReleaseBranch: 'main',
       cdkVersion: '1.100.0',
@@ -83,11 +81,11 @@ describe('lambda functions', () => {
 
 describe('watch', () => {
 
-  let project: AwsCdkTypeScriptApp;
+  let project: awscdk.AwsCdkTypeScriptApp;
   let files: Record<string, any>;
 
   beforeEach(() => {
-    project = new AwsCdkTypeScriptApp({
+    project = new awscdk.AwsCdkTypeScriptApp({
       name: 'hello',
       defaultReleaseBranch: 'main',
       cdkVersion: '1.100.0',

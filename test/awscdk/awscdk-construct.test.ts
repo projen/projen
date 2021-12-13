@@ -1,9 +1,9 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
-import { awscdk } from '../src';
-import { AwsCdkConstructLibrary, AwsCdkConstructLibraryOptions } from '../src/awscdk';
-import { NpmAccess } from '../src/javascript';
-import { mkdtemp, synthSnapshot } from './util';
+import { awscdk } from '../../src';
+import { AwsCdkConstructLibrary, AwsCdkConstructLibraryOptions } from '../../src/awscdk';
+import { NpmAccess } from '../../src/javascript';
+import { mkdtemp, synthSnapshot } from '../util';
 
 describe('constructs dependency selection', () => {
   test('user-selected', () => {
@@ -37,7 +37,7 @@ describe('constructs dependency selection', () => {
 
   test('for cdk 2.x', () => {
     // GIVEN
-    const project = new TestProject({ cdkVersion: '2.0.0-alpha.5' });
+    const project = new TestProject({ cdkVersion: '^2.0.0-alpha.5' });
 
     // WHEN
     const snapshot = synthSnapshot(project);
@@ -55,7 +55,7 @@ describe('constructs dependency selection', () => {
     expect(() => new TestProject({
       cdkVersion: '2.0.0-alpha.5',
       constructsVersion: '3.2.27',
-    })).toThrow(/CDK 2.x requires constructs version >= 10/);
+    })).toThrow(/CDK 2.x requires constructs 10.x/);
   });
 
   test('for cdk 2.x, throws if cdkDependencies provided', () => {
@@ -89,15 +89,7 @@ describe('constructs dependency selection', () => {
 
   test('for cdk 3.x (does not exist yet)', () => {
     // GIVEN
-    const project = new TestProject({ cdkVersion: '3.1337.42' });
-
-    // WHEN
-    const snapshot = synthSnapshot(project);
-
-    // THEN
-    expect(snapshot['package.json']?.peerDependencies?.constructs).toBe('*');
-    expect(snapshot['package.json']?.devDependencies?.constructs).toBe('*');
-    expect(snapshot['package.json']?.dependencies?.constructs).toBeUndefined();
+    expect(() => new TestProject({ cdkVersion: '3.1337.42' })).toThrow(/Unsupported AWS CDK major version 3\.x/);
   });
 });
 

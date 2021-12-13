@@ -1,10 +1,11 @@
 import { basename, dirname, extname, join, relative, sep, posix } from 'path';
 import { pascal } from 'case';
-import { Project } from '..';
 import { Component } from '../component';
 import { FileBase } from '../file';
 import { Bundler, BundlingOptions, Eslint } from '../javascript';
+import { Project } from '../project';
 import { SourceCode } from '../source-code';
+import { AwsCdkDeps } from './awscdk-deps';
 import { TYPESCRIPT_LAMBDA_EXT } from './internal';
 
 /**
@@ -60,6 +61,11 @@ export interface LambdaFunctionOptions extends LambdaFunctionCommonOptions {
    * the extension `Function` (e.g. `ResizeImageFunction`).
    */
   readonly constructName?: string;
+
+  /**
+   * AWS CDK dependency manager.
+   */
+  readonly cdkDeps: AwsCdkDeps;
 }
 
 /**
@@ -92,6 +98,7 @@ export class LambdaFunction extends Component {
   constructor(project: Project, options: LambdaFunctionOptions) {
     super(project);
 
+    const cdkDeps = options.cdkDeps;
     const bundler = Bundler.of(project);
     if (!bundler) {
       throw new Error('No bundler found. Please add a Bundler component to your project.');
@@ -141,8 +148,17 @@ export class LambdaFunction extends Component {
     const src = new SourceCode(project, constructFile);
     src.line(`// ${FileBase.PROJEN_MARKER}`);
     src.line('import * as path from \'path\';');
-    src.line('import * as lambda from \'@aws-cdk/aws-lambda\';');
-    src.line('import { Construct } from \'@aws-cdk/core\';');
+
+    if (cdkDeps.majorVersion === 1) {
+      src.line('import * as lambda from \'@aws-cdk/aws-lambda\';');
+      src.line('import { Construct } from \'@aws-cdk/core\';');
+      cdkDeps.addCdkDependencies('@aws-cdk/aws-lambda');
+      cdkDeps.addCdkDependencies('@aws-cdk/core');
+    } else {
+      src.line('import * as lambda from \'aws-cdk-lib/aws-lambda\';');
+      src.line('import { Construct } from \'constructs\';');
+    }
+
     src.line();
     src.line('/**');
     src.line(` * Props for ${constructName}`);
