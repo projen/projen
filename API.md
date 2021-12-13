@@ -3041,7 +3041,6 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**cdkDependenciesAsDeps**⚠️ | <code>boolean</code> | Whether CDK dependencies are added as normal dependencies (and peer dependencies).
 **cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | <span></span>
 **cdkVersion**🔹 | <code>string</code> | The target CDK version for this library.
 **version**⚠️ | <code>string</code> | <span></span>
@@ -3082,6 +3081,18 @@ addCdkTestDependencies(...deps: string[]): void
 
 
 
+
+#### cdkDependenciesAsDeps()⚠️ <a id="projen-awscdk-awscdkconstructlibrary-cdkdependenciesasdeps"></a>
+
+Whether CDK dependencies are added as normal dependencies (and peer dependencies).
+
+```ts
+cdkDependenciesAsDeps(): boolean
+```
+
+
+__Returns__:
+* <code>boolean</code>
 
 
 
