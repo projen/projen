@@ -16,7 +16,7 @@ describe('constructs dependency selection', () => {
 
     // THEN
     expect(snapshot['package.json']?.peerDependencies?.constructs).toBe('^3.1337.0-ultimate');
-    expect(snapshot['package.json']?.devDependencies?.constructs).toBeUndefined();
+    expect(snapshot['package.json']?.devDependencies?.constructs).toBe('3.1337.0-ultimate');
     expect(snapshot['package.json']?.dependencies?.constructs).toBeUndefined();
   });
 
@@ -29,7 +29,7 @@ describe('constructs dependency selection', () => {
 
     // THEN
     expect(snapshot['package.json']?.peerDependencies?.constructs).toMatch(/^\^3\./);
-    expect(snapshot['package.json']?.devDependencies?.constructs).toBeUndefined();
+    expect(snapshot['package.json']?.devDependencies?.constructs).toBe('3.2.27');
     expect(snapshot['package.json']?.devDependencies['@aws-cdk/assertions']).toBeDefined();
     expect(snapshot['package.json']?.devDependencies['@aws-cdk/assert']).toBeUndefined();
     expect(snapshot['package.json']?.dependencies?.constructs).toBeUndefined();
