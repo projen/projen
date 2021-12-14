@@ -78,16 +78,15 @@ exports[`projen new awscdk-app-ts 1`] = `
 Object {
   ".projenrc.js": "const { awscdk } = require(\\"projen\\");
 const project = new awscdk.AwsCdkTypeScriptApp({
-  cdkVersion: \\"1.129.0\\",
+  cdkVersion: \\"^2\\",
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
 
-  // cdkDependencies: undefined,  /* Which AWS CDK modules (those that start with \\"@aws-cdk/\\") this app uses. */
-  // deps: [],                    /* Runtime dependencies of this module. */
-  // description: undefined,      /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],                 /* Build dependencies for this module. */
-  // packageName: undefined,      /* The \\"name\\" in package.json. */
-  // release: undefined,          /* Add release management to this project. */
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -99,7 +98,7 @@ Object {
 const project = new awscdk.AwsCdkConstructLibrary({
   author: \\"My User Name\\",
   authorAddress: \\"my@user.email.com\\",
-  cdkVersion: \\"2.0.0\\",
+  cdkVersion: \\"^2\\",
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
   repositoryUrl: \\"git@boom.com:foo/bar.git\\",
