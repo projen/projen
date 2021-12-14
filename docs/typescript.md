@@ -46,7 +46,8 @@ features of your TypeScript project.
 ## Migrating your TypeScript Project to Projen
 
 Projen provides some opinionated defaults that may be different than the defaults
-you rely on in your existing TypeScript Project. The most important is the default project structure. Projen expects all source code to be in the `src` directory and
+you rely on in your existing TypeScript Project. The most important is the default
+project structure. Projen expects all source code to be in the `src` directory and
 will write compiled `.js` and `.d.ts` files to the `lib` directory. Test files are
 expected in the `test` directory and not compiled to javascript. Instead, Projen
 configures `Jest` to compile `.ts` files when testing.
