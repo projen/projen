@@ -21,7 +21,7 @@ code.
 
 The default options will set up your `tsconfig` root directory as `src` and your
 out directory as `lib`. By default the `test` directory is not compiled to
-JavaScript 
+JavaScript and instead compiled when `npx projen test` is executed.
 
 The `projen new` command will also generate a `.projenrc.js` file which includes
 the definition of your project with any options you specified in the command
@@ -42,6 +42,10 @@ project.synth();
 To modify your project definitions, edit `.projenrc.js` and run `projen` again
 to re-synthesize your project. The following sections describe the various
 features of your TypeScript project.
+
+## Dependencies
+
+// TODO
 
 ## Migrating your TypeScript Project to Projen
 
