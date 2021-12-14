@@ -3156,18 +3156,6 @@ addV1DevDependencies(...deps: string[]): void
 
 
 
-#### preSynthesize()🔹 <a id="projen-awscdk-awscdkdeps-presynthesize"></a>
-
-Called before synthesis.
-
-```ts
-preSynthesize(): void
-```
-
-
-
-
-
 
 
 ## class AwsCdkJavaApp 🔹 <a id="projen-awscdk-awscdkjavaapp"></a>
