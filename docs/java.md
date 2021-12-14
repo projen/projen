@@ -50,10 +50,7 @@ project.synth();
 > specifying your project definitions in Java.
 
 To modify your project definitions, edit `.projenrc.js` and run `projen` again
-to re-synthesize your project. The following sections describe the various
-features of your project.
-
-The following sections describe the various features of Java projects.
+to re-synthesize your project. The following sections describe the various features of Java projects.
 
 ## Versioning
 

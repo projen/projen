@@ -47,10 +47,7 @@ project.synth();
 > specifying your project definitions in python.
 
 To modify your project definitions, edit `.projenrc.js` and run `projen` again
-to re-synthesize your project. The following sections describe the various
-features of your project.
-
-The following sections describe the various features of Python projects.
+to re-synthesize your project. The following sections describe the various features of Python projects.
 
 ## Managing environments, dependencies, and packaging
 
