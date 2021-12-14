@@ -1202,44 +1202,8 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Install the @aws-cdk/assert library?",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "cdkAssert",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": Array [
-          "cdkAssert",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-assert",
-      },
-      Object {
-        "default": "true",
-        "docs": "Install the @aws-cdk/assertions library?",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "cdkAssertions",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": Array [
-          "cdkAssertions",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-assertions",
-      },
-      Object {
-        "deprecated": true,
-        "docs": "Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed?",
-        "featured": false,
+        "docs": "Which AWS CDK modules (those that start with \\"@aws-cdk/\\") this app uses.",
+        "featured": true,
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
@@ -1251,30 +1215,12 @@ Array [
         "jsonLike": true,
         "name": "cdkDependencies",
         "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
+        "parent": "AwsCdkTypeScriptAppOptions",
         "path": Array [
           "cdkDependencies",
         ],
         "simpleType": "unknown",
         "switch": "cdk-dependencies",
-      },
-      Object {
-        "default": "true",
-        "deprecated": true,
-        "docs": "If this is enabled (default), all modules declared in \`cdkDependencies\` will be also added as normal \`dependencies\` (as well as \`peerDependencies\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "cdkDependenciesAsDeps",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": Array [
-          "cdkDependenciesAsDeps",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk-dependencies-as-deps",
       },
       Object {
         "default": "\\"cdk.out\\"",
@@ -1294,37 +1240,15 @@ Array [
         "switch": "cdkout",
       },
       Object {
-        "deprecated": true,
-        "docs": "AWS CDK modules required for testing.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "cdkTestDependencies",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": Array [
-          "cdkTestDependencies",
-        ],
-        "simpleType": "unknown",
-        "switch": "cdk-test-dependencies",
-      },
-      Object {
-        "default": "\\"^2\\"",
-        "docs": "Semantic version requirement for the the AWS CDK libraries.",
-        "featured": false,
+        "default": "\\"1.129.0\\"",
+        "docs": "AWS CDK version to use.",
+        "featured": true,
         "fullType": Object {
           "primitive": "string",
         },
         "jsonLike": true,
         "name": "cdkVersion",
-        "parent": "AwsCdkDepsCommonOptions",
+        "parent": "AwsCdkTypeScriptAppOptions",
         "path": Array [
           "cdkVersion",
         ],
@@ -1332,7 +1256,7 @@ Array [
         "switch": "cdk-version",
       },
       Object {
-        "deprecated": true,
+        "default": "false",
         "docs": "Use pinned version instead of caret version for CDK.",
         "featured": false,
         "fullType": Object {
@@ -1341,7 +1265,7 @@ Array [
         "jsonLike": true,
         "name": "cdkVersionPinning",
         "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
+        "parent": "AwsCdkTypeScriptAppOptions",
         "path": Array [
           "cdkVersionPinning",
         ],
@@ -1417,24 +1341,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "code-cov-token-secret",
-      },
-      Object {
-        "default": "- for CDK 1.x the default is \\"^3.2.27\\", for CDK 2.x the default
-is \\"^10.0.5\\".",
-        "docs": "Semantic version requirement for the \`constructs\` library.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "constructsVersion",
-        "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
-        "path": Array [
-          "constructsVersion",
-        ],
-        "simpleType": "string",
-        "switch": "constructs-version",
       },
       Object {
         "default": "- no additional context",
@@ -3792,7 +3698,7 @@ is \\"^10.0.5\\".",
         "jsonLike": true,
         "name": "cdkAssert",
         "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
+        "parent": "AwsCdkConstructLibraryOptions",
         "path": Array [
           "cdkAssert",
         ],
@@ -3809,7 +3715,7 @@ is \\"^10.0.5\\".",
         "jsonLike": true,
         "name": "cdkAssertions",
         "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
+        "parent": "AwsCdkConstructLibraryOptions",
         "path": Array [
           "cdkAssertions",
         ],
@@ -3831,7 +3737,7 @@ is \\"^10.0.5\\".",
         "jsonLike": true,
         "name": "cdkDependencies",
         "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
+        "parent": "AwsCdkConstructLibraryOptions",
         "path": Array [
           "cdkDependencies",
         ],
@@ -3849,7 +3755,7 @@ is \\"^10.0.5\\".",
         "jsonLike": true,
         "name": "cdkDependenciesAsDeps",
         "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
+        "parent": "AwsCdkConstructLibraryOptions",
         "path": Array [
           "cdkDependenciesAsDeps",
         ],
@@ -3859,7 +3765,7 @@ is \\"^10.0.5\\".",
       Object {
         "deprecated": true,
         "docs": "AWS CDK modules required for testing.",
-        "featured": false,
+        "featured": true,
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
@@ -3871,7 +3777,7 @@ is \\"^10.0.5\\".",
         "jsonLike": true,
         "name": "cdkTestDependencies",
         "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
+        "parent": "AwsCdkConstructLibraryOptions",
         "path": Array [
           "cdkTestDependencies",
         ],
@@ -3879,15 +3785,15 @@ is \\"^10.0.5\\".",
         "switch": "cdk-test-dependencies",
       },
       Object {
-        "default": "\\"^2\\"",
-        "docs": "Semantic version requirement for the the AWS CDK libraries.",
-        "featured": false,
+        "default": "\\"2.0.0\\"",
+        "docs": "Minimum target version this library is tested against.",
+        "featured": true,
         "fullType": Object {
           "primitive": "string",
         },
         "jsonLike": true,
         "name": "cdkVersion",
-        "parent": "AwsCdkDepsCommonOptions",
+        "parent": "AwsCdkConstructLibraryOptions",
         "path": Array [
           "cdkVersion",
         ],
@@ -3895,7 +3801,7 @@ is \\"^10.0.5\\".",
         "switch": "cdk-version",
       },
       Object {
-        "deprecated": true,
+        "default": "false",
         "docs": "Use pinned version instead of caret version for CDK.",
         "featured": false,
         "fullType": Object {
@@ -3904,7 +3810,7 @@ is \\"^10.0.5\\".",
         "jsonLike": true,
         "name": "cdkVersionPinning",
         "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
+        "parent": "AwsCdkConstructLibraryOptions",
         "path": Array [
           "cdkVersionPinning",
         ],
@@ -4016,9 +3922,9 @@ is \\"^10.0.5\\".",
         "switch": "compat-ignore",
       },
       Object {
-        "default": "- for CDK 1.x the default is \\"^3.2.27\\", for CDK 2.x the default
-is \\"^10.0.5\\".",
-        "docs": "Semantic version requirement for the \`constructs\` library.",
+        "default": "- When the default behavior is used, the dependency on \`constructs\` will
+be added as both a \`peerDependency\` and a \`devDependency\`.",
+        "docs": "Minimum target version of constructs being tested against. If not provided, the default value depends on the configured \`cdkVersion\`:.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -4026,7 +3932,7 @@ is \\"^10.0.5\\".",
         "jsonLike": true,
         "name": "constructsVersion",
         "optional": true,
-        "parent": "AwsCdkDepsCommonOptions",
+        "parent": "AwsCdkConstructLibraryOptions",
         "path": Array [
           "constructsVersion",
         ],
