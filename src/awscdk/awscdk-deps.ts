@@ -214,7 +214,7 @@ export class AwsCdkDeps extends Component {
   }
 
   /**
-   * Addsa depdenencies on the AWS CDK framework (e.g. `@aws-cdk/core` for V1 or `aws-cdk-lib` for V1).
+   * Adds a dependency on the AWS CDK framework (e.g. `@aws-cdk/core` for V1 or `aws-cdk-lib` for V1).
    */
   private addFrameworkDependency(options: AwsCdkDepsOptions) {
 
