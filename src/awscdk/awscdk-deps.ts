@@ -109,7 +109,7 @@ export class AwsCdkDeps extends Component {
   public readonly cdkDependenciesAsDeps: boolean;
 
   /**
-   * The major version of the AWX CDK (e.g. 1, 2, ...)
+   * The major version of the AWS CDK (e.g. 1, 2, ...)
    */
   public readonly cdkMajorVersion: number;
 
