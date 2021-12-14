@@ -145,6 +145,25 @@ describe('deps', () => {
     expect(pkgjson.dependencieds).toBeUndefined();
   });
 
+  test('devDeps are only added for peerDeps if a runtime dep does not already exist', () => {
+    // GIVEN
+    const project = new TestNodeProject();
+
+    // WHEN
+    project.addPeerDeps('ccc@^2');
+    project.addDeps('ccc@^2.3.3');
+
+    // THEN
+    const pkgjson = packageJson(project);
+
+    // sanitize
+    ['npm-check-updates', 'jest', 'jest-junit', 'projen', 'standard-version'].forEach(d => delete pkgjson.devDependencies[d]);
+
+    expect(pkgjson.peerDependencies).toStrictEqual({ ccc: '^2' });
+    expect(pkgjson.dependencies).toStrictEqual({ ccc: '^2.3.3' });
+    expect(pkgjson.devDependencies).toStrictEqual({});
+  });
+
   test('bundled deps are automatically added as normal deps', () => {
     // GIVEN
     const project = new TestNodeProject({
