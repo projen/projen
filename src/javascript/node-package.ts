@@ -838,6 +838,12 @@ export class NodePackage extends Component {
     if (pinned) {
       for (const dep of this.project.deps.all.filter(d => d.type === DependencyType.PEER)) {
         let req = dep.name;
+
+        // skip if we already have a runtime dependency on this peer
+        if (this.project.deps.tryGetDependency(dep.name, DependencyType.RUNTIME)) {
+          continue;
+        }
+
         if (dep.version) {
           const ver = semver.minVersion(dep.version)?.version;
           if (!ver) {
