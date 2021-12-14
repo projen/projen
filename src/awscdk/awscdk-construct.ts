@@ -86,7 +86,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
    * Since this is a library project, dependencies will be added as peer dependencies.
    *
    * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
-   * @deprecated Not supported in v2. For v1, use `project.cdkDeps.addCdkDependencies()`
+   * @deprecated Not supported in v2. For v1, use `project.cdkDeps.addV1Dependencies()`
    */
   public addCdkDependencies(...deps: string[]) {
     return this.cdkDeps.addV1Dependencies(...deps);
@@ -96,7 +96,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
    * Adds AWS CDK modules as dev dependencies.
    *
    * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
-   * @deprecated Not supported in v2. For v1, use `project.cdkDeps.addCdkDevDependencies()`
+   * @deprecated Not supported in v2. For v1, use `project.cdkDeps.addV1DevDependencies()`
    */
   public addCdkTestDependencies(...deps: string[]) {
     return this.cdkDeps.addV1DevDependencies(...deps);
