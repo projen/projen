@@ -6,7 +6,15 @@ To create a new TypeScript project, use `projen new typescript`:
 npx projen new typescript
 ```
 
-This will synthesize a standard project directory structure with some sample
+This will create a `.projenrc.js` file which defines your project. If you
+instead would like to define your project in TypeScript, use the
+`--projenrc-ts` flag to create a `.projenrc.ts` file:
+
+```shell
+npx projen new typescript --projenrc-ts
+```
+
+`projen new` will synthesize a standard project directory structure with some sample
 code.
 
 ```shell
@@ -29,15 +37,12 @@ line:
 
 ```js
 const { typescript } = require('projen');
-  const project = new typescript.TypeScriptProject({
-    defaultReleaseBranch: 'main',
-    name: 'my-project',
-  });
+const project = new typescript.TypeScriptProject({
+  defaultReleaseBranch: 'main',
+  name: 'my-project',
+});
 project.synth();
 ```
-
-> At this point, projenrc is in JavaScript, but in the future we plan to allow
-> specifying your project definitions in TypeScript.
 
 To modify your project definitions, edit `.projenrc.js` and run `projen` again
 to re-synthesize your project. The following sections describe the various
@@ -45,16 +50,29 @@ features of your TypeScript project.
 
 ## Dependencies
 
-// TODO
+You can specify dependencies in your project via the `deps`, `devDeps`, and
+`peerDeps` options similar to what you might expect in a `package.json` file.
+
+The recommendation is to only specify the module name here (e.g. `express`).
+This will behave similar to yarn add or npm install in the sense that it will
+add the module as a dependency to your package.json file with the latest version
+(`^`). You can specify semver requirements in the same syntax passed to npm i or
+yarn add (e.g. `express@^2`) and this will be what your `package.json` will
+eventually include.
 
 ## Migrating your TypeScript Project to Projen
 
 Projen provides some opinionated defaults that may be different than the defaults
-you rely on in your existing TypeScript Project. The most important is the default
-project structure. Projen expects all source code to be in the `src` directory and
-will write compiled `.js` and `.d.ts` files to the `lib` directory. Test files are
-expected in the `test` directory and not compiled to javascript. Instead, Projen
-configures `Jest` to compile `.ts` files when testing.
+you rely on in your existing TypeScript Project. This section attempts to document
+some of the common themes to look out for when migrating an existing TypeScript
+project to Projen.
+
+### Default Directory Structure
+
+The most important is the default project structure. Projen expects all source code
+to be in the `src` directory and will write compiled `.js` and `.d.ts` files to the
+`lib` directory. Test files are expected in the `test` directory and not compiled
+to javascript. Instead, Projen configures `Jest` to compile `.ts` files when testing.
 
 As this is only one of many structures for valid TypeScript projects, your migrated
 project may not work out-of-the-box with Projen. We recommend that you take the
@@ -80,3 +98,11 @@ const project = new typescript.TypeScriptProject({
   },
 });
 ```
+
+### Dependency Versions
+
+As described in the section above, Projen recommends that you list your dependencies
+only by module name and have Projen install the latest version of the package. A
+consequence of this recommendation is that when migrating, you may unknowingly update
+your dependencies to incompatible versions. You can always specify specific semvar
+requirements (e.g. `express@^2`) if necessary.
