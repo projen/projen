@@ -73,6 +73,6 @@ const project = new typescript.TypeScriptProject({
       outDir: '.',
     },
     include: ['**/*.ts'], // all typescript files recursively
-  }
+  },
 });
 ```
