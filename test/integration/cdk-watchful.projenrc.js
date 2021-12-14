@@ -19,7 +19,7 @@ const project = new awscdk.ConstructLibraryAws({
   // creates PRs for projen upgrades
   projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
 
-  cdkVersion: '^1.75.0',
+  cdkVersion: '1.75.0',
   cdkDependencies: [
     '@aws-cdk/aws-apigateway',
     '@aws-cdk/aws-cloudwatch',
