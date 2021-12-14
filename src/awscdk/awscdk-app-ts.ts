@@ -150,7 +150,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
    * @param modules The list of modules to depend on
    */
   public addCdkDependency(...modules: string[]) {
-    return this.cdkDeps.addCdkDependencies(...modules);
+    return this.cdkDeps.addV1Dependencies(...modules);
   }
 }
 

@@ -44,9 +44,6 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
     const cdkMajorVersion = semver.minVersion(cdkVersion)?.major ?? 2;
 
     super({
-      peerDependencyOptions: cdkMajorVersion === 1 ? {
-        pinnedDevDependency: false,
-      } : undefined,
       workflowContainerImage: determineWorkflowContainerImage(options, cdkMajorVersion),
       ...options,
     });
@@ -77,14 +74,6 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   }
 
   /**
-   * Whether CDK dependencies are added as normal dependencies (and peer dependencies).
-   * @deprecated Not used in v2
-   */
-  public cdkDependenciesAsDeps() {
-    return this.cdkDeps.cdkDependenciesAsDeps;
-  }
-
-  /**
    * @deprecated use `cdkVersion`
    */
   public get version() {
@@ -92,31 +81,25 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   }
 
   /**
-   * Adds CDK modules as runtime dependencies.
+   * Adds dependencies to AWS CDK modules.
    *
-   * Modules are currently by default added with a caret CDK version both as "dependencies"
-   * and "peerDependencies". This is because currently npm would not
-   * automatically install peer dependencies that are not declared as concerete
-   * dependencies by the consumer, so this is a little npm "hack" so that
-   * consumers will not need to depend on them directly if they don't interact
-   * with them.
-   * See `cdkDependenciesAsDeps` for changing the default behavior.
+   * Since this is a library project, dependencies will be added as peer dependencies.
    *
    * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
-   * @deprecated Not used in v2
+   * @deprecated Not supported in v2. For v1, use `project.cdkDeps.addCdkDependencies()`
    */
   public addCdkDependencies(...deps: string[]) {
-    return this.cdkDeps.addCdkDependencies(...deps);
+    return this.cdkDeps.addV1Dependencies(...deps);
   }
 
   /**
-   * Adds CDK modules as test dependencies.
+   * Adds AWS CDK modules as dev dependencies.
    *
    * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
-   * @deprecated Not used in v2
+   * @deprecated Not supported in v2. For v1, use `project.cdkDeps.addCdkDevDependencies()`
    */
   public addCdkTestDependencies(...deps: string[]) {
-    return this.cdkDeps.addCdkTestDependencies(...deps);
+    return this.cdkDeps.addV1DevDependencies(...deps);
   }
 }
 

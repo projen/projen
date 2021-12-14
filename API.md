@@ -3041,7 +3041,6 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**cdkDependenciesAsDeps**⚠️ | <code>boolean</code> | Whether CDK dependencies are added as normal dependencies (and peer dependencies).
 **cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | <span></span>
 **cdkVersion**🔹 | <code>string</code> | The target CDK version for this library.
 **version**⚠️ | <code>string</code> | <span></span>
@@ -3051,15 +3050,9 @@ Name | Type | Description
 
 #### addCdkDependencies(...deps)⚠️ <a id="projen-awscdk-awscdkconstructlibrary-addcdkdependencies"></a>
 
-Adds CDK modules as runtime dependencies.
+Adds dependencies to AWS CDK modules.
 
-Modules are currently by default added with a caret CDK version both as "dependencies"
-and "peerDependencies". This is because currently npm would not
-automatically install peer dependencies that are not declared as concerete
-dependencies by the consumer, so this is a little npm "hack" so that
-consumers will not need to depend on them directly if they don't interact
-with them.
-See `cdkDependenciesAsDeps` for changing the default behavior.
+Since this is a library project, dependencies will be added as peer dependencies.
 
 ```ts
 addCdkDependencies(...deps: string[]): void
@@ -3072,7 +3065,7 @@ addCdkDependencies(...deps: string[]): void
 
 #### addCdkTestDependencies(...deps)⚠️ <a id="projen-awscdk-awscdkconstructlibrary-addcdktestdependencies"></a>
 
-Adds CDK modules as test dependencies.
+Adds AWS CDK modules as dev dependencies.
 
 ```ts
 addCdkTestDependencies(...deps: string[]): void
@@ -3129,20 +3122,17 @@ Name | Type | Description
 ### Methods
 
 
-#### addCdkDependencies(...deps)⚠️ <a id="projen-awscdk-awscdkdeps-addcdkdependencies"></a>
+#### addV1Dependencies(...deps)🔹 <a id="projen-awscdk-awscdkdeps-addv1dependencies"></a>
 
-Adds CDK modules as runtime dependencies.
+Adds dependencies to AWS CDK modules.
 
-Modules are currently by default added with a caret CDK version both as "dependencies"
-and "peerDependencies". This is because currently npm would not
-automatically install peer dependencies that are not declared as concerete
-dependencies by the consumer, so this is a little npm "hack" so that
-consumers will not need to depend on them directly if they don't interact
-with them.
-See `cdkDependenciesAsDeps` for changing the default behavior.
+The type of dependency is determined by the `dependencyType` option.
+
+This method is not supported in CDK v2. Use `project.addPeerDeps()` or
+`project.addDeps()` as appropriate.
 
 ```ts
-addCdkDependencies(...deps: string[]): void
+addV1Dependencies(...deps: string[]): void
 ```
 
 * **deps** (<code>string</code>)  names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
@@ -3150,12 +3140,15 @@ addCdkDependencies(...deps: string[]): void
 
 
 
-#### addCdkTestDependencies(...deps)⚠️ <a id="projen-awscdk-awscdkdeps-addcdktestdependencies"></a>
+#### addV1DevDependencies(...deps)🔹 <a id="projen-awscdk-awscdkdeps-addv1devdependencies"></a>
 
-Adds CDK modules as test dependencies.
+Adds AWS CDK modules as dev dependencies.
+
+This method is not supported in CDK v2. Use `project.addPeerDeps()` or
+`project.addDeps()` as appropriate.
 
 ```ts
-addCdkTestDependencies(...deps: string[]): void
+addV1DevDependencies(...deps: string[]): void
 ```
 
 * **deps** (<code>string</code>)  names of cdk modules (e.g. `@aws-cdk/aws-lambda`).

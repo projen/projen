@@ -152,8 +152,8 @@ export class LambdaFunction extends Component {
     if (cdkDeps.cdkMajorVersion === 1) {
       src.line('import * as lambda from \'@aws-cdk/aws-lambda\';');
       src.line('import { Construct } from \'@aws-cdk/core\';');
-      cdkDeps.addCdkDependencies('@aws-cdk/aws-lambda');
-      cdkDeps.addCdkDependencies('@aws-cdk/core');
+      cdkDeps.addV1Dependencies('@aws-cdk/aws-lambda');
+      cdkDeps.addV1Dependencies('@aws-cdk/core');
     } else {
       src.line('import * as lambda from \'aws-cdk-lib/aws-lambda\';');
       src.line('import { Construct } from \'constructs\';');
