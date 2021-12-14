@@ -3076,6 +3076,18 @@ addCdkTestDependencies(...deps: string[]): void
 
 
 
+#### cdkDependenciesAsDeps()⚠️ <a id="projen-awscdk-awscdkconstructlibrary-cdkdependenciesasdeps"></a>
+
+Whether CDK dependencies are added as normal dependencies (and peer dependencies).
+
+```ts
+cdkDependenciesAsDeps(): boolean
+```
+
+
+__Returns__:
+* <code>boolean</code>
+
 
 
 ## class AwsCdkDeps 🔹 <a id="projen-awscdk-awscdkdeps"></a>
