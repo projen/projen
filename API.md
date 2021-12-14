@@ -3115,7 +3115,7 @@ new awscdk.AwsCdkDeps(project: Project, options: AwsCdkDepsOptions)
 Name | Type | Description 
 -----|------|-------------
 **cdkDependenciesAsDeps**⚠️ | <code>boolean</code> | Whether CDK dependencies are added as normal dependencies (and peer dependencies).
-**cdkMajorVersion**🔹 | <code>number</code> | The major version of the AWX CDK (e.g. 1, 2, ...).
+**cdkMajorVersion**🔹 | <code>number</code> | The major version of the AWS CDK (e.g. 1, 2, ...).
 **cdkMinimumVersion**🔹 | <code>string</code> | The minimum version of the AWS CDK (e.g. `2.0.0`).
 **cdkVersion**🔹 | <code>string</code> | The dependency requirement for AWS CDK (e.g. `^2.0.0`).
 
