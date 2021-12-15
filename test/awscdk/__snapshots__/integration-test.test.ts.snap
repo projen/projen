@@ -77,3 +77,51 @@ Object {
   ],
 }
 `;
+
+exports[`synthesizing cdk v2 integration tests 1`] = `
+Object {
+  "description": "deploy integration test 'foo' and capture snapshot",
+  "name": "integ:foo:deploy",
+  "steps": Array [
+    Object {
+      "exec": "rm -fr test/.tmp/foo.integ/deploy.cdk.out",
+    },
+    Object {
+      "exec": "cdk deploy --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-version-reporting --require-approval=never -o test/.tmp/foo.integ/deploy.cdk.out",
+    },
+    Object {
+      "exec": "rm -fr test/foo.integ.snapshot",
+    },
+    Object {
+      "exec": "mv test/.tmp/foo.integ/deploy.cdk.out test/foo.integ.snapshot",
+    },
+    Object {
+      "spawn": "integ:foo:destroy",
+    },
+  ],
+}
+`;
+
+exports[`synthesizing cdk v2 integration tests 2`] = `
+Object {
+  "description": "update snapshot for integration test \\"foo\\"",
+  "name": "integ:foo:snapshot",
+  "steps": Array [
+    Object {
+      "exec": "cdk synth --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-version-reporting -o test/foo.integ.snapshot > /dev/null",
+    },
+  ],
+}
+`;
+
+exports[`synthesizing cdk v2 integration tests 3`] = `
+Object {
+  "description": "watch integration test 'foo' (without updating snapshots)",
+  "name": "integ:foo:watch",
+  "steps": Array [
+    Object {
+      "exec": "cdk watch --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-version-reporting -o test/.tmp/foo.integ/deploy.cdk.out",
+    },
+  ],
+}
+`;

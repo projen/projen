@@ -96,20 +96,7 @@ test('synthesizing cdk v2 integration tests', () => {
   // THEN
   const output = Testing.synth(project);
 
-  const tasks = output['.projen/tasks.json'].tasks;
-  expect(tasks['integ:foo:deploy'].steps).toEqual(
-    expect.arrayContaining([
-      { exec: 'cdk deploy --app "ts-node -P tsconfig.dev.json test/foo.integ.ts" --no-version-reporting --require-approval=never -o test/.tmp/foo.integ/deploy.cdk.out' },
-    ]),
-  );
-  expect(tasks['integ:foo:snapshot'].steps).toEqual(
-    expect.arrayContaining([
-      { exec: 'cdk synth --app "ts-node -P tsconfig.dev.json test/foo.integ.ts" --no-version-reporting -o test/foo.integ.snapshot > /dev/null' },
-    ]),
-  );
-  expect(tasks['integ:foo:watch'].steps).toEqual(
-    expect.arrayContaining([
-      { exec: 'cdk watch --app "ts-node -P tsconfig.dev.json test/foo.integ.ts" --no-version-reporting -o test/.tmp/foo.integ/deploy.cdk.out' },
-    ]),
-  );
+  expect(output['.projen/tasks.json'].tasks['integ:foo:deploy']).toMatchSnapshot();
+  expect(output['.projen/tasks.json'].tasks['integ:foo:snapshot']).toMatchSnapshot();
+  expect(output['.projen/tasks.json'].tasks['integ:foo:watch']).toMatchSnapshot();
 });
