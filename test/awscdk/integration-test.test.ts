@@ -1,5 +1,5 @@
-import { awscdk } from '../../src';
-import { IntegrationTest } from '../../src/awscdk';
+import { awscdk, DependencyType } from '../../src';
+import { AwsCdkDeps, IntegrationTest } from '../../src/awscdk';
 import { Testing } from '../../src/testing';
 import { TypeScriptProject } from '../../src/typescript';
 
@@ -11,6 +11,7 @@ describe('IntegrationTest', () => {
   new awscdk.IntegrationTest(project, {
     entrypoint: 'test/foo.integ.ts',
     tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: project.cdkDeps,
   });
 
   // THEN
@@ -72,10 +73,30 @@ test('installs ts-node if needed', () => {
   new IntegrationTest(project, {
     entrypoint: 'test/foo.integ.ts',
     tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: new AwsCdkDeps(project, { cdkVersion: '1.0.0', dependencyType: DependencyType.RUNTIME }),
   });
 
   expect(project.deps.getDependency('ts-node')).toStrictEqual({
     name: 'ts-node',
     type: 'build',
   });
+});
+
+test('synthesizing cdk v2 integration tests', () => {
+  // GIVEN
+  const project = new awscdk.AwsCdkTypeScriptApp({ name: 'test', defaultReleaseBranch: 'main', cdkVersion: '2.3.1' });
+
+  // WHEN
+  new awscdk.IntegrationTest(project, {
+    entrypoint: 'test/foo.integ.ts',
+    tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: project.cdkDeps,
+  });
+
+  // THEN
+  const output = Testing.synth(project);
+
+  expect(output['.projen/tasks.json'].tasks['integ:foo:deploy']).toMatchSnapshot();
+  expect(output['.projen/tasks.json'].tasks['integ:foo:snapshot']).toMatchSnapshot();
+  expect(output['.projen/tasks.json'].tasks['integ:foo:watch']).toMatchSnapshot();
 });
