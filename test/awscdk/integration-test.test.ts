@@ -107,4 +107,9 @@ test('synthesizing cdk v2 integration tests', () => {
       { exec: 'cdk synth --app "ts-node -P tsconfig.dev.json test/foo.integ.ts" --no-version-reporting -o test/foo.integ.snapshot > /dev/null' },
     ]),
   );
+  expect(tasks['integ:foo:watch'].steps).toEqual(
+    expect.arrayContaining([
+      { exec: 'cdk watch --app "ts-node -P tsconfig.dev.json test/foo.integ.ts" --no-version-reporting -o test/.tmp/foo.integ/deploy.cdk.out' },
+    ]),
+  );
 });
