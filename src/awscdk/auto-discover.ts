@@ -71,6 +71,7 @@ export class AutoDiscover extends Component {
     for (const entrypoint of entrypoints) {
       new IntegrationTest(this.project, {
         entrypoint: join(options.testdir, entrypoint),
+        cdkDeps: options.cdkDeps,
         tsconfigPath: options.tsconfigPath,
       });
     }
