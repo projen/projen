@@ -3,9 +3,9 @@
 exports[`generate projenrc in python 1`] = `
 "from projen.python import PythonProject
 
-project = PythonProject();
+project = PythonProject()
 
-project.synth();"
+project.synth()"
 `;
 
 exports[`javascript values are translated to python 1`] = `
@@ -21,9 +21,9 @@ project = PythonProject(
     null_arg=None,
     object_arg={\\"foo\\":\\"bar\\"},
     project_type=ProjectType.LIB,
-);
+)
 
-project.synth();"
+project.synth()"
 `;
 
 exports[`projenrc.py support 1`] = `
@@ -167,7 +167,7 @@ node_modules/
         "name": "default",
         "steps": Array [
           Object {
-            "exec": "python projenrc.py",
+            "exec": "python .projenrc.py",
           },
         ],
       },

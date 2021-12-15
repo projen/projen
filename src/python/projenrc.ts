@@ -39,13 +39,13 @@ export class Projenrc extends Component {
   constructor(project: Project, options: ProjenrcOptions = {}) {
     super(project);
 
-    const projenVersion = options.projenVersion ?? PROJEN_VERSION; // ?
+    const projenVersion = options.projenVersion ?? PROJEN_VERSION;
     this.rcfile = options.filename ?? '.projenrc.py';
 
     project.deps.addDependency(`projen@${projenVersion}`, DependencyType.DEVENV);
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
-    project.defaultTask.exec('python projenrc.py');
+    project.defaultTask.exec('python .projenrc.py');
 
     // if this is a new project, generate a skeleton for projenrc.py
     this.generateProjenrc();
@@ -93,9 +93,9 @@ export class Projenrc extends Component {
       emit(toPythonImport(fqn));
     }
     emit();
-    emit(`project = ${jsiiType.name}(${renderedOptions});`);
+    emit(`project = ${jsiiType.name}(${renderedOptions})`);
     emit();
-    emit('project.synth();');
+    emit('project.synth()');
 
     mkdirpSync(dirname(pythonFile));
     writeFileSync(pythonFile, lines.join('\n'));

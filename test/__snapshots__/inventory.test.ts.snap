@@ -23507,7 +23507,7 @@ Array [
         "switch": "projenrc-json-options",
       },
       Object {
-        "default": "false",
+        "default": "true",
         "docs": "Use projenrc in python.",
         "featured": false,
         "fullType": Object {
