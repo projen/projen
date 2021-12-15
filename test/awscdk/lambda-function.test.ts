@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
+import { DependencyType } from '../../src';
 import * as awscdk from '../../src/awscdk';
+import { AwsCdkDeps } from '../../src/awscdk';
 import { Testing } from '../../src/testing';
 import { TypeScriptProject } from '../../src/typescript';
 
@@ -21,6 +23,7 @@ describe('bundled function', () => {
 
     new awscdk.LambdaFunction(project, {
       entrypoint: join('src', 'hello.lambda.ts'),
+      cdkDeps: cdkDepsForProject(project),
     });
 
     const snapshot = Testing.synth(project);
@@ -69,6 +72,7 @@ test('fails if entrypoint does not have the .lambda suffix', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
   expect(() => new awscdk.LambdaFunction(project, {
     entrypoint: join('src', 'hello-no-lambda.ts'),
+    cdkDeps: cdkDepsForProject(project),
   })).toThrow('hello-no-lambda.ts must have a .lambda.ts extension');
 });
 
@@ -79,6 +83,7 @@ test('constructFile and constructName can be used to customize the generated con
     entrypoint: join('src', 'hello.lambda.ts'),
     constructFile: 'my-construct.ts',
     constructName: 'MyConstruct',
+    cdkDeps: cdkDepsForProject(project),
   });
 
   const snapshot = Testing.synth(project);
@@ -92,6 +97,7 @@ test('runtime can be used to customize the lambda runtime and esbuild target', (
   new awscdk.LambdaFunction(project, {
     entrypoint: join('src', 'hello.lambda.ts'),
     runtime: awscdk.LambdaRuntime.NODEJS_12_X,
+    cdkDeps: cdkDepsForProject(project),
   });
 
   const snapshot = Testing.synth(project);
@@ -111,8 +117,8 @@ test('runtime can be used to customize the lambda runtime and esbuild target', (
 
 test('eslint allows handlers to import dev dependencies', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
-  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts') });
-  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts') });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts'), cdkDeps: cdkDepsForProject(project) });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts'), cdkDeps: cdkDepsForProject(project) });
 
   const snapshot = Testing.synth(project);
   expect(snapshot['.eslintrc.json'].rules['import/no-extraneous-dependencies']).toStrictEqual([
@@ -126,8 +132,8 @@ test('eslint allows handlers to import dev dependencies', () => {
 
 test('esbuild dependency is added', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
-  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts') });
-  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts') });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts'), cdkDeps: cdkDepsForProject(project) });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts'), cdkDeps: cdkDepsForProject(project) });
 
   const snapshot = Testing.synth(project);
   const deps = snapshot['.projen/deps.json'].dependencies;
@@ -136,8 +142,8 @@ test('esbuild dependency is added', () => {
 
 test('multiple functions', () => {
   const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
-  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts') });
-  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts') });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'hello.lambda.ts'), cdkDeps: cdkDepsForProject(project) });
+  new awscdk.LambdaFunction(project, { entrypoint: join('src', 'world.lambda.ts'), cdkDeps: cdkDepsForProject(project) });
 
   const snapshot = Testing.synth(project);
   expect(snapshot['src/hello-function.ts']).toMatchSnapshot();
@@ -158,6 +164,7 @@ test('auto-discover', () => {
     srcdir: project.srcdir,
     testdir: project.testdir,
     tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: new AwsCdkDeps(project, { cdkVersion: '1.23.0', dependencyType: DependencyType.RUNTIME }),
     lambdaOptions: {
       runtime: awscdk.LambdaRuntime.NODEJS_12_X,
     },
@@ -184,3 +191,19 @@ test('auto-discover', () => {
     expect(tasks[name]).toMatchSnapshot();
   }
 });
+
+test('generates cdkv2-compatible imports', () => {
+  const project = new TypeScriptProject({ name: 'hello', defaultReleaseBranch: 'main' });
+
+  new awscdk.LambdaFunction(project, {
+    entrypoint: join('src', 'hello.lambda.ts'),
+    cdkDeps: cdkDepsForProject(project, '2.3.1'),
+  });
+
+  const snapshot = Testing.synth(project);
+  expect(snapshot['src/hello-function.ts']).toMatchSnapshot();
+});
+
+function cdkDepsForProject(project: TypeScriptProject, cdkVersion = '1.0.0'): awscdk.AwsCdkDeps {
+  return new AwsCdkDeps(project, { cdkVersion: cdkVersion, dependencyType: DependencyType.RUNTIME });
+}
