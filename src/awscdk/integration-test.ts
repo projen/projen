@@ -3,6 +3,7 @@ import { Component } from '../component';
 import { DependencyType } from '../dependencies';
 import { Project } from '../project';
 import { Task } from '../task';
+import { AwsCdkDeps } from './awscdk-deps';
 import { FEATURE_FLAGS, TYPESCRIPT_INTEG_EXT } from './internal';
 
 export interface IntegrationTestCommonOptions {
@@ -32,6 +33,11 @@ export interface IntegrationTestOptions extends IntegrationTestCommonOptions {
    * The path of the tsconfig.json file to use when running integration test cdk apps.
    */
   readonly tsconfigPath: string;
+
+  /**
+   * AWS CDK dependency manager.
+   */
+  readonly cdkDeps: AwsCdkDeps;
 }
 
 /**
@@ -84,14 +90,16 @@ export class IntegrationTest extends Component {
       '--no-version-reporting',
     ];
 
-    // add all feature flags
-    const features = [
-      ...FEATURE_FLAGS,
-      '@aws-cdk/core:newStyleStackSynthesis', // simplifies asset coordinates in synth output
-    ];
+    if (options.cdkDeps.cdkMajorVersion === 1) {
+      // add all feature flags
+      const features = [
+        ...FEATURE_FLAGS,
+        '@aws-cdk/core:newStyleStackSynthesis', // simplifies asset coordinates in synth output
+      ];
 
-    for (const feature of features) {
-      opts.push(`--context ${feature}=true`);
+      for (const feature of features) {
+        opts.push(`--context ${feature}=true`);
+      }
     }
 
     const cdkopts = opts.join(' ');
