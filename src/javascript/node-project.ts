@@ -28,6 +28,7 @@ import {
   NodePackage,
   NodePackageManager,
   NodePackageOptions,
+  ScopedPackagesOptions,
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
 
@@ -306,6 +307,70 @@ export enum AutoRelease {
  * @pjid node
  */
 export class NodeProject extends GitHubProject {
+  /**
+   * Regex for AWS CodeArtifact registry
+   */
+  private static readonly codeArtifactRegex =
+    /^https:\/\/(?<domain>[^\.]+)-(?<accountId>\d{12})\.d\.codeartifact\.(?<region>[^\.]+).*\.amazonaws\.com\/.*\/(?<repository>\w+)/;
+
+  /**
+   * gets AWS details from the Code Artifact registry URL
+   * throws exception if not matching expected pattern
+   * @param registryUrl Code Artifact registry URL
+   * @returns object containing the (domain, accountId, region, repository)
+   */
+  private static extractCodeArtifactDetails(registryUrl: string) {
+    const match = registryUrl.match(NodeProject.codeArtifactRegex);
+    if (match?.groups) {
+      const { domain, accountId, region, repository } = match.groups;
+      return { domain, accountId, region, repository };
+    }
+    throw new Error("Could not get CodeArtifact details from npm Registry");
+  }
+
+  /**
+   * Get steps for scoped package
+   * if required will add the assume role step
+   *
+   * @param scopedPackageOptions details of scoped package
+   * @returns array of job steps required for each private scoped packages
+   */
+  private static getScopedPackageSteps(
+    scopedPackageOptions: ScopedPackagesOptions
+  ): JobStep[] {
+    const codeArtifactDetails = NodeProject.extractCodeArtifactDetails(
+      scopedPackageOptions.registryUrl
+    );
+    const result: JobStep[] = [];
+    if (scopedPackageOptions.roleToAssume) {
+      result.push({
+        name: `AWS Assume Role for ${scopedPackageOptions.scope}`,
+        uses: "aws-actions/configure-aws-credentials@v1",
+        with: {
+          "aws-access-key-id": scopedPackageOptions.accessKeyIdSecret,
+          "aws-secret-access-key": scopedPackageOptions.secretAccessKeySecret,
+          "aws-region": codeArtifactDetails.region,
+          "role-to-assume": scopedPackageOptions.roleToAssume,
+          "role-duration-seconds": 900,
+        },
+      });
+    }
+
+    result.push({
+      name: `AWS CodeArtifact Login ${scopedPackageOptions.scope}`,
+      uses: "MondoPower/codeartifact-auth@1.2",
+      with: {
+        domain: codeArtifactDetails.domain,
+        repository: codeArtifactDetails.repository,
+        scope: scopedPackageOptions.scope,
+        region: codeArtifactDetails.region,
+        accountId: codeArtifactDetails.accountId,
+      },
+    });
+
+    return result;
+  }
+
   /**
    * API for managing the node package.
    */
@@ -778,6 +843,14 @@ export class NodeProject extends GitHubProject {
     }
 
     const mutable = options.mutable ?? false;
+
+    if (this.package.scopedPackagesOptions) {
+      const scopedPackagesSteps = this.package.scopedPackagesOptions.flatMap(
+        NodeProject.getScopedPackageSteps
+      );
+
+      install.push(...scopedPackagesSteps);
+    }
 
     install.push({
       name: "Install dependencies",

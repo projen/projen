@@ -286,6 +286,13 @@ export interface NodePackageOptions {
    * @default - undefined
    */
   readonly codeArtifactOptions?: CodeArtifactOptions;
+
+  /**
+   * Options for privately hosted scoped packages
+   *
+   * @default undefined
+   */
+  readonly scopedPackagesOptions?: ScopedPackagesOptions[];
 }
 
 export interface CodeArtifactOptions {
@@ -313,6 +320,32 @@ export interface CodeArtifactOptions {
    */
   readonly roleToAssume?: string;
 }
+
+/**
+ * Options for scoped packages
+ */
+export interface ScopedPackagesBaseOptions {
+  /**
+   * scope of the packages
+   *
+   * @example "@angular"
+   */
+  readonly scope: string;
+
+  /**
+   * Url of the registry for scoped packages
+   */
+  readonly registryUrl: string;
+}
+
+/**
+ * Options for scoped packages hosted on AWS Code artifacts
+ */
+export interface ScopedPackagesCodeArtifactOptions
+  extends ScopedPackagesBaseOptions,
+    CodeArtifactOptions {}
+
+export type ScopedPackagesOptions = ScopedPackagesCodeArtifactOptions;
 
 /**
  * Represents the npm `package.json` file.
@@ -383,6 +416,13 @@ export class NodePackage extends Component {
   readonly codeArtifactOptions?: CodeArtifactOptions;
 
   /**
+   * Options for privately hosted scoped packages
+   *
+   * @default undefined
+   */
+  readonly scopedPackagesOptions?: ScopedPackagesOptions[];
+
+  /**
    * npm package access level.
    */
   public readonly npmAccess: NpmAccess;
@@ -420,12 +460,14 @@ export class NodePackage extends Component {
       npmRegistryUrl,
       npmTokenSecret,
       codeArtifactOptions,
+      scopedPackagesOptions,
     } = this.parseNpmOptions(options);
     this.npmAccess = npmAccess;
     this.npmRegistry = npmRegistry;
     this.npmRegistryUrl = npmRegistryUrl;
     this.npmTokenSecret = npmTokenSecret;
     this.codeArtifactOptions = codeArtifactOptions;
+    this.scopedPackagesOptions = scopedPackagesOptions;
 
     this.processDeps(options);
 
@@ -829,7 +871,43 @@ export class NodePackage extends Component {
       npmRegistryUrl: npmr.href,
       npmTokenSecret: defaultNpmToken(options.npmTokenSecret, npmr.hostname),
       codeArtifactOptions,
+      scopedPackagesOptions: this.parseScopedPackagesOptions(
+        options.scopedPackagesOptions
+      ),
     };
+  }
+
+  private parseScopedPackagesOptions(
+    scopedPackagesOptions?: ScopedPackagesOptions[]
+  ): ScopedPackagesOptions[] {
+    if (!scopedPackagesOptions) {
+      return [];
+    }
+
+    return scopedPackagesOptions.map((option): ScopedPackagesOptions => {
+      if (!isScoped(option.scope)) {
+        throw new Error(
+          `Scope must start with "@" in options, found ${option.scope}`
+        );
+      }
+
+      if (!isAwsCodeArtifactRegistry(option.registryUrl)) {
+        throw new Error(
+          `Only AWS Code artifact scoped registry is supported for now, found ${option.registryUrl}`
+        );
+      }
+
+      const result: ScopedPackagesOptions = {
+        registryUrl: option.registryUrl,
+        scope: option.scope,
+        accessKeyIdSecret: option.accessKeyIdSecret ?? "AWS_ACCESS_KEY_ID",
+        secretAccessKeySecret:
+          option.secretAccessKeySecret ?? "AWS_SECRET_ACCESS_KEY",
+        roleToAssume: option.roleToAssume,
+      };
+
+      return result;
+    });
   }
 
   private addNodeEngine() {
