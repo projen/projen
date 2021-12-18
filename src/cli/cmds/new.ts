@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as yargs from 'yargs';
 import * as inventory from '../../inventory';
-import { NewProjectOptionHints } from '../../option-hints';
+import { InitProjectOptionHints } from '../../option-hints';
 import { Projects } from '../../projects';
 import { exec, isTruthy } from '../../util';
 import { tryProcessMacro } from '../macros';
@@ -60,7 +60,7 @@ class Command implements yargs.CommandModule {
 
           return cargs;
         },
-        handler: argv => newProject(process.cwd(), type, argv),
+        handler: argv => initProject(process.cwd(), type, argv),
       });
     }
 
@@ -71,7 +71,7 @@ class Command implements yargs.CommandModule {
     // handle --from which means we want to first install a jsii module and then
     // create a project defined within this module.
     if (args.from) {
-      return newProjectFromModule(process.cwd(), args.from, args);
+      return initProjectFromModule(process.cwd(), args.from, args);
     }
 
     // project type is defined but was not matched by yargs, so print the list of supported types
@@ -144,7 +144,7 @@ function commandLineToProps(cwd: string, type: inventory.ProjectType, argv: Reco
  * @param spec The name of the external module to load
  * @param args Command line arguments (incl. project type)
  */
-async function newProjectFromModule(baseDir: string, spec: string, args: any) {
+async function initProjectFromModule(baseDir: string, spec: string, args: any) {
   const projenVersion = args.projenVersion ?? 'latest';
   const installCommand = renderInstallCommand(baseDir, `projen@${projenVersion}`);
   if (args.projenVersion) {
@@ -217,7 +217,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
   args.devDeps = [spec];
   args['dev-deps'] = [spec];
 
-  await newProject(baseDir, type, args);
+  await initProject(baseDir, type, args);
 }
 
 /**
@@ -226,7 +226,7 @@ async function newProjectFromModule(baseDir: string, spec: string, args: any) {
  * @param args Command line arguments
  * @param additionalProps Additional parameters to include in .projenrc.js
  */
-async function newProject(baseDir: string, type: inventory.ProjectType, args: any) {
+async function initProject(baseDir: string, type: inventory.ProjectType, args: any) {
   // convert command line arguments to project props using type information
   const props = commandLineToProps(baseDir, type, args);
 
@@ -234,7 +234,7 @@ async function newProject(baseDir: string, type: inventory.ProjectType, args: an
     dir: props.outdir ?? baseDir,
     projectFqn: type.fqn,
     projectOptions: props,
-    optionHints: args.comments ? NewProjectOptionHints.FEATURED : NewProjectOptionHints.NONE,
+    optionHints: args.comments ? InitProjectOptionHints.FEATURED : InitProjectOptionHints.NONE,
     synth: args.synth,
     post: args.post,
   });

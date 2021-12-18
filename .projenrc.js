@@ -74,17 +74,15 @@ const project = new cdk.JsiiProject({
     mavenArtifactId: 'projen',
     mavenEndpoint: 'https://s01.oss.sonatype.org',
   },
-
   publishToPypi: {
     distName: 'projen',
     module: 'projen',
   },
-  releaseFailureIssue: true,
+  publishToGo: {
+    moduleName: 'github.com/projen/projen-go',
+  },
 
-  // Disabled due to cycles between main module and submodules
-  // publishToGo: {
-  //   moduleName: 'github.com/projen/projen-go',
-  // },
+  releaseFailureIssue: true,
 
   autoApproveUpgrades: true,
   autoApproveOptions: { allowedUsernames: ['cdklabs-automation'], secret: 'GITHUB_TOKEN' },

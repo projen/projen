@@ -1,4 +1,4 @@
-import { NewProjectOptionHints } from '../src/option-hints';
+import { InitProjectOptionHints } from '../src/option-hints';
 import { Projects } from '../src/projects';
 import { directorySnapshot, withProjectDir } from './util';
 
@@ -7,7 +7,7 @@ describe('createProject', () => {
     withProjectDir(projectdir => {
       // GIVEN
       Projects.createProject({
-        optionHints: NewProjectOptionHints.FEATURED,
+        optionHints: InitProjectOptionHints.FEATURED,
         dir: projectdir,
         post: false,
         synth: false,
@@ -30,7 +30,7 @@ describe('createProject', () => {
     withProjectDir(projectdir => {
       // GIVEN
       Projects.createProject({
-        optionHints: NewProjectOptionHints.FEATURED,
+        optionHints: InitProjectOptionHints.FEATURED,
         dir: projectdir,
         post: false,
         synth: false,
@@ -67,7 +67,7 @@ describe('createProject', () => {
 
       // WHEN
       Projects.createProject({
-        optionHints: NewProjectOptionHints.FEATURED,
+        optionHints: InitProjectOptionHints.FEATURED,
         dir: projectdir,
         post: false,
         synth: false,

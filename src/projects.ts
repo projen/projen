@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as vm from 'vm';
 import { resolveProjectType } from './inventory';
 import { renderJavaScriptOptions } from './javascript/render-options';
-import { NewProjectOptionHints } from './option-hints';
+import { InitProjectOptionHints } from './option-hints';
 
 export interface CreateProjectOptions {
   /**
@@ -31,9 +31,9 @@ export interface CreateProjectOptions {
    * Should we render commented-out default options in the projenrc file?
    * Does not apply to projenrc.json files.
    *
-   * @default NewProjectOptionHints.FEATURED
+   * @default InitProjectOptionHints.FEATURED
    */
-  readonly optionHints?: NewProjectOptionHints;
+  readonly optionHints?: InitProjectOptionHints;
 
   /**
    * Should we call `project.synth()` or instantiate the project (could still
@@ -96,7 +96,7 @@ function createProject(opts: CreateProjectOptions) {
   // generate the projenrc file.
   const { renderedOptions } = renderJavaScriptOptions({
     bootstrap: true,
-    comments: opts.optionHints ?? NewProjectOptionHints.FEATURED,
+    comments: opts.optionHints ?? InitProjectOptionHints.FEATURED,
     type: projectType,
     args: opts.projectOptions,
     omitFromBootstrap: ['outdir'],
@@ -109,7 +109,7 @@ function createProject(opts: CreateProjectOptions) {
   //
   // errors if this isn't unique
   const varName = 'project' + Math.random().toString(36).slice(2);
-  const newProjectCode = `const ${varName} = new ${projectType.typename}(${renderedOptions});`;
+  const initProjectCode = `const ${varName} = new ${projectType.typename}(${renderedOptions});`;
 
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const module = require(mod);
@@ -119,7 +119,7 @@ function createProject(opts: CreateProjectOptions) {
   const postSynth = opts.post ?? true;
   process.env.PROJEN_DISABLE_POST = (!postSynth).toString();
   vm.runInContext([
-    newProjectCode,
+    initProjectCode,
     synth ? `${varName}.synth();` : '',
   ].join('\n'), ctx);
 }

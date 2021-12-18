@@ -52,7 +52,7 @@ export class Projenrc extends Component {
   }
 
   private generateProjenrc() {
-    const bootstrap = this.project.newProject;
+    const bootstrap = this.project.initProject;
     if (!bootstrap) {
       return;
     }

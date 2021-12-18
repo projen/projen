@@ -1,4 +1,4 @@
-import { renderProjenNewOptions } from '../../src/javascript/render-options';
+import { renderProjenInitOptions } from '../../src/javascript/render-options';
 import { ProjectType } from '../../src/project';
 import { Projenrc } from '../../src/python/projenrc';
 import { synthSnapshot, TestProject } from '../util';
@@ -19,7 +19,7 @@ test('projenrc.py support', () => {
 
 test('generate projenrc in python', () => {
   // GIVEN
-  const project = new TestProject(renderProjenNewOptions('projen.python.PythonProject', {}));
+  const project = new TestProject(renderProjenInitOptions('projen.python.PythonProject', {}));
 
   // WHEN
   new Projenrc(project);
@@ -30,7 +30,7 @@ test('generate projenrc in python', () => {
 
 test('javascript values are translated to python', () => {
   // GIVEN
-  const project = new TestProject(renderProjenNewOptions('projen.python.PythonProject', {
+  const project = new TestProject(renderProjenInitOptions('projen.python.PythonProject', {
     stringArg: 'hello',
     intArg: 123,
     floatArg: 123.45,

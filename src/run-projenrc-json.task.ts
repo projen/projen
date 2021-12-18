@@ -8,7 +8,7 @@
  *   Defaults to `.projenrc.json`.
  */
 import * as fs from 'fs-extra';
-import { NewProjectOptionHints } from './option-hints';
+import { InitProjectOptionHints } from './option-hints';
 import { Projects } from './projects';
 
 let filename = process.env.PROJENRC_FILE;
@@ -26,7 +26,7 @@ Projects.createProject({
   dir: '.',
   projectFqn: type,
   projectOptions: json,
-  optionHints: NewProjectOptionHints.NONE,
+  optionHints: InitProjectOptionHints.NONE,
   synth: true,
   post: false,
 });

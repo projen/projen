@@ -137,11 +137,11 @@ Name|Description
 [GitpodPrebuilds](#projen-gitpodprebuilds)|Configure the Gitpod App for prebuilds.
 [GitpodTask](#projen-gitpodtask)|Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
 [IniFileOptions](#projen-inifileoptions)|Options for `IniFile`.
+[InitProject](#projen-initproject)|Information passed from `projen new` to the project object when the project is first created.
 [JsonFileOptions](#projen-jsonfileoptions)|Options for `JsonFile`.
 [LicenseOptions](#projen-licenseoptions)|*No description*
 [LoggerOptions](#projen-loggeroptions)|Options for logging utilities.
 [MakefileOptions](#projen-makefileoptions)|Options for Makefiles.
-[NewProject](#projen-newproject)|Information passed from `projen new` to the project object when the project is first created.
 [ObjectFileOptions](#projen-objectfileoptions)|Options for `ObjectFile`.
 [ProjectOptions](#projen-projectoptions)|Options for `Project`.
 [ProjenrcOptions](#projen-projenrcoptions)|*No description*
@@ -310,8 +310,8 @@ Name|Description
 [GitpodOpenIn](#projen-gitpodopenin)|Configure where in the IDE the terminal should be opened.
 [GitpodOpenMode](#projen-gitpodopenmode)|Configure how the terminal should be opened relative to the previous task.
 [GitpodPortVisibility](#projen-gitpodportvisibility)|Whether the port visibility should be private or public.
+[InitProjectOptionHints](#projen-initprojectoptionhints)|Choices for how to display commented out options in projenrc files.
 [LogLevel](#projen-loglevel)|Logging verbosity.
-[NewProjectOptionHints](#projen-newprojectoptionhints)|Choices for how to display commented out options in projenrc files.
 [ProjectType](#projen-projecttype)|Which type of project this is.
 [awscdk.ApprovalLevel](#projen-awscdk-approvallevel)|Which approval is required when deploying CDK apps.
 [cdk.Stability](#projen-cdk-stability)|*No description*
@@ -1633,7 +1633,7 @@ Name | Type | Description
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
 **tasks**🔹 | <code>[Tasks](#projen-tasks)</code> | Project tasks.
 **testTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
-**newProject**?🔹 | <code>[NewProject](#projen-newproject)</code> | The options used when this project is bootstrapped via `projen new`.<br/>__*Optional*__
+**initProject**?🔹 | <code>[InitProject](#projen-initproject)</code> | The options used when this project is bootstrapped via `projen new`.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 *static* **DEFAULT_TASK**🔹 | <code>string</code> | The name of the default task (the task executed when `projen` is run without arguments).
 
@@ -1920,7 +1920,7 @@ static createProject(options: CreateProjectOptions): void
   * **dir** (<code>string</code>)  Directory that the project will be generated in. 
   * **projectFqn** (<code>string</code>)  Fully-qualified name of the project type (usually formatted as `module.ProjectType`). 
   * **projectOptions** (<code>Map<string, any></code>)  Project options. 
-  * **optionHints** (<code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code>)  Should we render commented-out default options in the projenrc file? __*Default*__: NewProjectOptionHints.FEATURED
+  * **optionHints** (<code>[InitProjectOptionHints](#projen-initprojectoptionhints)</code>)  Should we render commented-out default options in the projenrc file? __*Default*__: InitProjectOptionHints.FEATURED
   * **post** (<code>boolean</code>)  Should we execute post synthesis hooks? __*Default*__: true
   * **synth** (<code>boolean</code>)  Should we call `project.synth()` or instantiate the project (could still have side-effects) and render the .projenrc file. __*Default*__: true
 
@@ -9201,7 +9201,7 @@ Name | Type | Description
 **dir**🔹 | <code>string</code> | Directory that the project will be generated in.
 **projectFqn**🔹 | <code>string</code> | Fully-qualified name of the project type (usually formatted as `module.ProjectType`).
 **projectOptions**🔹 | <code>Map<string, any></code> | Project options.
-**optionHints**?🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Should we render commented-out default options in the projenrc file?<br/>__*Default*__: NewProjectOptionHints.FEATURED
+**optionHints**?🔹 | <code>[InitProjectOptionHints](#projen-initprojectoptionhints)</code> | Should we render commented-out default options in the projenrc file?<br/>__*Default*__: InitProjectOptionHints.FEATURED
 **post**?🔹 | <code>boolean</code> | Should we execute post synthesis hooks?<br/>__*Default*__: true
 **synth**?🔹 | <code>boolean</code> | Should we call `project.synth()` or instantiate the project (could still have side-effects) and render the .projenrc file.<br/>__*Default*__: true
 
@@ -9668,6 +9668,24 @@ Name | Type | Description
 
 
 
+## struct InitProject 🔹 <a id="projen-initproject"></a>
+
+
+Information passed from `projen new` to the project object when the project is first created.
+
+It is used to generate projenrc files in various languages.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**args**🔹 | <code>Map<string, any></code> | Initial arguments passed to `projen new`.
+**comments**🔹 | <code>[InitProjectOptionHints](#projen-initprojectoptionhints)</code> | Include commented out options.
+**fqn**🔹 | <code>string</code> | The JSII FQN of the project type.
+**type**🔹 | <code>[ProjectType](#projen-projecttype)</code> | Project metadata.
+
+
+
 ## struct JsonFileOptions 🔹 <a id="projen-jsonfileoptions"></a>
 
 
@@ -9731,24 +9749,6 @@ Name | Type | Description
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 **rules**?🔹 | <code>Array<[Rule](#projen-rule)></code> | Rules to include in the Makefile.<br/>__*Default*__: []
-
-
-
-## struct NewProject 🔹 <a id="projen-newproject"></a>
-
-
-Information passed from `projen new` to the project object when the project is first created.
-
-It is used to generate projenrc files in various languages.
-
-
-
-Name | Type | Description 
------|------|-------------
-**args**🔹 | <code>Map<string, any></code> | Initial arguments passed to `projen new`.
-**comments**🔹 | <code>[NewProjectOptionHints](#projen-newprojectoptionhints)</code> | Include commented out options.
-**fqn**🔹 | <code>string</code> | The JSII FQN of the project type.
-**type**🔹 | <code>[ProjectType](#projen-projecttype)</code> | Project metadata.
 
 
 
@@ -14427,6 +14427,19 @@ Name | Description
 **PRIVATE** 🔹|Only allows users with workspace access to access the port.
 
 
+## enum InitProjectOptionHints 🔹 <a id="projen-initprojectoptionhints"></a>
+
+Choices for how to display commented out options in projenrc files.
+
+Does not apply to projenrc.json files.
+
+Name | Description
+-----|-----
+**ALL** 🔹|Display all possible options (grouped by which interface they belong to).
+**FEATURED** 🔹|Display only featured options, in alphabetical order.
+**NONE** 🔹|Display no extra options.
+
+
 ## enum LogLevel 🔹 <a id="projen-loglevel"></a>
 
 Logging verbosity.
@@ -14439,19 +14452,6 @@ Name | Description
 **INFO** 🔹|
 **DEBUG** 🔹|
 **VERBOSE** 🔹|
-
-
-## enum NewProjectOptionHints 🔹 <a id="projen-newprojectoptionhints"></a>
-
-Choices for how to display commented out options in projenrc files.
-
-Does not apply to projenrc.json files.
-
-Name | Description
------|-----
-**ALL** 🔹|Display all possible options (grouped by which interface they belong to).
-**FEATURED** 🔹|Display only featured options, in alphabetical order.
-**NONE** 🔹|Display no extra options.
 
 
 ## enum ProjectType ⚠️ <a id="projen-projecttype"></a>

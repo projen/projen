@@ -9,11 +9,11 @@ import { FileBase } from './file';
 import { GitAttributesFile } from './gitattributes';
 import { IgnoreFile } from './ignore-file';
 import * as inventory from './inventory';
-import { resolveNewProject } from './javascript/render-options';
+import { resolveInitProject } from './javascript/render-options';
 import { JsonFile } from './json';
 import { Logger, LoggerOptions } from './logger';
 import { ObjectFile } from './object-file';
-import { NewProjectOptionHints } from './option-hints';
+import { InitProjectOptionHints } from './option-hints';
 import { ProjectBuild as ProjectBuild } from './project-build';
 import { Projenrc, ProjenrcOptions } from './projenrc-json';
 import { Task, TaskOptions } from './task';
@@ -142,7 +142,7 @@ export class Project {
    * includes the original set of options passed to the CLI and also the JSII
    * FQN of the project type.
    */
-  public readonly newProject?: NewProject;
+  public readonly initProject?: InitProject;
 
   /**
    * The command to use in order to run the projen CLI.
@@ -165,7 +165,7 @@ export class Project {
   private readonly excludeFromCleanup: string[];
 
   constructor(options: ProjectOptions) {
-    this.newProject = resolveNewProject(options);
+    this.initProject = resolveInitProject(options);
 
     this.name = options.name;
     this.parent = options.parent;
@@ -534,7 +534,7 @@ export enum ProjectType {
  * Information passed from `projen new` to the project object when the project
  * is first created. It is used to generate projenrc files in various languages.
  */
-export interface NewProject {
+export interface InitProject {
   /**
    * The JSII FQN of the project type.
    */
@@ -552,7 +552,7 @@ export interface NewProject {
 
   /**
    * Include commented out options. Does not apply to projenrc.json files.
-   * @default NewProjectOptionHints.FEATURED
+   * @default InitProjectOptionHints.FEATURED
    */
-  readonly comments: NewProjectOptionHints;
+  readonly comments: InitProjectOptionHints;
 }
