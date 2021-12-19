@@ -48,9 +48,9 @@ project = PythonProject(
     version=\\"0.1.0\\",
     project_type=ProjectType.LIB,
     projenrc_python=True,
-);
+)
 
-project.synth();"
+project.synth()"
 `;
 
 exports[`projen new awscdk-app-java 1`] = `
@@ -284,24 +284,17 @@ exports[`projen new project 1`] = `Object {}`;
 
 exports[`projen new python 1`] = `
 Object {
-  ".projenrc.js": "const { python } = require(\\"projen\\");
-const project = new python.PythonProject({
-  authorEmail: \\"my@user.email.com\\",
-  authorName: \\"My User Name\\",
-  moduleName: \\"my_project\\",
-  name: \\"my-project\\",
-  version: \\"0.1.0\\",
+  ".projenrc.py": "from projen.python import PythonProject
 
-  // deps: [],                /* List of runtime dependencies for this project. */
-  // description: undefined,  /* A short description of the package. */
-  // devDeps: [],             /* List of dev dependencies for this project. */
-  // pip: true,               /* Use pip with a requirements.txt file to track project dependencies. */
-  // poetry: false,           /* Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. */
-  // pytest: true,            /* Include pytest tests. */
-  // setuptools: undefined,   /* Use setuptools with a setup.py script for packaging and publishing. */
-  // venv: true,              /* Use venv to manage a virtual environment for installing dependencies inside. */
-});
-project.synth();",
+project = PythonProject(
+    author_email=\\"my@user.email.com\\",
+    author_name=\\"My User Name\\",
+    module_name=\\"my_project\\",
+    name=\\"my-project\\",
+    version=\\"0.1.0\\",
+)
+
+project.synth()",
 }
 `;
 
