@@ -1619,7 +1619,7 @@ jobs:
           node-version: 14
       - uses: actions/setup-python@v2
         with:
-          python-version: 3.7.4
+          python-version: 3
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -1742,7 +1742,7 @@ jobs:
           node-version: 14
       - uses: actions/setup-python@v2
         with:
-          python-version: 3.7.4
+          python-version: 3
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -3683,7 +3683,7 @@ jobs:
           node-version: 14
       - uses: actions/setup-python@v2
         with:
-          python-version: 3.7.4
+          python-version: 3
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
