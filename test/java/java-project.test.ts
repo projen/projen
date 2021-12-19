@@ -1,5 +1,5 @@
 import { JavaProject, JavaProjectOptions } from '../../src/java/java-project';
-import { renderProjenNewOptions } from '../../src/javascript/render-options';
+import { renderProjenInitOptions } from '../../src/javascript/render-options';
 import { synthSnapshot } from '../util';
 
 test('defaults', () => {
@@ -69,7 +69,7 @@ function snapPom(p: JavaProject) {
 
 class TestJavaProject extends JavaProject {
   constructor(options: Partial<JavaProjectOptions> = { }) {
-    super(renderProjenNewOptions('projen.java.JavaProject', {
+    super(renderProjenInitOptions('projen.java.JavaProject', {
       ...options,
       groupId: 'org.acme',
       artifactId: 'my-artifact',

@@ -1,4 +1,4 @@
-import { renderProjenNewOptions } from '../../src/javascript/render-options';
+import { renderProjenInitOptions } from '../../src/javascript/render-options';
 import { Projenrc } from '../../src/projenrc-json';
 import { synthSnapshot, TestProject } from '../util';
 
@@ -15,7 +15,7 @@ test('projenrc.json default project', () => {
 
 test('projenrc.json with typed options', () => {
   // GIVEN
-  const project = new TestProject(renderProjenNewOptions('projen.typescript.TypeScriptProject', {
+  const project = new TestProject(renderProjenInitOptions('projen.typescript.TypeScriptProject', {
     staleOptions: {
       issues: {
         daysBeforeStale: 100, // number, nested option

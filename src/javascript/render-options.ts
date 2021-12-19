@@ -1,5 +1,5 @@
 import * as inventory from '../inventory';
-import { NewProjectOptionHints } from '../option-hints';
+import { InitProjectOptionHints } from '../option-hints';
 
 const PROJEN_NEW = '__new__';
 const TAB = makePadding(2);
@@ -20,9 +20,9 @@ export interface RenderProjectOptions {
 
   /**
    * Include commented out options.
-   * @default NewProjectOptionHints.FEATURED
+   * @default InitProjectOptionHints.FEATURED
    */
-  readonly comments?: NewProjectOptionHints;
+  readonly comments?: InitProjectOptionHints;
 
   /**
    * Inject a `__new__` attribute to the project constructor with a stringified
@@ -45,7 +45,7 @@ export interface RenderProjectOptions {
  * Information passed from `projen new` to the project object when the project
  * is first created. It is used to generate projenrc files in various languages.
  */
-interface ProjenNew {
+interface ProjenInit {
   /**
    * The JSII FQN of the project type.
    */
@@ -59,22 +59,22 @@ interface ProjenNew {
   /**
    * Include commented out options. Does not apply to projenrc.json files.
    */
-  readonly comments: NewProjectOptionHints;
+  readonly comments: InitProjectOptionHints;
 }
 
 
 /**
  * Renders options as if the project was created via `projen new` (embeds the __new__ field).
  */
-export function renderProjenNewOptions(fqn: string, args: Record<string, any>, comments: NewProjectOptionHints = NewProjectOptionHints.NONE): any {
+export function renderProjenInitOptions(fqn: string, args: Record<string, any>, comments: InitProjectOptionHints = InitProjectOptionHints.NONE): any {
   return {
     ...args,
-    [PROJEN_NEW]: { fqn, args, comments } as ProjenNew,
+    [PROJEN_NEW]: { fqn, args, comments } as ProjenInit,
   };
 }
 
-export function resolveNewProject(opts: any) {
-  const f = opts[PROJEN_NEW] as ProjenNew;
+export function resolveInitProject(opts: any) {
+  const f = opts[PROJEN_NEW] as ProjenInit;
   if (!f) {
     return undefined;
   }
@@ -131,7 +131,7 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
     for (const arg of (opts.omitFromBootstrap ?? [])) {
       delete opts.args[arg];
     }
-    renders[PROJEN_NEW] = `${PROJEN_NEW}: ${JSON.stringify({ args: opts.args, fqn: opts.type.fqn, comments: opts.comments } as ProjenNew)},`;
+    renders[PROJEN_NEW] = `${PROJEN_NEW}: ${JSON.stringify({ args: opts.args, fqn: opts.type.fqn, comments: opts.comments } as ProjenInit)},`;
     optionsWithDefaults.push(PROJEN_NEW);
   }
 
@@ -149,13 +149,13 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
   }
 
   // render options without defaults as comments
-  if (opts.comments === NewProjectOptionHints.ALL) {
+  if (opts.comments === InitProjectOptionHints.ALL) {
     const options = opts.type.options.filter((opt) => !opt.deprecated && opts.args[opt.name] === undefined);
     result.push(...renderCommentedOptionsByModule(renders, options));
-  } else if (opts.comments === NewProjectOptionHints.FEATURED) {
+  } else if (opts.comments === InitProjectOptionHints.FEATURED) {
     const options = opts.type.options.filter((opt) => !opt.deprecated && opts.args[opt.name] === undefined && opt.featured);
     result.push(...renderCommentedOptionsInOrder(renders, options));
-  } else if (opts.comments === NewProjectOptionHints.NONE) {
+  } else if (opts.comments === InitProjectOptionHints.NONE) {
     // don't render any extra options
   }
 

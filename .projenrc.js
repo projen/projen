@@ -74,17 +74,15 @@ const project = new cdk.JsiiProject({
     mavenArtifactId: 'projen',
     mavenEndpoint: 'https://s01.oss.sonatype.org',
   },
-
   publishToPypi: {
     distName: 'projen',
     module: 'projen',
   },
-  releaseFailureIssue: true,
+  publishToGo: {
+    moduleName: 'github.com/projen/projen-go',
+  },
 
-  // Disabled due to cycles between main module and submodules
-  // publishToGo: {
-  //   moduleName: 'github.com/projen/projen-go',
-  // },
+  releaseFailureIssue: true,
 
   autoApproveUpgrades: true,
   autoApproveOptions: { allowedUsernames: ['cdklabs-automation'], secret: 'GITHUB_TOKEN' },
@@ -216,6 +214,13 @@ new github.TaskWorkflow(project.github, {
       uses: 'actions/setup-python@v2',
       with: {
         'python-version': '3.x',
+      },
+    },
+    {
+      name: 'Set up Go 1.16',
+      uses: 'actions/setup-go@v2',
+      with: {
+        'go-version': '^1.16.0',
       },
     },
   ],
