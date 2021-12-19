@@ -1,15 +1,14 @@
-import { BranchOptions } from '.';
 import { Component } from '../component';
 import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
-import { Job, JobPermission, JobPermissions } from '../github/workflows-model';
+import { Job, JobPermission, JobPermissions, JobStep } from '../github/workflows-model';
 import { defaultNpmToken } from '../javascript/node-package';
 import { Project } from '../project';
+import { BranchOptions } from './release';
 
 const JSII_RELEASE_VERSION = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
 const ARTIFACTS_DOWNLOAD_DIR = 'dist';
-const JSII_RELEASE_IMAGE = 'jsii/superchain:1-buster-slim-node14';
 const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
 
 /**
@@ -204,6 +203,7 @@ export class Publisher extends Component {
       return {
         name: 'github',
         registryName: 'GitHub Releases',
+        setupSteps: [], // github cli is installed by default
         permissions: {
           contents: JobPermission.WRITE,
         },
@@ -237,8 +237,8 @@ export class Publisher extends Component {
 
       return {
         name: 'npm',
+        setupSteps: [], // node 14.x is already installed
         run: this.jsiiReleaseCommand('jsii-release-npm'),
-        containerImage: JSII_RELEASE_IMAGE,
         registryName: 'npm',
         env: {
           NPM_DIST_TAG: branchOptions.npmDistTag ?? options.distTag ?? 'latest',
@@ -266,7 +266,9 @@ export class Publisher extends Component {
   public publishToNuget(options: NugetPublishOptions = {}) {
     this.addPublishJob((_branch, _branchOptions) => ({
       name: 'nuget',
-      containerImage: JSII_RELEASE_IMAGE,
+      setupSteps: [
+        { uses: 'actions/setup-dotnet@v1', with: { 'dotnet-version': '3.x' } },
+      ],
       run: this.jsiiReleaseCommand('jsii-release-nuget'),
       registryName: 'NuGet Gallery',
       workflowEnv: {
@@ -291,7 +293,9 @@ export class Publisher extends Component {
     this.addPublishJob((_branch, _branchOptions) => ({
       name: 'maven',
       registryName: 'Maven Central',
-      containerImage: JSII_RELEASE_IMAGE,
+      setupSteps: [
+        { uses: 'actions/setup-java@v2', with: { 'distribution': 'temurin', 'java-version': 11 } },
+      ],
       run: this.jsiiReleaseCommand('jsii-release-maven'),
       env: {
         MAVEN_ENDPOINT: options.mavenEndpoint,
@@ -320,8 +324,10 @@ export class Publisher extends Component {
     this.addPublishJob((_branch, _branchOptions) => ({
       name: 'pypi',
       registryName: 'PyPI',
+      setupSteps: [
+        { uses: 'actions/setup-python@v2', with: { 'python-version': '3.7.4' } },
+      ],
       run: this.jsiiReleaseCommand('jsii-release-pypi'),
-      containerImage: JSII_RELEASE_IMAGE,
       env: {
         TWINE_REPOSITORY_URL: options.twineRegistryUrl,
       },
@@ -339,9 +345,9 @@ export class Publisher extends Component {
   public publishToGo(options: GoPublishOptions = {}) {
     this.addPublishJob((_branch, _branchOptions) => ({
       name: 'golang',
+      setupSteps: [], // only requires `git`
       run: this.jsiiReleaseCommand('jsii-release-golang'),
-      containerImage: JSII_RELEASE_IMAGE,
-      registryName: 'GitHub',
+      registryName: 'GitHub Go Module Repository',
       env: {
         GITHUB_REPO: options.githubRepo,
         GIT_BRANCH: options.gitBranch,
@@ -391,8 +397,9 @@ export class Publisher extends Component {
         task.exec(opts.run);
       }
 
-
-      const steps: any[] = [
+      const steps: JobStep[] = [
+        { uses: 'actions/setup-node@v2', with: { 'node-version': 14 } }, // jsii-release requires node, so always set that up
+        ...opts.setupSteps,
         {
           name: 'Download build artifacts',
           uses: 'actions/download-artifact@v2',
@@ -443,9 +450,6 @@ export class Publisher extends Component {
           if: this.condition,
           needs: [this.buildJobId],
           runsOn: this.runsOn,
-          container: opts.containerImage ? {
-            image: opts.containerImage,
-          } : undefined,
           steps,
         },
       };
@@ -483,12 +487,6 @@ interface PublishJobOptions {
   readonly permissions?: JobPermissions;
 
   /**
-   * Custom container image to use.
-   * @default - no custom image
-   */
-  readonly containerImage?: string;
-
-  /**
    * The name of the publish job (should be lowercase).
    */
   readonly name: string;
@@ -497,6 +495,13 @@ interface PublishJobOptions {
    * Environment to include only in the workflow (and not tasks).
    */
   readonly workflowEnv?: { [name: string]: string | undefined };
+
+  /**
+   * The GitHub action to execute in order to setup the environment.
+   *
+   * NOTE: node 14.x will always be installed since it is required by jsii-release.
+   */
+  readonly setupSteps: JobStep[];
 }
 
 /**
