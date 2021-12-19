@@ -325,7 +325,7 @@ export class Publisher extends Component {
       name: 'pypi',
       registryName: 'PyPI',
       setupSteps: [
-        { uses: 'actions/setup-python@v2', with: { 'python-version': '3.7.4' } },
+        { uses: 'actions/setup-python@v2', with: { 'python-version': 3 } },
       ],
       run: this.jsiiReleaseCommand('jsii-release-pypi'),
       env: {
