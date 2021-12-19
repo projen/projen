@@ -135,13 +135,8 @@ export class Dependencies extends Component {
     const existingDepIndex = this.tryGetDependencyIndex(dep.name, type);
 
     if (existingDepIndex !== -1) {
-      const existingDep = this._deps[existingDepIndex];
-      if (dep.version === existingDep.version || existingDep.version === undefined) {
-        this.project.logger.debug(`updating existing ${dep.type}-dep ${dep.name} with more specific version/metadata`);
-        this._deps[existingDepIndex] = dep;
-      } else {
-        throw new Error(`"${dep.name}" is already specified with different version: ${existingDep.version}`);
-      }
+      this.project.logger.debug(`updating existing ${dep.type}-dep ${dep.name} with more specific version/metadata`);
+      this._deps[existingDepIndex] = dep;
     } else {
       this._deps.push(dep);
     }

@@ -1,6 +1,6 @@
-import { PROJEN_RC } from '../src/common';
-import { mergeTsconfigOptions, TypeScriptProject } from '../src/typescript';
-import { synthSnapshot } from './util';
+import { PROJEN_RC } from '../../src/common';
+import { mergeTsconfigOptions, TypeScriptProject } from '../../src/typescript';
+import { synthSnapshot } from '../util';
 
 describe('mergeTsconfigOptions', () => {
   test('merging includes', () => {

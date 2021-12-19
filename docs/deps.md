@@ -39,3 +39,21 @@ The second argument (`type`) defines the dependency type and is one of:
 - `DependencyType.DEVENV`: The dependency is required for development (e.g. IDE plugins).
 
 [semantic version]: https://semver.org
+
+## Overriding Dependency Specifications
+
+If a dependency is added multiple times, the last specification will prevail.
+This allows you to override dependency specs added by projects or components.
+
+For example, if you wish to change the version of the TypeScript compiler used
+in TypeScript projects:
+
+```ts
+const { typescript } = require('projen');
+
+const project = new typescript.TypeScriptProject({ 
+  /* ... */ 
+});
+project.addDevDeps('typescript@^5');
+project.synth();
+```
