@@ -53,6 +53,9 @@ jobs:
       issues: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -92,6 +95,9 @@ jobs:
       issues: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -117,8 +123,6 @@ jobs:
             github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    container:
-      image: jsii/superchain:1-buster-slim-node14
   release_maven:
     name: Publish to Maven Central
     needs: release
@@ -128,6 +132,13 @@ jobs:
       issues: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 11
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -157,8 +168,6 @@ jobs:
             github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    container:
-      image: jsii/superchain:1-buster-slim-node14
   release_pypi:
     name: Publish to PyPI
     needs: release
@@ -168,6 +177,12 @@ jobs:
       issues: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.7.4
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -192,10 +207,8 @@ jobs:
             github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    container:
-      image: jsii/superchain:1-buster-slim-node14
   release_golang:
-    name: Publish to GitHub
+    name: Publish to GitHub Go Module Repository
     needs: release
     runs-on: ubuntu-latest
     permissions:
@@ -203,6 +216,9 @@ jobs:
       issues: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -223,10 +239,9 @@ jobs:
         uses: imjohnbo/issue-bot@v3
         with:
           labels: failed-release
-          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to GitHub failed
+          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to GitHub Go
+            Module Repository failed
           body: See https://github.com/${{ github.repository }}/actions/runs/${{
             github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    container:
-      image: jsii/superchain:1-buster-slim-node14
