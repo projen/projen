@@ -216,6 +216,13 @@ new github.TaskWorkflow(project.github, {
         'python-version': '3.x',
       },
     },
+    {
+      name: 'Set up Go 1.16',
+      uses: 'actions/setup-go@v2',
+      with: {
+        'go-version': '^1.16.0',
+      },
+    },
   ],
 
   task: integTask,
