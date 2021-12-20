@@ -14,9 +14,7 @@ import {
 
 /**
  * CI for GitLab.
- *
  * A CI is a configurable automated process made up of one or more stages/jobs.
- *
  * @see https://docs.gitlab.com/ee/ci/yaml/
  */
 export class CiConfiguration extends Component {
@@ -25,8 +23,8 @@ export class CiConfiguration extends Component {
   /** Path to CI file */
   public readonly path: string;
   /**
-     * The workflow YAML file.
-     */
+       * The workflow YAML file.
+       */
   public readonly file: YamlFile;
   // /* Defines scripts that should run *after* the job. Can be set globally or per job. */
   // private afterScript?: Array<string[] | string>;
@@ -36,21 +34,21 @@ export class CiConfiguration extends Component {
   private default?: Default;
   // private image?: Image | string;
   /**
-     * Can be `IncludeItem` or `IncludeItem[]`. Each `IncludeItem` will be a string, or an
-     * object with properties for the method if including external YAML file. The external
-     * content will be fetched, included and evaluated along the `.gitlab-ci.yml`.
-     */
+       * Can be `IncludeItem` or `IncludeItem[]`. Each `IncludeItem` will be a string, or an
+       * object with properties for the method if including external YAML file. The external
+       * content will be fetched, included and evaluated along the `.gitlab-ci.yml`.
+       */
   public readonly include: Array<IncludeItem | string> = [];
   /**
-     * A special job used to upload static sites to Gitlab pages. Requires a `public/` directory
-     * with `artifacts.path` pointing to it.
-     */
+       * A special job used to upload static sites to Gitlab pages. Requires a `public/` directory
+       * with `artifacts.path` pointing to it.
+       */
   private pages?: Job;
   public readonly services: Array<Service | string> = [];
   /**
-     * Groups jobs into stages. All jobs in one stage must complete before next stage is
-     * executed. Defaults to ['build', 'test', 'deploy'].
-     */
+       * Groups jobs into stages. All jobs in one stage must complete before next stage is
+       * executed. Defaults to ['build', 'test', 'deploy'].
+       */
   public readonly stages: string[] = [];
   public readonly variables: Record<string, number | VariableConfig | string> =
     {};
@@ -71,9 +69,9 @@ export class CiConfiguration extends Component {
   }
 
   /**
-     * Set the GitLab default. Throws error if default has been previously set.
-     * @param defaultConfig The default to use.
-     */
+       * Set the GitLab default. Throws error if default has been previously set.
+       * @param defaultConfig The default to use.
+       */
   public configureDefault(defaultConfig: Default) {
     if (this.default === undefined) {
       this.default = defaultConfig;
@@ -85,9 +83,9 @@ export class CiConfiguration extends Component {
   }
 
   /**
-     * Add additional yml/yaml files to the CI includes
-     * @param includes The includes to add.
-     */
+       * Add additional yml/yaml files to the CI includes
+       * @param includes The includes to add.
+       */
   public addIncludeItems(...includes: (string | Include)[]) {
     for (const include of includes) {
       if (this.include.includes(include)) {
@@ -98,9 +96,9 @@ export class CiConfiguration extends Component {
   }
 
   /**
-     * Set the GitLab pages job. Throws error if page job has been previously set.
-     * @param job The job to use.
-     */
+       * Set the GitLab pages job. Throws error if page job has been previously set.
+       * @param job The job to use.
+       */
   public configurePagesJob(job: Job) {
     if (this.pages === undefined) {
       this.pages = job;
@@ -112,9 +110,9 @@ export class CiConfiguration extends Component {
   }
 
   /**
-     * Add additional services
-     * @param services The services to add.
-     */
+       * Add additional services
+       * @param services The services to add.
+       */
   public addServices(...services: Service[]) {
     for (const service of services) {
       if (this.services.includes(service)) {
@@ -127,9 +125,9 @@ export class CiConfiguration extends Component {
   }
 
   /**
-     * Add a globally defined variable to the CI configuration.
-     * @param variables The variables to add.
-     */
+       * Add a globally defined variable to the CI configuration.
+       * @param variables The variables to add.
+       */
   public addGlobalVariables(
     variables: Record<string, number | VariableConfig | string>,
   ) {
@@ -144,9 +142,9 @@ export class CiConfiguration extends Component {
   }
 
   /**
-     * Set the CI workflow configuration. Throws error if timeout settings have been previously set.
-     * @param workflow The workflow setting.
-     */
+       * Set the CI workflow configuration. Throws error if timeout settings have been previously set.
+       * @param workflow The workflow setting.
+       */
   public configureWorkflow(workflow: Workflow) {
     if (this.workflow === undefined) {
       this.workflow = workflow;
@@ -158,9 +156,9 @@ export class CiConfiguration extends Component {
   }
 
   /**
-     * Add stages to the CI configuration if not already present.
-     * @param stages stages to add.
-     */
+       * Add stages to the CI configuration if not already present.
+       * @param stages stages to add.
+       */
   public addStages(...stages: string[]) {
     for (const stage of stages) {
       if (!this.stages.includes(stage)) {
@@ -170,9 +168,9 @@ export class CiConfiguration extends Component {
   }
 
   /**
-     * Add jobs and their stages to the CI configuration.
-     * @param jobs Jobs to add.
-     */
+       * Add jobs and their stages to the CI configuration.
+       * @param jobs Jobs to add.
+       */
   public addJobs(jobs: Record<string, Job>) {
     for (const [key, value] of Object.entries(jobs)) {
       if (this.jobs[key] !== undefined) {
