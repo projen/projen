@@ -66,8 +66,8 @@ Name|Description
 [github.Stale](#projen-github-stale)|Warns and then closes issues and PRs that have had no activity for a specified amount of time.
 [github.TaskWorkflow](#projen-github-taskworkflow)|A GitHub workflow for common build tasks within a project.
 [gitlab.CiConfiguration](#projen-gitlab-ciconfiguration)|CI for GitLab.
-[gitlab.GitlabConfiguration](#projen-gitlab-gitlabconfiguration)|*No description*
-[gitlab.NestedConfiguration](#projen-gitlab-nestedconfiguration)|*No description*
+[gitlab.GitlabConfiguration](#projen-gitlab-gitlabconfiguration)|A GitLab CI for the main `.gitlab-ci.yml` file.
+[gitlab.NestedConfiguration](#projen-gitlab-nestedconfiguration)|A GitLab CI for templates that are created and included in the `.gitlab-ci.yml` file.
 [java.JavaProject](#projen-java-javaproject)|Java project.
 [java.Junit](#projen-java-junit)|Implements JUnit-based testing.
 [java.MavenCompile](#projen-java-mavencompile)|Adds the maven-compiler plugin to a POM file and the `compile` task.
@@ -208,33 +208,33 @@ Name|Description
 [github.TaskWorkflowOptions](#projen-github-taskworkflowoptions)|*No description*
 [gitlab.AllowFailure](#projen-gitlab-allowfailure)|Exit code that are not considered failure. The job fails for any other exit code.
 [gitlab.Artifacts](#projen-gitlab-artifacts)|Used to specify a list of files and directories that should be attached to the job if it succeeds.
-[gitlab.Assets](#projen-gitlab-assets)|*No description*
+[gitlab.Assets](#projen-gitlab-assets)|Asset configuration for a release.
 [gitlab.Cache](#projen-gitlab-cache)|Cache Definition.
 [gitlab.Default](#projen-gitlab-default)|Default settings for the CI Configuration.
-[gitlab.Engine](#projen-gitlab-engine)|*No description*
-[gitlab.Environment](#projen-gitlab-environment)|*No description*
-[gitlab.Filter](#projen-gitlab-filter)|*No description*
+[gitlab.Engine](#projen-gitlab-engine)|The engine configuration for a secret.
+[gitlab.Environment](#projen-gitlab-environment)|The environment that a job deploys to.
+[gitlab.Filter](#projen-gitlab-filter)|Filtering options for when a job will run.
 [gitlab.Image](#projen-gitlab-image)|Specifies the docker image to use for the job or globally for all jobs.
-[gitlab.Include](#projen-gitlab-include)|*No description*
+[gitlab.Include](#projen-gitlab-include)|Used to include external YAML files in your CI/CD configuration.
 [gitlab.IncludeElement](#projen-gitlab-includeelement)|References a local file or an artifact from another job to define the pipeline configuration.
-[gitlab.IncludeItem](#projen-gitlab-includeitem)|*No description*
+[gitlab.IncludeItem](#projen-gitlab-includeitem)|An included YAML file.
 [gitlab.IncludeItemRule](#projen-gitlab-includeitemrule)|Rules allows for an array of individual rule objects to be evaluated in order, until one matches and dynamically provides attributes to the job.
 [gitlab.Inherit](#projen-gitlab-inherit)|Controls inheritance of globally-defined defaults and variables.
 [gitlab.Job](#projen-gitlab-job)|Jobs are the most fundamental element of a .gitlab-ci.yml file.
 [gitlab.KubernetesConfig](#projen-gitlab-kubernetesconfig)|Used to configure the kubernetes deployment for this environment.
-[gitlab.Link](#projen-gitlab-link)|*No description*
-[gitlab.Need](#projen-gitlab-need)|*No description*
-[gitlab.Parallel](#projen-gitlab-parallel)|*No description*
+[gitlab.Link](#projen-gitlab-link)|Link configuration for an asset.
+[gitlab.Need](#projen-gitlab-need)|A jobs in a previous stage whose sole completion is needed to start the current job.
+[gitlab.Parallel](#projen-gitlab-parallel)|Used to run a job multiple times in parallel in a single pipeline.
 [gitlab.Release](#projen-gitlab-release)|Indicates that the job creates a Release.
 [gitlab.Reports](#projen-gitlab-reports)|Reports will be uploaded as artifacts, and often displayed in the Gitlab UI, such as in Merge Requests.
-[gitlab.Retry](#projen-gitlab-retry)|*No description*
-[gitlab.Secret](#projen-gitlab-secret)|Environment variable name.
-[gitlab.Service](#projen-gitlab-service)|*No description*
+[gitlab.Retry](#projen-gitlab-retry)|How many times a job is retried if it fails.
+[gitlab.Secret](#projen-gitlab-secret)|A CI/CD secret.
+[gitlab.Service](#projen-gitlab-service)|Used to specify an additional Docker image to run scripts in.
 [gitlab.Trigger](#projen-gitlab-trigger)|Trigger a multi-project pipeline. Read more: https://docs.gitlab.com/ee/ci/yaml/README.html#simple-trigger-syntax-for-multi-project-pipelines.
-[gitlab.VariableConfig](#projen-gitlab-variableconfig)|*No description*
-[gitlab.VaultConfig](#projen-gitlab-vaultconfig)|*No description*
-[gitlab.Workflow](#projen-gitlab-workflow)|*No description*
-[gitlab.WorkflowRule](#projen-gitlab-workflowrule)|*No description*
+[gitlab.VariableConfig](#projen-gitlab-variableconfig)|Explains what the variable is used for, what the acceptable values are.
+[gitlab.VaultConfig](#projen-gitlab-vaultconfig)|Specification for a secret provided by a HashiCorp Vault.
+[gitlab.Workflow](#projen-gitlab-workflow)|Used to control pipeline behavior.
+[gitlab.WorkflowRule](#projen-gitlab-workflowrule)|Used to control whether or not a whole pipeline is created.
 [java.JavaProjectCommonOptions](#projen-java-javaprojectcommonoptions)|Options for `JavaProject`.
 [java.JavaProjectOptions](#projen-java-javaprojectoptions)|Options for `JavaProject`.
 [java.JunitOptions](#projen-java-junitoptions)|Options for `Junit`.
@@ -5463,7 +5463,7 @@ configureWorkflow(workflow: Workflow): void
 
 ## class GitlabConfiguration 🔹 <a id="projen-gitlab-gitlabconfiguration"></a>
 
-
+A GitLab CI for the main `.gitlab-ci.yml` file.
 
 __Submodule__: gitlab
 
@@ -5511,7 +5511,7 @@ createNestedTemplates(...names: string[]): void
 
 ## class NestedConfiguration 🔹 <a id="projen-gitlab-nestedconfiguration"></a>
 
-
+A GitLab CI for templates that are created and included in the `.gitlab-ci.yml` file.
 
 __Submodule__: gitlab
 
@@ -12313,7 +12313,7 @@ Name | Type | Description
 ## struct Assets 🔹 <a id="projen-gitlab-assets"></a>
 
 
-
+Asset configuration for a release.
 
 
 
@@ -12361,7 +12361,7 @@ Name | Type | Description
 ## struct Engine 🔹 <a id="projen-gitlab-engine"></a>
 
 
-
+The engine configuration for a secret.
 
 
 
@@ -12375,7 +12375,7 @@ Name | Type | Description
 ## struct Environment 🔹 <a id="projen-gitlab-environment"></a>
 
 
-
+The environment that a job deploys to.
 
 
 
@@ -12394,7 +12394,7 @@ Name | Type | Description
 ## struct Filter 🔹 <a id="projen-gitlab-filter"></a>
 
 
-
+Filtering options for when a job will run.
 
 
 
@@ -12427,7 +12427,7 @@ Name | Type | Description
 ## struct Include 🔹 <a id="projen-gitlab-include"></a>
 
 
-
+Used to include external YAML files in your CI/CD configuration.
 
 
 
@@ -12465,7 +12465,7 @@ Name | Type | Description
 ## struct IncludeItem 🔹 <a id="projen-gitlab-includeitem"></a>
 
 
-
+An included YAML file.
 
 
 
@@ -12579,7 +12579,7 @@ Name | Type | Description
 ## struct Link 🔹 <a id="projen-gitlab-link"></a>
 
 
-
+Link configuration for an asset.
 
 
 
@@ -12595,7 +12595,7 @@ Name | Type | Description
 ## struct Need 🔹 <a id="projen-gitlab-need"></a>
 
 
-
+A jobs in a previous stage whose sole completion is needed to start the current job.
 
 
 
@@ -12613,7 +12613,7 @@ Name | Type | Description
 ## struct Parallel 🔹 <a id="projen-gitlab-parallel"></a>
 
 
-
+Used to run a job multiple times in parallel in a single pipeline.
 
 
 
@@ -12673,7 +12673,9 @@ Name | Type | Description
 ## struct Retry 🔹 <a id="projen-gitlab-retry"></a>
 
 
+How many times a job is retried if it fails.
 
+If not defined, defaults to 0 and jobs do not retry.
 
 
 
@@ -12687,7 +12689,7 @@ Name | Type | Description
 ## struct Secret 🔹 <a id="projen-gitlab-secret"></a>
 
 
-Environment variable name.
+A CI/CD secret.
 
 
 
@@ -12700,7 +12702,9 @@ Name | Type | Description
 ## struct Service 🔹 <a id="projen-gitlab-service"></a>
 
 
+Used to specify an additional Docker image to run scripts in.
 
+The service image is linked to the image specified in the @Default image keyword.
 
 
 
@@ -12735,13 +12739,13 @@ Name | Type | Description
 ## struct VariableConfig 🔹 <a id="projen-gitlab-variableconfig"></a>
 
 
-
+Explains what the variable is used for, what the acceptable values are.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**description**?🔹 | <code>string</code> | Explains what the variable is used for, what the acceptable values are.<br/>__*Optional*__
+**description**?🔹 | <code>string</code> | __*Optional*__
 **value**?🔹 | <code>string</code> | __*Optional*__
 
 
@@ -12749,7 +12753,7 @@ Name | Type | Description
 ## struct VaultConfig 🔹 <a id="projen-gitlab-vaultconfig"></a>
 
 
-
+Specification for a secret provided by a HashiCorp Vault.
 
 
 
@@ -12764,7 +12768,7 @@ Name | Type | Description
 ## struct Workflow 🔹 <a id="projen-gitlab-workflow"></a>
 
 
-
+Used to control pipeline behavior.
 
 
 
@@ -12777,7 +12781,7 @@ Name | Type | Description
 ## struct WorkflowRule 🔹 <a id="projen-gitlab-workflowrule"></a>
 
 
-
+Used to control whether or not a whole pipeline is created.
 
 
 
