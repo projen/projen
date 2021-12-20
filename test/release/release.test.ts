@@ -546,11 +546,11 @@ describe('npmDistTag', () => {
     const files = synthSnapshot(project);
     const main = YAML.parse(files['.github/workflows/release.yml']);
     const main3 = YAML.parse(files['.github/workflows/release-main-3.yml']);
-    expect(main.jobs.release_npm.steps[1].env).toStrictEqual({
+    expect(main.jobs.release_npm.steps[2].env).toStrictEqual({
       NPM_DIST_TAG: 'latest',
       NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
     });
-    expect(main3.jobs.release_npm.steps[1].env).toStrictEqual({
+    expect(main3.jobs.release_npm.steps[2].env).toStrictEqual({
       NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
       NPM_DIST_TAG: 'latest-3',
     });
@@ -579,11 +579,11 @@ describe('npmDistTag', () => {
     const files = synthSnapshot(project);
     const main = YAML.parse(files['.github/workflows/release.yml']);
     const main3 = YAML.parse(files['.github/workflows/release-main-3.yml']);
-    expect(main.jobs.release_npm.steps[1].env).toStrictEqual({
+    expect(main.jobs.release_npm.steps[2].env).toStrictEqual({
       NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
       NPM_DIST_TAG: 'main-tag',
     });
-    expect(main3.jobs.release_npm.steps[1].env).toStrictEqual({
+    expect(main3.jobs.release_npm.steps[2].env).toStrictEqual({
       NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
       NPM_DIST_TAG: 'latest-3',
     });
