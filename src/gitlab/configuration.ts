@@ -60,9 +60,9 @@ export class CiConfiguration extends Component {
     this.project = project;
     this.name = name;
     this.path =
-            this.name === 'gitlab-ci'
-              ? '.gitlab-ci.yml'
-              : `ci-templates/${name.toLocaleLowerCase()}.yml`;
+      this.name === 'gitlab-ci'
+        ? '.gitlab-ci.yml'
+        : `.gitlab/ci-templates/${name.toLocaleLowerCase()}.yml`;
     this.file = new YamlFile(this.project, this.path, {
       obj: () => this.renderCI(),
     });
@@ -191,12 +191,12 @@ export class CiConfiguration extends Component {
       default: snakeCaseKeys(this.default),
       // image: snakeCaseKeys(this.image),
       include:
-                this.include.length > 0 ? snakeCaseKeys(this.include) : undefined,
+        this.include.length > 0 ? snakeCaseKeys(this.include) : undefined,
       pages: snakeCaseKeys(this.pages),
       services:
-                this.services.length > 0 ? snakeCaseKeys(this.services) : undefined,
+        this.services.length > 0 ? snakeCaseKeys(this.services) : undefined,
       variables:
-                Object.entries(this.variables).length > 0 ? this.variables : undefined,
+        Object.entries(this.variables).length > 0 ? this.variables : undefined,
       workflow: snakeCaseKeys(this.workflow),
       stages: this.stages.length > 0 ? this.stages : undefined,
       ...snakeCaseKeys(this.jobs),
