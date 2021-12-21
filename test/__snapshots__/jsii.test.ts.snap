@@ -41,8 +41,6 @@ jobs:
         with:
           name: dist
           path: dist
-    container:
-      image: jsii/superchain:1-buster-slim
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -85,6 +83,15 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: Create js artifact
+        run: >-
+          tar -xzvf dist/js/*.tgz
+
+          rm -fr dist/
+
+          jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]\\")
+
+          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target js package/
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -107,6 +114,15 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: Create go artifact
+        run: >-
+          tar -xzvf dist/js/*.tgz
+
+          rm -fr dist/
+
+          jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]\\")
+
+          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target go package/
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
@@ -160,8 +176,6 @@ jobs:
         with:
           name: dist
           path: dist
-    container:
-      image: jsii/superchain:1-buster-slim
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -204,6 +218,15 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: Create js artifact
+        run: >-
+          tar -xzvf dist/js/*.tgz
+
+          rm -fr dist/
+
+          jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]\\")
+
+          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target js package/
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -226,6 +249,15 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: Create go artifact
+        run: >-
+          tar -xzvf dist/js/*.tgz
+
+          rm -fr dist/
+
+          jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]\\")
+
+          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target go package/
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:

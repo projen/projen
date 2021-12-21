@@ -204,6 +204,7 @@ export class Publisher extends Component {
         name: 'github',
         registryName: 'GitHub Releases',
         setupSteps: [], // github cli is installed by default
+        prePublishSteps: options.prePublishSteps ?? [],
         permissions: {
           contents: JobPermission.WRITE,
         },
@@ -238,6 +239,7 @@ export class Publisher extends Component {
       return {
         name: 'npm',
         setupSteps: [], // node 14.x is already installed
+        prePublishSteps: options.prePublishSteps ?? [],
         run: this.jsiiReleaseCommand('jsii-release-npm'),
         registryName: 'npm',
         env: {
@@ -269,6 +271,7 @@ export class Publisher extends Component {
       setupSteps: [
         { uses: 'actions/setup-dotnet@v1', with: { 'dotnet-version': '3.x' } },
       ],
+      prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-nuget'),
       registryName: 'NuGet Gallery',
       workflowEnv: {
@@ -296,6 +299,7 @@ export class Publisher extends Component {
       setupSteps: [
         { uses: 'actions/setup-java@v2', with: { 'distribution': 'temurin', 'java-version': 11 } },
       ],
+      prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-maven'),
       env: {
         MAVEN_ENDPOINT: options.mavenEndpoint,
@@ -327,6 +331,7 @@ export class Publisher extends Component {
       setupSteps: [
         { uses: 'actions/setup-python@v2', with: { 'python-version': 3 } },
       ],
+      prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-pypi'),
       env: {
         TWINE_REPOSITORY_URL: options.twineRegistryUrl,
@@ -346,6 +351,7 @@ export class Publisher extends Component {
     this.addPublishJob((_branch, _branchOptions) => ({
       name: 'golang',
       setupSteps: [], // only requires `git`
+      prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-golang'),
       registryName: 'GitHub Go Module Repository',
       env: {
@@ -408,6 +414,7 @@ export class Publisher extends Component {
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for jsii-release
           },
         },
+        ...opts.prePublishSteps,
         {
           name: 'Release',
           // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
@@ -502,6 +509,25 @@ interface PublishJobOptions {
    * NOTE: node 14.x will always be installed since it is required by jsii-release.
    */
   readonly setupSteps: JobStep[];
+
+  /**
+   * Steps to execute before the release command for preparing the dist/ output.
+   */
+  readonly prePublishSteps: JobStep[];
+}
+
+/**
+ * Common publishing options
+ */
+export interface CommonPublishOptions {
+  /**
+   * Steps to execute before executing the publishing command. These can be used
+   * to prepare the artifact for publishing if neede.
+   *
+   * These steps are executed after `dist/` has been populated with the build
+   * output.
+   */
+  readonly prePublishSteps?: JobStep[];
 }
 
 /**
@@ -512,7 +538,7 @@ export interface JsiiReleaseNpm extends NpmPublishOptions { }
 /**
  * Options for npm release
  */
-export interface NpmPublishOptions {
+export interface NpmPublishOptions extends CommonPublishOptions {
   /**
    * Tags can be used to provide an alias instead of version numbers.
    *
@@ -594,7 +620,7 @@ export interface JsiiReleasePyPi extends PyPiPublishOptions { }
 /**
  * Options for PyPI release
  */
-export interface PyPiPublishOptions {
+export interface PyPiPublishOptions extends CommonPublishOptions {
   /**
    * The registry url to use when releasing packages.
    *
@@ -623,7 +649,7 @@ export interface JsiiReleaseNuget extends NugetPublishOptions { }
 /**
  * Options for NuGet releases
  */
-export interface NugetPublishOptions {
+export interface NugetPublishOptions extends CommonPublishOptions {
   /**
    * GitHub secret which contains the API key for NuGet.
    *
@@ -640,7 +666,7 @@ export interface JsiiReleaseMaven extends MavenPublishOptions { }
 /**
  * Options for Maven releases
  */
-export interface MavenPublishOptions {
+export interface MavenPublishOptions extends CommonPublishOptions {
   /**
    * URL of Nexus repository. if not set, defaults to https://oss.sonatype.org
    *
@@ -726,7 +752,7 @@ export interface JsiiReleaseGo extends GoPublishOptions { }
 /**
  * Options for Go releases.
  */
-export interface GoPublishOptions {
+export interface GoPublishOptions extends CommonPublishOptions {
   /**
    * The name of the secret that includes a personal GitHub access token used to
    * push to the GitHub repository.
@@ -804,7 +830,7 @@ export function isAwsCodeArtifactRegistry(registryUrl: string | undefined) {
 /**
  * Publishing options for GitHub releases.
  */
-export interface GitHubReleasesPublishOptions extends VersionArtifactOptions { }
+export interface GitHubReleasesPublishOptions extends VersionArtifactOptions, CommonPublishOptions { }
 
 /**
  * Publishing options for Git releases

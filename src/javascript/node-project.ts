@@ -53,6 +53,14 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
   readonly buildWorkflow?: boolean;
 
   /**
+   * Should we upload artifacts in build workflows (if this is disabled,
+   * artifacts are only uploaded in release workflows).
+   *
+   * @default false
+   */
+  readonly buildWorkflowUploadArtifacts?: boolean;
+
+  /**
    * Automatically update files modified during builds to pull-request branches. This means
    * that any files synthesized by projen or e.g. test snapshots will always be up-to-date
    * before a PR is merged.
@@ -559,6 +567,7 @@ export class NodeProject extends GitHubProject {
           gitIdentity: this.workflowGitIdentity,
           name: 'build',
           jobId: buildJobId,
+          artifactsDirectory: options.buildWorkflowUploadArtifacts ? (options.artifactsDirectory ?? 'dist') : undefined,
           triggers: {
             pullRequest: { },
           },

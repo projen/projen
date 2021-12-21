@@ -42,8 +42,6 @@ jobs:
         with:
           name: dist
           path: dist
-    container:
-      image: jsii/superchain:1-buster-slim-node12
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -103,6 +101,15 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: Create js artifact
+        run: >-
+          tar -xzvf dist/js/*.tgz
+
+          rm -fr dist/
+
+          jsii_version=$(node -p "JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target js package/
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -144,6 +151,15 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: Create java artifact
+        run: >-
+          tar -xzvf dist/js/*.tgz
+
+          rm -fr dist/
+
+          jsii_version=$(node -p "JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target java package/
       - name: Release
         run: npx -p jsii-release@latest jsii-release-maven
         env:
@@ -188,6 +204,15 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: Create python artifact
+        run: >-
+          tar -xzvf dist/js/*.tgz
+
+          rm -fr dist/
+
+          jsii_version=$(node -p "JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target python package/
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -224,6 +249,15 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: Create go artifact
+        run: >-
+          tar -xzvf dist/js/*.tgz
+
+          rm -fr dist/
+
+          jsii_version=$(node -p "JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target go package/
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:

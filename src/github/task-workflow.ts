@@ -113,11 +113,13 @@ export interface TaskWorkflowOptions {
 export class TaskWorkflow extends GithubWorkflow {
   private readonly github: GitHub;
   public readonly jobId: string;
+  public readonly artifactsDirectory?: string;
 
   constructor(github: GitHub, options: TaskWorkflowOptions) {
     super(github, options.name);
     this.jobId = options.jobId ?? DEFAULT_JOB_ID;
     this.github = github;
+    this.artifactsDirectory = options.artifactsDirectory;
 
     if (options.triggers) {
       if (options.triggers.issueComment) {
@@ -138,7 +140,7 @@ export class TaskWorkflow extends GithubWorkflow {
     const postBuildSteps = options.postBuildSteps ?? [];
     const gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
 
-    if (options.artifactsDirectory) {
+    if (this.artifactsDirectory) {
       postBuildSteps.push({
         name: 'Upload artifact',
         uses: 'actions/upload-artifact@v2.1.1',
@@ -146,8 +148,8 @@ export class TaskWorkflow extends GithubWorkflow {
         // the previous ones have failed (e.g. coverage report, internal logs, etc)
         if: 'always()',
         with: {
-          name: options.artifactsDirectory,
-          path: options.artifactsDirectory,
+          name: this.artifactsDirectory,
+          path: this.artifactsDirectory,
         },
       });
     }

@@ -55,5 +55,104 @@ jobs:
           }}/actions/runs/${{ github.run_id }}/cancel
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    container:
-      image: jsii/superchain:1-buster-slim-node12
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2.1.1
+        if: always()
+        with:
+          name: dist
+          path: dist
+  package-js:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - name: Create js artifact
+        run: >-
+          tar -xzvf dist/js/*.tgz
+
+          rm -fr dist/
+
+          jsii_version=$(node -p "JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target js package/
+  package-java:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 11
+      - name: Create java artifact
+        run: >-
+          tar -xzvf dist/js/*.tgz
+
+          rm -fr dist/
+
+          jsii_version=$(node -p "JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target java package/
+  package-python:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3
+      - name: Create python artifact
+        run: >-
+          tar -xzvf dist/js/*.tgz
+
+          rm -fr dist/
+
+          jsii_version=$(node -p "JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target python package/
+  package-go:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - name: Create go artifact
+        run: >-
+          tar -xzvf dist/js/*.tgz
+
+          rm -fr dist/
+
+          jsii_version=$(node -p "JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target go package/

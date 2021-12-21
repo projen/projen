@@ -207,7 +207,7 @@ export class TypeScriptProject extends NodeProject {
 
     if (options.package ?? true) {
       this.packageTask.exec('mkdir -p dist/js');
-      this.packageTask.exec(`${this.package.packageManager} pack`);
+      this.packageTask.exec('npm pack'); // always use npm here - yarn doesn't add much value
       this.packageTask.exec('mv *.tgz dist/js/');
     }
 

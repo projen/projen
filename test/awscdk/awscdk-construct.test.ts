@@ -176,13 +176,6 @@ describe('workflow container image', () => {
     const buildWorkflow = YAML.parse(snapshot['.github/workflows/build.yml']);
     expect(buildWorkflow.jobs.build.container.image).toStrictEqual('my-custom-image');
   });
-
-  it('determines an image if minNodeVersion is set', () => {
-    const project = new TestProject({ cdkVersion: '2.12.0', minNodeVersion: '16.0.0' });
-    const snapshot = synthSnapshot(project);
-    const buildWorkflow = YAML.parse(snapshot['.github/workflows/build.yml']);
-    expect(buildWorkflow.jobs.build.container.image).toStrictEqual('jsii/superchain:1-buster-slim-node16');
-  });
 });
 
 const defaultOptions = {

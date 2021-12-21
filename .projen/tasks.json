@@ -161,7 +161,13 @@
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "jsii-pacmak"
+          "exec": "mkdir -p dist/js"
+        },
+        {
+          "exec": "npm pack"
+        },
+        {
+          "exec": "mv *.tgz dist/js/"
         }
       ]
     },

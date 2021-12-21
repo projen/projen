@@ -247,6 +247,7 @@ Name|Description
 [python.VenvOptions](#projen-python-venvoptions)|Options for venv.
 [release.BranchOptions](#projen-release-branchoptions)|Options for a release branch.
 [release.CodeArtifactOptions](#projen-release-codeartifactoptions)|*No description*
+[release.CommonPublishOptions](#projen-release-commonpublishoptions)|Common publishing options.
 [release.GitHubReleasesPublishOptions](#projen-release-githubreleasespublishoptions)|Publishing options for GitHub releases.
 [release.GitPublishOptions](#projen-release-gitpublishoptions)|Publishing options for Git releases.
 [release.GoPublishOptions](#projen-release-gopublishoptions)|*No description*
@@ -7464,6 +7465,7 @@ publishToGitHubReleases(options: GitHubReleasesPublishOptions): void
 ```
 
 * **options** (<code>[release.GitHubReleasesPublishOptions](#projen-release-githubreleasespublishoptions)</code>)  Options.
+  * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
   * **changelogFile** (<code>string</code>)  The location of an .md file (relative to `dist/`) that includes the changelog for the release. 
   * **releaseTagFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the release tag. 
   * **versionFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the version number. 
@@ -7480,6 +7482,7 @@ publishToGo(options?: GoPublishOptions): void
 ```
 
 * **options** (<code>[release.GoPublishOptions](#projen-release-gopublishoptions)</code>)  Options.
+  * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
   * **gitBranch** (<code>string</code>)  Branch to push to. __*Default*__: "main"
   * **gitCommitMessage** (<code>string</code>)  The commit message. __*Default*__: "chore(release): $VERSION"
   * **githubRepo** (<code>string</code>)  GitHub repository to push to. __*Default*__: derived from `moduleName`
@@ -7499,6 +7502,7 @@ publishToMaven(options?: MavenPublishOptions): void
 ```
 
 * **options** (<code>[release.MavenPublishOptions](#projen-release-mavenpublishoptions)</code>)  Options.
+  * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
   * **mavenEndpoint** (<code>string</code>)  URL of Nexus repository. __*Default*__: "https://oss.sonatype.org"
   * **mavenGpgPrivateKeyPassphrase** (<code>string</code>)  GitHub secret name which contains the GPG private key or file that includes it. __*Default*__: "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE" or not set when using GitHub Packages
   * **mavenGpgPrivateKeySecret** (<code>string</code>)  GitHub secret name which contains the GPG private key or file that includes it. __*Default*__: "MAVEN_GPG_PRIVATE_KEY" or not set when using GitHub Packages
@@ -7520,6 +7524,7 @@ publishToNpm(options?: NpmPublishOptions): void
 ```
 
 * **options** (<code>[release.NpmPublishOptions](#projen-release-npmpublishoptions)</code>)  Options.
+  * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
   * **codeArtifactOptions** (<code>[release.CodeArtifactOptions](#projen-release-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **distTag** (<code>string</code>)  Tags can be used to provide an alias instead of version numbers. __*Default*__: "latest"
   * **npmTokenSecret** (<code>string</code>)  GitHub secret which contains the NPM token to use when publishing packages. __*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
@@ -7537,6 +7542,7 @@ publishToNuget(options?: NugetPublishOptions): void
 ```
 
 * **options** (<code>[release.NugetPublishOptions](#projen-release-nugetpublishoptions)</code>)  Options.
+  * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
   * **nugetApiKeySecret** (<code>string</code>)  GitHub secret which contains the API key for NuGet. __*Default*__: "NUGET_API_KEY"
 
 
@@ -7551,6 +7557,7 @@ publishToPyPi(options?: PyPiPublishOptions): void
 ```
 
 * **options** (<code>[release.PyPiPublishOptions](#projen-release-pypipublishoptions)</code>)  Options.
+  * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
   * **twinePasswordSecret** (<code>string</code>)  The GitHub secret which contains PyPI password. __*Default*__: "TWINE_PASSWORD"
   * **twineRegistryUrl** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: twine default
   * **twineUsernameSecret** (<code>string</code>)  The GitHub secret which contains PyPI user name. __*Default*__: "TWINE_USERNAME"
@@ -10948,6 +10955,7 @@ Name | Type | Description
 **dotNetNamespace**🔹 | <code>string</code> | <span></span>
 **packageId**🔹 | <code>string</code> | <span></span>
 **nugetApiKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 
 
 
@@ -10967,6 +10975,7 @@ Name | Type | Description
 **gitUserName**?⚠️ | <code>string</code> | The user name to use for the release git commit.<br/>__*Default*__: "github-actions"
 **githubRepo**?⚠️ | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
 **githubTokenSecret**?⚠️ | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 
 
 
@@ -10990,6 +10999,7 @@ Name | Type | Description
 **mavenServerId**?🔹 | <code>string</code> | Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).<br/>__*Default*__: "ossrh" (Maven Central) or "github" when using GitHub Packages
 **mavenStagingProfileId**?🔹 | <code>string</code> | GitHub secret name which contains the Maven Central (sonatype) staging profile ID (e.g. 68a05363083174). Staging profile ID can be found in the URL of the "Releases" staging profile under "Staging Profiles" in https://oss.sonatype.org (e.g. https://oss.sonatype.org/#stagingProfiles;11a33451234521).<br/>__*Default*__: "MAVEN_STAGING_PROFILE_ID" or not set when using GitHub Packages
 **mavenUsername**?🔹 | <code>string</code> | GitHub secret name which contains the Username for maven repository.<br/>__*Default*__: "MAVEN_USERNAME" or the GitHub Actor when using GitHub Packages
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 
 
 
@@ -11152,6 +11162,7 @@ Name | Type | Description
 -----|------|-------------
 **distName**🔹 | <code>string</code> | <span></span>
 **module**🔹 | <code>string</code> | <span></span>
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **twinePasswordSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI password.<br/>__*Default*__: "TWINE_PASSWORD"
 **twineRegistryUrl**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: twine default
 **twineUsernameSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI user name.<br/>__*Default*__: "TWINE_USERNAME"
@@ -13085,6 +13096,19 @@ Name | Type | Description
 
 
 
+## struct CommonPublishOptions 🔹 <a id="projen-release-commonpublishoptions"></a>
+
+
+Common publishing options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+
+
+
 ## struct GitHubReleasesPublishOptions 🔹 <a id="projen-release-githubreleasespublishoptions"></a>
 
 
@@ -13097,6 +13121,7 @@ Name | Type | Description
 **changelogFile**🔹 | <code>string</code> | The location of an .md file (relative to `dist/`) that includes the changelog for the release.
 **releaseTagFile**🔹 | <code>string</code> | The location of a text file (relative to `dist/`) that contains the release tag.
 **versionFile**🔹 | <code>string</code> | The location of a text file (relative to `dist/`) that contains the version number.
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 
 
 
@@ -13133,6 +13158,7 @@ Name | Type | Description
 **gitUserName**?⚠️ | <code>string</code> | The user name to use for the release git commit.<br/>__*Default*__: "github-actions"
 **githubRepo**?⚠️ | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
 **githubTokenSecret**?⚠️ | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
+**prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 
 
 
@@ -13153,6 +13179,7 @@ Name | Type | Description
 **mavenServerId**?⚠️ | <code>string</code> | Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).<br/>__*Default*__: "ossrh" (Maven Central) or "github" when using GitHub Packages
 **mavenStagingProfileId**?⚠️ | <code>string</code> | GitHub secret name which contains the Maven Central (sonatype) staging profile ID (e.g. 68a05363083174). Staging profile ID can be found in the URL of the "Releases" staging profile under "Staging Profiles" in https://oss.sonatype.org (e.g. https://oss.sonatype.org/#stagingProfiles;11a33451234521).<br/>__*Default*__: "MAVEN_STAGING_PROFILE_ID" or not set when using GitHub Packages
 **mavenUsername**?⚠️ | <code>string</code> | GitHub secret name which contains the Username for maven repository.<br/>__*Default*__: "MAVEN_USERNAME" or the GitHub Actor when using GitHub Packages
+**prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 
 
 
@@ -13168,6 +13195,7 @@ Name | Type | Description
 **codeArtifactOptions**?⚠️ | <code>[release.CodeArtifactOptions](#projen-release-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **distTag**?⚠️ | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmTokenSecret**?⚠️ | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
+**prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **registry**?⚠️ | <code>string</code> | The domain name of the npm package registry.<br/>__*Default*__: "registry.npmjs.org"
 
 
@@ -13182,6 +13210,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **nugetApiKeySecret**?⚠️ | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
+**prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 
 
 
@@ -13194,6 +13223,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **twinePasswordSecret**?⚠️ | <code>string</code> | The GitHub secret which contains PyPI password.<br/>__*Default*__: "TWINE_PASSWORD"
 **twineRegistryUrl**?⚠️ | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: twine default
 **twineUsernameSecret**?⚠️ | <code>string</code> | The GitHub secret which contains PyPI user name.<br/>__*Default*__: "TWINE_USERNAME"
@@ -13232,6 +13262,7 @@ Name | Type | Description
 **mavenServerId**?🔹 | <code>string</code> | Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).<br/>__*Default*__: "ossrh" (Maven Central) or "github" when using GitHub Packages
 **mavenStagingProfileId**?🔹 | <code>string</code> | GitHub secret name which contains the Maven Central (sonatype) staging profile ID (e.g. 68a05363083174). Staging profile ID can be found in the URL of the "Releases" staging profile under "Staging Profiles" in https://oss.sonatype.org (e.g. https://oss.sonatype.org/#stagingProfiles;11a33451234521).<br/>__*Default*__: "MAVEN_STAGING_PROFILE_ID" or not set when using GitHub Packages
 **mavenUsername**?🔹 | <code>string</code> | GitHub secret name which contains the Username for maven repository.<br/>__*Default*__: "MAVEN_USERNAME" or the GitHub Actor when using GitHub Packages
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 
 
 
@@ -13247,6 +13278,7 @@ Name | Type | Description
 **codeArtifactOptions**?🔹 | <code>[release.CodeArtifactOptions](#projen-release-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **distTag**?⚠️ | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **registry**?🔹 | <code>string</code> | The domain name of the npm package registry.<br/>__*Default*__: "registry.npmjs.org"
 
 
@@ -13261,6 +13293,7 @@ Options for NuGet releases.
 Name | Type | Description 
 -----|------|-------------
 **nugetApiKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 
 
 
@@ -13293,6 +13326,7 @@ Options for PyPI release.
 
 Name | Type | Description 
 -----|------|-------------
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **twinePasswordSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI password.<br/>__*Default*__: "TWINE_PASSWORD"
 **twineRegistryUrl**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: twine default
 **twineUsernameSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI user name.<br/>__*Default*__: "TWINE_USERNAME"

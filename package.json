@@ -51,10 +51,10 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "all-contributors-cli": "^6.20.0",
-    "eslint": "^8",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.3",
+    "eslint": "^8",
     "jest": "^27.4.4",
     "jest-junit": "^13",
     "jsii": "^1.47.0",
@@ -68,6 +68,7 @@
     "ts-jest": "^27.1.1",
     "typescript": "^3.9.10"
   },
+  "peerDependencies": {},
   "dependencies": {
     "@iarna/toml": "^2.2.5",
     "case": "^1.6.3",
