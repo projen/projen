@@ -1163,6 +1163,23 @@ Array [
         "switch": "build-workflow",
       },
       Object {
+        "default": "false",
+        "docs": "Should we upload artifacts in build workflows (if this is disabled, artifacts are only uploaded in release workflows).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowUploadArtifacts",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowUploadArtifacts",
+        ],
+        "simpleType": "boolean",
+        "switch": "build-workflow-upload-artifacts",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": Object {
@@ -3721,6 +3738,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "false",
+        "docs": "Should we upload artifacts in build workflows (if this is disabled, artifacts are only uploaded in release workflows).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowUploadArtifacts",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowUploadArtifacts",
+        ],
+        "simpleType": "boolean",
+        "switch": "build-workflow-upload-artifacts",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",
@@ -6367,6 +6401,23 @@ Array [
         "switch": "build-workflow",
       },
       Object {
+        "default": "false",
+        "docs": "Should we upload artifacts in build workflows (if this is disabled, artifacts are only uploaded in release workflows).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowUploadArtifacts",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowUploadArtifacts",
+        ],
+        "simpleType": "boolean",
+        "switch": "build-workflow-upload-artifacts",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": Object {
@@ -8741,6 +8792,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "false",
+        "docs": "Should we upload artifacts in build workflows (if this is disabled, artifacts are only uploaded in release workflows).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowUploadArtifacts",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowUploadArtifacts",
+        ],
+        "simpleType": "boolean",
+        "switch": "build-workflow-upload-artifacts",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",
@@ -11301,6 +11369,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "false",
+        "docs": "Should we upload artifacts in build workflows (if this is disabled, artifacts are only uploaded in release workflows).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowUploadArtifacts",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowUploadArtifacts",
+        ],
+        "simpleType": "boolean",
+        "switch": "build-workflow-upload-artifacts",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",
@@ -14484,6 +14569,23 @@ Array [
         "switch": "build-workflow",
       },
       Object {
+        "default": "false",
+        "docs": "Should we upload artifacts in build workflows (if this is disabled, artifacts are only uploaded in release workflows).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowUploadArtifacts",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowUploadArtifacts",
+        ],
+        "simpleType": "boolean",
+        "switch": "build-workflow-upload-artifacts",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": Object {
@@ -16926,6 +17028,23 @@ Array [
         "switch": "build-workflow",
       },
       Object {
+        "default": "false",
+        "docs": "Should we upload artifacts in build workflows (if this is disabled, artifacts are only uploaded in release workflows).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowUploadArtifacts",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowUploadArtifacts",
+        ],
+        "simpleType": "boolean",
+        "switch": "build-workflow-upload-artifacts",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": Object {
@@ -18922,6 +19041,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "false",
+        "docs": "Should we upload artifacts in build workflows (if this is disabled, artifacts are only uploaded in release workflows).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowUploadArtifacts",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowUploadArtifacts",
+        ],
+        "simpleType": "boolean",
+        "switch": "build-workflow-upload-artifacts",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",
@@ -21165,6 +21301,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "false",
+        "docs": "Should we upload artifacts in build workflows (if this is disabled, artifacts are only uploaded in release workflows).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowUploadArtifacts",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowUploadArtifacts",
+        ],
+        "simpleType": "boolean",
+        "switch": "build-workflow-upload-artifacts",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",
@@ -24010,6 +24163,23 @@ Array [
         "switch": "build-workflow",
       },
       Object {
+        "default": "false",
+        "docs": "Should we upload artifacts in build workflows (if this is disabled, artifacts are only uploaded in release workflows).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowUploadArtifacts",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowUploadArtifacts",
+        ],
+        "simpleType": "boolean",
+        "switch": "build-workflow-upload-artifacts",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": Object {
@@ -25994,6 +26164,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "false",
+        "docs": "Should we upload artifacts in build workflows (if this is disabled, artifacts are only uploaded in release workflows).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowUploadArtifacts",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowUploadArtifacts",
+        ],
+        "simpleType": "boolean",
+        "switch": "build-workflow-upload-artifacts",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",
@@ -28244,6 +28431,23 @@ Array [
         "switch": "build-workflow",
       },
       Object {
+        "default": "false",
+        "docs": "Should we upload artifacts in build workflows (if this is disabled, artifacts are only uploaded in release workflows).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowUploadArtifacts",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowUploadArtifacts",
+        ],
+        "simpleType": "boolean",
+        "switch": "build-workflow-upload-artifacts",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": Object {
@@ -30468,6 +30672,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "false",
+        "docs": "Should we upload artifacts in build workflows (if this is disabled, artifacts are only uploaded in release workflows).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "buildWorkflowUploadArtifacts",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowUploadArtifacts",
+        ],
+        "simpleType": "boolean",
+        "switch": "build-workflow-upload-artifacts",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",
