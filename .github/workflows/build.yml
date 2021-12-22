@@ -8,9 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      checks: write
       contents: write
-      actions: write
+    outputs:
+      has_changes: ${{ steps.git_diff.outputs.has_changes }}
     env:
       CI: "true"
     steps:
@@ -42,38 +42,49 @@ jobs:
         name: Commit and push changes (if changed)
         run: 'git add . && git commit -m "chore: self mutation" && git push origin
           HEAD:${{ github.event.pull_request.head.ref }}'
-      - if: steps.git_diff.outputs.has_changes
-        name: Update status check (if changed)
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2.1.1
+        if: always()
+        with:
+          name: build-artifact
+          path: dist
+  update-status:
+    needs:
+      - build
+      - package-js
+      - package-java
+      - package-python
+      - package-go
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      actions: write
+    if: ${{ jobs.build.outputs.has_changes }}
+    steps:
+      - name: Update status check (if changed)
         run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
           }}/check-runs -F name="build" -F head_sha="$(git rev-parse HEAD)" -F
           status="completed" -F conclusion="success"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - if: steps.git_diff.outputs.has_changes
-        name: Cancel workflow (if changed)
+      - name: Cancel workflow (if changed)
         run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
           }}/actions/runs/${{ github.run_id }}/cancel
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2.1.1
-        if: always()
-        with:
-          name: dist
-          path: dist
   package-js:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
       - name: Create js artifact
         run: >-
           tar -xzvf dist/js/*.tgz
@@ -88,14 +99,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions: {}
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
       - uses: actions/setup-java@v2
         with:
           distribution: temurin
@@ -114,14 +125,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions: {}
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
       - uses: actions/setup-python@v2
         with:
           python-version: 3
@@ -139,14 +150,14 @@ jobs:
     runs-on: ubuntu-latest
     permissions: {}
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
       - name: Create go artifact
         run: >-
           tar -xzvf dist/js/*.tgz

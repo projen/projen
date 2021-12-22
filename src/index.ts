@@ -45,3 +45,4 @@ export * as awscdk from './awscdk';
 export * as cdk8s from './cdk8s';
 export * as cdktf from './cdktf';
 export * as cdk from './cdk';
+export * as build from './build';

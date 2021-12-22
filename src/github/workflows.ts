@@ -81,6 +81,15 @@ export class GithubWorkflow extends Component {
   }
 
   /**
+   * Adds a single job to the workflow.
+   * @param id The job name (unique within the workflow)
+   * @param job The job specification
+   */
+  public addJob(id: string, job: workflows.Job): void {
+    this.addJobs({ [id]: job });
+  }
+
+  /**
    * Add jobs to the workflow.
    *
    * @param jobs Jobs to add.

@@ -45,6 +45,11 @@ export interface GitHubOptions {
 }
 
 export class GitHub extends Component {
+  public static of(project: Project): GitHub | undefined {
+    const isGitHub = (c: Component): c is GitHub => c instanceof GitHub;
+    return project.components.find(isGitHub);
+  }
+
   /**
    * The `Mergify` configured on this repository. This is `undefined` if Mergify
    * was not enabled when creating the repository.

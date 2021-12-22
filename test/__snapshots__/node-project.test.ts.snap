@@ -100,6 +100,10 @@ git config user.email \\"github-actions@github.com\\"",
     "run": "npx projen build",
   },
   Object {
+    "name": "Anti-tamper check",
+    "run": "git diff --ignore-space-at-eol --exit-code",
+  },
+  Object {
     "id": "git_diff",
     "name": "Check for changes",
     "run": "git diff --exit-code || echo \\"::set-output name=has_changes::true\\"",
@@ -108,26 +112,6 @@ git config user.email \\"github-actions@github.com\\"",
     "if": "steps.git_diff.outputs.has_changes",
     "name": "Commit and push changes (if changed)",
     "run": "git add . && git commit -m \\"chore: self mutation\\" && git push origin HEAD:\${{ github.event.pull_request.head.ref }}",
-  },
-  Object {
-    "env": Object {
-      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
-    },
-    "if": "steps.git_diff.outputs.has_changes",
-    "name": "Update status check (if changed)",
-    "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/check-runs -F name=\\"build\\" -F head_sha=\\"$(git rev-parse HEAD)\\" -F status=\\"completed\\" -F conclusion=\\"success\\"",
-  },
-  Object {
-    "env": Object {
-      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
-    },
-    "if": "steps.git_diff.outputs.has_changes",
-    "name": "Cancel workflow (if changed)",
-    "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/actions/runs/\${{ github.run_id }}/cancel",
-  },
-  Object {
-    "name": "Anti-tamper check",
-    "run": "git diff --ignore-space-at-eol --exit-code",
   },
 ]
 `;
@@ -164,22 +148,6 @@ git config user.email \\"github-actions@github.com\\"",
     "if": "steps.git_diff.outputs.has_changes",
     "name": "Commit and push changes (if changed)",
     "run": "git add . && git commit -m \\"chore: self mutation\\" && git push origin HEAD:\${{ github.event.pull_request.head.ref }}",
-  },
-  Object {
-    "env": Object {
-      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
-    },
-    "if": "steps.git_diff.outputs.has_changes",
-    "name": "Update status check (if changed)",
-    "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/check-runs -F name=\\"build\\" -F head_sha=\\"$(git rev-parse HEAD)\\" -F status=\\"completed\\" -F conclusion=\\"success\\"",
-  },
-  Object {
-    "env": Object {
-      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
-    },
-    "if": "steps.git_diff.outputs.has_changes",
-    "name": "Cancel workflow (if changed)",
-    "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/actions/runs/\${{ github.run_id }}/cancel",
   },
 ]
 `;

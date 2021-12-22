@@ -185,7 +185,7 @@ export class JsiiProject extends TypeScriptProject {
     const targets: Record<string, any> = {};
 
     const jsii: any = {
-      outdir: this.buildWorkflow?.artifactsDirectory ?? 'dist',
+      outdir: this.artifactsDirectory,
       targets,
       tsc: {
         outDir: libdir,
@@ -303,32 +303,21 @@ export class JsiiProject extends TypeScriptProject {
   }
 
   private addPackJobToBuild(language: JsiiPacmakTarget, setupSteps: JobStep[]) {
-    if (!this.buildWorkflow || !this.buildWorkflowJobId) {
+    if (!this.buildWorkflow) {
       return;
     }
 
-    this.buildWorkflow.addJobs({
-      [`package-${language}`]: {
-        runsOn: ['ubuntu-latest'],
-        permissions: {},
-        needs: [this.buildWorkflowJobId],
-        steps: [
-          {
-            uses: 'actions/setup-node@v2',
-            with: { 'node-version': 14 },
-          },
-          {
-            name: 'Download build artifacts',
-            uses: 'actions/download-artifact@v2',
-            with: {
-              name: this.buildWorkflow.artifactsDirectory,
-              path: this.buildWorkflow.artifactsDirectory,
-            },
-          },
-          ...setupSteps,
-          ...renderJsiiPacmakSteps(language),
-        ],
-      },
+    this.buildWorkflow.addPostBuildJob(`package-${language}`, {
+      runsOn: ['ubuntu-latest'],
+      permissions: {},
+      steps: [
+        {
+          uses: 'actions/setup-node@v2',
+          with: { 'node-version': 14 },
+        },
+        ...setupSteps,
+        ...renderJsiiPacmakSteps(language),
+      ],
     });
 
   }

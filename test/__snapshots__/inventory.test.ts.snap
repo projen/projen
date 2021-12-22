@@ -939,7 +939,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -947,7 +947,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -3501,7 +3501,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -3509,7 +3509,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -6194,7 +6194,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -6202,7 +6202,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -8555,7 +8555,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -8563,7 +8563,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -11132,7 +11132,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -11140,7 +11140,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -14330,7 +14330,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -14338,7 +14338,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -16804,7 +16804,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -16812,7 +16812,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -18819,7 +18819,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -18827,7 +18827,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -21096,7 +21096,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -21104,7 +21104,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -23956,7 +23956,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -23964,7 +23964,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -25959,7 +25959,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -25967,7 +25967,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -28224,7 +28224,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -28232,7 +28232,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -30467,7 +30467,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -30475,7 +30475,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
