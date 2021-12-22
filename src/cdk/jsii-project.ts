@@ -280,7 +280,9 @@ export class JsiiProject extends TypeScriptProject {
         ...golang,
       });
 
-      this.addPackJobToBuild('go', []);
+      this.addPackJobToBuild('go', [
+        { uses: 'actions/setup-go@v2', with: { 'go-version': '^1.16.0' } },
+      ]);
     }
 
     this.addDevDeps(
