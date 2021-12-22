@@ -22,6 +22,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
       - name: Setup Node.js
@@ -101,15 +102,16 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/
       - name: Create js artifact
         run: >-
-          tar -xzvf dist/js/*.tgz
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
 
-          rm -fr dist/
-
-          jsii_version=$(node -p "JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]")
-
-          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target js package/
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -151,15 +153,16 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/
       - name: Create java artifact
         run: >-
-          tar -xzvf dist/js/*.tgz
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
 
-          rm -fr dist/
-
-          jsii_version=$(node -p "JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]")
-
-          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target java package/
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java
       - name: Release
         run: npx -p jsii-release@latest jsii-release-maven
         env:
@@ -204,15 +207,16 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/
       - name: Create python artifact
         run: >-
-          tar -xzvf dist/js/*.tgz
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
 
-          rm -fr dist/
-
-          jsii_version=$(node -p "JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]")
-
-          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target python package/
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -249,15 +253,16 @@ jobs:
         with:
           name: dist
           path: dist
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/
       - name: Create go artifact
         run: >-
-          tar -xzvf dist/js/*.tgz
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
 
-          rm -fr dist/
-
-          jsii_version=$(node -p "JSON.parse(fs.readFileSync('package/.jsii')).jsiiVersion.split(' ')[0]")
-
-          npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target go package/
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target go
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:

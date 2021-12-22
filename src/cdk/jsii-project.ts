@@ -351,12 +351,17 @@ type JsiiPacmakTarget = 'js' | 'go' | 'java' | 'python' | 'dotnet';
 function renderJsiiPacmakSteps(target: JsiiPacmakTarget): JobStep[] {
   return ([
     {
+      name: 'Extract npm tarball',
+      run: [
+        'tar -xzf dist/js/*.tgz --strip-components=1',
+        'rm -fr dist/',
+      ].join('\n'),
+    },
+    {
       name: `Create ${target} artifact`,
       run: [
-        'tar -xzvf dist/js/*.tgz',
-        'rm -fr dist/',
-        'jsii_version=$(node -p "JSON.parse(fs.readFileSync(\'package/.jsii\')).jsiiVersion.split(\' \')[0]")',
-        `npx jsii-pacmak@$jsii_version -vvvv --outdir dist --target ${target} package/`,
+        'jsii_version=$(node -p "JSON.parse(fs.readFileSync(\'.jsii\')).jsiiVersion.split(\' \')[0]")',
+        `npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target ${target}`,
       ].join('\n'),
     },
   ]);

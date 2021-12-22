@@ -20,7 +20,8 @@ Object {
     },
     Object {
       "name": "Set git identity",
-      "run": "git config user.name \\"github-actions\\"
+      "run": "git config --global init.defaultBranch main
+git config user.name \\"github-actions\\"
 git config user.email \\"github-actions@github.com\\"",
     },
     Object {
@@ -84,7 +85,8 @@ Array [
   },
   Object {
     "name": "Set git identity",
-    "run": "git config user.name \\"github-actions\\"
+    "run": "git config --global init.defaultBranch main
+git config user.name \\"github-actions\\"
 git config user.email \\"github-actions@github.com\\"",
   },
   Object {
@@ -128,7 +130,8 @@ Array [
   },
   Object {
     "name": "Set git identity",
-    "run": "git config user.name \\"github-actions\\"
+    "run": "git config --global init.defaultBranch main
+git config user.name \\"github-actions\\"
 git config user.email \\"github-actions@github.com\\"",
   },
   Object {
