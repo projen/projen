@@ -112,7 +112,7 @@ git config user.email \\"github-actions@github.com\\"",
   git add .
   git commit -m \\"chore: self mutation\\"
   git push origin HEAD:\${{ github.event.pull_request.head.ref }}
-  echo \\"::set-output name=self_mutation_commit::$(git rev-parse HEAD)
+  echo \\"::set-output name=self_mutation_commit::$(git rev-parse HEAD)\\"
 fi",
   },
 ]
@@ -149,7 +149,7 @@ git config user.email \\"github-actions@github.com\\"",
   git add .
   git commit -m \\"chore: self mutation\\"
   git push origin HEAD:\${{ github.event.pull_request.head.ref }}
-  echo \\"::set-output name=self_mutation_commit::$(git rev-parse HEAD)
+  echo \\"::set-output name=self_mutation_commit::$(git rev-parse HEAD)\\"
 fi",
   },
 ]
