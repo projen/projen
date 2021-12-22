@@ -132,6 +132,53 @@ export interface Job {
    */
   readonly services?: Record<string, ContainerOptions>;
 
+  /**
+   * Tools required for this job. Traslates into `actions/setup-xxx` steps at
+   * the beginning of the job.
+   */
+  readonly tools?: Tools;
+}
+
+/**
+ * Supported tools.
+ */
+export interface Tools {
+  /**
+   * Setup java.
+   * @default - not installed
+   */
+  readonly java?: ToolRequirement;
+
+  /**
+   * Setup python.
+   * @default - not installed
+   */
+  readonly python?: ToolRequirement;
+
+  /**
+   * Setup golang.
+   * @default - not installed
+   */
+  readonly go?: ToolRequirement;
+
+  /**
+   * Setup node.js
+   * @default - not installed
+   */
+  readonly node?: ToolRequirement;
+
+  /**
+   * Setup .NET Core
+   * @default - not installed
+   */
+  readonly dotnet?: ToolRequirement;
+}
+
+/**
+ * Version requirement for tools.
+ */
+export interface ToolRequirement {
+  readonly version: string;
 }
 
 /**

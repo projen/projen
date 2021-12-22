@@ -1,6 +1,7 @@
+import { JSII_TOOLCHAIN } from '../cdk/consts';
 import { Component } from '../component';
 import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
-import { Job, JobPermission, JobPermissions, JobStep } from '../github/workflows-model';
+import { Job, JobPermission, JobPermissions, JobStep, Tools } from '../github/workflows-model';
 import { defaultNpmToken } from '../javascript/node-package';
 import { Project } from '../project';
 import { BranchOptions } from './release';
@@ -205,6 +206,7 @@ export class Publisher extends Component {
         registryName: 'GitHub Releases',
         setupSteps: [], // github cli is installed by default
         prePublishSteps: options.prePublishSteps ?? [],
+        tools: options.publishTools,
         permissions: {
           contents: JobPermission.WRITE,
         },
@@ -238,7 +240,7 @@ export class Publisher extends Component {
 
       return {
         name: 'npm',
-        setupSteps: [], // node 14.x is already installed
+        setupSteps: JSII_TOOLCHAIN.js,
         prePublishSteps: options.prePublishSteps ?? [],
         run: this.jsiiReleaseCommand('jsii-release-npm'),
         registryName: 'npm',
@@ -296,9 +298,7 @@ export class Publisher extends Component {
     this.addPublishJob((_branch, _branchOptions) => ({
       name: 'maven',
       registryName: 'Maven Central',
-      setupSteps: [
-        { uses: 'actions/setup-java@v2', with: { 'distribution': 'temurin', 'java-version': 11 } },
-      ],
+      setupSteps: JSII_TOOLCHAIN.java,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-maven'),
       env: {
@@ -328,9 +328,7 @@ export class Publisher extends Component {
     this.addPublishJob((_branch, _branchOptions) => ({
       name: 'pypi',
       registryName: 'PyPI',
-      setupSteps: [
-        { uses: 'actions/setup-python@v2', with: { 'python-version': 3 } },
-      ],
+      setupSteps: JSII_TOOLCHAIN.python,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-pypi'),
       env: {
@@ -350,7 +348,7 @@ export class Publisher extends Component {
   public publishToGo(options: GoPublishOptions = {}) {
     this.addPublishJob((_branch, _branchOptions) => ({
       name: 'golang',
-      setupSteps: [], // only requires `git`
+      setupSteps: JSII_TOOLCHAIN.go,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-golang'),
       registryName: 'GitHub Go Module Repository',
@@ -404,8 +402,6 @@ export class Publisher extends Component {
       }
 
       const steps: JobStep[] = [
-        { uses: 'actions/setup-node@v2', with: { 'node-version': 14 } }, // jsii-release requires node, so always set that up
-        ...opts.setupSteps,
         {
           name: 'Download build artifacts',
           uses: 'actions/download-artifact@v2',
@@ -452,6 +448,10 @@ export class Publisher extends Component {
 
       return {
         [jobname]: {
+          tools: {
+            node: { version: '14.x' },
+            ...opts.tools,
+          },
           name: `Publish to ${opts.registryName}`,
           permissions: perms,
           if: this.condition,
@@ -504,16 +504,15 @@ interface PublishJobOptions {
   readonly workflowEnv?: { [name: string]: string | undefined };
 
   /**
-   * The GitHub action to execute in order to setup the environment.
-   *
-   * NOTE: node 14.x will always be installed since it is required by jsii-release.
-   */
-  readonly setupSteps: JobStep[];
-
-  /**
    * Steps to execute before the release command for preparing the dist/ output.
    */
   readonly prePublishSteps: JobStep[];
+
+  /**
+   * Tools setup for the workflow.
+   * @default - no tools are installed
+   */
+  readonly tools?: Tools;
 }
 
 /**
@@ -528,6 +527,12 @@ export interface CommonPublishOptions {
    * output.
    */
   readonly prePublishSteps?: JobStep[];
+
+  /**
+   * Additional tools to install in the publishing job.
+   * @default - no additional tools are installed
+   */
+  readonly publishTools?: Tools;
 }
 
 /**
