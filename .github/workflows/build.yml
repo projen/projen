@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: write
     outputs:
-      has_changes: ${{ steps.git_diff.outputs.has_changes }}
+      self_mutation_commit: ${{ steps.self_mutation.outputs.self_mutation_commit }}
     env:
       CI: "true"
     steps:
@@ -36,13 +36,15 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           directory: coverage
-      - name: Check for changes
-        id: git_diff
-        run: git diff --exit-code || echo "::set-output name=has_changes::true"
-      - if: steps.git_diff.outputs.has_changes
-        name: Commit and push changes (if changed)
-        run: 'git add . && git commit -m "chore: self mutation" && git push origin
-          HEAD:${{ github.event.pull_request.head.ref }}'
+      - name: Self mutation
+        id: self_mutation
+        run: |-
+          if ! git diff --exit-code; then
+            git add .
+            git commit -m "chore: self mutation"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+            echo "::set-output name=self_mutation_commit::$(git rev-parse HEAD)
+          fi
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
         if: always()
@@ -60,12 +62,13 @@ jobs:
     permissions:
       checks: write
       actions: write
-    if: ${{ needs.build.outputs.has_changes }}
+    if: ${{ needs.build.outputs.self_mutation_commit }}
     steps:
       - name: Update status check (if changed)
         run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
-          }}/check-runs -F name="build" -F head_sha="$(git rev-parse HEAD)" -F
-          status="completed" -F conclusion="success"
+          }}/check-runs -F name="build" -F head_sha="${{
+          needs.build.outputs.self_mutation_commit }}" -F status="completed" -F
+          conclusion="success"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Cancel workflow (if changed)

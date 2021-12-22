@@ -8,8 +8,8 @@ import { Project } from '../project';
 const BRANCH_REF = '${{ github.event.pull_request.head.ref }}';
 const REPO_REF = '${{ github.event.pull_request.head.repo.full_name }}';
 const PRIMARY_JOB_ID = 'build';
-const GIT_DIFF_STEP = 'git_diff';
-const HAS_CHANGES_OUTPUT_NAME = 'has_changes';
+const SELF_MUTATION_STEP = 'self_mutation';
+const SELF_MUTATION_COMMIT = 'self_mutation_commit';
 
 export interface BuildWorkflowOptions {
   /**
@@ -132,9 +132,9 @@ export class BuildWorkflow extends Component {
         contents: JobPermission.WRITE,
       },
       outputs: {
-        [HAS_CHANGES_OUTPUT_NAME]: {
-          stepId: GIT_DIFF_STEP,
-          outputName: HAS_CHANGES_OUTPUT_NAME,
+        [SELF_MUTATION_COMMIT]: {
+          stepId: SELF_MUTATION_STEP,
+          outputName: SELF_MUTATION_COMMIT,
         },
       },
       steps: (() => this.renderSteps()) as any,
@@ -151,7 +151,7 @@ export class BuildWorkflow extends Component {
         actions: JobPermission.WRITE,
       },
       needs: (() => this._buildJobIds) as any, // wait for all build jobs to finish
-      if: `\${{ needs.${this.primaryJobId}.outputs.${HAS_CHANGES_OUTPUT_NAME} }}`,
+      if: `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_COMMIT} }}`,
       steps: [
       // if we pushed changes, we need to manually update the status check so
       // that the PR will be green (we won't get here for forks with updates
@@ -163,7 +163,7 @@ export class BuildWorkflow extends Component {
             '-X POST',
             `/repos/${REPO_REF}/check-runs`,
             `-F name="${PRIMARY_JOB_ID}"`,
-            '-F head_sha="$(git rev-parse HEAD)"',
+            `-F head_sha="\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_COMMIT} }}"`,
             '-F status="completed"',
             '-F conclusion="success"',
           ].join(' '),
@@ -280,21 +280,17 @@ export class BuildWorkflow extends Component {
     steps.push(...this.postBuildSteps);
     steps.push(...this.antitamperSteps);
 
-    // use "git diff --exit code" to check if there were changes in the repo
-    // and create a step output that will be used in subsequent steps.
     steps.push({
-      name: 'Check for changes',
-      id: GIT_DIFF_STEP,
-      run: `git diff --exit-code || echo "::set-output name=${HAS_CHANGES_OUTPUT_NAME}::true"`,
-    });
-
-    // only if we had changes, commit them and push to the repo note that for
-    // forks, this will fail (because the workflow doesn't have permissions.
-    // this indicates to users that they need to update their branch manually.
-    steps.push({
-      if: `steps.${GIT_DIFF_STEP}.outputs.${HAS_CHANGES_OUTPUT_NAME}`,
-      name: 'Commit and push changes (if changed)',
-      run: `git add . && git commit -m "chore: self mutation" && git push origin HEAD:${BRANCH_REF}`,
+      name: 'Self mutation',
+      id: SELF_MUTATION_STEP,
+      run: [
+        'if ! git diff --exit-code; then',
+        '  git add .',
+        '  git commit -m "chore: self mutation"',
+        `  git push origin HEAD:${BRANCH_REF}`,
+        `  echo "::set-output name=${SELF_MUTATION_COMMIT}::$(git rev-parse HEAD)`,
+        'fi',
+      ].join('\n'),
     });
 
     if (this.uploadArtitactSteps) {
