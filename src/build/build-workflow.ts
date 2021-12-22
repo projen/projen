@@ -151,7 +151,7 @@ export class BuildWorkflow extends Component {
         actions: JobPermission.WRITE,
       },
       needs: (() => this._buildJobIds) as any, // wait for all build jobs to finish
-      if: `\${{ jobs.${this.primaryJobId}.outputs.${HAS_CHANGES_OUTPUT_NAME} }}`,
+      if: `\${{ needs.${this.primaryJobId}.outputs.${HAS_CHANGES_OUTPUT_NAME} }}`,
       steps: [
       // if we pushed changes, we need to manually update the status check so
       // that the PR will be green (we won't get here for forks with updates

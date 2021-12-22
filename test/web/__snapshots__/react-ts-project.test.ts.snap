@@ -67,7 +67,7 @@ jobs:
     permissions:
       checks: write
       actions: write
-    if: \${{ jobs.build.outputs.has_changes }}
+    if: \${{ needs.build.outputs.has_changes }}
     steps:
       - name: Update status check (if changed)
         run: gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name
