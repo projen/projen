@@ -288,7 +288,7 @@ export class BuildWorkflow extends Component {
         '  git add .',
         '  git commit -m "chore: self mutation"',
         `  git push origin HEAD:${BRANCH_REF}`,
-        `  echo "::set-output name=${SELF_MUTATION_COMMIT}::$(git rev-parse HEAD)`,
+        `  echo "::set-output name=${SELF_MUTATION_COMMIT}::$(git rev-parse HEAD)"`,
         'fi',
       ].join('\n'),
     });
