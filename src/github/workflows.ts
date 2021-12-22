@@ -1,8 +1,8 @@
 import { snake } from 'case';
+import { resolve } from '../_resolve';
 import { Component } from '../component';
 import { kebabCaseKeys } from '../util';
 import { YamlFile } from '../yaml';
-import { resolve } from '../_resolve';
 import { GitHub } from './github';
 
 import * as workflows from './workflows-model';
