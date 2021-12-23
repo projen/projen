@@ -215,7 +215,7 @@ export class Publisher extends Component {
         name: 'github',
         registryName: 'GitHub Releases',
         prePublishSteps: options.prePublishSteps ?? [],
-        tools: options.publishTools,
+        publishTools: options.publishTools,
         permissions: {
           contents: JobPermission.WRITE,
         },
@@ -249,7 +249,7 @@ export class Publisher extends Component {
 
       return {
         name: 'npm',
-        tools: JSII_TOOLCHAIN.js,
+        publishTools: JSII_TOOLCHAIN.js,
         prePublishSteps: options.prePublishSteps ?? [],
         run: this.jsiiReleaseCommand('jsii-release-npm'),
         registryName: 'npm',
@@ -279,7 +279,7 @@ export class Publisher extends Component {
   public publishToNuget(options: NugetPublishOptions = {}) {
     this.addPublishJob((_branch, _branchOptions): PublishJobOptions => ({
       name: 'nuget',
-      tools: JSII_TOOLCHAIN.dotnet,
+      publishTools: JSII_TOOLCHAIN.dotnet,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-nuget'),
       registryName: 'NuGet Gallery',
@@ -305,7 +305,7 @@ export class Publisher extends Component {
     this.addPublishJob((_branch, _branchOptions): PublishJobOptions => ({
       name: 'maven',
       registryName: 'Maven Central',
-      tools: JSII_TOOLCHAIN.java,
+      publishTools: JSII_TOOLCHAIN.java,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-maven'),
       env: {
@@ -335,7 +335,7 @@ export class Publisher extends Component {
     this.addPublishJob((_branch, _branchOptions): PublishJobOptions => ({
       name: 'pypi',
       registryName: 'PyPI',
-      tools: JSII_TOOLCHAIN.python,
+      publishTools: JSII_TOOLCHAIN.python,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-pypi'),
       env: {
@@ -355,7 +355,7 @@ export class Publisher extends Component {
   public publishToGo(options: GoPublishOptions = {}) {
     this.addPublishJob((_branch, _branchOptions): PublishJobOptions => ({
       name: 'golang',
-      tools: JSII_TOOLCHAIN.go,
+      publishTools: JSII_TOOLCHAIN.go,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-golang'),
       registryName: 'GitHub Go Module Repository',
@@ -458,7 +458,7 @@ export class Publisher extends Component {
         [jobname]: {
           tools: {
             node: { version: '14.x' },
-            ...opts.tools,
+            ...opts.publishTools,
           },
           name: `Publish to ${opts.registryName}`,
           permissions: perms,
@@ -520,7 +520,7 @@ interface PublishJobOptions {
    * Tools setup for the workflow.
    * @default - no tools are installed
    */
-  readonly tools?: Tools;
+  readonly publishTools?: Tools;
 }
 
 /**
