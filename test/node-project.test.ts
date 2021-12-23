@@ -346,7 +346,11 @@ describe('deps upgrade', () => {
     // we expect the default auto-approve label to be applied
     expect(upgrade.jobs.pr.steps[1]).toStrictEqual({
       name: 'Set git identity',
-      run: 'git config user.name "hey"\ngit config user.email "there@foo.com"',
+      run: [
+        'git config --global init.defaultBranch main',
+        'git config user.name "hey"',
+        'git config user.email "there@foo.com"',
+      ].join('\n'),
     });
   });
 
@@ -741,7 +745,11 @@ test('workflowGitIdentity can be used to customize the git identity used in buil
   const buildWorkflow = yaml.parse(output['.github/workflows/build.yml']);
   expect(buildWorkflow.jobs.build.steps[1]).toStrictEqual({
     name: 'Set git identity',
-    run: 'git config user.name "heya"\ngit config user.email "there@z.com"',
+    run: [
+      'git config --global init.defaultBranch main',
+      'git config user.name "heya"',
+      'git config user.email "there@z.com"',
+    ].join('\n'),
   });
 });
 

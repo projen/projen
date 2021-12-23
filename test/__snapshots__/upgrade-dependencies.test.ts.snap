@@ -23,6 +23,7 @@ jobs:
           ref: main
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
@@ -57,6 +58,7 @@ jobs:
           ref: main
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -141,6 +143,7 @@ jobs:
           ref: branch1
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
@@ -175,6 +178,7 @@ jobs:
           ref: branch1
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -259,6 +263,7 @@ jobs:
           ref: branch2
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
@@ -293,6 +298,7 @@ jobs:
           ref: branch2
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -377,6 +383,7 @@ jobs:
           ref: branch1
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
@@ -411,6 +418,7 @@ jobs:
           ref: branch1
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -495,6 +503,7 @@ jobs:
           ref: branch2
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
@@ -529,6 +538,7 @@ jobs:
           ref: branch2
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -613,6 +623,7 @@ jobs:
           ref: main
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
@@ -647,6 +658,7 @@ jobs:
           ref: main
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -731,6 +743,7 @@ jobs:
           ref: branch1
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
@@ -765,6 +778,7 @@ jobs:
           ref: branch1
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -849,6 +863,7 @@ jobs:
           ref: branch2
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
@@ -883,6 +898,7 @@ jobs:
           ref: branch2
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -967,6 +983,7 @@ jobs:
           ref: main
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
@@ -1001,6 +1018,7 @@ jobs:
           ref: main
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -1085,6 +1103,7 @@ jobs:
           ref: main
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
@@ -1119,6 +1138,7 @@ jobs:
           ref: main
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch

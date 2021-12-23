@@ -166,6 +166,7 @@ test('git identity can be customized', () => {
   expect(upgrade.jobs.upgrade.steps[1]).toEqual({
     name: 'Set git identity',
     run: [
+      'git config --global init.defaultBranch main',
       'git config user.name \"Foo Bar\"',
       'git config user.email \"foo@bar.com\"',
     ].join('\n'),

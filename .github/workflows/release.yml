@@ -22,6 +22,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
       - name: Setup Node.js
@@ -42,8 +43,6 @@ jobs:
         with:
           name: dist
           path: dist
-    container:
-      image: jsii/superchain:1-buster-slim-node12
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -55,18 +54,18 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
           name: dist
           path: dist
       - name: Release
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
-          $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
-          --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode
-          -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then
-          cat $errout; exit $exitcode; fi
+        run: 'echo "DRY RUN: errout=$(mktemp); gh release create $(cat
+          dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t
+          $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true;
+          exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name
+          already exists" $errout; then cat $errout; exit $exitcode; fi"'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
@@ -97,14 +96,24 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
           name: dist
           path: dist
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/*.tgz --strip-components=1
+          rm -fr dist/
+      - name: Create js artifact
+        run: >-
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-npm
+        run: 'echo "DRY RUN: npx -p jsii-release@latest jsii-release-npm"'
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
@@ -132,20 +141,30 @@ jobs:
       issues: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
       - uses: actions/setup-java@v2
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 11.x
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
           name: dist
           path: dist
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/*.tgz --strip-components=1
+          rm -fr dist/
+      - name: Create java artifact
+        run: >-
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-maven
+        run: 'echo "DRY RUN: npx -p jsii-release@latest jsii-release-maven"'
         env:
           MAVEN_ENDPOINT: https://s01.oss.sonatype.org
           MAVEN_GPG_PRIVATE_KEY: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
@@ -179,17 +198,27 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - uses: actions/setup-python@v2
         with:
-          python-version: 3
+          python-version: 3.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
           name: dist
           path: dist
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/*.tgz --strip-components=1
+          rm -fr dist/
+      - name: Create python artifact
+        run: >-
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-pypi
+        run: 'echo "DRY RUN: npx -p jsii-release@latest jsii-release-pypi"'
         env:
           TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
@@ -218,14 +247,27 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ^1.16.0
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
           name: dist
           path: dist
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/*.tgz --strip-components=1
+          rm -fr dist/
+      - name: Create go artifact
+        run: >-
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target go
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-golang
+        run: 'echo "DRY RUN: npx -p jsii-release@latest jsii-release-golang"'
         env:
           GIT_USER_NAME: github-actions
           GIT_USER_EMAIL: github-actions@github.com

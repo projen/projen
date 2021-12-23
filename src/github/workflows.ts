@@ -1,4 +1,5 @@
 import { snake } from 'case';
+import { resolve } from '../_resolve';
 import { Component } from '../component';
 import { kebabCaseKeys } from '../util';
 import { YamlFile } from '../yaml';
@@ -81,6 +82,15 @@ export class GithubWorkflow extends Component {
   }
 
   /**
+   * Adds a single job to the workflow.
+   * @param id The job name (unique within the workflow)
+   * @param job The job specification
+   */
+  public addJob(id: string, job: workflows.Job): void {
+    this.addJobs({ [id]: job });
+  }
+
+  /**
    * Add jobs to the workflow.
    *
    * @param jobs Jobs to add.
@@ -145,6 +155,15 @@ function renderJobs(jobs: Record<string, workflows.Job>) {
 
   /** @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions */
   function renderJob(job: workflows.Job) {
+    const steps = new Array<workflows.JobStep>();
+
+    if (job.tools) {
+      steps.push(...setupTools(job.tools));
+    }
+
+    const userDefinedSteps = kebabCaseKeys(resolve(job.steps), false);
+    steps.push(...userDefinedSteps);
+
     return {
       'name': job.name,
       'needs': arrayOrScalar(job.needs),
@@ -156,7 +175,7 @@ function renderJobs(jobs: Record<string, workflows.Job>) {
       'env': job.env,
       'defaults': kebabCaseKeys(job.defaults),
       'if': job.if,
-      'steps': kebabCaseKeys(job.steps, false),
+      'steps': steps,
       'timeout-minutes': job.timeoutMinutes,
       'strategy': renderJobStrategy(job.strategy),
       'continue-on-error': job.continueOnError,
@@ -221,4 +240,30 @@ export interface IJobProvider {
    * Generates a collection of named GitHub workflow jobs.
    */
   renderJobs(): Record<string, workflows.Job>;
+}
+
+function setupTools(tools: workflows.Tools) {
+  const steps: workflows.JobStep[] = [];
+
+  if (tools.java) {
+    steps.push({ uses: 'actions/setup-java@v2', with: { 'distribution': 'temurin', 'java-version': tools.java.version } });
+  }
+
+  if (tools.node) {
+    steps.push({ uses: 'actions/setup-node@v2', with: { 'node-version': tools.node.version } });
+  }
+
+  if (tools.python) {
+    steps.push({ uses: 'actions/setup-python@v2', with: { 'python-version': tools.python.version } });
+  }
+
+  if (tools.go) {
+    steps.push({ uses: 'actions/setup-go@v2', with: { 'go-version': tools.go.version } });
+  }
+
+  if (tools.dotnet) {
+    steps.push({ uses: 'actions/setup-dotnet@v1', with: { 'dotnet-version': tools.dotnet.version } });
+  }
+
+  return steps;
 }

@@ -18,6 +18,7 @@ export function setGitIdentityStep(id: GitIdentity): workflow.JobStep {
   return {
     name: 'Set git identity',
     run: [
+      'git config --global init.defaultBranch main',
       `git config user.name "${id.name}"`,
       `git config user.email "${id.email}"`,
     ].join('\n'),

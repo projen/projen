@@ -1,7 +1,8 @@
+import { BuildWorkflow } from '../build';
 import { PROJEN_DIR, PROJEN_RC } from '../common';
-import { AutoMerge, DependabotOptions, GitHubProject, GitHubProjectOptions, GitIdentity, TaskWorkflow } from '../github';
+import { AutoMerge, DependabotOptions, GitHubProject, GitHubProjectOptions, GitIdentity } from '../github';
 import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
-import { JobPermission, JobStep } from '../github/workflows-model';
+import { JobStep } from '../github/workflows-model';
 import { IgnoreFile } from '../ignore-file';
 import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from '../javascript';
 import { License } from '../license';
@@ -275,6 +276,21 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * Options for `Bundler`.
    */
   readonly bundlerOptions?: BundlerOptions;
+
+  /**
+   * A directory which will contain build artifacts.
+   *
+   * @default "dist"
+   */
+  readonly artifactsDirectory?: string;
+
+  /**
+   * Defines a `package` task that will produce an npm tarball under the
+   * artifacts directory (e.g. `dist`).
+   *
+   * @default true
+   */
+  readonly package?: boolean;
 }
 
 /**
@@ -327,8 +343,7 @@ export class NodeProject extends GitHubProject {
   /**
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
    */
-  public readonly buildWorkflow?: TaskWorkflow;
-  public readonly buildWorkflowJobId?: string;
+  public readonly buildWorkflow?: BuildWorkflow;
 
   /**
    * Package publisher. This will be `undefined` if the project does not have a
@@ -386,6 +401,16 @@ export class NodeProject extends GitHubProject {
 
   public readonly bundler: Bundler;
 
+  /**
+   * The build output directory. By default this is `dist`.
+   */
+  public readonly artifactsDirectory: string;
+
+  /**
+   * The upgrade workflow.
+   */
+  public readonly upgradeWorkflow?: UpgradeDependencies;
+
   private readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
 
@@ -395,6 +420,7 @@ export class NodeProject extends GitHubProject {
     this.package = new NodePackage(this, options);
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
     this.workflowGitIdentity = options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
+    this.artifactsDirectory = options.artifactsDirectory ?? 'dist';
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
@@ -454,7 +480,6 @@ export class NodeProject extends GitHubProject {
     }
 
     const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
-    const mutableBuilds = options.mutableBuild ?? true;
 
     // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
     // to decide if we can always run with --updateSnapshot
@@ -466,28 +491,22 @@ export class NodeProject extends GitHubProject {
       this.jest = new Jest(this, options.jestOptions);
     }
 
-    if (buildEnabled) {
-      const branch = '${{ github.event.pull_request.head.ref }}';
-      const repo = '${{ github.event.pull_request.head.repo.full_name }}';
-      const buildJobId = 'build';
-
-      const postBuildSteps = new Array<any>();
-      const gitDiffStepId = 'git_diff';
-      const hasChangesCondName = 'has_changes';
-      const hasChanges = `steps.${gitDiffStepId}.outputs.${hasChangesCondName}`;
-
-      // disable anti-tamper if build workflow is mutable
-      const antitamperSteps = (!mutableBuilds ?? this.antitamper) ? [{
-        // anti-tamper check (fails if there were changes to committed files)
-        // this will identify any non-committed files generated during build (e.g. test snapshots)
-        name: 'Anti-tamper check',
-        run: 'git diff --ignore-space-at-eol --exit-code',
-      }] : [];
+    if (buildEnabled && this.github) {
+      this.buildWorkflow = new BuildWorkflow(this, {
+        buildTask: this.buildTask,
+        antitamper: this.antitamper,
+        artifactsDirectory: this.artifactsDirectory,
+        containerImage: options.workflowContainerImage,
+        gitIdentity: this.workflowGitIdentity,
+        mutableBuild: options.mutableBuild,
+        preBuildSteps: this.installWorkflowSteps,
+        postBuildSteps: options.postBuildSteps,
+      });
 
       // run codecov if enabled or a secret token name is passed in
       // AND jest must be configured
       if ((options.codeCov || options.codeCovTokenSecret) && this.jest?.config) {
-        postBuildSteps.push({
+        this.buildWorkflow.addPostBuildSteps({
           name: 'Upload coverage to Codecov',
           uses: 'codecov/codecov-action@v1',
           with: options.codeCovTokenSecret ? {
@@ -497,96 +516,6 @@ export class NodeProject extends GitHubProject {
             directory: this.jest.config.coverageDirectory,
           },
         });
-      }
-
-      // use "git diff --exit code" to check if there were changes in the repo
-      // and create a step output that will be used in subsequent steps.
-      postBuildSteps.push({
-        name: 'Check for changes',
-        id: gitDiffStepId,
-        run: `git diff --exit-code || echo "::set-output name=${hasChangesCondName}::true"`,
-      });
-
-      // only if we had changes, commit them and push to the repo note that for
-      // forks, this will fail (because the workflow doesn't have permissions.
-      // this indicates to users that they need to update their branch manually.
-      postBuildSteps.push({
-        if: hasChanges,
-        name: 'Commit and push changes (if changed)',
-        run: `git add . && git commit -m "chore: self mutation" && git push origin HEAD:${branch}`,
-      });
-
-      // if we pushed changes, we need to manually update the status check so
-      // that the PR will be green (we won't get here for forks with updates
-      // because the push would have failed).
-      postBuildSteps.push({
-        if: hasChanges,
-        name: 'Update status check (if changed)',
-        run: [
-          'gh api',
-          '-X POST',
-          `/repos/${repo}/check-runs`,
-          `-F name="${buildJobId}"`,
-          '-F head_sha="$(git rev-parse HEAD)"',
-          '-F status="completed"',
-          '-F conclusion="success"',
-        ].join(' '),
-        env: {
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-        },
-      });
-
-      // if we pushed changes, we need to mark the current commit as failed, so
-      // that GitHub auto-merge does not risk merging this commit before the
-      // event for the new commit has registered.
-      postBuildSteps.push({
-        if: hasChanges,
-        name: 'Cancel workflow (if changed)',
-        run: [
-          'gh api',
-          '-X POST',
-          `/repos/${repo}/actions/runs/\${{ github.run_id }}/cancel`,
-        ].join(' '),
-        env: {
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-        },
-      });
-
-      postBuildSteps.push(...antitamperSteps);
-
-      if (this.github) {
-        this.buildWorkflow = new TaskWorkflow(this.github, {
-          gitIdentity: this.workflowGitIdentity,
-          name: 'build',
-          jobId: buildJobId,
-          triggers: {
-            pullRequest: { },
-          },
-          env: {
-            CI: 'true', // will cause `NodeProject` to execute `yarn install` with `--frozen-lockfile`
-          },
-          permissions: {
-            checks: JobPermission.WRITE,
-            contents: JobPermission.WRITE,
-            actions: JobPermission.WRITE,
-          },
-          checkoutWith: mutableBuilds ? {
-            ref: branch,
-            repository: repo,
-          } : undefined,
-
-          preBuildSteps: [
-            ...antitamperSteps,
-            ...this.installWorkflowSteps, // install dependencies steps
-          ],
-
-          task: this.buildTask,
-
-          postBuildSteps,
-
-          container: options.workflowContainerImage ? { image: options.workflowContainerImage } : undefined,
-        });
-        this.buildWorkflowJobId = buildJobId;
       }
     }
 
@@ -598,6 +527,7 @@ export class NodeProject extends GitHubProject {
         versionFile: 'package.json', // this is where "version" is set after bump
         task: this.buildTask,
         branch: options.defaultReleaseBranch ?? 'main',
+        artifactsDirectory: this.artifactsDirectory,
         ...options,
 
         releaseWorkflowSetupSteps: [
@@ -635,9 +565,9 @@ export class NodeProject extends GitHubProject {
       }
     }
 
-    if (this.github?.mergify) {
+    if (this.github?.mergify && this.buildWorkflow?.buildJobIds) {
       this.autoMerge = new AutoMerge(this.github, {
-        buildJob: this.buildWorkflowJobId,
+        buildJob: this.buildWorkflow?.buildJobIds[0],
         ...options.autoMergeOptions,
       });
     }
@@ -691,11 +621,11 @@ export class NodeProject extends GitHubProject {
       };
       const upgradeDependencies = new UpgradeDependencies(this, deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}]));
       ignoresProjen = upgradeDependencies.ignoresProjen;
+      this.upgradeWorkflow = upgradeDependencies;
     }
 
     // create a dedicated workflow to upgrade projen itself if needed
     if (ignoresProjen && this.package.packageName !== 'projen') {
-
       new UpgradeDependencies(this, {
         include: ['projen'],
         taskName: 'upgrade-projen',
@@ -723,6 +653,14 @@ export class NodeProject extends GitHubProject {
 
     // add a bundler component - this enables things like Lambda bundling and in the future web bundling.
     this.bundler = new Bundler(this, options.bundlerOptions);
+
+    if (options.package ?? true) {
+      this.packageTask.exec(`mkdir -p ${this.artifactsDirectory}`);
+
+      // always use npm here - yarn doesn't add much value
+      // sadly we cannot use --pack-destination because it is not supported by older npm
+      this.packageTask.exec(`mv $(npm pack) ${this.artifactsDirectory}/`);
+    }
   }
 
   public addBins(bins: Record<string, string>) {
@@ -958,6 +896,13 @@ export class NodeProject extends GitHubProject {
  */
   public runTaskCommand(task: Task) {
     return `${this.package.projenCommand} ${task.name}`;
+  }
+
+  /**
+   * The job ID of the build workflow.
+   */
+  public get buildWorkflowJobId() {
+    return this.buildWorkflow?.buildJobIds[0];
   }
 }
 
