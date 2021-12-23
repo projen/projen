@@ -195,6 +195,7 @@ const integTask = project.addTask('integ');
 integTask.spawn(project.buildTask);
 integTask.spawn(project.tasks.tryFind('package:python'));
 integTask.spawn(pythonCompatTask);
+project.tryFindObjectFile('.mergify.yml').addOverride('pull_request_rules.0.conditions.3', 'status-success=integ');
 
 new github.TaskWorkflow(project.github, {
   name: 'integ',
