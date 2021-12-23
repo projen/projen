@@ -2981,6 +2981,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -3003,7 +3004,6 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -3371,6 +3371,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -3393,7 +3394,6 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -3637,6 +3637,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -3659,7 +3660,6 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4004,6 +4004,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4026,7 +4027,6 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4185,6 +4185,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4207,7 +4208,6 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4352,6 +4352,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4374,7 +4375,6 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4521,6 +4521,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4543,7 +4544,6 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4699,6 +4699,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4721,7 +4722,6 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4977,7 +4977,7 @@ __Returns__:
 
 #### *static* of(project)🔹 <a id="projen-github-github-of"></a>
 
-
+Returns the `GitHub` component of a project or `undefined` if the project does not have a GitHub component.
 
 ```ts
 static of(project: Project): GitHub
@@ -6454,6 +6454,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -6479,7 +6480,7 @@ Name | Type | Description
 -----|------|-------------
 **allowLibraryDependencies**⚠️ | <code>boolean</code> | <span></span>
 **antitamper**🔹 | <code>boolean</code> | Indicates if workflows have anti-tamper checks.
-**artifactsDirectory**🔹 | <code>string</code> | <span></span>
+**artifactsDirectory**🔹 | <code>string</code> | The build output directory.
 **bundler**🔹 | <code>[javascript.Bundler](#projen-javascript-bundler)</code> | <span></span>
 **entrypoint**⚠️ | <code>string</code> | <span></span>
 **installWorkflowSteps**🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | <span></span>
@@ -8056,6 +8057,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -8078,7 +8080,6 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -8202,6 +8203,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -8224,7 +8226,6 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -8348,6 +8349,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -8370,7 +8372,6 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -8739,6 +8740,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -8882,6 +8884,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -8904,7 +8907,6 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -9098,6 +9100,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -9282,6 +9285,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -9304,7 +9308,6 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -10366,7 +10369,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -10624,7 +10627,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -10820,7 +10823,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?⚠️ | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?⚠️ | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?⚠️ | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?⚠️ | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?⚠️ | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?⚠️ | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?⚠️ | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -11069,7 +11072,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -11281,7 +11284,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -11450,7 +11453,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -11599,7 +11602,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -11750,7 +11753,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -12720,6 +12723,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -13715,7 +13719,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?⚠️ | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?⚠️ | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?⚠️ | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?⚠️ | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?⚠️ | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?⚠️ | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?⚠️ | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -13851,7 +13855,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -14085,6 +14089,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -14215,7 +14220,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -14374,6 +14379,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -14532,7 +14538,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__

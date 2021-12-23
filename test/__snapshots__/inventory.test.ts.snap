@@ -2350,7 +2350,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -2358,7 +2358,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -4963,7 +4963,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -4971,7 +4971,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -7467,7 +7467,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -7475,7 +7475,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -9918,7 +9918,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -9926,7 +9926,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -12427,7 +12427,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -12435,7 +12435,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -15590,7 +15590,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -15598,7 +15598,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -17854,6 +17854,23 @@ Array [
         "switch": "outdir",
       },
       Object {
+        "default": "true",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "package",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "package",
+        ],
+        "simpleType": "boolean",
+        "switch": "package",
+      },
+      Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
@@ -19991,7 +20008,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -19999,7 +20016,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -22127,6 +22144,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "outdir",
+      },
+      Object {
+        "default": "true",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "package",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "package",
+        ],
+        "simpleType": "boolean",
+        "switch": "package",
       },
       Object {
         "default": "NodePackageManager.YARN",
@@ -24989,6 +25023,23 @@ Array [
         "switch": "outdir",
       },
       Object {
+        "default": "true",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "package",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "package",
+        ],
+        "simpleType": "boolean",
+        "switch": "package",
+      },
+      Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
@@ -27114,7 +27165,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -27122,7 +27173,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -29379,7 +29430,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -29387,7 +29438,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -31622,7 +31673,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -31630,7 +31681,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
