@@ -138,3 +138,11 @@ This will create an issue labeled with the `failed-release` label for every indi
 For example, if Nuget publishing failed for a specific version, it will create an issue titled *Publishing v1.0.4 to Nuget gallery failed*.
 
 This can be helpful to keep track of failed releases as well as integrate with third-party ticketing systems by querying issues labeled with `failed-release`.
+
+## Dry run
+
+If you wish to completely disable publishing, you can enable the `dryRun` option on
+`Publisher` or `publishDryRun` on the project.
+
+This will cause all publishing tasks and jobs to just print the publishing
+command but not actually publish.
