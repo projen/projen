@@ -193,6 +193,7 @@ const pythonCompatTask = project.addTask('integ:python-compat', {
 });
 const integTask = project.addTask('integ');
 integTask.spawn(project.buildTask);
+integTask.spawn(project.tasks.tryFind('package:python'));
 integTask.spawn(pythonCompatTask);
 
 new github.TaskWorkflow(project.github, {

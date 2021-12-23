@@ -143,6 +143,9 @@
           "spawn": "build"
         },
         {
+          "spawn": "package:python"
+        },
+        {
           "spawn": "integ:python-compat"
         }
       ]
