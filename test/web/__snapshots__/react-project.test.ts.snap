@@ -552,6 +552,14 @@ pull_request_rules:
       "package": Object {
         "description": "Creates the distribution package",
         "name": "package",
+        "steps": Array [
+          Object {
+            "exec": "mkdir -p dist",
+          },
+          Object {
+            "exec": "npm pack --pack-destination dist",
+          },
+        ],
       },
       "post-compile": Object {
         "description": "Runs after successful compilation",

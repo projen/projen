@@ -291,6 +291,14 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * @default "dist"
    */
   readonly artifactsDirectory?: string;
+
+  /**
+   * Defines a `package` task that will produce an npm tarball under the
+   * artifacts directory (e.g. `dist`).
+   *
+   * @default true
+   */
+  readonly package?: boolean;
 }
 
 /**
@@ -401,6 +409,9 @@ export class NodeProject extends GitHubProject {
 
   public readonly bundler: Bundler;
 
+  /**
+   * The build output directory. By default this is `dist`.
+   */
   public readonly artifactsDirectory: string;
 
   private readonly workflowBootstrapSteps: JobStep[];
@@ -645,6 +656,11 @@ export class NodeProject extends GitHubProject {
 
     // add a bundler component - this enables things like Lambda bundling and in the future web bundling.
     this.bundler = new Bundler(this, options.bundlerOptions);
+
+    if (options.package ?? true) {
+      this.packageTask.exec(`mkdir -p ${this.artifactsDirectory}`);
+      this.packageTask.exec(`npm pack --pack-destination ${this.artifactsDirectory}`); // always use npm here - yarn doesn't add much value
+    }
   }
 
   public addBins(bins: Record<string, string>) {

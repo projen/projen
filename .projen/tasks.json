@@ -161,13 +161,10 @@
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "mkdir -p dist/js"
+          "exec": "mkdir -p dist"
         },
         {
-          "exec": "npm pack"
-        },
-        {
-          "exec": "mv *.tgz dist/js/"
+          "exec": "npm pack --pack-destination dist"
         }
       ]
     },

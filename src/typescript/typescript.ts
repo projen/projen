@@ -112,14 +112,6 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   readonly entrypointTypes?: string;
 
   /**
-   * Defines a `yarn package` command that will produce a tarball and place it
-   * under `dist/js`.
-   *
-   * @default true
-   */
-  readonly package?: boolean;
-
-  /**
    * Use TypeScript for your projenrc file (`.projenrc.ts`).
    *
    * @default false
@@ -205,11 +197,6 @@ export class TypeScriptProject extends NodeProject {
     // the javascript files and not let jest compile it for us.
     const compiledTests = this.testdir.startsWith(this.srcdir + path.posix.sep);
 
-    if (options.package ?? true) {
-      this.packageTask.exec('mkdir -p dist/js');
-      this.packageTask.exec('npm pack'); // always use npm here - yarn doesn't add much value
-      this.packageTask.exec('mv *.tgz dist/js/');
-    }
 
     if (options.entrypointTypes || this.entrypoint !== '') {
       const entrypointTypes = options.entrypointTypes ?? `${path.join(path.dirname(this.entrypoint), path.basename(this.entrypoint, '.js')).replace(/\\/g, '/')}.d.ts`;

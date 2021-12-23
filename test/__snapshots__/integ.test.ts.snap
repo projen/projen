@@ -344,7 +344,7 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
+          tar -xzf dist/*.tgz --strip-components=1
           rm -fr dist/
       - name: Create js artifact
         run: >-
@@ -371,7 +371,7 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
+          tar -xzf dist/*.tgz --strip-components=1
           rm -fr dist/
       - name: Create java artifact
         run: >-
@@ -397,7 +397,7 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
+          tar -xzf dist/*.tgz --strip-components=1
           rm -fr dist/
       - name: Create python artifact
         run: >-
@@ -524,7 +524,7 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
+          tar -xzf dist/*.tgz --strip-components=1
           rm -fr dist/
       - name: Create js artifact
         run: >-
@@ -556,7 +556,7 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
+          tar -xzf dist/*.tgz --strip-components=1
           rm -fr dist/
       - name: Create java artifact
         run: >-
@@ -590,7 +590,7 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
+          tar -xzf dist/*.tgz --strip-components=1
           rm -fr dist/
       - name: Create python artifact
         run: >-
@@ -1265,13 +1265,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist/js",
+            "exec": "mkdir -p dist",
           },
           Object {
-            "exec": "npm pack",
-          },
-          Object {
-            "exec": "mv *.tgz dist/js/",
+            "exec": "npm pack --pack-destination dist",
           },
         ],
       },
@@ -2635,13 +2632,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist/js",
+            "exec": "mkdir -p dist",
           },
           Object {
-            "exec": "npm pack",
-          },
-          Object {
-            "exec": "mv *.tgz dist/js/",
+            "exec": "npm pack --pack-destination dist",
           },
         ],
       },
@@ -4097,13 +4091,10 @@ tsconfig.tsbuildinfo
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist/js",
+            "exec": "mkdir -p dist",
           },
           Object {
-            "exec": "npm pack",
-          },
-          Object {
-            "exec": "mv *.tgz dist/js/",
+            "exec": "npm pack --pack-destination dist",
           },
         ],
       },
@@ -5384,6 +5375,14 @@ junit.xml
       "package": Object {
         "description": "Creates the distribution package",
         "name": "package",
+        "steps": Array [
+          Object {
+            "exec": "mkdir -p dist",
+          },
+          Object {
+            "exec": "npm pack --pack-destination dist",
+          },
+        ],
       },
       "post-compile": Object {
         "description": "Runs after successful compilation",

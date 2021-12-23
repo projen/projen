@@ -202,7 +202,7 @@ export class JsiiProject extends TypeScriptProject {
 
     if (options.releaseToNpm != false) {
       this.release?.publisher.publishToNpm({
-        ...pacmakForLanguage('js'),
+        ...this.pacmakForLanguage('js'),
         registry: this.package.npmRegistry,
         npmTokenSecret: this.package.npmTokenSecret,
       });
@@ -227,7 +227,7 @@ export class JsiiProject extends TypeScriptProject {
       };
 
       this.release?.publisher.publishToMaven({
-        ...pacmakForLanguage('java'),
+        ...this.pacmakForLanguage('java'),
         ...options.publishToMaven,
       });
 
@@ -242,7 +242,7 @@ export class JsiiProject extends TypeScriptProject {
       };
 
       this.release?.publisher.publishToPyPi({
-        ...pacmakForLanguage('python'),
+        ...this.pacmakForLanguage('python'),
         ...pypi,
       });
 
@@ -257,7 +257,7 @@ export class JsiiProject extends TypeScriptProject {
       };
 
       this.release?.publisher.publishToNuget({
-        ...pacmakForLanguage('dotnet'),
+        ...this.pacmakForLanguage('dotnet'),
         ...nuget,
       });
 
@@ -271,7 +271,7 @@ export class JsiiProject extends TypeScriptProject {
       };
 
       this.release?.publisher.publishToGo({
-        ...pacmakForLanguage('go'),
+        ...this.pacmakForLanguage('go'),
         ...golang,
       });
 
@@ -302,7 +302,7 @@ export class JsiiProject extends TypeScriptProject {
       return;
     }
 
-    const pacmak = pacmakForLanguage(language);
+    const pacmak = this.pacmakForLanguage(language);
 
     this.buildWorkflow.addPostBuildJob(`package-${language}`, {
       runsOn: ['ubuntu-latest'],
@@ -313,7 +313,28 @@ export class JsiiProject extends TypeScriptProject {
       },
       steps: pacmak.prePublishSteps,
     });
+  }
 
+  private pacmakForLanguage(target: JsiiPacmakTarget): { prePublishSteps: JobStep[]; publishTools: Tools } {
+    return {
+      publishTools: JSII_TOOLCHAIN[target],
+      prePublishSteps: [
+        {
+          name: 'Extract npm tarball',
+          run: [
+            `tar -xzf ${this.artifactsDirectory}/*.tgz --strip-components=1`,
+            `rm -fr ${this.artifactsDirectory}/`,
+          ].join('\n'),
+        },
+        {
+          name: `Create ${target} artifact`,
+          run: [
+            'jsii_version=$(node -p "JSON.parse(fs.readFileSync(\'.jsii\')).jsiiVersion.split(\' \')[0]")',
+            `npx jsii-pacmak@$jsii_version -v --outdir $PWD/${this.artifactsDirectory} --target ${target}`,
+          ].join('\n'),
+        },
+      ],
+    };
   }
 }
 
@@ -340,24 +361,3 @@ function parseAuthorAddress(options: JsiiProjectOptions) {
   return { authorEmail, authorUrl };
 }
 
-function pacmakForLanguage(target: JsiiPacmakTarget): { prePublishSteps: JobStep[]; publishTools: Tools } {
-  return {
-    publishTools: JSII_TOOLCHAIN[target],
-    prePublishSteps: [
-      {
-        name: 'Extract npm tarball',
-        run: [
-          'tar -xzf dist/js/*.tgz --strip-components=1',
-          'rm -fr dist/',
-        ].join('\n'),
-      },
-      {
-        name: `Create ${target} artifact`,
-        run: [
-          'jsii_version=$(node -p "JSON.parse(fs.readFileSync(\'.jsii\')).jsiiVersion.split(\' \')[0]")',
-          `npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target ${target}`,
-        ].join('\n'),
-      },
-    ],
-  };
-}

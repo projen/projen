@@ -86,7 +86,7 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
+          tar -xzf dist/*.tgz --strip-components=1
           rm -fr dist/
       - name: Create js artifact
         run: >-
@@ -118,7 +118,7 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
+          tar -xzf dist/*.tgz --strip-components=1
           rm -fr dist/
       - name: Create go artifact
         run: >-
@@ -224,7 +224,7 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
+          tar -xzf dist/*.tgz --strip-components=1
           rm -fr dist/
       - name: Create js artifact
         run: >-
@@ -256,7 +256,7 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
+          tar -xzf dist/*.tgz --strip-components=1
           rm -fr dist/
       - name: Create go artifact
         run: >-
