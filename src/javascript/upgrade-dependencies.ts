@@ -1,7 +1,7 @@
 import { Component } from '../component';
 import { GitHub, GithubWorkflow, GitIdentity, workflows } from '../github';
 import { DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from '../github/constants';
-import { JobStep } from '../github/workflows-model';
+import { ContainerOptions, JobStep } from '../github/workflows-model';
 import { NodeProject } from '../javascript';
 import { Task } from '../task';
 
@@ -105,6 +105,11 @@ export class UpgradeDependencies extends Component {
    */
   public readonly ignoresProjen: boolean;
 
+  /**
+   * Container definitions for the upgrade workflow.
+   */
+  public containerOptions?: ContainerOptions;
+
   private readonly gitIdentity: GitIdentity;
   private readonly postBuildSteps: JobStep[];
 
@@ -117,6 +122,7 @@ export class UpgradeDependencies extends Component {
     this.ignoresProjen = this.options.ignoreProjen ?? true;
     this.gitIdentity = options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.postBuildSteps = [];
+    this.containerOptions = options.workflowOptions?.container;
 
     project.addDevDeps('npm-check-updates@^12');
   }
@@ -208,7 +214,6 @@ export class UpgradeDependencies extends Component {
   }
 
   private createUpgrade(task: Task, branch?: string): Upgrade {
-
     const build = this.options.workflowOptions?.rebuild ?? true;
     const runsOn = this.options.workflowOptions?.runsOn ?? ['ubuntu-latest'];
     const patchFile = '.upgrade.tmp.patch';
@@ -270,7 +275,7 @@ export class UpgradeDependencies extends Component {
     return {
       job: {
         name: 'Upgrade',
-        container: this.options.workflowOptions?.container,
+        container: this.containerOptions,
         permissions: permissions,
         runsOn: runsOn ?? ['ubuntu-latest'],
         outputs: outputs,

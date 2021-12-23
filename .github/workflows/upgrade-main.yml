@@ -36,7 +36,8 @@ jobs:
         run: /bin/bash ./projen.bash build && echo "::set-output
           name=conclusion::success" || echo "::set-output
           name=conclusion::failure"
-      - run: npx jsii-pacmak
+      - name: Verify language bindings
+        run: /bin/bash ./projen.bash package-all
       - name: Create Patch
         run: |-
           git add .
@@ -46,6 +47,8 @@ jobs:
         with:
           name: .upgrade.tmp.patch
           path: .upgrade.tmp.patch
+    container:
+      image: jsii/superchain:1-buster-slim-node12
   pr:
     name: Create Pull Request
     needs: upgrade
