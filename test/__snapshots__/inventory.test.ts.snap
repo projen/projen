@@ -2718,6 +2718,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
+      },
+      Object {
+        "default": "false",
         "docs": "Define publishing tasks that can be executed manually as well as workflows.",
         "featured": false,
         "fullType": Object {
@@ -5314,6 +5331,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
+      },
+      Object {
+        "default": "false",
         "docs": "Define publishing tasks that can be executed manually as well as workflows.",
         "featured": false,
         "fullType": Object {
@@ -7801,6 +7835,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
+      },
+      Object {
+        "default": "false",
         "docs": "Define publishing tasks that can be executed manually as well as workflows.",
         "featured": false,
         "fullType": Object {
@@ -10232,6 +10283,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -12724,6 +12792,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -15873,6 +15958,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
+      },
+      Object {
+        "default": "false",
         "docs": "Define publishing tasks that can be executed manually as well as workflows.",
         "featured": false,
         "fullType": Object {
@@ -18086,6 +18188,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
+      },
+      Object {
+        "default": "false",
         "docs": "Define publishing tasks that can be executed manually as well as workflows.",
         "featured": false,
         "fullType": Object {
@@ -20257,6 +20376,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
+      },
+      Object {
+        "default": "false",
         "docs": "Define publishing tasks that can be executed manually as well as workflows.",
         "featured": false,
         "fullType": Object {
@@ -22341,6 +22477,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -25204,6 +25357,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
+      },
+      Object {
+        "default": "false",
         "docs": "Define publishing tasks that can be executed manually as well as workflows.",
         "featured": false,
         "fullType": Object {
@@ -27360,6 +27530,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -29611,6 +29798,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
+      },
+      Object {
+        "default": "false",
         "docs": "Define publishing tasks that can be executed manually as well as workflows.",
         "featured": false,
         "fullType": Object {
@@ -31834,6 +32038,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
