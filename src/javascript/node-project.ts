@@ -659,7 +659,10 @@ export class NodeProject extends GitHubProject {
 
     if (options.package ?? true) {
       this.packageTask.exec(`mkdir -p ${this.artifactsDirectory}`);
-      this.packageTask.exec(`npm pack --pack-destination ${this.artifactsDirectory}`); // always use npm here - yarn doesn't add much value
+
+      // always use npm here - yarn doesn't add much value
+      // sadly we cannot use --pack-destination because it is not supported by older npm
+      this.packageTask.exec(`mv $(npm pack) ${this.artifactsDirectory}/`);
     }
   }
 

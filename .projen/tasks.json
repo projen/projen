@@ -164,7 +164,7 @@
           "exec": "mkdir -p dist"
         },
         {
-          "exec": "npm pack --pack-destination dist"
+          "exec": "mv $(npm pack) dist/"
         }
       ]
     },
