@@ -36,6 +36,7 @@ jobs:
         run: /bin/bash ./projen.bash build && echo "::set-output
           name=conclusion::success" || echo "::set-output
           name=conclusion::failure"
+      - run: npx jsii-pacmak
       - name: Create Patch
         run: |-
           git add .

@@ -1,5 +1,6 @@
-import { JsiiProject } from '../src/cdk';
-import { synthSnapshot } from './util';
+import * as yaml from 'yaml';
+import { JsiiProject } from '../../src/cdk';
+import { synthSnapshot } from '../util';
 
 describe('author', () => {
   test('authorEmail and authorAddress can be the same value', () => {
@@ -307,4 +308,54 @@ test('docgen: true should just work', () => {
 
   const output = synthSnapshot(project);
   expect(output['.projen/tasks.json'].tasks.docgen.steps[0].exec).toStrictEqual('jsii-docgen');
+});
+
+describe('language bindings', () => {
+  const project = new JsiiProject({
+    author: 'My name',
+    name: 'testproject',
+    authorAddress: 'https://foo.bar',
+    defaultReleaseBranch: 'main',
+    repositoryUrl: 'https://github.com/foo/bar.git',
+    publishToGo: { moduleName: 'github.com/foo/bar' },
+    publishToMaven: { javaPackage: 'io.github.cdklabs.watchful', mavenGroupId: 'io.github.cdklabs', mavenArtifactId: 'cdk-watchful' },
+    publishToNuget: { dotNetNamespace: 'DotNet.Namespace', packageId: 'PackageId' },
+    publishToPypi: { distName: 'dist-name', module: 'module-name' },
+  });
+
+  const output = synthSnapshot(project);
+  const build = yaml.parse(output['.github/workflows/build.yml']);
+  const release = yaml.parse(output['.github/workflows/release.yml']);
+  const tasks = output['.projen/tasks.json'].tasks;
+
+  test('build workflow includes packaging jobs', () => {
+    expect(Object.keys(build.jobs)).toStrictEqual([
+      'build',
+      'update-status',
+      'package-js',
+      'package-java',
+      'package-python',
+      'package-dotnet',
+      'package-go',
+    ]);
+  });
+
+  test.each(['js', 'java', 'python', 'dotnet', 'go'])('snapshot %s', language => {
+    expect(build.jobs[`package-${language}`]).toMatchSnapshot();
+  });
+
+  test.each(['js', 'java', 'python', 'dotnet', 'go'])('package:%s task', language => {
+    expect(tasks[`package:${language}`]).toMatchSnapshot();
+  });
+
+  test('package-all creates all bindings', () => {
+    expect(tasks['package-all']).toBeDefined();
+    expect(tasks['package-all']).toMatchSnapshot();
+  });
+
+  test.each(['pypi', 'nuget', 'npm', 'maven', 'golang'])('release workflow includes release_%s job', (language) => {
+    const job = release.jobs[`release_${language}`];
+    expect(job).toBeDefined();
+    expect(job).toMatchSnapshot();
+  });
 });

@@ -1,6 +1,7 @@
 import { Component } from '../component';
 import { GitHub, GithubWorkflow, GitIdentity, workflows } from '../github';
 import { DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from '../github/constants';
+import { JobStep } from '../github/workflows-model';
 import { NodeProject } from '../javascript';
 import { Task } from '../task';
 
@@ -105,6 +106,7 @@ export class UpgradeDependencies extends Component {
   public readonly ignoresProjen: boolean;
 
   private readonly gitIdentity: GitIdentity;
+  private readonly postBuildSteps: JobStep[];
 
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
@@ -114,8 +116,17 @@ export class UpgradeDependencies extends Component {
     this.pullRequestTitle = options.pullRequestTitle ?? 'upgrade dependencies';
     this.ignoresProjen = this.options.ignoreProjen ?? true;
     this.gitIdentity = options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
+    this.postBuildSteps = [];
 
     project.addDevDeps('npm-check-updates@^12');
+  }
+
+  /**
+   * Add steps to execute a successful build.
+   * @param steps worklfow steps
+   */
+  public addPostBuildSteps(...steps: JobStep[]) {
+    this.postBuildSteps.push(...steps);
   }
 
   // create the upgrade task and a corresponding github workflow
@@ -238,6 +249,8 @@ export class UpgradeDependencies extends Component {
         outputName: conclusion,
       };
     }
+
+    steps.push(...this.postBuildSteps);
 
     steps.push(
       {

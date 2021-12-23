@@ -6497,6 +6497,7 @@ Name | Type | Description
 **npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
 **publisher**?⚠️ | <code>[release.Publisher](#projen-release-publisher)</code> | Package publisher.<br/>__*Optional*__
 **release**?🔹 | <code>[release.Release](#projen-release-release)</code> | Release management.<br/>__*Optional*__
+**upgradeWorkflow**?🔹 | <code>[javascript.UpgradeDependencies](#projen-javascript-upgradedependencies)</code> | The upgrade workflow.<br/>__*Optional*__
 
 ### Methods
 
@@ -6884,6 +6885,28 @@ Name | Type | Description
 **workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | The workflows that execute the upgrades.
 
 ### Methods
+
+
+#### addPostBuildSteps(...steps)🔹 <a id="projen-javascript-upgradedependencies-addpostbuildsteps"></a>
+
+Add steps to execute a successful build.
+
+```ts
+addPostBuildSteps(...steps: JobStep[]): void
+```
+
+* **steps** (<code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code>)  worklfow steps.
+  * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
+  * **env** (<code>Map<string, string></code>)  Sets environment variables for steps to use in the runner environment. __*Optional*__
+  * **id** (<code>string</code>)  A unique identifier for the step. __*Optional*__
+  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
+  * **name** (<code>string</code>)  A name for your step to display on GitHub. __*Optional*__
+  * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
+  * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
+  * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
+  * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
+
+
 
 
 #### preSynthesize()🔹 <a id="projen-javascript-upgradedependencies-presynthesize"></a>

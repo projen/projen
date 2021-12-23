@@ -681,6 +681,7 @@ jobs:
         id: build
         run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
           \\"::set-output name=conclusion::failure\\"
+      - run: npx jsii-pacmak
       - name: Create Patch
         run: |-
           git add .
@@ -928,10 +929,6 @@ tsconfig.tsbuildinfo
       },
       Object {
         "name": "jsii-docgen",
-        "type": "build",
-      },
-      Object {
-        "name": "jsii-pacmak",
         "type": "build",
       },
       Object {
@@ -1276,6 +1273,57 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
           Object {
             "exec": "mv $(npm pack) dist/",
+          },
+        ],
+      },
+      "package-all": Object {
+        "description": "Packages artifacts for all target languages",
+        "name": "package-all",
+        "steps": Array [
+          Object {
+            "spawn": "package:js",
+          },
+          Object {
+            "spawn": "package:java",
+          },
+          Object {
+            "spawn": "package:python",
+          },
+        ],
+      },
+      "package:java": Object {
+        "description": "Create java language bindings",
+        "name": "package:java",
+        "steps": Array [
+          Object {
+            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+          },
+          Object {
+            "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java",
+          },
+        ],
+      },
+      "package:js": Object {
+        "description": "Create js language bindings",
+        "name": "package:js",
+        "steps": Array [
+          Object {
+            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+          },
+          Object {
+            "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js",
+          },
+        ],
+      },
+      "package:python": Object {
+        "description": "Create python language bindings",
+        "name": "package:python",
+        "steps": Array [
+          Object {
+            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+          },
+          Object {
+            "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python",
           },
         ],
       },
@@ -1719,7 +1767,6 @@ project.synth();
       "jsii": "*",
       "jsii-diff": "*",
       "jsii-docgen": "*",
-      "jsii-pacmak": "*",
       "json-schema": "*",
       "npm-check-updates": "^12",
       "projen": "*",
@@ -1829,6 +1876,10 @@ project.synth();
       "docgen": "npx projen docgen",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
+      "package-all": "npx projen package-all",
+      "package:java": "npx projen package:java",
+      "package:js": "npx projen package:js",
+      "package:python": "npx projen package:python",
       "post-compile": "npx projen post-compile",
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
@@ -2241,6 +2292,7 @@ jobs:
         id: build
         run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
           \\"::set-output name=conclusion::failure\\"
+      - run: npx jsii-pacmak
       - name: Create Patch
         run: |-
           git add .
@@ -2456,10 +2508,6 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
-        "name": "jsii-pacmak",
-        "type": "build",
-      },
-      Object {
         "name": "json-schema",
         "type": "build",
       },
@@ -2646,6 +2694,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
+      "package-all": Object {
+        "description": "Packages artifacts for all target languages",
+        "name": "package-all",
+      },
       "post-compile": Object {
         "description": "Runs after successful compilation",
         "name": "post-compile",
@@ -2718,7 +2770,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade @types/follow-redirects @types/jest @types/json-stable-stringify @types/node @types/yaml @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema json-schema-to-typescript npm-check-updates ts-jest typescript fast-json-patch follow-redirects json-stable-stringify yaml constructs",
+            "exec": "yarn upgrade @types/follow-redirects @types/jest @types/json-stable-stringify @types/node @types/yaml @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii jsii-diff jsii-docgen json-schema json-schema-to-typescript npm-check-updates ts-jest typescript fast-json-patch follow-redirects json-stable-stringify yaml constructs",
           },
           Object {
             "exec": "npx projen",
@@ -3212,7 +3264,6 @@ project.synth();
       "jsii": "*",
       "jsii-diff": "*",
       "jsii-docgen": "*",
-      "jsii-pacmak": "*",
       "json-schema": "*",
       "json-schema-to-typescript": "*",
       "npm-check-updates": "^12",
@@ -3311,6 +3362,7 @@ project.synth();
       "docgen": "npx projen docgen",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
+      "package-all": "npx projen package-all",
       "post-compile": "npx projen post-compile",
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",

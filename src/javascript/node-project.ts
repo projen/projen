@@ -414,6 +414,11 @@ export class NodeProject extends GitHubProject {
    */
   public readonly artifactsDirectory: string;
 
+  /**
+   * The upgrade workflow.
+   */
+  public readonly upgradeWorkflow?: UpgradeDependencies;
+
   private readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
 
@@ -624,11 +629,11 @@ export class NodeProject extends GitHubProject {
       };
       const upgradeDependencies = new UpgradeDependencies(this, deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}]));
       ignoresProjen = upgradeDependencies.ignoresProjen;
+      this.upgradeWorkflow = upgradeDependencies;
     }
 
     // create a dedicated workflow to upgrade projen itself if needed
     if (ignoresProjen && this.package.packageName !== 'projen') {
-
       new UpgradeDependencies(this, {
         include: ['projen'],
         taskName: 'upgrade-projen',
