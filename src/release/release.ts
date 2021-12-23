@@ -171,6 +171,13 @@ export interface ReleaseProjectOptions {
    * @default false
    */
   readonly publishTasks?: boolean;
+
+  /**
+   * Instead of actually publishing to package managers, just print the publishing command.
+   *
+   * @default false
+   */
+  readonly publishDryRun?: boolean;
 }
 
 /**
@@ -295,6 +302,7 @@ export class Release extends Component {
       failureIssueLabel: options.releaseFailureIssueLabel,
       workflowRunsOn: options.workflowRunsOn,
       publishTasks: options.publishTasks,
+      dryRun: options.publishDryRun,
     });
 
     const githubRelease = options.githubRelease ?? true;

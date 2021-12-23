@@ -76,6 +76,13 @@ export interface PublisherOptions {
    * @default false
    */
   readonly publishTasks?: boolean;
+
+  /**
+   * Do not actually publish, only print the commands that would be executed instead.
+   *
+   * Useful if you wish to block all publishing from a single option.
+   */
+  readonly dryRun?: boolean;
 }
 
 /**
@@ -97,6 +104,8 @@ export class Publisher extends Component {
   // functions that create jobs associated with a specific branch
   private readonly _jobFactories: PublishJobFactory[] = [];
 
+  private readonly dryRun: boolean;
+
   constructor(project: Project, options: PublisherOptions) {
     super(project);
 
@@ -104,6 +113,7 @@ export class Publisher extends Component {
     this.artifactName = options.artifactName;
     this.jsiiReleaseVersion = options.jsiiReleaseVersion ?? JSII_RELEASE_VERSION;
     this.condition = options.condition;
+    this.dryRun = options.dryRun ?? false;
 
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? 'failed-release';
@@ -370,6 +380,7 @@ export class Publisher extends Component {
         throw new Error(`Duplicate job with name "${jobname}"`);
       }
 
+      const commandToRun = this.dryRun ? `echo "DRY RUN: ${opts.run}"` : opts.run;;
       const requiredEnv = new Array<string>();
 
       // jobEnv is the env we pass to the github job (task environment + secrets/expressions).
@@ -395,7 +406,7 @@ export class Publisher extends Component {
         task.exec(`test "$(git branch --show-current)" = "${branch}"`);
 
         // run commands
-        task.exec(opts.run);
+        task.exec(commandToRun);
       }
 
       const steps: JobStep[] = [
@@ -411,7 +422,7 @@ export class Publisher extends Component {
         {
           name: 'Release',
           // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
-          run: opts.run,
+          run: commandToRun,
           env: jobEnv,
         },
       ];
