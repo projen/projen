@@ -2947,6 +2947,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -3336,6 +3337,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -3601,6 +3603,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -3967,6 +3970,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -4147,6 +4151,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -4313,6 +4318,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -4481,6 +4487,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -4658,6 +4665,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -6412,6 +6420,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -7583,6 +7592,7 @@ new release.Publisher(project: Project, options: PublisherOptions)
   * **artifactName** (<code>string</code>)  The name of the artifact to download (e.g. `dist`). 
   * **buildJobId** (<code>string</code>)  The job ID that produces the build artifacts. 
   * **condition** (<code>string</code>)  A GitHub workflow expression used as a condition for publishers. __*Default*__: no condition
+  * **dryRun** (<code>boolean</code>)  Do not actually publish, only print the commands that would be executed instead. __*Optional*__
   * **failureIssue** (<code>boolean</code>)  Create an issue when a publish task fails. __*Default*__: false
   * **failureIssueLabel** (<code>string</code>)  The label to apply to the issue marking failed publish tasks. __*Default*__: "failed-release"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement for `jsii-release`. __*Default*__: "latest"
@@ -7769,6 +7779,7 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -8038,6 +8049,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -8183,6 +8195,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -8328,6 +8341,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -8718,6 +8732,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -8861,6 +8876,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -9076,6 +9092,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -9260,6 +9277,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -10397,6 +10415,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **publishToGo**?🔹 | <code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
@@ -10654,6 +10673,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -10849,6 +10869,7 @@ Name | Type | Description
 **projenrcJsonOptions**?⚠️ | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?⚠️ | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?⚠️ | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?⚠️ | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?⚠️ | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **publishToGo**?⚠️ | <code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?⚠️ | <code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
@@ -11097,6 +11118,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **publishToGo**?🔹 | <code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
@@ -11308,6 +11330,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **publishToGo**?🔹 | <code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
@@ -11476,6 +11499,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -11624,6 +11648,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **publishToGo**?🔹 | <code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
@@ -11774,6 +11799,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **publishToGo**?🔹 | <code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
@@ -12741,6 +12767,7 @@ Name | Type | Description
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -13523,6 +13550,7 @@ Name | Type | Description
 **artifactName**🔹 | <code>string</code> | The name of the artifact to download (e.g. `dist`).
 **buildJobId**🔹 | <code>string</code> | The job ID that produces the build artifacts.
 **condition**?🔹 | <code>string</code> | A GitHub workflow expression used as a condition for publishers.<br/>__*Default*__: no condition
+**dryRun**?🔹 | <code>boolean</code> | Do not actually publish, only print the commands that would be executed instead.<br/>__*Optional*__
 **failureIssue**?🔹 | <code>boolean</code> | Create an issue when a publish task fails.<br/>__*Default*__: false
 **failureIssueLabel**?🔹 | <code>string</code> | The label to apply to the issue marking failed publish tasks.<br/>__*Default*__: "failed-release"
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement for `jsii-release`.<br/>__*Default*__: "latest"
@@ -13568,6 +13596,7 @@ Name | Type | Description
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
@@ -13599,6 +13628,7 @@ Name | Type | Description
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
@@ -13738,6 +13768,7 @@ Name | Type | Description
 **projenrcJsonOptions**?⚠️ | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?⚠️ | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?⚠️ | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?⚠️ | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?⚠️ | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?⚠️ | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?⚠️ | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -13873,6 +13904,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -14104,6 +14136,7 @@ Name | Type | Description
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -14236,6 +14269,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -14392,6 +14426,7 @@ Name | Type | Description
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -14552,6 +14587,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
