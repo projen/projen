@@ -1,6 +1,5 @@
-import { JobStep, Tools } from '../github/workflows-model';
 import { Eslint } from '../javascript';
-import { GoPublishOptions, MavenPublishOptions, PyPiPublishOptions, NugetPublishOptions } from '../release';
+import { GoPublishOptions, MavenPublishOptions, PyPiPublishOptions, NugetPublishOptions, CommonPublishOptions } from '../release';
 import { TypeScriptProject, TypeScriptProjectOptions } from '../typescript';
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from './consts';
 import { JsiiDocgen } from './jsii-docgen';
@@ -311,11 +310,11 @@ export class JsiiProject extends TypeScriptProject {
         node: { version: '14.x' },
         ...pacmak.publishTools,
       },
-      steps: pacmak.prePublishSteps,
+      steps: pacmak.prePublishSteps ?? [],
     });
   }
 
-  private pacmakForLanguage(target: JsiiPacmakTarget): { prePublishSteps: JobStep[]; publishTools: Tools } {
+  private pacmakForLanguage(target: JsiiPacmakTarget): CommonPublishOptions {
     return {
       publishTools: JSII_TOOLCHAIN[target],
       prePublishSteps: [

@@ -89,7 +89,6 @@ export class BuildWorkflow extends Component {
   constructor(project: Project, options: BuildWorkflowOptions) {
     super(project);
 
-
     const github = GitHub.of(project);
     if (!github) {
       throw new Error('BuildWorkflow is currently only supported for GitHub projects');

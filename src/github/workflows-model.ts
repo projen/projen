@@ -144,7 +144,7 @@ export interface Job {
  */
 export interface Tools {
   /**
-   * Setup java (temurin).
+   * Setup java (temurin distribution).
    * @default - not installed
    */
   readonly java?: ToolRequirement;

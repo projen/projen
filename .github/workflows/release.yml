@@ -141,6 +141,10 @@ jobs:
       issues: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
+      - uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 11.x
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
@@ -195,6 +199,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -241,6 +248,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ^1.16.0
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:

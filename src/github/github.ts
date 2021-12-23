@@ -45,6 +45,10 @@ export interface GitHubOptions {
 }
 
 export class GitHub extends Component {
+  /**
+   * Returns the `GitHub` component of a project or `undefined` if the project
+   * does not have a GitHub component.
+   */
   public static of(project: Project): GitHub | undefined {
     const isGitHub = (c: Component): c is GitHub => c instanceof GitHub;
     return project.components.find(isGitHub);

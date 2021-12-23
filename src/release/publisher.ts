@@ -200,11 +200,10 @@ export class Publisher extends Component {
       'fi',
     ].join(' ');
 
-    this.addPublishJob(() => {
+    this.addPublishJob((): PublishJobOptions => {
       return {
         name: 'github',
         registryName: 'GitHub Releases',
-        setupSteps: [], // github cli is installed by default
         prePublishSteps: options.prePublishSteps ?? [],
         tools: options.publishTools,
         permissions: {
@@ -233,14 +232,14 @@ export class Publisher extends Component {
       this.project.logger.warn('The `distTag` option is deprecated. Use the npmDistTag option instead.');
     }
 
-    this.addPublishJob((_branch, branchOptions) => {
+    this.addPublishJob((_branch, branchOptions): PublishJobOptions => {
       if (branchOptions.npmDistTag && options.distTag) {
         throw new Error('cannot set branch-level npmDistTag and npmDistTag in publishToNpm()');
       }
 
       return {
         name: 'npm',
-        setupSteps: JSII_TOOLCHAIN.js,
+        tools: JSII_TOOLCHAIN.js,
         prePublishSteps: options.prePublishSteps ?? [],
         run: this.jsiiReleaseCommand('jsii-release-npm'),
         registryName: 'npm',
@@ -268,11 +267,9 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToNuget(options: NugetPublishOptions = {}) {
-    this.addPublishJob((_branch, _branchOptions) => ({
+    this.addPublishJob((_branch, _branchOptions): PublishJobOptions => ({
       name: 'nuget',
-      setupSteps: [
-        { uses: 'actions/setup-dotnet@v1', with: { 'dotnet-version': '3.x' } },
-      ],
+      tools: JSII_TOOLCHAIN.dotnet,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-nuget'),
       registryName: 'NuGet Gallery',
@@ -295,10 +292,10 @@ export class Publisher extends Component {
       throw new Error('publishing to GitHub Packages requires the "mavenServerId" to be "github"');
     }
 
-    this.addPublishJob((_branch, _branchOptions) => ({
+    this.addPublishJob((_branch, _branchOptions): PublishJobOptions => ({
       name: 'maven',
       registryName: 'Maven Central',
-      setupSteps: JSII_TOOLCHAIN.java,
+      tools: JSII_TOOLCHAIN.java,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-maven'),
       env: {
@@ -325,10 +322,10 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToPyPi(options: PyPiPublishOptions = {}) {
-    this.addPublishJob((_branch, _branchOptions) => ({
+    this.addPublishJob((_branch, _branchOptions): PublishJobOptions => ({
       name: 'pypi',
       registryName: 'PyPI',
-      setupSteps: JSII_TOOLCHAIN.python,
+      tools: JSII_TOOLCHAIN.python,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-pypi'),
       env: {
@@ -346,9 +343,9 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToGo(options: GoPublishOptions = {}) {
-    this.addPublishJob((_branch, _branchOptions) => ({
+    this.addPublishJob((_branch, _branchOptions): PublishJobOptions => ({
       name: 'golang',
-      setupSteps: JSII_TOOLCHAIN.go,
+      tools: JSII_TOOLCHAIN.go,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-golang'),
       registryName: 'GitHub Go Module Repository',
