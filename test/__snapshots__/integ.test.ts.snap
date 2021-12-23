@@ -681,7 +681,8 @@ jobs:
         id: build
         run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
           \\"::set-output name=conclusion::failure\\"
-      - run: npx jsii-pacmak
+      - name: Verify language bindings
+        run: npx projen package-all
       - name: Create Patch
         run: |-
           git add .
@@ -2292,7 +2293,8 @@ jobs:
         id: build
         run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
           \\"::set-output name=conclusion::failure\\"
-      - run: npx jsii-pacmak
+      - name: Verify language bindings
+        run: npx projen package-all
       - name: Create Patch
         run: |-
           git add .

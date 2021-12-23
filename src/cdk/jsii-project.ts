@@ -304,7 +304,8 @@ export class JsiiProject extends TypeScriptProject {
     // we don't have an ability to leverage the multiple build jobs in the upgrade workflow
     // and we want to preserve the behavior of the old upgrade workflow.
     this.upgradeWorkflow?.addPostBuildSteps({
-      run: 'npx jsii-pacmak',
+      name: 'Verify language bindings',
+      run: this.runTaskCommand(this.packageAllTask),
     });
   }
 
