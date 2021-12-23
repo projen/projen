@@ -572,7 +572,7 @@ pull_request_rules:
             "exec": "mkdir -p dist",
           },
           Object {
-            "exec": "npm pack --pack-destination dist",
+            "exec": "mv $(npm pack) dist/",
           },
         ],
       },

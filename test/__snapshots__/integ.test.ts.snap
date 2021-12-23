@@ -1275,7 +1275,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "mkdir -p dist",
           },
           Object {
-            "exec": "npm pack --pack-destination dist",
+            "exec": "mv $(npm pack) dist/",
           },
         ],
       },
@@ -2642,7 +2642,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "mkdir -p dist",
           },
           Object {
-            "exec": "npm pack --pack-destination dist",
+            "exec": "mv $(npm pack) dist/",
           },
         ],
       },
@@ -4101,7 +4101,7 @@ tsconfig.tsbuildinfo
             "exec": "mkdir -p dist",
           },
           Object {
-            "exec": "npm pack --pack-destination dist",
+            "exec": "mv $(npm pack) dist/",
           },
         ],
       },
@@ -5387,7 +5387,7 @@ junit.xml
             "exec": "mkdir -p dist",
           },
           Object {
-            "exec": "npm pack --pack-destination dist",
+            "exec": "mv $(npm pack) dist/",
           },
         ],
       },
