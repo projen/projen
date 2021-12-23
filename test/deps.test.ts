@@ -96,17 +96,6 @@ test('can be overridden with more specific version', () => {
   expect(depsManifest(p)).toMatchSnapshot();
 });
 
-test('cannot be overridden with different version', () => {
-  // GIVEN
-  const p = new TestProject();
-
-  // WHEN
-  p.deps.addDependency('depy@^7', DependencyType.PEER);
-
-  // THEN
-  expect(() => p.deps.addDependency('depy@^9', DependencyType.PEER)).toThrow(/\"depy\" is already specified with different version: \^7/);
-});
-
 describe('removeDependency()', () => {
   test('can be used to remove a dependency', () => {
     // GIVEN
@@ -266,6 +255,22 @@ test('tryGetDependency() returns undefined if there is no dep', () => {
   expect(p.deps.tryGetDependency('zoo', DependencyType.RUNTIME)).toStrictEqual({ name: 'zoo', type: 'runtime' });
   expect(p.deps.tryGetDependency('zoo', DependencyType.BUILD)).toBeUndefined();
   expect(p.deps.tryGetDependency('boo')).toBeUndefined();
+});
+
+test('it is possible to overwrite dependency specs', () => {
+  // GIVEN
+  const p = new TestProject();
+
+  // WHEN
+  p.deps.addDependency('zoo@^0.3.4', DependencyType.RUNTIME);
+  p.deps.addDependency('zoo@1.2.3', DependencyType.RUNTIME);
+  p.deps.addDependency('zoo@^2.3.4', DependencyType.BUILD);
+
+  // THEN
+  expect(p.deps.all).toStrictEqual([
+    { name: 'zoo', type: 'build', version: '^2.3.4' },
+    { name: 'zoo', type: 'runtime', version: '1.2.3' },
+  ]);
 });
 
 function depsManifest(p: Project) {

@@ -88,6 +88,9 @@ export class IntegrationTest extends Component {
     const opts = [
       `--app "${app}"`,
       '--no-version-reporting',
+      // don't inject cloudformation metadata into template
+      '--no-path-metadata',
+      '--no-asset-metadata',
     ];
 
     if (options.cdkDeps.cdkMajorVersion === 1) {
