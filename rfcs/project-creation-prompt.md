@@ -1,4 +1,4 @@
-# Project Creation Prompts
+# Project Creation Prompts (RFC #1365)
 
 > **Author**: [@MarkMcCulloh](https://github.com/MarkMcCulloh), **Status**: Draft
 
@@ -18,35 +18,43 @@ A user should be prompted to select a project type to create. This should be pro
 - A project id has not been specified
 - There is more than one project type available
 
-Currently projen will exit and show the user the help menu. Instead, it should show the user a list of available projects to choose from in the current context. After choosing a project, projen can continue is it normally would have if the user has provided it during the original invocation. 
+Currently projen will exit and show the user the help menu. Instead, it should show the user a list of available projects to choose from in the current context. After choosing a project, projen can continue is it normally would have if the user has provided it during the original invocation.
 
 [autocomplete](https://github.com/terkelg/prompts#autocompletemessage-choices-initial-suggest-limit-style) would be a good input type for this as it has a filtering feature.
 
 ### Project option prompts
 
 After a project type has been selected, the user can be shown a list of featured options to set interactively. For a project option to be available as a prompt during `projen new`:
+
 - `@featured` tag in property docstring
 - Must be able to be set via CLI arg (is a primitive or enum)
 - Must not have already been provided as a CLI arg
 
-By default, `projen new` will not show prompts unless the `--prompt` flag is provided. 
+By default, `projen new` will not show prompts unless the `--prompt` flag is provided.
 There is one exception: If a project option meets the above criteria but is also:
+
 - Non-nullable
 - Not already provided as a CLI arg
 
 ### Prompt format
 
-By default, values sent to the `prompts` library will be derived by the information in the JSII. For example, enums should have their choices populated automatically. 
+By default, values sent to the `prompts` library will be derived by the information in the JSII. For example, enums should have their choices populated automatically.
 
 In case the default logic is insufficient,  `@prompt...` doc tags can be added to override the default. See below for reference.
 
 #### Docstring tag reference
 
+<https://github.com/terkelg/prompts#multiselectmessage-choices-initial-max-hint-warn>
+
 - `@featured` - Functions as it did before, but now also signifies that this option is prompt-able
-- `@promptType` - See https://github.com/terkelg/prompts#-types
-- `@promptMessage` - See https://github.com/terkelg/prompts#message
-- `@promptInitial` - See https://github.com/terkelg/prompts#initial
-- `@promptChoices` - Comma-separated list of choices for this option 
+- `@promptType` - The type of prompt (text, toggle, etc.). See <https://github.com/terkelg/prompts#-types>.
+  - **Example:** An array type would have a default prompt type of [list](https://github.com/terkelg/prompts#listmessage-initial).  
+  `@promptType multiselect` would allow you to provide a set of distinct options instead.
+- `@promptMessage` - The actual prompt, derived from the docstring summary. See <https://github.com/terkelg/prompts#message>.
+  - Can be used when the type documentation insufficient for use as a prompt.
+- `@promptChoices` - Comma-separated list of choices for this prompt.
+  - Important for types that can't have their available choices automatically derived.  
+  - **Example:** `@promptChoices choice1,choice2` would limit a plain text field into only have those two choices.
 
 ## Testing
 
