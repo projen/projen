@@ -5,6 +5,27 @@
 When hearing about projen for the first time, the typical comparisons one may think of are tools such as `yeoman` or the various projects making use of `npm init`.
 Obviously the underlying methodology of projen is quite different, but there is a great UX feature these other tools typically employ that projen can make use of: Guided prompts. This allows users to create a project from an opinionated set of options with friendly guidance. This is especially useful in scenarios where the project requires a value that has no reasonable default (and thus could not be created with projen as it is now without it being provided as a CLI arg).
 
+## Example user flows
+
+Note: All prompts are assuming to be run from a TTY. We should check if in a TTY before a prompt is presented and error otherwise.
+
+`$ npx projen new`
+1. User is shown a list of base projen project types
+1. User selects the `typescript` project
+1. Project is synthesized
+
+`$ npx projen new typescript`
+1. No prompts are shown because a project is selected and the `typescript` project type has no `@featured` required options that do not also have a default
+1. Project is synthesized
+
+`$ npx projen new typescript --prompt`
+1. Prompts are shown for (currently) `packageName` and `description`, as those options are `@featured` and have no default value
+1. Project is synthesized
+
+`$ npx projen new typescript --prompt --package-name cool-name --description 'Terse but useful'`
+1. No prompts are shown because all `@featured` options have been given supplied values already
+1. Project is synthesized
+
 ## Details
 
 ### Prompt library to use
@@ -30,7 +51,7 @@ After a project type has been selected, the user can be shown a list of featured
 - Must be able to be set via CLI arg (is a primitive or enum)
 - Must not have already been provided as a CLI arg
 
-By default, `projen new` will not show prompts unless the `--prompt` flag is provided.
+By default, `projen new <project>` will not show prompts unless the `--prompt` flag is provided.
 There is one exception: If a project option meets the above criteria but is also:
 
 - Non-nullable
