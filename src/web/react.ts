@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as semver from 'semver';
 import { Component } from '../component';
 import { FileBase, FileBaseOptions, IResolver } from '../file';
 import { NodeProject, NodeProjectOptions, TypeScriptJsxMode, TypeScriptModuleResolution } from '../javascript';
@@ -181,6 +182,12 @@ export class ReactComponent extends Component {
 
     // No compile for react app
     project.compileTask.reset();
+
+    // validate min node version as required by `react-scripts@5`.
+    // https://github.com/facebook/create-react-app/blob/v5.0.0/packages/react-scripts/package.json#L12
+    if (project.package.minNodeVersion && semver.gt('14.0.0', project.package.minNodeVersion)) {
+      throw new Error(`React projects require a minimun node version of 14.0.0 (got ${project.package.minNodeVersion})`);
+    }
 
     project.addDeps('react', 'react-dom', 'react-scripts@^5.0.0', 'web-vitals');
     project.addDevDeps('@testing-library/jest-dom', '@testing-library/react', '@testing-library/user-event');
