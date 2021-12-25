@@ -249,6 +249,11 @@ export interface NodePackageOptions {
   readonly npmRegistry?: string;
 
   /**
+   * Options for issue tracking.
+   */
+  readonly issueTrackerOptions?: IssueTrackerOptions;
+
+  /**
    * Access level of the npm package.
    *
    * @default - for scoped packages (e.g. `foo@bar`), the default is
@@ -296,6 +301,17 @@ export interface CodeArtifactOptions {
     * @default undefined
     */
   readonly roleToAssume?: string;
+}
+
+export interface IssueTrackerOptions {
+  /**
+   * The url to your project's issue tracker.
+   */
+  url?: string;
+  /**
+   * The email address to which issues should be reported.
+   */
+  email?: string,
 }
 
 /**
@@ -435,6 +451,7 @@ export class NodePackage extends Component {
       // in release CI builds we bump the version before we run "build" so we want
       // to preserve the version number. otherwise, we always set it to 0.0.0
       version: this.determineVersion(prev?.version),
+      bugs: options.issueTrackerOptions,
     };
 
     // override any scripts from options (if specified)
