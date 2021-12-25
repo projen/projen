@@ -251,7 +251,7 @@ export interface NodePackageOptions {
   /**
    * Options for issue tracking.
    */
-  readonly issueTrackerOptions?: IssueTrackerOptions;
+  readonly issueTrackerOptions?: IIssueTrackerOptions;
 
   /**
    * Access level of the npm package.
@@ -303,15 +303,15 @@ export interface CodeArtifactOptions {
   readonly roleToAssume?: string;
 }
 
-export interface IssueTrackerOptions {
+export interface IIssueTrackerOptions {
   /**
    * The url to your project's issue tracker.
    */
-  url?: string;
+  readonly url?: string;
   /**
    * The email address to which issues should be reported.
    */
-  email?: string,
+  readonly email?: string,
 }
 
 /**
