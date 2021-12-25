@@ -2,6 +2,79 @@ import * as fs from 'fs-extra';
 import { FileBase, IResolver } from './file';
 import { Project } from './project';
 
+
+interface ISpdxLicenseList {
+  /**
+   * list version number of License list generator
+   *
+   * @see https://github.com/spdx/license-list-data
+   */
+  licenseListVersion: string;
+  /**
+  * list of SPDX license defintions
+  *
+  * @see https://github.com/spdx/license-list-data
+  */
+  licenses: ISpdxLicense[];
+}
+
+
+interface ISpdxLicense {
+  /**
+   * External reference field
+   *
+   * @see https://github.com/spdx/license-list-XML/blob/master/DOCS/license-fields.md
+   */
+  reference: string;
+  /**
+   * License deprecation status
+   */
+  isDeprecatedLicenseId: boolean;
+  /**
+   * Link to SPDX.org details web page of license
+   *
+   * @see https://github.com/spdx/license-list-XML/blob/master/DOCS/license-fields.md
+   */
+  detailsUrl: string;
+  /**
+   * SPDX.org license reference number
+   *
+   * @see https://github.com/spdx/license-list-XML/blob/master/DOCS/license-fields.md
+   */
+  referenceNumber: number;
+  /**
+   * Full Name of license
+   *
+   * @see https://github.com/spdx/license-list-XML/blob/master/DOCS/license-fields.md
+   */
+  name: string;
+  /**
+   * Short Identifier of liences
+   *
+   * @see https://github.com/spdx/license-list-XML/blob/master/DOCS/license-fields.md
+   */
+  licenseId: string;
+  /**
+   * List of external URL references for more information about license
+   *
+   * @see https://github.com/spdx/license-list-XML/blob/master/DOCS/license-fields.md
+   */
+  seeAlso: string[];
+  /**
+   * OSI Approval status of license
+   *
+   * @see https://github.com/spdx/license-list-XML/blob/master/DOCS/license-fields.md
+   */
+  isOsiApproved: boolean;
+  /**
+   *  FSF Free/Libre status of license
+   *
+   * @see https://github.com/spdx/license-list-XML/blob/master/DOCS/license-fields.md
+   */
+  isFsfLibre?: boolean;
+}
+
+
 export interface LicenseOptions {
   /**
    * License type (SPDX).
@@ -30,16 +103,38 @@ export interface LicenseOptions {
 }
 
 export class License extends FileBase {
-  private readonly text: string;
+  private readonly text?: string;
 
   constructor(project: Project, options: LicenseOptions) {
     super(project, 'LICENSE');
 
     const spdx = options.spdx;
 
+    const licensesFile = `${__dirname}/../license-text/licenses.json`;
+
+    const spdxl:ISpdxLicenseList = JSON.parse(fs.readFileSync(licensesFile, 'utf-8'));
+
+    var matchedLicenseName:string|undefined = undefined;
+
+    for ( var i = 0; i < spdxl.licenses.length; i += 1 ) {
+
+      let spdxLicenseObj:ISpdxLicense = spdxl.licenses[ i ];
+
+      if (spdx == spdxLicenseObj.licenseId) {
+
+        matchedLicenseName = spdxLicenseObj.name;
+
+        break;
+      }
+    }
+
+    if (!matchedLicenseName) {
+      throw new Error(`invalid SPDX license ${spdx} identifier`);
+    }
+
     const textFile = `${__dirname}/../license-text/${spdx}.txt`;
     if (!fs.existsSync(textFile)) {
-      throw new Error(`unsupported license ${spdx}`);
+      return;
     }
 
     const years = options.copyrightPeriod ?? new Date().getFullYear().toString();

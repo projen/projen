@@ -72,3 +72,25 @@ test('MIT-0 with owner and period', () => {
 
   expect(synthSnapshot(project).LICENSE).toMatchSnapshot();
 });
+
+test('valid but unsupported common identifier', () => {
+  const project = new TestProject();
+
+  new License(project, {
+    spdx: 'BSD-3-Clause',
+  });
+
+  expect(synthSnapshot(project).LICENSE).toMatchSnapshot();
+});
+
+test('invalid identifier', () => {
+  const project = new TestProject();
+
+  const exec = (() => {
+    new License(project, {
+      spdx: '#$%&',
+    });
+  });
+
+  expect(exec).toThrow(Error);
+});
