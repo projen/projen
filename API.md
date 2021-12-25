@@ -79,6 +79,7 @@ Name|Description
 [javascript.NodePackage](#projen-javascript-nodepackage)|Represents the npm `package.json` file.
 [javascript.NodeProject](#projen-javascript-nodeproject)|Node.js project.
 [javascript.NpmConfig](#projen-javascript-npmconfig)|File representing the local NPM config in .npmrc.
+[javascript.Prettier](#projen-javascript-prettier)|Represents prettier configuration.
 [javascript.Projenrc](#projen-javascript-projenrc)|Sets up a javascript project to use TypeScript for projenrc.
 [javascript.TypescriptConfig](#projen-javascript-typescriptconfig)|*No description*
 [javascript.UpgradeDependencies](#projen-javascript-upgradedependencies)|Upgrade node project dependencies.
@@ -231,6 +232,10 @@ Name|Description
 [javascript.NodeWorkflowSteps](#projen-javascript-nodeworkflowsteps)|*No description*
 [javascript.NpmConfigOptions](#projen-javascript-npmconfigoptions)|Options to configure the local NPM config.
 [javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)|*No description*
+[javascript.PrettierConfig](#projen-javascript-prettierconfig)|*No description*
+[javascript.PrettierOptions](#projen-javascript-prettieroptions)|*No description*
+[javascript.PrettierOverride](#projen-javascript-prettieroverride)|*No description*
+[javascript.PrettierOverrideOptions](#projen-javascript-prettieroverrideoptions)|The options to apply for this override.
 [javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)|*No description*
 [javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)|*No description*
 [javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)|*No description*
@@ -321,9 +326,16 @@ Name|Description
 [github.DependabotRegistryType](#projen-github-dependabotregistrytype)|Each configuration type requires you to provide particular settings.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
+[javascript.ArrowParens](#projen-javascript-arrowparens)|Include parentheses around a sole arrow function parameter.
 [javascript.AutoRelease](#projen-javascript-autorelease)|Automatic bump modes.
+[javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)|Control how Prettier formats quoted code embedded in the file.
+[javascript.EndOfLine](#projen-javascript-endofline)|Which end of line characters to apply.
+[javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)|How to handle whitespaces in HTML.
 [javascript.NodePackageManager](#projen-javascript-nodepackagemanager)|The node package manager to use.
 [javascript.NpmAccess](#projen-javascript-npmaccess)|Npm package access level.
+[javascript.ProseWrap](#projen-javascript-prosewrap)|How to wrap prose.
+[javascript.QuoteProps](#projen-javascript-quoteprops)|Change when properties in objects are quoted.
+[javascript.TrailingComma](#projen-javascript-trailingcomma)|Print trailing commas wherever possible when multi-line.
 [javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)|Determines how modules get resolved.
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
@@ -6755,6 +6767,74 @@ addRegistry(url: string, scope?: string): void
 
 
 
+## class Prettier 🔹 <a id="projen-javascript-prettier"></a>
+
+Represents prettier configuration.
+
+__Submodule__: javascript
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new javascript.Prettier(project: NodeProject, options: PrettierOptions)
+```
+
+* **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
+* **options** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  *No description*
+  * **config** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  *No description* __*Optional*__
+  * **enabled** (<code>boolean</code>)  *No description* __*Optional*__
+  * **prettierIgnoreEnabled** (<code>boolean</code>)  *No description* __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**config**🔹 | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Direct access to the prettier configuration (escape hatch).
+**overrides**🔹 | <code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code> | Direct access to the prettier overrides (escape hatch).
+**prettierIgnore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | Direct access to the prettier ignore.<br/>__*Optional*__
+
+### Methods
+
+
+#### addIgnorePattern(pattern)🔹 <a id="projen-javascript-prettier-addignorepattern"></a>
+
+Add an prettier ignore pattern.
+
+```ts
+addIgnorePattern(pattern: string): void
+```
+
+* **pattern** (<code>string</code>)  *No description*
+
+
+
+
+#### addOverride(override)🔹 <a id="projen-javascript-prettier-addoverride"></a>
+
+Add an prettier override.
+
+```ts
+addOverride(override: PrettierOverride): void
+```
+
+* **override** (<code>[javascript.PrettierOverride](#projen-javascript-prettieroverride)</code>)  *No description*
+  * **excludeFiles** (<code>string &#124; Array<string></code>)  Exclude these files from this override. __*Optional*__
+  * **files** (<code>string &#124; Array<string></code>)  Include these files in this override. __*Optional*__
+  * **options** (<code>[javascript.PrettierOverrideOptions](#projen-javascript-prettieroverrideoptions)</code>)  The options to apply for this override. __*Optional*__
+
+
+
+
+
+
 ## class Projenrc 🔹 <a id="projen-javascript-projenrc"></a>
 
 Sets up a javascript project to use TypeScript for projenrc.
@@ -12840,6 +12920,111 @@ Name | Type | Description
 
 
 
+## struct PrettierConfig 🔹 <a id="projen-javascript-prettierconfig"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**arrowParens**?🔹 | <code>[javascript.ArrowParens](#projen-javascript-arrowparens)</code> | Include parentheses around a sole arrow function parameter.<br/>__*Optional*__
+**bracketSameLine**?🔹 | <code>boolean</code> | Put > of opening tags on the last line instead of on a new line.<br/>__*Optional*__
+**bracketSpacing**?🔹 | <code>boolean</code> | Print spaces between brackets.<br/>__*Optional*__
+**cursorOffset**?🔹 | <code>number</code> | Print (to stderr) where a cursor at the given position would move to after formatting.<br/>__*Optional*__
+**embeddedLanguageFormatting**?🔹 | <code>[javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)</code> | Control how Prettier formats quoted code embedded in the file.<br/>__*Optional*__
+**endOfLine**?🔹 | <code>[javascript.EndOfLine](#projen-javascript-endofline)</code> | Which end of line characters to apply.<br/>__*Optional*__
+**filepath**?🔹 | <code>string</code> | Specify the input filepath.<br/>__*Optional*__
+**htmlWhitespaceSensitivity**?🔹 | <code>[javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)</code> | How to handle whitespaces in HTML.<br/>__*Optional*__
+**insertPragma**?🔹 | <code>boolean</code> | Insert @format pragma into file's first docblock comment.<br/>__*Optional*__
+**jsxSingleQuote**?🔹 | <code>boolean</code> | Use single quotes in JSX.<br/>__*Optional*__
+**overrides**?🔹 | <code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code> | Provide a list of patterns to override prettier configuration.<br/>__*Optional*__
+**parser**?🔹 | <code>string</code> | Which parser to use.<br/>__*Optional*__
+**pluginSearchDirs**?🔹 | <code>Array<string></code> | Custom directory that contains prettier plugins in node_modules subdirectory.<br/>__*Optional*__
+**plugins**?🔹 | <code>Array<string></code> | Add a plugin.<br/>__*Optional*__
+**printWidth**?🔹 | <code>number</code> | The line length where Prettier will try wrap.<br/>__*Optional*__
+**proseWrap**?🔹 | <code>[javascript.ProseWrap](#projen-javascript-prosewrap)</code> | How to wrap prose.<br/>__*Optional*__
+**quoteProps**?🔹 | <code>[javascript.QuoteProps](#projen-javascript-quoteprops)</code> | Change when properties in objects are quoted.<br/>__*Optional*__
+**rangeEnd**?🔹 | <code>number</code> | Format code ending at a given character offset (exclusive).<br/>__*Optional*__
+**rangeStart**?🔹 | <code>number</code> | Format code starting at a given character offset.<br/>__*Optional*__
+**requirePragma**?🔹 | <code>boolean</code> | Require either '@prettier' or '@format' to be present in the file's first docblock comment in order for it to be formatted.<br/>__*Optional*__
+**semi**?🔹 | <code>boolean</code> | Print semicolons.<br/>__*Optional*__
+**singleQuote**?🔹 | <code>boolean</code> | Use single quotes instead of double quotes.<br/>__*Optional*__
+**tabWidth**?🔹 | <code>number</code> | Number of spaces per indentation level.<br/>__*Optional*__
+**trailingComma**?🔹 | <code>[javascript.TrailingComma](#projen-javascript-trailingcomma)</code> | Print trailing commas wherever possible when multi-line.<br/>__*Optional*__
+**useTabs**?🔹 | <code>boolean</code> | Indent with tabs instead of spaces.<br/>__*Optional*__
+**vueIndentScriptAndStyle**?🔹 | <code>boolean</code> | Indent script and style tags in Vue files.<br/>__*Optional*__
+
+
+
+## struct PrettierOptions 🔹 <a id="projen-javascript-prettieroptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**config**?🔹 | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | __*Optional*__
+**enabled**?🔹 | <code>boolean</code> | __*Optional*__
+**prettierIgnoreEnabled**?🔹 | <code>boolean</code> | __*Optional*__
+
+
+
+## struct PrettierOverride 🔹 <a id="projen-javascript-prettieroverride"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**excludeFiles**?🔹 | <code>string &#124; Array<string></code> | Exclude these files from this override.<br/>__*Optional*__
+**files**?🔹 | <code>string &#124; Array<string></code> | Include these files in this override.<br/>__*Optional*__
+**options**?🔹 | <code>[javascript.PrettierOverrideOptions](#projen-javascript-prettieroverrideoptions)</code> | The options to apply for this override.<br/>__*Optional*__
+
+
+
+## struct PrettierOverrideOptions 🔹 <a id="projen-javascript-prettieroverrideoptions"></a>
+
+
+The options to apply for this override.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**arrowParens**?🔹 | <code>[javascript.ArrowParens](#projen-javascript-arrowparens)</code> | Include parentheses around a sole arrow function parameter.<br/>__*Optional*__
+**bracketSameLine**?🔹 | <code>boolean</code> | Put > of opening tags on the last line instead of on a new line.<br/>__*Optional*__
+**bracketSpacing**?🔹 | <code>boolean</code> | Print spaces between brackets.<br/>__*Optional*__
+**cursorOffset**?🔹 | <code>number</code> | Print (to stderr) where a cursor at the given position would move to after formatting.<br/>__*Optional*__
+**embeddedLanguageFormatting**?🔹 | <code>[javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)</code> | Control how Prettier formats quoted code embedded in the file.<br/>__*Optional*__
+**endOfLine**?🔹 | <code>[javascript.EndOfLine](#projen-javascript-endofline)</code> | Which end of line characters to apply.<br/>__*Optional*__
+**filepath**?🔹 | <code>string</code> | Specify the input filepath.<br/>__*Optional*__
+**htmlWhitespaceSensitivity**?🔹 | <code>[javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)</code> | How to handle whitespaces in HTML.<br/>__*Optional*__
+**insertPragma**?🔹 | <code>boolean</code> | Insert @format pragma into file's first docblock comment.<br/>__*Optional*__
+**jsxSingleQuote**?🔹 | <code>boolean</code> | Use single quotes in JSX.<br/>__*Optional*__
+**parser**?🔹 | <code>string</code> | Which parser to use.<br/>__*Optional*__
+**pluginSearchDirs**?🔹 | <code>Array<string></code> | Custom directory that contains prettier plugins in node_modules subdirectory.<br/>__*Optional*__
+**plugins**?🔹 | <code>Array<string></code> | Add a plugin.<br/>__*Optional*__
+**printWidth**?🔹 | <code>number</code> | The line length where Prettier will try wrap.<br/>__*Optional*__
+**proseWrap**?🔹 | <code>[javascript.ProseWrap](#projen-javascript-prosewrap)</code> | How to wrap prose.<br/>__*Optional*__
+**quoteProps**?🔹 | <code>[javascript.QuoteProps](#projen-javascript-quoteprops)</code> | Change when properties in objects are quoted.<br/>__*Optional*__
+**rangeEnd**?🔹 | <code>number</code> | Format code ending at a given character offset (exclusive).<br/>__*Optional*__
+**rangeStart**?🔹 | <code>number</code> | Format code starting at a given character offset.<br/>__*Optional*__
+**requirePragma**?🔹 | <code>boolean</code> | Require either '@prettier' or '@format' to be present in the file's first docblock comment in order for it to be formatted.<br/>__*Optional*__
+**semi**?🔹 | <code>boolean</code> | Print semicolons.<br/>__*Optional*__
+**singleQuote**?🔹 | <code>boolean</code> | Use single quotes instead of double quotes.<br/>__*Optional*__
+**tabWidth**?🔹 | <code>number</code> | Number of spaces per indentation level.<br/>__*Optional*__
+**trailingComma**?🔹 | <code>[javascript.TrailingComma](#projen-javascript-trailingcomma)</code> | Print trailing commas wherever possible when multi-line.<br/>__*Optional*__
+**useTabs**?🔹 | <code>boolean</code> | Indent with tabs instead of spaces.<br/>__*Optional*__
+**vueIndentScriptAndStyle**?🔹 | <code>boolean</code> | Indent script and style tags in Vue files.<br/>__*Optional*__
+
+
+
 ## struct ProjenrcOptions 🔹 <a id="projen-javascript-projenrcoptions"></a>
 
 
@@ -14817,6 +15002,20 @@ Name | Description
 **INCREASE_IF_NECESSARY** 🔹|Increase the version requirement only when required by the new version.
 
 
+## enum ArrowParens 🔹 <a id="projen-javascript-arrowparens"></a>
+
+Include parentheses around a sole arrow function parameter.
+
+Always include parens. Example: `(x) => x`
+
+Omit parens when possible. Example: `x => x`
+
+Name | Description
+-----|-----
+**ALWAYS** 🔹|
+**AVOID** 🔹|
+
+
 ## enum AutoRelease 🔹 <a id="projen-javascript-autorelease"></a>
 
 Automatic bump modes.
@@ -14825,6 +15024,59 @@ Name | Description
 -----|-----
 **EVERY_COMMIT** 🔹|Automatically bump & release a new version for every commit to "main".
 **DAILY** 🔹|Automatically bump & release a new version on a daily basis.
+
+
+## enum EmbeddedLanguageFormatting 🔹 <a id="projen-javascript-embeddedlanguageformatting"></a>
+
+Control how Prettier formats quoted code embedded in the file.
+
+Format embedded code if Prettier can automatically identify it.
+
+Never automatically format embedded code.
+
+Name | Description
+-----|-----
+**AUTO** 🔹|
+**OFF** 🔹|
+
+
+## enum EndOfLine 🔹 <a id="projen-javascript-endofline"></a>
+
+Which end of line characters to apply.
+
+Line Feed only (\n), common on Linux and macOS as well as inside git repos
+
+Carriage Return + Line Feed characters (\r\n), common on Windows
+
+Carriage Return character only (\r), used very rarely
+
+Maintain existing
+(mixed values within one file are normalised by looking at what's used after the first
+line)
+
+Name | Description
+-----|-----
+**AUTO** 🔹|
+**CR** 🔹|
+**CRLF** 🔹|
+**LF** 🔹|
+
+
+## enum HTMLWhitespaceSensitivity 🔹 <a id="projen-javascript-htmlwhitespacesensitivity"></a>
+
+How to handle whitespaces in HTML.
+
+Respect the default value of CSS display property.
+
+Whitespaces are considered sensitive.
+
+Whitespaces are considered insensitive.
+
+Name | Description
+-----|-----
+**CSS** 🔹|
+**IGNORE** 🔹|
+**STRICT** 🔹|
 
 
 ## enum NodePackageManager 🔹 <a id="projen-javascript-nodepackagemanager"></a>
@@ -14846,6 +15098,57 @@ Name | Description
 -----|-----
 **PUBLIC** 🔹|Package is public.
 **RESTRICTED** 🔹|Package can only be accessed with credentials.
+
+
+## enum ProseWrap 🔹 <a id="projen-javascript-prosewrap"></a>
+
+How to wrap prose.
+
+Wrap prose if it exceeds the print width.
+
+Do not wrap prose.
+
+Wrap prose as-is.
+
+Name | Description
+-----|-----
+**ALWAYS** 🔹|
+**NEVER** 🔹|
+**PRESERVE** 🔹|
+
+
+## enum QuoteProps 🔹 <a id="projen-javascript-quoteprops"></a>
+
+Change when properties in objects are quoted.
+
+Only add quotes around object properties where required.
+
+If at least one property in an object requires quotes, quote all properties.
+
+Respect the input use of quotes in object properties.
+
+Name | Description
+-----|-----
+**ASNEEDED** 🔹|
+**CONSISTENT** 🔹|
+**PRESERVE** 🔹|
+
+
+## enum TrailingComma 🔹 <a id="projen-javascript-trailingcomma"></a>
+
+Print trailing commas wherever possible when multi-line.
+
+Trailing commas where valid in ES5 (objects, arrays, etc.)
+
+No trailing commas.
+
+Trailing commas wherever possible (including function arguments).
+
+Name | Description
+-----|-----
+**ALL** 🔹|
+**ES5** 🔹|
+**NONE** 🔹|
 
 
 ## enum TypeScriptJsxMode 🔹 <a id="projen-javascript-typescriptjsxmode"></a>
