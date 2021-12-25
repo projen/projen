@@ -1,11 +1,7 @@
 import { Component } from '../component';
 import { NodeProject } from '../javascript';
 import { JsonFile } from '../json';
-
-export interface PrettierOptions {
-  readonly config?: PrettierConfig;
-  readonly enabled?: boolean;
-}
+import { Project } from '../project';
 
 export interface PrettierConfig {
   /**
@@ -372,6 +368,10 @@ export enum TrailingComma {
  * Represents prettier configuration.
  */
 export class Prettier extends Component {
+  public static of(project: Project): Prettier | undefined {
+    const isPrettier = (c: Component): c is Prettier => c instanceof Prettier;
+    return project.components.find(isPrettier);
+  }
   /**
    * Direct access to the prettier configuration (escape hatch)
    */
@@ -381,18 +381,16 @@ export class Prettier extends Component {
    */
   public readonly overrides: PrettierOverride[];
 
-  constructor(project: NodeProject, options: PrettierOptions) {
+  constructor(project: NodeProject, options: PrettierConfig) {
     super(project);
 
     this.overrides = [];
 
     project.addDevDeps('prettier');
 
-    this.config = { ...options.config, overrides: { ...this.overrides } };
+    this.config = { ...options, overrides: [...this.overrides] };
 
-    if (options.enabled ?? false) {
-      new JsonFile(project, '.prettierrc.json', { obj: this.config, marker: false });
-    }
+    new JsonFile(project, '.prettierrc.json', { obj: this.config, marker: false });
   }
   /**
    * Add an prettier override.

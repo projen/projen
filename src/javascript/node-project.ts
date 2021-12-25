@@ -457,7 +457,7 @@ export class NodeProject extends GitHubProject {
     }
 
     if (options.prettierIgnoreEnabled ?? false) {
-      this.prettierIgnore = new IgnoreFile(this, '.npmignore');
+      this.prettierIgnore = new IgnoreFile(this, '.prettierignore');
     }
 
     this.addDefaultGitIgnore();

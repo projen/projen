@@ -2483,6 +2483,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "false",
         "docs": "Defines an .prettierIgnore file.",
         "featured": false,
         "fullType": Object {
@@ -2497,6 +2514,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier-ignore-enabled",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierConfig",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierConfig",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierConfig",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -5113,6 +5149,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "false",
         "docs": "Defines an .prettierIgnore file.",
         "featured": false,
         "fullType": Object {
@@ -5127,6 +5180,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier-ignore-enabled",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierConfig",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierConfig",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierConfig",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -7634,6 +7706,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "false",
         "docs": "Defines an .prettierIgnore file.",
         "featured": false,
         "fullType": Object {
@@ -7648,6 +7737,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier-ignore-enabled",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierConfig",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierConfig",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierConfig",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -10102,6 +10210,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "false",
         "docs": "Defines an .prettierIgnore file.",
         "featured": false,
         "fullType": Object {
@@ -10116,6 +10241,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier-ignore-enabled",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierConfig",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierConfig",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierConfig",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -12628,6 +12772,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "false",
         "docs": "Defines an .prettierIgnore file.",
         "featured": false,
         "fullType": Object {
@@ -12642,6 +12803,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier-ignore-enabled",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierConfig",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierConfig",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierConfig",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -15808,6 +15988,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "false",
         "docs": "Defines an .prettierIgnore file.",
         "featured": false,
         "fullType": Object {
@@ -15822,6 +16019,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier-ignore-enabled",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierConfig",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierConfig",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierConfig",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -20260,6 +20476,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "false",
         "docs": "Defines an .prettierIgnore file.",
         "featured": false,
         "fullType": Object {
@@ -20274,6 +20507,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier-ignore-enabled",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierConfig",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierConfig",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierConfig",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -27468,6 +27720,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "false",
         "docs": "Defines an .prettierIgnore file.",
         "featured": false,
         "fullType": Object {
@@ -27482,6 +27751,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier-ignore-enabled",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierConfig",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierConfig",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierConfig",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -29750,6 +30038,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "false",
         "docs": "Defines an .prettierIgnore file.",
         "featured": false,
         "fullType": Object {
@@ -29764,6 +30069,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier-ignore-enabled",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierConfig",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierConfig",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierConfig",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -32010,6 +32334,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "false",
         "docs": "Defines an .prettierIgnore file.",
         "featured": false,
         "fullType": Object {
@@ -32024,6 +32365,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier-ignore-enabled",
+      },
+      Object {
+        "default": "- opinionated default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierConfig",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierConfig",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierConfig",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
