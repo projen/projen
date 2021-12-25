@@ -1,4 +1,3 @@
-import { IgnoreFile } from '..';
 import { Component } from '../component';
 import { NodeProject } from '../javascript';
 import { JsonFile } from '../json';
@@ -6,7 +5,6 @@ import { JsonFile } from '../json';
 export interface PrettierOptions {
   readonly config?: PrettierConfig;
   readonly enabled?: boolean;
-  readonly prettierIgnoreEnabled?: boolean;
 }
 
 export interface PrettierConfig {
@@ -382,10 +380,6 @@ export class Prettier extends Component {
    * Direct access to the prettier overrides (escape hatch)
    */
   public readonly overrides: PrettierOverride[];
-  /**
-   * Direct access to the prettier ignore
-   */
-  public readonly prettierIgnore?: IgnoreFile;
 
   constructor(project: NodeProject, options: PrettierOptions) {
     super(project);
@@ -393,10 +387,6 @@ export class Prettier extends Component {
     this.overrides = [];
 
     project.addDevDeps('prettier');
-
-    if (options.prettierIgnoreEnabled ?? true) {
-      this.prettierIgnore = new IgnoreFile(project, '.prettierignore');
-    }
 
     this.config = { ...options.config, overrides: { ...this.overrides } };
 
@@ -409,12 +399,5 @@ export class Prettier extends Component {
    */
   public addOverride(override: PrettierOverride) {
     this.overrides.push(override);
-  }
-
-  /**
-   * Add an prettier ignore pattern.
-   */
-  public addIgnorePattern(pattern: string) {
-    this.prettierIgnore?.addPatterns(pattern);
   }
 }

@@ -2482,6 +2482,23 @@ Array [
         "switch": "prerelease",
       },
       Object {
+        "default": "false",
+        "docs": "Defines an .prettierIgnore file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettierIgnoreEnabled",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierIgnoreEnabled",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier-ignore-enabled",
+      },
+      Object {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -5095,6 +5112,23 @@ Array [
         "switch": "prerelease",
       },
       Object {
+        "default": "false",
+        "docs": "Defines an .prettierIgnore file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettierIgnoreEnabled",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierIgnoreEnabled",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier-ignore-enabled",
+      },
+      Object {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -7599,6 +7633,23 @@ Array [
         "switch": "prerelease",
       },
       Object {
+        "default": "false",
+        "docs": "Defines an .prettierIgnore file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettierIgnoreEnabled",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierIgnoreEnabled",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier-ignore-enabled",
+      },
+      Object {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -10048,6 +10099,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Defines an .prettierIgnore file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettierIgnoreEnabled",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierIgnoreEnabled",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier-ignore-enabled",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -12557,6 +12625,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Defines an .prettierIgnore file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettierIgnoreEnabled",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierIgnoreEnabled",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier-ignore-enabled",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -15722,6 +15807,23 @@ Array [
         "switch": "prerelease",
       },
       Object {
+        "default": "false",
+        "docs": "Defines an .prettierIgnore file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettierIgnoreEnabled",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierIgnoreEnabled",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier-ignore-enabled",
+      },
+      Object {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -17987,6 +18089,23 @@ Array [
         "switch": "prerelease",
       },
       Object {
+        "default": "false",
+        "docs": "Defines an .prettierIgnore file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettierIgnoreEnabled",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierIgnoreEnabled",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier-ignore-enabled",
+      },
+      Object {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -20140,6 +20259,23 @@ Array [
         "switch": "prerelease",
       },
       Object {
+        "default": "false",
+        "docs": "Defines an .prettierIgnore file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettierIgnoreEnabled",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierIgnoreEnabled",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier-ignore-enabled",
+      },
+      Object {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -22277,6 +22413,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Defines an .prettierIgnore file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettierIgnoreEnabled",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierIgnoreEnabled",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier-ignore-enabled",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -25156,6 +25309,23 @@ Array [
         "switch": "prerelease",
       },
       Object {
+        "default": "false",
+        "docs": "Defines an .prettierIgnore file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettierIgnoreEnabled",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierIgnoreEnabled",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier-ignore-enabled",
+      },
+      Object {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -27295,6 +27465,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Defines an .prettierIgnore file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettierIgnoreEnabled",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierIgnoreEnabled",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier-ignore-enabled",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -29562,6 +29749,23 @@ Array [
         "switch": "prerelease",
       },
       Object {
+        "default": "false",
+        "docs": "Defines an .prettierIgnore file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettierIgnoreEnabled",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierIgnoreEnabled",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier-ignore-enabled",
+      },
+      Object {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -31803,6 +32007,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Defines an .prettierIgnore file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettierIgnoreEnabled",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierIgnoreEnabled",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier-ignore-enabled",
       },
       Object {
         "default": "ProjectType.UNKNOWN",

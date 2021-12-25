@@ -6,7 +6,7 @@ import { JobStep } from '../github/workflows-model';
 import { IgnoreFile } from '../ignore-file';
 import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from '../javascript';
 import { License } from '../license';
-import { Release, ReleaseProjectOptions, Publisher } from '../release';
+import { Publisher, Release, ReleaseProjectOptions } from '../release';
 import { Task } from '../task';
 import { deepMerge } from '../util';
 import { Version } from '../version';
@@ -242,6 +242,13 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
   readonly pullRequestTemplateContents?: string[];
 
   /**
+   * Defines an .prettierIgnore file
+   *
+   * @default false
+   */
+  readonly prettierIgnoreEnabled?: boolean;
+
+  /**
    * Additional entries to .gitignore
    */
   readonly gitignore?: string[];
@@ -323,6 +330,11 @@ export class NodeProject extends GitHubProject {
    * The .npmignore file.
    */
   public readonly npmignore?: IgnoreFile;
+
+  /**
+   * The .prettierIgnore file.
+   */
+  public readonly prettierIgnore?: IgnoreFile;
 
   /**
    * @deprecated use `package.allowLibraryDependencies`
@@ -442,6 +454,10 @@ export class NodeProject extends GitHubProject {
 
     if (options.npmignoreEnabled ?? true) {
       this.npmignore = new IgnoreFile(this, '.npmignore');
+    }
+
+    if (options.prettierIgnoreEnabled ?? false) {
+      this.prettierIgnore = new IgnoreFile(this, '.npmignore');
     }
 
     this.addDefaultGitIgnore();
@@ -822,6 +838,10 @@ export class NodeProject extends GitHubProject {
 
   public addPackageIgnore(pattern: string) {
     this.npmignore?.addPatterns(pattern);
+  }
+
+  public addPrettierIgnore(pattern: string) {
+    this.prettierIgnore?.addPatterns(pattern);
   }
 
   private addLicense(options: NodeProjectOptions) {
