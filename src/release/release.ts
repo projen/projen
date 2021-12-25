@@ -41,13 +41,6 @@ export interface ReleaseProjectOptions {
   readonly releaseTrigger?: ReleaseTrigger;
 
   /**
-   * A directory which will contain artifacts to be published to npm.
-   *
-   * @default "dist"
-   */
-  readonly artifactsDirectory?: string;
-
-  /**
    * A set of workflow steps to execute in order to setup the workflow
    * container.
    */
@@ -178,6 +171,13 @@ export interface ReleaseProjectOptions {
    * @default false
    */
   readonly publishTasks?: boolean;
+
+  /**
+   * Instead of actually publishing to package managers, just print the publishing command.
+   *
+   * @default false
+   */
+  readonly publishDryRun?: boolean;
 }
 
 /**
@@ -214,6 +214,15 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    * @default true
    */
   readonly githubRelease?: boolean;
+
+
+  /**
+   * A directory which will contain build artifacts.
+   *
+   * @default "dist"
+   */
+  readonly artifactsDirectory: string;
+
 }
 
 /**
@@ -231,7 +240,6 @@ export class Release extends Component {
   private readonly version: Version;
   private readonly postBuildSteps: JobStep[];
   private readonly antitamper: boolean;
-  private readonly artifactsDirectory: string;
   private readonly versionFile: string;
   private readonly releaseTrigger: ReleaseTrigger;
   private readonly preBuildSteps: JobStep[];
@@ -241,6 +249,11 @@ export class Release extends Component {
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
   private readonly workflowRunsOn?: string[];
+
+  /**
+   * Location of build artifacts.
+   */
+  public readonly artifactsDirectory: string;
 
   constructor(project: GitHubProject, options: ReleaseOptions) {
     super(project);
@@ -289,6 +302,7 @@ export class Release extends Component {
       failureIssueLabel: options.releaseFailureIssueLabel,
       workflowRunsOn: options.workflowRunsOn,
       publishTasks: options.publishTasks,
+      dryRun: options.publishDryRun,
     });
 
     const githubRelease = options.githubRelease ?? true;

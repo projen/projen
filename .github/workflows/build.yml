@@ -8,9 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      checks: write
       contents: write
-      actions: write
+    outputs:
+      self_mutation_commit: ${{ steps.self_mutation.outputs.self_mutation_commit }}
     env:
       CI: "true"
     steps:
@@ -21,6 +21,7 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
       - name: Setup Node.js
@@ -35,25 +36,145 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           directory: coverage
-      - name: Check for changes
-        id: git_diff
-        run: git diff --exit-code || echo "::set-output name=has_changes::true"
-      - if: steps.git_diff.outputs.has_changes
-        name: Commit and push changes (if changed)
-        run: 'git add . && git commit -m "chore: self mutation" && git push origin
-          HEAD:${{ github.event.pull_request.head.ref }}'
-      - if: steps.git_diff.outputs.has_changes
-        name: Update status check (if changed)
+      - name: Self mutation
+        id: self_mutation
+        run: |-
+          if ! git diff --exit-code; then
+            git add .
+            git commit -m "chore: self mutation"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+            echo "::set-output name=self_mutation_commit::$(git rev-parse HEAD)"
+          fi
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2.1.1
+        if: always()
+        with:
+          name: build-artifact
+          path: dist
+  update-status:
+    needs:
+      - build
+      - package-js
+      - package-java
+      - package-python
+      - package-go
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      actions: write
+    if: ${{ needs.build.outputs.self_mutation_commit }}
+    steps:
+      - name: Update status check (if changed)
         run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
-          }}/check-runs -F name="build" -F head_sha="$(git rev-parse HEAD)" -F
-          status="completed" -F conclusion="success"
+          }}/check-runs -F name="build" -F head_sha="${{
+          needs.build.outputs.self_mutation_commit }}" -F status="completed" -F
+          conclusion="success"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - if: steps.git_diff.outputs.has_changes
-        name: Cancel workflow (if changed)
+      - name: Cancel workflow (if changed)
         run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
           }}/actions/runs/${{ github.run_id }}/cancel
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    container:
-      image: jsii/superchain:1-buster-slim-node12
+  package-js:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: dist
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/*.tgz --strip-components=1
+          rm -fr dist/
+      - name: Create js artifact
+        run: >-
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js
+  package-java:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 11.x
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: dist
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/*.tgz --strip-components=1
+          rm -fr dist/
+      - name: Create java artifact
+        run: >-
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java
+  package-python:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: dist
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/*.tgz --strip-components=1
+          rm -fr dist/
+      - name: Create python artifact
+        run: >-
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python
+  package-go:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ^1.16.0
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: dist
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/*.tgz --strip-components=1
+          rm -fr dist/
+      - name: Create go artifact
+        run: >-
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target go

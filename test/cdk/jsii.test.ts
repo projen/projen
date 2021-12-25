@@ -1,5 +1,6 @@
-import { JsiiProject } from '../src/cdk';
-import { synthSnapshot } from './util';
+import * as yaml from 'yaml';
+import { JsiiProject } from '../../src/cdk';
+import { synthSnapshot } from '../util';
 
 describe('author', () => {
   test('authorEmail and authorAddress can be the same value', () => {
@@ -309,41 +310,52 @@ test('docgen: true should just work', () => {
   expect(output['.projen/tasks.json'].tasks.docgen.steps[0].exec).toStrictEqual('jsii-docgen');
 });
 
-describe('superchain image is selected based on the node version', () => {
-  const opts = {
+describe('language bindings', () => {
+  const project = new JsiiProject({
     author: 'My name',
     name: 'testproject',
     authorAddress: 'https://foo.bar',
     defaultReleaseBranch: 'main',
     repositoryUrl: 'https://github.com/foo/bar.git',
-  };
-
-  test('defaults to 1-buster-slim without minNodeVersion', () => {
-    const project = new JsiiProject(opts);
-    const output = synthSnapshot(project);
-    expect(output['.github/workflows/build.yml']).toContain('image: jsii/superchain:1-buster-slim');
+    publishToGo: { moduleName: 'github.com/foo/bar' },
+    publishToMaven: { javaPackage: 'io.github.cdklabs.watchful', mavenGroupId: 'io.github.cdklabs', mavenArtifactId: 'cdk-watchful' },
+    publishToNuget: { dotNetNamespace: 'DotNet.Namespace', packageId: 'PackageId' },
+    publishToPypi: { distName: 'dist-name', module: 'module-name' },
   });
 
-  test('12.x', () => {
-    const project = new JsiiProject({ ...opts, minNodeVersion: '12.22.1' });
-    const output = synthSnapshot(project);
-    expect(output['.github/workflows/build.yml']).toContain('image: jsii/superchain:1-buster-slim-node12');
+  const output = synthSnapshot(project);
+  const build = yaml.parse(output['.github/workflows/build.yml']);
+  const release = yaml.parse(output['.github/workflows/release.yml']);
+  const tasks = output['.projen/tasks.json'].tasks;
+
+  test('build workflow includes packaging jobs', () => {
+    expect(Object.keys(build.jobs)).toStrictEqual([
+      'build',
+      'update-status',
+      'package-js',
+      'package-java',
+      'package-python',
+      'package-dotnet',
+      'package-go',
+    ]);
   });
 
-  test('14.x', () => {
-    const project = new JsiiProject({ ...opts, minNodeVersion: '14.42.1' });
-    const output = synthSnapshot(project);
-    expect(output['.github/workflows/build.yml']).toContain('image: jsii/superchain:1-buster-slim-node14');
+  test.each(['js', 'java', 'python', 'dotnet', 'go'])('snapshot %s', language => {
+    expect(build.jobs[`package-${language}`]).toMatchSnapshot();
   });
 
-  test('16.x', () => {
-    const project = new JsiiProject({ ...opts, minNodeVersion: '16.22.1' });
-    const output = synthSnapshot(project);
-    expect(output['.github/workflows/build.yml']).toContain('image: jsii/superchain:1-buster-slim-node16');
+  test.each(['js', 'java', 'python', 'dotnet', 'go'])('package:%s task', language => {
+    expect(tasks[`package:${language}`]).toMatchSnapshot();
   });
 
-  test('unsupported version', () => {
-    expect(() => new JsiiProject({ ...opts, minNodeVersion: '15.3.20' })).toThrow('No jsii/superchain image available for node 15.x. Supported node versions: 12.x,14.x,16.x');
-    expect(() => new JsiiProject({ ...opts, minNodeVersion: '10.2.3' })).toThrow('No jsii/superchain image available for node 10.x. Supported node versions: 12.x,14.x,16.x');
+  test('package-all creates all bindings', () => {
+    expect(tasks['package-all']).toBeDefined();
+    expect(tasks['package-all']).toMatchSnapshot();
+  });
+
+  test.each(['pypi', 'nuget', 'npm', 'maven', 'golang'])('release workflow includes release_%s job', (language) => {
+    const job = release.jobs[`release_${language}`];
+    expect(job).toBeDefined();
+    expect(job).toMatchSnapshot();
   });
 });

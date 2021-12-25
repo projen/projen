@@ -1,6 +1,7 @@
+import { JSII_TOOLCHAIN } from '../cdk/consts';
 import { Component } from '../component';
 import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
-import { Job, JobPermission, JobPermissions, JobStep } from '../github/workflows-model';
+import { Job, JobPermission, JobPermissions, JobStep, Tools } from '../github/workflows-model';
 import { defaultNpmToken } from '../javascript/node-package';
 import { Project } from '../project';
 import { BranchOptions } from './release';
@@ -75,6 +76,13 @@ export interface PublisherOptions {
    * @default false
    */
   readonly publishTasks?: boolean;
+
+  /**
+   * Do not actually publish, only print the commands that would be executed instead.
+   *
+   * Useful if you wish to block all publishing from a single option.
+   */
+  readonly dryRun?: boolean;
 }
 
 /**
@@ -96,6 +104,8 @@ export class Publisher extends Component {
   // functions that create jobs associated with a specific branch
   private readonly _jobFactories: PublishJobFactory[] = [];
 
+  private readonly dryRun: boolean;
+
   constructor(project: Project, options: PublisherOptions) {
     super(project);
 
@@ -103,6 +113,7 @@ export class Publisher extends Component {
     this.artifactName = options.artifactName;
     this.jsiiReleaseVersion = options.jsiiReleaseVersion ?? JSII_RELEASE_VERSION;
     this.condition = options.condition;
+    this.dryRun = options.dryRun ?? false;
 
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? 'failed-release';
@@ -199,11 +210,12 @@ export class Publisher extends Component {
       'fi',
     ].join(' ');
 
-    this.addPublishJob(() => {
+    this.addPublishJob((): PublishJobOptions => {
       return {
         name: 'github',
         registryName: 'GitHub Releases',
-        setupSteps: [], // github cli is installed by default
+        prePublishSteps: options.prePublishSteps ?? [],
+        publishTools: options.publishTools,
         permissions: {
           contents: JobPermission.WRITE,
         },
@@ -230,14 +242,15 @@ export class Publisher extends Component {
       this.project.logger.warn('The `distTag` option is deprecated. Use the npmDistTag option instead.');
     }
 
-    this.addPublishJob((_branch, branchOptions) => {
+    this.addPublishJob((_branch, branchOptions): PublishJobOptions => {
       if (branchOptions.npmDistTag && options.distTag) {
         throw new Error('cannot set branch-level npmDistTag and npmDistTag in publishToNpm()');
       }
 
       return {
         name: 'npm',
-        setupSteps: [], // node 14.x is already installed
+        publishTools: JSII_TOOLCHAIN.js,
+        prePublishSteps: options.prePublishSteps ?? [],
         run: this.jsiiReleaseCommand('jsii-release-npm'),
         registryName: 'npm',
         env: {
@@ -264,11 +277,10 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToNuget(options: NugetPublishOptions = {}) {
-    this.addPublishJob((_branch, _branchOptions) => ({
+    this.addPublishJob((_branch, _branchOptions): PublishJobOptions => ({
       name: 'nuget',
-      setupSteps: [
-        { uses: 'actions/setup-dotnet@v1', with: { 'dotnet-version': '3.x' } },
-      ],
+      publishTools: JSII_TOOLCHAIN.dotnet,
+      prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-nuget'),
       registryName: 'NuGet Gallery',
       workflowEnv: {
@@ -290,12 +302,11 @@ export class Publisher extends Component {
       throw new Error('publishing to GitHub Packages requires the "mavenServerId" to be "github"');
     }
 
-    this.addPublishJob((_branch, _branchOptions) => ({
+    this.addPublishJob((_branch, _branchOptions): PublishJobOptions => ({
       name: 'maven',
       registryName: 'Maven Central',
-      setupSteps: [
-        { uses: 'actions/setup-java@v2', with: { 'distribution': 'temurin', 'java-version': 11 } },
-      ],
+      publishTools: JSII_TOOLCHAIN.java,
+      prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-maven'),
       env: {
         MAVEN_ENDPOINT: options.mavenEndpoint,
@@ -321,12 +332,11 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToPyPi(options: PyPiPublishOptions = {}) {
-    this.addPublishJob((_branch, _branchOptions) => ({
+    this.addPublishJob((_branch, _branchOptions): PublishJobOptions => ({
       name: 'pypi',
       registryName: 'PyPI',
-      setupSteps: [
-        { uses: 'actions/setup-python@v2', with: { 'python-version': 3 } },
-      ],
+      publishTools: JSII_TOOLCHAIN.python,
+      prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-pypi'),
       env: {
         TWINE_REPOSITORY_URL: options.twineRegistryUrl,
@@ -343,9 +353,10 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToGo(options: GoPublishOptions = {}) {
-    this.addPublishJob((_branch, _branchOptions) => ({
+    this.addPublishJob((_branch, _branchOptions): PublishJobOptions => ({
       name: 'golang',
-      setupSteps: [], // only requires `git`
+      publishTools: JSII_TOOLCHAIN.go,
+      prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-golang'),
       registryName: 'GitHub Go Module Repository',
       env: {
@@ -369,6 +380,7 @@ export class Publisher extends Component {
         throw new Error(`Duplicate job with name "${jobname}"`);
       }
 
+      const commandToRun = this.dryRun ? `echo "DRY RUN: ${opts.run}"` : opts.run;;
       const requiredEnv = new Array<string>();
 
       // jobEnv is the env we pass to the github job (task environment + secrets/expressions).
@@ -394,12 +406,10 @@ export class Publisher extends Component {
         task.exec(`test "$(git branch --show-current)" = "${branch}"`);
 
         // run commands
-        task.exec(opts.run);
+        task.exec(commandToRun);
       }
 
       const steps: JobStep[] = [
-        { uses: 'actions/setup-node@v2', with: { 'node-version': 14 } }, // jsii-release requires node, so always set that up
-        ...opts.setupSteps,
         {
           name: 'Download build artifacts',
           uses: 'actions/download-artifact@v2',
@@ -408,10 +418,11 @@ export class Publisher extends Component {
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for jsii-release
           },
         },
+        ...opts.prePublishSteps,
         {
           name: 'Release',
           // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
-          run: opts.run,
+          run: commandToRun,
           env: jobEnv,
         },
       ];
@@ -445,6 +456,10 @@ export class Publisher extends Component {
 
       return {
         [jobname]: {
+          tools: {
+            node: { version: '14.x' },
+            ...opts.publishTools,
+          },
           name: `Publish to ${opts.registryName}`,
           permissions: perms,
           if: this.condition,
@@ -497,11 +512,35 @@ interface PublishJobOptions {
   readonly workflowEnv?: { [name: string]: string | undefined };
 
   /**
-   * The GitHub action to execute in order to setup the environment.
-   *
-   * NOTE: node 14.x will always be installed since it is required by jsii-release.
+   * Steps to execute before the release command for preparing the dist/ output.
    */
-  readonly setupSteps: JobStep[];
+  readonly prePublishSteps: JobStep[];
+
+  /**
+   * Tools setup for the workflow.
+   * @default - no tools are installed
+   */
+  readonly publishTools?: Tools;
+}
+
+/**
+ * Common publishing options
+ */
+export interface CommonPublishOptions {
+  /**
+   * Steps to execute before executing the publishing command. These can be used
+   * to prepare the artifact for publishing if neede.
+   *
+   * These steps are executed after `dist/` has been populated with the build
+   * output.
+   */
+  readonly prePublishSteps?: JobStep[];
+
+  /**
+   * Additional tools to install in the publishing job.
+   * @default - no additional tools are installed
+   */
+  readonly publishTools?: Tools;
 }
 
 /**
@@ -512,7 +551,7 @@ export interface JsiiReleaseNpm extends NpmPublishOptions { }
 /**
  * Options for npm release
  */
-export interface NpmPublishOptions {
+export interface NpmPublishOptions extends CommonPublishOptions {
   /**
    * Tags can be used to provide an alias instead of version numbers.
    *
@@ -594,7 +633,7 @@ export interface JsiiReleasePyPi extends PyPiPublishOptions { }
 /**
  * Options for PyPI release
  */
-export interface PyPiPublishOptions {
+export interface PyPiPublishOptions extends CommonPublishOptions {
   /**
    * The registry url to use when releasing packages.
    *
@@ -623,7 +662,7 @@ export interface JsiiReleaseNuget extends NugetPublishOptions { }
 /**
  * Options for NuGet releases
  */
-export interface NugetPublishOptions {
+export interface NugetPublishOptions extends CommonPublishOptions {
   /**
    * GitHub secret which contains the API key for NuGet.
    *
@@ -640,7 +679,7 @@ export interface JsiiReleaseMaven extends MavenPublishOptions { }
 /**
  * Options for Maven releases
  */
-export interface MavenPublishOptions {
+export interface MavenPublishOptions extends CommonPublishOptions {
   /**
    * URL of Nexus repository. if not set, defaults to https://oss.sonatype.org
    *
@@ -726,7 +765,7 @@ export interface JsiiReleaseGo extends GoPublishOptions { }
 /**
  * Options for Go releases.
  */
-export interface GoPublishOptions {
+export interface GoPublishOptions extends CommonPublishOptions {
   /**
    * The name of the secret that includes a personal GitHub access token used to
    * push to the GitHub repository.
@@ -804,7 +843,7 @@ export function isAwsCodeArtifactRegistry(registryUrl: string | undefined) {
 /**
  * Publishing options for GitHub releases.
  */
-export interface GitHubReleasesPublishOptions extends VersionArtifactOptions { }
+export interface GitHubReleasesPublishOptions extends VersionArtifactOptions, CommonPublishOptions { }
 
 /**
  * Publishing options for Git releases

@@ -66,6 +66,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
@@ -90,7 +91,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -116,7 +117,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -403,6 +404,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
@@ -427,7 +429,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -453,7 +455,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -740,6 +742,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
@@ -764,7 +767,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -790,7 +793,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -1081,6 +1084,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:10.x
@@ -1105,7 +1109,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -1146,6 +1150,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:2.x
@@ -1170,7 +1175,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -1211,6 +1216,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
@@ -1235,7 +1241,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -1566,6 +1572,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:foo
@@ -1590,7 +1597,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -1616,10 +1623,10 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - uses: actions/setup-python@v2
         with:
-          python-version: 3
+          python-version: 3.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -1689,6 +1696,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
@@ -1713,7 +1721,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -1739,10 +1747,10 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - uses: actions/setup-python@v2
         with:
-          python-version: 3
+          python-version: 3.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -2090,6 +2098,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
@@ -2114,7 +2123,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -2345,6 +2354,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
@@ -2370,7 +2380,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -2413,7 +2423,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -2508,6 +2518,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
@@ -2532,7 +2543,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -2559,7 +2570,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -2803,6 +2814,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
@@ -2827,7 +2839,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -3041,6 +3053,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
@@ -3065,7 +3078,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -3294,6 +3307,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
@@ -3318,7 +3332,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -3536,6 +3550,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
@@ -3560,7 +3575,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -3586,7 +3601,10 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ^1.16.0
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -3606,13 +3624,13 @@ jobs:
       contents: read
     if: needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
       - uses: actions/setup-java@v2
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 11.x
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -3636,7 +3654,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -3657,7 +3675,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.x
@@ -3680,10 +3698,10 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - uses: actions/setup-python@v2
         with:
-          python-version: 3
+          python-version: 3.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -3979,6 +3997,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:firefox
@@ -4003,7 +4022,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -4044,6 +4063,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:safari
@@ -4068,7 +4088,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -4387,6 +4407,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:3.x
@@ -4411,7 +4432,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -4452,6 +4473,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:next
@@ -4476,7 +4498,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -4517,6 +4539,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release
@@ -4541,7 +4564,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -4901,6 +4924,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:10.x
@@ -4925,7 +4949,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -5196,6 +5220,7 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
+          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: release:10.x
@@ -5220,7 +5245,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:

@@ -939,7 +939,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -947,7 +947,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -2333,7 +2333,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -2341,7 +2341,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -2715,6 +2715,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -3484,7 +3501,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -3492,7 +3509,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -4929,7 +4946,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -4937,7 +4954,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -5311,6 +5328,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -6160,7 +6194,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -6168,7 +6202,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -7416,7 +7450,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -7424,7 +7458,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -7798,6 +7832,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -8504,7 +8555,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -8512,7 +8563,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -9850,7 +9901,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -9858,7 +9909,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -10232,6 +10283,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -11064,7 +11132,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -11072,7 +11140,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -12342,7 +12410,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -12350,7 +12418,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -12724,6 +12792,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -14245,7 +14330,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -14253,7 +14338,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -15488,7 +15573,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -15496,7 +15581,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -15870,6 +15955,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -16702,7 +16804,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -16710,7 +16812,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -17735,6 +17837,23 @@ Array [
         "switch": "outdir",
       },
       Object {
+        "default": "true",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "package",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "package",
+        ],
+        "simpleType": "boolean",
+        "switch": "package",
+      },
+      Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
@@ -18066,6 +18185,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -18700,7 +18836,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -18708,7 +18844,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -19855,7 +19991,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -19863,7 +19999,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -20237,6 +20373,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -20960,7 +21113,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -20968,7 +21121,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -21976,6 +22129,23 @@ Array [
         "switch": "outdir",
       },
       Object {
+        "default": "true",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "package",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "package",
+        ],
+        "simpleType": "boolean",
+        "switch": "package",
+      },
+      Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
@@ -22307,6 +22477,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -23803,7 +23990,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -23811,7 +23998,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -24819,6 +25006,23 @@ Array [
         "switch": "outdir",
       },
       Object {
+        "default": "true",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "package",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "package",
+        ],
+        "simpleType": "boolean",
+        "switch": "package",
+      },
+      Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
@@ -25150,6 +25354,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -25789,7 +26010,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -25797,7 +26018,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -26927,7 +27148,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -26935,7 +27156,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -27309,6 +27530,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -28037,7 +28275,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -28045,7 +28283,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -29175,7 +29413,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -29183,7 +29421,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -29557,6 +29795,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -30263,7 +30518,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -30271,7 +30526,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -31401,7 +31656,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -31409,7 +31664,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -31783,6 +32038,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",

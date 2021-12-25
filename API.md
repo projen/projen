@@ -48,6 +48,7 @@ Name|Description
 [awscdk.IntegrationTest](#projen-awscdk-integrationtest)|Cloud integration tests.
 [awscdk.LambdaFunction](#projen-awscdk-lambdafunction)|Generates a pre-bundled AWS Lambda function construct from handler code.
 [awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)|The runtime for the AWS Lambda function.
+[build.BuildWorkflow](#projen-build-buildworkflow)|*No description*
 [cdk.ConstructLibrary](#projen-cdk-constructlibrary)|A multi-language library for CDK constructs.
 [cdk.JsiiDocgen](#projen-cdk-jsiidocgen)|Creates an API.md file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that API.md is checked in.
 [cdk.JsiiProject](#projen-cdk-jsiiproject)|Multi-language jsii library project.
@@ -175,6 +176,7 @@ Name|Description
 [awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)|Options for `IntegrationTest`.
 [awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)|Common options for `LambdaFunction`.
 [awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)|Options for `Function`.
+[build.BuildWorkflowOptions](#projen-build-buildworkflowoptions)|*No description*
 [cdk.Catalog](#projen-cdk-catalog)|*No description*
 [cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)|*No description*
 [cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)|*No description*
@@ -247,6 +249,7 @@ Name|Description
 [python.VenvOptions](#projen-python-venvoptions)|Options for venv.
 [release.BranchOptions](#projen-release-branchoptions)|Options for a release branch.
 [release.CodeArtifactOptions](#projen-release-codeartifactoptions)|*No description*
+[release.CommonPublishOptions](#projen-release-commonpublishoptions)|Common publishing options.
 [release.GitHubReleasesPublishOptions](#projen-release-githubreleasespublishoptions)|Publishing options for GitHub releases.
 [release.GitPublishOptions](#projen-release-gitpublishoptions)|Publishing options for Git releases.
 [release.GoPublishOptions](#projen-release-gopublishoptions)|*No description*
@@ -2939,12 +2942,12 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -2959,6 +2962,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -2977,6 +2981,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -2999,7 +3004,6 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -3328,12 +3332,12 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -3348,6 +3352,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -3366,6 +3371,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -3388,7 +3394,6 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -3593,12 +3598,12 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -3613,6 +3618,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -3631,6 +3637,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -3653,7 +3660,6 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -3791,6 +3797,102 @@ Name | Type | Description
 
 
 
+## class BuildWorkflow 🔹 <a id="projen-build-buildworkflow"></a>
+
+
+
+__Submodule__: build
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new build.BuildWorkflow(project: Project, options: BuildWorkflowOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[build.BuildWorkflowOptions](#projen-build-buildworkflowoptions)</code>)  *No description*
+  * **artifactsDirectory** (<code>string</code>)  A name of a directory that includes build artifacts. 
+  * **buildTask** (<code>[Task](#projen-task)</code>)  The task to execute in order to build the project. 
+  * **antitamper** (<code>boolean</code>)  Enable anti-tamper check. __*Default*__: true
+  * **containerImage** (<code>string</code>)  The container image to use for builds. __*Default*__: the default workflow container
+  * **env** (<code>Map<string, string></code>)  Build environment variables. __*Default*__: {}
+  * **gitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  Git identity to use for the workflow. __*Default*__: default identity
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
+  * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build. __*Default*__: []
+  * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before the build. __*Default*__: []
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**buildJobIds**🔹 | <code>Array<string></code> | Returns a list of job IDs that are part of the build.
+
+### Methods
+
+
+#### addPostBuildJob(id, job)🔹 <a id="projen-build-buildworkflow-addpostbuildjob"></a>
+
+Adds another job to the build workflow which is executed after the build job succeeded.
+
+```ts
+addPostBuildJob(id: string, job: Job): void
+```
+
+* **id** (<code>string</code>)  The id of the new job.
+* **job** (<code>[github.workflows.Job](#projen-github-workflows-job)</code>)  The job specification.
+  * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  You can modify the default permissions granted to the GITHUB_TOKEN, adding or removing access as required, so that you only allow the minimum required access. 
+  * **runsOn** (<code>Array<string></code>)  The type of machine to run the job on. 
+  * **steps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A job contains a sequence of tasks called steps. 
+  * **concurrency** (<code>any</code>)  Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. __*Optional*__
+  * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  A container to run any steps in a job that don't already specify a container. __*Optional*__
+  * **continueOnError** (<code>boolean</code>)  Prevents a workflow run from failing when a job fails. __*Optional*__
+  * **defaults** (<code>[github.workflows.JobDefaults](#projen-github-workflows-jobdefaults)</code>)  A map of default settings that will apply to all steps in the job. __*Optional*__
+  * **env** (<code>Map<string, string></code>)  A map of environment variables that are available to all steps in the job. __*Optional*__
+  * **environment** (<code>any</code>)  The environment that the job references. __*Optional*__
+  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
+  * **name** (<code>string</code>)  The name of the job displayed on GitHub. __*Optional*__
+  * **needs** (<code>Array<string></code>)  Identifies any jobs that must complete successfully before this job will run. __*Optional*__
+  * **outputs** (<code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code>)  A map of outputs for a job. __*Optional*__
+  * **services** (<code>Map<string, [github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)></code>)  Used to host service containers for a job in a workflow. __*Optional*__
+  * **strategy** (<code>[github.workflows.JobStrategy](#projen-github-workflows-jobstrategy)</code>)  A strategy creates a build matrix for your jobs. __*Optional*__
+  * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to let a job run before GitHub automatically cancels it. __*Default*__: 360
+  * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools required for this job. __*Optional*__
+
+
+
+
+#### addPostBuildSteps(...steps)🔹 <a id="projen-build-buildworkflow-addpostbuildsteps"></a>
+
+Adds steps that are executed after the build.
+
+```ts
+addPostBuildSteps(...steps: JobStep[]): void
+```
+
+* **steps** (<code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code>)  The job steps.
+  * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
+  * **env** (<code>Map<string, string></code>)  Sets environment variables for steps to use in the runner environment. __*Optional*__
+  * **id** (<code>string</code>)  A unique identifier for the step. __*Optional*__
+  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
+  * **name** (<code>string</code>)  A name for your step to display on GitHub. __*Optional*__
+  * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
+  * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
+  * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
+  * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
+
+
+
+
+
+
 ## class ConstructLibrary 🔹 <a id="projen-cdk-constructlibrary"></a>
 
 A multi-language library for CDK constructs.
@@ -3863,12 +3965,12 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -3883,6 +3985,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -3901,6 +4004,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -3923,7 +4027,6 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4043,12 +4146,12 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -4063,6 +4166,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -4081,6 +4185,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4103,7 +4208,6 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4209,12 +4313,12 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -4229,6 +4333,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -4247,6 +4352,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4269,7 +4375,6 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4377,12 +4482,12 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -4397,6 +4502,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -4415,6 +4521,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4437,7 +4544,6 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4554,12 +4660,12 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -4574,6 +4680,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -4592,6 +4699,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4614,7 +4722,6 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4868,6 +4975,19 @@ tryFindWorkflow(name: string): GithubWorkflow
 __Returns__:
 * <code>[github.GithubWorkflow](#projen-github-githubworkflow)</code>
 
+#### *static* of(project)🔹 <a id="projen-github-github-of"></a>
+
+Returns the `GitHub` component of a project or `undefined` if the project does not have a GitHub component.
+
+```ts
+static of(project: Project): GitHub
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+__Returns__:
+* <code>[github.GitHub](#projen-github-github)</code>
+
 
 
 ## class GitHubProject ⚠️ <a id="projen-github-githubproject"></a>
@@ -4983,6 +5103,37 @@ Name | Type | Description
 **file**?🔹 | <code>[YamlFile](#projen-yamlfile)</code> | The workflow YAML file.<br/>__*Optional*__
 
 ### Methods
+
+
+#### addJob(id, job)🔹 <a id="projen-github-githubworkflow-addjob"></a>
+
+Adds a single job to the workflow.
+
+```ts
+addJob(id: string, job: Job): void
+```
+
+* **id** (<code>string</code>)  The job name (unique within the workflow).
+* **job** (<code>[github.workflows.Job](#projen-github-workflows-job)</code>)  The job specification.
+  * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  You can modify the default permissions granted to the GITHUB_TOKEN, adding or removing access as required, so that you only allow the minimum required access. 
+  * **runsOn** (<code>Array<string></code>)  The type of machine to run the job on. 
+  * **steps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A job contains a sequence of tasks called steps. 
+  * **concurrency** (<code>any</code>)  Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. __*Optional*__
+  * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  A container to run any steps in a job that don't already specify a container. __*Optional*__
+  * **continueOnError** (<code>boolean</code>)  Prevents a workflow run from failing when a job fails. __*Optional*__
+  * **defaults** (<code>[github.workflows.JobDefaults](#projen-github-workflows-jobdefaults)</code>)  A map of default settings that will apply to all steps in the job. __*Optional*__
+  * **env** (<code>Map<string, string></code>)  A map of environment variables that are available to all steps in the job. __*Optional*__
+  * **environment** (<code>any</code>)  The environment that the job references. __*Optional*__
+  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
+  * **name** (<code>string</code>)  The name of the job displayed on GitHub. __*Optional*__
+  * **needs** (<code>Array<string></code>)  Identifies any jobs that must complete successfully before this job will run. __*Optional*__
+  * **outputs** (<code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code>)  A map of outputs for a job. __*Optional*__
+  * **services** (<code>Map<string, [github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)></code>)  Used to host service containers for a job in a workflow. __*Optional*__
+  * **strategy** (<code>[github.workflows.JobStrategy](#projen-github-workflows-jobstrategy)</code>)  A strategy creates a build matrix for your jobs. __*Optional*__
+  * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to let a job run before GitHub automatically cancels it. __*Default*__: 360
+  * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools required for this job. __*Optional*__
+
+
 
 
 #### addJobs(jobs)🔹 <a id="projen-github-githubworkflow-addjobs"></a>
@@ -5218,6 +5369,7 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
 Name | Type | Description 
 -----|------|-------------
 **jobId**🔹 | <code>string</code> | <span></span>
+**artifactsDirectory**?🔹 | <code>string</code> | __*Optional*__
 
 
 
@@ -6263,12 +6415,12 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -6283,6 +6435,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -6301,6 +6454,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -6326,6 +6480,7 @@ Name | Type | Description
 -----|------|-------------
 **allowLibraryDependencies**⚠️ | <code>boolean</code> | <span></span>
 **antitamper**🔹 | <code>boolean</code> | Indicates if workflows have anti-tamper checks.
+**artifactsDirectory**🔹 | <code>string</code> | The build output directory.
 **bundler**🔹 | <code>[javascript.Bundler](#projen-javascript-bundler)</code> | <span></span>
 **entrypoint**⚠️ | <code>string</code> | <span></span>
 **installWorkflowSteps**🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | <span></span>
@@ -6334,14 +6489,15 @@ Name | Type | Description
 **packageManager**⚠️ | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The package manager to use.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
 **autoMerge**?🔹 | <code>[github.AutoMerge](#projen-github-automerge)</code> | Automatic PR merges.<br/>__*Optional*__
-**buildWorkflow**?🔹 | <code>[github.TaskWorkflow](#projen-github-taskworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
-**buildWorkflowJobId**?🔹 | <code>string</code> | __*Optional*__
+**buildWorkflow**?🔹 | <code>[build.BuildWorkflow](#projen-build-buildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
+**buildWorkflowJobId**?🔹 | <code>string</code> | The job ID of the build workflow.<br/>__*Optional*__
 **jest**?🔹 | <code>[javascript.Jest](#projen-javascript-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Optional*__
 **npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
 **publisher**?⚠️ | <code>[release.Publisher](#projen-release-publisher)</code> | Package publisher.<br/>__*Optional*__
 **release**?🔹 | <code>[release.Release](#projen-release-release)</code> | Release management.<br/>__*Optional*__
+**upgradeWorkflow**?🔹 | <code>[javascript.UpgradeDependencies](#projen-javascript-upgradedependencies)</code> | The upgrade workflow.<br/>__*Optional*__
 
 ### Methods
 
@@ -6727,8 +6883,31 @@ Name | Type | Description
 -----|------|-------------
 **ignoresProjen**🔹 | <code>boolean</code> | Whether or not projen is also upgraded in this workflow,.
 **workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | The workflows that execute the upgrades.
+**containerOptions**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Container definitions for the upgrade workflow.<br/>__*Optional*__
 
 ### Methods
+
+
+#### addPostBuildSteps(...steps)🔹 <a id="projen-javascript-upgradedependencies-addpostbuildsteps"></a>
+
+Add steps to execute a successful build.
+
+```ts
+addPostBuildSteps(...steps: JobStep[]): void
+```
+
+* **steps** (<code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code>)  worklfow steps.
+  * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
+  * **env** (<code>Map<string, string></code>)  Sets environment variables for steps to use in the runner environment. __*Optional*__
+  * **id** (<code>string</code>)  A unique identifier for the step. __*Optional*__
+  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
+  * **name** (<code>string</code>)  A name for your step to display on GitHub. __*Optional*__
+  * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
+  * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
+  * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
+  * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
+
+
 
 
 #### preSynthesize()🔹 <a id="projen-javascript-upgradedependencies-presynthesize"></a>
@@ -7413,6 +7592,7 @@ new release.Publisher(project: Project, options: PublisherOptions)
   * **artifactName** (<code>string</code>)  The name of the artifact to download (e.g. `dist`). 
   * **buildJobId** (<code>string</code>)  The job ID that produces the build artifacts. 
   * **condition** (<code>string</code>)  A GitHub workflow expression used as a condition for publishers. __*Default*__: no condition
+  * **dryRun** (<code>boolean</code>)  Do not actually publish, only print the commands that would be executed instead. __*Optional*__
   * **failureIssue** (<code>boolean</code>)  Create an issue when a publish task fails. __*Default*__: false
   * **failureIssueLabel** (<code>string</code>)  The label to apply to the issue marking failed publish tasks. __*Default*__: "failed-release"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement for `jsii-release`. __*Default*__: "latest"
@@ -7464,6 +7644,8 @@ publishToGitHubReleases(options: GitHubReleasesPublishOptions): void
 ```
 
 * **options** (<code>[release.GitHubReleasesPublishOptions](#projen-release-githubreleasespublishoptions)</code>)  Options.
+  * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
+  * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **changelogFile** (<code>string</code>)  The location of an .md file (relative to `dist/`) that includes the changelog for the release. 
   * **releaseTagFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the release tag. 
   * **versionFile** (<code>string</code>)  The location of a text file (relative to `dist/`) that contains the version number. 
@@ -7480,6 +7662,8 @@ publishToGo(options?: GoPublishOptions): void
 ```
 
 * **options** (<code>[release.GoPublishOptions](#projen-release-gopublishoptions)</code>)  Options.
+  * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
+  * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **gitBranch** (<code>string</code>)  Branch to push to. __*Default*__: "main"
   * **gitCommitMessage** (<code>string</code>)  The commit message. __*Default*__: "chore(release): $VERSION"
   * **githubRepo** (<code>string</code>)  GitHub repository to push to. __*Default*__: derived from `moduleName`
@@ -7499,6 +7683,8 @@ publishToMaven(options?: MavenPublishOptions): void
 ```
 
 * **options** (<code>[release.MavenPublishOptions](#projen-release-mavenpublishoptions)</code>)  Options.
+  * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
+  * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **mavenEndpoint** (<code>string</code>)  URL of Nexus repository. __*Default*__: "https://oss.sonatype.org"
   * **mavenGpgPrivateKeyPassphrase** (<code>string</code>)  GitHub secret name which contains the GPG private key or file that includes it. __*Default*__: "MAVEN_GPG_PRIVATE_KEY_PASSPHRASE" or not set when using GitHub Packages
   * **mavenGpgPrivateKeySecret** (<code>string</code>)  GitHub secret name which contains the GPG private key or file that includes it. __*Default*__: "MAVEN_GPG_PRIVATE_KEY" or not set when using GitHub Packages
@@ -7520,6 +7706,8 @@ publishToNpm(options?: NpmPublishOptions): void
 ```
 
 * **options** (<code>[release.NpmPublishOptions](#projen-release-npmpublishoptions)</code>)  Options.
+  * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
+  * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **codeArtifactOptions** (<code>[release.CodeArtifactOptions](#projen-release-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
   * **distTag** (<code>string</code>)  Tags can be used to provide an alias instead of version numbers. __*Default*__: "latest"
   * **npmTokenSecret** (<code>string</code>)  GitHub secret which contains the NPM token to use when publishing packages. __*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
@@ -7537,6 +7725,8 @@ publishToNuget(options?: NugetPublishOptions): void
 ```
 
 * **options** (<code>[release.NugetPublishOptions](#projen-release-nugetpublishoptions)</code>)  Options.
+  * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
+  * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **nugetApiKeySecret** (<code>string</code>)  GitHub secret which contains the API key for NuGet. __*Default*__: "NUGET_API_KEY"
 
 
@@ -7551,6 +7741,8 @@ publishToPyPi(options?: PyPiPublishOptions): void
 ```
 
 * **options** (<code>[release.PyPiPublishOptions](#projen-release-pypipublishoptions)</code>)  Options.
+  * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
+  * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **twinePasswordSecret** (<code>string</code>)  The GitHub secret which contains PyPI password. __*Default*__: "TWINE_PASSWORD"
   * **twineRegistryUrl** (<code>string</code>)  The registry url to use when releasing packages. __*Default*__: twine default
   * **twineUsernameSecret** (<code>string</code>)  The GitHub secret which contains PyPI user name. __*Default*__: "TWINE_USERNAME"
@@ -7582,12 +7774,12 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
 * **project** (<code>[github.GitHubProject](#projen-github-githubproject)</code>)  *No description*
 * **options** (<code>[release.ReleaseOptions](#projen-release-releaseoptions)</code>)  *No description*
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -7601,6 +7793,7 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. 
   * **branch** (<code>string</code>)  The default branch name to release from. 
   * **task** (<code>[Task](#projen-task)</code>)  The task to execute in order to create the release artifacts. 
   * **versionFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
@@ -7613,6 +7806,7 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**artifactsDirectory**🔹 | <code>string</code> | Location of build artifacts.
 **branches**🔹 | <code>Array<string></code> | Retrieve all release branch names.
 **publisher**🔹 | <code>[release.Publisher](#projen-release-publisher)</code> | Package publisher.
 
@@ -7850,12 +8044,12 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -7870,6 +8064,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -7888,6 +8083,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -7910,7 +8106,6 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -7995,12 +8190,12 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -8015,6 +8210,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -8033,6 +8229,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -8055,7 +8252,6 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -8140,12 +8336,12 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -8160,6 +8356,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -8178,6 +8375,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -8200,7 +8398,6 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -8530,12 +8727,12 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -8550,6 +8747,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -8568,6 +8766,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -8672,12 +8871,12 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -8692,6 +8891,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -8710,6 +8910,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -8732,7 +8933,6 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -8887,12 +9087,12 @@ new web.ReactProject(options: ReactProjectOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -8907,6 +9107,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -8925,6 +9126,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -9070,12 +9272,12 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
   * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
   * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
@@ -9090,6 +9292,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
   * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
   * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
@@ -9108,6 +9311,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -9130,7 +9334,6 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -10115,7 +10318,7 @@ Name | Type | Description
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -10191,7 +10394,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -10212,6 +10415,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **publishToGo**?🔹 | <code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
@@ -10373,7 +10577,7 @@ Name | Type | Description
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
 **appEntrypoint**?🔹 | <code>string</code> | The CDK app's entrypoint (relative to the source directory, which is "src" by default).<br/>__*Default*__: "main.ts"
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -10448,7 +10652,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -10469,6 +10673,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -10567,7 +10772,7 @@ Name | Type | Description
 **repositoryUrl**⚠️ | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?⚠️ | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?⚠️ | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?⚠️ | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?⚠️ | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?⚠️ | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -10643,7 +10848,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?⚠️ | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?⚠️ | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?⚠️ | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?⚠️ | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?⚠️ | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?⚠️ | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?⚠️ | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -10664,6 +10869,7 @@ Name | Type | Description
 **projenrcJsonOptions**?⚠️ | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?⚠️ | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?⚠️ | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?⚠️ | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?⚠️ | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **publishToGo**?⚠️ | <code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?⚠️ | <code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
@@ -10773,6 +10979,27 @@ Name | Type | Description
 
 
 
+## struct BuildWorkflowOptions 🔹 <a id="projen-build-buildworkflowoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**artifactsDirectory**🔹 | <code>string</code> | A name of a directory that includes build artifacts.
+**buildTask**🔹 | <code>[Task](#projen-task)</code> | The task to execute in order to build the project.
+**antitamper**?🔹 | <code>boolean</code> | Enable anti-tamper check.<br/>__*Default*__: true
+**containerImage**?🔹 | <code>string</code> | The container image to use for builds.<br/>__*Default*__: the default workflow container
+**env**?🔹 | <code>Map<string, string></code> | Build environment variables.<br/>__*Default*__: {}
+**gitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | Git identity to use for the workflow.<br/>__*Default*__: default identity
+**mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
+**postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build.<br/>__*Default*__: []
+**preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before the build.<br/>__*Default*__: []
+
+
+
 ## struct Catalog 🔹 <a id="projen-cdk-catalog"></a>
 
 
@@ -10803,7 +11030,7 @@ Name | Type | Description
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -10870,7 +11097,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -10891,6 +11118,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **publishToGo**?🔹 | <code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
@@ -10948,6 +11176,8 @@ Name | Type | Description
 **dotNetNamespace**🔹 | <code>string</code> | <span></span>
 **packageId**🔹 | <code>string</code> | <span></span>
 **nugetApiKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
 
 
@@ -10967,6 +11197,8 @@ Name | Type | Description
 **gitUserName**?⚠️ | <code>string</code> | The user name to use for the release git commit.<br/>__*Default*__: "github-actions"
 **githubRepo**?⚠️ | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
 **githubTokenSecret**?⚠️ | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
 
 
@@ -10990,6 +11222,8 @@ Name | Type | Description
 **mavenServerId**?🔹 | <code>string</code> | Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).<br/>__*Default*__: "ossrh" (Maven Central) or "github" when using GitHub Packages
 **mavenStagingProfileId**?🔹 | <code>string</code> | GitHub secret name which contains the Maven Central (sonatype) staging profile ID (e.g. 68a05363083174). Staging profile ID can be found in the URL of the "Releases" staging profile under "Staging Profiles" in https://oss.sonatype.org (e.g. https://oss.sonatype.org/#stagingProfiles;11a33451234521).<br/>__*Default*__: "MAVEN_STAGING_PROFILE_ID" or not set when using GitHub Packages
 **mavenUsername**?🔹 | <code>string</code> | GitHub secret name which contains the Username for maven repository.<br/>__*Default*__: "MAVEN_USERNAME" or the GitHub Actor when using GitHub Packages
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
 
 
@@ -11009,7 +11243,7 @@ Name | Type | Description
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -11075,7 +11309,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -11096,6 +11330,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **publishToGo**?🔹 | <code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
@@ -11152,6 +11387,8 @@ Name | Type | Description
 -----|------|-------------
 **distName**🔹 | <code>string</code> | <span></span>
 **module**🔹 | <code>string</code> | <span></span>
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 **twinePasswordSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI password.<br/>__*Default*__: "TWINE_PASSWORD"
 **twineRegistryUrl**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: twine default
 **twineUsernameSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI user name.<br/>__*Default*__: "TWINE_USERNAME"
@@ -11173,7 +11410,7 @@ Name | Type | Description
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
 **appEntrypoint**?🔹 | <code>string</code> | The CDK8s app's entrypoint (relative to the source directory, which is "src" by default).<br/>__*Default*__: "main.ts"
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -11241,7 +11478,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -11262,6 +11499,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -11318,7 +11556,7 @@ Name | Type | Description
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -11389,7 +11627,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -11410,6 +11648,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **publishToGo**?🔹 | <code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
@@ -11472,7 +11711,7 @@ Name | Type | Description
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -11539,7 +11778,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -11560,6 +11799,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **publishToGo**?🔹 | <code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code> | Publish Go bindings to a git repository.<br/>__*Default*__: no publishing
 **publishToMaven**?🔹 | <code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code> | Publish to maven.<br/>__*Default*__: no publishing
@@ -12453,7 +12693,7 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -12508,6 +12748,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -12526,6 +12767,7 @@ Name | Type | Description
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -13085,6 +13327,20 @@ Name | Type | Description
 
 
 
+## struct CommonPublishOptions 🔹 <a id="projen-release-commonpublishoptions"></a>
+
+
+Common publishing options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
+
+
+
 ## struct GitHubReleasesPublishOptions 🔹 <a id="projen-release-githubreleasespublishoptions"></a>
 
 
@@ -13097,6 +13353,8 @@ Name | Type | Description
 **changelogFile**🔹 | <code>string</code> | The location of an .md file (relative to `dist/`) that includes the changelog for the release.
 **releaseTagFile**🔹 | <code>string</code> | The location of a text file (relative to `dist/`) that contains the release tag.
 **versionFile**🔹 | <code>string</code> | The location of a text file (relative to `dist/`) that contains the version number.
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
 
 
@@ -13133,6 +13391,8 @@ Name | Type | Description
 **gitUserName**?⚠️ | <code>string</code> | The user name to use for the release git commit.<br/>__*Default*__: "github-actions"
 **githubRepo**?⚠️ | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
 **githubTokenSecret**?⚠️ | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
+**prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?⚠️ | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
 
 
@@ -13153,6 +13413,8 @@ Name | Type | Description
 **mavenServerId**?⚠️ | <code>string</code> | Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).<br/>__*Default*__: "ossrh" (Maven Central) or "github" when using GitHub Packages
 **mavenStagingProfileId**?⚠️ | <code>string</code> | GitHub secret name which contains the Maven Central (sonatype) staging profile ID (e.g. 68a05363083174). Staging profile ID can be found in the URL of the "Releases" staging profile under "Staging Profiles" in https://oss.sonatype.org (e.g. https://oss.sonatype.org/#stagingProfiles;11a33451234521).<br/>__*Default*__: "MAVEN_STAGING_PROFILE_ID" or not set when using GitHub Packages
 **mavenUsername**?⚠️ | <code>string</code> | GitHub secret name which contains the Username for maven repository.<br/>__*Default*__: "MAVEN_USERNAME" or the GitHub Actor when using GitHub Packages
+**prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?⚠️ | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
 
 
@@ -13168,6 +13430,8 @@ Name | Type | Description
 **codeArtifactOptions**?⚠️ | <code>[release.CodeArtifactOptions](#projen-release-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **distTag**?⚠️ | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmTokenSecret**?⚠️ | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
+**prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?⚠️ | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 **registry**?⚠️ | <code>string</code> | The domain name of the npm package registry.<br/>__*Default*__: "registry.npmjs.org"
 
 
@@ -13182,6 +13446,8 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **nugetApiKeySecret**?⚠️ | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
+**prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?⚠️ | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
 
 
@@ -13194,6 +13460,8 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?⚠️ | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 **twinePasswordSecret**?⚠️ | <code>string</code> | The GitHub secret which contains PyPI password.<br/>__*Default*__: "TWINE_PASSWORD"
 **twineRegistryUrl**?⚠️ | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: twine default
 **twineUsernameSecret**?⚠️ | <code>string</code> | The GitHub secret which contains PyPI user name.<br/>__*Default*__: "TWINE_USERNAME"
@@ -13232,6 +13500,8 @@ Name | Type | Description
 **mavenServerId**?🔹 | <code>string</code> | Used in maven settings for credential lookup (e.g. use github when publishing to GitHub).<br/>__*Default*__: "ossrh" (Maven Central) or "github" when using GitHub Packages
 **mavenStagingProfileId**?🔹 | <code>string</code> | GitHub secret name which contains the Maven Central (sonatype) staging profile ID (e.g. 68a05363083174). Staging profile ID can be found in the URL of the "Releases" staging profile under "Staging Profiles" in https://oss.sonatype.org (e.g. https://oss.sonatype.org/#stagingProfiles;11a33451234521).<br/>__*Default*__: "MAVEN_STAGING_PROFILE_ID" or not set when using GitHub Packages
 **mavenUsername**?🔹 | <code>string</code> | GitHub secret name which contains the Username for maven repository.<br/>__*Default*__: "MAVEN_USERNAME" or the GitHub Actor when using GitHub Packages
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
 
 
@@ -13247,6 +13517,8 @@ Name | Type | Description
 **codeArtifactOptions**?🔹 | <code>[release.CodeArtifactOptions](#projen-release-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **distTag**?⚠️ | <code>string</code> | Tags can be used to provide an alias instead of version numbers.<br/>__*Default*__: "latest"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN" or "GITHUB_TOKEN" if `registry` is set to `npm.pkg.github.com`.
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 **registry**?🔹 | <code>string</code> | The domain name of the npm package registry.<br/>__*Default*__: "registry.npmjs.org"
 
 
@@ -13261,6 +13533,8 @@ Options for NuGet releases.
 Name | Type | Description 
 -----|------|-------------
 **nugetApiKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
 
 
@@ -13276,6 +13550,7 @@ Name | Type | Description
 **artifactName**🔹 | <code>string</code> | The name of the artifact to download (e.g. `dist`).
 **buildJobId**🔹 | <code>string</code> | The job ID that produces the build artifacts.
 **condition**?🔹 | <code>string</code> | A GitHub workflow expression used as a condition for publishers.<br/>__*Default*__: no condition
+**dryRun**?🔹 | <code>boolean</code> | Do not actually publish, only print the commands that would be executed instead.<br/>__*Optional*__
 **failureIssue**?🔹 | <code>boolean</code> | Create an issue when a publish task fails.<br/>__*Default*__: false
 **failureIssueLabel**?🔹 | <code>string</code> | The label to apply to the issue marking failed publish tasks.<br/>__*Default*__: "failed-release"
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement for `jsii-release`.<br/>__*Default*__: "latest"
@@ -13293,6 +13568,8 @@ Options for PyPI release.
 
 Name | Type | Description 
 -----|------|-------------
+**prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
+**publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 **twinePasswordSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI password.<br/>__*Default*__: "TWINE_PASSWORD"
 **twineRegistryUrl**?🔹 | <code>string</code> | The registry url to use when releasing packages.<br/>__*Default*__: twine default
 **twineUsernameSecret**?🔹 | <code>string</code> | The GitHub secret which contains PyPI user name.<br/>__*Default*__: "TWINE_USERNAME"
@@ -13308,17 +13585,18 @@ Options for `Release`.
 
 Name | Type | Description 
 -----|------|-------------
+**artifactsDirectory**🔹 | <code>string</code> | A directory which will contain build artifacts.
 **branch**🔹 | <code>string</code> | The default branch name to release from.
 **task**🔹 | <code>[Task](#projen-task)</code> | The task to execute in order to create the release artifacts.
 **versionFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
 **githubRelease**?🔹 | <code>boolean</code> | Create a GitHub release for each release.<br/>__*Default*__: true
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
@@ -13345,12 +13623,12 @@ Project options for release.
 Name | Type | Description 
 -----|------|-------------
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **releaseBranches**?🔹 | <code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code> | Defines additional release branches.<br/>__*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
 **releaseEveryCommit**?⚠️ | <code>boolean</code> | Automatically release new versions every commit to one of branches in `releaseBranches`.<br/>__*Default*__: true
@@ -13407,7 +13685,7 @@ Name | Type | Description
 **name**⚠️ | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?⚠️ | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?⚠️ | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?⚠️ | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?⚠️ | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?⚠️ | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -13469,7 +13747,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?⚠️ | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?⚠️ | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?⚠️ | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?⚠️ | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?⚠️ | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?⚠️ | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?⚠️ | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -13490,6 +13768,7 @@ Name | Type | Description
 **projenrcJsonOptions**?⚠️ | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?⚠️ | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?⚠️ | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?⚠️ | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?⚠️ | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?⚠️ | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?⚠️ | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -13542,7 +13821,7 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -13604,7 +13883,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -13625,6 +13904,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -13781,7 +14061,7 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: "public"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
@@ -13837,6 +14117,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -13855,6 +14136,7 @@ Name | Type | Description
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -13903,7 +14185,7 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: "public"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
@@ -13966,7 +14248,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -13987,6 +14269,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -14069,7 +14352,7 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -14124,6 +14407,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -14142,6 +14426,7 @@ Name | Type | Description
 **projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options for .projenrc.js.<br/>__*Default*__: default options
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content
@@ -14219,7 +14504,7 @@ Name | Type | Description
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **antitamper**?🔹 | <code>boolean</code> | Checks that after build there are no modified files on git.<br/>__*Default*__: true
-**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain artifacts to be published to npm.<br/>__*Default*__: "dist"
+**artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
@@ -14281,7 +14566,7 @@ Name | Type | Description
 **npmignore**?⚠️ | <code>Array<string></code> | Additional entries to .npmignore.<br/>__*Optional*__
 **npmignoreEnabled**?🔹 | <code>boolean</code> | Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs.<br/>__*Default*__: true
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**package**?🔹 | <code>boolean</code> | Defines a `yarn package` command that will produce a tarball and place it under `dist/js`.<br/>__*Default*__: true
+**package**?🔹 | <code>boolean</code> | Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`).<br/>__*Default*__: true
 **packageManager**?🔹 | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The Node Package Manager used to execute scripts.<br/>__*Default*__: NodePackageManager.YARN
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -14302,6 +14587,7 @@ Name | Type | Description
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use TypeScript for your projenrc file (`.projenrc.ts`).<br/>__*Default*__: false
 **projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options for .projenrc.ts.<br/>__*Optional*__
+**publishDryRun**?🔹 | <code>boolean</code> | Instead of actually publishing to package managers, just print the publishing command.<br/>__*Default*__: false
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
 **pullRequestTemplate**?🔹 | <code>boolean</code> | Include a GitHub pull request template.<br/>__*Default*__: true
 **pullRequestTemplateContents**?🔹 | <code>Array<string></code> | The contents of the pull request template.<br/>__*Default*__: default content

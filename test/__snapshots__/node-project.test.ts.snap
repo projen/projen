@@ -20,7 +20,8 @@ Object {
     },
     Object {
       "name": "Set git identity",
-      "run": "git config user.name \\"github-actions\\"
+      "run": "git config --global init.defaultBranch main
+git config user.name \\"github-actions\\"
 git config user.email \\"github-actions@github.com\\"",
     },
     Object {
@@ -84,7 +85,8 @@ Array [
   },
   Object {
     "name": "Set git identity",
-    "run": "git config user.name \\"github-actions\\"
+    "run": "git config --global init.defaultBranch main
+git config user.name \\"github-actions\\"
 git config user.email \\"github-actions@github.com\\"",
   },
   Object {
@@ -100,34 +102,18 @@ git config user.email \\"github-actions@github.com\\"",
     "run": "npx projen build",
   },
   Object {
-    "id": "git_diff",
-    "name": "Check for changes",
-    "run": "git diff --exit-code || echo \\"::set-output name=has_changes::true\\"",
-  },
-  Object {
-    "if": "steps.git_diff.outputs.has_changes",
-    "name": "Commit and push changes (if changed)",
-    "run": "git add . && git commit -m \\"chore: self mutation\\" && git push origin HEAD:\${{ github.event.pull_request.head.ref }}",
-  },
-  Object {
-    "env": Object {
-      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
-    },
-    "if": "steps.git_diff.outputs.has_changes",
-    "name": "Update status check (if changed)",
-    "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/check-runs -F name=\\"build\\" -F head_sha=\\"$(git rev-parse HEAD)\\" -F status=\\"completed\\" -F conclusion=\\"success\\"",
-  },
-  Object {
-    "env": Object {
-      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
-    },
-    "if": "steps.git_diff.outputs.has_changes",
-    "name": "Cancel workflow (if changed)",
-    "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/actions/runs/\${{ github.run_id }}/cancel",
-  },
-  Object {
     "name": "Anti-tamper check",
     "run": "git diff --ignore-space-at-eol --exit-code",
+  },
+  Object {
+    "id": "self_mutation",
+    "name": "Self mutation",
+    "run": "if ! git diff --exit-code; then
+  git add .
+  git commit -m \\"chore: self mutation\\"
+  git push origin HEAD:\${{ github.event.pull_request.head.ref }}
+  echo \\"::set-output name=self_mutation_commit::$(git rev-parse HEAD)\\"
+fi",
   },
 ]
 `;
@@ -144,7 +130,8 @@ Array [
   },
   Object {
     "name": "Set git identity",
-    "run": "git config user.name \\"github-actions\\"
+    "run": "git config --global init.defaultBranch main
+git config user.name \\"github-actions\\"
 git config user.email \\"github-actions@github.com\\"",
   },
   Object {
@@ -156,30 +143,14 @@ git config user.email \\"github-actions@github.com\\"",
     "run": "npx projen build",
   },
   Object {
-    "id": "git_diff",
-    "name": "Check for changes",
-    "run": "git diff --exit-code || echo \\"::set-output name=has_changes::true\\"",
-  },
-  Object {
-    "if": "steps.git_diff.outputs.has_changes",
-    "name": "Commit and push changes (if changed)",
-    "run": "git add . && git commit -m \\"chore: self mutation\\" && git push origin HEAD:\${{ github.event.pull_request.head.ref }}",
-  },
-  Object {
-    "env": Object {
-      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
-    },
-    "if": "steps.git_diff.outputs.has_changes",
-    "name": "Update status check (if changed)",
-    "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/check-runs -F name=\\"build\\" -F head_sha=\\"$(git rev-parse HEAD)\\" -F status=\\"completed\\" -F conclusion=\\"success\\"",
-  },
-  Object {
-    "env": Object {
-      "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
-    },
-    "if": "steps.git_diff.outputs.has_changes",
-    "name": "Cancel workflow (if changed)",
-    "run": "gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name }}/actions/runs/\${{ github.run_id }}/cancel",
+    "id": "self_mutation",
+    "name": "Self mutation",
+    "run": "if ! git diff --exit-code; then
+  git add .
+  git commit -m \\"chore: self mutation\\"
+  git push origin HEAD:\${{ github.event.pull_request.head.ref }}
+  echo \\"::set-output name=self_mutation_commit::$(git rev-parse HEAD)\\"
+fi",
   },
 ]
 `;
