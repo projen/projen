@@ -440,7 +440,7 @@ pull_request_rules:
       Object {
         "name": "react-scripts",
         "type": "runtime",
-        "version": "^4.0.0",
+        "version": "^5.0.0",
       },
       Object {
         "name": "web-vitals",
@@ -907,7 +907,7 @@ pull_request_rules:
     "dependencies": Object {
       "react": "*",
       "react-dom": "*",
-      "react-scripts": "^4.0.0",
+      "react-scripts": "^5.0.0",
       "web-vitals": "*",
     },
     "devDependencies": Object {
