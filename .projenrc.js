@@ -68,8 +68,6 @@ const project = new cdk.JsiiProject({
     coverageText: false,
   },
 
-  publishDryRun: true,
-
   publishToMaven: {
     javaPackage: 'io.github.cdklabs.projen',
     mavenGroupId: 'io.github.cdklabs',
