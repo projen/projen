@@ -185,7 +185,7 @@ export class ReactComponent extends Component {
     project.addDeps(
       'react',
       'react-dom',
-      'react-scripts@^5.0.0',
+      'react-scripts@^5',
       'web-vitals');
     project.addDevDeps('@testing-library/jest-dom', '@testing-library/react', '@testing-library/user-event');
     if (this.typescript) {
