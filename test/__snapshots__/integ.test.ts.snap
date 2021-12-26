@@ -1272,10 +1272,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist",
+            "exec": "mkdir -p dist/js",
           },
           Object {
-            "exec": "mv $(npm pack) dist/",
+            "exec": "mv $(npm pack) dist/js",
           },
         ],
       },
@@ -2693,10 +2693,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist",
+            "exec": "mkdir -p dist/js",
           },
           Object {
-            "exec": "mv $(npm pack) dist/",
+            "exec": "mv $(npm pack) dist/js",
           },
         ],
       },
@@ -4156,10 +4156,10 @@ tsconfig.tsbuildinfo
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist",
+            "exec": "mkdir -p dist/js",
           },
           Object {
-            "exec": "mv $(npm pack) dist/",
+            "exec": "mv $(npm pack) dist/js",
           },
         ],
       },
@@ -5442,10 +5442,10 @@ junit.xml
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist",
+            "exec": "mkdir -p dist/js",
           },
           Object {
-            "exec": "mv $(npm pack) dist/",
+            "exec": "mv $(npm pack) dist/js",
           },
         ],
       },

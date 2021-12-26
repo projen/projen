@@ -655,11 +655,11 @@ export class NodeProject extends GitHubProject {
     this.bundler = new Bundler(this, options.bundlerOptions);
 
     if (options.package ?? true) {
-      this.packageTask.exec(`mkdir -p ${this.artifactsDirectory}`);
+      this.packageTask.exec(`mkdir -p ${this.artifactsDirectory}/js`);
 
       // always use npm here - yarn doesn't add much value
       // sadly we cannot use --pack-destination because it is not supported by older npm
-      this.packageTask.exec(`mv $(npm pack) ${this.artifactsDirectory}/`);
+      this.packageTask.exec(`mv $(npm pack) ${this.artifactsDirectory}/js`);
     }
   }
 

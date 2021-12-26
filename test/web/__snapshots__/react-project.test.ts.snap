@@ -554,10 +554,10 @@ pull_request_rules:
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist",
+            "exec": "mkdir -p dist/js",
           },
           Object {
-            "exec": "mv $(npm pack) dist/",
+            "exec": "mv $(npm pack) dist/js",
           },
         ],
       },
