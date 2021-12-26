@@ -1,5 +1,4 @@
 import * as path from 'path';
-import * as semver from 'semver';
 import { Component } from '../component';
 import { FileBase, FileBaseOptions, IResolver } from '../file';
 import { NodeProject, NodeProjectOptions, TypeScriptJsxMode, TypeScriptModuleResolution } from '../javascript';
