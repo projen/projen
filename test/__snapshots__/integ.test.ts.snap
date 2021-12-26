@@ -344,8 +344,8 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create js artifact
         run: >-
           jsii_version=$(node -p
@@ -371,8 +371,8 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create java artifact
         run: >-
           jsii_version=$(node -p
@@ -397,8 +397,8 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create python artifact
         run: >-
           jsii_version=$(node -p
@@ -524,8 +524,8 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create js artifact
         run: >-
           jsii_version=$(node -p
@@ -560,8 +560,8 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create java artifact
         run: >-
           jsii_version=$(node -p
@@ -597,8 +597,8 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create python artifact
         run: >-
           jsii_version=$(node -p
@@ -1272,10 +1272,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist",
+            "exec": "mkdir -p dist/js",
           },
           Object {
-            "exec": "mv $(npm pack) dist/",
+            "exec": "mv $(npm pack) dist/js/",
           },
         ],
       },
@@ -2693,10 +2693,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist",
+            "exec": "mkdir -p dist/js",
           },
           Object {
-            "exec": "mv $(npm pack) dist/",
+            "exec": "mv $(npm pack) dist/js/",
           },
         ],
       },
@@ -4156,10 +4156,10 @@ tsconfig.tsbuildinfo
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist",
+            "exec": "mkdir -p dist/js",
           },
           Object {
-            "exec": "mv $(npm pack) dist/",
+            "exec": "mv $(npm pack) dist/js/",
           },
         ],
       },
@@ -5442,10 +5442,10 @@ junit.xml
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist",
+            "exec": "mkdir -p dist/js",
           },
           Object {
-            "exec": "mv $(npm pack) dist/",
+            "exec": "mv $(npm pack) dist/js/",
           },
         ],
       },
