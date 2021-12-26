@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { BuildWorkflow } from '../build';
 import { PROJEN_DIR, PROJEN_RC } from '../common';
 import { AutoMerge, DependabotOptions, GitHubProject, GitHubProjectOptions, GitIdentity } from '../github';
@@ -402,9 +403,16 @@ export class NodeProject extends GitHubProject {
   public readonly bundler: Bundler;
 
   /**
-   * The build output directory. By default this is `dist`.
+   * The build output directory. An npm tarball will be created under the `js`
+   * subdirectory. For example, if this is set to `dist` (the default), the npm
+   * tarball will be placed under `dist/js/boom-boom-1.2.3.tg`.
    */
   public readonly artifactsDirectory: string;
+
+  /**
+   * The location of the npm tarball after build (`${artifactsDirectory}/js`).
+   */
+  public readonly artifactsJavascriptDirectory: string;
 
   /**
    * The upgrade workflow.
@@ -421,6 +429,7 @@ export class NodeProject extends GitHubProject {
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
     this.workflowGitIdentity = options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.artifactsDirectory = options.artifactsDirectory ?? 'dist';
+    this.artifactsJavascriptDirectory = join(this.artifactsDirectory, 'js');
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
@@ -655,11 +664,11 @@ export class NodeProject extends GitHubProject {
     this.bundler = new Bundler(this, options.bundlerOptions);
 
     if (options.package ?? true) {
-      this.packageTask.exec(`mkdir -p ${this.artifactsDirectory}`);
+      this.packageTask.exec(`mkdir -p ${this.artifactsJavascriptDirectory}`);
 
       // always use npm here - yarn doesn't add much value
       // sadly we cannot use --pack-destination because it is not supported by older npm
-      this.packageTask.exec(`mv $(npm pack) ${this.artifactsDirectory}/`);
+      this.packageTask.exec(`mv $(npm pack) ${this.artifactsJavascriptDirectory}/`);
     }
   }
 
