@@ -400,7 +400,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "react-scripts",
         "type": "runtime",
-        "version": "^5.0.0",
+        "version": "^5",
       },
       Object {
         "name": "web-vitals",
@@ -815,7 +815,7 @@ tsconfig.tsbuildinfo
     "dependencies": Object {
       "react": "*",
       "react-dom": "*",
-      "react-scripts": "^5.0.0",
+      "react-scripts": "^5",
       "web-vitals": "*",
     },
     "devDependencies": Object {
