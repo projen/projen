@@ -1,10 +1,6 @@
 import { ReactProject, ReactProjectOptions } from '../../src/web';
 import { synthSnapshot } from '../util';
 
-test('throws when node is lower than 14', () => {
-  expect(() => new TestReactProject({ minNodeVersion: '12.0.0' })).toThrowError('React projects require a minimun node version of 14.0.0');
-});
-
 test('defaults', () => {
   const p = new TestReactProject();
   expect(synthSnapshot(p)).toMatchSnapshot();
