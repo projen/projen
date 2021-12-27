@@ -3840,6 +3840,7 @@ new build.BuildWorkflow(project: Project, options: BuildWorkflowOptions)
 Name | Type | Description 
 -----|------|-------------
 **buildJobIds**🔹 | <code>Array<string></code> | Returns a list of job IDs that are part of the build.
+**filename**🔹 | <code>string</code> | The workflow file name (`build.yml`).
 
 ### Methods
 
@@ -5114,6 +5115,7 @@ new github.GithubWorkflow(github: GitHub, name: string, options?: GithubWorkflow
 
 Name | Type | Description 
 -----|------|-------------
+**filename**🔹 | <code>string</code> | The file name of the workflow (`$name.yaml`).
 **name**🔹 | <code>string</code> | The name of the workflow.
 **concurrency**?🔹 | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.<br/>__*Default*__: disabled
 **file**?🔹 | <code>[YamlFile](#projen-yamlfile)</code> | The workflow YAML file.<br/>__*Optional*__
@@ -13006,7 +13008,6 @@ Name | Type | Description
 **container**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Job container options.<br/>__*Default*__: defaults
 **gitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use for commits.<br/>__*Default*__: "github-actions
 **labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: no labels.
-**rebuild**?🔹 | <code>boolean</code> | Execute 'build' after the upgrade.<br/>__*Default*__: true
 **runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **schedule**?🔹 | <code>[javascript.UpgradeDependenciesSchedule](#projen-javascript-upgradedependenciesschedule)</code> | Schedule to run on.<br/>__*Default*__: UpgradeDependenciesSchedule.DAILY
 **secret**?🔹 | <code>string</code> | Which secret to use when creating the PR.<br/>__*Default*__: default github token.
