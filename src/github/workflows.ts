@@ -38,6 +38,12 @@ export class GithubWorkflow extends Component {
    * The name of the workflow.
    */
   public readonly name: string;
+
+  /**
+   * The file name of the workflow (`$name.yaml`).
+   */
+  public readonly filename: string;
+
   /**
    * Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.
    *
@@ -58,12 +64,13 @@ export class GithubWorkflow extends Component {
     super(github.project);
 
     this.name = name;
+    this.filename = `${name.toLocaleLowerCase()}.yml`;
     this.concurrency = options.concurrency;
 
     const workflowsEnabled = github.workflowsEnabled || options.force;
 
     if (workflowsEnabled) {
-      this.file = new YamlFile(this.project, `.github/workflows/${name.toLocaleLowerCase()}.yml`, {
+      this.file = new YamlFile(this.project, `.github/workflows/${this.filename}`, {
         obj: () => this.renderWorkflow(),
       });
     }

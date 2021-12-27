@@ -2,6 +2,7 @@ import { Task } from '..';
 import { Component } from '../component';
 import { GitHub, GithubWorkflow, GitIdentity } from '../github';
 import { DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from '../github/constants';
+import { WorkflowActions } from '../github/workflow-actions';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { Project } from '../project';
 
@@ -9,7 +10,7 @@ const BRANCH_REF = '${{ github.event.pull_request.head.ref }}';
 const REPO_REF = '${{ github.event.pull_request.head.repo.full_name }}';
 const PRIMARY_JOB_ID = 'build';
 const SELF_MUTATION_STEP = 'self_mutation';
-const SELF_MUTATION_COMMIT = 'self_mutation_commit';
+const SELF_MUTATION_REF = 'self_mutation_commit';
 
 export interface BuildWorkflowOptions {
   /**
@@ -86,6 +87,11 @@ export class BuildWorkflow extends Component {
   private readonly _buildJobIds: string[];
   private uploadArtitactSteps?: JobStep[];
 
+  /**
+   * The workflow file name (`build.yml`).
+   */
+  public readonly filename: string;
+
   constructor(project: Project, options: BuildWorkflowOptions) {
     super(project);
 
@@ -114,6 +120,7 @@ export class BuildWorkflow extends Component {
     }] : [];
 
     this.workflow = new GithubWorkflow(github, 'build');
+    this.filename = this.workflow.filename;
 
     this.workflow.on({
       pullRequest: {},
@@ -131,9 +138,9 @@ export class BuildWorkflow extends Component {
         contents: JobPermission.WRITE,
       },
       outputs: {
-        [SELF_MUTATION_COMMIT]: {
+        [SELF_MUTATION_REF]: {
           stepId: SELF_MUTATION_STEP,
-          outputName: SELF_MUTATION_COMMIT,
+          outputName: SELF_MUTATION_REF,
         },
       },
       steps: (() => this.renderSteps()) as any,
@@ -143,48 +150,19 @@ export class BuildWorkflow extends Component {
 
     this._buildJobIds = [PRIMARY_JOB_ID];
 
-    this.workflow.addJob('update-status', {
+    this.workflow.addJob('trigger-rebuild', {
       runsOn: ['ubuntu-latest'],
       permissions: {
-        checks: JobPermission.WRITE,
         actions: JobPermission.WRITE,
       },
       needs: (() => this._buildJobIds) as any, // wait for all build jobs to finish
-      if: `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_COMMIT} }}`,
+      if: `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_REF} }}`,
       steps: [
-      // if we pushed changes, we need to manually update the status check so
-      // that the PR will be green (we won't get here for forks with updates
-      // because the push would have failed).
-        {
-          name: 'Update status check (if changed)',
-          run: [
-            'gh api',
-            '-X POST',
-            `/repos/${REPO_REF}/check-runs`,
-            `-F name="${PRIMARY_JOB_ID}"`,
-            `-F head_sha="\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_COMMIT} }}"`,
-            '-F status="completed"',
-            '-F conclusion="success"',
-          ].join(' '),
-          env: {
-            GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-          },
-        },
-
-        // if we pushed changes, we need to mark the current commit as failed, so
-        // that GitHub auto-merge does not risk merging this commit before the
-        // event for the new commit has registered.
-        {
-          name: 'Cancel workflow (if changed)',
-          run: [
-            'gh api',
-            '-X POST',
-            `/repos/${REPO_REF}/actions/runs/\${{ github.run_id }}/cancel`,
-          ].join(' '),
-          env: {
-            GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
-          },
-        },
+        ...WorkflowActions.dispatchWorkflow({
+          workflowId: this.filename,
+          ref: `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_REF} }}`,
+          repo: REPO_REF,
+        }),
       ],
     });
   }
@@ -287,7 +265,7 @@ export class BuildWorkflow extends Component {
         '  git add .',
         '  git commit -m "chore: self mutation"',
         `  git push origin HEAD:${BRANCH_REF}`,
-        `  echo "::set-output name=${SELF_MUTATION_COMMIT}::$(git rev-parse HEAD)"`,
+        `  echo "::set-output name=${SELF_MUTATION_REF}::$(git rev-parse HEAD)"`,
         'fi',
       ].join('\n'),
     });

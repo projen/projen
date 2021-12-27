@@ -1,16 +1,13 @@
 import { Component } from '../component';
 import { GitHub, GithubWorkflow, GitIdentity, workflows } from '../github';
 import { DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from '../github/constants';
+import { WorkflowActions } from '../github/workflow-actions';
 import { ContainerOptions, JobStep } from '../github/workflows-model';
 import { NodeProject } from '../javascript';
 import { Task } from '../task';
 
 function context(value: string) {
   return `\${{ ${value} }}`;
-}
-
-function setOutput(name: string, value: string) {
-  return `echo "::set-output name=${name}::${value}"`;
 }
 
 const RUNNER_TEMP = context('runner.temp');
@@ -214,11 +211,8 @@ export class UpgradeDependencies extends Component {
   }
 
   private createUpgrade(task: Task, branch?: string): Upgrade {
-    const build = this.options.workflowOptions?.rebuild ?? true;
     const runsOn = this.options.workflowOptions?.runsOn ?? ['ubuntu-latest'];
     const patchFile = '.upgrade.tmp.patch';
-    const buildStepId = 'build';
-    const conclusion = 'conclusion';
 
     // thats all we should need at this stage since all we do is clone.
     // note that this also prevents new code that is introduced in the upgrade
@@ -227,7 +221,6 @@ export class UpgradeDependencies extends Component {
       contents: workflows.JobPermission.READ,
     };
 
-    const outputs: Record<string, workflows.JobStepOutput> = {};
     const steps: workflows.JobStep[] = [
       {
         name: 'Checkout',
@@ -241,19 +234,6 @@ export class UpgradeDependencies extends Component {
         run: this._project.runTaskCommand(task),
       },
     ];
-
-    if (build) {
-      steps.push({
-        name: 'Build',
-        id: buildStepId,
-        run: `${this._project.runTaskCommand(this._project.buildTask)} && ${setOutput(conclusion, 'success')} || ${setOutput(conclusion, 'failure')}`,
-      });
-
-      outputs[conclusion] = {
-        stepId: buildStepId,
-        outputName: conclusion,
-      };
-    }
 
     steps.push(...this.postBuildSteps);
 
@@ -278,13 +258,10 @@ export class UpgradeDependencies extends Component {
         container: this.containerOptions,
         permissions: permissions,
         runsOn: runsOn ?? ['ubuntu-latest'],
-        outputs: outputs,
         steps: steps,
       },
       jobId: 'upgrade',
       patchFile: patchFile,
-      build: build,
-      buildConclusionOutput: conclusion,
       ref: branch,
     };
   }
@@ -346,31 +323,11 @@ export class UpgradeDependencies extends Component {
       },
     ];
 
-    let writeChecksPermission = false;
-    if (this._project.buildWorkflowJobId && upgrade.build) {
-      const body = {
-        name: this._project.buildWorkflowJobId,
-        head_sha: branchName,
-        status: 'completed',
-        conclusion: context(`needs.${upgrade.jobId}.outputs.${upgrade.buildConclusionOutput}`),
-        output: {
-          title: `Created via the ${workflowName} workflow.`,
-          summary: `Action run URL: ${RUN_URL}`,
-        },
-      };
-      steps.push({
-        name: 'Update status check',
-        if: `steps.${prStepId}.outputs.pull-request-url != \'\'`,
-        run: 'curl -i --fail '
-                + '-X POST '
-                + '-H "Accept: application/vnd.github.v3+json" '
-                + `-H "Authorization: token \${GITHUB_TOKEN}" https://api.github.com/repos/${REPO}/check-runs `
-                + `-d '${JSON.stringify(body)}'`,
-        env: { GITHUB_TOKEN: DEFAULT_TOKEN },
-      });
-
-      // necessary to update status checks
-      writeChecksPermission = true;
+    const workflowFile = this._project.buildWorkflow?.filename;
+    if (workflowFile) {
+      steps.push(...WorkflowActions.dispatchWorkflow({
+        workflowId: workflowFile,
+      }));
     }
 
     return {
@@ -380,7 +337,7 @@ export class UpgradeDependencies extends Component {
         permissions: {
           contents: workflows.JobPermission.WRITE,
           pullRequests: workflows.JobPermission.WRITE,
-          checks: writeChecksPermission ? workflows.JobPermission.WRITE : undefined,
+          actions: workflows.JobPermission.WRITE,
         },
         runsOn: runsOn ?? ['ubuntu-latest'],
         steps: steps,
@@ -395,8 +352,6 @@ interface Upgrade {
   readonly job: workflows.Job;
   readonly jobId: string;
   readonly patchFile: string;
-  readonly build: boolean;
-  readonly buildConclusionOutput: string;
 }
 
 interface PR {
@@ -438,20 +393,6 @@ export interface UpgradeDependenciesWorkflowOptions {
    * @default - no labels.
    */
   readonly labels?: string[];
-
-  /**
-   * Execute 'build' after the upgrade.
-   *
-   * When true, the workflow will run the project build task after the dependency upgrade.
-   * This means that the PR created will include any changes caused by the `build` command,
-   * (e.g project synth changes, test snapshots)
-   *
-   * This is necessary when using the default github token.
-   *
-   * @see `secret` for more details.
-   * @default true
-   */
-  readonly rebuild?: boolean;
 
   /**
    * Job container options.
