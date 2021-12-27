@@ -11,39 +11,94 @@ export class WorkflowActions {
    * @returns A set of JobSteps
    */
   public static dispatchWorkflow(options: DispatchWorkflowOptions): JobStep[] {
-    const githubTokenSecret = options.githubTokenSecret ?? 'GITHUB_TOKEN';
     const repo = options.repo ?? '${{ github.repository }}';
     const ref = options.ref ?? '$(git rev-parse HEAD)';
+    return this.githubRequest({
+      name: `Trigger ${options.workflowId} workflow`,
+      url: `repos/${repo}/actions/workflows/${options.workflowId}/dispatches`,
+      body: { ref },
+      ...options,
+    });
+  }
+
+  /**
+   * Sends an authenticated HTTP request to the GitHub API.
+   * @param options Request options
+   * @returns Job steps
+   */
+  public static githubRequest(options: GitHubRequestOptions): JobStep[] {
+    const githubTokenSecret = options.githubTokenSecret ?? 'GITHUB_TOKEN';
+    const method = options.method ?? 'POST';
+    const url = options.url;
+    const curl = [
+      'curl',
+      '-i',
+      '--fail',
+      `-X ${method}`,
+      '-H "Accept: application/vnd.github.v3+json"',
+      '-H "Authorization: token ${GITHUB_TOKEN}"',
+    ];
+
+    if (options.body) {
+      // outer JSON.stringify is for escaping
+      curl.push(`--data ${JSON.stringify(JSON.stringify(options.body))}`);
+    }
+
+    curl.push(`https://api.github.com/${url}`);
 
     return [
       {
-        name: `Trigger ${options.workflowId} workflow`,
+        name: options.name,
         if: options.if,
         env: {
           GITHUB_TOKEN: `\${{ secrets.${githubTokenSecret} }}`,
         },
-        run: [
-          'curl',
-          '-i',
-          '--fail',
-          '-X POST',
-          '-H "Accept: application/vnd.github.v3+json"',
-          '-H "Authorization: token ${GITHUB_TOKEN}"',
-          `--data ${JSON.stringify(JSON.stringify({ ref }))}`, // outer JSON.stringify is for escaping
-          `https://api.github.com/repos/${repo}/actions/workflows/${options.workflowId}/dispatches`,
-        ].join(' '),
+        run: curl.join(' '),
       },
     ];
   }
 }
 
-export interface DispatchWorkflowOptions {
+export interface GitHubRequestCommonOptions {
   /**
    * The github token secret to use.
    *
    * @default "GITHUB_TOKEN"
    */
   readonly githubTokenSecret?: string;
+
+  /**
+   * Condition
+   * @default - no condition
+   */
+  readonly if?: string;
+}
+
+export interface GitHubRequestOptions extends GitHubRequestCommonOptions {
+  /**
+   * The url (without http://api.github.com)
+   */
+  readonly url: string;
+  /**
+   * The step name.
+   * @default - no name
+   */
+  readonly name?: string;
+
+  /**
+   * HTTP method.
+   * @default "POST"
+   */
+  readonly method?: string;
+
+  /**
+   * Request JSON body.
+   * @default - no data is sent
+   */
+  readonly body?: any;
+}
+
+export interface DispatchWorkflowOptions extends GitHubRequestCommonOptions {
 
   /**
    * The repository to use.
@@ -59,12 +114,6 @@ export interface DispatchWorkflowOptions {
    * @default "$(git rev-parse HEAD)"
    */
   readonly ref?: string;
-
-  /**
-   * Condition
-   * @default - no condition
-   */
-  readonly if?: string;
 
   /**
    * The file name of the workflow to dispatch (e.g. `build.yml`).
