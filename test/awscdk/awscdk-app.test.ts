@@ -95,7 +95,7 @@ describe('synth', () => {
   });
 
   it('adds a "synth" task', () => {
-    expect(files['.projen/tasks.json'].tasks['synth']).toStrictEqual({
+    expect(files['.projen/tasks.json'].tasks.synth).toStrictEqual({
       name: 'synth',
       description: 'Synthesizes your cdk app into cdk.out',
       steps: [
@@ -116,7 +116,7 @@ describe('synth', () => {
 
   it('spawns a "synth:silent" post-compile task', () => {
     expect(files['.projen/tasks.json'].tasks['post-compile'].steps).toStrictEqual([
-    { spawn: 'synth:silent' },
+      { spawn: 'synth:silent' },
     ]);
   });
 });
