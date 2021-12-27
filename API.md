@@ -3527,6 +3527,7 @@ Name | Type | Description
 **destroy**🔹 | <code>[Task](#projen-task)</code> | Destroys all the stacks.
 **diff**🔹 | <code>[Task](#projen-task)</code> | Diff against production.
 **synth**🔹 | <code>[Task](#projen-task)</code> | Synthesizes your app.
+**synthSilent**🔹 | <code>[Task](#projen-task)</code> | Synthesizes your app and suppresses stdout.
 **watch**🔹 | <code>[Task](#projen-task)</code> | Watch task.
 
 
