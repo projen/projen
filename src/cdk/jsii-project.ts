@@ -183,6 +183,11 @@ export class JsiiProject extends TypeScriptProject {
 
     this.compileTask.reset(`jsii ${jsiiFlags}`);
     this.watchTask.reset(`jsii -w ${jsiiFlags}`);
+
+    // we don't need this becaue pacmak will be doing
+    // the packaging.
+    this.packageTask.reset("echo Skipping. Use 'npx projen package-all' or 'npx projen package:{target}'");
+
     this.packageAllTask = this.addTask('package-all', {
       description: 'Packages artifacts for all target languages',
     });
@@ -354,8 +359,10 @@ export class JsiiProject extends TypeScriptProject {
 
   private pacmakForLanguage(target: JsiiPacmakTarget): CommonPublishOptions & { commands: string[] } {
     const commands = [
+      'echo listing directory before calling pacmak',
+      'ls -la',
       'jsii_version=$(node -p "JSON.parse(fs.readFileSync(\'.jsii\')).jsiiVersion.split(\' \')[0]")',
-      `npx jsii-pacmak@$jsii_version -v --outdir $PWD/${this.artifactsDirectory} --target ${target}`,
+      `npx jsii-pacmak@$jsii_version -v --target ${target}`,
     ];
 
     return {
@@ -363,11 +370,8 @@ export class JsiiProject extends TypeScriptProject {
       publishTools: JSII_TOOLCHAIN[target],
       prePublishSteps: [
         {
-          name: 'Extract npm tarball',
-          run: [
-            `tar -xzf ${this.artifactsJavascriptDirectory}/*.tgz --strip-components=1`,
-            `rm -fr ${this.artifactsJavascriptDirectory}`,
-          ].join('\n'),
+          name: 'Install Dependencies',
+          run: this.package.installCommand,
         },
         {
           name: `Create ${target} artifact`,

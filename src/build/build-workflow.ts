@@ -218,17 +218,29 @@ export class BuildWorkflow extends Component {
       // add a step at the end of the build workflow which will upload the
       // artifact so we can download it in each post-build job (do it once).
       if (!this.uploadArtitactSteps) {
-        this.uploadArtitactSteps = [{
-          name: 'Upload artifact',
-          uses: 'actions/upload-artifact@v2.1.1',
-          // Setting to always will ensure that this step will run even if
-          // the previous ones have failed (e.g. coverage report, internal logs, etc)
-          if: 'always()',
-          with: {
-            name: artfiactName,
-            path: this.artifactsDirectory,
+        this.uploadArtitactSteps = [
+          {
+            name: 'List',
+            run: 'ls -la',
           },
-        }];
+          {
+            name: 'Upload artifact',
+            uses: 'actions/upload-artifact@v2.1.1',
+            // Setting to always will ensure that this step will run even if
+            // the previous ones have failed (e.g. coverage report, internal logs, etc)
+            if: 'always()',
+            with: {
+              name: artfiactName,
+              path: [
+                '.',
+                '!.git',
+                // node_modules takes forever to compress.
+                // instead we skip it and re-install after downloading.
+                '!node_modules',
+              ].join('\n'),
+            },
+          },
+        ];
       }
 
       steps.push({
@@ -236,7 +248,7 @@ export class BuildWorkflow extends Component {
         uses: 'actions/download-artifact@v2',
         with: {
           name: artfiactName,
-          path: this.artifactsDirectory,
+          path: '.',
         },
       });
     }
@@ -284,10 +296,11 @@ export class BuildWorkflow extends Component {
       id: SELF_MUTATION_STEP,
       run: [
         'if ! git diff --exit-code; then',
-        '  git add .',
-        '  git commit -m "chore: self mutation"',
-        `  git push origin HEAD:${BRANCH_REF}`,
-        `  echo "::set-output name=${SELF_MUTATION_COMMIT}::$(git rev-parse HEAD)"`,
+        '  echo Detected diff, skipping',
+        // '  git add .',
+        // '  git commit -m "chore: self mutation"',
+        // `  git push origin HEAD:${BRANCH_REF}`,
+        // `  echo "::set-output name=${SELF_MUTATION_COMMIT}::$(git rev-parse HEAD)"`,
         'fi',
       ].join('\n'),
     });
