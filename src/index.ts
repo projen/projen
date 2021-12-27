@@ -46,3 +46,4 @@ export * as cdk8s from './cdk8s';
 export * as cdktf from './cdktf';
 export * as cdk from './cdk';
 export * as build from './build';
+export * as bitbucket from './bitbucket';

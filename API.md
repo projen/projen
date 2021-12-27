@@ -48,6 +48,17 @@ Name|Description
 [awscdk.IntegrationTest](#projen-awscdk-integrationtest)|Cloud integration tests.
 [awscdk.LambdaFunction](#projen-awscdk-lambdafunction)|Generates a pre-bundled AWS Lambda function construct from handler code.
 [awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)|The runtime for the AWS Lambda function.
+[bitbucket.Bitbucket](#projen-bitbucket-bitbucket)|*No description*
+[bitbucket.Cache](#projen-bitbucket-cache)|Cache definitions for Bitbucket Pipelines Configuration.
+[bitbucket.Definitions](#projen-bitbucket-definitions)|Definitions for Bitbucket Pipelines Configuration.
+[bitbucket.Line](#projen-bitbucket-line)|Line of Step Script.
+[bitbucket.Parallel](#projen-bitbucket-parallel)|Parallelization of Steps.
+[bitbucket.Pipe](#projen-bitbucket-pipe)|Pipe of Step Script.
+[bitbucket.Pipeline](#projen-bitbucket-pipeline)|Pipeline.
+[bitbucket.Pipelines](#projen-bitbucket-pipelines)|Pipelines for Bitbucket Pipelines Configuration.
+[bitbucket.PipelinesYaml](#projen-bitbucket-pipelinesyaml)|Pipelines Configuration for Bitbucket.
+[bitbucket.Service](#projen-bitbucket-service)|Service definitions for Bitbucket Pipelines Configuration.
+[bitbucket.Step](#projen-bitbucket-step)|Step for Bitbucket Pipelines Configuration.
 [build.BuildWorkflow](#projen-build-buildworkflow)|*No description*
 [cdk.ConstructLibrary](#projen-cdk-constructlibrary)|A multi-language library for CDK constructs.
 [cdk.JsiiDocgen](#projen-cdk-jsiidocgen)|Creates an API.md file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that API.md is checked in.
@@ -176,6 +187,16 @@ Name|Description
 [awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)|Options for `IntegrationTest`.
 [awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)|Common options for `LambdaFunction`.
 [awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)|Options for `Function`.
+[bitbucket.BitbucketOptions](#projen-bitbucket-bitbucketoptions)|*No description*
+[bitbucket.CacheOptions](#projen-bitbucket-cacheoptions)|Options for `Cache`.
+[bitbucket.DefinitionsOptions](#projen-bitbucket-definitionsoptions)|Options for `Definitions`.
+[bitbucket.LineOptions](#projen-bitbucket-lineoptions)|Options for `Line`.
+[bitbucket.PipeOptions](#projen-bitbucket-pipeoptions)|Options for `Pipe`.
+[bitbucket.PipelineOptions](#projen-bitbucket-pipelineoptions)|Options for `Pipeline`.
+[bitbucket.PipelinesOptions](#projen-bitbucket-pipelinesoptions)|Options for `Pipelines`.
+[bitbucket.PipelinesYamlOptions](#projen-bitbucket-pipelinesyamloptions)|Options for `PipelinesConfiguration`.
+[bitbucket.ServiceOptions](#projen-bitbucket-serviceoptions)|Options for `Service`.
+[bitbucket.StepOptions](#projen-bitbucket-stepoptions)|Options for `Step`.
 [build.BuildWorkflowOptions](#projen-build-buildworkflowoptions)|*No description*
 [cdk.Catalog](#projen-cdk-catalog)|*No description*
 [cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)|*No description*
@@ -3794,6 +3815,549 @@ Name | Type | Description
 *static* **NODEJS_10_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 10.x.
 *static* **NODEJS_12_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 12.x.
 *static* **NODEJS_14_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 14.x.
+
+
+
+## class Bitbucket 🔹 <a id="projen-bitbucket-bitbucket"></a>
+
+
+
+__Submodule__: bitbucket
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new bitbucket.Bitbucket(project: Project, options?: BitbucketOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[bitbucket.BitbucketOptions](#projen-bitbucket-bitbucketoptions)</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**pipelinesYaml**🔹 | <code>[bitbucket.PipelinesYaml](#projen-bitbucket-pipelinesyaml)</code> | The `PipelinesConfiguration` configured on this repository.
+
+### Methods
+
+
+#### *static* of(project)🔹 <a id="projen-bitbucket-bitbucket-of"></a>
+
+Returns the `Bitbucket` component of a project or `undefined` if the project does not have a Bitbucket component.
+
+```ts
+static of(project: Project): Bitbucket
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+__Returns__:
+* <code>[bitbucket.Bitbucket](#projen-bitbucket-bitbucket)</code>
+
+
+
+## class Cache 🔹 <a id="projen-bitbucket-cache"></a>
+
+Cache definitions for Bitbucket Pipelines Configuration.
+
+Bitbucket Pipelines is able to cache external build dependencies and
+directories, such as 3rd-party libraries, between builds providing faster
+builds, and reducing the number of consumed build minutes.
+
+__Submodule__: bitbucket
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new bitbucket.Cache(definitions: Definitions, name: string, options: CacheOptions)
+```
+
+* **definitions** (<code>[bitbucket.Definitions](#projen-bitbucket-definitions)</code>)  *No description*
+* **name** (<code>string</code>)  *No description*
+* **options** (<code>[bitbucket.CacheOptions](#projen-bitbucket-cacheoptions)</code>)  *No description*
+  * **path** (<code>string</code>)  *No description* 
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | <span></span>
+**path**🔹 | <code>string</code> | <span></span>
+
+
+
+## class Definitions 🔹 <a id="projen-bitbucket-definitions"></a>
+
+Definitions for Bitbucket Pipelines Configuration.
+
+Bitbucket Pipelines is able to cache external build dependencies and
+directories, such as 3rd-party libraries, between builds providing faster
+builds, and reducing the number of consumed build minutes.
+
+__Submodule__: bitbucket
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new bitbucket.Definitions(configuration: PipelinesYaml, options?: DefinitionsOptions)
+```
+
+* **configuration** (<code>[bitbucket.PipelinesYaml](#projen-bitbucket-pipelinesyaml)</code>)  *No description*
+* **options** (<code>[bitbucket.DefinitionsOptions](#projen-bitbucket-definitionsoptions)</code>)  *No description*
+
+
+### Methods
+
+
+#### addCache(name, options)🔹 <a id="projen-bitbucket-definitions-addcache"></a>
+
+Adds a cache definition.
+
+```ts
+addCache(name: string, options: CacheOptions): Cache
+```
+
+* **name** (<code>string</code>)  Name of the cache.
+* **options** (<code>[bitbucket.CacheOptions](#projen-bitbucket-cacheoptions)</code>)  *No description*
+  * **path** (<code>string</code>)  *No description* 
+
+__Returns__:
+* <code>[bitbucket.Cache](#projen-bitbucket-cache)</code>
+
+#### addService(name, options)🔹 <a id="projen-bitbucket-definitions-addservice"></a>
+
+Adds a service definition.
+
+```ts
+addService(name: string, options: ServiceOptions): Service
+```
+
+* **name** (<code>string</code>)  Name of the service.
+* **options** (<code>[bitbucket.ServiceOptions](#projen-bitbucket-serviceoptions)</code>)  *No description*
+  * **image** (<code>string</code>)  *No description* 
+  * **memory** (<code>number</code>)  *No description* __*Optional*__
+  * **variables** (<code>Map<string, string></code>)  *No description* __*Optional*__
+
+__Returns__:
+* <code>[bitbucket.Service](#projen-bitbucket-service)</code>
+
+
+
+## class Line 🔹 <a id="projen-bitbucket-line"></a>
+
+Line of Step Script.
+
+__Submodule__: bitbucket
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new bitbucket.Line(step: Step, value: string)
+```
+
+* **step** (<code>[bitbucket.Step](#projen-bitbucket-step)</code>)  *No description*
+* **value** (<code>string</code>)  *No description*
+
+
+
+
+## class Parallel 🔹 <a id="projen-bitbucket-parallel"></a>
+
+Parallelization of Steps.
+
+Parallel steps enable you to build and test faster, by running a set of
+self-contained steps at the same time.
+
+__Submodule__: bitbucket
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new bitbucket.Parallel(pipeline: Pipeline)
+```
+
+* **pipeline** (<code>[bitbucket.Pipeline](#projen-bitbucket-pipeline)</code>)  *No description*
+
+
+### Methods
+
+
+#### addStep(options)🔹 <a id="projen-bitbucket-parallel-addstep"></a>
+
+Adds a step.
+
+```ts
+addStep(options: StepOptions): Step
+```
+
+* **options** (<code>[bitbucket.StepOptions](#projen-bitbucket-stepoptions)</code>)  step configuration.
+  * **artifacts** (<code>Array<string></code>)  step artifacts. __*Optional*__
+  * **name** (<code>string</code>)  name of step. __*Optional*__
+
+__Returns__:
+* <code>[bitbucket.Step](#projen-bitbucket-step)</code>
+
+
+
+## class Pipe 🔹 <a id="projen-bitbucket-pipe"></a>
+
+Pipe of Step Script.
+
+Pipes provide a simple way to configure a pipeline. They are especially
+powerful when you want to work with third-party tools.
+
+__Submodule__: bitbucket
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new bitbucket.Pipe(step: Step, name: string, options?: PipeOptions)
+```
+
+* **step** (<code>[bitbucket.Step](#projen-bitbucket-step)</code>)  *No description*
+* **name** (<code>string</code>)  *No description*
+* **options** (<code>[bitbucket.PipeOptions](#projen-bitbucket-pipeoptions)</code>)  *No description*
+  * **variables** (<code>Map<string, string></code>)  environment variables. __*Optional*__
+
+
+
+
+## class Pipeline 🔹 <a id="projen-bitbucket-pipeline"></a>
+
+Pipeline.
+
+__Submodule__: bitbucket
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new bitbucket.Pipeline(pipelines: Pipelines, options: PipelineOptions)
+```
+
+* **pipelines** (<code>[bitbucket.Pipelines](#projen-bitbucket-pipelines)</code>)  *No description*
+* **options** (<code>[bitbucket.PipelineOptions](#projen-bitbucket-pipelineoptions)</code>)  *No description*
+
+
+### Methods
+
+
+#### addParallel()🔹 <a id="projen-bitbucket-pipeline-addparallel"></a>
+
+Adds step parallelization.
+
+```ts
+addParallel(): Parallel
+```
+
+
+__Returns__:
+* <code>[bitbucket.Parallel](#projen-bitbucket-parallel)</code>
+
+#### addStep(options)🔹 <a id="projen-bitbucket-pipeline-addstep"></a>
+
+Adds a step.
+
+```ts
+addStep(options: StepOptions): Step
+```
+
+* **options** (<code>[bitbucket.StepOptions](#projen-bitbucket-stepoptions)</code>)  step configuration.
+  * **artifacts** (<code>Array<string></code>)  step artifacts. __*Optional*__
+  * **name** (<code>string</code>)  name of step. __*Optional*__
+
+__Returns__:
+* <code>[bitbucket.Step](#projen-bitbucket-step)</code>
+
+
+
+## class Pipelines 🔹 <a id="projen-bitbucket-pipelines"></a>
+
+Pipelines for Bitbucket Pipelines Configuration.
+
+Bitbucket Pipelines is able to cache external build dependencies and
+directories, such as 3rd-party libraries, between builds providing faster
+builds, and reducing the number of consumed build minutes.
+
+__Submodule__: bitbucket
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new bitbucket.Pipelines(configuration: PipelinesYaml, options?: PipelinesOptions)
+```
+
+* **configuration** (<code>[bitbucket.PipelinesYaml](#projen-bitbucket-pipelinesyaml)</code>)  *No description*
+* **options** (<code>[bitbucket.PipelinesOptions](#projen-bitbucket-pipelinesoptions)</code>)  *No description*
+
+
+### Methods
+
+
+#### addBookmark(bookmark, options)🔹 <a id="projen-bitbucket-pipelines-addbookmark"></a>
+
+Adds a bookmark-specific build pipeline.
+
+```ts
+addBookmark(bookmark: string, options: PipelineOptions): Pipeline
+```
+
+* **bookmark** (<code>string</code>)  name or glob expression of bookmark.
+* **options** (<code>[bitbucket.PipelineOptions](#projen-bitbucket-pipelineoptions)</code>)  configuration of pipeline.
+
+__Returns__:
+* <code>[bitbucket.Pipeline](#projen-bitbucket-pipeline)</code>
+
+#### addBranch(branch, options)🔹 <a id="projen-bitbucket-pipelines-addbranch"></a>
+
+Adds a branch-specific build pipeline.
+
+```ts
+addBranch(branch: string, options: PipelineOptions): Pipeline
+```
+
+* **branch** (<code>string</code>)  name or glob expression of branch.
+* **options** (<code>[bitbucket.PipelineOptions](#projen-bitbucket-pipelineoptions)</code>)  Configuration of pipeline.
+
+__Returns__:
+* <code>[bitbucket.Pipeline](#projen-bitbucket-pipeline)</code>
+
+#### addCustom(name, options)🔹 <a id="projen-bitbucket-pipelines-addcustom"></a>
+
+Adds a custom pipeline.
+
+```ts
+addCustom(name: string, options: PipelineOptions): Pipeline
+```
+
+* **name** (<code>string</code>)  Name of custom pipeline.
+* **options** (<code>[bitbucket.PipelineOptions](#projen-bitbucket-pipelineoptions)</code>)  Configuration of pipeline.
+
+__Returns__:
+* <code>[bitbucket.Pipeline](#projen-bitbucket-pipeline)</code>
+
+#### addDefault(options)🔹 <a id="projen-bitbucket-pipelines-adddefault"></a>
+
+Adds a default pipeline.
+
+```ts
+addDefault(options: PipelineOptions): Pipeline
+```
+
+* **options** (<code>[bitbucket.PipelineOptions](#projen-bitbucket-pipelineoptions)</code>)  Configuration of pipeline.
+
+__Returns__:
+* <code>[bitbucket.Pipeline](#projen-bitbucket-pipeline)</code>
+
+#### addPullRequest(pullRequest, options)🔹 <a id="projen-bitbucket-pipelines-addpullrequest"></a>
+
+Adds a special pipeline that only runs on pull requests initiated from within the repository.
+
+```ts
+addPullRequest(pullRequest: string, options: PipelineOptions): Pipeline
+```
+
+* **pullRequest** (<code>string</code>)  name or glob expression of pull request.
+* **options** (<code>[bitbucket.PipelineOptions](#projen-bitbucket-pipelineoptions)</code>)  configuration of pipeline.
+
+__Returns__:
+* <code>[bitbucket.Pipeline](#projen-bitbucket-pipeline)</code>
+
+#### addTag(tag, options)🔹 <a id="projen-bitbucket-pipelines-addtag"></a>
+
+Adds a tag-specific build pipeline.
+
+```ts
+addTag(tag: string, options: PipelineOptions): Pipeline
+```
+
+* **tag** (<code>string</code>)  name or glob expression of tag.
+* **options** (<code>[bitbucket.PipelineOptions](#projen-bitbucket-pipelineoptions)</code>)  configuration of pipeline.
+
+__Returns__:
+* <code>[bitbucket.Pipeline](#projen-bitbucket-pipeline)</code>
+
+
+
+## class PipelinesYaml 🔹 <a id="projen-bitbucket-pipelinesyaml"></a>
+
+Pipelines Configuration for Bitbucket.
+
+Bitbucket Pipelines is an integrated CI/CD service built into Bitbucket.
+
+__Submodule__: bitbucket
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new bitbucket.PipelinesYaml(bitbucket: Bitbucket, options?: PipelinesYamlOptions)
+```
+
+* **bitbucket** (<code>[bitbucket.Bitbucket](#projen-bitbucket-bitbucket)</code>)  *No description*
+* **options** (<code>[bitbucket.PipelinesYamlOptions](#projen-bitbucket-pipelinesyamloptions)</code>)  *No description*
+  * **image** (<code>[bitbucket.model.Image](#projen-bitbucket-model-image)</code>)  *No description* __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**definitions**🔹 | <code>[bitbucket.Definitions](#projen-bitbucket-definitions)</code> | <span></span>
+**file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | <span></span>
+**pipelines**🔹 | <code>[bitbucket.Pipelines](#projen-bitbucket-pipelines)</code> | <span></span>
+**image**?🔹 | <code>[bitbucket.model.Image](#projen-bitbucket-model-image)</code> | __*Optional*__
+
+
+
+## class Service 🔹 <a id="projen-bitbucket-service"></a>
+
+Service definitions for Bitbucket Pipelines Configuration.
+
+Pipelines can spin up separate docker containers for services, which results
+in faster builds, and easy service editing.
+
+__Submodule__: bitbucket
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new bitbucket.Service(definitions: Definitions, name: string, options: ServiceOptions)
+```
+
+* **definitions** (<code>[bitbucket.Definitions](#projen-bitbucket-definitions)</code>)  *No description*
+* **name** (<code>string</code>)  *No description*
+* **options** (<code>[bitbucket.ServiceOptions](#projen-bitbucket-serviceoptions)</code>)  *No description*
+  * **image** (<code>string</code>)  *No description* 
+  * **memory** (<code>number</code>)  *No description* __*Optional*__
+  * **variables** (<code>Map<string, string></code>)  *No description* __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**image**🔹 | <code>string</code> | <span></span>
+**name**🔹 | <code>string</code> | <span></span>
+**memory**?🔹 | <code>number</code> | __*Optional*__
+**variables**?🔹 | <code>Map<string, string></code> | __*Optional*__
+
+
+
+## class Step 🔹 <a id="projen-bitbucket-step"></a>
+
+Step for Bitbucket Pipelines Configuration.
+
+A pipeline is made up of a list of steps.
+
+__Submodule__: bitbucket
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new bitbucket.Step(pipeline: Pipeline &#124; Parallel, options: StepOptions)
+```
+
+* **pipeline** (<code>[bitbucket.Pipeline](#projen-bitbucket-pipeline) &#124; [bitbucket.Parallel](#projen-bitbucket-parallel)</code>)  *No description*
+* **options** (<code>[bitbucket.StepOptions](#projen-bitbucket-stepoptions)</code>)  *No description*
+  * **artifacts** (<code>Array<string></code>)  step artifacts. __*Optional*__
+  * **name** (<code>string</code>)  name of step. __*Optional*__
+
+
+### Methods
+
+
+#### addLine(value)🔹 <a id="projen-bitbucket-step-addline"></a>
+
+Add a script line.
+
+```ts
+addLine(value: string): Step
+```
+
+* **value** (<code>string</code>)  a script line.
+
+__Returns__:
+* <code>[bitbucket.Step](#projen-bitbucket-step)</code>
+
+#### addPipe(name, options?)🔹 <a id="projen-bitbucket-step-addpipe"></a>
+
+Add a script pipe.
+
+```ts
+addPipe(name: string, options?: PipeOptions): Step
+```
+
+* **name** (<code>string</code>)  the docker image id conformant name of the pipe.
+* **options** (<code>[bitbucket.PipeOptions](#projen-bitbucket-pipeoptions)</code>)  configuration of the pipe.
+  * **variables** (<code>Map<string, string></code>)  environment variables. __*Optional*__
+
+__Returns__:
+* <code>[bitbucket.Step](#projen-bitbucket-step)</code>
 
 
 
@@ -10977,6 +11541,104 @@ Name | Type | Description
 **constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
 **constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
 **runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
+
+
+
+## struct BitbucketOptions 🔹 <a id="projen-bitbucket-bitbucketoptions"></a>
+
+
+
+
+
+## struct CacheOptions 🔹 <a id="projen-bitbucket-cacheoptions"></a>
+
+
+Options for `Cache`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**path**🔹 | <code>string</code> | <span></span>
+
+
+
+## struct DefinitionsOptions 🔹 <a id="projen-bitbucket-definitionsoptions"></a>
+
+
+Options for `Definitions`.
+
+
+## struct LineOptions 🔹 <a id="projen-bitbucket-lineoptions"></a>
+
+
+Options for `Line`.
+
+
+## struct PipeOptions 🔹 <a id="projen-bitbucket-pipeoptions"></a>
+
+
+Options for `Pipe`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**variables**?🔹 | <code>Map<string, string></code> | environment variables.<br/>__*Optional*__
+
+
+
+## struct PipelineOptions 🔹 <a id="projen-bitbucket-pipelineoptions"></a>
+
+
+Options for `Pipeline`.
+
+
+## struct PipelinesOptions 🔹 <a id="projen-bitbucket-pipelinesoptions"></a>
+
+
+Options for `Pipelines`.
+
+
+## struct PipelinesYamlOptions 🔹 <a id="projen-bitbucket-pipelinesyamloptions"></a>
+
+
+Options for `PipelinesConfiguration`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**image**?🔹 | <code>[bitbucket.model.Image](#projen-bitbucket-model-image)</code> | __*Optional*__
+
+
+
+## struct ServiceOptions 🔹 <a id="projen-bitbucket-serviceoptions"></a>
+
+
+Options for `Service`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**image**🔹 | <code>string</code> | <span></span>
+**memory**?🔹 | <code>number</code> | __*Optional*__
+**variables**?🔹 | <code>Map<string, string></code> | __*Optional*__
+
+
+
+## struct StepOptions 🔹 <a id="projen-bitbucket-stepoptions"></a>
+
+
+Options for `Step`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**artifacts**?🔹 | <code>Array<string></code> | step artifacts.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | name of step.<br/>__*Optional*__
 
 
 
