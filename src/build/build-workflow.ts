@@ -161,6 +161,7 @@ export class BuildWorkflow extends Component {
         ...WorkflowActions.dispatchWorkflow({
           workflowId: this.filename,
           repo: REPO_REF,
+          ref: BRANCH_REF,
         }),
       ],
     });
