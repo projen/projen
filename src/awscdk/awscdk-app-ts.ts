@@ -91,7 +91,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     this.cdkTasks = new CdkTasks(this);
 
     // add synth to the build
-    this.postCompileTask.spawn(this.cdkTasks.synth);
+    this.postCompileTask.spawn(this.cdkTasks.synthSilent);
 
     const tsConfigFile = this.tsconfig?.fileName;
     if (!tsConfigFile) {

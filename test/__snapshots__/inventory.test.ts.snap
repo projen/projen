@@ -176,7 +176,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "string",
+              "primitive": "any",
             },
             "kind": "map",
           },
@@ -1151,6 +1151,38 @@ Array [
         "switch": "bin",
       },
       Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
+      },
+      Object {
         "default": "- no build command",
         "docs": "A command to execute before synthesis.",
         "featured": false,
@@ -1485,7 +1517,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "string",
+              "primitive": "any",
             },
             "kind": "map",
           },
@@ -3786,6 +3818,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -6470,6 +6534,38 @@ Array [
         "switch": "bin",
       },
       Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
+      },
+      Object {
         "default": "- true if not a subproject",
         "docs": "Define a GitHub workflow for building PRs.",
         "featured": false,
@@ -8861,6 +8957,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -11438,6 +11566,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -14638,6 +14798,38 @@ Array [
         "switch": "bin",
       },
       Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
+      },
+      Object {
         "default": "- true if not a subproject",
         "docs": "Define a GitHub workflow for building PRs.",
         "featured": false,
@@ -17097,6 +17289,38 @@ Array [
         "switch": "bin",
       },
       Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
+      },
+      Object {
         "default": "- true if not a subproject",
         "docs": "Define a GitHub workflow for building PRs.",
         "featured": false,
@@ -19127,6 +19351,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -21387,6 +21643,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -24266,6 +24554,38 @@ Array [
         "switch": "bin",
       },
       Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
+      },
+      Object {
         "default": "- true if not a subproject",
         "docs": "Define a GitHub workflow for building PRs.",
         "featured": false,
@@ -26284,6 +26604,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -28551,6 +28903,38 @@ Array [
         "switch": "bin",
       },
       Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
+      },
+      Object {
         "default": "- true if not a subproject",
         "docs": "Define a GitHub workflow for building PRs.",
         "featured": false,
@@ -30792,6 +31176,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",

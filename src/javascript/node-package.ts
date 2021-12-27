@@ -249,6 +249,16 @@ export interface NodePackageOptions {
   readonly npmRegistry?: string;
 
   /**
+   * The url to your project's issue tracker.
+   */
+  readonly bugsUrl?: string;
+
+  /**
+   * The email address to which issues should be reported.
+   */
+  readonly bugsEmail?: string;
+
+  /**
    * Access level of the npm package.
    *
    * @default - for scoped packages (e.g. `foo@bar`), the default is
@@ -297,6 +307,7 @@ export interface CodeArtifactOptions {
     */
   readonly roleToAssume?: string;
 }
+
 
 /**
  * Represents the npm `package.json` file.
@@ -435,6 +446,10 @@ export class NodePackage extends Component {
       // in release CI builds we bump the version before we run "build" so we want
       // to preserve the version number. otherwise, we always set it to 0.0.0
       version: this.determineVersion(prev?.version),
+      bugs: (options.bugsEmail || options.bugsUrl) ? {
+        email: options.bugsEmail,
+        url: options.bugsUrl,
+      } : undefined,
     };
 
     // override any scripts from options (if specified)
