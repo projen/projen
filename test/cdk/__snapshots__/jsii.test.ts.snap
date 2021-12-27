@@ -131,8 +131,8 @@ Object {
     },
     Object {
       "name": "Extract npm tarball",
-      "run": "tar -xzf dist/*.tgz --strip-components=1
-rm -fr dist/",
+      "run": "tar -xzf dist/js/*.tgz --strip-components=1
+rm -fr dist/js",
     },
     Object {
       "name": "Create go artifact",
@@ -185,8 +185,8 @@ Object {
     },
     Object {
       "name": "Extract npm tarball",
-      "run": "tar -xzf dist/*.tgz --strip-components=1
-rm -fr dist/",
+      "run": "tar -xzf dist/js/*.tgz --strip-components=1
+rm -fr dist/js",
     },
     Object {
       "name": "Create java artifact",
@@ -234,8 +234,8 @@ Object {
     },
     Object {
       "name": "Extract npm tarball",
-      "run": "tar -xzf dist/*.tgz --strip-components=1
-rm -fr dist/",
+      "run": "tar -xzf dist/js/*.tgz --strip-components=1
+rm -fr dist/js",
     },
     Object {
       "name": "Create js artifact",
@@ -287,8 +287,8 @@ Object {
     },
     Object {
       "name": "Extract npm tarball",
-      "run": "tar -xzf dist/*.tgz --strip-components=1
-rm -fr dist/",
+      "run": "tar -xzf dist/js/*.tgz --strip-components=1
+rm -fr dist/js",
     },
     Object {
       "name": "Create dotnet artifact",
@@ -338,8 +338,8 @@ Object {
     },
     Object {
       "name": "Extract npm tarball",
-      "run": "tar -xzf dist/*.tgz --strip-components=1
-rm -fr dist/",
+      "run": "tar -xzf dist/js/*.tgz --strip-components=1
+rm -fr dist/js",
     },
     Object {
       "name": "Create python artifact",
@@ -386,8 +386,8 @@ Object {
     },
     Object {
       "name": "Extract npm tarball",
-      "run": "tar -xzf dist/*.tgz --strip-components=1
-rm -fr dist/",
+      "run": "tar -xzf dist/js/*.tgz --strip-components=1
+rm -fr dist/js",
     },
     Object {
       "name": "Create dotnet artifact",
@@ -426,8 +426,8 @@ Object {
     },
     Object {
       "name": "Extract npm tarball",
-      "run": "tar -xzf dist/*.tgz --strip-components=1
-rm -fr dist/",
+      "run": "tar -xzf dist/js/*.tgz --strip-components=1
+rm -fr dist/js",
     },
     Object {
       "name": "Create go artifact",
@@ -467,8 +467,8 @@ Object {
     },
     Object {
       "name": "Extract npm tarball",
-      "run": "tar -xzf dist/*.tgz --strip-components=1
-rm -fr dist/",
+      "run": "tar -xzf dist/js/*.tgz --strip-components=1
+rm -fr dist/js",
     },
     Object {
       "name": "Create java artifact",
@@ -501,8 +501,8 @@ Object {
     },
     Object {
       "name": "Extract npm tarball",
-      "run": "tar -xzf dist/*.tgz --strip-components=1
-rm -fr dist/",
+      "run": "tar -xzf dist/js/*.tgz --strip-components=1
+rm -fr dist/js",
     },
     Object {
       "name": "Create js artifact",
@@ -541,8 +541,8 @@ Object {
     },
     Object {
       "name": "Extract npm tarball",
-      "run": "tar -xzf dist/*.tgz --strip-components=1
-rm -fr dist/",
+      "run": "tar -xzf dist/js/*.tgz --strip-components=1
+rm -fr dist/js",
     },
     Object {
       "name": "Create python artifact",
@@ -639,8 +639,8 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create js artifact
         run: >-
           jsii_version=$(node -p
@@ -674,8 +674,8 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create go artifact
         run: >-
           jsii_version=$(node -p
@@ -780,8 +780,8 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create js artifact
         run: >-
           jsii_version=$(node -p
@@ -815,8 +815,8 @@ jobs:
           path: dist
       - name: Extract npm tarball
         run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create go artifact
         run: >-
           jsii_version=$(node -p

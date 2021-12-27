@@ -365,8 +365,8 @@ export class JsiiProject extends TypeScriptProject {
         {
           name: 'Extract npm tarball',
           run: [
-            `tar -xzf ${this.artifactsDirectory}/*.tgz --strip-components=1`,
-            `rm -fr ${this.artifactsDirectory}/`,
+            `tar -xzf ${this.artifactsJavascriptDirectory}/*.tgz --strip-components=1`,
+            `rm -fr ${this.artifactsJavascriptDirectory}`,
           ].join('\n'),
         },
         {
