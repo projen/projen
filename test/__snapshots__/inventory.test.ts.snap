@@ -176,7 +176,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "string",
+              "primitive": "any",
             },
             "kind": "map",
           },
@@ -1474,7 +1474,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "string",
+              "primitive": "any",
             },
             "kind": "map",
           },
