@@ -248,7 +248,6 @@ export class BuildWorkflow extends Component {
         uses: 'actions/download-artifact@v2',
         with: {
           name: artfiactName,
-          path: '.',
         },
       });
     }
