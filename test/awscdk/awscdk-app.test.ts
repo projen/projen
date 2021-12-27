@@ -128,3 +128,116 @@ test('CDK v1 usage', () => {
     'constructs': '^3.2.27',
   });
 });
+
+
+describe('CDK Plugins', () => {
+
+  test('plugin set', () => {
+
+    const plugins = ['cdk-assume-role-credential-plugin'];
+
+    const project = new awscdk.AwsCdkTypeScriptApp({
+      name: 'test',
+      defaultReleaseBranch: 'main',
+      cdkVersion: '1.133.0',
+      cdkPlugins: plugins,
+    });
+
+    const files = synthSnapshot(project);
+
+    expect( files['cdk.json'].plugin ).toStrictEqual(plugins);
+
+    expect(Object.keys(files['package.json'].devDependencies)).toContain(plugins[0]);
+  });
+
+  test('local plugin set', () => {
+
+    const plugins = ['foo@/full/path/to/my-plugin.js'];
+
+    const project = new awscdk.AwsCdkTypeScriptApp({
+      name: 'test',
+      defaultReleaseBranch: 'main',
+      cdkVersion: '1.133.0',
+      cdkPlugins: plugins,
+    });
+
+    const files = synthSnapshot(project);
+
+    expect( files['cdk.json'].plugin ).toStrictEqual(['foo']);
+
+    expect(Object.keys(files['package.json'].devDependencies)).toContain('foo');
+
+    expect(files['package.json'].devDependencies.foo).toStrictEqual('/full/path/to/my-plugin.js');
+  });
+
+  test('scoped plugin set', () => {
+
+    const plugins = ['@foo/bar'];
+
+    const project = new awscdk.AwsCdkTypeScriptApp({
+      name: 'test',
+      defaultReleaseBranch: 'main',
+      cdkVersion: '1.133.0',
+      cdkPlugins: plugins,
+    });
+
+    const files = synthSnapshot(project);
+
+    expect( files['cdk.json'].plugin ).toStrictEqual(plugins);
+
+    expect(Object.keys(files['package.json'].devDependencies)).toContain(plugins[0]);
+  });
+
+  test('scoped and versioned plugin set', () => {
+
+    const plugins = ['@foo/bar@^1.0.0'];
+
+    const project = new awscdk.AwsCdkTypeScriptApp({
+      name: 'test',
+      defaultReleaseBranch: 'main',
+      cdkVersion: '1.133.0',
+      cdkPlugins: plugins,
+    });
+
+    const files = synthSnapshot(project);
+
+    expect( files['cdk.json'].plugin ).toStrictEqual(['@foo/bar']);
+
+    expect(Object.keys(files['package.json'].devDependencies)).toContain('@foo/bar');
+
+    expect(files['package.json'].devDependencies['@foo/bar']).toStrictEqual('^1.0.0');
+  });
+
+  test('versioned plugin set', () => {
+
+    const plugins = ['foo/bar@^1.0.0'];
+
+    const project = new awscdk.AwsCdkTypeScriptApp({
+      name: 'test',
+      defaultReleaseBranch: 'main',
+      cdkVersion: '1.133.0',
+      cdkPlugins: plugins,
+    });
+
+    const files = synthSnapshot(project);
+
+    expect( files['cdk.json'].plugin ).toStrictEqual(['foo/bar']);
+
+    expect(Object.keys(files['package.json'].devDependencies)).toContain('foo/bar');
+
+    expect(files['package.json'].devDependencies['foo/bar']).toStrictEqual('^1.0.0');
+  });
+
+  test('no plugins set', () => {
+
+    const project = new awscdk.AwsCdkTypeScriptApp({
+      name: 'test',
+      defaultReleaseBranch: 'main',
+      cdkVersion: '1.133.0',
+    });
+
+    const files = synthSnapshot(project);
+
+    expect( files['cdk.json'].plugin ).toStrictEqual( undefined );
+  });
+});

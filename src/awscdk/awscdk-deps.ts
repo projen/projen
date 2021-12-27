@@ -77,6 +77,13 @@ export interface AwsCdkDepsCommonOptions {
    * @deprecated For CDK 2.x use 'devDeps' instead
    */
   readonly cdkTestDependencies?: string[];
+
+  /**
+   * AWS CDK plugins that extend the CDK features.
+   *
+   * Plugins are regular node packages
+   */
+  readonly cdkPlugins?: string[];
 }
 
 export interface AwsCdkDepsOptions extends AwsCdkDepsCommonOptions {

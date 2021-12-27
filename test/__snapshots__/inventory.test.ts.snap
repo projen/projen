@@ -546,6 +546,28 @@ Array [
         "switch": "parent",
       },
       Object {
+        "default": "[]",
+        "docs": "npm package plugins to include.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "plugins",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "plugins",
+        ],
+        "simpleType": "unknown",
+        "switch": "plugins",
+      },
+      Object {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -1292,6 +1314,27 @@ Array [
         ],
         "simpleType": "string",
         "switch": "cdkout",
+      },
+      Object {
+        "docs": "AWS CDK plugins that extend the CDK features.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "cdkPlugins",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkPlugins",
+        ],
+        "simpleType": "unknown",
+        "switch": "cdk-plugins",
       },
       Object {
         "deprecated": true,
@@ -2441,6 +2484,28 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "[]",
+        "docs": "npm package plugins to include.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "plugins",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "plugins",
+        ],
+        "simpleType": "unknown",
+        "switch": "plugins",
       },
       Object {
         "default": "[]",
@@ -3871,6 +3936,27 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "cdk-dependencies-as-deps",
+      },
+      Object {
+        "docs": "AWS CDK plugins that extend the CDK features.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "cdkPlugins",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkPlugins",
+        ],
+        "simpleType": "unknown",
+        "switch": "cdk-plugins",
       },
       Object {
         "deprecated": true,

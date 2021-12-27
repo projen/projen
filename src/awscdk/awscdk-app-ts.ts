@@ -98,6 +98,23 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       throw new Error('Expecting tsconfig.json');
     }
 
+    // add CDK plugins as dependencies
+    const cdkPlugins = ( options.cdkPlugins ?? [] ).map( ( plugin:string ) => {
+
+      this.addDevDeps( plugin );
+
+      //field prefix (scope and semver) count
+      const fpc = (plugin.match(/@/g) || []).length;
+
+      if (fpc > 1 || (fpc === 1 && plugin[0] != '@')) {
+
+        //remove the semver prefix
+        return plugin.substring(0, plugin.lastIndexOf('@'));
+      }
+
+      return plugin;
+    });
+
     this.cdkConfig = new CdkConfig(this, {
       app: `npx ts-node -P ${tsConfigFile} --prefer-ts-exts ${path.posix.join(this.srcdir, this.appEntrypoint)}`,
       featureFlags: this.cdkDeps.cdkMajorVersion < 2,
@@ -116,6 +133,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
         'yarn.lock',
         'node_modules',
       ],
+      plugins: cdkPlugins,
       ...options,
     });
 

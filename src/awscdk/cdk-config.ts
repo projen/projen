@@ -58,6 +58,12 @@ export interface CdkConfigCommonOptions {
    * @default []
    */
   readonly watchExcludes?: string[];
+  /**
+   * npm package plugins to include
+   *
+   * @default []
+   */
+  readonly plugins?: string[];
 }
 
 /**
@@ -111,6 +117,7 @@ export class CdkConfig extends Component {
           include: options.watchIncludes ?? [],
           exclude: options.watchExcludes ?? [],
         },
+        plugin: options.plugins,
       },
     });
 
