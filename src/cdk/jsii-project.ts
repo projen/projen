@@ -334,6 +334,13 @@ export class JsiiProject extends TypeScriptProject {
       return;
     }
 
+    const packageTask = this.tasks.addTask(`package:${language}`, {
+      description: `Create ${language} language bindings`,
+    });
+
+    packageTask.exec('jsii_version=$(node -p "JSON.parse(fs.readFileSync(\'.jsii\')).jsiiVersion.split(\' \')[0]")');
+    packageTask.exec(`npx jsii-pacmak@$jsii_version -v --target ${language}`);
+
     const pacmak = this.pacmakForLanguage(language);
 
     this.buildWorkflow.addPostBuildJob(`package-${language}`, {
@@ -346,27 +353,11 @@ export class JsiiProject extends TypeScriptProject {
       steps: pacmak.prePublishSteps ?? [],
     });
 
-    const packageTask = this.tasks.addTask(`package:${language}`, {
-      description: `Create ${language} language bindings`,
-    });
-
-    for (const cmd of pacmak.commands) {
-      packageTask.exec(cmd);
-    }
-
     this.packageAllTask.spawn(packageTask);
   }
 
-  private pacmakForLanguage(target: JsiiPacmakTarget): CommonPublishOptions & { commands: string[] } {
-    const commands = [
-      'echo listing directory before calling pacmak',
-      'ls -la',
-      'jsii_version=$(node -p "JSON.parse(fs.readFileSync(\'.jsii\')).jsiiVersion.split(\' \')[0]")',
-      `npx jsii-pacmak@$jsii_version -v --target ${target}`,
-    ];
-
+  private pacmakForLanguage(target: JsiiPacmakTarget): CommonPublishOptions {
     return {
-      commands: commands,
       publishTools: JSII_TOOLCHAIN[target],
       prePublishSteps: [
         {
@@ -375,7 +366,7 @@ export class JsiiProject extends TypeScriptProject {
         },
         {
           name: `Create ${target} artifact`,
-          run: commands.join('\n'),
+          run: `npx projen package:${target}`,
         },
       ],
     };
