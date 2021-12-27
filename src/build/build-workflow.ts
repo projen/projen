@@ -160,7 +160,6 @@ export class BuildWorkflow extends Component {
       steps: [
         ...WorkflowActions.dispatchWorkflow({
           workflowId: this.filename,
-          ref: `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_REF} }}`,
           repo: REPO_REF,
         }),
       ],

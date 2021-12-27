@@ -12,7 +12,7 @@ export class WorkflowActions {
    */
   public static dispatchWorkflow(options: DispatchWorkflowOptions): JobStep[] {
     const repo = options.repo ?? '${{ github.repository }}';
-    const ref = options.ref ?? '$(git rev-parse HEAD)';
+    const ref = options.ref ?? '$GITHUB_REF_NAME';
     return this.githubRequest({
       name: `Trigger ${options.workflowId} workflow`,
       url: `repos/${repo}/actions/workflows/${options.workflowId}/dispatches`,
@@ -111,7 +111,7 @@ export interface DispatchWorkflowOptions extends GitHubRequestCommonOptions {
    *
    * Defaults to the last commit in the checked out repository (requires that a repository is checked out).
    *
-   * @default "$(git rev-parse HEAD)"
+   * @default "$GITHUB_REF_NAME"
    */
   readonly ref?: string;
 
