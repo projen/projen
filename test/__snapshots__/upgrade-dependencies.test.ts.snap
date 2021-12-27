@@ -14,8 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -30,10 +28,6 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
@@ -50,7 +44,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      checks: write
+      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -104,19 +98,13 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Update status check
-        if: steps.create-pr.outputs.pull-request-url != ''
-        run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
-          \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-main\\\\\\",\\\\\\"s\\\\
-          tatus\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
-          via the upgrade-main workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.repository }}/actions/runs/\${{
-          github.run_id }}\\\\\\"}}'\\"
+      - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\"',
+                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
 "
 `;
 
@@ -134,8 +122,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -150,10 +136,6 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
@@ -170,7 +152,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      checks: write
+      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -224,19 +206,13 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Update status check
-        if: steps.create-pr.outputs.pull-request-url != ''
-        run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
-          \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-branch1\\\\\\",\\\\
-          \\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
-          via the upgrade-branch1 workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.repository }}/actions/runs/\${{
-          github.run_id }}\\\\\\"}}'\\"
+      - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\"',
+                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
 "
 `;
 
@@ -254,8 +230,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -270,10 +244,6 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
@@ -290,7 +260,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      checks: write
+      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -344,19 +314,13 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Update status check
-        if: steps.create-pr.outputs.pull-request-url != ''
-        run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
-          \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-branch2\\\\\\",\\\\
-          \\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
-          via the upgrade-branch2 workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.repository }}/actions/runs/\${{
-          github.run_id }}\\\\\\"}}'\\"
+      - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\"',
+                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
 "
 `;
 
@@ -374,8 +338,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -390,10 +352,6 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
@@ -410,7 +368,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      checks: write
+      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -464,19 +422,13 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Update status check
-        if: steps.create-pr.outputs.pull-request-url != ''
-        run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
-          \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-branch1\\\\\\",\\\\
-          \\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
-          via the upgrade-branch1 workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.repository }}/actions/runs/\${{
-          github.run_id }}\\\\\\"}}'\\"
+      - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\"',
+                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
 "
 `;
 
@@ -494,8 +446,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -510,10 +460,6 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
@@ -530,7 +476,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      checks: write
+      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -584,19 +530,13 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Update status check
-        if: steps.create-pr.outputs.pull-request-url != ''
-        run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
-          \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-branch2\\\\\\",\\\\
-          \\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
-          via the upgrade-branch2 workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.repository }}/actions/runs/\${{
-          github.run_id }}\\\\\\"}}'\\"
+      - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\"',
+                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
 "
 `;
 
@@ -614,8 +554,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -630,10 +568,6 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
@@ -650,7 +584,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      checks: write
+      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -704,19 +638,13 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Update status check
-        if: steps.create-pr.outputs.pull-request-url != ''
-        run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
-          \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-main\\\\\\",\\\\\\"s\\\\
-          tatus\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
-          via the upgrade-main workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.repository }}/actions/runs/\${{
-          github.run_id }}\\\\\\"}}'\\"
+      - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\"',
+                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
 "
 `;
 
@@ -734,8 +662,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -750,10 +676,6 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
@@ -770,7 +692,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      checks: write
+      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -824,19 +746,13 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Update status check
-        if: steps.create-pr.outputs.pull-request-url != ''
-        run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
-          \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-branch1\\\\\\",\\\\
-          \\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
-          via the upgrade-branch1 workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.repository }}/actions/runs/\${{
-          github.run_id }}\\\\\\"}}'\\"
+      - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\"',
+                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
 "
 `;
 
@@ -854,8 +770,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -870,10 +784,6 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
@@ -890,7 +800,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      checks: write
+      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -944,19 +854,13 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Update status check
-        if: steps.create-pr.outputs.pull-request-url != ''
-        run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
-          \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-branch2\\\\\\",\\\\
-          \\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
-          via the upgrade-branch2 workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.repository }}/actions/runs/\${{
-          github.run_id }}\\\\\\"}}'\\"
+      - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\"',
+                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
 "
 `;
 
@@ -974,8 +878,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -990,10 +892,6 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
@@ -1010,7 +908,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      checks: write
+      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -1064,19 +962,13 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Update status check
-        if: steps.create-pr.outputs.pull-request-url != ''
-        run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
-          \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-main\\\\\\",\\\\\\"s\\\\
-          tatus\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
-          via the upgrade-main workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.repository }}/actions/runs/\${{
-          github.run_id }}\\\\\\"}}'\\"
+      - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\"',
+                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
 "
 `;
 
@@ -1094,8 +986,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -1110,10 +1000,6 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
       - name: Create Patch
         run: |-
           git add .
@@ -1130,7 +1016,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      checks: write
+      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -1184,18 +1070,12 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Update status check
-        if: steps.create-pr.outputs.pull-request-url != ''
-        run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
-          \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-main\\\\\\",\\\\\\"s\\\\
-          tatus\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
-          via the upgrade-main workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.repository }}/actions/runs/\${{
-          github.run_id }}\\\\\\"}}'\\"
+      - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\"',
+                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
 "
 `;

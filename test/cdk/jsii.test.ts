@@ -331,7 +331,7 @@ describe('language bindings', () => {
   test('build workflow includes packaging jobs', () => {
     expect(Object.keys(build.jobs)).toStrictEqual([
       'build',
-      'update-status',
+      'trigger-rebuild',
       'package-js',
       'package-java',
       'package-python',
