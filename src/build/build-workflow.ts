@@ -1,7 +1,7 @@
 import { Task } from '..';
 import { Component } from '../component';
 import { GitHub, GithubWorkflow, GitIdentity } from '../github';
-import { DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from '../github/constants';
+import { BUILD_ARTIFACT_NAME, DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from '../github/constants';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { NodeProject } from '../javascript';
 import { Project } from '../project';
@@ -214,7 +214,6 @@ export class BuildWorkflow extends Component {
     const steps = [];
 
     if (this.artifactsDirectory) {
-      const artfiactName = 'build-artifact';
 
       // add a step at the end of the build workflow which will upload the
       // artifact so we can download it in each post-build job (do it once).
@@ -237,7 +236,7 @@ export class BuildWorkflow extends Component {
           // the previous ones have failed (e.g. coverage report, internal logs, etc)
           if: 'always()',
           with: {
-            name: artfiactName,
+            name: BUILD_ARTIFACT_NAME,
             path: paths.join('\n'),
           },
         }];
@@ -247,7 +246,7 @@ export class BuildWorkflow extends Component {
         name: 'Download build artifacts',
         uses: 'actions/download-artifact@v2',
         with: {
-          name: artfiactName,
+          name: BUILD_ARTIFACT_NAME,
         },
       });
     }

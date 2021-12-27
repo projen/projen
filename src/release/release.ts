@@ -1,7 +1,9 @@
 import * as path from 'path';
 import { Component } from '../component';
 import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from '../github';
+import { BUILD_ARTIFACT_NAME } from '../github/constants';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
+import { NodeProject } from '../javascript';
 import { Task } from '../task';
 import { Version } from '../version';
 import { Publisher } from './publisher';
@@ -478,13 +480,23 @@ export class Release extends Component {
       run: `echo ::set-output name=${LATEST_COMMIT_OUTPUT}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
     });
 
+    const paths = ['.', '!.git'];
+
+    if (this.project instanceof NodeProject) {
+      paths.push(
+        // node_modules takes forever to compress.
+        // instead, we skip it and re-install after downloading.
+        '!node_modules',
+      );
+    }
+
     postBuildSteps.push({
       name: 'Upload artifact',
       if: noNewCommits,
       uses: 'actions/upload-artifact@v2.1.1',
       with: {
-        name: this.artifactsDirectory,
-        path: this.artifactsDirectory,
+        name: BUILD_ARTIFACT_NAME,
+        path: paths.join('\n'),
       },
     });
 

@@ -460,8 +460,11 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
+            !node_modules
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -476,8 +479,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -502,8 +504,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Create js artifact
@@ -532,8 +533,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Create java artifact
@@ -563,8 +563,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Create python artifact
@@ -5058,8 +5057,11 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
+            !node_modules
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -5074,8 +5076,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
