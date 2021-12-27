@@ -101,10 +101,10 @@ jobs:
       - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        run: >-
-          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\"',
-                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
+        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\" --data \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git
+          rev-parse HEAD)\\\\\\"}\\" https://api.github.com/repos/\${{ github.repository
+          }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -209,10 +209,10 @@ jobs:
       - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        run: >-
-          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\"',
-                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
+        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\" --data \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git
+          rev-parse HEAD)\\\\\\"}\\" https://api.github.com/repos/\${{ github.repository
+          }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -317,10 +317,10 @@ jobs:
       - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        run: >-
-          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\"',
-                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
+        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\" --data \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git
+          rev-parse HEAD)\\\\\\"}\\" https://api.github.com/repos/\${{ github.repository
+          }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -425,10 +425,10 @@ jobs:
       - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        run: >-
-          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\"',
-                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
+        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\" --data \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git
+          rev-parse HEAD)\\\\\\"}\\" https://api.github.com/repos/\${{ github.repository
+          }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -533,10 +533,10 @@ jobs:
       - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        run: >-
-          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\"',
-                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
+        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\" --data \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git
+          rev-parse HEAD)\\\\\\"}\\" https://api.github.com/repos/\${{ github.repository
+          }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -641,10 +641,10 @@ jobs:
       - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        run: >-
-          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\"',
-                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
+        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\" --data \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git
+          rev-parse HEAD)\\\\\\"}\\" https://api.github.com/repos/\${{ github.repository
+          }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -749,10 +749,10 @@ jobs:
       - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        run: >-
-          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\"',
-                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
+        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\" --data \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git
+          rev-parse HEAD)\\\\\\"}\\" https://api.github.com/repos/\${{ github.repository
+          }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -857,10 +857,10 @@ jobs:
       - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        run: >-
-          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\"',
-                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
+        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\" --data \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git
+          rev-parse HEAD)\\\\\\"}\\" https://api.github.com/repos/\${{ github.repository
+          }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -965,10 +965,10 @@ jobs:
       - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        run: >-
-          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\"',
-                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
+        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\" --data \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git
+          rev-parse HEAD)\\\\\\"}\\" https://api.github.com/repos/\${{ github.repository
+          }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -1073,9 +1073,9 @@ jobs:
       - name: Trigger build.yml workflow
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-        run: >-
-          curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\"',
-                    'https://api.github.com/repos/\${{ github.repository }}/actions/workflows/build.yml/dispatches -d \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git rev-parse HEAD)\\\\\\"}\\"
+        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
+          \\"Authorization: token \${GITHUB_TOKEN}\\" --data \\"{\\\\\\"ref\\\\\\":\\\\\\"$(git
+          rev-parse HEAD)\\\\\\"}\\" https://api.github.com/repos/\${{ github.repository
+          }}/actions/workflows/build.yml/dispatches'
 "
 `;

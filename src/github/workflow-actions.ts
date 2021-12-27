@@ -28,9 +28,9 @@ export class WorkflowActions {
           '--fail',
           '-X POST',
           '-H "Accept: application/vnd.github.v3+json"',
-          `-H "Authorization: token \${GITHUB_TOKEN}"',
-          'https://api.github.com/repos/${repo}/actions/workflows/${options.workflowId}/dispatches`,
-          `-d ${JSON.stringify(JSON.stringify({ ref }))}`, // outer JSON.stringify is for escaping
+          '-H "Authorization: token ${GITHUB_TOKEN}"',
+          `--data ${JSON.stringify(JSON.stringify({ ref }))}`, // outer JSON.stringify is for escaping
+          `https://api.github.com/repos/${repo}/actions/workflows/${options.workflowId}/dispatches`,
         ].join(' '),
       },
     ];
