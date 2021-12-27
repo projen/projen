@@ -663,3 +663,32 @@ test('if publishTasks is disabled, no publish tasks are created', () => {
   const tasks = files['.projen/tasks.json'].tasks;
   expect(Object.keys(tasks).filter(t => t.startsWith('publish:')).length).toBe(0);
 });
+
+test('dryRun', () => {
+  // GIVEN
+  const project = new TestProject();
+
+  const release = new Release(project, {
+    task: project.buildTask,
+    versionFile: 'version.json',
+    branch: 'main',
+    artifactsDirectory: 'dist',
+    publishDryRun: true,
+  });
+
+  // WHEN
+  release.publisher.publishToGo();
+  release.publisher.publishToMaven();
+  release.publisher.publishToNpm();
+  release.publisher.publishToNuget();
+  release.publisher.publishToPyPi();
+
+  // THEN
+  const files = synthSnapshot(project);
+  const releaseWorkflow = YAML.parse(files['.github/workflows/release.yml']);
+  const releaseJobs = Object.keys(releaseWorkflow.jobs).filter(name => name.startsWith('release_'));
+  for (const name of releaseJobs) {
+    const job = releaseWorkflow.jobs[name];
+    expect(job.steps.slice(-1)[0].run.startsWith('echo "DRY RUN:')).toBeTruthy();
+  }
+});

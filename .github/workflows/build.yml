@@ -50,7 +50,10 @@ jobs:
         if: always()
         with:
           name: build-artifact
-          path: dist
+          path: |-
+            .
+            !.git
+            !node_modules
   update-status:
     needs:
       - build
@@ -88,17 +91,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
-          path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+      - name: Install Dependencies
+        run: yarn install --check-files --frozen-lockfile
       - name: Create js artifact
-        run: >-
-          jsii_version=$(node -p
-          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js
+        run: npx projen package:js
   package-java:
     needs: build
     runs-on: ubuntu-latest
@@ -115,17 +111,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
-          path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+      - name: Install Dependencies
+        run: yarn install --check-files --frozen-lockfile
       - name: Create java artifact
-        run: >-
-          jsii_version=$(node -p
-          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java
+        run: npx projen package:java
   package-python:
     needs: build
     runs-on: ubuntu-latest
@@ -141,17 +130,10 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
-          path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+      - name: Install Dependencies
+        run: yarn install --check-files --frozen-lockfile
       - name: Create python artifact
-        run: >-
-          jsii_version=$(node -p
-          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python
+        run: npx projen package:python
   package-go:
     needs: build
     runs-on: ubuntu-latest
@@ -167,14 +149,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
-          path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+      - name: Install Dependencies
+        run: yarn install --check-files --frozen-lockfile
       - name: Create go artifact
-        run: >-
-          jsii_version=$(node -p
-          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target go
+        run: npx projen package:go
