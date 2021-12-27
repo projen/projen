@@ -218,25 +218,23 @@ export class BuildWorkflow extends Component {
       // add a step at the end of the build workflow which will upload the
       // artifact so we can download it in each post-build job (do it once).
       if (!this.uploadArtitactSteps) {
-        this.uploadArtitactSteps = [
-          {
-            name: 'Upload artifact',
-            uses: 'actions/upload-artifact@v2.1.1',
-            // Setting to always will ensure that this step will run even if
-            // the previous ones have failed (e.g. coverage report, internal logs, etc)
-            if: 'always()',
-            with: {
-              name: artfiactName,
-              path: [
-                '.',
-                '!.git',
-                // node_modules takes forever to compress.
-                // instead we skip it and re-install after downloading.
-                '!node_modules',
-              ].join('\n'),
-            },
+        this.uploadArtitactSteps = [{
+          name: 'Upload artifact',
+          uses: 'actions/upload-artifact@v2.1.1',
+          // Setting to always will ensure that this step will run even if
+          // the previous ones have failed (e.g. coverage report, internal logs, etc)
+          if: 'always()',
+          with: {
+            name: artfiactName,
+            path: [
+              '.',
+              '!.git',
+              // node_modules takes forever to compress.
+              // instead we skip it and re-install after downloading.
+              '!node_modules',
+            ].join('\n'),
           },
-        ];
+        }];
       }
 
       steps.push({
