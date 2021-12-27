@@ -184,13 +184,11 @@ export class JsiiProject extends TypeScriptProject {
     this.compileTask.reset(`jsii ${jsiiFlags}`);
     this.watchTask.reset(`jsii -w ${jsiiFlags}`);
 
-    // we don't need this becaue pacmak will be doing
-    // the packaging.
-    this.packageTask.reset("echo Skipping. Use 'npx projen package-all' or 'npx projen package:{target}'");
-
     this.packageAllTask = this.addTask('package-all', {
       description: 'Packages artifacts for all target languages',
     });
+
+    this.packageTask.reset(`echo Skipping. Use 'npx projen ${this.packageAllTask.name}'`);
 
     const targets: Record<string, any> = {};
 
