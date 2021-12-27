@@ -232,9 +232,9 @@ Name|Description
 [javascript.NodeWorkflowSteps](#projen-javascript-nodeworkflowsteps)|*No description*
 [javascript.NpmConfigOptions](#projen-javascript-npmconfigoptions)|Options to configure the local NPM config.
 [javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)|*No description*
-[javascript.PrettierConfig](#projen-javascript-prettierconfig)|*No description*
+[javascript.PrettierBaseOptions](#projen-javascript-prettierbaseoptions)|Options to set in Prettier directly or through overrides.
+[javascript.PrettierOptions](#projen-javascript-prettieroptions)|Options for Prettier.
 [javascript.PrettierOverride](#projen-javascript-prettieroverride)|*No description*
-[javascript.PrettierOverrideOptions](#projen-javascript-prettieroverrideoptions)|The options to apply for this override.
 [javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)|*No description*
 [javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)|*No description*
 [javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)|*No description*
@@ -325,16 +325,16 @@ Name|Description
 [github.DependabotRegistryType](#projen-github-dependabotregistrytype)|Each configuration type requires you to provide particular settings.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
-[javascript.ArrowParens](#projen-javascript-arrowparens)|Include parentheses around a sole arrow function parameter.
+[javascript.ArrowParens](#projen-javascript-arrowparens)|*No description*
 [javascript.AutoRelease](#projen-javascript-autorelease)|Automatic bump modes.
-[javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)|Control how Prettier formats quoted code embedded in the file.
-[javascript.EndOfLine](#projen-javascript-endofline)|Which end of line characters to apply.
-[javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)|How to handle whitespaces in HTML.
+[javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)|*No description*
+[javascript.EndOfLine](#projen-javascript-endofline)|*No description*
+[javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)|*No description*
 [javascript.NodePackageManager](#projen-javascript-nodepackagemanager)|The node package manager to use.
 [javascript.NpmAccess](#projen-javascript-npmaccess)|Npm package access level.
-[javascript.ProseWrap](#projen-javascript-prosewrap)|How to wrap prose.
-[javascript.QuoteProps](#projen-javascript-quoteprops)|Change when properties in objects are quoted.
-[javascript.TrailingComma](#projen-javascript-trailingcomma)|Print trailing commas wherever possible when multi-line.
+[javascript.ProseWrap](#projen-javascript-prosewrap)|*No description*
+[javascript.QuoteProps](#projen-javascript-quoteprops)|*No description*
+[javascript.TrailingComma](#projen-javascript-trailingcomma)|*No description*
 [javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)|Determines how modules get resolved.
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
@@ -2993,7 +2993,9 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -3016,8 +3018,6 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
-  * **prettierOptions** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -3386,7 +3386,9 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -3409,8 +3411,6 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
-  * **prettierOptions** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -3655,7 +3655,9 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -3678,8 +3680,6 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
-  * **prettierOptions** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4025,7 +4025,9 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4048,8 +4050,6 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
-  * **prettierOptions** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4209,7 +4209,9 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4232,8 +4234,6 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
-  * **prettierOptions** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4265,7 +4265,6 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
 Name | Type | Description 
 -----|------|-------------
 **eslint**?🔹 | <code>[javascript.Eslint](#projen-javascript-eslint)</code> | __*Optional*__
-**prettier**?🔹 | <code>[javascript.Prettier](#projen-javascript-prettier)</code> | __*Optional*__
 
 
 
@@ -4380,7 +4379,9 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4403,8 +4404,6 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
-  * **prettierOptions** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4552,7 +4551,9 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4575,8 +4576,6 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
-  * **prettierOptions** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -4733,7 +4732,9 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -4756,8 +4757,6 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
-  * **prettierOptions** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -6491,7 +6490,9 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -6532,6 +6533,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Optional*__
 **npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
+**prettier**?🔹 | <code>[javascript.Prettier](#projen-javascript-prettier)</code> | __*Optional*__
 **prettierIgnore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .prettierIgnore file.<br/>__*Optional*__
 **publisher**?⚠️ | <code>[release.Publisher](#projen-release-publisher)</code> | Package publisher.<br/>__*Optional*__
 **release**?🔹 | <code>[release.Release](#projen-release-release)</code> | Release management.<br/>__*Optional*__
@@ -6669,13 +6671,13 @@ addPeerDeps(...deps: string[]): void
 
 #### addPrettierIgnore(pattern)🔹 <a id="projen-javascript-nodeproject-addprettierignore"></a>
 
-
+Defines Prettier ignore Patterns these patterns will be added to the file .prettierignore.
 
 ```ts
 addPrettierIgnore(pattern: string): void
 ```
 
-* **pattern** (<code>string</code>)  *No description*
+* **pattern** (<code>string</code>)  filepatterns so exclude from prettier formatting.
 
 
 
@@ -6820,37 +6822,37 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new javascript.Prettier(project: NodeProject, options: PrettierConfig)
+new javascript.Prettier(project: NodeProject, options: PrettierOptions)
 ```
 
 * **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
-* **options** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  *No description*
-  * **arrowParens** (<code>[javascript.ArrowParens](#projen-javascript-arrowparens)</code>)  Include parentheses around a sole arrow function parameter. __*Optional*__
-  * **bracketSameLine** (<code>boolean</code>)  Put > of opening tags on the last line instead of on a new line. __*Optional*__
-  * **bracketSpacing** (<code>boolean</code>)  Print spaces between brackets. __*Optional*__
-  * **cursorOffset** (<code>number</code>)  Print (to stderr) where a cursor at the given position would move to after formatting. __*Optional*__
-  * **embeddedLanguageFormatting** (<code>[javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)</code>)  Control how Prettier formats quoted code embedded in the file. __*Optional*__
-  * **endOfLine** (<code>[javascript.EndOfLine](#projen-javascript-endofline)</code>)  Which end of line characters to apply. __*Optional*__
-  * **filepath** (<code>string</code>)  Specify the input filepath. __*Optional*__
-  * **htmlWhitespaceSensitivity** (<code>[javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)</code>)  How to handle whitespaces in HTML. __*Optional*__
-  * **insertPragma** (<code>boolean</code>)  Insert @format pragma into file's first docblock comment. __*Optional*__
-  * **jsxSingleQuote** (<code>boolean</code>)  Use single quotes in JSX. __*Optional*__
-  * **overrides** (<code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code>)  Provide a list of patterns to override prettier configuration. __*Optional*__
-  * **parser** (<code>string</code>)  Which parser to use. __*Optional*__
-  * **plugins** (<code>Array<string></code>)  Add a plugin. __*Optional*__
-  * **pluginSearchDirs** (<code>Array<string></code>)  Custom directory that contains prettier plugins in node_modules subdirectory. __*Optional*__
-  * **printWidth** (<code>number</code>)  The line length where Prettier will try wrap. __*Optional*__
-  * **proseWrap** (<code>[javascript.ProseWrap](#projen-javascript-prosewrap)</code>)  How to wrap prose. __*Optional*__
-  * **quoteProps** (<code>[javascript.QuoteProps](#projen-javascript-quoteprops)</code>)  Change when properties in objects are quoted. __*Optional*__
-  * **rangeEnd** (<code>number</code>)  Format code ending at a given character offset (exclusive). __*Optional*__
-  * **rangeStart** (<code>number</code>)  Format code starting at a given character offset. __*Optional*__
-  * **requirePragma** (<code>boolean</code>)  Require either '@prettier' or '@format' to be present in the file's first docblock comment in order for it to be formatted. __*Optional*__
-  * **semi** (<code>boolean</code>)  Print semicolons. __*Optional*__
-  * **singleQuote** (<code>boolean</code>)  Use single quotes instead of double quotes. __*Optional*__
-  * **tabWidth** (<code>number</code>)  Number of spaces per indentation level. __*Optional*__
-  * **trailingComma** (<code>[javascript.TrailingComma](#projen-javascript-trailingcomma)</code>)  Print trailing commas wherever possible when multi-line. __*Optional*__
-  * **useTabs** (<code>boolean</code>)  Indent with tabs instead of spaces. __*Optional*__
-  * **vueIndentScriptAndStyle** (<code>boolean</code>)  Indent script and style tags in Vue files. __*Optional*__
+* **options** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  *No description*
+  * **arrowParens** (<code>[javascript.ArrowParens](#projen-javascript-arrowparens)</code>)  Include parentheses around a sole arrow function parameter. __*Default*__: ArrowParens.ALWAYS
+  * **bracketSameLine** (<code>boolean</code>)  Put > of opening tags on the last line instead of on a new line. __*Default*__: false
+  * **bracketSpacing** (<code>boolean</code>)  Print spaces between brackets. __*Default*__: true
+  * **cursorOffset** (<code>number</code>)  Print (to stderr) where a cursor at the given position would move to after formatting. __*Default*__: -1
+  * **embeddedLanguageFormatting** (<code>[javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)</code>)  Control how Prettier formats quoted code embedded in the file. __*Default*__: EmbeddedLanguageFormatting.AUTO
+  * **endOfLine** (<code>[javascript.EndOfLine](#projen-javascript-endofline)</code>)  Which end of line characters to apply. __*Default*__: EndOfLine.LF
+  * **filepath** (<code>string</code>)  Specify the input filepath. __*Default*__: none
+  * **htmlWhitespaceSensitivity** (<code>[javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)</code>)  How to handle whitespaces in HTML. __*Default*__: HTMLWhitespaceSensitivity.CSS
+  * **insertPragma** (<code>boolean</code>)  Insert @format pragma into file's first docblock comment. __*Default*__: false
+  * **jsxSingleQuote** (<code>boolean</code>)  Use single quotes in JSX. __*Default*__: false
+  * **parser** (<code>string</code>)  Which parser to use. __*Default*__: Prettier automatically infers the parser from the input file path, so you shouldn’t have to change this setting.
+  * **plugins** (<code>Array<string></code>)  Add a plugin. __*Default*__: []
+  * **pluginSearchDirs** (<code>Array<string></code>)  Custom directory that contains prettier plugins in node_modules subdirectory. __*Default*__: []
+  * **printWidth** (<code>number</code>)  The line length where Prettier will try wrap. __*Default*__: 80
+  * **proseWrap** (<code>[javascript.ProseWrap](#projen-javascript-prosewrap)</code>)  How to wrap prose. __*Default*__: ProseWrap.PRESERVE
+  * **quoteProps** (<code>[javascript.QuoteProps](#projen-javascript-quoteprops)</code>)  Change when properties in objects are quoted. __*Default*__: QuoteProps.ASNEEDED
+  * **rangeEnd** (<code>number</code>)  Format code ending at a given character offset (exclusive). __*Default*__: null
+  * **rangeStart** (<code>number</code>)  Format code starting at a given character offset. __*Default*__: 0
+  * **requirePragma** (<code>boolean</code>)  Require either '@prettier' or '@format' to be present in the file's first docblock comment in order for it to be formatted. __*Default*__: false
+  * **semi** (<code>boolean</code>)  Print semicolons. __*Default*__: true
+  * **singleQuote** (<code>boolean</code>)  Use single quotes instead of double quotes. __*Default*__: false
+  * **tabWidth** (<code>number</code>)  Number of spaces per indentation level. __*Default*__: 2
+  * **trailingComma** (<code>[javascript.TrailingComma](#projen-javascript-trailingcomma)</code>)  Print trailing commas wherever possible when multi-line. __*Default*__: TrailingComma.ES5
+  * **useTabs** (<code>boolean</code>)  Indent with tabs instead of spaces. __*Default*__: false
+  * **vueIndentScriptAndStyle** (<code>boolean</code>)  Indent script and style tags in Vue files. __*Default*__: false
+  * **overrides** (<code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code>)  Provide a list of patterns to override prettier configuration. __*Default*__: []
 
 
 
@@ -6859,24 +6861,24 @@ new javascript.Prettier(project: NodeProject, options: PrettierConfig)
 
 Name | Type | Description 
 -----|------|-------------
-**config**🔹 | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Direct access to the prettier configuration (escape hatch).
-**overrides**🔹 | <code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code> | Direct access to the prettier overrides (escape hatch).
+**config**🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Direct access to the prettier configuration.
+**overrides**🔹 | <code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code> | Access to the Prettieroverrides to extend those.
 
 ### Methods
 
 
 #### addOverride(override)🔹 <a id="projen-javascript-prettier-addoverride"></a>
 
-Add an prettier override.
+Add a prettier override.
 
 ```ts
 addOverride(override: PrettierOverride): void
 ```
 
 * **override** (<code>[javascript.PrettierOverride](#projen-javascript-prettieroverride)</code>)  *No description*
+  * **files** (<code>string &#124; Array<string></code>)  Include these files in this override. 
+  * **options** (<code>[javascript.PrettierBaseOptions](#projen-javascript-prettierbaseoptions)</code>)  The options to apply for this override. 
   * **excludeFiles** (<code>string &#124; Array<string></code>)  Exclude these files from this override. __*Optional*__
-  * **files** (<code>string &#124; Array<string></code>)  Include these files in this override. __*Optional*__
-  * **options** (<code>[javascript.PrettierOverrideOptions](#projen-javascript-prettieroverrideoptions)</code>)  The options to apply for this override. __*Optional*__
 
 
 
@@ -8225,7 +8227,9 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -8248,8 +8252,6 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
-  * **prettierOptions** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -8374,7 +8376,9 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -8397,8 +8401,6 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
-  * **prettierOptions** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -8523,7 +8525,9 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -8546,8 +8550,6 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
-  * **prettierOptions** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -8573,7 +8575,6 @@ Name | Type | Description
 **watchTask**🔹 | <code>[Task](#projen-task)</code> | The "watch" task.
 **docgen**?🔹 | <code>boolean</code> | __*Optional*__
 **eslint**?🔹 | <code>[javascript.Eslint](#projen-javascript-eslint)</code> | __*Optional*__
-**prettier**?🔹 | <code>[javascript.Prettier](#projen-javascript-prettier)</code> | __*Optional*__
 **tsconfig**?🔹 | <code>[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)</code> | __*Optional*__
 **tsconfigEslint**?🔹 | <code>[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)</code> | __*Optional*__
 
@@ -8918,7 +8919,9 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -9063,7 +9066,9 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -9086,8 +9091,6 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
-  * **prettierOptions** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -9282,7 +9285,9 @@ new web.ReactProject(options: ReactProjectOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -9468,7 +9473,9 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierIgnoreEnabled** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
   * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
   * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
@@ -9491,8 +9498,6 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
   * **eslintOptions** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
   * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
-  * **prettierOptions** (<code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code>)  Prettier options. __*Default*__: opinionated default options
   * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
   * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
@@ -10563,7 +10568,7 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
-**prettierOptions**?🔹 | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Prettier options.<br/>__*Default*__: opinionated default options
+**prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -10824,7 +10829,7 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
-**prettierOptions**?🔹 | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Prettier options.<br/>__*Default*__: opinionated default options
+**prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -11023,7 +11028,7 @@ Name | Type | Description
 **prerelease**?⚠️ | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?⚠️ | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?⚠️ | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
-**prettierOptions**?⚠️ | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Prettier options.<br/>__*Default*__: opinionated default options
+**prettierOptions**?⚠️ | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?⚠️ | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?⚠️ | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -11275,7 +11280,7 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
-**prettierOptions**?🔹 | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Prettier options.<br/>__*Default*__: opinionated default options
+**prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -11490,7 +11495,7 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
-**prettierOptions**?🔹 | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Prettier options.<br/>__*Default*__: opinionated default options
+**prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -11662,7 +11667,7 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
-**prettierOptions**?🔹 | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Prettier options.<br/>__*Default*__: opinionated default options
+**prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -11814,7 +11819,7 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
-**prettierOptions**?🔹 | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Prettier options.<br/>__*Default*__: opinionated default options
+**prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -11968,7 +11973,7 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
-**prettierOptions**?🔹 | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Prettier options.<br/>__*Default*__: opinionated default options
+**prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -12939,7 +12944,9 @@ Name | Type | Description
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
+**prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
+**prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -13024,41 +13031,78 @@ Name | Type | Description
 
 
 
-## struct PrettierConfig 🔹 <a id="projen-javascript-prettierconfig"></a>
+## struct PrettierBaseOptions 🔹 <a id="projen-javascript-prettierbaseoptions"></a>
 
 
-
+Options to set in Prettier directly or through overrides.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**arrowParens**?🔹 | <code>[javascript.ArrowParens](#projen-javascript-arrowparens)</code> | Include parentheses around a sole arrow function parameter.<br/>__*Optional*__
-**bracketSameLine**?🔹 | <code>boolean</code> | Put > of opening tags on the last line instead of on a new line.<br/>__*Optional*__
-**bracketSpacing**?🔹 | <code>boolean</code> | Print spaces between brackets.<br/>__*Optional*__
-**cursorOffset**?🔹 | <code>number</code> | Print (to stderr) where a cursor at the given position would move to after formatting.<br/>__*Optional*__
-**embeddedLanguageFormatting**?🔹 | <code>[javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)</code> | Control how Prettier formats quoted code embedded in the file.<br/>__*Optional*__
-**endOfLine**?🔹 | <code>[javascript.EndOfLine](#projen-javascript-endofline)</code> | Which end of line characters to apply.<br/>__*Optional*__
-**filepath**?🔹 | <code>string</code> | Specify the input filepath.<br/>__*Optional*__
-**htmlWhitespaceSensitivity**?🔹 | <code>[javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)</code> | How to handle whitespaces in HTML.<br/>__*Optional*__
-**insertPragma**?🔹 | <code>boolean</code> | Insert @format pragma into file's first docblock comment.<br/>__*Optional*__
-**jsxSingleQuote**?🔹 | <code>boolean</code> | Use single quotes in JSX.<br/>__*Optional*__
-**overrides**?🔹 | <code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code> | Provide a list of patterns to override prettier configuration.<br/>__*Optional*__
-**parser**?🔹 | <code>string</code> | Which parser to use.<br/>__*Optional*__
-**pluginSearchDirs**?🔹 | <code>Array<string></code> | Custom directory that contains prettier plugins in node_modules subdirectory.<br/>__*Optional*__
-**plugins**?🔹 | <code>Array<string></code> | Add a plugin.<br/>__*Optional*__
-**printWidth**?🔹 | <code>number</code> | The line length where Prettier will try wrap.<br/>__*Optional*__
-**proseWrap**?🔹 | <code>[javascript.ProseWrap](#projen-javascript-prosewrap)</code> | How to wrap prose.<br/>__*Optional*__
-**quoteProps**?🔹 | <code>[javascript.QuoteProps](#projen-javascript-quoteprops)</code> | Change when properties in objects are quoted.<br/>__*Optional*__
-**rangeEnd**?🔹 | <code>number</code> | Format code ending at a given character offset (exclusive).<br/>__*Optional*__
-**rangeStart**?🔹 | <code>number</code> | Format code starting at a given character offset.<br/>__*Optional*__
-**requirePragma**?🔹 | <code>boolean</code> | Require either '@prettier' or '@format' to be present in the file's first docblock comment in order for it to be formatted.<br/>__*Optional*__
-**semi**?🔹 | <code>boolean</code> | Print semicolons.<br/>__*Optional*__
-**singleQuote**?🔹 | <code>boolean</code> | Use single quotes instead of double quotes.<br/>__*Optional*__
-**tabWidth**?🔹 | <code>number</code> | Number of spaces per indentation level.<br/>__*Optional*__
-**trailingComma**?🔹 | <code>[javascript.TrailingComma](#projen-javascript-trailingcomma)</code> | Print trailing commas wherever possible when multi-line.<br/>__*Optional*__
-**useTabs**?🔹 | <code>boolean</code> | Indent with tabs instead of spaces.<br/>__*Optional*__
-**vueIndentScriptAndStyle**?🔹 | <code>boolean</code> | Indent script and style tags in Vue files.<br/>__*Optional*__
+**arrowParens**?🔹 | <code>[javascript.ArrowParens](#projen-javascript-arrowparens)</code> | Include parentheses around a sole arrow function parameter.<br/>__*Default*__: ArrowParens.ALWAYS
+**bracketSameLine**?🔹 | <code>boolean</code> | Put > of opening tags on the last line instead of on a new line.<br/>__*Default*__: false
+**bracketSpacing**?🔹 | <code>boolean</code> | Print spaces between brackets.<br/>__*Default*__: true
+**cursorOffset**?🔹 | <code>number</code> | Print (to stderr) where a cursor at the given position would move to after formatting.<br/>__*Default*__: -1
+**embeddedLanguageFormatting**?🔹 | <code>[javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)</code> | Control how Prettier formats quoted code embedded in the file.<br/>__*Default*__: EmbeddedLanguageFormatting.AUTO
+**endOfLine**?🔹 | <code>[javascript.EndOfLine](#projen-javascript-endofline)</code> | Which end of line characters to apply.<br/>__*Default*__: EndOfLine.LF
+**filepath**?🔹 | <code>string</code> | Specify the input filepath.<br/>__*Default*__: none
+**htmlWhitespaceSensitivity**?🔹 | <code>[javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)</code> | How to handle whitespaces in HTML.<br/>__*Default*__: HTMLWhitespaceSensitivity.CSS
+**insertPragma**?🔹 | <code>boolean</code> | Insert @format pragma into file's first docblock comment.<br/>__*Default*__: false
+**jsxSingleQuote**?🔹 | <code>boolean</code> | Use single quotes in JSX.<br/>__*Default*__: false
+**parser**?🔹 | <code>string</code> | Which parser to use.<br/>__*Default*__: Prettier automatically infers the parser from the input file path, so you shouldn’t have to change this setting.
+**pluginSearchDirs**?🔹 | <code>Array<string></code> | Custom directory that contains prettier plugins in node_modules subdirectory.<br/>__*Default*__: []
+**plugins**?🔹 | <code>Array<string></code> | Add a plugin.<br/>__*Default*__: []
+**printWidth**?🔹 | <code>number</code> | The line length where Prettier will try wrap.<br/>__*Default*__: 80
+**proseWrap**?🔹 | <code>[javascript.ProseWrap](#projen-javascript-prosewrap)</code> | How to wrap prose.<br/>__*Default*__: ProseWrap.PRESERVE
+**quoteProps**?🔹 | <code>[javascript.QuoteProps](#projen-javascript-quoteprops)</code> | Change when properties in objects are quoted.<br/>__*Default*__: QuoteProps.ASNEEDED
+**rangeEnd**?🔹 | <code>number</code> | Format code ending at a given character offset (exclusive).<br/>__*Default*__: null
+**rangeStart**?🔹 | <code>number</code> | Format code starting at a given character offset.<br/>__*Default*__: 0
+**requirePragma**?🔹 | <code>boolean</code> | Require either '@prettier' or '@format' to be present in the file's first docblock comment in order for it to be formatted.<br/>__*Default*__: false
+**semi**?🔹 | <code>boolean</code> | Print semicolons.<br/>__*Default*__: true
+**singleQuote**?🔹 | <code>boolean</code> | Use single quotes instead of double quotes.<br/>__*Default*__: false
+**tabWidth**?🔹 | <code>number</code> | Number of spaces per indentation level.<br/>__*Default*__: 2
+**trailingComma**?🔹 | <code>[javascript.TrailingComma](#projen-javascript-trailingcomma)</code> | Print trailing commas wherever possible when multi-line.<br/>__*Default*__: TrailingComma.ES5
+**useTabs**?🔹 | <code>boolean</code> | Indent with tabs instead of spaces.<br/>__*Default*__: false
+**vueIndentScriptAndStyle**?🔹 | <code>boolean</code> | Indent script and style tags in Vue files.<br/>__*Default*__: false
+
+
+
+## struct PrettierOptions 🔹 <a id="projen-javascript-prettieroptions"></a>
+
+
+Options for Prettier.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**arrowParens**?🔹 | <code>[javascript.ArrowParens](#projen-javascript-arrowparens)</code> | Include parentheses around a sole arrow function parameter.<br/>__*Default*__: ArrowParens.ALWAYS
+**bracketSameLine**?🔹 | <code>boolean</code> | Put > of opening tags on the last line instead of on a new line.<br/>__*Default*__: false
+**bracketSpacing**?🔹 | <code>boolean</code> | Print spaces between brackets.<br/>__*Default*__: true
+**cursorOffset**?🔹 | <code>number</code> | Print (to stderr) where a cursor at the given position would move to after formatting.<br/>__*Default*__: -1
+**embeddedLanguageFormatting**?🔹 | <code>[javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)</code> | Control how Prettier formats quoted code embedded in the file.<br/>__*Default*__: EmbeddedLanguageFormatting.AUTO
+**endOfLine**?🔹 | <code>[javascript.EndOfLine](#projen-javascript-endofline)</code> | Which end of line characters to apply.<br/>__*Default*__: EndOfLine.LF
+**filepath**?🔹 | <code>string</code> | Specify the input filepath.<br/>__*Default*__: none
+**htmlWhitespaceSensitivity**?🔹 | <code>[javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)</code> | How to handle whitespaces in HTML.<br/>__*Default*__: HTMLWhitespaceSensitivity.CSS
+**insertPragma**?🔹 | <code>boolean</code> | Insert @format pragma into file's first docblock comment.<br/>__*Default*__: false
+**jsxSingleQuote**?🔹 | <code>boolean</code> | Use single quotes in JSX.<br/>__*Default*__: false
+**overrides**?🔹 | <code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code> | Provide a list of patterns to override prettier configuration.<br/>__*Default*__: []
+**parser**?🔹 | <code>string</code> | Which parser to use.<br/>__*Default*__: Prettier automatically infers the parser from the input file path, so you shouldn’t have to change this setting.
+**pluginSearchDirs**?🔹 | <code>Array<string></code> | Custom directory that contains prettier plugins in node_modules subdirectory.<br/>__*Default*__: []
+**plugins**?🔹 | <code>Array<string></code> | Add a plugin.<br/>__*Default*__: []
+**printWidth**?🔹 | <code>number</code> | The line length where Prettier will try wrap.<br/>__*Default*__: 80
+**proseWrap**?🔹 | <code>[javascript.ProseWrap](#projen-javascript-prosewrap)</code> | How to wrap prose.<br/>__*Default*__: ProseWrap.PRESERVE
+**quoteProps**?🔹 | <code>[javascript.QuoteProps](#projen-javascript-quoteprops)</code> | Change when properties in objects are quoted.<br/>__*Default*__: QuoteProps.ASNEEDED
+**rangeEnd**?🔹 | <code>number</code> | Format code ending at a given character offset (exclusive).<br/>__*Default*__: null
+**rangeStart**?🔹 | <code>number</code> | Format code starting at a given character offset.<br/>__*Default*__: 0
+**requirePragma**?🔹 | <code>boolean</code> | Require either '@prettier' or '@format' to be present in the file's first docblock comment in order for it to be formatted.<br/>__*Default*__: false
+**semi**?🔹 | <code>boolean</code> | Print semicolons.<br/>__*Default*__: true
+**singleQuote**?🔹 | <code>boolean</code> | Use single quotes instead of double quotes.<br/>__*Default*__: false
+**tabWidth**?🔹 | <code>number</code> | Number of spaces per indentation level.<br/>__*Default*__: 2
+**trailingComma**?🔹 | <code>[javascript.TrailingComma](#projen-javascript-trailingcomma)</code> | Print trailing commas wherever possible when multi-line.<br/>__*Default*__: TrailingComma.ES5
+**useTabs**?🔹 | <code>boolean</code> | Indent with tabs instead of spaces.<br/>__*Default*__: false
+**vueIndentScriptAndStyle**?🔹 | <code>boolean</code> | Indent script and style tags in Vue files.<br/>__*Default*__: false
 
 
 
@@ -13071,46 +13115,9 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**files**🔹 | <code>string &#124; Array<string></code> | Include these files in this override.
+**options**🔹 | <code>[javascript.PrettierBaseOptions](#projen-javascript-prettierbaseoptions)</code> | The options to apply for this override.
 **excludeFiles**?🔹 | <code>string &#124; Array<string></code> | Exclude these files from this override.<br/>__*Optional*__
-**files**?🔹 | <code>string &#124; Array<string></code> | Include these files in this override.<br/>__*Optional*__
-**options**?🔹 | <code>[javascript.PrettierOverrideOptions](#projen-javascript-prettieroverrideoptions)</code> | The options to apply for this override.<br/>__*Optional*__
-
-
-
-## struct PrettierOverrideOptions 🔹 <a id="projen-javascript-prettieroverrideoptions"></a>
-
-
-The options to apply for this override.
-
-
-
-Name | Type | Description 
------|------|-------------
-**arrowParens**?🔹 | <code>[javascript.ArrowParens](#projen-javascript-arrowparens)</code> | Include parentheses around a sole arrow function parameter.<br/>__*Optional*__
-**bracketSameLine**?🔹 | <code>boolean</code> | Put > of opening tags on the last line instead of on a new line.<br/>__*Optional*__
-**bracketSpacing**?🔹 | <code>boolean</code> | Print spaces between brackets.<br/>__*Optional*__
-**cursorOffset**?🔹 | <code>number</code> | Print (to stderr) where a cursor at the given position would move to after formatting.<br/>__*Optional*__
-**embeddedLanguageFormatting**?🔹 | <code>[javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)</code> | Control how Prettier formats quoted code embedded in the file.<br/>__*Optional*__
-**endOfLine**?🔹 | <code>[javascript.EndOfLine](#projen-javascript-endofline)</code> | Which end of line characters to apply.<br/>__*Optional*__
-**filepath**?🔹 | <code>string</code> | Specify the input filepath.<br/>__*Optional*__
-**htmlWhitespaceSensitivity**?🔹 | <code>[javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)</code> | How to handle whitespaces in HTML.<br/>__*Optional*__
-**insertPragma**?🔹 | <code>boolean</code> | Insert @format pragma into file's first docblock comment.<br/>__*Optional*__
-**jsxSingleQuote**?🔹 | <code>boolean</code> | Use single quotes in JSX.<br/>__*Optional*__
-**parser**?🔹 | <code>string</code> | Which parser to use.<br/>__*Optional*__
-**pluginSearchDirs**?🔹 | <code>Array<string></code> | Custom directory that contains prettier plugins in node_modules subdirectory.<br/>__*Optional*__
-**plugins**?🔹 | <code>Array<string></code> | Add a plugin.<br/>__*Optional*__
-**printWidth**?🔹 | <code>number</code> | The line length where Prettier will try wrap.<br/>__*Optional*__
-**proseWrap**?🔹 | <code>[javascript.ProseWrap](#projen-javascript-prosewrap)</code> | How to wrap prose.<br/>__*Optional*__
-**quoteProps**?🔹 | <code>[javascript.QuoteProps](#projen-javascript-quoteprops)</code> | Change when properties in objects are quoted.<br/>__*Optional*__
-**rangeEnd**?🔹 | <code>number</code> | Format code ending at a given character offset (exclusive).<br/>__*Optional*__
-**rangeStart**?🔹 | <code>number</code> | Format code starting at a given character offset.<br/>__*Optional*__
-**requirePragma**?🔹 | <code>boolean</code> | Require either '@prettier' or '@format' to be present in the file's first docblock comment in order for it to be formatted.<br/>__*Optional*__
-**semi**?🔹 | <code>boolean</code> | Print semicolons.<br/>__*Optional*__
-**singleQuote**?🔹 | <code>boolean</code> | Use single quotes instead of double quotes.<br/>__*Optional*__
-**tabWidth**?🔹 | <code>number</code> | Number of spaces per indentation level.<br/>__*Optional*__
-**trailingComma**?🔹 | <code>[javascript.TrailingComma](#projen-javascript-trailingcomma)</code> | Print trailing commas wherever possible when multi-line.<br/>__*Optional*__
-**useTabs**?🔹 | <code>boolean</code> | Indent with tabs instead of spaces.<br/>__*Optional*__
-**vueIndentScriptAndStyle**?🔹 | <code>boolean</code> | Indent script and style tags in Vue files.<br/>__*Optional*__
 
 
 
@@ -14031,7 +14038,7 @@ Name | Type | Description
 **prerelease**?⚠️ | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?⚠️ | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?⚠️ | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
-**prettierOptions**?⚠️ | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Prettier options.<br/>__*Default*__: opinionated default options
+**prettierOptions**?⚠️ | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?⚠️ | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?⚠️ | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -14170,7 +14177,7 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
-**prettierOptions**?🔹 | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Prettier options.<br/>__*Default*__: opinionated default options
+**prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -14405,7 +14412,9 @@ Name | Type | Description
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
+**prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
+**prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -14539,7 +14548,7 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
-**prettierOptions**?🔹 | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Prettier options.<br/>__*Default*__: opinionated default options
+**prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -14699,7 +14708,9 @@ Name | Type | Description
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
+**prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
+**prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -14861,7 +14872,7 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierIgnoreEnabled**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: false
-**prettierOptions**?🔹 | <code>[javascript.PrettierConfig](#projen-javascript-prettierconfig)</code> | Prettier options.<br/>__*Default*__: opinionated default options
+**prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: opinionated default options
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
@@ -15107,11 +15118,7 @@ Name | Description
 
 ## enum ArrowParens 🔹 <a id="projen-javascript-arrowparens"></a>
 
-Include parentheses around a sole arrow function parameter.
 
-Always include parens. Example: `(x) => x`
-
-Omit parens when possible. Example: `x => x`
 
 Name | Description
 -----|-----
@@ -15131,11 +15138,7 @@ Name | Description
 
 ## enum EmbeddedLanguageFormatting 🔹 <a id="projen-javascript-embeddedlanguageformatting"></a>
 
-Control how Prettier formats quoted code embedded in the file.
 
-Format embedded code if Prettier can automatically identify it.
-
-Never automatically format embedded code.
 
 Name | Description
 -----|-----
@@ -15145,17 +15148,7 @@ Name | Description
 
 ## enum EndOfLine 🔹 <a id="projen-javascript-endofline"></a>
 
-Which end of line characters to apply.
 
-Line Feed only (\n), common on Linux and macOS as well as inside git repos
-
-Carriage Return + Line Feed characters (\r\n), common on Windows
-
-Carriage Return character only (\r), used very rarely
-
-Maintain existing
-(mixed values within one file are normalised by looking at what's used after the first
-line)
 
 Name | Description
 -----|-----
@@ -15167,13 +15160,7 @@ Name | Description
 
 ## enum HTMLWhitespaceSensitivity 🔹 <a id="projen-javascript-htmlwhitespacesensitivity"></a>
 
-How to handle whitespaces in HTML.
 
-Respect the default value of CSS display property.
-
-Whitespaces are considered sensitive.
-
-Whitespaces are considered insensitive.
 
 Name | Description
 -----|-----
@@ -15205,13 +15192,7 @@ Name | Description
 
 ## enum ProseWrap 🔹 <a id="projen-javascript-prosewrap"></a>
 
-How to wrap prose.
 
-Wrap prose if it exceeds the print width.
-
-Do not wrap prose.
-
-Wrap prose as-is.
 
 Name | Description
 -----|-----
@@ -15222,13 +15203,7 @@ Name | Description
 
 ## enum QuoteProps 🔹 <a id="projen-javascript-quoteprops"></a>
 
-Change when properties in objects are quoted.
 
-Only add quotes around object properties where required.
-
-If at least one property in an object requires quotes, quote all properties.
-
-Respect the input use of quotes in object properties.
 
 Name | Description
 -----|-----
@@ -15239,13 +15214,7 @@ Name | Description
 
 ## enum TrailingComma 🔹 <a id="projen-javascript-trailingcomma"></a>
 
-Print trailing commas wherever possible when multi-line.
 
-Trailing commas where valid in ES5 (objects, arrays, etc.)
-
-No trailing commas.
-
-Trailing commas wherever possible (including function arguments).
 
 Name | Description
 -----|-----

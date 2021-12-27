@@ -1,5 +1,5 @@
 import { Task } from '..';
-import { Eslint, Prettier } from '../javascript';
+import { Eslint } from '../javascript';
 import { CommonPublishOptions, GoPublishOptions, MavenPublishOptions, NugetPublishOptions, PyPiPublishOptions } from '../release';
 import { TypeScriptProject, TypeScriptProjectOptions } from '../typescript';
 import { determineSuperchainImage, JsiiPacmakTarget, JSII_TOOLCHAIN } from './consts';
@@ -136,7 +136,6 @@ export interface JsiiGoTarget extends GoPublishOptions {
  */
 export class JsiiProject extends TypeScriptProject {
   public readonly eslint?: Eslint;
-  public readonly prettier?: Prettier;
 
   private readonly packageAllTask: Task;
 

@@ -2,7 +2,7 @@ import * as path from 'path';
 import * as semver from 'semver';
 import { PROJEN_DIR, PROJEN_RC } from '../common';
 import { Component } from '../component';
-import { Eslint, EslintOptions, NodeProject, NodeProjectOptions, Prettier, PrettierConfig, TypeScriptCompilerOptions, TypescriptConfig, TypescriptConfigOptions } from '../javascript';
+import { Eslint, EslintOptions, NodeProject, NodeProjectOptions, TypeScriptCompilerOptions, TypescriptConfig, TypescriptConfigOptions } from '../javascript';
 import { SampleDir } from '../sample-file';
 import { Task } from '../task';
 import { TextFile } from '../textfile';
@@ -47,19 +47,6 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * @default - opinionated default options
    */
   readonly eslintOptions?: EslintOptions;
-
-  /**
-   * Setup prettier.
-   *
-   * @default false
-   */
-  readonly prettier?: boolean;
-
-  /**
-    * Prettier options
-    * @default - opinionated default options
-    */
-  readonly prettierOptions?: PrettierConfig;
 
   /**
    * TypeScript version to use.
@@ -147,7 +134,6 @@ export class TypeScriptProject extends NodeProject {
   public readonly eslint?: Eslint;
   public readonly tsconfigEslint?: TypescriptConfig;
   public readonly tsconfig?: TypescriptConfig;
-  public readonly prettier?: Prettier;
 
   /**
    * A typescript configuration file which covers all files (sources, tests, projen).
@@ -349,10 +335,6 @@ export class TypeScriptProject extends NodeProject {
       });
 
       this.tsconfigEslint = this.tsconfigDev;
-    }
-
-    if (options.prettier ?? false) {
-      this.prettier = new Prettier(this, { ...options.prettierOptions });
     }
 
     const tsver = options.typescriptVersion ? `@${options.typescriptVersion}` : '';

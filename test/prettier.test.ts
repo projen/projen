@@ -1,4 +1,4 @@
-import { ArrowParens, Eslint, NodeProject, Prettier, TrailingComma } from '../src/javascript';
+import { ArrowParens, Eslint, NodeProject, TrailingComma } from '../src/javascript';
 import { synthSnapshot } from './util';
 
 describe('prettier', () => {
@@ -8,17 +8,14 @@ describe('prettier', () => {
       name: 'test',
       defaultReleaseBranch: 'master',
       prettierIgnoreEnabled: true,
+      prettier: true,
+      prettierOptions: { printWidth: 140 },
     });
-
 
     // WHEN
     new Eslint(project, {
       dirs: ['mysrc'],
       prettier: true,
-    });
-
-    new Prettier(project, {
-      printWidth: 140,
     });
 
     // THEN
@@ -31,6 +28,8 @@ describe('prettier', () => {
       name: 'test',
       defaultReleaseBranch: 'master',
       prettierIgnoreEnabled: true,
+      prettier: true,
+      prettierOptions: { printWidth: 140 },
     });
 
 
@@ -38,10 +37,6 @@ describe('prettier', () => {
     new Eslint(project, {
       dirs: ['mysrc'],
       prettier: true,
-    });
-
-    new Prettier(project, {
-      printWidth: 140,
     });
 
     project.prettierIgnore?.addPatterns('build');
@@ -55,8 +50,19 @@ describe('prettier', () => {
     const project = new NodeProject({
       name: 'test',
       defaultReleaseBranch: 'master',
+      prettier: true,
+      prettierOptions: {
+        trailingComma: TrailingComma.ALL,
+        bracketSpacing: true,
+        tabWidth: 2,
+        semi: true,
+        singleQuote: true,
+        arrowParens: ArrowParens.ALWAYS,
+        printWidth: 140,
+        useTabs: false,
+        parser: 'typescript',
+      },
     });
-
 
     // WHEN
     new Eslint(project, {
@@ -64,20 +70,8 @@ describe('prettier', () => {
       prettier: true,
     });
 
-    const prettier = new Prettier(project, {
-      trailingComma: TrailingComma.ALL,
-      bracketSpacing: true,
-      tabWidth: 2,
-      semi: true,
-      singleQuote: true,
-      arrowParens: ArrowParens.ALWAYS,
-      printWidth: 140,
-      useTabs: false,
-      parser: 'typescript',
-    });
-
     // THEN
-    expect(prettier.config).toMatchObject({
+    expect(project.prettier?.config).toMatchObject({
       trailingComma: 'all',
       bracketSpacing: true,
       tabWidth: 2,

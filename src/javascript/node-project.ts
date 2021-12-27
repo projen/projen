@@ -4,7 +4,7 @@ import { AutoMerge, DependabotOptions, GitHubProject, GitHubProjectOptions, GitI
 import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { JobStep } from '../github/workflows-model';
 import { IgnoreFile } from '../ignore-file';
-import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from '../javascript';
+import { Prettier, PrettierOptions, UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from '../javascript';
 import { License } from '../license';
 import { Publisher, Release, ReleaseProjectOptions } from '../release';
 import { Task } from '../task';
@@ -249,6 +249,19 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
   readonly prettierIgnoreEnabled?: boolean;
 
   /**
+   * Setup prettier.
+   *
+   * @default false
+   */
+  readonly prettier?: boolean;
+
+  /**
+   * Prettier options
+   * @default - opinionated default options
+   */
+  readonly prettierOptions?: PrettierOptions;
+
+  /**
    * Additional entries to .gitignore
    */
   readonly gitignore?: string[];
@@ -425,6 +438,7 @@ export class NodeProject extends GitHubProject {
 
   private readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
+  public readonly prettier?: Prettier;
 
   constructor(options: NodeProjectOptions) {
     super(options);
@@ -677,6 +691,10 @@ export class NodeProject extends GitHubProject {
       // sadly we cannot use --pack-destination because it is not supported by older npm
       this.packageTask.exec(`mv $(npm pack) ${this.artifactsDirectory}/`);
     }
+
+    if (options.prettier ?? false) {
+      this.prettier = new Prettier(this, { ...options.prettierOptions });
+    }
   }
 
   public addBins(bins: Record<string, string>) {
@@ -840,6 +858,12 @@ export class NodeProject extends GitHubProject {
     this.npmignore?.addPatterns(pattern);
   }
 
+  /**
+  * Defines Prettier ignore Patterns
+  * these patterns will be added to the file .prettierignore
+  *
+  * @param {string} pattern filepatterns so exclude from prettier formatting
+  */
   public addPrettierIgnore(pattern: string) {
     this.prettierIgnore?.addPatterns(pattern);
   }
