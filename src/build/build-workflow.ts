@@ -220,10 +220,6 @@ export class BuildWorkflow extends Component {
       if (!this.uploadArtitactSteps) {
         this.uploadArtitactSteps = [
           {
-            name: 'List',
-            run: 'ls -la',
-          },
-          {
             name: 'Upload artifact',
             uses: 'actions/upload-artifact@v2.1.1',
             // Setting to always will ensure that this step will run even if
