@@ -187,7 +187,10 @@ export class JsiiProject extends TypeScriptProject {
       description: 'Packages artifacts for all target languages',
     });
 
-    this.packageTask.reset(`echo Skipping. Use 'npx projen ${this.packageAllTask.name}'`);
+    // in jsii we consider the entire repo (post build) as the build artifact
+    // which is then used to create the language bindings in separate jobs.
+    this.packageTask.reset(`mkdir -p ${this.artifactsDirectory}`);
+    this.packageTask.exec(`rsync -av --progress . ${this.artifactsDirectory} --exclude .git --exclude node_modules`);
 
     const targets: Record<string, any> = {};
 
@@ -212,6 +215,7 @@ export class JsiiProject extends TypeScriptProject {
         ...this.pacmakForLanguage('js', task),
         registry: this.package.npmRegistry,
         npmTokenSecret: this.package.npmTokenSecret,
+        workingDirectory: this.artifactsDirectory,
       });
       this.addPackagingTarget('js', task);
     }
@@ -371,6 +375,7 @@ export class JsiiProject extends TypeScriptProject {
         {
           name: `Create ${target} artifact`,
           run: `npx projen ${packTask.name}`,
+          workingDirectory: this.artifactsDirectory,
         },
       ],
     };

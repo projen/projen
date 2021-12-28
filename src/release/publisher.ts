@@ -8,6 +8,7 @@ import { BranchOptions } from './release';
 
 const JSII_RELEASE_VERSION = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
+const ARTIFACTS_DOWNLOAD_DIR = 'dist';
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
 const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
 
@@ -251,6 +252,7 @@ export class Publisher extends Component {
         publishTools: JSII_TOOLCHAIN.js,
         prePublishSteps: options.prePublishSteps ?? [],
         run: this.jsiiReleaseCommand('jsii-release-npm'),
+        workingDirectory: options.workingDirectory,
         registryName: 'npm',
         env: {
           NPM_DIST_TAG: branchOptions.npmDistTag ?? options.distTag ?? 'latest',
@@ -281,6 +283,7 @@ export class Publisher extends Component {
       publishTools: JSII_TOOLCHAIN.dotnet,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-nuget'),
+      workingDirectory: options.workingDirectory,
       registryName: 'NuGet Gallery',
       workflowEnv: {
         NUGET_API_KEY: secret(options.nugetApiKeySecret ?? 'NUGET_API_KEY'),
@@ -307,6 +310,7 @@ export class Publisher extends Component {
       publishTools: JSII_TOOLCHAIN.java,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-maven'),
+      workingDirectory: options.workingDirectory,
       env: {
         MAVEN_ENDPOINT: options.mavenEndpoint,
         MAVEN_SERVER_ID: mavenServerId,
@@ -337,6 +341,7 @@ export class Publisher extends Component {
       publishTools: JSII_TOOLCHAIN.python,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-pypi'),
+      workingDirectory: options.workingDirectory,
       env: {
         TWINE_REPOSITORY_URL: options.twineRegistryUrl,
       },
@@ -357,6 +362,7 @@ export class Publisher extends Component {
       publishTools: JSII_TOOLCHAIN.go,
       prePublishSteps: options.prePublishSteps ?? [],
       run: this.jsiiReleaseCommand('jsii-release-golang'),
+      workingDirectory: options.workingDirectory,
       registryName: 'GitHub Go Module Repository',
       env: {
         GITHUB_REPO: options.githubRepo,
@@ -414,6 +420,7 @@ export class Publisher extends Component {
           uses: 'actions/download-artifact@v2',
           with: {
             name: BUILD_ARTIFACT_NAME,
+            path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for jsii-release
           },
         },
         ...opts.prePublishSteps,
@@ -421,6 +428,8 @@ export class Publisher extends Component {
           name: 'Release',
           // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
           run: commandToRun,
+          workingDirectory: opts.workingDirectory,
+
           env: jobEnv,
         },
       ];
@@ -485,6 +494,13 @@ interface PublishJobOptions {
   readonly run: string;
 
   /**
+   * Which directory to run the commadn in.
+   *
+   * @default - Working directory of the job.
+   */
+  readonly workingDirectory?: string;
+
+  /**
    * Environment variables to set
    */
   readonly env?: Record<string, any>;
@@ -539,6 +555,13 @@ export interface CommonPublishOptions {
    * @default - no additional tools are installed
    */
   readonly publishTools?: Tools;
+
+  /**
+   * The working directory of publishing step.
+   *
+   * @default - Working directory of the job.
+   */
+  readonly workingDirectory?: string;
 }
 
 /**

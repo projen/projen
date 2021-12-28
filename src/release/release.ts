@@ -496,7 +496,7 @@ export class Release extends Component {
       uses: 'actions/upload-artifact@v2.1.1',
       with: {
         name: BUILD_ARTIFACT_NAME,
-        path: paths.join('\n'),
+        path: this.artifactsDirectory,
       },
     });
 

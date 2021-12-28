@@ -237,7 +237,7 @@ export class BuildWorkflow extends Component {
           if: 'always()',
           with: {
             name: BUILD_ARTIFACT_NAME,
-            path: paths.join('\n'),
+            path: this.artifactsDirectory,
           },
         }];
       }
@@ -247,6 +247,7 @@ export class BuildWorkflow extends Component {
         uses: 'actions/download-artifact@v2',
         with: {
           name: BUILD_ARTIFACT_NAME,
+          path: this.artifactsDirectory,
         },
       });
     }
@@ -294,10 +295,11 @@ export class BuildWorkflow extends Component {
       id: SELF_MUTATION_STEP,
       run: [
         'if ! git diff --exit-code; then',
-        '  git add .',
-        '  git commit -m "chore: self mutation"',
-        `  git push origin HEAD:${BRANCH_REF}`,
-        `  echo "::set-output name=${SELF_MUTATION_COMMIT}::$(git rev-parse HEAD)"`,
+        '  echo Skipping',
+        // '  git add .',
+        // '  git commit -m "chore: self mutation"',
+        // `  git push origin HEAD:${BRANCH_REF}`,
+        // `  echo "::set-output name=${SELF_MUTATION_COMMIT}::$(git rev-parse HEAD)"`,
         'fi',
       ].join('\n'),
     });

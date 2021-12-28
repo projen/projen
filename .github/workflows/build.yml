@@ -40,20 +40,14 @@ jobs:
         id: self_mutation
         run: |-
           if ! git diff --exit-code; then
-            git add .
-            git commit -m "chore: self mutation"
-            git push origin HEAD:${{ github.event.pull_request.head.ref }}
-            echo "::set-output name=self_mutation_commit::$(git rev-parse HEAD)"
+            echo Skipping
           fi
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
         if: always()
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
-            !node_modules
+          path: dist
   update-status:
     needs:
       - build
@@ -91,10 +85,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Create js artifact
         run: npx projen package:js
+        working-directory: dist
   package-java:
     needs: build
     runs-on: ubuntu-latest
@@ -111,10 +107,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Create java artifact
         run: npx projen package:java
+        working-directory: dist
   package-python:
     needs: build
     runs-on: ubuntu-latest
@@ -130,10 +128,12 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Create python artifact
         run: npx projen package:python
+        working-directory: dist
   package-go:
     needs: build
     runs-on: ubuntu-latest
@@ -149,7 +149,9 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Create go artifact
         run: npx projen package:go
+        working-directory: dist

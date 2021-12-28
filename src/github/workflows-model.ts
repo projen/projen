@@ -305,6 +305,13 @@ export interface JobStep {
   readonly env?: Record<string, string>;
 
   /**
+   * Directory to run the step in.
+   *
+   * @default - Working directory of the job.
+   */
+  readonly workingDirectory?: string;
+
+  /**
    * Prevents a job from failing when a step fails. Set to true to allow a job
    * to pass when this step fails.
    */

@@ -48,6 +48,8 @@ const project = new cdk.JsiiProject({
     'all-contributors-cli',
   ],
 
+  publishDryRun: true,
+
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: '12.7.0',
