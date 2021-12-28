@@ -126,15 +126,18 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
+        "path": "dist",
       },
     },
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
+      "working-directory": "dist",
     },
     Object {
       "name": "Create go artifact",
       "run": "npx projen package:go",
+      "working-directory": "dist",
     },
     Object {
       "env": Object {
@@ -177,15 +180,18 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
+        "path": "dist",
       },
     },
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
+      "working-directory": "dist",
     },
     Object {
       "name": "Create java artifact",
       "run": "npx projen package:java",
+      "working-directory": "dist",
     },
     Object {
       "env": Object {
@@ -223,15 +229,18 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
+        "path": "dist",
       },
     },
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
+      "working-directory": "dist",
     },
     Object {
       "name": "Create js artifact",
       "run": "npx projen package:js",
+      "working-directory": "dist",
     },
     Object {
       "env": Object {
@@ -241,6 +250,7 @@ Object {
       },
       "name": "Release",
       "run": "npx -p jsii-release@latest jsii-release-npm",
+      "working-directory": "dist",
     },
   ],
 }
@@ -273,15 +283,18 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
+        "path": "dist",
       },
     },
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
+      "working-directory": "dist",
     },
     Object {
       "name": "Create dotnet artifact",
       "run": "npx projen package:dotnet",
+      "working-directory": "dist",
     },
     Object {
       "env": Object {
@@ -321,15 +334,18 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
+        "path": "dist",
       },
     },
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
+      "working-directory": "dist",
     },
     Object {
       "name": "Create python artifact",
       "run": "npx projen package:python",
+      "working-directory": "dist",
     },
     Object {
       "env": Object {
@@ -366,15 +382,18 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
+        "path": "dist",
       },
     },
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
+      "working-directory": "dist",
     },
     Object {
       "name": "Create dotnet artifact",
       "run": "npx projen package:dotnet",
+      "working-directory": "dist",
     },
   ],
 }
@@ -403,15 +422,18 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
+        "path": "dist",
       },
     },
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
+      "working-directory": "dist",
     },
     Object {
       "name": "Create go artifact",
       "run": "npx projen package:go",
+      "working-directory": "dist",
     },
   ],
 }
@@ -441,15 +463,18 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
+        "path": "dist",
       },
     },
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
+      "working-directory": "dist",
     },
     Object {
       "name": "Create java artifact",
       "run": "npx projen package:java",
+      "working-directory": "dist",
     },
   ],
 }
@@ -472,15 +497,18 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
+        "path": "dist",
       },
     },
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
+      "working-directory": "dist",
     },
     Object {
       "name": "Create js artifact",
       "run": "npx projen package:js",
+      "working-directory": "dist",
     },
   ],
 }
@@ -509,15 +537,18 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
+        "path": "dist",
       },
     },
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
+      "working-directory": "dist",
     },
     Object {
       "name": "Create python artifact",
       "run": "npx projen package:python",
+      "working-directory": "dist",
     },
   ],
 }
@@ -564,10 +595,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
-            !node_modules
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -583,6 +611,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -608,16 +637,20 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
+        working-directory: dist
       - name: Create js artifact
         run: npx projen package:js
+        working-directory: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
+        working-directory: dist
   release_golang:
     name: Publish to GitHub Go Module Repository
     needs: release
@@ -636,10 +669,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
+        working-directory: dist
       - name: Create go artifact
         run: npx projen package:go
+        working-directory: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
@@ -693,10 +729,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
-            !node_modules
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -712,6 +745,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -737,16 +771,20 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
+        working-directory: dist
       - name: Create js artifact
         run: npx projen package:js
+        working-directory: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
+        working-directory: dist
   release_golang:
     name: Publish to GitHub Go Module Repository
     needs: release
@@ -765,10 +803,13 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
+        working-directory: dist
       - name: Create go artifact
         run: npx projen package:go
+        working-directory: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
