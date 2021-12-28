@@ -187,7 +187,10 @@ export class JsiiProject extends TypeScriptProject {
       description: 'Packages artifacts for all target languages',
     });
 
-    this.packageTask.reset(`echo Skipping. Use 'npx projen ${this.packageAllTask.name}'`);
+    // in jsii we consider the entire repo (post build) as the build artifact
+    // which is then used to create the language bindings in separate jobs.
+    this.packageTask.reset(`mkdir -p ${this.artifactsDirectory}`);
+    this.packageTask.exec(`rsync -a . ${this.artifactsDirectory} --exclude .git --exclude node_modules`);
 
     const targets: Record<string, any> = {};
 
@@ -361,16 +364,31 @@ export class JsiiProject extends TypeScriptProject {
   }
 
   private pacmakForLanguage(target: JsiiPacmakTarget, packTask: Task): CommonPublishOptions {
+
+    const repo = '.repo';
+
+    // at this stage, `artifactsDirectory` contains the prebuilt repository.
+    // for the publishing to work seamlessely, that directory needs to contain the actual artifact.
+    // so we move the repo, create the artifact, and put it in the expected place.
+
     return {
       publishTools: JSII_TOOLCHAIN[target],
       prePublishSteps: [
         {
+          name: 'Prepare Repository',
+          run: `mv ${this.artifactsDirectory} ${repo}`,
+        },
+        {
           name: 'Install Dependencies',
-          run: this.package.installCommand,
+          run: `cd ${repo} && ${this.package.installCommand}`,
         },
         {
           name: `Create ${target} artifact`,
-          run: `npx projen ${packTask.name}`,
+          run: `cd ${repo} && npx projen ${packTask.name}`,
+        },
+        {
+          name: `Collect ${target} Artifact`,
+          run: `mv ${repo}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
         },
       ],
     };
