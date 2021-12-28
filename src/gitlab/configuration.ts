@@ -25,13 +25,7 @@ export class CiConfiguration extends Component {
    * The workflow YAML file.
    */
   public readonly file: YamlFile;
-  // /* Defines scripts that should run *after* the job. Can be set globally or per job. */
-  // private afterScript?: Array<string[] | string>;
-  // /* Defines scripts that should run *before* the job. Can be set globally or per job. */
-  // private beforeScript?: Array<string[] | string>;
-  // private cache?: Cache;
   private default?: Default;
-  // private image?: Image | string;
   /**
    * Can be `Include` or `Include[]`. Each `Include` will be a string, or an
    * object with properties for the method if including external YAML file. The external
@@ -183,11 +177,7 @@ export class CiConfiguration extends Component {
 
   private renderCI() {
     return {
-      // afterScript: this.afterScript,
-      // beforeScript: this.beforeScript,
-      // cache: snakeCaseKeys(this.cache),
       default: snakeCaseKeys(this.default),
-      // image: snakeCaseKeys(this.image),
       include:
         this.include.length > 0 ? snakeCaseKeys(this.include) : undefined,
       pages: snakeCaseKeys(this.pages),
