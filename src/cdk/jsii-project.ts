@@ -371,6 +371,7 @@ export class JsiiProject extends TypeScriptProject {
         {
           name: 'Install Dependencies',
           run: this.package.installCommand,
+          workingDirectory: this.artifactsDirectory,
         },
         {
           name: `Create ${target} artifact`,
