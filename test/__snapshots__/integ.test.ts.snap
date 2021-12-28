@@ -308,7 +308,7 @@ jobs:
             .
             !.git
             !node_modules
-  update-status:
+  trigger-rebuild:
     needs:
       - build
       - package-js
