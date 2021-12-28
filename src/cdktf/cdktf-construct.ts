@@ -43,7 +43,7 @@ export class ConstructLibraryCdktf extends ConstructLibrary {
 
     const ver = options.cdktfVersion;
     const constructVersion =
-      options.constructsVersion || getDefaultConstructVersion();
+      options.constructsVersion ?? getDefaultConstructVersion();
 
     this.addPeerDeps(`constructs@${constructVersion}`, `cdktf@${ver}`);
   }
