@@ -164,7 +164,10 @@
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "echo Skipping. Use 'npx projen package-all'"
+          "exec": "mkdir -p dist/js"
+        },
+        {
+          "exec": "mv $(npm pack) dist/js/"
         }
       ]
     },
@@ -194,7 +197,7 @@
           "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
         },
         {
-          "exec": "npx jsii-pacmak@$jsii_version -v --target go"
+          "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target go"
         }
       ]
     },
@@ -206,7 +209,7 @@
           "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
         },
         {
-          "exec": "npx jsii-pacmak@$jsii_version -v --target java"
+          "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java"
         }
       ]
     },
@@ -218,7 +221,7 @@
           "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
         },
         {
-          "exec": "npx jsii-pacmak@$jsii_version -v --target js"
+          "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js"
         }
       ]
     },
@@ -230,7 +233,7 @@
           "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
         },
         {
-          "exec": "npx jsii-pacmak@$jsii_version -v --target python"
+          "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python"
         }
       ]
     },

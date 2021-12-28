@@ -102,10 +102,16 @@ jobs:
         with:
           name: dist
           path: dist
-      - name: Install Dependencies
-        run: yarn install --check-files --frozen-lockfile
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create js artifact
-        run: npx projen package:js
+        run: >-
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -147,10 +153,16 @@ jobs:
         with:
           name: dist
           path: dist
-      - name: Install Dependencies
-        run: yarn install --check-files --frozen-lockfile
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create java artifact
-        run: npx projen package:java
+        run: >-
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java
       - name: Release
         run: npx -p jsii-release@latest jsii-release-maven
         env:
@@ -195,10 +207,16 @@ jobs:
         with:
           name: dist
           path: dist
-      - name: Install Dependencies
-        run: yarn install --check-files --frozen-lockfile
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create python artifact
-        run: npx projen package:python
+        run: >-
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -238,10 +256,16 @@ jobs:
         with:
           name: dist
           path: dist
-      - name: Install Dependencies
-        run: yarn install --check-files --frozen-lockfile
+      - name: Extract npm tarball
+        run: |-
+          tar -xzf dist/js/*.tgz --strip-components=1
+          rm -fr dist/js
       - name: Create go artifact
-        run: npx projen package:go
+        run: >-
+          jsii_version=$(node -p
+          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
+
+          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target go
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
