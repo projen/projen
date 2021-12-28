@@ -258,13 +258,6 @@ describe('deps upgrade', () => {
     expect(tasks.upgrade.steps[6].exec).toStrictEqual('yarn upgrade');
   });
 
-  test('default - no projen secret', () => {
-    const project = new TestNodeProject();
-    const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeUndefined();
-  });
-
   test('dependabot - with projen secret', () => {
     const project = new TestNodeProject({
       dependabot: true,
@@ -275,32 +268,12 @@ describe('deps upgrade', () => {
     expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeDefined();
   });
 
-  test('dependabot - no projen secret', () => {
-    const project = new TestNodeProject({
-      dependabot: true,
-    });
-    const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/dependabot.yml']).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeUndefined();
-  });
-
   test('github actions - with projen secret', () => {
     const project = new TestNodeProject({
       projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
     });
     const snapshot = synthSnapshot(project);
     expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeUndefined();
-  });
-
-  test('github actions - no projen secret', () => {
-    const project = new TestNodeProject({});
-    const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
-
-    // note that in this case only the task is created, not the workflow
-    const upgradeProjen = snapshot['.projen/tasks.json'].tasks['upgrade-projen'];
-    expect(upgradeProjen).toBeDefined();
     expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeUndefined();
   });
 

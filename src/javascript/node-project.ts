@@ -5,7 +5,7 @@ import { AutoMerge, DependabotOptions, GitHubProject, GitHubProjectOptions, GitI
 import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { JobStep } from '../github/workflows-model';
 import { IgnoreFile } from '../ignore-file';
-import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from '../javascript';
+import { UpgradeDependencies, UpgradeDependenciesOptions } from '../javascript';
 import { License } from '../license';
 import { Release, ReleaseProjectOptions, Publisher } from '../release';
 import { Task } from '../task';
@@ -15,6 +15,7 @@ import { Bundler, BundlerOptions } from './bundler';
 import { Jest, JestOptions } from './jest';
 import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
 import { Projenrc, ProjenrcOptions } from './projenrc';
+import { UpgradeDependenciesSchedule } from './upgrade-dependencies';
 
 const PROJEN_SCRIPT = 'projen';
 
@@ -92,7 +93,6 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * Add release management to this project.
    *
    * @default - true (false for subprojects)
-   * @featured
    */
   readonly release?: boolean;
 
@@ -173,6 +173,8 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * To create a personal access token see https://github.com/settings/tokens
    *
    * @default - no automatic projen upgrade pull requests
+   *
+   * @deprecated use `githubTokenSecret` instead.
    */
   readonly projenUpgradeSecret?: string;
 
@@ -919,3 +921,4 @@ export interface NodeWorkflowSteps {
   readonly antitamper: any[];
   readonly install: any[];
 }
+

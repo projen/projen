@@ -292,6 +292,8 @@ jobs:
         run: npx projen build
       - name: Self mutation
         id: self_mutation
+        env:
+          GITHUB_TOKEN: PROJEN_GITHUB_TOKEN
         run: |-
           if ! git diff --exit-code; then
             git add .
@@ -321,7 +323,7 @@ jobs:
     steps:
       - name: Trigger build.yml workflow
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
         run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
           \\"Authorization: token \${GITHUB_TOKEN}\\" --data \\"{\\\\\\"ref\\\\\\":\\\\\\"\${{
           github.event.pull_request.head.ref }}\\\\\\"}\\"
@@ -710,7 +712,7 @@ jobs:
           signoff: true
       - name: Trigger build.yml workflow
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
         run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
           \\"Authorization: token \${GITHUB_TOKEN}\\" --data
           \\"{\\\\\\"ref\\\\\\":\\\\\\"$GITHUB_REF_NAME\\\\\\"}\\" https://api.github.com/repos/\${{
@@ -2274,7 +2276,7 @@ jobs:
         id: create-pr
         uses: peter-evans/create-pull-request@v3
         with:
-          token: \${{ secrets.GITHUB_TOKEN }}
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: >-
             chore(deps): upgrade dependencies
 
@@ -3815,7 +3817,7 @@ jobs:
         id: create-pr
         uses: peter-evans/create-pull-request@v3
         with:
-          token: \${{ secrets.GITHUB_TOKEN }}
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: >-
             chore(deps): upgrade dependencies
 
@@ -4930,6 +4932,8 @@ jobs:
         run: npx projen build
       - name: Self mutation
         id: self_mutation
+        env:
+          GITHUB_TOKEN: PROJEN_GITHUB_TOKEN
         run: |-
           if ! git diff --exit-code; then
             git add .
@@ -4947,7 +4951,7 @@ jobs:
     steps:
       - name: Trigger build.yml workflow
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
         run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
           \\"Authorization: token \${GITHUB_TOKEN}\\" --data \\"{\\\\\\"ref\\\\\\":\\\\\\"\${{
           github.event.pull_request.head.ref }}\\\\\\"}\\"
@@ -5161,7 +5165,7 @@ jobs:
         id: create-pr
         uses: peter-evans/create-pull-request@v3
         with:
-          token: \${{ secrets.GITHUB_TOKEN }}
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: >-
             chore(deps): upgrade dependencies
 
@@ -5194,7 +5198,7 @@ jobs:
           signoff: true
       - name: Trigger build.yml workflow
         env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
         run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
           \\"Authorization: token \${GITHUB_TOKEN}\\" --data
           \\"{\\\\\\"ref\\\\\\":\\\\\\"$GITHUB_REF_NAME\\\\\\"}\\" https://api.github.com/repos/\${{

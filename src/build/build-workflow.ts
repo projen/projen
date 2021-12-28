@@ -31,14 +31,18 @@ export interface BuildWorkflowOptions {
   readonly containerImage?: string;
 
   /**
-  * Automatically update files modified during builds to pull-request branches. This means
-  * that any files synthesized by projen or e.g. test snapshots will always be up-to-date
-  * before a PR is merged.
-  *
-  * Implies that PR builds do not have anti-tamper checks.
-  *
-  * @default true
-  */
+   * Automatically update files modified during builds to pull-request branches.
+   * This means that any files synthesized by projen or e.g. test snapshots will
+   * always be up-to-date before a PR is merged.
+   *
+   * Implies that PR builds do not have anti-tamper checks.
+   *
+   * This is enabled by default only if `githubTokenSecret` is set. Otherwise it
+   * is disabled, which implies that file changes that happen during build will
+   * not be pushed back to the branch.
+   *
+   * @default true
+   */
   readonly mutableBuild?: boolean;
 
   /**
@@ -76,7 +80,6 @@ export interface BuildWorkflowOptions {
 export class BuildWorkflow extends Component {
   private readonly postBuildSteps: JobStep[];
   private readonly preBuildSteps: JobStep[];
-  private readonly antitamperSteps: JobStep[];
   private readonly mutableBuilds: boolean;
   private readonly gitIdentity: GitIdentity;
   private readonly buildTask: Task;
@@ -87,6 +90,7 @@ export class BuildWorkflow extends Component {
 
   private readonly _buildJobIds: string[];
   private uploadArtitactSteps?: JobStep[];
+  private readonly antitamper: boolean;
 
   /**
    * The workflow file name (`build.yml`).
@@ -105,23 +109,13 @@ export class BuildWorkflow extends Component {
 
     this.preBuildSteps = options.preBuildSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
-    this.mutableBuilds = options.mutableBuild ?? true;
     this.gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.buildTask = options.buildTask;
     this.artifactsDirectory = options.artifactsDirectory;
-
-    const antitamper = options.antitamper ?? true;
-
-    // disable anti-tamper if build workflow is mutable
-    this.antitamperSteps = (!this.mutableBuilds ?? antitamper) ? [{
-      // anti-tamper check (fails if there were changes to committed files)
-      // this will identify any non-committed files generated during build (e.g. test snapshots)
-      name: 'Anti-tamper check',
-      run: 'git diff --ignore-space-at-eol --exit-code',
-    }] : [];
-
+    this.mutableBuilds = options.mutableBuild ?? true;
     this.workflow = new GithubWorkflow(github, 'build');
     this.filename = this.workflow.filename;
+    this.antitamper = options.antitamper ?? true;
 
     this.workflow.on({
       pullRequest: {},
@@ -151,21 +145,24 @@ export class BuildWorkflow extends Component {
 
     this._buildJobIds = [PRIMARY_JOB_ID];
 
-    this.workflow.addJob('trigger-rebuild', {
-      runsOn: ['ubuntu-latest'],
-      permissions: {
-        actions: JobPermission.WRITE,
-      },
-      needs: (() => this._buildJobIds) as any, // wait for all build jobs to finish
-      if: `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_REF} }}`,
-      steps: [
-        ...WorkflowActions.dispatchWorkflow({
-          workflowId: this.filename,
-          repo: REPO_REF,
-          ref: BRANCH_REF,
-        }),
-      ],
-    });
+    if (this.mutableBuilds) {
+      this.workflow.addJob('trigger-rebuild', {
+        runsOn: ['ubuntu-latest'],
+        permissions: {
+          actions: JobPermission.WRITE,
+        },
+        needs: (() => this._buildJobIds) as any, // wait for all build jobs to finish
+        if: `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_REF} }}`,
+        steps: [
+          ...WorkflowActions.dispatchWorkflow({
+            githubTokenSecret: this.github.projenTokenSecret,
+            workflowId: this.filename,
+            repo: REPO_REF,
+            ref: BRANCH_REF,
+          }),
+        ],
+      });
+    }
   }
 
   /**
@@ -257,28 +254,37 @@ export class BuildWorkflow extends Component {
     });
 
     steps.push(setGitIdentityStep(this.gitIdentity));
-
-    steps.push(...this.antitamperSteps);
     steps.push(...this.preBuildSteps);
     steps.push({
       name: this.buildTask.name,
       run: this.github.project.runTaskCommand(this.buildTask),
     });
     steps.push(...this.postBuildSteps);
-    steps.push(...this.antitamperSteps);
 
-    steps.push({
-      name: 'Self mutation',
-      id: SELF_MUTATION_STEP,
-      run: [
-        'if ! git diff --exit-code; then',
-        '  git add .',
-        '  git commit -m "chore: self mutation"',
-        `  git push origin HEAD:${BRANCH_REF}`,
-        `  echo "::set-output name=${SELF_MUTATION_REF}::$(git rev-parse HEAD)"`,
-        'fi',
-      ].join('\n'),
-    });
+    if (this.mutableBuilds) {
+      steps.push({
+        name: 'Self mutation',
+        id: SELF_MUTATION_STEP,
+        env: {
+          GITHUB_TOKEN: this.github.projenTokenSecret,
+        },
+        run: [
+          'if ! git diff --exit-code; then',
+          '  git add .',
+          '  git commit -m "chore: self mutation"',
+          `  git push origin HEAD:${BRANCH_REF}`,
+          `  echo "::set-output name=${SELF_MUTATION_REF}::$(git rev-parse HEAD)"`,
+          'fi',
+        ].join('\n'),
+      });
+    } else if (this.antitamper) {
+      // anti-tamper check (fails if there were changes to committed files)
+      // this will identify any non-committed files generated during build (e.g. test snapshots)
+      steps.push({
+        name: 'Anti-tamper check',
+        run: 'git diff --ignore-space-at-eol --exit-code',
+      });
+    }
 
     if (this.uploadArtitactSteps) {
       steps.push(...this.uploadArtitactSteps);

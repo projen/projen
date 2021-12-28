@@ -27,7 +27,7 @@ export class WorkflowActions {
    * @returns Job steps
    */
   public static githubRequest(options: GitHubRequestOptions): JobStep[] {
-    const githubTokenSecret = options.githubTokenSecret ?? 'GITHUB_TOKEN';
+    const githubTokenSecret = options.githubTokenSecret;
     const method = options.method ?? 'POST';
     const url = options.url;
     const curl = [
@@ -62,10 +62,8 @@ export class WorkflowActions {
 export interface GitHubRequestCommonOptions {
   /**
    * The github token secret to use.
-   *
-   * @default "GITHUB_TOKEN"
    */
-  readonly githubTokenSecret?: string;
+  readonly githubTokenSecret: string;
 
   /**
    * Condition

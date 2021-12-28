@@ -4,6 +4,7 @@ import { DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from '../github/const
 import { WorkflowActions } from '../github/workflow-actions';
 import { ContainerOptions, JobStep } from '../github/workflows-model';
 import { NodeProject } from '../javascript';
+import { warn } from '../logging';
 import { Task } from '../task';
 
 function context(value: string) {
@@ -11,7 +12,6 @@ function context(value: string) {
 }
 
 const RUNNER_TEMP = context('runner.temp');
-const DEFAULT_TOKEN = context('secrets.GITHUB_TOKEN');
 const REPO = context('github.repository');
 const RUN_ID = context('github.run_id');
 const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
@@ -267,8 +267,11 @@ export class UpgradeDependencies extends Component {
   }
 
   private createPr(workflow: GithubWorkflow, upgrade: Upgrade): PR {
-
-    const customToken = this.options.workflowOptions?.secret ? context(`secrets.${this.options.workflowOptions.secret}`) : undefined;
+    const secretName = this.options.workflowOptions?.secret ?? workflow.projenTokenSecret;
+    if (this.options.workflowOptions?.secret === workflow.projenTokenSecret) {
+      warn(`No need to specify "workflowOptions.secret" when it is the same as the default workflow projen token secret ("${workflow.projenTokenSecret}").`);
+    }
+    const token = context(`secrets.${secretName}`);
     const runsOn = this.options.workflowOptions?.runsOn ?? ['ubuntu-latest'];
     const workflowName = workflow.name;
     const branchName = `github-actions/${workflowName}`;
@@ -310,7 +313,7 @@ export class UpgradeDependencies extends Component {
         with: {
           // the pr can modify workflow files, so we need to use the custom
           // secret if one is configured.
-          'token': customToken ?? DEFAULT_TOKEN,
+          'token': token,
           'commit-message': `${title}\n\n${description}`,
           'branch': branchName,
           'title': title,
@@ -327,6 +330,7 @@ export class UpgradeDependencies extends Component {
     if (workflowFile) {
       steps.push(...WorkflowActions.dispatchWorkflow({
         workflowId: workflowFile,
+        githubTokenSecret: workflow.projenTokenSecret,
       }));
     }
 

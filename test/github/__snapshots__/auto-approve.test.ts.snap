@@ -74,6 +74,6 @@ jobs:
     steps:
       - uses: hmarr/auto-approve-action@v2.1.0
         with:
-          github-token: \${{ secrets.MY_SECRET }}
+          github-token: \${{ secrets.GITHUB_TOKEN }}
 "
 `;

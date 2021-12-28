@@ -112,6 +112,15 @@ export interface GitHubProjectOptions extends ProjectOptions {
    * @default true
    */
   readonly stale?: boolean;
+
+  /**
+   * The name of a secret which includes a GitHub Personal Access Token to be
+   * used by projen workflows. This token needs to have the `repo`, `workflows`
+   * and `packages` scope.
+   *
+   * @default "PROJEN_GITHUB_TOKEN"
+   */
+  readonly projenTokenSecret?: string;
 }
 
 /**
@@ -171,6 +180,7 @@ export class GitHubProject extends Project {
     // we only allow these global services to be used in root projects
     const github = options.github ?? (this.parent ? false : true);
     this.github = github ? new GitHub(this, {
+      projenTokenSecret: options.projenTokenSecret,
       mergify: options.mergify,
       mergifyOptions: options.mergifyOptions,
       ...options.githubOptions,
