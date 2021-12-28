@@ -79,8 +79,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -95,8 +97,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -121,8 +122,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -417,8 +417,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -433,8 +435,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -459,8 +460,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -755,8 +755,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -771,8 +773,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -797,8 +798,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -1097,8 +1097,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1113,8 +1115,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -1163,8 +1164,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1179,8 +1182,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -1229,8 +1231,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1245,8 +1249,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -1585,8 +1588,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1601,8 +1606,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -1630,8 +1634,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -1709,8 +1712,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1725,8 +1730,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -1754,8 +1758,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -2111,8 +2114,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2127,8 +2132,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -2367,8 +2371,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2384,8 +2390,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -2427,8 +2432,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -2531,8 +2535,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2547,8 +2553,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -2574,8 +2579,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -2827,8 +2831,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2843,8 +2849,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -3066,8 +3071,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -3082,8 +3089,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -3320,8 +3326,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -3336,8 +3344,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -3563,8 +3570,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -3579,8 +3588,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -3608,8 +3616,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
@@ -3634,8 +3641,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: npx -p jsii-release@latest jsii-release-maven
         env:
@@ -3658,8 +3664,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -3682,8 +3687,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: npx -p jsii-release@latest jsii-release-nuget
         env:
@@ -3705,8 +3709,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -4010,8 +4013,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4026,8 +4031,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -4076,8 +4080,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4092,8 +4098,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -4420,8 +4425,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4436,8 +4443,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -4486,8 +4492,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4502,8 +4510,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -4552,8 +4559,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4568,8 +4577,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -4937,8 +4945,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4953,8 +4963,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -5233,8 +5242,10 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -5249,8 +5260,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
