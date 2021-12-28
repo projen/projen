@@ -1,3 +1,4 @@
+import * as path from 'path';
 import { snake } from 'case';
 import { Component } from '../component';
 import { Project } from '../project';
@@ -67,7 +68,7 @@ export class CiConfiguration extends Component {
   constructor(project: Project, name: string, options?: CiConfigurationOptions) {
     super(project);
     this.project = project;
-    this.name = name;
+    this.name = path.parse(name).name;
     this.path =
       this.name === 'gitlab-ci'
         ? '.gitlab-ci.yml'
