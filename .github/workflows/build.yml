@@ -40,7 +40,10 @@ jobs:
         id: self_mutation
         run: |-
           if ! git diff --exit-code; then
-            echo Skipping
+            git add .
+            git commit -m "chore: self mutation"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+            echo "::set-output name=self_mutation_commit::$(git rev-parse HEAD)"
           fi
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
@@ -93,7 +96,7 @@ jobs:
       - name: Create js artifact
         run: cd .repo && npx projen package:js
       - name: Collect js Artifact
-        run: mv .repo/dist dist
+        run: mv .repo/dist dist && ls -l -r dist
   package-java:
     needs: build
     runs-on: ubuntu-latest
@@ -118,7 +121,7 @@ jobs:
       - name: Create java artifact
         run: cd .repo && npx projen package:java
       - name: Collect java Artifact
-        run: mv .repo/dist dist
+        run: mv .repo/dist dist && ls -l -r dist
   package-python:
     needs: build
     runs-on: ubuntu-latest
@@ -142,7 +145,7 @@ jobs:
       - name: Create python artifact
         run: cd .repo && npx projen package:python
       - name: Collect python Artifact
-        run: mv .repo/dist dist
+        run: mv .repo/dist dist && ls -l -r dist
   package-go:
     needs: build
     runs-on: ubuntu-latest
@@ -166,4 +169,4 @@ jobs:
       - name: Create go artifact
         run: cd .repo && npx projen package:go
       - name: Collect go Artifact
-        run: mv .repo/dist dist
+        run: mv .repo/dist dist && ls -l -r dist

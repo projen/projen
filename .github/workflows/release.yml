@@ -109,7 +109,7 @@ jobs:
       - name: Create js artifact
         run: cd .repo && npx projen package:js
       - name: Collect js Artifact
-        run: mv .repo/dist dist
+        run: mv .repo/dist dist && ls -l -r dist
       - name: Release
         run: 'echo "DRY RUN: npx -p jsii-release@latest jsii-release-npm"'
         env:
@@ -158,7 +158,7 @@ jobs:
       - name: Create java artifact
         run: cd .repo && npx projen package:java
       - name: Collect java Artifact
-        run: mv .repo/dist dist
+        run: mv .repo/dist dist && ls -l -r dist
       - name: Release
         run: 'echo "DRY RUN: npx -p jsii-release@latest jsii-release-maven"'
         env:
@@ -210,7 +210,7 @@ jobs:
       - name: Create python artifact
         run: cd .repo && npx projen package:python
       - name: Collect python Artifact
-        run: mv .repo/dist dist
+        run: mv .repo/dist dist && ls -l -r dist
       - name: Release
         run: 'echo "DRY RUN: npx -p jsii-release@latest jsii-release-pypi"'
         env:
@@ -257,7 +257,7 @@ jobs:
       - name: Create go artifact
         run: cd .repo && npx projen package:go
       - name: Collect go Artifact
-        run: mv .repo/dist dist
+        run: mv .repo/dist dist && ls -l -r dist
       - name: Release
         run: 'echo "DRY RUN: npx -p jsii-release@latest jsii-release-golang"'
         env:
