@@ -247,11 +247,6 @@ export interface RunSettings {
    * @example "bash"
    */
   readonly shell?: string;
-
-  /**
-   * Working directory to use when running the step.
-   */
-  readonly workingDirectory?: string;
 }
 
 /**
@@ -303,13 +298,6 @@ export interface JobStep {
    * You can also set environment variables for the entire workflow or a job.
    */
   readonly env?: Record<string, string>;
-
-  /**
-   * Directory to run the step in.
-   *
-   * @default - Working directory of the job.
-   */
-  readonly workingDirectory?: string;
 
   /**
    * Prevents a job from failing when a step fails. Set to true to allow a job

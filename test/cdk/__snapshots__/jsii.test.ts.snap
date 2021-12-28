@@ -6,10 +6,16 @@ Object {
   "name": "package:dotnet",
   "steps": Array [
     Object {
-      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+      "exec": "mv dist .repo",
     },
     Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --target dotnet",
+      "exec": "cd .repo && jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+    },
+    Object {
+      "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target dotnet",
+    },
+    Object {
+      "exec": "mv .repo/dist dist",
     },
   ],
 }
@@ -21,10 +27,16 @@ Object {
   "name": "package:go",
   "steps": Array [
     Object {
-      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+      "exec": "mv dist .repo",
     },
     Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --target go",
+      "exec": "cd .repo && jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+    },
+    Object {
+      "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target go",
+    },
+    Object {
+      "exec": "mv .repo/dist dist",
     },
   ],
 }
@@ -36,10 +48,16 @@ Object {
   "name": "package:java",
   "steps": Array [
     Object {
-      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+      "exec": "mv dist .repo",
     },
     Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --target java",
+      "exec": "cd .repo && jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+    },
+    Object {
+      "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target java",
+    },
+    Object {
+      "exec": "mv .repo/dist dist",
     },
   ],
 }
@@ -51,10 +69,16 @@ Object {
   "name": "package:js",
   "steps": Array [
     Object {
-      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+      "exec": "mv dist .repo",
     },
     Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --target js",
+      "exec": "cd .repo && jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+    },
+    Object {
+      "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target js",
+    },
+    Object {
+      "exec": "mv .repo/dist dist",
     },
   ],
 }
@@ -66,10 +90,16 @@ Object {
   "name": "package:python",
   "steps": Array [
     Object {
-      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+      "exec": "mv dist .repo",
     },
     Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --target python",
+      "exec": "cd .repo && jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+    },
+    Object {
+      "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target python",
+    },
+    Object {
+      "exec": "mv .repo/dist dist",
     },
   ],
 }
@@ -132,12 +162,10 @@ Object {
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
-      "working-directory": "dist",
     },
     Object {
       "name": "Create go artifact",
       "run": "npx projen package:go",
-      "working-directory": "dist",
     },
     Object {
       "env": Object {
@@ -186,12 +214,10 @@ Object {
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
-      "working-directory": "dist",
     },
     Object {
       "name": "Create java artifact",
       "run": "npx projen package:java",
-      "working-directory": "dist",
     },
     Object {
       "env": Object {
@@ -235,12 +261,10 @@ Object {
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
-      "working-directory": "dist",
     },
     Object {
       "name": "Create js artifact",
       "run": "npx projen package:js",
-      "working-directory": "dist",
     },
     Object {
       "env": Object {
@@ -250,7 +274,6 @@ Object {
       },
       "name": "Release",
       "run": "npx -p jsii-release@latest jsii-release-npm",
-      "working-directory": "dist",
     },
   ],
 }
@@ -289,12 +312,10 @@ Object {
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
-      "working-directory": "dist",
     },
     Object {
       "name": "Create dotnet artifact",
       "run": "npx projen package:dotnet",
-      "working-directory": "dist",
     },
     Object {
       "env": Object {
@@ -340,12 +361,10 @@ Object {
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
-      "working-directory": "dist",
     },
     Object {
       "name": "Create python artifact",
       "run": "npx projen package:python",
-      "working-directory": "dist",
     },
     Object {
       "env": Object {
@@ -388,12 +407,10 @@ Object {
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
-      "working-directory": "dist",
     },
     Object {
       "name": "Create dotnet artifact",
       "run": "npx projen package:dotnet",
-      "working-directory": "dist",
     },
   ],
 }
@@ -428,12 +445,10 @@ Object {
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
-      "working-directory": "dist",
     },
     Object {
       "name": "Create go artifact",
       "run": "npx projen package:go",
-      "working-directory": "dist",
     },
   ],
 }
@@ -469,12 +484,10 @@ Object {
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
-      "working-directory": "dist",
     },
     Object {
       "name": "Create java artifact",
       "run": "npx projen package:java",
-      "working-directory": "dist",
     },
   ],
 }
@@ -503,12 +516,10 @@ Object {
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
-      "working-directory": "dist",
     },
     Object {
       "name": "Create js artifact",
       "run": "npx projen package:js",
-      "working-directory": "dist",
     },
   ],
 }
@@ -543,12 +554,10 @@ Object {
     Object {
       "name": "Install Dependencies",
       "run": "yarn install --check-files --frozen-lockfile",
-      "working-directory": "dist",
     },
     Object {
       "name": "Create python artifact",
       "run": "npx projen package:python",
-      "working-directory": "dist",
     },
   ],
 }
@@ -640,17 +649,14 @@ jobs:
           path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
-        working-directory: dist
       - name: Create js artifact
         run: npx projen package:js
-        working-directory: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
-        working-directory: dist
   release_golang:
     name: Publish to GitHub Go Module Repository
     needs: release
@@ -672,10 +678,8 @@ jobs:
           path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
-        working-directory: dist
       - name: Create go artifact
         run: npx projen package:go
-        working-directory: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
@@ -774,17 +778,14 @@ jobs:
           path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
-        working-directory: dist
       - name: Create js artifact
         run: npx projen package:js
-        working-directory: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
-        working-directory: dist
   release_golang:
     name: Publish to GitHub Go Module Repository
     needs: release
@@ -806,10 +807,8 @@ jobs:
           path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
-        working-directory: dist
       - name: Create go artifact
         run: npx projen package:go
-        working-directory: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:

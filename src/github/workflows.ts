@@ -175,21 +175,13 @@ function renderJobs(jobs: Record<string, workflows.Job>) {
       'env': job.env,
       'defaults': kebabCaseKeys(job.defaults),
       'if': job.if,
-      'steps': renderJobSteps(steps),
+      'steps': steps,
       'timeout-minutes': job.timeoutMinutes,
       'strategy': renderJobStrategy(job.strategy),
       'continue-on-error': job.continueOnError,
       'container': job.container,
       'services': job.services,
     };
-  }
-
-  function renderJobSteps(steps: workflows.JobStep[]) {
-    return steps.map(s => {
-      const res = { ...s, 'working-directory': s.workingDirectory };
-      delete res.workingDirectory;
-      return res;
-    });
   }
 
   function renderJobOutputs(output: workflows.Job['outputs']) {

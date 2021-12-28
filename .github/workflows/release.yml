@@ -104,17 +104,14 @@ jobs:
           path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
-        working-directory: dist
       - name: Create js artifact
         run: npx projen package:js
-        working-directory: dist
       - name: Release
         run: 'echo "DRY RUN: npx -p jsii-release@latest jsii-release-npm"'
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        working-directory: dist
       - name: Extract Version
         if: ${{ failure() }}
         id: extract-version
@@ -152,10 +149,8 @@ jobs:
           path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
-        working-directory: dist
       - name: Create java artifact
         run: npx projen package:java
-        working-directory: dist
       - name: Release
         run: 'echo "DRY RUN: npx -p jsii-release@latest jsii-release-maven"'
         env:
@@ -202,10 +197,8 @@ jobs:
           path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
-        working-directory: dist
       - name: Create python artifact
         run: npx projen package:python
-        working-directory: dist
       - name: Release
         run: 'echo "DRY RUN: npx -p jsii-release@latest jsii-release-pypi"'
         env:
@@ -247,10 +240,8 @@ jobs:
           path: dist
       - name: Install Dependencies
         run: yarn install --check-files --frozen-lockfile
-        working-directory: dist
       - name: Create go artifact
         run: npx projen package:go
-        working-directory: dist
       - name: Release
         run: 'echo "DRY RUN: npx -p jsii-release@latest jsii-release-golang"'
         env:

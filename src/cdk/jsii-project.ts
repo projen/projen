@@ -190,7 +190,7 @@ export class JsiiProject extends TypeScriptProject {
     // in jsii we consider the entire repo (post build) as the build artifact
     // which is then used to create the language bindings in separate jobs.
     this.packageTask.reset(`mkdir -p ${this.artifactsDirectory}`);
-    this.packageTask.exec(`rsync -av --progress . ${this.artifactsDirectory} --exclude .git --exclude node_modules`);
+    this.packageTask.exec(`rsync -a . ${this.artifactsDirectory} --exclude .git --exclude node_modules`);
 
     const targets: Record<string, any> = {};
 
@@ -215,7 +215,6 @@ export class JsiiProject extends TypeScriptProject {
         ...this.pacmakForLanguage('js', task),
         registry: this.package.npmRegistry,
         npmTokenSecret: this.package.npmTokenSecret,
-        workingDirectory: this.artifactsDirectory,
       });
       this.addPackagingTarget('js', task);
     }
@@ -358,8 +357,14 @@ export class JsiiProject extends TypeScriptProject {
       description: `Create ${language} language bindings`,
     });
 
-    packageTask.exec('jsii_version=$(node -p "JSON.parse(fs.readFileSync(\'.jsii\')).jsiiVersion.split(\' \')[0]")');
-    packageTask.exec(`npx jsii-pacmak@$jsii_version -v --target ${language}`);
+    // at this stage, `artifactsDirectory` contains the prebuilt repository.
+    // for the publishing to work seamlessely, that directory needs to contain the actual artifact.
+    // so we move the repo, create the artifact, and put it in the expected place.
+    const repo = '.repo';
+    packageTask.exec(`mv ${this.artifactsDirectory} ${repo}`);
+    packageTask.exec(`cd ${repo} && jsii_version=$(node -p "JSON.parse(fs.readFileSync(\'.jsii\')).jsiiVersion.split(\' \')[0]")`);
+    packageTask.exec(`cd ${repo} && npx jsii-pacmak@$jsii_version -v --target ${language}`);
+    packageTask.exec(`mv ${repo}/${this.artifactsDirectory} ${this.artifactsDirectory}`);
     this.packageAllTask.spawn(packageTask);
     return packageTask;
   }
@@ -371,12 +376,10 @@ export class JsiiProject extends TypeScriptProject {
         {
           name: 'Install Dependencies',
           run: this.package.installCommand,
-          workingDirectory: this.artifactsDirectory,
         },
         {
           name: `Create ${target} artifact`,
           run: `npx projen ${packTask.name}`,
-          workingDirectory: this.artifactsDirectory,
         },
       ],
     };
