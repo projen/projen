@@ -75,17 +75,17 @@ export class CiConfiguration extends Component {
     this.file = new YamlFile(this.project, this.path, {
       obj: () => this.renderCI(),
     });
-    this.default = options?.default
-    this.pages = options?.pages
-    this.workflow = options?.workflow
+    this.default = options?.default;
+    this.pages = options?.pages;
+    this.workflow = options?.workflow;
     if (options?.stages) {
-      this.addStages(...options.stages)
+      this.addStages(...options.stages);
     }
     if (options?.variables) {
-      this.addJobs(options.variables)
+      this.addJobs(options.variables);
     }
     if (options?.jobs) {
-      this.addJobs(options.jobs)
+      this.addJobs(options.jobs);
     }
 
   }

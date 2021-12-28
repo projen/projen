@@ -13,7 +13,8 @@ export class GitlabConfiguration extends CiConfiguration {
   }
 
   /**
-   * Creates and adds nested templates to the includes of the main CI. Additionally adds their stages to the main CI if they are not already present.
+   * Creates and adds nested templates to the includes of the main CI.
+   * Additionally adds their stages to the main CI if they are not already present.
    * You can futher customize nested templates through the `nestedTemplates` property.
    * E.g. gitlabConfig.nestedTemplates['templateName']?.addStages('stageName')
    * @param config a record the names and configuraitons of the templates.
