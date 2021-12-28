@@ -3,7 +3,6 @@ import { Component } from '../component';
 import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from '../github';
 import { BUILD_ARTIFACT_NAME } from '../github/constants';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
-import { NodeProject } from '../javascript';
 import { Task } from '../task';
 import { Version } from '../version';
 import { Publisher } from './publisher';
@@ -479,16 +478,6 @@ export class Release extends Component {
       id: GIT_REMOTE_STEPID,
       run: `echo ::set-output name=${LATEST_COMMIT_OUTPUT}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
     });
-
-    const paths = ['.', '!.git'];
-
-    if (this.project instanceof NodeProject) {
-      paths.push(
-        // node_modules takes forever to compress.
-        // instead, we skip it and re-install after downloading.
-        '!node_modules',
-      );
-    }
 
     postBuildSteps.push({
       name: 'Upload artifact',
