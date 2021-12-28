@@ -573,10 +573,10 @@ export class NodeProject extends GitHubProject {
         throw new Error('"releaseSchedule" is not supported for APP projects');
       }
     }
-
+ 
     if (this.github?.mergify && this.buildWorkflow?.buildJobIds) {
       this.autoMerge = new AutoMerge(this.github, {
-        buildJob: this.buildWorkflow?.buildJobIds[0],
+        buildWorkflow: this.buildWorkflow,
         ...options.autoMergeOptions,
       });
     }

@@ -1,11 +1,12 @@
+import { BuildWorkflow } from '../build';
 import { Component } from '../component';
 import { GitHub } from './github';
 
 export interface AutoMergeOptions {
   /**
-   * The GitHub job ID of the build workflow.
+   * The IDs of all jobs that must be completed before auto-merging.
    */
-  readonly buildJob?: string;
+  readonly buildWorkflow?: BuildWorkflow;
 
   /**
    * Number of approved code reviews.
@@ -38,10 +39,6 @@ export class AutoMerge extends Component {
       throw new Error('auto merging requires mergify to be enabled');
     }
 
-    const successfulBuild = options.buildJob
-      ? [`status-success=${options.buildJob}`]
-      : [];
-
     const blockingLabels = options.blockingLabels ?? ['do-not-merge'];
     const blockingCondition = blockingLabels?.length
       ? [`-label~=(${blockingLabels.join('|')})`]
@@ -69,14 +66,16 @@ export class AutoMerge extends Component {
 
     const approvedReviews = options.approvedReviews ?? 1;
 
+    const renderConditions = () => [
+      `#approved-reviews-by>=${approvedReviews}`,
+      ...blockingCondition,
+      ...options.buildWorkflow?.buildJobIds.map(jid => `status-success=${jid}`) ?? [],
+    ];
+
     mergify.addRule({
       name: 'Automatic merge on approval and successful build',
       actions: mergeAction,
-      conditions: [
-        `#approved-reviews-by>=${approvedReviews}`,
-        ...blockingCondition,
-        ...successfulBuild,
-      ],
+      conditions: (() => renderConditions()) as any,
     });
 
     this.project.addPackageIgnore('/.mergify.yml');
