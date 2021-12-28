@@ -1,13 +1,7 @@
-import { BuildWorkflow } from '../build';
 import { Component } from '../component';
 import { GitHub } from './github';
 
 export interface AutoMergeOptions {
-  /**
-   * The IDs of all jobs that must be completed before auto-merging.
-   */
-  readonly buildWorkflow?: BuildWorkflow;
-
   /**
    * Number of approved code reviews.
    * @default 1
@@ -31,7 +25,11 @@ export interface AutoMergeOptions {
  * the PR to be merged.
  */
 export class AutoMerge extends Component {
-  constructor(github: GitHub, options: AutoMergeOptions) {
+
+  private readonly conditions = new Array<string>();
+  private readonly lazyConditions = new Array<IAddConditionsLater>();
+
+  constructor(github: GitHub, options: AutoMergeOptions = {}) {
     super(github.project);
 
     const mergify = github.mergify;
@@ -66,18 +64,45 @@ export class AutoMerge extends Component {
 
     const approvedReviews = options.approvedReviews ?? 1;
 
-    const renderConditions = () => [
-      `#approved-reviews-by>=${approvedReviews}`,
-      ...blockingCondition,
-      ...options.buildWorkflow?.buildJobIds.map(jid => `status-success=${jid}`) ?? [],
-    ];
+    this.addConditions(`#approved-reviews-by>=${approvedReviews}`);
+    this.addConditions(...blockingCondition);
 
     mergify.addRule({
       name: 'Automatic merge on approval and successful build',
       actions: mergeAction,
-      conditions: (() => renderConditions()) as any,
+      conditions: (() => this.renderConditions()) as any,
     });
 
     this.project.addPackageIgnore('/.mergify.yml');
   }
+
+  /**
+   * Adds conditions to the auto merge rule.
+   * @param conditions The conditions to add (mergify syntax)
+   */
+  public addConditions(...conditions: string[]) {
+    this.conditions.push(...conditions);
+  }
+
+  /**
+   * Adds conditions that will be rendered only during synthesis.
+   * @param later The later
+   */
+  public addConditionsLater(later: IAddConditionsLater) {
+    this.lazyConditions.push(later);
+  }
+
+  private renderConditions() {
+    const output = [ ...this.conditions ];
+
+    for (const later of this.lazyConditions) {
+      output.push(...later.renderConditions());
+    }
+
+    return output;
+  }
+}
+
+export interface IAddConditionsLater {
+  renderConditions(): string[];
 }
