@@ -246,13 +246,13 @@ export class BuildWorkflow extends Component {
         name: 'Self mutation',
         id: SELF_MUTATION_STEP,
         env: {
-          GITHUB_TOKEN: this.github.projenTokenSecret,
+          TOKEN: `\${{ secrets.${this.github.projenTokenSecret} }}`,
         },
         run: [
           'if ! git diff --exit-code; then',
           '  git add .',
           '  git commit -m "chore: self mutation"',
-          `  git push https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/${REPO_REF}.git HEAD:${BRANCH_REF}`,
+          `  git push https://\${GITHUB_ACTOR}:$\{TOKEN}@github.com/${REPO_REF}.git HEAD:${BRANCH_REF}`,
           `  echo "::set-output name=${SELF_MUTATION_REF}::$(git rev-parse HEAD)"`,
           'fi',
         ].join('\n'),
