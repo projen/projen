@@ -136,7 +136,7 @@ git config user.email \\"github-actions@github.com\\"",
     "run": "if ! git diff --exit-code; then
   git add .
   git commit -m \\"chore: self mutation\\"
-  git push origin HEAD:\${{ github.event.pull_request.head.ref }}
+  git push https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/\${{ github.event.pull_request.head.repo.full_name }}.git HEAD:\${{ github.event.pull_request.head.ref }}
   echo \\"::set-output name=self_mutation_commit::$(git rev-parse HEAD)\\"
 fi",
   },
