@@ -35,7 +35,7 @@ export class ConstructLibraryCdktf extends ConstructLibrary {
 
     function getDefaultConstructVersion() {
       if (semver.lte(options.cdktfVersion, "0.5.0")) {
-        return "3.0.0";
+        return "^3.0.0";
       }
 
       return "10.0.12";
