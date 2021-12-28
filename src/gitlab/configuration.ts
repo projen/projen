@@ -102,26 +102,46 @@ export class CiConfiguration extends Component {
   }
 
   /**
-   * Add additional services
+   * Add additional services.
    * @param services The services to add.
    */
-  public addServices(...services: Service[]) {
-    for (const service of services) {
-      if (this.services.includes(service)) {
-        throw new Error(
-          `${this.name}: GitLab CI already contains service ${service}.`,
-        );
+  public addServices(...services: (string | Service)[]) {
+    for (const additional of services) {
+      for (const existing of this.services) {
+        if (this.areEqualServices(existing, additional)) {
+          throw new Error(
+            `${this.name}: GitLab CI already contains service ${additional}.`,
+          );
+        }
       }
-      this.services.push(service);
+      this.services.push(additional);
     }
   }
+
+  /**
+   * Check if the equality of services by comparing their names and aliases .
+   * @param x First service to compare.
+   * @param y Second service to compare.
+   * @returns Whether the services have the same name and alias.
+   */
+  private areEqualServices(x: Service | string, y: Service | string): boolean {
+    const serviceXName = typeof x == 'string' ? x : x.name;
+    const serviceYName = typeof y == 'string' ? x : y.name;
+    if (serviceXName === serviceYName) {
+      if ((x as Service).alias === (y as Service).alias) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 
   /**
    * Add a globally defined variable to the CI configuration.
    * @param variables The variables to add.
    */
   public addGlobalVariables(
-    variables: Record<string, number | VariableConfig | string>,
+    variables: Record<string, any>,
   ) {
     for (const [key, value] of Object.entries(variables)) {
       if (this.variables[key] !== undefined) {
