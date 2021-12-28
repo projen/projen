@@ -5307,6 +5307,9 @@ Name | Type | Description
 **services**🔹 | <code>Array<string &#124; [gitlab.Service](#projen-gitlab-service)></code> | <span></span>
 **stages**🔹 | <code>Array<string></code> | Groups jobs into stages.
 **variables**🔹 | <code>Map<string, string &#124; number &#124; [gitlab.VariableConfig](#projen-gitlab-variableconfig)></code> | <span></span>
+**default**?🔹 | <code>[gitlab.Default](#projen-gitlab-default)</code> | __*Optional*__
+**pages**?🔹 | <code>[gitlab.Job](#projen-gitlab-job)</code> | A special job used to upload static sites to Gitlab pages.<br/>__*Optional*__
+**workflow**?🔹 | <code>[gitlab.Workflow](#projen-gitlab-workflow)</code> | __*Optional*__
 
 ### Methods
 

@@ -42,7 +42,7 @@ export class CiConfiguration extends Component {
    * The workflow YAML file.
    */
   public readonly file: YamlFile;
-  private default?: Default;
+  public default?: Default;
   /**
    * Can be `Include` or `Include[]`. Each `Include` will be a string, or an
    * object with properties for the method if including external YAML file. The external
@@ -53,7 +53,7 @@ export class CiConfiguration extends Component {
    * A special job used to upload static sites to Gitlab pages. Requires a `public/` directory
    * with `artifacts.path` pointing to it.
    */
-  private pages?: Job;
+  public pages?: Job;
   public readonly services: Array<Service | string> = [];
   /**
    * Groups jobs into stages. All jobs in one stage must complete before next stage is
@@ -61,7 +61,7 @@ export class CiConfiguration extends Component {
    */
   public readonly stages: string[] = [];
   public readonly variables: Record<string, number | VariableConfig | string> = {};
-  private workflow?: Workflow;
+  public workflow?: Workflow;
   public readonly jobs: Record<string, Job> = {};
 
   constructor(project: Project, name: string, options?: CiConfigurationOptions) {
