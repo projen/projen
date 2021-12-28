@@ -1,5 +1,6 @@
 import { Component } from '../../component';
 import { Pipelines } from '../pipelines';
+import * as util from '../util';
 import { Step, StepOptions, Parallel } from './step';
 
 /**
@@ -17,13 +18,13 @@ export interface PipelineOptions {
 export class Pipeline extends Component {
 
   /**
-     * Pipeline steps and/or parallelizations
-     */
+   * Pipeline steps and/or parallelizations
+   */
   private steps: ( Step | Parallel )[];
 
   constructor(
     pipelines: Pipelines,
-    options: PipelineOptions,
+    options: PipelineOptions = {},
   ) {
 
     super( pipelines.project );
@@ -35,11 +36,11 @@ export class Pipeline extends Component {
 
 
   /**
-     * Adds a step.
-     * @param options step configuration
-     * @returns a Parallel instance
-     */
-  public addStep( options: StepOptions ) {
+   * Adds a step.
+   * @param options step configuration
+   * @returns a Parallel instance
+   */
+  public addStep( options?: StepOptions ) {
 
     const step = new Step( this, options );
 
@@ -50,9 +51,9 @@ export class Pipeline extends Component {
 
 
   /**
-     * Adds step parallelization.
-     * @returns a Parallel instance
-     */
+   * Adds step parallelization.
+   * @returns a Parallel instance
+   */
   public addParallel() {
 
     const parallel = new Parallel( this );
@@ -64,14 +65,23 @@ export class Pipeline extends Component {
 
 
   /**
-     * @internal
-     */
-  public _render() {
+   * @internal
+   */
+  public _render():any[]|undefined {
 
-    return this.steps.map( ( step:Step|Parallel ) => {
+    const out = this.steps.map( ( step:Step|Parallel ) => {
+
+      if ( step instanceof Parallel ) {
+        return {
+          parallel: step._render(),
+        };
+      }
+
       return {
         step: step._render(),
       };
-    } );
+    });
+
+    return util.reduceRenderArray( out );
   }
 }

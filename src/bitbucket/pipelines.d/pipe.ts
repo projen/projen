@@ -1,4 +1,5 @@
 import { Component } from '../../component';
+import * as util from '../util';
 import { Step } from './step';
 
 /**
@@ -31,11 +32,7 @@ export class Pipe extends Component {
      */
   private readonly variables?: Record<string, string>;
 
-  constructor(
-    step: Step,
-    name: string,
-    options: PipeOptions = {},
-  ) {
+  constructor( step: Step, name: string, options: PipeOptions = {} ) {
 
     super( step.project );
 
@@ -45,13 +42,13 @@ export class Pipe extends Component {
 
 
   /**
-     * @internal
-     */
+   * @internal
+   */
   _render() {
 
-    return {
+    return util.reduceRenderObject({
       pipe: this.name,
       variables: this.variables,
-    };
+    });
   }
 }

@@ -1,6 +1,7 @@
 import { Component } from '../component';
 import { PipelinesYaml } from './configuration';
 import { Cache, CacheOptions, Service, ServiceOptions } from './definitions.d';
+import * as util from './util';
 
 
 /**
@@ -57,10 +58,10 @@ export class Definitions extends Component {
   }
 
   /**
-     * Adds a service definition.
-     * @param name Name of the service
-     * @returns a Service instance
-     */
+   * Adds a service definition.
+   * @param name Name of the service
+   * @returns a Service instance
+   */
   public addService( name: string, options: ServiceOptions ) {
 
     const service = new Service(this, name, options);
@@ -72,14 +73,16 @@ export class Definitions extends Component {
 
 
   /**
-     * @internal
-     */
+   * @internal
+   */
   public _render() {
 
-    return {
+    const result = {
       services: renderServices( this.services ),
       caches: renderCaches( this.caches ),
     };
+
+    return util.reduceRenderObject( result );
   }
 }
 
@@ -93,7 +96,7 @@ function renderServices( services: Record<string, Service> ) {
     result[ name ] = service._render();
   }
 
-  return result;
+  return util.reduceRenderObject( result );
 }
 
 
@@ -106,5 +109,5 @@ function renderCaches( caches: Record<string, Cache> ) {
     result[ name ] = cache._render();
   }
 
-  return result;
+  return util.reduceRenderObject( result );
 }

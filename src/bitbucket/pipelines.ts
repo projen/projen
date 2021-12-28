@@ -1,6 +1,7 @@
 import { Component } from '../component';
 import { PipelinesYaml } from './configuration';
 import { Pipeline, PipelineOptions } from './pipelines.d';
+import * as util from './util';
 
 
 /**
@@ -87,7 +88,7 @@ export class Pipelines extends Component {
      * @param options Configuration of pipeline
      * @returns a Pipeline instance
      */
-  public addDefault( options: PipelineOptions ) {
+  public addDefault( options?: PipelineOptions ) {
 
     const pipeline = new Pipeline(this, options);
 
@@ -103,7 +104,7 @@ export class Pipelines extends Component {
      * @param options Configuration of pipeline
      * @returns a bitbucket.pipelines.Pipeline instance
      */
-  public addBranch( branch: string, options: PipelineOptions ) {
+  public addBranch( branch: string, options?: PipelineOptions ) {
 
     const pipeline = new Pipeline(this, options);
 
@@ -119,7 +120,7 @@ export class Pipelines extends Component {
      * @param options configuration of pipeline
      * @returns a Pipeline instance
      */
-  public addTag( tag: string, options: PipelineOptions ) {
+  public addTag( tag: string, options?: PipelineOptions ) {
 
     const pipeline = new Pipeline(this, options);
 
@@ -135,11 +136,11 @@ export class Pipelines extends Component {
      * @param options configuration of pipeline
      * @returns a Pipeline instance
      */
-  public addBookmark( bookmark: string, options: PipelineOptions ) {
+  public addBookmark( bookmark: string, options?: PipelineOptions ) {
 
     const pipeline = new Pipeline(this, options);
 
-    this.tags[ bookmark ] = pipeline;
+    this.bookmarks[ bookmark ] = pipeline;
 
     return pipeline;
   }
@@ -152,7 +153,7 @@ export class Pipelines extends Component {
      * @param options configuration of pipeline
      * @returns a Pipeline instance
      */
-  public addPullRequest( pullRequest: string, options: PipelineOptions ) {
+  public addPullRequest( pullRequest: string, options?: PipelineOptions ) {
 
     const pipeline = new Pipeline(this, options);
 
@@ -168,7 +169,7 @@ export class Pipelines extends Component {
      * @param options Configuration of pipeline
      * @returns a Pipeline instance
      */
-  public addCustom( name: string, options: PipelineOptions ) {
+  public addCustom( name: string, options?: PipelineOptions ) {
 
     const pipeline = new Pipeline(this, options);
 
@@ -178,11 +179,11 @@ export class Pipelines extends Component {
   }
 
   /**
-     * @internal
-     */
+   * @internal
+   */
   public _render() {
 
-    return {
+    const out = {
       default: ( ! this.default ) ? this.default : this.default._render(),
       branches: renderPipelines( this.branches ),
       tags: renderPipelines( this.tags ),
@@ -190,6 +191,25 @@ export class Pipelines extends Component {
       pullRequests: renderPipelines( this.pullRequests ),
       custom: renderPipelines( this.custom ),
     };
+
+    return util.reduceRenderObject( out );
+  }
+
+  /**
+   *
+   */
+  public anyPipelineDefined() {
+
+    const count = (this.default ? 1 : 0 ) +
+                  Object.keys(this.branches).length +
+                  Object.keys(this.tags).length +
+                  Object.keys(this.bookmarks).length +
+                  Object.keys(this.pullRequests).length +
+                  Object.keys(this.custom).length;
+
+    if ( count > 0 ) return true;
+
+    return false;
   }
 }
 
@@ -203,5 +223,5 @@ function renderPipelines( pipelines: Record<string, Pipeline> ) {
     result[ index ] = pipeline._render();
   }
 
-  return result;
+  return util.reduceRenderObject( result );
 }

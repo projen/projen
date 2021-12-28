@@ -20,8 +20,8 @@ export class Bitbucket extends Component {
 
 
   /**
-     * The `PipelinesConfiguration` configured on this repository.
-     */
+   * The `PipelinesConfiguration` configured on this repository.
+   */
   public readonly pipelinesYaml: PipelinesYaml;
 
 

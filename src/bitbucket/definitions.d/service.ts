@@ -1,12 +1,15 @@
 import { Component } from '../../component';
 import { Definitions } from '../definitions';
+import { Image } from '../model';
+import * as util from '../util';
+
 
 /**
  * Options for `Service`.
  */
 export interface ServiceOptions {
 
-  readonly image: string;
+  readonly image: string|Image;
 
   readonly variables?: { [name: string]: string };
 
@@ -25,7 +28,7 @@ export interface ServiceOptions {
 export class Service extends Component {
 
   public readonly name: string;
-  public readonly image: string;
+  public readonly image: string|Image;
   public readonly variables?: Record<string, string>;
   public readonly memory?: number;
 
@@ -45,14 +48,16 @@ export class Service extends Component {
 
 
   /**
-     * @internal
-     */
+   * @internal
+   */
   _render() {
 
-    return {
+    const out = {
       image: this.image,
       variables: this.variables,
       memory: this.memory,
     };
+
+    return util.reduceRenderObject( out );
   }
 }

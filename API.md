@@ -189,6 +189,7 @@ Name|Description
 [awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)|Options for `Function`.
 [bitbucket.BitbucketOptions](#projen-bitbucket-bitbucketoptions)|*No description*
 [bitbucket.CacheOptions](#projen-bitbucket-cacheoptions)|Options for `Cache`.
+[bitbucket.CloneOption](#projen-bitbucket-cloneoption)|*No description*
 [bitbucket.DefinitionsOptions](#projen-bitbucket-definitionsoptions)|Options for `Definitions`.
 [bitbucket.LineOptions](#projen-bitbucket-lineoptions)|Options for `Line`.
 [bitbucket.PipeOptions](#projen-bitbucket-pipeoptions)|Options for `Pipe`.
@@ -3956,7 +3957,7 @@ addService(name: string, options: ServiceOptions): Service
 
 * **name** (<code>string</code>)  Name of the service.
 * **options** (<code>[bitbucket.ServiceOptions](#projen-bitbucket-serviceoptions)</code>)  *No description*
-  * **image** (<code>string</code>)  *No description* 
+  * **image** (<code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code>)  *No description* 
   * **memory** (<code>number</code>)  *No description* __*Optional*__
   * **variables** (<code>Map<string, string></code>)  *No description* __*Optional*__
 
@@ -4014,17 +4015,27 @@ new bitbucket.Parallel(pipeline: Pipeline)
 ### Methods
 
 
-#### addStep(options)🔹 <a id="projen-bitbucket-parallel-addstep"></a>
+#### addStep(options?)🔹 <a id="projen-bitbucket-parallel-addstep"></a>
 
 Adds a step.
 
 ```ts
-addStep(options: StepOptions): Step
+addStep(options?: StepOptions): Step
 ```
 
 * **options** (<code>[bitbucket.StepOptions](#projen-bitbucket-stepoptions)</code>)  step configuration.
   * **artifacts** (<code>Array<string></code>)  step artifacts. __*Optional*__
+  * **caches** (<code>Array<string &#124; [bitbucket.Cache](#projen-bitbucket-cache)></code>)  step caches. __*Optional*__
+  * **changesetIncludePaths** (<code>Array<string></code>)  This allows steps to be executed only when a condition or rule is  satisfied. __*Optional*__
+  * **clone** (<code>[bitbucket.CloneOption](#projen-bitbucket-cloneoption)</code>)  Contains settings for when Bitbucket clones your repository into a  container. __*Optional*__
+  * **deployment** (<code>string</code>)  deployment flag. __*Optional*__
+  * **image** (<code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code>)  image specifier. __*Optional*__
+  * **maxTime** (<code>number</code>)  step timeout. __*Optional*__
   * **name** (<code>string</code>)  name of step. __*Optional*__
+  * **oidc** (<code>boolean</code>)  Enables the use of OpenID Connect with Pipelines and your resource server. __*Optional*__
+  * **runsOn** (<code>Array<string></code>)  runner labels. __*Optional*__
+  * **size** (<code>string</code>)  step size. __*Optional*__
+  * **trigger** (<code>string</code>)  trigger flag. __*Optional*__
 
 __Returns__:
 * <code>[bitbucket.Step](#projen-bitbucket-step)</code>
@@ -4073,7 +4084,7 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new bitbucket.Pipeline(pipelines: Pipelines, options: PipelineOptions)
+new bitbucket.Pipeline(pipelines: Pipelines, options?: PipelineOptions)
 ```
 
 * **pipelines** (<code>[bitbucket.Pipelines](#projen-bitbucket-pipelines)</code>)  *No description*
@@ -4095,17 +4106,27 @@ addParallel(): Parallel
 __Returns__:
 * <code>[bitbucket.Parallel](#projen-bitbucket-parallel)</code>
 
-#### addStep(options)🔹 <a id="projen-bitbucket-pipeline-addstep"></a>
+#### addStep(options?)🔹 <a id="projen-bitbucket-pipeline-addstep"></a>
 
 Adds a step.
 
 ```ts
-addStep(options: StepOptions): Step
+addStep(options?: StepOptions): Step
 ```
 
 * **options** (<code>[bitbucket.StepOptions](#projen-bitbucket-stepoptions)</code>)  step configuration.
   * **artifacts** (<code>Array<string></code>)  step artifacts. __*Optional*__
+  * **caches** (<code>Array<string &#124; [bitbucket.Cache](#projen-bitbucket-cache)></code>)  step caches. __*Optional*__
+  * **changesetIncludePaths** (<code>Array<string></code>)  This allows steps to be executed only when a condition or rule is  satisfied. __*Optional*__
+  * **clone** (<code>[bitbucket.CloneOption](#projen-bitbucket-cloneoption)</code>)  Contains settings for when Bitbucket clones your repository into a  container. __*Optional*__
+  * **deployment** (<code>string</code>)  deployment flag. __*Optional*__
+  * **image** (<code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code>)  image specifier. __*Optional*__
+  * **maxTime** (<code>number</code>)  step timeout. __*Optional*__
   * **name** (<code>string</code>)  name of step. __*Optional*__
+  * **oidc** (<code>boolean</code>)  Enables the use of OpenID Connect with Pipelines and your resource server. __*Optional*__
+  * **runsOn** (<code>Array<string></code>)  runner labels. __*Optional*__
+  * **size** (<code>string</code>)  step size. __*Optional*__
+  * **trigger** (<code>string</code>)  trigger flag. __*Optional*__
 
 __Returns__:
 * <code>[bitbucket.Step](#projen-bitbucket-step)</code>
@@ -4140,12 +4161,12 @@ new bitbucket.Pipelines(configuration: PipelinesYaml, options?: PipelinesOptions
 ### Methods
 
 
-#### addBookmark(bookmark, options)🔹 <a id="projen-bitbucket-pipelines-addbookmark"></a>
+#### addBookmark(bookmark, options?)🔹 <a id="projen-bitbucket-pipelines-addbookmark"></a>
 
 Adds a bookmark-specific build pipeline.
 
 ```ts
-addBookmark(bookmark: string, options: PipelineOptions): Pipeline
+addBookmark(bookmark: string, options?: PipelineOptions): Pipeline
 ```
 
 * **bookmark** (<code>string</code>)  name or glob expression of bookmark.
@@ -4154,12 +4175,12 @@ addBookmark(bookmark: string, options: PipelineOptions): Pipeline
 __Returns__:
 * <code>[bitbucket.Pipeline](#projen-bitbucket-pipeline)</code>
 
-#### addBranch(branch, options)🔹 <a id="projen-bitbucket-pipelines-addbranch"></a>
+#### addBranch(branch, options?)🔹 <a id="projen-bitbucket-pipelines-addbranch"></a>
 
 Adds a branch-specific build pipeline.
 
 ```ts
-addBranch(branch: string, options: PipelineOptions): Pipeline
+addBranch(branch: string, options?: PipelineOptions): Pipeline
 ```
 
 * **branch** (<code>string</code>)  name or glob expression of branch.
@@ -4168,12 +4189,12 @@ addBranch(branch: string, options: PipelineOptions): Pipeline
 __Returns__:
 * <code>[bitbucket.Pipeline](#projen-bitbucket-pipeline)</code>
 
-#### addCustom(name, options)🔹 <a id="projen-bitbucket-pipelines-addcustom"></a>
+#### addCustom(name, options?)🔹 <a id="projen-bitbucket-pipelines-addcustom"></a>
 
 Adds a custom pipeline.
 
 ```ts
-addCustom(name: string, options: PipelineOptions): Pipeline
+addCustom(name: string, options?: PipelineOptions): Pipeline
 ```
 
 * **name** (<code>string</code>)  Name of custom pipeline.
@@ -4182,12 +4203,12 @@ addCustom(name: string, options: PipelineOptions): Pipeline
 __Returns__:
 * <code>[bitbucket.Pipeline](#projen-bitbucket-pipeline)</code>
 
-#### addDefault(options)🔹 <a id="projen-bitbucket-pipelines-adddefault"></a>
+#### addDefault(options?)🔹 <a id="projen-bitbucket-pipelines-adddefault"></a>
 
 Adds a default pipeline.
 
 ```ts
-addDefault(options: PipelineOptions): Pipeline
+addDefault(options?: PipelineOptions): Pipeline
 ```
 
 * **options** (<code>[bitbucket.PipelineOptions](#projen-bitbucket-pipelineoptions)</code>)  Configuration of pipeline.
@@ -4195,12 +4216,12 @@ addDefault(options: PipelineOptions): Pipeline
 __Returns__:
 * <code>[bitbucket.Pipeline](#projen-bitbucket-pipeline)</code>
 
-#### addPullRequest(pullRequest, options)🔹 <a id="projen-bitbucket-pipelines-addpullrequest"></a>
+#### addPullRequest(pullRequest, options?)🔹 <a id="projen-bitbucket-pipelines-addpullrequest"></a>
 
 Adds a special pipeline that only runs on pull requests initiated from within the repository.
 
 ```ts
-addPullRequest(pullRequest: string, options: PipelineOptions): Pipeline
+addPullRequest(pullRequest: string, options?: PipelineOptions): Pipeline
 ```
 
 * **pullRequest** (<code>string</code>)  name or glob expression of pull request.
@@ -4209,12 +4230,12 @@ addPullRequest(pullRequest: string, options: PipelineOptions): Pipeline
 __Returns__:
 * <code>[bitbucket.Pipeline](#projen-bitbucket-pipeline)</code>
 
-#### addTag(tag, options)🔹 <a id="projen-bitbucket-pipelines-addtag"></a>
+#### addTag(tag, options?)🔹 <a id="projen-bitbucket-pipelines-addtag"></a>
 
 Adds a tag-specific build pipeline.
 
 ```ts
-addTag(tag: string, options: PipelineOptions): Pipeline
+addTag(tag: string, options?: PipelineOptions): Pipeline
 ```
 
 * **tag** (<code>string</code>)  name or glob expression of tag.
@@ -4222,6 +4243,18 @@ addTag(tag: string, options: PipelineOptions): Pipeline
 
 __Returns__:
 * <code>[bitbucket.Pipeline](#projen-bitbucket-pipeline)</code>
+
+#### anyPipelineDefined()🔹 <a id="projen-bitbucket-pipelines-anypipelinedefined"></a>
+
+
+
+```ts
+anyPipelineDefined(): boolean
+```
+
+
+__Returns__:
+* <code>boolean</code>
 
 
 
@@ -4241,12 +4274,14 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new bitbucket.PipelinesYaml(bitbucket: Bitbucket, options?: PipelinesYamlOptions)
+new bitbucket.PipelinesYaml(bitbucket: Bitbucket &#124; Project, options?: PipelinesYamlOptions)
 ```
 
-* **bitbucket** (<code>[bitbucket.Bitbucket](#projen-bitbucket-bitbucket)</code>)  *No description*
+* **bitbucket** (<code>[bitbucket.Bitbucket](#projen-bitbucket-bitbucket) &#124; [Project](#projen-project)</code>)  *No description*
 * **options** (<code>[bitbucket.PipelinesYamlOptions](#projen-bitbucket-pipelinesyamloptions)</code>)  *No description*
-  * **image** (<code>[bitbucket.model.Image](#projen-bitbucket-model-image)</code>)  *No description* __*Optional*__
+  * **clone** (<code>[bitbucket.model.RepositoryCloneOptions](#projen-bitbucket-model-repositorycloneoptions)</code>)  Contains settings for when we clone your repository into a container. __*Optional*__
+  * **image** (<code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code>)  *No description* __*Optional*__
+  * **options** (<code>[bitbucket.model.RepositoryOptions](#projen-bitbucket-model-repositoryoptions)</code>)  Contains global settings that apply to all your pipelines. __*Optional*__
 
 
 
@@ -4256,9 +4291,7 @@ new bitbucket.PipelinesYaml(bitbucket: Bitbucket, options?: PipelinesYamlOptions
 Name | Type | Description 
 -----|------|-------------
 **definitions**🔹 | <code>[bitbucket.Definitions](#projen-bitbucket-definitions)</code> | <span></span>
-**file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | <span></span>
 **pipelines**🔹 | <code>[bitbucket.Pipelines](#projen-bitbucket-pipelines)</code> | <span></span>
-**image**?🔹 | <code>[bitbucket.model.Image](#projen-bitbucket-model-image)</code> | __*Optional*__
 
 
 
@@ -4285,7 +4318,7 @@ new bitbucket.Service(definitions: Definitions, name: string, options: ServiceOp
 * **definitions** (<code>[bitbucket.Definitions](#projen-bitbucket-definitions)</code>)  *No description*
 * **name** (<code>string</code>)  *No description*
 * **options** (<code>[bitbucket.ServiceOptions](#projen-bitbucket-serviceoptions)</code>)  *No description*
-  * **image** (<code>string</code>)  *No description* 
+  * **image** (<code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code>)  *No description* 
   * **memory** (<code>number</code>)  *No description* __*Optional*__
   * **variables** (<code>Map<string, string></code>)  *No description* __*Optional*__
 
@@ -4296,7 +4329,7 @@ new bitbucket.Service(definitions: Definitions, name: string, options: ServiceOp
 
 Name | Type | Description 
 -----|------|-------------
-**image**🔹 | <code>string</code> | <span></span>
+**image**🔹 | <code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code> | <span></span>
 **name**🔹 | <code>string</code> | <span></span>
 **memory**?🔹 | <code>number</code> | __*Optional*__
 **variables**?🔹 | <code>Map<string, string></code> | __*Optional*__
@@ -4319,24 +4352,42 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new bitbucket.Step(pipeline: Pipeline &#124; Parallel, options: StepOptions)
+new bitbucket.Step(pipeline: Pipeline &#124; Parallel, options?: StepOptions)
 ```
 
 * **pipeline** (<code>[bitbucket.Pipeline](#projen-bitbucket-pipeline) &#124; [bitbucket.Parallel](#projen-bitbucket-parallel)</code>)  *No description*
 * **options** (<code>[bitbucket.StepOptions](#projen-bitbucket-stepoptions)</code>)  *No description*
   * **artifacts** (<code>Array<string></code>)  step artifacts. __*Optional*__
+  * **caches** (<code>Array<string &#124; [bitbucket.Cache](#projen-bitbucket-cache)></code>)  step caches. __*Optional*__
+  * **changesetIncludePaths** (<code>Array<string></code>)  This allows steps to be executed only when a condition or rule is  satisfied. __*Optional*__
+  * **clone** (<code>[bitbucket.CloneOption](#projen-bitbucket-cloneoption)</code>)  Contains settings for when Bitbucket clones your repository into a  container. __*Optional*__
+  * **deployment** (<code>string</code>)  deployment flag. __*Optional*__
+  * **image** (<code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code>)  image specifier. __*Optional*__
+  * **maxTime** (<code>number</code>)  step timeout. __*Optional*__
   * **name** (<code>string</code>)  name of step. __*Optional*__
+  * **oidc** (<code>boolean</code>)  Enables the use of OpenID Connect with Pipelines and your resource server. __*Optional*__
+  * **runsOn** (<code>Array<string></code>)  runner labels. __*Optional*__
+  * **size** (<code>string</code>)  step size. __*Optional*__
+  * **trigger** (<code>string</code>)  trigger flag. __*Optional*__
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**changesetIncludePaths**?🔹 | <code>Array<string></code> | This allows steps to be executed only when a condition or rule is  satisfied.<br/>__*Optional*__
 
 ### Methods
 
 
-#### addLine(value)🔹 <a id="projen-bitbucket-step-addline"></a>
+#### addAfterScriptLine(value)🔹 <a id="projen-bitbucket-step-addafterscriptline"></a>
 
-Add a script line.
+Add a after-script line.
 
 ```ts
-addLine(value: string): Step
+addAfterScriptLine(value: string): Step
 ```
 
 * **value** (<code>string</code>)  a script line.
@@ -4344,12 +4395,40 @@ addLine(value: string): Step
 __Returns__:
 * <code>[bitbucket.Step](#projen-bitbucket-step)</code>
 
-#### addPipe(name, options?)🔹 <a id="projen-bitbucket-step-addpipe"></a>
+#### addAfterScriptPipe(name, options?)🔹 <a id="projen-bitbucket-step-addafterscriptpipe"></a>
+
+Add a after-script pipe.
+
+```ts
+addAfterScriptPipe(name: string, options?: PipeOptions): Step
+```
+
+* **name** (<code>string</code>)  the docker image id conformant name of the pipe.
+* **options** (<code>[bitbucket.PipeOptions](#projen-bitbucket-pipeoptions)</code>)  configuration of the pipe.
+  * **variables** (<code>Map<string, string></code>)  environment variables. __*Optional*__
+
+__Returns__:
+* <code>[bitbucket.Step](#projen-bitbucket-step)</code>
+
+#### addScriptLine(value)🔹 <a id="projen-bitbucket-step-addscriptline"></a>
+
+Add a script line.
+
+```ts
+addScriptLine(value: string): Step
+```
+
+* **value** (<code>string</code>)  a script line.
+
+__Returns__:
+* <code>[bitbucket.Step](#projen-bitbucket-step)</code>
+
+#### addScriptPipe(name, options?)🔹 <a id="projen-bitbucket-step-addscriptpipe"></a>
 
 Add a script pipe.
 
 ```ts
-addPipe(name: string, options?: PipeOptions): Step
+addScriptPipe(name: string, options?: PipeOptions): Step
 ```
 
 * **name** (<code>string</code>)  the docker image id conformant name of the pipe.
@@ -11563,6 +11642,19 @@ Name | Type | Description
 
 
 
+## struct CloneOption 🔹 <a id="projen-bitbucket-cloneoption"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**enabled**🔹 | <code>boolean</code> | By default, enabled is set to ‘true’.
+
+
+
 ## struct DefinitionsOptions 🔹 <a id="projen-bitbucket-definitionsoptions"></a>
 
 
@@ -11609,7 +11701,9 @@ Options for `PipelinesConfiguration`.
 
 Name | Type | Description 
 -----|------|-------------
-**image**?🔹 | <code>[bitbucket.model.Image](#projen-bitbucket-model-image)</code> | __*Optional*__
+**clone**?🔹 | <code>[bitbucket.model.RepositoryCloneOptions](#projen-bitbucket-model-repositorycloneoptions)</code> | Contains settings for when we clone your repository into a container.<br/>__*Optional*__
+**image**?🔹 | <code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code> | __*Optional*__
+**options**?🔹 | <code>[bitbucket.model.RepositoryOptions](#projen-bitbucket-model-repositoryoptions)</code> | Contains global settings that apply to all your pipelines.<br/>__*Optional*__
 
 
 
@@ -11622,7 +11716,7 @@ Options for `Service`.
 
 Name | Type | Description 
 -----|------|-------------
-**image**🔹 | <code>string</code> | <span></span>
+**image**🔹 | <code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code> | <span></span>
 **memory**?🔹 | <code>number</code> | __*Optional*__
 **variables**?🔹 | <code>Map<string, string></code> | __*Optional*__
 
@@ -11638,7 +11732,17 @@ Options for `Step`.
 Name | Type | Description 
 -----|------|-------------
 **artifacts**?🔹 | <code>Array<string></code> | step artifacts.<br/>__*Optional*__
+**caches**?🔹 | <code>Array<string &#124; [bitbucket.Cache](#projen-bitbucket-cache)></code> | step caches.<br/>__*Optional*__
+**changesetIncludePaths**?🔹 | <code>Array<string></code> | This allows steps to be executed only when a condition or rule is  satisfied.<br/>__*Optional*__
+**clone**?🔹 | <code>[bitbucket.CloneOption](#projen-bitbucket-cloneoption)</code> | Contains settings for when Bitbucket clones your repository into a  container.<br/>__*Optional*__
+**deployment**?🔹 | <code>string</code> | deployment flag.<br/>__*Optional*__
+**image**?🔹 | <code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code> | image specifier.<br/>__*Optional*__
+**maxTime**?🔹 | <code>number</code> | step timeout.<br/>__*Optional*__
 **name**?🔹 | <code>string</code> | name of step.<br/>__*Optional*__
+**oidc**?🔹 | <code>boolean</code> | Enables the use of OpenID Connect with Pipelines and your resource server.<br/>__*Optional*__
+**runsOn**?🔹 | <code>Array<string></code> | runner labels.<br/>__*Optional*__
+**size**?🔹 | <code>string</code> | step size.<br/>__*Optional*__
+**trigger**?🔹 | <code>string</code> | trigger flag.<br/>__*Optional*__
 
 
 
