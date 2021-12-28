@@ -4828,7 +4828,7 @@ new github.AutoMerge(github: GitHub, options: AutoMergeOptions)
 * **options** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  *No description*
   * **approvedReviews** (<code>number</code>)  Number of approved code reviews. __*Default*__: 1
   * **blockingLabels** (<code>Array<string></code>)  List of labels that will prevent auto-merging. __*Default*__: ['do-not-merge']
-  * **buildJob** (<code>string</code>)  The GitHub job ID of the build workflow. __*Optional*__
+  * **buildWorkflow** (<code>[build.BuildWorkflow](#projen-build-buildworkflow)</code>)  The IDs of all jobs that must be completed before auto-merging. __*Optional*__
 
 
 
@@ -11923,7 +11923,7 @@ Name | Type | Description
 -----|------|-------------
 **approvedReviews**?🔹 | <code>number</code> | Number of approved code reviews.<br/>__*Default*__: 1
 **blockingLabels**?🔹 | <code>Array<string></code> | List of labels that will prevent auto-merging.<br/>__*Default*__: ['do-not-merge']
-**buildJob**?🔹 | <code>string</code> | The GitHub job ID of the build workflow.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>[build.BuildWorkflow](#projen-build-buildworkflow)</code> | The IDs of all jobs that must be completed before auto-merging.<br/>__*Optional*__
 
 
 
