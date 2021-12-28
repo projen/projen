@@ -117,7 +117,7 @@ export class CdkConfig extends Component {
           include: options.watchIncludes ?? [],
           exclude: options.watchExcludes ?? [],
         },
-        plugin: options.plugins,
+        plugin: options.plugins ?? [],
       },
     });
 

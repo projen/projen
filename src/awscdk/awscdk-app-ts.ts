@@ -99,7 +99,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
     }
 
     // add CDK plugins as dependencies
-    const cdkPlugins = ( options.cdkPlugins ?? [] ).map( ( plugin:string ) => {
+    const cdkPlugins = (options.cdkPlugins ?? []).map((plugin: string) => {
 
       this.addDevDeps( plugin );
 

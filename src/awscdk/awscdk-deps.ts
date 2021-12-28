@@ -82,6 +82,8 @@ export interface AwsCdkDepsCommonOptions {
    * AWS CDK plugins that extend the CDK features.
    *
    * Plugins are regular node packages
+   *
+   * @default []
    */
   readonly cdkPlugins?: string[];
 }
