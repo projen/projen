@@ -2,6 +2,12 @@ import { GitIdentity } from '.';
 import * as workflow from './workflows-model';
 
 /**
+ * Name of the artifact produced by the build job. Its contains the entire
+ * working directory.
+ */
+export const BUILD_ARTIFACT_NAME = 'build-artifact';
+
+/**
  * Represents the github-actions user.
  *
  * Use this when you need to perform a commit as part of your workflow.
