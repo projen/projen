@@ -1348,6 +1348,7 @@ Array [
         "switch": "cdkout",
       },
       Object {
+        "default": "[]",
         "docs": "AWS CDK plugins that extend the CDK features.",
         "featured": false,
         "fullType": Object {
@@ -4002,6 +4003,7 @@ Array [
         "switch": "cdk-dependencies-as-deps",
       },
       Object {
+        "default": "[]",
         "docs": "AWS CDK plugins that extend the CDK features.",
         "featured": false,
         "fullType": Object {
