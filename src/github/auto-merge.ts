@@ -64,6 +64,7 @@ export class AutoMerge extends Component {
 
     const approvedReviews = options.approvedReviews ?? 1;
 
+    // add initial conditions (additional conditions can be added later)
     this.addConditions(`#approved-reviews-by>=${approvedReviews}`);
     this.addConditions(...blockingCondition);
 
