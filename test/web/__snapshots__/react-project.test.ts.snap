@@ -55,7 +55,7 @@ jobs:
       - name: Self mutation
         id: self_mutation
         env:
-          TOKEN: \\"{{ secrets.PROJEN_GITHUB_TOKEN }}\\"
+          TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
         run: >-
           if ! git diff --exit-code; then
             git add .
