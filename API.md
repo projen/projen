@@ -4033,8 +4033,8 @@ addStep(options?: StepOptions): Step
 * **options** (<code>[bitbucket.StepOptions](#projen-bitbucket-stepoptions)</code>)  step configuration.
   * **artifacts** (<code>Array<string></code>)  step artifacts. __*Optional*__
   * **caches** (<code>Array<string &#124; [bitbucket.Cache](#projen-bitbucket-cache)></code>)  step caches. __*Optional*__
-  * **changesetIncludePaths** (<code>Array<string></code>)  This allows steps to be executed only when a condition or rule is  satisfied. __*Optional*__
-  * **clone** (<code>[bitbucket.CloneOption](#projen-bitbucket-cloneoption)</code>)  Contains settings for when Bitbucket clones your repository into a  container. __*Optional*__
+  * **changesetIncludePaths** (<code>Array<string></code>)  This allows steps to be executed only when a condition or rule is satisfied. __*Optional*__
+  * **clone** (<code>[bitbucket.CloneOption](#projen-bitbucket-cloneoption)</code>)  Contains settings for when Bitbucket clones your repository into a container. __*Optional*__
   * **deployment** (<code>string</code>)  deployment flag. __*Optional*__
   * **image** (<code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code>)  image specifier. __*Optional*__
   * **maxTime** (<code>number</code>)  step timeout. __*Optional*__
@@ -4124,8 +4124,8 @@ addStep(options?: StepOptions): Step
 * **options** (<code>[bitbucket.StepOptions](#projen-bitbucket-stepoptions)</code>)  step configuration.
   * **artifacts** (<code>Array<string></code>)  step artifacts. __*Optional*__
   * **caches** (<code>Array<string &#124; [bitbucket.Cache](#projen-bitbucket-cache)></code>)  step caches. __*Optional*__
-  * **changesetIncludePaths** (<code>Array<string></code>)  This allows steps to be executed only when a condition or rule is  satisfied. __*Optional*__
-  * **clone** (<code>[bitbucket.CloneOption](#projen-bitbucket-cloneoption)</code>)  Contains settings for when Bitbucket clones your repository into a  container. __*Optional*__
+  * **changesetIncludePaths** (<code>Array<string></code>)  This allows steps to be executed only when a condition or rule is satisfied. __*Optional*__
+  * **clone** (<code>[bitbucket.CloneOption](#projen-bitbucket-cloneoption)</code>)  Contains settings for when Bitbucket clones your repository into a container. __*Optional*__
   * **deployment** (<code>string</code>)  deployment flag. __*Optional*__
   * **image** (<code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code>)  image specifier. __*Optional*__
   * **maxTime** (<code>number</code>)  step timeout. __*Optional*__
@@ -4366,8 +4366,8 @@ new bitbucket.Step(pipeline: Pipeline &#124; Parallel, options?: StepOptions)
 * **options** (<code>[bitbucket.StepOptions](#projen-bitbucket-stepoptions)</code>)  *No description*
   * **artifacts** (<code>Array<string></code>)  step artifacts. __*Optional*__
   * **caches** (<code>Array<string &#124; [bitbucket.Cache](#projen-bitbucket-cache)></code>)  step caches. __*Optional*__
-  * **changesetIncludePaths** (<code>Array<string></code>)  This allows steps to be executed only when a condition or rule is  satisfied. __*Optional*__
-  * **clone** (<code>[bitbucket.CloneOption](#projen-bitbucket-cloneoption)</code>)  Contains settings for when Bitbucket clones your repository into a  container. __*Optional*__
+  * **changesetIncludePaths** (<code>Array<string></code>)  This allows steps to be executed only when a condition or rule is satisfied. __*Optional*__
+  * **clone** (<code>[bitbucket.CloneOption](#projen-bitbucket-cloneoption)</code>)  Contains settings for when Bitbucket clones your repository into a container. __*Optional*__
   * **deployment** (<code>string</code>)  deployment flag. __*Optional*__
   * **image** (<code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code>)  image specifier. __*Optional*__
   * **maxTime** (<code>number</code>)  step timeout. __*Optional*__
@@ -4384,7 +4384,7 @@ new bitbucket.Step(pipeline: Pipeline &#124; Parallel, options?: StepOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**changesetIncludePaths**?🔹 | <code>Array<string></code> | This allows steps to be executed only when a condition or rule is  satisfied.<br/>__*Optional*__
+**changesetIncludePaths**?🔹 | <code>Array<string></code> | This allows steps to be executed only when a condition or rule is satisfied.<br/>__*Optional*__
 
 ### Methods
 
@@ -11774,8 +11774,8 @@ Name | Type | Description
 -----|------|-------------
 **artifacts**?🔹 | <code>Array<string></code> | step artifacts.<br/>__*Optional*__
 **caches**?🔹 | <code>Array<string &#124; [bitbucket.Cache](#projen-bitbucket-cache)></code> | step caches.<br/>__*Optional*__
-**changesetIncludePaths**?🔹 | <code>Array<string></code> | This allows steps to be executed only when a condition or rule is  satisfied.<br/>__*Optional*__
-**clone**?🔹 | <code>[bitbucket.CloneOption](#projen-bitbucket-cloneoption)</code> | Contains settings for when Bitbucket clones your repository into a  container.<br/>__*Optional*__
+**changesetIncludePaths**?🔹 | <code>Array<string></code> | This allows steps to be executed only when a condition or rule is satisfied.<br/>__*Optional*__
+**clone**?🔹 | <code>[bitbucket.CloneOption](#projen-bitbucket-cloneoption)</code> | Contains settings for when Bitbucket clones your repository into a container.<br/>__*Optional*__
 **deployment**?🔹 | <code>string</code> | deployment flag.<br/>__*Optional*__
 **image**?🔹 | <code>string &#124; [bitbucket.model.Image](#projen-bitbucket-model-image)</code> | image specifier.<br/>__*Optional*__
 **maxTime**?🔹 | <code>number</code> | step timeout.<br/>__*Optional*__
