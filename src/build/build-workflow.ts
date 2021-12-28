@@ -2,7 +2,6 @@ import { Task } from '..';
 import { Component } from '../component';
 import { GitHub, GithubWorkflow, GitIdentity } from '../github';
 import { BUILD_ARTIFACT_NAME, DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from '../github/constants';
-import { WorkflowActions } from '../github/workflow-actions';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { NodeProject } from '../javascript';
 import { Project } from '../project';
@@ -144,25 +143,6 @@ export class BuildWorkflow extends Component {
     this.primaryJobId = PRIMARY_JOB_ID;
 
     this._buildJobIds = [PRIMARY_JOB_ID];
-
-    if (this.mutableBuilds) {
-      this.workflow.addJob('trigger-rebuild', {
-        runsOn: ['ubuntu-latest'],
-        permissions: {
-          actions: JobPermission.WRITE,
-        },
-        needs: (() => this._buildJobIds) as any, // wait for all build jobs to finish
-        if: `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_REF} }}`,
-        steps: [
-          ...WorkflowActions.dispatchWorkflow({
-            githubTokenSecret: this.github.projenTokenSecret,
-            workflowId: this.filename,
-            repo: REPO_REF,
-            ref: BRANCH_REF,
-          }),
-        ],
-      });
-    }
   }
 
   /**
@@ -272,7 +252,7 @@ export class BuildWorkflow extends Component {
           'if ! git diff --exit-code; then',
           '  git add .',
           '  git commit -m "chore: self mutation"',
-          `  git push origin HEAD:${BRANCH_REF}`,
+          `  git push https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/${REPO_REF}.git HEAD:${BRANCH_REF}`,
           `  echo "::set-output name=${SELF_MUTATION_REF}::$(git rev-parse HEAD)"`,
           'fi',
         ].join('\n'),
