@@ -12,9 +12,9 @@ export class GitlabConfiguration extends CiConfiguration {
   }
 
   /**
-       * Creates and adds nested templates to the includes of the main CI. Additionally adds their stages to the main CI if they are not already present.
-       * @param names The template names.
-       */
+   * Creates and adds nested templates to the includes of the main CI. Additionally adds their stages to the main CI if they are not already present.
+   * @param names The template names.
+   */
   public createNestedTemplates(...names: string[]) {
     for (const name of names) {
       if (this.nestedTemplates[name] !== undefined) {
@@ -24,7 +24,7 @@ export class GitlabConfiguration extends CiConfiguration {
       }
       const template = new NestedConfiguration(this.project, this, name);
       this.nestedTemplates[template.name] = template;
-      this.addIncludeItems({ local: template.path });
+      this.addIncludes({ local: template.path });
       this.addStages(...template.stages);
     }
   }

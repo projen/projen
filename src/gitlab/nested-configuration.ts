@@ -12,9 +12,9 @@ export class NestedConfiguration extends CiConfiguration {
     this.parent = parent;
   }
   /**
-       * Add stages to the Nested configuration and the main CI file if not already present.
-       * @param stages stages to add.
-       */
+   * Add stages to the Nested configuration and the main CI file if not already present.
+   * @param stages stages to add.
+   */
   public addStages(...stages: string[]) {
     for (const stage of stages) {
       if (!this.stages.includes(stage)) {
