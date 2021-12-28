@@ -38,7 +38,7 @@ export class ConstructLibraryCdktf extends ConstructLibrary {
         return "^3.0.0";
       }
 
-      return "10.0.12";
+      return "^10.0.12";
     }
 
     const ver = options.cdktfVersion;
