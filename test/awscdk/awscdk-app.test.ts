@@ -79,6 +79,48 @@ describe('lambda functions', () => {
   });
 });
 
+describe('synth', () => {
+
+  let project: awscdk.AwsCdkTypeScriptApp;
+  let files: Record<string, any>;
+
+  beforeEach(() => {
+    project = new awscdk.AwsCdkTypeScriptApp({
+      name: 'hello',
+      defaultReleaseBranch: 'main',
+      cdkVersion: '1.100.0',
+    });
+
+    files = synthSnapshot(project);
+  });
+
+  it('adds a "synth" task', () => {
+    expect(files['.projen/tasks.json'].tasks.synth).toStrictEqual({
+      name: 'synth',
+      description: 'Synthesizes your cdk app into cdk.out',
+      steps: [
+        { exec: 'cdk synth' },
+      ],
+    });
+  });
+
+  it('adds a "synth:silent" task', () => {
+    expect(files['.projen/tasks.json'].tasks['synth:silent']).toStrictEqual({
+      name: 'synth:silent',
+      description: 'Synthesizes your cdk app into cdk.out and suppresses the template in stdout (part of \"yarn build\")',
+      steps: [
+        { exec: 'cdk synth > /dev/null' },
+      ],
+    });
+  });
+
+  it('spawns a "synth:silent" post-compile task', () => {
+    expect(files['.projen/tasks.json'].tasks['post-compile'].steps).toStrictEqual([
+      { spawn: 'synth:silent' },
+    ]);
+  });
+});
+
 describe('watch', () => {
 
   let project: awscdk.AwsCdkTypeScriptApp;

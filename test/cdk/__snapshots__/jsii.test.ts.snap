@@ -9,7 +9,7 @@ Object {
       "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
     },
     Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target dotnet",
+      "exec": "npx jsii-pacmak@$jsii_version -v --target dotnet",
     },
   ],
 }
@@ -24,7 +24,7 @@ Object {
       "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
     },
     Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target go",
+      "exec": "npx jsii-pacmak@$jsii_version -v --target go",
     },
   ],
 }
@@ -39,7 +39,7 @@ Object {
       "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
     },
     Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java",
+      "exec": "npx jsii-pacmak@$jsii_version -v --target java",
     },
   ],
 }
@@ -54,7 +54,7 @@ Object {
       "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
     },
     Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js",
+      "exec": "npx jsii-pacmak@$jsii_version -v --target js",
     },
   ],
 }
@@ -69,7 +69,7 @@ Object {
       "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
     },
     Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python",
+      "exec": "npx jsii-pacmak@$jsii_version -v --target python",
     },
   ],
 }
@@ -125,19 +125,16 @@ Object {
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v2",
       "with": Object {
-        "name": "dist",
-        "path": "dist",
+        "name": "build-artifact",
       },
     },
     Object {
-      "name": "Extract npm tarball",
-      "run": "tar -xzf dist/js/*.tgz --strip-components=1
-rm -fr dist/js",
+      "name": "Install Dependencies",
+      "run": "yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create go artifact",
-      "run": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target go",
+      "run": "npx projen package:go",
     },
     Object {
       "env": Object {
@@ -179,19 +176,16 @@ Object {
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v2",
       "with": Object {
-        "name": "dist",
-        "path": "dist",
+        "name": "build-artifact",
       },
     },
     Object {
-      "name": "Extract npm tarball",
-      "run": "tar -xzf dist/js/*.tgz --strip-components=1
-rm -fr dist/js",
+      "name": "Install Dependencies",
+      "run": "yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create java artifact",
-      "run": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java",
+      "run": "npx projen package:java",
     },
     Object {
       "env": Object {
@@ -228,19 +222,16 @@ Object {
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v2",
       "with": Object {
-        "name": "dist",
-        "path": "dist",
+        "name": "build-artifact",
       },
     },
     Object {
-      "name": "Extract npm tarball",
-      "run": "tar -xzf dist/js/*.tgz --strip-components=1
-rm -fr dist/js",
+      "name": "Install Dependencies",
+      "run": "yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create js artifact",
-      "run": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js",
+      "run": "npx projen package:js",
     },
     Object {
       "env": Object {
@@ -281,19 +272,16 @@ Object {
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v2",
       "with": Object {
-        "name": "dist",
-        "path": "dist",
+        "name": "build-artifact",
       },
     },
     Object {
-      "name": "Extract npm tarball",
-      "run": "tar -xzf dist/js/*.tgz --strip-components=1
-rm -fr dist/js",
+      "name": "Install Dependencies",
+      "run": "yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create dotnet artifact",
-      "run": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target dotnet",
+      "run": "npx projen package:dotnet",
     },
     Object {
       "env": Object {
@@ -332,19 +320,16 @@ Object {
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v2",
       "with": Object {
-        "name": "dist",
-        "path": "dist",
+        "name": "build-artifact",
       },
     },
     Object {
-      "name": "Extract npm tarball",
-      "run": "tar -xzf dist/js/*.tgz --strip-components=1
-rm -fr dist/js",
+      "name": "Install Dependencies",
+      "run": "yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create python artifact",
-      "run": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python",
+      "run": "npx projen package:python",
     },
     Object {
       "env": Object {
@@ -381,18 +366,15 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
-        "path": "dist",
       },
     },
     Object {
-      "name": "Extract npm tarball",
-      "run": "tar -xzf dist/js/*.tgz --strip-components=1
-rm -fr dist/js",
+      "name": "Install Dependencies",
+      "run": "yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create dotnet artifact",
-      "run": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target dotnet",
+      "run": "npx projen package:dotnet",
     },
   ],
 }
@@ -421,18 +403,15 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
-        "path": "dist",
       },
     },
     Object {
-      "name": "Extract npm tarball",
-      "run": "tar -xzf dist/js/*.tgz --strip-components=1
-rm -fr dist/js",
+      "name": "Install Dependencies",
+      "run": "yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create go artifact",
-      "run": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target go",
+      "run": "npx projen package:go",
     },
   ],
 }
@@ -462,18 +441,15 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
-        "path": "dist",
       },
     },
     Object {
-      "name": "Extract npm tarball",
-      "run": "tar -xzf dist/js/*.tgz --strip-components=1
-rm -fr dist/js",
+      "name": "Install Dependencies",
+      "run": "yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create java artifact",
-      "run": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java",
+      "run": "npx projen package:java",
     },
   ],
 }
@@ -496,18 +472,15 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
-        "path": "dist",
       },
     },
     Object {
-      "name": "Extract npm tarball",
-      "run": "tar -xzf dist/js/*.tgz --strip-components=1
-rm -fr dist/js",
+      "name": "Install Dependencies",
+      "run": "yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create js artifact",
-      "run": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js",
+      "run": "npx projen package:js",
     },
   ],
 }
@@ -536,18 +509,15 @@ Object {
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "build-artifact",
-        "path": "dist",
       },
     },
     Object {
-      "name": "Extract npm tarball",
-      "run": "tar -xzf dist/js/*.tgz --strip-components=1
-rm -fr dist/js",
+      "name": "Install Dependencies",
+      "run": "yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create python artifact",
-      "run": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python",
+      "run": "npx projen package:python",
     },
   ],
 }
@@ -593,8 +563,11 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
+            !node_modules
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -609,8 +582,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -635,18 +607,11 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
-          rm -fr dist/js
+          name: build-artifact
+      - name: Install Dependencies
+        run: yarn install --check-files --frozen-lockfile
       - name: Create js artifact
-        run: >-
-          jsii_version=$(node -p
-          \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js
+        run: npx projen package:js
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -670,18 +635,11 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
-          rm -fr dist/js
+          name: build-artifact
+      - name: Install Dependencies
+        run: yarn install --check-files --frozen-lockfile
       - name: Create go artifact
-        run: >-
-          jsii_version=$(node -p
-          \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target go
+        run: npx projen package:go
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
@@ -734,8 +692,11 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
-          path: dist
+          name: build-artifact
+          path: |-
+            .
+            !.git
+            !node_modules
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -750,8 +711,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
+          name: build-artifact
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -776,18 +736,11 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
-          rm -fr dist/js
+          name: build-artifact
+      - name: Install Dependencies
+        run: yarn install --check-files --frozen-lockfile
       - name: Create js artifact
-        run: >-
-          jsii_version=$(node -p
-          \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js
+        run: npx projen package:js
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -811,18 +764,11 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
-          path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
-          rm -fr dist/js
+          name: build-artifact
+      - name: Install Dependencies
+        run: yarn install --check-files --frozen-lockfile
       - name: Create go artifact
-        run: >-
-          jsii_version=$(node -p
-          \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target go
+        run: npx projen package:go
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
