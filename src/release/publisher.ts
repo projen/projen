@@ -423,7 +423,6 @@ export class Publisher extends Component {
           name: 'Release',
           // it would have been nice if we could just run "projen publish:xxx" here but that is not possible because this job does not checkout sources
           run: commandToRun,
-
           env: jobEnv,
         },
       ];

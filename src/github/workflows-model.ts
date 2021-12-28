@@ -247,6 +247,11 @@ export interface RunSettings {
    * @example "bash"
    */
   readonly shell?: string;
+
+  /**
+   * Working directory to use when running the step.
+   */
+  readonly workingDirectory?: string;
 }
 
 /**
