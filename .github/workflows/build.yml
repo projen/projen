@@ -86,10 +86,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
       - name: Install Dependencies
-        run: yarn install --check-files --frozen-lockfile
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create js artifact
-        run: npx projen package:js
+        run: cd .repo && npx projen package:js
+      - name: Collect js Artifact
+        run: mv .repo/dist dist
   package-java:
     needs: build
     runs-on: ubuntu-latest
@@ -107,10 +111,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
       - name: Install Dependencies
-        run: yarn install --check-files --frozen-lockfile
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create java artifact
-        run: npx projen package:java
+        run: cd .repo && npx projen package:java
+      - name: Collect java Artifact
+        run: mv .repo/dist dist
   package-python:
     needs: build
     runs-on: ubuntu-latest
@@ -127,10 +135,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
       - name: Install Dependencies
-        run: yarn install --check-files --frozen-lockfile
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create python artifact
-        run: npx projen package:python
+        run: cd .repo && npx projen package:python
+      - name: Collect python Artifact
+        run: mv .repo/dist dist
   package-go:
     needs: build
     runs-on: ubuntu-latest
@@ -147,7 +159,11 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
       - name: Install Dependencies
-        run: yarn install --check-files --frozen-lockfile
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create go artifact
-        run: npx projen package:go
+        run: cd .repo && npx projen package:go
+      - name: Collect go Artifact
+        run: mv .repo/dist dist

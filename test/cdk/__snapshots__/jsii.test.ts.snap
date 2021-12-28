@@ -6,16 +6,10 @@ Object {
   "name": "package:dotnet",
   "steps": Array [
     Object {
-      "exec": "mv dist .repo",
+      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
     },
     Object {
-      "exec": "cd .repo && jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-    },
-    Object {
-      "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target dotnet",
-    },
-    Object {
-      "exec": "mv .repo/dist dist",
+      "exec": "npx jsii-pacmak@$jsii_version -v --target dotnet",
     },
   ],
 }
@@ -27,16 +21,10 @@ Object {
   "name": "package:go",
   "steps": Array [
     Object {
-      "exec": "mv dist .repo",
+      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
     },
     Object {
-      "exec": "cd .repo && jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-    },
-    Object {
-      "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target go",
-    },
-    Object {
-      "exec": "mv .repo/dist dist",
+      "exec": "npx jsii-pacmak@$jsii_version -v --target go",
     },
   ],
 }
@@ -48,16 +36,10 @@ Object {
   "name": "package:java",
   "steps": Array [
     Object {
-      "exec": "mv dist .repo",
+      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
     },
     Object {
-      "exec": "cd .repo && jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-    },
-    Object {
-      "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target java",
-    },
-    Object {
-      "exec": "mv .repo/dist dist",
+      "exec": "npx jsii-pacmak@$jsii_version -v --target java",
     },
   ],
 }
@@ -69,16 +51,10 @@ Object {
   "name": "package:js",
   "steps": Array [
     Object {
-      "exec": "mv dist .repo",
+      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
     },
     Object {
-      "exec": "cd .repo && jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-    },
-    Object {
-      "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target js",
-    },
-    Object {
-      "exec": "mv .repo/dist dist",
+      "exec": "npx jsii-pacmak@$jsii_version -v --target js",
     },
   ],
 }
@@ -90,16 +66,10 @@ Object {
   "name": "package:python",
   "steps": Array [
     Object {
-      "exec": "mv dist .repo",
+      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
     },
     Object {
-      "exec": "cd .repo && jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-    },
-    Object {
-      "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target python",
-    },
-    Object {
-      "exec": "mv .repo/dist dist",
+      "exec": "npx jsii-pacmak@$jsii_version -v --target python",
     },
   ],
 }
@@ -160,12 +130,20 @@ Object {
       },
     },
     Object {
+      "name": "Prepare Repository",
+      "run": "mv dist .repo",
+    },
+    Object {
       "name": "Install Dependencies",
-      "run": "yarn install --check-files --frozen-lockfile",
+      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create go artifact",
-      "run": "npx projen package:go",
+      "run": "cd .repo && npx projen package:go",
+    },
+    Object {
+      "name": "Collect go Artifact",
+      "run": "mv .repo/dist dist && ls -l -r dist",
     },
     Object {
       "env": Object {
@@ -212,12 +190,20 @@ Object {
       },
     },
     Object {
+      "name": "Prepare Repository",
+      "run": "mv dist .repo",
+    },
+    Object {
       "name": "Install Dependencies",
-      "run": "yarn install --check-files --frozen-lockfile",
+      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create java artifact",
-      "run": "npx projen package:java",
+      "run": "cd .repo && npx projen package:java",
+    },
+    Object {
+      "name": "Collect java Artifact",
+      "run": "mv .repo/dist dist && ls -l -r dist",
     },
     Object {
       "env": Object {
@@ -259,12 +245,20 @@ Object {
       },
     },
     Object {
+      "name": "Prepare Repository",
+      "run": "mv dist .repo",
+    },
+    Object {
       "name": "Install Dependencies",
-      "run": "yarn install --check-files --frozen-lockfile",
+      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create js artifact",
-      "run": "npx projen package:js",
+      "run": "cd .repo && npx projen package:js",
+    },
+    Object {
+      "name": "Collect js Artifact",
+      "run": "mv .repo/dist dist && ls -l -r dist",
     },
     Object {
       "env": Object {
@@ -310,12 +304,20 @@ Object {
       },
     },
     Object {
+      "name": "Prepare Repository",
+      "run": "mv dist .repo",
+    },
+    Object {
       "name": "Install Dependencies",
-      "run": "yarn install --check-files --frozen-lockfile",
+      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create dotnet artifact",
-      "run": "npx projen package:dotnet",
+      "run": "cd .repo && npx projen package:dotnet",
+    },
+    Object {
+      "name": "Collect dotnet Artifact",
+      "run": "mv .repo/dist dist && ls -l -r dist",
     },
     Object {
       "env": Object {
@@ -359,12 +361,20 @@ Object {
       },
     },
     Object {
+      "name": "Prepare Repository",
+      "run": "mv dist .repo",
+    },
+    Object {
       "name": "Install Dependencies",
-      "run": "yarn install --check-files --frozen-lockfile",
+      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create python artifact",
-      "run": "npx projen package:python",
+      "run": "cd .repo && npx projen package:python",
+    },
+    Object {
+      "name": "Collect python Artifact",
+      "run": "mv .repo/dist dist && ls -l -r dist",
     },
     Object {
       "env": Object {
@@ -405,12 +415,20 @@ Object {
       },
     },
     Object {
+      "name": "Prepare Repository",
+      "run": "mv dist .repo",
+    },
+    Object {
       "name": "Install Dependencies",
-      "run": "yarn install --check-files --frozen-lockfile",
+      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create dotnet artifact",
-      "run": "npx projen package:dotnet",
+      "run": "cd .repo && npx projen package:dotnet",
+    },
+    Object {
+      "name": "Collect dotnet Artifact",
+      "run": "mv .repo/dist dist && ls -l -r dist",
     },
   ],
 }
@@ -443,12 +461,20 @@ Object {
       },
     },
     Object {
+      "name": "Prepare Repository",
+      "run": "mv dist .repo",
+    },
+    Object {
       "name": "Install Dependencies",
-      "run": "yarn install --check-files --frozen-lockfile",
+      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create go artifact",
-      "run": "npx projen package:go",
+      "run": "cd .repo && npx projen package:go",
+    },
+    Object {
+      "name": "Collect go Artifact",
+      "run": "mv .repo/dist dist && ls -l -r dist",
     },
   ],
 }
@@ -482,12 +508,20 @@ Object {
       },
     },
     Object {
+      "name": "Prepare Repository",
+      "run": "mv dist .repo",
+    },
+    Object {
       "name": "Install Dependencies",
-      "run": "yarn install --check-files --frozen-lockfile",
+      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create java artifact",
-      "run": "npx projen package:java",
+      "run": "cd .repo && npx projen package:java",
+    },
+    Object {
+      "name": "Collect java Artifact",
+      "run": "mv .repo/dist dist && ls -l -r dist",
     },
   ],
 }
@@ -514,12 +548,20 @@ Object {
       },
     },
     Object {
+      "name": "Prepare Repository",
+      "run": "mv dist .repo",
+    },
+    Object {
       "name": "Install Dependencies",
-      "run": "yarn install --check-files --frozen-lockfile",
+      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create js artifact",
-      "run": "npx projen package:js",
+      "run": "cd .repo && npx projen package:js",
+    },
+    Object {
+      "name": "Collect js Artifact",
+      "run": "mv .repo/dist dist && ls -l -r dist",
     },
   ],
 }
@@ -552,12 +594,20 @@ Object {
       },
     },
     Object {
+      "name": "Prepare Repository",
+      "run": "mv dist .repo",
+    },
+    Object {
       "name": "Install Dependencies",
-      "run": "yarn install --check-files --frozen-lockfile",
+      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
       "name": "Create python artifact",
-      "run": "npx projen package:python",
+      "run": "cd .repo && npx projen package:python",
+    },
+    Object {
+      "name": "Collect python Artifact",
+      "run": "mv .repo/dist dist && ls -l -r dist",
     },
   ],
 }
@@ -647,10 +697,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
       - name: Install Dependencies
-        run: yarn install --check-files --frozen-lockfile
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create js artifact
-        run: npx projen package:js
+        run: cd .repo && npx projen package:js
+      - name: Collect js Artifact
+        run: mv .repo/dist dist && ls -l -r dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -676,10 +730,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
       - name: Install Dependencies
-        run: yarn install --check-files --frozen-lockfile
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create go artifact
-        run: npx projen package:go
+        run: cd .repo && npx projen package:go
+      - name: Collect go Artifact
+        run: mv .repo/dist dist && ls -l -r dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
@@ -776,10 +834,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
       - name: Install Dependencies
-        run: yarn install --check-files --frozen-lockfile
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create js artifact
-        run: npx projen package:js
+        run: cd .repo && npx projen package:js
+      - name: Collect js Artifact
+        run: mv .repo/dist dist && ls -l -r dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -805,10 +867,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
       - name: Install Dependencies
-        run: yarn install --check-files --frozen-lockfile
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create go artifact
-        run: npx projen package:go
+        run: cd .repo && npx projen package:go
+      - name: Collect go Artifact
+        run: mv .repo/dist dist && ls -l -r dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:

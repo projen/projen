@@ -194,16 +194,10 @@
       "description": "Create go language bindings",
       "steps": [
         {
-          "exec": "mv dist .repo"
+          "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
         },
         {
-          "exec": "cd .repo && jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
-        },
-        {
-          "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target go"
-        },
-        {
-          "exec": "mv .repo/dist dist"
+          "exec": "npx jsii-pacmak@$jsii_version -v --target go"
         }
       ]
     },
@@ -212,16 +206,10 @@
       "description": "Create java language bindings",
       "steps": [
         {
-          "exec": "mv dist .repo"
+          "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
         },
         {
-          "exec": "cd .repo && jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
-        },
-        {
-          "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target java"
-        },
-        {
-          "exec": "mv .repo/dist dist"
+          "exec": "npx jsii-pacmak@$jsii_version -v --target java"
         }
       ]
     },
@@ -230,16 +218,10 @@
       "description": "Create js language bindings",
       "steps": [
         {
-          "exec": "mv dist .repo"
+          "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
         },
         {
-          "exec": "cd .repo && jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
-        },
-        {
-          "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target js"
-        },
-        {
-          "exec": "mv .repo/dist dist"
+          "exec": "npx jsii-pacmak@$jsii_version -v --target js"
         }
       ]
     },
@@ -248,16 +230,10 @@
       "description": "Create python language bindings",
       "steps": [
         {
-          "exec": "mv dist .repo"
+          "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
         },
         {
-          "exec": "cd .repo && jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
-        },
-        {
-          "exec": "cd .repo && npx jsii-pacmak@$jsii_version -v --target python"
-        },
-        {
-          "exec": "mv .repo/dist dist"
+          "exec": "npx jsii-pacmak@$jsii_version -v --target python"
         }
       ]
     },

@@ -357,29 +357,38 @@ export class JsiiProject extends TypeScriptProject {
       description: `Create ${language} language bindings`,
     });
 
-    // at this stage, `artifactsDirectory` contains the prebuilt repository.
-    // for the publishing to work seamlessely, that directory needs to contain the actual artifact.
-    // so we move the repo, create the artifact, and put it in the expected place.
-    const repo = '.repo';
-    packageTask.exec(`mv ${this.artifactsDirectory} ${repo}`);
-    packageTask.exec(`cd ${repo} && jsii_version=$(node -p "JSON.parse(fs.readFileSync(\'.jsii\')).jsiiVersion.split(\' \')[0]")`);
-    packageTask.exec(`cd ${repo} && npx jsii-pacmak@$jsii_version -v --target ${language}`);
-    packageTask.exec(`mv ${repo}/${this.artifactsDirectory} ${this.artifactsDirectory}`);
+    packageTask.exec('jsii_version=$(node -p "JSON.parse(fs.readFileSync(\'.jsii\')).jsiiVersion.split(\' \')[0]")');
+    packageTask.exec(`npx jsii-pacmak@$jsii_version -v --target ${language}`);
     this.packageAllTask.spawn(packageTask);
     return packageTask;
   }
 
   private pacmakForLanguage(target: JsiiPacmakTarget, packTask: Task): CommonPublishOptions {
+
+    const repo = '.repo';
+
+    // at this stage, `artifactsDirectory` contains the prebuilt repository.
+    // for the publishing to work seamlessely, that directory needs to contain the actual artifact.
+    // so we move the repo, create the artifact, and put it in the expected place.
+
     return {
       publishTools: JSII_TOOLCHAIN[target],
       prePublishSteps: [
         {
+          name: 'Prepare Repository',
+          run: `mv ${this.artifactsDirectory} ${repo}`,
+        },
+        {
           name: 'Install Dependencies',
-          run: this.package.installCommand,
+          run: `cd ${repo} && ${this.package.installCommand}`,
         },
         {
           name: `Create ${target} artifact`,
-          run: `npx projen ${packTask.name}`,
+          run: `cd ${repo} && npx projen ${packTask.name}`,
+        },
+        {
+          name: `Collect ${target} Artifact`,
+          run: `mv ${repo}/${this.artifactsDirectory} ${this.artifactsDirectory} && ls -l -r ${this.artifactsDirectory}`,
         },
       ],
     };
