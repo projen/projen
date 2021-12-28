@@ -93,7 +93,7 @@ export class AutoMerge extends Component {
   }
 
   private renderConditions() {
-    const output = [ ...this.conditions ];
+    const output = [...this.conditions];
 
     for (const later of this.lazyConditions) {
       output.push(...later.renderConditions());

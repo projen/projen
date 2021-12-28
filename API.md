@@ -296,6 +296,7 @@ Name|Description
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
 [IResolvable](#projen-iresolvable)|*No description*
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
+[github.IAddConditionsLater](#projen-github-iaddconditionslater)|*No description*
 [github.IJobProvider](#projen-github-ijobprovider)|*No description*
 [python.IPackageProvider](#projen-python-ipackageprovider)|*No description*
 [python.IPythonDeps](#projen-python-ipythondeps)|*No description*
@@ -4821,14 +4822,42 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new github.AutoMerge(github: GitHub, options: AutoMergeOptions)
+new github.AutoMerge(github: GitHub, options?: AutoMergeOptions)
 ```
 
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **options** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  *No description*
   * **approvedReviews** (<code>number</code>)  Number of approved code reviews. __*Default*__: 1
   * **blockingLabels** (<code>Array<string></code>)  List of labels that will prevent auto-merging. __*Default*__: ['do-not-merge']
-  * **buildWorkflow** (<code>[build.BuildWorkflow](#projen-build-buildworkflow)</code>)  The IDs of all jobs that must be completed before auto-merging. __*Optional*__
+
+
+### Methods
+
+
+#### addConditions(...conditions)🔹 <a id="projen-github-automerge-addconditions"></a>
+
+Adds conditions to the auto merge rule.
+
+```ts
+addConditions(...conditions: string[]): void
+```
+
+* **conditions** (<code>string</code>)  The conditions to add (mergify syntax).
+
+
+
+
+#### addConditionsLater(later)🔹 <a id="projen-github-automerge-addconditionslater"></a>
+
+Adds conditions that will be rendered only during synthesis.
+
+```ts
+addConditionsLater(later: IAddConditionsLater): void
+```
+
+* **later** (<code>[github.IAddConditionsLater](#projen-github-iaddconditionslater)</code>)  The later.
+
+
 
 
 
@@ -11923,7 +11952,6 @@ Name | Type | Description
 -----|------|-------------
 **approvedReviews**?🔹 | <code>number</code> | Number of approved code reviews.<br/>__*Default*__: 1
 **blockingLabels**?🔹 | <code>Array<string></code> | List of labels that will prevent auto-merging.<br/>__*Default*__: ['do-not-merge']
-**buildWorkflow**?🔹 | <code>[build.BuildWorkflow](#projen-build-buildworkflow)</code> | The IDs of all jobs that must be completed before auto-merging.<br/>__*Optional*__
 
 
 
@@ -12056,6 +12084,27 @@ Name | Type | Description
 -----|------|-------------
 **concurrency**?🔹 | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.<br/>__*Default*__: disabled
 **force**?🔹 | <code>boolean</code> | Force the creation of the workflow even if `workflows` is disabled in `GitHub`.<br/>__*Default*__: false
+
+
+
+## interface IAddConditionsLater 🔹 <a id="projen-github-iaddconditionslater"></a>
+
+
+
+### Methods
+
+
+#### renderConditions()🔹 <a id="projen-github-iaddconditionslater-renderconditions"></a>
+
+
+
+```ts
+renderConditions(): Array<string>
+```
+
+
+__Returns__:
+* <code>Array<string></code>
 
 
 
