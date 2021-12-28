@@ -1,3 +1,4 @@
+import { CiConfigurationOptions } from '.';
 import { Project } from '../project';
 import { CiConfiguration } from './configuration';
 import { NestedConfiguration } from './nested-configuration';
@@ -7,8 +8,8 @@ import { NestedConfiguration } from './nested-configuration';
  */
 export class GitlabConfiguration extends CiConfiguration {
   public readonly nestedTemplates: Record<string, NestedConfiguration> = {};
-  constructor(project: Project) {
-    super(project, 'gitlab-ci');
+  constructor(project: Project, options?: CiConfigurationOptions) {
+    super(project, 'gitlab-ci', options);
   }
 
   /**

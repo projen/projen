@@ -11,6 +11,23 @@ import {
   Workflow,
 } from './configuration-model';
 
+export interface CiConfigurationOptions {
+  readonly default?: Default;
+  /**
+   * A special job used to upload static sites to Gitlab pages. Requires a `public/` directory
+   * with `artifacts.path` pointing to it.
+   */
+  readonly pages?: Job;
+  readonly workflow?: Workflow;
+  /**
+   * Groups jobs into stages. All jobs in one stage must complete before next stage is
+   * executed. Defaults to ['build', 'test', 'deploy'].
+   */
+  readonly stages?: string[];
+  readonly variables?: Record<string, any>;
+  readonly jobs?: Record<string, Job>;
+}
+
 /**
  * CI for GitLab.
  * A CI is a configurable automated process made up of one or more stages/jobs.
@@ -47,7 +64,7 @@ export class CiConfiguration extends Component {
   private workflow?: Workflow;
   public readonly jobs: Record<string, Job> = {};
 
-  constructor(project: Project, name: string) {
+  constructor(project: Project, name: string, options?: CiConfigurationOptions) {
     super(project);
     this.project = project;
     this.name = name;
@@ -58,20 +75,19 @@ export class CiConfiguration extends Component {
     this.file = new YamlFile(this.project, this.path, {
       obj: () => this.renderCI(),
     });
-  }
-
-  /**
-   * Set the GitLab default. Throws error if default has been previously set.
-   * @param defaultConfig The default to use.
-   */
-  public configureDefault(defaultConfig: Default) {
-    if (this.default === undefined) {
-      this.default = defaultConfig;
-    } else {
-      throw new Error(
-        `${this.name}: GitLab CI default has been previously set.`,
-      );
+    this.default = options?.default
+    this.pages = options?.pages
+    this.workflow = options?.workflow
+    if (options?.stages) {
+      this.addStages(...options.stages)
     }
+    if (options?.variables) {
+      this.addJobs(options.variables)
+    }
+    if (options?.jobs) {
+      this.addJobs(options.jobs)
+    }
+
   }
 
   /**
@@ -84,20 +100,6 @@ export class CiConfiguration extends Component {
         throw new Error(`${this.name}: GitLab CI already contains ${include}.`);
       }
       this.include.push(include);
-    }
-  }
-
-  /**
-   * Set the GitLab pages job. Throws error if page job has been previously set.
-   * @param job The job to use.
-   */
-  public configurePagesJob(job: Job) {
-    if (this.pages === undefined) {
-      this.pages = job;
-    } else {
-      throw new Error(
-        `${this.name}: GitLab CI pages job has been previously set.`,
-      );
     }
   }
 
@@ -150,20 +152,6 @@ export class CiConfiguration extends Component {
         );
       }
       this.variables[key] = value;
-    }
-  }
-
-  /**
-   * Set the CI workflow configuration. Throws error if timeout settings have been previously set.
-   * @param workflow The workflow setting.
-   */
-  public configureWorkflow(workflow: Workflow) {
-    if (this.workflow === undefined) {
-      this.workflow = workflow;
-    } else {
-      throw new Error(
-        `${this.name}: GitLab CI default workflow setting has been previously set.`,
-      );
     }
   }
 
