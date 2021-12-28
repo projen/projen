@@ -388,7 +388,7 @@ export class JsiiProject extends TypeScriptProject {
         },
         {
           name: `Collect ${target} Artifact`,
-          run: `mv ${repo}/${this.artifactsDirectory} ${this.artifactsDirectory} && ls -l -r ${this.artifactsDirectory}`,
+          run: `mv ${repo}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
         },
       ],
     };

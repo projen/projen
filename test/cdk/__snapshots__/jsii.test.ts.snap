@@ -143,7 +143,7 @@ Object {
     },
     Object {
       "name": "Collect go Artifact",
-      "run": "mv .repo/dist dist && ls -l -r dist",
+      "run": "mv .repo/dist dist",
     },
     Object {
       "env": Object {
@@ -203,7 +203,7 @@ Object {
     },
     Object {
       "name": "Collect java Artifact",
-      "run": "mv .repo/dist dist && ls -l -r dist",
+      "run": "mv .repo/dist dist",
     },
     Object {
       "env": Object {
@@ -258,7 +258,7 @@ Object {
     },
     Object {
       "name": "Collect js Artifact",
-      "run": "mv .repo/dist dist && ls -l -r dist",
+      "run": "mv .repo/dist dist",
     },
     Object {
       "env": Object {
@@ -317,7 +317,7 @@ Object {
     },
     Object {
       "name": "Collect dotnet Artifact",
-      "run": "mv .repo/dist dist && ls -l -r dist",
+      "run": "mv .repo/dist dist",
     },
     Object {
       "env": Object {
@@ -374,7 +374,7 @@ Object {
     },
     Object {
       "name": "Collect python Artifact",
-      "run": "mv .repo/dist dist && ls -l -r dist",
+      "run": "mv .repo/dist dist",
     },
     Object {
       "env": Object {
@@ -428,7 +428,7 @@ Object {
     },
     Object {
       "name": "Collect dotnet Artifact",
-      "run": "mv .repo/dist dist && ls -l -r dist",
+      "run": "mv .repo/dist dist",
     },
   ],
 }
@@ -474,7 +474,7 @@ Object {
     },
     Object {
       "name": "Collect go Artifact",
-      "run": "mv .repo/dist dist && ls -l -r dist",
+      "run": "mv .repo/dist dist",
     },
   ],
 }
@@ -521,7 +521,7 @@ Object {
     },
     Object {
       "name": "Collect java Artifact",
-      "run": "mv .repo/dist dist && ls -l -r dist",
+      "run": "mv .repo/dist dist",
     },
   ],
 }
@@ -561,7 +561,7 @@ Object {
     },
     Object {
       "name": "Collect js Artifact",
-      "run": "mv .repo/dist dist && ls -l -r dist",
+      "run": "mv .repo/dist dist",
     },
   ],
 }
@@ -607,7 +607,7 @@ Object {
     },
     Object {
       "name": "Collect python Artifact",
-      "run": "mv .repo/dist dist && ls -l -r dist",
+      "run": "mv .repo/dist dist",
     },
   ],
 }
@@ -704,7 +704,7 @@ jobs:
       - name: Create js artifact
         run: cd .repo && npx projen package:js
       - name: Collect js Artifact
-        run: mv .repo/dist dist && ls -l -r dist
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -737,7 +737,7 @@ jobs:
       - name: Create go artifact
         run: cd .repo && npx projen package:go
       - name: Collect go Artifact
-        run: mv .repo/dist dist && ls -l -r dist
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
@@ -841,7 +841,7 @@ jobs:
       - name: Create js artifact
         run: cd .repo && npx projen package:js
       - name: Collect js Artifact
-        run: mv .repo/dist dist && ls -l -r dist
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -874,7 +874,7 @@ jobs:
       - name: Create go artifact
         run: cd .repo && npx projen package:go
       - name: Collect go Artifact
-        run: mv .repo/dist dist && ls -l -r dist
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
