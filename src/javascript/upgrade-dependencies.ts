@@ -294,7 +294,10 @@ export class UpgradeDependencies extends Component {
       {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
-        with: upgrade.ref ? { ref: upgrade.ref } : undefined,
+        with: {
+          token: `\${{ secrets.${workflow.projenTokenSecret} }}`,
+          ref: upgrade.ref,
+        },
       },
       setGitIdentityStep(this.gitIdentity),
       {

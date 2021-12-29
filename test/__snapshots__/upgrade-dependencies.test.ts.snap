@@ -49,6 +49,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: main
       - name: Set git identity
         run: |-
@@ -157,6 +158,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: branch1
       - name: Set git identity
         run: |-
@@ -265,6 +267,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: branch2
       - name: Set git identity
         run: |-
@@ -373,6 +376,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: branch1
       - name: Set git identity
         run: |-
@@ -481,6 +485,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: branch2
       - name: Set git identity
         run: |-
@@ -589,6 +594,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: main
       - name: Set git identity
         run: |-
@@ -697,6 +703,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: branch1
       - name: Set git identity
         run: |-
@@ -805,6 +812,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: branch2
       - name: Set git identity
         run: |-
@@ -913,6 +921,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: main
       - name: Set git identity
         run: |-
@@ -1021,6 +1030,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: main
       - name: Set git identity
         run: |-

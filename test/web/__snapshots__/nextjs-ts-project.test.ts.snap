@@ -44,6 +44,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Set git identity
@@ -67,7 +68,7 @@ jobs:
           if ! git diff --exit-code; then
             git add .
             git commit -m \\"chore: self mutation\\"
-            git push https://\${GITHUB_ACTOR}:\${TOKEN}@github.com/\${{ github.event.pull_request.head.repo.full_name }}.git HEAD:\${{ github.event.pull_request.head.ref }}
+            git push origin HEAD:\${{ github.event.pull_request.head.ref }}
             echo \\"::set-output name=self_mutation_commit::$(git rev-parse HEAD)\\"
           fi
 ",
@@ -182,6 +183,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
       - name: Set git identity
         run: |-
           git config --global init.defaultBranch main

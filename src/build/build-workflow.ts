@@ -227,10 +227,11 @@ export class BuildWorkflow extends Component {
     steps.push({
       name: 'Checkout',
       uses: 'actions/checkout@v2',
-      with: this.mutableBuilds ? {
+      with: {
+        token: `\${{ secrets.${this.workflow.projenTokenSecret} }}`,
         ref: BRANCH_REF,
         repository: REPO_REF,
-      } : undefined,
+      },
     });
 
     steps.push(setGitIdentityStep(this.gitIdentity));
@@ -245,14 +246,11 @@ export class BuildWorkflow extends Component {
       steps.push({
         name: 'Self mutation',
         id: SELF_MUTATION_STEP,
-        env: {
-          TOKEN: `\${{ secrets.${this.github.projenTokenSecret} }}`,
-        },
         run: [
           'if ! git diff --exit-code; then',
           '  git add .',
           '  git commit -m "chore: self mutation"',
-          `  git push https://\${GITHUB_ACTOR}:$\{TOKEN}@github.com/${REPO_REF}.git HEAD:${BRANCH_REF}`,
+          `  git push origin HEAD:${BRANCH_REF}`,
           `  echo "::set-output name=${SELF_MUTATION_REF}::$(git rev-parse HEAD)"`,
           'fi',
         ].join('\n'),
