@@ -29,18 +29,25 @@ export enum CacheWhen {
  * @see https://docs.gitlab.com/ee/ci/yaml/#default
  */
 export interface Default {
-  /* Defines scripts that should run *after* the job. Can be set globally or per job. */
-  readonly afterScript?: Array<string[] | string>;
+  /* Defines scripts that should run *after* all jobs. Can be overriden by the job level `afterScript. */
+  readonly afterScript?: string[];
+  /* List of files and directories that should be attached to the job if it succeeds. Artifacts are sent to Gitlab where they can be downloaded. */
   readonly artifacts?: Artifacts;
-  /* Defines scripts that should run *before* the job. Can be set globally or per job. */
-  readonly beforeScript?: Array<string[] | string>;
+  /* Defines scripts that should run *before* all jobs. Can be overriden by the job level `afterScript`. */
+  readonly beforeScript?: string[];
+  /* A list of files and directories to cache between jobs. You can only use paths that are in the local working copy. */
   readonly cache?: Cache;
-  readonly image?: Image | string;
+  /* Specifies the default docker image to use globally for all jobs. */
+  readonly image?: Image;
   /* If a job should be canceled when a newer pipeline starts before the job completes (Default: false).*/
   readonly interruptible?: boolean;
-  readonly retry?: Retry | number;
-  readonly services?: Array<Service | string>;
+  /* How many times a job is retried if it fails. If not defined, defaults to 0 and jobs do not retry. */
+  readonly retry?: Retry;
+  /* Additional Docker images to run scripts in. The service image is linked to the image specified in the  image parameter. */
+  readonly services?: Service[];
+  /* Used to select a specific runner from the list of all runners that are available for the project. */
   readonly tags?: string[];
+  /* A default timeout job written in natural language (Ex. one hour, 3600 seconds, 60 minutes). */
   readonly timeout?: string;
 }
 
@@ -75,37 +82,37 @@ export interface Artifacts {
  */
 export interface Reports {
   /** Path for file(s) that should be parsed as Cobertura XML coverage report*/
-  readonly cobertura?: string[] | string;
+  readonly cobertura?: string[];
   /** Path to file or list of files with code quality report(s) (such as Code Climate).*/
-  readonly codequality?: string[] | string;
+  readonly codequality?: string[];
   /** Path to file or list of files with Container scanning vulnerabilities report(s).*/
-  readonly containerScanning?: string[] | string;
+  readonly containerScanning?: string[];
   /** Path to file or list of files with DAST vulnerabilities report(s).*/
-  readonly dast?: string[] | string;
+  readonly dast?: string[];
   /** Path to file or list of files with Dependency scanning vulnerabilities report(s).*/
-  readonly dependencyScanning?: string[] | string;
+  readonly dependencyScanning?: string[];
   /** Path to file or list of files containing runtime-created variables for this job.*/
-  readonly dotenv?: string[] | string;
+  readonly dotenv?: string[];
   /** Path for file(s) that should be parsed as JUnit XML result*/
-  readonly junit?: string[] | string;
+  readonly junit?: string[];
   /** Deprecated in 12.8: Path to file or list of files with license report(s).*/
-  readonly licenseManagement?: string[] | string;
+  readonly licenseManagement?: string[];
   /** Path to file or list of files with license report(s).*/
-  readonly licenseScanning?: string[] | string;
+  readonly licenseScanning?: string[];
   /** Path to file or list of files containing code intelligence (Language Server Index Format).*/
-  readonly lsif?: string[] | string;
+  readonly lsif?: string[];
   /** Path to file or list of files with custom metrics report(s).*/
-  readonly metrics?: string[] | string;
+  readonly metrics?: string[];
   /** Path to file or list of files with performance metrics report(s).*/
-  readonly performance?: string[] | string;
+  readonly performance?: string[];
   /** Path to file or list of files with requirements report(s).*/
-  readonly requirements?: string[] | string;
+  readonly requirements?: string[];
   /** Path to file or list of files with SAST vulnerabilities report(s).*/
-  readonly sast?: string[] | string;
+  readonly sast?: string[];
   /** Path to file or list of files with secret detection report(s).*/
-  readonly secretDetection?: string[] | string;
+  readonly secretDetection?: string[];
   /** Path to file or list of files with terraform plan(s).*/
-  readonly terraform?: string[] | string;
+  readonly terraform?: string[];
 }
 
 /**
@@ -124,6 +131,7 @@ export interface Image {
  * @see https://docs.gitlab.com/ee/ci/yaml/#retry
  */
 export interface Retry {
+  /** 0 (default), 1, or 2.*/
   readonly max?: number;
   /** Either a single or array of error types to trigger job retry.*/
   readonly when?: any;
@@ -150,8 +158,10 @@ export interface Service {
 export interface Include {
   /** Relative path from local repository root (`/`) to the `yaml`/`yml` file template. The file must be on the same branch, and does not work across git submodules.*/
   readonly local?: string;
+  /**Rules allows for an array of individual rule objects to be evaluated in order, until one matches and dynamically provides attributes to the job. */
   readonly rules?: IncludeRule[];
-  readonly file?: string[] | string;
+  /** Files from another private project on the same GitLab instance. You can use `file` in combination with `project` only. */
+  readonly file?: string[];
   /** Path to the project, e.g. `group/project`, or `group/sub-group/project`.*/
   readonly project?: string;
   /** Branch/Tag/Commit-hash for the target project.*/
@@ -169,12 +179,19 @@ export interface Include {
  * @see https://docs.gitlab.com/ee/ci/yaml/includes.html#use-rules-with-include
  */
 export interface IncludeRule {
+  /* Whether a pipeline should continue running when a job fails. */
   readonly allowFailure?: boolean | AllowFailure;
+  /* Specify when to add a job to a pipeline by checking for changes to specific files. */
   readonly changes?: string[];
+  /* Run a job when certain files exist in the repository. */
   readonly exists?: string[];
+  /* Clauses to specify when to add a job to a pipeline.*/
   readonly if?: string;
+  /* Execute scripts after a waiting period written in natural language (Ex. one hour, 3600 seconds, 60 minutes). */
   readonly startIn?: string;
-  readonly variables?: { [key: string]: number | string };
+  /* Use variables in rules to define variables for specific conditions. */
+  readonly variables?: Record<string, number | string>;
+  /* Conditions for when to run the job. Defaults to 'on_success' */
   readonly when?: JobWhen;
 }
 
@@ -206,10 +223,15 @@ export enum JobWhen {
  * @see https://docs.gitlab.com/ee/ci/jobs/
  */
 export interface Job {
-  readonly afterScript?: Array<string[] | string>;
+  /* Defines scripts that should run *after* the job. */
+  readonly afterScript?: string[];
+  /** Whether to allow the pipeline to continue running on job failure (Default: false). */
   readonly allowFailure?: boolean | AllowFailure;
+  /* A list of files and directories that should be attached to the job if it succeeds. Artifacts are sent to Gitlab where they can be downloaded. */
   readonly artifacts?: Artifacts;
-  readonly beforeScript?: Array<string[] | string>;
+  /* Defines scripts that should run *before* the job. */
+  readonly beforeScript?: string[];
+  /* A list of files and directories to cache between jobs. You can only use paths that are in the local working copy. */
   readonly cache?: Cache;
   /** Must be a regular expression, optionally but recommended to be quoted, and must be surrounded with '/'. Example: '/Code coverage: \d+\.\d+/'*/
   readonly coverage?: string;
@@ -220,10 +242,12 @@ export interface Job {
   /** Job will run *except* for when these filtering options match.*/
   readonly except?: string[] | Filter;
   /** The name of one or more jobs to inherit configuration from.*/
-  readonly extends?: string[] | string;
-  readonly image?: Image | string;
+  readonly extends?: string[];
+  /* Specifies the default docker image to used for the job. */
+  readonly image?: Image;
   /** Controls inheritance of globally-defined defaults and variables. Boolean values control inheritance of all default: or variables: keywords. To inherit only a subset of default: or variables: keywords, specify what you wish to inherit. Anything not listed is not inherited.*/
   readonly inherit?: Inherit;
+  /* If a job should be canceled when a newer pipeline starts before the job completes (Default: false).*/
   readonly interruptible?: boolean;
   /** The list of jobs in previous stages whose sole completion is needed to start the current job.*/
   readonly needs?: Array<Need | string>;
@@ -235,20 +259,29 @@ export interface Job {
   readonly release?: Release;
   /** Limit job concurrency. Can be used to ensure that the Runner will not run certain jobs simultaneously.*/
   readonly resourceGroup?: string;
-  readonly retry?: Retry | number;
+  /* How many times a job is retried if it fails. If not defined, defaults to 0 and jobs do not retry. */
+  readonly retry?: Retry;
+  /**Rules allows for an array of individual rule objects to be evaluated in order, until one matches and dynamically provides attributes to the job. */
   readonly rules?: IncludeRule[];
   /** Shell scripts executed by the Runner. The only required property of jobs. Be careful with special characters (e.g. `:`, `{`, `}`, `&`) and use single or double quotes to avoid issues.*/
-  readonly script?: Array<string[] | string> | string;
-  readonly secrets?: { [key: string]: { [key: string]: Secret } };
-  readonly services?: Array<Service | string>;
+  readonly script?: string[];
+  /** CI/CD secrets */
+  readonly secrets?: Record<string, Record<string, Secret>>;
+  /* Additional Docker images to run scripts in. The service image is linked to the image specified in the  image parameter. */
+  readonly services?: Service[];
   /** Define what stage the job will run in.*/
   readonly stage?: string;
+  /* Execute scripts after a waiting period written in natural language (Ex. one hour, 3600 seconds, 60 minutes). */
   readonly startIn?: string;
+  /* Used to select a specific runner from the list of all runners that are available for the project. */
   readonly tags?: string[];
+  /* A default timeout job written in natural language (Ex. one hour, 3600 seconds, 60 minutes). */
   readonly timeout?: string;
   /** Trigger allows you to define downstream pipeline trigger. When a job created from trigger definition is started by GitLab, a downstream pipeline gets created. Read more: https://docs.gitlab.com/ee/ci/yaml/README.html#trigger*/
   readonly trigger?: Trigger | string;
-  readonly variables?: { [key: string]: number | string };
+  /** Configurable values that are passed to the Job. */
+  readonly variables?: Record<string, number | string>;
+  /** Describes the conditions for when to run the job. Defaults to 'on_success'. */
   readonly when?: JobWhen;
 }
 
@@ -312,6 +345,7 @@ export interface Filter {
   readonly changes?: string[];
   /** Filter job based on if Kubernetes integration is active.*/
   readonly kubernetes?: KubernetesEnum;
+  /** Control when to add jobs to a pipeline based on branch names or pipeline types. */
   readonly refs?: string[];
   /** Filter job by checking comparing values of environment variables. Read more about variable expressions: https://docs.gitlab.com/ee/ci/variables/README.html#variables-expressions*/
   readonly variables?: string[];
@@ -367,7 +401,7 @@ export interface Need {
  */
 export interface Parallel {
   /** Defines different variables for jobs that are running in parallel.*/
-  readonly matrix: { [key: string]: any[] | number | string }[];
+  readonly matrix: Record<string, any[]>[];
 }
 
 /**
@@ -424,7 +458,8 @@ export enum LinkType {
  * A CI/CD secret
  */
 export interface Secret {
-  readonly vault: VaultConfig | string;
+  /* Specification for a secret provided by a HashiCorp Vault. */
+  readonly vault: VaultConfig;
 }
 
 /**
@@ -432,15 +467,20 @@ export interface Secret {
  * @see https://www.vaultproject.io/
  */
 export interface VaultConfig {
+  /* The engine configuration for a secret. */
   readonly engine: Engine;
+  /* The name of the field where the password is stored. */
   readonly field: string;
+  /** Path to the secret. */
   readonly path: string;
 }
 /**
  * The engine configuration for a secret.
  */
 export interface Engine {
+  /** Name of the secrets engine. */
   readonly name: string;
+  /** Path to the secrets engine. */
   readonly path: string;
 }
 
@@ -456,7 +496,8 @@ export interface Trigger {
   readonly project?: string;
   /** You can mirror the pipeline status from the triggered pipeline to the source bridge job by using strategy: depend*/
   readonly strategy?: Strategy;
-  readonly include?: TriggerInclude[] | string;
+  /** A list of local files or artifacts from other jobs to define the pipeline */
+  readonly include?: TriggerInclude[];
 }
 
 /**
@@ -491,11 +532,13 @@ export enum Strategy {
 }
 
 /**
- * Explains what the variable is used for, what the acceptable values are.
+ * Explains what the global variable is used for, what the acceptable values are.
  * @see https://docs.gitlab.com/ee/ci/yaml/#variables
  */
 export interface VariableConfig {
+  /** Define a global variable that is prefilled when running a pipeline manually. Must be used with value.  */
   readonly description?: string;
+  /** The variable value. */
   readonly value?: string;
 }
 
@@ -504,6 +547,7 @@ export interface VariableConfig {
  * @see https://docs.gitlab.com/ee/ci/yaml/#workflow
  */
 export interface Workflow {
+  /** Used to control whether or not a whole pipeline is created. */
   readonly rules?: WorkflowRule[];
 }
 
@@ -512,11 +556,16 @@ export interface Workflow {
  * @see https://docs.gitlab.com/ee/ci/yaml/#workflowrules
  */
 export interface WorkflowRule {
+  /* Specify when to add a job to a pipeline by checking for changes to specific files. */
   readonly changes?: string[];
+  /* Run a job when certain files exist in the repository. */
   readonly exists?: string[];
+  /* Clauses to specify when to add a job to a pipeline.*/
   readonly if?: string;
-  readonly variables?: { [key: string]: number | string };
-  readonly when?: WorkflowWhen;
+  /* Use variables in rules to define variables for specific conditions. */
+  readonly variables?: Record<string, number | string>;
+  /* Conditions for when to run the job. Defaults to 'on_success' */
+  readonly when?: JobWhen;
 }
 
 /**

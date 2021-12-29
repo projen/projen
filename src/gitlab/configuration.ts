@@ -12,20 +12,36 @@ import {
   Workflow,
 } from './configuration-model';
 
+/**
+ * Options for `CiConfiguration`.
+ */
 export interface CiConfigurationOptions {
+  /**
+   * Default settings for the CI Configuration. Jobs that do not define one or more of the listed keywords use the value defined in the default section.
+   */
   readonly default?: Default;
   /**
    * A special job used to upload static sites to Gitlab pages. Requires a `public/` directory
    * with `artifacts.path` pointing to it.
    */
   readonly pages?: Job;
+  /**
+   * Used to control pipeline behavior.
+   */
   readonly workflow?: Workflow;
   /**
    * Groups jobs into stages. All jobs in one stage must complete before next stage is
-   * executed. Defaults to ['build', 'test', 'deploy'].
+   * executed. If no stages are specified. Defaults to ['build', 'test', 'deploy'].
    */
   readonly stages?: string[];
+  /**
+   * Global variables that are passed to jobs.
+   * If the job already has that variable defined, the job-level variable takes precedence.
+   */
   readonly variables?: Record<string, any>;
+  /**
+   * An initial set of jobs to add to the configuration.
+   */
   readonly jobs?: Record<string, Job>;
 }
 
@@ -35,34 +51,58 @@ export interface CiConfigurationOptions {
  * @see https://docs.gitlab.com/ee/ci/yaml/
  */
 export class CiConfiguration extends Component {
+  /**
+   * The project the configuration belongs to.
+   */
   public readonly project: Project;
+  /**
+   * The name of the configuration.
+   */
   public readonly name: string;
-  /** Path to CI file */
+  /**
+   * Path to CI file egenrated by the configuration.
+   */
   public readonly path: string;
   /**
    * The workflow YAML file.
    */
   public readonly file: YamlFile;
+  /**
+   * Default settings for the CI Configuration. Jobs that do not define one or more of the listed keywords use the value defined in the default section.
+   */
   public readonly default?: Default;
   /**
    * Can be `Include` or `Include[]`. Each `Include` will be a string, or an
    * object with properties for the method if including external YAML file. The external
    * content will be fetched, included and evaluated along the `.gitlab-ci.yml`.
    */
-  public readonly include: Array<Include | string> = [];
+  public readonly include: Include[] = [];
   /**
    * A special job used to upload static sites to Gitlab pages. Requires a `public/` directory
    * with `artifacts.path` pointing to it.
    */
   public readonly pages?: Job;
-  public readonly services: Array<Service | string> = [];
+  /**
+   * Additional Docker images to run scripts in.
+   */
+  public readonly services: Service[] = [];
   /**
    * Groups jobs into stages. All jobs in one stage must complete before next stage is
    * executed. Defaults to ['build', 'test', 'deploy'].
    */
   public readonly stages: string[] = [];
+  /**
+   * Global variables that are passed to jobs.
+   * If the job already has that variable defined, the job-level variable takes precedence.
+   */
   public readonly variables: Record<string, number | VariableConfig | string> = {};
+  /**
+   * Used to control pipeline behavior.
+   */
   public readonly workflow?: Workflow;
+  /**
+   * The jobs in the CI configuration.
+   */
   public readonly jobs: Record<string, Job> = {};
 
   constructor(project: Project, name: string, options?: CiConfigurationOptions) {
@@ -95,23 +135,63 @@ export class CiConfiguration extends Component {
    * Add additional yml/yaml files to the CI includes
    * @param includes The includes to add.
    */
-  public addIncludes(...includes: (string | Include)[]) {
-    for (const include of includes) {
-      if (this.include.includes(include)) {
-        throw new Error(`${this.name}: GitLab CI already contains ${include}.`);
+  public addIncludes(...includes: Include[]) {
+    for (const additional of includes) {
+      if (!this.isValidInclude(additional)) {
+        throw new Error(`${this.name}: GitLab CI ${additional} is not a valid include configuration.`);
       }
-      this.include.push(include);
+      for (const existing of this.include) {
+        if (this.areEqualIncludes(existing, additional)) {
+          throw new Error(`${this.name}: GitLab CI ${existing} already contains one or more templates specified in ${additional}.`);
+        }
+      }
+      this.include.push(additional);
     }
+  }
+
+  /**
+ * Check if an Include configuration is valid
+ * @see https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/config/external/mapper.rb
+ * @param include the Include to balidate
+ * @returns Whether the include is valid.
+ */
+  private isValidInclude(include: Include): boolean {
+    const combos = [include.local, (include.file && include.project), include.remote, include.template];
+    return combos.filter(x => Boolean(x)).length === 1;
+
+  }
+
+  /**
+   * Check if the equality of Includes.
+   * @see https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/config/external/mapper.rb
+   * @param x First include to compare.
+   * @param y Second include to compare.
+   * @returns Whether the includes are equal.
+   */
+  private areEqualIncludes(x: Include, y: Include): boolean {
+    if (x.local === y.local && x.local !== undefined) {
+      return true;
+    } else if (x.template === y.template && x.template !== undefined) {
+      return true;
+    } else if (x.remote === y.remote && x.remote !== undefined) {
+      return true;
+    } else if (x.project === y.project && x.ref === y.ref) {
+      const xFiles = x.file ? x.file : [];
+      const yFiles = y.file ? y.file : [];
+      const allFiles = xFiles.concat(yFiles);
+      return (new Set(allFiles)).size !== allFiles.length;
+    }
+    return false;
   }
 
   /**
    * Add additional services.
    * @param services The services to add.
    */
-  public addServices(...services: (string | Service)[]) {
+  public addServices(...services: Service[]) {
     for (const additional of services) {
       for (const existing of this.services) {
-        if (this.areEqualServices(existing, additional)) {
+        if (additional.name === existing.name && additional.alias === existing.alias) {
           throw new Error(
             `${this.name}: GitLab CI already contains service ${additional}.`,
           );
@@ -120,24 +200,6 @@ export class CiConfiguration extends Component {
       this.services.push(additional);
     }
   }
-
-  /**
-   * Check if the equality of services by comparing their names and aliases .
-   * @param x First service to compare.
-   * @param y Second service to compare.
-   * @returns Whether the services have the same name and alias.
-   */
-  private areEqualServices(x: Service | string, y: Service | string): boolean {
-    const serviceXName = typeof x == 'string' ? x : x.name;
-    const serviceYName = typeof y == 'string' ? x : y.name;
-    if (serviceXName === serviceYName) {
-      if ((x as Service).alias === (y as Service).alias) {
-        return true;
-      }
-    }
-    return false;
-  }
-
 
   /**
    * Add a globally defined variable to the CI configuration.
