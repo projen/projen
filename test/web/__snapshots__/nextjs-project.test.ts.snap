@@ -86,7 +86,7 @@ jobs:
         run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp
           }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
       - name: Found diff after build (update your branch)
-        run: git diff --exit-code
+        run: git add . && diff --staged --exit-code
   self-mutation:
     needs: build
     runs-on: ubuntu-latest
