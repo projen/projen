@@ -6,8 +6,6 @@ import { Project } from '../project';
  * Options for Prettier
  *
  * @see https://prettier.io/docs/en/options.html
- * @export
- * @interface PrettierOptions
  */
 export interface PrettierOptions extends PrettierBaseOptions {
   /**
