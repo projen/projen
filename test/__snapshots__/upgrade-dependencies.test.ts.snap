@@ -99,13 +99,6 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Trigger build.yml workflow
-        env:
-          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
-        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\" --data
-          \\"{\\\\\\"ref\\\\\\":\\\\\\"$GITHUB_REF_NAME\\\\\\"}\\" https://api.github.com/repos/\${{
-          github.repository }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -208,13 +201,6 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Trigger build.yml workflow
-        env:
-          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
-        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\" --data
-          \\"{\\\\\\"ref\\\\\\":\\\\\\"$GITHUB_REF_NAME\\\\\\"}\\" https://api.github.com/repos/\${{
-          github.repository }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -317,13 +303,6 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Trigger build.yml workflow
-        env:
-          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
-        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\" --data
-          \\"{\\\\\\"ref\\\\\\":\\\\\\"$GITHUB_REF_NAME\\\\\\"}\\" https://api.github.com/repos/\${{
-          github.repository }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -426,13 +405,6 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Trigger build.yml workflow
-        env:
-          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
-        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\" --data
-          \\"{\\\\\\"ref\\\\\\":\\\\\\"$GITHUB_REF_NAME\\\\\\"}\\" https://api.github.com/repos/\${{
-          github.repository }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -535,13 +507,6 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Trigger build.yml workflow
-        env:
-          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
-        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\" --data
-          \\"{\\\\\\"ref\\\\\\":\\\\\\"$GITHUB_REF_NAME\\\\\\"}\\" https://api.github.com/repos/\${{
-          github.repository }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -644,13 +609,6 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Trigger build.yml workflow
-        env:
-          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
-        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\" --data
-          \\"{\\\\\\"ref\\\\\\":\\\\\\"$GITHUB_REF_NAME\\\\\\"}\\" https://api.github.com/repos/\${{
-          github.repository }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -753,13 +711,6 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Trigger build.yml workflow
-        env:
-          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
-        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\" --data
-          \\"{\\\\\\"ref\\\\\\":\\\\\\"$GITHUB_REF_NAME\\\\\\"}\\" https://api.github.com/repos/\${{
-          github.repository }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -862,13 +813,6 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Trigger build.yml workflow
-        env:
-          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
-        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\" --data
-          \\"{\\\\\\"ref\\\\\\":\\\\\\"$GITHUB_REF_NAME\\\\\\"}\\" https://api.github.com/repos/\${{
-          github.repository }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -971,13 +915,6 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Trigger build.yml workflow
-        env:
-          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
-        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\" --data
-          \\"{\\\\\\"ref\\\\\\":\\\\\\"$GITHUB_REF_NAME\\\\\\"}\\" https://api.github.com/repos/\${{
-          github.repository }}/actions/workflows/build.yml/dispatches'
 "
 `;
 
@@ -1080,12 +1017,5 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Trigger build.yml workflow
-        env:
-          GITHUB_TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
-        run: 'curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H
-          \\"Authorization: token \${GITHUB_TOKEN}\\" --data
-          \\"{\\\\\\"ref\\\\\\":\\\\\\"$GITHUB_REF_NAME\\\\\\"}\\" https://api.github.com/repos/\${{
-          github.repository }}/actions/workflows/build.yml/dispatches'
 "
 `;

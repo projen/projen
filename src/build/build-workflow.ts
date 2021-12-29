@@ -2,6 +2,7 @@ import { Task } from '..';
 import { Component } from '../component';
 import { GitHub, GithubWorkflow, GitIdentity } from '../github';
 import { BUILD_ARTIFACT_NAME, DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from '../github/constants';
+import { WorkflowActions } from '../github/workflow-actions';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { Project } from '../project';
 
@@ -9,7 +10,7 @@ const BRANCH_REF = '${{ github.event.pull_request.head.ref }}';
 const REPO_REF = '${{ github.event.pull_request.head.repo.full_name }}';
 const PRIMARY_JOB_ID = 'build';
 const SELF_MUTATION_STEP = 'self_mutation';
-const SELF_MUTATION_REF = 'self_mutation_commit';
+const SELF_MUTATION_HAPPENED = 'self_mutation_happened';
 
 export interface BuildWorkflowOptions {
   /**
@@ -90,11 +91,6 @@ export class BuildWorkflow extends Component {
   private uploadArtitactSteps?: JobStep[];
   private readonly antitamper: boolean;
 
-  /**
-   * The workflow file name (`build.yml`).
-   */
-  public readonly filename: string;
-
   constructor(project: Project, options: BuildWorkflowOptions) {
     super(project);
 
@@ -112,7 +108,6 @@ export class BuildWorkflow extends Component {
     this.artifactsDirectory = options.artifactsDirectory;
     this.mutableBuilds = options.mutableBuild ?? true;
     this.workflow = new GithubWorkflow(github, 'build');
-    this.filename = this.workflow.filename;
     this.antitamper = options.antitamper ?? true;
 
     this.workflow.on({
@@ -131,9 +126,9 @@ export class BuildWorkflow extends Component {
         contents: JobPermission.WRITE,
       },
       outputs: {
-        [SELF_MUTATION_REF]: {
+        [SELF_MUTATION_HAPPENED]: {
           stepId: SELF_MUTATION_STEP,
-          outputName: SELF_MUTATION_REF,
+          outputName: SELF_MUTATION_HAPPENED,
         },
       },
       steps: (() => this.renderSteps()) as any,
@@ -142,6 +137,36 @@ export class BuildWorkflow extends Component {
     this.primaryJobId = PRIMARY_JOB_ID;
 
     this._buildJobIds = [PRIMARY_JOB_ID];
+
+    if (this.mutableBuilds) {
+      this.workflow.addJob('self-mutate', {
+        runsOn: ['ubuntu-latest'],
+        permissions: {
+          contents: JobPermission.WRITE,
+        },
+        needs: (() => this._buildJobIds) as any, // wait for all build jobs to finish
+        if: `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_HAPPENED} }}`,
+        steps: [
+          {
+            name: 'Checkout',
+            uses: 'actions/checkout@v2',
+            with: {
+              repository: REPO_REF,
+              ref: BRANCH_REF,
+            },
+          },
+          ...WorkflowActions.downloadApplyGitPatch(),
+          {
+            name: 'Push changes',
+            run: [
+              '  git add .',
+              '  git commit -m "chore: self mutation"',
+              `  git push origin HEAD:${BRANCH_REF}`,
+            ].join('\n'),
+          },
+        ],
+      });
+    }
   }
 
   /**
@@ -232,18 +257,16 @@ export class BuildWorkflow extends Component {
     steps.push(...this.postBuildSteps);
 
     if (this.mutableBuilds) {
-      steps.push({
-        name: 'Self mutation',
-        id: SELF_MUTATION_STEP,
-        run: [
-          'if ! git diff --exit-code; then',
-          '  git add .',
-          '  git commit -m "chore: self mutation"',
-          `  git push origin HEAD:${BRANCH_REF}`,
-          `  echo "::set-output name=${SELF_MUTATION_REF}::$(git rev-parse HEAD)"`,
-          'fi',
-        ].join('\n'),
-      });
+      steps.push(
+        {
+          name: 'Check self-mutation',
+          id: SELF_MUTATION_STEP,
+          run: 'git diff --exit-code || echo "::set-output name=${SELF_MUTATION_HAPPENED}::true"',
+        },
+        ...WorkflowActions.createUploadGitPatch({
+          if: `\${{ steps.${SELF_MUTATION_STEP}.outputs.${SELF_MUTATION_HAPPENED} }}`,
+        }),
+      );
     } else if (this.antitamper) {
       // anti-tamper check (fails if there were changes to committed files)
       // this will identify any non-committed files generated during build (e.g. test snapshots)

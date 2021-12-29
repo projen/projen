@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: write
     outputs:
-      self_mutation_commit: ${{ steps.self_mutation.outputs.self_mutation_commit }}
+      self_mutation_happened: ${{ steps.self_mutation.outputs.self_mutation_happened }}
     env:
       CI: "true"
     steps:
@@ -37,21 +37,57 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           directory: coverage
-      - name: Self mutation
+      - name: Check self-mutation
         id: self_mutation
+        run: git diff --exit-code || echo "::set-output
+          name=${SELF_MUTATION_HAPPENED}::true"
+      - if: ${{ steps.self_mutation.outputs.self_mutation_happened }}
+        name: Create Patch
         run: |-
-          if ! git diff --exit-code; then
-            git add .
-            git commit -m "chore: self mutation"
-            git push origin HEAD:${{ github.event.pull_request.head.ref }}
-            echo "::set-output name=self_mutation_commit::$(git rev-parse HEAD)"
-          fi
+          git add .
+          git diff --patch --staged > .upgrade.tmp.patch
+      - if: ${{ steps.self_mutation.outputs.self_mutation_happened }}
+        name: Upload patch
+        uses: actions/upload-artifact@v2
+        with:
+          name: .upgrade.tmp.patch
+          path: .upgrade.tmp.patch
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
         if: always()
         with:
           name: build-artifact
           path: dist
+  self-mutate:
+    needs:
+      - build
+      - package-js
+      - package-java
+      - package-python
+      - package-go
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: ${{ needs.build.outputs.self_mutation_happened }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: .upgrade.tmp.patch
+          path: ${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s ${{ runner.temp }}/.upgrade.tmp.patch ] && git apply ${{ runner.temp
+          }}/.upgrade.tmp.patch || echo "Empty patch. Skipping."'
+      - name: Push changes
+        run: |-2
+            git add .
+            git commit -m "chore: self mutation"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
   package-js:
     needs: build
     runs-on: ubuntu-latest

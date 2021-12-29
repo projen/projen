@@ -11,7 +11,6 @@ function context(value: string) {
   return `\${{ ${value} }}`;
 }
 
-const RUNNER_TEMP = context('runner.temp');
 const REPO = context('github.repository');
 const RUN_ID = context('github.run_id');
 const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
@@ -212,7 +211,7 @@ export class UpgradeDependencies extends Component {
 
   private createUpgrade(task: Task, branch?: string): Upgrade {
     const runsOn = this.options.workflowOptions?.runsOn ?? ['ubuntu-latest'];
-    const patchFile = '.upgrade.tmp.patch';
+
 
     // thats all we should need at this stage since all we do is clone.
     // note that this also prevents new code that is introduced in the upgrade
@@ -237,20 +236,7 @@ export class UpgradeDependencies extends Component {
 
     steps.push(...this.postBuildSteps);
 
-    steps.push(
-      {
-        name: 'Create Patch',
-        run: [
-          'git add .',
-          `git diff --patch --staged > ${patchFile}`,
-        ].join('\n'),
-      },
-      {
-        name: 'Upload patch',
-        uses: 'actions/upload-artifact@v2',
-        with: { name: patchFile, path: patchFile },
-      },
-    );
+    steps.push(...WorkflowActions.createUploadGitPatch());
 
     return {
       job: {
@@ -261,7 +247,6 @@ export class UpgradeDependencies extends Component {
         steps: steps,
       },
       jobId: 'upgrade',
-      patchFile: patchFile,
       ref: branch,
     };
   }
@@ -300,15 +285,7 @@ export class UpgradeDependencies extends Component {
         },
       },
       setGitIdentityStep(this.gitIdentity),
-      {
-        name: 'Download patch',
-        uses: 'actions/download-artifact@v2',
-        with: { name: upgrade.patchFile, path: RUNNER_TEMP },
-      },
-      {
-        name: 'Apply patch',
-        run: `[ -s ${RUNNER_TEMP}/${upgrade.patchFile} ] && git apply ${RUNNER_TEMP}/${upgrade.patchFile} || echo "Empty patch. Skipping."`,
-      },
+      ...WorkflowActions.downloadApplyGitPatch(),
       {
         name: 'Create Pull Request',
         id: prStepId,
@@ -328,14 +305,6 @@ export class UpgradeDependencies extends Component {
         },
       },
     ];
-
-    const workflowFile = this._project.buildWorkflow?.filename;
-    if (workflowFile) {
-      steps.push(...WorkflowActions.dispatchWorkflow({
-        workflowId: workflowFile,
-        githubTokenSecret: workflow.projenTokenSecret,
-      }));
-    }
 
     return {
       job: {
@@ -358,7 +327,6 @@ interface Upgrade {
   readonly ref?: string;
   readonly job: workflows.Job;
   readonly jobId: string;
-  readonly patchFile: string;
 }
 
 interface PR {
