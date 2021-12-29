@@ -63,4 +63,3 @@ test('throws when adding an existing includes', () => {
   expect(() => c.addIncludes({ template: 'foo' })).toThrowError(/already contains one or more templates specified in/);
 });
 
-
