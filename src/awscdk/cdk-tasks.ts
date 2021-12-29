@@ -12,6 +12,11 @@ export class CdkTasks extends Component {
   public readonly synth: Task;
 
   /**
+   * Synthesizes your app and suppresses stdout.
+   */
+  public readonly synthSilent: Task;
+
+  /**
    * Deploys your app.
    */
   public readonly deploy: Task;
@@ -35,7 +40,12 @@ export class CdkTasks extends Component {
     super(project);
 
     this.synth = project.addTask('synth', {
-      description: 'Synthesizes your cdk app into cdk.out (part of "yarn build")',
+      description: 'Synthesizes your cdk app into cdk.out',
+      exec: 'cdk synth',
+    });
+
+    this.synthSilent = project.addTask('synth:silent', {
+      description: 'Synthesizes your cdk app into cdk.out and suppresses the template in stdout (part of "yarn build")',
       exec: 'cdk synth > /dev/null', // redirect to /dev/null to hide template
     });
 

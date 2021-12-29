@@ -1,10 +1,11 @@
+import { join } from 'path';
 import { BuildWorkflow } from '../build';
 import { PROJEN_DIR, PROJEN_RC } from '../common';
 import { AutoMerge, DependabotOptions, GitHubProject, GitHubProjectOptions, GitIdentity } from '../github';
 import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { JobStep } from '../github/workflows-model';
 import { IgnoreFile } from '../ignore-file';
-import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from '../javascript';
+import { UpgradeDependencies, UpgradeDependenciesOptions } from '../javascript';
 import { License } from '../license';
 import { Release, ReleaseProjectOptions, Publisher } from '../release';
 import { Task } from '../task';
@@ -14,6 +15,7 @@ import { Bundler, BundlerOptions } from './bundler';
 import { Jest, JestOptions } from './jest';
 import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
 import { Projenrc, ProjenrcOptions } from './projenrc';
+import { UpgradeDependenciesSchedule } from './upgrade-dependencies';
 
 const PROJEN_SCRIPT = 'projen';
 
@@ -91,7 +93,6 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * Add release management to this project.
    *
    * @default - true (false for subprojects)
-   * @featured
    */
   readonly release?: boolean;
 
@@ -172,6 +173,8 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * To create a personal access token see https://github.com/settings/tokens
    *
    * @default - no automatic projen upgrade pull requests
+   *
+   * @deprecated use `githubTokenSecret` instead.
    */
   readonly projenUpgradeSecret?: string;
 
@@ -371,11 +374,6 @@ export class NodeProject extends GitHubProject {
   private readonly nodeVersion?: string;
 
   /**
-   * Indicates if workflows have anti-tamper checks.
-   */
-  public readonly antitamper: boolean;
-
-  /**
    * The package manager to use.
    *
    * @deprecated use `package.packageManager`
@@ -402,9 +400,16 @@ export class NodeProject extends GitHubProject {
   public readonly bundler: Bundler;
 
   /**
-   * The build output directory. By default this is `dist`.
+   * The build output directory. An npm tarball will be created under the `js`
+   * subdirectory. For example, if this is set to `dist` (the default), the npm
+   * tarball will be placed under `dist/js/boom-boom-1.2.3.tg`.
    */
   public readonly artifactsDirectory: string;
+
+  /**
+   * The location of the npm tarball after build (`${artifactsDirectory}/js`).
+   */
+  public readonly artifactsJavascriptDirectory: string;
 
   /**
    * The upgrade workflow.
@@ -421,6 +426,7 @@ export class NodeProject extends GitHubProject {
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
     this.workflowGitIdentity = options.workflowGitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.artifactsDirectory = options.artifactsDirectory ?? 'dist';
+    this.artifactsJavascriptDirectory = join(this.artifactsDirectory, 'js');
 
     this.runScriptCommand = (() => {
       switch (this.packageManager) {
@@ -481,10 +487,6 @@ export class NodeProject extends GitHubProject {
 
     const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
 
-    // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
-    // to decide if we can always run with --updateSnapshot
-    this.antitamper = buildEnabled && (options.antitamper ?? true);
-
     // configure jest if enabled
     // must be before the build/release workflows
     if (options.jest ?? true) {
@@ -494,7 +496,6 @@ export class NodeProject extends GitHubProject {
     if (buildEnabled && this.github) {
       this.buildWorkflow = new BuildWorkflow(this, {
         buildTask: this.buildTask,
-        antitamper: this.antitamper,
         artifactsDirectory: this.artifactsDirectory,
         containerImage: options.workflowContainerImage,
         gitIdentity: this.workflowGitIdentity,
@@ -566,9 +567,9 @@ export class NodeProject extends GitHubProject {
     }
 
     if (this.github?.mergify && this.buildWorkflow?.buildJobIds) {
-      this.autoMerge = new AutoMerge(this.github, {
-        buildJob: this.buildWorkflow?.buildJobIds[0],
-        ...options.autoMergeOptions,
+      this.autoMerge = new AutoMerge(this.github, options.autoMergeOptions);
+      this.autoMerge.addConditionsLater({
+        render: () => this.buildWorkflow?.buildJobIds.map(id => `status-success=${id}`) ?? [],
       });
     }
 
@@ -655,11 +656,11 @@ export class NodeProject extends GitHubProject {
     this.bundler = new Bundler(this, options.bundlerOptions);
 
     if (options.package ?? true) {
-      this.packageTask.exec(`mkdir -p ${this.artifactsDirectory}`);
+      this.packageTask.exec(`mkdir -p ${this.artifactsJavascriptDirectory}`);
 
       // always use npm here - yarn doesn't add much value
       // sadly we cannot use --pack-destination because it is not supported by older npm
-      this.packageTask.exec(`mv $(npm pack) ${this.artifactsDirectory}/`);
+      this.packageTask.exec(`mv $(npm pack) ${this.artifactsJavascriptDirectory}/`);
     }
   }
 
@@ -904,9 +905,4 @@ export class NodeProject extends GitHubProject {
   public get buildWorkflowJobId() {
     return this.buildWorkflow?.buildJobIds[0];
   }
-}
-
-export interface NodeWorkflowSteps {
-  readonly antitamper: any[];
-  readonly install: any[];
 }

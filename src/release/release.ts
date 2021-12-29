@@ -1,6 +1,7 @@
 import * as path from 'path';
 import { Component } from '../component';
 import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from '../github';
+import { BUILD_ARTIFACT_NAME } from '../github/constants';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { Task } from '../task';
 import { Version } from '../version';
@@ -64,12 +65,6 @@ export interface ReleaseProjectOptions {
    * @default []
    */
   readonly postBuildSteps?: JobStep[];
-
-  /**
-   * Checks that after build there are no modified files on git.
-   * @default true
-   */
-  readonly antitamper?: boolean;
 
   /**
    * Major version to release from the default branch.
@@ -239,7 +234,6 @@ export class Release extends Component {
   private readonly buildTask: Task;
   private readonly version: Version;
   private readonly postBuildSteps: JobStep[];
-  private readonly antitamper: boolean;
   private readonly versionFile: string;
   private readonly releaseTrigger: ReleaseTrigger;
   private readonly preBuildSteps: JobStep[];
@@ -266,7 +260,6 @@ export class Release extends Component {
     this.buildTask = options.task;
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
-    this.antitamper = options.antitamper ?? true;
     this.artifactsDirectory = options.artifactsDirectory ?? 'dist';
     this.versionFile = options.versionFile;
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
@@ -464,9 +457,7 @@ export class Release extends Component {
 
     // anti-tamper check (fails if there were changes to committed files)
     // this will identify any non-committed files generated during build (e.g. test snapshots)
-    if (this.antitamper) {
-      releaseTask.exec('git diff --ignore-space-at-eol --exit-code');
-    }
+    releaseTask.exec('git diff --ignore-space-at-eol --exit-code');
 
     const postBuildSteps = [...this.postBuildSteps];
 
@@ -483,7 +474,7 @@ export class Release extends Component {
       if: noNewCommits,
       uses: 'actions/upload-artifact@v2.1.1',
       with: {
-        name: this.artifactsDirectory,
+        name: BUILD_ARTIFACT_NAME,
         path: this.artifactsDirectory,
       },
     });

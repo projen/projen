@@ -268,7 +268,7 @@ jobs:
     permissions:
       contents: write
     outputs:
-      self_mutation_commit: \${{ steps.self_mutation.outputs.self_mutation_commit }}
+      self_mutation_happened: \${{ steps.self_mutation.outputs.self_mutation_happened }}
     env:
       CI: \\"true\\"
     steps:
@@ -277,11 +277,6 @@ jobs:
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -290,49 +285,82 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: build
         run: npx projen build
-      - name: Self mutation
-        id: self_mutation
-        run: |-
-          if ! git diff --exit-code; then
-            git add .
-            git commit -m \\"chore: self mutation\\"
-            git push origin HEAD:\${{ github.event.pull_request.head.ref }}
-            echo \\"::set-output name=self_mutation_commit::$(git rev-parse HEAD)\\"
-          fi
+      - id: self_mutation
+        name: Find mutations
+        run: >-
+          git add .
+
+          git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"
+      - if: \${{ steps.self_mutation.outputs.self_mutation_happened }}
+        name: Upload patch
+        uses: actions/upload-artifact@v2
+        with:
+          name: .repo.patch
+          path: .repo.patch
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
-        if: always()
+        if: \${{ ! steps.self_mutation.outputs.self_mutation_happened }}
         with:
           name: build-artifact
           path: dist
-  update-status:
-    needs:
-      - build
-      - package-js
-      - package-java
-      - package-python
+  anti-tamper:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    if: \${{ needs.build.outputs.self_mutation_happened &&
+      github.event.pull_request.head.repo.full_name != github.repository }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: \${{ github.event.pull_request.head.ref }}
+          repository: \${{ github.event.pull_request.head.repo.full_name }}
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: .repo.patch
+          path: \${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp
+          }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+      - name: Found diff after build (update your branch)
+        run: git add . && diff --staged --exit-code
+  self-mutation:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
-      checks: write
-      actions: write
-    if: \${{ needs.build.outputs.self_mutation_commit }}
+      contents: write
+    if: \${{ needs.build.outputs.self_mutation_happened &&
+      !(github.event.pull_request.head.repo.full_name != github.repository) }}
     steps:
-      - name: Update status check (if changed)
-        run: gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name
-          }}/check-runs -F name=\\"build\\" -F head_sha=\\"\${{
-          needs.build.outputs.self_mutation_commit }}\\" -F status=\\"completed\\" -F
-          conclusion=\\"success\\"
-        env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-      - name: Cancel workflow (if changed)
-        run: gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name
-          }}/actions/runs/\${{ github.run_id }}/cancel
-        env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
+          ref: \${{ github.event.pull_request.head.ref }}
+          repository: \${{ github.event.pull_request.head.repo.full_name }}
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: .repo.patch
+          path: \${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp
+          }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+      - name: Set git identity
+        run: |-
+          git config user.name \\"github-actions\\"
+          git config user.email \\"github-actions@github.com\\"
+      - name: Push changes
+        run: |-2
+            git add .
+            git commit -m \\"chore: self mutation\\"
+            git push origin HEAD:\${{ github.event.pull_request.head.ref }}
   package-js:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
+    if: \${{ ! needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -342,20 +370,19 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create js artifact
-        run: >-
-          jsii_version=$(node -p
-          \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js
+        run: cd .repo && npx projen package:js
+      - name: Collect js Artifact
+        run: mv .repo/dist dist
   package-java:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
+    if: \${{ ! needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-java@v2
         with:
@@ -369,20 +396,19 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create java artifact
-        run: >-
-          jsii_version=$(node -p
-          \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java
+        run: cd .repo && npx projen package:java
+      - name: Collect java Artifact
+        run: mv .repo/dist dist
   package-python:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
+    if: \${{ ! needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -395,16 +421,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create python artifact
-        run: >-
-          jsii_version=$(node -p
-          \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python
+        run: cd .repo && npx projen package:python
+      - name: Collect python Artifact
+        run: mv .repo/dist dist
 ",
   ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
@@ -459,7 +483,6 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Setup Node.js
@@ -478,7 +501,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -494,7 +517,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
@@ -520,18 +543,16 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create js artifact
-        run: >-
-          jsii_version=$(node -p
-          \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js
+        run: cd .repo && npx projen package:js
+      - name: Collect js Artifact
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -556,18 +577,16 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create java artifact
-        run: >-
-          jsii_version=$(node -p
-          \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java
+        run: cd .repo && npx projen package:java
+      - name: Collect java Artifact
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-maven
         env:
@@ -593,18 +612,16 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/*.tgz --strip-components=1
-          rm -fr dist/
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create python artifact
-        run: >-
-          jsii_version=$(node -p
-          \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python
+        run: cd .repo && npx projen package:python
+      - name: Collect python Artifact
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -658,17 +675,12 @@ jobs:
     permissions:
       contents: read
     outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
+      patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           ref: master
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -677,23 +689,18 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
-      - name: Verify language bindings
-        run: npx projen package-all
-      - name: Create Patch
-        run: |-
+      - id: create_patch
+        name: Find mutations
+        run: >-
           git add .
-          git diff --patch --staged > .upgrade.tmp.patch
-      - name: Upload patch
+
+          git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
+      - if: \${{ steps.create_patch.outputs.patch_created }}
+        name: Upload patch
         uses: actions/upload-artifact@v2
         with:
-          name: .upgrade.tmp.patch
-          path: .upgrade.tmp.patch
-    container:
-      image: jsii/superchain:1-buster-slim-node14
+          name: .repo.patch
+          path: .repo.patch
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -701,25 +708,25 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      checks: write
+    if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: master
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Download patch
         uses: actions/download-artifact@v2
         with:
-          name: .upgrade.tmp.patch
+          name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.upgrade.tmp.patch ] && git apply \${{ runner.temp
-          }}/.upgrade.tmp.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp
+          }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+      - name: Set git identity
+        run: |-
+          git config user.name \\"github-actions\\"
+          git config user.email \\"github-actions@github.com\\"
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v3
@@ -755,19 +762,6 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Update status check
-        if: steps.create-pr.outputs.pull-request-url != ''
-        run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
-          \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-master\\\\\\",\\\\
-          \\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
-          via the upgrade-master workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.repository }}/actions/runs/\${{
-          github.run_id }}\\\\\\"}}'\\"
-        env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
 ",
   ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 !/.gitattributes
@@ -845,6 +839,9 @@ pull_request_rules:
       - \\"#approved-reviews-by>=1\\"
       - -label~=(do-not-merge)
       - status-success=build
+      - status-success=package-js
+      - status-success=package-java
+      - status-success=package-python
 ",
   ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 /.projen/
@@ -1275,7 +1272,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "mkdir -p dist",
           },
           Object {
-            "exec": "mv $(npm pack) dist/",
+            "exec": "rsync -a . dist --exclude .git --exclude node_modules",
           },
         ],
       },
@@ -1302,7 +1299,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
           },
           Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java",
+            "exec": "npx jsii-pacmak@$jsii_version -v --target java",
           },
         ],
       },
@@ -1314,7 +1311,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
           },
           Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js",
+            "exec": "npx jsii-pacmak@$jsii_version -v --target js",
           },
         ],
       },
@@ -1326,7 +1323,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
           },
           Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python",
+            "exec": "npx jsii-pacmak@$jsii_version -v --target python",
           },
         ],
       },
@@ -2274,15 +2271,10 @@ jobs:
     permissions:
       contents: read
     outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
+      patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -2291,23 +2283,18 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
-      - name: Verify language bindings
-        run: npx projen package-all
-      - name: Create Patch
-        run: |-
+      - id: create_patch
+        name: Find mutations
+        run: >-
           git add .
-          git diff --patch --staged > .upgrade.tmp.patch
-      - name: Upload patch
+
+          git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
+      - if: \${{ steps.create_patch.outputs.patch_created }}
+        name: Upload patch
         uses: actions/upload-artifact@v2
         with:
-          name: .upgrade.tmp.patch
-          path: .upgrade.tmp.patch
-    container:
-      image: jsii/superchain:1-buster-slim-node12
+          name: .repo.patch
+          path: .repo.patch
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -2315,27 +2302,29 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+    if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+        with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
       - name: Download patch
         uses: actions/download-artifact@v2
         with:
-          name: .upgrade.tmp.patch
+          name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.upgrade.tmp.patch ] && git apply \${{ runner.temp
-          }}/.upgrade.tmp.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp
+          }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+      - name: Set git identity
+        run: |-
+          git config user.name \\"github-actions\\"
+          git config user.email \\"github-actions@github.com\\"
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v3
         with:
-          token: \${{ secrets.GITHUB_TOKEN }}
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: >-
             chore(deps): upgrade dependencies
 
@@ -2696,13 +2685,75 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "mkdir -p dist",
           },
           Object {
-            "exec": "mv $(npm pack) dist/",
+            "exec": "rsync -a . dist --exclude .git --exclude node_modules",
           },
         ],
       },
       "package-all": Object {
         "description": "Packages artifacts for all target languages",
         "name": "package-all",
+        "steps": Array [
+          Object {
+            "spawn": "package:js",
+          },
+          Object {
+            "spawn": "package:java",
+          },
+          Object {
+            "spawn": "package:python",
+          },
+          Object {
+            "spawn": "package:dotnet",
+          },
+        ],
+      },
+      "package:dotnet": Object {
+        "description": "Create dotnet language bindings",
+        "name": "package:dotnet",
+        "steps": Array [
+          Object {
+            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+          },
+          Object {
+            "exec": "npx jsii-pacmak@$jsii_version -v --target dotnet",
+          },
+        ],
+      },
+      "package:java": Object {
+        "description": "Create java language bindings",
+        "name": "package:java",
+        "steps": Array [
+          Object {
+            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+          },
+          Object {
+            "exec": "npx jsii-pacmak@$jsii_version -v --target java",
+          },
+        ],
+      },
+      "package:js": Object {
+        "description": "Create js language bindings",
+        "name": "package:js",
+        "steps": Array [
+          Object {
+            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+          },
+          Object {
+            "exec": "npx jsii-pacmak@$jsii_version -v --target js",
+          },
+        ],
+      },
+      "package:python": Object {
+        "description": "Create python language bindings",
+        "name": "package:python",
+        "steps": Array [
+          Object {
+            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
+          },
+          Object {
+            "exec": "npx jsii-pacmak@$jsii_version -v --target python",
+          },
+        ],
       },
       "post-compile": Object {
         "description": "Runs after successful compilation",
@@ -2722,7 +2773,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all",
+            "exec": "jest --passWithNoTests --all --updateSnapshot",
           },
           Object {
             "spawn": "eslint",
@@ -3369,6 +3420,10 @@ project.synth();
       "eslint": "npx projen eslint",
       "package": "npx projen package",
       "package-all": "npx projen package-all",
+      "package:dotnet": "npx projen package:dotnet",
+      "package:java": "npx projen package:java",
+      "package:js": "npx projen package:js",
+      "package:python": "npx projen package:python",
       "post-compile": "npx projen post-compile",
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
@@ -3761,15 +3816,10 @@ jobs:
     permissions:
       contents: read
     outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
+      patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -3778,19 +3828,18 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
-      - name: Create Patch
-        run: |-
+      - id: create_patch
+        name: Find mutations
+        run: >-
           git add .
-          git diff --patch --staged > .upgrade.tmp.patch
-      - name: Upload patch
+
+          git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
+      - if: \${{ steps.create_patch.outputs.patch_created }}
+        name: Upload patch
         uses: actions/upload-artifact@v2
         with:
-          name: .upgrade.tmp.patch
-          path: .upgrade.tmp.patch
+          name: .repo.patch
+          path: .repo.patch
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -3798,27 +3847,29 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+    if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
+        with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
       - name: Download patch
         uses: actions/download-artifact@v2
         with:
-          name: .upgrade.tmp.patch
+          name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.upgrade.tmp.patch ] && git apply \${{ runner.temp
-          }}/.upgrade.tmp.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp
+          }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+      - name: Set git identity
+        run: |-
+          git config user.name \\"github-actions\\"
+          git config user.email \\"github-actions@github.com\\"
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v3
         with:
-          token: \${{ secrets.GITHUB_TOKEN }}
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: >-
             chore(deps): upgrade dependencies
 
@@ -4156,10 +4207,10 @@ tsconfig.tsbuildinfo
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist",
+            "exec": "mkdir -p dist/js",
           },
           Object {
-            "exec": "mv $(npm pack) dist/",
+            "exec": "mv $(npm pack) dist/js/",
           },
         ],
       },
@@ -4176,7 +4227,7 @@ tsconfig.tsbuildinfo
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all",
+            "exec": "jest --passWithNoTests --all --updateSnapshot",
           },
           Object {
             "spawn": "eslint",
@@ -4909,7 +4960,7 @@ jobs:
     permissions:
       contents: write
     outputs:
-      self_mutation_commit: \${{ steps.self_mutation.outputs.self_mutation_commit }}
+      self_mutation_happened: \${{ steps.self_mutation.outputs.self_mutation_happened }}
     env:
       CI: \\"true\\"
     steps:
@@ -4918,11 +4969,6 @@ jobs:
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
@@ -4931,36 +4977,71 @@ jobs:
         run: pnpm i --frozen-lockfile
       - name: build
         run: npx projen build
-      - name: Self mutation
-        id: self_mutation
+      - id: self_mutation
+        name: Find mutations
+        run: >-
+          git add .
+
+          git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"
+      - if: \${{ steps.self_mutation.outputs.self_mutation_happened }}
+        name: Upload patch
+        uses: actions/upload-artifact@v2
+        with:
+          name: .repo.patch
+          path: .repo.patch
+  anti-tamper:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    if: \${{ needs.build.outputs.self_mutation_happened &&
+      github.event.pull_request.head.repo.full_name != github.repository }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: \${{ github.event.pull_request.head.ref }}
+          repository: \${{ github.event.pull_request.head.repo.full_name }}
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: .repo.patch
+          path: \${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp
+          }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+      - name: Found diff after build (update your branch)
+        run: git add . && diff --staged --exit-code
+  self-mutation:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: \${{ needs.build.outputs.self_mutation_happened &&
+      !(github.event.pull_request.head.repo.full_name != github.repository) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
+          ref: \${{ github.event.pull_request.head.ref }}
+          repository: \${{ github.event.pull_request.head.repo.full_name }}
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: .repo.patch
+          path: \${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp
+          }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+      - name: Set git identity
         run: |-
-          if ! git diff --exit-code; then
+          git config user.name \\"github-actions\\"
+          git config user.email \\"github-actions@github.com\\"
+      - name: Push changes
+        run: |-2
             git add .
             git commit -m \\"chore: self mutation\\"
             git push origin HEAD:\${{ github.event.pull_request.head.ref }}
-            echo \\"::set-output name=self_mutation_commit::$(git rev-parse HEAD)\\"
-          fi
-  update-status:
-    needs:
-      - build
-    runs-on: ubuntu-latest
-    permissions:
-      checks: write
-      actions: write
-    if: \${{ needs.build.outputs.self_mutation_commit }}
-    steps:
-      - name: Update status check (if changed)
-        run: gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name
-          }}/check-runs -F name=\\"build\\" -F head_sha=\\"\${{
-          needs.build.outputs.self_mutation_commit }}\\" -F status=\\"completed\\" -F
-          conclusion=\\"success\\"
-        env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
-      - name: Cancel workflow (if changed)
-        run: gh api -X POST /repos/\${{ github.event.pull_request.head.repo.full_name
-          }}/actions/runs/\${{ github.run_id }}/cancel
-        env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
 ",
   ".github/workflows/pull-request-lint.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
@@ -5015,7 +5096,6 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Setup pnpm
@@ -5034,7 +5114,7 @@ jobs:
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
+          name: build-artifact
           path: dist
   release_github:
     name: Publish to GitHub Releases
@@ -5050,7 +5130,7 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
@@ -5110,17 +5190,12 @@ jobs:
     permissions:
       contents: read
     outputs:
-      conclusion: \${{ steps.build.outputs.conclusion }}
+      patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           ref: master
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.0.1
         with:
@@ -5129,19 +5204,18 @@ jobs:
         run: pnpm i --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Build
-        id: build
-        run: npx projen build && echo \\"::set-output name=conclusion::success\\" || echo
-          \\"::set-output name=conclusion::failure\\"
-      - name: Create Patch
-        run: |-
+      - id: create_patch
+        name: Find mutations
+        run: >-
           git add .
-          git diff --patch --staged > .upgrade.tmp.patch
-      - name: Upload patch
+
+          git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
+      - if: \${{ steps.create_patch.outputs.patch_created }}
+        name: Upload patch
         uses: actions/upload-artifact@v2
         with:
-          name: .upgrade.tmp.patch
-          path: .upgrade.tmp.patch
+          name: .repo.patch
+          path: .repo.patch
   pr:
     name: Create Pull Request
     needs: upgrade
@@ -5149,30 +5223,30 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      checks: write
+    if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: master
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Download patch
         uses: actions/download-artifact@v2
         with:
-          name: .upgrade.tmp.patch
+          name: .repo.patch
           path: \${{ runner.temp }}
       - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.upgrade.tmp.patch ] && git apply \${{ runner.temp
-          }}/.upgrade.tmp.patch || echo \\"Empty patch. Skipping.\\"'
+        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp
+          }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
+      - name: Set git identity
+        run: |-
+          git config user.name \\"github-actions\\"
+          git config user.email \\"github-actions@github.com\\"
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v3
         with:
-          token: \${{ secrets.GITHUB_TOKEN }}
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           commit-message: >-
             chore(deps): upgrade dependencies
 
@@ -5203,19 +5277,6 @@ jobs:
           author: github-actions <github-actions@github.com>
           committer: github-actions <github-actions@github.com>
           signoff: true
-      - name: Update status check
-        if: steps.create-pr.outputs.pull-request-url != ''
-        run: \\"curl -i --fail -X POST -H \\\\\\"Accept: application/vnd.github.v3+json\\\\\\" -H
-          \\\\\\"Authorization: token \${GITHUB_TOKEN}\\\\\\"
-          https://api.github.com/repos/\${{ github.repository }}/check-runs -d
-          '{\\\\\\"name\\\\\\":\\\\\\"build\\\\\\",\\\\\\"head_sha\\\\\\":\\\\\\"github-actions/upgrade-master\\\\\\",\\\\
-          \\\\\\"status\\\\\\":\\\\\\"completed\\\\\\",\\\\\\"conclusion\\\\\\":\\\\\\"\${{
-          needs.upgrade.outputs.conclusion }}\\\\\\",\\\\\\"output\\\\\\":{\\\\\\"title\\\\\\":\\\\\\"Created
-          via the upgrade-master workflow.\\\\\\",\\\\\\"summary\\\\\\":\\\\\\"Action run URL:
-          https://github.com/\${{ github.repository }}/actions/runs/\${{
-          github.run_id }}\\\\\\"}}'\\"
-        env:
-          GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
 ",
   ".gitignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 !/.gitattributes
@@ -5442,10 +5503,10 @@ junit.xml
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "mkdir -p dist",
+            "exec": "mkdir -p dist/js",
           },
           Object {
-            "exec": "mv $(npm pack) dist/",
+            "exec": "mv $(npm pack) dist/js/",
           },
         ],
       },

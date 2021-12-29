@@ -12,7 +12,7 @@ export interface CdkConfigCommonOptions {
    *
    * @default - no additional context
    */
-  readonly context?: { [key: string]: string };
+  readonly context?: { [key: string]: any };
 
   /**
     * Include all feature flags in cdk.json
