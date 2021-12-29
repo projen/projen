@@ -262,7 +262,7 @@ export class BuildWorkflow extends Component {
         {
           name: 'Check self-mutation',
           id: SELF_MUTATION_STEP,
-          run: 'git diff --exit-code || echo "::set-output name=${SELF_MUTATION_HAPPENED}::true"',
+          run: `git diff --exit-code || echo "::set-output name=${SELF_MUTATION_HAPPENED}::true"`,
         },
         ...WorkflowActions.createUploadGitPatch({
           if: `\${{ steps.${SELF_MUTATION_STEP}.outputs.${SELF_MUTATION_HAPPENED} }}`,

@@ -40,7 +40,7 @@ jobs:
       - name: Check self-mutation
         id: self_mutation
         run: git diff --exit-code || echo "::set-output
-          name=${SELF_MUTATION_HAPPENED}::true"
+          name=self_mutation_happened::true"
       - if: ${{ steps.self_mutation.outputs.self_mutation_happened }}
         name: Create Patch
         run: |-
