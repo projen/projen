@@ -311,7 +311,6 @@ export class UpgradeDependencies extends Component {
         permissions: {
           contents: workflows.JobPermission.WRITE,
           pullRequests: workflows.JobPermission.WRITE,
-          actions: workflows.JobPermission.WRITE,
         },
         runsOn: runsOn ?? ['ubuntu-latest'],
         steps: steps,
