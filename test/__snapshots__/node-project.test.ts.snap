@@ -125,14 +125,6 @@ Object {
       },
     },
     Object {
-      "name": "Checkout",
-      "uses": "actions/checkout@v2",
-      "with": Object {
-        "ref": "\${{ github.event.pull_request.head.ref }}",
-        "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
-      },
-    },
-    Object {
       "name": "Download patch",
       "uses": "actions/download-artifact@v2",
       "with": Object {

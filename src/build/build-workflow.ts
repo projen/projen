@@ -229,14 +229,6 @@ export class BuildWorkflow extends Component {
       permissions: {},
       needs: [BUILD_JOBID],
       steps: [
-        {
-          name: 'Checkout',
-          uses: 'actions/checkout@v2',
-          with: {
-            repository: PULL_REQUEST_REPOSITORY,
-            ref: PULL_REQUEST_REF,
-          },
-        },
         ...WorkflowActions.checkoutWithPatch({
           repository: PULL_REQUEST_REPOSITORY,
           ref: PULL_REQUEST_REF,
