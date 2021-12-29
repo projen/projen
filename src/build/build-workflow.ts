@@ -151,6 +151,11 @@ export class BuildWorkflow extends Component {
             name: 'Checkout',
             uses: 'actions/checkout@v2',
             with: {
+              // we must use a PAT in order to be able to trigger build
+              // workflows again, update workflow files, etc. but this is safe
+              // here because there is no foreign code execution here just
+              // applying the patch and pushing it to the repo.
+              token: `\${{ secrets.${this.workflow.projenTokenSecret} }}`,
               repository: REPO_REF,
               ref: BRANCH_REF,
             },
@@ -243,7 +248,6 @@ export class BuildWorkflow extends Component {
       name: 'Checkout',
       uses: 'actions/checkout@v2',
       with: {
-        token: `\${{ secrets.${this.workflow.projenTokenSecret} }}`,
         ref: BRANCH_REF,
         repository: REPO_REF,
       },
