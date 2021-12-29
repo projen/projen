@@ -11,7 +11,7 @@ describe('constructs dependency selection', () => {
     const snapshot = synthSnapshot(project);
 
     // THEN
-    expect(snapshot['package.json']?.peerDependencies?.cdktf).toBe('0.99');
+    expect(snapshot['package.json']?.peerDependencies?.cdktf).toBe('^0.99');
     expect(snapshot['package.json']?.devDependencies?.cdktf).toBe('0.99.0');
     expect(snapshot['package.json']?.dependencies?.cdktf).toBeUndefined();
   });
