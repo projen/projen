@@ -12,8 +12,8 @@ const BUILD_JOBID = 'build';
 const ANTI_TAMPER_JOBID = 'anti-tempar';
 const SELF_MUTATION_JOBID = 'self-mutation';
 const DIFF_STEP = 'diff';
-const DIFF_EXISTS = 'diff_exists';
-const DIFF_EXISTS_CONDITION = `needs.${BUILD_JOBID}.outputs.${DIFF_EXISTS}`;
+const DIFF_EXISTS_OUTPUT = 'diff_exists';
+const DIFF_EXISTS_CONDITION = `needs.${BUILD_JOBID}.outputs.${DIFF_EXISTS_OUTPUT}`;
 const IS_FORK = 'github.event.pull_request.head.repo.full_name != github.repository';
 const NOT_FORK = `!(${IS_FORK})`;
 
@@ -138,9 +138,9 @@ export class BuildWorkflow extends Component {
       },
       steps: (() => this.renderBuildSteps()) as any,
       outputs: {
-        [DIFF_EXISTS]: {
+        [DIFF_EXISTS_OUTPUT]: {
           stepId: DIFF_STEP,
-          outputName: DIFF_EXISTS,
+          outputName: DIFF_EXISTS_OUTPUT,
         },
       },
     });
@@ -245,7 +245,7 @@ export class BuildWorkflow extends Component {
         }),
         {
           name: 'Found diff after build (update your branch)',
-          run: 'git diff --staged --exit-code',
+          run: 'git add . && diff --staged --exit-code',
         },
       ],
     });
@@ -274,14 +274,9 @@ export class BuildWorkflow extends Component {
 
       ...this.postBuildSteps,
 
-      {
-        name: 'diff',
-        id: DIFF_STEP,
-        run: `git diff --staged --exit-code || echo "::set-output name=${DIFF_EXISTS}::true"`,
-      },
-
       ...WorkflowActions.createUploadGitPatch({
-        if: `\${{ steps.${DIFF_STEP}.outputs.${DIFF_EXISTS} }}`,
+        stepId: DIFF_STEP,
+        outputName: DIFF_EXISTS_OUTPUT,
       }),
 
       // upload the build artifact only if we have post-build jobs and only if
@@ -289,7 +284,7 @@ export class BuildWorkflow extends Component {
       ...(this._postBuildJobs.length == 0 ? [] : [{
         name: 'Upload artifact',
         uses: 'actions/upload-artifact@v2.1.1',
-        if: `\${{ ! steps.${DIFF_STEP}.outputs.${DIFF_EXISTS} }}`,
+        if: `\${{ ! steps.${DIFF_STEP}.outputs.${DIFF_EXISTS_OUTPUT} }}`,
         with: {
           name: BUILD_ARTIFACT_NAME,
           path: this.artifactsDirectory,
