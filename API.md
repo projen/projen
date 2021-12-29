@@ -3845,7 +3845,6 @@ new build.BuildWorkflow(project: Project, options: BuildWorkflowOptions)
 Name | Type | Description 
 -----|------|-------------
 **buildJobIds**🔹 | <code>Array<string></code> | Returns a list of job IDs that are part of the build.
-**filename**🔹 | <code>string</code> | The workflow file name (`build.yml`).
 
 ### Methods
 
@@ -5128,7 +5127,6 @@ new github.GithubWorkflow(github: GitHub, name: string, options?: GithubWorkflow
 
 Name | Type | Description 
 -----|------|-------------
-**filename**🔹 | <code>string</code> | The file name of the workflow (`$name.yaml`).
 **name**🔹 | <code>string</code> | The name of the workflow.
 **projenTokenSecret**🔹 | <code>string</code> | The name of a secret that includes a PAT that can be used by workflows.
 **concurrency**?🔹 | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.<br/>__*Default*__: disabled

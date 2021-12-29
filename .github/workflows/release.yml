@@ -22,7 +22,6 @@ jobs:
           fetch-depth: 0
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
       - name: Setup Node.js
