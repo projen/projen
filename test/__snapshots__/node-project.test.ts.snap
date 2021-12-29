@@ -135,9 +135,6 @@ git config user.email \\"github-actions@github.com\\"",
     "run": "npx projen build",
   },
   Object {
-    "env": Object {
-      "TOKEN": "\${{ secrets.PROJEN_GITHUB_TOKEN }}",
-    },
     "id": "self_mutation",
     "name": "Self mutation",
     "run": "if ! git diff --exit-code; then

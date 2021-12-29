@@ -293,9 +293,7 @@ jobs:
         run: npx projen build
       - name: Self mutation
         id: self_mutation
-        env:
-          TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
-        run: >-
+        run: |-
           if ! git diff --exit-code; then
             git add .
             git commit -m \\"chore: self mutation\\"
@@ -307,10 +305,7 @@ jobs:
         if: always()
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
-            !node_modules
+          path: dist
   package-js:
     needs: build
     runs-on: ubuntu-latest
@@ -4953,9 +4948,7 @@ jobs:
         run: npx projen build
       - name: Self mutation
         id: self_mutation
-        env:
-          TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
-        run: >-
+        run: |-
           if ! git diff --exit-code; then
             git add .
             git commit -m \\"chore: self mutation\\"

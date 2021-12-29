@@ -62,9 +62,7 @@ jobs:
         run: npx projen build
       - name: Self mutation
         id: self_mutation
-        env:
-          TOKEN: \${{ secrets.PROJEN_GITHUB_TOKEN }}
-        run: >-
+        run: |-
           if ! git diff --exit-code; then
             git add .
             git commit -m \\"chore: self mutation\\"
