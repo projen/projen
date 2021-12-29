@@ -274,16 +274,11 @@ export class UpgradeDependencies extends Component {
     const comitter = `${this.gitIdentity.name} <${this.gitIdentity.email}>`;
 
     const steps: workflows.JobStep[] = [
-      {
-        name: 'Checkout',
-        uses: 'actions/checkout@v2',
-        with: {
-          token: `\${{ secrets.${workflow.projenTokenSecret} }}`,
-          ref: upgrade.ref,
-        },
-      },
+      ...WorkflowActions.checkoutWithPatch({
+        token: `\${{ secrets.${workflow.projenTokenSecret} }}`,
+        ref: upgrade.ref,
+      }),
       ...WorkflowActions.setGitIdentity(this.gitIdentity),
-      ...WorkflowActions.downloadApplyGitPatch(),
       {
         name: 'Create Pull Request',
         id: prStepId,

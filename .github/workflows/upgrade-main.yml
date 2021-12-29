@@ -29,12 +29,12 @@ jobs:
       - name: Create Patch
         run: |-
           git add .
-          git diff --patch --staged > .upgrade.tmp.patch
+          git diff --patch --staged > .repo.patch
       - name: Upload patch
         uses: actions/upload-artifact@v2
         with:
-          name: .upgrade.tmp.patch
-          path: .upgrade.tmp.patch
+          name: .repo.patch
+          path: .repo.patch
     container:
       image: jsii/superchain:1-buster-slim-node12
   pr:
@@ -50,18 +50,18 @@ jobs:
         with:
           token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: main
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: .repo.patch
+          path: ${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s ${{ runner.temp }}/.repo.patch ] && git apply ${{ runner.temp
+          }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Set git identity
         run: |-
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-      - name: Download patch
-        uses: actions/download-artifact@v2
-        with:
-          name: .upgrade.tmp.patch
-          path: ${{ runner.temp }}
-      - name: Apply patch
-        run: '[ -s ${{ runner.temp }}/.upgrade.tmp.patch ] && git apply ${{ runner.temp
-          }}/.upgrade.tmp.patch || echo "Empty patch. Skipping."'
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v3

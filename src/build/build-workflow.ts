@@ -6,13 +6,13 @@ import { WorkflowActions } from '../github/workflow-actions';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { Project } from '../project';
 
-const BRANCH_REF = '${{ github.event.pull_request.head.ref }}';
-const REPO_REF = '${{ github.event.pull_request.head.repo.full_name }}';
+const PULL_REQUEST_REF = '${{ github.event.pull_request.head.ref }}';
+const PULL_REQUEST_REPOSITORY = '${{ github.event.pull_request.head.repo.full_name }}';
 const BUILD_JOBID = 'build';
 const SELF_MUTATION_STEP = 'self_mutation';
 const SELF_MUTATION_HAPPENED_OUTPUT = 'self_mutation_happened';
 const IS_FORK = 'github.event.pull_request.head.repo.full_name != github.repository';
-const NOT_FORK = 'github.event.pull_request.head.repo.full_name == github.repository';
+const NOT_FORK = `!(${IS_FORK})`;
 
 export interface BuildWorkflowOptions {
   /**
@@ -196,27 +196,19 @@ export class BuildWorkflow extends Component {
       needs: [BUILD_JOBID],
       if: `\${{ needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} && ${NOT_FORK} }}`,
       steps: [
-        {
-          name: 'Checkout',
-          uses: 'actions/checkout@v2',
-          with: {
-            // we must use a PAT in order to be able to trigger build
-            // workflows again, update workflow files, etc. but this is safe
-            // here because there is no foreign code execution here just
-            // applying the patch and pushing it to the repo.
-            token: `\${{ secrets.${this.workflow.projenTokenSecret} }}`,
-            repository: REPO_REF,
-            ref: BRANCH_REF,
-          },
-        },
-        ...WorkflowActions.downloadApplyGitPatch(),
+        ...WorkflowActions.checkoutWithPatch({
+          // we need to use a PAT so that our push will trigger the build workflow
+          token: `\${{ secrets.${this.workflow.projenTokenSecret} }}`,
+          ref: PULL_REQUEST_REF,
+          repository: PULL_REQUEST_REPOSITORY,
+        }),
         ...WorkflowActions.setGitIdentity(this.gitIdentity),
         {
           name: 'Push changes',
           run: [
             '  git add .',
             '  git commit -m "chore: self mutation"',
-            `  git push origin HEAD:${BRANCH_REF}`,
+            `  git push origin HEAD:${PULL_REQUEST_REF}`,
           ].join('\n'),
         },
       ],
@@ -241,11 +233,14 @@ export class BuildWorkflow extends Component {
           name: 'Checkout',
           uses: 'actions/checkout@v2',
           with: {
-            repository: REPO_REF,
-            ref: BRANCH_REF,
+            repository: PULL_REQUEST_REPOSITORY,
+            ref: PULL_REQUEST_REF,
           },
         },
-        ...WorkflowActions.downloadApplyGitPatch(),
+        ...WorkflowActions.checkoutWithPatch({
+          repository: PULL_REQUEST_REPOSITORY,
+          ref: PULL_REQUEST_REF,
+        }),
         {
           name: 'Found diff after build (update your branch)',
           run: 'git diff --exit-code',
@@ -263,8 +258,8 @@ export class BuildWorkflow extends Component {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
         with: {
-          ref: BRANCH_REF,
-          repository: REPO_REF,
+          ref: PULL_REQUEST_REF,
+          repository: PULL_REQUEST_REPOSITORY,
         },
       },
 
