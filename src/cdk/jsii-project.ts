@@ -1,6 +1,6 @@
 import { Task } from '..';
 import { Eslint } from '../javascript';
-import { GoPublishOptions, MavenPublishOptions, PyPiPublishOptions, NugetPublishOptions, CommonPublishOptions } from '../release';
+import { CommonPublishOptions, GoPublishOptions, MavenPublishOptions, NugetPublishOptions, PyPiPublishOptions } from '../release';
 import { TypeScriptProject, TypeScriptProjectOptions } from '../typescript';
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from './consts';
 import { JsiiDocgen } from './jsii-docgen';
