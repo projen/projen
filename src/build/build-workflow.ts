@@ -206,9 +206,9 @@ export class BuildWorkflow extends Component {
         this.uploadArtitactSteps = [{
           name: 'Upload artifact',
           uses: 'actions/upload-artifact@v2.1.1',
-          // Setting to always will ensure that this step will run even if
-          // the previous ones have failed (e.g. coverage report, internal logs, etc)
-          if: 'always()',
+          // only upload the artifact if self mutation did not happen. if it
+          // did, we are going to push it to the branch and rebuild.
+          if: `\${{ ! steps.${SELF_MUTATION_STEP}.outputs.${SELF_MUTATION_HAPPENED} }}`,
           with: {
             name: BUILD_ARTIFACT_NAME,
             path: this.artifactsDirectory,

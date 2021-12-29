@@ -48,7 +48,7 @@ jobs:
           path: .upgrade.tmp.patch
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
-        if: always()
+        if: ${{ ! steps.self_mutation.outputs.self_mutation_happened }}
         with:
           name: build-artifact
           path: dist
