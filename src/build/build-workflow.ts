@@ -235,7 +235,7 @@ export class BuildWorkflow extends Component {
         }),
         {
           name: 'Found diff after build (update your branch)',
-          run: 'git diff --exit-code',
+          run: 'git add . && diff --staged --exit-code',
         },
       ],
     });
