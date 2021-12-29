@@ -12094,12 +12094,12 @@ Name | Type | Description
 ### Methods
 
 
-#### renderConditions()🔹 <a id="projen-github-iaddconditionslater-renderconditions"></a>
+#### render()🔹 <a id="projen-github-iaddconditionslater-render"></a>
 
 
 
 ```ts
-renderConditions(): Array<string>
+render(): Array<string>
 ```
 
 
