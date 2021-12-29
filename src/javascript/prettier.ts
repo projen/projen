@@ -21,8 +21,6 @@ export interface PrettierOptions extends PrettierBaseOptions {
 /**
  * Options to set in Prettier directly or through overrides
  *
- * @export
- * @interface PrettierBaseOptions
  */
 export interface PrettierBaseOptions {
   /**
@@ -308,7 +306,7 @@ export class Prettier extends Component {
    *
    * @internal
    */
-  public readonly _overrides: PrettierOverride[];
+  private readonly _overrides: PrettierOverride[];
 
   constructor(project: NodeProject, options: PrettierOptions) {
     super(project);
