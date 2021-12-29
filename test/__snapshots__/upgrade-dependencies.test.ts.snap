@@ -19,11 +19,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: main
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -53,7 +48,6 @@ jobs:
           ref: main
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -121,11 +115,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: branch1
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -155,7 +144,6 @@ jobs:
           ref: branch1
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -223,11 +211,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: branch2
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -257,7 +240,6 @@ jobs:
           ref: branch2
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -325,11 +307,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: branch1
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -359,7 +336,6 @@ jobs:
           ref: branch1
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -427,11 +403,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: branch2
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -461,7 +432,6 @@ jobs:
           ref: branch2
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -529,11 +499,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: main
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -563,7 +528,6 @@ jobs:
           ref: main
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -631,11 +595,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: branch1
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -665,7 +624,6 @@ jobs:
           ref: branch1
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -733,11 +691,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: branch2
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -767,7 +720,6 @@ jobs:
           ref: branch2
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -835,11 +787,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: main
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -869,7 +816,6 @@ jobs:
           ref: main
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch
@@ -937,11 +883,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: main
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -971,7 +912,6 @@ jobs:
           ref: main
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch

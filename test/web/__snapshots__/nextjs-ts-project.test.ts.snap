@@ -44,14 +44,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -63,7 +57,7 @@ jobs:
       - name: Check self-mutation
         id: self_mutation
         run: git diff --exit-code || echo \\"::set-output
-          name=\${SELF_MUTATION_HAPPENED}::true\\"
+          name=self_mutation_happened::true\\"
       - if: \${{ steps.self_mutation.outputs.self_mutation_happened }}
         name: Create Patch
         run: |-
@@ -76,8 +70,7 @@ jobs:
           name: .upgrade.tmp.patch
           path: .upgrade.tmp.patch
   self-mutate:
-    needs:
-      - build
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -86,6 +79,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
           ref: \${{ github.event.pull_request.head.ref }}
       - name: Download patch
@@ -96,6 +90,10 @@ jobs:
       - name: Apply patch
         run: '[ -s \${{ runner.temp }}/.upgrade.tmp.patch ] && git apply \${{ runner.temp
           }}/.upgrade.tmp.patch || echo \\"Empty patch. Skipping.\\"'
+      - name: Set git identity
+        run: |-
+          git config user.name \\"github-actions\\"
+          git config user.email \\"github-actions@github.com\\"
       - name: Push changes
         run: |-2
             git add .
@@ -180,11 +178,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name \\"github-actions\\"
-          git config user.email \\"github-actions@github.com\\"
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -217,7 +210,6 @@ jobs:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
       - name: Set git identity
         run: |-
-          git config --global init.defaultBranch main
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Download patch

@@ -21,8 +21,7 @@ Object {
     },
     Object {
       "name": "Set git identity",
-      "run": "git config --global init.defaultBranch main
-git config user.name \\"github-actions\\"
+      "run": "git config user.name \\"github-actions\\"
 git config user.email \\"github-actions@github.com\\"",
     },
     Object {
@@ -78,14 +77,7 @@ Array [
     "with": Object {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
-      "token": "\${{ secrets.PROJEN_GITHUB_TOKEN }}",
     },
-  },
-  Object {
-    "name": "Set git identity",
-    "run": "git config --global init.defaultBranch main
-git config user.name \\"github-actions\\"
-git config user.email \\"github-actions@github.com\\"",
   },
   Object {
     "name": "Install dependencies",
@@ -110,14 +102,7 @@ Array [
     "with": Object {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
-      "token": "\${{ secrets.PROJEN_GITHUB_TOKEN }}",
     },
-  },
-  Object {
-    "name": "Set git identity",
-    "run": "git config --global init.defaultBranch main
-git config user.name \\"github-actions\\"
-git config user.email \\"github-actions@github.com\\"",
   },
   Object {
     "name": "Install dependencies",
@@ -130,7 +115,7 @@ git config user.email \\"github-actions@github.com\\"",
   Object {
     "id": "self_mutation",
     "name": "Check self-mutation",
-    "run": "git diff --exit-code || echo \\"::set-output name=\${SELF_MUTATION_HAPPENED}::true\\"",
+    "run": "git diff --exit-code || echo \\"::set-output name=self_mutation_happened::true\\"",
   },
   Object {
     "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",

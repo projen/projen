@@ -320,7 +320,6 @@ describe('deps upgrade', () => {
     expect(upgrade.jobs.pr.steps[1]).toStrictEqual({
       name: 'Set git identity',
       run: [
-        'git config --global init.defaultBranch main',
         'git config user.name "hey"',
         'git config user.email "there@foo.com"',
       ].join('\n'),
@@ -716,10 +715,9 @@ test('workflowGitIdentity can be used to customize the git identity used in buil
   // THEN
   const output = synthSnapshot(project);
   const buildWorkflow = yaml.parse(output['.github/workflows/build.yml']);
-  expect(buildWorkflow.jobs.build.steps[1]).toStrictEqual({
+  expect(buildWorkflow.jobs['self-mutate'].steps[3]).toStrictEqual({
     name: 'Set git identity',
     run: [
-      'git config --global init.defaultBranch main',
       'git config user.name "heya"',
       'git config user.email "there@z.com"',
     ].join('\n'),
