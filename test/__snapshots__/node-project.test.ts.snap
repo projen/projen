@@ -2,6 +2,7 @@
 
 exports[`deps upgrade commit can be signed 1`] = `
 Object {
+  "if": "\${{ ! needs.upgrade.outputs.patch_created }}",
   "name": "Create Pull Request",
   "needs": "upgrade",
   "permissions": Object {
@@ -88,14 +89,9 @@ Array [
   },
   Object {
     "id": "self_mutation",
-    "name": "Check self-mutation",
-    "run": "git diff --exit-code || echo \\"::set-output name=self_mutation_happened::true\\"",
-  },
-  Object {
-    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
-    "name": "Create Patch",
+    "name": "Find mutations",
     "run": "git add .
-git diff --patch --staged > .repo.patch",
+git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"",
   },
   Object {
     "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
@@ -164,14 +160,9 @@ Array [
   },
   Object {
     "id": "self_mutation",
-    "name": "Check self-mutation",
-    "run": "git diff --exit-code || echo \\"::set-output name=self_mutation_happened::true\\"",
-  },
-  Object {
-    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
-    "name": "Create Patch",
+    "name": "Find mutations",
     "run": "git add .
-git diff --patch --staged > .repo.patch",
+git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"",
   },
   Object {
     "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",

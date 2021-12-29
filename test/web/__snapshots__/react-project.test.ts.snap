@@ -47,15 +47,12 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: build
         run: npx projen build
-      - name: Check self-mutation
-        id: self_mutation
-        run: git diff --exit-code || echo \\"::set-output
-          name=self_mutation_happened::true\\"
-      - if: \${{ steps.self_mutation.outputs.self_mutation_happened }}
-        name: Create Patch
-        run: |-
+      - id: self_mutation
+        name: Find mutations
+        run: >-
           git add .
-          git diff --patch --staged > .repo.patch
+
+          git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"
       - if: \${{ steps.self_mutation.outputs.self_mutation_happened }}
         name: Upload patch
         uses: actions/upload-artifact@v2
@@ -258,6 +255,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    outputs:
+      patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -267,11 +266,14 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - name: Create Patch
-        run: |-
+      - id: create_patch
+        name: Find mutations
+        run: >-
           git add .
-          git diff --patch --staged > .repo.patch
-      - name: Upload patch
+
+          git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
+      - if: \${{ steps.create_patch.outputs.patch_created }}
+        name: Upload patch
         uses: actions/upload-artifact@v2
         with:
           name: .repo.patch
@@ -283,6 +285,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
+    if: \${{ ! needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
