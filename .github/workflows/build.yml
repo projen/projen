@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: write
     outputs:
-      self_mutation_commit: ${{ steps.self_mutation.outputs.self_mutation_commit }}
+      self_mutation_happened: ${{ steps.self_mutation.outputs.self_mutation_happened }}
     env:
       CI: "true"
     steps:
@@ -19,11 +19,6 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -36,50 +31,85 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           directory: coverage
-      - name: Self mutation
+      - name: Check self-mutation
         id: self_mutation
+        run: git diff --exit-code || echo "::set-output
+          name=self_mutation_happened::true"
+      - if: ${{ steps.self_mutation.outputs.self_mutation_happened }}
+        name: Create Patch
         run: |-
-          if ! git diff --exit-code; then
-            git add .
-            git commit -m "chore: self mutation"
-            git push origin HEAD:${{ github.event.pull_request.head.ref }}
-            echo "::set-output name=self_mutation_commit::$(git rev-parse HEAD)"
-          fi
+          git add .
+          git diff --patch --staged > .repo.patch
+      - if: ${{ steps.self_mutation.outputs.self_mutation_happened }}
+        name: Upload patch
+        uses: actions/upload-artifact@v2
+        with:
+          name: .repo.patch
+          path: .repo.patch
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
-        if: always()
+        if: ${{ ! steps.self_mutation.outputs.self_mutation_happened }}
         with:
           name: build-artifact
           path: dist
-  update-status:
-    needs:
-      - build
-      - package-js
-      - package-java
-      - package-python
-      - package-go
+  anti-tamper:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    if: ${{ needs.build.outputs.self_mutation_happened &&
+      github.event.pull_request.head.repo.full_name != github.repository }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: .repo.patch
+          path: ${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s ${{ runner.temp }}/.repo.patch ] && git apply ${{ runner.temp
+          }}/.repo.patch || echo "Empty patch. Skipping."'
+      - name: Found diff after build (update your branch)
+        run: git diff --exit-code
+  self-mutation:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
-      checks: write
-      actions: write
-    if: ${{ needs.build.outputs.self_mutation_commit }}
+      contents: write
+    if: ${{ needs.build.outputs.self_mutation_happened &&
+      !(github.event.pull_request.head.repo.full_name != github.repository) }}
     steps:
-      - name: Update status check (if changed)
-        run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
-          }}/check-runs -F name="build" -F head_sha="${{
-          needs.build.outputs.self_mutation_commit }}" -F status="completed" -F
-          conclusion="success"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Cancel workflow (if changed)
-        run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
-          }}/actions/runs/${{ github.run_id }}/cancel
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: .repo.patch
+          path: ${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s ${{ runner.temp }}/.repo.patch ] && git apply ${{ runner.temp
+          }}/.repo.patch || echo "Empty patch. Skipping."'
+      - name: Set git identity
+        run: |-
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+      - name: Push changes
+        run: |-2
+            git add .
+            git commit -m "chore: self mutation"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
   package-js:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
+    if: ${{ ! needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -101,6 +131,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
+    if: ${{ ! needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-java@v2
         with:
@@ -126,6 +157,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
+    if: ${{ ! needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -150,6 +182,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
+    if: ${{ ! needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-node@v2
         with:

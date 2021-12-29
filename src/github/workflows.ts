@@ -38,6 +38,7 @@ export class GithubWorkflow extends Component {
    * The name of the workflow.
    */
   public readonly name: string;
+
   /**
    * Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.
    *
@@ -51,6 +52,11 @@ export class GithubWorkflow extends Component {
    */
   public readonly file: YamlFile | undefined;
 
+  /**
+   * The name of a secret that includes a PAT that can be used by workflows.
+   */
+  public readonly projenTokenSecret: string;
+
   private events: workflows.Triggers = { };
   private jobs: Record<string, workflows.Job> = { };
 
@@ -59,6 +65,7 @@ export class GithubWorkflow extends Component {
 
     this.name = name;
     this.concurrency = options.concurrency;
+    this.projenTokenSecret = github.projenTokenSecret;
 
     const workflowsEnabled = github.workflowsEnabled || options.force;
 

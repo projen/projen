@@ -42,6 +42,15 @@ export interface GitHubOptions {
    * @default - see defaults in `PullRequestLintOptions`
    */
   readonly pullRequestLintOptions?: PullRequestLintOptions;
+
+  /**
+   * The name of a secret which includes a GitHub Personal Access Token to be
+   * used by projen workflows. This token needs to have the `repo`, `workflows`
+   * and `packages` scope.
+   *
+   * @default "PROJEN_GITHUB_TOKEN"
+   */
+  readonly projenTokenSecret?: string;
 }
 
 export class GitHub extends Component {
@@ -65,10 +74,17 @@ export class GitHub extends Component {
    */
   public readonly workflowsEnabled: boolean;
 
+  /**
+   * The name of a secret with a GitHub Personal Access Token to be used by
+   * projen workflows.
+   */
+  public readonly projenTokenSecret: string;
+
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
 
     this.workflowsEnabled = options.workflows ?? true;
+    this.projenTokenSecret = options.projenTokenSecret ?? 'PROJEN_GITHUB_TOKEN';
 
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this, options.mergifyOptions);

@@ -87,7 +87,7 @@ export function withProjectDir(code: (workdir: string) => void, options: { git?:
 
     const shell = (command: string) => cp.execSync(command, { cwd: projectdir });
     if (options.git ?? true) {
-      shell('git init');
+      shell('git init -b main');
       shell('git remote add origin git@boom.com:foo/bar.git');
       shell('git config user.name "My User Name"');
       shell('git config user.email "my@user.email.com"');

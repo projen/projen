@@ -29,8 +29,10 @@ export interface AutoApproveOptions {
    * {@link https://docs.github.com/en/actions/reference/authentication-in-a-workflow `GITHUB_TOKEN` }
    * - that you would like auto approved, such as when using the `depsUpgrade` property in
    * `NodeProjectOptions`, then you must use a different token here.
+   *
+   * @default "GITHUB_TOKEN"
    */
-  readonly secret: string;
+  readonly secret?: string;
 
   /**
    * Github Runner selection labels
@@ -45,7 +47,7 @@ export interface AutoApproveOptions {
 export class AutoApprove extends Component {
   public readonly label: string;
 
-  constructor(github: GitHub, options: AutoApproveOptions) {
+  constructor(github: GitHub, options: AutoApproveOptions = {}) {
     super(github.project);
 
     this.label = options.label ?? 'auto-approve';
@@ -58,6 +60,8 @@ export class AutoApprove extends Component {
       condition += ')';
     }
 
+    const secret = options.secret ?? 'GITHUB_TOKEN';
+
     const approveJob: Job = {
       runsOn: options.runsOn ?? ['ubuntu-latest'],
       permissions: {
@@ -67,7 +71,7 @@ export class AutoApprove extends Component {
       steps: [{
         uses: 'hmarr/auto-approve-action@v2.1.0',
         with: {
-          'github-token': `\${{ secrets.${options.secret} }}`,
+          'github-token': `\${{ secrets.${secret} }}`,
         },
       }],
     };

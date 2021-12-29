@@ -720,11 +720,11 @@ export class Jest {
     const jestOpts = ['--passWithNoTests', '--all'];
     const jestConfigOpts = this.file && this.file.path != 'jest.config.json' ? ` -c ${this.file.path}` : '';
 
-    // if the project has anti-tamper configured, it should be safe to always run tests
-    // with --updateSnapshot because if we forget to commit a snapshot change the CI build will fail.
-    if (this.project.antitamper) {
-      jestOpts.push('--updateSnapshot');
-    }
+    // since our build & release workflows have anti-tamper protection, it is
+    // safe to always run tests with --updateSnapshot. if a snapshot changes,
+    // the `build` workflow will either fail (on forks) or push the update and
+    // `release` workflows will fail.
+    jestOpts.push('--updateSnapshot');
 
     // as recommended in the jest docs, node > 14 may use native v8 coverage collection
     // https://jestjs.io/docs/en/cli#--coverageproviderprovider

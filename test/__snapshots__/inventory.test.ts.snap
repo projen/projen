@@ -655,6 +655,23 @@ Array [
         "switch": "projenrc-json-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "featured": false,
@@ -902,23 +919,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"main.ts\\"",
@@ -2675,6 +2675,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -2716,6 +2733,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -2843,7 +2861,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -3513,23 +3531,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -5320,6 +5321,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -5361,6 +5379,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -5582,7 +5601,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -6221,23 +6240,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"main.ts\\"",
@@ -7856,6 +7858,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -7897,6 +7916,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -8024,7 +8044,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -8631,23 +8651,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -10339,6 +10342,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -10380,6 +10400,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -10601,7 +10622,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -11240,23 +11261,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -12880,6 +12884,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -12921,6 +12942,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -13142,7 +13164,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -14286,6 +14308,23 @@ Array [
         "switch": "projenrc-json-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "featured": false,
@@ -14470,23 +14509,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -16075,6 +16097,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -16116,6 +16155,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -16337,7 +16377,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -16976,23 +17016,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -18337,6 +18360,23 @@ Array [
         "switch": "projenrc-js-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -18378,6 +18418,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -18505,7 +18546,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -19040,23 +19081,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -20557,6 +20581,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -20598,6 +20639,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -20725,7 +20767,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -21349,23 +21391,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -22693,6 +22718,23 @@ Array [
         "switch": "projenrc-js-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -22734,6 +22776,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -22861,7 +22904,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -24018,6 +24061,23 @@ Array [
         "switch": "projenrc-python-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "true",
         "docs": "Include pytest tests.",
         "featured": true,
@@ -24258,23 +24318,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -25602,6 +25645,23 @@ Array [
         "switch": "projenrc-js-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -25643,6 +25703,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -25770,7 +25831,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -26310,23 +26371,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -27810,6 +27854,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -27851,6 +27912,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -27978,7 +28040,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -28609,23 +28671,6 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -30107,6 +30152,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -30148,6 +30210,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -30275,7 +30338,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -30884,23 +30947,6 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -32382,6 +32428,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -32423,6 +32486,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -32550,7 +32614,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },

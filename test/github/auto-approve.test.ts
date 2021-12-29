@@ -6,9 +6,7 @@ describe('auto-approve', () => {
   test('default', () => {
     const project = createProject();
 
-    new AutoApprove(project.github!, {
-      secret: 'MY_SECRET',
-    });
+    new AutoApprove(project.github!);
 
     const snapshot = synthSnapshot(project);
 

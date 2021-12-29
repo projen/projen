@@ -5,7 +5,6 @@ Object {
   "name": "Create Pull Request",
   "needs": "upgrade",
   "permissions": Object {
-    "checks": "write",
     "contents": "write",
     "pull-requests": "write",
   },
@@ -16,25 +15,25 @@ Object {
       "uses": "actions/checkout@v2",
       "with": Object {
         "ref": "main",
+        "token": "\${{ secrets.PROJEN_GITHUB_TOKEN }}",
       },
-    },
-    Object {
-      "name": "Set git identity",
-      "run": "git config --global init.defaultBranch main
-git config user.name \\"github-actions\\"
-git config user.email \\"github-actions@github.com\\"",
     },
     Object {
       "name": "Download patch",
       "uses": "actions/download-artifact@v2",
       "with": Object {
-        "name": ".upgrade.tmp.patch",
+        "name": ".repo.patch",
         "path": "\${{ runner.temp }}",
       },
     },
     Object {
       "name": "Apply patch",
-      "run": "[ -s \${{ runner.temp }}/.upgrade.tmp.patch ] && git apply \${{ runner.temp }}/.upgrade.tmp.patch || echo \\"Empty patch. Skipping.\\"",
+      "run": "[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"",
+    },
+    Object {
+      "name": "Set git identity",
+      "run": "git config user.name \\"github-actions\\"
+git config user.email \\"github-actions@github.com\\"",
     },
     Object {
       "id": "create-pr",
@@ -62,16 +61,8 @@ Upgrades project dependencies. See details in [workflow run].
         "committer": "github-actions <github-actions@github.com>",
         "signoff": true,
         "title": "chore(deps): upgrade dependencies",
-        "token": "\${{ secrets.GITHUB_TOKEN }}",
+        "token": "\${{ secrets.PROJEN_GITHUB_TOKEN }}",
       },
-    },
-    Object {
-      "env": Object {
-        "GITHUB_TOKEN": "\${{ secrets.GITHUB_TOKEN }}",
-      },
-      "if": "steps.create-pr.outputs.pull-request-url != ''",
-      "name": "Update status check",
-      "run": "curl -i --fail -X POST -H \\"Accept: application/vnd.github.v3+json\\" -H \\"Authorization: token \${GITHUB_TOKEN}\\" https://api.github.com/repos/\${{ github.repository }}/check-runs -d '{\\"name\\":\\"build\\",\\"head_sha\\":\\"github-actions/upgrade-main\\",\\"status\\":\\"completed\\",\\"conclusion\\":\\"\${{ needs.upgrade.outputs.conclusion }}\\",\\"output\\":{\\"title\\":\\"Created via the upgrade-main workflow.\\",\\"summary\\":\\"Action run URL: https://github.com/\${{ github.repository }}/actions/runs/\${{ github.run_id }}\\"}}'",
     },
   ],
 }
@@ -82,16 +73,10 @@ Array [
   Object {
     "name": "Checkout",
     "uses": "actions/checkout@v2",
-  },
-  Object {
-    "name": "Set git identity",
-    "run": "git config --global init.defaultBranch main
-git config user.name \\"github-actions\\"
-git config user.email \\"github-actions@github.com\\"",
-  },
-  Object {
-    "name": "Anti-tamper check",
-    "run": "git diff --ignore-space-at-eol --exit-code",
+    "with": Object {
+      "ref": "\${{ github.event.pull_request.head.ref }}",
+      "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
+    },
   },
   Object {
     "name": "Install dependencies",
@@ -102,20 +87,61 @@ git config user.email \\"github-actions@github.com\\"",
     "run": "npx projen build",
   },
   Object {
-    "name": "Anti-tamper check",
-    "run": "git diff --ignore-space-at-eol --exit-code",
+    "id": "self_mutation",
+    "name": "Check self-mutation",
+    "run": "git diff --exit-code || echo \\"::set-output name=self_mutation_happened::true\\"",
   },
   Object {
-    "id": "self_mutation",
-    "name": "Self mutation",
-    "run": "if ! git diff --exit-code; then
-  git add .
-  git commit -m \\"chore: self mutation\\"
-  git push origin HEAD:\${{ github.event.pull_request.head.ref }}
-  echo \\"::set-output name=self_mutation_commit::$(git rev-parse HEAD)\\"
-fi",
+    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "name": "Create Patch",
+    "run": "git add .
+git diff --patch --staged > .repo.patch",
+  },
+  Object {
+    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "name": "Upload patch",
+    "uses": "actions/upload-artifact@v2",
+    "with": Object {
+      "name": ".repo.patch",
+      "path": ".repo.patch",
+    },
   },
 ]
+`;
+
+exports[`enable anti-tamper 2`] = `
+Object {
+  "if": "\${{ needs.build.outputs.self_mutation_happened }}",
+  "needs": "build",
+  "permissions": Object {},
+  "runs-on": "ubuntu-latest",
+  "steps": Array [
+    Object {
+      "name": "Checkout",
+      "uses": "actions/checkout@v2",
+      "with": Object {
+        "ref": "\${{ github.event.pull_request.head.ref }}",
+        "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
+      },
+    },
+    Object {
+      "name": "Download patch",
+      "uses": "actions/download-artifact@v2",
+      "with": Object {
+        "name": ".repo.patch",
+        "path": "\${{ runner.temp }}",
+      },
+    },
+    Object {
+      "name": "Apply patch",
+      "run": "[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"",
+    },
+    Object {
+      "name": "Found diff after build (update your branch)",
+      "run": "git diff --exit-code",
+    },
+  ],
+}
 `;
 
 exports[`mutableBuild will push changes to PR branches 1`] = `
@@ -129,12 +155,6 @@ Array [
     },
   },
   Object {
-    "name": "Set git identity",
-    "run": "git config --global init.defaultBranch main
-git config user.name \\"github-actions\\"
-git config user.email \\"github-actions@github.com\\"",
-  },
-  Object {
     "name": "Install dependencies",
     "run": "yarn install --check-files --frozen-lockfile",
   },
@@ -144,13 +164,23 @@ git config user.email \\"github-actions@github.com\\"",
   },
   Object {
     "id": "self_mutation",
-    "name": "Self mutation",
-    "run": "if ! git diff --exit-code; then
-  git add .
-  git commit -m \\"chore: self mutation\\"
-  git push origin HEAD:\${{ github.event.pull_request.head.ref }}
-  echo \\"::set-output name=self_mutation_commit::$(git rev-parse HEAD)\\"
-fi",
+    "name": "Check self-mutation",
+    "run": "git diff --exit-code || echo \\"::set-output name=self_mutation_happened::true\\"",
+  },
+  Object {
+    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "name": "Create Patch",
+    "run": "git add .
+git diff --patch --staged > .repo.patch",
+  },
+  Object {
+    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "name": "Upload patch",
+    "uses": "actions/upload-artifact@v2",
+    "with": Object {
+      "name": ".repo.patch",
+      "path": ".repo.patch",
+    },
   },
 ]
 `;
