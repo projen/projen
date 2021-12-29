@@ -921,23 +921,6 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"main.ts\\"",
         "docs": "The CDK app's entrypoint (relative to the source directory, which is \\"src\\" by default).",
         "featured": false,
@@ -3548,23 +3531,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -6276,23 +6242,6 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"main.ts\\"",
         "docs": "The CDK8s app's entrypoint (relative to the source directory, which is \\"src\\" by default).",
         "featured": false,
@@ -8702,23 +8651,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -11329,23 +11261,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -14596,23 +14511,6 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -17120,23 +17018,6 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -19200,23 +19081,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -21527,23 +21391,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -24473,23 +24320,6 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -26541,23 +26371,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
@@ -28858,23 +28671,6 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
         "docs": "A directory which will contain build artifacts.",
         "featured": false,
@@ -31149,23 +30945,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "allow-library-dependencies",
-      },
-      Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
       },
       Object {
         "default": "\\"dist\\"",
