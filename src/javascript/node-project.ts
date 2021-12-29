@@ -577,7 +577,7 @@ export class NodeProject extends GitHubProject {
     if (this.github?.mergify && this.buildWorkflow?.buildJobIds) {
       this.autoMerge = new AutoMerge(this.github, options.autoMergeOptions);
       this.autoMerge.addConditionsLater({
-        renderConditions: () => this.buildWorkflow?.buildJobIds.map(id => `status-success=${id}`) ?? [],
+        render: () => this.buildWorkflow?.buildJobIds.map(id => `status-success=${id}`) ?? [],
       });
     }
 
