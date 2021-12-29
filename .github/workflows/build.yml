@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: write
     outputs:
-      self_mutation_happened: ${{ steps.self_mutation.outputs.self_mutation_happened }}
+      diff_exists: ${{ steps.diff.outputs.diff_exists }}
     env:
       CI: "true"
     steps:
@@ -31,16 +31,15 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           directory: coverage
-      - name: Check self-mutation
-        id: self_mutation
-        run: git diff --staged --exit-code || echo "::set-output
-          name=self_mutation_happened::true"
-      - if: ${{ steps.self_mutation.outputs.self_mutation_happened }}
+      - name: diff
+        id: diff
+        run: git diff --staged --exit-code || echo "::set-output name=diff_exists::true"
+      - if: ${{ steps.diff.outputs.diff_exists }}
         name: Create Patch
         run: |-
           git add .
           git diff --staged --patch > .repo.patch
-      - if: ${{ steps.self_mutation.outputs.self_mutation_happened }}
+      - if: ${{ steps.diff.outputs.diff_exists }}
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -48,7 +47,7 @@ jobs:
           path: .repo.patch
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
-        if: ${{ ! steps.self_mutation.outputs.self_mutation_happened }}
+        if: ${{ ! steps.diff.outputs.diff_exists }}
         with:
           name: build-artifact
           path: dist
@@ -56,7 +55,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: ${{ needs.build.outputs.self_mutation_happened &&
+    if: ${{ needs.build.outputs.diff_exists &&
       github.event.pull_request.head.repo.full_name != github.repository }}
     steps:
       - name: Checkout
@@ -79,7 +78,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: ${{ needs.build.outputs.self_mutation_happened &&
+    if: ${{ needs.build.outputs.diff_exists &&
       !(github.event.pull_request.head.repo.full_name != github.repository) }}
     steps:
       - name: Checkout
@@ -109,7 +108,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: ${{ ! needs.build.outputs.self_mutation_happened }}
+    if: ${{ ! needs.build.outputs.diff_exists }}
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -131,7 +130,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: ${{ ! needs.build.outputs.self_mutation_happened }}
+    if: ${{ ! needs.build.outputs.diff_exists }}
     steps:
       - uses: actions/setup-java@v2
         with:
@@ -157,7 +156,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: ${{ ! needs.build.outputs.self_mutation_happened }}
+    if: ${{ ! needs.build.outputs.diff_exists }}
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -182,7 +181,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: ${{ ! needs.build.outputs.self_mutation_happened }}
+    if: ${{ ! needs.build.outputs.diff_exists }}
     steps:
       - uses: actions/setup-node@v2
         with:
