@@ -8,6 +8,7 @@ import { BranchOptions } from './release';
 
 const JSII_RELEASE_VERSION = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
+const ARTIFACTS_DOWNLOAD_DIR = 'dist';
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
 const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
 
@@ -414,6 +415,7 @@ export class Publisher extends Component {
           uses: 'actions/download-artifact@v2',
           with: {
             name: BUILD_ARTIFACT_NAME,
+            path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for jsii-release
           },
         },
         ...opts.prePublishSteps,

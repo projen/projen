@@ -134,10 +134,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
-            !node_modules
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -153,6 +150,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)

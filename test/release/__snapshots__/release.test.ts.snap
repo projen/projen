@@ -80,9 +80,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -98,6 +96,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -123,6 +122,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -418,9 +418,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -436,6 +434,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -461,6 +460,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -756,9 +756,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -774,6 +772,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -799,6 +798,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -1098,9 +1098,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1116,6 +1114,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -1165,9 +1164,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1183,6 +1180,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -1232,9 +1230,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1250,6 +1246,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -1589,9 +1586,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1607,6 +1602,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -1635,6 +1631,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -1713,9 +1710,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1731,6 +1726,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -1759,6 +1755,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -2115,9 +2112,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2133,6 +2128,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -2372,9 +2368,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2391,6 +2385,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -2433,6 +2428,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -2536,9 +2532,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2554,6 +2548,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -2580,6 +2575,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -2832,9 +2828,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2850,6 +2844,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -3072,9 +3067,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -3090,6 +3083,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -3327,9 +3321,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -3345,6 +3337,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -3571,9 +3564,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -3589,6 +3580,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -3617,6 +3609,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
@@ -3642,6 +3635,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-maven
         env:
@@ -3665,6 +3659,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -3688,6 +3683,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-nuget
         env:
@@ -3710,6 +3706,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -4014,9 +4011,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4032,6 +4027,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -4081,9 +4077,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4099,6 +4093,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -4426,9 +4421,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4444,6 +4437,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -4493,9 +4487,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4511,6 +4503,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -4560,9 +4553,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4578,6 +4569,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -4946,9 +4938,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4964,6 +4954,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -5243,9 +5234,7 @@ jobs:
         uses: actions/upload-artifact@v2.1.1
         with:
           name: build-artifact
-          path: |-
-            .
-            !.git
+          path: dist
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -5261,6 +5250,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
+          path: dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
