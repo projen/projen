@@ -1,6 +1,6 @@
 import { JSII_TOOLCHAIN } from '../cdk/consts';
 import { Component } from '../component';
-import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
+import { BUILD_ARTIFACT_NAME, DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { Job, JobPermission, JobPermissions, JobStep, Tools } from '../github/workflows-model';
 import { defaultNpmToken } from '../javascript/node-package';
 import { Project } from '../project';
@@ -8,8 +8,8 @@ import { BranchOptions } from './release';
 
 const JSII_RELEASE_VERSION = 'latest';
 const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
-const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
 const ARTIFACTS_DOWNLOAD_DIR = 'dist';
+const GITHUB_PACKAGES_MAVEN_REPOSITORY = 'https://maven.pkg.github.com';
 const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
 
 /**
@@ -414,7 +414,7 @@ export class Publisher extends Component {
           name: 'Download build artifacts',
           uses: 'actions/download-artifact@v2',
           with: {
-            name: this.artifactName,
+            name: BUILD_ARTIFACT_NAME,
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for jsii-release
           },
         },

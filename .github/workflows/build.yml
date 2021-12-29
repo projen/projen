@@ -10,7 +10,7 @@ jobs:
     permissions:
       contents: write
     outputs:
-      self_mutation_commit: ${{ steps.self_mutation.outputs.self_mutation_commit }}
+      self_mutation_happened: ${{ steps.self_mutation.outputs.self_mutation_happened }}
     env:
       CI: "true"
     steps:
@@ -19,11 +19,6 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-      - name: Set git identity
-        run: |-
-          git config --global init.defaultBranch main
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -36,50 +31,82 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           directory: coverage
-      - name: Self mutation
-        id: self_mutation
-        run: |-
-          if ! git diff --exit-code; then
-            git add .
-            git commit -m "chore: self mutation"
-            git push origin HEAD:${{ github.event.pull_request.head.ref }}
-            echo "::set-output name=self_mutation_commit::$(git rev-parse HEAD)"
-          fi
+      - id: self_mutation
+        name: Find mutations
+        run: >-
+          git add .
+
+          git diff --staged --patch --exit-code > .repo.patch || echo "::set-output name=self_mutation_happened::true"
+      - if: ${{ steps.self_mutation.outputs.self_mutation_happened }}
+        name: Upload patch
+        uses: actions/upload-artifact@v2
+        with:
+          name: .repo.patch
+          path: .repo.patch
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
-        if: always()
+        if: ${{ ! steps.self_mutation.outputs.self_mutation_happened }}
         with:
           name: build-artifact
           path: dist
-  update-status:
-    needs:
-      - build
-      - package-js
-      - package-java
-      - package-python
-      - package-go
+  anti-tamper:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    if: ${{ needs.build.outputs.self_mutation_happened &&
+      github.event.pull_request.head.repo.full_name != github.repository }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: .repo.patch
+          path: ${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s ${{ runner.temp }}/.repo.patch ] && git apply ${{ runner.temp
+          }}/.repo.patch || echo "Empty patch. Skipping."'
+      - name: Found diff after build (update your branch)
+        run: git add . && diff --staged --exit-code
+  self-mutation:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
-      checks: write
-      actions: write
-    if: ${{ needs.build.outputs.self_mutation_commit }}
+      contents: write
+    if: ${{ needs.build.outputs.self_mutation_happened &&
+      !(github.event.pull_request.head.repo.full_name != github.repository) }}
     steps:
-      - name: Update status check (if changed)
-        run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
-          }}/check-runs -F name="build" -F head_sha="${{
-          needs.build.outputs.self_mutation_commit }}" -F status="completed" -F
-          conclusion="success"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Cancel workflow (if changed)
-        run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
-          }}/actions/runs/${{ github.run_id }}/cancel
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: .repo.patch
+          path: ${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s ${{ runner.temp }}/.repo.patch ] && git apply ${{ runner.temp
+          }}/.repo.patch || echo "Empty patch. Skipping."'
+      - name: Set git identity
+        run: |-
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+      - name: Push changes
+        run: |-2
+            git add .
+            git commit -m "chore: self mutation"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
   package-js:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
+    if: ${{ ! needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -89,20 +116,19 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
-          rm -fr dist/js
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create js artifact
-        run: >-
-          jsii_version=$(node -p
-          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target js
+        run: cd .repo && npx projen package:js
+      - name: Collect js Artifact
+        run: mv .repo/dist dist
   package-java:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
+    if: ${{ ! needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-java@v2
         with:
@@ -116,20 +142,19 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
-          rm -fr dist/js
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create java artifact
-        run: >-
-          jsii_version=$(node -p
-          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target java
+        run: cd .repo && npx projen package:java
+      - name: Collect java Artifact
+        run: mv .repo/dist dist
   package-python:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
+    if: ${{ ! needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -142,20 +167,19 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
-          rm -fr dist/js
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create python artifact
-        run: >-
-          jsii_version=$(node -p
-          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target python
+        run: cd .repo && npx projen package:python
+      - name: Collect python Artifact
+        run: mv .repo/dist dist
   package-go:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
+    if: ${{ ! needs.build.outputs.self_mutation_happened }}
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -168,13 +192,11 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Extract npm tarball
-        run: |-
-          tar -xzf dist/js/*.tgz --strip-components=1
-          rm -fr dist/js
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
       - name: Create go artifact
-        run: >-
-          jsii_version=$(node -p
-          "JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]")
-
-          npx jsii-pacmak@$jsii_version -v --outdir $PWD/dist --target go
+        run: cd .repo && npx projen package:go
+      - name: Collect go Artifact
+        run: mv .repo/dist dist

@@ -85,13 +85,7 @@ const project = new cdk.JsiiProject({
   releaseFailureIssue: true,
 
   autoApproveUpgrades: true,
-  autoApproveOptions: { allowedUsernames: ['cdklabs-automation'], secret: 'GITHUB_TOKEN' },
-
-  depsUpgradeOptions: {
-    workflowOptions: {
-      secret: 'PROJEN_GITHUB_TOKEN',
-    },
-  },
+  autoApproveOptions: { allowedUsernames: ['cdklabs-automation'] },
 });
 
 // this script is what we use as the projen command in this project

@@ -258,13 +258,6 @@ describe('deps upgrade', () => {
     expect(tasks.upgrade.steps[6].exec).toStrictEqual('yarn upgrade');
   });
 
-  test('default - no projen secret', () => {
-    const project = new TestNodeProject();
-    const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeUndefined();
-  });
-
   test('dependabot - with projen secret', () => {
     const project = new TestNodeProject({
       dependabot: true,
@@ -275,32 +268,12 @@ describe('deps upgrade', () => {
     expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeDefined();
   });
 
-  test('dependabot - no projen secret', () => {
-    const project = new TestNodeProject({
-      dependabot: true,
-    });
-    const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/dependabot.yml']).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeUndefined();
-  });
-
   test('github actions - with projen secret', () => {
     const project = new TestNodeProject({
       projenUpgradeSecret: 'PROJEN_GITHUB_TOKEN',
     });
     const snapshot = synthSnapshot(project);
     expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
-    expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeUndefined();
-  });
-
-  test('github actions - no projen secret', () => {
-    const project = new TestNodeProject({});
-    const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/workflows/upgrade-main.yml']).toBeDefined();
-
-    // note that in this case only the task is created, not the workflow
-    const upgradeProjen = snapshot['.projen/tasks.json'].tasks['upgrade-projen'];
-    expect(upgradeProjen).toBeDefined();
     expect(snapshot['.github/workflows/upgrade-projen-main.yml']).toBeUndefined();
   });
 
@@ -344,10 +317,9 @@ describe('deps upgrade', () => {
     const upgrade = yaml.parse(snapshot['.github/workflows/upgrade-main.yml']);
 
     // we expect the default auto-approve label to be applied
-    expect(upgrade.jobs.pr.steps[1]).toStrictEqual({
+    expect(upgrade.jobs.pr.steps[3]).toStrictEqual({
       name: 'Set git identity',
       run: [
-        'git config --global init.defaultBranch main',
         'git config user.name "hey"',
         'git config user.email "there@foo.com"',
       ].join('\n'),
@@ -663,18 +635,14 @@ test('enable anti-tamper', () => {
     packageManager: NodePackageManager.NPM,
     releaseToNpm: true,
     mutableBuild: false,
-    antitamper: true,
   });
 
   // THEN
   const workflowYaml = synthSnapshot(project)['.github/workflows/build.yml'];
   const workflow = yaml.parse(workflowYaml);
   expect(workflow.jobs.build.steps).toMatchSnapshot();
-  expect(workflow.jobs.build.steps).toEqual(expect.arrayContaining([
-    expect.objectContaining({
-      name: 'Anti-tamper check',
-    }),
-  ]));
+  expect(workflow.jobs['anti-tamper']).toBeDefined();
+  expect(workflow.jobs['anti-tamper']).toMatchSnapshot();
 });
 
 test('enabling dependabot does not overturn mergify: false', () => {
@@ -743,10 +711,9 @@ test('workflowGitIdentity can be used to customize the git identity used in buil
   // THEN
   const output = synthSnapshot(project);
   const buildWorkflow = yaml.parse(output['.github/workflows/build.yml']);
-  expect(buildWorkflow.jobs.build.steps[1]).toStrictEqual({
+  expect(buildWorkflow.jobs['self-mutation'].steps[3]).toStrictEqual({
     name: 'Set git identity',
     run: [
-      'git config --global init.defaultBranch main',
       'git config user.name "heya"',
       'git config user.email "there@z.com"',
     ].join('\n'),

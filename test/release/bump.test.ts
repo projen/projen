@@ -180,7 +180,7 @@ async function testBump(opts: { options?: Partial<BumpOptions>; commits?: { mess
   const git = (cmd: string) => execSync(`git ${cmd}`, { cwd: workdir, stdio: 'inherit' });
 
   // init a git repository
-  git('init');
+  git('init -b main');
   git('config user.email "you@example.com"');
   git('config user.name "Your Name"');
   git('config commit.gpgsign false');
