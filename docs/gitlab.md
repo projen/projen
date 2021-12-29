@@ -1,12 +1,12 @@
 # GitLab
 
-[GitLab CI/CD](https://docs.gitlab.com/ee/ci/yaml/gitlab_ci_yaml.html) uses a `.gitlab-ci.yml` configuration located in the root of your repository. Optionally `.gitlab-ci.yml` files can be split into multiple files to increase readability, or reduce duplication of the same configuration in multiple places by using [include](https://docs.gitlab.com/ee/ci/yaml/#include).
+[GitLab CI/CD](https://docs.gitlab.com/ee/ci/yaml/gitlab_ci_yaml.html) uses a `.gitlab-ci.yml` file located at the root of your repository to specify continuous integration and continuous deployment processes. GitLab CI configuration files can be split into multiple files using the [include](https://docs.gitlab.com/ee/ci/yaml/#include) fields in order to increase readability or reduce duplication of the same configuration in multiple places.
 
 ## Creating a configuration
 
 We support the creation of GitLab CI/CD Configurations through a `CiConfiguration` class and a higher level `GitlabConfiguration` and `NestedConfiguration` classes. To create a GitLab configuration you must first create a [project](./project.md) to assign the configuration to.
 
-When using any of the `gitlab` classes. The `.gitlab-ci.yml` is always located at the root of the project while other configuration files are located in the `.gitlab\ci-templates\` subdirectory.
+When using GitLab for CI, the `.gitlab-ci.yml` is always located at the root of the project while other configuration files are located in the `.gitlab\ci-templates\` subdirectory.
 
 ```js
 const { typescript, gitlab } = require('projen');
