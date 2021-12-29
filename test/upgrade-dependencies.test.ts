@@ -163,7 +163,7 @@ test('git identity can be customized', () => {
 
   const snapshot = synthSnapshot(project);
   const upgrade = yaml.parse(snapshot['.github/workflows/upgrade-main.yml']);
-  expect(upgrade.jobs.pr.steps[1]).toEqual({
+  expect(upgrade.jobs.pr.steps[3]).toEqual({
     name: 'Set git identity',
     run: [
       'git config user.name \"Foo Bar\"',

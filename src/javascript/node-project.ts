@@ -374,11 +374,6 @@ export class NodeProject extends GitHubProject {
   private readonly nodeVersion?: string;
 
   /**
-   * Indicates if workflows have anti-tamper checks.
-   */
-  public readonly antitamper: boolean;
-
-  /**
    * The package manager to use.
    *
    * @deprecated use `package.packageManager`
@@ -491,10 +486,6 @@ export class NodeProject extends GitHubProject {
     }
 
     const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
-
-    // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
-    // to decide if we can always run with --updateSnapshot
-    this.antitamper = buildEnabled && (options.antitamper ?? true);
 
     // configure jest if enabled
     // must be before the build/release workflows
@@ -915,9 +906,3 @@ export class NodeProject extends GitHubProject {
     return this.buildWorkflow?.buildJobIds[0];
   }
 }
-
-export interface NodeWorkflowSteps {
-  readonly antitamper: any[];
-  readonly install: any[];
-}
-

@@ -19,21 +19,21 @@ Object {
       },
     },
     Object {
-      "name": "Set git identity",
-      "run": "git config user.name \\"github-actions\\"
-git config user.email \\"github-actions@github.com\\"",
-    },
-    Object {
       "name": "Download patch",
       "uses": "actions/download-artifact@v2",
       "with": Object {
-        "name": ".upgrade.tmp.patch",
+        "name": ".repo.patch",
         "path": "\${{ runner.temp }}",
       },
     },
     Object {
       "name": "Apply patch",
-      "run": "[ -s \${{ runner.temp }}/.upgrade.tmp.patch ] && git apply \${{ runner.temp }}/.upgrade.tmp.patch || echo \\"Empty patch. Skipping.\\"",
+      "run": "[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"",
+    },
+    Object {
+      "name": "Set git identity",
+      "run": "git config user.name \\"github-actions\\"
+git config user.email \\"github-actions@github.com\\"",
     },
     Object {
       "id": "create-pr",
@@ -87,10 +87,69 @@ Array [
     "run": "npx projen build",
   },
   Object {
-    "name": "Anti-tamper check",
-    "run": "git diff --ignore-space-at-eol --exit-code",
+    "id": "self_mutation",
+    "name": "Check self-mutation",
+    "run": "git diff --exit-code || echo \\"::set-output name=self_mutation_happened::true\\"",
+  },
+  Object {
+    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "name": "Create Patch",
+    "run": "git add .
+git diff --patch --staged > .repo.patch",
+  },
+  Object {
+    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "name": "Upload patch",
+    "uses": "actions/upload-artifact@v2",
+    "with": Object {
+      "name": ".repo.patch",
+      "path": ".repo.patch",
+    },
   },
 ]
+`;
+
+exports[`enable anti-tamper 2`] = `
+Object {
+  "if": "\${{ needs.build.outputs.self_mutation_happened }}",
+  "needs": "build",
+  "permissions": Object {},
+  "runs-on": "ubuntu-latest",
+  "steps": Array [
+    Object {
+      "name": "Checkout",
+      "uses": "actions/checkout@v2",
+      "with": Object {
+        "ref": "\${{ github.event.pull_request.head.ref }}",
+        "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
+      },
+    },
+    Object {
+      "name": "Checkout",
+      "uses": "actions/checkout@v2",
+      "with": Object {
+        "ref": "\${{ github.event.pull_request.head.ref }}",
+        "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
+      },
+    },
+    Object {
+      "name": "Download patch",
+      "uses": "actions/download-artifact@v2",
+      "with": Object {
+        "name": ".repo.patch",
+        "path": "\${{ runner.temp }}",
+      },
+    },
+    Object {
+      "name": "Apply patch",
+      "run": "[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"",
+    },
+    Object {
+      "name": "Found diff after build (update your branch)",
+      "run": "git diff --exit-code",
+    },
+  ],
+}
 `;
 
 exports[`mutableBuild will push changes to PR branches 1`] = `
@@ -120,15 +179,15 @@ Array [
     "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
     "name": "Create Patch",
     "run": "git add .
-git diff --patch --staged > .upgrade.tmp.patch",
+git diff --patch --staged > .repo.patch",
   },
   Object {
     "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
     "name": "Upload patch",
     "uses": "actions/upload-artifact@v2",
     "with": Object {
-      "name": ".upgrade.tmp.patch",
-      "path": ".upgrade.tmp.patch",
+      "name": ".repo.patch",
+      "path": ".repo.patch",
     },
   },
 ]

@@ -317,7 +317,7 @@ describe('deps upgrade', () => {
     const upgrade = yaml.parse(snapshot['.github/workflows/upgrade-main.yml']);
 
     // we expect the default auto-approve label to be applied
-    expect(upgrade.jobs.pr.steps[1]).toStrictEqual({
+    expect(upgrade.jobs.pr.steps[3]).toStrictEqual({
       name: 'Set git identity',
       run: [
         'git config user.name "hey"',
@@ -635,18 +635,14 @@ test('enable anti-tamper', () => {
     packageManager: NodePackageManager.NPM,
     releaseToNpm: true,
     mutableBuild: false,
-    antitamper: true,
   });
 
   // THEN
   const workflowYaml = synthSnapshot(project)['.github/workflows/build.yml'];
   const workflow = yaml.parse(workflowYaml);
   expect(workflow.jobs.build.steps).toMatchSnapshot();
-  expect(workflow.jobs.build.steps).toEqual(expect.arrayContaining([
-    expect.objectContaining({
-      name: 'Anti-tamper check',
-    }),
-  ]));
+  expect(workflow.jobs['anti-tamper']).toBeDefined();
+  expect(workflow.jobs['anti-tamper']).toMatchSnapshot();
 });
 
 test('enabling dependabot does not overturn mergify: false', () => {
