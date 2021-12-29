@@ -11,6 +11,8 @@ const REPO_REF = '${{ github.event.pull_request.head.repo.full_name }}';
 const PRIMARY_JOB_ID = 'build';
 const SELF_MUTATION_STEP = 'self_mutation';
 const SELF_MUTATION_HAPPENED = 'self_mutation_happened';
+const IS_FORK = 'github.event.pull_request.head.repo.full_name != github.repository';
+const NOT_FORK = 'github.event.pull_request.head.repo.full_name == github.repository';
 
 export interface BuildWorkflowOptions {
   /**
@@ -131,21 +133,46 @@ export class BuildWorkflow extends Component {
           outputName: SELF_MUTATION_HAPPENED,
         },
       },
-      steps: (() => this.renderSteps()) as any,
+      steps: (() => this.renderBuildSteps()) as any,
     });
 
     this.primaryJobId = PRIMARY_JOB_ID;
-
     this._buildJobIds = [PRIMARY_JOB_ID];
 
+    const antitamperCondition = this.mutableBuilds
+      ? `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_HAPPENED} && ${IS_FORK} }}`
+      : `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_HAPPENED} }}`;
+
+    this.workflow.addJob('anti-tamper', {
+      runsOn: ['ubuntu-latest'],
+      if: antitamperCondition,
+      permissions: {},
+      needs: [this.primaryJobId],
+      steps: [
+        {
+          name: 'Checkout',
+          uses: 'actions/checkout@v2',
+          with: {
+            repository: REPO_REF,
+            ref: BRANCH_REF,
+          },
+        },
+        ...WorkflowActions.downloadApplyGitPatch(),
+        {
+          name: 'Found diff after build (update your branch)',
+          run: 'git diff --exit-code',
+        },
+      ],
+    });
+
     if (this.mutableBuilds) {
-      this.workflow.addJob('self-mutate', {
+      this.workflow.addJob('self-mutation', {
         runsOn: ['ubuntu-latest'],
         permissions: {
           contents: JobPermission.WRITE,
         },
         needs: [this.primaryJobId],
-        if: `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_HAPPENED} }}`,
+        if: `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_HAPPENED} && ${NOT_FORK} }}`,
         steps: [
           {
             name: 'Checkout',
@@ -242,24 +269,23 @@ export class BuildWorkflow extends Component {
   /**
    * Called (lazily) during synth to render the build job steps.
    */
-  private renderSteps(): JobStep[] {
-    const steps = new Array<JobStep>();
-
-    steps.push({
-      name: 'Checkout',
-      uses: 'actions/checkout@v2',
-      with: {
-        ref: BRANCH_REF,
-        repository: REPO_REF,
+  private renderBuildSteps(): JobStep[] {
+    const steps: JobStep[] = [
+      {
+        name: 'Checkout',
+        uses: 'actions/checkout@v2',
+        with: {
+          ref: BRANCH_REF,
+          repository: REPO_REF,
+        },
       },
-    });
-
-    steps.push(...this.preBuildSteps);
-    steps.push({
-      name: this.buildTask.name,
-      run: this.github.project.runTaskCommand(this.buildTask),
-    });
-    steps.push(...this.postBuildSteps);
+      ...this.preBuildSteps,
+      {
+        name: this.buildTask.name,
+        run: this.github.project.runTaskCommand(this.buildTask),
+      },
+      ...this.postBuildSteps,
+    ];
 
     if (this.mutableBuilds) {
       steps.push(

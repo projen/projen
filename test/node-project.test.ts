@@ -715,7 +715,7 @@ test('workflowGitIdentity can be used to customize the git identity used in buil
   // THEN
   const output = synthSnapshot(project);
   const buildWorkflow = yaml.parse(output['.github/workflows/build.yml']);
-  expect(buildWorkflow.jobs['self-mutate'].steps[3]).toStrictEqual({
+  expect(buildWorkflow.jobs['self-mutation'].steps[3]).toStrictEqual({
     name: 'Set git identity',
     run: [
       'git config user.name "heya"',
