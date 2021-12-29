@@ -51,12 +51,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
-  anti-tamper:
+  anti-tempar:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
     if: ${{ needs.build.outputs.diff_exists &&
-      github.event.pull_request.head.repo.full_name != github.repository }}
+      !(!(github.event.pull_request.head.repo.full_name !=
+      github.repository)&&!contains(github.event.pull_request.labels.*.name,
+      'auto-approve')) }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -79,7 +81,9 @@ jobs:
     permissions:
       contents: write
     if: ${{ needs.build.outputs.diff_exists &&
-      !(github.event.pull_request.head.repo.full_name != github.repository) }}
+      !(github.event.pull_request.head.repo.full_name !=
+      github.repository)&&!contains(github.event.pull_request.labels.*.name,
+      'auto-approve') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -105,7 +109,9 @@ jobs:
             git commit -m "chore: self mutation"
             git push origin HEAD:${{ github.event.pull_request.head.ref }}
   package-js:
-    needs: build
+    needs:
+      - anti-tempar
+      - self-mutation
     runs-on: ubuntu-latest
     permissions: {}
     if: ${{ ! needs.build.outputs.diff_exists }}
@@ -127,7 +133,9 @@ jobs:
       - name: Collect js Artifact
         run: mv .repo/dist dist
   package-java:
-    needs: build
+    needs:
+      - anti-tempar
+      - self-mutation
     runs-on: ubuntu-latest
     permissions: {}
     if: ${{ ! needs.build.outputs.diff_exists }}
@@ -153,7 +161,9 @@ jobs:
       - name: Collect java Artifact
         run: mv .repo/dist dist
   package-python:
-    needs: build
+    needs:
+      - anti-tempar
+      - self-mutation
     runs-on: ubuntu-latest
     permissions: {}
     if: ${{ ! needs.build.outputs.diff_exists }}
@@ -178,7 +188,9 @@ jobs:
       - name: Collect python Artifact
         run: mv .repo/dist dist
   package-go:
-    needs: build
+    needs:
+      - anti-tempar
+      - self-mutation
     runs-on: ubuntu-latest
     permissions: {}
     if: ${{ ! needs.build.outputs.diff_exists }}

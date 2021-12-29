@@ -9,8 +9,11 @@ import { Project } from '../project';
 const PULL_REQUEST_REF = '${{ github.event.pull_request.head.ref }}';
 const PULL_REQUEST_REPOSITORY = '${{ github.event.pull_request.head.repo.full_name }}';
 const BUILD_JOBID = 'build';
+const ANTI_TAMPER_JOBID = 'anti-tempar';
+const SELF_MUTATION_JOBID = 'self-mutation';
 const DIFF_STEP = 'diff';
 const DIFF_EXISTS = 'diff_exists';
+const DIFF_EXISTS_CONDITION = `needs.${BUILD_JOBID}.outputs.${DIFF_EXISTS}`;
 const IS_FORK = 'github.event.pull_request.head.repo.full_name != github.repository';
 const NOT_FORK = `!(${IS_FORK})`;
 
@@ -80,6 +83,7 @@ export class BuildWorkflow extends Component {
   private readonly workflow: GithubWorkflow;
   private readonly artifactsDirectory?: string;
   private readonly mutableBuilds: boolean;
+  private readonly selfMutationConditions: string;
 
   private readonly _postBuildJobs: string[] = [];
 
@@ -99,22 +103,14 @@ export class BuildWorkflow extends Component {
     this.artifactsDirectory = options.artifactsDirectory;
     this.mutableBuilds = options.mutableBuild ?? true;
 
-    const conditions = [
-      // if a diff doesn't exist, no need to update anything.
-      `needs.${BUILD_JOBID}.outputs.${DIFF_EXISTS}`,
-
-      // if its a fork, we cant push to it.
-      NOT_FORK,
-    ];
-
     const autoApproveLabel = (this.project as GitHubProject).autoApprove?.label;
 
+    const selfMutationConditions = [NOT_FORK];
     if (autoApproveLabel) {
-      // if the pr is auto approved we don't perform self-mutation
-      // because it may result in unexpected changes not being reviewed.
-      conditions.push(`!contains(github.event.pull_request.labels.*.name, '${autoApproveLabel}')`);
+      selfMutationConditions.push(`!contains(github.event.pull_request.labels.*.name, '${autoApproveLabel}')`);
     }
 
+    this.selfMutationConditions = selfMutationConditions.join('&&');
 
     this.workflow = new GithubWorkflow(github, 'build');
     this.workflow.on({
@@ -193,9 +189,9 @@ export class BuildWorkflow extends Component {
     steps.push(...job.steps);
 
     this.workflow.addJob(id, {
-      needs: [BUILD_JOBID],
+      needs: [ANTI_TAMPER_JOBID, SELF_MUTATION_JOBID],
       // only run if build did not self-mutate
-      if: `\${{ ! needs.${BUILD_JOBID}.outputs.${DIFF_EXISTS} }}`,
+      if: `\${{ ! ${DIFF_EXISTS_CONDITION}} }}`,
       ...job,
       steps: steps,
     });
@@ -206,13 +202,13 @@ export class BuildWorkflow extends Component {
 
 
   private addSelfMutationJob() {
-    this.workflow.addJob('self-mutation', {
+    this.workflow.addJob(SELF_MUTATION_JOBID, {
       runsOn: ['ubuntu-latest'],
       permissions: {
         contents: JobPermission.WRITE,
       },
       needs: [BUILD_JOBID],
-      if: `\${{ ${conditions.join('&&')} }}`,
+      if: `\${{ ${DIFF_EXISTS_CONDITION} && ${this.selfMutationConditions} }}`,
       steps: [
         ...WorkflowActions.checkoutWithPatch({
           // we need to use a PAT so that our push will trigger the build workflow
@@ -237,22 +233,9 @@ export class BuildWorkflow extends Component {
    * Adds a job that fails if there were file changes.
    */
   private addAntiTamperJob() {
-
-    const conditions = [
-      // if a diff doesn't exist, no tampering has been made.
-      `needs.${BUILD_JOBID}.outputs.${DIFF_EXISTS}`,
-    ];
-
-    if (options.onlyForks) {
-      //
-    }
-    const antitamperCondition = options.onlyForks
-      ? `\${{ needs.${BUILD_JOBID}.outputs.${DIFF_EXISTS} && ${IS_FORK} }}`
-      : `\${{ needs.${BUILD_JOBID}.outputs.${DIFF_EXISTS} }}`;
-
-    this.workflow.addJob('anti-tamper', {
+    this.workflow.addJob(ANTI_TAMPER_JOBID, {
       runsOn: ['ubuntu-latest'],
-      if: antitamperCondition,
+      if: `\${{ ${DIFF_EXISTS_CONDITION} && !(${this.selfMutationConditions}) }}`,
       permissions: {},
       needs: [BUILD_JOBID],
       steps: [
