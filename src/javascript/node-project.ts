@@ -871,7 +871,7 @@ export class NodeProject extends GitHubProject {
   * Defines Prettier ignore Patterns
   * these patterns will be added to the file .prettierignore
   *
-  * @param {string} pattern filepatterns so exclude from prettier formatting
+  * @param pattern filepatterns so exclude from prettier formatting
   */
   public addPrettierIgnore(pattern: string) {
     this.prettierIgnore?.addPatterns(pattern);
