@@ -39,7 +39,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -135,7 +134,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -231,7 +229,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -327,7 +324,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -423,7 +419,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -519,7 +514,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -615,7 +609,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -711,7 +704,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -807,7 +799,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -903,7 +894,6 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      actions: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2

@@ -5,7 +5,6 @@ Object {
   "name": "Create Pull Request",
   "needs": "upgrade",
   "permissions": Object {
-    "actions": "write",
     "contents": "write",
     "pull-requests": "write",
   },
