@@ -12,21 +12,23 @@ export class WorkflowActions {
    * Creates a .patch file from the current git diff and uploads it as an
    * artifact. Use `checkoutWithPatch` to download and apply in another job.
    *
+   * If a patch was uploaded,
+   *
    * @param options Options
    * @returns Job steps
    */
-  public static createUploadGitPatch(options: WorkflowActionsCommonOptions = {}): JobStep[] {
+  public static createUploadGitPatch(options: CreateUploadGitPatchOptions): JobStep[] {
     return [
       {
-        if: options.if,
-        name: 'Create Patch',
+        id: options.stepId,
+        name: 'Find mutations',
         run: [
           'git add .',
-          `git diff --staged --patch > ${GIT_PATCH_FILE}`,
+          `git diff --staged --patch --exit-code > ${GIT_PATCH_FILE} || echo "::set-output name=${options.outputName}::true"`,
         ].join('\n'),
       },
       {
-        if: options.if,
+        if: `\${{ steps.${options.stepId}.outputs.${options.outputName} }}`,
         name: 'Upload patch',
         uses: 'actions/upload-artifact@v2',
         with: { name: GIT_PATCH_FILE, path: GIT_PATCH_FILE },
@@ -53,13 +55,11 @@ export class WorkflowActions {
         },
       },
       {
-        if: options.if,
         name: 'Download patch',
         uses: 'actions/download-artifact@v2',
         with: { name: GIT_PATCH_FILE, path: RUNNER_TEMP },
       },
       {
-        if: options.if,
         name: 'Apply patch',
         run: `[ -s ${RUNNER_TEMP}/${GIT_PATCH_FILE} ] && git apply ${RUNNER_TEMP}/${GIT_PATCH_FILE} || echo "Empty patch. Skipping."`,
       },
@@ -85,7 +85,7 @@ export class WorkflowActions {
 /**
  * Options for `checkoutWithPatch`.
  */
-export interface CheckoutWithPatchOptions extends WorkflowActionsCommonOptions {
+export interface CheckoutWithPatchOptions {
   /**
    * A GitHub token to use when checking out the repository.
    *
@@ -108,10 +108,14 @@ export interface CheckoutWithPatchOptions extends WorkflowActionsCommonOptions {
   readonly repository?: string;
 }
 
-export interface WorkflowActionsCommonOptions {
+export interface CreateUploadGitPatchOptions {
   /**
-   * Condition
-   * @default - no condition
+   * The step ID which produces the output which indicates if a patch was created.
    */
-  readonly if?: string;
+  readonly stepId: string;
+
+  /**
+   * The name of the output to emit. It will be set to `true` if there was a diff.
+   */
+  readonly outputName: string;
 }

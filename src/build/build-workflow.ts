@@ -235,7 +235,7 @@ export class BuildWorkflow extends Component {
         }),
         {
           name: 'Found diff after build (update your branch)',
-          run: 'git diff --staged --exit-code',
+          run: 'git add . && diff --staged --exit-code',
         },
       ],
     });
@@ -264,14 +264,9 @@ export class BuildWorkflow extends Component {
 
       ...this.postBuildSteps,
 
-      {
-        name: 'Check self-mutation',
-        id: SELF_MUTATION_STEP,
-        run: `git diff --staged --exit-code || echo "::set-output name=${SELF_MUTATION_HAPPENED_OUTPUT}::true"`,
-      },
-
       ...WorkflowActions.createUploadGitPatch({
-        if: `\${{ steps.${SELF_MUTATION_STEP}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} }}`,
+        stepId: SELF_MUTATION_STEP,
+        outputName: SELF_MUTATION_HAPPENED_OUTPUT,
       }),
 
       // upload the build artifact only if we have post-build jobs and only if

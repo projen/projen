@@ -31,15 +31,12 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           directory: coverage
-      - name: Check self-mutation
-        id: self_mutation
-        run: git diff --staged --exit-code || echo "::set-output
-          name=self_mutation_happened::true"
-      - if: ${{ steps.self_mutation.outputs.self_mutation_happened }}
-        name: Create Patch
-        run: |-
+      - id: self_mutation
+        name: Find mutations
+        run: >-
           git add .
-          git diff --staged --patch > .repo.patch
+
+          git diff --staged --patch --exit-code > .repo.patch || echo "::set-output name=self_mutation_happened::true"
       - if: ${{ steps.self_mutation.outputs.self_mutation_happened }}
         name: Upload patch
         uses: actions/upload-artifact@v2
@@ -73,7 +70,7 @@ jobs:
         run: '[ -s ${{ runner.temp }}/.repo.patch ] && git apply ${{ runner.temp
           }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Found diff after build (update your branch)
-        run: git diff --staged --exit-code
+        run: git add . && diff --staged --exit-code
   self-mutation:
     needs: build
     runs-on: ubuntu-latest
