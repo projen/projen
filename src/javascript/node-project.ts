@@ -505,7 +505,6 @@ export class NodeProject extends GitHubProject {
     if (buildEnabled && this.github) {
       this.buildWorkflow = new BuildWorkflow(this, {
         buildTask: this.buildTask,
-        antitamper: this.antitamper,
         artifactsDirectory: this.artifactsDirectory,
         containerImage: options.workflowContainerImage,
         gitIdentity: this.workflowGitIdentity,

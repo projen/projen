@@ -8,9 +8,9 @@ import { Project } from '../project';
 
 const BRANCH_REF = '${{ github.event.pull_request.head.ref }}';
 const REPO_REF = '${{ github.event.pull_request.head.repo.full_name }}';
-const PRIMARY_JOB_ID = 'build';
+const BUILD_JOBID = 'build';
 const SELF_MUTATION_STEP = 'self_mutation';
-const SELF_MUTATION_HAPPENED = 'self_mutation_happened';
+const SELF_MUTATION_HAPPENED_OUTPUT = 'self_mutation_happened';
 const IS_FORK = 'github.event.pull_request.head.repo.full_name != github.repository';
 const NOT_FORK = 'github.event.pull_request.head.repo.full_name == github.repository';
 
@@ -69,29 +69,18 @@ export interface BuildWorkflowOptions {
    * @default {}
    */
   readonly env?: { [key: string]: string };
-
-  /**
-   * Enable anti-tamper check.
-   *
-   * @default true
-   */
-  readonly antitamper?: boolean;
 }
 
 export class BuildWorkflow extends Component {
   private readonly postBuildSteps: JobStep[];
   private readonly preBuildSteps: JobStep[];
-  private readonly mutableBuilds: boolean;
   private readonly gitIdentity: GitIdentity;
   private readonly buildTask: Task;
   private readonly github: GitHub;
   private readonly workflow: GithubWorkflow;
-  private readonly primaryJobId: string;
   private readonly artifactsDirectory?: string;
 
-  private readonly _buildJobIds: string[];
-  private uploadArtitactSteps?: JobStep[];
-  private readonly antitamper: boolean;
+  private readonly _postBuildJobs: string[] = [];
 
   constructor(project: Project, options: BuildWorkflowOptions) {
     super(project);
@@ -102,22 +91,28 @@ export class BuildWorkflow extends Component {
     }
 
     this.github = github;
-
     this.preBuildSteps = options.preBuildSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
     this.gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.buildTask = options.buildTask;
     this.artifactsDirectory = options.artifactsDirectory;
-    this.mutableBuilds = options.mutableBuild ?? true;
-    this.workflow = new GithubWorkflow(github, 'build');
-    this.antitamper = options.antitamper ?? true;
+    const mutableBuilds = options.mutableBuild ?? true;
 
+    this.workflow = new GithubWorkflow(github, 'build');
     this.workflow.on({
       pullRequest: {},
       workflowDispatch: {}, // allow manual triggering
     });
 
-    this.workflow.addJob(PRIMARY_JOB_ID, {
+    this.addBuildJob(options);
+    this.addAntiTamperJob({ onlyForks: mutableBuilds });
+    if (mutableBuilds) {
+      this.addSelfMutationJob();
+    }
+  }
+
+  private addBuildJob(options: BuildWorkflowOptions) {
+    this.workflow.addJob(BUILD_JOBID, {
       runsOn: ['ubuntu-latest'],
       container: options.containerImage ? { image: options.containerImage } : undefined,
       env: {
@@ -127,27 +122,120 @@ export class BuildWorkflow extends Component {
       permissions: {
         contents: JobPermission.WRITE,
       },
+      steps: (() => this.renderBuildSteps()) as any,
       outputs: {
-        [SELF_MUTATION_HAPPENED]: {
+        [SELF_MUTATION_HAPPENED_OUTPUT]: {
           stepId: SELF_MUTATION_STEP,
-          outputName: SELF_MUTATION_HAPPENED,
+          outputName: SELF_MUTATION_HAPPENED_OUTPUT,
         },
       },
-      steps: (() => this.renderBuildSteps()) as any,
+    });
+  }
+
+  /**
+   * Returns a list of job IDs that are part of the build.
+   */
+  public get buildJobIds(): string[] {
+    return [BUILD_JOBID, ...this._postBuildJobs];
+  }
+
+  /**
+   * Adds steps that are executed after the build.
+   * @param steps The job steps
+   */
+  public addPostBuildSteps(...steps: JobStep[]): void {
+    this.postBuildSteps.push(...steps);
+  }
+
+  /**
+   * Adds another job to the build workflow which is executed after the build
+   * job succeeded.
+   *
+   * Jobs are executed _only_ if the build did NOT self mutate. If the build
+   * self-mutate, the branch will either be updated or the build will fail (in
+   * forks), so there is no point in executing the post-build job.
+   *
+   * @param id The id of the new job
+   * @param job The job specification
+   */
+  public addPostBuildJob(id: string, job: Job) {
+    const steps = [];
+
+    if (this.artifactsDirectory) {
+      steps.push({
+        name: 'Download build artifacts',
+        uses: 'actions/download-artifact@v2',
+        with: {
+          name: BUILD_ARTIFACT_NAME,
+          path: this.artifactsDirectory,
+        },
+      });
+    }
+
+    steps.push(...job.steps);
+
+    this.workflow.addJob(id, {
+      needs: [BUILD_JOBID],
+      // only run if build did not self-mutate
+      if: `\${{ ! needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} }}`,
+      ...job,
+      steps: steps,
     });
 
-    this.primaryJobId = PRIMARY_JOB_ID;
-    this._buildJobIds = [PRIMARY_JOB_ID];
+    // add to the list of build job IDs
+    this._postBuildJobs.push(id);
+  }
 
-    const antitamperCondition = this.mutableBuilds
-      ? `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_HAPPENED} && ${IS_FORK} }}`
-      : `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_HAPPENED} }}`;
+
+  private addSelfMutationJob() {
+    this.workflow.addJob('self-mutation', {
+      runsOn: ['ubuntu-latest'],
+      permissions: {
+        contents: JobPermission.WRITE,
+      },
+      needs: [BUILD_JOBID],
+      if: `\${{ needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} && ${NOT_FORK} }}`,
+      steps: [
+        {
+          name: 'Checkout',
+          uses: 'actions/checkout@v2',
+          with: {
+            // we must use a PAT in order to be able to trigger build
+            // workflows again, update workflow files, etc. but this is safe
+            // here because there is no foreign code execution here just
+            // applying the patch and pushing it to the repo.
+            token: `\${{ secrets.${this.workflow.projenTokenSecret} }}`,
+            repository: REPO_REF,
+            ref: BRANCH_REF,
+          },
+        },
+        ...WorkflowActions.downloadApplyGitPatch(),
+        ...WorkflowActions.setGitIdentity(this.gitIdentity),
+        {
+          name: 'Push changes',
+          run: [
+            '  git add .',
+            '  git commit -m "chore: self mutation"',
+            `  git push origin HEAD:${BRANCH_REF}`,
+          ].join('\n'),
+        },
+      ],
+    });
+  }
+
+  /**
+   * Adds a job that fails if there were file changes.
+   */
+  private addAntiTamperJob(options: { onlyForks: boolean }) {
+    const antitamperCondition = options.onlyForks
+      ? `\${{ needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} && ${IS_FORK} }}`
+      : `\${{ needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} }}`;
 
     this.workflow.addJob('anti-tamper', {
       runsOn: ['ubuntu-latest'],
       if: antitamperCondition,
       permissions: {},
-      needs: [this.primaryJobId],
+      needs: [BUILD_JOBID],
       steps: [
         {
           name: 'Checkout',
@@ -164,113 +252,13 @@ export class BuildWorkflow extends Component {
         },
       ],
     });
-
-    if (this.mutableBuilds) {
-      this.workflow.addJob('self-mutation', {
-        runsOn: ['ubuntu-latest'],
-        permissions: {
-          contents: JobPermission.WRITE,
-        },
-        needs: [this.primaryJobId],
-        if: `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_HAPPENED} && ${NOT_FORK} }}`,
-        steps: [
-          {
-            name: 'Checkout',
-            uses: 'actions/checkout@v2',
-            with: {
-              // we must use a PAT in order to be able to trigger build
-              // workflows again, update workflow files, etc. but this is safe
-              // here because there is no foreign code execution here just
-              // applying the patch and pushing it to the repo.
-              token: `\${{ secrets.${this.workflow.projenTokenSecret} }}`,
-              repository: REPO_REF,
-              ref: BRANCH_REF,
-            },
-          },
-          ...WorkflowActions.downloadApplyGitPatch(),
-          ...WorkflowActions.setGitIdentity(this.gitIdentity),
-          {
-            name: 'Push changes',
-            run: [
-              '  git add .',
-              '  git commit -m "chore: self mutation"',
-              `  git push origin HEAD:${BRANCH_REF}`,
-            ].join('\n'),
-          },
-        ],
-      });
-    }
-  }
-
-  /**
-   * Returns a list of job IDs that are part of the build.
-   */
-  public get buildJobIds(): string[] {
-    return [...this._buildJobIds];
-  }
-
-  /**
-   * Adds steps that are executed after the build.
-   * @param steps The job steps
-   */
-  public addPostBuildSteps(...steps: JobStep[]): void {
-    this.postBuildSteps.push(...steps);
-  }
-
-  /**
-   * Adds another job to the build workflow which is executed after the build job succeeded.
-   * @param id The id of the new job
-   * @param job The job specification
-   */
-  public addPostBuildJob(id: string, job: Job) {
-    const steps = [];
-
-    if (this.artifactsDirectory) {
-
-      // add a step at the end of the build workflow which will upload the
-      // artifact so we can download it in each post-build job (do it once).
-      if (!this.uploadArtitactSteps) {
-        this.uploadArtitactSteps = [{
-          name: 'Upload artifact',
-          uses: 'actions/upload-artifact@v2.1.1',
-          // only upload the artifact if self mutation did not happen. if it
-          // did, we are going to push it to the branch and rebuild.
-          if: `\${{ ! steps.${SELF_MUTATION_STEP}.outputs.${SELF_MUTATION_HAPPENED} }}`,
-          with: {
-            name: BUILD_ARTIFACT_NAME,
-            path: this.artifactsDirectory,
-          },
-        }];
-      }
-
-      steps.push({
-        name: 'Download build artifacts',
-        uses: 'actions/download-artifact@v2',
-        with: {
-          name: BUILD_ARTIFACT_NAME,
-          path: this.artifactsDirectory,
-        },
-      });
-    }
-
-    steps.push(...job.steps);
-
-    this.workflow.addJob(id, {
-      needs: [this.primaryJobId],
-      if: `\${{ ! needs.${this.primaryJobId}.outputs.${SELF_MUTATION_HAPPENED} }}`, // only run if build did not self-mutate
-      ...job,
-      steps: steps,
-    });
-
-    // add to the list of build job IDs
-    this._buildJobIds.push(id);
   }
 
   /**
    * Called (lazily) during synth to render the build job steps.
    */
   private renderBuildSteps(): JobStep[] {
-    const steps: JobStep[] = [
+    return [
       {
         name: 'Checkout',
         uses: 'actions/checkout@v2',
@@ -279,38 +267,37 @@ export class BuildWorkflow extends Component {
           repository: REPO_REF,
         },
       },
+
       ...this.preBuildSteps,
+
       {
         name: this.buildTask.name,
         run: this.github.project.runTaskCommand(this.buildTask),
       },
+
       ...this.postBuildSteps,
-    ];
 
-    if (this.mutableBuilds) {
-      steps.push(
-        {
-          name: 'Check self-mutation',
-          id: SELF_MUTATION_STEP,
-          run: `git diff --exit-code || echo "::set-output name=${SELF_MUTATION_HAPPENED}::true"`,
+      {
+        name: 'Check self-mutation',
+        id: SELF_MUTATION_STEP,
+        run: `git diff --exit-code || echo "::set-output name=${SELF_MUTATION_HAPPENED_OUTPUT}::true"`,
+      },
+
+      ...WorkflowActions.createUploadGitPatch({
+        if: `\${{ steps.${SELF_MUTATION_STEP}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} }}`,
+      }),
+
+      // upload the build artifact only if we have post-build jobs and only if
+      // there we NO self mutation.
+      ...(this._postBuildJobs.length == 0 ? [] : [{
+        name: 'Upload artifact',
+        uses: 'actions/upload-artifact@v2.1.1',
+        if: `\${{ ! steps.${SELF_MUTATION_STEP}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} }}`,
+        with: {
+          name: BUILD_ARTIFACT_NAME,
+          path: this.artifactsDirectory,
         },
-        ...WorkflowActions.createUploadGitPatch({
-          if: `\${{ steps.${SELF_MUTATION_STEP}.outputs.${SELF_MUTATION_HAPPENED} }}`,
-        }),
-      );
-    } else if (this.antitamper) {
-      // anti-tamper check (fails if there were changes to committed files)
-      // this will identify any non-committed files generated during build (e.g. test snapshots)
-      steps.push({
-        name: 'Anti-tamper check',
-        run: 'git diff --ignore-space-at-eol --exit-code',
-      });
-    }
-
-    if (this.uploadArtitactSteps) {
-      steps.push(...this.uploadArtitactSteps);
-    }
-
-    return steps;
+      }]),
+    ];
   }
 }
