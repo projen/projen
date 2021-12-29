@@ -235,7 +235,7 @@ export class BuildWorkflow extends Component {
         }),
         {
           name: 'Found diff after build (update your branch)',
-          run: 'git diff --exit-code',
+          run: 'git diff --staged --exit-code',
         },
       ],
     });
@@ -267,7 +267,7 @@ export class BuildWorkflow extends Component {
       {
         name: 'Check self-mutation',
         id: SELF_MUTATION_STEP,
-        run: `git diff --exit-code || echo "::set-output name=${SELF_MUTATION_HAPPENED_OUTPUT}::true"`,
+        run: `git diff --staged --exit-code || echo "::set-output name=${SELF_MUTATION_HAPPENED_OUTPUT}::true"`,
       },
 
       ...WorkflowActions.createUploadGitPatch({
