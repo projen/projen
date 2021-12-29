@@ -1,6 +1,6 @@
 import { Component } from '../component';
 import { GitHub, GithubWorkflow, GitIdentity, workflows } from '../github';
-import { DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from '../github/constants';
+import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { WorkflowActions } from '../github/workflow-actions';
 import { ContainerOptions, JobStep } from '../github/workflows-model';
 import { NodeProject } from '../javascript';
@@ -226,7 +226,6 @@ export class UpgradeDependencies extends Component {
         uses: 'actions/checkout@v2',
         with: branch ? { ref: branch } : undefined,
       },
-      setGitIdentityStep(this.gitIdentity),
       ...this._project.installWorkflowSteps,
       {
         name: 'Upgrade dependencies',
@@ -235,7 +234,6 @@ export class UpgradeDependencies extends Component {
     ];
 
     steps.push(...this.postBuildSteps);
-
     steps.push(...WorkflowActions.createUploadGitPatch());
 
     return {
@@ -284,7 +282,7 @@ export class UpgradeDependencies extends Component {
           ref: upgrade.ref,
         },
       },
-      setGitIdentityStep(this.gitIdentity),
+      ...WorkflowActions.setGitIdentity(this.gitIdentity),
       ...WorkflowActions.downloadApplyGitPatch(),
       {
         name: 'Create Pull Request',

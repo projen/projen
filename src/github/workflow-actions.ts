@@ -1,3 +1,4 @@
+import { GitIdentity } from '.';
 import { JobStep } from './workflows-model';
 
 const GIT_PATCH_FILE = '.upgrade.tmp.patch';
@@ -41,6 +42,17 @@ export class WorkflowActions {
         run: `[ -s ${RUNNER_TEMP}/${GIT_PATCH_FILE} ] && git apply ${RUNNER_TEMP}/${GIT_PATCH_FILE} || echo "Empty patch. Skipping."`,
       },
     ];
+  }
+
+  public static setGitIdentity(id: GitIdentity): JobStep[] {
+    return [{
+      name: 'Set git identity',
+      run: [
+        'git config --global init.defaultBranch main',
+        `git config user.name "${id.name}"`,
+        `git config user.email "${id.email}"`,
+      ].join('\n'),
+    }];
   }
 
   // /**

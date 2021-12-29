@@ -1,7 +1,7 @@
 import { Task } from '..';
 import { Component } from '../component';
 import { GitHub, GithubWorkflow, GitIdentity } from '../github';
-import { BUILD_ARTIFACT_NAME, DEFAULT_GITHUB_ACTIONS_USER, setGitIdentityStep } from '../github/constants';
+import { BUILD_ARTIFACT_NAME, DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { WorkflowActions } from '../github/workflow-actions';
 import { Job, JobPermission, JobStep } from '../github/workflows-model';
 import { Project } from '../project';
@@ -161,6 +161,7 @@ export class BuildWorkflow extends Component {
             },
           },
           ...WorkflowActions.downloadApplyGitPatch(),
+          ...WorkflowActions.setGitIdentity(this.gitIdentity),
           {
             name: 'Push changes',
             run: [
@@ -253,7 +254,6 @@ export class BuildWorkflow extends Component {
       },
     });
 
-    steps.push(setGitIdentityStep(this.gitIdentity));
     steps.push(...this.preBuildSteps);
     steps.push({
       name: this.buildTask.name,
