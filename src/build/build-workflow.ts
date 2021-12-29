@@ -144,7 +144,7 @@ export class BuildWorkflow extends Component {
         permissions: {
           contents: JobPermission.WRITE,
         },
-        needs: (() => this._buildJobIds) as any, // wait for all build jobs to finish
+        needs: [this.primaryJobId],
         if: `\${{ needs.${this.primaryJobId}.outputs.${SELF_MUTATION_HAPPENED} }}`,
         steps: [
           {
@@ -224,6 +224,7 @@ export class BuildWorkflow extends Component {
 
     this.workflow.addJob(id, {
       needs: [this.primaryJobId],
+      if: `\${{ ! needs.${this.primaryJobId}.outputs.${SELF_MUTATION_HAPPENED} }}`, // only run if build did not self-mutate
       ...job,
       steps: steps,
     });
