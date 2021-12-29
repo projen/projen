@@ -2,7 +2,7 @@
 
 exports[`deps upgrade commit can be signed 1`] = `
 Object {
-  "if": "\${{ ! needs.upgrade.outputs.patch_created }}",
+  "if": "\${{ needs.upgrade.outputs.patch_created }}",
   "name": "Create Pull Request",
   "needs": "upgrade",
   "permissions": Object {

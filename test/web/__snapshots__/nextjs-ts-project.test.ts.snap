@@ -227,7 +227,7 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-    if: \${{ ! needs.upgrade.outputs.patch_created }}
+    if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
