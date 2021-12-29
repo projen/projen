@@ -14,6 +14,8 @@ function context(value: string) {
 const REPO = context('github.repository');
 const RUN_ID = context('github.run_id');
 const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
+const CREATE_PATCH_STEP_ID = 'create_patch';
+const PATCH_CREATED_OUTPUT = 'patch_created';
 
 /**
  * Options for `UpgradeDependencies`.
@@ -212,7 +214,6 @@ export class UpgradeDependencies extends Component {
   private createUpgrade(task: Task, branch?: string): Upgrade {
     const runsOn = this.options.workflowOptions?.runsOn ?? ['ubuntu-latest'];
 
-
     // thats all we should need at this stage since all we do is clone.
     // note that this also prevents new code that is introduced in the upgrade
     // to have write access to anything, in case its somehow executed. (for example during build)
@@ -234,7 +235,10 @@ export class UpgradeDependencies extends Component {
     ];
 
     steps.push(...this.postBuildSteps);
-    steps.push(...WorkflowActions.createUploadGitPatch());
+    steps.push(...WorkflowActions.createUploadGitPatch({
+      stepId: CREATE_PATCH_STEP_ID,
+      outputName: PATCH_CREATED_OUTPUT,
+    }));
 
     return {
       job: {
@@ -243,6 +247,12 @@ export class UpgradeDependencies extends Component {
         permissions: permissions,
         runsOn: runsOn ?? ['ubuntu-latest'],
         steps: steps,
+        outputs: {
+          [PATCH_CREATED_OUTPUT]: {
+            stepId: CREATE_PATCH_STEP_ID,
+            outputName: PATCH_CREATED_OUTPUT,
+          },
+        },
       },
       jobId: 'upgrade',
       ref: branch,
@@ -302,6 +312,7 @@ export class UpgradeDependencies extends Component {
     return {
       job: {
         name: 'Create Pull Request',
+        if: `\${{ ! needs.${upgrade.jobId}.outputs.${PATCH_CREATED_OUTPUT} }}`,
         needs: [upgrade.jobId],
         permissions: {
           contents: workflows.JobPermission.WRITE,
