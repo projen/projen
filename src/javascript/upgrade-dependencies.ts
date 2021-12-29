@@ -312,7 +312,7 @@ export class UpgradeDependencies extends Component {
     return {
       job: {
         name: 'Create Pull Request',
-        if: `\${{ ! needs.${upgrade.jobId}.outputs.${PATCH_CREATED_OUTPUT} }}`,
+        if: `\${{ needs.${upgrade.jobId}.outputs.${PATCH_CREATED_OUTPUT} }}`,
         needs: [upgrade.jobId],
         permissions: {
           contents: workflows.JobPermission.WRITE,
