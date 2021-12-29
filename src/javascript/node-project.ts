@@ -5,7 +5,7 @@ import { AutoMerge, DependabotOptions, GitHubProject, GitHubProjectOptions, GitI
 import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { JobStep } from '../github/workflows-model';
 import { IgnoreFile } from '../ignore-file';
-import { UpgradeDependencies, UpgradeDependenciesOptions, UpgradeDependenciesSchedule } from '../javascript';
+import { UpgradeDependencies, UpgradeDependenciesOptions } from '../javascript';
 import { License } from '../license';
 import { Release, ReleaseProjectOptions, Publisher } from '../release';
 import { Task } from '../task';
@@ -15,6 +15,7 @@ import { Bundler, BundlerOptions } from './bundler';
 import { Jest, JestOptions } from './jest';
 import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
 import { Projenrc, ProjenrcOptions } from './projenrc';
+import { UpgradeDependenciesSchedule } from './upgrade-dependencies';
 
 const PROJEN_SCRIPT = 'projen';
 
@@ -92,7 +93,6 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * Add release management to this project.
    *
    * @default - true (false for subprojects)
-   * @featured
    */
   readonly release?: boolean;
 
@@ -173,6 +173,8 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * To create a personal access token see https://github.com/settings/tokens
    *
    * @default - no automatic projen upgrade pull requests
+   *
+   * @deprecated use `githubTokenSecret` instead.
    */
   readonly projenUpgradeSecret?: string;
 
@@ -372,11 +374,6 @@ export class NodeProject extends GitHubProject {
   private readonly nodeVersion?: string;
 
   /**
-   * Indicates if workflows have anti-tamper checks.
-   */
-  public readonly antitamper: boolean;
-
-  /**
    * The package manager to use.
    *
    * @deprecated use `package.packageManager`
@@ -490,10 +487,6 @@ export class NodeProject extends GitHubProject {
 
     const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
 
-    // indicate if we have anti-tamper configured in our workflows. used by e.g. Jest
-    // to decide if we can always run with --updateSnapshot
-    this.antitamper = buildEnabled && (options.antitamper ?? true);
-
     // configure jest if enabled
     // must be before the build/release workflows
     if (options.jest ?? true) {
@@ -503,7 +496,6 @@ export class NodeProject extends GitHubProject {
     if (buildEnabled && this.github) {
       this.buildWorkflow = new BuildWorkflow(this, {
         buildTask: this.buildTask,
-        antitamper: this.antitamper,
         artifactsDirectory: this.artifactsDirectory,
         containerImage: options.workflowContainerImage,
         gitIdentity: this.workflowGitIdentity,
@@ -913,9 +905,4 @@ export class NodeProject extends GitHubProject {
   public get buildWorkflowJobId() {
     return this.buildWorkflow?.buildJobIds[0];
   }
-}
-
-export interface NodeWorkflowSteps {
-  readonly antitamper: any[];
-  readonly install: any[];
 }

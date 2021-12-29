@@ -31,7 +31,6 @@ const project = new javascript.NodeProject({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();"
 `;
@@ -86,7 +85,6 @@ const project = new awscdk.AwsCdkTypeScriptApp({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -107,7 +105,6 @@ const project = new awscdk.AwsCdkConstructLibrary({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -125,7 +122,6 @@ const project = new cdk8s.Cdk8sTypeScriptApp({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -146,7 +142,6 @@ const project = new cdk8s.ConstructLibraryCdk8s({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -167,7 +162,6 @@ const project = new cdktf.ConstructLibraryCdktf({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -206,7 +200,6 @@ const project = new cdk.JsiiProject({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -223,7 +216,6 @@ const project = new web.NextJsProject({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
   // tailwind: true,          /* Setup Tailwind CSS as a PostCSS plugin. */
 });
 project.synth();",
@@ -241,7 +233,6 @@ const project = new web.NextJsTypeScriptProject({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
   // tailwind: true,          /* Setup Tailwind CSS as a PostCSS plugin. */
 });
 project.synth();",
@@ -258,7 +249,6 @@ const project = new javascript.NodeProject({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();"
 `;
@@ -274,7 +264,6 @@ const project = new javascript.NodeProject({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -309,7 +298,6 @@ const project = new web.ReactProject({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -326,7 +314,6 @@ const project = new web.ReactTypeScriptProject({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -343,7 +330,6 @@ const project = new typescript.TypeScriptProject({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -360,7 +346,6 @@ const project = new typescript.TypeScriptAppProject({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();",
 }
@@ -386,7 +371,6 @@ const project = new typescript.TypeScriptProject({
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
   // packageName: undefined,  /* The \\"name\\" in package.json. */
-  // release: undefined,      /* Add release management to this project. */
 });
 project.synth();"
 `;
