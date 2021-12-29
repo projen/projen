@@ -42,6 +42,10 @@ $ npx projen new PROJECT-TYPE
 ...
 ```
 
+NOTE:   If creating a new project fails while doing "git init -b" you probably skipped
+the "git init" step.  *projen* will do that for you but requires that you have at least 
+git version 2.28 installed in order for "git init -b <branch>" to be supported. 
+
 Currently supported project types (use `npx projen new` without a type for a
 list):
 
