@@ -22,7 +22,7 @@ export class WorkflowActions {
         name: 'Create Patch',
         run: [
           'git add .',
-          `git diff --patch --staged > ${GIT_PATCH_FILE}`,
+          `git diff --staged --patch > ${GIT_PATCH_FILE}`,
         ].join('\n'),
       },
       {

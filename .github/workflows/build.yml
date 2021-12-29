@@ -33,13 +33,13 @@ jobs:
           directory: coverage
       - name: Check self-mutation
         id: self_mutation
-        run: git diff --exit-code || echo "::set-output
+        run: git diff --staged --exit-code || echo "::set-output
           name=self_mutation_happened::true"
       - if: ${{ steps.self_mutation.outputs.self_mutation_happened }}
         name: Create Patch
         run: |-
           git add .
-          git diff --patch --staged > .repo.patch
+          git diff --staged --patch > .repo.patch
       - if: ${{ steps.self_mutation.outputs.self_mutation_happened }}
         name: Upload patch
         uses: actions/upload-artifact@v2
@@ -73,7 +73,7 @@ jobs:
         run: '[ -s ${{ runner.temp }}/.repo.patch ] && git apply ${{ runner.temp
           }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Found diff after build (update your branch)
-        run: git diff --exit-code
+        run: git diff --staged --exit-code
   self-mutation:
     needs: build
     runs-on: ubuntu-latest

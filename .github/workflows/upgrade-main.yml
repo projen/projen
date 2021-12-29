@@ -24,19 +24,15 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: /bin/bash ./projen.bash upgrade
-      - name: Verify language bindings
-        run: /bin/bash ./projen.bash package-all
       - name: Create Patch
         run: |-
           git add .
-          git diff --patch --staged > .repo.patch
+          git diff --staged --patch > .repo.patch
       - name: Upload patch
         uses: actions/upload-artifact@v2
         with:
           name: .repo.patch
           path: .repo.patch
-    container:
-      image: jsii/superchain:1-buster-slim-node12
   pr:
     name: Create Pull Request
     needs: upgrade

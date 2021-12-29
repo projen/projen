@@ -457,7 +457,7 @@ export class Release extends Component {
 
     // anti-tamper check (fails if there were changes to committed files)
     // this will identify any non-committed files generated during build (e.g. test snapshots)
-    releaseTask.exec('git diff --ignore-space-at-eol --exit-code');
+    releaseTask.exec('git diff --staged --ignore-space-at-eol --exit-code');
 
     const postBuildSteps = [...this.postBuildSteps];
 
