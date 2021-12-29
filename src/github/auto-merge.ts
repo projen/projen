@@ -25,8 +25,6 @@ export interface AutoMergeOptions {
  * the PR to be merged.
  */
 export class AutoMerge extends Component {
-
-  private readonly conditions = new Array<string>();
   private readonly lazyConditions = new Array<IAddConditionsLater>();
 
   constructor(github: GitHub, options: AutoMergeOptions = {}) {
@@ -82,7 +80,7 @@ export class AutoMerge extends Component {
    * @param conditions The conditions to add (mergify syntax)
    */
   public addConditions(...conditions: string[]) {
-    this.conditions.push(...conditions);
+    this.addConditionsLater({ render: () => conditions });
   }
 
   /**
@@ -94,10 +92,10 @@ export class AutoMerge extends Component {
   }
 
   private renderConditions() {
-    const output = [...this.conditions];
+    const output = new Array<string>();
 
     for (const later of this.lazyConditions) {
-      output.push(...later.renderConditions());
+      output.push(...later.render());
     }
 
     return output;
@@ -105,5 +103,5 @@ export class AutoMerge extends Component {
 }
 
 export interface IAddConditionsLater {
-  renderConditions(): string[];
+  render(): string[];
 }
