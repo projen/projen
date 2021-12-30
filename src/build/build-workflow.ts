@@ -4,6 +4,7 @@ import { GitHub, GithubWorkflow, GitIdentity } from '../github';
 import { BUILD_ARTIFACT_NAME, DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { WorkflowActions } from '../github/workflow-actions';
 import { Job, JobPermission, JobStep, Tools } from '../github/workflows-model';
+import { NodeProject } from '../javascript';
 import { Project } from '../project';
 
 const PULL_REQUEST_REF = '${{ github.event.pull_request.head.ref }}';
@@ -215,6 +216,16 @@ export class BuildWorkflow extends Component {
         },
       },
     );
+
+    // install dependencies (may be used by tasks)
+    if (this.project instanceof NodeProject) {
+      steps.push(
+        {
+          name: 'Install dependencies',
+          run: `${this.project.package.installCommand}`,
+        },
+      );
+    }
 
     if (this.artifactsDirectory) {
       steps.push({
