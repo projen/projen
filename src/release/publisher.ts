@@ -545,7 +545,7 @@ export interface CommonPublishOptions {
    * These steps are executed after `dist/` has been populated with the build
    * output.
    *
-   * Note that this will override steps added via `addGitHubPrePublishingSteps`.
+   * Note that when using this in `publishToGitHubReleases` this will override steps added via `addGitHubPrePublishingSteps`.
    */
   readonly prePublishSteps?: JobStep[];
 
