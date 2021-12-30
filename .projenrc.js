@@ -213,6 +213,14 @@ project.buildWorkflow.addPostBuildJob('integ', {
       },
     },
     {
+      name: 'Prepare repository',
+      run: `cd ${project.artifactsDirectory}`,
+    },
+    {
+      name: 'Install dependencies',
+      run: `${project.package.installCommand}`,
+    },
+    {
       name: 'Run integration test',
       run: `${project.projenCommand} ${integTask.name}`,
     },
