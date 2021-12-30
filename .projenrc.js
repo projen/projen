@@ -188,43 +188,10 @@ integTask.spawn(project.buildTask);
 integTask.spawn(project.tasks.tryFind('package:python'));
 integTask.spawn(pythonCompatTask);
 
-project.buildWorkflow.addPostBuildJob('integ', {
+project.buildWorkflow.addPostBuildJobCommand({
   name: 'integ',
-  permissions: {
-    contents: workflows.JobPermission.READ,
-  },
-  env: {
-    CI: 'true',
-  },
-  runsOn: 'ubuntu-latest',
-  steps: [
-    {
-      name: 'Set up Python 3.x',
-      uses: 'actions/setup-python@v2',
-      with: {
-        'python-version': '3.x',
-      },
-    },
-    {
-      name: 'Set up Go 1.16',
-      uses: 'actions/setup-go@v2',
-      with: {
-        'go-version': '^1.16.0',
-      },
-    },
-    {
-      name: 'Prepare repository',
-      run: `cd ${project.artifactsDirectory} && ls -laH`,
-    },
-    {
-      name: 'Install dependencies',
-      run: `${project.package.installCommand}`,
-    },
-    {
-      name: 'Run integration test',
-      run: `${project.projenCommand} ${integTask.name}`,
-    },
-  ],
+  command: `cd ${project.artifactsDirectory} && ${project.projenCommand} ${integTask.name}`,
+  tools: { python: { version: '3.x' }, go: { version: '1.16.x' } },
 });
 
 project.synth();

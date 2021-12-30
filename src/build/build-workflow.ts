@@ -3,7 +3,7 @@ import { Component } from '../component';
 import { GitHub, GithubWorkflow, GitIdentity } from '../github';
 import { BUILD_ARTIFACT_NAME, DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
 import { WorkflowActions } from '../github/workflow-actions';
-import { Job, JobPermission, JobStep } from '../github/workflows-model';
+import { Job, JobPermission, JobStep, Tools } from '../github/workflows-model';
 import { Project } from '../project';
 
 const PULL_REQUEST_REF = '${{ github.event.pull_request.head.ref }}';
@@ -186,6 +186,27 @@ export class BuildWorkflow extends Component {
     this._postBuildJobs.push(id);
   }
 
+  public addPostBuildJobCommand(options: AddPostBuildCommandOptions) {
+    const job: Job = {
+      permissions: {
+        contents: JobPermission.READ,
+      },
+      env: {
+        CI: 'true',
+      },
+      tools: options.tools,
+      runsOn: ['ubuntu-latest'],
+      steps: [
+        {
+          name: options.name,
+          run: options.command,
+        },
+      ],
+    };
+
+    this.addPostBuildJob(options.name, job);
+  }
+
 
   private addSelfMutationJob() {
     this.workflow.addJob('self-mutation', {
@@ -282,4 +303,22 @@ export class BuildWorkflow extends Component {
       }]),
     ];
   }
+}
+
+/**
+ * Options for `BuildWorkflow.addPostBuildCommand`
+ */
+export interface AddPostBuildCommandOptions {
+  /**
+   * Name of the job that will be created.
+   */
+  readonly name: string;
+  /**
+   * Command that should be executed.
+   */
+  readonly command: string;
+  /**
+   * Tools that should be installed before the command is run.
+   */
+  readonly tools: Tools;
 }
