@@ -699,8 +699,9 @@ export class NodePackage extends Component {
 
     const outdir = this.project.outdir;
 
-    // only run "install" if package.json has changed.
-    if (this.file.changed) {
+    // only run "install" if package.json has changed or if we don't have a
+    // `node_modules` directory.
+    if (this.file.changed || !existsSync(join(outdir, 'node_modules'))) {
       exec(this.renderInstallCommand(this.isAutomatedBuild), { cwd: outdir });
     }
 
