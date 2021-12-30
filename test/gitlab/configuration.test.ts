@@ -33,10 +33,10 @@ test('does not throw when adding an valid include', () => {
   });
   const c = new CiConfiguration(p, 'foo');
   // THEN
-  expect(() => c.addIncludes({ local: 'foo' })).not.toThrowError(/is not a valid include configuration/);
-  expect(() => c.addIncludes({ file: ['foo'], project: 'foo' })).not.toThrowError(/is not a valid include configuration/);
-  expect(() => c.addIncludes({ remote: 'foo' })).not.toThrowError(/is not a valid include configuration/);
-  expect(() => c.addIncludes({ template: 'foo' })).not.toThrowError(/is not a valid include configuration/);
+  expect(() => c.addIncludes({ local: 'foo' })).not.toThrowError(/A valid include configuration specifies/);
+  expect(() => c.addIncludes({ file: ['foo'], project: 'foo' })).not.toThrowError(/A valid include configuration specifies/);
+  expect(() => c.addIncludes({ remote: 'foo' })).not.toThrowError(/A valid include configuration specifies/);
+  expect(() => c.addIncludes({ template: 'foo' })).not.toThrowError(/A valid include configuration specifies/);
 });
 
 test('throws when adding an invalid include', () => {
@@ -46,7 +46,8 @@ test('throws when adding an invalid include', () => {
   });
   const c = new CiConfiguration(p, 'foo');
   // THEN
-  expect(() => c.addIncludes({ file: ['foo'], project: 'foo', local: 'foo' })).toThrow(/is not a valid include configuration/);
+  expect(() => c.addIncludes({ file: ['foo'], project: 'foo', local: 'foo' })).toThrow(/contains 2 property combination/);
+  expect(() => c.addIncludes({ project: 'foo' })).toThrow(/contains 0 property combination/);
 });
 
 test('throws when adding an existing includes', () => {

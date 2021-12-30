@@ -185,9 +185,7 @@ export class CiConfiguration extends Component {
    */
   public addIncludes(...includes: Include[]) {
     for (const additional of includes) {
-      if (!this.isValidInclude(additional)) {
-        throw new Error(`${this.name}: GitLab CI ${additional} is not a valid include configuration.`);
-      }
+      this.assertIsValidInclude(additional);
       for (const existing of this.include) {
         if (this.areEqualIncludes(existing, additional)) {
           throw new Error(`${this.name}: GitLab CI ${existing} already contains one or more templates specified in ${additional}.`);
@@ -198,15 +196,24 @@ export class CiConfiguration extends Component {
   }
 
   /**
-   * Check if an Include configuration is valid
+   * Throw an error if the provided Include is invalid.
    * @see https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/config/external/mapper.rb
-   * @param include the Include to balidate
-   * @returns Whether the include is valid.
+   * @param include the Include to validate.
    */
-  private isValidInclude(include: Include): boolean {
+  private assertIsValidInclude(include: Include) {
     const combos = [include.local, (include.file && include.project), include.remote, include.template];
-    return combos.filter(x => Boolean(x)).length === 1;
-
+    const len = combos.filter(x => Boolean(x)).length;
+    if (len !== 1) {
+      throw new Error(
+        `${this.name}: GitLab CI include ${include} contains ${len} property combination(s).
+        A valid include configuration specifies *one* of the following property combinations.
+        * local
+        * file, project
+        * remote
+        * template  
+        `,
+      );
+    }
   }
 
   /**
