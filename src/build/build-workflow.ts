@@ -206,10 +206,14 @@ export class BuildWorkflow extends Component {
 
     // check out the repository
     steps.push(
-      ...WorkflowActions.checkoutWithPatch({
-        ref: PULL_REQUEST_REF,
-        repository: PULL_REQUEST_REPOSITORY,
-      }),
+      {
+        name: 'Checkout',
+        uses: 'actions/checkout@v2',
+        with: {
+          ref: PULL_REQUEST_REF,
+          repository: PULL_REQUEST_REPOSITORY,
+        },
+      },
     );
 
     if (this.artifactsDirectory) {
