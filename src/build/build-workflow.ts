@@ -13,6 +13,7 @@ const SELF_MUTATION_STEP = 'self_mutation';
 const SELF_MUTATION_HAPPENED_OUTPUT = 'self_mutation_happened';
 const IS_FORK = 'github.event.pull_request.head.repo.full_name != github.repository';
 const NOT_FORK = `!(${IS_FORK})`;
+const SELF_MUTATION_CONDITION = `needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT}`;
 
 export interface BuildWorkflowOptions {
   /**
@@ -177,7 +178,7 @@ export class BuildWorkflow extends Component {
     this.workflow.addJob(id, {
       needs: [BUILD_JOBID],
       // only run if build did not self-mutate
-      if: `\${{ ! needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} }}`,
+      if: `! ${SELF_MUTATION_CONDITION}`,
       ...job,
       steps: steps,
     });
@@ -194,7 +195,7 @@ export class BuildWorkflow extends Component {
         contents: JobPermission.WRITE,
       },
       needs: [BUILD_JOBID],
-      if: `\${{ needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} && ${NOT_FORK} }}`,
+      if: `always() && ${SELF_MUTATION_CONDITION} && ${NOT_FORK}`,
       steps: [
         ...WorkflowActions.checkoutWithPatch({
           // we need to use a PAT so that our push will trigger the build workflow
@@ -219,13 +220,18 @@ export class BuildWorkflow extends Component {
    * Adds a job that fails if there were file changes.
    */
   private addAntiTamperJob(options: { onlyForks: boolean }) {
-    const antitamperCondition = options.onlyForks
-      ? `\${{ needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} && ${IS_FORK} }}`
-      : `\${{ needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} }}`;
+    const conditions = [
+      'always()', // run even if build job failed
+      SELF_MUTATION_CONDITION,
+    ];
+
+    if (options.onlyForks) {
+      conditions.push(IS_FORK);
+    }
 
     this.workflow.addJob('anti-tamper', {
       runsOn: ['ubuntu-latest'],
-      if: antitamperCondition,
+      if: conditions.join(' && '),
       permissions: {},
       needs: [BUILD_JOBID],
       steps: [
@@ -267,6 +273,7 @@ export class BuildWorkflow extends Component {
       ...WorkflowActions.createUploadGitPatch({
         stepId: SELF_MUTATION_STEP,
         outputName: SELF_MUTATION_HAPPENED_OUTPUT,
+        failOnMutation: true,
       }),
 
       // upload the build artifact only if we have post-build jobs and only if
@@ -274,7 +281,6 @@ export class BuildWorkflow extends Component {
       ...(this._postBuildJobs.length == 0 ? [] : [{
         name: 'Upload artifact',
         uses: 'actions/upload-artifact@v2.1.1',
-        if: `\${{ ! steps.${SELF_MUTATION_STEP}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} }}`,
         with: {
           name: BUILD_ARTIFACT_NAME,
           path: this.artifactsDirectory,

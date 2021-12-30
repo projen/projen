@@ -18,7 +18,7 @@ export class WorkflowActions {
    * @returns Job steps
    */
   public static createUploadGitPatch(options: CreateUploadGitPatchOptions): JobStep[] {
-    return [
+    const steps: JobStep[] = [
       {
         id: options.stepId,
         name: 'Find mutations',
@@ -34,6 +34,16 @@ export class WorkflowActions {
         with: { name: GIT_PATCH_FILE, path: GIT_PATCH_FILE },
       },
     ];
+
+    if (options.failOnMutation ?? false) {
+      steps.push({
+        name: 'Fail build on mutation',
+        if: `\${{ steps.${options.stepId}.outputs.${options.outputName} }}`,
+        run: 'exit 1',
+      });
+    }
+
+    return steps;
   }
 
   /**
@@ -108,6 +118,9 @@ export interface CheckoutWithPatchOptions {
   readonly repository?: string;
 }
 
+/**
+ * Options for `createUploadGitPatch`.
+ */
 export interface CreateUploadGitPatchOptions {
   /**
    * The step ID which produces the output which indicates if a patch was created.
@@ -118,4 +131,10 @@ export interface CreateUploadGitPatchOptions {
    * The name of the output to emit. It will be set to `true` if there was a diff.
    */
   readonly outputName: string;
+
+  /**
+   * Fail if a mutation was found.
+   * @default false
+   */
+  readonly failOnMutation?: boolean;
 }
