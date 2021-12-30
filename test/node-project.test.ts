@@ -1,7 +1,7 @@
 import * as yaml from 'yaml';
 import { DependencyType } from '../src/dependencies';
 import { JobPermission } from '../src/github/workflows-model';
-import { NodeProject, NodeProjectOptions, NodePackage, NodePackageManager, NpmAccess } from '../src/javascript';
+import { NodeProject, NodeProjectOptions, NodePackage, NpmAccess } from '../src/javascript';
 import * as logging from '../src/logging';
 import { Project } from '../src/project';
 import { Tasks } from '../src/tasks';
@@ -53,7 +53,7 @@ describe('deps', () => {
       ccc: '*',
       ddd: '*',
     });
-    expect(pkgjson.peerDependencies).toStrictEqual({});
+    expect(pkgjson.peerDependencies).toBeUndefined();
   });
 
   test('dev dependencies', () => {
@@ -79,7 +79,7 @@ describe('deps', () => {
     expect(pkgjson.devDependencies.ddd).toStrictEqual('*');
     expect(pkgjson.devDependencies.eee).toStrictEqual('^1');
     expect(pkgjson.devDependencies.fff).toStrictEqual('^2');
-    expect(pkgjson.peerDependencies).toStrictEqual({});
+    expect(pkgjson.peerDependencies).toBeUndefined();
     expect(pkgjson.dependencieds).toBeUndefined();
   });
 
@@ -627,22 +627,6 @@ test('projen synth is only executed for subprojects', () => {
       { spawn: 'package' },
     ],
   });
-});
-
-test('enable anti-tamper', () => {
-  // WHEN
-  const project = new TestNodeProject({
-    packageManager: NodePackageManager.NPM,
-    releaseToNpm: true,
-    mutableBuild: false,
-  });
-
-  // THEN
-  const workflowYaml = synthSnapshot(project)['.github/workflows/build.yml'];
-  const workflow = yaml.parse(workflowYaml);
-  expect(workflow.jobs.build.steps).toMatchSnapshot();
-  expect(workflow.jobs['anti-tamper']).toBeDefined();
-  expect(workflow.jobs['anti-tamper']).toMatchSnapshot();
 });
 
 test('enabling dependabot does not overturn mergify: false', () => {

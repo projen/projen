@@ -37,47 +37,33 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo "::set-output name=self_mutation_happened::true"
-      - if: ${{ steps.self_mutation.outputs.self_mutation_happened }}
+      - if: steps.self_mutation.outputs.self_mutation_happened
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
           name: .repo.patch
           path: .repo.patch
+      - name: Fail build on mutation
+        if: steps.self_mutation.outputs.self_mutation_happened
+        run: >-
+          echo "::error::Files were changed during build (see build log). If
+          this was triggered from a fork, you will need to update your branch."
+
+          cat .repo.patch
+
+          exit 1
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
-        if: ${{ ! steps.self_mutation.outputs.self_mutation_happened }}
         with:
           name: build-artifact
           path: dist
-  anti-tamper:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions: {}
-    if: ${{ needs.build.outputs.self_mutation_happened &&
-      github.event.pull_request.head.repo.full_name != github.repository }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
-      - name: Download patch
-        uses: actions/download-artifact@v2
-        with:
-          name: .repo.patch
-          path: ${{ runner.temp }}
-      - name: Apply patch
-        run: '[ -s ${{ runner.temp }}/.repo.patch ] && git apply ${{ runner.temp
-          }}/.repo.patch || echo "Empty patch. Skipping."'
-      - name: Found diff after build (update your branch)
-        run: git add . && diff --staged --exit-code
   self-mutation:
     needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: ${{ needs.build.outputs.self_mutation_happened &&
-      !(github.event.pull_request.head.repo.full_name != github.repository) }}
+    if: always() && needs.build.outputs.self_mutation_happened &&
+      !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -106,7 +92,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: ${{ ! needs.build.outputs.self_mutation_happened }}
+    if: "! needs.build.outputs.self_mutation_happened"
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -128,7 +114,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: ${{ ! needs.build.outputs.self_mutation_happened }}
+    if: "! needs.build.outputs.self_mutation_happened"
     steps:
       - uses: actions/setup-java@v2
         with:
@@ -154,7 +140,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: ${{ ! needs.build.outputs.self_mutation_happened }}
+    if: "! needs.build.outputs.self_mutation_happened"
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -179,7 +165,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: ${{ ! needs.build.outputs.self_mutation_happened }}
+    if: "! needs.build.outputs.self_mutation_happened"
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -207,7 +193,7 @@ jobs:
       contents: read
     env:
       CI: "true"
-    if: ${{ ! needs.build.outputs.self_mutation_happened }}
+    if: "! needs.build.outputs.self_mutation_happened"
     steps:
       - uses: actions/setup-python@v2
         with:

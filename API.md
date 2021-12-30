@@ -177,6 +177,7 @@ Name|Description
 [awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)|Options for `IntegrationTest`.
 [awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)|Common options for `LambdaFunction`.
 [awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)|Options for `Function`.
+[build.AddPostBuildJobCommandOptions](#projen-build-addpostbuildjobcommandoptions)|Options for `BuildWorkflow.addPostBuildCommand`.
 [build.BuildWorkflowOptions](#projen-build-buildworkflowoptions)|*No description*
 [cdk.Catalog](#projen-cdk-catalog)|*No description*
 [cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)|*No description*
@@ -821,6 +822,7 @@ Name | Type | Description
 **executable**🔹 | <code>boolean</code> | Indicates if the file should be marked as executable.
 **path**🔹 | <code>string</code> | The file path, relative to the project root.
 **readonly**🔹 | <code>boolean</code> | Indicates if the file should be read-only or read-write.
+**changed**?🔹 | <code>boolean</code> | Indicates if the file has been changed during synthesis.<br/>__*Optional*__
 *static* **PROJEN_MARKER**🔹 | <code>string</code> | The marker to embed in files in order to identify them as projen files.
 
 ### Methods
@@ -1209,6 +1211,7 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
+  * **newline** (<code>boolean</code>)  Adds a newline at the end of the file. __*Default*__: true
 
 
 ### Methods
@@ -3896,6 +3899,26 @@ addPostBuildJob(id: string, job: Job): void
   * **strategy** (<code>[github.workflows.JobStrategy](#projen-github-workflows-jobstrategy)</code>)  A strategy creates a build matrix for your jobs. __*Optional*__
   * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to let a job run before GitHub automatically cancels it. __*Default*__: 360
   * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools required for this job. __*Optional*__
+
+
+
+
+#### addPostBuildJobCommand(options)🔹 <a id="projen-build-buildworkflow-addpostbuildjobcommand"></a>
+
+Adds another job to the build workflow which is executed after the build job succeeded.
+
+Jobs are executed _only_ if the build did NOT self mutate. If the build
+self-mutate, the branch will either be updated or the build will fail (in
+forks), so there is no point in executing the post-build job.
+
+```ts
+addPostBuildJobCommand(options: AddPostBuildJobCommandOptions): void
+```
+
+* **options** (<code>[build.AddPostBuildJobCommandOptions](#projen-build-addpostbuildjobcommandoptions)</code>)  *No description*
+  * **command** (<code>string</code>)  Command that should be executed. 
+  * **name** (<code>string</code>)  Name of the job that will be created. 
+  * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools that should be installed before the command is run. __*Optional*__
 
 
 
@@ -7816,6 +7839,28 @@ Name | Type | Description
 ### Methods
 
 
+#### addGitHubPrePublishingSteps(...steps)🔹 <a id="projen-release-publisher-addgithubprepublishingsteps"></a>
+
+Adds pre publishing steps for the GitHub release job.
+
+```ts
+addGitHubPrePublishingSteps(...steps: JobStep[]): void
+```
+
+* **steps** (<code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code>)  The steps.
+  * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
+  * **env** (<code>Map<string, string></code>)  Sets environment variables for steps to use in the runner environment. __*Optional*__
+  * **id** (<code>string</code>)  A unique identifier for the step. __*Optional*__
+  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
+  * **name** (<code>string</code>)  A name for your step to display on GitHub. __*Optional*__
+  * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
+  * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
+  * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
+  * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
+
+
+
+
 #### publishToGit(options)🔹 <a id="projen-release-publisher-publishtogit"></a>
 
 Publish to git.
@@ -10138,6 +10183,7 @@ Name | Type | Description
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: true
+**newline**?🔹 | <code>boolean</code> | Adds a newline at the end of the file.<br/>__*Default*__: true
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
@@ -11228,6 +11274,21 @@ Name | Type | Description
 **constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
 **constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
 **runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
+
+
+
+## struct AddPostBuildJobCommandOptions 🔹 <a id="projen-build-addpostbuildjobcommandoptions"></a>
+
+
+Options for `BuildWorkflow.addPostBuildCommand`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**command**🔹 | <code>string</code> | Command that should be executed.
+**name**🔹 | <code>string</code> | Name of the job that will be created.
+**tools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Tools that should be installed before the command is run.<br/>__*Optional*__
 
 
 

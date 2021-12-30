@@ -13,6 +13,7 @@ const SELF_MUTATION_STEP = 'self_mutation';
 const SELF_MUTATION_HAPPENED_OUTPUT = 'self_mutation_happened';
 const IS_FORK = 'github.event.pull_request.head.repo.full_name != github.repository';
 const NOT_FORK = `!(${IS_FORK})`;
+const SELF_MUTATION_CONDITION = `needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT}`;
 
 export interface BuildWorkflowOptions {
   /**
@@ -105,7 +106,7 @@ export class BuildWorkflow extends Component {
     });
 
     this.addBuildJob(options);
-    this.addAntiTamperJob({ onlyForks: mutableBuilds });
+
     if (mutableBuilds) {
       this.addSelfMutationJob();
     }
@@ -177,7 +178,7 @@ export class BuildWorkflow extends Component {
     this.workflow.addJob(id, {
       needs: [BUILD_JOBID],
       // only run if build did not self-mutate
-      if: `\${{ ! needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} }}`,
+      if: `! ${SELF_MUTATION_CONDITION}`,
       ...job,
       steps: steps,
     });
@@ -186,7 +187,15 @@ export class BuildWorkflow extends Component {
     this._postBuildJobs.push(id);
   }
 
-  public addPostBuildJobCommand(options: AddPostBuildCommandOptions) {
+  /**
+   * Adds another job to the build workflow which is executed after the build
+   * job succeeded.
+   *
+   * Jobs are executed _only_ if the build did NOT self mutate. If the build
+   * self-mutate, the branch will either be updated or the build will fail (in
+   * forks), so there is no point in executing the post-build job.
+   */
+  public addPostBuildJobCommand(options: AddPostBuildJobCommandOptions) {
     const job: Job = {
       permissions: {
         contents: JobPermission.READ,
@@ -207,7 +216,6 @@ export class BuildWorkflow extends Component {
     this.addPostBuildJob(options.name, job);
   }
 
-
   private addSelfMutationJob() {
     this.workflow.addJob('self-mutation', {
       runsOn: ['ubuntu-latest'],
@@ -215,7 +223,7 @@ export class BuildWorkflow extends Component {
         contents: JobPermission.WRITE,
       },
       needs: [BUILD_JOBID],
-      if: `\${{ needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} && ${NOT_FORK} }}`,
+      if: `always() && ${SELF_MUTATION_CONDITION} && ${NOT_FORK}`,
       steps: [
         ...WorkflowActions.checkoutWithPatch({
           // we need to use a PAT so that our push will trigger the build workflow
@@ -231,32 +239,6 @@ export class BuildWorkflow extends Component {
             '  git commit -m "chore: self mutation"',
             `  git push origin HEAD:${PULL_REQUEST_REF}`,
           ].join('\n'),
-        },
-      ],
-    });
-  }
-
-  /**
-   * Adds a job that fails if there were file changes.
-   */
-  private addAntiTamperJob(options: { onlyForks: boolean }) {
-    const antitamperCondition = options.onlyForks
-      ? `\${{ needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} && ${IS_FORK} }}`
-      : `\${{ needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} }}`;
-
-    this.workflow.addJob('anti-tamper', {
-      runsOn: ['ubuntu-latest'],
-      if: antitamperCondition,
-      permissions: {},
-      needs: [BUILD_JOBID],
-      steps: [
-        ...WorkflowActions.checkoutWithPatch({
-          repository: PULL_REQUEST_REPOSITORY,
-          ref: PULL_REQUEST_REF,
-        }),
-        {
-          name: 'Found diff after build (update your branch)',
-          run: 'git add . && diff --staged --exit-code',
         },
       ],
     });
@@ -285,17 +267,17 @@ export class BuildWorkflow extends Component {
 
       ...this.postBuildSteps,
 
+      // check for mutations and upload a git patch file as an artifact
       ...WorkflowActions.createUploadGitPatch({
         stepId: SELF_MUTATION_STEP,
         outputName: SELF_MUTATION_HAPPENED_OUTPUT,
+        mutationError: 'Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.',
       }),
 
-      // upload the build artifact only if we have post-build jobs and only if
-      // there we NO self mutation.
+      // upload the build artifact only if we have post-build jobs (otherwise, there's no point)
       ...(this._postBuildJobs.length == 0 ? [] : [{
         name: 'Upload artifact',
         uses: 'actions/upload-artifact@v2.1.1',
-        if: `\${{ ! steps.${SELF_MUTATION_STEP}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT} }}`,
         with: {
           name: BUILD_ARTIFACT_NAME,
           path: this.artifactsDirectory,
@@ -308,7 +290,7 @@ export class BuildWorkflow extends Component {
 /**
  * Options for `BuildWorkflow.addPostBuildCommand`
  */
-export interface AddPostBuildCommandOptions {
+export interface AddPostBuildJobCommandOptions {
   /**
    * Name of the job that will be created.
    */
@@ -320,5 +302,5 @@ export interface AddPostBuildCommandOptions {
   /**
    * Tools that should be installed before the command is run.
    */
-  readonly tools: Tools;
+  readonly tools?: Tools;
 }

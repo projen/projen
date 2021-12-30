@@ -31,7 +31,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -132,7 +132,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -233,7 +233,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -334,7 +334,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -435,7 +435,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -536,7 +536,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -637,7 +637,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -738,7 +738,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -839,7 +839,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -940,7 +940,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:

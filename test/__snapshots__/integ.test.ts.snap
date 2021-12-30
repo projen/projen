@@ -291,47 +291,33 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"
-      - if: \${{ steps.self_mutation.outputs.self_mutation_happened }}
+      - if: steps.self_mutation.outputs.self_mutation_happened
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
           name: .repo.patch
           path: .repo.patch
+      - name: Fail build on mutation
+        if: steps.self_mutation.outputs.self_mutation_happened
+        run: >-
+          echo \\"::error::Files were changed during build (see build log). If
+          this was triggered from a fork, you will need to update your branch.\\"
+
+          cat .repo.patch
+
+          exit 1
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
-        if: \${{ ! steps.self_mutation.outputs.self_mutation_happened }}
         with:
           name: build-artifact
           path: dist
-  anti-tamper:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions: {}
-    if: \${{ needs.build.outputs.self_mutation_happened &&
-      github.event.pull_request.head.repo.full_name != github.repository }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: \${{ github.event.pull_request.head.ref }}
-          repository: \${{ github.event.pull_request.head.repo.full_name }}
-      - name: Download patch
-        uses: actions/download-artifact@v2
-        with:
-          name: .repo.patch
-          path: \${{ runner.temp }}
-      - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp
-          }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
-      - name: Found diff after build (update your branch)
-        run: git add . && diff --staged --exit-code
   self-mutation:
     needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: \${{ needs.build.outputs.self_mutation_happened &&
-      !(github.event.pull_request.head.repo.full_name != github.repository) }}
+    if: always() && needs.build.outputs.self_mutation_happened &&
+      !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -360,7 +346,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: \${{ ! needs.build.outputs.self_mutation_happened }}
+    if: \\"! needs.build.outputs.self_mutation_happened\\"
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -382,7 +368,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: \${{ ! needs.build.outputs.self_mutation_happened }}
+    if: \\"! needs.build.outputs.self_mutation_happened\\"
     steps:
       - uses: actions/setup-java@v2
         with:
@@ -408,7 +394,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: \${{ ! needs.build.outputs.self_mutation_happened }}
+    if: \\"! needs.build.outputs.self_mutation_happened\\"
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -519,6 +505,10 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Collect GitHub Metadata
+        run: mv .repo/dist dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -695,7 +685,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -1732,7 +1722,6 @@ project.synth();
     "awscdkio": Object {
       "twitter": "emeshbi",
     },
-    "bundledDependencies": Array [],
     "dependencies": Object {
       "@aws-cdk/aws-apigateway": "^1.75.0",
       "@aws-cdk/aws-cloudwatch": "^1.75.0",
@@ -2289,7 +2278,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -3834,7 +3823,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -4729,7 +4718,6 @@ project.synth();
     "bin": Object {
       "cdk8s": "bin/cdk8s",
     },
-    "bundledDependencies": Array [],
     "dependencies": Object {
       "@types/node": "*",
       "cdk8s": "^0.0.0",
@@ -4817,7 +4805,6 @@ project.synth();
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "cdk8s-cli",
-    "peerDependencies": Object {},
     "repository": Object {
       "type": "git",
       "url": "https://github.com/awslabs/cdk8s.git",
@@ -4983,41 +4970,28 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"
-      - if: \${{ steps.self_mutation.outputs.self_mutation_happened }}
+      - if: steps.self_mutation.outputs.self_mutation_happened
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
           name: .repo.patch
           path: .repo.patch
-  anti-tamper:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions: {}
-    if: \${{ needs.build.outputs.self_mutation_happened &&
-      github.event.pull_request.head.repo.full_name != github.repository }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: \${{ github.event.pull_request.head.ref }}
-          repository: \${{ github.event.pull_request.head.repo.full_name }}
-      - name: Download patch
-        uses: actions/download-artifact@v2
-        with:
-          name: .repo.patch
-          path: \${{ runner.temp }}
-      - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp
-          }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
-      - name: Found diff after build (update your branch)
-        run: git add . && diff --staged --exit-code
+      - name: Fail build on mutation
+        if: steps.self_mutation.outputs.self_mutation_happened
+        run: >-
+          echo \\"::error::Files were changed during build (see build log). If
+          this was triggered from a fork, you will need to update your branch.\\"
+
+          cat .repo.patch
+
+          exit 1
   self-mutation:
     needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: \${{ needs.build.outputs.self_mutation_happened &&
-      !(github.event.pull_request.head.repo.full_name != github.repository) }}
+    if: always() && needs.build.outputs.self_mutation_happened &&
+      !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -5210,7 +5184,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
@@ -5873,7 +5847,6 @@ project.synth();
   "README.md": "# replace this",
   "package.json": Object {
     "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "bundledDependencies": Array [],
     "dependencies": Object {
       "esbuild": "*",
     },
@@ -5921,7 +5894,6 @@ project.synth();
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "pnpm-project",
-    "peerDependencies": Object {},
     "scripts": Object {
       "build": "npx projen build",
       "bump": "npx projen bump",
