@@ -106,7 +106,7 @@ export class BuildWorkflow extends Component {
     });
 
     this.addBuildJob(options);
-    this.addAntiTamperJob({ onlyForks: mutableBuilds });
+
     if (mutableBuilds) {
       this.addSelfMutationJob();
     }
@@ -187,7 +187,6 @@ export class BuildWorkflow extends Component {
     this._postBuildJobs.push(id);
   }
 
-
   private addSelfMutationJob() {
     this.workflow.addJob('self-mutation', {
       runsOn: ['ubuntu-latest'],
@@ -211,37 +210,6 @@ export class BuildWorkflow extends Component {
             '  git commit -m "chore: self mutation"',
             `  git push origin HEAD:${PULL_REQUEST_REF}`,
           ].join('\n'),
-        },
-      ],
-    });
-  }
-
-  /**
-   * Adds a job that fails if there were file changes.
-   */
-  private addAntiTamperJob(options: { onlyForks: boolean }) {
-    const conditions = [
-      'always()', // run even if build job failed
-      SELF_MUTATION_CONDITION,
-    ];
-
-    if (options.onlyForks) {
-      conditions.push(IS_FORK);
-    }
-
-    this.workflow.addJob('anti-tamper', {
-      runsOn: ['ubuntu-latest'],
-      if: conditions.join(' && '),
-      permissions: {},
-      needs: [BUILD_JOBID],
-      steps: [
-        ...WorkflowActions.checkoutWithPatch({
-          repository: PULL_REQUEST_REPOSITORY,
-          ref: PULL_REQUEST_REF,
-        }),
-        {
-          name: 'Found diff after build (update your branch)',
-          run: 'git add . && diff --staged --exit-code',
         },
       ],
     });
