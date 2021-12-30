@@ -4,7 +4,7 @@ import * as yargs from 'yargs';
 import * as inventory from '../../inventory';
 import { InitProjectOptionHints } from '../../option-hints';
 import { Projects } from '../../projects';
-import { exec, isTruthy } from '../../util';
+import { exec, execCapture, isTruthy } from '../../util';
 import { tryProcessMacro } from '../macros';
 import { installPackage, renderInstallCommand } from '../util';
 
@@ -244,10 +244,30 @@ async function initProject(baseDir: string, type: inventory.ProjectType, args: a
   }
 
   if (args.git) {
+
     const git = (cmd: string) => exec(`git ${cmd}`, { cwd: baseDir });
-    git('init -b main');
-    git('add .');
-    git('commit --allow-empty -m "chore: project created with projen"');
+    const gitversion = execCapture('git --version', { cwd: baseDir, })
+      .toString()
+      .match(/-?[\d\.]+/g);
+    var major: number = 0;
+    var minor: number = 0;
+    if (gitversion) {
+      const ver = gitversion[0].split('.');
+      major = parseInt(ver[0]);
+      minor = parseInt(ver[1]);
+    }
+    if ((major > + 2) && (minor >= 28)) {
+      git('init -b main');
+      git('add .');
+      git('commit --allow-empty -m "chore: project created with projen"');
+    } else {
+      git('init');
+      git('add .');
+      git('commit --allow-empty -m "chore: project created with projen"');
+      console.log("older version of git detected, changing branch name to main");
+      git('branch -m main');
+    }
+
   }
 }
 
