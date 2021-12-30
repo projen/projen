@@ -289,6 +289,14 @@ export async function tryReadFile(file: string) {
   return fs.readFile(file, 'utf8');
 }
 
+export function tryReadFileSync(file: string) {
+  if (!fs.pathExistsSync(file)) {
+    return undefined;
+  }
+
+  return fs.readFileSync(file, 'utf8');
+}
+
 function decamelize(s: string, sep: string = '_') {
   if (Case.of(s) === 'camel') {
     return Case.lower(s, sep);

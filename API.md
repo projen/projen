@@ -821,6 +821,7 @@ Name | Type | Description
 **executable**🔹 | <code>boolean</code> | Indicates if the file should be marked as executable.
 **path**🔹 | <code>string</code> | The file path, relative to the project root.
 **readonly**🔹 | <code>boolean</code> | Indicates if the file should be read-only or read-write.
+**changed**?🔹 | <code>boolean</code> | Indicates if the file has been changed during synthesis.<br/>__*Optional*__
 *static* **PROJEN_MARKER**🔹 | <code>string</code> | The marker to embed in files in order to identify them as projen files.
 
 ### Methods
@@ -1209,6 +1210,7 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
+  * **newline** (<code>boolean</code>)  Adds a newline at the end of the file. __*Default*__: true
 
 
 ### Methods
@@ -10160,6 +10162,7 @@ Name | Type | Description
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: true
+**newline**?🔹 | <code>boolean</code> | Adds a newline at the end of the file.<br/>__*Default*__: true
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true

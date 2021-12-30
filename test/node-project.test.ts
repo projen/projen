@@ -53,7 +53,7 @@ describe('deps', () => {
       ccc: '*',
       ddd: '*',
     });
-    expect(pkgjson.peerDependencies).toStrictEqual({});
+    expect(pkgjson.peerDependencies).toBeUndefined();
   });
 
   test('dev dependencies', () => {
@@ -79,7 +79,7 @@ describe('deps', () => {
     expect(pkgjson.devDependencies.ddd).toStrictEqual('*');
     expect(pkgjson.devDependencies.eee).toStrictEqual('^1');
     expect(pkgjson.devDependencies.fff).toStrictEqual('^2');
-    expect(pkgjson.peerDependencies).toStrictEqual({});
+    expect(pkgjson.peerDependencies).toBeUndefined();
     expect(pkgjson.dependencieds).toBeUndefined();
   });
 
