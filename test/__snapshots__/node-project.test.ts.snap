@@ -94,7 +94,7 @@ Array [
 git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"",
   },
   Object {
-    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
     "uses": "actions/upload-artifact@v2",
     "with": Object {
@@ -103,9 +103,10 @@ git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name
     },
   },
   Object {
-    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Fail build on mutation",
-    "run": "exit 1",
+    "run": "echo \\"::error::Mutation detected, please update your branch.\\"
+exit 1",
   },
 ]
 `;
@@ -170,7 +171,7 @@ Array [
 git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"",
   },
   Object {
-    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
     "uses": "actions/upload-artifact@v2",
     "with": Object {
@@ -179,9 +180,10 @@ git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name
     },
   },
   Object {
-    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Fail build on mutation",
-    "run": "exit 1",
+    "run": "echo \\"::error::Mutation detected, please update your branch.\\"
+exit 1",
   },
 ]
 `;
