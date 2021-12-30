@@ -224,8 +224,8 @@ jobs:
         with:
           go-version: ^1.16.0
       - name: Prepare repository
-        run: mv dist .repo
+        run: cd dist && ls -laH
       - name: Install dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
+        run: yarn install --check-files --frozen-lockfile
       - name: Run integration test
         run: /bin/bash ./projen.bash integ

@@ -214,11 +214,11 @@ project.buildWorkflow.addPostBuildJob('integ', {
     },
     {
       name: 'Prepare repository',
-      run: `mv ${project.artifactsDirectory} .repo`,
+      run: `cd ${project.artifactsDirectory} && ls -laH`,
     },
     {
       name: 'Install dependencies',
-      run: `cd .repo && ${project.package.installCommand}`,
+      run: `${project.package.installCommand}`,
     },
     {
       name: 'Run integration test',
