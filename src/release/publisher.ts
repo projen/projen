@@ -104,6 +104,8 @@ export class Publisher extends Component {
   // functions that create jobs associated with a specific branch
   private readonly _jobFactories: PublishJobFactory[] = [];
 
+  private readonly _gitHubPrePublishing: JobStep[] = [];
+
   private readonly dryRun: boolean;
 
   constructor(project: Project, options: PublisherOptions) {
@@ -140,6 +142,15 @@ export class Publisher extends Component {
     }
 
     return jobs;
+  }
+
+  /**
+   * Adds pre publishing steps for the GitHub release job.
+   *
+   * @param steps The steps.
+   */
+  public addGitHubPrePublishingSteps(...steps: JobStep[]) {
+    this._gitHubPrePublishing.push(...steps);
   }
 
   /**
@@ -214,7 +225,7 @@ export class Publisher extends Component {
       return {
         name: 'github',
         registryName: 'GitHub Releases',
-        prePublishSteps: options.prePublishSteps ?? [],
+        prePublishSteps: options.prePublishSteps ?? this._gitHubPrePublishing,
         publishTools: options.publishTools,
         permissions: {
           contents: JobPermission.WRITE,
@@ -533,6 +544,8 @@ export interface CommonPublishOptions {
    *
    * These steps are executed after `dist/` has been populated with the build
    * output.
+   *
+   * Note that this will override steps added via `addGitHubPrePublishingSteps`.
    */
   readonly prePublishSteps?: JobStep[];
 

@@ -7,6 +7,7 @@ import { JsiiDocgen } from './jsii-docgen';
 
 const EMAIL_REGEX = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
 const URL_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
+const REPO_TEMP_DIRECTORY = '.repo';
 
 export interface JsiiProjectOptions extends TypeScriptProjectOptions {
   /**
@@ -209,6 +210,17 @@ export class JsiiProject extends TypeScriptProject {
 
     this.addFields({ jsii });
 
+    this.release?.publisher.addGitHubPrePublishingSteps(
+      {
+        name: 'Prepare Repository',
+        run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
+      },
+      {
+        name: 'Collect GitHub Metadata',
+        run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
+      },
+    );
+
     if (options.releaseToNpm != false) {
       const task = this.addPackagingTask('js');
       this.release?.publisher.publishToNpm({
@@ -346,8 +358,6 @@ export class JsiiProject extends TypeScriptProject {
 
   private pacmakForLanguage(target: JsiiPacmakTarget, packTask: Task): CommonPublishOptions {
 
-    const repo = '.repo';
-
     // at this stage, `artifactsDirectory` contains the prebuilt repository.
     // for the publishing to work seamlessely, that directory needs to contain the actual artifact.
     // so we move the repo, create the artifact, and put it in the expected place.
@@ -357,19 +367,19 @@ export class JsiiProject extends TypeScriptProject {
       prePublishSteps: [
         {
           name: 'Prepare Repository',
-          run: `mv ${this.artifactsDirectory} ${repo}`,
+          run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
         },
         {
           name: 'Install Dependencies',
-          run: `cd ${repo} && ${this.package.installCommand}`,
+          run: `cd ${REPO_TEMP_DIRECTORY} && ${this.package.installCommand}`,
         },
         {
           name: `Create ${target} artifact`,
-          run: `cd ${repo} && npx projen ${packTask.name}`,
+          run: `cd ${REPO_TEMP_DIRECTORY} && npx projen ${packTask.name}`,
         },
         {
           name: `Collect ${target} Artifact`,
-          run: `mv ${repo}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
+          run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
         },
       ],
     };
