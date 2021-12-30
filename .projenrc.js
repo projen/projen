@@ -187,24 +187,17 @@ const integTask = project.addTask('integ');
 integTask.spawn(project.buildTask);
 integTask.spawn(project.tasks.tryFind('package:python'));
 integTask.spawn(pythonCompatTask);
-project.autoMerge.addConditions('status-success=integ');
 
-new github.TaskWorkflow(project.github, {
+project.buildWorkflow.addPostBuildJob('integ', {
   name: 'integ',
-  jobId: 'integ',
-  triggers: {
-    pullRequest: {},
-    workflowDispatch: {},
+  permissions: {
+    contents: workflows.JobPermission.READ,
   },
   env: {
     CI: 'true',
   },
-  permissions: {
-    contents: workflows.JobPermission.READ,
-  },
-
-  preBuildSteps: [
-    ...project.installWorkflowSteps, // install dependencies for projen
+  runsOn: 'ubuntu-latest',
+  steps: [
     {
       name: 'Set up Python 3.x',
       uses: 'actions/setup-python@v2',
@@ -219,9 +212,11 @@ new github.TaskWorkflow(project.github, {
         'go-version': '^1.16.0',
       },
     },
+    {
+      name: 'Run integration test',
+      run: `${project.projenCommand} ${integTask.name}`,
+    },
   ],
-
-  task: integTask,
 });
 
 project.synth();
