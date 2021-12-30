@@ -177,7 +177,7 @@ Name|Description
 [awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)|Options for `IntegrationTest`.
 [awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)|Common options for `LambdaFunction`.
 [awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)|Options for `Function`.
-[build.AddPostBuildJobCommandOptions](#projen-build-addpostbuildjobcommandoptions)|Options for `BuildWorkflow.addPostBuildCommand`.
+[build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)|Options for `BuildWorkflow.addPostBuildTask`.
 [build.BuildWorkflowOptions](#projen-build-buildworkflowoptions)|*No description*
 [cdk.Catalog](#projen-cdk-catalog)|*No description*
 [cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)|*No description*
@@ -3903,21 +3903,23 @@ addPostBuildJob(id: string, job: Job): void
 
 
 
-#### addPostBuildJobCommand(options)🔹 <a id="projen-build-buildworkflow-addpostbuildjobcommand"></a>
+#### addPostBuildJobTask(task, options)🔹 <a id="projen-build-buildworkflow-addpostbuildjobtask"></a>
 
-Adds another job to the build workflow which is executed after the build job succeeded.
+Run a task as a job within the build workflow which is executed after the build job succeeded.
+
+The task will have access to build artifacts if `project.artifactsDirectory`
+is defined.
 
 Jobs are executed _only_ if the build did NOT self mutate. If the build
 self-mutate, the branch will either be updated or the build will fail (in
 forks), so there is no point in executing the post-build job.
 
 ```ts
-addPostBuildJobCommand(options: AddPostBuildJobCommandOptions): void
+addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions): void
 ```
 
-* **options** (<code>[build.AddPostBuildJobCommandOptions](#projen-build-addpostbuildjobcommandoptions)</code>)  *No description*
-  * **command** (<code>string</code>)  Command that should be executed. 
-  * **name** (<code>string</code>)  Name of the job that will be created. 
+* **task** (<code>[Task](#projen-task)</code>)  *No description*
+* **options** (<code>[build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)</code>)  Specify tools and other options.
   * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools that should be installed before the command is run. __*Optional*__
 
 
@@ -11277,17 +11279,15 @@ Name | Type | Description
 
 
 
-## struct AddPostBuildJobCommandOptions 🔹 <a id="projen-build-addpostbuildjobcommandoptions"></a>
+## struct AddPostBuildJobTaskOptions 🔹 <a id="projen-build-addpostbuildjobtaskoptions"></a>
 
 
-Options for `BuildWorkflow.addPostBuildCommand`.
+Options for `BuildWorkflow.addPostBuildTask`.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**command**🔹 | <code>string</code> | Command that should be executed.
-**name**🔹 | <code>string</code> | Name of the job that will be created.
 **tools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Tools that should be installed before the command is run.<br/>__*Optional*__
 
 
