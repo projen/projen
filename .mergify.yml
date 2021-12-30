@@ -16,10 +16,11 @@ pull_request_rules:
       - "#approved-reviews-by>=1"
       - -label~=(do-not-merge)
       - status-success=build
-      - status-success=integ
+      - status-success=package-js
       - status-success=package-java
       - status-success=package-python
       - status-success=package-go
+      - status-success=integ
   - name: Label core contributions
     actions:
       label:
