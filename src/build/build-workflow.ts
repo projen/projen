@@ -188,32 +188,60 @@ export class BuildWorkflow extends Component {
   }
 
   /**
-   * Adds another job to the build workflow which is executed after the build
-   * job succeeded.
+   * Run a task as a job within the build workflow which is executed after the
+   * build job succeeded.
+   *
+   * The task will have access to build artifacts if `project.artifactsDirectory`
+   * is defined.
    *
    * Jobs are executed _only_ if the build did NOT self mutate. If the build
    * self-mutate, the branch will either be updated or the build will fail (in
    * forks), so there is no point in executing the post-build job.
+   *
+   * @param options Specify tools and other options
    */
-  public addPostBuildJobCommand(options: AddPostBuildJobCommandOptions) {
-    const job: Job = {
+  public addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions) {
+    const steps = [];
+    const id = `post-build-${task.name}`;
+
+    // check out the repository
+    steps.push(
+      ...WorkflowActions.checkoutWithPatch({
+        ref: PULL_REQUEST_REF,
+        repository: PULL_REQUEST_REPOSITORY,
+      }),
+    );
+
+    if (this.artifactsDirectory) {
+      steps.push({
+        name: 'Download build artifacts',
+        uses: 'actions/download-artifact@v2',
+        with: {
+          name: BUILD_ARTIFACT_NAME,
+          path: this.artifactsDirectory,
+        },
+      });
+    }
+
+    steps.push({
+      name: `Run task "${task.name}"`,
+      run: `${this.project.projenCommand} ${task.name}`,
+    });
+
+    // add to the list of build job IDs
+    this._postBuildJobs.push(id);
+
+    this.workflow.addJob(id, {
+      needs: [BUILD_JOBID],
       permissions: {
         contents: JobPermission.READ,
       },
-      env: {
-        CI: 'true',
-      },
+      // only run if build did not self-mutate
+      if: `! ${SELF_MUTATION_CONDITION}`,
       tools: options.tools,
       runsOn: ['ubuntu-latest'],
-      steps: [
-        {
-          name: options.name,
-          run: options.command,
-        },
-      ],
-    };
-
-    this.addPostBuildJob(options.name, job);
+      steps,
+    });
   }
 
   private addSelfMutationJob() {
@@ -288,17 +316,9 @@ export class BuildWorkflow extends Component {
 }
 
 /**
- * Options for `BuildWorkflow.addPostBuildCommand`
+ * Options for `BuildWorkflow.addPostBuildTask`
  */
-export interface AddPostBuildJobCommandOptions {
-  /**
-   * Name of the job that will be created.
-   */
-  readonly name: string;
-  /**
-   * Command that should be executed.
-   */
-  readonly command: string;
+export interface AddPostBuildJobTaskOptions {
   /**
    * Tools that should be installed before the command is run.
    */

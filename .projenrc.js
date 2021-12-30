@@ -188,9 +188,7 @@ integTask.spawn(project.buildTask);
 integTask.spawn(project.tasks.tryFind('package:python'));
 integTask.spawn(pythonCompatTask);
 
-project.buildWorkflow.addPostBuildJobCommand({
-  name: 'integ',
-  command: `cd ${project.artifactsDirectory} && ${project.projenCommand} ${integTask.name}`,
+project.buildWorkflow.addPostBuildJobTask(integTask, {
   tools: { python: { version: '3.x' }, go: { version: '1.16.x' } },
 });
 

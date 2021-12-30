@@ -20,7 +20,7 @@ pull_request_rules:
       - status-success=package-java
       - status-success=package-python
       - status-success=package-go
-      - status-success=integ
+      - status-success=post-build-integ
   - name: Label core contributions
     actions:
       label:

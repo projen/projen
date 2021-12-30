@@ -186,13 +186,11 @@ jobs:
         run: cd .repo && npx projen package:go
       - name: Collect go Artifact
         run: mv .repo/dist dist
-  integ:
+  post-build-integ:
     needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    env:
-      CI: "true"
     if: "! needs.build.outputs.self_mutation_happened"
     steps:
       - uses: actions/setup-python@v2
@@ -201,10 +199,23 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: 1.16.x
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: .repo.patch
+          path: ${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s ${{ runner.temp }}/.repo.patch ] && git apply ${{ runner.temp
+          }}/.repo.patch || echo "Empty patch. Skipping."'
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
           name: build-artifact
           path: dist
-      - name: integ
-        run: cd dist && /bin/bash ./projen.bash integ
+      - name: Run task "integ"
+        run: /bin/bash ./projen.bash integ
