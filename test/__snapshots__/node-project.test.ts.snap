@@ -69,82 +69,6 @@ Upgrades project dependencies. See details in [workflow run].
 }
 `;
 
-exports[`enable anti-tamper 1`] = `
-Array [
-  Object {
-    "name": "Checkout",
-    "uses": "actions/checkout@v2",
-    "with": Object {
-      "ref": "\${{ github.event.pull_request.head.ref }}",
-      "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
-    },
-  },
-  Object {
-    "name": "Install dependencies",
-    "run": "npm ci",
-  },
-  Object {
-    "name": "build",
-    "run": "npx projen build",
-  },
-  Object {
-    "id": "self_mutation",
-    "name": "Find mutations",
-    "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"",
-  },
-  Object {
-    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
-    "name": "Upload patch",
-    "uses": "actions/upload-artifact@v2",
-    "with": Object {
-      "name": ".repo.patch",
-      "path": ".repo.patch",
-    },
-  },
-  Object {
-    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
-    "name": "Fail build on mutation",
-    "run": "exit 1",
-  },
-]
-`;
-
-exports[`enable anti-tamper 2`] = `
-Object {
-  "if": "always() && needs.build.outputs.self_mutation_happened",
-  "needs": "build",
-  "permissions": Object {},
-  "runs-on": "ubuntu-latest",
-  "steps": Array [
-    Object {
-      "name": "Checkout",
-      "uses": "actions/checkout@v2",
-      "with": Object {
-        "ref": "\${{ github.event.pull_request.head.ref }}",
-        "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
-      },
-    },
-    Object {
-      "name": "Download patch",
-      "uses": "actions/download-artifact@v2",
-      "with": Object {
-        "name": ".repo.patch",
-        "path": "\${{ runner.temp }}",
-      },
-    },
-    Object {
-      "name": "Apply patch",
-      "run": "[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"",
-    },
-    Object {
-      "name": "Found diff after build (update your branch)",
-      "run": "git add . && diff --staged --exit-code",
-    },
-  ],
-}
-`;
-
 exports[`mutableBuild will push changes to PR branches 1`] = `
 Array [
   Object {
@@ -170,7 +94,7 @@ Array [
 git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"",
   },
   Object {
-    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
     "uses": "actions/upload-artifact@v2",
     "with": Object {
@@ -179,9 +103,10 @@ git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name
     },
   },
   Object {
-    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Fail build on mutation",
-    "run": "exit 1",
+    "run": "echo \\"::error::Mutation detected, please update your branch.\\"
+exit 1",
   },
 ]
 `;

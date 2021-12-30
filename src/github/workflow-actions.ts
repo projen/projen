@@ -18,6 +18,9 @@ export class WorkflowActions {
    * @returns Job steps
    */
   public static createUploadGitPatch(options: CreateUploadGitPatchOptions): JobStep[] {
+
+    const MUTATIONS_FOUND = `steps.${options.stepId}.outputs.${options.outputName}`;
+
     const steps: JobStep[] = [
       {
         id: options.stepId,
@@ -28,7 +31,7 @@ export class WorkflowActions {
         ].join('\n'),
       },
       {
-        if: `\${{ steps.${options.stepId}.outputs.${options.outputName} }}`,
+        if: MUTATIONS_FOUND,
         name: 'Upload patch',
         uses: 'actions/upload-artifact@v2',
         with: { name: GIT_PATCH_FILE, path: GIT_PATCH_FILE },
@@ -38,8 +41,11 @@ export class WorkflowActions {
     if (options.failOnMutation ?? false) {
       steps.push({
         name: 'Fail build on mutation',
-        if: `\${{ steps.${options.stepId}.outputs.${options.outputName} }}`,
-        run: 'exit 1',
+        if: MUTATIONS_FOUND,
+        run: [
+          'echo "::error::Mutation detected, please update your branch."',
+          'exit 1',
+        ].join('\n'),
       });
     }
 

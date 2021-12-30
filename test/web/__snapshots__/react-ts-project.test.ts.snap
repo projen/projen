@@ -55,37 +55,17 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"
-      - if: \${{ steps.self_mutation.outputs.self_mutation_happened }}
+      - if: steps.self_mutation.outputs.self_mutation_happened
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:
           name: .repo.patch
           path: .repo.patch
       - name: Fail build on mutation
-        if: \${{ steps.self_mutation.outputs.self_mutation_happened }}
-        run: exit 1
-  anti-tamper:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions: {}
-    if: always() && needs.build.outputs.self_mutation_happened &&
-      github.event.pull_request.head.repo.full_name != github.repository
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: \${{ github.event.pull_request.head.ref }}
-          repository: \${{ github.event.pull_request.head.repo.full_name }}
-      - name: Download patch
-        uses: actions/download-artifact@v2
-        with:
-          name: .repo.patch
-          path: \${{ runner.temp }}
-      - name: Apply patch
-        run: '[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp
-          }}/.repo.patch || echo \\"Empty patch. Skipping.\\"'
-      - name: Found diff after build (update your branch)
-        run: git add . && diff --staged --exit-code
+        if: steps.self_mutation.outputs.self_mutation_happened
+        run: |-
+          echo \\"::error::Mutation detected, please update your branch.\\"
+          exit 1
   self-mutation:
     needs: build
     runs-on: ubuntu-latest
@@ -208,7 +188,7 @@ jobs:
           git add .
 
           git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: \${{ steps.create_patch.outputs.patch_created }}
+      - if: steps.create_patch.outputs.patch_created
         name: Upload patch
         uses: actions/upload-artifact@v2
         with:

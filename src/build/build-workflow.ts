@@ -106,7 +106,7 @@ export class BuildWorkflow extends Component {
     });
 
     this.addBuildJob(options);
-    this.addAntiTamperJob({ onlyForks: mutableBuilds });
+
     if (mutableBuilds) {
       this.addSelfMutationJob();
     }
@@ -187,7 +187,6 @@ export class BuildWorkflow extends Component {
     this._postBuildJobs.push(id);
   }
 
-
   private addSelfMutationJob() {
     this.workflow.addJob('self-mutation', {
       runsOn: ['ubuntu-latest'],
@@ -217,37 +216,6 @@ export class BuildWorkflow extends Component {
   }
 
   /**
-   * Adds a job that fails if there were file changes.
-   */
-  private addAntiTamperJob(options: { onlyForks: boolean }) {
-    const conditions = [
-      'always()', // run even if build job failed
-      SELF_MUTATION_CONDITION,
-    ];
-
-    if (options.onlyForks) {
-      conditions.push(IS_FORK);
-    }
-
-    this.workflow.addJob('anti-tamper', {
-      runsOn: ['ubuntu-latest'],
-      if: conditions.join(' && '),
-      permissions: {},
-      needs: [BUILD_JOBID],
-      steps: [
-        ...WorkflowActions.checkoutWithPatch({
-          repository: PULL_REQUEST_REPOSITORY,
-          ref: PULL_REQUEST_REF,
-        }),
-        {
-          name: 'Found diff after build (update your branch)',
-          run: 'git add . && diff --staged --exit-code',
-        },
-      ],
-    });
-  }
-
-  /**
    * Called (lazily) during synth to render the build job steps.
    */
   private renderBuildSteps(): JobStep[] {
@@ -270,14 +238,14 @@ export class BuildWorkflow extends Component {
 
       ...this.postBuildSteps,
 
+      // check for mutations and upload a git patch file as an artifact
       ...WorkflowActions.createUploadGitPatch({
         stepId: SELF_MUTATION_STEP,
         outputName: SELF_MUTATION_HAPPENED_OUTPUT,
         failOnMutation: true,
       }),
 
-      // upload the build artifact only if we have post-build jobs and only if
-      // there we NO self mutation.
+      // upload the build artifact only if we have post-build jobs (otherwise, there's no point)
       ...(this._postBuildJobs.length == 0 ? [] : [{
         name: 'Upload artifact',
         uses: 'actions/upload-artifact@v2.1.1',
