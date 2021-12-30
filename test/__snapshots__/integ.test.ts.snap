@@ -297,9 +297,11 @@ jobs:
         with:
           name: .repo.patch
           path: .repo.patch
+      - name: Fail build on mutation
+        if: \${{ steps.self_mutation.outputs.self_mutation_happened }}
+        run: exit 1
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
-        if: \${{ ! steps.self_mutation.outputs.self_mutation_happened }}
         with:
           name: build-artifact
           path: dist
@@ -307,8 +309,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: \${{ needs.build.outputs.self_mutation_happened &&
-      github.event.pull_request.head.repo.full_name != github.repository }}
+    if: always() && needs.build.outputs.self_mutation_happened &&
+      github.event.pull_request.head.repo.full_name != github.repository
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -330,8 +332,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: \${{ needs.build.outputs.self_mutation_happened &&
-      !(github.event.pull_request.head.repo.full_name != github.repository) }}
+    if: always() && needs.build.outputs.self_mutation_happened &&
+      !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -360,7 +362,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: \${{ ! needs.build.outputs.self_mutation_happened }}
+    if: \\"! needs.build.outputs.self_mutation_happened\\"
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -382,7 +384,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: \${{ ! needs.build.outputs.self_mutation_happened }}
+    if: \\"! needs.build.outputs.self_mutation_happened\\"
     steps:
       - uses: actions/setup-java@v2
         with:
@@ -408,7 +410,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: \${{ ! needs.build.outputs.self_mutation_happened }}
+    if: \\"! needs.build.outputs.self_mutation_happened\\"
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -4989,12 +4991,15 @@ jobs:
         with:
           name: .repo.patch
           path: .repo.patch
+      - name: Fail build on mutation
+        if: \${{ steps.self_mutation.outputs.self_mutation_happened }}
+        run: exit 1
   anti-tamper:
     needs: build
     runs-on: ubuntu-latest
     permissions: {}
-    if: \${{ needs.build.outputs.self_mutation_happened &&
-      github.event.pull_request.head.repo.full_name != github.repository }}
+    if: always() && needs.build.outputs.self_mutation_happened &&
+      github.event.pull_request.head.repo.full_name != github.repository
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -5016,8 +5021,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: \${{ needs.build.outputs.self_mutation_happened &&
-      !(github.event.pull_request.head.repo.full_name != github.repository) }}
+    if: always() && needs.build.outputs.self_mutation_happened &&
+      !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
         uses: actions/checkout@v2

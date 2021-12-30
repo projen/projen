@@ -390,7 +390,7 @@ Object {
 
 exports[`language bindings snapshot dotnet 1`] = `
 Object {
-  "if": "\${{ ! needs.build.outputs.self_mutation_happened }}",
+  "if": "! needs.build.outputs.self_mutation_happened",
   "needs": "build",
   "permissions": Object {},
   "runs-on": "ubuntu-latest",
@@ -437,7 +437,7 @@ Object {
 
 exports[`language bindings snapshot go 1`] = `
 Object {
-  "if": "\${{ ! needs.build.outputs.self_mutation_happened }}",
+  "if": "! needs.build.outputs.self_mutation_happened",
   "needs": "build",
   "permissions": Object {},
   "runs-on": "ubuntu-latest",
@@ -484,7 +484,7 @@ Object {
 
 exports[`language bindings snapshot java 1`] = `
 Object {
-  "if": "\${{ ! needs.build.outputs.self_mutation_happened }}",
+  "if": "! needs.build.outputs.self_mutation_happened",
   "needs": "build",
   "permissions": Object {},
   "runs-on": "ubuntu-latest",
@@ -532,7 +532,7 @@ Object {
 
 exports[`language bindings snapshot js 1`] = `
 Object {
-  "if": "\${{ ! needs.build.outputs.self_mutation_happened }}",
+  "if": "! needs.build.outputs.self_mutation_happened",
   "needs": "build",
   "permissions": Object {},
   "runs-on": "ubuntu-latest",
@@ -573,7 +573,7 @@ Object {
 
 exports[`language bindings snapshot python 1`] = `
 Object {
-  "if": "\${{ ! needs.build.outputs.self_mutation_happened }}",
+  "if": "! needs.build.outputs.self_mutation_happened",
   "needs": "build",
   "permissions": Object {},
   "runs-on": "ubuntu-latest",
