@@ -811,7 +811,6 @@ tsconfig.tsbuildinfo
         "not op_mini all",
       ],
     },
-    "bundledDependencies": Array [],
     "dependencies": Object {
       "react": "*",
       "react-dom": "*",
@@ -838,7 +837,6 @@ tsconfig.tsbuildinfo
     },
     "license": "Apache-2.0",
     "name": "test-nextjs-project",
-    "peerDependencies": Object {},
     "scripts": Object {
       "build": "npx projen build",
       "compile": "npx projen compile",

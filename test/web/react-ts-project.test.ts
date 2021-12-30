@@ -18,7 +18,7 @@ test('deps can be overridden', () => {
 
   const pkg = synthSnapshot(p)['package.json'];
 
-  expect(pkg.dependencies).toStrictEqual({});
+  expect(pkg.dependencies).toBeUndefined();
   expect(pkg.devDependencies.react).toStrictEqual('^2');
   expect(pkg.devDependencies['react-dom']).toStrictEqual('^4');
   expect(pkg.devDependencies['react-scripts']).toStrictEqual('1.2.3');

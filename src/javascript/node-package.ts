@@ -460,6 +460,7 @@ export class NodePackage extends Component {
     this.file = new JsonFile(this.project, 'package.json', {
       obj: this.manifest,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
+      newline: false, // when file is edited by npm/yarn it doesn't include a newline
     });
 
     this.addKeywords(...options.keywords ?? []);
@@ -698,7 +699,10 @@ export class NodePackage extends Component {
 
     const outdir = this.project.outdir;
 
-    exec(this.renderInstallCommand(this.isAutomatedBuild), { cwd: outdir });
+    // only run "install" if package.json has changed.
+    if (this.file.changed) {
+      exec(this.renderInstallCommand(this.isAutomatedBuild), { cwd: outdir });
+    }
 
     this.resolveDepsAndWritePackageJson(outdir);
   }
@@ -902,11 +906,14 @@ export class NodePackage extends Component {
       }
     }
 
+    // returns a lazy value to normalize during synthesis
+    const normalize = (obj: any) => () => sorted(obj);
+
     // update the manifest we are about to save into `package.json`
-    this.manifest.devDependencies = devDependencies;
-    this.manifest.peerDependencies = peerDependencies;
-    this.manifest.dependencies = dependencies;
-    this.manifest.bundledDependencies = bundledDependencies;
+    this.manifest.devDependencies = normalize(devDependencies);
+    this.manifest.peerDependencies = normalize(peerDependencies);
+    this.manifest.dependencies = normalize(dependencies);
+    this.manifest.bundledDependencies = sorted(bundledDependencies);
 
     // nothing further to do if package.json file does not exist
     const pkg = this.readPackageJson();

@@ -1,3 +1,5 @@
+import { readFileSync, writeFileSync } from 'fs';
+import { join } from 'path';
 import { JsonFile } from '../src';
 import { synthSnapshot, TestProject } from './util';
 
@@ -87,3 +89,64 @@ test('json file can contain projen marker', () => {
 
   expect(output['//']).toBe(JsonFile.PROJEN_MARKER);
 });
+
+describe('newline', () => {
+  const obj = {
+    hello: 'world',
+  };
+
+  test('is enabled by default', () => {
+    const prj = new TestProject();
+
+    new JsonFile(prj, 'hello.json', { obj });
+
+    prj.synth();
+    const output = readFileSync(join(prj.outdir, 'hello.json'), 'utf-8');
+    expect(output.endsWith('\n')).toBe(true);
+  });
+
+  test('can be disabled', () => {
+    const prj = new TestProject();
+
+    new JsonFile(prj, 'hello.json', { obj, newline: false });
+
+    prj.synth();
+    const output = readFileSync(join(prj.outdir, 'hello.json'), 'utf-8');
+    expect(output.endsWith('\n')).toBe(false);
+  });
+});
+
+describe('changed', () => {
+  const obj = { hello: 'world' };
+
+  it('is "undefined" before synthesis', () => {
+    const prj = new TestProject();
+    const file = new JsonFile(prj, 'hello.json', { obj });
+    expect(file.changed).toBeUndefined();
+  });
+
+  it('is set to "true" for new files', () => {
+    const prj = new TestProject();
+    const file = new JsonFile(prj, 'hello.json', { obj });
+    prj.synth();
+    expect(file.changed).toBeTruthy();
+  });
+
+  it('is set to "true" if the file changed', () => {
+    const prj = new TestProject();
+    const file = new JsonFile(prj, 'hello.json', { obj });
+    writeFileSync(join(prj.outdir, 'hello.json'), JSON.stringify({ hello: 'world1' }, undefined, 2));
+    prj.synth();
+    expect(file.changed).toBeTruthy();
+  });
+
+  it('is set to "false" if the file did not change', () => {
+    const prj = new TestProject();
+    const file = new JsonFile(prj, 'hello.json', { obj, newline: false, marker: false });
+    writeFileSync(join(prj.outdir, 'hello.json'), JSON.stringify(obj, undefined, 2));
+    prj.synth();
+    expect(file.changed).toStrictEqual(false);
+  });
+
+});
+
