@@ -105,7 +105,8 @@ git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name
   Object {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Fail build on mutation",
-    "run": "echo \\"::error::Mutation detected, please update your branch.\\"
+    "run": "echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+cat .repo.patch
 exit 1",
   },
 ]

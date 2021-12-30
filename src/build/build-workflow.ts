@@ -242,7 +242,7 @@ export class BuildWorkflow extends Component {
       ...WorkflowActions.createUploadGitPatch({
         stepId: SELF_MUTATION_STEP,
         outputName: SELF_MUTATION_HAPPENED_OUTPUT,
-        failOnMutation: true,
+        mutationError: 'Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.',
       }),
 
       // upload the build artifact only if we have post-build jobs (otherwise, there's no point)
