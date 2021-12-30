@@ -198,11 +198,11 @@ export class CiConfiguration extends Component {
   }
 
   /**
- * Check if an Include configuration is valid
- * @see https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/config/external/mapper.rb
- * @param include the Include to balidate
- * @returns Whether the include is valid.
- */
+   * Check if an Include configuration is valid
+   * @see https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/config/external/mapper.rb
+   * @param include the Include to balidate
+   * @returns Whether the include is valid.
+   */
   private isValidInclude(include: Include): boolean {
     const combos = [include.local, (include.file && include.project), include.remote, include.template];
     return combos.filter(x => Boolean(x)).length === 1;
