@@ -102,12 +102,17 @@ git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name
       "path": ".repo.patch",
     },
   },
+  Object {
+    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "name": "Fail build on mutation",
+    "run": "exit 1",
+  },
 ]
 `;
 
 exports[`enable anti-tamper 2`] = `
 Object {
-  "if": "\${{ needs.build.outputs.self_mutation_happened }}",
+  "if": "always() && needs.build.outputs.self_mutation_happened",
   "needs": "build",
   "permissions": Object {},
   "runs-on": "ubuntu-latest",
@@ -172,6 +177,11 @@ git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name
       "name": ".repo.patch",
       "path": ".repo.patch",
     },
+  },
+  Object {
+    "if": "\${{ steps.self_mutation.outputs.self_mutation_happened }}",
+    "name": "Fail build on mutation",
+    "run": "exit 1",
   },
 ]
 `;
