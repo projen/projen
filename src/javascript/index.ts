@@ -1,5 +1,6 @@
 export * from './bundler';
 export * from './eslint';
+export * from './husky';
 export * from './jest';
 export * from './node-package';
 export * from './node-project';
