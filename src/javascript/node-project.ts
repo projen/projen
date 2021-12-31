@@ -12,6 +12,7 @@ import { Task } from '../task';
 import { deepMerge } from '../util';
 import { Version } from '../version';
 import { Bundler, BundlerOptions } from './bundler';
+import { Husky, HuskyPremadeOptions } from './husky';
 import { Jest, JestOptions } from './jest';
 import { NodePackage, NodePackageManager, NodePackageOptions } from './node-package';
 import { Projenrc, ProjenrcOptions } from './projenrc';
@@ -314,6 +315,20 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
    * @default true
    */
   readonly package?: boolean;
+
+  /**
+   * Setup Husky.
+   *
+   * @default false
+   */
+  readonly husky?: boolean;
+
+  /**
+   * Premade Husky hook configuration.
+   *
+   * @default - opinionated Husky premade hooks.
+   */
+  readonly huskyPremadeHooks?: HuskyPremadeOptions;
 }
 
 /**
@@ -444,6 +459,7 @@ export class NodeProject extends GitHubProject {
   private readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
   public readonly prettier?: Prettier;
+  public readonly husky?: Husky;
 
   constructor(options: NodeProjectOptions) {
     super(options);
@@ -695,6 +711,9 @@ export class NodeProject extends GitHubProject {
 
     if (options.prettier ?? false) {
       this.prettier = new Prettier(this, { ...options.prettierOptions });
+    }
+    if (options.husky ?? false) {
+      this.husky = new Husky(this, options.huskyPremadeHooks);
     }
   }
 
