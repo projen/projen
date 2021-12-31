@@ -23,6 +23,9 @@ export enum GitClientHook {
     POST_REWRITE = 'post-rewrite',
 }
 
+/**
+ * Options for opinionated premade hooks for Husky.
+ */
 export interface HuskyPremadeOptions {
     /**
      * Enforce convential commits standards on commit messages.
@@ -40,7 +43,10 @@ export interface HuskyPremadeOptions {
     lintStaged?: boolean;
 };
 
-
+/**
+ * A Husky configuration
+ * @see https://typicode.github.io/husky/#/
+ */
 export class Husky {
     readonly project: NodeProject;
     /**
