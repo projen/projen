@@ -33,14 +33,14 @@ export interface HuskyPremadeOptions {
      * 
      * @default true
      */
-    enforceConventialCommits?: boolean;
+    readonly enforceConventialCommits?: boolean;
 
     /**
-     * Enable linting and re-adding of staged files pre commit..
+     * Enable linting and re-adding of staged files pre commit.
      * 
      * @default true
      */
-    lintStaged?: boolean;
+    readonly lintStaged?: boolean;
 };
 
 /**
