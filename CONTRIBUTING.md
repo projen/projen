@@ -35,12 +35,13 @@ $ yarn build # build projen
 
 Check out [this recording](https://www.youtube.com/watch?v=8dHwnuSND14) from a walkthrough of the projen codebase.
 
-### Development workflow
+### Development Scripts and Unit Tests
 
 The projen package has the following scripts:
 
-- `build` - builds the package and runs all unit tests
-- `watch` - watches for file changes and builds them progressively
+- `build` - builds the package and runs all unit tests (this takes a long time)
+- `compile` - transpiles the code into a runable state, useful when doing development
+- `watch` - watches for file changes and builds them progressively (usually run in a separate terminal)
 - `test` - executes all unit tests
 - `test:update` - executes all unit tests and overwrites snapshot expectations (those `.snap` files).
 - `test:watch` - runs all unit tests and reruns tests when files are changed
@@ -55,6 +56,12 @@ make sure to compile once before running any tests.
 One trick for quickly iterating is to run `yarn watch` in one terminal, and
 `yarn test:watch` in another. Then, when you change your unit tests the code
 will automatically recompile, thus triggering the tests to automatically re-run.
+
+### Development Process
+
+To actually work with projen you will need to "tell" your system to use the code in your local 
+tree instead of using the distributed release.  
+
 
 #### Linting & Formatting
 

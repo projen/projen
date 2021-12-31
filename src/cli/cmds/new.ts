@@ -246,7 +246,7 @@ async function initProject(baseDir: string, type: inventory.ProjectType, args: a
   if (args.git) {
 
     const git = (cmd: string) => exec(`git ${cmd}`, { cwd: baseDir });
-    const gitversion = execCapture('git --version', { cwd: baseDir, })
+    const gitversion = execCapture('git --version', { cwd: baseDir })
       .toString()
       .match(/-?[\d\.]+/g);
     var major: number = 0;
@@ -264,7 +264,7 @@ async function initProject(baseDir: string, type: inventory.ProjectType, args: a
       git('init');
       git('add .');
       git('commit --allow-empty -m "chore: project created with projen"');
-      console.log("older version of git detected, changing branch name to main");
+      console.log('older version of git detected, changing branch name to main');
       git('branch -m main');
     }
 
