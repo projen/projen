@@ -25,16 +25,15 @@ export interface AwsCdkDepsCommonOptions {
   /**
    * Use pinned version instead of caret version for CDK.
    *
-   * You can use this to prevent yarn to mix versions for your CDK dependencies and to prevent auto-updates.
+   * You can use this to prevent mixed versions for your CDK dependencies and to prevent auto-updates.
    * If you use experimental features this will let you define the moment you include breaking changes.
    */
   readonly cdkVersionPinning?: boolean;
 
   /**
-    * Which AWS CDK modules (those that start with "@aws-cdk/") does this library
-    * require when consumed?
+    * Which AWS CDKv1 modules this project requires
     *
-    * @deprecated For CDK 2.x use 'peerDeps' instead
+    * @deprecated For CDK 2.x use "deps" instead. (or "peerDeps" if you're building a library)
     */
   readonly cdkDependencies?: string[];
 
@@ -47,12 +46,15 @@ export interface AwsCdkDepsCommonOptions {
    * If this is disabled, `cdkDependencies` will be added to `devDependencies` to ensure
    * they are present during development.
    *
+   * Note: this setting only applies to construct library projects
+   *
    * @default true
    * @deprecated Not supported in CDK v2.
    */
   readonly cdkDependenciesAsDeps?: boolean;
 
   /**
+   * Warning: NodeJS only.
    * Install the @aws-cdk/assert library?
    *
    * @default - will be included by default for AWS CDK >= 1.0.0 < 2.0.0
@@ -62,7 +64,7 @@ export interface AwsCdkDepsCommonOptions {
   readonly cdkAssert?: boolean;
 
   /**
-   * Install the @aws-cdk/assertions library?
+   * Install the assertions library?
    *
    * Only needed for CDK 1.x. If using CDK 2.x then
    * assertions is already included in 'aws-cdk-lib'
@@ -74,7 +76,7 @@ export interface AwsCdkDepsCommonOptions {
   /**
    * AWS CDK modules required for testing.
    *
-   * @deprecated For CDK 2.x use 'devDeps' instead
+   * @deprecated For CDK 2.x use 'devDeps'(node) or 'testDeps'(java) instead
    */
   readonly cdkTestDependencies?: string[];
 }
@@ -86,6 +88,30 @@ export interface AwsCdkDepsOptions extends AwsCdkDepsCommonOptions {
    * For libraries, use peer dependencies and for apps use runtime dependencies.
    */
   readonly dependencyType: DependencyType;
+}
+
+export interface AwsCdkDepsPackageConf {
+  /**
+   * Fully qualified name of the core framework package for CDKv1
+   */
+  readonly frameworkV1Package: string;
+  /**
+   * Fully qualified name of the core framework package for CDKv2
+   */
+  readonly frameworkV2Package: string;
+  /**
+   * Fully qualified name of the constructs library package
+   */
+  readonly constructsPackage: string;
+  /**
+   * Fully qualified name of the assertions library package
+   */
+  readonly assertionsPackage: string;
+  /**
+   * Fully qualified name of the assert library package
+   * Can be empty as it's only really available for javascript projects
+   */
+  readonly assertPackage?: string;
 }
 
 /**
@@ -115,7 +141,7 @@ export class AwsCdkDeps extends Component {
 
   private readonly dependencyType: DependencyType;
 
-  constructor(project: Project, options: AwsCdkDepsOptions) {
+  constructor(project: Project, options: AwsCdkDepsOptions, pkgConf: AwsCdkDepsPackageConf) {
     super(project);
 
     this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;
@@ -127,13 +153,13 @@ export class AwsCdkDeps extends Component {
     this.cdkVersion = framework.range;
     this.cdkMajorVersion = framework.major;
     this.cdkMinimumVersion = framework.minimum;
-    this.addFrameworkDependency(options);
+    this.addFrameworkDependency(options, pkgConf);
 
     // assert/assertions library
-    this.addV1AssertionLibraryDependency(options);
+    this.addV1AssertionLibraryDependency(options, pkgConf);
 
     // constructs library
-    this.addConstructsDependency(options.constructsVersion);
+    this.addConstructsDependency(options.constructsVersion, pkgConf.constructsPackage);
 
     // user-defined v1 dependencies (will only fail in CDK v2 if these have values)
     this.addV1Dependencies(...options.cdkDependencies ?? []);
@@ -171,17 +197,17 @@ export class AwsCdkDeps extends Component {
    * This method is not supported in CDK v2. Use `project.addPeerDeps()` or
    * `project.addDeps()` as appropriate.
    *
-   * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
+   * @param deps fully qualified names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
    */
   public addV1DevDependencies(...deps: string[]) {
     if (deps.length > 0 && this.cdkMajorVersion !== 1) {
-      throw new Error('addV1DevDependencies() is not supported for CDK 2.x and above, use addDevDeps() instead');
+      throw new Error('addV1DevDependencies() is not supported for CDK 2.x and above, use addDevDeps()/addTestDeps() instead');
     }
 
     this.addV1DependenciesByType(DependencyType.BUILD, ...deps);
   }
 
-  private addConstructsDependency(requestedVersion: string | undefined) {
+  private addConstructsDependency(requestedVersion: string | undefined, constructsPackage: string) {
     if (requestedVersion && !semver.parse(requestedVersion)) {
       throw new Error(`"constructsVersion" cannot be parsed as a semver version: ${requestedVersion}`);
     }
@@ -208,7 +234,7 @@ export class AwsCdkDeps extends Component {
         break;
     }
 
-    this.project.deps.addDependency(`constructs@${versionRequirement}`, this.dependencyType);
+    this.project.deps.addDependency(`${constructsPackage}@${versionRequirement}`, this.dependencyType);
 
     return versionRequirement;
   }
@@ -216,25 +242,25 @@ export class AwsCdkDeps extends Component {
   /**
    * Adds a dependency on the AWS CDK framework (e.g. `@aws-cdk/core` for V1 or `aws-cdk-lib` for V1).
    */
-  private addFrameworkDependency(options: AwsCdkDepsOptions) {
+  private addFrameworkDependency(options: AwsCdkDepsOptions, pkgConf: AwsCdkDepsPackageConf) {
 
     switch (this.cdkMajorVersion) {
       case 1:
-        this.addV1Dependencies('@aws-cdk/core');
+        this.addV1Dependencies(pkgConf.frameworkV1Package);
         break;
 
       case 2:
         if (options.cdkDependencies !== undefined) {
-          throw new Error('cdkDependencies is not used for CDK 2.x. Use "peerDeps" instead');
+          throw new Error('cdkDependencies is not used for CDK 2.x. Use "peerDeps" or "deps" instead');
         }
         if (options.cdkDependenciesAsDeps !== undefined) {
           throw new Error('cdkDependenciesAsDeps is not used for CDK 2.x');
         }
         if (options.cdkTestDependencies !== undefined) {
-          throw new Error('cdkTestDependencies is not used for CDK 2.x. Use "devDeps" instead');
+          throw new Error('cdkTestDependencies is not used for CDK 2.x. Use "devDeps" or "testDeps" instead');
         }
 
-        this.project.deps.addDependency(`aws-cdk-lib@${this.cdkVersion}`, this.dependencyType);
+        this.project.deps.addDependency(`${pkgConf.frameworkV2Package}@${this.cdkVersion}`, this.dependencyType);
         break;
 
       default:
@@ -242,7 +268,7 @@ export class AwsCdkDeps extends Component {
     }
   }
 
-  private addV1AssertionLibraryDependency(options: AwsCdkDepsOptions) {
+  private addV1AssertionLibraryDependency(options: AwsCdkDepsOptions, pkgConf: AwsCdkDepsPackageConf) {
     if (this.cdkMajorVersion !== 1) {
       if (options.cdkAssert !== undefined) {
         throw new Error('cdkAssert is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib');
@@ -256,13 +282,13 @@ export class AwsCdkDeps extends Component {
 
     const testDeps = new Array<string>();
 
-    if (options.cdkAssert ?? true) {
-      testDeps.push('@aws-cdk/assert');
+    if ((options.cdkAssert ?? true) && pkgConf.assertPackage) {
+      testDeps.push(pkgConf.assertPackage);
     }
 
     // @aws-cdk/assertions is only available starting v1.111.0
     if (semver.gte(this.cdkMinimumVersion, '1.111.0') && (options.cdkAssertions ?? true)) {
-      testDeps.push('@aws-cdk/assertions');
+      testDeps.push(pkgConf.assertionsPackage);
     }
 
     this.addV1DependenciesByType(DependencyType.TEST, ...testDeps);

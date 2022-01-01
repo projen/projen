@@ -6,7 +6,7 @@ test('happy flow', () => {
   const p = new awscdk.AwsCdkJavaApp({
     artifactId: 'my-app',
     groupId: 'org.acme',
-    cdkVersion: '^1.130.0',
+    cdkVersion: '1.130.0',
     mainClass: 'org.bacme.BoomApp',
     name: 'my-app',
     version: '0.1.0',
@@ -37,7 +37,7 @@ test('mainClass', () => {
   const p = new awscdk.AwsCdkJavaApp({
     artifactId: 'my-app',
     groupId: 'org.acme',
-    cdkVersion: '^1.130.0',
+    cdkVersion: '1.130.0',
     mainClass: 'org.acme.jojo.MyApp',
     name: 'my-app',
     version: '0.1.0',
@@ -51,7 +51,7 @@ test('deps', () => {
   const p = new awscdk.AwsCdkJavaApp({
     artifactId: 'my-app',
     groupId: 'org.acme',
-    cdkVersion: '^1.120.0',
+    cdkVersion: '1.120.0',
     mainClass: 'org.acme.jojo.MyApp',
     name: 'my-app',
     version: '0.1.0',
@@ -88,6 +88,52 @@ test('deps', () => {
       artifactId: 'core',
       groupId: 'software.amazon.awscdk',
       version: '[1.120.0,2.0.0)',
+    },
+    {
+      artifactId: 'assertions',
+      groupId: 'software.amazon.awscdk',
+      version: '[1.120.0,2.0.0)',
+      scope: 'test',
+    },
+  ]);
+
+  expect(pom.project.dependencies.dependency.filter((d: any) => d.groupId === 'software.constructs')).toStrictEqual([
+    {
+      artifactId: 'constructs',
+      groupId: 'software.constructs',
+      version: '[3.2.27,4.0.0)',
+    },
+  ]);
+});
+
+test('deps cdkv2', () => {
+  const p = new awscdk.AwsCdkJavaApp({
+    artifactId: 'my-app',
+    groupId: 'org.acme',
+    cdkVersion: '2.3.0',
+    mainClass: 'org.acme.jojo.MyApp',
+    name: 'my-app',
+    version: '0.1.0',
+  });
+
+  const snapshot = Testing.synth(p);
+  const pom = JSON.parse(xml.convert(snapshot['pom.xml'], {
+    format: 'json',
+  }));
+
+  expect(pom.project.dependencies.dependency.filter((d: any) => d.groupId === 'software.amazon.awscdk')).toStrictEqual([
+    {
+      artifactId: 'aws-cdk-lib',
+      groupId: 'software.amazon.awscdk',
+      version: '[2.3.0,3.0.0)',
+    },
+  ]);
+
+  expect(pom.project.dependencies.dependency.filter((d: any) => d.groupId === 'software.constructs')).toStrictEqual([
+    {
+      artifactId: 'constructs',
+      groupId: 'software.constructs',
+      version: '[10.0.5,11.0.0)',
     },
   ]);
 });
