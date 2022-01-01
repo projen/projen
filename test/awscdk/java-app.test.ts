@@ -137,3 +137,20 @@ test('deps cdkv2', () => {
     },
   ]);
 });
+
+test('can disable sample code', () => {
+  const p = new awscdk.AwsCdkJavaApp({
+    artifactId: 'my-app',
+    groupId: 'org.acme',
+    cdkVersion: '1.120.0',
+    mainClass: 'org.acme.jojo.MyApp',
+    sampleJavaPackage: 'org.acme',
+    sample: false,
+    name: 'my-app',
+    version: '0.1.0',
+  });
+
+  const snapshot = Testing.synth(p);
+
+  expect(Object.keys(snapshot)).not.toContain('src/main/java/org/acme/jojo/MyApp.java');
+});

@@ -81,7 +81,9 @@ export class AwsCdkJavaApp extends JavaProject {
       ...options,
     });
 
-    this.addSample();
+    if ( options.sample ?? true ) {
+      this.addSample();
+    }
   }
 
   /**
