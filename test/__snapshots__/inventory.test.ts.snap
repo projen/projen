@@ -82,7 +82,7 @@ Array [
       Object {
         "default": "- will be included by default for AWS CDK >= 1.0.0 < 2.0.0",
         "deprecated": true,
-        "docs": "Install the @aws-cdk/assert library?",
+        "docs": "Warning: NodeJS only.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -99,7 +99,7 @@ Array [
       },
       Object {
         "default": "- will be included by default for AWS CDK >= 1.111.0 < 2.0.0",
-        "docs": "Install the @aws-cdk/assertions library?",
+        "docs": "Install the assertions library?",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -116,7 +116,7 @@ Array [
       },
       Object {
         "deprecated": true,
-        "docs": "Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed?",
+        "docs": "Which AWS CDKv1 modules this project requires.",
         "featured": false,
         "fullType": Object {
           "collection": Object {
@@ -1346,7 +1346,7 @@ Array [
       Object {
         "default": "- will be included by default for AWS CDK >= 1.0.0 < 2.0.0",
         "deprecated": true,
-        "docs": "Install the @aws-cdk/assert library?",
+        "docs": "Warning: NodeJS only.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -1363,7 +1363,7 @@ Array [
       },
       Object {
         "default": "- will be included by default for AWS CDK >= 1.111.0 < 2.0.0",
-        "docs": "Install the @aws-cdk/assertions library?",
+        "docs": "Install the assertions library?",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -1380,7 +1380,7 @@ Array [
       },
       Object {
         "deprecated": true,
-        "docs": "Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed?",
+        "docs": "Which AWS CDKv1 modules this project requires.",
         "featured": false,
         "fullType": Object {
           "collection": Object {
@@ -4028,7 +4028,7 @@ Array [
       Object {
         "default": "- will be included by default for AWS CDK >= 1.0.0 < 2.0.0",
         "deprecated": true,
-        "docs": "Install the @aws-cdk/assert library?",
+        "docs": "Warning: NodeJS only.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -4045,7 +4045,7 @@ Array [
       },
       Object {
         "default": "- will be included by default for AWS CDK >= 1.111.0 < 2.0.0",
-        "docs": "Install the @aws-cdk/assertions library?",
+        "docs": "Install the assertions library?",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -4062,7 +4062,7 @@ Array [
       },
       Object {
         "deprecated": true,
-        "docs": "Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed?",
+        "docs": "Which AWS CDKv1 modules this project requires.",
         "featured": false,
         "fullType": Object {
           "collection": Object {
