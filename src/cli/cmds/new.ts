@@ -7,6 +7,8 @@ import { Projects } from '../../projects';
 import { exec, execCapture, isTruthy } from '../../util';
 import { tryProcessMacro } from '../macros';
 import { installPackage, renderInstallCommand } from '../util';
+import * as logging from '../../logging';
+import * as semver from 'semver';
 
 class Command implements yargs.CommandModule {
   public readonly command = 'new [PROJECT-TYPE-NAME] [OPTIONS]';
@@ -244,30 +246,24 @@ async function initProject(baseDir: string, type: inventory.ProjectType, args: a
   }
 
   if (args.git) {
-
     const git = (cmd: string) => exec(`git ${cmd}`, { cwd: baseDir });
-    const gitversion = execCapture('git --version', { cwd: baseDir })
+    const gitversion:string = execCapture('git --version', { cwd: baseDir })
       .toString()
-      .match(/-?[\d\.]+/g);
-    var major: number = 0;
-    var minor: number = 0;
-    if (gitversion) {
-      const ver = gitversion[0].split('.');
-      major = parseInt(ver[0]);
-      minor = parseInt(ver[1]);
-    }
-    if ((major > + 2) && (minor >= 28)) {
+      .replace(/[a-z,/s]/g, '')
+      .trim();
+    logging.info('system using git version ',gitversion);
+    if ( gitversion && semver.gte(gitversion, '2.28.0') ) {
       git('init -b main');
       git('add .');
       git('commit --allow-empty -m "chore: project created with projen"');
+      logging.info('default branch name set to main');
     } else {
       git('init');
       git('add .');
       git('commit --allow-empty -m "chore: project created with projen"');
-      console.log('older version of git detected, changing branch name to main');
+      logging.info('older version of git detected, changed default branch name to main');
       git('branch -m main');
     }
-
   }
 }
 
