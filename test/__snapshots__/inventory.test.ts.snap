@@ -820,6 +820,7 @@ Array [
         "switch": "require-approval",
       },
       Object {
+        "default": "true",
         "docs": "Include sample code and test if the relevant directories don't exist.",
         "featured": false,
         "fullType": Object {
@@ -14719,6 +14720,7 @@ Array [
         "switch": "readme",
       },
       Object {
+        "default": "true",
         "docs": "Include sample code and test if the relevant directories don't exist.",
         "featured": false,
         "fullType": Object {
