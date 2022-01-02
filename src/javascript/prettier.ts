@@ -351,7 +351,7 @@ export class Prettier extends Component {
   /**
    * The .prettierIgnore file.
    */
-  public readonly ignoreFIle?: IgnoreFile;
+  public readonly ignoreFile?: IgnoreFile;
 
   /**
    * Direct access to the prettier overrides
@@ -366,7 +366,7 @@ export class Prettier extends Component {
     this._overrides = options.overrides ?? [];
 
     if (options.ignoreFile ?? true) {
-      this.ignoreFIle = new IgnoreFile(project, '.prettierignore');
+      this.ignoreFile = new IgnoreFile(project, '.prettierignore');
     }
 
     project.addDevDeps('prettier');
@@ -400,7 +400,7 @@ export class Prettier extends Component {
    * @param pattern filepatterns so exclude from prettier formatting
    */
   public addIgnorePattern(pattern: string) {
-    this.ignoreFIle?.addPatterns(pattern);
+    this.ignoreFile?.addPatterns(pattern);
   }
 
   /**

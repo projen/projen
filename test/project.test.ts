@@ -109,14 +109,14 @@ test('forEachComponent() will be called for each component before synth', () => 
   };
 
   // WHEN
-  p.forEachComponent({ on: subscription('sub1') });
+  p.forEachComponent({ do: subscription('sub1') });
 
   // add a bunch of components after the call
   new NamedComponent(p, 'p3');
   new NamedComponent(p, 'p4');
 
   // now add another subscriber
-  p.forEachComponent({ on: subscription('sub2') });
+  p.forEachComponent({ do: subscription('sub2') });
 
   // and a bunch more components
   new NamedComponent(p, 'p5');
