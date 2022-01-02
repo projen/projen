@@ -117,7 +117,7 @@ export interface AwsCdkDepsPackageConf {
 /**
  * Manages dependencies on the AWS CDK.
  */
-export class AwsCdkDeps extends Component {
+export abstract class AwsCdkDeps extends Component {
   /**
    * The dependency requirement for AWS CDK (e.g. `^2.0.0`).
    */
@@ -141,25 +141,29 @@ export class AwsCdkDeps extends Component {
 
   private readonly dependencyType: DependencyType;
 
-  constructor(project: Project, options: AwsCdkDepsOptions, pkgConf: AwsCdkDepsPackageConf) {
+  private readonly packageConfig: AwsCdkDepsPackageConf;
+
+  constructor(project: Project, options: AwsCdkDepsOptions) {
     super(project);
 
     this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;
 
     this.dependencyType = options.dependencyType;
+    this.packageConfig = this.packageConfigForLanguage();
 
     const framework = determineFrameworkVersion(options);
 
     this.cdkVersion = framework.range;
     this.cdkMajorVersion = framework.major;
     this.cdkMinimumVersion = framework.minimum;
-    this.addFrameworkDependency(options, pkgConf);
+
+    this.addFrameworkDependency(options);
 
     // assert/assertions library
-    this.addV1AssertionLibraryDependency(options, pkgConf);
+    this.addV1AssertionLibraryDependency(options);
 
     // constructs library
-    this.addConstructsDependency(options.constructsVersion, pkgConf.constructsPackage);
+    this.addConstructsDependency(options.constructsVersion, this.packageConfig.constructsPackage);
 
     // user-defined v1 dependencies (will only fail in CDK v2 if these have values)
     this.addV1Dependencies(...options.cdkDependencies ?? []);
@@ -242,11 +246,11 @@ export class AwsCdkDeps extends Component {
   /**
    * Adds a dependency on the AWS CDK framework (e.g. `@aws-cdk/core` for V1 or `aws-cdk-lib` for V1).
    */
-  private addFrameworkDependency(options: AwsCdkDepsOptions, pkgConf: AwsCdkDepsPackageConf) {
+  private addFrameworkDependency(options: AwsCdkDepsOptions) {
 
     switch (this.cdkMajorVersion) {
       case 1:
-        this.addV1Dependencies(pkgConf.frameworkV1Package);
+        this.addV1Dependencies(this.packageConfig.frameworkV1Package);
         break;
 
       case 2:
@@ -260,7 +264,7 @@ export class AwsCdkDeps extends Component {
           throw new Error('cdkTestDependencies is not used for CDK 2.x. Use "devDeps" or "testDeps" instead');
         }
 
-        this.project.deps.addDependency(`${pkgConf.frameworkV2Package}@${this.cdkVersion}`, this.dependencyType);
+        this.project.deps.addDependency(`${this.packageConfig.frameworkV2Package}@${this.cdkVersion}`, this.dependencyType);
         break;
 
       default:
@@ -268,7 +272,7 @@ export class AwsCdkDeps extends Component {
     }
   }
 
-  private addV1AssertionLibraryDependency(options: AwsCdkDepsOptions, pkgConf: AwsCdkDepsPackageConf) {
+  private addV1AssertionLibraryDependency(options: AwsCdkDepsOptions) {
     if (this.cdkMajorVersion !== 1) {
       if (options.cdkAssert !== undefined) {
         throw new Error('cdkAssert is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib');
@@ -282,13 +286,13 @@ export class AwsCdkDeps extends Component {
 
     const testDeps = new Array<string>();
 
-    if ((options.cdkAssert ?? true) && pkgConf.assertPackage) {
-      testDeps.push(pkgConf.assertPackage);
+    if ((options.cdkAssert ?? true) && this.packageConfig.assertPackage) {
+      testDeps.push(this.packageConfig.assertPackage);
     }
 
     // @aws-cdk/assertions is only available starting v1.111.0
     if (semver.gte(this.cdkMinimumVersion, '1.111.0') && (options.cdkAssertions ?? true)) {
-      testDeps.push(pkgConf.assertionsPackage);
+      testDeps.push(this.packageConfig.assertionsPackage);
     }
 
     this.addV1DependenciesByType(DependencyType.TEST, ...testDeps);
@@ -303,6 +307,11 @@ export class AwsCdkDeps extends Component {
       this.project.deps.addDependency(`${module}@${this.cdkVersion}`, type);
     }
   }
+
+  /**
+   * Return a configuration object with information about package naming in various languages
+   */
+  protected abstract packageConfigForLanguage(): AwsCdkDepsPackageConf;
 }
 
 function determineFrameworkVersion(options: AwsCdkDepsOptions) {

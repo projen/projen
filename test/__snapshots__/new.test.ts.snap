@@ -63,7 +63,7 @@ public class projenrc {
             .artifactId(\\"my-app\\")
             .cdkVersion(\\"2.1.0\\")
             .groupId(\\"org.acme\\")
-            .mainClass(\\"org.acme.CdkApp\\")
+            .mainClass(\\"org.acme.MyApp\\")
             .name(\\"my-project\\")
             .version(\\"0.1.0\\")
             .build());

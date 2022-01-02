@@ -56,12 +56,12 @@ test('deps', () => {
     name: 'my-app',
     version: '0.1.0',
     cdkDependencies: [
-      'aws-lambda',
-      'aws-sns',
+      'software.amazon.awscdk/aws-lambda',
+      'software.amazon.awscdk/aws-sns',
     ],
   });
 
-  p.addCdkDependency('aws-sqs');
+  p.addCdkDependency('software.amazon.awscdk/aws-sqs');
 
   const snapshot = Testing.synth(p);
   const pom = JSON.parse(xml.convert(snapshot['pom.xml'], {

@@ -1,8 +1,8 @@
 import { join } from 'path';
-import { AwsCdkDepsJava } from '.';
 import { DependencyType, SampleDir } from '..';
 import { JavaProject, JavaProjectOptions } from '../java';
 import { AwsCdkDeps, AwsCdkDepsCommonOptions } from './awscdk-deps';
+import { AwsCdkDepsJava } from './awscdk-deps-java';
 import { CdkConfig, CdkConfigCommonOptions } from './cdk-config';
 import { CdkTasks } from './cdk-tasks';
 
@@ -11,7 +11,7 @@ export interface AwsCdkJavaAppOptions extends JavaProjectOptions, CdkConfigCommo
    * The name of the Java class with the static `main()` method. This method
    * should call `app.synth()` on the CDK app.
    *
-   * @default "org.acme.CdkApp"
+   * @default "org.acme.MyApp"
    */
   readonly mainClass: string;
 }
@@ -81,7 +81,7 @@ export class AwsCdkJavaApp extends JavaProject {
       ...options,
     });
 
-    if ( options.sample ?? true ) {
+    if (options.sample ?? true) {
       this.addSample();
     }
   }
@@ -89,12 +89,12 @@ export class AwsCdkJavaApp extends JavaProject {
   /**
    * Adds an AWS CDK module dependencies
    *
-   * @param modules The list of modules to depend on (e.g. "aws-lambda", "aws-iam", etc)
+   * @param modules The list of modules to depend on (e.g. "software.amazon.awscdk/aws-lambda", "software.amazon.awscdk/aws-iam", etc)
    * @deprecated In CDK 2.x all modules are available by default. Alpha modules should be added using the standard 'deps'
    */
   public addCdkDependency(...modules: string[]) {
     for (const m of modules) {
-      this.cdkDeps.addV1Dependencies(`${AwsCdkDepsJava.PACKAGE_GROUP}/${m}`);
+      this.cdkDeps.addV1Dependencies(m);
     }
   }
 

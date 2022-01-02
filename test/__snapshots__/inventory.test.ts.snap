@@ -515,7 +515,7 @@ Array [
         "switch": "logging",
       },
       Object {
-        "default": "\\"org.acme.CdkApp\\"",
+        "default": "\\"org.acme.MyApp\\"",
         "docs": "The name of the Java class with the static \`main()\` method.",
         "featured": false,
         "fullType": Object {

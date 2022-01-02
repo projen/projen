@@ -3110,6 +3110,7 @@ Manages dependencies on the AWS CDK.
 __Submodule__: awscdk
 
 __Extends__: [Component](#projen-component)
+__Implemented by__: [awscdk.AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava), [awscdk.AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs)
 
 ### Initializer
 
@@ -3117,17 +3118,20 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new awscdk.AwsCdkDeps(project: Project, options: AwsCdkDepsOptions, pkgConf: AwsCdkDepsPackageConf)
+new awscdk.AwsCdkDeps(project: Project, options: AwsCdkDepsOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)</code>)  *No description*
-* **pkgConf** (<code>[awscdk.AwsCdkDepsPackageConf](#projen-awscdk-awscdkdepspackageconf)</code>)  *No description*
-  * **assertionsPackage** (<code>string</code>)  Fully qualified name of the assertions library package. 
-  * **constructsPackage** (<code>string</code>)  Fully qualified name of the constructs library package. 
-  * **frameworkV1Package** (<code>string</code>)  Fully qualified name of the core framework package for CDKv1. 
-  * **frameworkV2Package** (<code>string</code>)  Fully qualified name of the core framework package for CDKv2. 
-  * **assertPackage** (<code>string</code>)  Fully qualified name of the assert library package Can be empty as it's only really available for javascript projects. __*Optional*__
+  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
+  * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
+  * **cdkAssertions** (<code>boolean</code>)  Install the assertions library? __*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
+  * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDKv1 modules this project requires. __*Optional*__
+  * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
+  * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+  * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
+  * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
+  * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime AWS CDK and `constructs` modules. 
 
 
 
@@ -3178,6 +3182,18 @@ addV1DevDependencies(...deps: string[]): void
 
 
 
+#### protected packageConfigForLanguage()🔹 <a id="projen-awscdk-awscdkdeps-packageconfigforlanguage"></a>
+
+Return a configuration object with information about package naming in various languages.
+
+```ts
+protected packageConfigForLanguage(): AwsCdkDepsPackageConf
+```
+
+
+__Returns__:
+* <code>[awscdk.AwsCdkDepsPackageConf](#projen-awscdk-awscdkdepspackageconf)</code>
+
 
 
 ## class AwsCdkDepsJava 🔹 <a id="projen-awscdk-awscdkdepsjava"></a>
@@ -3210,13 +3226,20 @@ new awscdk.AwsCdkDepsJava(project: Project, options: AwsCdkDepsOptions)
   * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime AWS CDK and `constructs` modules. 
 
 
+### Methods
 
-### Properties
+
+#### protected packageConfigForLanguage()🔹 <a id="projen-awscdk-awscdkdepsjava-packageconfigforlanguage"></a>
+
+Return a configuration object with information about package naming in various languages.
+
+```ts
+protected packageConfigForLanguage(): AwsCdkDepsPackageConf
+```
 
 
-Name | Type | Description 
------|------|-------------
-*static* **PACKAGE_GROUP**🔹 | <code>string</code> | <span></span>
+__Returns__:
+* <code>[awscdk.AwsCdkDepsPackageConf](#projen-awscdk-awscdkdepspackageconf)</code>
 
 
 
@@ -3249,6 +3272,21 @@ new awscdk.AwsCdkDepsJs(project: Project, options: AwsCdkDepsOptions)
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
   * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime AWS CDK and `constructs` modules. 
 
+
+### Methods
+
+
+#### protected packageConfigForLanguage()🔹 <a id="projen-awscdk-awscdkdepsjs-packageconfigforlanguage"></a>
+
+Return a configuration object with information about package naming in various languages.
+
+```ts
+protected packageConfigForLanguage(): AwsCdkDepsPackageConf
+```
+
+
+__Returns__:
+* <code>[awscdk.AwsCdkDepsPackageConf](#projen-awscdk-awscdkdepspackageconf)</code>
 
 
 
@@ -3351,7 +3389,7 @@ Adds an AWS CDK module dependencies.
 addCdkDependency(...modules: string[]): void
 ```
 
-* **modules** (<code>string</code>)  The list of modules to depend on (e.g. "aws-lambda", "aws-iam", etc).
+* **modules** (<code>string</code>)  The list of modules to depend on (e.g. "software.amazon.awscdk/aws-lambda", "software.amazon.awscdk/aws-iam", etc).
 
 
 
@@ -10848,6 +10886,7 @@ Name | Type | Description
 
 ## struct AwsCdkDepsPackageConf 🔹 <a id="projen-awscdk-awscdkdepspackageconf"></a>
 
+__Obtainable from__: [AwsCdkDeps](#projen-awscdk-awscdkdeps).[packageConfigForLanguage](#projen-awscdk-awscdkdeps#projen-awscdk-awscdkdeps-packageconfigforlanguage)(), [AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava).[packageConfigForLanguage](#projen-awscdk-awscdkdepsjava#projen-awscdk-awscdkdepsjava-packageconfigforlanguage)(), [AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs).[packageConfigForLanguage](#projen-awscdk-awscdkdepsjs#projen-awscdk-awscdkdepsjs-packageconfigforlanguage)()
 
 
 
