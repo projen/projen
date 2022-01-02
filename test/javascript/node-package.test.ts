@@ -53,7 +53,7 @@ test('single bugs field present', () => {
 
 test('lockfile updated (install twice) after "*"s are resolved', () => {
   const execMock = jest.spyOn(util, 'exec').mockImplementation((command, options) => {
-    expect(command).toBe('yarn install --check-files');
+    expect(command.startsWith('yarn install')).toBeTruthy();
 
     const pkgJson = readJsonSync(join(options.cwd, 'package.json'));
     const ver = pkgJson.dependencies.ms;
