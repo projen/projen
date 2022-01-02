@@ -90,6 +90,9 @@ export interface AwsCdkDepsOptions extends AwsCdkDepsCommonOptions {
   readonly dependencyType: DependencyType;
 }
 
+/**
+ * Language-specific AWS CDK package names.
+ */
 export interface AwsCdkPackageNames {
   /**
    * Fully qualified name of the core framework package for CDKv1

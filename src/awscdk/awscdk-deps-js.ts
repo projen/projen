@@ -1,14 +1,9 @@
-import { Project } from '../project';
-import { AwsCdkDeps, AwsCdkDepsOptions, AwsCdkPackageNames } from './awscdk-deps';
+import { AwsCdkDeps, AwsCdkPackageNames } from './awscdk-deps';
 
 /**
  * Manages dependencies on the AWS CDK for Node.js projects.
  */
 export class AwsCdkDepsJs extends AwsCdkDeps {
-  constructor(project: Project, options: AwsCdkDepsOptions) {
-    super(project, options);
-  }
-
   protected packageNames(): AwsCdkPackageNames {
     return {
       coreV1: '@aws-cdk/core',

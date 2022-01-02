@@ -171,7 +171,7 @@ Name|Description
 [awscdk.AwsCdkDepsCommonOptions](#projen-awscdk-awscdkdepscommonoptions)|Options for `AwsCdkDeps`.
 [awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)|*No description*
 [awscdk.AwsCdkJavaAppOptions](#projen-awscdk-awscdkjavaappoptions)|*No description*
-[awscdk.AwsCdkPackageNames](#projen-awscdk-awscdkpackagenames)|*No description*
+[awscdk.AwsCdkPackageNames](#projen-awscdk-awscdkpackagenames)|Language-specific AWS CDK package names.
 [awscdk.AwsCdkTypeScriptAppOptions](#projen-awscdk-awscdktypescriptappoptions)|*No description*
 [awscdk.CdkConfigCommonOptions](#projen-awscdk-cdkconfigcommonoptions)|Common options for `cdk.json`.
 [awscdk.CdkConfigOptions](#projen-awscdk-cdkconfigoptions)|Options for `CdkJson`.
@@ -10955,7 +10955,7 @@ Name | Type | Description
 
 __Obtainable from__: [AwsCdkDeps](#projen-awscdk-awscdkdeps).[packageNames](#projen-awscdk-awscdkdeps#projen-awscdk-awscdkdeps-packagenames)(), [AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava).[packageNames](#projen-awscdk-awscdkdepsjava#projen-awscdk-awscdkdepsjava-packagenames)(), [AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs).[packageNames](#projen-awscdk-awscdkdepsjs#projen-awscdk-awscdkdepsjs-packagenames)()
 
-
+Language-specific AWS CDK package names.
 
 
 
