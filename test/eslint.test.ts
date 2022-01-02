@@ -26,7 +26,6 @@ describe('prettier', () => {
       defaultReleaseBranch: 'master',
     });
 
-
     // WHEN
     new Eslint(project, {
       dirs: ['mysrc'],
@@ -45,13 +44,16 @@ describe('prettier', () => {
     });
 
     // WHEN
-    const eslint = new Eslint(project, {
+    new Eslint(project, {
       dirs: ['mysrc'],
       prettier: true,
     });
 
     // THEN
-    expect(eslint.rules).toHaveProperty('prettier/prettier', ['error']);
+    const output = synthSnapshot(project);
+    expect(output['.eslintrc.json'].rules).toHaveProperty('prettier/prettier', [
+      'error',
+    ]);
   });
 });
 
@@ -62,7 +64,6 @@ describe('alias', () => {
       name: 'test',
       defaultReleaseBranch: 'master',
     });
-
 
     // WHEN
     const eslint = new Eslint(project, {
@@ -75,13 +76,18 @@ describe('alias', () => {
     });
 
     // THEN
-    expect(eslint.config.settings['import/resolver'].alias).toHaveProperty('map', [
-      ['@src', './src'],
-      ['@foo', './src/foo'],
-    ]);
-    expect(eslint.config.settings['import/resolver'].alias).toHaveProperty('extensions', ['.ts', '.js']);
+    expect(eslint.config.settings['import/resolver'].alias).toHaveProperty(
+      'map',
+      [
+        ['@src', './src'],
+        ['@foo', './src/foo'],
+      ],
+    );
+    expect(eslint.config.settings['import/resolver'].alias).toHaveProperty(
+      'extensions',
+      ['.ts', '.js'],
+    );
   });
-
 });
 
 test('tsAlwaysTryTypes', () => {
@@ -98,5 +104,28 @@ test('tsAlwaysTryTypes', () => {
   });
 
   // THEN
-  expect(eslint.config.settings['import/resolver'].typescript).toHaveProperty('alwaysTryTypes', true);
+  expect(eslint.config.settings['import/resolver'].typescript).toHaveProperty(
+    'alwaysTryTypes',
+    true,
+  );
+});
+
+test('if the prettier is configured, eslint is configured accordingly', () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: 'test',
+    defaultReleaseBranch: 'master',
+    prettier: true,
+  });
+
+  // WHEN
+  new Eslint(project, {
+    dirs: ['src'],
+  });
+
+  // THEN
+  const output = synthSnapshot(project);
+  expect(output['.eslintrc.json'].rules).toMatchObject({
+    'prettier/prettier': ['error'],
+  });
 });

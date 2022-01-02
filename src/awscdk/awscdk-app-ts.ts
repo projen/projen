@@ -5,6 +5,7 @@ import { DependencyType } from '../dependencies';
 import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';
 import { AutoDiscover } from './auto-discover';
 import { AwsCdkDeps, AwsCdkDepsCommonOptions } from './awscdk-deps';
+import { AwsCdkDepsJs } from './awscdk-deps-js';
 import { CdkConfig, CdkConfigCommonOptions } from './cdk-config';
 import { CdkTasks } from './cdk-tasks';
 import { LambdaFunctionCommonOptions } from './lambda-function';
@@ -76,7 +77,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       },
     });
 
-    this.cdkDeps = new AwsCdkDeps(this, {
+    this.cdkDeps = new AwsCdkDepsJs(this, {
       dependencyType: DependencyType.RUNTIME,
       ...options,
     });

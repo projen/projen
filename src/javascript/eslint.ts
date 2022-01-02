@@ -3,7 +3,7 @@ import { PROJEN_RC } from '../common';
 import { Component } from '../component';
 import { NodeProject } from '../javascript';
 import { JsonFile } from '../json';
-
+import { Prettier } from './prettier';
 
 export interface EslintOptions {
   /**
@@ -118,10 +118,16 @@ export class Eslint extends Component {
    */
   public readonly ignorePatterns: string[];
 
+  private _formattingRules: Record<string, any>;
   private readonly _allowDevDeps: Set<string>;
+  private readonly _plugins = new Array<string>();
+  private readonly _extends = new Array<string>();
+  private readonly nodeProject: NodeProject;
 
   constructor(project: NodeProject, options: EslintOptions) {
     super(project);
+
+    this.nodeProject = project;
 
     project.addDevDeps(
       'eslint@^8',
@@ -132,14 +138,6 @@ export class Eslint extends Component {
       'eslint-plugin-import',
       'json-schema',
     );
-
-    if (options.prettier) {
-      project.addDevDeps(
-        'prettier',
-        'eslint-plugin-prettier',
-        'eslint-config-prettier',
-      );
-    }
 
     if (options.aliasMap) {
       project.addDevDeps('eslint-import-resolver-alias');
@@ -171,9 +169,7 @@ export class Eslint extends Component {
     // exclude some files
     project.npmignore?.exclude('/.eslintrc.json');
 
-    const formattingRules: { [rule: string]: any } = options.prettier ? {
-      'prettier/prettier': ['error'],
-    } : {
+    this._formattingRules = {
       // see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
       'indent': ['off'],
       '@typescript-eslint/indent': ['error', 2],
@@ -212,7 +208,6 @@ export class Eslint extends Component {
     };
 
     this.rules = {
-      ...formattingRules,
       // Require use of the `import { foo } from 'bar';` form instead of `import foo = require('bar');`
       '@typescript-eslint/no-require-imports': ['error'],
 
@@ -309,19 +304,9 @@ export class Eslint extends Component {
 
     const tsconfig = options.tsconfigPath ?? './tsconfig.json';
 
-    const plugins = [
-      '@typescript-eslint',
-      'import',
-      ...(options.prettier ? ['prettier'] : []),
-    ];
-
-    const extendsConf = [
-      'plugin:import/typescript',
-      ...(options.prettier ? [
-        'prettier',
-        'plugin:prettier/recommended',
-      ] : []),
-    ];
+    this.addPlugins('@typescript-eslint');
+    this.addPlugins('import');
+    this.addExtends('plugin:import/typescript');
 
     this.config = {
       env: {
@@ -329,14 +314,14 @@ export class Eslint extends Component {
         node: true,
       },
       root: true,
-      plugins,
+      plugins: () => this._plugins,
       parser: '@typescript-eslint/parser',
       parserOptions: {
         ecmaVersion: 2018,
         sourceType: 'module',
         project: tsconfig,
       },
-      extends: extendsConf,
+      extends: () => this._extends,
       settings: {
         'import/parsers': {
           '@typescript-eslint/parser': ['.ts', '.tsx'],
@@ -356,11 +341,17 @@ export class Eslint extends Component {
         },
       },
       ignorePatterns: this.ignorePatterns,
-      rules: this.rules,
+      rules: () => ({ ...this._formattingRules, ...this.rules }),
       overrides: this.overrides,
     };
 
     new JsonFile(project, '.eslintrc.json', { obj: this.config, marker: false });
+
+    // if the user enabled prettier explicitly _or_ if the project has a
+    // `Prettier` component, we shall tweak our configuration accordingly.
+    if (options.prettier || Prettier.of(project)) {
+      this.enablePrettier();
+    }
   }
 
   /**
@@ -370,6 +361,14 @@ export class Eslint extends Component {
     for (const [k, v] of Object.entries(rules)) {
       this.rules[k] = v;
     }
+  }
+
+  /**
+   * Adds an eslint plugin
+   * @param plugin The name of the plugin
+   */
+  public addPlugins(...plugins: string[]) {
+    this._plugins.push(...plugins);
   }
 
   /**
@@ -387,11 +386,38 @@ export class Eslint extends Component {
   }
 
   /**
+   * Adds an `extends` item to the eslint configuration.
+   * @param extendList The list of "extends" to add.
+   */
+  public addExtends(...extendList: string[]) {
+    this._extends.push(...extendList);
+  }
+
+  /**
    * Add a glob file pattern which allows importing dev dependencies.
    * @param pattern glob pattern.
    */
   public allowDevDeps(pattern: string) {
     this._allowDevDeps.add(pattern);
+  }
+
+  /**
+   * Enables prettier for code formatting.
+   */
+  private enablePrettier() {
+    this.nodeProject.addDevDeps(
+      'prettier',
+      'eslint-plugin-prettier',
+      'eslint-config-prettier',
+    );
+
+    this.addPlugins('prettier');
+
+    this._formattingRules = {
+      'prettier/prettier': ['error'],
+    };
+
+    this.addExtends('prettier', 'plugin:prettier/recommended');
   }
 
   private renderDevDepsAllowList() {

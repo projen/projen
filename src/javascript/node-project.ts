@@ -246,13 +246,6 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
   readonly pullRequestTemplateContents?: string[];
 
   /**
-   * Defines an .prettierIgnore file
-   *
-   * @default false
-   */
-  readonly prettierIgnoreEnabled?: boolean;
-
-  /**
    * Setup prettier.
    *
    * @default false
@@ -261,7 +254,7 @@ export interface NodeProjectOptions extends GitHubProjectOptions, NodePackageOpt
 
   /**
    * Prettier options
-   * @default - opinionated default options
+   * @default - default options
    */
   readonly prettierOptions?: PrettierOptions;
 
@@ -343,7 +336,7 @@ export enum AutoRelease {
   /**
    * Automatically bump & release a new version on a daily basis.
    */
-  DAILY
+  DAILY,
 }
 
 /**
@@ -361,11 +354,6 @@ export class NodeProject extends GitHubProject {
    * The .npmignore file.
    */
   public readonly npmignore?: IgnoreFile;
-
-  /**
-   * The .prettierIgnore file.
-   */
-  public readonly prettierIgnore?: IgnoreFile;
 
   /**
    * @deprecated use `package.allowLibraryDependencies`
@@ -490,10 +478,6 @@ export class NodeProject extends GitHubProject {
 
     if (options.npmignoreEnabled ?? true) {
       this.npmignore = new IgnoreFile(this, '.npmignore');
-    }
-
-    if (options.prettierIgnoreEnabled ?? false) {
-      this.prettierIgnore = new IgnoreFile(this, '.prettierignore');
     }
 
     this.addDefaultGitIgnore();
@@ -876,16 +860,6 @@ export class NodeProject extends GitHubProject {
 
   public addPackageIgnore(pattern: string) {
     this.npmignore?.addPatterns(pattern);
-  }
-
-  /**
-  * Defines Prettier ignore Patterns
-  * these patterns will be added to the file .prettierignore
-  *
-  * @param pattern filepatterns so exclude from prettier formatting
-  */
-  public addPrettierIgnore(pattern: string) {
-    this.prettierIgnore?.addPatterns(pattern);
   }
 
   private addLicense(options: NodeProjectOptions) {

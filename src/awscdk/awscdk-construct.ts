@@ -3,6 +3,7 @@ import { ConstructLibrary, ConstructLibraryOptions } from '../cdk';
 import { DependencyType } from '../dependencies';
 import { AutoDiscover } from './auto-discover';
 import { AwsCdkDeps, AwsCdkDepsCommonOptions } from './awscdk-deps';
+import { AwsCdkDepsJs } from './awscdk-deps-js';
 import { LambdaFunctionCommonOptions } from './lambda-function';
 
 /**
@@ -50,7 +51,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
       ...options,
     });
 
-    this.cdkDeps = new AwsCdkDeps(this, {
+    this.cdkDeps = new AwsCdkDepsJs(this, {
       // since this we are a library, dependencies should be added a peers
       dependencyType: DependencyType.PEER,
       ...options,
