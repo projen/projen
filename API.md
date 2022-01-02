@@ -6543,19 +6543,6 @@ addTestMatch(pattern: string): void
 
 
 
-#### addTypeScriptSupport(tsconfig)🔹 <a id="projen-javascript-jest-addtypescriptsupport"></a>
-
-Configures jest for TypeScript.
-
-```ts
-addTypeScriptSupport(tsconfig: TypescriptConfig): void
-```
-
-* **tsconfig** (<code>[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)</code>)  The typescript config file.
-
-
-
-
 #### addWatchIgnorePattern(pattern)🔹 <a id="projen-javascript-jest-addwatchignorepattern"></a>
 
 Adds a watch ignore pattern.
