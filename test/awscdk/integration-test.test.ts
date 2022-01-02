@@ -1,5 +1,6 @@
 import { awscdk, DependencyType } from '../../src';
-import { AwsCdkDeps, IntegrationTest } from '../../src/awscdk';
+import { IntegrationTest } from '../../src/awscdk';
+import { AwsCdkDepsJs } from '../../src/awscdk/awscdk-deps-js';
 import { Testing } from '../../src/testing';
 import { TypeScriptProject } from '../../src/typescript';
 
@@ -73,7 +74,7 @@ test('installs ts-node if needed', () => {
   new IntegrationTest(project, {
     entrypoint: 'test/foo.integ.ts',
     tsconfigPath: project.tsconfigDev.fileName,
-    cdkDeps: new AwsCdkDeps(project, { cdkVersion: '1.0.0', dependencyType: DependencyType.RUNTIME }),
+    cdkDeps: new AwsCdkDepsJs(project, { cdkVersion: '1.0.0', dependencyType: DependencyType.RUNTIME }),
   });
 
   expect(project.deps.getDependency('ts-node')).toStrictEqual({

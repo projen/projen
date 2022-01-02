@@ -92,6 +92,7 @@ export interface JavaProjectCommonOptions extends GitHubProjectOptions, PomOptio
 export interface JavaProjectOptions extends JavaProjectCommonOptions {
   /**
    * Include sample code and test if the relevant directories don't exist.
+   * @default true
    */
   readonly sample?: boolean;
 
