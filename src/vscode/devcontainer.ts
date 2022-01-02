@@ -1,13 +1,17 @@
-import { Component } from '../component';
-import { DevEnvironmentDockerImage, DevEnvironmentOptions, IDevEnvironment } from '../dev-env';
-import { JsonFile } from '../json';
-import { Project } from '../project';
-import { Task } from '../task';
+import { Component } from "../component";
+import {
+  DevEnvironmentDockerImage,
+  DevEnvironmentOptions,
+  IDevEnvironment,
+} from "../dev-env";
+import { JsonFile } from "../json";
+import { Project } from "../project";
+import { Task } from "../task";
 
 /**
-  * Relative path of devcontainer file to generate
-  */
-const DEVCONTAINER_FILE = '.devcontainer.json';
+ * Relative path of devcontainer file to generate
+ */
+const DEVCONTAINER_FILE = ".devcontainer.json";
 
 /**
  * Constructor options for the DevContainer component.
@@ -63,12 +67,15 @@ export class DevContainer extends Component implements IDevEnvironment {
       extensions: this.vscodeExtensions,
     };
 
-    new JsonFile(this.project, DEVCONTAINER_FILE, { obj: this.config, omitEmpty: true });
+    new JsonFile(this.project, DEVCONTAINER_FILE, {
+      obj: this.config,
+      omitEmpty: true,
+    });
   }
 
   public addDockerImage(image: DevEnvironmentDockerImage) {
     if (this.dockerImage) {
-      throw new Error('dockerImage cannot be redefined.');
+      throw new Error("dockerImage cannot be redefined.");
     }
     this.dockerImage = image;
   }
@@ -103,7 +110,9 @@ export class DevContainer extends Component implements IDevEnvironment {
 
   private renderTasks() {
     if (this.postCreateTasks.length !== 0) {
-      return this.postCreateTasks.map(task => `( npx projen ${task.name} )`).join(' && ');
+      return this.postCreateTasks
+        .map((task) => `( npx projen ${task.name} )`)
+        .join(" && ");
     } else {
       return undefined;
     }

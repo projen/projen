@@ -1,4 +1,4 @@
-import { JsiiProject, JsiiProjectOptions } from './jsii-project';
+import { JsiiProject, JsiiProjectOptions } from "./jsii-project";
 
 export interface ConstructLibraryOptions extends JsiiProjectOptions {
   /**
@@ -41,9 +41,9 @@ export abstract class ConstructLibrary extends JsiiProject {
   constructor(options: ConstructLibraryOptions) {
     super(options);
 
-    this.addKeywords('cdk'); // publish to the catalog
+    this.addKeywords("cdk"); // publish to the catalog
     if (options.catalog) {
-      this.package.addField('awscdkio', {
+      this.package.addField("awscdkio", {
         twitter: options.catalog.twitter,
         announce: options.catalog.announce,
       });

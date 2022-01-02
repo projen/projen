@@ -1,14 +1,16 @@
-import * as chalk from 'chalk';
-import { IS_TEST_RUN } from './common';
+import * as chalk from "chalk";
+import { IS_TEST_RUN } from "./common";
 
-export const ICON = '👾'; //'✨';
+export const ICON = "👾"; //'✨';
 
 // disable logs if running inside a test
 let enabled = IS_TEST_RUN ? false : true;
 
 function log(isError: boolean, color: chalk.ChalkFunction, ...text: any[]) {
   // errors are always emitted, even if logs are disabled
-  if (!enabled && !isError) { return; }
+  if (!enabled && !isError) {
+    return;
+  }
   console.error(`${ICON} ${color(...text)}`);
 }
 

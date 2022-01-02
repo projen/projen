@@ -1,6 +1,6 @@
-import { Component } from './component';
-import { Project } from './project';
-import { Task } from './task';
+import { Component } from "./component";
+import { Project } from "./project";
+import { Task } from "./task";
 
 /**
  * Manages a standard build process for all projects.
@@ -14,7 +14,6 @@ import { Task } from './task';
  * 6. package
  */
 export class ProjectBuild extends Component {
-
   /**
    * The task responsible for a full release build.
    */
@@ -48,28 +47,28 @@ export class ProjectBuild extends Component {
   constructor(project: Project) {
     super(project);
 
-    this.preCompileTask = project.tasks.addTask('pre-compile', {
-      description: 'Prepare the project for compilation',
+    this.preCompileTask = project.tasks.addTask("pre-compile", {
+      description: "Prepare the project for compilation",
     });
 
-    this.compileTask = project.tasks.addTask('compile', {
-      description: 'Only compile',
+    this.compileTask = project.tasks.addTask("compile", {
+      description: "Only compile",
     });
 
-    this.postCompileTask = project.tasks.addTask('post-compile', {
-      description: 'Runs after successful compilation',
+    this.postCompileTask = project.tasks.addTask("post-compile", {
+      description: "Runs after successful compilation",
     });
 
-    this.testTask = project.tasks.addTask('test', {
-      description: 'Run tests',
+    this.testTask = project.tasks.addTask("test", {
+      description: "Run tests",
     });
 
-    this.packageTask = project.tasks.addTask('package', {
-      description: 'Creates the distribution package',
+    this.packageTask = project.tasks.addTask("package", {
+      description: "Creates the distribution package",
     });
 
-    this.buildTask = project.tasks.addTask('build', {
-      description: 'Full release build',
+    this.buildTask = project.tasks.addTask("build", {
+      description: "Full release build",
     });
 
     // if this is not subproject, execute the "default" task which will

@@ -1,119 +1,121 @@
-import { Dependabot, DependabotRegistryType } from '../../src/github';
-import { NodeProject, NodeProjectOptions } from '../../src/javascript';
-import { synthSnapshot } from '../util';
+import { Dependabot, DependabotRegistryType } from "../../src/github";
+import { NodeProject, NodeProjectOptions } from "../../src/javascript";
+import { synthSnapshot } from "../util";
 
-describe('dependabot', () => {
-  test('default', () => {
+describe("dependabot", () => {
+  test("default", () => {
     const project = createProject();
 
     new Dependabot(project.github!);
 
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.github/dependabot.yml']).toBeDefined();
-    expect(snapshot['.github/dependabot.yml']).toMatchSnapshot();
+    expect(snapshot[".github/dependabot.yml"]).toBeDefined();
+    expect(snapshot[".github/dependabot.yml"]).toMatchSnapshot();
   });
 
-  test('private registries', () => {
+  test("private registries", () => {
     const project = createProject();
 
-    const registryName = 'npm-registry-npm-pkg-github-com';
+    const registryName = "npm-registry-npm-pkg-github-com";
 
     new Dependabot(project.github!, {
       registries: {
         [registryName]: {
           type: DependabotRegistryType.NPM_REGISTRY,
-          url: 'https://npm.pkg.github.com',
-          token: '${{ secrets.TOKEN }}',
+          url: "https://npm.pkg.github.com",
+          token: "${{ secrets.TOKEN }}",
           replacesBase: true,
-          username: 'test',
-          password: '${{ secrets.TOKEN }}',
-          key: 'abc123',
+          username: "test",
+          password: "${{ secrets.TOKEN }}",
+          key: "abc123",
         },
       },
     });
 
     const snapshot = synthSnapshot(project);
-    const dependabot = snapshot['.github/dependabot.yml'];
+    const dependabot = snapshot[".github/dependabot.yml"];
     expect(dependabot).toBeDefined();
     expect(dependabot).toMatchSnapshot();
-    expect(dependabot).toContain('registries');
+    expect(dependabot).toContain("registries");
     expect(dependabot).toContain(registryName);
   });
 
-  describe('ignoring', () => {
-    test('ignores projen by default', () => {
+  describe("ignoring", () => {
+    test("ignores projen by default", () => {
       const project = createProject();
       new Dependabot(project.github!, {});
       const snapshot = synthSnapshot(project);
-      const dependabot = snapshot['.github/dependabot.yml'];
+      const dependabot = snapshot[".github/dependabot.yml"];
       expect(dependabot).toMatchSnapshot();
-      expect(dependabot).toContain('ignore:');
-      expect(dependabot).toContain('dependency-name: projen');
+      expect(dependabot).toContain("ignore:");
+      expect(dependabot).toContain("dependency-name: projen");
     });
 
-    test('ignore with ignoreProjen set to false', () => {
+    test("ignore with ignoreProjen set to false", () => {
       const project = createProject();
       new Dependabot(project.github!, { ignoreProjen: false });
       const snapshot = synthSnapshot(project);
-      const dependabot = snapshot['.github/dependabot.yml'];
+      const dependabot = snapshot[".github/dependabot.yml"];
       expect(dependabot).toMatchSnapshot();
-      expect(dependabot).not.toContain('ignore:');
-      expect(dependabot).not.toContain('dependency-name: projen');
+      expect(dependabot).not.toContain("ignore:");
+      expect(dependabot).not.toContain("dependency-name: projen");
     });
 
-    test('ignore with no version', () => {
+    test("ignore with no version", () => {
       const project = createProject();
       new Dependabot(project.github!, {
-        ignore: [{ dependencyName: 'testlib' }],
+        ignore: [{ dependencyName: "testlib" }],
       });
 
       const snapshot = synthSnapshot(project);
-      const dependabot = snapshot['.github/dependabot.yml'];
+      const dependabot = snapshot[".github/dependabot.yml"];
       expect(dependabot).toMatchSnapshot();
-      expect(dependabot).toContain('ignore');
-      expect(dependabot).toContain('dependency-name: testlib');
-      expect(dependabot).not.toContain('versions');
-
+      expect(dependabot).toContain("ignore");
+      expect(dependabot).toContain("dependency-name: testlib");
+      expect(dependabot).not.toContain("versions");
     });
 
-    test('ignore with a single version', () => {
+    test("ignore with a single version", () => {
       const project = createProject();
       new Dependabot(project.github!, {
-        ignore: [{ dependencyName: 'testlib', versions: ['>10.x'] }],
+        ignore: [{ dependencyName: "testlib", versions: [">10.x"] }],
       });
 
       const snapshot = synthSnapshot(project);
-      const dependabot = snapshot['.github/dependabot.yml'];
+      const dependabot = snapshot[".github/dependabot.yml"];
       expect(dependabot).toMatchSnapshot();
-      expect(dependabot).toContain('ignore');
-      expect(dependabot).toContain('dependency-name: testlib');
-      expect(dependabot).toContain('versions');
-      expect(dependabot).toContain('>10.x');
+      expect(dependabot).toContain("ignore");
+      expect(dependabot).toContain("dependency-name: testlib");
+      expect(dependabot).toContain("versions");
+      expect(dependabot).toContain(">10.x");
     });
 
-    test('ignore with multiple versions', () => {
+    test("ignore with multiple versions", () => {
       const project = createProject();
       new Dependabot(project.github!, {
-        ignore: [{ dependencyName: 'testlib', versions: ['10.x', '20.x'] }],
+        ignore: [{ dependencyName: "testlib", versions: ["10.x", "20.x"] }],
       });
 
       const snapshot = synthSnapshot(project);
-      const dependabot = snapshot['.github/dependabot.yml'];
+      const dependabot = snapshot[".github/dependabot.yml"];
       expect(dependabot).toMatchSnapshot();
-      expect(dependabot).toContain('ignore');
-      expect(dependabot).toContain('dependency-name: testlib');
-      expect(dependabot).toContain('versions');
-      expect(dependabot).toContain('10.x');
-      expect(dependabot).toContain('20.x');
+      expect(dependabot).toContain("ignore");
+      expect(dependabot).toContain("dependency-name: testlib");
+      expect(dependabot).toContain("versions");
+      expect(dependabot).toContain("10.x");
+      expect(dependabot).toContain("20.x");
     });
   });
 });
 
-type ProjectOptions = Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name'>;
+type ProjectOptions = Omit<
+  NodeProjectOptions,
+  "outdir" | "defaultReleaseBranch" | "name"
+>;
 function createProject(options: ProjectOptions = {}): NodeProject {
   return new NodeProject({
-    defaultReleaseBranch: 'main',
-    name: 'node-project',
+    defaultReleaseBranch: "main",
+    name: "node-project",
     ...options,
   });
 }

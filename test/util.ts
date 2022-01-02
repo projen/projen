@@ -1,22 +1,22 @@
-import * as cp from 'child_process';
-import * as os from 'os';
-import * as path from 'path';
-import * as fs from 'fs-extra';
-import { Project } from '../src';
-import { GitHubProject, GitHubProjectOptions } from '../src/github';
-import * as logging from '../src/logging';
-import { Task } from '../src/task';
-import { exec } from '../src/util';
-import { directorySnapshot } from '../src/util/synth';
+import * as cp from "child_process";
+import * as os from "os";
+import * as path from "path";
+import * as fs from "fs-extra";
+import { Project } from "../src";
+import { GitHubProject, GitHubProjectOptions } from "../src/github";
+import * as logging from "../src/logging";
+import { Task } from "../src/task";
+import { exec } from "../src/util";
+import { directorySnapshot } from "../src/util/synth";
 
-const PROJEN_CLI = require.resolve('../lib/cli/index.js');
+const PROJEN_CLI = require.resolve("../lib/cli/index.js");
 
 logging.disable(); // no logging during tests
 
 export class TestProject extends GitHubProject {
-  constructor(options: Omit<GitHubProjectOptions, 'name'> = {}) {
+  constructor(options: Omit<GitHubProjectOptions, "name"> = {}) {
     super({
-      name: 'my-project',
+      name: "my-project",
       clobber: false,
       ...options,
     });
@@ -29,18 +29,14 @@ export class TestProject extends GitHubProject {
   }
 
   postSynthesize() {
-    fs.writeFileSync(path.join(this.outdir, '.postsynth'), '# postsynth');
+    fs.writeFileSync(path.join(this.outdir, ".postsynth"), "# postsynth");
   }
 }
 
 export function execProjenCLI(workdir: string, args: string[] = []) {
-  const command = [
-    process.execPath,
-    PROJEN_CLI,
-    ...args,
-  ];
+  const command = [process.execPath, PROJEN_CLI, ...args];
 
-  return exec(command.map(x => `"${x}"`).join(' '), { cwd: workdir });
+  return exec(command.map((x) => `"${x}"`).join(" "), { cwd: workdir });
 }
 
 const autoRemove = new Set<string>();
@@ -63,7 +59,7 @@ afterAll((done) => {
 });
 
 export function mkdtemp(opts: { cleanup?: boolean } = {}) {
-  const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
+  const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), "projen-test-"));
   if (opts.cleanup ?? true) {
     autoRemove.add(tmpdir);
   }
@@ -79,25 +75,33 @@ export function synthSnapshotWithPost(project: Project) {
   }
 }
 
-export function withProjectDir(code: (workdir: string) => void, options: { git?: boolean; chdir?: boolean } = {}) {
+export function withProjectDir(
+  code: (workdir: string) => void,
+  options: { git?: boolean; chdir?: boolean } = {}
+) {
   const origDir = process.cwd();
   const outdir = mkdtemp();
   try {
     // create project under "my-project" so that basedir is deterministic
-    const projectdir = path.join(outdir, 'my-project');
+    const projectdir = path.join(outdir, "my-project");
     fs.mkdirSync(projectdir);
 
-    const shell = (command: string) => cp.execSync(command, { cwd: projectdir });
+    const shell = (command: string) =>
+      cp.execSync(command, { cwd: projectdir });
     if (options.git ?? true) {
-      shell('git init -b main');
-      shell('git remote add origin git@boom.com:foo/bar.git');
+      shell("git init -b main");
+      shell("git remote add origin git@boom.com:foo/bar.git");
       shell('git config user.name "My User Name"');
       shell('git config user.email "my@user.email.com"');
     } else if (process.env.CI) {
       // if "git" is set to "false", we still want to make sure global user is defined
       // (relevant in CI context)
-      shell('git config user.name || git config --global user.name "My User Name"');
-      shell('git config user.email || git config --global user.email "my@user.email.com"');
+      shell(
+        'git config user.name || git config --global user.name "My User Name"'
+      );
+      shell(
+        'git config user.email || git config --global user.email "my@user.email.com"'
+      );
     }
 
     if (options.chdir ?? false) {
@@ -116,28 +120,35 @@ export function withProjectDir(code: (workdir: string) => void, options: { git?:
  * @param dir The output directory.
  */
 export function sanitizeOutput(dir: string) {
-  const filepath = path.join(dir, 'package.json');
+  const filepath = path.join(dir, "package.json");
   const pkg = fs.readJsonSync(filepath);
   const prev = pkg.devDependencies.projen;
   if (!prev) {
-    throw new Error(`expecting "${filepath}" to include a devDependency on "projen"`);
+    throw new Error(
+      `expecting "${filepath}" to include a devDependency on "projen"`
+    );
   }
 
   // replace the current projen version with 999.999.999 for deterministic output.
   // this will preserve any semantic version requirements (e.g. "^", "~", etc).
-  pkg.devDependencies.projen = prev.replace(/\d+\.\d+\.\d+/, '999.999.999');
+  pkg.devDependencies.projen = prev.replace(/\d+\.\d+\.\d+/, "999.999.999");
   fs.writeJsonSync(filepath, pkg);
 
   // we will also patch deps.json so that all projen deps will be set to 999.999.999
-  const depsPath = path.join(dir, '.projen', 'deps.json');
+  const depsPath = path.join(dir, ".projen", "deps.json");
   const deps = fs.readJsonSync(depsPath);
   for (const dep of deps.dependencies) {
-    if (dep.name === 'projen' && dep.version) {
-      dep.version = dep.version.replace(/\d+\.\d+\.\d+/, '999.999.999');
+    if (dep.name === "projen" && dep.version) {
+      dep.version = dep.version.replace(/\d+\.\d+\.\d+/, "999.999.999");
     }
   }
-  fs.chmodSync(depsPath, '777');
+  fs.chmodSync(depsPath, "777");
   fs.writeJsonSync(depsPath, deps);
 }
 
-export { synthSnapshot, directorySnapshot, SynthOutput, DirectorySnapshotOptions } from '../src/util/synth';
+export {
+  synthSnapshot,
+  directorySnapshot,
+  SynthOutput,
+  DirectorySnapshotOptions,
+} from "../src/util/synth";

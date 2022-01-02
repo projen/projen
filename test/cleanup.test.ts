@@ -1,15 +1,15 @@
-import { join } from 'path';
-import { readJsonSync } from 'fs-extra';
-import { DependencyType, FileBase, SampleFile, TextFile } from '../src';
-import { cleanup, FILE_MANIFEST } from '../src/cleanup';
-import { directorySnapshot, TestProject } from './util';
+import { join } from "path";
+import { readJsonSync } from "fs-extra";
+import { DependencyType, FileBase, SampleFile, TextFile } from "../src";
+import { cleanup, FILE_MANIFEST } from "../src/cleanup";
+import { directorySnapshot, TestProject } from "./util";
 
-test('cleanup uses cache file', () => {
+test("cleanup uses cache file", () => {
   // GIVEN
   const p = new TestProject();
-  p.deps.addDependency('test', DependencyType.BUILD);
-  const textFile = new TextFile(p, 'foo/bar.txt');
-  new SampleFile(p, 'sample.txt', {
+  p.deps.addDependency("test", DependencyType.BUILD);
+  const textFile = new TextFile(p, "foo/bar.txt");
+  new SampleFile(p, "sample.txt", {
     contents: FileBase.PROJEN_MARKER,
   });
 
@@ -26,28 +26,28 @@ test('cleanup uses cache file', () => {
   const postDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const postFiles = Object.keys(postDirSnapshot);
 
-  const deletedFiles = preFiles.filter(f => !postFiles.includes(f));
+  const deletedFiles = preFiles.filter((f) => !postFiles.includes(f));
 
   // THEN
   expect(deletedFiles).toEqual(fileList);
   expect(deletedFiles).toContain(textFile.path);
-  expect(deletedFiles).not.toContain('sample.txt');
+  expect(deletedFiles).not.toContain("sample.txt");
   expect(deletedFiles).toMatchSnapshot();
 });
 
-test('cleanup falls back to greedy method', () => {
+test("cleanup falls back to greedy method", () => {
   // GIVEN
   const p = new TestProject();
-  p.deps.addDependency('test', DependencyType.BUILD);
+  p.deps.addDependency("test", DependencyType.BUILD);
 
   // This file would not normally get cleaned up up by the file manifest
-  new TextFile(p, 'delete.txt', {
+  new TextFile(p, "delete.txt", {
     readonly: false,
     lines: [FileBase.PROJEN_MARKER],
   });
 
   // corrupt file manifest
-  p.tryFindObjectFile(FILE_MANIFEST)!.addDeletionOverride('files');
+  p.tryFindObjectFile(FILE_MANIFEST)!.addDeletionOverride("files");
 
   // WHEN
   p.synth();
@@ -60,10 +60,9 @@ test('cleanup falls back to greedy method', () => {
   const postDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const postFiles = Object.keys(postDirSnapshot);
 
-  const deletedFiles = preFiles.filter(f => !postFiles.includes(f));
+  const deletedFiles = preFiles.filter((f) => !postFiles.includes(f));
 
   // THEN
-  expect(postFiles).not.toContain('delete.txt');
+  expect(postFiles).not.toContain("delete.txt");
   expect(deletedFiles).toMatchSnapshot();
 });
-

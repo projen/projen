@@ -1,9 +1,9 @@
-import { Project } from '..';
-import { PROJEN_RC } from '../common';
-import { Component } from '../component';
-import { NodeProject } from '../javascript';
-import { JsonFile } from '../json';
-import { Prettier } from './prettier';
+import { Project } from "..";
+import { PROJEN_RC } from "../common";
+import { Component } from "../component";
+import { NodeProject } from "../javascript";
+import { JsonFile } from "../json";
+import { Prettier } from "./prettier";
 
 export interface EslintOptions {
   /**
@@ -89,7 +89,6 @@ export interface EslintOverride {
  * Represents eslint configuration.
  */
 export class Eslint extends Component {
-
   /**
    * Returns the singletone Eslint component of a project or undefined if there is none.
    */
@@ -130,90 +129,96 @@ export class Eslint extends Component {
     this.nodeProject = project;
 
     project.addDevDeps(
-      'eslint@^8',
-      '@typescript-eslint/eslint-plugin@^5',
-      '@typescript-eslint/parser@^5',
-      'eslint-import-resolver-node',
-      'eslint-import-resolver-typescript',
-      'eslint-plugin-import',
-      'json-schema',
+      "eslint@^8",
+      "@typescript-eslint/eslint-plugin@^5",
+      "@typescript-eslint/parser@^5",
+      "eslint-import-resolver-node",
+      "eslint-import-resolver-typescript",
+      "eslint-plugin-import",
+      "json-schema"
     );
 
     if (options.aliasMap) {
-      project.addDevDeps('eslint-import-resolver-alias');
+      project.addDevDeps("eslint-import-resolver-alias");
     }
 
     const devdirs = options.devdirs ?? [];
 
     const dirs = [...options.dirs, ...devdirs];
-    const fileExtensions = options.fileExtensions ?? ['.ts'];
+    const fileExtensions = options.fileExtensions ?? [".ts"];
 
-    this._allowDevDeps = new Set((devdirs ?? []).map(dir => `**/${dir}/**`));
+    this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
 
     const lintProjenRc = options.lintProjenRc ?? true;
 
-    const eslint = project.addTask('eslint', {
-      description: 'Runs eslint against the codebase',
+    const eslint = project.addTask("eslint", {
+      description: "Runs eslint against the codebase",
       exec: [
-        'eslint',
-        `--ext ${fileExtensions.join(',')}`,
-        '--fix',
-        '--no-error-on-unmatched-pattern',
+        "eslint",
+        `--ext ${fileExtensions.join(",")}`,
+        "--fix",
+        "--no-error-on-unmatched-pattern",
         ...dirs,
-        ...lintProjenRc ? [PROJEN_RC] : [],
-      ].join(' '),
+        ...(lintProjenRc ? [PROJEN_RC] : []),
+      ].join(" "),
     });
 
     project.testTask.spawn(eslint);
 
     // exclude some files
-    project.npmignore?.exclude('/.eslintrc.json');
+    project.npmignore?.exclude("/.eslintrc.json");
 
     this._formattingRules = {
       // see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
-      'indent': ['off'],
-      '@typescript-eslint/indent': ['error', 2],
+      indent: ["off"],
+      "@typescript-eslint/indent": ["error", 2],
 
       // Style
-      'quotes': ['error', 'single', { avoidEscape: true }],
-      'comma-dangle': ['error', 'always-multiline'], // ensures clean diffs, see https://medium.com/@nikgraf/why-you-should-enforce-dangling-commas-for-multiline-statements-d034c98e36f8
-      'comma-spacing': ['error', { before: false, after: true }], // space after, no space before
-      'no-multi-spaces': ['error', { ignoreEOLComments: false }], // no multi spaces
-      'array-bracket-spacing': ['error', 'never'], // [1, 2, 3]
-      'array-bracket-newline': ['error', 'consistent'], // enforce consistent line breaks between brackets
-      'object-curly-spacing': ['error', 'always'], // { key: 'value' }
-      'object-curly-newline': ['error', { multiline: true, consistent: true }], // enforce consistent line breaks between braces
-      'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }], // enforce "same line" or "multiple line" on object properties
-      'keyword-spacing': ['error'], // require a space before & after keywords
-      'brace-style': ['error', '1tbs', { allowSingleLine: true }], // enforce one true brace style
-      'space-before-blocks': ['error'], // require space before blocks
-      'curly': ['error', 'multi-line', 'consistent'], // require curly braces for multiline control statements
-      '@typescript-eslint/member-delimiter-style': ['error'],
+      quotes: ["error", "single", { avoidEscape: true }],
+      "comma-dangle": ["error", "always-multiline"], // ensures clean diffs, see https://medium.com/@nikgraf/why-you-should-enforce-dangling-commas-for-multiline-statements-d034c98e36f8
+      "comma-spacing": ["error", { before: false, after: true }], // space after, no space before
+      "no-multi-spaces": ["error", { ignoreEOLComments: false }], // no multi spaces
+      "array-bracket-spacing": ["error", "never"], // [1, 2, 3]
+      "array-bracket-newline": ["error", "consistent"], // enforce consistent line breaks between brackets
+      "object-curly-spacing": ["error", "always"], // { key: 'value' }
+      "object-curly-newline": ["error", { multiline: true, consistent: true }], // enforce consistent line breaks between braces
+      "object-property-newline": [
+        "error",
+        { allowAllPropertiesOnSameLine: true },
+      ], // enforce "same line" or "multiple line" on object properties
+      "keyword-spacing": ["error"], // require a space before & after keywords
+      "brace-style": ["error", "1tbs", { allowSingleLine: true }], // enforce one true brace style
+      "space-before-blocks": ["error"], // require space before blocks
+      curly: ["error", "multi-line", "consistent"], // require curly braces for multiline control statements
+      "@typescript-eslint/member-delimiter-style": ["error"],
 
       // Require semicolons
-      'semi': ['error', 'always'],
+      semi: ["error", "always"],
 
       // Max line lengths
-      'max-len': ['error', {
-        code: 150,
-        ignoreUrls: true, // Most common reason to disable it
-        ignoreStrings: true, // These are not fantastic but necessary for error messages
-        ignoreTemplateLiterals: true,
-        ignoreComments: true,
-        ignoreRegExpLiterals: true,
-      }],
+      "max-len": [
+        "error",
+        {
+          code: 150,
+          ignoreUrls: true, // Most common reason to disable it
+          ignoreStrings: true, // These are not fantastic but necessary for error messages
+          ignoreTemplateLiterals: true,
+          ignoreComments: true,
+          ignoreRegExpLiterals: true,
+        },
+      ],
 
       // Don't unnecessarily quote properties
-      'quote-props': ['error', 'consistent-as-needed'],
+      "quote-props": ["error", "consistent-as-needed"],
     };
 
     this.rules = {
       // Require use of the `import { foo } from 'bar';` form instead of `import foo = require('bar');`
-      '@typescript-eslint/no-require-imports': ['error'],
+      "@typescript-eslint/no-require-imports": ["error"],
 
       // Require all imported dependencies are actually declared in package.json
-      'import/no-extraneous-dependencies': [
-        'error',
+      "import/no-extraneous-dependencies": [
+        "error",
         {
           // Only allow importing devDependencies from "devdirs".
           devDependencies: () => this.renderDevDepsAllowList(),
@@ -223,63 +228,69 @@ export class Eslint extends Component {
       ],
 
       // Require all imported libraries actually resolve (!!required for import/no-extraneous-dependencies to work!!)
-      'import/no-unresolved': ['error'],
+      "import/no-unresolved": ["error"],
 
       // Require an ordering on all imports
-      'import/order': ['warn', {
-        groups: ['builtin', 'external'],
-        alphabetize: { order: 'asc', caseInsensitive: true },
-      }],
+      "import/order": [
+        "warn",
+        {
+          groups: ["builtin", "external"],
+          alphabetize: { order: "asc", caseInsensitive: true },
+        },
+      ],
 
       // Cannot import from the same module twice
-      'no-duplicate-imports': ['error'],
+      "no-duplicate-imports": ["error"],
 
       // Cannot shadow names
-      'no-shadow': ['off'],
-      '@typescript-eslint/no-shadow': ['error'],
+      "no-shadow": ["off"],
+      "@typescript-eslint/no-shadow": ["error"],
 
       // Required spacing in property declarations (copied from TSLint, defaults are good)
-      'key-spacing': ['error'],
+      "key-spacing": ["error"],
 
       // No multiple empty lines
-      'no-multiple-empty-lines': ['error'],
+      "no-multiple-empty-lines": ["error"],
 
       // One of the easiest mistakes to make
-      '@typescript-eslint/no-floating-promises': ['error'],
+      "@typescript-eslint/no-floating-promises": ["error"],
 
       // Make sure that inside try/catch blocks, promises are 'return await'ed
       // (must disable the base rule as it can report incorrect errors)
-      'no-return-await': ['off'],
-      '@typescript-eslint/return-await': ['error'],
+      "no-return-await": ["off"],
+      "@typescript-eslint/return-await": ["error"],
 
       // Useless diff results
-      'no-trailing-spaces': ['error'],
+      "no-trailing-spaces": ["error"],
 
       // Must use foo.bar instead of foo['bar'] if possible
-      'dot-notation': ['error'],
+      "dot-notation": ["error"],
 
       // Are you sure | is not a typo for || ?
-      'no-bitwise': ['error'],
+      "no-bitwise": ["error"],
 
       // Member ordering
-      '@typescript-eslint/member-ordering': ['error', {
-        default: [
-          'public-static-field',
-          'public-static-method',
-          'protected-static-field',
-          'protected-static-method',
-          'private-static-field',
-          'private-static-method',
+      "@typescript-eslint/member-ordering": [
+        "error",
+        {
+          default: [
+            "public-static-field",
+            "public-static-method",
+            "protected-static-field",
+            "protected-static-method",
+            "private-static-field",
+            "private-static-method",
 
-          'field',
+            "field",
 
-          // Constructors
-          'constructor', // = ["public-constructor", "protected-constructor", "private-constructor"]
+            // Constructors
+            "constructor", // = ["public-constructor", "protected-constructor", "private-constructor"]
 
-          // Methods
-          'method',
-        ],
-      }],
+            // Methods
+            "method",
+          ],
+        },
+      ],
     };
 
     // Overrides for .projenrc.js
@@ -287,26 +298,26 @@ export class Eslint extends Component {
       {
         files: [PROJEN_RC],
         rules: {
-          '@typescript-eslint/no-require-imports': 'off',
-          'import/no-extraneous-dependencies': 'off',
+          "@typescript-eslint/no-require-imports": "off",
+          "import/no-extraneous-dependencies": "off",
         },
       },
     ];
 
     this.ignorePatterns = options.ignorePatterns ?? [
-      '*.js',
+      "*.js",
       `!${PROJEN_RC}`,
-      '*.d.ts',
-      'node_modules/',
-      '*.generated.ts',
-      'coverage',
+      "*.d.ts",
+      "node_modules/",
+      "*.generated.ts",
+      "coverage",
     ];
 
-    const tsconfig = options.tsconfigPath ?? './tsconfig.json';
+    const tsconfig = options.tsconfigPath ?? "./tsconfig.json";
 
-    this.addPlugins('@typescript-eslint');
-    this.addPlugins('import');
-    this.addExtends('plugin:import/typescript');
+    this.addPlugins("@typescript-eslint");
+    this.addPlugins("import");
+    this.addExtends("plugin:import/typescript");
 
     this.config = {
       env: {
@@ -315,19 +326,19 @@ export class Eslint extends Component {
       },
       root: true,
       plugins: () => this._plugins,
-      parser: '@typescript-eslint/parser',
+      parser: "@typescript-eslint/parser",
       parserOptions: {
         ecmaVersion: 2018,
-        sourceType: 'module',
+        sourceType: "module",
         project: tsconfig,
       },
       extends: () => this._extends,
       settings: {
-        'import/parsers': {
-          '@typescript-eslint/parser': ['.ts', '.tsx'],
+        "import/parsers": {
+          "@typescript-eslint/parser": [".ts", ".tsx"],
         },
-        'import/resolver': {
-          ...( options.aliasMap && {
+        "import/resolver": {
+          ...(options.aliasMap && {
             alias: {
               map: Object.entries(options.aliasMap).map(([k, v]) => [k, v]),
               extensions: options.aliasExtensions,
@@ -336,7 +347,7 @@ export class Eslint extends Component {
           node: {},
           typescript: {
             project: tsconfig,
-            ...( options.tsAlwaysTryTypes !== false && { alwaysTryTypes: true } ),
+            ...(options.tsAlwaysTryTypes !== false && { alwaysTryTypes: true }),
           },
         },
       },
@@ -345,7 +356,10 @@ export class Eslint extends Component {
       overrides: this.overrides,
     };
 
-    new JsonFile(project, '.eslintrc.json', { obj: this.config, marker: false });
+    new JsonFile(project, ".eslintrc.json", {
+      obj: this.config,
+      marker: false,
+    });
 
     // if the user enabled prettier explicitly _or_ if the project has a
     // `Prettier` component, we shall tweak our configuration accordingly.
@@ -365,7 +379,7 @@ export class Eslint extends Component {
 
   /**
    * Adds an eslint plugin
-   * @param plugin The name of the plugin
+   * @param plugins The names of plugins to add
    */
   public addPlugins(...plugins: string[]) {
     this._plugins.push(...plugins);
@@ -406,18 +420,18 @@ export class Eslint extends Component {
    */
   private enablePrettier() {
     this.nodeProject.addDevDeps(
-      'prettier',
-      'eslint-plugin-prettier',
-      'eslint-config-prettier',
+      "prettier",
+      "eslint-plugin-prettier",
+      "eslint-config-prettier"
     );
 
-    this.addPlugins('prettier');
+    this.addPlugins("prettier");
 
     this._formattingRules = {
-      'prettier/prettier': ['error'],
+      "prettier/prettier": ["error"],
     };
 
-    this.addExtends('prettier', 'plugin:prettier/recommended');
+    this.addExtends("prettier", "plugin:prettier/recommended");
   }
 
   private renderDevDepsAllowList() {

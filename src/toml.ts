@@ -1,7 +1,7 @@
-import * as TOML from '@iarna/toml';
-import { IResolver } from './file';
-import { ObjectFile, ObjectFileOptions } from './object-file';
-import { Project } from './project';
+import * as TOML from "@iarna/toml";
+import { IResolver } from "./file";
+import { ObjectFile, ObjectFileOptions } from "./object-file";
+import { Project } from "./project";
 
 /**
  * Options for `TomlFile`.
@@ -23,9 +23,9 @@ export class TomlFile extends ObjectFile {
     }
 
     return [
-      ... (this.marker ? [`# ${TomlFile.PROJEN_MARKER}`] : []),
-      '',
+      ...(this.marker ? [`# ${TomlFile.PROJEN_MARKER}`] : []),
+      "",
       TOML.stringify(JSON.parse(json)),
-    ].join('\n');
+    ].join("\n");
   }
 }

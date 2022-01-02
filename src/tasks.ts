@@ -1,10 +1,10 @@
-import * as path from 'path';
-import { PROJEN_DIR } from './common';
-import { Component } from './component';
-import { JsonFile } from './json';
-import { Project } from './project';
-import { Task, TaskOptions } from './task';
-import { TasksManifest, TaskSpec } from './task-model';
+import * as path from "path";
+import { PROJEN_DIR } from "./common";
+import { Component } from "./component";
+import { JsonFile } from "./json";
+import { Project } from "./project";
+import { Task, TaskOptions } from "./task";
+import { TasksManifest, TaskSpec } from "./task-model";
 
 /**
  * Defines project tasks.
@@ -16,7 +16,10 @@ export class Tasks extends Component {
   /**
    * The project-relative path of the tasks manifest file.
    */
-  public static readonly MANIFEST_FILE = path.posix.join(PROJEN_DIR, 'tasks.json');
+  public static readonly MANIFEST_FILE = path.posix.join(
+    PROJEN_DIR,
+    "tasks.json"
+  );
 
   private readonly _tasks: { [name: string]: Task };
   private readonly _env: { [name: string]: string };
@@ -52,7 +55,9 @@ export class Tasks extends Component {
   public addTask(name: string, options: TaskOptions = {}) {
     const task = new Task(name, options);
     if (this._tasks[name]) {
-      throw new Error(`A task with the name ${name} already exists. To override it, call removeTask first and then create the new task.`);
+      throw new Error(
+        `A task with the name ${name} already exists. To override it, call removeTask first and then create the new task.`
+      );
     }
     this._tasks[name] = task;
     return task;
@@ -66,10 +71,14 @@ export class Tasks extends Component {
    * @returns The `Task` that was removed, otherwise `undefined`.
    */
   public removeTask(name: string): undefined | Task {
-    const dependentTasks = this.all.filter(task => task.steps.find(step => step.spawn == name));
+    const dependentTasks = this.all.filter((task) =>
+      task.steps.find((step) => step.spawn == name)
+    );
     if (dependentTasks.length > 0) {
-      const errList = dependentTasks.map(depTask => depTask.name).join(', ');
-      throw new Error(`Unable to remove task "${name}" because the following tasks depend on it: ${errList}`);
+      const errList = dependentTasks.map((depTask) => depTask.name).join(", ");
+      throw new Error(
+        `Unable to remove task "${name}" because the following tasks depend on it: ${errList}`
+      );
     }
 
     const task = this._tasks[name];
@@ -109,7 +118,9 @@ export class Tasks extends Component {
 
   private renderTasks() {
     const tasks: { [name: string]: TaskSpec } = {};
-    for (const task of Object.values(this._tasks).sort((x, y) => x.name.localeCompare(y.name))) {
+    for (const task of Object.values(this._tasks).sort((x, y) =>
+      x.name.localeCompare(y.name)
+    )) {
       tasks[task.name] = task._renderSpec();
     }
 

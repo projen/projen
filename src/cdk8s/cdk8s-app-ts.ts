@@ -1,8 +1,7 @@
-
-import * as path from 'path';
-import * as fs from 'fs-extra';
-import { Component } from '../component';
-import { TypeScriptAppProject, TypeScriptProjectOptions } from '../typescript';
+import * as path from "path";
+import * as fs from "fs-extra";
+import { Component } from "../component";
+import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 
 export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
@@ -76,7 +75,6 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
    * @default "main.ts"
    */
   readonly appEntrypoint?: string;
-
 }
 
 /**
@@ -87,7 +85,6 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
  */
 
 export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
-
   /**
    * The CDK8s version this app is using.
    */
@@ -116,60 +113,66 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
     });
 
     if (!options.cdk8sVersion) {
-      throw new Error('Required field cdk8sVersion is not specified.');
+      throw new Error("Required field cdk8sVersion is not specified.");
     }
 
     // encode a hidden assumption further down the chain
-    if (this.srcdir !== 'src') {
+    if (this.srcdir !== "src") {
       throw new Error('sources are expected under the "src" directory');
     }
 
     // encode a hidden assumption further down the chain
-    if (this.testdir !== 'test') {
+    if (this.testdir !== "test") {
       throw new Error('test sources are expected under the "test" directory');
     }
 
-    this.appEntrypoint = options.appEntrypoint ?? 'main.ts';
+    this.appEntrypoint = options.appEntrypoint ?? "main.ts";
 
-    this.cdk8sVersion = options.cdk8sVersionPinning ? options.cdk8sVersion : `^${options.cdk8sVersion}`;
+    this.cdk8sVersion = options.cdk8sVersionPinning
+      ? options.cdk8sVersion
+      : `^${options.cdk8sVersion}`;
 
     if (options.constructsVersion) {
-      this.constructsVersion = options.constructsVersionPinning ? options.constructsVersion: `^${options.constructsVersion}`;
+      this.constructsVersion = options.constructsVersionPinning
+        ? options.constructsVersion
+        : `^${options.constructsVersion}`;
     } else {
-      this.constructsVersion = '^3.2.34';
+      this.constructsVersion = "^3.2.34";
     }
 
-    if (!! options.cdk8sCliVersion) {
-      this.cdk8sCliVersion = options.cdk8sCliVersionPinning ? options.cdk8sCliVersion: `^${options.cdk8sCliVersion}`;
+    if (!!options.cdk8sCliVersion) {
+      this.cdk8sCliVersion = options.cdk8sCliVersionPinning
+        ? options.cdk8sCliVersion
+        : `^${options.cdk8sCliVersion}`;
     } else {
       this.cdk8sCliVersion = this.cdk8sVersion;
     }
 
-
     // CLI
     this.addDeps(
       `cdk8s@${this.cdk8sVersion}`,
-      `constructs@${this.constructsVersion}`,
+      `constructs@${this.constructsVersion}`
     );
     this.addDevDeps(
-      'ts-node@^9',
+      "ts-node@^9",
       `cdk8s-cli@${this.cdk8sCliVersion}`,
       `cdk8s@${this.cdk8sVersion}`,
-      `constructs@${this.constructsVersion}`,
+      `constructs@${this.constructsVersion}`
     );
 
-    const synth = this.addTask('synth', {
-      description: 'Synthesizes your cdk8s app into dist (part of "yarn build")',
-      exec: 'cdk8s synth',
+    const synth = this.addTask("synth", {
+      description:
+        'Synthesizes your cdk8s app into dist (part of "yarn build")',
+      exec: "cdk8s synth",
     });
 
-    this.addTask('import', {
-      description: 'Imports API objects to your app by generating constructs.',
-      exec: 'cdk8s import',
+    this.addTask("import", {
+      description: "Imports API objects to your app by generating constructs.",
+      exec: "cdk8s import",
     });
 
-    this.gitignore.include('imports/');
-    this.gitignore.include('cdk8s.yaml');
+    this.gitignore.include("imports/");
+    this.gitignore.include("cdk8s.yaml");
 
     // add synth to the build
     this.postCompileTask.spawn(synth);
@@ -178,7 +181,6 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
       new SampleCode(this);
     }
   }
-
 }
 
 class SampleCode extends Component {
@@ -191,7 +193,10 @@ class SampleCode extends Component {
   public synthesize() {
     const outdir = this.project.outdir;
     const srcdir = path.join(outdir, this.appProject.srcdir);
-    if (fs.pathExistsSync(srcdir) && fs.readdirSync(srcdir).filter(x => x.endsWith('.ts'))) {
+    if (
+      fs.pathExistsSync(srcdir) &&
+      fs.readdirSync(srcdir).filter((x) => x.endsWith(".ts"))
+    ) {
       return;
     }
 
@@ -237,7 +242,10 @@ app.synth();`;
     fs.mkdirpSync(srcdir);
     fs.writeFileSync(path.join(srcdir, this.appProject.appEntrypoint), srcCode);
 
-    const appEntrypointName = path.basename(this.appProject.appEntrypoint, '.ts');
+    const appEntrypointName = path.basename(
+      this.appProject.appEntrypoint,
+      ".ts"
+    );
 
     const cdk8sYaml = `language: typescript
 app: node lib/${appEntrypointName}.js
@@ -245,7 +253,6 @@ imports:
   - k8s
     `;
 
-    fs.writeFileSync(path.join(outdir, 'cdk8s.yaml'), cdk8sYaml);
-
+    fs.writeFileSync(path.join(outdir, "cdk8s.yaml"), cdk8sYaml);
   }
 }

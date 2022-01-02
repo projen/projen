@@ -1,7 +1,7 @@
-import { Component } from './component';
-import { Project } from './project';
-import { decamelizeKeysRecursively } from './util';
-import { YamlFile } from './yaml';
+import { Component } from "./component";
+import { Project } from "./project";
+import { decamelizeKeysRecursively } from "./util";
+import { YamlFile } from "./yaml";
 
 /**
  * Props for DockerCompose.
@@ -56,14 +56,18 @@ export class DockerCompose extends Component {
    * @param targetPort Container's port number
    * @param options Port mapping options
    */
-  static portMapping(publishedPort: number, targetPort: number, options?: DockerComposePortMappingOptions): DockerComposeServicePort {
+  static portMapping(
+    publishedPort: number,
+    targetPort: number,
+    options?: DockerComposePortMappingOptions
+  ): DockerComposeServicePort {
     const protocol = options?.protocol ?? DockerComposeProtocol.TCP;
 
     return {
       target: targetPort,
       published: publishedPort,
       protocol: protocol,
-      mode: 'host',
+      mode: "host",
     };
   }
 
@@ -72,11 +76,14 @@ export class DockerCompose extends Component {
    * @param sourcePath Host path name
    * @param targetPath Target path name
    */
-  static bindVolume(sourcePath: string, targetPath: string): IDockerComposeVolumeBinding {
+  static bindVolume(
+    sourcePath: string,
+    targetPath: string
+  ): IDockerComposeVolumeBinding {
     return {
       bind(_volumeInfo: IDockerComposeVolumeConfig): DockerComposeVolumeMount {
         return {
-          type: 'bind',
+          type: "bind",
           source: sourcePath,
           target: targetPath,
         };
@@ -93,13 +100,17 @@ export class DockerCompose extends Component {
    * @param targetPath Target path
    * @param options volume configuration (default: docker compose defaults)
    */
-  static namedVolume(volumeName: string, targetPath: string, options: DockerComposeVolumeConfig = {}): IDockerComposeVolumeBinding {
+  static namedVolume(
+    volumeName: string,
+    targetPath: string,
+    options: DockerComposeVolumeConfig = {}
+  ): IDockerComposeVolumeBinding {
     return {
       bind(volumeInfo: IDockerComposeVolumeConfig): DockerComposeVolumeMount {
         volumeInfo.addVolumeConfiguration(volumeName, options);
 
         return {
-          type: 'volume',
+          type: "volume",
           source: volumeName,
           target: targetPath,
         };
@@ -113,7 +124,7 @@ export class DockerCompose extends Component {
   constructor(project: Project, props?: DockerComposeProps) {
     super(project);
 
-    const nameSuffix = props?.nameSuffix ? `${props!.nameSuffix}.yml` : 'yml';
+    const nameSuffix = props?.nameSuffix ? `${props!.nameSuffix}.yml` : "yml";
     new YamlFile(project, `docker-compose.${nameSuffix}`, {
       committed: true,
       readonly: true,
@@ -121,9 +132,9 @@ export class DockerCompose extends Component {
     });
 
     if (props?.schemaVersion && !parseFloat(props.schemaVersion)) {
-      throw Error('Version tag needs to be a number');
+      throw Error("Version tag needs to be a number");
     }
-    this.version = props?.schemaVersion ? props.schemaVersion : '3.3';
+    this.version = props?.schemaVersion ? props.schemaVersion : "3.3";
     this.services = {};
 
     // Add the services provided via the constructor argument.
@@ -138,7 +149,10 @@ export class DockerCompose extends Component {
    * @param serviceName name of the service
    * @param description a service description
    */
-  public addService(serviceName: string, description: DockerComposeServiceDescription): DockerComposeService {
+  public addService(
+    serviceName: string,
+    description: DockerComposeServiceDescription
+  ): DockerComposeService {
     const service = new DockerComposeService(serviceName, description);
     this.services[serviceName] = service;
     return service;
@@ -149,7 +163,7 @@ export class DockerCompose extends Component {
    */
   _synthesizeDockerCompose(): object {
     if (Object.keys(this.services).length === 0) {
-      throw new Error('DockerCompose requires at least one service');
+      throw new Error("DockerCompose requires at least one service");
     }
 
     return renderDockerComposeFile(this.services, this.version);
@@ -261,10 +275,17 @@ export class DockerComposeService implements IDockerComposeServiceName {
    */
   public readonly environment: Record<string, string>;
 
-  constructor(serviceName: string, serviceDescription: DockerComposeServiceDescription) {
-    if ((!serviceDescription.imageBuild && !serviceDescription.image)
-      || (serviceDescription.imageBuild && serviceDescription.image)) {
-      throw new Error(`A service ${serviceName} requires exactly one of a \`imageBuild\` or \`image\` key`);
+  constructor(
+    serviceName: string,
+    serviceDescription: DockerComposeServiceDescription
+  ) {
+    if (
+      (!serviceDescription.imageBuild && !serviceDescription.image) ||
+      (serviceDescription.imageBuild && serviceDescription.image)
+    ) {
+      throw new Error(
+        `A service ${serviceName} requires exactly one of a \`imageBuild\` or \`image\` key`
+      );
     }
 
     this.serviceName = serviceName;
@@ -283,8 +304,14 @@ export class DockerComposeService implements IDockerComposeServiceName {
    * @param targetPort Container's port number
    * @param options Port mapping options
    */
-  public addPort(publishedPort: number, targetPort: number, options?: DockerComposePortMappingOptions) {
-    this.ports?.push(DockerCompose.portMapping(publishedPort, targetPort, options));
+  public addPort(
+    publishedPort: number,
+    targetPort: number,
+    options?: DockerComposePortMappingOptions
+  ) {
+    this.ports?.push(
+      DockerCompose.portMapping(publishedPort, targetPort, options)
+    );
   }
 
   /**
@@ -345,12 +372,12 @@ export enum DockerComposeProtocol {
   /**
    * TCP protocol
    */
-  TCP = 'tcp',
+  TCP = "tcp",
 
   /**
    * UDP protocol
    */
-  UDP = 'udp',
+  UDP = "udp",
 }
 
 /**
@@ -425,7 +452,10 @@ export interface IDockerComposeVolumeConfig {
    * @param volumeName
    * @param configuration
    */
-  addVolumeConfiguration(volumeName: string, configuration: DockerComposeVolumeConfig): void;
+  addVolumeConfiguration(
+    volumeName: string,
+    configuration: DockerComposeVolumeConfig
+  ): void;
 }
 
 /**
@@ -472,11 +502,17 @@ interface DockerComposeFileServiceSchema {
   readonly environment?: Record<string, string>;
 }
 
-function renderDockerComposeFile(serviceDescriptions: Record<string, DockerComposeService>, version: string): object {
+function renderDockerComposeFile(
+  serviceDescriptions: Record<string, DockerComposeService>,
+  version: string
+): object {
   // Record volume configuration
   const volumeConfig: Record<string, DockerComposeVolumeConfig> = {};
   const volumeInfo: IDockerComposeVolumeConfig = {
-    addVolumeConfiguration(volumeName: string, configuration: DockerComposeVolumeConfig) {
+    addVolumeConfiguration(
+      volumeName: string,
+      configuration: DockerComposeVolumeConfig
+    ) {
       if (!volumeConfig[volumeName]) {
         // First volume configuration takes precedence.
         volumeConfig[volumeName] = configuration;
@@ -486,7 +522,9 @@ function renderDockerComposeFile(serviceDescriptions: Record<string, DockerCompo
 
   // Render service configuration
   const services: Record<string, DockerComposeFileServiceSchema> = {};
-  for (const [serviceName, serviceDescription] of Object.entries(serviceDescriptions ?? {})) {
+  for (const [serviceName, serviceDescription] of Object.entries(
+    serviceDescriptions ?? {}
+  )) {
     // Resolve the names of each dependency and check that they exist.
     // Note: They may not exist if the user made a mistake when referencing a
     // service by name via `DockerCompose.serviceName()`.
@@ -498,7 +536,9 @@ function renderDockerComposeFile(serviceDescriptions: Record<string, DockerCompo
         throw new Error(`Service ${serviceName} cannot depend on itself`);
       }
       if (!serviceDescriptions[resolvedServiceName]) {
-        throw new Error(`Unable to resolve service named ${resolvedServiceName} for ${serviceName}`);
+        throw new Error(
+          `Unable to resolve service named ${resolvedServiceName} for ${serviceName}`
+        );
       }
 
       dependsOn.push(resolvedServiceName);
@@ -514,11 +554,24 @@ function renderDockerComposeFile(serviceDescriptions: Record<string, DockerCompo
     // Create and store the service configuration, taking care not to create
     // object members with undefined values.
     services[serviceName] = {
-      ...getObjectWithKeyAndValueIfValueIsDefined('image', serviceDescription.image),
-      ...getObjectWithKeyAndValueIfValueIsDefined('build', serviceDescription.imageBuild),
-      ...getObjectWithKeyAndValueIfValueIsDefined('command', serviceDescription.command),
-      ...(Object.keys(serviceDescription.environment).length > 0 ? { environment: serviceDescription.environment } : {}),
-      ...(serviceDescription.ports.length > 0 ? { ports: serviceDescription.ports } : {}),
+      ...getObjectWithKeyAndValueIfValueIsDefined(
+        "image",
+        serviceDescription.image
+      ),
+      ...getObjectWithKeyAndValueIfValueIsDefined(
+        "build",
+        serviceDescription.imageBuild
+      ),
+      ...getObjectWithKeyAndValueIfValueIsDefined(
+        "command",
+        serviceDescription.command
+      ),
+      ...(Object.keys(serviceDescription.environment).length > 0
+        ? { environment: serviceDescription.environment }
+        : {}),
+      ...(serviceDescription.ports.length > 0
+        ? { ports: serviceDescription.ports }
+        : {}),
       ...(dependsOn.length > 0 ? { dependsOn } : {}),
       ...(volumes.length > 0 ? { volumes } : {}),
     };
@@ -535,7 +588,7 @@ function renderDockerComposeFile(serviceDescriptions: Record<string, DockerCompo
   // Change most keys to snake case.
   return decamelizeKeysRecursively(input, {
     shouldDecamelize: shouldDecamelizeDockerComposeKey,
-    separator: '_',
+    separator: "_",
   });
 }
 
@@ -545,7 +598,10 @@ function renderDockerComposeFile(serviceDescriptions: Record<string, DockerCompo
  * @param key
  * @param value
  */
-function getObjectWithKeyAndValueIfValueIsDefined<K extends string, T>(key: K, value: T): { K: T } | {} {
+function getObjectWithKeyAndValueIfValueIsDefined<K extends string, T>(
+  key: K,
+  value: T
+): { K: T } | {} {
   return value !== undefined ? { [key]: value } : {};
 }
 
@@ -558,7 +614,7 @@ function getObjectWithKeyAndValueIfValueIsDefined<K extends string, T>(key: K, v
  * @param path
  */
 function shouldDecamelizeDockerComposeKey(path: string[]) {
-  const poundPath = path.join('#');
+  const poundPath = path.join("#");
 
   // Does not decamelize user's names.
   // services.namehere:

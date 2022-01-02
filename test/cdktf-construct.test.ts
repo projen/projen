@@ -1,35 +1,40 @@
-import { ConstructLibraryCdktf, ConstructLibraryCdktfOptions } from '../src/cdktf';
-import { NpmAccess } from '../src/javascript';
-import { synthSnapshot } from './util';
+import {
+  ConstructLibraryCdktf,
+  ConstructLibraryCdktfOptions,
+} from "../src/cdktf";
+import { NpmAccess } from "../src/javascript";
+import { synthSnapshot } from "./util";
 
-describe('constructs dependency selection', () => {
-  test('user-selected', () => {
+describe("constructs dependency selection", () => {
+  test("user-selected", () => {
     // GIVEN
-    const project = new TestProject({ cdktfVersion: '0.99' });
+    const project = new TestProject({ cdktfVersion: "0.99" });
 
     // WHEN
     const snapshot = synthSnapshot(project);
 
     // THEN
-    expect(snapshot['package.json']?.peerDependencies?.cdktf).toBe('^0.99');
-    expect(snapshot['package.json']?.devDependencies?.cdktf).toBe('0.99.0');
-    expect(snapshot['package.json']?.dependencies?.cdktf).toBeUndefined();
+    expect(snapshot["package.json"]?.peerDependencies?.cdktf).toBe("^0.99");
+    expect(snapshot["package.json"]?.devDependencies?.cdktf).toBe("0.99.0");
+    expect(snapshot["package.json"]?.dependencies?.cdktf).toBeUndefined();
   });
 });
 
 const defaultOptions = {
-  author: 'Nobody',
-  authorAddress: 'nobody@nowhere.com',
+  author: "Nobody",
+  authorAddress: "nobody@nowhere.com",
   clobber: false,
-  defaultReleaseBranch: 'main',
+  defaultReleaseBranch: "main",
   jest: false,
-  name: 'test-project',
+  name: "test-project",
   npmAccess: NpmAccess.PUBLIC,
-  repositoryUrl: 'https://github.com/projen/projen.git',
+  repositoryUrl: "https://github.com/projen/projen.git",
 } as const;
 
 class TestProject extends ConstructLibraryCdktf {
-  constructor(options: Omit<ConstructLibraryCdktfOptions, keyof typeof defaultOptions>) {
+  constructor(
+    options: Omit<ConstructLibraryCdktfOptions, keyof typeof defaultOptions>
+  ) {
     super({
       ...defaultOptions,
       ...options,
