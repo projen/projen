@@ -2531,7 +2531,7 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "- opinionated default options",
+        "default": "- default options",
         "docs": "Prettier options.",
         "featured": false,
         "fqn": "projen.javascript.PrettierOptions",
@@ -5213,7 +5213,7 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "- opinionated default options",
+        "default": "- default options",
         "docs": "Prettier options.",
         "featured": false,
         "fqn": "projen.javascript.PrettierOptions",
@@ -7786,7 +7786,7 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "- opinionated default options",
+        "default": "- default options",
         "docs": "Prettier options.",
         "featured": false,
         "fqn": "projen.javascript.PrettierOptions",
@@ -10306,7 +10306,7 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "- opinionated default options",
+        "default": "- default options",
         "docs": "Prettier options.",
         "featured": false,
         "fqn": "projen.javascript.PrettierOptions",
@@ -12884,7 +12884,7 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "- opinionated default options",
+        "default": "- default options",
         "docs": "Prettier options.",
         "featured": false,
         "fqn": "projen.javascript.PrettierOptions",
@@ -16133,7 +16133,7 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "- opinionated default options",
+        "default": "- default options",
         "docs": "Prettier options.",
         "featured": false,
         "fqn": "projen.javascript.PrettierOptions",
@@ -18467,7 +18467,7 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "- opinionated default options",
+        "default": "- default options",
         "docs": "Prettier options.",
         "featured": false,
         "fqn": "projen.javascript.PrettierOptions",
@@ -20689,7 +20689,7 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "- opinionated default options",
+        "default": "- default options",
         "docs": "Prettier options.",
         "featured": false,
         "fqn": "projen.javascript.PrettierOptions",
@@ -22897,7 +22897,7 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "- opinionated default options",
+        "default": "- default options",
         "docs": "Prettier options.",
         "featured": false,
         "fqn": "projen.javascript.PrettierOptions",
@@ -25860,7 +25860,7 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "- opinionated default options",
+        "default": "- default options",
         "docs": "Prettier options.",
         "featured": false,
         "fqn": "projen.javascript.PrettierOptions",
@@ -28070,7 +28070,7 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "- opinionated default options",
+        "default": "- default options",
         "docs": "Prettier options.",
         "featured": false,
         "fqn": "projen.javascript.PrettierOptions",
@@ -30404,7 +30404,7 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "- opinionated default options",
+        "default": "- default options",
         "docs": "Prettier options.",
         "featured": false,
         "fqn": "projen.javascript.PrettierOptions",
@@ -32716,7 +32716,7 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "- opinionated default options",
+        "default": "- default options",
         "docs": "Prettier options.",
         "featured": false,
         "fqn": "projen.javascript.PrettierOptions",
