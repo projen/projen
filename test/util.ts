@@ -62,9 +62,11 @@ afterAll((done) => {
   done();
 });
 
-export function mkdtemp() {
+export function mkdtemp(opts: { cleanup?: boolean } = {}) {
   const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), 'projen-test-'));
-  autoRemove.add(tmpdir);
+  if (opts.cleanup ?? true) {
+    autoRemove.add(tmpdir);
+  }
   return tmpdir;
 }
 
