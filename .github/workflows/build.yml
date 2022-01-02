@@ -199,6 +199,11 @@ jobs:
       - uses: actions/setup-go@v2
         with:
           go-version: 1.16.x
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: dist
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -206,9 +211,4 @@ jobs:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
-      - name: Download build artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: build-artifact
-          path: dist
       - run: /bin/bash ./projen.bash integ

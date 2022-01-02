@@ -138,6 +138,7 @@
     },
     "integ": {
       "name": "integ",
+      "description": "Run integration tests",
       "steps": [
         {
           "spawn": "build"

@@ -183,7 +183,9 @@ const pythonCompatTask = project.addTask('integ:python-compat', {
   exec: 'scripts/python-compat.sh',
   description: 'Checks that projen\'s submodule structure does not cause import failures for python. Expects python to be installed and projen to be fully built.',
 });
-const integTask = project.addTask('integ');
+const integTask = project.addTask('integ', {
+  description: 'Run integration tests',
+});
 integTask.spawn(project.buildTask);
 integTask.spawn(project.tasks.tryFind('package:python'));
 integTask.spawn(pythonCompatTask);

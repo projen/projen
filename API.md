@@ -177,7 +177,8 @@ Name|Description
 [awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)|Options for `IntegrationTest`.
 [awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)|Common options for `LambdaFunction`.
 [awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)|Options for `Function`.
-[build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)|Options for `BuildWorkflow.addPostBuildTask`.
+[build.AddPostBuildJobCommandsOptions](#projen-build-addpostbuildjobcommandsoptions)|Options for `BuildWorkflow.addPostBuildJobCommands`.
+[build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)|Options for `BuildWorkflow.addPostBuildJobTask`.
 [build.BuildWorkflowOptions](#projen-build-buildworkflowoptions)|*No description*
 [cdk.Catalog](#projen-cdk-catalog)|*No description*
 [cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)|*No description*
@@ -3900,12 +3901,35 @@ addPostBuildJob(id: string, job: Job): void
 
 
 
+#### addPostBuildJobCommands(id, commands, options?)🔹 <a id="projen-build-buildworkflow-addpostbuildjobcommands"></a>
+
+Run a sequence of commands as a job within the build workflow which is executed after the build job succeeded.
+
+Jobs are executed _only_ if the build did NOT self mutate. If the build
+self-mutate, the branch will either be updated or the build will fail (in
+forks), so there is no point in executing the post-build job.
+
+```ts
+addPostBuildJobCommands(id: string, commands: Array<string>, options?: AddPostBuildJobCommandsOptions): void
+```
+
+* **id** (<code>string</code>)  *No description*
+* **commands** (<code>Array<string></code>)  *No description*
+* **options** (<code>[build.AddPostBuildJobCommandsOptions](#projen-build-addpostbuildjobcommandsoptions)</code>)  Specify tools and other options.
+  * **checkoutRepo** (<code>boolean</code>)  Check out the repository at the pull request branch before commands are run. __*Default*__: false
+  * **installDeps** (<code>boolean</code>)  Install project dependencies before running commands. `checkoutRepo` must also be set to true. __*Default*__: false
+  * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools that should be installed before the commands are run. __*Optional*__
+
+
+
+
 #### addPostBuildJobTask(task, options)🔹 <a id="projen-build-buildworkflow-addpostbuildjobtask"></a>
 
 Run a task as a job within the build workflow which is executed after the build job succeeded.
 
-The task will have access to build artifacts if `project.artifactsDirectory`
-is defined.
+The job will have access to build artifacts if `project.artifactsDirectory`
+is defined, and will install project dependencies in order to be able to
+run any commands used in the tasks.
 
 Jobs are executed _only_ if the build did NOT self mutate. If the build
 self-mutate, the branch will either be updated or the build will fail (in
@@ -3917,7 +3941,7 @@ addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions): void
 
 * **task** (<code>[Task](#projen-task)</code>)  *No description*
 * **options** (<code>[build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)</code>)  Specify tools and other options.
-  * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools that should be installed before the command is run. __*Optional*__
+  * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools that should be installed before the task is run. __*Optional*__
 
 
 
@@ -11263,16 +11287,31 @@ Name | Type | Description
 
 
 
-## struct AddPostBuildJobTaskOptions 🔹 <a id="projen-build-addpostbuildjobtaskoptions"></a>
+## struct AddPostBuildJobCommandsOptions 🔹 <a id="projen-build-addpostbuildjobcommandsoptions"></a>
 
 
-Options for `BuildWorkflow.addPostBuildTask`.
+Options for `BuildWorkflow.addPostBuildJobCommands`.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**tools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Tools that should be installed before the command is run.<br/>__*Optional*__
+**checkoutRepo**?🔹 | <code>boolean</code> | Check out the repository at the pull request branch before commands are run.<br/>__*Default*__: false
+**installDeps**?🔹 | <code>boolean</code> | Install project dependencies before running commands. `checkoutRepo` must also be set to true.<br/>__*Default*__: false
+**tools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Tools that should be installed before the commands are run.<br/>__*Optional*__
+
+
+
+## struct AddPostBuildJobTaskOptions 🔹 <a id="projen-build-addpostbuildjobtaskoptions"></a>
+
+
+Options for `BuildWorkflow.addPostBuildJobTask`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**tools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Tools that should be installed before the task is run.<br/>__*Optional*__
 
 
 
