@@ -89,6 +89,7 @@ export interface EslintOverride {
  * Represents eslint configuration.
  */
 export class Eslint extends Component {
+
   /**
    * Returns the singletone Eslint component of a project or undefined if there is none.
    */
@@ -159,7 +160,7 @@ export class Eslint extends Component {
         '--fix',
         '--no-error-on-unmatched-pattern',
         ...dirs,
-        ...(lintProjenRc ? [PROJEN_RC] : []),
+        ...lintProjenRc ? [PROJEN_RC] : [],
       ].join(' '),
     });
 
@@ -182,10 +183,7 @@ export class Eslint extends Component {
       'array-bracket-newline': ['error', 'consistent'], // enforce consistent line breaks between brackets
       'object-curly-spacing': ['error', 'always'], // { key: 'value' }
       'object-curly-newline': ['error', { multiline: true, consistent: true }], // enforce consistent line breaks between braces
-      'object-property-newline': [
-        'error',
-        { allowAllPropertiesOnSameLine: true },
-      ], // enforce "same line" or "multiple line" on object properties
+      'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }], // enforce "same line" or "multiple line" on object properties
       'keyword-spacing': ['error'], // require a space before & after keywords
       'brace-style': ['error', '1tbs', { allowSingleLine: true }], // enforce one true brace style
       'space-before-blocks': ['error'], // require space before blocks
@@ -196,17 +194,14 @@ export class Eslint extends Component {
       'semi': ['error', 'always'],
 
       // Max line lengths
-      'max-len': [
-        'error',
-        {
-          code: 150,
-          ignoreUrls: true, // Most common reason to disable it
-          ignoreStrings: true, // These are not fantastic but necessary for error messages
-          ignoreTemplateLiterals: true,
-          ignoreComments: true,
-          ignoreRegExpLiterals: true,
-        },
-      ],
+      'max-len': ['error', {
+        code: 150,
+        ignoreUrls: true, // Most common reason to disable it
+        ignoreStrings: true, // These are not fantastic but necessary for error messages
+        ignoreTemplateLiterals: true,
+        ignoreComments: true,
+        ignoreRegExpLiterals: true,
+      }],
 
       // Don't unnecessarily quote properties
       'quote-props': ['error', 'consistent-as-needed'],
@@ -231,13 +226,10 @@ export class Eslint extends Component {
       'import/no-unresolved': ['error'],
 
       // Require an ordering on all imports
-      'import/order': [
-        'warn',
-        {
-          groups: ['builtin', 'external'],
-          alphabetize: { order: 'asc', caseInsensitive: true },
-        },
-      ],
+      'import/order': ['warn', {
+        groups: ['builtin', 'external'],
+        alphabetize: { order: 'asc', caseInsensitive: true },
+      }],
 
       // Cannot import from the same module twice
       'no-duplicate-imports': ['error'],
@@ -270,27 +262,24 @@ export class Eslint extends Component {
       'no-bitwise': ['error'],
 
       // Member ordering
-      '@typescript-eslint/member-ordering': [
-        'error',
-        {
-          default: [
-            'public-static-field',
-            'public-static-method',
-            'protected-static-field',
-            'protected-static-method',
-            'private-static-field',
-            'private-static-method',
+      '@typescript-eslint/member-ordering': ['error', {
+        default: [
+          'public-static-field',
+          'public-static-method',
+          'protected-static-field',
+          'protected-static-method',
+          'private-static-field',
+          'private-static-method',
 
-            'field',
+          'field',
 
-            // Constructors
-            'constructor', // = ["public-constructor", "protected-constructor", "private-constructor"]
+          // Constructors
+          'constructor', // = ["public-constructor", "protected-constructor", "private-constructor"]
 
-            // Methods
-            'method',
-          ],
-        },
-      ],
+          // Methods
+          'method',
+        ],
+      }],
     };
 
     // Overrides for .projenrc.js
@@ -338,7 +327,7 @@ export class Eslint extends Component {
           '@typescript-eslint/parser': ['.ts', '.tsx'],
         },
         'import/resolver': {
-          ...(options.aliasMap && {
+          ...( options.aliasMap && {
             alias: {
               map: Object.entries(options.aliasMap).map(([k, v]) => [k, v]),
               extensions: options.aliasExtensions,
@@ -347,7 +336,7 @@ export class Eslint extends Component {
           node: {},
           typescript: {
             project: tsconfig,
-            ...(options.tsAlwaysTryTypes !== false && { alwaysTryTypes: true }),
+            ...( options.tsAlwaysTryTypes !== false && { alwaysTryTypes: true } ),
           },
         },
       },
@@ -356,10 +345,7 @@ export class Eslint extends Component {
       overrides: this.overrides,
     };
 
-    new JsonFile(project, '.eslintrc.json', {
-      obj: this.config,
-      marker: false,
-    });
+    new JsonFile(project, '.eslintrc.json', { obj: this.config, marker: false });
 
     // if the user enabled prettier explicitly _or_ if the project has a
     // `Prettier` component, we shall tweak our configuration accordingly.
