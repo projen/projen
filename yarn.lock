@@ -4107,10 +4107,10 @@ map-obj@^4.0.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-markmac@^0.1.125:
-  version "0.1.125"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.125.tgz#76cd47610badc9ebda3663cee1e6465231b95a75"
-  integrity sha512-YNqv7O8/OFd8XNUMvTMfPlxA1eSoR75wcVBKnx7Yrr6d8kn6QF/eC87mPI7CdLJm6oXR3euG4zDpQXq6jpobjw==
+markmac@^0.1.124:
+  version "0.1.126"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.126.tgz#aac2d1b1d8e90082cf73d70e1611f2def1c8bc3e"
+  integrity sha512-X/oPszck9ugEQsXiXsf5Ir1IyyqSDVTcZnEzOy+zRZiadtQCDoht+V1eDQOniSdvXonBcaHoowYkOvpXCt09Rg==
 
 meow@^8.0.0:
   version "8.1.2"
