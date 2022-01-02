@@ -379,7 +379,7 @@ export class Eslint extends Component {
 
   /**
    * Adds an eslint plugin
-   * @param plugin The name of the plugin
+   * @param plugins The names of plugins to add
    */
   public addPlugins(...plugins: string[]) {
     this._plugins.push(...plugins);
