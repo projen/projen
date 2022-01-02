@@ -163,7 +163,7 @@ export abstract class AwsCdkDeps extends Component {
     this.addV1AssertionLibraryDependency(options);
 
     // constructs library
-    this.addConstructsDependency(options.constructsVersion, this.packageConfig.constructsPackage);
+    this.addConstructsDependency(options.constructsVersion);
 
     // user-defined v1 dependencies (will only fail in CDK v2 if these have values)
     this.addV1Dependencies(...options.cdkDependencies ?? []);
@@ -211,7 +211,7 @@ export abstract class AwsCdkDeps extends Component {
     this.addV1DependenciesByType(DependencyType.BUILD, ...deps);
   }
 
-  private addConstructsDependency(requestedVersion: string | undefined, constructsPackage: string) {
+  private addConstructsDependency(requestedVersion: string | undefined) {
     if (requestedVersion && !semver.parse(requestedVersion)) {
       throw new Error(`"constructsVersion" cannot be parsed as a semver version: ${requestedVersion}`);
     }
@@ -238,7 +238,7 @@ export abstract class AwsCdkDeps extends Component {
         break;
     }
 
-    this.project.deps.addDependency(`${constructsPackage}@${versionRequirement}`, this.dependencyType);
+    this.project.deps.addDependency(`${this.packageConfig.constructsPackage}@${versionRequirement}`, this.dependencyType);
 
     return versionRequirement;
   }
