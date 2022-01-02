@@ -251,7 +251,7 @@ async function initProject(baseDir: string, type: inventory.ProjectType, args: a
       .toString()
       .replace(/[a-z,/s]/g, '')
       .trim();
-    logging.debug('system using git version ',gitversion);
+    logging.debug('system using git version ', gitversion);
     if ( gitversion && semver.gte(gitversion, '2.28.0') ) {
       git('init -b main');
       git('add .');
