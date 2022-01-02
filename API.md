@@ -3927,9 +3927,8 @@ addPostBuildJobCommands(id: string, commands: Array<string>, options?: AddPostBu
 
 Run a task as a job within the build workflow which is executed after the build job succeeded.
 
-The job will have access to build artifacts if `project.artifactsDirectory`
-is defined, and will install project dependencies in order to be able to
-run any commands used in the tasks.
+The job will have access to build artifacts and will install project
+dependencies in order to be able to run any commands used in the tasks.
 
 Jobs are executed _only_ if the build did NOT self mutate. If the build
 self-mutate, the branch will either be updated or the build will fail (in
