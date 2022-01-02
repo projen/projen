@@ -1,8 +1,8 @@
-import { Component } from '../component';
-import { IgnoreFile } from '../ignore-file';
-import { NodeProject } from '../javascript';
-import { JsonFile } from '../json';
-import { Project } from '../project';
+import { Component } from "../component";
+import { IgnoreFile } from "../ignore-file";
+import { NodeProject } from "../javascript";
+import { JsonFile } from "../json";
+import { Project } from "../project";
 /**
  * Options for Prettier
  *
@@ -201,24 +201,24 @@ export enum ArrowParens {
   /**
    * Always include parens. Example: `(x) => x`
    */
-  ALWAYS = 'always',
+  ALWAYS = "always",
 
   /**
    * Omit parens when possible. Example: `x => x`
    */
-  AVOID = 'avoid',
+  AVOID = "avoid",
 }
 
 export enum EmbeddedLanguageFormatting {
   /**
    * Format embedded code if Prettier can automatically identify it.
    */
-  AUTO = 'auto',
+  AUTO = "auto",
 
   /**
    * Never automatically format embedded code.
    */
-  OFF = 'off',
+  OFF = "off",
 }
 
 export enum EndOfLine {
@@ -226,39 +226,39 @@ export enum EndOfLine {
    * Maintain existing (mixed values within one file are normalised by looking
    * at what's used after the first line)
    */
-  AUTO = 'auto',
+  AUTO = "auto",
 
   /**
    * Carriage Return character only (\r), used very rarely
    */
-  CR = 'cr',
+  CR = "cr",
 
   /**
    * Carriage Return + Line Feed characters (\r\n), common on Windows
    */
-  CRLF = 'crlf',
+  CRLF = "crlf",
 
   /**
    * Line Feed only (\n), common on Linux and macOS as well as inside git repos
    */
-  LF = 'lf',
+  LF = "lf",
 }
 
 export enum HTMLWhitespaceSensitivity {
   /**
    * Respect the default value of CSS display property.
    */
-  CSS = 'css',
+  CSS = "css",
 
   /**
    * Whitespaces are considered insignificant.
    */
-  IGNORE = 'ignore',
+  IGNORE = "ignore",
 
   /**
    * Whitespaces are considered significant.
    */
-  STRICT = 'strict',
+  STRICT = "strict",
 }
 
 export interface PrettierOverride {
@@ -287,51 +287,51 @@ export enum ProseWrap {
   /**
    * Wrap prose if it exceeds the print width.
    */
-  ALWAYS = 'always',
+  ALWAYS = "always",
 
   /**
    * Do not wrap prose.
    */
-  NEVER = 'never',
+  NEVER = "never",
 
   /**
    * Wrap prose as-is.
    */
-  PRESERVE = 'preserve',
+  PRESERVE = "preserve",
 }
 
 export enum QuoteProps {
   /**
    * Only add quotes around object properties where required.
    */
-  ASNEEDED = 'as-needed',
+  ASNEEDED = "as-needed",
 
   /**
    * If at least one property in an object requires quotes, quote all properties.
    */
-  CONSISTENT = 'consistent',
+  CONSISTENT = "consistent",
 
   /**
    * Respect the input use of quotes in object properties.
    */
-  PRESERVE = 'preserve',
+  PRESERVE = "preserve",
 }
 
 export enum TrailingComma {
   /**
    * Trailing commas wherever possible (including function arguments).
    */
-  ALL = 'all',
+  ALL = "all",
 
   /**
    * Trailing commas where valid in ES5 (objects, arrays, etc.)
    */
-  ES5 = 'es5',
+  ES5 = "es5",
 
   /**
    * No trailing commas.
    */
-  NONE = 'none',
+  NONE = "none",
 }
 
 /**
@@ -365,16 +365,16 @@ export class Prettier extends Component {
     this._overrides = options.overrides ?? [];
 
     if (options.ignoreFile ?? true) {
-      this.ignoreFile = new IgnoreFile(project, '.prettierignore');
+      this.ignoreFile = new IgnoreFile(project, ".prettierignore");
     }
 
-    project.addDevDeps('prettier');
+    project.addDevDeps("prettier");
 
     this.settings = {
       ...options.settings,
     };
 
-    new JsonFile(project, '.prettierrc.json', {
+    new JsonFile(project, ".prettierrc.json", {
       obj: () => ({ ...this.settings, overrides: [...this._overrides] }),
       marker: false,
     });

@@ -1,7 +1,7 @@
-import * as semver from 'semver';
-import { Component } from '../component';
-import { DependencyType } from '../dependencies';
-import { Project } from '../project';
+import * as semver from "semver";
+import { Component } from "../component";
+import { DependencyType } from "../dependencies";
+import { Project } from "../project";
 
 /**
  * Options for `AwsCdkDeps`
@@ -31,10 +31,10 @@ export interface AwsCdkDepsCommonOptions {
   readonly cdkVersionPinning?: boolean;
 
   /**
-    * Which AWS CDKv1 modules this project requires
-    *
-    * @deprecated For CDK 2.x use "deps" instead. (or "peerDeps" if you're building a library)
-    */
+   * Which AWS CDKv1 modules this project requires
+   *
+   * @deprecated For CDK 2.x use "deps" instead. (or "peerDeps" if you're building a library)
+   */
   readonly cdkDependencies?: string[];
 
   /**
@@ -169,8 +169,8 @@ export abstract class AwsCdkDeps extends Component {
     this.addConstructsDependency(options.constructsVersion);
 
     // user-defined v1 dependencies (will only fail in CDK v2 if these have values)
-    this.addV1Dependencies(...options.cdkDependencies ?? []);
-    this.addV1DevDependencies(...options.cdkTestDependencies ?? []);
+    this.addV1Dependencies(...(options.cdkDependencies ?? []));
+    this.addV1DevDependencies(...(options.cdkTestDependencies ?? []));
   }
 
   /**
@@ -185,7 +185,9 @@ export abstract class AwsCdkDeps extends Component {
    */
   public addV1Dependencies(...deps: string[]) {
     if (deps.length > 0 && this.cdkMajorVersion !== 1) {
-      throw new Error('addV1Dependencies() is not supported for CDK 2.x and above, use addDeps() or addPeerDeps() instead');
+      throw new Error(
+        "addV1Dependencies() is not supported for CDK 2.x and above, use addDeps() or addPeerDeps() instead"
+      );
     }
 
     // this will add dependencies based on the type requested by the user
@@ -208,7 +210,9 @@ export abstract class AwsCdkDeps extends Component {
    */
   public addV1DevDependencies(...deps: string[]) {
     if (deps.length > 0 && this.cdkMajorVersion !== 1) {
-      throw new Error('addV1DevDependencies() is not supported for CDK 2.x and above, use addDevDeps()/addTestDeps() instead');
+      throw new Error(
+        "addV1DevDependencies() is not supported for CDK 2.x and above, use addDevDeps()/addTestDeps() instead"
+      );
     }
 
     this.addV1DependenciesByType(DependencyType.BUILD, ...deps);
@@ -216,32 +220,39 @@ export abstract class AwsCdkDeps extends Component {
 
   private addConstructsDependency(requestedVersion: string | undefined) {
     if (requestedVersion && !semver.parse(requestedVersion)) {
-      throw new Error(`"constructsVersion" cannot be parsed as a semver version: ${requestedVersion}`);
+      throw new Error(
+        `"constructsVersion" cannot be parsed as a semver version: ${requestedVersion}`
+      );
     }
 
-    const defaultVersion = this.cdkMajorVersion === 1 ? '3.2.27' : '10.0.5';
+    const defaultVersion = this.cdkMajorVersion === 1 ? "3.2.27" : "10.0.5";
     const versionRequirement = `^${requestedVersion ?? defaultVersion}`;
 
     const constructsMajorVersion = semver.minVersion(versionRequirement)?.major;
     if (!constructsMajorVersion) {
-      throw new Error(`Cannot determine major version of constructs version '${versionRequirement}'`);
+      throw new Error(
+        `Cannot determine major version of constructs version '${versionRequirement}'`
+      );
     }
 
     switch (this.cdkMajorVersion) {
       case 1:
         if (constructsMajorVersion !== 3) {
-          throw new Error('AWS CDK 1.x requires constructs 3.x');
+          throw new Error("AWS CDK 1.x requires constructs 3.x");
         }
         break;
 
       case 2:
         if (constructsMajorVersion !== 10) {
-          throw new Error('AWS CDK 2.x requires constructs 10.x');
+          throw new Error("AWS CDK 2.x requires constructs 10.x");
         }
         break;
     }
 
-    this.project.deps.addDependency(`${this._packageNames.constructs}@${versionRequirement}`, this.dependencyType);
+    this.project.deps.addDependency(
+      `${this._packageNames.constructs}@${versionRequirement}`,
+      this.dependencyType
+    );
 
     return versionRequirement;
   }
@@ -250,7 +261,6 @@ export abstract class AwsCdkDeps extends Component {
    * Adds a dependency on the AWS CDK framework (e.g. `@aws-cdk/core` for V1 or `aws-cdk-lib` for V1).
    */
   private addFrameworkDependency(options: AwsCdkDepsOptions) {
-
     switch (this.cdkMajorVersion) {
       case 1:
         this.addV1Dependencies(this._packageNames.coreV1);
@@ -258,30 +268,43 @@ export abstract class AwsCdkDeps extends Component {
 
       case 2:
         if (options.cdkDependencies !== undefined) {
-          throw new Error('cdkDependencies is not used for CDK 2.x. Use "peerDeps" or "deps" instead');
+          throw new Error(
+            'cdkDependencies is not used for CDK 2.x. Use "peerDeps" or "deps" instead'
+          );
         }
         if (options.cdkDependenciesAsDeps !== undefined) {
-          throw new Error('cdkDependenciesAsDeps is not used for CDK 2.x');
+          throw new Error("cdkDependenciesAsDeps is not used for CDK 2.x");
         }
         if (options.cdkTestDependencies !== undefined) {
-          throw new Error('cdkTestDependencies is not used for CDK 2.x. Use "devDeps" or "testDeps" instead');
+          throw new Error(
+            'cdkTestDependencies is not used for CDK 2.x. Use "devDeps" or "testDeps" instead'
+          );
         }
 
-        this.project.deps.addDependency(`${this._packageNames.coreV2}@${this.cdkVersion}`, this.dependencyType);
+        this.project.deps.addDependency(
+          `${this._packageNames.coreV2}@${this.cdkVersion}`,
+          this.dependencyType
+        );
         break;
 
       default:
-        throw new Error(`Unsupported AWS CDK major version ${this.cdkMajorVersion}.x`);
+        throw new Error(
+          `Unsupported AWS CDK major version ${this.cdkMajorVersion}.x`
+        );
     }
   }
 
   private addV1AssertionLibraryDependency(options: AwsCdkDepsOptions) {
     if (this.cdkMajorVersion !== 1) {
       if (options.cdkAssert !== undefined) {
-        throw new Error('cdkAssert is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib');
+        throw new Error(
+          "cdkAssert is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib"
+        );
       }
       if (options.cdkAssertions !== undefined) {
-        throw new Error('cdkAssertion is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib');
+        throw new Error(
+          "cdkAssertion is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib"
+        );
       }
 
       return;
@@ -294,7 +317,10 @@ export abstract class AwsCdkDeps extends Component {
     }
 
     // @aws-cdk/assertions is only available starting v1.111.0
-    if (semver.gte(this.cdkMinimumVersion, '1.111.0') && (options.cdkAssertions ?? true)) {
+    if (
+      semver.gte(this.cdkMinimumVersion, "1.111.0") &&
+      (options.cdkAssertions ?? true)
+    ) {
       testDeps.push(this._packageNames.assertions);
     }
 
@@ -320,12 +346,16 @@ export abstract class AwsCdkDeps extends Component {
 function determineFrameworkVersion(options: AwsCdkDepsOptions) {
   const ver = semver.parse(options.cdkVersion);
   if (!ver) {
-    throw new Error(`"cdkVersion" cannot be parsed as a semver version: ${options.cdkVersion}`);
+    throw new Error(
+      `"cdkVersion" cannot be parsed as a semver version: ${options.cdkVersion}`
+    );
   }
 
   return {
     minimum: ver.format(),
-    range: options.cdkVersionPinning ? options.cdkVersion : `^${options.cdkVersion}`,
+    range: options.cdkVersionPinning
+      ? options.cdkVersion
+      : `^${options.cdkVersion}`,
     major: ver.major,
   };
 }

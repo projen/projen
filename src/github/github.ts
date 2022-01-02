@@ -1,10 +1,10 @@
-import { Component } from '../component';
-import { Project } from '../project';
-import { Dependabot, DependabotOptions } from './dependabot';
-import { Mergify, MergifyOptions } from './mergify';
-import { PullRequestTemplate } from './pr-template';
-import { PullRequestLint, PullRequestLintOptions } from './pull-request-lint';
-import { GithubWorkflow } from './workflows';
+import { Component } from "../component";
+import { Project } from "../project";
+import { Dependabot, DependabotOptions } from "./dependabot";
+import { Mergify, MergifyOptions } from "./mergify";
+import { PullRequestTemplate } from "./pr-template";
+import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
+import { GithubWorkflow } from "./workflows";
 
 export interface GitHubOptions {
   /**
@@ -84,7 +84,7 @@ export class GitHub extends Component {
     super(project);
 
     this.workflowsEnabled = options.workflows ?? true;
-    this.projenTokenSecret = options.projenTokenSecret ?? 'PROJEN_GITHUB_TOKEN';
+    this.projenTokenSecret = options.projenTokenSecret ?? "PROJEN_GITHUB_TOKEN";
 
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this, options.mergifyOptions);
@@ -99,8 +99,11 @@ export class GitHub extends Component {
    * All workflows.
    */
   public get workflows(): GithubWorkflow[] {
-    const isWorkflow = (c: Component): c is GithubWorkflow => c instanceof GithubWorkflow;
-    return this.project.components.filter(isWorkflow).sort((w1, w2) => w1.name.localeCompare(w2.name));
+    const isWorkflow = (c: Component): c is GithubWorkflow =>
+      c instanceof GithubWorkflow;
+    return this.project.components
+      .filter(isWorkflow)
+      .sort((w1, w2) => w1.name.localeCompare(w2.name));
   }
 
   /**
@@ -126,6 +129,6 @@ export class GitHub extends Component {
    * @param name The name of the GitHub workflow
    */
   public tryFindWorkflow(name: string): undefined | GithubWorkflow {
-    return this.workflows.find(w => w.name === name);
+    return this.workflows.find((w) => w.name === name);
   }
 }

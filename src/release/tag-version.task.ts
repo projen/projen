@@ -12,17 +12,17 @@
  * - CHANGELOG_FILE: Changelog to be used for tag annotation
  *
  */
-import { tag, TagOptions } from './tag-version';
+import { tag, TagOptions } from "./tag-version";
 
 const changelog = process.env.CHANGELOG;
 const releaseTagFile = process.env.RELEASE_TAG_FILE;
 
 if (!releaseTagFile) {
-  throw new Error('RELEASE_TAG_FILE is required');
+  throw new Error("RELEASE_TAG_FILE is required");
 }
 
 if (!changelog) {
-  throw new Error('CHANGELOG is required');
+  throw new Error("CHANGELOG is required");
 }
 
 const opts: TagOptions = {

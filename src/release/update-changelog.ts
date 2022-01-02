@@ -1,7 +1,7 @@
-import { join } from 'path';
-import { readFile, writeFile } from 'fs-extra';
-import * as logging from '../logging';
-import * as utils from '../util';
+import { join } from "path";
+import { readFile, writeFile } from "fs-extra";
+import * as logging from "../logging";
+import * as utils from "../util";
 
 export interface UpdateChangelogOptions {
   /**
@@ -43,7 +43,7 @@ export interface UpdateChangelogOptions {
  */
 export async function updateChangelog(
   cwd: string,
-  options: UpdateChangelogOptions,
+  options: UpdateChangelogOptions
 ) {
   const inputChangelog = join(cwd, options.inputChangelog);
   const outputChangelog = join(cwd, options.outputChangelog);
@@ -53,34 +53,37 @@ export async function updateChangelog(
 
   if (!version) {
     throw new Error(
-      `Unable to determine version from ${versionFile}. Cannot proceed with changelog update. Did you run 'bump'?`,
+      `Unable to determine version from ${versionFile}. Cannot proceed with changelog update. Did you run 'bump'?`
     );
   }
 
-  const inputChangelogContent = await readFile(inputChangelog, 'utf-8');
+  const inputChangelogContent = await readFile(inputChangelog, "utf-8");
   const changelogVersionSearchPattern = `[${version}]`;
 
   if (!inputChangelogContent.includes(changelogVersionSearchPattern)) {
     throw new Error(
-      `Supplied version ${version} was not found in input changelog. You may want to check it's content.`,
+      `Supplied version ${version} was not found in input changelog. You may want to check it's content.`
     );
   }
 
-  const outputChangelogContent = await readFile(outputChangelog, 'utf-8');
+  const outputChangelogContent = await readFile(outputChangelog, "utf-8");
 
   if (outputChangelogContent.indexOf(changelogVersionSearchPattern) > -1) {
     logging.info(
-      `Changelog already contains an entry for ${version}. Skipping changelog update.`,
+      `Changelog already contains an entry for ${version}. Skipping changelog update.`
     );
     return;
   }
 
-  const newChangelog = inputChangelogContent.trimEnd() + '\n\n' + outputChangelogContent.trimStart();
+  const newChangelog =
+    inputChangelogContent.trimEnd() +
+    "\n\n" +
+    outputChangelogContent.trimStart();
 
-  await writeFile(
-    outputChangelog,
-    newChangelog,
+  await writeFile(outputChangelog, newChangelog);
+
+  utils.exec(
+    `git add ${outputChangelog} && git commit -m "chore(release): ${version}"`,
+    { cwd }
   );
-
-  utils.exec(`git add ${outputChangelog} && git commit -m "chore(release): ${version}"`, { cwd });
 }

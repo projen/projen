@@ -1,7 +1,7 @@
-import { Component } from '../component';
-import { kebabCaseKeys } from '../util';
-import { YamlFile } from '../yaml';
-import { GitHub } from './github';
+import { Component } from "../component";
+import { kebabCaseKeys } from "../util";
+import { YamlFile } from "../yaml";
+import { GitHub } from "./github";
 
 export interface DependabotOptions {
   /**
@@ -116,62 +116,62 @@ export enum DependabotRegistryType {
    * The composer-repository type supports username and password.
    * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#composer-repository
    */
-  COMPOSER_REGISTRY = 'composer-registry',
+  COMPOSER_REGISTRY = "composer-registry",
 
   /**
    * The docker-registry type supports username and password.
    * The docker-registry type can also be used to pull from Amazon ECR using static AWS credentials
    * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#docker-registry
    */
-  DOCKER_REGISTRY = 'docker-registry',
+  DOCKER_REGISTRY = "docker-registry",
 
   /**
    * The git type supports username and password
    * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#git
    */
-  GIT = 'git',
+  GIT = "git",
 
   /**
    * The hex-organization type supports organization and key
    * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#hex-organization
    */
-  HEX_ORGANIZATION = 'hex-organization',
+  HEX_ORGANIZATION = "hex-organization",
 
   /**
    * The maven-repository type supports username and password, or token
    * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#maven-repository
    */
-  MAVEN_REPOSITORY = 'maven-repository',
+  MAVEN_REPOSITORY = "maven-repository",
 
   /**
    * The npm-registry type supports username and password, or token
    * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#npm-registry
    */
-  NPM_REGISTRY = 'npm-registry',
+  NPM_REGISTRY = "npm-registry",
 
   /**
    * The nuget-feed type supports username and password, or token
    * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#nuget-feed
    */
-  NUGET_FEED = 'nuget-feed',
+  NUGET_FEED = "nuget-feed",
 
   /**
    * The python-index type supports username and password, or token
    * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#python-index
    */
-  PYTHON_INDEX = 'python-index',
+  PYTHON_INDEX = "python-index",
 
   /**
    * The rubygems-server type supports username and password, or token
    * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#rubygems-server
    */
-  RUBYGEMS_SERVER = 'rubygems-server',
+  RUBYGEMS_SERVER = "rubygems-server",
 
   /**
    * The terraform-registry type supports a token
    * @see https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates#terraform-registry
    */
-  TERRAFORM_REGISTRY = 'terraform-registry'
+  TERRAFORM_REGISTRY = "terraform-registry",
 }
 
 /**
@@ -204,17 +204,17 @@ export enum DependabotScheduleInterval {
   /**
    * Runs on every weekday, Monday to Friday.
    */
-  DAILY = 'daily',
+  DAILY = "daily",
 
   /**
    * Runs once each week. By default, this is on Monday.
    */
-  WEEKLY = 'weekly',
+  WEEKLY = "weekly",
 
   /**
    * Runs once each month. This is on the first day of the month.
    */
-  MONTHLY = 'monthly'
+  MONTHLY = "monthly",
 }
 
 /**
@@ -225,29 +225,29 @@ export enum VersioningStrategy {
    * Only create pull requests to update lockfiles updates. Ignore any new
    * versions that would require package manifest changes.
    */
-  LOCKFILE_ONLY = 'lockfile-only',
+  LOCKFILE_ONLY = "lockfile-only",
 
   /**
    * - For apps, the version requirements are increased.
    * - For libraries, the range of versions is widened.
    */
-  AUTO = 'auto',
+  AUTO = "auto",
 
   /**
    * Relax the version requirement to include both the new and old version, when
    * possible.
    */
-  WIDEN = 'widen',
+  WIDEN = "widen",
 
   /**
    * Always increase the version requirement to match the new version.
    */
-  INCREASE = 'increase',
+  INCREASE = "increase",
 
   /**
    * Increase the version requirement only when required by the new version.
    */
-  INCREASE_IF_NECESSARY = 'increase-if-necessary',
+  INCREASE_IF_NECESSARY = "increase-if-necessary",
 }
 
 /**
@@ -279,27 +279,30 @@ export class Dependabot extends Component {
     this.ignore = [];
     this.ignoresProjen = options.ignoreProjen ?? true;
 
-    const registries = options.registries ? kebabCaseKeys(options.registries) : undefined;
+    const registries = options.registries
+      ? kebabCaseKeys(options.registries)
+      : undefined;
 
     this.config = {
       version: 2,
       registries,
       updates: [
         {
-          'package-ecosystem': 'npm',
-          'versioning-strategy': 'lockfile-only',
-          'directory': '/',
-          'schedule': {
-            interval: options.scheduleInterval ?? DependabotScheduleInterval.DAILY,
+          "package-ecosystem": "npm",
+          "versioning-strategy": "lockfile-only",
+          directory: "/",
+          schedule: {
+            interval:
+              options.scheduleInterval ?? DependabotScheduleInterval.DAILY,
           },
-          'ignore': () => this.ignore.length > 0 ? this.ignore : undefined,
-          'labels': options.labels ? options.labels : undefined,
-          'registries': registries ? Object.keys(registries) : undefined,
+          ignore: () => (this.ignore.length > 0 ? this.ignore : undefined),
+          labels: options.labels ? options.labels : undefined,
+          registries: registries ? Object.keys(registries) : undefined,
         },
       ],
     };
 
-    new YamlFile(project, '.github/dependabot.yml', {
+    new YamlFile(project, ".github/dependabot.yml", {
       obj: this.config,
       committed: true,
     });
@@ -309,7 +312,7 @@ export class Dependabot extends Component {
     }
 
     if (this.ignoresProjen) {
-      this.addIgnore('projen');
+      this.addIgnore("projen");
     }
   }
 
@@ -324,8 +327,8 @@ export class Dependabot extends Component {
    */
   public addIgnore(dependencyName: string, ...versions: string[]) {
     this.ignore.push({
-      'dependency-name': dependencyName,
-      'versions': () => versions.length > 0 ? versions : undefined,
+      "dependency-name": dependencyName,
+      versions: () => (versions.length > 0 ? versions : undefined),
     });
   }
 }

@@ -12,22 +12,22 @@
  * - PROJECT_CHANGELOG_FILE: Project-level changelog
  *
  */
-import { updateChangelog, UpdateChangelogOptions } from './update-changelog';
+import { updateChangelog, UpdateChangelogOptions } from "./update-changelog";
 
 const inputChangelog = process.env.CHANGELOG;
 const outputChangelog = process.env.PROJECT_CHANGELOG_FILE;
 const versionFile = process.env.VERSION_FILE;
 
 if (!versionFile) {
-  throw new Error('VERSION_FILE is required');
+  throw new Error("VERSION_FILE is required");
 }
 
 if (!inputChangelog) {
-  throw new Error('CHANGELOG is required');
+  throw new Error("CHANGELOG is required");
 }
 
 if (!outputChangelog) {
-  throw new Error('PROJECT_CHANGELOG_FILE is required');
+  throw new Error("PROJECT_CHANGELOG_FILE is required");
 }
 
 const opts: UpdateChangelogOptions = {

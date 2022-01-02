@@ -1,7 +1,7 @@
-import { create as createxml } from 'xmlbuilder2';
-import { IResolver } from './file';
-import { ObjectFile, ObjectFileOptions } from './object-file';
-import { Project } from './project';
+import { create as createxml } from "xmlbuilder2";
+import { IResolver } from "./file";
+import { ObjectFile, ObjectFileOptions } from "./object-file";
+import { Project } from "./project";
 
 /**
  * Options for `XmlFile`.
@@ -15,7 +15,11 @@ export interface XmlFileOptions extends ObjectFileOptions {}
  * @see https://www.npmjs.com/package/xml
  */
 export class XmlFile extends ObjectFile {
-  constructor(project: Project, filePath: string, options: XmlFileOptions = {}) {
+  constructor(
+    project: Project,
+    filePath: string,
+    options: XmlFileOptions = {}
+  ) {
     super(project, filePath, options);
   }
 
@@ -25,14 +29,14 @@ export class XmlFile extends ObjectFile {
       return undefined;
     }
 
-    const xmlString = createxml({ encoding: 'UTF-8' }, obj).end({
+    const xmlString = createxml({ encoding: "UTF-8" }, obj).end({
       prettyPrint: true,
-      indent: ' '.repeat(4),
+      indent: " ".repeat(4),
     });
 
     return [
       xmlString,
-      ... (this.marker ? [`<!-- ${XmlFile.PROJEN_MARKER} -->`] : []),
-    ].join('\n');
+      ...(this.marker ? [`<!-- ${XmlFile.PROJEN_MARKER} -->`] : []),
+    ].join("\n");
   }
 }

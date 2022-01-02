@@ -1,5 +1,5 @@
-import { IResolver, FileBase } from './file';
-import { Project } from './project';
+import { IResolver, FileBase } from "./file";
+import { Project } from "./project";
 
 /**
  * Assign attributes to file names in a git repository.
@@ -10,7 +10,7 @@ export class GitAttributesFile extends FileBase {
   private readonly attributes = new Map<string, Set<string>>();
 
   public constructor(project: Project) {
-    super(project, '.gitattributes', {
+    super(project, ".gitattributes", {
       editGitignore: false,
     });
   }
@@ -32,8 +32,9 @@ export class GitAttributesFile extends FileBase {
 
   protected synthesizeContent(_: IResolver): string | undefined {
     // We can assume the file map is never empty.
-    const entries = Array.from(this.attributes.entries())
-      .sort(([l], [r]) => l.localeCompare(r));
+    const entries = Array.from(this.attributes.entries()).sort(([l], [r]) =>
+      l.localeCompare(r)
+    );
 
     if (entries.length === 0) {
       return undefined;
@@ -41,8 +42,10 @@ export class GitAttributesFile extends FileBase {
 
     return [
       `# ${FileBase.PROJEN_MARKER}`,
-      '',
-      ...entries.map(([name, attributes]) => `${name} ${Array.from(attributes).join(' ')}`),
-    ].join('\n');
+      "",
+      ...entries.map(
+        ([name, attributes]) => `${name} ${Array.from(attributes).join(" ")}`
+      ),
+    ].join("\n");
   }
 }

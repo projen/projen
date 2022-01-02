@@ -1,26 +1,26 @@
-import { TextFile } from '../textfile';
-import { NodePackageManager } from './node-package';
-import { NodeProject } from './node-project';
+import { TextFile } from "../textfile";
+import { NodePackageManager } from "./node-package";
+import { NodeProject } from "./node-project";
 
 /**
  * The list of git cient-side hooks
  * @see https://git-scm.com/docs/githooks
  */
 export enum GitClientHook {
-  APPLYPATCH_MSG = 'applypatch-msg',
-  PRE_APPLYPATCH = 'pre-applypatch',
-  POST_APPLYPATCH = 'post-applypatch',
-  PRE_COMMIT = 'pre-commit',
-  PRE_MERGE_COMMIT = 'pre-merge-commit',
-  PREPARE_COMMIT_MSG = 'prepare-commit-msg',
-  COMMIT_MSG = 'commit-msg',
-  POST_COMMIT = 'post-commit',
-  PRE_REBASE = 'pre-rebase',
-  POST_CHECKOUT = 'post-checkout',
-  POST_MERGE = 'post-merge',
-  PRE_PUSH = 'pre-push',
-  PRE_AUTO_GC = 'pre-auto-gc',
-  POST_REWRITE = 'post-rewrite',
+  APPLYPATCH_MSG = "applypatch-msg",
+  PRE_APPLYPATCH = "pre-applypatch",
+  POST_APPLYPATCH = "post-applypatch",
+  PRE_COMMIT = "pre-commit",
+  PRE_MERGE_COMMIT = "pre-merge-commit",
+  PREPARE_COMMIT_MSG = "prepare-commit-msg",
+  COMMIT_MSG = "commit-msg",
+  POST_COMMIT = "post-commit",
+  PRE_REBASE = "pre-rebase",
+  POST_CHECKOUT = "post-checkout",
+  POST_MERGE = "post-merge",
+  PRE_PUSH = "pre-push",
+  PRE_AUTO_GC = "pre-auto-gc",
+  POST_REWRITE = "post-rewrite",
 }
 
 /**
@@ -41,7 +41,7 @@ export interface HuskyPremadeOptions {
    * @default true
    */
   readonly lintStaged?: boolean;
-};
+}
 
 /**
  * A Husky configuration
@@ -66,12 +66,17 @@ export class Husky {
 
   constructor(project: NodeProject, options?: HuskyPremadeOptions) {
     if (project.parent) {
-      throw Error(`${project}: Husky can only be configured on the root project.`);
+      throw Error(
+        `${project}: Husky can only be configured on the root project.`
+      );
     }
     this.project = project;
-    this.project.addDevDeps('husky@^7');
-    const script = this.project.package.packageManager === NodePackageManager.YARN ? 'postinstall' : 'prepare';
-    this.project.package.setScript(script, 'npx husky install');
+    this.project.addDevDeps("husky@^7");
+    const script =
+      this.project.package.packageManager === NodePackageManager.YARN
+        ? "postinstall"
+        : "prepare";
+    this.project.package.setScript(script, "npx husky install");
     if (options?.enforceConventialCommits !== false) {
       this.enableConventialCommitEnforcement();
     }
@@ -87,14 +92,13 @@ export class Husky {
   public enableConventialCommitEnforcement() {
     if (this.areConventionalCommitsEnforced === false) {
       this.areConventionalCommitsEnforced = true;
-      this.project.addDevDeps(
-        'commitlint',
-        '@commitlint/config-conventional',
-      );
-      this.project.package.addField('commitlint', {
-        extends: ['@commitlint/config-conventional'],
+      this.project.addDevDeps("commitlint", "@commitlint/config-conventional");
+      this.project.package.addField("commitlint", {
+        extends: ["@commitlint/config-conventional"],
       });
-      this.addHookCommands(GitClientHook.COMMIT_MSG, ['npx --no -- commitlint --edit "$1"']);
+      this.addHookCommands(GitClientHook.COMMIT_MSG, [
+        'npx --no -- commitlint --edit "$1"',
+      ]);
     }
   }
 
@@ -104,11 +108,11 @@ export class Husky {
   public enableLintStaged() {
     if (this.areStagedFilesLinted === false) {
       this.areStagedFilesLinted = true;
-      this.project.addDevDeps('lint-staged');
-      this.project.package.addField('lint-staged', {
-        '*': ['npx projen eslint', 'git add -u'],
+      this.project.addDevDeps("lint-staged");
+      this.project.package.addField("lint-staged", {
+        "*": ["npx projen eslint", "git add -u"],
       });
-      this.addHookCommands(GitClientHook.PRE_COMMIT, ['npx lint-staged']);
+      this.addHookCommands(GitClientHook.PRE_COMMIT, ["npx lint-staged"]);
     }
   }
 
@@ -121,7 +125,7 @@ export class Husky {
     if (this.tryFindHook(hook) ?? true) {
       this.hooks[hook] = this.createHook(hook);
     }
-    commands.forEach(c => this.hooks[hook]?.addLine(c));
+    commands.forEach((c) => this.hooks[hook]?.addLine(c));
   }
 
   /**

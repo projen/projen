@@ -1,5 +1,5 @@
-import { Project } from './project';
-import { SampleFile } from './sample-file';
+import { Project } from "./project";
+import { SampleFile } from "./sample-file";
 
 /**
  * SampleReadme Properties
@@ -28,6 +28,8 @@ export interface SampleReadmeProps {
  */
 export class SampleReadme extends SampleFile {
   constructor(project: Project, props?: SampleReadmeProps) {
-    super(project, props?.filename ?? 'README.md', { contents: props?.contents ?? '# replace this' });
+    super(project, props?.filename ?? "README.md", {
+      contents: props?.contents ?? "# replace this",
+    });
   }
 }

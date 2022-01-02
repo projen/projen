@@ -1,6 +1,6 @@
-import { IResolver } from './file';
-import { ObjectFile, ObjectFileOptions } from './object-file';
-import { Project } from './project';
+import { IResolver } from "./file";
+import { ObjectFile, ObjectFileOptions } from "./object-file";
+import { Project } from "./project";
 
 /**
  * Options for `JsonFile`.
@@ -17,7 +17,6 @@ export interface JsonFileOptions extends ObjectFileOptions {
  * Represents a JSON file.
  */
 export class JsonFile extends ObjectFile {
-
   private readonly newline: boolean;
 
   constructor(project: Project, filePath: string, options: JsonFileOptions) {
@@ -39,12 +38,12 @@ export class JsonFile extends ObjectFile {
     const sanitized = JSON.parse(json);
 
     if (this.marker) {
-      sanitized['//'] = JsonFile.PROJEN_MARKER;
+      sanitized["//"] = JsonFile.PROJEN_MARKER;
     }
 
     let content = JSON.stringify(sanitized, undefined, 2);
     if (this.newline) {
-      content += '\n';
+      content += "\n";
     }
 
     return content;

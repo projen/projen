@@ -1,8 +1,8 @@
-import { existsSync, writeFileSync } from 'fs';
-import { resolve } from 'path';
-import { Component } from '../component';
-import { renderJavaScriptOptions } from '../javascript/render-options';
-import { TypeScriptProject } from '../typescript';
+import { existsSync, writeFileSync } from "fs";
+import { resolve } from "path";
+import { Component } from "../component";
+import { renderJavaScriptOptions } from "../javascript/render-options";
+import { TypeScriptProject } from "../typescript";
 
 export interface ProjenrcOptions {
   /**
@@ -29,9 +29,9 @@ export class Projenrc extends Component {
   constructor(project: TypeScriptProject, options: ProjenrcOptions = {}) {
     super(project);
 
-    this.rcfile = options.filename ?? '.projenrc.ts';
+    this.rcfile = options.filename ?? ".projenrc.ts";
 
-    const projensrc = options.projenCodeDir ?? 'projenrc';
+    const projensrc = options.projenCodeDir ?? "projenrc";
 
     // tell eslint to take .projenrc.ts and *.ts files under `projen` into account as a dev-dependency
     project.tsconfigDev.addInclude(this.rcfile);
@@ -45,11 +45,13 @@ export class Projenrc extends Component {
     // this is the task projen executes when running `projen` without a
     // specific task (if this task is not defined, projen falls back to
     // running "node .projenrc.js").
-    project.addDevDeps('ts-node@^9');
+    project.addDevDeps("ts-node@^9");
 
     // we use "tsconfig.dev.json" here to allow projen source files to reside
     // anywhere in the project tree.
-    project.defaultTask.exec(`ts-node --project ${project.tsconfigDev.fileName} ${this.rcfile}`);
+    project.defaultTask.exec(
+      `ts-node --project ${project.tsconfigDev.fileName} ${this.rcfile}`
+    );
 
     this.generateProjenrc();
   }
@@ -65,10 +67,10 @@ export class Projenrc extends Component {
       return;
     }
 
-    const parts = bootstrap.fqn.split('.');
+    const parts = bootstrap.fqn.split(".");
     const moduleName = parts[0];
     const importName = parts[1];
-    const className = parts.slice(1).join('.');
+    const className = parts.slice(1).join(".");
 
     const { renderedOptions, imports } = renderJavaScriptOptions({
       args: bootstrap.args,
@@ -79,13 +81,17 @@ export class Projenrc extends Component {
     imports.add(importName);
 
     const lines = new Array<string>();
-    lines.push(`import { ${[...imports].sort().join(', ')} } from "${moduleName}";`);
+    lines.push(
+      `import { ${[...imports].sort().join(", ")} } from "${moduleName}";`
+    );
     lines.push();
     lines.push(`const project = new ${className}(${renderedOptions});`);
     lines.push();
-    lines.push('project.synth();');
+    lines.push("project.synth();");
 
-    writeFileSync(rcfile, lines.join('\n'));
-    this.project.logger.info(`Project definition file was created at ${rcfile}`);
+    writeFileSync(rcfile, lines.join("\n"));
+    this.project.logger.info(
+      `Project definition file was created at ${rcfile}`
+    );
   }
 }
