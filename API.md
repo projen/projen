@@ -293,7 +293,6 @@ Name|Description
 
 Name|Description
 ----|-----------
-[IAddComponentSubscriber](#projen-iaddcomponentsubscriber)|An action to perform for each component in the project.
 [IDevEnvironment](#projen-idevenvironment)|Abstract interface for container-based development environments, such as Gitpod and GitHub Codespaces.
 [IDockerComposeServiceName](#projen-idockercomposeservicename)|An interface providing the name of a docker compose service.
 [IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)|Volume binding information.
@@ -1751,19 +1750,6 @@ annotateGenerated(_glob: string): void
 ```
 
 * **_glob** (<code>string</code>)  the glob pattern to match (could be a file path).
-
-
-
-
-#### forEachComponent(action)🔹 <a id="projen-project-foreachcomponent"></a>
-
-Registers an action to be called for each component of the project (and all future components that are added to the project).
-
-```ts
-forEachComponent(action: IAddComponentSubscriber): void
-```
-
-* **action** (<code>[IAddComponentSubscriber](#projen-iaddcomponentsubscriber)</code>)  The action to ccall.
 
 
 
@@ -6042,18 +6028,6 @@ allowDevDeps(pattern: string): void
 
 
 
-#### enablePrettier()🔹 <a id="projen-javascript-eslint-enableprettier"></a>
-
-Enables prettier for code formatting.
-
-```ts
-enablePrettier(): void
-```
-
-
-
-
-
 #### *static* of(project)🔹 <a id="projen-javascript-eslint-of"></a>
 
 Returns the singletone Eslint component of a project or undefined if there is none.
@@ -9948,28 +9922,6 @@ Name | Type | Description
 **openIn**?🔹 | <code>[GitpodOpenIn](#projen-gitpodopenin)</code> | You can configure where in the IDE the terminal should be opened.<br/>__*Default*__: GitpodOpenIn.BOTTOM
 **openMode**?🔹 | <code>[GitpodOpenMode](#projen-gitpodopenmode)</code> | You can configure how the terminal should be opened relative to the previous task.<br/>__*Default*__: GitpodOpenMode.TAB_AFTER
 **prebuild**?🔹 | <code>string</code> | The optional prebuild command will be executed during prebuilds.<br/>__*Optional*__
-
-
-
-## interface IAddComponentSubscriber 🔹 <a id="projen-iaddcomponentsubscriber"></a>
-
-
-An action to perform for each component in the project.
-### Methods
-
-
-#### do(c)🔹 <a id="projen-iaddcomponentsubscriber-do"></a>
-
-Called for each component in the project.
-
-```ts
-do(c: Component): void
-```
-
-* **c** (<code>[Component](#projen-component)</code>)  The component.
-
-
-
 
 
 
