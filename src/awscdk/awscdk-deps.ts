@@ -90,28 +90,28 @@ export interface AwsCdkDepsOptions extends AwsCdkDepsCommonOptions {
   readonly dependencyType: DependencyType;
 }
 
-export interface AwsCdkDepsPackageConf {
+export interface AwsCdkPackageNames {
   /**
    * Fully qualified name of the core framework package for CDKv1
    */
-  readonly frameworkV1Package: string;
+  readonly coreV1: string;
   /**
    * Fully qualified name of the core framework package for CDKv2
    */
-  readonly frameworkV2Package: string;
+  readonly coreV2: string;
   /**
    * Fully qualified name of the constructs library package
    */
-  readonly constructsPackage: string;
+  readonly constructs: string;
   /**
    * Fully qualified name of the assertions library package
    */
-  readonly assertionsPackage: string;
+  readonly assertions: string;
   /**
    * Fully qualified name of the assert library package
    * Can be empty as it's only really available for javascript projects
    */
-  readonly assertPackage?: string;
+  readonly assert?: string;
 }
 
 /**
@@ -141,7 +141,7 @@ export abstract class AwsCdkDeps extends Component {
 
   private readonly dependencyType: DependencyType;
 
-  private readonly packageConfig: AwsCdkDepsPackageConf;
+  private readonly _packageNames: AwsCdkPackageNames;
 
   constructor(project: Project, options: AwsCdkDepsOptions) {
     super(project);
@@ -149,7 +149,7 @@ export abstract class AwsCdkDeps extends Component {
     this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;
 
     this.dependencyType = options.dependencyType;
-    this.packageConfig = this.packageConfigForLanguage();
+    this._packageNames = this.packageNames();
 
     const framework = determineFrameworkVersion(options);
 
@@ -238,7 +238,7 @@ export abstract class AwsCdkDeps extends Component {
         break;
     }
 
-    this.project.deps.addDependency(`${this.packageConfig.constructsPackage}@${versionRequirement}`, this.dependencyType);
+    this.project.deps.addDependency(`${this._packageNames.constructs}@${versionRequirement}`, this.dependencyType);
 
     return versionRequirement;
   }
@@ -250,7 +250,7 @@ export abstract class AwsCdkDeps extends Component {
 
     switch (this.cdkMajorVersion) {
       case 1:
-        this.addV1Dependencies(this.packageConfig.frameworkV1Package);
+        this.addV1Dependencies(this._packageNames.coreV1);
         break;
 
       case 2:
@@ -264,7 +264,7 @@ export abstract class AwsCdkDeps extends Component {
           throw new Error('cdkTestDependencies is not used for CDK 2.x. Use "devDeps" or "testDeps" instead');
         }
 
-        this.project.deps.addDependency(`${this.packageConfig.frameworkV2Package}@${this.cdkVersion}`, this.dependencyType);
+        this.project.deps.addDependency(`${this._packageNames.coreV2}@${this.cdkVersion}`, this.dependencyType);
         break;
 
       default:
@@ -286,13 +286,13 @@ export abstract class AwsCdkDeps extends Component {
 
     const testDeps = new Array<string>();
 
-    if ((options.cdkAssert ?? true) && this.packageConfig.assertPackage) {
-      testDeps.push(this.packageConfig.assertPackage);
+    if ((options.cdkAssert ?? true) && this._packageNames.assert) {
+      testDeps.push(this._packageNames.assert);
     }
 
     // @aws-cdk/assertions is only available starting v1.111.0
     if (semver.gte(this.cdkMinimumVersion, '1.111.0') && (options.cdkAssertions ?? true)) {
-      testDeps.push(this.packageConfig.assertionsPackage);
+      testDeps.push(this._packageNames.assertions);
     }
 
     this.addV1DependenciesByType(DependencyType.TEST, ...testDeps);
@@ -311,7 +311,7 @@ export abstract class AwsCdkDeps extends Component {
   /**
    * Return a configuration object with information about package naming in various languages
    */
-  protected abstract packageConfigForLanguage(): AwsCdkDepsPackageConf;
+  protected abstract packageNames(): AwsCdkPackageNames;
 }
 
 function determineFrameworkVersion(options: AwsCdkDepsOptions) {

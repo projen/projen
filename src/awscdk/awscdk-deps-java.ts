@@ -1,5 +1,5 @@
 import { Project } from '../project';
-import { AwsCdkDeps, AwsCdkDepsOptions, AwsCdkDepsPackageConf } from './awscdk-deps';
+import { AwsCdkDeps, AwsCdkDepsOptions, AwsCdkPackageNames } from './awscdk-deps';
 
 /**
  * Manages dependencies on the AWS CDK for Java projects.
@@ -9,12 +9,12 @@ export class AwsCdkDepsJava extends AwsCdkDeps {
     super(project, options);
   }
 
-  protected packageConfigForLanguage(): AwsCdkDepsPackageConf {
+  protected packageNames(): AwsCdkPackageNames {
     return {
-      frameworkV1Package: 'software.amazon.awscdk/core',
-      frameworkV2Package: 'software.amazon.awscdk/aws-cdk-lib',
-      constructsPackage: 'software.constructs/constructs',
-      assertionsPackage: 'software.amazon.awscdk/assertions',
+      coreV1: 'software.amazon.awscdk/core',
+      coreV2: 'software.amazon.awscdk/aws-cdk-lib',
+      constructs: 'software.constructs/constructs',
+      assertions: 'software.amazon.awscdk/assertions',
     };
   }
 }

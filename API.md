@@ -170,8 +170,8 @@ Name|Description
 [awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)|Options for `AwsCdkConstructLibrary`.
 [awscdk.AwsCdkDepsCommonOptions](#projen-awscdk-awscdkdepscommonoptions)|Options for `AwsCdkDeps`.
 [awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)|*No description*
-[awscdk.AwsCdkDepsPackageConf](#projen-awscdk-awscdkdepspackageconf)|*No description*
 [awscdk.AwsCdkJavaAppOptions](#projen-awscdk-awscdkjavaappoptions)|*No description*
+[awscdk.AwsCdkPackageNames](#projen-awscdk-awscdkpackagenames)|*No description*
 [awscdk.AwsCdkTypeScriptAppOptions](#projen-awscdk-awscdktypescriptappoptions)|*No description*
 [awscdk.CdkConfigCommonOptions](#projen-awscdk-cdkconfigcommonoptions)|Common options for `cdk.json`.
 [awscdk.CdkConfigOptions](#projen-awscdk-cdkconfigoptions)|Options for `CdkJson`.
@@ -3182,17 +3182,17 @@ addV1DevDependencies(...deps: string[]): void
 
 
 
-#### protected packageConfigForLanguage()🔹 <a id="projen-awscdk-awscdkdeps-packageconfigforlanguage"></a>
+#### protected packageNames()🔹 <a id="projen-awscdk-awscdkdeps-packagenames"></a>
 
 Return a configuration object with information about package naming in various languages.
 
 ```ts
-protected packageConfigForLanguage(): AwsCdkDepsPackageConf
+protected packageNames(): AwsCdkPackageNames
 ```
 
 
 __Returns__:
-* <code>[awscdk.AwsCdkDepsPackageConf](#projen-awscdk-awscdkdepspackageconf)</code>
+* <code>[awscdk.AwsCdkPackageNames](#projen-awscdk-awscdkpackagenames)</code>
 
 
 
@@ -3229,17 +3229,17 @@ new awscdk.AwsCdkDepsJava(project: Project, options: AwsCdkDepsOptions)
 ### Methods
 
 
-#### protected packageConfigForLanguage()🔹 <a id="projen-awscdk-awscdkdepsjava-packageconfigforlanguage"></a>
+#### protected packageNames()🔹 <a id="projen-awscdk-awscdkdepsjava-packagenames"></a>
 
 Return a configuration object with information about package naming in various languages.
 
 ```ts
-protected packageConfigForLanguage(): AwsCdkDepsPackageConf
+protected packageNames(): AwsCdkPackageNames
 ```
 
 
 __Returns__:
-* <code>[awscdk.AwsCdkDepsPackageConf](#projen-awscdk-awscdkdepspackageconf)</code>
+* <code>[awscdk.AwsCdkPackageNames](#projen-awscdk-awscdkpackagenames)</code>
 
 
 
@@ -3276,17 +3276,17 @@ new awscdk.AwsCdkDepsJs(project: Project, options: AwsCdkDepsOptions)
 ### Methods
 
 
-#### protected packageConfigForLanguage()🔹 <a id="projen-awscdk-awscdkdepsjs-packageconfigforlanguage"></a>
+#### protected packageNames()🔹 <a id="projen-awscdk-awscdkdepsjs-packagenames"></a>
 
 Return a configuration object with information about package naming in various languages.
 
 ```ts
-protected packageConfigForLanguage(): AwsCdkDepsPackageConf
+protected packageNames(): AwsCdkPackageNames
 ```
 
 
 __Returns__:
-* <code>[awscdk.AwsCdkDepsPackageConf](#projen-awscdk-awscdkdepspackageconf)</code>
+* <code>[awscdk.AwsCdkPackageNames](#projen-awscdk-awscdkpackagenames)</code>
 
 
 
@@ -10884,24 +10884,6 @@ Name | Type | Description
 
 
 
-## struct AwsCdkDepsPackageConf 🔹 <a id="projen-awscdk-awscdkdepspackageconf"></a>
-
-__Obtainable from__: [AwsCdkDeps](#projen-awscdk-awscdkdeps).[packageConfigForLanguage](#projen-awscdk-awscdkdeps#projen-awscdk-awscdkdeps-packageconfigforlanguage)(), [AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava).[packageConfigForLanguage](#projen-awscdk-awscdkdepsjava#projen-awscdk-awscdkdepsjava-packageconfigforlanguage)(), [AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs).[packageConfigForLanguage](#projen-awscdk-awscdkdepsjs#projen-awscdk-awscdkdepsjs-packageconfigforlanguage)()
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**assertionsPackage**🔹 | <code>string</code> | Fully qualified name of the assertions library package.
-**constructsPackage**🔹 | <code>string</code> | Fully qualified name of the constructs library package.
-**frameworkV1Package**🔹 | <code>string</code> | Fully qualified name of the core framework package for CDKv1.
-**frameworkV2Package**🔹 | <code>string</code> | Fully qualified name of the core framework package for CDKv2.
-**assertPackage**?🔹 | <code>string</code> | Fully qualified name of the assert library package Can be empty as it's only really available for javascript projects.<br/>__*Optional*__
-
-
-
 ## struct AwsCdkJavaAppOptions 🔹 <a id="projen-awscdk-awscdkjavaappoptions"></a>
 
 
@@ -10966,6 +10948,24 @@ Name | Type | Description
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **watchExcludes**?🔹 | <code>Array<string></code> | Glob patterns to exclude from `cdk watch`.<br/>__*Default*__: []
 **watchIncludes**?🔹 | <code>Array<string></code> | Glob patterns to include in `cdk watch`.<br/>__*Default*__: []
+
+
+
+## struct AwsCdkPackageNames 🔹 <a id="projen-awscdk-awscdkpackagenames"></a>
+
+__Obtainable from__: [AwsCdkDeps](#projen-awscdk-awscdkdeps).[packageNames](#projen-awscdk-awscdkdeps#projen-awscdk-awscdkdeps-packagenames)(), [AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava).[packageNames](#projen-awscdk-awscdkdepsjava#projen-awscdk-awscdkdepsjava-packagenames)(), [AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs).[packageNames](#projen-awscdk-awscdkdepsjs#projen-awscdk-awscdkdepsjs-packagenames)()
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**assertions**🔹 | <code>string</code> | Fully qualified name of the assertions library package.
+**constructs**🔹 | <code>string</code> | Fully qualified name of the constructs library package.
+**coreV1**🔹 | <code>string</code> | Fully qualified name of the core framework package for CDKv1.
+**coreV2**🔹 | <code>string</code> | Fully qualified name of the core framework package for CDKv2.
+**assert**?🔹 | <code>string</code> | Fully qualified name of the assert library package Can be empty as it's only really available for javascript projects.<br/>__*Optional*__
 
 
 

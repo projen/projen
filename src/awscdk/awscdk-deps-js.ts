@@ -1,5 +1,5 @@
 import { Project } from '../project';
-import { AwsCdkDeps, AwsCdkDepsOptions, AwsCdkDepsPackageConf } from './awscdk-deps';
+import { AwsCdkDeps, AwsCdkDepsOptions, AwsCdkPackageNames } from './awscdk-deps';
 
 /**
  * Manages dependencies on the AWS CDK for Node.js projects.
@@ -9,13 +9,13 @@ export class AwsCdkDepsJs extends AwsCdkDeps {
     super(project, options);
   }
 
-  protected packageConfigForLanguage(): AwsCdkDepsPackageConf {
+  protected packageNames(): AwsCdkPackageNames {
     return {
-      frameworkV1Package: '@aws-cdk/core',
-      frameworkV2Package: 'aws-cdk-lib',
-      constructsPackage: 'constructs',
-      assertPackage: '@aws-cdk/assert',
-      assertionsPackage: '@aws-cdk/assertions',
+      coreV1: '@aws-cdk/core',
+      coreV2: 'aws-cdk-lib',
+      constructs: 'constructs',
+      assert: '@aws-cdk/assert',
+      assertions: '@aws-cdk/assertions',
     };
   }
 }
