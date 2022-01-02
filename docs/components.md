@@ -19,18 +19,3 @@ for (const c of p.components) {
   // do something with `component`
 }
 ```
-
-Since components can be added at different stages of initialization,
-you can also use a subscription API which will be called for all components
-of a project just before the project is synthesized:
-
-```ts
-p.forEachComponent({ do: component => {
-  // do something with `component`
-}});
-```
-
-Each subscriber callback will be invoked for _all_ components that have been
-added to the project, giving it an opportunity to react.
-
-> This is a simple dependency injection programming model.

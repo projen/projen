@@ -109,3 +109,23 @@ test('tsAlwaysTryTypes', () => {
     true,
   );
 });
+
+test('if the prettier is configured, eslint is configured accordingly', () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: 'test',
+    defaultReleaseBranch: 'master',
+    prettier: true,
+  });
+
+  // WHEN
+  new Eslint(project, {
+    dirs: ['src'],
+  });
+
+  // THEN
+  const output = synthSnapshot(project);
+  expect(output['.eslintrc.json'].rules).toMatchObject({
+    'prettier/prettier': ['error'],
+  });
+});

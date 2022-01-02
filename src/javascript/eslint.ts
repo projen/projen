@@ -3,6 +3,7 @@ import { PROJEN_RC } from '../common';
 import { Component } from '../component';
 import { NodeProject } from '../javascript';
 import { JsonFile } from '../json';
+import { Prettier } from './prettier';
 
 export interface EslintOptions {
   /**
@@ -360,7 +361,9 @@ export class Eslint extends Component {
       marker: false,
     });
 
-    if (options.prettier) {
+    // if the user enabled prettier explicitly _or_ if the project has a
+    // `Prettier` component, we shall tweak our configuration accordingly.
+    if (options.prettier || Prettier.of(project)) {
       this.enablePrettier();
     }
   }
@@ -415,7 +418,7 @@ export class Eslint extends Component {
   /**
    * Enables prettier for code formatting.
    */
-  public enablePrettier() {
+  private enablePrettier() {
     this.nodeProject.addDevDeps(
       'prettier',
       'eslint-plugin-prettier',

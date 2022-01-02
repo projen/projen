@@ -3,7 +3,6 @@ import { IgnoreFile } from '../ignore-file';
 import { NodeProject } from '../javascript';
 import { JsonFile } from '../json';
 import { Project } from '../project';
-import { Eslint } from './eslint';
 /**
  * Options for Prettier
  *
@@ -379,9 +378,6 @@ export class Prettier extends Component {
       obj: () => ({ ...this.settings, overrides: [...this._overrides] }),
       marker: false,
     });
-
-    // if Eslint is added to the project, enable prettier
-    project.forEachComponent({ do: c => c instanceof Eslint && c.enablePrettier() });
   }
 
   /**

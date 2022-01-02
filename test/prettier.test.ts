@@ -1,4 +1,4 @@
-import { ArrowParens, Eslint, NodeProject, TrailingComma } from '../src/javascript';
+import { ArrowParens, NodeProject, TrailingComma } from '../src/javascript';
 import { synthSnapshot } from './util';
 
 describe('prettier', () => {
@@ -63,25 +63,5 @@ describe('prettier', () => {
       useTabs: false,
       parser: 'typescript',
     });
-  });
-});
-
-test('if the project is configured with Eslint, prettier is used to format', () => {
-  // GIVEN
-  const project = new NodeProject({
-    name: 'test',
-    defaultReleaseBranch: 'master',
-    prettier: true,
-  });
-
-  // WHEN
-  new Eslint(project, {
-    dirs: ['src'],
-  });
-
-  // THEN
-  const output = synthSnapshot(project);
-  expect(output['.eslintrc.json'].rules).toMatchObject({
-    'prettier/prettier': ['error'],
   });
 });
