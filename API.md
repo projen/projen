@@ -68,6 +68,9 @@ Name|Description
 [github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
 [github.Stale](#projen-github-stale)|Warns and then closes issues and PRs that have had no activity for a specified amount of time.
 [github.TaskWorkflow](#projen-github-taskworkflow)|A GitHub workflow for common build tasks within a project.
+[gitlab.CiConfiguration](#projen-gitlab-ciconfiguration)|CI for GitLab.
+[gitlab.GitlabConfiguration](#projen-gitlab-gitlabconfiguration)|A GitLab CI for the main `.gitlab-ci.yml` file.
+[gitlab.NestedConfiguration](#projen-gitlab-nestedconfiguration)|A GitLab CI for templates that are created and included in the `.gitlab-ci.yml` file.
 [java.JavaProject](#projen-java-javaproject)|Java project.
 [java.Junit](#projen-java-junit)|Implements JUnit-based testing.
 [java.MavenCompile](#projen-java-mavencompile)|Adds the maven-compiler plugin to a POM file and the `compile` task.
@@ -211,6 +214,35 @@ Name|Description
 [github.StaleBehavior](#projen-github-stalebehavior)|Stale behavior.
 [github.StaleOptions](#projen-github-staleoptions)|Options for `Stale`.
 [github.TaskWorkflowOptions](#projen-github-taskworkflowoptions)|*No description*
+[gitlab.AllowFailure](#projen-gitlab-allowfailure)|Exit code that are not considered failure.
+[gitlab.Artifacts](#projen-gitlab-artifacts)|Used to specify a list of files and directories that should be attached to the job if it succeeds.
+[gitlab.Assets](#projen-gitlab-assets)|Asset configuration for a release.
+[gitlab.Cache](#projen-gitlab-cache)|Cache Definition.
+[gitlab.CiConfigurationOptions](#projen-gitlab-ciconfigurationoptions)|Options for `CiConfiguration`.
+[gitlab.Default](#projen-gitlab-default)|Default settings for the CI Configuration.
+[gitlab.Engine](#projen-gitlab-engine)|The engine configuration for a secret.
+[gitlab.Environment](#projen-gitlab-environment)|The environment that a job deploys to.
+[gitlab.Filter](#projen-gitlab-filter)|Filtering options for when a job will run.
+[gitlab.Image](#projen-gitlab-image)|Specifies the docker image to use for the job or globally for all jobs.
+[gitlab.Include](#projen-gitlab-include)|An included YAML file.
+[gitlab.IncludeRule](#projen-gitlab-includerule)|Rules allows for an array of individual rule objects to be evaluated in order, until one matches and dynamically provides attributes to the job.
+[gitlab.Inherit](#projen-gitlab-inherit)|Controls inheritance of globally-defined defaults and variables.
+[gitlab.Job](#projen-gitlab-job)|Jobs are the most fundamental element of a .gitlab-ci.yml file.
+[gitlab.KubernetesConfig](#projen-gitlab-kubernetesconfig)|Used to configure the kubernetes deployment for this environment.
+[gitlab.Link](#projen-gitlab-link)|Link configuration for an asset.
+[gitlab.Need](#projen-gitlab-need)|A jobs in a previous stage whose sole completion is needed to start the current job.
+[gitlab.Parallel](#projen-gitlab-parallel)|Used to run a job multiple times in parallel in a single pipeline.
+[gitlab.Release](#projen-gitlab-release)|Indicates that the job creates a Release.
+[gitlab.Reports](#projen-gitlab-reports)|Reports will be uploaded as artifacts, and often displayed in the Gitlab UI, such as in Merge Requests.
+[gitlab.Retry](#projen-gitlab-retry)|How many times a job is retried if it fails.
+[gitlab.Secret](#projen-gitlab-secret)|A CI/CD secret.
+[gitlab.Service](#projen-gitlab-service)|Used to specify an additional Docker image to run scripts in.
+[gitlab.Trigger](#projen-gitlab-trigger)|Trigger a multi-project or a child pipeline.
+[gitlab.TriggerInclude](#projen-gitlab-triggerinclude)|References a local file or an artifact from another job to define the pipeline configuration.
+[gitlab.VariableConfig](#projen-gitlab-variableconfig)|Explains what the global variable is used for, what the acceptable values are.
+[gitlab.VaultConfig](#projen-gitlab-vaultconfig)|Specification for a secret provided by a HashiCorp Vault.
+[gitlab.Workflow](#projen-gitlab-workflow)|Used to control pipeline behavior.
+[gitlab.WorkflowRule](#projen-gitlab-workflowrule)|Used to control whether or not a whole pipeline is created.
 [java.JavaProjectCommonOptions](#projen-java-javaprojectcommonoptions)|Options for `JavaProject`.
 [java.JavaProjectOptions](#projen-java-javaprojectoptions)|Options for `JavaProject`.
 [java.JunitOptions](#projen-java-junitoptions)|Options for `Junit`.
@@ -330,6 +362,15 @@ Name|Description
 [github.DependabotRegistryType](#projen-github-dependabotregistrytype)|Each configuration type requires you to provide particular settings.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
+[gitlab.Action](#projen-gitlab-action)|Specifies what this job will do.
+[gitlab.CacheWhen](#projen-gitlab-cachewhen)|Configure when artifacts are uploaded depended on job status.
+[gitlab.DefaultElement](#projen-gitlab-defaultelement)|*No description*
+[gitlab.DeploymentTier](#projen-gitlab-deploymenttier)|Explicitly specifies the tier of the deployment environment if non-standard environment name is used.
+[gitlab.JobWhen](#projen-gitlab-jobwhen)|Describes the conditions for when to run the job.
+[gitlab.KubernetesEnum](#projen-gitlab-kubernetesenum)|Filter job based on if Kubernetes integration is active.
+[gitlab.LinkType](#projen-gitlab-linktype)|The content kind of what users can download via url.
+[gitlab.Strategy](#projen-gitlab-strategy)|You can mirror the pipeline status from the triggered pipeline to the source bridge job by using strategy: depend.
+[gitlab.WorkflowWhen](#projen-gitlab-workflowwhen)|Describes the conditions for when to run the job.
 [javascript.ArrowParens](#projen-javascript-arrowparens)|*No description*
 [javascript.AutoRelease](#projen-javascript-autorelease)|Automatic bump modes.
 [javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)|*No description*
@@ -5617,6 +5658,254 @@ Name | Type | Description
 
 
 
+## class CiConfiguration 🔹 <a id="projen-gitlab-ciconfiguration"></a>
+
+CI for GitLab.
+
+A CI is a configurable automated process made up of one or more stages/jobs.
+
+__Submodule__: gitlab
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new gitlab.CiConfiguration(project: Project, name: string, options?: CiConfigurationOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **name** (<code>string</code>)  *No description*
+* **options** (<code>[gitlab.CiConfigurationOptions](#projen-gitlab-ciconfigurationoptions)</code>)  *No description*
+  * **default** (<code>[gitlab.Default](#projen-gitlab-default)</code>)  Default settings for the CI Configuration. __*Optional*__
+  * **jobs** (<code>Map<string, [gitlab.Job](#projen-gitlab-job)></code>)  An initial set of jobs to add to the configuration. __*Optional*__
+  * **pages** (<code>[gitlab.Job](#projen-gitlab-job)</code>)  A special job used to upload static sites to Gitlab pages. __*Optional*__
+  * **stages** (<code>Array<string></code>)  Groups jobs into stages. __*Optional*__
+  * **variables** (<code>Map<string, any></code>)  Global variables that are passed to jobs. __*Optional*__
+  * **workflow** (<code>[gitlab.Workflow](#projen-gitlab-workflow)</code>)  Used to control pipeline behavior. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**defaultAfterScript**🔹 | <code>Array<string></code> | Defines default scripts that should run *after* all jobs.
+**defaultBeforeScript**🔹 | <code>Array<string></code> | Defines default scripts that should run *before* all jobs.
+**defaultTags**🔹 | <code>Array<string></code> | Used to select a specific runner from the list of all runners that are available for the project.
+**file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | The workflow YAML file.
+**jobs**🔹 | <code>Map<string, [gitlab.Job](#projen-gitlab-job)></code> | The jobs in the CI configuration.
+**name**🔹 | <code>string</code> | The name of the configuration.
+**path**🔹 | <code>string</code> | Path to CI file generated by the configuration.
+**project**🔹 | <code>[Project](#projen-project)</code> | The project the configuration belongs to.
+**stages**🔹 | <code>Array<string></code> | Groups jobs into stages.
+**variables**🔹 | <code>Map<string, string &#124; number &#124; [gitlab.VariableConfig](#projen-gitlab-variableconfig)></code> | Global variables that are passed to jobs.
+**defaultArtifacts**?🔹 | <code>[gitlab.Artifacts](#projen-gitlab-artifacts)</code> | Default list of files and directories that should be attached to the job if it succeeds.<br/>__*Optional*__
+**defaultCache**?🔹 | <code>[gitlab.Cache](#projen-gitlab-cache)</code> | A default list of files and directories to cache between jobs.<br/>__*Optional*__
+**defaultImage**?🔹 | <code>[gitlab.Image](#projen-gitlab-image)</code> | Specifies the default docker image to use globally for all jobs.<br/>__*Optional*__
+**defaultInterruptible**?🔹 | <code>boolean</code> | The default behavior for whether a job should be canceled when a newer pipeline starts before the job completes (Default: false).<br/>__*Optional*__
+**defaultRetry**?🔹 | <code>[gitlab.Retry](#projen-gitlab-retry)</code> | How many times a job is retried if it fails.<br/>__*Optional*__
+**defaultTimeout**?🔹 | <code>string</code> | A default timeout job written in natural language (Ex.<br/>__*Optional*__
+**pages**?🔹 | <code>[gitlab.Job](#projen-gitlab-job)</code> | A special job used to upload static sites to Gitlab pages.<br/>__*Optional*__
+**workflow**?🔹 | <code>[gitlab.Workflow](#projen-gitlab-workflow)</code> | Used to control pipeline behavior.<br/>__*Optional*__
+
+### Methods
+
+
+#### addGlobalVariables(variables)🔹 <a id="projen-gitlab-ciconfiguration-addglobalvariables"></a>
+
+Add a globally defined variable to the CI configuration.
+
+```ts
+addGlobalVariables(variables: Map<string, any>): void
+```
+
+* **variables** (<code>Map<string, any></code>)  The variables to add.
+
+
+
+
+#### addIncludes(...includes)🔹 <a id="projen-gitlab-ciconfiguration-addincludes"></a>
+
+Add additional yml/yaml files to the CI includes.
+
+```ts
+addIncludes(...includes: Include[]): void
+```
+
+* **includes** (<code>[gitlab.Include](#projen-gitlab-include)</code>)  The includes to add.
+  * **file** (<code>Array<string></code>)  Files from another private project on the same GitLab instance. __*Optional*__
+  * **local** (<code>string</code>)  Relative path from local repository root (`/`) to the `yaml`/`yml` file template. __*Optional*__
+  * **project** (<code>string</code>)  Path to the project, e.g. `group/project`, or `group/sub-group/project`. __*Optional*__
+  * **ref** (<code>string</code>)  Branch/Tag/Commit-hash for the target project. __*Optional*__
+  * **remote** (<code>string</code>)  URL to a `yaml`/`yml` template file using HTTP/HTTPS. __*Optional*__
+  * **rules** (<code>Array<[gitlab.IncludeRule](#projen-gitlab-includerule)></code>)  Rules allows for an array of individual rule objects to be evaluated in order, until one matches and dynamically provides attributes to the job. __*Optional*__
+  * **template** (<code>string</code>)  Use a `.gitlab-ci.yml` template as a base, e.g. `Nodejs.gitlab-ci.yml`. __*Optional*__
+
+
+
+
+#### addJobs(jobs)🔹 <a id="projen-gitlab-ciconfiguration-addjobs"></a>
+
+Add jobs and their stages to the CI configuration.
+
+```ts
+addJobs(jobs: Map<string, Job>): void
+```
+
+* **jobs** (<code>Map<string, [gitlab.Job](#projen-gitlab-job)></code>)  Jobs to add.
+
+
+
+
+#### addServices(...services)🔹 <a id="projen-gitlab-ciconfiguration-addservices"></a>
+
+Add additional services.
+
+```ts
+addServices(...services: Service[]): void
+```
+
+* **services** (<code>[gitlab.Service](#projen-gitlab-service)</code>)  The services to add.
+  * **name** (<code>string</code>)  Full name of the image that should be used. 
+  * **alias** (<code>string</code>)  Additional alias that can be used to access the service from the job's container. __*Optional*__
+  * **command** (<code>Array<string></code>)  Command or script that should be used as the container's command. __*Optional*__
+  * **entrypoint** (<code>Array<string></code>)  Command or script that should be executed as the container's entrypoint. __*Optional*__
+
+
+
+
+#### addStages(...stages)🔹 <a id="projen-gitlab-ciconfiguration-addstages"></a>
+
+Add stages to the CI configuration if not already present.
+
+```ts
+addStages(...stages: string[]): void
+```
+
+* **stages** (<code>string</code>)  stages to add.
+
+
+
+
+
+
+## class GitlabConfiguration 🔹 <a id="projen-gitlab-gitlabconfiguration"></a>
+
+A GitLab CI for the main `.gitlab-ci.yml` file.
+
+__Submodule__: gitlab
+
+__Extends__: [gitlab.CiConfiguration](#projen-gitlab-ciconfiguration)
+
+### Initializer
+
+
+
+
+```ts
+new gitlab.GitlabConfiguration(project: Project, options?: CiConfigurationOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[gitlab.CiConfigurationOptions](#projen-gitlab-ciconfigurationoptions)</code>)  *No description*
+  * **default** (<code>[gitlab.Default](#projen-gitlab-default)</code>)  Default settings for the CI Configuration. __*Optional*__
+  * **jobs** (<code>Map<string, [gitlab.Job](#projen-gitlab-job)></code>)  An initial set of jobs to add to the configuration. __*Optional*__
+  * **pages** (<code>[gitlab.Job](#projen-gitlab-job)</code>)  A special job used to upload static sites to Gitlab pages. __*Optional*__
+  * **stages** (<code>Array<string></code>)  Groups jobs into stages. __*Optional*__
+  * **variables** (<code>Map<string, any></code>)  Global variables that are passed to jobs. __*Optional*__
+  * **workflow** (<code>[gitlab.Workflow](#projen-gitlab-workflow)</code>)  Used to control pipeline behavior. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**nestedTemplates**🔹 | <code>Map<string, [gitlab.NestedConfiguration](#projen-gitlab-nestedconfiguration)></code> | <span></span>
+
+### Methods
+
+
+#### createNestedTemplates(config)🔹 <a id="projen-gitlab-gitlabconfiguration-createnestedtemplates"></a>
+
+Creates and adds nested templates to the includes of the main CI.
+
+Additionally adds their stages to the main CI if they are not already present.
+You can futher customize nested templates through the `nestedTemplates` property.
+E.g. gitlabConfig.nestedTemplates['templateName']?.addStages('stageName')
+
+```ts
+createNestedTemplates(config: Map<string, CiConfigurationOptions>): void
+```
+
+* **config** (<code>Map<string, [gitlab.CiConfigurationOptions](#projen-gitlab-ciconfigurationoptions)></code>)  a record the names and configuraitons of the templates.
+
+
+
+
+
+
+## class NestedConfiguration 🔹 <a id="projen-gitlab-nestedconfiguration"></a>
+
+A GitLab CI for templates that are created and included in the `.gitlab-ci.yml` file.
+
+__Submodule__: gitlab
+
+__Extends__: [gitlab.CiConfiguration](#projen-gitlab-ciconfiguration)
+
+### Initializer
+
+
+
+
+```ts
+new gitlab.NestedConfiguration(project: Project, parent: GitlabConfiguration, name: string, options?: CiConfigurationOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **parent** (<code>[gitlab.GitlabConfiguration](#projen-gitlab-gitlabconfiguration)</code>)  *No description*
+* **name** (<code>string</code>)  *No description*
+* **options** (<code>[gitlab.CiConfigurationOptions](#projen-gitlab-ciconfigurationoptions)</code>)  *No description*
+  * **default** (<code>[gitlab.Default](#projen-gitlab-default)</code>)  Default settings for the CI Configuration. __*Optional*__
+  * **jobs** (<code>Map<string, [gitlab.Job](#projen-gitlab-job)></code>)  An initial set of jobs to add to the configuration. __*Optional*__
+  * **pages** (<code>[gitlab.Job](#projen-gitlab-job)</code>)  A special job used to upload static sites to Gitlab pages. __*Optional*__
+  * **stages** (<code>Array<string></code>)  Groups jobs into stages. __*Optional*__
+  * **variables** (<code>Map<string, any></code>)  Global variables that are passed to jobs. __*Optional*__
+  * **workflow** (<code>[gitlab.Workflow](#projen-gitlab-workflow)</code>)  Used to control pipeline behavior. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**parent**🔹 | <code>[gitlab.GitlabConfiguration](#projen-gitlab-gitlabconfiguration)</code> | <span></span>
+
+### Methods
+
+
+#### addStages(...stages)🔹 <a id="projen-gitlab-nestedconfiguration-addstages"></a>
+
+Add stages to the Nested configuration and the main CI file if not already present.
+
+```ts
+addStages(...stages: string[]): void
+```
+
+* **stages** (<code>string</code>)  stages to add.
+
+
+
+
+
+
 ## class JavaProject 🔹 <a id="projen-java-javaproject"></a>
 
 Java project.
@@ -6159,7 +6448,7 @@ Adds an eslint plugin.
 addPlugins(...plugins: string[]): void
 ```
 
-* **plugins** (<code>string</code>)  *No description*
+* **plugins** (<code>string</code>)  The names of plugins to add.
 
 
 
@@ -12692,6 +12981,531 @@ Name | Type | Description
 
 
 
+## struct AllowFailure 🔹 <a id="projen-gitlab-allowfailure"></a>
+
+
+Exit code that are not considered failure.
+
+The job fails for any other exit code.
+You can list which exit codes are not considered failures. The job fails for any other
+exit code.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**exitCodes**🔹 | <code>number &#124; Array<number></code> | <span></span>
+
+
+
+## struct Artifacts 🔹 <a id="projen-gitlab-artifacts"></a>
+
+
+Used to specify a list of files and directories that should be attached to the job if it succeeds.
+
+Artifacts are sent to Gitlab where they can be downloaded.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**exclude**?🔹 | <code>Array<string></code> | A list of paths to files/folders that should be excluded in the artifact.<br/>__*Optional*__
+**expireIn**?🔹 | <code>string</code> | How long artifacts should be kept.<br/>__*Optional*__
+**exposeAs**?🔹 | <code>string</code> | Can be used to expose job artifacts in the merge request UI.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | Name for the archive created on job success.<br/>__*Optional*__
+**paths**?🔹 | <code>Array<string></code> | A list of paths to files/folders that should be included in the artifact.<br/>__*Optional*__
+**reports**?🔹 | <code>[gitlab.Reports](#projen-gitlab-reports)</code> | Reports will be uploaded as artifacts, and often displayed in the Gitlab UI, such as in Merge Requests.<br/>__*Optional*__
+**untracked**?🔹 | <code>boolean</code> | Whether to add all untracked files (along with 'artifacts.paths') to the artifact.<br/>__*Optional*__
+**when**?🔹 | <code>[gitlab.CacheWhen](#projen-gitlab-cachewhen)</code> | Configure when artifacts are uploaded depended on job status.<br/>__*Optional*__
+
+
+
+## struct Assets 🔹 <a id="projen-gitlab-assets"></a>
+
+
+Asset configuration for a release.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**links**🔹 | <code>Array<[gitlab.Link](#projen-gitlab-link)></code> | Include asset links in the release.
+
+
+
+## struct Cache 🔹 <a id="projen-gitlab-cache"></a>
+
+
+Cache Definition.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**when**?🔹 | <code>[gitlab.CacheWhen](#projen-gitlab-cachewhen)</code> | Defines when to save the cache, based on the status of the job (Default: Job Success).<br/>__*Optional*__
+
+
+
+## struct CiConfigurationOptions 🔹 <a id="projen-gitlab-ciconfigurationoptions"></a>
+
+
+Options for `CiConfiguration`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**default**?🔹 | <code>[gitlab.Default](#projen-gitlab-default)</code> | Default settings for the CI Configuration.<br/>__*Optional*__
+**jobs**?🔹 | <code>Map<string, [gitlab.Job](#projen-gitlab-job)></code> | An initial set of jobs to add to the configuration.<br/>__*Optional*__
+**pages**?🔹 | <code>[gitlab.Job](#projen-gitlab-job)</code> | A special job used to upload static sites to Gitlab pages.<br/>__*Optional*__
+**stages**?🔹 | <code>Array<string></code> | Groups jobs into stages.<br/>__*Optional*__
+**variables**?🔹 | <code>Map<string, any></code> | Global variables that are passed to jobs.<br/>__*Optional*__
+**workflow**?🔹 | <code>[gitlab.Workflow](#projen-gitlab-workflow)</code> | Used to control pipeline behavior.<br/>__*Optional*__
+
+
+
+## struct Default 🔹 <a id="projen-gitlab-default"></a>
+
+
+Default settings for the CI Configuration.
+
+Jobs that do not define one or more of the listed keywords use the value defined in the default section.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**afterScript**?🔹 | <code>Array<string></code> | __*Optional*__
+**artifacts**?🔹 | <code>[gitlab.Artifacts](#projen-gitlab-artifacts)</code> | __*Optional*__
+**beforeScript**?🔹 | <code>Array<string></code> | __*Optional*__
+**cache**?🔹 | <code>[gitlab.Cache](#projen-gitlab-cache)</code> | __*Optional*__
+**image**?🔹 | <code>[gitlab.Image](#projen-gitlab-image)</code> | __*Optional*__
+**interruptible**?🔹 | <code>boolean</code> | __*Optional*__
+**retry**?🔹 | <code>[gitlab.Retry](#projen-gitlab-retry)</code> | __*Optional*__
+**services**?🔹 | <code>Array<[gitlab.Service](#projen-gitlab-service)></code> | __*Optional*__
+**tags**?🔹 | <code>Array<string></code> | __*Optional*__
+**timeout**?🔹 | <code>string</code> | __*Optional*__
+
+
+
+## struct Engine 🔹 <a id="projen-gitlab-engine"></a>
+
+
+The engine configuration for a secret.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | Name of the secrets engine.
+**path**🔹 | <code>string</code> | Path to the secrets engine.
+
+
+
+## struct Environment 🔹 <a id="projen-gitlab-environment"></a>
+
+
+The environment that a job deploys to.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | The name of the environment, e.g. 'qa', 'staging', 'production'.
+**action**?🔹 | <code>[gitlab.Action](#projen-gitlab-action)</code> | Specifies what this job will do.<br/>__*Optional*__
+**autoStopIn**?🔹 | <code>string</code> | The amount of time it should take before Gitlab will automatically stop the environment.<br/>__*Optional*__
+**deploymentTier**?🔹 | <code>[gitlab.DeploymentTier](#projen-gitlab-deploymenttier)</code> | Explicitly specifies the tier of the deployment environment if non-standard environment name is used.<br/>__*Optional*__
+**kubernetes**?🔹 | <code>[gitlab.KubernetesConfig](#projen-gitlab-kubernetesconfig)</code> | Used to configure the kubernetes deployment for this environment.<br/>__*Optional*__
+**onStop**?🔹 | <code>string</code> | The name of a job to execute when the environment is about to be stopped.<br/>__*Optional*__
+**url**?🔹 | <code>string</code> | When set, this will expose buttons in various places for the current environment in Gitlab, that will take you to the defined URL.<br/>__*Optional*__
+
+
+
+## struct Filter 🔹 <a id="projen-gitlab-filter"></a>
+
+
+Filtering options for when a job will run.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**changes**?🔹 | <code>Array<string></code> | Filter job creation based on files that were modified in a git push.<br/>__*Optional*__
+**kubernetes**?🔹 | <code>[gitlab.KubernetesEnum](#projen-gitlab-kubernetesenum)</code> | Filter job based on if Kubernetes integration is active.<br/>__*Optional*__
+**refs**?🔹 | <code>Array<string></code> | Control when to add jobs to a pipeline based on branch names or pipeline types.<br/>__*Optional*__
+**variables**?🔹 | <code>Array<string></code> | Filter job by checking comparing values of environment variables.<br/>__*Optional*__
+
+
+
+## struct Image 🔹 <a id="projen-gitlab-image"></a>
+
+
+Specifies the docker image to use for the job or globally for all jobs.
+
+Job configuration
+takes precedence over global setting. Requires a certain kind of Gitlab runner executor.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | Full name of the image that should be used.
+**entrypoint**?🔹 | <code>Array<any></code> | Command or script that should be executed as the container's entrypoint.<br/>__*Optional*__
+
+
+
+## struct Include 🔹 <a id="projen-gitlab-include"></a>
+
+
+An included YAML file.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**?🔹 | <code>Array<string></code> | Files from another private project on the same GitLab instance.<br/>__*Optional*__
+**local**?🔹 | <code>string</code> | Relative path from local repository root (`/`) to the `yaml`/`yml` file template.<br/>__*Optional*__
+**project**?🔹 | <code>string</code> | Path to the project, e.g. `group/project`, or `group/sub-group/project`.<br/>__*Optional*__
+**ref**?🔹 | <code>string</code> | Branch/Tag/Commit-hash for the target project.<br/>__*Optional*__
+**remote**?🔹 | <code>string</code> | URL to a `yaml`/`yml` template file using HTTP/HTTPS.<br/>__*Optional*__
+**rules**?🔹 | <code>Array<[gitlab.IncludeRule](#projen-gitlab-includerule)></code> | Rules allows for an array of individual rule objects to be evaluated in order, until one matches and dynamically provides attributes to the job.<br/>__*Optional*__
+**template**?🔹 | <code>string</code> | Use a `.gitlab-ci.yml` template as a base, e.g. `Nodejs.gitlab-ci.yml`.<br/>__*Optional*__
+
+
+
+## struct IncludeRule 🔹 <a id="projen-gitlab-includerule"></a>
+
+
+Rules allows for an array of individual rule objects to be evaluated in order, until one matches and dynamically provides attributes to the job.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**allowFailure**?🔹 | <code>boolean &#124; [gitlab.AllowFailure](#projen-gitlab-allowfailure)</code> | __*Optional*__
+**changes**?🔹 | <code>Array<string></code> | __*Optional*__
+**exists**?🔹 | <code>Array<string></code> | __*Optional*__
+**if**?🔹 | <code>string</code> | __*Optional*__
+**startIn**?🔹 | <code>string</code> | __*Optional*__
+**variables**?🔹 | <code>Map<string, string &#124; number></code> | __*Optional*__
+**when**?🔹 | <code>[gitlab.JobWhen](#projen-gitlab-jobwhen)</code> | __*Optional*__
+
+
+
+## struct Inherit 🔹 <a id="projen-gitlab-inherit"></a>
+
+
+Controls inheritance of globally-defined defaults and variables.
+
+Boolean values control
+inheritance of all default: or variables: keywords. To inherit only a subset of default:
+or variables: keywords, specify what you wish to inherit. Anything not listed is not
+inherited.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**default**?🔹 | <code>boolean &#124; Array<[gitlab.DefaultElement](#projen-gitlab-defaultelement)></code> | Whether to inherit all globally-defined defaults or not.<br/>__*Optional*__
+**variables**?🔹 | <code>boolean &#124; Array<string></code> | Whether to inherit all globally-defined variables or not.<br/>__*Optional*__
+
+
+
+## struct Job 🔹 <a id="projen-gitlab-job"></a>
+
+
+Jobs are the most fundamental element of a .gitlab-ci.yml file.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**afterScript**?🔹 | <code>Array<string></code> | __*Optional*__
+**allowFailure**?🔹 | <code>boolean &#124; [gitlab.AllowFailure](#projen-gitlab-allowfailure)</code> | Whether to allow the pipeline to continue running on job failure (Default: false).<br/>__*Optional*__
+**artifacts**?🔹 | <code>[gitlab.Artifacts](#projen-gitlab-artifacts)</code> | __*Optional*__
+**beforeScript**?🔹 | <code>Array<string></code> | __*Optional*__
+**cache**?🔹 | <code>[gitlab.Cache](#projen-gitlab-cache)</code> | __*Optional*__
+**coverage**?🔹 | <code>string</code> | Must be a regular expression, optionally but recommended to be quoted, and must be surrounded with '/'.<br/>__*Optional*__
+**dependencies**?🔹 | <code>Array<string></code> | Specify a list of job names from earlier stages from which artifacts should be loaded.<br/>__*Optional*__
+**environment**?🔹 | <code>string &#124; [gitlab.Environment](#projen-gitlab-environment)</code> | Used to associate environment metadata with a deploy.<br/>__*Optional*__
+**except**?🔹 | <code>[gitlab.Filter](#projen-gitlab-filter) &#124; Array<string></code> | Job will run *except* for when these filtering options match.<br/>__*Optional*__
+**extends**?🔹 | <code>Array<string></code> | The name of one or more jobs to inherit configuration from.<br/>__*Optional*__
+**image**?🔹 | <code>[gitlab.Image](#projen-gitlab-image)</code> | __*Optional*__
+**inherit**?🔹 | <code>[gitlab.Inherit](#projen-gitlab-inherit)</code> | Controls inheritance of globally-defined defaults and variables.<br/>__*Optional*__
+**interruptible**?🔹 | <code>boolean</code> | __*Optional*__
+**needs**?🔹 | <code>Array<string &#124; [gitlab.Need](#projen-gitlab-need)></code> | The list of jobs in previous stages whose sole completion is needed to start the current job.<br/>__*Optional*__
+**only**?🔹 | <code>[gitlab.Filter](#projen-gitlab-filter) &#124; Array<string></code> | Job will run *only* when these filtering options match.<br/>__*Optional*__
+**parallel**?🔹 | <code>number &#124; [gitlab.Parallel](#projen-gitlab-parallel)</code> | Parallel will split up a single job into several, and provide `CI_NODE_INDEX` and `CI_NODE_TOTAL` environment variables for the running jobs.<br/>__*Optional*__
+**release**?🔹 | <code>[gitlab.Release](#projen-gitlab-release)</code> | Indicates that the job creates a Release.<br/>__*Optional*__
+**resourceGroup**?🔹 | <code>string</code> | Limit job concurrency.<br/>__*Optional*__
+**retry**?🔹 | <code>[gitlab.Retry](#projen-gitlab-retry)</code> | __*Optional*__
+**rules**?🔹 | <code>Array<[gitlab.IncludeRule](#projen-gitlab-includerule)></code> | Rules allows for an array of individual rule objects to be evaluated in order, until one matches and dynamically provides attributes to the job.<br/>__*Optional*__
+**script**?🔹 | <code>Array<string></code> | Shell scripts executed by the Runner.<br/>__*Optional*__
+**secrets**?🔹 | <code>Map<string, Map<string, [gitlab.Secret](#projen-gitlab-secret)>></code> | CI/CD secrets.<br/>__*Optional*__
+**services**?🔹 | <code>Array<[gitlab.Service](#projen-gitlab-service)></code> | __*Optional*__
+**stage**?🔹 | <code>string</code> | Define what stage the job will run in.<br/>__*Optional*__
+**startIn**?🔹 | <code>string</code> | __*Optional*__
+**tags**?🔹 | <code>Array<string></code> | __*Optional*__
+**timeout**?🔹 | <code>string</code> | __*Optional*__
+**trigger**?🔹 | <code>string &#124; [gitlab.Trigger](#projen-gitlab-trigger)</code> | Trigger allows you to define downstream pipeline trigger.<br/>__*Optional*__
+**variables**?🔹 | <code>Map<string, string &#124; number></code> | Configurable values that are passed to the Job.<br/>__*Optional*__
+**when**?🔹 | <code>[gitlab.JobWhen](#projen-gitlab-jobwhen)</code> | Describes the conditions for when to run the job.<br/>__*Optional*__
+
+
+
+## struct KubernetesConfig 🔹 <a id="projen-gitlab-kubernetesconfig"></a>
+
+
+Used to configure the kubernetes deployment for this environment.
+
+This is currently not
+supported for kubernetes clusters that are managed by Gitlab.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**namespace**?🔹 | <code>string</code> | The kubernetes namespace where this environment should be deployed to.<br/>__*Optional*__
+
+
+
+## struct Link 🔹 <a id="projen-gitlab-link"></a>
+
+
+Link configuration for an asset.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | The name of the link.
+**url**🔹 | <code>string</code> | The URL to download a file.
+**filepath**?🔹 | <code>string</code> | The redirect link to the url.<br/>__*Optional*__
+**linkType**?🔹 | <code>[gitlab.LinkType](#projen-gitlab-linktype)</code> | The content kind of what users can download via url.<br/>__*Optional*__
+
+
+
+## struct Need 🔹 <a id="projen-gitlab-need"></a>
+
+
+A jobs in a previous stage whose sole completion is needed to start the current job.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**job**🔹 | <code>string</code> | <span></span>
+**artifacts**?🔹 | <code>boolean</code> | __*Optional*__
+**optional**?🔹 | <code>boolean</code> | __*Optional*__
+**pipeline**?🔹 | <code>string</code> | __*Optional*__
+**project**?🔹 | <code>string</code> | __*Optional*__
+**ref**?🔹 | <code>string</code> | __*Optional*__
+
+
+
+## struct Parallel 🔹 <a id="projen-gitlab-parallel"></a>
+
+
+Used to run a job multiple times in parallel in a single pipeline.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**matrix**🔹 | <code>Array<Map<string, Array<any>>></code> | Defines different variables for jobs that are running in parallel.
+
+
+
+## struct Release 🔹 <a id="projen-gitlab-release"></a>
+
+
+Indicates that the job creates a Release.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**description**🔹 | <code>string</code> | Specifies the longer description of the Release.
+**tagName**🔹 | <code>string</code> | The tag_name must be specified.
+**assets**?🔹 | <code>[gitlab.Assets](#projen-gitlab-assets)</code> | __*Optional*__
+**milestones**?🔹 | <code>Array<string></code> | The title of each milestone the release is associated with.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | The Release name.<br/>__*Optional*__
+**ref**?🔹 | <code>string</code> | If the release: tag_name doesn’t exist yet, the release is created from ref.<br/>__*Optional*__
+**releasedAt**?🔹 | <code>string</code> | The date and time when the release is ready.<br/>__*Optional*__
+
+
+
+## struct Reports 🔹 <a id="projen-gitlab-reports"></a>
+
+
+Reports will be uploaded as artifacts, and often displayed in the Gitlab UI, such as in Merge Requests.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cobertura**?🔹 | <code>Array<string></code> | Path for file(s) that should be parsed as Cobertura XML coverage report.<br/>__*Optional*__
+**codequality**?🔹 | <code>Array<string></code> | Path to file or list of files with code quality report(s) (such as Code Climate).<br/>__*Optional*__
+**containerScanning**?🔹 | <code>Array<string></code> | Path to file or list of files with Container scanning vulnerabilities report(s).<br/>__*Optional*__
+**dast**?🔹 | <code>Array<string></code> | Path to file or list of files with DAST vulnerabilities report(s).<br/>__*Optional*__
+**dependencyScanning**?🔹 | <code>Array<string></code> | Path to file or list of files with Dependency scanning vulnerabilities report(s).<br/>__*Optional*__
+**dotenv**?🔹 | <code>Array<string></code> | Path to file or list of files containing runtime-created variables for this job.<br/>__*Optional*__
+**junit**?🔹 | <code>Array<string></code> | Path for file(s) that should be parsed as JUnit XML result.<br/>__*Optional*__
+**licenseManagement**?🔹 | <code>Array<string></code> | Deprecated in 12.8: Path to file or list of files with license report(s).<br/>__*Optional*__
+**licenseScanning**?🔹 | <code>Array<string></code> | Path to file or list of files with license report(s).<br/>__*Optional*__
+**lsif**?🔹 | <code>Array<string></code> | Path to file or list of files containing code intelligence (Language Server Index Format).<br/>__*Optional*__
+**metrics**?🔹 | <code>Array<string></code> | Path to file or list of files with custom metrics report(s).<br/>__*Optional*__
+**performance**?🔹 | <code>Array<string></code> | Path to file or list of files with performance metrics report(s).<br/>__*Optional*__
+**requirements**?🔹 | <code>Array<string></code> | Path to file or list of files with requirements report(s).<br/>__*Optional*__
+**sast**?🔹 | <code>Array<string></code> | Path to file or list of files with SAST vulnerabilities report(s).<br/>__*Optional*__
+**secretDetection**?🔹 | <code>Array<string></code> | Path to file or list of files with secret detection report(s).<br/>__*Optional*__
+**terraform**?🔹 | <code>Array<string></code> | Path to file or list of files with terraform plan(s).<br/>__*Optional*__
+
+
+
+## struct Retry 🔹 <a id="projen-gitlab-retry"></a>
+
+
+How many times a job is retried if it fails.
+
+If not defined, defaults to 0 and jobs do not retry.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**max**?🔹 | <code>number</code> | 0 (default), 1, or 2.<br/>__*Optional*__
+**when**?🔹 | <code>any</code> | Either a single or array of error types to trigger job retry.<br/>__*Optional*__
+
+
+
+## struct Secret 🔹 <a id="projen-gitlab-secret"></a>
+
+
+A CI/CD secret.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**vault**🔹 | <code>[gitlab.VaultConfig](#projen-gitlab-vaultconfig)</code> | <span></span>
+
+
+
+## struct Service 🔹 <a id="projen-gitlab-service"></a>
+
+
+Used to specify an additional Docker image to run scripts in.
+
+The service image is linked to the image specified in the @Default image keyword.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | Full name of the image that should be used.
+**alias**?🔹 | <code>string</code> | Additional alias that can be used to access the service from the job's container.<br/>__*Optional*__
+**command**?🔹 | <code>Array<string></code> | Command or script that should be used as the container's command.<br/>__*Optional*__
+**entrypoint**?🔹 | <code>Array<string></code> | Command or script that should be executed as the container's entrypoint.<br/>__*Optional*__
+
+
+
+## struct Trigger 🔹 <a id="projen-gitlab-trigger"></a>
+
+
+Trigger a multi-project or a child pipeline.
+
+Read more:
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**branch**?🔹 | <code>string</code> | The branch name that a downstream pipeline will use.<br/>__*Optional*__
+**include**?🔹 | <code>Array<[gitlab.TriggerInclude](#projen-gitlab-triggerinclude)></code> | A list of local files or artifacts from other jobs to define the pipeline.<br/>__*Optional*__
+**project**?🔹 | <code>string</code> | Path to the project, e.g. `group/project`, or `group/sub-group/project`.<br/>__*Optional*__
+**strategy**?🔹 | <code>[gitlab.Strategy](#projen-gitlab-strategy)</code> | You can mirror the pipeline status from the triggered pipeline to the source bridge job by using strategy: depend.<br/>__*Optional*__
+
+
+
+## struct TriggerInclude 🔹 <a id="projen-gitlab-triggerinclude"></a>
+
+
+References a local file or an artifact from another job to define the pipeline configuration.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**artifact**?🔹 | <code>string</code> | Relative path to the generated YAML file which is extracted from the artifacts and used as the configuration for triggering the child pipeline.<br/>__*Optional*__
+**file**?🔹 | <code>string</code> | Relative path from repository root (`/`) to the pipeline configuration YAML file.<br/>__*Optional*__
+**job**?🔹 | <code>string</code> | Job name which generates the artifact.<br/>__*Optional*__
+**local**?🔹 | <code>string</code> | Relative path from local repository root (`/`) to the local YAML file to define the pipeline configuration.<br/>__*Optional*__
+**project**?🔹 | <code>string</code> | Path to another private project under the same GitLab instance, like `group/project` or `group/sub-group/project`.<br/>__*Optional*__
+**ref**?🔹 | <code>string</code> | Branch/Tag/Commit hash for the target project.<br/>__*Optional*__
+**template**?🔹 | <code>string</code> | Name of the template YAML file to use in the pipeline configuration.<br/>__*Optional*__
+
+
+
+## struct VariableConfig 🔹 <a id="projen-gitlab-variableconfig"></a>
+
+
+Explains what the global variable is used for, what the acceptable values are.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**description**?🔹 | <code>string</code> | Define a global variable that is prefilled when running a pipeline manually.<br/>__*Optional*__
+**value**?🔹 | <code>string</code> | The variable value.<br/>__*Optional*__
+
+
+
+## struct VaultConfig 🔹 <a id="projen-gitlab-vaultconfig"></a>
+
+
+Specification for a secret provided by a HashiCorp Vault.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**engine**🔹 | <code>[gitlab.Engine](#projen-gitlab-engine)</code> | <span></span>
+**field**🔹 | <code>string</code> | <span></span>
+**path**🔹 | <code>string</code> | Path to the secret.
+
+
+
+## struct Workflow 🔹 <a id="projen-gitlab-workflow"></a>
+
+
+Used to control pipeline behavior.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**rules**?🔹 | <code>Array<[gitlab.WorkflowRule](#projen-gitlab-workflowrule)></code> | Used to control whether or not a whole pipeline is created.<br/>__*Optional*__
+
+
+
+## struct WorkflowRule 🔹 <a id="projen-gitlab-workflowrule"></a>
+
+
+Used to control whether or not a whole pipeline is created.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**changes**?🔹 | <code>Array<string></code> | __*Optional*__
+**exists**?🔹 | <code>Array<string></code> | __*Optional*__
+**if**?🔹 | <code>string</code> | __*Optional*__
+**variables**?🔹 | <code>Map<string, string &#124; number></code> | __*Optional*__
+**when**?🔹 | <code>[gitlab.JobWhen](#projen-gitlab-jobwhen)</code> | __*Optional*__
+
+
+
 ## struct JavaProjectCommonOptions 🔹 <a id="projen-java-javaprojectcommonoptions"></a>
 
 
@@ -15414,6 +16228,122 @@ Name | Description
 **WIDEN** 🔹|Relax the version requirement to include both the new and old version, when possible.
 **INCREASE** 🔹|Always increase the version requirement to match the new version.
 **INCREASE_IF_NECESSARY** 🔹|Increase the version requirement only when required by the new version.
+
+
+## enum Action 🔹 <a id="projen-gitlab-action"></a>
+
+Specifies what this job will do.
+
+'start' (default) indicates the job will start the
+deployment. 'prepare' indicates this will not affect the deployment. 'stop' indicates
+this will stop the deployment.
+
+Name | Description
+-----|-----
+**PREPARE** 🔹|
+**START** 🔹|
+**STOP** 🔹|
+
+
+## enum CacheWhen 🔹 <a id="projen-gitlab-cachewhen"></a>
+
+Configure when artifacts are uploaded depended on job status.
+
+Name | Description
+-----|-----
+**ALWAYS** 🔹|Upload artifacts regardless of job status.
+**ON_FAILURE** 🔹|Upload artifacts only when the job fails.
+**ON_SUCCESS** 🔹|Upload artifacts only when the job succeeds (this is the default).
+
+
+## enum DefaultElement 🔹 <a id="projen-gitlab-defaultelement"></a>
+
+
+
+Name | Description
+-----|-----
+**AFTER_SCRIPT** 🔹|
+**ARTIFACTS** 🔹|
+**BEFORE_SCRIPT** 🔹|
+**CACHE** 🔹|
+**IMAGE** 🔹|
+**INTERRUPTIBLE** 🔹|
+**RETRY** 🔹|
+**SERVICES** 🔹|
+**TAGS** 🔹|
+**TIMEOUT** 🔹|
+
+
+## enum DeploymentTier 🔹 <a id="projen-gitlab-deploymenttier"></a>
+
+Explicitly specifies the tier of the deployment environment if non-standard environment name is used.
+
+Name | Description
+-----|-----
+**DEVELOPMENT** 🔹|
+**OTHER** 🔹|
+**PRODUCTION** 🔹|
+**STAGING** 🔹|
+**TESTING** 🔹|
+
+
+## enum JobWhen 🔹 <a id="projen-gitlab-jobwhen"></a>
+
+Describes the conditions for when to run the job.
+
+Defaults to 'on_success'.
+
+Name | Description
+-----|-----
+**ALWAYS** 🔹|
+**DELAYED** 🔹|
+**MANUAL** 🔹|
+**NEVER** 🔹|
+**ON_FAILURE** 🔹|
+**ON_SUCCESS** 🔹|
+
+
+## enum KubernetesEnum 🔹 <a id="projen-gitlab-kubernetesenum"></a>
+
+Filter job based on if Kubernetes integration is active.
+
+Name | Description
+-----|-----
+**ACTIVE** 🔹|
+
+
+## enum LinkType 🔹 <a id="projen-gitlab-linktype"></a>
+
+The content kind of what users can download via url.
+
+Name | Description
+-----|-----
+**IMAGE** 🔹|
+**OTHER** 🔹|
+**PACKAGE** 🔹|
+**RUNBOOK** 🔹|
+
+
+## enum Strategy 🔹 <a id="projen-gitlab-strategy"></a>
+
+You can mirror the pipeline status from the triggered pipeline to the source bridge job by using strategy: depend.
+
+Name | Description
+-----|-----
+**DEPEND** 🔹|
+
+
+## enum WorkflowWhen 🔹 <a id="projen-gitlab-workflowwhen"></a>
+
+Describes the conditions for when to run the job.
+
+Defaults to 'on_success'.
+The value can only be 'always' or 'never' when used with workflow.
+
+Name | Description
+-----|-----
+**ALWAYS** 🔹|
+**NEVER** 🔹|
 
 
 ## enum ArrowParens 🔹 <a id="projen-javascript-arrowparens"></a>
