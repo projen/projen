@@ -1,4 +1,4 @@
-import * as semver from 'semver';
+import * as semver from "semver";
 
 /**
  * @deprecated This class will be removed in upcoming releases. if you wish to
@@ -6,18 +6,23 @@ import * as semver from 'semver';
  * `express@^2.1`.
  */
 export class Semver {
-
-  public static of(spec: string) { return new Semver(spec); }
+  public static of(spec: string) {
+    return new Semver(spec);
+  }
 
   /**
    * Latest version.
    */
-  public static latest() { return new Semver('*'); }
+  public static latest() {
+    return new Semver("*");
+  }
 
   /**
    * Accept only an exact version
    */
-  public static pinned(version: string) { return new Semver(version); }
+  public static pinned(version: string) {
+    return new Semver(version);
+  }
 
   /**
    * Accept any minor version.
@@ -25,7 +30,9 @@ export class Semver {
    * >= version
    * < next major version
    */
-  public static caret(version: string) { return new Semver(`^${version}`); }
+  public static caret(version: string) {
+    return new Semver(`^${version}`);
+  }
 
   /**
    * Accept patches.
@@ -33,13 +40,13 @@ export class Semver {
    * >= version
    * < next minor version
    */
-  public static tilde(version: string) { return new Semver(`~${version}`); }
+  public static tilde(version: string) {
+    return new Semver(`~${version}`);
+  }
 
   public readonly mode?: string;
 
-  private constructor(public readonly spec: string) {
-
-  }
+  private constructor(public readonly spec: string) {}
 
   public get version() {
     return semver.minVersion(this.spec)?.version;

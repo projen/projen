@@ -1,5 +1,5 @@
-import { FileBase, FileBaseOptions, IResolver } from './file';
-import { Project } from './project';
+import { FileBase, FileBaseOptions, IResolver } from "./file";
+import { Project } from "./project";
 
 /**
  * A Make rule.
@@ -68,24 +68,24 @@ export class Makefile extends FileBase {
 
   private readonly all: AllRule;
 
-
-  constructor(project: Project, filePath: string, options: MakefileOptions = {}) {
+  constructor(
+    project: Project,
+    filePath: string,
+    options: MakefileOptions = {}
+  ) {
     super(project, filePath, options);
 
     const all = options.all ? options.all : [];
     const rules = options.rules ? options.rules : [];
 
-    rules.forEach(e => this.validateRule(e));
+    rules.forEach((e) => this.validateRule(e));
 
     this.all = {
-      targets: ['all'],
+      targets: ["all"],
       prerequisites: all,
       phony: true,
     };
-    this.rules = [
-      this.all,
-      ...rules,
-    ];
+    this.rules = [this.all, ...rules];
   }
 
   /**
@@ -100,7 +100,7 @@ export class Makefile extends FileBase {
    * Add multiple targets to all
    */
   public addAlls(...targets: string[]): Makefile {
-    targets.forEach(e => this.addAll(e));
+    targets.forEach((e) => this.addAll(e));
     return this;
   }
 
@@ -117,13 +117,15 @@ export class Makefile extends FileBase {
    * Add multiple rules to the Makefile.
    */
   public addRules(...rules: Rule[]): Makefile {
-    rules.forEach(e => this.addRule(e));
+    rules.forEach((e) => this.addRule(e));
     return this;
   }
 
   private validateRule(rule: Rule) {
     if (!rule.targets || !rule.targets.length) {
-      throw new Error('"targets" cannot be undefined or empty for items in "rules"');
+      throw new Error(
+        '"targets" cannot be undefined or empty for items in "rules"'
+      );
     }
   }
 
@@ -132,8 +134,10 @@ export class Makefile extends FileBase {
 
     const lines = [
       ...rules.map((rule: Rule) => {
-        const targets = rule.targets.join(' ');
-        const prerequisites = (rule.prerequisites ? rule.prerequisites : []).join(' ');
+        const targets = rule.targets.join(" ");
+        const prerequisites = (
+          rule.prerequisites ? rule.prerequisites : []
+        ).join(" ");
         const recipe = rule.recipe ? rule.recipe : [];
 
         const phony = rule.phony ? [`.PHONY: ${targets}`] : [];
@@ -141,11 +145,11 @@ export class Makefile extends FileBase {
         return [
           ...phony,
           `${targets}: ${prerequisites}`.trim(),
-          ...recipe.map(step => `\t${step}`),
-        ].join('\n');
+          ...recipe.map((step) => `\t${step}`),
+        ].join("\n");
       }),
     ];
 
-    return `${lines.join('\n\n')}\n`;
+    return `${lines.join("\n\n")}\n`;
   }
 }

@@ -14,6 +14,8 @@
     ".gitpod.yml",
     ".markdownlint.json",
     ".mergify.yml",
+    ".prettierignore",
+    ".prettierrc.json",
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",

@@ -1,13 +1,17 @@
-import { Component } from './component';
-import { IDevEnvironment, DevEnvironmentOptions, DevEnvironmentDockerImage } from './dev-env';
-import { Project } from './project';
-import { Task } from './task';
-import { YamlFile } from './yaml';
+import { Component } from "./component";
+import {
+  IDevEnvironment,
+  DevEnvironmentOptions,
+  DevEnvironmentDockerImage,
+} from "./dev-env";
+import { Project } from "./project";
+import { Task } from "./task";
+import { YamlFile } from "./yaml";
 
 /**
-  * Relative path of Gitpod file to generate
-  */
-const GITPOD_FILE = '.gitpod.yml';
+ * Relative path of Gitpod file to generate
+ */
+const GITPOD_FILE = ".gitpod.yml";
 
 /**
  * https://www.gitpod.io/docs/configuration/
@@ -17,33 +21,33 @@ const GITPOD_FILE = '.gitpod.yml';
  */
 
 /**
-  * Configure how the terminal should be opened relative to the previous task.
-  */
+ * Configure how the terminal should be opened relative to the previous task.
+ */
 export enum GitpodOpenMode {
   /**
    * Opens in the same tab group right after the previous tab
    */
-  TAB_AFTER = 'tab-after',
+  TAB_AFTER = "tab-after",
   /**
    * Opens in the same tab group left before the previous tab
    */
-  TAB_BEFORE = 'tab-before',
+  TAB_BEFORE = "tab-before",
   /**
    * Splits and adds the terminal to the right
    */
-  SPLIT_RIGHT = 'split-right',
+  SPLIT_RIGHT = "split-right",
   /**
    * Splits and adds the terminal to the left
    */
-  SPLIT_LEFT = 'split-left',
+  SPLIT_LEFT = "split-left",
   /**
    * Splits and adds the terminal to the top
    */
-  SPLIT_TOP = 'split-top',
+  SPLIT_TOP = "split-top",
   /**
    * Splits and adds the terminal to the bottom
    */
-  SPLIT_BOTTOM = 'split-bottom'
+  SPLIT_BOTTOM = "split-bottom",
 }
 
 /**
@@ -53,19 +57,19 @@ export enum GitpodOpenIn {
   /**
    * the bottom panel (default)
    */
-  BOTTOM = 'bottom',
+  BOTTOM = "bottom",
   /**
    * the left panel
    */
-  LEFT = 'left',
+  LEFT = "left",
   /**
    * the right panel
    */
-  RIGHT = 'right',
+  RIGHT = "right",
   /**
    * the main editor area
    */
-  MAIN = 'main'
+  MAIN = "main",
 }
 
 /**
@@ -77,7 +81,7 @@ export enum GitpodOpenIn {
  * Restart Workspace  | before && command
  * Snapshot           | before && command
  * Prebuild           | before && init && prebuild
-*/
+ */
 export interface GitpodTask {
   /**
    * Required. The shell command to run
@@ -132,22 +136,22 @@ export enum GitpodOnOpen {
   /**
    * Open a new browser tab
    */
-  OPEN_BROWSER = 'open-browser',
+  OPEN_BROWSER = "open-browser",
 
   /**
    * Open a preview on the right side of the IDE
    */
-  OPEN_PREVIEW = 'open-preview',
+  OPEN_PREVIEW = "open-preview",
 
   /**
    * Show a notification asking the user what to do (default)
    */
-  NOTIFY = 'notify',
+  NOTIFY = "notify",
 
   /**
    * Do nothing.
    */
-  IGNORE = 'ignore',
+  IGNORE = "ignore",
 }
 
 /**
@@ -157,12 +161,12 @@ export enum GitpodPortVisibility {
   /**
    * Allows everyone with the port URL to access the port (default)
    */
-  PUBLIC = 'public',
+  PUBLIC = "public",
 
   /**
    * Only allows users with workspace access to access the port
    */
-  PRIVATE = 'private'
+  PRIVATE = "private",
 }
 
 /**
@@ -313,7 +317,10 @@ export class Gitpod extends Component implements IDevEnvironment {
       },
     };
 
-    new YamlFile(this.project, GITPOD_FILE, { obj: this.config, omitEmpty: true });
+    new YamlFile(this.project, GITPOD_FILE, {
+      obj: this.config,
+      omitEmpty: true,
+    });
   }
 
   /**
@@ -323,7 +330,7 @@ export class Gitpod extends Component implements IDevEnvironment {
    */
   public addDockerImage(image: DevEnvironmentDockerImage) {
     if (this.dockerImage) {
-      throw new Error('dockerImage cannot be redefined.');
+      throw new Error("dockerImage cannot be redefined.");
     }
     this.dockerImage = image;
   }
@@ -337,10 +344,12 @@ export class Gitpod extends Component implements IDevEnvironment {
    * @param tasks The new tasks
    */
   public addTasks(...tasks: Task[]) {
-    this.tasks.push(...tasks.map(task => ({
-      name: task.name,
-      command: `npx projen ${task.name}`,
-    })));
+    this.tasks.push(
+      ...tasks.map((task) => ({
+        name: task.name,
+        command: `npx projen ${task.name}`,
+      }))
+    );
   }
 
   /**
@@ -377,7 +386,7 @@ export class Gitpod extends Component implements IDevEnvironment {
    * @param ports The new ports
    */
   public addPorts(...ports: string[]) {
-    this.ports.push(...ports.map(port => ({ port: port })));
+    this.ports.push(...ports.map((port) => ({ port: port })));
   }
 
   /**

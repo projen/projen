@@ -1,22 +1,28 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
-import { parse as urlparse } from 'url';
-import { accessSync, constants, existsSync, readdirSync, readJsonSync } from 'fs-extra';
-import * as semver from 'semver';
-import { resolve as resolveJson } from '../_resolve';
-import { Component } from '../component';
-import { DependencyType } from '../dependencies';
-import { JsonFile } from '../json';
-import { Project } from '../project';
-import { isAwsCodeArtifactRegistry } from '../release';
-import { Task } from '../task';
-import { exec, isTruthy, sorted, writeFile } from '../util';
+import { readFileSync } from "fs";
+import { join } from "path";
+import { parse as urlparse } from "url";
+import {
+  accessSync,
+  constants,
+  existsSync,
+  readdirSync,
+  readJsonSync,
+} from "fs-extra";
+import * as semver from "semver";
+import { resolve as resolveJson } from "../_resolve";
+import { Component } from "../component";
+import { DependencyType } from "../dependencies";
+import { JsonFile } from "../json";
+import { Project } from "../project";
+import { isAwsCodeArtifactRegistry } from "../release";
+import { Task } from "../task";
+import { exec, isTruthy, sorted, writeFile } from "../util";
 
-const UNLICENSED = 'UNLICENSED';
-const DEFAULT_NPM_REGISTRY_URL = 'https://registry.npmjs.org/';
-const GITHUB_PACKAGES_REGISTRY = 'npm.pkg.github.com';
-const DEFAULT_NPM_TOKEN_SECRET = 'NPM_TOKEN';
-const DEFAULT_GITHUB_TOKEN_SECRET = 'GITHUB_TOKEN';
+const UNLICENSED = "UNLICENSED";
+const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
+const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
+const DEFAULT_NPM_TOKEN_SECRET = "NPM_TOKEN";
+const DEFAULT_GITHUB_TOKEN_SECRET = "GITHUB_TOKEN";
 
 export interface NodePackageOptions {
   /**
@@ -127,7 +133,6 @@ export interface NodePackageOptions {
    * @default "lib/index.js"
    */
   readonly entrypoint?: string;
-
 
   /**
    * Binary programs vended with your module.
@@ -293,28 +298,26 @@ export interface CodeArtifactOptions {
   readonly accessKeyIdSecret?: string;
 
   /**
-    * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
-    * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
-    *
-    * @default "AWS_SECRET_ACCESS_KEY"
-    */
+   * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
+   * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
+   *
+   * @default "AWS_SECRET_ACCESS_KEY"
+   */
   readonly secretAccessKeySecret?: string;
 
   /**
-    * ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact
-    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
-    *
-    * @default undefined
-    */
+   * ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact
+   * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+   *
+   * @default undefined
+   */
   readonly roleToAssume?: string;
 }
-
 
 /**
  * Represents the npm `package.json` file.
  */
 export class NodePackage extends Component {
-
   /**
    * The name of the npm package.
    */
@@ -403,13 +406,17 @@ export class NodePackage extends Component {
     this.peerDependencyOptions = options.peerDependencyOptions ?? {};
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.packageManager = options.packageManager ?? NodePackageManager.YARN;
-    this.entrypoint = options.entrypoint ?? 'lib/index.js';
+    this.entrypoint = options.entrypoint ?? "lib/index.js";
     this.lockFile = determineLockfile(this.packageManager);
 
     this.project.annotateGenerated(`/${this.lockFile}`);
 
     const {
-      npmAccess, npmRegistry, npmRegistryUrl, npmTokenSecret, codeArtifactOptions,
+      npmAccess,
+      npmRegistry,
+      npmRegistryUrl,
+      npmTokenSecret,
+      codeArtifactOptions,
     } = this.parseNpmOptions(options);
     this.npmAccess = npmAccess;
     this.npmRegistry = npmRegistry;
@@ -425,11 +432,13 @@ export class NodePackage extends Component {
     this.manifest = {
       name: this.packageName,
       description: options.description,
-      repository: !options.repository ? undefined : {
-        type: 'git',
-        url: options.repository,
-        directory: options.repositoryDirectory,
-      },
+      repository: !options.repository
+        ? undefined
+        : {
+            type: "git",
+            url: options.repository,
+            directory: options.repositoryDirectory,
+          },
       bin: () => this.renderBin(),
       scripts: () => this.renderScripts(),
       author: this.renderAuthor(options),
@@ -439,7 +448,7 @@ export class NodePackage extends Component {
       bundledDependencies: [],
       keywords: () => this.renderKeywords(),
       engines: () => this.renderEngines(),
-      main: this.entrypoint !== '' ? this.entrypoint : undefined,
+      main: this.entrypoint !== "" ? this.entrypoint : undefined,
       license: () => this.license ?? UNLICENSED,
       homepage: options.homepage,
       publishConfig: () => this.renderPublishConfig(),
@@ -447,10 +456,13 @@ export class NodePackage extends Component {
       // in release CI builds we bump the version before we run "build" so we want
       // to preserve the version number. otherwise, we always set it to 0.0.0
       version: this.determineVersion(prev?.version),
-      bugs: (options.bugsEmail || options.bugsUrl) ? {
-        email: options.bugsEmail,
-        url: options.bugsUrl,
-      } : undefined,
+      bugs:
+        options.bugsEmail || options.bugsUrl
+          ? {
+              email: options.bugsEmail,
+              url: options.bugsUrl,
+            }
+          : undefined,
     };
 
     // override any scripts from options (if specified)
@@ -458,13 +470,13 @@ export class NodePackage extends Component {
       project.addTask(cmdname, { exec: shell });
     }
 
-    this.file = new JsonFile(this.project, 'package.json', {
+    this.file = new JsonFile(this.project, "package.json", {
       obj: this.manifest,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
       newline: false, // when file is edited by npm/yarn it doesn't include a newline
     });
 
-    this.addKeywords(...options.keywords ?? []);
+    this.addKeywords(...(options.keywords ?? []));
     this.addBin(options.bin ?? {});
 
     // automatically add all executable files under "bin"
@@ -479,7 +491,7 @@ export class NodePackage extends Component {
 
     // license
     if (options.licensed ?? true) {
-      this.license = options.license ?? 'Apache-2.0';
+      this.license = options.license ?? "Apache-2.0";
     }
   }
 
@@ -510,7 +522,6 @@ export class NodePackage extends Component {
   public addDevDeps(...deps: string[]) {
     for (const dep of deps) {
       this.project.deps.addDependency(dep, DependencyType.BUILD);
-
     }
   }
 
@@ -529,7 +540,11 @@ export class NodePackage extends Component {
    */
   public addPeerDeps(...deps: string[]) {
     if (Object.keys(deps).length && !this.allowLibraryDependencies) {
-      throw new Error(`cannot add peer dependencies to an APP project: ${Object.keys(deps).join(',')}`);
+      throw new Error(
+        `cannot add peer dependencies to an APP project: ${Object.keys(
+          deps
+        ).join(",")}`
+      );
     }
 
     for (const dep of deps) {
@@ -551,7 +566,9 @@ export class NodePackage extends Component {
    */
   public addBundledDeps(...deps: string[]) {
     if (deps.length && !this.allowLibraryDependencies) {
-      throw new Error(`cannot add bundled dependencies to an APP project: ${deps.join(',')}`);
+      throw new Error(
+        `cannot add bundled dependencies to an APP project: ${deps.join(",")}`
+      );
     }
 
     for (const dep of deps) {
@@ -602,7 +619,6 @@ export class NodePackage extends Component {
     this.file.addDeletionOverride(`scripts.${name}`);
   }
 
-
   /**
    * Indicates if a script by the given name is defined.
    * @param name The name of the script
@@ -647,8 +663,10 @@ export class NodePackage extends Component {
   /**
    * Render a package manager specific command to upgrade all requested dependencies.
    */
-  public renderUpgradePackagesCommand(exclude: string[], include?: string[]): string {
-
+  public renderUpgradePackagesCommand(
+    exclude: string[],
+    include?: string[]
+  ): string {
     const project = this.project;
     function upgradePackages(command: string) {
       return () => {
@@ -660,23 +678,23 @@ export class NodePackage extends Component {
 
         // filter by exclude and include.
         return `${command} ${project.deps.all
-          .map(d => d.name)
-          .filter(d => include ? include.includes(d) : true)
-          .filter(d => !exclude.includes(d))
-          .join(' ')}`;
+          .map((d) => d.name)
+          .filter((d) => (include ? include.includes(d) : true))
+          .filter((d) => !exclude.includes(d))
+          .join(" ")}`;
       };
     }
 
     let lazy = undefined;
     switch (this.packageManager) {
       case NodePackageManager.YARN:
-        lazy = upgradePackages('yarn upgrade');
+        lazy = upgradePackages("yarn upgrade");
         break;
       case NodePackageManager.NPM:
-        lazy = upgradePackages('npm update');
+        lazy = upgradePackages("npm update");
         break;
       case NodePackageManager.PNPM:
-        lazy = upgradePackages('pnpm update');
+        lazy = upgradePackages("pnpm update");
         break;
       default:
         throw new Error(`unexpected package manager ${this.packageManager}`);
@@ -685,7 +703,6 @@ export class NodePackage extends Component {
     // return a lazy function so that dependencies include ones that were
     // added post project instantiation (i.e using project.addDeps)
     return lazy as unknown as string;
-
   }
 
   // ---------------------------------------------------------------------------------------
@@ -700,7 +717,10 @@ export class NodePackage extends Component {
 
     // only run "install" if package.json has changed or if we don't have a
     // `node_modules` directory.
-    if (this.file.changed || !existsSync(join(this.project.outdir, 'node_modules'))) {
+    if (
+      this.file.changed ||
+      !existsSync(join(this.project.outdir, "node_modules"))
+    ) {
       this.installDependencies();
     }
 
@@ -727,10 +747,10 @@ export class NodePackage extends Component {
 
   private determineVersion(currVersion?: string) {
     if (!this.isReleaseBuild) {
-      return '0.0.0';
+      return "0.0.0";
     }
 
-    return currVersion ?? '0.0.0';
+    return currVersion ?? "0.0.0";
   }
 
   /**
@@ -746,7 +766,9 @@ export class NodePackage extends Component {
     let npmRegistryUrl = options.npmRegistryUrl;
     if (options.npmRegistry) {
       if (npmRegistryUrl) {
-        throw new Error('cannot use the deprecated "npmRegistry" together with "npmRegistryUrl". please use "npmRegistryUrl" instead.');
+        throw new Error(
+          'cannot use the deprecated "npmRegistry" together with "npmRegistryUrl". please use "npmRegistryUrl" instead.'
+        );
       }
 
       npmRegistryUrl = `https://${options.npmRegistry}`;
@@ -754,33 +776,46 @@ export class NodePackage extends Component {
 
     const npmr = urlparse(npmRegistryUrl ?? DEFAULT_NPM_REGISTRY_URL);
     if (!npmr || !npmr.hostname || !npmr.href) {
-      throw new Error(`unable to determine npm registry host from url ${npmRegistryUrl}. Is this really a URL?`);
+      throw new Error(
+        `unable to determine npm registry host from url ${npmRegistryUrl}. Is this really a URL?`
+      );
     }
 
     const npmAccess = options.npmAccess ?? defaultNpmAccess(this.packageName);
     if (!isScoped(this.packageName) && npmAccess === NpmAccess.RESTRICTED) {
-      throw new Error(`"npmAccess" cannot be RESTRICTED for non-scoped npm package "${this.packageName}"`);
+      throw new Error(
+        `"npmAccess" cannot be RESTRICTED for non-scoped npm package "${this.packageName}"`
+      );
     }
 
     const isAwsCodeArtifact = isAwsCodeArtifactRegistry(npmRegistryUrl);
     if (isAwsCodeArtifact) {
       if (options.npmTokenSecret) {
-        throw new Error('"npmTokenSecret" must not be specified when publishing AWS CodeArtifact.');
+        throw new Error(
+          '"npmTokenSecret" must not be specified when publishing AWS CodeArtifact.'
+        );
       }
     } else {
-      if (options.codeArtifactOptions?.accessKeyIdSecret ||
+      if (
+        options.codeArtifactOptions?.accessKeyIdSecret ||
         options.codeArtifactOptions?.secretAccessKeySecret ||
-        options.codeArtifactOptions?.roleToAssume) {
-        throw new Error('codeArtifactOptions must only be specified when publishing AWS CodeArtifact.');
+        options.codeArtifactOptions?.roleToAssume
+      ) {
+        throw new Error(
+          "codeArtifactOptions must only be specified when publishing AWS CodeArtifact."
+        );
       }
     }
 
     // apply defaults for AWS CodeArtifact
-    let codeArtifactOptions: CodeArtifactOptions | undefined;
+    let codeArtifactOptions: CodeArtifactOptions | undefined;
     if (isAwsCodeArtifact) {
       codeArtifactOptions = {
-        accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret ?? 'AWS_ACCESS_KEY_ID',
-        secretAccessKeySecret: options.codeArtifactOptions?.secretAccessKeySecret ?? 'AWS_SECRET_ACCESS_KEY',
+        accessKeyIdSecret:
+          options.codeArtifactOptions?.accessKeyIdSecret ?? "AWS_ACCESS_KEY_ID",
+        secretAccessKeySecret:
+          options.codeArtifactOptions?.secretAccessKeySecret ??
+          "AWS_SECRET_ACCESS_KEY",
         roleToAssume: options.codeArtifactOptions?.roleToAssume,
       };
     }
@@ -799,19 +834,19 @@ export class NodePackage extends Component {
       return;
     }
 
-    let nodeVersion = '';
+    let nodeVersion = "";
     if (this.minNodeVersion) {
       nodeVersion += `>= ${this.minNodeVersion}`;
     }
     if (this.maxNodeVersion) {
       nodeVersion += ` <= ${this.maxNodeVersion}`;
     }
-    this.addEngine('node', nodeVersion);
+    this.addEngine("node", nodeVersion);
   }
 
   private renderNpmRegistryPath(path: string | undefined): string {
-    if (!path || path == '/') {
-      return '';
+    if (!path || path == "/") {
+      return "";
     } else {
       return path;
     }
@@ -821,21 +856,16 @@ export class NodePackage extends Component {
     switch (this.packageManager) {
       case NodePackageManager.YARN:
         return [
-          'yarn install',
-          '--check-files', // ensure all modules exist (especially projen which was just removed).
-          ...frozen ? ['--frozen-lockfile'] : [],
-        ].join(' ');
+          "yarn install",
+          "--check-files", // ensure all modules exist (especially projen which was just removed).
+          ...(frozen ? ["--frozen-lockfile"] : []),
+        ].join(" ");
 
       case NodePackageManager.NPM:
-        return frozen
-          ? 'npm ci'
-          : 'npm install';
+        return frozen ? "npm ci" : "npm install";
 
       case NodePackageManager.PNPM:
-        return [
-          'pnpm i',
-          ...frozen ? ['--frozen-lockfile'] : [],
-        ].join(' ');
+        return ["pnpm i", ...(frozen ? ["--frozen-lockfile"] : [])].join(" ");
 
       default:
         throw new Error(`unexpected package manager ${this.packageManager}`);
@@ -843,10 +873,10 @@ export class NodePackage extends Component {
   }
 
   private processDeps(options: NodePackageOptions) {
-    this.addDeps(...options.deps ?? []);
-    this.addDevDeps(...options.devDeps ?? []);
-    this.addPeerDeps(...options.peerDeps ?? []);
-    this.addBundledDeps(...options.bundledDeps ?? []);
+    this.addDeps(...(options.deps ?? []));
+    this.addDevDeps(...(options.devDeps ?? []));
+    this.addPeerDeps(...(options.peerDeps ?? []));
+    this.addBundledDeps(...(options.bundledDeps ?? []));
   }
 
   private renderDependencies(): NpmDependencies {
@@ -859,35 +889,47 @@ export class NodePackage extends Component {
     // testing against the minimum requirement of the peer.
     const pinned = this.peerDependencyOptions.pinnedDevDependency ?? true;
     if (pinned) {
-      for (const dep of this.project.deps.all.filter(d => d.type === DependencyType.PEER)) {
+      for (const dep of this.project.deps.all.filter(
+        (d) => d.type === DependencyType.PEER
+      )) {
         let req = dep.name;
 
         // skip if we already have a runtime dependency on this peer
-        if (this.project.deps.tryGetDependency(dep.name, DependencyType.RUNTIME)) {
+        if (
+          this.project.deps.tryGetDependency(dep.name, DependencyType.RUNTIME)
+        ) {
           continue;
         }
 
         if (dep.version) {
           const ver = semver.minVersion(dep.version)?.version;
           if (!ver) {
-            throw new Error(`unable to determine minimum semver for peer dependency ${dep.name}@${dep.version}`);
+            throw new Error(
+              `unable to determine minimum semver for peer dependency ${dep.name}@${dep.version}`
+            );
           }
 
-          req += '@' + ver;
+          req += "@" + ver;
         }
         this.addDevDeps(req);
       }
     }
 
     for (const dep of this.project.deps.all) {
-      const version = dep.version ?? '*';
+      const version = dep.version ?? "*";
 
       switch (dep.type) {
         case DependencyType.BUNDLED:
           bundledDependencies.push(dep.name);
 
-          if (this.project.deps.all.find(d => d.name === dep.name && d.type === DependencyType.PEER)) {
-            throw new Error(`unable to bundle "${dep.name}". it cannot appear as a peer dependency`);
+          if (
+            this.project.deps.all.find(
+              (d) => d.name === dep.name && d.type === DependencyType.PEER
+            )
+          ) {
+            throw new Error(
+              `unable to bundle "${dep.name}". it cannot appear as a peer dependency`
+            );
           }
 
           // also add as a runtime dependency
@@ -925,12 +967,15 @@ export class NodePackage extends Component {
       return { devDependencies, peerDependencies, dependencies };
     }
 
-    const readDeps = (user: Record<string, string>, current: Record<string, string> = {}) => {
+    const readDeps = (
+      user: Record<string, string>,
+      current: Record<string, string> = {}
+    ) => {
       for (const [name, userVersion] of Object.entries(user)) {
         const currentVersion = current[name];
 
         // respect user version if it's not '*' or if current version is undefined
-        if (userVersion !== '*' || !currentVersion || currentVersion === '*') {
+        if (userVersion !== "*" || !currentVersion || currentVersion === "*") {
           continue;
         }
 
@@ -961,12 +1006,15 @@ export class NodePackage extends Component {
    */
   private resolveDepsAndWritePackageJson(): boolean {
     const outdir = this.project.outdir;
-    const rootPackageJson = join(outdir, 'package.json');
+    const rootPackageJson = join(outdir, "package.json");
 
-    const original = readFileSync(rootPackageJson, 'utf8');
+    const original = readFileSync(rootPackageJson, "utf8");
     const pkg = JSON.parse(original);
 
-    const resolveDeps = (current: { [name: string]: string }, user: Record<string, string>) => {
+    const resolveDeps = (
+      current: { [name: string]: string },
+      user: Record<string, string>
+    ) => {
       const result: Record<string, string> = {};
       current = current ?? {};
       user = user ?? {};
@@ -975,21 +1023,27 @@ export class NodePackage extends Component {
         // find actual version from node_modules
         let desiredVersion = currentDefinition;
 
-        if (currentDefinition === '*') {
+        if (currentDefinition === "*") {
           try {
-            const modulePath = require.resolve(`${name}/package.json`, { paths: [outdir] });
+            const modulePath = require.resolve(`${name}/package.json`, {
+              paths: [outdir],
+            });
             const module = readJsonSync(modulePath);
             desiredVersion = `^${module.version}`;
-          } catch (e) { }
+          } catch (e) {}
 
           if (!desiredVersion) {
-            this.project.logger.warn(`unable to resolve version for ${name} from installed modules`);
+            this.project.logger.warn(
+              `unable to resolve version for ${name} from installed modules`
+            );
             continue;
           }
         }
 
         if (currentDefinition !== desiredVersion) {
-          this.project.logger.verbose(`${name}: ${currentDefinition} => ${desiredVersion}`);
+          this.project.logger.verbose(
+            `${name}: ${currentDefinition} => ${desiredVersion}`
+          );
         }
 
         result[name] = desiredVersion;
@@ -1007,11 +1061,17 @@ export class NodePackage extends Component {
 
     const rendered = this._renderedDeps;
     if (!rendered) {
-      throw new Error('assertion failed');
+      throw new Error("assertion failed");
     }
     pkg.dependencies = resolveDeps(pkg.dependencies, rendered.dependencies);
-    pkg.devDependencies = resolveDeps(pkg.devDependencies, rendered.devDependencies);
-    pkg.peerDependencies = resolveDeps(pkg.peerDependencies, rendered.peerDependencies);
+    pkg.devDependencies = resolveDeps(
+      pkg.devDependencies,
+      rendered.devDependencies
+    );
+    pkg.peerDependencies = resolveDeps(
+      pkg.peerDependencies,
+      rendered.peerDependencies
+    );
 
     const updated = JSON.stringify(pkg, undefined, 2);
 
@@ -1025,10 +1085,19 @@ export class NodePackage extends Component {
 
   private renderPublishConfig() {
     // omit values if they are the same as the npm defaults
-    return resolveJson({
-      registry: this.npmRegistryUrl !== DEFAULT_NPM_REGISTRY_URL ? this.npmRegistryUrl : undefined,
-      access: this.npmAccess !== defaultNpmAccess(this.packageName) ? this.npmAccess : undefined,
-    }, { omitEmpty: true });
+    return resolveJson(
+      {
+        registry:
+          this.npmRegistryUrl !== DEFAULT_NPM_REGISTRY_URL
+            ? this.npmRegistryUrl
+            : undefined,
+        access:
+          this.npmAccess !== defaultNpmAccess(this.packageName)
+            ? this.npmAccess
+            : undefined,
+      },
+      { omitEmpty: true }
+    );
   }
 
   private renderKeywords() {
@@ -1041,13 +1110,13 @@ export class NodePackage extends Component {
   }
 
   private autoDiscoverBinaries() {
-    const binrel = 'bin';
+    const binrel = "bin";
     const bindir = join(this.project.outdir, binrel);
     if (existsSync(bindir)) {
       for (const file of readdirSync(bindir)) {
         try {
           accessSync(join(bindir, file), constants.X_OK);
-          this.bin[file] = join(binrel, file).replace(/\\/g, '/');
+          this.bin[file] = join(binrel, file).replace(/\\/g, "/");
         } catch (e) {
           // not executable, skip
         }
@@ -1065,8 +1134,14 @@ export class NodePackage extends Component {
         organization: options.authorOrganization ?? false,
       };
     } else {
-      if (options.authorEmail || options.authorUrl || options.authorOrganization !== undefined) {
-        throw new Error('"authorName" is required if specifying "authorEmail" or "authorUrl"');
+      if (
+        options.authorEmail ||
+        options.authorUrl ||
+        options.authorOrganization !== undefined
+      ) {
+        throw new Error(
+          '"authorName" is required if specifying "authorEmail" or "authorUrl"'
+        );
       }
     }
     return author;
@@ -1078,20 +1153,21 @@ export class NodePackage extends Component {
 
   private renderScripts() {
     const result: any = {};
-    for (const task of this.project.tasks.all.sort((x, y) => x.name.localeCompare(y.name))) {
+    for (const task of this.project.tasks.all.sort((x, y) =>
+      x.name.localeCompare(y.name)
+    )) {
       result[task.name] = this.npmScriptForTask(task);
     }
 
     return result;
   }
 
-
   private npmScriptForTask(task: Task) {
     return `${this.projenCommand} ${task.name}`;
   }
 
   private readPackageJson() {
-    const file = join(this.project.outdir, 'package.json');
+    const file = join(this.project.outdir, "package.json");
     if (!existsSync(file)) {
       return undefined;
     }
@@ -1100,7 +1176,9 @@ export class NodePackage extends Component {
   }
 
   private installDependencies() {
-    exec(this.renderInstallCommand(this.isAutomatedBuild), { cwd: this.project.outdir });
+    exec(this.renderInstallCommand(this.isAutomatedBuild), {
+      cwd: this.project.outdir,
+    });
   }
 }
 
@@ -1119,17 +1197,17 @@ export enum NodePackageManager {
   /**
    * Use `yarn` as the package manager.
    */
-  YARN = 'yarn',
+  YARN = "yarn",
 
   /**
    * Use `npm` as the package manager.
    */
-  NPM = 'npm',
+  NPM = "npm",
 
   /**
    * Use `pnpm` as the package manager.
    */
-  PNPM = 'pnpm'
+  PNPM = "pnpm",
 }
 
 /**
@@ -1139,12 +1217,12 @@ export enum NpmAccess {
   /**
    * Package is public.
    */
-  PUBLIC = 'public',
+  PUBLIC = "public",
 
   /**
    * Package can only be accessed with credentials.
    */
-  RESTRICTED = 'restricted'
+  RESTRICTED = "restricted",
 }
 
 interface NpmDependencies {
@@ -1157,14 +1235,17 @@ interface NpmDependencies {
  * Determines if an npm package is "scoped" (i.e. it starts with "xxx@").
  */
 function isScoped(packageName: string) {
-  return packageName.includes('@');
+  return packageName.includes("@");
 }
 
 function defaultNpmAccess(packageName: string) {
   return isScoped(packageName) ? NpmAccess.RESTRICTED : NpmAccess.PUBLIC;
 }
 
-export function defaultNpmToken(npmToken: string | undefined, registry: string | undefined) {
+export function defaultNpmToken(
+  npmToken: string | undefined,
+  registry: string | undefined
+) {
   // if we are publishing to AWS CdodeArtifact, no NPM_TOKEN used (will be requested using AWS CLI later).
   if (isAwsCodeArtifactRegistry(registry)) {
     return undefined;
@@ -1172,16 +1253,19 @@ export function defaultNpmToken(npmToken: string | undefined, registry: string |
 
   // if we are publishing to GitHub Packages, default to GITHUB_TOKEN.
   const isGitHubPackages = registry === GITHUB_PACKAGES_REGISTRY;
-  return npmToken ?? (isGitHubPackages ? DEFAULT_GITHUB_TOKEN_SECRET : DEFAULT_NPM_TOKEN_SECRET);
+  return (
+    npmToken ??
+    (isGitHubPackages ? DEFAULT_GITHUB_TOKEN_SECRET : DEFAULT_NPM_TOKEN_SECRET)
+  );
 }
 
 function determineLockfile(packageManager: NodePackageManager) {
   if (packageManager === NodePackageManager.YARN) {
-    return 'yarn.lock';
+    return "yarn.lock";
   } else if (packageManager === NodePackageManager.NPM) {
-    return 'package-lock.json';
+    return "package-lock.json";
   } else if (packageManager === NodePackageManager.PNPM) {
-    return 'pnpm-lock.yaml';
+    return "pnpm-lock.yaml";
   }
 
   throw new Error(`unsupported package manager ${packageManager}`);

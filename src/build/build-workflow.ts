@@ -1,18 +1,23 @@
-import { Task } from '..';
-import { Component } from '../component';
-import { GitHub, GithubWorkflow, GitIdentity } from '../github';
-import { BUILD_ARTIFACT_NAME, DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
-import { WorkflowActions } from '../github/workflow-actions';
-import { Job, JobPermission, JobStep, Tools } from '../github/workflows-model';
-import { NodeProject } from '../javascript';
-import { Project } from '../project';
+import { Task } from "..";
+import { Component } from "../component";
+import { GitHub, GithubWorkflow, GitIdentity } from "../github";
+import {
+  BUILD_ARTIFACT_NAME,
+  DEFAULT_GITHUB_ACTIONS_USER,
+} from "../github/constants";
+import { WorkflowActions } from "../github/workflow-actions";
+import { Job, JobPermission, JobStep, Tools } from "../github/workflows-model";
+import { NodeProject } from "../javascript";
+import { Project } from "../project";
 
-const PULL_REQUEST_REF = '${{ github.event.pull_request.head.ref }}';
-const PULL_REQUEST_REPOSITORY = '${{ github.event.pull_request.head.repo.full_name }}';
-const BUILD_JOBID = 'build';
-const SELF_MUTATION_STEP = 'self_mutation';
-const SELF_MUTATION_HAPPENED_OUTPUT = 'self_mutation_happened';
-const IS_FORK = 'github.event.pull_request.head.repo.full_name != github.repository';
+const PULL_REQUEST_REF = "${{ github.event.pull_request.head.ref }}";
+const PULL_REQUEST_REPOSITORY =
+  "${{ github.event.pull_request.head.repo.full_name }}";
+const BUILD_JOBID = "build";
+const SELF_MUTATION_STEP = "self_mutation";
+const SELF_MUTATION_HAPPENED_OUTPUT = "self_mutation_happened";
+const IS_FORK =
+  "github.event.pull_request.head.repo.full_name != github.repository";
 const NOT_FORK = `!(${IS_FORK})`;
 const SELF_MUTATION_CONDITION = `needs.${BUILD_JOBID}.outputs.${SELF_MUTATION_HAPPENED_OUTPUT}`;
 
@@ -89,7 +94,9 @@ export class BuildWorkflow extends Component {
 
     const github = GitHub.of(project);
     if (!github) {
-      throw new Error('BuildWorkflow is currently only supported for GitHub projects');
+      throw new Error(
+        "BuildWorkflow is currently only supported for GitHub projects"
+      );
     }
 
     this.github = github;
@@ -100,7 +107,7 @@ export class BuildWorkflow extends Component {
     this.artifactsDirectory = options.artifactsDirectory;
     const mutableBuilds = options.mutableBuild ?? true;
 
-    this.workflow = new GithubWorkflow(github, 'build');
+    this.workflow = new GithubWorkflow(github, "build");
     this.workflow.on({
       pullRequest: {},
       workflowDispatch: {}, // allow manual triggering
@@ -115,10 +122,12 @@ export class BuildWorkflow extends Component {
 
   private addBuildJob(options: BuildWorkflowOptions) {
     this.workflow.addJob(BUILD_JOBID, {
-      runsOn: ['ubuntu-latest'],
-      container: options.containerImage ? { image: options.containerImage } : undefined,
+      runsOn: ["ubuntu-latest"],
+      container: options.containerImage
+        ? { image: options.containerImage }
+        : undefined,
       env: {
-        CI: 'true',
+        CI: "true",
         ...options.env,
       },
       permissions: {
@@ -165,8 +174,8 @@ export class BuildWorkflow extends Component {
 
     if (this.artifactsDirectory) {
       steps.push({
-        name: 'Download build artifacts',
-        uses: 'actions/download-artifact@v2',
+        name: "Download build artifacts",
+        uses: "actions/download-artifact@v2",
         with: {
           name: BUILD_ARTIFACT_NAME,
           path: this.artifactsDirectory,
@@ -209,7 +218,7 @@ export class BuildWorkflow extends Component {
         checkoutRepo: true,
         installDeps: true,
         tools: options.tools,
-      },
+      }
     );
   }
 
@@ -223,46 +232,50 @@ export class BuildWorkflow extends Component {
    *
    * @param options Specify tools and other options
    */
-  public addPostBuildJobCommands(id: string, commands: string[], options?: AddPostBuildJobCommandsOptions) {
+  public addPostBuildJobCommands(
+    id: string,
+    commands: string[],
+    options?: AddPostBuildJobCommandsOptions
+  ) {
     const steps = [];
 
     if (options?.checkoutRepo) {
-      steps.push(
-        {
-          name: 'Checkout',
-          uses: 'actions/checkout@v2',
-          with: {
-            ref: PULL_REQUEST_REF,
-            repository: PULL_REQUEST_REPOSITORY,
-          },
+      steps.push({
+        name: "Checkout",
+        uses: "actions/checkout@v2",
+        with: {
+          ref: PULL_REQUEST_REF,
+          repository: PULL_REQUEST_REPOSITORY,
         },
-      );
+      });
     }
 
-    if (options?.checkoutRepo && options?.installDeps && this.project instanceof NodeProject) {
-      steps.push(
-        {
-          name: 'Install dependencies',
-          run: `${this.project.package.installCommand}`,
-        },
-      );
+    if (
+      options?.checkoutRepo &&
+      options?.installDeps &&
+      this.project instanceof NodeProject
+    ) {
+      steps.push({
+        name: "Install dependencies",
+        run: `${this.project.package.installCommand}`,
+      });
     }
 
-    steps.push({ run: commands.join('\n') });
+    steps.push({ run: commands.join("\n") });
 
     this.addPostBuildJob(id, {
       permissions: {
         contents: JobPermission.READ,
       },
       tools: options?.tools,
-      runsOn: ['ubuntu-latest'],
+      runsOn: ["ubuntu-latest"],
       steps,
     });
   }
 
   private addSelfMutationJob() {
-    this.workflow.addJob('self-mutation', {
-      runsOn: ['ubuntu-latest'],
+    this.workflow.addJob("self-mutation", {
+      runsOn: ["ubuntu-latest"],
       permissions: {
         contents: JobPermission.WRITE,
       },
@@ -277,12 +290,12 @@ export class BuildWorkflow extends Component {
         }),
         ...WorkflowActions.setGitIdentity(this.gitIdentity),
         {
-          name: 'Push changes',
+          name: "Push changes",
           run: [
-            '  git add .',
+            "  git add .",
             '  git commit -m "chore: self mutation"',
             `  git push origin HEAD:${PULL_REQUEST_REF}`,
-          ].join('\n'),
+          ].join("\n"),
         },
       ],
     });
@@ -294,8 +307,8 @@ export class BuildWorkflow extends Component {
   private renderBuildSteps(): JobStep[] {
     return [
       {
-        name: 'Checkout',
-        uses: 'actions/checkout@v2',
+        name: "Checkout",
+        uses: "actions/checkout@v2",
         with: {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
@@ -315,18 +328,23 @@ export class BuildWorkflow extends Component {
       ...WorkflowActions.createUploadGitPatch({
         stepId: SELF_MUTATION_STEP,
         outputName: SELF_MUTATION_HAPPENED_OUTPUT,
-        mutationError: 'Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.',
+        mutationError:
+          "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.",
       }),
 
       // upload the build artifact only if we have post-build jobs (otherwise, there's no point)
-      ...(this._postBuildJobs.length == 0 ? [] : [{
-        name: 'Upload artifact',
-        uses: 'actions/upload-artifact@v2.1.1',
-        with: {
-          name: BUILD_ARTIFACT_NAME,
-          path: this.artifactsDirectory,
-        },
-      }]),
+      ...(this._postBuildJobs.length == 0
+        ? []
+        : [
+            {
+              name: "Upload artifact",
+              uses: "actions/upload-artifact@v2.1.1",
+              with: {
+                name: BUILD_ARTIFACT_NAME,
+                path: this.artifactsDirectory,
+              },
+            },
+          ]),
     ];
   }
 }

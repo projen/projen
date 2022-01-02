@@ -1,12 +1,15 @@
-import { join } from 'path';
-import { DependencyType, SampleDir } from '..';
-import { JavaProject, JavaProjectOptions } from '../java';
-import { AwsCdkDeps, AwsCdkDepsCommonOptions } from './awscdk-deps';
-import { AwsCdkDepsJava } from './awscdk-deps-java';
-import { CdkConfig, CdkConfigCommonOptions } from './cdk-config';
-import { CdkTasks } from './cdk-tasks';
+import { join } from "path";
+import { DependencyType, SampleDir } from "..";
+import { JavaProject, JavaProjectOptions } from "../java";
+import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
+import { AwsCdkDepsJava } from "./awscdk-deps-java";
+import { CdkConfig, CdkConfigCommonOptions } from "./cdk-config";
+import { CdkTasks } from "./cdk-tasks";
 
-export interface AwsCdkJavaAppOptions extends JavaProjectOptions, CdkConfigCommonOptions, AwsCdkDepsCommonOptions {
+export interface AwsCdkJavaAppOptions
+  extends JavaProjectOptions,
+    CdkConfigCommonOptions,
+    AwsCdkDepsCommonOptions {
   /**
    * The name of the Java class with the static `main()` method. This method
    * should call `app.synth()` on the CDK app.
@@ -53,18 +56,18 @@ export class AwsCdkJavaApp extends JavaProject {
   public readonly mainClassName: string;
 
   constructor(options: AwsCdkJavaAppOptions) {
-    const mainClassComponents = options.mainClass.split('.');
+    const mainClassComponents = options.mainClass.split(".");
     const mainPackage = mainClassComponents.slice(0, -1);
     const mainClassName = mainClassComponents[mainClassComponents.length - 1];
 
     super({
       ...options,
       sample: false,
-      sampleJavaPackage: mainPackage.join('.'),
+      sampleJavaPackage: mainPackage.join("."),
     });
 
     this.mainClass = options.mainClass;
-    this.mainPackage = mainPackage.join('.');
+    this.mainPackage = mainPackage.join(".");
     this.mainClassName = mainClassName;
 
     this.cdkDeps = new AwsCdkDepsJava(this, {
@@ -99,24 +102,28 @@ export class AwsCdkJavaApp extends JavaProject {
   }
 
   private addSample() {
-    const pkg = this.mainPackage.split('.');
+    const pkg = this.mainPackage.split(".");
     const javaFile = `${this.mainClassName}.java`;
-    new SampleDir(this, join('src', 'main', 'java', ...pkg), {
+    new SampleDir(this, join("src", "main", "java", ...pkg), {
       files: {
         [javaFile]: [
-          `package ${pkg.join('.')};`,
-          '',
-          this.cdkDeps.cdkMajorVersion == 1 ? 'import software.amazon.awscdk.core.App;' : 'import software.amazon.awscdk.App;',
-          this.cdkDeps.cdkMajorVersion == 1 ? 'import software.amazon.awscdk.core.Stack;' : 'import software.amazon.awscdk.Stack;',
-          '',
+          `package ${pkg.join(".")};`,
+          "",
+          this.cdkDeps.cdkMajorVersion == 1
+            ? "import software.amazon.awscdk.core.App;"
+            : "import software.amazon.awscdk.App;",
+          this.cdkDeps.cdkMajorVersion == 1
+            ? "import software.amazon.awscdk.core.Stack;"
+            : "import software.amazon.awscdk.Stack;",
+          "",
           `public class ${this.mainClassName} {`,
-          '  public static void main(final String[] args) {',
-          '    App app = new App();',
+          "  public static void main(final String[] args) {",
+          "    App app = new App();",
           '    new Stack(app, "MyStack");',
-          '    app.synth();',
-          '  }',
-          '}',
-        ].join('\n'),
+          "    app.synth();",
+          "  }",
+          "}",
+        ].join("\n"),
       },
     });
   }

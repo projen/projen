@@ -1,27 +1,26 @@
-import { Component } from '../component';
-import { GitHub, GithubWorkflow, GitIdentity, workflows } from '../github';
-import { DEFAULT_GITHUB_ACTIONS_USER } from '../github/constants';
-import { WorkflowActions } from '../github/workflow-actions';
-import { ContainerOptions, JobStep } from '../github/workflows-model';
-import { NodeProject } from '../javascript';
-import { warn } from '../logging';
-import { Task } from '../task';
+import { Component } from "../component";
+import { GitHub, GithubWorkflow, GitIdentity, workflows } from "../github";
+import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
+import { WorkflowActions } from "../github/workflow-actions";
+import { ContainerOptions, JobStep } from "../github/workflows-model";
+import { NodeProject } from "../javascript";
+import { warn } from "../logging";
+import { Task } from "../task";
 
 function context(value: string) {
   return `\${{ ${value} }}`;
 }
 
-const REPO = context('github.repository');
-const RUN_ID = context('github.run_id');
+const REPO = context("github.repository");
+const RUN_ID = context("github.run_id");
 const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
-const CREATE_PATCH_STEP_ID = 'create_patch';
-const PATCH_CREATED_OUTPUT = 'patch_created';
+const CREATE_PATCH_STEP_ID = "create_patch";
+const PATCH_CREATED_OUTPUT = "patch_created";
 
 /**
  * Options for `UpgradeDependencies`.
  */
 export interface UpgradeDependenciesOptions {
-
   /**
    * List of package names to exclude during the upgrade.
    *
@@ -88,7 +87,6 @@ export interface UpgradeDependenciesOptions {
  * Upgrade node project dependencies.
  */
 export class UpgradeDependencies extends Component {
-
   /**
    * The workflows that execute the upgrades. One workflow per branch.
    */
@@ -116,13 +114,14 @@ export class UpgradeDependencies extends Component {
 
     this._project = project;
     this.options = options;
-    this.pullRequestTitle = options.pullRequestTitle ?? 'upgrade dependencies';
+    this.pullRequestTitle = options.pullRequestTitle ?? "upgrade dependencies";
     this.ignoresProjen = this.options.ignoreProjen ?? true;
-    this.gitIdentity = options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
+    this.gitIdentity =
+      options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.postBuildSteps = [];
     this.containerOptions = options.workflowOptions?.container;
 
-    project.addDevDeps('npm-check-updates@^12');
+    project.addDevDeps("npm-check-updates@^12");
   }
 
   /**
@@ -142,46 +141,58 @@ export class UpgradeDependencies extends Component {
       // just like not specifying anything.
       const defaultBranch = undefined;
 
-      const branches = this.options.workflowOptions?.branches ?? (this._project.release?.branches ?? [defaultBranch]);
+      const branches = this.options.workflowOptions?.branches ??
+        this._project.release?.branches ?? [defaultBranch];
       for (const branch of branches) {
-        this.workflows.push(this.createWorkflow(task, this._project.github, branch));
+        this.workflows.push(
+          this.createWorkflow(task, this._project.github, branch)
+        );
       }
     }
   }
 
   private createTask(): Task {
-    const taskName = this.options.taskName ?? 'upgrade';
+    const taskName = this.options.taskName ?? "upgrade";
     const task = this._project.addTask(taskName, {
       // this task should not run in CI mode because its designed to
       // update package.json and lock files.
-      env: { CI: '0' },
+      env: { CI: "0" },
       description: this.pullRequestTitle,
     });
 
     const exclude = this.options.exclude ?? [];
     if (this.ignoresProjen) {
-      exclude.push('projen');
+      exclude.push("projen");
     }
 
-    for (const dep of ['dev', 'optional', 'peer', 'prod', 'bundle']) {
-
-      const ncuCommand = ['npm-check-updates', '--dep', dep, '--upgrade', '--target=minor'];
+    for (const dep of ["dev", "optional", "peer", "prod", "bundle"]) {
+      const ncuCommand = [
+        "npm-check-updates",
+        "--dep",
+        dep,
+        "--upgrade",
+        "--target=minor",
+      ];
       if (exclude.length > 0) {
-        ncuCommand.push(`--reject='${exclude.join(',')}'`);
+        ncuCommand.push(`--reject='${exclude.join(",")}'`);
       }
       if (this.options.include) {
-        ncuCommand.push(`--filter='${this.options.include.join(',')}'`);
+        ncuCommand.push(`--filter='${this.options.include.join(",")}'`);
       }
 
-      task.exec(ncuCommand.join(' '));
-
+      task.exec(ncuCommand.join(" "));
     }
 
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
     task.exec(this._project.package.installAndUpdateLockfileCommand);
 
     // run upgrade command to upgrade transitive deps as well
-    task.exec(this._project.package.renderUpgradePackagesCommand(exclude, this.options.include));
+    task.exec(
+      this._project.package.renderUpgradePackagesCommand(
+        exclude,
+        this.options.include
+      )
+    );
 
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
     task.exec(this._project.projenCommand);
@@ -189,14 +200,24 @@ export class UpgradeDependencies extends Component {
     return task;
   }
 
-  private createWorkflow(task: Task, github: GitHub, branch?: string): GithubWorkflow {
-    const schedule = this.options.workflowOptions?.schedule ?? UpgradeDependenciesSchedule.DAILY;
+  private createWorkflow(
+    task: Task,
+    github: GitHub,
+    branch?: string
+  ): GithubWorkflow {
+    const schedule =
+      this.options.workflowOptions?.schedule ??
+      UpgradeDependenciesSchedule.DAILY;
 
-    const workflowName = `${task.name}${branch ? `-${branch.replace(/\//g, '-')}` : ''}`;
+    const workflowName = `${task.name}${
+      branch ? `-${branch.replace(/\//g, "-")}` : ""
+    }`;
     const workflow = github.addWorkflow(workflowName);
     const triggers: workflows.Triggers = {
       workflowDispatch: {},
-      schedule: schedule.cron ? schedule.cron.map(e => ({ cron: e })) : undefined,
+      schedule: schedule.cron
+        ? schedule.cron.map((e) => ({ cron: e }))
+        : undefined,
     };
     workflow.on(triggers);
 
@@ -212,7 +233,7 @@ export class UpgradeDependencies extends Component {
   }
 
   private createUpgrade(task: Task, branch?: string): Upgrade {
-    const runsOn = this.options.workflowOptions?.runsOn ?? ['ubuntu-latest'];
+    const runsOn = this.options.workflowOptions?.runsOn ?? ["ubuntu-latest"];
 
     // thats all we should need at this stage since all we do is clone.
     // note that this also prevents new code that is introduced in the upgrade
@@ -223,29 +244,31 @@ export class UpgradeDependencies extends Component {
 
     const steps: workflows.JobStep[] = [
       {
-        name: 'Checkout',
-        uses: 'actions/checkout@v2',
+        name: "Checkout",
+        uses: "actions/checkout@v2",
         with: branch ? { ref: branch } : undefined,
       },
       ...this._project.installWorkflowSteps,
       {
-        name: 'Upgrade dependencies',
+        name: "Upgrade dependencies",
         run: this._project.runTaskCommand(task),
       },
     ];
 
     steps.push(...this.postBuildSteps);
-    steps.push(...WorkflowActions.createUploadGitPatch({
-      stepId: CREATE_PATCH_STEP_ID,
-      outputName: PATCH_CREATED_OUTPUT,
-    }));
+    steps.push(
+      ...WorkflowActions.createUploadGitPatch({
+        stepId: CREATE_PATCH_STEP_ID,
+        outputName: PATCH_CREATED_OUTPUT,
+      })
+    );
 
     return {
       job: {
-        name: 'Upgrade',
+        name: "Upgrade",
         container: this.containerOptions,
         permissions: permissions,
-        runsOn: runsOn ?? ['ubuntu-latest'],
+        runsOn: runsOn ?? ["ubuntu-latest"],
         steps: steps,
         outputs: {
           [PATCH_CREATED_OUTPUT]: {
@@ -254,32 +277,35 @@ export class UpgradeDependencies extends Component {
           },
         },
       },
-      jobId: 'upgrade',
+      jobId: "upgrade",
       ref: branch,
     };
   }
 
   private createPr(workflow: GithubWorkflow, upgrade: Upgrade): PR {
-    const secretName = this.options.workflowOptions?.secret ?? workflow.projenTokenSecret;
+    const secretName =
+      this.options.workflowOptions?.secret ?? workflow.projenTokenSecret;
     if (this.options.workflowOptions?.secret === workflow.projenTokenSecret) {
-      warn(`No need to specify "workflowOptions.secret" when it is the same as the default workflow projen token secret ("${workflow.projenTokenSecret}").`);
+      warn(
+        `No need to specify "workflowOptions.secret" when it is the same as the default workflow projen token secret ("${workflow.projenTokenSecret}").`
+      );
     }
     const token = context(`secrets.${secretName}`);
-    const runsOn = this.options.workflowOptions?.runsOn ?? ['ubuntu-latest'];
+    const runsOn = this.options.workflowOptions?.runsOn ?? ["ubuntu-latest"];
     const workflowName = workflow.name;
     const branchName = `github-actions/${workflowName}`;
-    const prStepId = 'create-pr';
+    const prStepId = "create-pr";
 
     const title = `chore(deps): ${this.pullRequestTitle}`;
     const description = [
-      'Upgrades project dependencies. See details in [workflow run].',
-      '',
+      "Upgrades project dependencies. See details in [workflow run].",
+      "",
       `[Workflow Run]: ${RUN_URL}`,
-      '',
-      '------',
-      '',
+      "",
+      "------",
+      "",
       `*Automatically created by projen via the "${workflow.name}" workflow*`,
-    ].join('\n');
+    ].join("\n");
 
     const comitter = `${this.gitIdentity.name} <${this.gitIdentity.email}>`;
 
@@ -290,38 +316,38 @@ export class UpgradeDependencies extends Component {
       }),
       ...WorkflowActions.setGitIdentity(this.gitIdentity),
       {
-        name: 'Create Pull Request',
+        name: "Create Pull Request",
         id: prStepId,
-        uses: 'peter-evans/create-pull-request@v3',
+        uses: "peter-evans/create-pull-request@v3",
         with: {
           // the pr can modify workflow files, so we need to use the custom
           // secret if one is configured.
-          'token': token,
-          'commit-message': `${title}\n\n${description}`,
-          'branch': branchName,
-          'title': title,
-          'labels': this.options.workflowOptions?.labels?.join(',') || undefined,
-          'body': description,
-          'author': comitter,
-          'committer': comitter,
-          'signoff': this.options.signoff ?? true,
+          token: token,
+          "commit-message": `${title}\n\n${description}`,
+          branch: branchName,
+          title: title,
+          labels: this.options.workflowOptions?.labels?.join(",") || undefined,
+          body: description,
+          author: comitter,
+          committer: comitter,
+          signoff: this.options.signoff ?? true,
         },
       },
     ];
 
     return {
       job: {
-        name: 'Create Pull Request',
+        name: "Create Pull Request",
         if: `\${{ needs.${upgrade.jobId}.outputs.${PATCH_CREATED_OUTPUT} }}`,
         needs: [upgrade.jobId],
         permissions: {
           contents: workflows.JobPermission.WRITE,
           pullRequests: workflows.JobPermission.WRITE,
         },
-        runsOn: runsOn ?? ['ubuntu-latest'],
+        runsOn: runsOn ?? ["ubuntu-latest"],
         steps: steps,
       },
-      jobId: 'pr',
+      jobId: "pr",
     };
   }
 }
@@ -341,7 +367,6 @@ interface PR {
  * Options for `UpgradeDependencies.workflowOptions`.
  */
 export interface UpgradeDependenciesWorkflowOptions {
-
   /**
    * Schedule to run on.
    *
@@ -403,7 +428,6 @@ export interface UpgradeDependenciesWorkflowOptions {
  * How often to check for new versions and raise pull requests for version upgrades.
  */
 export class UpgradeDependenciesSchedule {
-
   /**
    * Disables automatic upgrades.
    */
@@ -412,22 +436,28 @@ export class UpgradeDependenciesSchedule {
   /**
    * At 00:00.
    */
-  public static readonly DAILY = new UpgradeDependenciesSchedule(['0 0 * * *']);
+  public static readonly DAILY = new UpgradeDependenciesSchedule(["0 0 * * *"]);
 
   /**
    * At 00:00 on every day-of-week from Monday through Friday.
    */
-  public static readonly WEEKDAY = new UpgradeDependenciesSchedule(['0 0 * * 1-5']);
+  public static readonly WEEKDAY = new UpgradeDependenciesSchedule([
+    "0 0 * * 1-5",
+  ]);
 
   /**
    * At 00:00 on Monday.
    */
-  public static readonly WEEKLY = new UpgradeDependenciesSchedule(['0 0 * * 1']);
+  public static readonly WEEKLY = new UpgradeDependenciesSchedule([
+    "0 0 * * 1",
+  ]);
 
   /**
    * At 00:00 on day-of-month 1.
    */
-  public static readonly MONTHLY = new UpgradeDependenciesSchedule(['0 0 1 * *']);
+  public static readonly MONTHLY = new UpgradeDependenciesSchedule([
+    "0 0 1 * *",
+  ]);
 
   /**
    * Create a schedule from a raw cron expression.

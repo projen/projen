@@ -1,19 +1,26 @@
-import { JsonFile } from '../src/json';
-import { decamelizeKeysRecursively, dedupArray, deepMerge, isTruthy, getFilePermissions, formatAsPythonModule } from '../src/util';
-import { TestProject } from './util';
+import { JsonFile } from "../src/json";
+import {
+  decamelizeKeysRecursively,
+  dedupArray,
+  deepMerge,
+  isTruthy,
+  getFilePermissions,
+  formatAsPythonModule,
+} from "../src/util";
+import { TestProject } from "./util";
 
-describe('decamelizeRecursively', () => {
-  test('decamel recurses an object structure', () => {
+describe("decamelizeRecursively", () => {
+  test("decamel recurses an object structure", () => {
     // GIVEN
     const input = {
-      dependsOn: ['a', 'b', 'c'],
+      dependsOn: ["a", "b", "c"],
       volumes: [
         {
-          driver: 'tmpfs',
+          driver: "tmpfs",
           driverOpts: {
-            type: 'nfs',
-            o: 'addr=...',
-            device: ':/docker/example',
+            type: "nfs",
+            o: "addr=...",
+            device: ":/docker/example",
           },
         },
       ],
@@ -24,33 +31,35 @@ describe('decamelizeRecursively', () => {
 
     // THEN
     expect(output).toEqual({
-      depends_on: ['a', 'b', 'c'],
+      depends_on: ["a", "b", "c"],
       volumes: [
         {
-          driver: 'tmpfs',
+          driver: "tmpfs",
           driver_opts: {
-            type: 'nfs',
-            o: 'addr=...',
-            device: ':/docker/example',
+            type: "nfs",
+            o: "addr=...",
+            device: ":/docker/example",
           },
         },
       ],
     });
   });
 
-  test('decamel quits when it recurses too deeply', () => {
+  test("decamel quits when it recurses too deeply", () => {
     // GIVEN
     const circle: Record<string, any> = {};
     circle.circle = circle;
 
     // WHEN
-    expect(() => decamelizeKeysRecursively(circle)).toThrow(/circular reference/);
+    expect(() => decamelizeKeysRecursively(circle)).toThrow(
+      /circular reference/
+    );
   });
 
-  test('decamel can know when not to decamelize a key', () => {
+  test("decamel can know when not to decamelize a key", () => {
     // GIVEN
     const input = {
-      dependsOn: ['a', 'b'],
+      dependsOn: ["a", "b"],
       environment: {
         leaveThisAlone: true,
         LEAVE_CASE_ALONE: true,
@@ -60,13 +69,13 @@ describe('decamelizeRecursively', () => {
     // WHEN
     const output = decamelizeKeysRecursively(input, {
       shouldDecamelize(path, _value) {
-        return !/^environment\./.test(path.join('.'));
+        return !/^environment\./.test(path.join("."));
       },
     });
 
     // THEN
     expect(output).toEqual({
-      depends_on: ['a', 'b'],
+      depends_on: ["a", "b"],
       environment: {
         leaveThisAlone: true,
         LEAVE_CASE_ALONE: true,
@@ -75,19 +84,19 @@ describe('decamelizeRecursively', () => {
   });
 });
 
-test('isTruthy', () => {
+test("isTruthy", () => {
   expect(isTruthy(undefined)).toEqual(false);
-  expect(isTruthy('false')).toEqual(false);
-  expect(isTruthy('0')).toEqual(false);
-  expect(isTruthy('null')).toEqual(false);
-  expect(isTruthy('')).toEqual(false);
-  expect(isTruthy('true')).toEqual(true);
-  expect(isTruthy('1')).toEqual(true);
-  expect(isTruthy('enabled')).toEqual(true);
+  expect(isTruthy("false")).toEqual(false);
+  expect(isTruthy("0")).toEqual(false);
+  expect(isTruthy("null")).toEqual(false);
+  expect(isTruthy("")).toEqual(false);
+  expect(isTruthy("true")).toEqual(true);
+  expect(isTruthy("1")).toEqual(true);
+  expect(isTruthy("enabled")).toEqual(true);
 });
 
-describe('deepMerge (destructive: false)', () => {
-  test('merges objects', () => {
+describe("deepMerge (destructive: false)", () => {
+  test("merges objects", () => {
     // GIVEN
     const original = { a: { b: 3 } };
 
@@ -98,9 +107,9 @@ describe('deepMerge (destructive: false)', () => {
     expect(original).toEqual({ a: { b: 3, c: 4 } });
   });
 
-  test('overwrites non-objects', () => {
+  test("overwrites non-objects", () => {
     // GIVEN
-    const original = { a: 'foo' };
+    const original = { a: "foo" };
 
     // WHEN
     deepMerge([original, { a: { b: 3 } }]);
@@ -120,7 +129,7 @@ describe('deepMerge (destructive: false)', () => {
     expect(original).toEqual({ a: 1 });
   });
 
-  test('does not recurse on projects', () => {
+  test("does not recurse on projects", () => {
     // GIVEN
     const proj1 = new TestProject();
     const proj2 = new TestProject();
@@ -134,11 +143,11 @@ describe('deepMerge (destructive: false)', () => {
     expect(objA).toEqual(objB);
   });
 
-  test('does not recurse on components', () => {
+  test("does not recurse on components", () => {
     // GIVEN
     const proj = new TestProject();
-    const comp1 = new JsonFile(proj, 'foo', { obj: 3 });
-    const comp2 = new JsonFile(proj, 'bar', { obj: 5 });
+    const comp1 = new JsonFile(proj, "foo", { obj: 3 });
+    const comp2 = new JsonFile(proj, "bar", { obj: 5 });
     const objA = { a: comp1 };
     const objB = { a: comp2 };
 
@@ -150,8 +159,8 @@ describe('deepMerge (destructive: false)', () => {
   });
 });
 
-describe('deepMerge (destructive: true)', () => {
-  test('merges objects', () => {
+describe("deepMerge (destructive: true)", () => {
+  test("merges objects", () => {
     // GIVEN
     const original = { a: { b: 3 } };
 
@@ -162,9 +171,9 @@ describe('deepMerge (destructive: true)', () => {
     expect(original).toEqual({ a: { b: 3, c: 4 } });
   });
 
-  test('overwrites non-objects', () => {
+  test("overwrites non-objects", () => {
     // GIVEN
-    const original = { a: 'foo' };
+    const original = { a: "foo" };
 
     // WHEN
     deepMerge([original, { a: { b: 3 } }], true);
@@ -184,7 +193,7 @@ describe('deepMerge (destructive: true)', () => {
     expect(original).toEqual({}); // ! different from the non-destructive case
   });
 
-  test('does not recurse on projects', () => {
+  test("does not recurse on projects", () => {
     // GIVEN
     const proj1 = new TestProject();
     const proj2 = new TestProject();
@@ -198,11 +207,11 @@ describe('deepMerge (destructive: true)', () => {
     expect(objA).toEqual(objB);
   });
 
-  test('does not recurse on components', () => {
+  test("does not recurse on components", () => {
     // GIVEN
     const proj = new TestProject();
-    const comp1 = new JsonFile(proj, 'foo', { obj: 3 });
-    const comp2 = new JsonFile(proj, 'bar', { obj: 5 });
+    const comp1 = new JsonFile(proj, "foo", { obj: 3 });
+    const comp2 = new JsonFile(proj, "bar", { obj: 5 });
     const objA = { a: comp1 };
     const objB = { a: comp2 };
 
@@ -214,22 +223,30 @@ describe('deepMerge (destructive: true)', () => {
   });
 });
 
-test('dedupArray', () => {
-  expect(dedupArray(['a', 'b', 'c'])).toEqual(['a', 'b', 'c']);
-  expect(dedupArray(['a', 'a', 'b', 'a'])).toEqual(['a', 'b']);
+test("dedupArray", () => {
+  expect(dedupArray(["a", "b", "c"])).toEqual(["a", "b", "c"]);
+  expect(dedupArray(["a", "a", "b", "a"])).toEqual(["a", "b"]);
 });
 
-test('getFilePermissions', () => {
-  expect(getFilePermissions({})).toEqual('644');
-  expect(getFilePermissions({ readonly: true, executable: true })).toEqual('500');
-  expect(getFilePermissions({ readonly: true, executable: false })).toEqual('400');
-  expect(getFilePermissions({ readonly: false, executable: true })).toEqual('755');
-  expect(getFilePermissions({ readonly: false, executable: false })).toEqual('644');
-  expect(getFilePermissions({ readonly: false })).toEqual('644');
-  expect(getFilePermissions({ executable: true })).toEqual('755');
+test("getFilePermissions", () => {
+  expect(getFilePermissions({})).toEqual("644");
+  expect(getFilePermissions({ readonly: true, executable: true })).toEqual(
+    "500"
+  );
+  expect(getFilePermissions({ readonly: true, executable: false })).toEqual(
+    "400"
+  );
+  expect(getFilePermissions({ readonly: false, executable: true })).toEqual(
+    "755"
+  );
+  expect(getFilePermissions({ readonly: false, executable: false })).toEqual(
+    "644"
+  );
+  expect(getFilePermissions({ readonly: false })).toEqual("644");
+  expect(getFilePermissions({ executable: true })).toEqual("755");
 });
 
-test('formatAsPythonModule', () => {
-  expect(formatAsPythonModule('foo-bar-baz')).toEqual('foo_bar_baz');
-  expect(formatAsPythonModule('foo.bar.baz')).toEqual('foo_bar_baz');
+test("formatAsPythonModule", () => {
+  expect(formatAsPythonModule("foo-bar-baz")).toEqual("foo_bar_baz");
+  expect(formatAsPythonModule("foo.bar.baz")).toEqual("foo_bar_baz");
 });

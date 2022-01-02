@@ -6,15 +6,15 @@ export enum InitProjectOptionHints {
   /**
    * Display all possible options (grouped by which interface they belong to).
    */
-  ALL = 'all',
+  ALL = "all",
 
   /**
    * Display only featured options, in alphabetical order.
    */
-  FEATURED = 'featured',
+  FEATURED = "featured",
 
   /**
    * Display no extra options.
    */
-  NONE = 'none'
+  NONE = "none",
 }

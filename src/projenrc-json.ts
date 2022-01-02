@@ -1,7 +1,7 @@
-import { existsSync, writeFileSync } from 'fs';
-import { resolve } from 'path';
-import { Component } from './component';
-import { Project } from './project';
+import { existsSync, writeFileSync } from "fs";
+import { resolve } from "path";
+import { Component } from "./component";
+import { Project } from "./project";
 
 export interface ProjenrcOptions {
   /**
@@ -20,11 +20,11 @@ export class Projenrc extends Component {
   constructor(project: Project, options: ProjenrcOptions = {}) {
     super(project);
 
-    this.rcfile = options.filename ?? '.projenrc.json';
+    this.rcfile = options.filename ?? ".projenrc.json";
 
     // this is the task projen executes when running `projen`
-    project.defaultTask.env('FILENAME', this.rcfile);
-    project.defaultTask.builtin('run-projenrc-json');
+    project.defaultTask.env("FILENAME", this.rcfile);
+    project.defaultTask.builtin("run-projenrc-json");
 
     this.generateProjenrc();
   }
@@ -46,6 +46,8 @@ export class Projenrc extends Component {
     };
 
     writeFileSync(rcfile, JSON.stringify(json, null, 2));
-    this.project.logger.info(`Project definition file was created at ${rcfile}`);
+    this.project.logger.info(
+      `Project definition file was created at ${rcfile}`
+    );
   }
 }

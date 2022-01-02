@@ -1,4 +1,4 @@
-import { ConstructLibrary, ConstructLibraryOptions } from '../cdk';
+import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
 
 export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
   /**
@@ -72,20 +72,24 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
     super(options);
 
     if (!options.cdk8sVersion) {
-      throw new Error('Required field cdk8sVersion is not specified.');
+      throw new Error("Required field cdk8sVersion is not specified.");
     }
 
-    this.cdk8sVersion = options.cdk8sVersionPinning ? options.cdk8sVersion : `^${options.cdk8sVersion}`;
+    this.cdk8sVersion = options.cdk8sVersionPinning
+      ? options.cdk8sVersion
+      : `^${options.cdk8sVersion}`;
 
     if (options.constructsVersion) {
-      this.constructsVersion = options.constructsVersionPinning ? options.constructsVersion: `^${options.constructsVersion}`;
+      this.constructsVersion = options.constructsVersionPinning
+        ? options.constructsVersion
+        : `^${options.constructsVersion}`;
     } else {
-      this.constructsVersion = '^3.2.34';
+      this.constructsVersion = "^3.2.34";
     }
 
     this.addPeerDeps(
       `constructs@${this.constructsVersion}`,
-      `cdk8s@${this.cdk8sVersion}`,
+      `cdk8s@${this.cdk8sVersion}`
     );
   }
 }

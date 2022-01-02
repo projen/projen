@@ -1,9 +1,9 @@
-import * as path from 'path';
-import { resolve } from './_resolve';
-import { PROJEN_MARKER, PROJEN_RC } from './common';
-import { Component } from './component';
-import { Project } from './project';
-import { tryReadFileSync, writeFile } from './util';
+import * as path from "path";
+import { resolve } from "./_resolve";
+import { PROJEN_MARKER, PROJEN_RC } from "./common";
+import { Component } from "./component";
+import { Project } from "./project";
+import { tryReadFileSync, writeFile } from "./util";
 
 export interface FileBaseOptions {
   /**
@@ -65,9 +65,12 @@ export abstract class FileBase extends Component {
 
   private _changed?: boolean;
 
-  constructor(project: Project, filePath: string, options: FileBaseOptions = { }) {
+  constructor(
+    project: Project,
+    filePath: string,
+    options: FileBaseOptions = {}
+  ) {
     super(project);
-
 
     this.readonly = options.readonly ?? true;
     this.executable = options.executable ?? false;
@@ -75,7 +78,7 @@ export abstract class FileBase extends Component {
 
     const globPattern = `/${this.path}`;
     const committed = options.committed ?? true;
-    if (committed && filePath !== '.gitattributes') {
+    if (committed && filePath !== ".gitattributes") {
       project.root.annotateGenerated(`/${filePath}`);
     }
 
@@ -84,15 +87,22 @@ export abstract class FileBase extends Component {
     // verify file path is unique within project tree
     const existing = project.root.tryFindFile(this.absolutePath);
     if (existing && existing !== this) {
-      throw new Error(`there is already a file under ${path.relative(project.root.outdir, this.absolutePath)}`);
+      throw new Error(
+        `there is already a file under ${path.relative(
+          project.root.outdir,
+          this.absolutePath
+        )}`
+      );
     }
 
     const editGitignore = options.editGitignore ?? true;
     if (editGitignore) {
-      this.project.addGitIgnore(`${committed ? '!' : ''}${globPattern}`);
+      this.project.addGitIgnore(`${committed ? "!" : ""}${globPattern}`);
     } else {
       if (options.committed != null) {
-        throw new Error('"gitignore" is disabled, so it does not make sense to specify "committed"');
+        throw new Error(
+          '"gitignore" is disabled, so it does not make sense to specify "committed"'
+        );
       }
     }
   }
@@ -112,7 +122,9 @@ export abstract class FileBase extends Component {
   public synthesize() {
     const outdir = this.project.outdir;
     const filePath = path.join(outdir, this.path);
-    const resolver: IResolver = { resolve: (obj, options) => resolve(obj, options) };
+    const resolver: IResolver = {
+      resolve: (obj, options) => resolve(obj, options),
+    };
     const content = this.synthesizeContent(resolver);
     if (content === undefined) {
       return; // skip

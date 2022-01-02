@@ -7,23 +7,25 @@
  * - PROJENRC_FILE: (optional) the name of the JSON file to parse from.
  *   Defaults to `.projenrc.json`.
  */
-import * as fs from 'fs-extra';
-import { InitProjectOptionHints } from './option-hints';
-import { Projects } from './projects';
+import * as fs from "fs-extra";
+import { InitProjectOptionHints } from "./option-hints";
+import { Projects } from "./projects";
 
 let filename = process.env.PROJENRC_FILE;
 
-if (!filename || filename == '') {
-  filename = '.projenrc.json';
+if (!filename || filename == "") {
+  filename = ".projenrc.json";
 }
 
-const { type, ...json } = fs.readJsonSync(filename, { encoding: 'utf8' });
+const { type, ...json } = fs.readJsonSync(filename, { encoding: "utf8" });
 if (!type) {
-  throw new Error('projenrc.json requires a "type" field with the fully qualified type name. e.g. projen.web.ReactProject');
+  throw new Error(
+    'projenrc.json requires a "type" field with the fully qualified type name. e.g. projen.web.ReactProject'
+  );
 }
 
 Projects.createProject({
-  dir: '.',
+  dir: ".",
   projectFqn: type,
   projectOptions: json,
   optionHints: InitProjectOptionHints.NONE,
