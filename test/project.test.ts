@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { JsonFile, Project, TextFile } from '../src';
+import { Component, JsonFile, Project, TextFile } from '../src';
 import { TestProject } from './util';
 
 test('file paths are relative to the project outdir', () => {
@@ -79,4 +79,56 @@ test('github: false disables github integration', () => {
 
   // THEN
   expect(p.github).toBeUndefined();
+});
+
+test('forEachComponent() will be called for each component before synth', () => {
+  // WHEN
+  const calls: Record<string, string[]> = {};
+  const p = new TestProject();
+
+  class NamedComponent extends Component {
+    constructor(project: Project, public readonly name: string) {
+      super(project);
+    }
+  }
+
+  // add a bunch of components before the call
+  new NamedComponent(p, 'p1');
+  new NamedComponent(p, 'p2');
+
+  const subscription = (subscriber: string) => (c: Component) => {
+    let log;
+    if (c instanceof NamedComponent) {
+      log = c.name;
+    } else {
+      log = c.constructor.name;
+    }
+
+    calls[subscriber] = calls[subscriber] ?? [];
+    calls[subscriber].push(log);
+  };
+
+  // WHEN
+  p.forEachComponent({ on: subscription('sub1') });
+
+  // add a bunch of components after the call
+  new NamedComponent(p, 'p3');
+  new NamedComponent(p, 'p4');
+
+  // now add another subscriber
+  p.forEachComponent({ on: subscription('sub2') });
+
+  // and a bunch more components
+  new NamedComponent(p, 'p5');
+
+  // THEN
+  expect(Object.keys(calls).length).toBe(0); // before synth()
+  p.synth();
+  expect(calls.sub1).toStrictEqual(calls.sub2); // after synth
+  expect(calls.sub2).toContain('p1');
+  expect(calls.sub2).toContain('p2');
+  expect(calls.sub2).toContain('p3');
+  expect(calls.sub2).toContain('p4');
+  expect(calls.sub2).toContain('p5');
+  expect(calls.sub2).toMatchSnapshot();
 });

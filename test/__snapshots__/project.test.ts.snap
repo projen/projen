@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`forEachComponent() will be called for each component before synth 1`] = `
+Array [
+  "GitAttributesFile",
+  "IgnoreFile",
+  "Tasks",
+  "JsonFile",
+  "ProjectBuild",
+  "Dependencies",
+  "JsonFile",
+  "Logger",
+  "JsonFile",
+  "GitHub",
+  "Mergify",
+  "PullRequestLint",
+  "GithubWorkflow",
+  "YamlFile",
+  "VsCode",
+  "SampleReadme",
+  "Stale",
+  "GithubWorkflow",
+  "YamlFile",
+  "p1",
+  "p2",
+  "p3",
+  "p4",
+  "p5",
+]
+`;

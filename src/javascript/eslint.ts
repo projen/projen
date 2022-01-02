@@ -4,7 +4,6 @@ import { Component } from '../component';
 import { NodeProject } from '../javascript';
 import { JsonFile } from '../json';
 
-
 export interface EslintOptions {
   /**
    * Path to `tsconfig.json` which should be used by eslint.
@@ -89,7 +88,6 @@ export interface EslintOverride {
  * Represents eslint configuration.
  */
 export class Eslint extends Component {
-
   /**
    * Returns the singletone Eslint component of a project or undefined if there is none.
    */
@@ -118,10 +116,16 @@ export class Eslint extends Component {
    */
   public readonly ignorePatterns: string[];
 
+  private _formattingRules: Record<string, any>;
   private readonly _allowDevDeps: Set<string>;
+  private readonly _plugins = new Array<string>();
+  private readonly _extends = new Array<string>();
+  private readonly nodeProject: NodeProject;
 
   constructor(project: NodeProject, options: EslintOptions) {
     super(project);
+
+    this.nodeProject = project;
 
     project.addDevDeps(
       'eslint@^8',
@@ -132,14 +136,6 @@ export class Eslint extends Component {
       'eslint-plugin-import',
       'json-schema',
     );
-
-    if (options.prettier) {
-      project.addDevDeps(
-        'prettier',
-        'eslint-plugin-prettier',
-        'eslint-config-prettier',
-      );
-    }
 
     if (options.aliasMap) {
       project.addDevDeps('eslint-import-resolver-alias');
@@ -162,7 +158,7 @@ export class Eslint extends Component {
         '--fix',
         '--no-error-on-unmatched-pattern',
         ...dirs,
-        ...lintProjenRc ? [PROJEN_RC] : [],
+        ...(lintProjenRc ? [PROJEN_RC] : []),
       ].join(' '),
     });
 
@@ -171,9 +167,7 @@ export class Eslint extends Component {
     // exclude some files
     project.npmignore?.exclude('/.eslintrc.json');
 
-    const formattingRules: { [rule: string]: any } = options.prettier ? {
-      'prettier/prettier': ['error'],
-    } : {
+    this._formattingRules = {
       // see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
       'indent': ['off'],
       '@typescript-eslint/indent': ['error', 2],
@@ -187,7 +181,10 @@ export class Eslint extends Component {
       'array-bracket-newline': ['error', 'consistent'], // enforce consistent line breaks between brackets
       'object-curly-spacing': ['error', 'always'], // { key: 'value' }
       'object-curly-newline': ['error', { multiline: true, consistent: true }], // enforce consistent line breaks between braces
-      'object-property-newline': ['error', { allowAllPropertiesOnSameLine: true }], // enforce "same line" or "multiple line" on object properties
+      'object-property-newline': [
+        'error',
+        { allowAllPropertiesOnSameLine: true },
+      ], // enforce "same line" or "multiple line" on object properties
       'keyword-spacing': ['error'], // require a space before & after keywords
       'brace-style': ['error', '1tbs', { allowSingleLine: true }], // enforce one true brace style
       'space-before-blocks': ['error'], // require space before blocks
@@ -198,21 +195,23 @@ export class Eslint extends Component {
       'semi': ['error', 'always'],
 
       // Max line lengths
-      'max-len': ['error', {
-        code: 150,
-        ignoreUrls: true, // Most common reason to disable it
-        ignoreStrings: true, // These are not fantastic but necessary for error messages
-        ignoreTemplateLiterals: true,
-        ignoreComments: true,
-        ignoreRegExpLiterals: true,
-      }],
+      'max-len': [
+        'error',
+        {
+          code: 150,
+          ignoreUrls: true, // Most common reason to disable it
+          ignoreStrings: true, // These are not fantastic but necessary for error messages
+          ignoreTemplateLiterals: true,
+          ignoreComments: true,
+          ignoreRegExpLiterals: true,
+        },
+      ],
 
       // Don't unnecessarily quote properties
       'quote-props': ['error', 'consistent-as-needed'],
     };
 
     this.rules = {
-      ...formattingRules,
       // Require use of the `import { foo } from 'bar';` form instead of `import foo = require('bar');`
       '@typescript-eslint/no-require-imports': ['error'],
 
@@ -231,10 +230,13 @@ export class Eslint extends Component {
       'import/no-unresolved': ['error'],
 
       // Require an ordering on all imports
-      'import/order': ['warn', {
-        groups: ['builtin', 'external'],
-        alphabetize: { order: 'asc', caseInsensitive: true },
-      }],
+      'import/order': [
+        'warn',
+        {
+          groups: ['builtin', 'external'],
+          alphabetize: { order: 'asc', caseInsensitive: true },
+        },
+      ],
 
       // Cannot import from the same module twice
       'no-duplicate-imports': ['error'],
@@ -267,24 +269,27 @@ export class Eslint extends Component {
       'no-bitwise': ['error'],
 
       // Member ordering
-      '@typescript-eslint/member-ordering': ['error', {
-        default: [
-          'public-static-field',
-          'public-static-method',
-          'protected-static-field',
-          'protected-static-method',
-          'private-static-field',
-          'private-static-method',
+      '@typescript-eslint/member-ordering': [
+        'error',
+        {
+          default: [
+            'public-static-field',
+            'public-static-method',
+            'protected-static-field',
+            'protected-static-method',
+            'private-static-field',
+            'private-static-method',
 
-          'field',
+            'field',
 
-          // Constructors
-          'constructor', // = ["public-constructor", "protected-constructor", "private-constructor"]
+            // Constructors
+            'constructor', // = ["public-constructor", "protected-constructor", "private-constructor"]
 
-          // Methods
-          'method',
-        ],
-      }],
+            // Methods
+            'method',
+          ],
+        },
+      ],
     };
 
     // Overrides for .projenrc.js
@@ -309,19 +314,9 @@ export class Eslint extends Component {
 
     const tsconfig = options.tsconfigPath ?? './tsconfig.json';
 
-    const plugins = [
-      '@typescript-eslint',
-      'import',
-      ...(options.prettier ? ['prettier'] : []),
-    ];
-
-    const extendsConf = [
-      'plugin:import/typescript',
-      ...(options.prettier ? [
-        'prettier',
-        'plugin:prettier/recommended',
-      ] : []),
-    ];
+    this.addPlugins('@typescript-eslint');
+    this.addPlugins('import');
+    this.addExtends('plugin:import/typescript');
 
     this.config = {
       env: {
@@ -329,20 +324,20 @@ export class Eslint extends Component {
         node: true,
       },
       root: true,
-      plugins,
+      plugins: () => this._plugins,
       parser: '@typescript-eslint/parser',
       parserOptions: {
         ecmaVersion: 2018,
         sourceType: 'module',
         project: tsconfig,
       },
-      extends: extendsConf,
+      extends: () => this._extends,
       settings: {
         'import/parsers': {
           '@typescript-eslint/parser': ['.ts', '.tsx'],
         },
         'import/resolver': {
-          ...( options.aliasMap && {
+          ...(options.aliasMap && {
             alias: {
               map: Object.entries(options.aliasMap).map(([k, v]) => [k, v]),
               extensions: options.aliasExtensions,
@@ -351,16 +346,23 @@ export class Eslint extends Component {
           node: {},
           typescript: {
             project: tsconfig,
-            ...( options.tsAlwaysTryTypes !== false && { alwaysTryTypes: true } ),
+            ...(options.tsAlwaysTryTypes !== false && { alwaysTryTypes: true }),
           },
         },
       },
       ignorePatterns: this.ignorePatterns,
-      rules: this.rules,
+      rules: () => ({ ...this._formattingRules, ...this.rules }),
       overrides: this.overrides,
     };
 
-    new JsonFile(project, '.eslintrc.json', { obj: this.config, marker: false });
+    new JsonFile(project, '.eslintrc.json', {
+      obj: this.config,
+      marker: false,
+    });
+
+    if (options.prettier) {
+      this.enablePrettier();
+    }
   }
 
   /**
@@ -370,6 +372,14 @@ export class Eslint extends Component {
     for (const [k, v] of Object.entries(rules)) {
       this.rules[k] = v;
     }
+  }
+
+  /**
+   * Adds an eslint plugin
+   * @param plugin The name of the plugin
+   */
+  public addPlugins(...plugins: string[]) {
+    this._plugins.push(...plugins);
   }
 
   /**
@@ -387,11 +397,38 @@ export class Eslint extends Component {
   }
 
   /**
+   * Adds an `extends` item to the eslint configuration.
+   * @param extendList The list of "extends" to add.
+   */
+  public addExtends(...extendList: string[]) {
+    this._extends.push(...extendList);
+  }
+
+  /**
    * Add a glob file pattern which allows importing dev dependencies.
    * @param pattern glob pattern.
    */
   public allowDevDeps(pattern: string) {
     this._allowDevDeps.add(pattern);
+  }
+
+  /**
+   * Enables prettier for code formatting.
+   */
+  public enablePrettier() {
+    this.nodeProject.addDevDeps(
+      'prettier',
+      'eslint-plugin-prettier',
+      'eslint-config-prettier',
+    );
+
+    this.addPlugins('prettier');
+
+    this._formattingRules = {
+      'prettier/prettier': ['error'],
+    };
+
+    this.addExtends('prettier', 'plugin:prettier/recommended');
   }
 
   private renderDevDepsAllowList() {

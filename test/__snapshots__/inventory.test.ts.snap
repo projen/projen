@@ -2531,23 +2531,6 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "false",
-        "docs": "Defines an .prettierIgnore file.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "prettierIgnoreEnabled",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "prettierIgnoreEnabled",
-        ],
-        "simpleType": "boolean",
-        "switch": "prettier-ignore-enabled",
-      },
-      Object {
         "default": "- opinionated default options",
         "docs": "Prettier options.",
         "featured": false,
@@ -5230,23 +5213,6 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "false",
-        "docs": "Defines an .prettierIgnore file.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "prettierIgnoreEnabled",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "prettierIgnoreEnabled",
-        ],
-        "simpleType": "boolean",
-        "switch": "prettier-ignore-enabled",
-      },
-      Object {
         "default": "- opinionated default options",
         "docs": "Prettier options.",
         "featured": false,
@@ -7820,23 +7786,6 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "false",
-        "docs": "Defines an .prettierIgnore file.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "prettierIgnoreEnabled",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "prettierIgnoreEnabled",
-        ],
-        "simpleType": "boolean",
-        "switch": "prettier-ignore-enabled",
-      },
-      Object {
         "default": "- opinionated default options",
         "docs": "Prettier options.",
         "featured": false,
@@ -10355,23 +10304,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier",
-      },
-      Object {
-        "default": "false",
-        "docs": "Defines an .prettierIgnore file.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "prettierIgnoreEnabled",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "prettierIgnoreEnabled",
-        ],
-        "simpleType": "boolean",
-        "switch": "prettier-ignore-enabled",
       },
       Object {
         "default": "- opinionated default options",
@@ -12950,23 +12882,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier",
-      },
-      Object {
-        "default": "false",
-        "docs": "Defines an .prettierIgnore file.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "prettierIgnoreEnabled",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "prettierIgnoreEnabled",
-        ],
-        "simpleType": "boolean",
-        "switch": "prettier-ignore-enabled",
       },
       Object {
         "default": "- opinionated default options",
@@ -16218,23 +16133,6 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "false",
-        "docs": "Defines an .prettierIgnore file.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "prettierIgnoreEnabled",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "prettierIgnoreEnabled",
-        ],
-        "simpleType": "boolean",
-        "switch": "prettier-ignore-enabled",
-      },
-      Object {
         "default": "- opinionated default options",
         "docs": "Prettier options.",
         "featured": false,
@@ -18569,23 +18467,6 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "false",
-        "docs": "Defines an .prettierIgnore file.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "prettierIgnoreEnabled",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "prettierIgnoreEnabled",
-        ],
-        "simpleType": "boolean",
-        "switch": "prettier-ignore-enabled",
-      },
-      Object {
         "default": "- opinionated default options",
         "docs": "Prettier options.",
         "featured": false,
@@ -20808,23 +20689,6 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "false",
-        "docs": "Defines an .prettierIgnore file.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "prettierIgnoreEnabled",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "prettierIgnoreEnabled",
-        ],
-        "simpleType": "boolean",
-        "switch": "prettier-ignore-enabled",
-      },
-      Object {
         "default": "- opinionated default options",
         "docs": "Prettier options.",
         "featured": false,
@@ -23031,23 +22895,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier",
-      },
-      Object {
-        "default": "false",
-        "docs": "Defines an .prettierIgnore file.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "prettierIgnoreEnabled",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "prettierIgnoreEnabled",
-        ],
-        "simpleType": "boolean",
-        "switch": "prettier-ignore-enabled",
       },
       Object {
         "default": "- opinionated default options",
@@ -26013,23 +25860,6 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "false",
-        "docs": "Defines an .prettierIgnore file.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "prettierIgnoreEnabled",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "prettierIgnoreEnabled",
-        ],
-        "simpleType": "boolean",
-        "switch": "prettier-ignore-enabled",
-      },
-      Object {
         "default": "- opinionated default options",
         "docs": "Prettier options.",
         "featured": false,
@@ -28238,23 +28068,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier",
-      },
-      Object {
-        "default": "false",
-        "docs": "Defines an .prettierIgnore file.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "prettierIgnoreEnabled",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "prettierIgnoreEnabled",
-        ],
-        "simpleType": "boolean",
-        "switch": "prettier-ignore-enabled",
       },
       Object {
         "default": "- opinionated default options",
@@ -30591,23 +30404,6 @@ Array [
         "switch": "prettier",
       },
       Object {
-        "default": "false",
-        "docs": "Defines an .prettierIgnore file.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "prettierIgnoreEnabled",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "prettierIgnoreEnabled",
-        ],
-        "simpleType": "boolean",
-        "switch": "prettier-ignore-enabled",
-      },
-      Object {
         "default": "- opinionated default options",
         "docs": "Prettier options.",
         "featured": false,
@@ -32918,23 +32714,6 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "prettier",
-      },
-      Object {
-        "default": "false",
-        "docs": "Defines an .prettierIgnore file.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "prettierIgnoreEnabled",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "prettierIgnoreEnabled",
-        ],
-        "simpleType": "boolean",
-        "switch": "prettier-ignore-enabled",
       },
       Object {
         "default": "- opinionated default options",

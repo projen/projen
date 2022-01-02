@@ -163,6 +163,7 @@ export class Project {
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
+  private readonly _addComponentSubscribers = new Array<IAddComponentSubscriber>();
 
   constructor(options: ProjectOptions) {
     this.initProject = resolveInitProject(options);
@@ -394,6 +395,13 @@ export class Project {
     const outdir = this.outdir;
     this.logger.debug('Synthesizing project...');
 
+    // call all component subscriptions
+    for (const comp of this._components) {
+      for (const act of this._addComponentSubscribers) {
+        act.do(comp);
+      }
+    }
+
     this.preSynthesize();
 
     for (const comp of this._components) {
@@ -438,6 +446,16 @@ export class Project {
    * Called after all components are synthesized. Order is *not* guaranteed.
    */
   public postSynthesize() {}
+
+  /**
+   * Registers an action to be called for each component of the project (and all
+   * future components that are added to the project)
+   *
+   * @param action The action to ccall
+   */
+  public forEachComponent(action: IAddComponentSubscriber) {
+    this._addComponentSubscribers.push(action);
+  }
 
   /**
    * Adds a component to the project.
@@ -555,4 +573,15 @@ export interface InitProject {
    * @default InitProjectOptionHints.FEATURED
    */
   readonly comments: InitProjectOptionHints;
+}
+
+/**
+ * An action to perform for each component in the project.
+ */
+export interface IAddComponentSubscriber {
+  /**
+   * Called for each component in the project.
+   * @param c The component
+   */
+  do(c: Component): void;
 }
