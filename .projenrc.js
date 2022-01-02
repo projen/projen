@@ -54,6 +54,7 @@ const project = new cdk.JsiiProject({
   workflowNodeVersion: '12.22.0', // required by @typescript-eslint/eslint-plugin@5.5.0
 
   codeCov: true,
+  prettier: true,
   defaultReleaseBranch: 'main',
   gitpod: true,
   devContainer: true,
