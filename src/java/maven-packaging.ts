@@ -1,6 +1,6 @@
-import { Component } from '../component';
-import { Project } from '../project';
-import { Pom } from './pom';
+import { Component } from "../component";
+import { Project } from "../project";
+import { Pom } from "./pom";
 
 /**
  * Options for `MavenPackage`.
@@ -38,7 +38,7 @@ export class MavenPackaging extends Component {
   constructor(project: Project, pom: Pom, options: MavenPackagingOptions = {}) {
     super(project);
 
-    pom.addPlugin('org.apache.maven.plugins/maven-jar-plugin@3.2.0', {
+    pom.addPlugin("org.apache.maven.plugins/maven-jar-plugin@3.2.0", {
       configuration: {
         archive: {
           index: true,
@@ -51,27 +51,23 @@ export class MavenPackaging extends Component {
     });
 
     if (options.sources ?? true) {
-      pom.addPlugin('org.apache.maven.plugins/maven-source-plugin@3.2.1', {
-        executions: [
-          { id: 'attach-sources', goals: ['jar'] },
-        ],
+      pom.addPlugin("org.apache.maven.plugins/maven-source-plugin@3.2.1", {
+        executions: [{ id: "attach-sources", goals: ["jar"] }],
       });
     }
 
     if (options.javadocs ?? true) {
-      pom.addPlugin('org.apache.maven.plugins/maven-javadoc-plugin@3.2.0', {
-        executions: [
-          { id: 'attach-javadocs', goals: ['jar'] },
-        ],
+      pom.addPlugin("org.apache.maven.plugins/maven-javadoc-plugin@3.2.0", {
+        executions: [{ id: "attach-javadocs", goals: ["jar"] }],
         configuration: {
           failOnError: false,
-          show: 'protected',
+          show: "protected",
           sourceFileExcludes: { exclude: options.javadocsExclude },
           detectJavaApiLink: false, // https://stackoverflow.com/a/61884267
           additionalJOptions: {
             additionalJOption: [
-              '-J-XX:+TieredCompilation',
-              '-J-XX:TieredStopAtLevel=1',
+              "-J-XX:+TieredCompilation",
+              "-J-XX:TieredStopAtLevel=1",
             ],
           },
         },
@@ -79,16 +75,18 @@ export class MavenPackaging extends Component {
     }
 
     const env = {
-      MAVEN_OPTS: '-XX:+TieredCompilation -XX:TieredStopAtLevel=1',
+      MAVEN_OPTS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1",
     };
 
-    const distdir = options.distdir ?? 'dist/java';
+    const distdir = options.distdir ?? "dist/java";
 
     for (const [k, v] of Object.entries(env)) {
       this.project.packageTask.env(k, v);
     }
     this.project.packageTask.exec(`mkdir -p ${distdir}`);
-    this.project.packageTask.exec(`mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${distdir}`);
+    this.project.packageTask.exec(
+      `mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${distdir}`
+    );
 
     project.gitignore.exclude(distdir);
   }

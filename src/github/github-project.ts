@@ -1,9 +1,18 @@
-import { AutoApprove, AutoApproveOptions, AutoMergeOptions, GitHub, GitHubOptions, MergifyOptions, Stale, StaleOptions } from '.';
-import { Clobber } from '../clobber';
-import { Gitpod } from '../gitpod';
-import { Project, ProjectOptions, ProjectType } from '../project';
-import { SampleReadme, SampleReadmeProps } from '../readme';
-import { DevContainer, VsCode } from '../vscode';
+import {
+  AutoApprove,
+  AutoApproveOptions,
+  AutoMergeOptions,
+  GitHub,
+  GitHubOptions,
+  MergifyOptions,
+  Stale,
+  StaleOptions,
+} from ".";
+import { Clobber } from "../clobber";
+import { Gitpod } from "../gitpod";
+import { Project, ProjectOptions, ProjectType } from "../project";
+import { SampleReadme, SampleReadmeProps } from "../readme";
+import { DevContainer, VsCode } from "../vscode";
 
 /**
  * Options for `GitHubProject`.
@@ -112,6 +121,15 @@ export interface GitHubProjectOptions extends ProjectOptions {
    * @default true
    */
   readonly stale?: boolean;
+
+  /**
+   * The name of a secret which includes a GitHub Personal Access Token to be
+   * used by projen workflows. This token needs to have the `repo`, `workflows`
+   * and `packages` scope.
+   *
+   * @default "PROJEN_GITHUB_TOKEN"
+   */
+  readonly projenTokenSecret?: string;
 }
 
 /**
@@ -170,17 +188,22 @@ export class GitHubProject extends Project {
     this.projectType = options.projectType ?? ProjectType.UNKNOWN;
     // we only allow these global services to be used in root projects
     const github = options.github ?? (this.parent ? false : true);
-    this.github = github ? new GitHub(this, {
-      mergify: options.mergify,
-      mergifyOptions: options.mergifyOptions,
-      ...options.githubOptions,
-    }) : undefined;
+    this.github = github
+      ? new GitHub(this, {
+          projenTokenSecret: options.projenTokenSecret,
+          mergify: options.mergify,
+          mergifyOptions: options.mergifyOptions,
+          ...options.githubOptions,
+        })
+      : undefined;
 
     const vscode = options.vscode ?? (this.parent ? false : true);
     this.vscode = vscode ? new VsCode(this) : undefined;
 
     this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
-    this.devContainer = options.devContainer ? new DevContainer(this) : undefined;
+    this.devContainer = options.devContainer
+      ? new DevContainer(this)
+      : undefined;
 
     if (options.clobber ?? true) {
       new Clobber(this);
@@ -189,7 +212,10 @@ export class GitHubProject extends Project {
     new SampleReadme(this, options.readme);
 
     if (options.autoApproveOptions && this.github) {
-      this.autoApprove = new AutoApprove(this.github, options.autoApproveOptions);
+      this.autoApprove = new AutoApprove(
+        this.github,
+        options.autoApproveOptions
+      );
     }
 
     const stale = options.stale ?? true;
@@ -208,6 +234,6 @@ export class GitHubProject extends Project {
    * @see https://github.com/github/linguist/blob/master/docs/overrides.md
    */
   public annotateGenerated(glob: string): void {
-    this.gitattributes.addAttributes(glob, 'linguist-generated');
+    this.gitattributes.addAttributes(glob, "linguist-generated");
   }
 }

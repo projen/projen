@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`all bugs field present 1`] = `
+Object {
+  "email": "bugs@foobar.local",
+  "url": "bugs.foobar.local",
+}
+`;
+
+exports[`no bugs field present 1`] = `undefined`;
+
+exports[`single bugs field present 1`] = `
+Object {
+  "email": "bugs@foobar.local",
+}
+`;

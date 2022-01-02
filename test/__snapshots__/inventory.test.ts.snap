@@ -80,8 +80,44 @@ Array [
         "switch": "build-command",
       },
       Object {
-        "docs": "Which AWS CDK modules this app uses.",
-        "featured": true,
+        "default": "- will be included by default for AWS CDK >= 1.0.0 < 2.0.0",
+        "deprecated": true,
+        "docs": "Warning: NodeJS only.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "cdkAssert",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkAssert",
+        ],
+        "simpleType": "boolean",
+        "switch": "cdk-assert",
+      },
+      Object {
+        "default": "- will be included by default for AWS CDK >= 1.111.0 < 2.0.0",
+        "docs": "Install the assertions library?",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "cdkAssertions",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkAssertions",
+        ],
+        "simpleType": "boolean",
+        "switch": "cdk-assertions",
+      },
+      Object {
+        "deprecated": true,
+        "docs": "Which AWS CDKv1 modules this project requires.",
+        "featured": false,
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
@@ -93,12 +129,30 @@ Array [
         "jsonLike": true,
         "name": "cdkDependencies",
         "optional": true,
-        "parent": "AwsCdkJavaAppOptions",
+        "parent": "AwsCdkDepsCommonOptions",
         "path": Array [
           "cdkDependencies",
         ],
         "simpleType": "unknown",
         "switch": "cdk-dependencies",
+      },
+      Object {
+        "default": "true",
+        "deprecated": true,
+        "docs": "If this is enabled (default), all modules declared in \`cdkDependencies\` will be also added as normal \`dependencies\` (as well as \`peerDependencies\`).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "cdkDependenciesAsDeps",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkDependenciesAsDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "cdk-dependencies-as-deps",
       },
       Object {
         "default": "\\"cdk.out\\"",
@@ -118,20 +172,58 @@ Array [
         "switch": "cdkout",
       },
       Object {
-        "default": "\\"^1.130.0\\"",
-        "docs": "AWS CDK version to use (you can use semantic versioning).",
+        "deprecated": true,
+        "docs": "AWS CDK modules required for testing.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "cdkTestDependencies",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkTestDependencies",
+        ],
+        "simpleType": "unknown",
+        "switch": "cdk-test-dependencies",
+      },
+      Object {
+        "default": "\\"2.1.0\\"",
+        "docs": "Minimum version of the AWS CDK to depend on.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
         },
         "jsonLike": true,
         "name": "cdkVersion",
-        "parent": "AwsCdkJavaAppOptions",
+        "parent": "AwsCdkDepsCommonOptions",
         "path": Array [
           "cdkVersion",
         ],
         "simpleType": "string",
         "switch": "cdk-version",
+      },
+      Object {
+        "docs": "Use pinned version instead of caret version for CDK.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "cdkVersionPinning",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkVersionPinning",
+        ],
+        "simpleType": "boolean",
+        "switch": "cdk-version-pinning",
       },
       Object {
         "default": "true",
@@ -170,13 +262,31 @@ Array [
         "switch": "compile-options",
       },
       Object {
+        "default": "- for CDK 1.x the default is \\"3.2.27\\", for CDK 2.x the default is
+\\"10.0.5\\".",
+        "docs": "Minimum version of the \`constructs\` library to depend on.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "constructsVersion",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "constructsVersion",
+        ],
+        "simpleType": "string",
+        "switch": "constructs-version",
+      },
+      Object {
         "default": "- no additional context",
         "docs": "Additional context to include in \`cdk.json\`.",
         "featured": false,
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "string",
+              "primitive": "any",
             },
             "kind": "map",
           },
@@ -405,7 +515,7 @@ Array [
         "switch": "logging",
       },
       Object {
-        "default": "\\"org.acme.App\\"",
+        "default": "\\"org.acme.MyApp\\"",
         "docs": "The name of the Java class with the static \`main()\` method.",
         "featured": false,
         "fullType": Object {
@@ -655,6 +765,23 @@ Array [
         "switch": "projenrc-json-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "featured": false,
@@ -693,6 +820,7 @@ Array [
         "switch": "require-approval",
       },
       Object {
+        "default": "true",
         "docs": "Include sample code and test if the relevant directories don't exist.",
         "featured": false,
         "fullType": Object {
@@ -904,23 +1032,6 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"main.ts\\"",
         "docs": "The CDK app's entrypoint (relative to the source directory, which is \\"src\\" by default).",
         "featured": false,
@@ -939,7 +1050,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -947,7 +1058,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -1129,6 +1240,38 @@ Array [
         "switch": "bin",
       },
       Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
+      },
+      Object {
         "default": "- no build command",
         "docs": "A command to execute before synthesis.",
         "featured": false,
@@ -1204,7 +1347,7 @@ Array [
       Object {
         "default": "- will be included by default for AWS CDK >= 1.0.0 < 2.0.0",
         "deprecated": true,
-        "docs": "Install the @aws-cdk/assert library?",
+        "docs": "Warning: NodeJS only.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -1221,7 +1364,7 @@ Array [
       },
       Object {
         "default": "- will be included by default for AWS CDK >= 1.111.0 < 2.0.0",
-        "docs": "Install the @aws-cdk/assertions library?",
+        "docs": "Install the assertions library?",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -1238,7 +1381,7 @@ Array [
       },
       Object {
         "deprecated": true,
-        "docs": "Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed?",
+        "docs": "Which AWS CDKv1 modules this project requires.",
         "featured": false,
         "fullType": Object {
           "collection": Object {
@@ -1442,7 +1585,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "string",
+              "primitive": "any",
             },
             "kind": "map",
           },
@@ -2333,7 +2476,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -2341,7 +2484,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -2480,6 +2623,42 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierOptions",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -2643,6 +2822,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -2684,6 +2880,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -2715,6 +2912,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -2794,7 +3008,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -3466,25 +3680,8 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -3492,7 +3689,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -3706,6 +3903,38 @@ Array [
         "switch": "bin",
       },
       Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
+      },
+      Object {
         "default": "- true if not a subproject",
         "docs": "Define a GitHub workflow for building PRs.",
         "featured": false,
@@ -3783,7 +4012,7 @@ Array [
       Object {
         "default": "- will be included by default for AWS CDK >= 1.0.0 < 2.0.0",
         "deprecated": true,
-        "docs": "Install the @aws-cdk/assert library?",
+        "docs": "Warning: NodeJS only.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -3800,7 +4029,7 @@ Array [
       },
       Object {
         "default": "- will be included by default for AWS CDK >= 1.111.0 < 2.0.0",
-        "docs": "Install the @aws-cdk/assertions library?",
+        "docs": "Install the assertions library?",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -3817,7 +4046,7 @@ Array [
       },
       Object {
         "deprecated": true,
-        "docs": "Which AWS CDK modules (those that start with \\"@aws-cdk/\\") does this library require when consumed?",
+        "docs": "Which AWS CDKv1 modules this project requires.",
         "featured": false,
         "fullType": Object {
           "collection": Object {
@@ -4929,7 +5158,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -4937,7 +5166,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -5076,6 +5305,42 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierOptions",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -5239,6 +5504,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -5280,6 +5562,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -5311,6 +5594,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -5484,7 +5784,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -6125,23 +6425,6 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"main.ts\\"",
         "docs": "The CDK8s app's entrypoint (relative to the source directory, which is \\"src\\" by default).",
         "featured": false,
@@ -6160,7 +6443,7 @@ Array [
       },
       Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -6168,7 +6451,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -6348,6 +6631,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -7416,7 +7731,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -7424,7 +7739,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -7563,6 +7878,42 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierOptions",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -7726,6 +8077,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -7767,6 +8135,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -7798,6 +8167,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -7877,7 +8263,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -8486,25 +8872,8 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -8512,7 +8881,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -8724,6 +9093,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -9850,7 +10251,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -9858,7 +10259,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -9997,6 +10398,42 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierOptions",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -10160,6 +10597,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -10201,6 +10655,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -10232,6 +10687,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -10405,7 +10877,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -11046,25 +11518,8 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -11072,7 +11527,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -11284,6 +11739,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -12342,7 +12829,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -12350,7 +12837,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -12489,6 +12976,42 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierOptions",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -12652,6 +13175,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -12693,6 +13233,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -12724,6 +13265,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -12897,7 +13455,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -14041,6 +14599,23 @@ Array [
         "switch": "projenrc-json-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "- { filename: 'README.md', contents: '# replace this' }",
         "docs": "The README setup.",
         "featured": false,
@@ -14060,6 +14635,7 @@ Array [
         "switch": "readme",
       },
       Object {
+        "default": "true",
         "docs": "Include sample code and test if the relevant directories don't exist.",
         "featured": false,
         "fullType": Object {
@@ -14227,25 +14803,8 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -14253,7 +14812,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -14465,6 +15024,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -15488,7 +16079,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -15496,7 +16087,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -15635,6 +16226,42 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierOptions",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -15798,6 +16425,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -15839,6 +16483,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -15870,6 +16515,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -16043,7 +16705,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -16684,25 +17346,8 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -16710,7 +17355,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -16907,6 +17552,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -17735,6 +18412,23 @@ Array [
         "switch": "outdir",
       },
       Object {
+        "default": "true",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "package",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "package",
+        ],
+        "simpleType": "boolean",
+        "switch": "package",
+      },
+      Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
@@ -17868,6 +18562,42 @@ Array [
         "switch": "prerelease",
       },
       Object {
+        "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierOptions",
+        "switch": "prettier-options",
+      },
+      Object {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -17994,6 +18724,23 @@ Array [
         "switch": "projenrc-js-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -18035,6 +18782,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -18066,6 +18814,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -18145,7 +18910,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -18682,25 +19447,8 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -18708,7 +19456,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -18905,6 +19653,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -19855,7 +20635,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -19863,7 +20643,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -20002,6 +20782,42 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierOptions",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -20165,6 +20981,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -20206,6 +21039,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -20237,6 +21071,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -20316,7 +21167,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -20942,25 +21793,8 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -20968,7 +21802,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -21148,6 +21982,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -21976,6 +22842,23 @@ Array [
         "switch": "outdir",
       },
       Object {
+        "default": "true",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "package",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "package",
+        ],
+        "simpleType": "boolean",
+        "switch": "package",
+      },
+      Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
@@ -22109,6 +22992,42 @@ Array [
         "switch": "prerelease",
       },
       Object {
+        "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierOptions",
+        "switch": "prettier-options",
+      },
+      Object {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -22235,6 +23154,23 @@ Array [
         "switch": "projenrc-js-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -22276,6 +23212,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -22307,6 +23244,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -22386,7 +23340,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -23543,6 +24497,23 @@ Array [
         "switch": "projenrc-python-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "true",
         "docs": "Include pytest tests.",
         "featured": true,
@@ -23785,25 +24756,8 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -23811,7 +24765,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -23991,6 +24945,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -24819,6 +25805,23 @@ Array [
         "switch": "outdir",
       },
       Object {
+        "default": "true",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "package",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "package",
+        ],
+        "simpleType": "boolean",
+        "switch": "package",
+      },
+      Object {
         "default": "NodePackageManager.YARN",
         "docs": "The Node Package Manager used to execute scripts.",
         "featured": false,
@@ -24952,6 +25955,42 @@ Array [
         "switch": "prerelease",
       },
       Object {
+        "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierOptions",
+        "switch": "prettier-options",
+      },
+      Object {
         "default": "ProjectType.UNKNOWN",
         "deprecated": true,
         "docs": "Which type of project this is (library/app).",
@@ -25078,6 +26117,23 @@ Array [
         "switch": "projenrc-js-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -25119,6 +26175,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -25150,6 +26207,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -25229,7 +26303,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -25771,25 +26845,8 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -25797,7 +26854,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -25977,6 +27034,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -26927,7 +28016,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -26935,7 +28024,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -27074,6 +28163,42 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierOptions",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -27237,6 +28362,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -27278,6 +28420,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -27309,6 +28452,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -27388,7 +28548,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -28019,25 +29179,8 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -28045,7 +29188,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -28225,6 +29368,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -29175,7 +30350,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -29183,7 +30358,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -29322,6 +30497,42 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierOptions",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -29485,6 +30696,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -29526,6 +30754,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -29557,6 +30786,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -29636,7 +30882,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },
@@ -30245,25 +31491,8 @@ Array [
         "switch": "allow-library-dependencies",
       },
       Object {
-        "default": "true",
-        "docs": "Checks that after build there are no modified files on git.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "antitamper",
-        "optional": true,
-        "parent": "ReleaseProjectOptions",
-        "path": Array [
-          "antitamper",
-        ],
-        "simpleType": "boolean",
-        "switch": "antitamper",
-      },
-      Object {
         "default": "\\"dist\\"",
-        "docs": "A directory which will contain artifacts to be published to npm.",
+        "docs": "A directory which will contain build artifacts.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -30271,7 +31500,7 @@ Array [
         "jsonLike": true,
         "name": "artifactsDirectory",
         "optional": true,
-        "parent": "ReleaseProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "artifactsDirectory",
         ],
@@ -30451,6 +31680,38 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "bin",
+      },
+      Object {
+        "docs": "The email address to which issues should be reported.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsEmail",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsEmail",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-email",
+      },
+      Object {
+        "docs": "The url to your project's issue tracker.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "bugsUrl",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "bugsUrl",
+        ],
+        "simpleType": "string",
+        "switch": "bugs-url",
       },
       Object {
         "default": "- true if not a subproject",
@@ -31401,7 +32662,7 @@ Array [
       },
       Object {
         "default": "true",
-        "docs": "Defines a \`yarn package\` command that will produce a tarball and place it under \`dist/js\`.",
+        "docs": "Defines a \`package\` task that will produce an npm tarball under the artifacts directory (e.g. \`dist\`).",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -31409,7 +32670,7 @@ Array [
         "jsonLike": true,
         "name": "package",
         "optional": true,
-        "parent": "TypeScriptProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "package",
         ],
@@ -31548,6 +32809,42 @@ Array [
         ],
         "simpleType": "string",
         "switch": "prerelease",
+      },
+      Object {
+        "default": "false",
+        "docs": "Setup prettier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "prettier",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettier",
+        ],
+        "simpleType": "boolean",
+        "switch": "prettier",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Prettier options.",
+        "featured": false,
+        "fqn": "projen.javascript.PrettierOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.PrettierOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "prettierOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "prettierOptions",
+        ],
+        "simpleType": "PrettierOptions",
+        "switch": "prettier-options",
       },
       Object {
         "default": "ProjectType.UNKNOWN",
@@ -31711,6 +33008,23 @@ Array [
         "switch": "projenrc-ts-options",
       },
       Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
         "default": "false",
         "deprecated": true,
         "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
@@ -31752,6 +33066,7 @@ Array [
       },
       Object {
         "default": "- no automatic projen upgrade pull requests",
+        "deprecated": true,
         "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
         "featured": false,
         "fullType": Object {
@@ -31783,6 +33098,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Instead of actually publishing to package managers, just print the publishing command.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "publishDryRun",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "publishDryRun",
+        ],
+        "simpleType": "boolean",
+        "switch": "publish-dry-run",
       },
       Object {
         "default": "false",
@@ -31862,7 +33194,7 @@ Array [
       Object {
         "default": "- true (false for subprojects)",
         "docs": "Add release management to this project.",
-        "featured": true,
+        "featured": false,
         "fullType": Object {
           "primitive": "boolean",
         },

@@ -132,6 +132,53 @@ export interface Job {
    */
   readonly services?: Record<string, ContainerOptions>;
 
+  /**
+   * Tools required for this job. Traslates into `actions/setup-xxx` steps at
+   * the beginning of the job.
+   */
+  readonly tools?: Tools;
+}
+
+/**
+ * Supported tools.
+ */
+export interface Tools {
+  /**
+   * Setup java (temurin distribution).
+   * @default - not installed
+   */
+  readonly java?: ToolRequirement;
+
+  /**
+   * Setup python.
+   * @default - not installed
+   */
+  readonly python?: ToolRequirement;
+
+  /**
+   * Setup golang.
+   * @default - not installed
+   */
+  readonly go?: ToolRequirement;
+
+  /**
+   * Setup node.js
+   * @default - not installed
+   */
+  readonly node?: ToolRequirement;
+
+  /**
+   * Setup .NET Core
+   * @default - not installed
+   */
+  readonly dotnet?: ToolRequirement;
+}
+
+/**
+ * Version requirement for tools.
+ */
+export interface ToolRequirement {
+  readonly version: string;
 }
 
 /**
@@ -158,13 +205,13 @@ export interface JobPermissions {
  */
 export enum JobPermission {
   /** Read-only access */
-  READ = 'read',
+  READ = "read",
 
   /** Read-write access */
-  WRITE = 'write',
+  WRITE = "write",
 
   /** No access at all */
-  NONE = 'none',
+  NONE = "none",
 }
 
 /**
@@ -389,7 +436,6 @@ export interface ContainerCredentials {
   /** The password. */
   readonly password: string;
 }
-
 
 /**
  * The set of available triggers for GitHub Workflows.
@@ -652,7 +698,7 @@ export interface BranchProtectionRuleOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'created' | 'edited' | 'deleted'>;
+  readonly types?: Array<"created" | "edited" | "deleted">;
 }
 
 /**
@@ -664,7 +710,9 @@ export interface CheckRunOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'create' | 'rerequested' | 'completed' | 'requested_action'>;
+  readonly types?: Array<
+    "create" | "rerequested" | "completed" | "requested_action"
+  >;
 }
 
 /**
@@ -676,7 +724,7 @@ export interface CheckSuiteOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'completed' | 'requested' | 'rerequested'>;
+  readonly types?: Array<"completed" | "requested" | "rerequested">;
 }
 
 /**
@@ -688,7 +736,20 @@ export interface DiscussionOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'created' | 'edited' | 'transferred' | 'pinned' | 'unpinned' | 'labeled' | 'unlabeled' | 'locked' | 'unlocked' | 'category_changed' | 'answered' | 'unanswered'>;
+  readonly types?: Array<
+    | "created"
+    | "edited"
+    | "transferred"
+    | "pinned"
+    | "unpinned"
+    | "labeled"
+    | "unlabeled"
+    | "locked"
+    | "unlocked"
+    | "category_changed"
+    | "answered"
+    | "unanswered"
+  >;
 }
 
 /**
@@ -700,7 +761,7 @@ export interface DiscussionCommentOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'created' | 'edited' | 'deleted'>;
+  readonly types?: Array<"created" | "edited" | "deleted">;
 }
 
 /**
@@ -712,7 +773,7 @@ export interface IssueCommentOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'created' | 'edited' | 'deleted'>;
+  readonly types?: Array<"created" | "edited" | "deleted">;
 }
 
 /**
@@ -724,7 +785,24 @@ export interface IssuesOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'opened' | 'edited' | 'deleted' | 'transferred' | 'pinned' | 'unpinned' | 'closed' | 'reopened' | 'assigned' | 'unassigned' | 'labeled' | 'unlabeled' | 'locked' | 'unlocked' | 'milestoned' | 'demilestoned'>;
+  readonly types?: Array<
+    | "opened"
+    | "edited"
+    | "deleted"
+    | "transferred"
+    | "pinned"
+    | "unpinned"
+    | "closed"
+    | "reopened"
+    | "assigned"
+    | "unassigned"
+    | "labeled"
+    | "unlabeled"
+    | "locked"
+    | "unlocked"
+    | "milestoned"
+    | "demilestoned"
+  >;
 }
 
 /**
@@ -736,7 +814,7 @@ export interface LabelOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'created' | 'edited' | 'deleted'>;
+  readonly types?: Array<"created" | "edited" | "deleted">;
 }
 
 /**
@@ -748,7 +826,9 @@ export interface MilestoneOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'created' | 'closed' | 'opened' | 'edited' | 'deleted'>;
+  readonly types?: Array<
+    "created" | "closed" | "opened" | "edited" | "deleted"
+  >;
 }
 
 /**
@@ -760,7 +840,9 @@ export interface ProjectOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'created' | 'updated' | 'closed' | 'reopened' | 'edited' | 'deleted'>;
+  readonly types?: Array<
+    "created" | "updated" | "closed" | "reopened" | "edited" | "deleted"
+  >;
 }
 
 /**
@@ -772,7 +854,9 @@ export interface ProjectCardOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'created' | 'moved' | 'converted' | 'edited' | 'deleted'>;
+  readonly types?: Array<
+    "created" | "moved" | "converted" | "edited" | "deleted"
+  >;
 }
 
 /**
@@ -784,7 +868,7 @@ export interface ProjectColumnOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'created' | 'updated' | 'moved' | 'deleted'>;
+  readonly types?: Array<"created" | "updated" | "moved" | "deleted">;
 }
 
 /**
@@ -796,7 +880,22 @@ export interface PullRequestOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'assigned' | 'unassigned' | 'labeled' | 'unlabeled' | 'opened' | 'edited' | 'closed' | 'reopened' | 'synchronize' | 'ready_for_review' | 'locked' | 'unlocked' | 'review_requested' | 'review_request_removed'>;
+  readonly types?: Array<
+    | "assigned"
+    | "unassigned"
+    | "labeled"
+    | "unlabeled"
+    | "opened"
+    | "edited"
+    | "closed"
+    | "reopened"
+    | "synchronize"
+    | "ready_for_review"
+    | "locked"
+    | "unlocked"
+    | "review_requested"
+    | "review_request_removed"
+  >;
 }
 
 /**
@@ -808,7 +907,7 @@ export interface PullRequestReviewOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'submitted' | 'edited' | 'dismissed'>;
+  readonly types?: Array<"submitted" | "edited" | "dismissed">;
 }
 
 /**
@@ -820,7 +919,7 @@ export interface PullRequestReviewCommentOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'created' | 'edited' | 'deleted'>;
+  readonly types?: Array<"created" | "edited" | "deleted">;
 }
 
 /**
@@ -832,7 +931,22 @@ export interface PullRequestTargetOptions extends PushOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'assigned' | 'unassigned' | 'labeled' | 'unlabeled' | 'opened' | 'edited' | 'closed' | 'reopened' | 'synchronize' | 'ready_for_review' | 'locked' | 'unlocked' | 'review_requested' | 'review_request_removed'>;
+  readonly types?: Array<
+    | "assigned"
+    | "unassigned"
+    | "labeled"
+    | "unlabeled"
+    | "opened"
+    | "edited"
+    | "closed"
+    | "reopened"
+    | "synchronize"
+    | "ready_for_review"
+    | "locked"
+    | "unlocked"
+    | "review_requested"
+    | "review_request_removed"
+  >;
 }
 
 /**
@@ -849,7 +963,6 @@ export interface PushOptions {
    * @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
    */
   readonly branches?: string[];
-
 
   /**
    * When using the push and pull_request events, you can configure a workflow
@@ -882,7 +995,7 @@ export interface RegistryPackageOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'published' | 'updated'>;
+  readonly types?: Array<"published" | "updated">;
 }
 
 /**
@@ -894,7 +1007,15 @@ export interface ReleaseOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'published' | 'unpublished' | 'created' | 'edited' | 'deleted' | 'prereleased' | 'released'>;
+  readonly types?: Array<
+    | "published"
+    | "unpublished"
+    | "created"
+    | "edited"
+    | "deleted"
+    | "prereleased"
+    | "released"
+  >;
 }
 
 /**
@@ -906,7 +1027,7 @@ export interface WatchOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'started'>;
+  readonly types?: Array<"started">;
 }
 
 /**
@@ -918,62 +1039,62 @@ export interface WorkflowRunOptions {
    *
    * @defaults - all activity types
    */
-  readonly types?: Array<'completed' | 'requested'>;
+  readonly types?: Array<"completed" | "requested">;
 }
 
 //#region Empty Options (future-proofing the API)
 /**
  * The Workflow dispatch event accepts no options.
  */
-export interface WorkflowDispatchOptions { }
+export interface WorkflowDispatchOptions {}
 
 /**
  * The Workflow Call event accepts no options.
  */
-export interface WorkflowCallOptions { }
+export interface WorkflowCallOptions {}
 
 /**
  * The Create event accepts no options.
  */
-export interface CreateOptions { }
+export interface CreateOptions {}
 
 /**
  * The Delete event accepts no options.
  */
-export interface DeleteOptions { }
+export interface DeleteOptions {}
 
 /**
  * The Deployment event accepts no options.
  */
-export interface DeploymentOptions { }
+export interface DeploymentOptions {}
 
 /**
  * The Deployment status event accepts no options.
  */
-export interface DeploymentStatusOptions { }
+export interface DeploymentStatusOptions {}
 
 /**
  * The Fork event accepts no options.
  */
-export interface ForkOptions { }
+export interface ForkOptions {}
 
 /**
  * The Gollum event accepts no options.
  */
-export interface GollumOptions { }
+export interface GollumOptions {}
 
 /**
  * The Page build event accepts no options.
  */
-export interface PageBuildOptions { }
+export interface PageBuildOptions {}
 
 /**
  * The Public event accepts no options.
  */
-export interface PublicOptions { }
+export interface PublicOptions {}
 
 /**
  * The Status event accepts no options.
  */
-export interface StatusOptions { }
+export interface StatusOptions {}
 //#endregion

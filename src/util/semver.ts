@@ -1,14 +1,14 @@
 // stolen from: https://github.com/aws/jsii/blob/main/packages/jsii-pacmak/lib/targets/version-utils.ts
 
-import { inspect } from 'util';
-import { Comparator, Range, parse } from 'semver';
+import { inspect } from "util";
+import { Comparator, Range, parse } from "semver";
 
 export enum TargetName {
   JAVA,
   DOTNET,
   PYTHON,
   GO,
-  JAVASCRIPT
+  JAVASCRIPT,
 }
 
 /**
@@ -21,7 +21,7 @@ export enum TargetName {
  */
 export function toMavenVersionRange(
   semverRange: string,
-  suffix?: string,
+  suffix?: string
 ): string {
   return toBracketNotation(semverRange, suffix, {
     semver: false,
@@ -56,23 +56,23 @@ export function toPythonVersionRange(semverRange: string): string {
       set
         .map((comp) => {
           const versionId = toReleaseVersion(
-            comp.semver.raw?.replace(/-0$/, '') ?? '0.0.0',
-            TargetName.PYTHON,
+            comp.semver.raw?.replace(/-0$/, "") ?? "0.0.0",
+            TargetName.PYTHON
           );
           switch (comp.operator) {
-            case '':
+            case "":
               // With ^0.0.0, somehow we get a left entry with an empty operator and value, we'll fix this up
-              return comp.value === '' ? '>=0.0.0' : `==${versionId}`;
-            case '=':
+              return comp.value === "" ? ">=0.0.0" : `==${versionId}`;
+            case "=":
               return `==${versionId}`;
             default:
               // >, >=, <, <= are all valid expressions
               return `${comp.operator}${versionId}`;
           }
         })
-        .join(', '),
+        .join(", ")
     )
-    .join(', ');
+    .join(", ");
 }
 
 /**
@@ -88,12 +88,12 @@ export function toPythonVersionRange(semverRange: string): string {
  */
 export function toReleaseVersion(
   assemblyVersion: string,
-  target: TargetName,
+  target: TargetName
 ): string {
   const version = parse(assemblyVersion, { includePrerelease: true });
   if (version == null) {
     throw new Error(
-      `Unable to parse the provided assembly version: "${assemblyVersion}"`,
+      `Unable to parse the provided assembly version: "${assemblyVersion}"`
     );
   }
   if (version.prerelease.length === 0) {
@@ -107,34 +107,34 @@ export function toReleaseVersion(
       if (rest.filter((elt) => elt !== 0).length > 0 || sequence == null) {
         throw new Error(
           `Unable to map prerelease identifier (in: ${assemblyVersion}) components to python: ${inspect(
-            version.prerelease,
-          )}. The format should be 'X.Y.Z-label.sequence', where sequence is a positive integer, and label is "dev", "pre", "alpha", beta", or "rc"`,
+            version.prerelease
+          )}. The format should be 'X.Y.Z-label.sequence', where sequence is a positive integer, and label is "dev", "pre", "alpha", beta", or "rc"`
         );
       }
       if (!Number.isInteger(sequence)) {
         throw new Error(
           `Unable to map prerelease identifier (in: ${assemblyVersion}) to python, as sequence ${inspect(
-            sequence,
-          )} is not an integer`,
+            sequence
+          )} is not an integer`
         );
       }
       const baseVersion = `${version.major}.${version.minor}.${version.patch}`;
       // See PEP 440: https://www.python.org/dev/peps/pep-0440/#pre-releases
       switch (label) {
-        case 'dev':
-        case 'pre':
+        case "dev":
+        case "pre":
           return `${baseVersion}.dev${sequence}`;
-        case 'alpha':
+        case "alpha":
           return `${baseVersion}.a${sequence}`;
-        case 'beta':
+        case "beta":
           return `${baseVersion}.b${sequence}`;
-        case 'rc':
+        case "rc":
           return `${baseVersion}.rc${sequence}`;
         default:
           throw new Error(
             `Unable to map prerelease identifier (in: ${assemblyVersion}) to python, as label ${inspect(
-              label,
-            )} is not mapped (only "dev", "pre", "alpha", "beta" and "rc" are)`,
+              label
+            )} is not mapped (only "dev", "pre", "alpha", "beta" and "rc" are)`
           );
       }
     case TargetName.DOTNET:
@@ -164,10 +164,10 @@ function toBracketNotation(
   {
     semver = true,
     target = TargetName.JAVASCRIPT,
-  }: { semver?: boolean; target?: TargetName } = {},
+  }: { semver?: boolean; target?: TargetName } = {}
 ): string {
-  if (semverRange === '*') {
-    semverRange = '>=0.0.0';
+  if (semverRange === "*") {
+    semverRange = ">=0.0.0";
   }
 
   const range = new Range(semverRange);
@@ -179,25 +179,25 @@ function toBracketNotation(
     .map((set) => {
       if (set.length === 1) {
         const version = set[0].semver.raw;
-        if (!version && range.raw === '>=0.0.0') {
+        if (!version && range.raw === ">=0.0.0") {
           // Case where version is '*'
-          return '[0.0.0,)';
+          return "[0.0.0,)";
         }
-        switch (set[0].operator || '=') {
+        switch (set[0].operator || "=") {
           // "[version]" => means exactly version
-          case '=':
+          case "=":
             return `[${addSuffix(version)}]`;
           // "(version,]" => means greater than version
-          case '>':
+          case ">":
             return `(${addSuffix(version)},)`;
           // "[version,]" => means greater than or equal to that version
-          case '>=':
+          case ">=":
             return `[${addSuffix(version)},)`;
           // "[,version)" => means less than version
-          case '<':
+          case "<":
             return `(,${addSuffix(version, !semver)})`;
           // "[,version]" => means less than or equal to version
-          case '<=':
+          case "<=":
             return `(,${addSuffix(version)}]`;
         }
       } else if (set.length === 2) {
@@ -209,44 +209,44 @@ function toBracketNotation(
       throw new Error(
         `Unsupported SemVer range set in ${semverRange}: ${set
           .map((comp) => comp.value)
-          .join(', ')}`,
+          .join(", ")}`
       );
     })
-    .join(', ');
+    .join(", ");
 
   function toBracketRange(
     left: Comparator,
-    right: Comparator,
+    right: Comparator
   ): string | undefined {
-    if (left.operator.startsWith('<') && right.operator.startsWith('>')) {
+    if (left.operator.startsWith("<") && right.operator.startsWith(">")) {
       // Order isn't ideal, swap around..
       [left, right] = [right, left];
     }
 
     // With ^0.0.0, somehow we get a left entry with an empty operator and value, we'll fix this up
-    if (left.operator === '' && left.value === '') {
-      left = new Comparator('>=0.0.0', left.options);
+    if (left.operator === "" && left.value === "") {
+      left = new Comparator(">=0.0.0", left.options);
     }
 
-    if (!left.operator.startsWith('>') || !right.operator.startsWith('<')) {
+    if (!left.operator.startsWith(">") || !right.operator.startsWith("<")) {
       // We only support ranges defined like "> (or >=) left, < (or <=) right"
       return undefined;
     }
 
-    const leftBrace = left.operator.endsWith('=') ? '[' : '(';
-    const rightBrace = right.operator.endsWith('=') ? ']' : ')';
+    const leftBrace = left.operator.endsWith("=") ? "[" : "(";
+    const rightBrace = right.operator.endsWith("=") ? "]" : ")";
     return `${leftBrace}${addSuffix(left.semver.raw)},${addSuffix(
       right.semver.raw,
-      right.operator === '<' && !semver,
+      right.operator === "<" && !semver
     )}${rightBrace}`;
   }
 
   function addSuffix(str: string | undefined, trimDashZero = false) {
     if (!str) {
-      return '';
+      return "";
     }
     if (trimDashZero) {
-      str = str.replace(/-0$/, '');
+      str = str.replace(/-0$/, "");
     }
     return suffix ? `${str}${suffix}` : toReleaseVersion(str, target);
   }

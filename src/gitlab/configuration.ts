@@ -1,8 +1,8 @@
-import * as path from 'path';
-import { snake } from 'case';
-import { Component } from '../component';
-import { Project } from '../project';
-import { YamlFile } from '../yaml';
+import * as path from "path";
+import { snake } from "case";
+import { Component } from "../component";
+import { Project } from "../project";
+import { YamlFile } from "../yaml";
 import {
   Artifacts,
   Cache,
@@ -14,7 +14,7 @@ import {
   Service,
   VariableConfig,
   Workflow,
-} from './configuration-model';
+} from "./configuration-model";
 
 /**
  * Options for `CiConfiguration`.
@@ -131,7 +131,8 @@ export class CiConfiguration extends Component {
    * Global variables that are passed to jobs.
    * If the job already has that variable defined, the job-level variable takes precedence.
    */
-  public readonly variables: Record<string, number | VariableConfig | string> = {};
+  public readonly variables: Record<string, number | VariableConfig | string> =
+    {};
   /**
    * Used to control pipeline behavior.
    */
@@ -141,13 +142,17 @@ export class CiConfiguration extends Component {
    */
   public readonly jobs: Record<string, Job> = {};
 
-  constructor(project: Project, name: string, options?: CiConfigurationOptions) {
+  constructor(
+    project: Project,
+    name: string,
+    options?: CiConfigurationOptions
+  ) {
     super(project);
     this.project = project;
     this.name = path.parse(name).name;
     this.path =
-      this.name === 'gitlab-ci'
-        ? '.gitlab-ci.yml'
+      this.name === "gitlab-ci"
+        ? ".gitlab-ci.yml"
         : `.gitlab/ci-templates/${name.toLocaleLowerCase()}.yml`;
     this.file = new YamlFile(this.project, this.path, {
       obj: () => this.renderCI(),
@@ -156,7 +161,8 @@ export class CiConfiguration extends Component {
     if (defaults) {
       this.defaultAfterScript.push(...(defaults.afterScript ?? []));
       this.defaultArtifacts = defaults.artifacts;
-      defaults.beforeScript && this.defaultBeforeScript.push(...defaults.beforeScript);
+      defaults.beforeScript &&
+        this.defaultBeforeScript.push(...defaults.beforeScript);
       this.defaultCache = defaults.cache;
       this.defaultImage = defaults.image;
       this.defaultInterruptible = defaults.interruptible;
@@ -176,7 +182,6 @@ export class CiConfiguration extends Component {
     if (options?.jobs) {
       this.addJobs(options.jobs);
     }
-
   }
 
   /**
@@ -188,7 +193,9 @@ export class CiConfiguration extends Component {
       this.assertIsValidInclude(additional);
       for (const existing of this.include) {
         if (this.areEqualIncludes(existing, additional)) {
-          throw new Error(`${this.name}: GitLab CI ${existing} already contains one or more templates specified in ${additional}.`);
+          throw new Error(
+            `${this.name}: GitLab CI ${existing} already contains one or more templates specified in ${additional}.`
+          );
         }
       }
       this.include.push(additional);
@@ -201,8 +208,13 @@ export class CiConfiguration extends Component {
    * @param include the Include to validate.
    */
   private assertIsValidInclude(include: Include) {
-    const combos = [include.local, (include.file && include.project), include.remote, include.template];
-    const len = combos.filter(x => Boolean(x)).length;
+    const combos = [
+      include.local,
+      include.file && include.project,
+      include.remote,
+      include.template,
+    ];
+    const len = combos.filter((x) => Boolean(x)).length;
     if (len !== 1) {
       throw new Error(
         `${this.name}: GitLab CI include ${include} contains ${len} property combination(s).
@@ -211,7 +223,7 @@ export class CiConfiguration extends Component {
         * file, project
         * remote
         * template  
-        `,
+        `
       );
     }
   }
@@ -234,7 +246,7 @@ export class CiConfiguration extends Component {
       const xFiles = x.file ? x.file : [];
       const yFiles = y.file ? y.file : [];
       const allFiles = xFiles.concat(yFiles);
-      return (new Set(allFiles)).size !== allFiles.length;
+      return new Set(allFiles).size !== allFiles.length;
     }
     return false;
   }
@@ -246,9 +258,12 @@ export class CiConfiguration extends Component {
   public addServices(...services: Service[]) {
     for (const additional of services) {
       for (const existing of this.defaultServices) {
-        if (additional.name === existing.name && additional.alias === existing.alias) {
+        if (
+          additional.name === existing.name &&
+          additional.alias === existing.alias
+        ) {
           throw new Error(
-            `${this.name}: GitLab CI already contains service ${additional}.`,
+            `${this.name}: GitLab CI already contains service ${additional}.`
           );
         }
       }
@@ -264,7 +279,7 @@ export class CiConfiguration extends Component {
     for (const [key, value] of Object.entries(variables)) {
       if (this.variables[key] !== undefined) {
         throw new Error(
-          `${this.name}: GitLab CI already contains variable ${key}.`,
+          `${this.name}: GitLab CI already contains variable ${key}.`
         );
       }
       this.variables[key] = value;
@@ -306,7 +321,9 @@ export class CiConfiguration extends Component {
         this.include.length > 0 ? snakeCaseKeys(this.include) : undefined,
       pages: snakeCaseKeys(this.pages),
       services:
-        this.defaultServices.length > 0 ? snakeCaseKeys(this.defaultServices) : undefined,
+        this.defaultServices.length > 0
+          ? snakeCaseKeys(this.defaultServices)
+          : undefined,
       variables:
         Object.entries(this.variables).length > 0 ? this.variables : undefined,
       workflow: snakeCaseKeys(this.workflow),
@@ -317,24 +334,32 @@ export class CiConfiguration extends Component {
 
   private renderDefault() {
     const defaults: Default = {
-      afterScript: this.defaultAfterScript.length > 0 ? this.defaultAfterScript : undefined,
+      afterScript:
+        this.defaultAfterScript.length > 0
+          ? this.defaultAfterScript
+          : undefined,
       artifacts: this.defaultArtifacts,
-      beforeScript: this.defaultBeforeScript.length > 0 ? this.defaultBeforeScript : undefined,
+      beforeScript:
+        this.defaultBeforeScript.length > 0
+          ? this.defaultBeforeScript
+          : undefined,
       cache: this.defaultCache,
       image: this.defaultImage,
       interruptible: this.defaultInterruptible,
       retry: this.defaultRetry,
-      services: this.defaultServices.length > 0 ? this.defaultServices : undefined,
+      services:
+        this.defaultServices.length > 0 ? this.defaultServices : undefined,
       tags: this.defaultTags.length > 0 ? this.defaultTags : undefined,
       timeout: this.defaultTimeout,
     };
-    return Object.values(defaults).filter(x => x).length ? snakeCaseKeys(defaults) : undefined;
+    return Object.values(defaults).filter((x) => x).length
+      ? snakeCaseKeys(defaults)
+      : undefined;
   }
 }
 
-
 function snakeCaseKeys<T = unknown>(obj: T): T {
-  if (typeof obj !== 'object' || obj == null) {
+  if (typeof obj !== "object" || obj == null) {
     return obj;
   }
 
@@ -344,7 +369,7 @@ function snakeCaseKeys<T = unknown>(obj: T): T {
 
   const result: Record<string, unknown> = {};
   for (let [k, v] of Object.entries(obj)) {
-    if (typeof v === 'object' && v != null) {
+    if (typeof v === "object" && v != null) {
       v = snakeCaseKeys(v);
     }
     result[snake(k)] = v;

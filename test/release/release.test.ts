@@ -1,86 +1,90 @@
-import * as YAML from 'yaml';
-import { JobPermission } from '../../src/github/workflows-model';
-import { Release, ReleaseTrigger } from '../../src/release';
-import { synthSnapshot, TestProject } from '../util';
+import * as YAML from "yaml";
+import { JobPermission } from "../../src/github/workflows-model";
+import { Release, ReleaseTrigger } from "../../src/release";
+import { synthSnapshot, TestProject } from "../util";
 
-test('minimal', () => {
+test("minimal", () => {
   // GIVEN
   const project = new TestProject();
 
   // WHEN
   new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   const outdir = synthSnapshot(project);
   expect(outdir).toMatchSnapshot();
 });
 
-test('with major version filter', () => {
+test("with major version filter", () => {
   // GIVEN
   const project = new TestProject();
 
   // WHEN
   new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: '10.x',
+    versionFile: "version.json",
+    branch: "10.x",
     majorVersion: 10,
-    releaseWorkflowName: 'release',
+    releaseWorkflowName: "release",
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // THEN
   const outdir = synthSnapshot(project);
-  expect(outdir['.github/workflows/release.yml']).toBeDefined();
+  expect(outdir[".github/workflows/release.yml"]).toBeDefined();
   expect(outdir).toMatchSnapshot();
 });
 
-test('with release tag prefix', () => {
+test("with release tag prefix", () => {
   // GIVEN
   const project = new TestProject();
 
   // WHEN
   new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: '10.x',
+    versionFile: "version.json",
+    branch: "10.x",
     majorVersion: 10,
-    releaseTagPrefix: 'prefix/',
-    releaseWorkflowName: 'release',
+    releaseTagPrefix: "prefix/",
+    releaseWorkflowName: "release",
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // THEN
   const outdir = synthSnapshot(project);
-  expect(outdir['.github/workflows/release.yml']).toBeDefined();
+  expect(outdir[".github/workflows/release.yml"]).toBeDefined();
   expect(outdir).toMatchSnapshot();
 });
 
-test('addBranch() can be used for additional release branches', () => {
+test("addBranch() can be used for additional release branches", () => {
   // GIVEN
   const project = new TestProject();
 
   const release = new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     majorVersion: 1,
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // WHEN
-  release.addBranch('2.x', { majorVersion: 2 });
-  release.addBranch('10.x', { majorVersion: 10 });
+  release.addBranch("2.x", { majorVersion: 2 });
+  release.addBranch("10.x", { majorVersion: 10 });
 
   // THEN
   const outdir = synthSnapshot(project);
-  expect(outdir['.github/workflows/release.yml']).toBeDefined();
-  expect(outdir['.github/workflows/release-2.x.yml']).toBeDefined();
-  expect(outdir['.github/workflows/release-10.x.yml']).toBeDefined();
+  expect(outdir[".github/workflows/release.yml"]).toBeDefined();
+  expect(outdir[".github/workflows/release-2.x.yml"]).toBeDefined();
+  expect(outdir[".github/workflows/release-10.x.yml"]).toBeDefined();
   expect(outdir).toMatchSnapshot();
 });
 
@@ -90,27 +94,31 @@ test('if multiple branches are defined, the default branch requires a "majorVers
 
   const release = new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // WHEN
-  const addBranch = () => release.addBranch('2.x', { majorVersion: 2 });
+  const addBranch = () => release.addBranch("2.x", { majorVersion: 2 });
 
   // THEN
-  expect(addBranch).toThrow(/you must specify \"majorVersion\" for the default branch when adding multiple release branches/);
+  expect(addBranch).toThrow(
+    /you must specify \"majorVersion\" for the default branch when adding multiple release branches/
+  );
 });
 
-test('publisher (defaults)', () => {
+test("publisher (defaults)", () => {
   // GIVEN
   const project = new TestProject();
 
   const release = new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     publishTasks: true,
+    artifactsDirectory: "dist",
   });
 
   // WHEN
@@ -122,88 +130,91 @@ test('publisher (defaults)', () => {
 
   // THEN
   const outdir = synthSnapshot(project);
-  expect(outdir['.github/workflows/release.yml']).toMatchSnapshot();
-  expect(outdir['.projen/tasks.json']).toMatchSnapshot();
+  expect(outdir[".github/workflows/release.yml"]).toMatchSnapshot();
+  expect(outdir[".projen/tasks.json"]).toMatchSnapshot();
 });
 
-test('publishers are added as jobs to all release workflows', () => {
+test("publishers are added as jobs to all release workflows", () => {
   // GIVEN
   const project = new TestProject();
 
   const release = new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     majorVersion: 1,
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // WHEN
-  release.addBranch('2.x', { majorVersion: 2 });
+  release.addBranch("2.x", { majorVersion: 2 });
   release.publisher.publishToNpm();
 
   // THEN
   const outdir = synthSnapshot(project);
-  const wf1 = YAML.parse(outdir['.github/workflows/release.yml']);
+  const wf1 = YAML.parse(outdir[".github/workflows/release.yml"]);
   expect(wf1).toMatchObject({
-    on: { push: { branches: ['main'] } },
+    on: { push: { branches: ["main"] } },
     jobs: {
       release: {
         steps: expect.any(Array),
       },
-      release_npm: { },
+      release_npm: {},
     },
   });
   expect(wf1.jobs.release.steps.length).toBe(5);
-  const wf2 = YAML.parse(outdir['.github/workflows/release-2.x.yml']);
+  const wf2 = YAML.parse(outdir[".github/workflows/release-2.x.yml"]);
   expect(wf2).toMatchObject({
-    on: { push: { branches: ['2.x'] } },
+    on: { push: { branches: ["2.x"] } },
     jobs: {
       release: {
         steps: expect.any(Array),
       },
-      release_npm: { },
+      release_npm: {},
     },
   });
   expect(wf2.jobs.release.steps.length).toBe(5);
 });
 
-test('manual releases do not generate a release workflow', () => {
+test("manual releases do not generate a release workflow", () => {
   // GIVEN
   const project = new TestProject();
 
   // WHEN
   new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     releaseTrigger: ReleaseTrigger.manual(),
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // THEN
   const outdir = synthSnapshot(project);
-  expect(outdir['.github/workflows/release.yml']).toBeUndefined();
+  expect(outdir[".github/workflows/release.yml"]).toBeUndefined();
 });
 
-test('releaseSchedule schedules releases', () => {
+test("releaseSchedule schedules releases", () => {
   // GIVEN
-  const schedule = '0 17 * * *';
+  const schedule = "0 17 * * *";
   const project = new TestProject();
 
   // WHEN
   new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     releaseEveryCommit: false,
     releaseSchedule: schedule,
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // THEN
   const outdir = synthSnapshot(project);
-  const wf1 = YAML.parse(outdir['.github/workflows/release.yml']);
+  const wf1 = YAML.parse(outdir[".github/workflows/release.yml"]);
   expect(wf1).toMatchObject({
     on: {
       schedule: expect.arrayContaining([{ cron: schedule }]),
@@ -211,25 +222,26 @@ test('releaseSchedule schedules releases', () => {
   });
 });
 
-test('addJobs() can be used to add arbitrary jobs to the release workflows', () => {
+test("addJobs() can be used to add arbitrary jobs to the release workflows", () => {
   // GIVEN
   const project = new TestProject();
 
   const release = new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     majorVersion: 0,
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
-  release.addBranch('foo', { majorVersion: 4, workflowName: 'foo-workflow' });
+  release.addBranch("foo", { majorVersion: 4, workflowName: "foo-workflow" });
   release.publisher.publishToPyPi();
 
   // WHEN
   release.addJobs({
     random_job: {
-      runsOn: ['foo'],
+      runsOn: ["foo"],
       permissions: {
         actions: JobPermission.NONE,
       },
@@ -242,118 +254,127 @@ test('addJobs() can be used to add arbitrary jobs to the release workflows', () 
   expect(outdir).toMatchSnapshot();
 });
 
-test('majorVersion can be 0', () => {
+test("majorVersion can be 0", () => {
   // GIVEN
   const project = new TestProject();
 
   // WHEN
   new Release(project, {
     task: project.buildTask,
-    versionFile: 'goo.json',
-    branch: 'main',
+    versionFile: "goo.json",
+    branch: "main",
     majorVersion: 0,
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // THEN
   const outdir = synthSnapshot(project);
-  expect(outdir['.github/workflows/release.yml']).toMatchSnapshot();
-  expect(outdir['.projen/tasks.json']).toMatchSnapshot();
+  expect(outdir[".github/workflows/release.yml"]).toMatchSnapshot();
+  expect(outdir[".projen/tasks.json"]).toMatchSnapshot();
 });
 
-test('prerelease can be specified per branch', () => {
+test("prerelease can be specified per branch", () => {
   // GIVEN
   const project = new TestProject();
 
   // WHEN
   const release = new Release(project, {
     task: project.buildTask,
-    versionFile: 'goo.json',
-    branch: 'main',
+    versionFile: "goo.json",
+    branch: "main",
     majorVersion: 0,
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
-  release.addBranch('10.x', { majorVersion: 10, prerelease: 'pre' });
+  release.addBranch("10.x", { majorVersion: 10, prerelease: "pre" });
 
   // THEN
   const outdir = synthSnapshot(project);
-  expect(outdir['.github/workflows/release.yml']).toMatchSnapshot();
-  expect(outdir['.github/workflows/release.10.x.yml']).toMatchSnapshot();
-  expect(outdir['.projen/tasks.json']).toMatchSnapshot();
+  expect(outdir[".github/workflows/release.yml"]).toMatchSnapshot();
+  expect(outdir[".github/workflows/release.10.x.yml"]).toMatchSnapshot();
+  expect(outdir[".projen/tasks.json"]).toMatchSnapshot();
 });
 
-test('releaseBranches can be use to define additional branches', () => {
+test("releaseBranches can be use to define additional branches", () => {
   // GIVEN
   const project = new TestProject();
 
   // WHEN
   new Release(project, {
     task: project.buildTask,
-    versionFile: 'goo.json',
-    branch: 'main',
+    versionFile: "goo.json",
+    branch: "main",
     majorVersion: 1,
     releaseBranches: {
-      '3.x': { majorVersion: 3 },
-      'next': { majorVersion: 4, prerelease: 'pre' },
+      "3.x": { majorVersion: 3 },
+      next: { majorVersion: 4, prerelease: "pre" },
     },
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   const outdir = synthSnapshot(project);
   expect(outdir).toMatchSnapshot();
 });
 
-test('releaseBranches can be defined with different tag prefixes to the same major version', () => {
+test("releaseBranches can be defined with different tag prefixes to the same major version", () => {
   // GIVEN
   const project = new TestProject();
 
   // WHEN
   new Release(project, {
     task: project.buildTask,
-    versionFile: 'goo.json',
-    branch: 'firefox',
+    versionFile: "goo.json",
+    branch: "firefox",
     majorVersion: 1,
-    releaseWorkflowName: 'release-firefox',
-    releaseTagPrefix: 'firefox/',
+    releaseWorkflowName: "release-firefox",
+    releaseTagPrefix: "firefox/",
     releaseBranches: {
-      safari: { majorVersion: 1, tagPrefix: 'safari/' },
+      safari: { majorVersion: 1, tagPrefix: "safari/" },
     },
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   const outdir = synthSnapshot(project);
   expect(outdir).toMatchSnapshot();
 });
 
-test('releaseBranches as an array throws an error since type was changed', () => {
+test("releaseBranches as an array throws an error since type was changed", () => {
   // GIVEN
   const project = new TestProject();
 
   // WHEN
-  expect(() => new Release(project, {
-    task: project.buildTask,
-    versionFile: 'goo.json',
-    branch: 'main',
-    majorVersion: 1,
-    releaseBranches: ['10.x', '2.x'] as any,
-  })).toThrow(/\"releaseBranches\" is no longer an array. See type annotations/);
+  expect(
+    () =>
+      new Release(project, {
+        task: project.buildTask,
+        versionFile: "goo.json",
+        branch: "main",
+        majorVersion: 1,
+        releaseBranches: ["10.x", "2.x"] as any,
+        artifactsDirectory: "dist",
+      })
+  ).toThrow(/\"releaseBranches\" is no longer an array. See type annotations/);
 });
 
-test('github packages are supported by npm', () => {
+test("github packages are supported by npm", () => {
   // GIVEN
   const project = new TestProject();
 
   const release = new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // WHEN
   release.publisher.publishToNpm({
-    registry: 'npm.pkg.github.com',
+    registry: "npm.pkg.github.com",
   });
 
   // THEN
@@ -361,42 +382,44 @@ test('github packages are supported by npm', () => {
   expect(outdir).toMatchSnapshot();
 });
 
-test('can enable issue creation on failed releases with a custom label', () => {
-
+test("can enable issue creation on failed releases with a custom label", () => {
   const project = new TestProject();
 
   const release = new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     releaseFailureIssue: true,
-    releaseFailureIssueLabel: 'custom-label',
+    releaseFailureIssueLabel: "custom-label",
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // WHEN
   release.publisher.publishToNpm({
-    registry: 'npm.pkg.github.com',
+    registry: "npm.pkg.github.com",
   });
 
   const outdir = synthSnapshot(project);
-  expect(outdir['.github/workflows/release.yml']).toMatchSnapshot();
+  expect(outdir[".github/workflows/release.yml"]).toMatchSnapshot();
 });
 
-test('AWS CodeArtifact is supported by npm', () => {
+test("AWS CodeArtifact is supported by npm", () => {
   // GIVEN
   const project = new TestProject();
 
   const release = new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // WHEN
   release.publisher.publishToNpm({
-    registry: 'my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+    registry:
+      "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
   });
 
   // THEN
@@ -404,23 +427,25 @@ test('AWS CodeArtifact is supported by npm', () => {
   expect(outdir).toMatchSnapshot();
 });
 
-test('AWS CodeArtifact is supported by npm with AWS access keys', () => {
+test("AWS CodeArtifact is supported by npm with AWS access keys", () => {
   // GIVEN
   const project = new TestProject();
 
   const release = new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // WHEN
   release.publisher.publishToNpm({
-    registry: 'my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+    registry:
+      "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
     codeArtifactOptions: {
-      accessKeyIdSecret: 'OTHER_AWS_ACCESS_KEY_ID',
-      secretAccessKeySecret: 'OTHER_AWS_SECRET_ACCESS_KEY',
+      accessKeyIdSecret: "OTHER_AWS_ACCESS_KEY_ID",
+      secretAccessKeySecret: "OTHER_AWS_SECRET_ACCESS_KEY",
     },
   });
 
@@ -429,21 +454,23 @@ test('AWS CodeArtifact is supported by npm with AWS access keys', () => {
   expect(outdir).toMatchSnapshot();
 });
 
-test('AWS CodeArtifact is supported with role to assume', () => {
+test("AWS CodeArtifact is supported with role to assume", () => {
   // GIVEN
   const project = new TestProject();
-  const roleArn = 'role-arn';
+  const roleArn = "role-arn";
 
   const release = new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // WHEN
   release.publisher.publishToNpm({
-    registry: 'my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/',
+    registry:
+      "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
     codeArtifactOptions: {
       roleToAssume: roleArn,
     },
@@ -454,58 +481,69 @@ test('AWS CodeArtifact is supported with role to assume', () => {
   expect(outdir).toMatchSnapshot();
 });
 
-test('can be modified with escape hatches', () => {
+test("can be modified with escape hatches", () => {
   // GIVEN
   const project = new TestProject();
   new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
+    versionFile: "version.json",
+    branch: "main",
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // WHEN
-  project.github!.tryFindWorkflow('release')!.file!.addOverride('jobs.release.env.FOO', 'VALUE1');
-  project.github!.tryFindWorkflow('release')!.file!.addOverride('jobs.release_github.env.BAR', 'VALUE2');
+  project
+    .github!.tryFindWorkflow("release")!
+    .file!.addOverride("jobs.release.env.FOO", "VALUE1");
+  project
+    .github!.tryFindWorkflow("release")!
+    .file!.addOverride("jobs.release_github.env.BAR", "VALUE2");
 
   // THEN
   const outdir = synthSnapshot(project);
-  expect(outdir['.github/workflows/release.yml']).toContain('FOO: VALUE1');
-  expect(outdir['.github/workflows/release.yml']).toContain('BAR: VALUE2');
+  expect(outdir[".github/workflows/release.yml"]).toContain("FOO: VALUE1");
+  expect(outdir[".github/workflows/release.yml"]).toContain("BAR: VALUE2");
   expect(outdir).toMatchSnapshot();
 });
 
-test('manual release with custom git-push', () => {
+test("manual release with custom git-push", () => {
   // GIVEN
   const project = new TestProject();
   new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
-    releaseTrigger: ReleaseTrigger.manual({ gitPushCommand: 'git push --follow-tags -o ci.skip origin main' }),
+    versionFile: "version.json",
+    branch: "main",
+    releaseTrigger: ReleaseTrigger.manual({
+      gitPushCommand: "git push --follow-tags -o ci.skip origin main",
+    }),
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // THEN
   const outdir = synthSnapshot(project);
-  const steps = outdir['.projen/tasks.json'].tasks['publish:git'].steps;
+  const steps = outdir[".projen/tasks.json"].tasks["publish:git"].steps;
   expect(steps).toEqual(
     expect.arrayContaining([
-      expect.objectContaining({ exec: 'git push --follow-tags -o ci.skip origin main' }),
-    ]),
+      expect.objectContaining({
+        exec: "git push --follow-tags -o ci.skip origin main",
+      }),
+    ])
   );
 });
 
-test('publisher can use custom github runner', () => {
+test("publisher can use custom github runner", () => {
   // GIVEN
   const project = new TestProject();
 
   const release = new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
-    workflowRunsOn: ['self-hosted'],
+    versionFile: "version.json",
+    branch: "main",
+    workflowRunsOn: ["self-hosted"],
     publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
   });
 
   // WHEN
@@ -517,111 +555,115 @@ test('publisher can use custom github runner', () => {
 
   // THEN
   const outdir = synthSnapshot(project);
-  const workflow = YAML.parse(outdir['.github/workflows/release.yml']);
-  for ( let job of Object.keys(workflow.jobs) ) {
-    expect(workflow.jobs[job]['runs-on']).toEqual('self-hosted');
+  const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
+  for (let job of Object.keys(workflow.jobs)) {
+    expect(workflow.jobs[job]["runs-on"]).toEqual("self-hosted");
   }
 });
 
-describe('npmDistTag', () => {
-  test('determines npm dist-tag used in the workflow', () => {
+describe("npmDistTag", () => {
+  test("determines npm dist-tag used in the workflow", () => {
     // GIVEN
     const project = new TestProject();
 
     // WHEN
     const release = new Release(project, {
       releaseBranches: {
-        'main-3': { majorVersion: 3, npmDistTag: 'latest-3' },
+        "main-3": { majorVersion: 3, npmDistTag: "latest-3" },
       },
-      branch: 'main',
+      branch: "main",
       majorVersion: 1,
       task: project.buildTask,
-      versionFile: 'version.json',
+      versionFile: "version.json",
       publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
     });
 
     release.publisher.publishToNpm();
 
     // THEN
     const files = synthSnapshot(project);
-    const main = YAML.parse(files['.github/workflows/release.yml']);
-    const main3 = YAML.parse(files['.github/workflows/release-main-3.yml']);
+    const main = YAML.parse(files[".github/workflows/release.yml"]);
+    const main3 = YAML.parse(files[".github/workflows/release-main-3.yml"]);
     expect(main.jobs.release_npm.steps[2].env).toStrictEqual({
-      NPM_DIST_TAG: 'latest',
-      NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
+      NPM_DIST_TAG: "latest",
+      NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
     });
     expect(main3.jobs.release_npm.steps[2].env).toStrictEqual({
-      NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
-      NPM_DIST_TAG: 'latest-3',
+      NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
+      NPM_DIST_TAG: "latest-3",
     });
   });
 
-  test('the dist-tag for the default branch is set at the root', () => {
+  test("the dist-tag for the default branch is set at the root", () => {
     // GIVEN
     const project = new TestProject();
 
     // WHEN
     const release = new Release(project, {
       releaseBranches: {
-        'main-3': { majorVersion: 3, npmDistTag: 'latest-3' },
+        "main-3": { majorVersion: 3, npmDistTag: "latest-3" },
       },
-      branch: 'main',
+      branch: "main",
       majorVersion: 1,
-      npmDistTag: 'main-tag',
+      npmDistTag: "main-tag",
       task: project.buildTask,
-      versionFile: 'version.json',
+      versionFile: "version.json",
       publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
     });
 
     release.publisher.publishToNpm();
 
     // THEN
     const files = synthSnapshot(project);
-    const main = YAML.parse(files['.github/workflows/release.yml']);
-    const main3 = YAML.parse(files['.github/workflows/release-main-3.yml']);
+    const main = YAML.parse(files[".github/workflows/release.yml"]);
+    const main3 = YAML.parse(files[".github/workflows/release-main-3.yml"]);
     expect(main.jobs.release_npm.steps[2].env).toStrictEqual({
-      NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
-      NPM_DIST_TAG: 'main-tag',
+      NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
+      NPM_DIST_TAG: "main-tag",
     });
     expect(main3.jobs.release_npm.steps[2].env).toStrictEqual({
-      NPM_TOKEN: '${{ secrets.NPM_TOKEN }}',
-      NPM_DIST_TAG: 'latest-3',
+      NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
+      NPM_DIST_TAG: "latest-3",
     });
-
-
   });
 
-  test('if branch-level dist-tag is set, then publishToNpm cannot specify dist-tag', () => {
+  test("if branch-level dist-tag is set, then publishToNpm cannot specify dist-tag", () => {
     // GIVEN
     const project = new TestProject();
 
     // WHEN
     const release = new Release(project, {
       releaseBranches: {
-        'main-3': { majorVersion: 3, npmDistTag: 'latest-3' },
+        "main-3": { majorVersion: 3, npmDistTag: "latest-3" },
       },
-      branch: 'main',
+      branch: "main",
       majorVersion: 1,
       task: project.buildTask,
-      versionFile: 'version.json',
+      versionFile: "version.json",
       publishTasks: true, // to increase coverage
+      artifactsDirectory: "dist",
     });
 
-    release.publisher.publishToNpm({ distTag: 'next' });
+    release.publisher.publishToNpm({ distTag: "next" });
 
-    expect(() => project.synth()).toThrow(/cannot set branch-level npmDistTag and npmDistTag in publishToNpm/);
+    expect(() => project.synth()).toThrow(
+      /cannot set branch-level npmDistTag and npmDistTag in publishToNpm/
+    );
   });
 });
 
-test('if publishTasks is disabled, no publish tasks are created', () => {
+test("if publishTasks is disabled, no publish tasks are created", () => {
   // GIVEN
   const project = new TestProject();
 
   const release = new Release(project, {
     task: project.buildTask,
-    versionFile: 'version.json',
-    branch: 'main',
-    workflowRunsOn: ['self-hosted'],
+    versionFile: "version.json",
+    branch: "main",
+    workflowRunsOn: ["self-hosted"],
+    artifactsDirectory: "dist",
   });
 
   // WHEN
@@ -633,6 +675,41 @@ test('if publishTasks is disabled, no publish tasks are created', () => {
 
   // THEN
   const files = synthSnapshot(project);
-  const tasks = files['.projen/tasks.json'].tasks;
-  expect(Object.keys(tasks).filter(t => t.startsWith('publish:')).length).toBe(0);
+  const tasks = files[".projen/tasks.json"].tasks;
+  expect(
+    Object.keys(tasks).filter((t) => t.startsWith("publish:")).length
+  ).toBe(0);
+});
+
+test("dryRun", () => {
+  // GIVEN
+  const project = new TestProject();
+
+  const release = new Release(project, {
+    task: project.buildTask,
+    versionFile: "version.json",
+    branch: "main",
+    artifactsDirectory: "dist",
+    publishDryRun: true,
+  });
+
+  // WHEN
+  release.publisher.publishToGo();
+  release.publisher.publishToMaven();
+  release.publisher.publishToNpm();
+  release.publisher.publishToNuget();
+  release.publisher.publishToPyPi();
+
+  // THEN
+  const files = synthSnapshot(project);
+  const releaseWorkflow = YAML.parse(files[".github/workflows/release.yml"]);
+  const releaseJobs = Object.keys(releaseWorkflow.jobs).filter((name) =>
+    name.startsWith("release_")
+  );
+  for (const name of releaseJobs) {
+    const job = releaseWorkflow.jobs[name];
+    expect(
+      job.steps.slice(-1)[0].run.startsWith('echo "DRY RUN:')
+    ).toBeTruthy();
+  }
 });

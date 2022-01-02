@@ -49,7 +49,6 @@ export interface TaskCommonOptions {
   readonly cwd?: string;
 }
 
-
 /**
  * Specification of a single task.
  */
@@ -123,4 +122,3 @@ export interface TaskStep extends TaskStepOptions {
    */
   readonly builtin?: string;
 }
-

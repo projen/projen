@@ -1,7 +1,7 @@
-import * as chalk from 'chalk';
-import * as yargs from 'yargs';
-import * as logging from '../logging';
-import { TaskRuntime } from '../task-runtime';
+import * as chalk from "chalk";
+import * as yargs from "yargs";
+import * as logging from "../logging";
+import { TaskRuntime } from "../task-runtime";
 
 /**
  * Reads .projen/tasks.json and adds CLI commands for all tasks.
@@ -10,12 +10,19 @@ import { TaskRuntime } from '../task-runtime';
 export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
   const tasks = runtime.manifest.tasks ?? {};
   for (const task of Object.values(tasks)) {
-    ya.command(task.name, task.description ?? '', taskCommandHandler(task.name));
+    ya.command(
+      task.name,
+      task.description ?? "",
+      taskCommandHandler(task.name)
+    );
   }
 
   function taskCommandHandler(taskName: string) {
     return (args: yargs.Argv) => {
-      args.option('inspect', { alias: 'i', desc: 'show all steps in this task' });
+      args.option("inspect", {
+        alias: "i",
+        desc: "show all steps in this task",
+      });
 
       const argv = args.argv;
 
@@ -33,7 +40,7 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
   }
 
   function inspectTask(name: string, indent = 0) {
-    const writeln = (s: string) => console.log(' '.repeat(indent) + s);
+    const writeln = (s: string) => console.log(" ".repeat(indent) + s);
 
     const task = runtime.tryFindTask(name);
     if (!task) {
@@ -41,11 +48,11 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
     }
 
     if (task.description) {
-      writeln(`${chalk.underline('description')}: ${task.description}`);
+      writeln(`${chalk.underline("description")}: ${task.description}`);
     }
 
     for (const [k, v] of Object.entries(task.env ?? {})) {
-      writeln(`${chalk.underline('env')}: ${k}=${v}`);
+      writeln(`${chalk.underline("env")}: ${k}=${v}`);
     }
 
     for (const step of task.steps ?? []) {

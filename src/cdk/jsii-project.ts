@@ -1,14 +1,21 @@
-import * as semver from 'semver';
-import { Eslint } from '../javascript';
-import { GoPublishOptions, MavenPublishOptions, PyPiPublishOptions, NugetPublishOptions } from '../release';
-import { TypeScriptProject, TypeScriptProjectOptions } from '../typescript';
-import { JsiiDocgen } from './jsii-docgen';
+import { Task } from "..";
+import { Eslint } from "../javascript";
+import {
+  CommonPublishOptions,
+  GoPublishOptions,
+  MavenPublishOptions,
+  NugetPublishOptions,
+  PyPiPublishOptions,
+} from "../release";
+import { TypeScriptProject, TypeScriptProjectOptions } from "../typescript";
+import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
+import { JsiiDocgen } from "./jsii-docgen";
 
-const SUPERCHAIN_IMAGE = 'jsii/superchain:1-buster-slim';
-const SUPERCHAIN_NODE_VERSIONS = [12, 14, 16]; // supported jsii/superchain image tags: `1-buster-slim-nodeNN`
-
-const EMAIL_REGEX = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-const URL_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
+const EMAIL_REGEX =
+  /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+const URL_REGEX =
+  /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
+const REPO_TEMP_DIRECTORY = ".repo";
 
 export interface JsiiProjectOptions extends TypeScriptProjectOptions {
   /**
@@ -96,9 +103,9 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
 }
 
 export enum Stability {
-  EXPERIMENTAL = 'experimental',
-  STABLE = 'stable',
-  DEPRECATED = 'deprecated'
+  EXPERIMENTAL = "experimental",
+  STABLE = "stable",
+  DEPRECATED = "deprecated",
 }
 
 export interface JsiiJavaTarget extends MavenPublishOptions {
@@ -128,7 +135,6 @@ export interface JsiiGoTarget extends GoPublishOptions {
    * @example github.com/owner/repo/subdir
    */
   readonly moduleName: string;
-
 }
 
 /**
@@ -139,6 +145,8 @@ export interface JsiiGoTarget extends GoPublishOptions {
 export class JsiiProject extends TypeScriptProject {
   public readonly eslint?: Eslint;
 
+  private readonly packageAllTask: Task;
+
   constructor(options: JsiiProjectOptions) {
     const { authorEmail, authorUrl } = parseAuthorAddress(options);
     super({
@@ -146,14 +154,7 @@ export class JsiiProject extends TypeScriptProject {
       authorName: options.author,
       authorEmail,
       authorUrl,
-
       ...options,
-
-      workflowContainerImage: options.workflowContainerImage ?? determineSuperchainImage(options.minNodeVersion),
-
-      // this is needed temporarily because our release workflows use the 'gh'
-      // cli and its not yet available in jsii/superchain:node14
-      releaseWorkflowSetupSteps: options.releaseWorkflowSetupSteps,
       releaseToNpm: false, // we have a jsii release workflow
       disableTsconfig: true, // jsii generates its own tsconfig.json
       docgen: false, // we use jsii-docgen here so disable typescript docgen
@@ -166,11 +167,11 @@ export class JsiiProject extends TypeScriptProject {
 
     // this is an unhelpful warning
     const jsiiFlags = [
-      '--silence-warnings=reserved-word',
-      '--no-fix-peer-dependencies',
-    ].join(' ');
+      "--silence-warnings=reserved-word",
+      "--no-fix-peer-dependencies",
+    ].join(" ");
 
-    const compatIgnore = options.compatIgnore ?? '.compatignore';
+    const compatIgnore = options.compatIgnore ?? ".compatignore";
 
     this.addFields({ stability: options.stability ?? Stability.STABLE });
 
@@ -178,8 +179,8 @@ export class JsiiProject extends TypeScriptProject {
       this.addFields({ deprecated: true });
     }
 
-    const compatTask = this.addTask('compat', {
-      description: 'Perform API compatibility check against latest version',
+    const compatTask = this.addTask("compat", {
+      description: "Perform API compatibility check against latest version",
       exec: `jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`,
     });
 
@@ -190,34 +191,59 @@ export class JsiiProject extends TypeScriptProject {
 
     this.compileTask.reset(`jsii ${jsiiFlags}`);
     this.watchTask.reset(`jsii -w ${jsiiFlags}`);
-    this.packageTask?.reset('jsii-pacmak');
+    this.packageAllTask = this.addTask("package-all", {
+      description: "Packages artifacts for all target languages",
+    });
+
+    // in jsii we consider the entire repo (post build) as the build artifact
+    // which is then used to create the language bindings in separate jobs.
+    this.packageTask.reset(`mkdir -p ${this.artifactsDirectory}`);
+    this.packageTask.exec(
+      `rsync -a . ${this.artifactsDirectory} --exclude .git --exclude node_modules`
+    );
 
     const targets: Record<string, any> = {};
 
     const jsii: any = {
-      outdir: 'dist',
+      outdir: this.artifactsDirectory,
       targets,
       tsc: {
         outDir: libdir,
         rootDir: srcdir,
       },
     };
+
     if (options.excludeTypescript) {
       jsii.excludeTypescript = options.excludeTypescript;
     }
+
     this.addFields({ jsii });
 
+    this.release?.publisher.addGitHubPrePublishingSteps(
+      {
+        name: "Prepare Repository",
+        run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
+      },
+      {
+        name: "Collect GitHub Metadata",
+        run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
+      }
+    );
+
     if (options.releaseToNpm != false) {
-      this.publisher?.publishToNpm({
+      const task = this.addPackagingTask("js");
+      this.release?.publisher.publishToNpm({
+        ...this.pacmakForLanguage("js", task),
         registry: this.package.npmRegistry,
         npmTokenSecret: this.package.npmTokenSecret,
       });
+      this.addPackagingTarget("js", task);
     }
 
     // we cannot call an option `java` because the java code generated by jsii
     // does not compile due to a conflict between this option name and the `java`
     // package (e.g. when `java.util.Objects` is referenced).
-    if ('java' in options) {
+    if ("java" in options) {
       throw new Error('the "java" option is now called "publishToMaven"');
     }
 
@@ -230,7 +256,14 @@ export class JsiiProject extends TypeScriptProject {
         },
       };
 
-      this.publisher?.publishToMaven(options.publishToMaven);
+      const task = this.addPackagingTask("java");
+
+      this.release?.publisher.publishToMaven({
+        ...this.pacmakForLanguage("java", task),
+        ...options.publishToMaven,
+      });
+
+      this.addPackagingTarget("java", task);
     }
 
     const pypi = options.publishToPypi ?? options.python;
@@ -240,7 +273,13 @@ export class JsiiProject extends TypeScriptProject {
         module: pypi.module,
       };
 
-      this.publisher?.publishToPyPi(pypi);
+      const task = this.addPackagingTask("python");
+      this.release?.publisher.publishToPyPi({
+        ...this.pacmakForLanguage("python", task),
+        ...pypi,
+      });
+
+      this.addPackagingTarget("python", task);
     }
 
     const nuget = options.publishToNuget ?? options.dotnet;
@@ -250,7 +289,13 @@ export class JsiiProject extends TypeScriptProject {
         packageId: nuget.packageId,
       };
 
-      this.publisher?.publishToNuget(nuget);
+      const task = this.addPackagingTask("dotnet");
+      this.release?.publisher.publishToNuget({
+        ...this.pacmakForLanguage("dotnet", task),
+        ...nuget,
+      });
+
+      this.addPackagingTarget("dotnet", task);
     }
 
     const golang = options.publishToGo;
@@ -259,17 +304,19 @@ export class JsiiProject extends TypeScriptProject {
         moduleName: golang.moduleName,
       };
 
-      this.publisher?.publishToGo(golang);
+      const task = this.addPackagingTask("go");
+      this.release?.publisher.publishToGo({
+        ...this.pacmakForLanguage("go", task),
+        ...golang,
+      });
+
+      this.addPackagingTarget("go", task);
     }
 
-    this.addDevDeps(
-      'jsii',
-      'jsii-diff',
-      'jsii-pacmak',
-    );
+    this.addDevDeps("jsii", "jsii-diff");
 
-    this.gitignore.exclude('.jsii', 'tsconfig.json');
-    this.npmignore?.include('.jsii');
+    this.gitignore.exclude(".jsii", "tsconfig.json");
+    this.npmignore?.include(".jsii");
 
     if (options.docgen ?? true) {
       new JsiiDocgen(this);
@@ -281,19 +328,88 @@ export class JsiiProject extends TypeScriptProject {
     }
   }
 
-}
+  /**
+   * Adds a target language to the build workflow and creates a package task.
+   * @param language
+   * @returns
+   */
+  private addPackagingTarget(language: JsiiPacmakTarget, packTask: Task) {
+    if (!this.buildWorkflow) {
+      return;
+    }
 
+    const pacmak = this.pacmakForLanguage(language, packTask);
+
+    this.buildWorkflow.addPostBuildJob(`package-${language}`, {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      tools: {
+        node: { version: "14.x" },
+        ...pacmak.publishTools,
+      },
+      steps: pacmak.prePublishSteps ?? [],
+    });
+  }
+
+  private addPackagingTask(language: JsiiPacmakTarget): Task {
+    const packageTask = this.tasks.addTask(`package:${language}`, {
+      description: `Create ${language} language bindings`,
+    });
+
+    packageTask.exec(
+      "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
+    );
+    packageTask.exec(`npx jsii-pacmak@$jsii_version -v --target ${language}`);
+    this.packageAllTask.spawn(packageTask);
+    return packageTask;
+  }
+
+  private pacmakForLanguage(
+    target: JsiiPacmakTarget,
+    packTask: Task
+  ): CommonPublishOptions {
+    // at this stage, `artifactsDirectory` contains the prebuilt repository.
+    // for the publishing to work seamlessely, that directory needs to contain the actual artifact.
+    // so we move the repo, create the artifact, and put it in the expected place.
+
+    return {
+      publishTools: JSII_TOOLCHAIN[target],
+      prePublishSteps: [
+        {
+          name: "Prepare Repository",
+          run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
+        },
+        {
+          name: "Install Dependencies",
+          run: `cd ${REPO_TEMP_DIRECTORY} && ${this.package.installCommand}`,
+        },
+        {
+          name: `Create ${target} artifact`,
+          run: `cd ${REPO_TEMP_DIRECTORY} && npx projen ${packTask.name}`,
+        },
+        {
+          name: `Collect ${target} Artifact`,
+          run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
+        },
+      ],
+    };
+  }
+}
 
 function parseAuthorAddress(options: JsiiProjectOptions) {
   let authorEmail = options.authorEmail;
   let authorUrl = options.authorUrl;
   if (options.authorAddress) {
     if (options.authorEmail && options.authorEmail !== options.authorAddress) {
-      throw new Error('authorEmail is deprecated and cannot be used in conjunction with authorAddress');
+      throw new Error(
+        "authorEmail is deprecated and cannot be used in conjunction with authorAddress"
+      );
     }
 
     if (options.authorUrl && options.authorUrl !== options.authorAddress) {
-      throw new Error('authorUrl is deprecated and cannot be used in conjunction with authorAddress.');
+      throw new Error(
+        "authorUrl is deprecated and cannot be used in conjunction with authorAddress."
+      );
     }
 
     if (EMAIL_REGEX.test(options.authorAddress)) {
@@ -301,31 +417,10 @@ function parseAuthorAddress(options: JsiiProjectOptions) {
     } else if (URL_REGEX.test(options.authorAddress)) {
       authorUrl = options.authorAddress;
     } else {
-      throw new Error(`authorAddress must be either an email address or a URL: ${options.authorAddress}`);
+      throw new Error(
+        `authorAddress must be either an email address or a URL: ${options.authorAddress}`
+      );
     }
   }
   return { authorEmail, authorUrl };
-}
-
-/**
- * Determines the jsii/superchain image to use based on the minimum node
- * version.
- *
- * @param minNodeVersion The minimum node version of the project. If not
- * specified, v14.17.4 is used.
- */
-function determineSuperchainImage(minNodeVersion?: string): string {
-  // the default image (`jsii/superchain:1-buster-slim`) will include the
-  // minimum supported node version of JSII (as of this writing it is 12.x).
-  if (!minNodeVersion) {
-    return SUPERCHAIN_IMAGE;
-  }
-
-  const major = semver.major(minNodeVersion);
-
-  if (!SUPERCHAIN_NODE_VERSIONS.includes(major)) {
-    throw new Error(`No jsii/superchain image available for node ${major}.x. Supported node versions: ${SUPERCHAIN_NODE_VERSIONS.map(m => `${m}.x`).join(',')}`);
-  }
-
-  return `${SUPERCHAIN_IMAGE}-node${major}`;
 }

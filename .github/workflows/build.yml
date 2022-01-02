@@ -8,9 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      checks: write
       contents: write
-      actions: write
+    outputs:
+      self_mutation_happened: ${{ steps.self_mutation.outputs.self_mutation_happened }}
     env:
       CI: "true"
     steps:
@@ -19,10 +19,6 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-      - name: Set git identity
-        run: |-
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -35,25 +31,158 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           directory: coverage
-      - name: Check for changes
-        id: git_diff
-        run: git diff --exit-code || echo "::set-output name=has_changes::true"
-      - if: steps.git_diff.outputs.has_changes
-        name: Commit and push changes (if changed)
-        run: 'git add . && git commit -m "chore: self mutation" && git push origin
-          HEAD:${{ github.event.pull_request.head.ref }}'
-      - if: steps.git_diff.outputs.has_changes
-        name: Update status check (if changed)
-        run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
-          }}/check-runs -F name="build" -F head_sha="$(git rev-parse HEAD)" -F
-          status="completed" -F conclusion="success"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - if: steps.git_diff.outputs.has_changes
-        name: Cancel workflow (if changed)
-        run: gh api -X POST /repos/${{ github.event.pull_request.head.repo.full_name
-          }}/actions/runs/${{ github.run_id }}/cancel
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    container:
-      image: jsii/superchain:1-buster-slim-node12
+      - id: self_mutation
+        name: Find mutations
+        run: >-
+          git add .
+
+          git diff --staged --patch --exit-code > .repo.patch || echo "::set-output name=self_mutation_happened::true"
+      - if: steps.self_mutation.outputs.self_mutation_happened
+        name: Upload patch
+        uses: actions/upload-artifact@v2
+        with:
+          name: .repo.patch
+          path: .repo.patch
+      - name: Fail build on mutation
+        if: steps.self_mutation.outputs.self_mutation_happened
+        run: >-
+          echo "::error::Files were changed during build (see build log). If
+          this was triggered from a fork, you will need to update your branch."
+
+          cat .repo.patch
+
+          exit 1
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2.1.1
+        with:
+          name: build-artifact
+          path: dist
+  self-mutation:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: always() && needs.build.outputs.self_mutation_happened &&
+      !(github.event.pull_request.head.repo.full_name != github.repository)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.PROJEN_GITHUB_TOKEN }}
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - name: Download patch
+        uses: actions/download-artifact@v2
+        with:
+          name: .repo.patch
+          path: ${{ runner.temp }}
+      - name: Apply patch
+        run: '[ -s ${{ runner.temp }}/.repo.patch ] && git apply ${{ runner.temp
+          }}/.repo.patch || echo "Empty patch. Skipping."'
+      - name: Set git identity
+        run: |-
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+      - name: Push changes
+        run: |-2
+            git add .
+            git commit -m "chore: self mutation"
+            git push origin HEAD:${{ github.event.pull_request.head.ref }}
+  package-js:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    if: "! needs.build.outputs.self_mutation_happened"
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Create js artifact
+        run: cd .repo && npx projen package:js
+      - name: Collect js Artifact
+        run: mv .repo/dist dist
+  package-java:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    if: "! needs.build.outputs.self_mutation_happened"
+    steps:
+      - uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 11.x
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Create java artifact
+        run: cd .repo && npx projen package:java
+      - name: Collect java Artifact
+        run: mv .repo/dist dist
+  package-python:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    if: "! needs.build.outputs.self_mutation_happened"
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Create python artifact
+        run: cd .repo && npx projen package:python
+      - name: Collect python Artifact
+        run: mv .repo/dist dist
+  package-go:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions: {}
+    if: "! needs.build.outputs.self_mutation_happened"
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ^1.16.0
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Create go artifact
+        run: cd .repo && npx projen package:go
+      - name: Collect go Artifact
+        run: mv .repo/dist dist

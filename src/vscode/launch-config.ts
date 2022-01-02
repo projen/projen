@@ -1,15 +1,15 @@
-import { Component } from '../component';
-import { JsonFile } from '../json';
-import { VsCode } from './vscode';
+import { Component } from "../component";
+import { JsonFile } from "../json";
+import { VsCode } from "./vscode";
 
 /**
  * Controls the visibility of the VSCode Debug Console panel during a debugging session
  * Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
  */
 export enum InternalConsoleOptions {
-  NEVER_OPEN = 'neverOpen',
-  OPEN_ON_FIRST_SESSION_START = 'openOnFirstSessionStart',
-  OPEN_ON_SESSION_START = 'openOnSessionStart',
+  NEVER_OPEN = "neverOpen",
+  OPEN_ON_FIRST_SESSION_START = "openOnFirstSessionStart",
+  OPEN_ON_SESSION_START = "openOnSessionStart",
 }
 
 /**
@@ -69,11 +69,11 @@ export class VsCodeLaunchConfig extends Component {
     super(vscode.project);
 
     this.content = {
-      version: '0.2.0',
+      version: "0.2.0",
       configurations: [],
     };
 
-    new JsonFile(vscode.project, '.vscode/launch.json', {
+    new JsonFile(vscode.project, ".vscode/launch.json", {
       obj: this.content,
     });
   }

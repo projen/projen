@@ -1,10 +1,10 @@
-import { basename, dirname, join } from 'path';
-import { Component } from '../component';
-import { DependencyType } from '../dependencies';
-import { Project } from '../project';
-import { Task } from '../task';
-import { AwsCdkDeps } from './awscdk-deps';
-import { FEATURE_FLAGS, TYPESCRIPT_INTEG_EXT } from './internal';
+import { basename, dirname, join } from "path";
+import { Component } from "../component";
+import { DependencyType } from "../dependencies";
+import { Project } from "../project";
+import { Task } from "../task";
+import { AwsCdkDeps } from "./awscdk-deps";
+import { FEATURE_FLAGS, TYPESCRIPT_INTEG_EXT } from "./internal";
 
 export interface IntegrationTestCommonOptions {
   /**
@@ -75,26 +75,29 @@ export class IntegrationTest extends Component {
     const name = basename(entry, TYPESCRIPT_INTEG_EXT);
     const dir = dirname(entry);
 
-    const deploydir = join(dir, '.tmp', `${name}.integ`, 'deploy.cdk.out');
-    const actualdir = join(dir, '.tmp', `${name}.integ`, 'synth.cdk.out');
+    const deploydir = join(dir, ".tmp", `${name}.integ`, "deploy.cdk.out");
+    const actualdir = join(dir, ".tmp", `${name}.integ`, "synth.cdk.out");
     const snapshotdir = join(dir, `${name}.integ.snapshot`);
 
     const app = `ts-node -P ${options.tsconfigPath} ${entry}`;
 
-    if (!project.deps.tryGetDependency('ts-node')) {
-      project.deps.addDependency('ts-node', DependencyType.BUILD);
+    if (!project.deps.tryGetDependency("ts-node")) {
+      project.deps.addDependency("ts-node", DependencyType.BUILD);
     }
 
     const opts = [
       `--app "${app}"`,
-      '--no-version-reporting',
+      "--no-version-reporting",
+      // don't inject cloudformation metadata into template
+      "--no-path-metadata",
+      "--no-asset-metadata",
     ];
 
     if (options.cdkDeps.cdkMajorVersion === 1) {
       // add all feature flags
       const features = [
         ...FEATURE_FLAGS,
-        '@aws-cdk/core:newStyleStackSynthesis', // simplifies asset coordinates in synth output
+        "@aws-cdk/core:newStyleStackSynthesis", // simplifies asset coordinates in synth output
       ];
 
       for (const feature of features) {
@@ -102,14 +105,16 @@ export class IntegrationTest extends Component {
       }
     }
 
-    const cdkopts = opts.join(' ');
+    const cdkopts = opts.join(" ");
 
     const deployTask = project.addTask(`integ:${name}:deploy`, {
       description: `deploy integration test '${name}' and capture snapshot`,
     });
 
     deployTask.exec(`rm -fr ${deploydir}`);
-    deployTask.exec(`cdk deploy ${cdkopts} --require-approval=never -o ${deploydir}`);
+    deployTask.exec(
+      `cdk deploy ${cdkopts} --require-approval=never -o ${deploydir}`
+    );
 
     // if deployment was successful, copy the deploy dir to the expected dir
     deployTask.exec(`rm -fr ${snapshotdir}`);
@@ -130,15 +135,21 @@ export class IntegrationTest extends Component {
       deployTask.spawn(destroyTask);
     }
 
-    const exclude = ['asset.*', 'cdk.out', 'manifest.json', 'tree.json'];
+    const exclude = ["asset.*", "cdk.out", "manifest.json", "tree.json"];
 
     const assertTask = project.addTask(`integ:${name}:assert`, {
       description: `assert the snapshot of integration test '${name}'`,
     });
 
-    assertTask.exec(`[ -d "${snapshotdir}" ] || (echo "No snapshot available for integration test '${name}'. Run 'projen ${deployTask.name}' to capture." && exit 1)`);
+    assertTask.exec(
+      `[ -d "${snapshotdir}" ] || (echo "No snapshot available for integration test '${name}'. Run 'projen ${deployTask.name}' to capture." && exit 1)`
+    );
     assertTask.exec(`cdk synth ${cdkopts} -o ${actualdir} > /dev/null`);
-    assertTask.exec(`diff -r ${exclude.map(x => `-x ${x}`).join(' ')} ${snapshotdir}/ ${actualdir}/`);
+    assertTask.exec(
+      `diff -r ${exclude
+        .map((x) => `-x ${x}`)
+        .join(" ")} ${snapshotdir}/ ${actualdir}/`
+    );
 
     const snapshotTask = project.addTask(`integ:${name}:snapshot`, {
       description: `update snapshot for integration test "${name}"`,

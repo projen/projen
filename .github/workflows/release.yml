@@ -40,10 +40,8 @@ jobs:
         if: ${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
+          name: build-artifact
           path: dist
-    container:
-      image: jsii/superchain:1-buster-slim-node12
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -55,12 +53,16 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Collect GitHub Metadata
+        run: mv .repo/dist dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -97,12 +99,20 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Create js artifact
+        run: cd .repo && npx projen package:js
+      - name: Collect js Artifact
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -132,18 +142,26 @@ jobs:
       issues: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 14
       - uses: actions/setup-java@v2
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 11.x
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Create java artifact
+        run: cd .repo && npx projen package:java
+      - name: Collect java Artifact
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-maven
         env:
@@ -179,15 +197,23 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
       - uses: actions/setup-python@v2
         with:
-          python-version: 3
+          python-version: 3.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Create python artifact
+        run: cd .repo && npx projen package:python
+      - name: Collect python Artifact
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -218,12 +244,23 @@ jobs:
     steps:
       - uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.x
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ^1.16.0
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Create go artifact
+        run: cd .repo && npx projen package:go
+      - name: Collect go Artifact
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:

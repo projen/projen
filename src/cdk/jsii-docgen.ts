@@ -1,4 +1,4 @@
-import { JsiiProject } from './jsii-project';
+import { JsiiProject } from "./jsii-project";
 
 /**
  * Creates an API.md file based on the jsii manifest:
@@ -8,15 +8,15 @@ import { JsiiProject } from './jsii-project';
  */
 export class JsiiDocgen {
   constructor(project: JsiiProject) {
-    project.addDevDeps('jsii-docgen');
+    project.addDevDeps("jsii-docgen");
 
-    const docgen = project.addTask('docgen', {
-      description: 'Generate API.md from .jsii manifest',
-      exec: 'jsii-docgen',
+    const docgen = project.addTask("docgen", {
+      description: "Generate API.md from .jsii manifest",
+      exec: "jsii-docgen",
     });
 
     // spawn docgen after compilation (requires the .jsii manifest).
     project.postCompileTask.spawn(docgen);
-    project.gitignore.include('/API.md');
+    project.gitignore.include("/API.md");
   }
 }

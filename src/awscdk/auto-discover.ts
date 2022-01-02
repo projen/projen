@@ -1,11 +1,11 @@
-import { join } from 'path';
-import * as glob from 'glob';
-import { Component } from '../component';
-import { Project } from '../project';
-import { AwsCdkDeps } from './awscdk-deps';
-import { IntegrationTest } from './integration-test';
-import { TYPESCRIPT_INTEG_EXT, TYPESCRIPT_LAMBDA_EXT } from './internal';
-import { LambdaFunction, LambdaFunctionCommonOptions } from './lambda-function';
+import { join } from "path";
+import * as glob from "glob";
+import { Component } from "../component";
+import { Project } from "../project";
+import { AwsCdkDeps } from "./awscdk-deps";
+import { IntegrationTest } from "./integration-test";
+import { TYPESCRIPT_INTEG_EXT, TYPESCRIPT_LAMBDA_EXT } from "./internal";
+import { LambdaFunction, LambdaFunctionCommonOptions } from "./lambda-function";
 
 /**
  * Options for `AutoDiscover`.
@@ -76,5 +76,4 @@ export class AutoDiscover extends Component {
       });
     }
   }
-
 }

@@ -17,11 +17,11 @@ export interface Cache {
  */
 export enum CacheWhen {
   /** Upload artifacts regardless of job status. */
-  ALWAYS = 'always',
+  ALWAYS = "always",
   /** Upload artifacts only when the job fails. */
-  ON_FAILURE = 'on_failure',
+  ON_FAILURE = "on_failure",
   /** Upload artifacts only when the job succeeds (this is the default). */
-  ON_SUCCESS = 'on_success',
+  ON_SUCCESS = "on_success",
 }
 
 /**
@@ -172,7 +172,6 @@ export interface Include {
   readonly remote?: string;
 }
 
-
 /**
  * Rules allows for an array of individual rule objects to be evaluated in order, until one
  * matches and dynamically provides attributes to the job.
@@ -210,12 +209,12 @@ export interface AllowFailure {
  * @see https://docs.gitlab.com/ee/ci/yaml/#when
  */
 export enum JobWhen {
-  ALWAYS = 'always',
-  DELAYED = 'delayed',
-  MANUAL = 'manual',
-  NEVER = 'never',
-  ON_FAILURE = 'on_failure',
-  ON_SUCCESS = 'on_success',
+  ALWAYS = "always",
+  DELAYED = "delayed",
+  MANUAL = "manual",
+  NEVER = "never",
+  ON_FAILURE = "on_failure",
+  ON_SUCCESS = "on_success",
 }
 
 /**
@@ -311,9 +310,9 @@ export interface Environment {
  * this will stop the deployment.
  */
 export enum Action {
-  PREPARE = 'prepare',
-  START = 'start',
-  STOP = 'stop',
+  PREPARE = "prepare",
+  START = "start",
+  STOP = "stop",
 }
 
 /**
@@ -321,11 +320,11 @@ export enum Action {
  * name is used.
  */
 export enum DeploymentTier {
-  DEVELOPMENT = 'development',
-  OTHER = 'other',
-  PRODUCTION = 'production',
-  STAGING = 'staging',
-  TESTING = 'testing',
+  DEVELOPMENT = "development",
+  OTHER = "other",
+  PRODUCTION = "production",
+  STAGING = "staging",
+  TESTING = "testing",
 }
 
 /**
@@ -355,7 +354,7 @@ export interface Filter {
  * Filter job based on if Kubernetes integration is active.
  */
 export enum KubernetesEnum {
-  ACTIVE = 'active',
+  ACTIVE = "active",
 }
 
 /**
@@ -372,21 +371,21 @@ export interface Inherit {
 }
 
 export enum DefaultElement {
-  AFTER_SCRIPT = 'after_script',
-  ARTIFACTS = 'artifacts',
-  BEFORE_SCRIPT = 'before_script',
-  CACHE = 'cache',
-  IMAGE = 'image',
-  INTERRUPTIBLE = 'interruptible',
-  RETRY = 'retry',
-  SERVICES = 'services',
-  TAGS = 'tags',
-  TIMEOUT = 'timeout',
+  AFTER_SCRIPT = "after_script",
+  ARTIFACTS = "artifacts",
+  BEFORE_SCRIPT = "before_script",
+  CACHE = "cache",
+  IMAGE = "image",
+  INTERRUPTIBLE = "interruptible",
+  RETRY = "retry",
+  SERVICES = "services",
+  TAGS = "tags",
+  TIMEOUT = "timeout",
 }
 
 /**
-   * A jobs in a previous stage whose sole completion is needed to start the current job.
-   */
+ * A jobs in a previous stage whose sole completion is needed to start the current job.
+ */
 export interface Need {
   readonly artifacts?: boolean;
   readonly job: string;
@@ -448,10 +447,10 @@ export interface Link {
  * The content kind of what users can download via url.
  */
 export enum LinkType {
-  IMAGE = 'image',
-  OTHER = 'other',
-  PACKAGE = 'package',
-  RUNBOOK = 'runbook',
+  IMAGE = "image",
+  OTHER = "other",
+  PACKAGE = "package",
+  RUNBOOK = "runbook",
 }
 
 /**
@@ -528,7 +527,7 @@ export interface TriggerInclude {
  * @see https://docs.gitlab.com/ee/ci/yaml/#triggerstrategy
  */
 export enum Strategy {
-  DEPEND = 'depend',
+  DEPEND = "depend",
 }
 
 /**
@@ -574,6 +573,6 @@ export interface WorkflowRule {
  * @see https://docs.gitlab.com/ee/ci/yaml/#workflowrules
  */
 export enum WorkflowWhen {
-  ALWAYS = 'always',
-  NEVER = 'never',
+  ALWAYS = "always",
+  NEVER = "never",
 }

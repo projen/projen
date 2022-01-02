@@ -1,10 +1,10 @@
-import { Component } from '../component';
-import { Project } from '../project';
-import { Dependabot, DependabotOptions } from './dependabot';
-import { Mergify, MergifyOptions } from './mergify';
-import { PullRequestTemplate } from './pr-template';
-import { PullRequestLint, PullRequestLintOptions } from './pull-request-lint';
-import { GithubWorkflow } from './workflows';
+import { Component } from "../component";
+import { Project } from "../project";
+import { Dependabot, DependabotOptions } from "./dependabot";
+import { Mergify, MergifyOptions } from "./mergify";
+import { PullRequestTemplate } from "./pr-template";
+import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
+import { GithubWorkflow } from "./workflows";
 
 export interface GitHubOptions {
   /**
@@ -42,9 +42,27 @@ export interface GitHubOptions {
    * @default - see defaults in `PullRequestLintOptions`
    */
   readonly pullRequestLintOptions?: PullRequestLintOptions;
+
+  /**
+   * The name of a secret which includes a GitHub Personal Access Token to be
+   * used by projen workflows. This token needs to have the `repo`, `workflows`
+   * and `packages` scope.
+   *
+   * @default "PROJEN_GITHUB_TOKEN"
+   */
+  readonly projenTokenSecret?: string;
 }
 
 export class GitHub extends Component {
+  /**
+   * Returns the `GitHub` component of a project or `undefined` if the project
+   * does not have a GitHub component.
+   */
+  public static of(project: Project): GitHub | undefined {
+    const isGitHub = (c: Component): c is GitHub => c instanceof GitHub;
+    return project.components.find(isGitHub);
+  }
+
   /**
    * The `Mergify` configured on this repository. This is `undefined` if Mergify
    * was not enabled when creating the repository.
@@ -56,10 +74,17 @@ export class GitHub extends Component {
    */
   public readonly workflowsEnabled: boolean;
 
+  /**
+   * The name of a secret with a GitHub Personal Access Token to be used by
+   * projen workflows.
+   */
+  public readonly projenTokenSecret: string;
+
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
 
     this.workflowsEnabled = options.workflows ?? true;
+    this.projenTokenSecret = options.projenTokenSecret ?? "PROJEN_GITHUB_TOKEN";
 
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this, options.mergifyOptions);
@@ -74,8 +99,11 @@ export class GitHub extends Component {
    * All workflows.
    */
   public get workflows(): GithubWorkflow[] {
-    const isWorkflow = (c: Component): c is GithubWorkflow => c instanceof GithubWorkflow;
-    return this.project.components.filter(isWorkflow).sort((w1, w2) => w1.name.localeCompare(w2.name));
+    const isWorkflow = (c: Component): c is GithubWorkflow =>
+      c instanceof GithubWorkflow;
+    return this.project.components
+      .filter(isWorkflow)
+      .sort((w1, w2) => w1.name.localeCompare(w2.name));
   }
 
   /**
@@ -101,6 +129,6 @@ export class GitHub extends Component {
    * @param name The name of the GitHub workflow
    */
   public tryFindWorkflow(name: string): undefined | GithubWorkflow {
-    return this.workflows.find(w => w.name === name);
+    return this.workflows.find((w) => w.name === name);
   }
 }

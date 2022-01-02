@@ -1,13 +1,13 @@
-import { spawnSync } from 'child_process';
-import * as os from 'os';
-import * as path from 'path';
-import * as fs from 'fs-extra';
-import { PROJEN_RC } from '../common';
-import * as logging from '../logging';
-import { Project } from '../project';
-import { TaskRuntime } from '../task-runtime';
+import { spawnSync } from "child_process";
+import * as os from "os";
+import * as path from "path";
+import * as fs from "fs-extra";
+import { PROJEN_RC } from "../common";
+import * as logging from "../logging";
+import { Project } from "../project";
+import { TaskRuntime } from "../task-runtime";
 
-const projenModule = path.dirname(require.resolve('../../package.json'));
+const projenModule = path.dirname(require.resolve("../../package.json"));
 
 export interface SynthOptions {
   /**
@@ -41,7 +41,9 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
   // if there are no tasks, we assume this is not a projen project (modern
   // projects must at least have the "default" task).
   if (runtime.tasks.length === 0 && !fs.existsSync(rcfile)) {
-    logging.error('Unable to find projen project. Use "projen new" to create a new project.');
+    logging.error(
+      'Unable to find projen project. Use "projen new" to create a new project.'
+    );
     process.exit(1);
   }
 
@@ -60,7 +62,9 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
     // determine if post synthesis tasks should be executed (e.g. "yarn install").
     process.env.PROJEN_DISABLE_POST = (!options.post).toString();
     try {
-      const defaultTask = runtime.tasks.find(t => t.name === Project.DEFAULT_TASK);
+      const defaultTask = runtime.tasks.find(
+        (t) => t.name === Project.DEFAULT_TASK
+      );
 
       // if "--rc" is specified, ignore the default task
       if (defaultTask) {
@@ -68,7 +72,9 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
           runtime.runTask(defaultTask.name);
           return true;
         } else {
-          logging.warn('Default task skipped. Trying legacy synthesis since --rc is specified');
+          logging.warn(
+            "Default task skipped. Trying legacy synthesis since --rc is specified"
+          );
         }
       }
 
@@ -87,13 +93,13 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
   function watchLoop() {
     logging.info(`Watching for changes in ${workdir}...`);
     const watch = fs.watch(workdir, { recursive: true });
-    watch.on('change', event => {
+    watch.on("change", (event) => {
       // we only care about "change" events
-      if (event !== 'change') {
+      if (event !== "change") {
         return;
       }
 
-      process.stdout.write('\x1Bc'); // clear screen
+      process.stdout.write("\x1Bc"); // clear screen
       watch.close();
       trySynth()
         .then(() => watchLoop())
@@ -111,23 +117,33 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
     // if node_modules/projen is not a directory or does not exist, create a
     // temporary symlink to the projen that we are currently running in order to
     // allow .projenrc.js to `require()` it.
-    const nodeModules = path.resolve(rcdir, 'node_modules');
-    const projenModulePath = path.resolve(nodeModules, 'projen');
-    if (!fs.existsSync(path.join(projenModulePath, 'package.json')) || !fs.statSync(projenModulePath).isDirectory()) {
+    const nodeModules = path.resolve(rcdir, "node_modules");
+    const projenModulePath = path.resolve(nodeModules, "projen");
+    if (
+      !fs.existsSync(path.join(projenModulePath, "package.json")) ||
+      !fs.statSync(projenModulePath).isDirectory()
+    ) {
       fs.removeSync(projenModulePath);
       fs.mkdirpSync(nodeModules);
-      fs.symlinkSync(projenModule, projenModulePath, (os.platform() === 'win32') ? 'junction' : null);
+      fs.symlinkSync(
+        projenModule,
+        projenModulePath,
+        os.platform() === "win32" ? "junction" : null
+      );
     }
 
-    const ret = spawnSync(process.execPath, [rcfile], { stdio: ['inherit', 'inherit', 'pipe'] });
+    const ret = spawnSync(process.execPath, [rcfile], {
+      stdio: ["inherit", "inherit", "pipe"],
+    });
     if (ret.error) {
       throw new Error(`Synthesis failed: ${ret.error}`);
     } else if (ret.status !== 0) {
       logging.error(ret.stderr.toString());
-      throw new Error(`Synthesis failed: calling "${process.execPath} ${rcfile}" exited with status=${ret.status}`);
+      throw new Error(
+        `Synthesis failed: calling "${process.execPath} ${rcfile}" exited with status=${ret.status}`
+      );
     }
 
     return true;
   }
 }
-

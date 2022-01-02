@@ -1,14 +1,17 @@
-import * as semver from 'semver';
-import { ConstructLibrary, ConstructLibraryOptions } from '../cdk';
-import { DependencyType } from '../dependencies';
-import { AutoDiscover } from './auto-discover';
-import { AwsCdkDeps, AwsCdkDepsCommonOptions } from './awscdk-deps';
-import { LambdaFunctionCommonOptions } from './lambda-function';
+import * as semver from "semver";
+import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
+import { DependencyType } from "../dependencies";
+import { AutoDiscover } from "./auto-discover";
+import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
+import { AwsCdkDepsJs } from "./awscdk-deps-js";
+import { LambdaFunctionCommonOptions } from "./lambda-function";
 
 /**
  * Options for `AwsCdkConstructLibrary`.
  */
-export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions, AwsCdkDepsCommonOptions {
+export interface AwsCdkConstructLibraryOptions
+  extends ConstructLibraryOptions,
+    AwsCdkDepsCommonOptions {
   /**
    * Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler
    * in your source tree. If this is disabled, you either need to explicitly
@@ -20,10 +23,10 @@ export interface AwsCdkConstructLibraryOptions extends ConstructLibraryOptions, 
   readonly lambdaAutoDiscover?: boolean;
 
   /**
-    * Common options for all AWS Lambda functions.
-    *
-    * @default - default options
-    */
+   * Common options for all AWS Lambda functions.
+   *
+   * @default - default options
+   */
   readonly lambdaOptions?: LambdaFunctionCommonOptions;
 }
 
@@ -43,14 +46,20 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
     const cdkMajorVersion = semver.parse(options.cdkVersion)?.major;
 
     super({
-      peerDependencyOptions: cdkMajorVersion === 1 ? {
-        pinnedDevDependency: false,
-      } : undefined,
-      workflowContainerImage: determineWorkflowContainerImage(options, cdkMajorVersion),
+      peerDependencyOptions:
+        cdkMajorVersion === 1
+          ? {
+              pinnedDevDependency: false,
+            }
+          : undefined,
+      workflowContainerImage: determineWorkflowContainerImage(
+        options,
+        cdkMajorVersion
+      ),
       ...options,
     });
 
-    this.cdkDeps = new AwsCdkDeps(this, {
+    this.cdkDeps = new AwsCdkDepsJs(this, {
       // since this we are a library, dependencies should be added a peers
       dependencyType: DependencyType.PEER,
       ...options,
@@ -105,7 +114,10 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   }
 }
 
-function determineWorkflowContainerImage(options: AwsCdkConstructLibraryOptions, cdkMajorVersion: number | undefined): string | undefined {
+function determineWorkflowContainerImage(
+  options: AwsCdkConstructLibraryOptions,
+  cdkMajorVersion: number | undefined
+): string | undefined {
   // if the user specifies the workflow container image explicitly, use that
   if (options.workflowContainerImage) {
     return options.workflowContainerImage;
@@ -119,20 +131,19 @@ function determineWorkflowContainerImage(options: AwsCdkConstructLibraryOptions,
 
   // otherwise, choose a workflow container image based on the CDK version
   if (cdkMajorVersion === 1) {
-    return 'jsii/superchain:1-buster-slim';
+    return "jsii/superchain:1-buster-slim";
   }
 
   if (cdkMajorVersion === 2) {
-    return 'jsii/superchain:1-buster-slim-node14';
+    return "jsii/superchain:1-buster-slim-node14";
   }
 
   return undefined;
 }
 
 /** @deprecated use `AwsCdkConstructLibraryOptions` */
-export interface ConstructLibraryAwsOptions extends AwsCdkConstructLibraryOptions { }
+export interface ConstructLibraryAwsOptions
+  extends AwsCdkConstructLibraryOptions {}
 
 /** @deprecated use `AwsCdkConstructLibrary` */
-export class ConstructLibraryAws extends AwsCdkConstructLibrary { }
-
-
+export class ConstructLibraryAws extends AwsCdkConstructLibrary {}
