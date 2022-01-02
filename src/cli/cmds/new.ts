@@ -251,18 +251,18 @@ async function initProject(baseDir: string, type: inventory.ProjectType, args: a
       .toString()
       .replace(/[a-z,/s]/g, '')
       .trim();
-    logging.info('system using git version ',gitversion);
+    logging.debug('system using git version ',gitversion);
     if ( gitversion && semver.gte(gitversion, '2.28.0') ) {
       git('init -b main');
       git('add .');
       git('commit --allow-empty -m "chore: project created with projen"');
-      logging.info('default branch name set to main');
+      logging.debug('default branch name set to main');
     } else {
       git('init');
       git('add .');
       git('commit --allow-empty -m "chore: project created with projen"');
-      logging.info('older version of git detected, changed default branch name to main');
-      git('branch -m main');
+      logging.debug('older version of git detected, changed default branch name to main');
+      git('branch -M main');
     }
   }
 }
