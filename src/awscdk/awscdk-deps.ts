@@ -76,7 +76,7 @@ export interface AwsCdkDepsCommonOptions {
   /**
    * AWS CDK modules required for testing.
    *
-   * @deprecated For CDK 2.x use 'devDeps'(node) or 'testDeps'(java) instead
+   * @deprecated For CDK 2.x use 'devDeps' (in node.js projects) or 'testDeps' (in java projects) instead
    */
   readonly cdkTestDependencies?: string[];
 }
