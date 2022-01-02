@@ -37,8 +37,8 @@ const PROJEN_SCRIPT = "projen";
 
 export interface NodeProjectOptions
   extends GitHubProjectOptions,
-    NodePackageOptions,
-    ReleaseProjectOptions {
+  NodePackageOptions,
+  ReleaseProjectOptions {
   /**
    * License copyright owner.
    *
@@ -581,12 +581,12 @@ export class NodeProject extends GitHubProject {
           uses: "codecov/codecov-action@v1",
           with: options.codeCovTokenSecret
             ? {
-                token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
-                directory: this.jest.config.coverageDirectory,
-              }
+              token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
+              directory: this.jest.config.coverageDirectory,
+            }
             : {
-                directory: this.jest.config.coverageDirectory,
-              },
+              directory: this.jest.config.coverageDirectory,
+            },
         });
       }
     }
@@ -712,8 +712,8 @@ export class NodeProject extends GitHubProject {
           secret: options.projenUpgradeSecret,
           container: options.workflowContainerImage
             ? {
-                image: options.workflowContainerImage,
-              }
+              image: options.workflowContainerImage,
+            }
             : undefined,
           labels: autoApproveLabel(depsAutoApprove),
           gitIdentity: this.workflowGitIdentity,
