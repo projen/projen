@@ -1101,18 +1101,7 @@ export class NodePackage extends Component {
 
   private installDependencies() {
     exec(this.renderInstallCommand(this.isAutomatedBuild), { cwd: this.project.outdir });
-    this._installCount++;
   }
-
-  /**
-   * Number of times `yarn/npm install` was called during synth().
-   *
-   * Used for unit tests.
-   *
-   * @internal
-   */
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  public _installCount: number = 0;
 }
 
 export interface PeerDependencyOptions {
