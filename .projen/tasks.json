@@ -141,7 +141,7 @@
       "description": "Run integration tests",
       "steps": [
         {
-          "spawn": "build"
+          "spawn": "compile"
         },
         {
           "spawn": "package:python"
