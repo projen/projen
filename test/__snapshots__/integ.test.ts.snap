@@ -1796,7 +1796,7 @@ project.synth();
       ],
       "testMatch": Array [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/(*.)+(spec|test).ts?(x)",
+        "<rootDir>/(test|src)/**/?(*.)+(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": Array [
         "/node_modules/",
@@ -3350,7 +3350,7 @@ project.synth();
       ],
       "testMatch": Array [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/(*.)+(spec|test).ts?(x)",
+        "<rootDir>/(test|src)/**/?(*.)+(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": Array [
         "/node_modules/",
@@ -4786,7 +4786,7 @@ project.synth();
       ],
       "testMatch": Array [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/(*.)+(spec|test).ts?(x)",
+        "<rootDir>/(test|src)/**/?(*.)+(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": Array [
         "/node_modules/",
