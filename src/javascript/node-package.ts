@@ -1,3 +1,4 @@
+import { readFileSync } from 'fs';
 import { join } from 'path';
 import { parse as urlparse } from 'url';
 import { accessSync, constants, existsSync, readdirSync, readJsonSync } from 'fs-extra';
@@ -697,15 +698,17 @@ export class NodePackage extends Component {
   public postSynthesize() {
     super.postSynthesize();
 
-    const outdir = this.project.outdir;
-
     // only run "install" if package.json has changed or if we don't have a
     // `node_modules` directory.
-    if (this.file.changed || !existsSync(join(outdir, 'node_modules'))) {
-      exec(this.renderInstallCommand(this.isAutomatedBuild), { cwd: outdir });
+    if (this.file.changed || !existsSync(join(this.project.outdir, 'node_modules'))) {
+      this.installDependencies();
     }
 
-    this.resolveDepsAndWritePackageJson(outdir);
+    // resolve "*" deps in package.json and update it. if it was changed,
+    // install deps again so that lockfile is updated.
+    if (this.resolveDepsAndWritePackageJson()) {
+      this.installDependencies();
+    }
   }
 
   /**
@@ -950,9 +953,18 @@ export class NodePackage extends Component {
     return { devDependencies, dependencies, peerDependencies };
   }
 
-  private resolveDepsAndWritePackageJson(outdir: string) {
-    const root = join(outdir, 'package.json');
-    const pkg = readJsonSync(root);
+  /**
+   * Resolves any deps that do not have a specified version (e.g. `*`) and
+   * update `package.json` if needed.
+   *
+   * @returns `true` if package.json was updated or `false` if not.
+   */
+  private resolveDepsAndWritePackageJson(): boolean {
+    const outdir = this.project.outdir;
+    const rootPackageJson = join(outdir, 'package.json');
+
+    const original = readFileSync(rootPackageJson, 'utf8');
+    const pkg = JSON.parse(original);
 
     const resolveDeps = (current: { [name: string]: string }, user: Record<string, string>) => {
       const result: Record<string, string> = {};
@@ -1001,7 +1013,14 @@ export class NodePackage extends Component {
     pkg.devDependencies = resolveDeps(pkg.devDependencies, rendered.devDependencies);
     pkg.peerDependencies = resolveDeps(pkg.peerDependencies, rendered.peerDependencies);
 
-    writeFile(root, JSON.stringify(pkg, undefined, 2));
+    const updated = JSON.stringify(pkg, undefined, 2);
+
+    if (original === updated) {
+      return false;
+    }
+
+    writeFile(rootPackageJson, updated);
+    return true;
   }
 
   private renderPublishConfig() {
@@ -1078,6 +1097,10 @@ export class NodePackage extends Component {
     }
 
     return readJsonSync(file);
+  }
+
+  private installDependencies() {
+    exec(this.renderInstallCommand(this.isAutomatedBuild), { cwd: this.project.outdir });
   }
 }
 
