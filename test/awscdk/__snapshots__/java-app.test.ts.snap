@@ -129,6 +129,11 @@ exports[`happy flow 2`] = `
             <version>[1.130.0,2.0.0)</version>
         </dependency>
         <dependency>
+            <groupId>software.constructs</groupId>
+            <artifactId>constructs</artifactId>
+            <version>[3.2.27,4.0.0)</version>
+        </dependency>
+        <dependency>
             <groupId>io.github.cdklabs</groupId>
             <artifactId>projen</artifactId>
             <version>99.99.99</version>
@@ -144,6 +149,12 @@ exports[`happy flow 2`] = `
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>software.amazon.awscdk</groupId>
+            <artifactId>assertions</artifactId>
+            <version>[1.130.0,2.0.0)</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
