@@ -1,40 +1,40 @@
-import { execSync } from 'child_process';
-import { mkdtempSync } from 'fs';
-import { tmpdir } from 'os';
-import { join } from 'path';
-import { writeFile, mkdir } from 'fs-extra';
-import * as logging from '../../src/logging';
+import { execSync } from "child_process";
+import { mkdtempSync } from "fs";
+import { tmpdir } from "os";
+import { join } from "path";
+import { writeFile, mkdir } from "fs-extra";
+import * as logging from "../../src/logging";
 import {
   updateChangelog,
   UpdateChangelogOptions,
-} from '../../src/release/update-changelog';
-import { execCapture, tryReadFile } from '../../src/util';
+} from "../../src/release/update-changelog";
+import { execCapture, tryReadFile } from "../../src/util";
 
 logging.disable();
 jest.setTimeout(1000 * 60); // 1min
 
-const DEFAULT_VERSION = '0.1.1';
-const DEFAULT_VERSION_FILE = 'dist/version.txt';
-const DEFAULT_INPUT_CHANGELOG = 'dist/changelog.md';
+const DEFAULT_VERSION = "0.1.1";
+const DEFAULT_VERSION_FILE = "dist/version.txt";
+const DEFAULT_INPUT_CHANGELOG = "dist/changelog.md";
 const DEFAULT_INPUT_CHANGELOG_CONTENT = `### [${DEFAULT_VERSION}](https://examplerepourl.com/diff/path) (2021-09-04)`;
-const DEFAULT_OUTPUT_CHANGELOG = 'CHANGELOG.md';
+const DEFAULT_OUTPUT_CHANGELOG = "CHANGELOG.md";
 const DEFAULT_OUTPUT_CHANGELOG_CONTENT =
-  '### output changelog original content';
+  "### output changelog original content";
 
-test('updates project changelog from bump artifacts', async () => {
+test("updates project changelog from bump artifacts", async () => {
   const result = await testUpdateChangelog();
 
   expect(result.projectChangelogContent).toMatch(DEFAULT_VERSION);
 });
 
-test('commits new changelog', async () => {
+test("commits new changelog", async () => {
   const result = await testUpdateChangelog();
 
   expect(result.commits[0]).toMatch(`chore(release): ${DEFAULT_VERSION}`);
   expect(result.lastCommitContent).toMatch(/.*CHANGELOG\.md.*/g);
 });
 
-test('duplicate release tag update is idempotent', async () => {
+test("duplicate release tag update is idempotent", async () => {
   const result1 = await testUpdateChangelog();
   const result2 = await testUpdateChangelog({
     testOptions: {
@@ -42,28 +42,28 @@ test('duplicate release tag update is idempotent', async () => {
     },
   });
   const commitsForVersion = result2.commits.filter((commit) =>
-    commit.includes(DEFAULT_VERSION),
+    commit.includes(DEFAULT_VERSION)
   );
 
   expect(commitsForVersion.length).toEqual(1);
-  expect(result2.projectChangelogContent.match(DEFAULT_VERSION)?.length).toEqual(
-    1,
-  );
+  expect(
+    result2.projectChangelogContent.match(DEFAULT_VERSION)?.length
+  ).toEqual(1);
 });
 
-test('missing release tag throws an error', async () => {
+test("missing release tag throws an error", async () => {
   await expect(
     testUpdateChangelog({
       testOptions: {
-        version: '',
+        version: "",
       },
-    }),
+    })
   ).rejects.toThrow();
 });
 
-test('mismatched release tag and input changelog release tag throws an error', async () => {
-  const version = '1.2.0';
-  const inputChangelogVersion = '1.1.0';
+test("mismatched release tag and input changelog release tag throws an error", async () => {
+  const version = "1.2.0";
+  const inputChangelogVersion = "1.1.0";
 
   await expect(
     testUpdateChangelog({
@@ -71,7 +71,7 @@ test('mismatched release tag and input changelog release tag throws an error', a
         version: version,
         inputChangelogContent: `### [${inputChangelogVersion}](https://examplerepourl.com/diff/path) (2021-09-04)`,
       },
-    }),
+    })
   ).rejects.toThrow();
 });
 
@@ -87,7 +87,8 @@ interface TestUpdateChangelogOpts {
 }
 
 async function testUpdateChangelog(opts: TestUpdateChangelogOpts = {}) {
-  const workdir = opts.testOptions?.cwd ?? mkdtempSync(join(tmpdir(), 'tag-test-'));
+  const workdir =
+    opts.testOptions?.cwd ?? mkdtempSync(join(tmpdir(), "tag-test-"));
   const version = opts.testOptions?.version ?? DEFAULT_VERSION;
   const versionFile =
     opts.updateChangelogOptions?.versionFile ?? DEFAULT_VERSION_FILE;
@@ -106,11 +107,11 @@ async function testUpdateChangelog(opts: TestUpdateChangelogOpts = {}) {
 
   if (!opts.testOptions?.cwd) {
     // init a git repository and make initial commit
-    git('init -q');
+    git("init -q");
     git('config user.email "you@example.com"');
     git('config user.name "Your Name"');
-    git('config commit.gpgsign false');
-    await mkdir(join(workdir, 'dist'));
+    git("config commit.gpgsign false");
+    await mkdir(join(workdir, "dist"));
     await writeFile(join(workdir, versionFile), version);
     await writeFile(inputChangelogFullPath, inputChangelogContent);
     await writeFile(outputChangelogFullPath, outputChangelogContent);
@@ -124,14 +125,14 @@ async function testUpdateChangelog(opts: TestUpdateChangelogOpts = {}) {
     versionFile: versionFile,
   });
 
-  const commits = execCapture('git log --oneline', {
+  const commits = execCapture("git log --oneline", {
     cwd: workdir,
   })
     .toString()
-    .split('\n');
+    .split("\n");
   const lastCommitContent = execCapture(
-    'git diff-tree --no-commit-id --name-only -r HEAD',
-    { cwd: workdir },
+    "git diff-tree --no-commit-id --name-only -r HEAD",
+    { cwd: workdir }
   ).toString();
   const projectChangelogContent = await tryReadFile(outputChangelogFullPath);
 
@@ -144,4 +145,4 @@ async function testUpdateChangelog(opts: TestUpdateChangelogOpts = {}) {
 }
 
 const gitFunc = (cwd: string) => (cmd: string) =>
-  execSync(`git ${cmd}`, { cwd: cwd, stdio: 'inherit' });
+  execSync(`git ${cmd}`, { cwd: cwd, stdio: "inherit" });

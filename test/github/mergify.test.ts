@@ -1,41 +1,46 @@
-import { NodeProject, NodeProjectOptions } from '../../src/javascript';
-import { synthSnapshot } from '../util';
+import { NodeProject, NodeProjectOptions } from "../../src/javascript";
+import { synthSnapshot } from "../util";
 
-describe('mergify', () => {
-  test('default', () => {
+describe("mergify", () => {
+  test("default", () => {
     // GIVEN
     const project = createProject();
 
     // WHEN
     // THEN
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.mergify.yml']).toBeDefined();
-    expect(snapshot['.mergify.yml']).toMatchSnapshot();
+    expect(snapshot[".mergify.yml"]).toBeDefined();
+    expect(snapshot[".mergify.yml"]).toMatchSnapshot();
   });
 
-  test('with options', () => {
+  test("with options", () => {
     // GIVEN
     const project = createProject({
       autoMergeOptions: {
         approvedReviews: 3,
-        blockingLabels: ['do-not-merge', 'missing-tests'],
+        blockingLabels: ["do-not-merge", "missing-tests"],
       },
     });
 
     // THEN
     const snapshot = synthSnapshot(project);
-    expect(snapshot['.mergify.yml']).toBeDefined();
-    expect(snapshot['.mergify.yml']).toContain('- -label~=(do-not-merge|missing-tests)');
-    expect(snapshot['.mergify.yml']).toContain('- "#approved-reviews-by>=3"');
-    expect(snapshot['.mergify.yml']).toMatchSnapshot();
+    expect(snapshot[".mergify.yml"]).toBeDefined();
+    expect(snapshot[".mergify.yml"]).toContain(
+      "- -label~=(do-not-merge|missing-tests)"
+    );
+    expect(snapshot[".mergify.yml"]).toContain('- "#approved-reviews-by>=3"');
+    expect(snapshot[".mergify.yml"]).toMatchSnapshot();
   });
 });
 
-type ProjectOptions = Omit<NodeProjectOptions, 'outdir' | 'defaultReleaseBranch' | 'name'>;
+type ProjectOptions = Omit<
+  NodeProjectOptions,
+  "outdir" | "defaultReleaseBranch" | "name"
+>;
 function createProject(options: ProjectOptions = {}): NodeProject {
   return new NodeProject({
-    defaultReleaseBranch: 'main',
-    name: 'node-project',
+    defaultReleaseBranch: "main",
+    name: "node-project",
     ...options,
   });
 }

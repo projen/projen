@@ -1,7 +1,7 @@
-import * as INI from 'ini';
-import { IResolver } from './file';
-import { ObjectFile, ObjectFileOptions } from './object-file';
-import { Project } from './project';
+import * as INI from "ini";
+import { IResolver } from "./file";
+import { ObjectFile, ObjectFileOptions } from "./object-file";
+import { Project } from "./project";
 
 /**
  * Options for `IniFile`.
@@ -23,9 +23,9 @@ export class IniFile extends ObjectFile {
     }
 
     return [
-      ... (this.marker ? [`# ${IniFile.PROJEN_MARKER}`] : []),
-      '',
+      ...(this.marker ? [`# ${IniFile.PROJEN_MARKER}`] : []),
+      "",
       INI.stringify(JSON.parse(json)),
-    ].join('\n');
+    ].join("\n");
   }
 }

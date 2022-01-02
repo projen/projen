@@ -1,6 +1,6 @@
-import { NodeProject } from '../javascript';
-import { JsonFile } from '../json';
-import { TailwindConfig, TailwindConfigOptions } from './tailwind';
+import { NodeProject } from "../javascript";
+import { JsonFile } from "../json";
+import { TailwindConfig, TailwindConfigOptions } from "./tailwind";
 
 export interface PostCssOptions {
   /**
@@ -30,9 +30,9 @@ export class PostCss {
   public readonly tailwind?: TailwindConfig;
 
   constructor(project: NodeProject, options?: PostCssOptions) {
-    this.fileName = options?.fileName ?? 'postcss.config.json';
+    this.fileName = options?.fileName ?? "postcss.config.json";
 
-    project.addDeps('postcss');
+    project.addDeps("postcss");
 
     const config: { [key: string]: any } = { plugins: {} };
 
@@ -40,10 +40,13 @@ export class PostCss {
       config.plugins.tailwindcss = {};
       config.plugins.autoprefixer = {};
       this.tailwind = new TailwindConfig(project, options?.tailwindOptions);
-      project.addDeps('tailwindcss', 'autoprefixer');
+      project.addDeps("tailwindcss", "autoprefixer");
     }
 
-    this.file = new JsonFile(project, this.fileName, { obj: config, marker: false });
+    this.file = new JsonFile(project, this.fileName, {
+      obj: config,
+      marker: false,
+    });
 
     project.npmignore?.exclude(`/${this.fileName}`);
   }

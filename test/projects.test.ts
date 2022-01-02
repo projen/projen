@@ -1,60 +1,66 @@
-import { InitProjectOptionHints } from '../src/option-hints';
-import { Projects } from '../src/projects';
-import { directorySnapshot, withProjectDir } from './util';
+import { InitProjectOptionHints } from "../src/option-hints";
+import { Projects } from "../src/projects";
+import { directorySnapshot, withProjectDir } from "./util";
 
-describe('createProject', () => {
-  test('creates a project in a directory', () => {
-    withProjectDir(projectdir => {
-      // GIVEN
-      Projects.createProject({
-        optionHints: InitProjectOptionHints.FEATURED,
-        dir: projectdir,
-        post: false,
-        synth: false,
-        projectFqn: 'projen.typescript.TypeScriptProject',
-        projectOptions: {
-          name: 'test-project',
-          defaultReleaseBranch: 'main',
-        },
-      });
+describe("createProject", () => {
+  test("creates a project in a directory", () => {
+    withProjectDir(
+      (projectdir) => {
+        // GIVEN
+        Projects.createProject({
+          optionHints: InitProjectOptionHints.FEATURED,
+          dir: projectdir,
+          post: false,
+          synth: false,
+          projectFqn: "projen.typescript.TypeScriptProject",
+          projectOptions: {
+            name: "test-project",
+            defaultReleaseBranch: "main",
+          },
+        });
 
-      // THEN
-      const snapshot = directorySnapshot(projectdir, {
-        excludeGlobs: ['node_modules/**'],
-      });
-      expect(snapshot['.projenrc.js']).toMatchSnapshot();
-    }, { chdir: true });
+        // THEN
+        const snapshot = directorySnapshot(projectdir, {
+          excludeGlobs: ["node_modules/**"],
+        });
+        expect(snapshot[".projenrc.js"]).toMatchSnapshot();
+      },
+      { chdir: true }
+    );
   });
 
-  test('creates a project and passes in JSON-like project options', () => {
-    withProjectDir(projectdir => {
-      // GIVEN
-      Projects.createProject({
-        optionHints: InitProjectOptionHints.FEATURED,
-        dir: projectdir,
-        post: false,
-        synth: false,
-        projectFqn: 'projen.typescript.TypeScriptProject',
-        projectOptions: {
-          name: 'test-project',
-          defaultReleaseBranch: 'main',
-          eslintOptions: {
-            dirs: ['src', 'test'],
-            prettier: true,
-            aliasMap: {
-              '@src': './src',
-              '@foo': './src/foo',
+  test("creates a project and passes in JSON-like project options", () => {
+    withProjectDir(
+      (projectdir) => {
+        // GIVEN
+        Projects.createProject({
+          optionHints: InitProjectOptionHints.FEATURED,
+          dir: projectdir,
+          post: false,
+          synth: false,
+          projectFqn: "projen.typescript.TypeScriptProject",
+          projectOptions: {
+            name: "test-project",
+            defaultReleaseBranch: "main",
+            eslintOptions: {
+              dirs: ["src", "test"],
+              prettier: true,
+              aliasMap: {
+                "@src": "./src",
+                "@foo": "./src/foo",
+              },
             },
           },
-        },
-      });
+        });
 
-      // THEN
-      const snapshot = directorySnapshot(projectdir, {
-        excludeGlobs: ['node_modules/**'],
-      });
-      expect(snapshot['.projenrc.js']).toMatchSnapshot();
-    }, { chdir: true });
+        // THEN
+        const snapshot = directorySnapshot(projectdir, {
+          excludeGlobs: ["node_modules/**"],
+        });
+        expect(snapshot[".projenrc.js"]).toMatchSnapshot();
+      },
+      { chdir: true }
+    );
   });
 
   /**

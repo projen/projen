@@ -1,15 +1,17 @@
-import { GitHubProject, GitHubProjectOptions } from '../github';
-import { Junit, JunitOptions } from './junit';
-import { MavenCompile, MavenCompileOptions } from './maven-compile';
-import { MavenPackaging, MavenPackagingOptions } from './maven-packaging';
-import { MavenSample } from './maven-sample';
-import { PluginOptions, Pom, PomOptions } from './pom';
-import { Projenrc as ProjenrcJava, ProjenrcOptions } from './projenrc';
+import { GitHubProject, GitHubProjectOptions } from "../github";
+import { Junit, JunitOptions } from "./junit";
+import { MavenCompile, MavenCompileOptions } from "./maven-compile";
+import { MavenPackaging, MavenPackagingOptions } from "./maven-packaging";
+import { MavenSample } from "./maven-sample";
+import { PluginOptions, Pom, PomOptions } from "./pom";
+import { Projenrc as ProjenrcJava, ProjenrcOptions } from "./projenrc";
 
 /**
  * Options for `JavaProject`.
  */
-export interface JavaProjectCommonOptions extends GitHubProjectOptions, PomOptions {
+export interface JavaProjectCommonOptions
+  extends GitHubProjectOptions,
+    PomOptions {
   /**
    * Final artifact output directory.
    *
@@ -97,9 +99,9 @@ export interface JavaProjectOptions extends JavaProjectCommonOptions {
   readonly sample?: boolean;
 
   /**
-    * The java package to use for the code sample.
-    * @default "org.acme"
-    */
+   * The java package to use for the code sample.
+   * @default "org.acme"
+   */
   readonly sampleJavaPackage?: string;
 }
 
@@ -142,14 +144,18 @@ export class JavaProject extends GitHubProject {
   constructor(options: JavaProjectOptions) {
     super(options);
 
-    this.distdir = options.distdir ?? 'dist/java';
+    this.distdir = options.distdir ?? "dist/java";
     this.pom = new Pom(this, options);
 
     if (options.projenrcJava ?? true) {
-      this.projenrc = new ProjenrcJava(this, this.pom, options.projenrcJavaOptions);
+      this.projenrc = new ProjenrcJava(
+        this,
+        this.pom,
+        options.projenrcJavaOptions
+      );
     }
 
-    const sampleJavaPackage = options.sampleJavaPackage ?? 'org.acme';
+    const sampleJavaPackage = options.sampleJavaPackage ?? "org.acme";
 
     if (options.junit ?? true) {
       this.junit = new Junit(this, {
@@ -164,21 +170,23 @@ export class JavaProject extends GitHubProject {
     }
 
     // platform independent build
-    this.pom.addProperty('project.build.sourceEncoding', 'UTF-8');
+    this.pom.addProperty("project.build.sourceEncoding", "UTF-8");
 
-    this.gitignore.exclude('.classpath');
-    this.gitignore.exclude('.project');
-    this.gitignore.exclude('.settings');
+    this.gitignore.exclude(".classpath");
+    this.gitignore.exclude(".project");
+    this.gitignore.exclude(".settings");
 
     this.compile = new MavenCompile(this, this.pom, options.compileOptions);
-    this.packaging = new MavenPackaging(this, this.pom, options.packagingOptions);
+    this.packaging = new MavenPackaging(
+      this,
+      this.pom,
+      options.packagingOptions
+    );
 
-    this.addPlugin('org.apache.maven.plugins/maven-enforcer-plugin@3.0.0-M3', {
-      executions: [{ id: 'enforce-maven', goals: ['enforce'] }],
+    this.addPlugin("org.apache.maven.plugins/maven-enforcer-plugin@3.0.0-M3", {
+      executions: [{ id: "enforce-maven", goals: ["enforce"] }],
       configuration: {
-        rules: [
-          { requireMavenVersion: [{ version: '3.6' }] },
-        ],
+        rules: [{ requireMavenVersion: [{ version: "3.6" }] }],
       },
     });
 

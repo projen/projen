@@ -92,7 +92,7 @@ export class ReleaseTrigger {
     let changelogPath;
 
     if (options.changelog ?? true) {
-      changelogPath = options.changelogPath ?? 'CHANGELOG.md';
+      changelogPath = options.changelogPath ?? "CHANGELOG.md";
     }
 
     return new ReleaseTrigger({

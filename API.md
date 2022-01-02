@@ -6113,7 +6113,7 @@ Adds an eslint plugin.
 addPlugins(...plugins: string[]): void
 ```
 
-* **plugins** (<code>string</code>)  *No description*
+* **plugins** (<code>string</code>)  The names of plugins to add.
 
 
 

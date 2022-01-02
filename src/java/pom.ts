@@ -1,14 +1,19 @@
-import { resolve } from '../_resolve';
-import { Component } from '../component';
-import { Dependencies, DependencyCoordinates, DependencyType } from '../dependencies';
-import { Project } from '../project';
-import { toMavenVersionRange } from '../util/semver';
-import { XmlFile } from '../xmlfile';
+import { resolve } from "../_resolve";
+import { Component } from "../component";
+import {
+  Dependencies,
+  DependencyCoordinates,
+  DependencyType,
+} from "../dependencies";
+import { Project } from "../project";
+import { toMavenVersionRange } from "../util/semver";
+import { XmlFile } from "../xmlfile";
 
 const POM_XML_ATTRS = {
-  '@xsi:schemaLocation': 'http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd',
-  '@xmlns': 'http://maven.apache.org/POM/4.0.0',
-  '@xmlns:xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+  "@xsi:schemaLocation":
+    "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd",
+  "@xmlns": "http://maven.apache.org/POM/4.0.0",
+  "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
 };
 
 /**
@@ -139,11 +144,11 @@ export class Pom extends Component {
   constructor(project: Project, options: PomOptions) {
     super(project);
 
-    this.fileName = 'pom.xml';
+    this.fileName = "pom.xml";
     this.groupId = options.groupId;
     this.artifactId = options.artifactId;
     this.version = options.version;
-    this.packaging = options.packaging ?? 'jar';
+    this.packaging = options.packaging ?? "jar";
     this.name = project.name;
     this.description = options.description;
     this.url = options.url;
@@ -194,26 +199,31 @@ export class Pom extends Component {
   }
 
   private synthPom() {
-    return resolve({
-      project: {
-        ...POM_XML_ATTRS,
-        modelVersion: '4.0.0',
-        groupId: this.groupId,
-        artifactId: this.artifactId,
-        version: this.version,
-        packaging: this.packaging,
-        name: this.name,
-        description: this.description,
-        url: this.url,
-        properties: this.properties,
-        ...this.synthDependencies(),
+    return resolve(
+      {
+        project: {
+          ...POM_XML_ATTRS,
+          modelVersion: "4.0.0",
+          groupId: this.groupId,
+          artifactId: this.artifactId,
+          version: this.version,
+          packaging: this.packaging,
+          name: this.name,
+          description: this.description,
+          url: this.url,
+          properties: this.properties,
+          ...this.synthDependencies(),
+        },
       },
-    }, { omitEmpty: true });
+      { omitEmpty: true }
+    );
   }
 
   private synthDependencies() {
     const deps = this.project.deps.all;
-    if (deps.length === 0) { return; }
+    if (deps.length === 0) {
+      return;
+    }
 
     const dependencies: any[] = [];
     const plugins: any[] = [];
@@ -228,7 +238,7 @@ export class Pom extends Component {
         case DependencyType.TEST:
           dependencies.push({
             ...mavenCoords(dep),
-            scope: 'test',
+            scope: "test",
           });
           break;
 
@@ -301,9 +311,11 @@ export interface PluginExecution {
  */
 function mavenCoords(dep: DependencyCoordinates) {
   const name = dep.name;
-  const parts = name.split('/');
+  const parts = name.split("/");
   if (parts.length !== 2) {
-    throw new Error(`invalid maven coordinates in dependency named "${name}". format is "<groupId>/<artifactId>". For example "org.junit.jupiter/junit-jupiter-engine"`);
+    throw new Error(
+      `invalid maven coordinates in dependency named "${name}". format is "<groupId>/<artifactId>". For example "org.junit.jupiter/junit-jupiter-engine"`
+    );
   }
 
   return {
@@ -316,13 +328,18 @@ function mavenCoords(dep: DependencyCoordinates) {
 function pluginConfig(options: PluginOptions = {}) {
   return {
     configuration: options.configuration,
-    dependencies: (options.dependencies && options.dependencies.length > 0)
-      ? { dependency: options.dependencies?.map(d => mavenCoords(Dependencies.parseDependency(d))) }
-      : undefined,
-    executions: options.executions?.map(e => ({
+    dependencies:
+      options.dependencies && options.dependencies.length > 0
+        ? {
+            dependency: options.dependencies?.map((d) =>
+              mavenCoords(Dependencies.parseDependency(d))
+            ),
+          }
+        : undefined,
+    executions: options.executions?.map((e) => ({
       execution: {
         id: e.id,
-        goals: e.goals.map(goal => ({ goal })),
+        goals: e.goals.map((goal) => ({ goal })),
       },
     })),
   };

@@ -1,13 +1,21 @@
-import { Task } from '..';
-import { Eslint } from '../javascript';
-import { CommonPublishOptions, GoPublishOptions, MavenPublishOptions, NugetPublishOptions, PyPiPublishOptions } from '../release';
-import { TypeScriptProject, TypeScriptProjectOptions } from '../typescript';
-import { JsiiPacmakTarget, JSII_TOOLCHAIN } from './consts';
-import { JsiiDocgen } from './jsii-docgen';
+import { Task } from "..";
+import { Eslint } from "../javascript";
+import {
+  CommonPublishOptions,
+  GoPublishOptions,
+  MavenPublishOptions,
+  NugetPublishOptions,
+  PyPiPublishOptions,
+} from "../release";
+import { TypeScriptProject, TypeScriptProjectOptions } from "../typescript";
+import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
+import { JsiiDocgen } from "./jsii-docgen";
 
-const EMAIL_REGEX = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
-const URL_REGEX = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
-const REPO_TEMP_DIRECTORY = '.repo';
+const EMAIL_REGEX =
+  /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
+const URL_REGEX =
+  /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/;
+const REPO_TEMP_DIRECTORY = ".repo";
 
 export interface JsiiProjectOptions extends TypeScriptProjectOptions {
   /**
@@ -95,9 +103,9 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
 }
 
 export enum Stability {
-  EXPERIMENTAL = 'experimental',
-  STABLE = 'stable',
-  DEPRECATED = 'deprecated'
+  EXPERIMENTAL = "experimental",
+  STABLE = "stable",
+  DEPRECATED = "deprecated",
 }
 
 export interface JsiiJavaTarget extends MavenPublishOptions {
@@ -127,7 +135,6 @@ export interface JsiiGoTarget extends GoPublishOptions {
    * @example github.com/owner/repo/subdir
    */
   readonly moduleName: string;
-
 }
 
 /**
@@ -160,11 +167,11 @@ export class JsiiProject extends TypeScriptProject {
 
     // this is an unhelpful warning
     const jsiiFlags = [
-      '--silence-warnings=reserved-word',
-      '--no-fix-peer-dependencies',
-    ].join(' ');
+      "--silence-warnings=reserved-word",
+      "--no-fix-peer-dependencies",
+    ].join(" ");
 
-    const compatIgnore = options.compatIgnore ?? '.compatignore';
+    const compatIgnore = options.compatIgnore ?? ".compatignore";
 
     this.addFields({ stability: options.stability ?? Stability.STABLE });
 
@@ -172,8 +179,8 @@ export class JsiiProject extends TypeScriptProject {
       this.addFields({ deprecated: true });
     }
 
-    const compatTask = this.addTask('compat', {
-      description: 'Perform API compatibility check against latest version',
+    const compatTask = this.addTask("compat", {
+      description: "Perform API compatibility check against latest version",
       exec: `jsii-diff npm:$(node -p "require(\'./package.json\').name") -k --ignore-file ${compatIgnore} || (echo "\nUNEXPECTED BREAKING CHANGES: add keys such as \'removed:constructs.Node.of\' to ${compatIgnore} to skip.\n" && exit 1)`,
     });
 
@@ -184,14 +191,16 @@ export class JsiiProject extends TypeScriptProject {
 
     this.compileTask.reset(`jsii ${jsiiFlags}`);
     this.watchTask.reset(`jsii -w ${jsiiFlags}`);
-    this.packageAllTask = this.addTask('package-all', {
-      description: 'Packages artifacts for all target languages',
+    this.packageAllTask = this.addTask("package-all", {
+      description: "Packages artifacts for all target languages",
     });
 
     // in jsii we consider the entire repo (post build) as the build artifact
     // which is then used to create the language bindings in separate jobs.
     this.packageTask.reset(`mkdir -p ${this.artifactsDirectory}`);
-    this.packageTask.exec(`rsync -a . ${this.artifactsDirectory} --exclude .git --exclude node_modules`);
+    this.packageTask.exec(
+      `rsync -a . ${this.artifactsDirectory} --exclude .git --exclude node_modules`
+    );
 
     const targets: Record<string, any> = {};
 
@@ -212,29 +221,29 @@ export class JsiiProject extends TypeScriptProject {
 
     this.release?.publisher.addGitHubPrePublishingSteps(
       {
-        name: 'Prepare Repository',
+        name: "Prepare Repository",
         run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
       },
       {
-        name: 'Collect GitHub Metadata',
+        name: "Collect GitHub Metadata",
         run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
-      },
+      }
     );
 
     if (options.releaseToNpm != false) {
-      const task = this.addPackagingTask('js');
+      const task = this.addPackagingTask("js");
       this.release?.publisher.publishToNpm({
-        ...this.pacmakForLanguage('js', task),
+        ...this.pacmakForLanguage("js", task),
         registry: this.package.npmRegistry,
         npmTokenSecret: this.package.npmTokenSecret,
       });
-      this.addPackagingTarget('js', task);
+      this.addPackagingTarget("js", task);
     }
 
     // we cannot call an option `java` because the java code generated by jsii
     // does not compile due to a conflict between this option name and the `java`
     // package (e.g. when `java.util.Objects` is referenced).
-    if ('java' in options) {
+    if ("java" in options) {
       throw new Error('the "java" option is now called "publishToMaven"');
     }
 
@@ -247,14 +256,14 @@ export class JsiiProject extends TypeScriptProject {
         },
       };
 
-      const task = this.addPackagingTask('java');
+      const task = this.addPackagingTask("java");
 
       this.release?.publisher.publishToMaven({
-        ...this.pacmakForLanguage('java', task),
+        ...this.pacmakForLanguage("java", task),
         ...options.publishToMaven,
       });
 
-      this.addPackagingTarget('java', task);
+      this.addPackagingTarget("java", task);
     }
 
     const pypi = options.publishToPypi ?? options.python;
@@ -264,13 +273,13 @@ export class JsiiProject extends TypeScriptProject {
         module: pypi.module,
       };
 
-      const task = this.addPackagingTask('python');
+      const task = this.addPackagingTask("python");
       this.release?.publisher.publishToPyPi({
-        ...this.pacmakForLanguage('python', task),
+        ...this.pacmakForLanguage("python", task),
         ...pypi,
       });
 
-      this.addPackagingTarget('python', task);
+      this.addPackagingTarget("python", task);
     }
 
     const nuget = options.publishToNuget ?? options.dotnet;
@@ -280,13 +289,13 @@ export class JsiiProject extends TypeScriptProject {
         packageId: nuget.packageId,
       };
 
-      const task = this.addPackagingTask('dotnet');
+      const task = this.addPackagingTask("dotnet");
       this.release?.publisher.publishToNuget({
-        ...this.pacmakForLanguage('dotnet', task),
+        ...this.pacmakForLanguage("dotnet", task),
         ...nuget,
       });
 
-      this.addPackagingTarget('dotnet', task);
+      this.addPackagingTarget("dotnet", task);
     }
 
     const golang = options.publishToGo;
@@ -295,22 +304,19 @@ export class JsiiProject extends TypeScriptProject {
         moduleName: golang.moduleName,
       };
 
-      const task = this.addPackagingTask('go');
+      const task = this.addPackagingTask("go");
       this.release?.publisher.publishToGo({
-        ...this.pacmakForLanguage('go', task),
+        ...this.pacmakForLanguage("go", task),
         ...golang,
       });
 
-      this.addPackagingTarget('go', task);
+      this.addPackagingTarget("go", task);
     }
 
-    this.addDevDeps(
-      'jsii',
-      'jsii-diff',
-    );
+    this.addDevDeps("jsii", "jsii-diff");
 
-    this.gitignore.exclude('.jsii', 'tsconfig.json');
-    this.npmignore?.include('.jsii');
+    this.gitignore.exclude(".jsii", "tsconfig.json");
+    this.npmignore?.include(".jsii");
 
     if (options.docgen ?? true) {
       new JsiiDocgen(this);
@@ -335,10 +341,10 @@ export class JsiiProject extends TypeScriptProject {
     const pacmak = this.pacmakForLanguage(language, packTask);
 
     this.buildWorkflow.addPostBuildJob(`package-${language}`, {
-      runsOn: ['ubuntu-latest'],
+      runsOn: ["ubuntu-latest"],
       permissions: {},
       tools: {
-        node: { version: '14.x' },
+        node: { version: "14.x" },
         ...pacmak.publishTools,
       },
       steps: pacmak.prePublishSteps ?? [],
@@ -350,14 +356,18 @@ export class JsiiProject extends TypeScriptProject {
       description: `Create ${language} language bindings`,
     });
 
-    packageTask.exec('jsii_version=$(node -p "JSON.parse(fs.readFileSync(\'.jsii\')).jsiiVersion.split(\' \')[0]")');
+    packageTask.exec(
+      "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
+    );
     packageTask.exec(`npx jsii-pacmak@$jsii_version -v --target ${language}`);
     this.packageAllTask.spawn(packageTask);
     return packageTask;
   }
 
-  private pacmakForLanguage(target: JsiiPacmakTarget, packTask: Task): CommonPublishOptions {
-
+  private pacmakForLanguage(
+    target: JsiiPacmakTarget,
+    packTask: Task
+  ): CommonPublishOptions {
     // at this stage, `artifactsDirectory` contains the prebuilt repository.
     // for the publishing to work seamlessely, that directory needs to contain the actual artifact.
     // so we move the repo, create the artifact, and put it in the expected place.
@@ -366,11 +376,11 @@ export class JsiiProject extends TypeScriptProject {
       publishTools: JSII_TOOLCHAIN[target],
       prePublishSteps: [
         {
-          name: 'Prepare Repository',
+          name: "Prepare Repository",
           run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
         },
         {
-          name: 'Install Dependencies',
+          name: "Install Dependencies",
           run: `cd ${REPO_TEMP_DIRECTORY} && ${this.package.installCommand}`,
         },
         {
@@ -391,11 +401,15 @@ function parseAuthorAddress(options: JsiiProjectOptions) {
   let authorUrl = options.authorUrl;
   if (options.authorAddress) {
     if (options.authorEmail && options.authorEmail !== options.authorAddress) {
-      throw new Error('authorEmail is deprecated and cannot be used in conjunction with authorAddress');
+      throw new Error(
+        "authorEmail is deprecated and cannot be used in conjunction with authorAddress"
+      );
     }
 
     if (options.authorUrl && options.authorUrl !== options.authorAddress) {
-      throw new Error('authorUrl is deprecated and cannot be used in conjunction with authorAddress.');
+      throw new Error(
+        "authorUrl is deprecated and cannot be used in conjunction with authorAddress."
+      );
     }
 
     if (EMAIL_REGEX.test(options.authorAddress)) {
@@ -403,9 +417,10 @@ function parseAuthorAddress(options: JsiiProjectOptions) {
     } else if (URL_REGEX.test(options.authorAddress)) {
       authorUrl = options.authorAddress;
     } else {
-      throw new Error(`authorAddress must be either an email address or a URL: ${options.authorAddress}`);
+      throw new Error(
+        `authorAddress must be either an email address or a URL: ${options.authorAddress}`
+      );
     }
   }
   return { authorEmail, authorUrl };
 }
-

@@ -1,3 +1,3 @@
-export * from './projenrc';
-export * from './typescript';
-export * from './typescript-typedoc';
+export * from "./projenrc";
+export * from "./typescript";
+export * from "./typescript-typedoc";

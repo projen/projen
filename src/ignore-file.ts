@@ -1,12 +1,11 @@
-import { FileBase, IResolver } from './file';
-import { Project } from './project';
-
+import { FileBase, IResolver } from "./file";
+import { Project } from "./project";
 
 export class IgnoreFile extends FileBase {
   private readonly _patterns = new Array<string>();
 
   constructor(project: Project, filePath: string) {
-    super(project, filePath, { editGitignore: filePath !== '.gitignore' });
+    super(project, filePath, { editGitignore: filePath !== ".gitignore" });
   }
 
   /**
@@ -21,7 +20,7 @@ export class IgnoreFile extends FileBase {
   public addPatterns(...patterns: string[]) {
     for (const pattern of patterns) {
       // skip comments
-      if (pattern.startsWith('#')) {
+      if (pattern.startsWith("#")) {
         continue;
       }
 
@@ -32,11 +31,11 @@ export class IgnoreFile extends FileBase {
   }
 
   private normalizePatterns(pattern: string) {
-    const opposite = pattern.startsWith('!') ? pattern.slice(1) : '!' + pattern;
+    const opposite = pattern.startsWith("!") ? pattern.slice(1) : "!" + pattern;
     remove(this._patterns, pattern); // prevent duplicates
     remove(this._patterns, opposite);
 
-    if (pattern.endsWith('/')) {
+    if (pattern.endsWith("/")) {
       const prefix = opposite;
       for (const p of [...this._patterns]) {
         if (p.startsWith(prefix)) {
@@ -73,8 +72,8 @@ export class IgnoreFile extends FileBase {
    */
   public include(...patterns: string[]) {
     for (let pattern of patterns) {
-      if (!pattern.startsWith('!')) {
-        pattern = '!' + pattern;
+      if (!pattern.startsWith("!")) {
+        pattern = "!" + pattern;
       }
 
       this.addPatterns(pattern);
@@ -82,12 +81,9 @@ export class IgnoreFile extends FileBase {
   }
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
-    const lines = [
-      `# ${FileBase.PROJEN_MARKER}`,
-      ...this._patterns,
-    ];
+    const lines = [`# ${FileBase.PROJEN_MARKER}`, ...this._patterns];
 
-    return `${resolver.resolve(lines).join('\n')}\n`;
+    return `${resolver.resolve(lines).join("\n")}\n`;
   }
 }
 
