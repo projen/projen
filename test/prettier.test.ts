@@ -1,4 +1,4 @@
-import { ArrowParens, Eslint, NodeProject, TrailingComma } from '../src/javascript';
+import { ArrowParens, NodeProject, TrailingComma } from '../src/javascript';
 import { synthSnapshot } from './util';
 
 describe('prettier', () => {
@@ -7,15 +7,8 @@ describe('prettier', () => {
     const project = new NodeProject({
       name: 'test',
       defaultReleaseBranch: 'master',
-      prettierIgnoreEnabled: true,
       prettier: true,
-      prettierOptions: { printWidth: 140 },
-    });
-
-    // WHEN
-    new Eslint(project, {
-      dirs: ['mysrc'],
-      prettier: true,
+      prettierOptions: { settings: { printWidth: 140 } },
     });
 
     // THEN
@@ -27,19 +20,11 @@ describe('prettier', () => {
     const project = new NodeProject({
       name: 'test',
       defaultReleaseBranch: 'master',
-      prettierIgnoreEnabled: true,
       prettier: true,
-      prettierOptions: { printWidth: 140 },
+      prettierOptions: { settings: { printWidth: 140 } },
     });
 
-
-    // WHEN
-    new Eslint(project, {
-      dirs: ['mysrc'],
-      prettier: true,
-    });
-
-    project.prettierIgnore?.addPatterns('build');
+    project.prettier?.ignoreFile?.addPatterns('build');
 
     // THEN
     expect(synthSnapshot(project)['.prettierignore']).toMatchSnapshot();
@@ -52,26 +37,22 @@ describe('prettier', () => {
       defaultReleaseBranch: 'master',
       prettier: true,
       prettierOptions: {
-        trailingComma: TrailingComma.ALL,
-        bracketSpacing: true,
-        tabWidth: 2,
-        semi: true,
-        singleQuote: true,
-        arrowParens: ArrowParens.ALWAYS,
-        printWidth: 140,
-        useTabs: false,
-        parser: 'typescript',
+        settings: {
+          trailingComma: TrailingComma.ALL,
+          bracketSpacing: true,
+          tabWidth: 2,
+          semi: true,
+          singleQuote: true,
+          arrowParens: ArrowParens.ALWAYS,
+          printWidth: 140,
+          useTabs: false,
+          parser: 'typescript',
+        },
       },
     });
 
-    // WHEN
-    new Eslint(project, {
-      dirs: ['mysrc'],
-      prettier: true,
-    });
-
     // THEN
-    expect(project.prettier?.config).toMatchObject({
+    expect(project.prettier?.settings).toMatchObject({
       trailingComma: 'all',
       bracketSpacing: true,
       tabWidth: 2,
