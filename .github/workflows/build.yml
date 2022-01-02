@@ -211,5 +211,4 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Run task "integ"
-        run: /bin/bash ./projen.bash integ
+      - run: /bin/bash ./projen.bash integ
