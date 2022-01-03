@@ -2230,6 +2230,14 @@ new SourceCode(project: Project, filePath: string, options?: SourceCodeOptions)
   * **indent** (<code>number</code>)  Indentation size. __*Default*__: 2
 
 
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**filePath**🔹 | <code>string</code> | <span></span>
+
 ### Methods
 
 
@@ -7385,6 +7393,18 @@ addOverride(override: PrettierOverride): void
   * **files** (<code>string &#124; Array<string></code>)  Include these files in this override. 
   * **settings** (<code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code>)  The options to apply for this override. 
   * **excludeFiles** (<code>string &#124; Array<string></code>)  Exclude these files from this override. __*Optional*__
+
+
+
+
+#### preSynthesize()🔹 <a id="projen-javascript-prettier-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
 
 
 

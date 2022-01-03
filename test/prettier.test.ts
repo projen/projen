@@ -1,3 +1,4 @@
+import { SourceCode } from "../src";
 import { ArrowParens, NodeProject, TrailingComma } from "../src/javascript";
 import { synthSnapshot } from "./util";
 
@@ -63,5 +64,18 @@ describe("prettier", () => {
       useTabs: false,
       parser: "typescript",
     });
+  });
+
+  test("snapshot with ignore", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
+    new SourceCode(project, "src/example.ts");
+
+    // THEN
+    expect(synthSnapshot(project)[".prettierignore"]).toMatchSnapshot();
   });
 });
