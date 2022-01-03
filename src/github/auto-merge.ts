@@ -1,5 +1,5 @@
-import { Component } from '../component';
-import { GitHub } from './github';
+import { Component } from "../component";
+import { GitHub } from "./github";
 
 export interface AutoMergeOptions {
   /**
@@ -32,32 +32,32 @@ export class AutoMerge extends Component {
 
     const mergify = github.mergify;
     if (!mergify) {
-      throw new Error('auto merging requires mergify to be enabled');
+      throw new Error("auto merging requires mergify to be enabled");
     }
 
-    const blockingLabels = options.blockingLabels ?? ['do-not-merge'];
+    const blockingLabels = options.blockingLabels ?? ["do-not-merge"];
     const blockingCondition = blockingLabels?.length
-      ? [`-label~=(${blockingLabels.join('|')})`]
+      ? [`-label~=(${blockingLabels.join("|")})`]
       : [];
 
     const mergeAction = {
       merge: {
-      // squash all commits into a single commit when merging
-        method: 'squash',
+        // squash all commits into a single commit when merging
+        method: "squash",
 
         // use PR title+body as the commit message
         commit_message_template: [
-          '{{ title }} (#{{ number }})',
-          '',
-          '{{ body }}',
-        ].join('\n'),
+          "{{ title }} (#{{ number }})",
+          "",
+          "{{ body }}",
+        ].join("\n"),
 
         // update PR branch so it's up-to-date before merging
-        strict: 'smart',
-        strict_method: 'merge',
+        strict: "smart",
+        strict_method: "merge",
       },
 
-      delete_head_branch: { },
+      delete_head_branch: {},
     };
 
     const approvedReviews = options.approvedReviews ?? 1;
@@ -67,12 +67,12 @@ export class AutoMerge extends Component {
     this.addConditions(...blockingCondition);
 
     mergify.addRule({
-      name: 'Automatic merge on approval and successful build',
+      name: "Automatic merge on approval and successful build",
       actions: mergeAction,
       conditions: (() => this.renderConditions()) as any,
     });
 
-    this.project.addPackageIgnore('/.mergify.yml');
+    this.project.addPackageIgnore("/.mergify.yml");
   }
 
   /**

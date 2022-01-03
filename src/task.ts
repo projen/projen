@@ -1,4 +1,9 @@
-import { TaskCommonOptions, TaskSpec, TaskStep, TaskStepOptions } from './task-model';
+import {
+  TaskCommonOptions,
+  TaskSpec,
+  TaskStep,
+  TaskStepOptions,
+} from "./task-model";
 
 export interface TaskOptions extends TaskCommonOptions {
   /**
@@ -31,7 +36,7 @@ export class Task {
   private _locked: boolean;
   private _description?: string;
 
-  constructor(name: string, props: TaskOptions = { }) {
+  constructor(name: string, props: TaskOptions = {}) {
     this.name = name;
     this._description = props.description;
     this.condition = props.condition;
@@ -71,8 +76,8 @@ export class Task {
   /**
    * Reset the task so it no longer has any commands.
    * @param command the first command to add to the task after it was cleared.
-  */
-  public reset(command?: string, options: TaskStepOptions = { }) {
+   */
+  public reset(command?: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
 
     while (this._steps.length) {
@@ -89,7 +94,7 @@ export class Task {
    * @param command Shell command
    * @param options Options
    */
-  public exec(command: string, options: TaskStepOptions = { }) {
+  public exec(command: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
     this._steps.push({ exec: command, ...options });
   }
@@ -115,7 +120,7 @@ export class Task {
    * @param message Your message
    * @param options Options
    */
-  public say(message: string, options: TaskStepOptions = { }) {
+  public say(message: string, options: TaskStepOptions = {}) {
     this.assertUnlocked();
     this._steps.push({ say: message, ...options });
   }

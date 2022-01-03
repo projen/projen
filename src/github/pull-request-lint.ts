@@ -1,6 +1,6 @@
-import { GitHub } from '.';
-import { Component } from '../component';
-import { Job, JobPermission } from './workflows-model';
+import { GitHub } from ".";
+import { Component } from "../component";
+import { Job, JobPermission } from "./workflows-model";
 
 /**
  * Options for PullRequestLint
@@ -57,36 +57,39 @@ export class PullRequestLint extends Component {
     // should only create a workflow if one or more linters are enabled
     if (options.semanticTitle ?? true) {
       const opts = options.semanticTitleOptions ?? {};
-      const types = opts.types ?? [
-        'feat',
-        'fix',
-        'chore',
-      ];
+      const types = opts.types ?? ["feat", "fix", "chore"];
 
       const validateJob: Job = {
-        name: 'Validate PR title',
-        runsOn: options.runsOn ?? ['ubuntu-latest'],
+        name: "Validate PR title",
+        runsOn: options.runsOn ?? ["ubuntu-latest"],
         permissions: {
           pullRequests: JobPermission.WRITE,
         },
         steps: [
           {
-            uses: 'amannn/action-semantic-pull-request@v3.4.6',
+            uses: "amannn/action-semantic-pull-request@v3.4.6",
             env: {
-              GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}',
+              GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
             },
             with: {
-              types: types.join('\n'),
+              types: types.join("\n"),
               requireScope: opts.requireScope ?? false,
             },
           },
         ],
       };
 
-      const workflow = github.addWorkflow('pull-request-lint');
+      const workflow = github.addWorkflow("pull-request-lint");
       workflow.on({
         pullRequestTarget: {
-          types: ['labeled', 'opened', 'synchronize', 'reopened', 'ready_for_review', 'edited'],
+          types: [
+            "labeled",
+            "opened",
+            "synchronize",
+            "reopened",
+            "ready_for_review",
+            "edited",
+          ],
         },
       });
       workflow.addJobs({ validate: validateJob });

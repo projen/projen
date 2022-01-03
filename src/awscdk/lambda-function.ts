@@ -1,12 +1,12 @@
-import { basename, dirname, extname, join, relative, sep, posix } from 'path';
-import { pascal } from 'case';
-import { Component } from '../component';
-import { FileBase } from '../file';
-import { Bundler, BundlingOptions, Eslint } from '../javascript';
-import { Project } from '../project';
-import { SourceCode } from '../source-code';
-import { AwsCdkDeps } from './awscdk-deps';
-import { TYPESCRIPT_LAMBDA_EXT } from './internal';
+import { basename, dirname, extname, join, relative, sep, posix } from "path";
+import { pascal } from "case";
+import { Component } from "../component";
+import { FileBase } from "../file";
+import { Bundler, BundlingOptions, Eslint } from "../javascript";
+import { Project } from "../project";
+import { SourceCode } from "../source-code";
+import { AwsCdkDeps } from "./awscdk-deps";
+import { TYPESCRIPT_LAMBDA_EXT } from "./internal";
 
 /**
  * Common options for `LambdaFunction`. Applies to all functions in
@@ -101,7 +101,9 @@ export class LambdaFunction extends Component {
     const cdkDeps = options.cdkDeps;
     const bundler = Bundler.of(project);
     if (!bundler) {
-      throw new Error('No bundler found. Please add a Bundler component to your project.');
+      throw new Error(
+        "No bundler found. Please add a Bundler component to your project."
+      );
     }
 
     const runtime = options.runtime ?? LambdaRuntime.NODEJS_14_X;
@@ -114,24 +116,32 @@ export class LambdaFunction extends Component {
     const entrypoint = options.entrypoint;
 
     if (!entrypoint.endsWith(TYPESCRIPT_LAMBDA_EXT)) {
-      throw new Error(`${entrypoint} must have a ${TYPESCRIPT_LAMBDA_EXT} extension`);
+      throw new Error(
+        `${entrypoint} must have a ${TYPESCRIPT_LAMBDA_EXT} extension`
+      );
     }
 
-    const basePath = join(dirname(entrypoint), basename(entrypoint, TYPESCRIPT_LAMBDA_EXT));
+    const basePath = join(
+      dirname(entrypoint),
+      basename(entrypoint, TYPESCRIPT_LAMBDA_EXT)
+    );
     const constructFile = options.constructFile ?? `${basePath}-function.ts`;
 
-    if (extname(constructFile) !== '.ts') {
-      throw new Error(`Construct file name "${constructFile}" must have a .ts extension`);
+    if (extname(constructFile) !== ".ts") {
+      throw new Error(
+        `Construct file name "${constructFile}" must have a .ts extension`
+      );
     }
 
     // type names
-    const constructName = options.constructName ?? pascal(basename(basePath)) + 'Function';
+    const constructName =
+      options.constructName ?? pascal(basename(basePath)) + "Function";
     const propsType = `${constructName}Props`;
 
     const bundle = bundler.addBundle(entrypoint, {
       target: runtime.esbuildTarget,
       platform: runtime.esbuildPlatform,
-      externals: ['aws-sdk'],
+      externals: ["aws-sdk"],
       ...options.bundlingOptions,
     });
 
@@ -143,48 +153,67 @@ export class LambdaFunction extends Component {
     //  - constructAbs => `/project-outdir/src/foo/bar/baz/foo-function.ts`
     const outfileAbs = join(project.outdir, bundle.outfile);
     const constructAbs = join(project.outdir, constructFile);
-    const relativeOutfile = relative(dirname(constructAbs), dirname(outfileAbs));
+    const relativeOutfile = relative(
+      dirname(constructAbs),
+      dirname(outfileAbs)
+    );
 
     const src = new SourceCode(project, constructFile);
     src.line(`// ${FileBase.PROJEN_MARKER}`);
-    src.line('import * as path from \'path\';');
+    src.line("import * as path from 'path';");
 
     if (cdkDeps.cdkMajorVersion === 1) {
-      src.line('import * as lambda from \'@aws-cdk/aws-lambda\';');
-      src.line('import { Construct } from \'@aws-cdk/core\';');
-      cdkDeps.addV1Dependencies('@aws-cdk/aws-lambda');
-      cdkDeps.addV1Dependencies('@aws-cdk/core');
+      src.line("import * as lambda from '@aws-cdk/aws-lambda';");
+      src.line("import { Construct } from '@aws-cdk/core';");
+      cdkDeps.addV1Dependencies("@aws-cdk/aws-lambda");
+      cdkDeps.addV1Dependencies("@aws-cdk/core");
     } else {
-      src.line('import * as lambda from \'aws-cdk-lib/aws-lambda\';');
-      src.line('import { Construct } from \'constructs\';');
+      src.line("import * as lambda from 'aws-cdk-lib/aws-lambda';");
+      src.line("import { Construct } from 'constructs';");
     }
 
     src.line();
-    src.line('/**');
+    src.line("/**");
     src.line(` * Props for ${constructName}`);
-    src.line(' */');
+    src.line(" */");
     src.open(`export interface ${propsType} extends lambda.FunctionOptions {`);
-    src.close('}');
+    src.close("}");
     src.line();
-    src.line('/**');
-    src.line(` * An AWS Lambda function which executes ${convertToPosixPath(basePath)}.`);
-    src.line(' */');
+    src.line("/**");
+    src.line(
+      ` * An AWS Lambda function which executes ${convertToPosixPath(
+        basePath
+      )}.`
+    );
+    src.line(" */");
     src.open(`export class ${constructName} extends lambda.Function {`);
-    src.open(`constructor(scope: Construct, id: string, props?: ${propsType}) {`);
-    src.open('super(scope, id, {');
+    src.open(
+      `constructor(scope: Construct, id: string, props?: ${propsType}) {`
+    );
+    src.open("super(scope, id, {");
     src.line(`description: '${convertToPosixPath(entrypoint)}',`);
-    src.line('...props,');
+    src.line("...props,");
     src.line(`runtime: lambda.Runtime.${runtime.functionRuntime},`);
-    src.line('handler: \'index.handler\',');
-    src.line(`code: lambda.Code.fromAsset(path.join(__dirname, '${convertToPosixPath(relativeOutfile)}')),`);
-    src.close('});');
-    src.close('}');
-    src.close('}');
+    src.line("handler: 'index.handler',");
+    src.line(
+      `code: lambda.Code.fromAsset(path.join(__dirname, '${convertToPosixPath(
+        relativeOutfile
+      )}')),`
+    );
+    src.close("});");
+    src.close("}");
+    src.close("}");
 
-    this.project.logger.verbose(`${basePath}: construct "${constructName}" generated under "${constructFile}"`);
-    this.project.logger.verbose(`${basePath}: bundle task "${bundle.bundleTask.name}"`);
+    this.project.logger.verbose(
+      `${basePath}: construct "${constructName}" generated under "${constructFile}"`
+    );
+    this.project.logger.verbose(
+      `${basePath}: bundle task "${bundle.bundleTask.name}"`
+    );
     if (bundle.watchTask) {
-      this.project.logger.verbose(`${basePath}: bundle watch task "${bundle.watchTask.name}"`);
+      this.project.logger.verbose(
+        `${basePath}: bundle watch task "${bundle.watchTask.name}"`
+      );
     }
   }
 }
@@ -196,19 +225,28 @@ export class LambdaRuntime {
   /**
    * Node.js 10.x
    */
-  public static readonly NODEJS_10_X = new LambdaRuntime('NODEJS_10_X', 'node10');
+  public static readonly NODEJS_10_X = new LambdaRuntime(
+    "NODEJS_10_X",
+    "node10"
+  );
 
   /**
    * Node.js 12.x
    */
-  public static readonly NODEJS_12_X = new LambdaRuntime('NODEJS_12_X', 'node12');
+  public static readonly NODEJS_12_X = new LambdaRuntime(
+    "NODEJS_12_X",
+    "node12"
+  );
 
   /**
    * Node.js 14.x
    */
-  public static readonly NODEJS_14_X = new LambdaRuntime('NODEJS_14_X', 'node14');
+  public static readonly NODEJS_14_X = new LambdaRuntime(
+    "NODEJS_14_X",
+    "node14"
+  );
 
-  public readonly esbuildPlatform = 'node';
+  public readonly esbuildPlatform = "node";
 
   private constructor(
     /**
@@ -219,8 +257,8 @@ export class LambdaRuntime {
     /**
      * The esbuild setting to use.
      */
-    public readonly esbuildTarget: string) {
-  }
+    public readonly esbuildTarget: string
+  ) {}
 }
 
 /**

@@ -1,11 +1,18 @@
-import { Task } from '../task';
-import { DEFAULT_GITHUB_ACTIONS_USER } from './constants';
-import { GitHub } from './github';
-import { WorkflowActions } from './workflow-actions';
-import { GithubWorkflow } from './workflows';
-import { ContainerOptions, Job, JobPermissions, JobStep, JobStepOutput, Triggers } from './workflows-model';
+import { Task } from "../task";
+import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
+import { GitHub } from "./github";
+import { WorkflowActions } from "./workflow-actions";
+import { GithubWorkflow } from "./workflows";
+import {
+  ContainerOptions,
+  Job,
+  JobPermissions,
+  JobStep,
+  JobStepOutput,
+  Triggers,
+} from "./workflows-model";
 
-const DEFAULT_JOB_ID = 'build';
+const DEFAULT_JOB_ID = "build";
 
 export interface TaskWorkflowOptions {
   /**
@@ -125,7 +132,9 @@ export class TaskWorkflow extends GithubWorkflow {
     if (options.triggers) {
       if (options.triggers.issueComment) {
         // https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#potential-impact-of-a-compromised-runner
-        throw new Error('Trigger "issueComment" should not be used due to a security concern');
+        throw new Error(
+          'Trigger "issueComment" should not be used due to a security concern'
+        );
       }
 
       this.on(options.triggers);
@@ -136,18 +145,20 @@ export class TaskWorkflow extends GithubWorkflow {
     });
 
     const preCheckoutSteps = options.preCheckoutSteps ?? [];
-    const checkoutWith = options.checkoutWith ? { with: options.checkoutWith } : {};
+    const checkoutWith = options.checkoutWith
+      ? { with: options.checkoutWith }
+      : {};
     const preBuildSteps = options.preBuildSteps ?? [];
     const postBuildSteps = options.postBuildSteps ?? [];
     const gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
 
     if (this.artifactsDirectory) {
       postBuildSteps.push({
-        name: 'Upload artifact',
-        uses: 'actions/upload-artifact@v2.1.1',
+        name: "Upload artifact",
+        uses: "actions/upload-artifact@v2.1.1",
         // Setting to always will ensure that this step will run even if
         // the previous ones have failed (e.g. coverage report, internal logs, etc)
-        if: 'always()',
+        if: "always()",
         with: {
           name: this.artifactsDirectory,
           path: this.artifactsDirectory,
@@ -156,7 +167,7 @@ export class TaskWorkflow extends GithubWorkflow {
     }
 
     const job: Job = {
-      runsOn: options.runsOn ?? ['ubuntu-latest'],
+      runsOn: options.runsOn ?? ["ubuntu-latest"],
       container: options.container,
       env: options.env,
       permissions: options.permissions,
@@ -167,8 +178,8 @@ export class TaskWorkflow extends GithubWorkflow {
 
         // check out sources.
         {
-          name: 'Checkout',
-          uses: 'actions/checkout@v2',
+          name: "Checkout",
+          uses: "actions/checkout@v2",
           ...checkoutWith,
         },
 

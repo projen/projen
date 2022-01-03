@@ -1,8 +1,8 @@
-import * as os from 'os';
-import * as path from 'path';
-import * as fs from 'fs-extra';
-import { glob } from 'glob';
-import { Project } from '../project';
+import * as os from "os";
+import * as path from "path";
+import * as fs from "fs-extra";
+import { glob } from "glob";
+import { Project } from "../project";
 
 export interface SynthOutput {
   [filePath: string]: any;
@@ -14,23 +14,30 @@ export interface SynthOutput {
  */
 export function synthSnapshot(project: Project): SynthOutput {
   // defensive: verify that "outdir" is actually in a temporary directory
-  if (!path.resolve(project.outdir).startsWith(os.tmpdir()) && !project.outdir.includes('project-temp-dir')) {
-    throw new Error('Trying to capture a snapshot of a project outside of tmpdir, which implies this test might corrupt an existing project');
+  if (
+    !path.resolve(project.outdir).startsWith(os.tmpdir()) &&
+    !project.outdir.includes("project-temp-dir")
+  ) {
+    throw new Error(
+      "Trying to capture a snapshot of a project outside of tmpdir, which implies this test might corrupt an existing project"
+    );
   }
 
-  const synthed = Symbol.for('synthed');
+  const synthed = Symbol.for("synthed");
   if (synthed in project) {
-    throw new Error('duplicate synth()');
+    throw new Error("duplicate synth()");
   }
 
   (project as any)[synthed] = true;
 
   const ENV_PROJEN_DISABLE_POST = process.env.PROJEN_DISABLE_POST;
   try {
-    process.env.PROJEN_DISABLE_POST = 'true';
+    process.env.PROJEN_DISABLE_POST = "true";
     project.synth();
-    const ignoreExts = ['png', 'ico'];
-    return directorySnapshot(project.outdir, { excludeGlobs: ignoreExts.map(ext => `**/*.${ext}`) });
+    const ignoreExts = ["png", "ico"];
+    return directorySnapshot(project.outdir, {
+      excludeGlobs: ignoreExts.map((ext) => `**/*.${ext}`),
+    });
   } finally {
     fs.removeSync(project.outdir);
 
@@ -59,11 +66,14 @@ export interface DirectorySnapshotOptions {
   readonly onlyFileNames?: boolean;
 }
 
-export function directorySnapshot(root: string, options: DirectorySnapshotOptions = {}) {
+export function directorySnapshot(
+  root: string,
+  options: DirectorySnapshotOptions = {}
+) {
   const output: SynthOutput = {};
 
-  const files = glob.sync('**', {
-    ignore: ['.git/**', ...(options.excludeGlobs ?? [])],
+  const files = glob.sync("**", {
+    ignore: [".git/**", ...(options.excludeGlobs ?? [])],
     cwd: root,
     nodir: true,
     dot: true,
@@ -74,10 +84,10 @@ export function directorySnapshot(root: string, options: DirectorySnapshotOption
 
     let content;
     if (!options.onlyFileNames) {
-      if (path.extname(filePath) === '.json') {
+      if (path.extname(filePath) === ".json") {
         content = fs.readJsonSync(filePath);
       } else {
-        content = fs.readFileSync(filePath, 'utf-8');
+        content = fs.readFileSync(filePath, "utf-8");
       }
     } else {
       content = true;

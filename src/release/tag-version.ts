@@ -1,6 +1,6 @@
-import { join } from 'path';
-import { pathExists } from 'fs-extra';
-import * as utils from '../util';
+import { join } from "path";
+import { pathExists } from "fs-extra";
+import * as utils from "../util";
 
 export interface TagOptions {
   /**

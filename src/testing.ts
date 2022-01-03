@@ -1,5 +1,5 @@
-import { Project } from './project';
-import { synthSnapshot } from './util/synth';
+import { Project } from "./project";
+import { synthSnapshot } from "./util/synth";
 
 /**
  * A Testing static class with a .synth helper for getting a snapshots of construct outputs.
@@ -8,7 +8,6 @@ import { synthSnapshot } from './util/synth';
  * @example `expect(Testing.synth(someProject)).toMatchSnapshot()`
  */
 export class Testing {
-
   /**
    * Produces a simple JS object that represents the contents of the projects with field names being file paths.
    * @param project the project to produce a snapshot for

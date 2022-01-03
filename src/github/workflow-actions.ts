@@ -1,8 +1,8 @@
-import { GitIdentity } from '.';
-import { JobStep } from './workflows-model';
+import { GitIdentity } from ".";
+import { JobStep } from "./workflows-model";
 
-const GIT_PATCH_FILE = '.repo.patch';
-const RUNNER_TEMP = '${{ runner.temp }}';
+const GIT_PATCH_FILE = ".repo.patch";
+const RUNNER_TEMP = "${{ runner.temp }}";
 
 /**
  * A set of utility functions for creating GitHub actions in workflows.
@@ -17,35 +17,37 @@ export class WorkflowActions {
    * @param options Options
    * @returns Job steps
    */
-  public static createUploadGitPatch(options: CreateUploadGitPatchOptions): JobStep[] {
+  public static createUploadGitPatch(
+    options: CreateUploadGitPatchOptions
+  ): JobStep[] {
     const MUTATIONS_FOUND = `steps.${options.stepId}.outputs.${options.outputName}`;
 
     const steps: JobStep[] = [
       {
         id: options.stepId,
-        name: 'Find mutations',
+        name: "Find mutations",
         run: [
-          'git add .',
+          "git add .",
           `git diff --staged --patch --exit-code > ${GIT_PATCH_FILE} || echo "::set-output name=${options.outputName}::true"`,
-        ].join('\n'),
+        ].join("\n"),
       },
       {
         if: MUTATIONS_FOUND,
-        name: 'Upload patch',
-        uses: 'actions/upload-artifact@v2',
+        name: "Upload patch",
+        uses: "actions/upload-artifact@v2",
         with: { name: GIT_PATCH_FILE, path: GIT_PATCH_FILE },
       },
     ];
 
     if (options.mutationError) {
       steps.push({
-        name: 'Fail build on mutation',
+        name: "Fail build on mutation",
         if: MUTATIONS_FOUND,
         run: [
           `echo "::error::${options.mutationError}"`,
           `cat ${GIT_PATCH_FILE}`,
-          'exit 1',
-        ].join('\n'),
+          "exit 1",
+        ].join("\n"),
       });
     }
 
@@ -59,11 +61,13 @@ export class WorkflowActions {
    * @param options Options
    * @returns Job steps
    */
-  public static checkoutWithPatch(options: CheckoutWithPatchOptions = {}): JobStep[] {
+  public static checkoutWithPatch(
+    options: CheckoutWithPatchOptions = {}
+  ): JobStep[] {
     return [
       {
-        name: 'Checkout',
-        uses: 'actions/checkout@v2',
+        name: "Checkout",
+        uses: "actions/checkout@v2",
         with: {
           token: options.token,
           ref: options.ref,
@@ -71,12 +75,12 @@ export class WorkflowActions {
         },
       },
       {
-        name: 'Download patch',
-        uses: 'actions/download-artifact@v2',
+        name: "Download patch",
+        uses: "actions/download-artifact@v2",
         with: { name: GIT_PATCH_FILE, path: RUNNER_TEMP },
       },
       {
-        name: 'Apply patch',
+        name: "Apply patch",
         run: `[ -s ${RUNNER_TEMP}/${GIT_PATCH_FILE} ] && git apply ${RUNNER_TEMP}/${GIT_PATCH_FILE} || echo "Empty patch. Skipping."`,
       },
     ];
@@ -88,13 +92,15 @@ export class WorkflowActions {
    * @returns Job steps
    */
   public static setGitIdentity(id: GitIdentity): JobStep[] {
-    return [{
-      name: 'Set git identity',
-      run: [
-        `git config user.name "${id.name}"`,
-        `git config user.email "${id.email}"`,
-      ].join('\n'),
-    }];
+    return [
+      {
+        name: "Set git identity",
+        run: [
+          `git config user.name "${id.name}"`,
+          `git config user.email "${id.email}"`,
+        ].join("\n"),
+      },
+    ];
   }
 }
 

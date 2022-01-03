@@ -1,4 +1,4 @@
-import { ResolveOptions, IResolvable } from './file';
+import { ResolveOptions, IResolvable } from "./file";
 
 function isResolvable(obj: any): obj is IResolvable {
   return (obj as IResolvable).toJSON !== undefined;
@@ -18,12 +18,12 @@ export function resolve(value: any, options: ResolveOptions = {}): any {
   }
 
   // if value is a function, call it and resolve the result.
-  if (typeof(value) === 'function') {
+  if (typeof value === "function") {
     const resolved = value.apply(undefined, args);
     return resolve(resolved, options);
   }
 
-  if (typeof(value) !== 'object') {
+  if (typeof value !== "object") {
     return value;
   }
 
@@ -31,14 +31,14 @@ export function resolve(value: any, options: ResolveOptions = {}): any {
     if (omitEmpty && value.length === 0) {
       return undefined;
     }
-    return value
-      .map(x => resolve(x, options))
-      .filter(x => x != null); // filter undefined/null/omitted
+    return value.map((x) => resolve(x, options)).filter((x) => x != null); // filter undefined/null/omitted
   }
 
   // only allow data types (i.e. objects without constructors)
-  if (value.constructor && value.constructor?.name !== 'Object') {
-    throw new Error(`only data types can be resolved. trying to resolve object of type ${value.constructor?.name}`);
+  if (value.constructor && value.constructor?.name !== "Object") {
+    throw new Error(
+      `only data types can be resolved. trying to resolve object of type ${value.constructor?.name}`
+    );
   }
 
   const result: any = {};

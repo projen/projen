@@ -1,24 +1,28 @@
 // tests for `projen new`: we run `projen new` for each supported project type
 // and compare against a golden snapshot.
-import { execSync } from 'child_process';
-import { join } from 'path';
-import { pathExistsSync } from 'fs-extra';
-import * as inventory from '../src/inventory';
-import { execCapture } from '../src/util';
-import { directorySnapshot, execProjenCLI, synthSnapshot, synthSnapshotWithPost, TestProject, withProjectDir } from './util';
+import { execSync } from "child_process";
+import { join } from "path";
+import { pathExistsSync } from "fs-extra";
+import * as inventory from "../src/inventory";
+import { execCapture } from "../src/util";
+import {
+  directorySnapshot,
+  execProjenCLI,
+  synthSnapshot,
+  synthSnapshotWithPost,
+  TestProject,
+  withProjectDir,
+} from "./util";
 
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {
-    withProjectDir(projectdir => {
-
+    withProjectDir((projectdir) => {
       // execute `projen new PJID --no-synth` in the project directory
-      execProjenCLI(projectdir, ['new', '--no-synth', type.pjid]);
+      execProjenCLI(projectdir, ["new", "--no-synth", type.pjid]);
 
       // compare generated .projenrc.js to the snapshot
       const actual = directorySnapshot(projectdir, {
-        excludeGlobs: [
-          '.git/**',
-        ],
+        excludeGlobs: [".git/**"],
       });
 
       expect(actual).toMatchSnapshot();
@@ -26,16 +30,16 @@ for (const type of inventory.discover()) {
   });
 }
 
-test('post-synthesis option enabled', () => {
+test("post-synthesis option enabled", () => {
   const project = new TestProject();
 
-  expect(synthSnapshotWithPost(project)['.postsynth']).toContain('postsynth');
+  expect(synthSnapshotWithPost(project)[".postsynth"]).toContain("postsynth");
 });
 
-test('post-synthesis option disabled', () => {
+test("post-synthesis option disabled", () => {
   const project = new TestProject();
 
-  expect(synthSnapshot(project)['.postsynth']).toBeUndefined();
+  expect(synthSnapshot(project)[".postsynth"]).toBeUndefined();
 });
 
 /**
@@ -160,48 +164,69 @@ test('can choose from one of multiple external project types', () => {
 
 **/
 
-test('projen new --no-comments', () => {
-  withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', 'node', '--no-comments', '--no-synth']);
+test("projen new --no-comments", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, ["new", "node", "--no-comments", "--no-synth"]);
 
-    const projenrc = directorySnapshot(projectdir)['.projenrc.js'];
+    const projenrc = directorySnapshot(projectdir)[".projenrc.js"];
     expect(projenrc).toBeDefined();
-    expect(projenrc).not.toMatch('//');
+    expect(projenrc).not.toMatch("//");
   });
 });
 
-test('creating node project with enum-typed CLI arg', () => {
-  withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', 'node', '--package-manager', 'npm', '--no-synth']);
+test("creating node project with enum-typed CLI arg", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, [
+      "new",
+      "node",
+      "--package-manager",
+      "npm",
+      "--no-synth",
+    ]);
 
-    const projenrc = directorySnapshot(projectdir)['.projenrc.js'];
+    const projenrc = directorySnapshot(projectdir)[".projenrc.js"];
     expect(projenrc).toMatchSnapshot();
   });
 });
 
-test('creating python project with enum-typed CLI arg', () => {
-  withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', 'python', '--project-type', 'lib', '--projenrc-python', '--no-synth']);
+test("creating python project with enum-typed CLI arg", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, [
+      "new",
+      "python",
+      "--project-type",
+      "lib",
+      "--projenrc-python",
+      "--no-synth",
+    ]);
 
-    const projenrc = directorySnapshot(projectdir)['.projenrc.py'];
+    const projenrc = directorySnapshot(projectdir)[".projenrc.py"];
     expect(projenrc).toMatchSnapshot();
   });
 });
 
-test('creating java project with enum-typed CLI arg', () => {
-  withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', 'java', '--project-type', 'lib', '--projenrc-java', '--no-synth']);
+test("creating java project with enum-typed CLI arg", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, [
+      "new",
+      "java",
+      "--project-type",
+      "lib",
+      "--projenrc-java",
+      "--no-synth",
+    ]);
 
-    const projenrc = directorySnapshot(projectdir)['src/test/java/projenrc.java'];
+    const projenrc =
+      directorySnapshot(projectdir)["src/test/java/projenrc.java"];
     expect(projenrc).toMatchSnapshot();
   });
 });
 
-test('projenrc-json creates node-project', () => {
-  withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', 'node', '--projenrc-json', '--no-synth']);
+test("projenrc-json creates node-project", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, ["new", "node", "--projenrc-json", "--no-synth"]);
 
-    const projenrc = directorySnapshot(projectdir)['.projenrc.json'];
+    const projenrc = directorySnapshot(projectdir)[".projenrc.json"];
     expect(projenrc).toMatchSnapshot();
   });
 });
@@ -222,42 +247,57 @@ test('projenrc-json creates external project type', () => {
 
 */
 
-test('projenrc-ts creates typescript projenrc', () => {
-  withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', 'typescript', '--projenrc-ts', '--no-synth']);
-    const projenrc = directorySnapshot(projectdir)['.projenrc.ts'];
+test("projenrc-ts creates typescript projenrc", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, [
+      "new",
+      "typescript",
+      "--projenrc-ts",
+      "--no-synth",
+    ]);
+    const projenrc = directorySnapshot(projectdir)[".projenrc.ts"];
     expect(projenrc).toMatchSnapshot();
   });
 });
 
-test('projen new node --outdir path/to/mydir', () => {
-  withProjectDir(projectdir => {
+test("projen new node --outdir path/to/mydir", () => {
+  withProjectDir((projectdir) => {
     // GIVEN
     const shell = (command: string) => execSync(command, { cwd: projectdir });
-    shell(`mkdir -p ${join('path', 'to', 'mydir')}`);
+    shell(`mkdir -p ${join("path", "to", "mydir")}`);
 
     // WHEN
-    execProjenCLI(projectdir, ['new', 'node', '--outdir', 'path/to/mydir']);
+    execProjenCLI(projectdir, ["new", "node", "--outdir", "path/to/mydir"]);
 
     // THEN
-    const targetDirSnapshot = directorySnapshot(join(projectdir, 'path', 'to', 'mydir'), { excludeGlobs: ['node_modules/**'] });
-    expect(targetDirSnapshot['.projenrc.js']).toMatchSnapshot();
-    expect(targetDirSnapshot['package.json']).toBeDefined();
+    const targetDirSnapshot = directorySnapshot(
+      join(projectdir, "path", "to", "mydir"),
+      { excludeGlobs: ["node_modules/**"] }
+    );
+    expect(targetDirSnapshot[".projenrc.js"]).toMatchSnapshot();
+    expect(targetDirSnapshot["package.json"]).toBeDefined();
   });
 });
 
-describe('git', () => {
-  test('--git (default) will initialize a git repo and create a commit', () => {
-    withProjectDir(projectdir => {
-      execProjenCLI(projectdir, ['new', 'project']);
-      expect(execCapture('git log', { cwd: projectdir }).toString('utf8').includes('chore: project created with projen')).toBeTruthy();
+describe("git", () => {
+  test("--git (default) will initialize a git repo and create a commit", () => {
+    withProjectDir((projectdir) => {
+      execProjenCLI(projectdir, ["new", "project"]);
+      expect(
+        execCapture("git log", { cwd: projectdir })
+          .toString("utf8")
+          .includes("chore: project created with projen")
+      ).toBeTruthy();
     });
   });
 
-  test('--no-git will not create a git repo', () => {
-    withProjectDir(projectdir => {
-      execProjenCLI(projectdir, ['new', 'project', '--no-git']);
-      expect(pathExistsSync(join(projectdir, '.git'))).toBeFalsy();
-    }, { git: false });
+  test("--no-git will not create a git repo", () => {
+    withProjectDir(
+      (projectdir) => {
+        execProjenCLI(projectdir, ["new", "project", "--no-git"]);
+        expect(pathExistsSync(join(projectdir, ".git"))).toBeFalsy();
+      },
+      { git: false }
+    );
   });
 });

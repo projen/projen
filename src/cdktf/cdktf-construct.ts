@@ -1,4 +1,4 @@
-import { ConstructLibrary, ConstructLibraryOptions } from '../cdk';
+import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
 
 export interface ConstructLibraryCdktfOptions extends ConstructLibraryOptions {
   /**
@@ -23,14 +23,11 @@ export class ConstructLibraryCdktf extends ConstructLibrary {
     super(options);
 
     if (!options.cdktfVersion) {
-      throw new Error('Required field cdktfVersion is not specified.');
+      throw new Error("Required field cdktfVersion is not specified.");
     }
 
     const ver = options.cdktfVersion;
 
-    this.addPeerDeps(
-      'constructs@^10',
-      `cdktf@^${ver}`,
-    );
+    this.addPeerDeps("constructs@^10", `cdktf@^${ver}`);
   }
 }

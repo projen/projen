@@ -1,6 +1,6 @@
-import { Component } from '../component';
-import { Project } from '../project';
-import { VsCodeLaunchConfig } from './launch-config';
+import { Component } from "../component";
+import { Project } from "../project";
+import { VsCodeLaunchConfig } from "./launch-config";
 
 export class VsCode extends Component {
   private _launchConfig?: VsCodeLaunchConfig;
