@@ -6,7 +6,8 @@ import {
   DEFAULT_GITHUB_ACTIONS_USER,
 } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
-import { Job, JobPermission, JobStep } from "../github/workflows-model";
+import { Job, JobPermission, JobStep, Tools } from "../github/workflows-model";
+import { NodeProject } from "../javascript";
 import { Project } from "../project";
 
 const PULL_REQUEST_REF = "${{ github.event.pull_request.head.ref }}";
@@ -84,7 +85,7 @@ export class BuildWorkflow extends Component {
   private readonly buildTask: Task;
   private readonly github: GitHub;
   private readonly workflow: GithubWorkflow;
-  private readonly artifactsDirectory?: string;
+  private readonly artifactsDirectory: string;
 
   private readonly _postBuildJobs: string[] = [];
 
@@ -196,6 +197,82 @@ export class BuildWorkflow extends Component {
     this._postBuildJobs.push(id);
   }
 
+  /**
+   * Run a task as a job within the build workflow which is executed after the
+   * build job succeeded.
+   *
+   * The job will have access to build artifacts and will install project
+   * dependencies in order to be able to run any commands used in the tasks.
+   *
+   * Jobs are executed _only_ if the build did NOT self mutate. If the build
+   * self-mutate, the branch will either be updated or the build will fail (in
+   * forks), so there is no point in executing the post-build job.
+   *
+   * @param options Specify tools and other options
+   */
+  public addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions) {
+    this.addPostBuildJobCommands(
+      `post-build-${task.name}`,
+      [`${this.project.projenCommand} ${task.name}`],
+      {
+        checkoutRepo: true,
+        installDeps: true,
+        tools: options.tools,
+      }
+    );
+  }
+
+  /**
+   * Run a sequence of commands as a job within the build workflow which is
+   * executed after the build job succeeded.
+   *
+   * Jobs are executed _only_ if the build did NOT self mutate. If the build
+   * self-mutate, the branch will either be updated or the build will fail (in
+   * forks), so there is no point in executing the post-build job.
+   *
+   * @param options Specify tools and other options
+   */
+  public addPostBuildJobCommands(
+    id: string,
+    commands: string[],
+    options?: AddPostBuildJobCommandsOptions
+  ) {
+    const steps = [];
+
+    if (options?.checkoutRepo) {
+      steps.push({
+        name: "Checkout",
+        uses: "actions/checkout@v2",
+        with: {
+          ref: PULL_REQUEST_REF,
+          repository: PULL_REQUEST_REPOSITORY,
+        },
+      });
+    }
+
+    if (
+      options?.checkoutRepo &&
+      options?.installDeps &&
+      this.project instanceof NodeProject
+    ) {
+      steps.push({
+        name: "Install dependencies",
+        run: `${this.project.package.installCommand}`,
+      });
+    }
+
+    steps.push({ run: commands.join("\n") });
+
+    this.addPostBuildJob(id, {
+      permissions: {
+        contents: JobPermission.READ,
+      },
+      tools: options?.tools,
+      runsOn: ["ubuntu-latest"],
+      steps,
+    });
+  }
+
   private addSelfMutationJob() {
     this.workflow.addJob("self-mutation", {
       runsOn: ["ubuntu-latest"],
@@ -270,4 +347,42 @@ export class BuildWorkflow extends Component {
           ]),
     ];
   }
+}
+
+/**
+ * Options for `BuildWorkflow.addPostBuildJobTask`
+ */
+export interface AddPostBuildJobTaskOptions {
+  /**
+   * Tools that should be installed before the task is run.
+   */
+  readonly tools?: Tools;
+}
+
+/**
+ * Options for `BuildWorkflow.addPostBuildJobCommands`
+ */
+export interface AddPostBuildJobCommandsOptions {
+  /**
+   * Tools that should be installed before the commands are run.
+   */
+  readonly tools?: Tools;
+
+  /**
+   * Check out the repository at the pull request branch before commands are
+   * run.
+   *
+   * @default false
+   */
+  readonly checkoutRepo?: boolean;
+
+  /**
+   * Install project dependencies before running commands. `checkoutRepo` must
+   * also be set to true.
+   *
+   * Currently only supported for `NodeProject`.
+   *
+   * @default false
+   */
+  readonly installDeps?: boolean;
 }
