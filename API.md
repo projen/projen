@@ -5897,22 +5897,6 @@ Name | Type | Description
 -----|------|-------------
 **parent**🔹 | <code>[gitlab.GitlabConfiguration](#projen-gitlab-gitlabconfiguration)</code> | <span></span>
 
-### Methods
-
-
-#### addStages(...stages)🔹 <a id="projen-gitlab-nestedconfiguration-addstages"></a>
-
-Add stages to the Nested configuration and the main CI file if not already present.
-
-```ts
-addStages(...stages: string[]): void
-```
-
-* **stages** (<code>string</code>)  stages to add.
-
-
-
-
 
 
 ## class JavaProject 🔹 <a id="projen-java-javaproject"></a>
