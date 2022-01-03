@@ -80,6 +80,7 @@ Name|Description
 [java.Projenrc](#projen-java-projenrc)|Allows writing projenrc files in java.
 [javascript.Bundler](#projen-javascript-bundler)|Adds support for bundling JavaScript applications and dependencies into a single file.
 [javascript.Eslint](#projen-javascript-eslint)|Represents eslint configuration.
+[javascript.Husky](#projen-javascript-husky)|A Husky configuration.
 [javascript.Jest](#projen-javascript-jest)|Installs the following npm scripts:.
 [javascript.NodePackage](#projen-javascript-nodepackage)|Represents the npm `package.json` file.
 [javascript.NodeProject](#projen-javascript-nodeproject)|Node.js project.
@@ -260,6 +261,7 @@ Name|Description
 [javascript.EslintOptions](#projen-javascript-eslintoptions)|*No description*
 [javascript.EslintOverride](#projen-javascript-eslintoverride)|eslint rules override.
 [javascript.HasteConfig](#projen-javascript-hasteconfig)|*No description*
+[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)|Options for opinionated premade hooks for Husky.
 [javascript.JestConfigOptions](#projen-javascript-jestconfigoptions)|*No description*
 [javascript.JestOptions](#projen-javascript-jestoptions)|*No description*
 [javascript.NodePackageOptions](#projen-javascript-nodepackageoptions)|*No description*
@@ -373,6 +375,7 @@ Name|Description
 [javascript.AutoRelease](#projen-javascript-autorelease)|Automatic bump modes.
 [javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)|*No description*
 [javascript.EndOfLine](#projen-javascript-endofline)|*No description*
+[javascript.GitClientHook](#projen-javascript-gitclienthook)|The list of git cient-side hooks.
 [javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)|*No description*
 [javascript.NodePackageManager](#projen-javascript-nodepackagemanager)|The node package manager to use.
 [javascript.NpmAccess](#projen-javascript-npmaccess)|Npm package access level.
@@ -3035,6 +3038,8 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -3543,6 +3548,8 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -3814,6 +3821,8 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -4188,6 +4197,8 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -4373,6 +4384,8 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -4544,6 +4557,8 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -4717,6 +4732,8 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -4899,6 +4916,8 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -6448,6 +6467,94 @@ __Returns__:
 
 
 
+## class Husky 🔹 <a id="projen-javascript-husky"></a>
+
+A Husky configuration.
+
+__Submodule__: javascript
+
+
+### Initializer
+
+
+
+
+```ts
+new javascript.Husky(project: NodeProject, options?: HuskyPremadeOptions)
+```
+
+* **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
+* **options** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  *No description*
+  * **enforceConventialCommits** (<code>boolean</code>)  Enforce convential commits standards on commit messages. __*Default*__: true
+  * **lintStaged** (<code>boolean</code>)  Enable linting and re-adding of staged files pre commit. __*Default*__: true
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**project**🔹 | <code>[javascript.NodeProject](#projen-javascript-nodeproject)</code> | <span></span>
+
+### Methods
+
+
+#### addHookCommands(hook, commands)🔹 <a id="projen-javascript-husky-addhookcommands"></a>
+
+Add a command to a Husky controlled git Hook.
+
+```ts
+addHookCommands(hook: GitClientHook, commands: Array<string>): void
+```
+
+* **hook** (<code>[javascript.GitClientHook](#projen-javascript-gitclienthook)</code>)  The Git Hook.
+* **commands** (<code>Array<string></code>)  The command to add.
+
+
+
+
+#### enableConventialCommitEnforcement()🔹 <a id="projen-javascript-husky-enableconventialcommitenforcement"></a>
+
+Enable enforcement of convential commits standards on commit messages.
+
+```ts
+enableConventialCommitEnforcement(): void
+```
+
+
+
+
+
+#### enableLintStaged()🔹 <a id="projen-javascript-husky-enablelintstaged"></a>
+
+Enable linting and re-adding of staged files pre commit.
+
+```ts
+enableLintStaged(): void
+```
+
+
+
+
+
+#### tryFindHook(hook)🔹 <a id="projen-javascript-husky-tryfindhook"></a>
+
+Return a Husky Hook file by name.
+
+Returns `undefined` if the hook has not been created.
+
+```ts
+tryFindHook(hook: GitClientHook): TextFile
+```
+
+* **hook** (<code>[javascript.GitClientHook](#projen-javascript-gitclienthook)</code>)  The name of the GitHub workflow.
+
+__Returns__:
+* <code>[TextFile](#projen-textfile)</code>
+
+
+
 ## class Jest 🔹 <a id="projen-javascript-jest"></a>
 
 Installs the following npm scripts:.
@@ -6967,6 +7074,8 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -7011,6 +7120,7 @@ Name | Type | Description
 **autoMerge**?🔹 | <code>[github.AutoMerge](#projen-github-automerge)</code> | Automatic PR merges.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>[build.BuildWorkflow](#projen-build-buildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **buildWorkflowJobId**?🔹 | <code>string</code> | The job ID of the build workflow.<br/>__*Optional*__
+**husky**?🔹 | <code>[javascript.Husky](#projen-javascript-husky)</code> | __*Optional*__
 **jest**?🔹 | <code>[javascript.Jest](#projen-javascript-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Optional*__
@@ -8704,6 +8814,8 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -8854,6 +8966,8 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -9004,6 +9118,8 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -9399,6 +9515,8 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -9547,6 +9665,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -9767,6 +9887,8 @@ new web.ReactProject(options: ReactProjectOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -9956,6 +10078,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
   * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
   * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **husky** (<code>boolean</code>)  Setup Husky. __*Default*__: false
+  * **huskyPremadeHooks** (<code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code>)  Premade Husky hook configuration. __*Default*__: opinionated Husky premade hooks.
   * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
   * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
@@ -11024,6 +11148,8 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?🔹 | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?🔹 | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -11311,6 +11437,8 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?🔹 | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?🔹 | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -11511,6 +11639,8 @@ Name | Type | Description
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?⚠️ | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?⚠️ | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -11765,6 +11895,8 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?🔹 | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?🔹 | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -11981,6 +12113,8 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?🔹 | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?🔹 | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -12154,6 +12288,8 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?🔹 | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?🔹 | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -12307,6 +12443,8 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?🔹 | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?🔹 | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -12462,6 +12600,8 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?🔹 | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?🔹 | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -13799,6 +13939,20 @@ Name | Type | Description
 
 
 
+## struct HuskyPremadeOptions 🔹 <a id="projen-javascript-huskypremadeoptions"></a>
+
+
+Options for opinionated premade hooks for Husky.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**enforceConventialCommits**?🔹 | <code>boolean</code> | Enforce convential commits standards on commit messages.<br/>__*Default*__: true
+**lintStaged**?🔹 | <code>boolean</code> | Enable linting and re-adding of staged files pre commit.<br/>__*Default*__: true
+
+
+
 ## struct JestConfigOptions 🔹 <a id="projen-javascript-jestconfigoptions"></a>
 
 
@@ -13988,6 +14142,8 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?🔹 | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?🔹 | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -15041,6 +15197,8 @@ Name | Type | Description
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?⚠️ | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?⚠️ | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?⚠️ | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?⚠️ | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -15181,6 +15339,8 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?🔹 | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?🔹 | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -15420,6 +15580,8 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?🔹 | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?🔹 | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -15554,6 +15716,8 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?🔹 | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?🔹 | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -15718,6 +15882,8 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?🔹 | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?🔹 | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -15880,6 +16046,8 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**husky**?🔹 | <code>boolean</code> | Setup Husky.<br/>__*Default*__: false
+**huskyPremadeHooks**?🔹 | <code>[javascript.HuskyPremadeOptions](#projen-javascript-huskypremadeoptions)</code> | Premade Husky hook configuration.<br/>__*Default*__: opinionated Husky premade hooks.
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -16312,6 +16480,28 @@ Name | Description
 **CR** 🔹|Carriage Return character only (\r), used very rarely.
 **CRLF** 🔹|Carriage Return + Line Feed characters (\r\n), common on Windows.
 **LF** 🔹|Line Feed only (\n), common on Linux and macOS as well as inside git repos.
+
+
+## enum GitClientHook 🔹 <a id="projen-javascript-gitclienthook"></a>
+
+The list of git cient-side hooks.
+
+Name | Description
+-----|-----
+**APPLYPATCH_MSG** 🔹|
+**PRE_APPLYPATCH** 🔹|
+**POST_APPLYPATCH** 🔹|
+**PRE_COMMIT** 🔹|
+**PRE_MERGE_COMMIT** 🔹|
+**PREPARE_COMMIT_MSG** 🔹|
+**COMMIT_MSG** 🔹|
+**POST_COMMIT** 🔹|
+**PRE_REBASE** 🔹|
+**POST_CHECKOUT** 🔹|
+**POST_MERGE** 🔹|
+**PRE_PUSH** 🔹|
+**PRE_AUTO_GC** 🔹|
+**POST_REWRITE** 🔹|
 
 
 ## enum HTMLWhitespaceSensitivity 🔹 <a id="projen-javascript-htmlwhitespacesensitivity"></a>
