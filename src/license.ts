@@ -62,6 +62,8 @@ export class License extends FileBase {
     }
 
     this.text = text;
+
+    this.marker = false;
   }
 
   protected synthesizeContent(_: IResolver): string | undefined {

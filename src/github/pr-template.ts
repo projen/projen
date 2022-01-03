@@ -23,6 +23,7 @@ export class PullRequestTemplate extends TextFile {
         options.lines && options.lines?.length > 0
           ? options.lines
           : ["Fixes #"],
+      marker: false,
     });
   }
 }

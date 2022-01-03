@@ -22,4 +22,9 @@ export class Component {
    * Called after synthesis. Order is *not* guaranteed.
    */
   public postSynthesize() {}
+
+  /**
+   * Called when `projen eject` is run, after synthesizing all files.
+   */
+  public eject() {}
 }

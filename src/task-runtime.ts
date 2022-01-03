@@ -6,7 +6,6 @@ import { format } from "util";
 import * as chalk from "chalk";
 import * as logging from "./logging";
 import { TasksManifest, TaskSpec } from "./task-model";
-import { Tasks } from "./tasks";
 
 const ENV_TRIM_LEN = 20;
 
@@ -26,7 +25,7 @@ export class TaskRuntime {
 
   constructor(workdir: string) {
     this.workdir = resolve(workdir);
-    const manifestPath = join(this.workdir, Tasks.MANIFEST_FILE);
+    const manifestPath = join(this.workdir, ".projen/tasks.json");
     this.manifest = existsSync(manifestPath)
       ? JSON.parse(readFileSync(manifestPath, "utf-8"))
       : { tasks: {} };
@@ -155,7 +154,7 @@ class RunTask {
           hasError = result.status !== 0;
         } catch (e) {
           // This is the error 'shx' will throw
-          if (e?.message?.startsWith("non-zero exit code:")) {
+          if ((e as any)?.message?.startsWith("non-zero exit code:")) {
             hasError = true;
           }
           throw e;

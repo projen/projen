@@ -81,7 +81,10 @@ export class IgnoreFile extends FileBase {
   }
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
-    const lines = [`# ${FileBase.PROJEN_MARKER}`, ...this._patterns];
+    const lines = [
+      ...(this.marker ? [`# ${FileBase.PROJEN_MARKER}`] : []),
+      ...this._patterns,
+    ];
 
     return `${resolver.resolve(lines).join("\n")}\n`;
   }

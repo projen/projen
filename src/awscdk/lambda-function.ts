@@ -1,5 +1,6 @@
 import { basename, dirname, extname, join, relative, sep, posix } from "path";
 import { pascal } from "case";
+import { IS_PROJEN_EJECTING } from "../common";
 import { Component } from "../component";
 import { FileBase } from "../file";
 import { Bundler, BundlingOptions, Eslint } from "../javascript";
@@ -159,7 +160,9 @@ export class LambdaFunction extends Component {
     );
 
     const src = new SourceCode(project, constructFile);
-    src.line(`// ${FileBase.PROJEN_MARKER}`);
+    if (IS_PROJEN_EJECTING) {
+      src.line(`// ${FileBase.PROJEN_MARKER}`);
+    }
     src.line("import * as path from 'path';");
 
     if (cdkDeps.cdkMajorVersion === 1) {

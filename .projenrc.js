@@ -45,6 +45,7 @@ const project = new cdk.JsiiProject({
     "@types/semver",
     "@types/ini",
     "markmac",
+    "esbuild",
     "all-contributors-cli",
   ],
 
@@ -172,21 +173,44 @@ project.npmignore.exclude("/SECURITY.md");
 project.npmignore.exclude("/.gitattributes");
 project.npmignore.exclude("/.gitpod.yml");
 
-// integ test
-const pythonCompatTask = project.addTask("integ:python-compat", {
-  exec: "scripts/python-compat.sh",
-  description:
-    "Checks that projen's submodule structure does not cause import failures for python. Expects python to be installed and projen to be fully built.",
-});
-const integTask = project.addTask("integ", {
-  description: "Run integration tests",
-});
-integTask.spawn(project.compileTask);
-integTask.spawn(project.tasks.tryFind("package:python"));
-integTask.spawn(pythonCompatTask);
+function setupIntegTest() {
+  const pythonCompatTask = project.addTask("integ:python-compat", {
+    exec: "scripts/python-compat.sh",
+    description:
+      "Checks that projen's submodule structure does not cause import failures for python. Expects python to be installed and projen to be fully built.",
+  });
+  const integTask = project.addTask("integ", {
+    description: "Run integration tests",
+  });
+  integTask.spawn(project.compileTask);
+  integTask.spawn(project.tasks.tryFind("package:python"));
+  integTask.spawn(pythonCompatTask);
 
-project.buildWorkflow.addPostBuildJobTask(integTask, {
-  tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
-});
+  project.buildWorkflow.addPostBuildJobTask(integTask, {
+    tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
+  });
+}
+
+// build `task-runner.js` script needed for "projen eject" functionality
+function setupBundleTaskRunner() {
+  const taskRunnerPath = "lib/task-runner.js";
+  const task = project.addTask("bundle:task-runner", {
+    description: 'Bundle the task-runner.js script needed for "projen eject"',
+    exec: `esbuild src/task-runtime.ts --outfile=${taskRunnerPath} --bundle --platform=node --external:"*/package.json"`,
+  });
+  // replace "../package.json" with "./package.json" everywhere
+  task.exec(
+    `sed -i -e 's/\\.\\.\\/package.json/\\.\\/package.json/g' ${taskRunnerPath}`
+  );
+  // add driver code
+  task.exec(
+    `echo "const runtime = new TaskRuntime(\\".\\");" >> ${taskRunnerPath}`
+  );
+  task.exec(`echo "runtime.runTask(process.argv[2]);" >> ${taskRunnerPath}`);
+  project.postCompileTask.spawn(task);
+}
+
+setupIntegTest();
+setupBundleTaskRunner();
 
 project.synth();

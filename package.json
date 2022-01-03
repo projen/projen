@@ -11,6 +11,7 @@
   "scripts": {
     "build": "/bin/bash ./projen.bash build",
     "bump": "/bin/bash ./projen.bash bump",
+    "bundle:task-runner": "/bin/bash ./projen.bash bundle:task-runner",
     "clobber": "/bin/bash ./projen.bash clobber",
     "compat": "/bin/bash ./projen.bash compat",
     "compile": "/bin/bash ./projen.bash compile",
@@ -18,6 +19,7 @@
     "default": "/bin/bash ./projen.bash default",
     "devenv:setup": "/bin/bash ./projen.bash devenv:setup",
     "docgen": "/bin/bash ./projen.bash docgen",
+    "eject": "/bin/bash ./projen.bash eject",
     "eslint": "/bin/bash ./projen.bash eslint",
     "integ": "/bin/bash ./projen.bash integ",
     "integ:python-compat": "/bin/bash ./projen.bash integ:python-compat",
@@ -56,6 +58,7 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "all-contributors-cli": "^6.20.0",
+    "esbuild": "^0.14.10",
     "eslint": "^8",
     "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-node": "^0.3.6",

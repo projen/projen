@@ -1,9 +1,10 @@
+import { unlinkSync } from "fs";
 import * as path from "path";
 import { resolve } from "./_resolve";
 import { PROJEN_MARKER, PROJEN_RC } from "./common";
 import { Component } from "./component";
 import { Project } from "./project";
-import { tryReadFileSync, writeFile } from "./util";
+import { isExecutable, isWritable, tryReadFileSync, writeFile } from "./util";
 
 export interface FileBaseOptions {
   /**
@@ -34,6 +35,14 @@ export interface FileBaseOptions {
    * @default false
    */
   readonly executable?: boolean;
+
+  /**
+   * Adds the projen marker to the file. This should be managed by the class
+   * that subclasses from FileBase.
+   *
+   * @default true
+   */
+  readonly marker?: boolean;
 }
 
 export abstract class FileBase extends Component {
@@ -59,6 +68,11 @@ export abstract class FileBase extends Component {
   public executable: boolean;
 
   /**
+   * Indicates if the projen marker will be added to the output file.
+   */
+  public marker: boolean;
+
+  /**
    * The absolute path of this file.
    */
   public readonly absolutePath: string;
@@ -74,6 +88,7 @@ export abstract class FileBase extends Component {
 
     this.readonly = options.readonly ?? true;
     this.executable = options.executable ?? false;
+    this.marker = options.marker ?? true;
     this.path = filePath;
 
     const globPattern = `/${this.path}`;
@@ -132,7 +147,14 @@ export abstract class FileBase extends Component {
 
     // check if the file was changed.
     const prev = tryReadFileSync(filePath);
-    if (prev !== undefined && content === prev) {
+    const prevReadonly = !isWritable(filePath);
+    const prevExecutable = isExecutable(filePath);
+    if (
+      prev !== undefined &&
+      content === prev &&
+      prevReadonly === this.readonly &&
+      prevExecutable === this.executable
+    ) {
       this.project.logger.debug(`no change in ${filePath}`);
       this._changed = false;
       return;
@@ -143,7 +165,37 @@ export abstract class FileBase extends Component {
       executable: this.executable,
     });
 
+    this.checkForProjenMarker();
+
     this._changed = true;
+  }
+
+  private checkForProjenMarker() {
+    const filePath = path.join(this.project.outdir, this.path);
+    const contents = tryReadFileSync(filePath);
+    const containsMarker = contents?.includes(PROJEN_MARKER);
+    if (this.marker && !containsMarker) {
+      this.project.logger.debug(
+        `Expected ${this.path} to contain marker but found none - possible bug?`
+      );
+    } else if (!this.marker && containsMarker) {
+      this.project.logger.debug(
+        `Expected ${this.path} to not contain marker but found one anyway - possible bug?`
+      );
+    }
+  }
+
+  public eject() {
+    this.readonly = false;
+    this.marker = false;
+    if (
+      !this.path.startsWith(".projen/") ||
+      this.path === ".projen/tasks.json"
+    ) {
+      this.synthesize();
+    } else {
+      unlinkSync(this.absolutePath);
+    }
   }
 
   /**

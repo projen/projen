@@ -1,3 +1,4 @@
+import * as fs from "fs";
 import * as path from "path";
 import { PROJEN_DIR } from "./common";
 import { Component } from "./component";
@@ -114,6 +115,14 @@ export class Tasks extends Component {
    */
   public tryFind(name: string): undefined | Task {
     return this._tasks[name];
+  }
+
+  public eject() {
+    // Insert a task-runner script so that tasks still work after ejecting
+    fs.copyFileSync(
+      path.join(__dirname, "..", "lib", "task-runner.js"),
+      "task-runner.js"
+    );
   }
 
   private renderTasks() {

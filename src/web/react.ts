@@ -1,4 +1,5 @@
 import * as path from "path";
+import { IS_PROJEN_EJECTING } from "../common";
 import { Component } from "../component";
 import { FileBase, FileBaseOptions, IResolver } from "../file";
 import {
@@ -215,7 +216,9 @@ export class ReactComponent extends Component {
       project.addFields({ "config-overrides-path": overridesPath });
 
       const configOverrides = new SourceCode(this.project, overridesPath);
-      configOverrides.line(`// ${FileBase.PROJEN_MARKER}`);
+      if (!IS_PROJEN_EJECTING) {
+        configOverrides.line(`// ${FileBase.PROJEN_MARKER}`);
+      }
       configOverrides.line("/**");
       configOverrides.line(
         " * Override CRA configuration without needing to eject."
