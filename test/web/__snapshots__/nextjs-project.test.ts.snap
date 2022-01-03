@@ -577,6 +577,10 @@ pull_request_rules:
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
+      "post-upgrade": Object {
+        "description": "Runs after upgrading dependencies",
+        "name": "post-upgrade",
+      },
       "pre-compile": Object {
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
@@ -673,6 +677,9 @@ pull_request_rules:
           Object {
             "exec": "npx projen",
           },
+          Object {
+            "spawn": "post-upgrade",
+          },
         ],
       },
       "upgrade-projen": Object {
@@ -705,6 +712,9 @@ pull_request_rules:
           },
           Object {
             "exec": "npx projen",
+          },
+          Object {
+            "spawn": "post-upgrade",
           },
         ],
       },
@@ -950,6 +960,7 @@ pull_request_rules:
       "export": "npx projen export",
       "package": "npx projen package",
       "post-compile": "npx projen post-compile",
+      "post-upgrade": "npx projen post-upgrade",
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "release": "npx projen release",

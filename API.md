@@ -7056,6 +7056,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Optional*__
 **npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
+**postUpgradeTask**?🔹 | <code>[Task](#projen-task)</code> | A task run after the upgrade task.<br/>__*Optional*__
 **prettier**?🔹 | <code>[javascript.Prettier](#projen-javascript-prettier)</code> | __*Optional*__
 **publisher**?⚠️ | <code>[release.Publisher](#projen-release-publisher)</code> | Package publisher.<br/>__*Optional*__
 **release**?🔹 | <code>[release.Release](#projen-release-release)</code> | Release management.<br/>__*Optional*__
@@ -7551,6 +7552,7 @@ new javascript.UpgradeDependencies(project: NodeProject, options?: UpgradeDepend
 Name | Type | Description 
 -----|------|-------------
 **ignoresProjen**🔹 | <code>boolean</code> | Whether or not projen is also upgraded in this workflow,.
+**postUpgradeTask**🔹 | <code>[Task](#projen-task)</code> | A task run after the upgrade task.
 **workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | The workflows that execute the upgrades.
 **containerOptions**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Container definitions for the upgrade workflow.<br/>__*Optional*__
 

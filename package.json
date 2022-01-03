@@ -28,6 +28,7 @@
     "package:js": "/bin/bash ./projen.bash package:js",
     "package:python": "/bin/bash ./projen.bash package:python",
     "post-compile": "/bin/bash ./projen.bash post-compile",
+    "post-upgrade": "/bin/bash ./projen.bash post-upgrade",
     "pre-compile": "/bin/bash ./projen.bash pre-compile",
     "readme-macros": "/bin/bash ./projen.bash readme-macros",
     "release": "/bin/bash ./projen.bash release",
