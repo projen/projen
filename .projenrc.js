@@ -178,47 +178,15 @@ const pythonCompatTask = project.addTask("integ:python-compat", {
   description:
     "Checks that projen's submodule structure does not cause import failures for python. Expects python to be installed and projen to be fully built.",
 });
-const integTask = project.addTask("integ");
-integTask.spawn(project.buildTask);
+const integTask = project.addTask("integ", {
+  description: "Run integration tests",
+});
+integTask.spawn(project.compileTask);
 integTask.spawn(project.tasks.tryFind("package:python"));
 integTask.spawn(pythonCompatTask);
-project
-  .tryFindObjectFile(".mergify.yml")
-  .addOverride("pull_request_rules.0.conditions.3", "status-success=integ");
 
-new github.TaskWorkflow(project.github, {
-  name: "integ",
-  jobId: "integ",
-  triggers: {
-    pullRequest: {},
-    workflowDispatch: {},
-  },
-  env: {
-    CI: "true",
-  },
-  permissions: {
-    contents: workflows.JobPermission.READ,
-  },
-
-  preBuildSteps: [
-    ...project.installWorkflowSteps, // install dependencies for projen
-    {
-      name: "Set up Python 3.x",
-      uses: "actions/setup-python@v2",
-      with: {
-        "python-version": "3.x",
-      },
-    },
-    {
-      name: "Set up Go 1.16",
-      uses: "actions/setup-go@v2",
-      with: {
-        "go-version": "^1.16.0",
-      },
-    },
-  ],
-
-  task: integTask,
+project.buildWorkflow.addPostBuildJobTask(integTask, {
+  tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
 });
 
 project.synth();

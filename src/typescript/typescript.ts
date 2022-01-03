@@ -5,6 +5,7 @@ import { Component } from "../component";
 import {
   Eslint,
   EslintOptions,
+  Jest,
   NodeProject,
   NodeProjectOptions,
   TypeScriptCompilerOptions,
@@ -309,62 +310,12 @@ export class TypeScriptProject extends NodeProject {
     this.npmignore?.exclude("/.projenrc.js");
     this.npmignore?.exclude("tsconfig.tsbuildinfo");
 
-    // tests are compiled to `lib/TESTDIR`, so we don't need jest to compile them for us.
-    // just run them directly from javascript.
-    if (this.jest && compiledTests) {
-      this.addDevDeps("@types/jest");
-
-      const testout = path.posix.relative(this.srcdir, this.testdir);
-      const libtest = path.posix.join(this.libdir, testout);
-      const srctest = this.testdir;
-
-      this.npmignore?.exclude(`/${libtest}/`);
-      this.jest.addTestMatch(`**/${libtest}/**/?(*.)+(spec|test).js?(x)`);
-      this.jest.addWatchIgnorePattern(`/${this.srcdir}/`);
-
-      const resolveSnapshotPath = (test: string, ext: string) => {
-        const fullpath = test.replace(libtest, srctest);
-        return path.join(
-          path.dirname(fullpath),
-          "__snapshots__",
-          path.basename(fullpath, ".js") + ".ts" + ext
-        );
-      };
-
-      const resolveTestPath = (snap: string, ext: string) => {
-        const filename = path.basename(snap, ".ts" + ext) + ".js";
-        const dir = path.dirname(path.dirname(snap)).replace(srctest, libtest);
-        return path.join(dir, filename);
-      };
-
-      const resolver = new TextFile(
-        this,
-        path.posix.join(PROJEN_DIR, "jest-snapshot-resolver.js")
-      );
-      resolver.addLine(`// ${TextFile.PROJEN_MARKER}`);
-      resolver.addLine('const path = require("path");');
-      resolver.addLine(`const libtest = "${libtest}";`);
-      resolver.addLine(`const srctest= "${srctest}";`);
-      resolver.addLine("module.exports = {");
-      resolver.addLine(
-        `  resolveSnapshotPath: ${resolveSnapshotPath.toString()},`
-      );
-      resolver.addLine(`  resolveTestPath: ${resolveTestPath.toString()},`);
-      resolver.addLine(
-        "  testPathForConsistencyCheck: path.join('some', '__tests__', 'example.test.js')"
-      );
-      resolver.addLine("};");
-
-      this.jest.addSnapshotResolver(`./${resolver.path}`);
-    }
-
-    if (this.jest && !compiledTests) {
-      this.jest.addTestMatch("**/__tests__/**/*.ts?(x)");
-      this.jest.addTestMatch("**/?(*.)+(spec|test).ts?(x)");
-
-      // create a tsconfig for jest that does NOT include outDir and rootDir and
-      // includes both "src" and "test" as inputs.
-      this.jest.addTypeScriptSupport(this.tsconfigDev);
+    if (this.jest) {
+      if (compiledTests) {
+        this.addJestCompiled(this.jest);
+      } else {
+        this.addJestNoCompile(this.jest);
+      }
     }
 
     if (options.eslint ?? true) {
@@ -410,6 +361,74 @@ export class TypeScriptProject extends NodeProject {
     if (projenrcTypeScript) {
       new ProjenrcTs(this, options.projenrcTsOptions);
     }
+  }
+
+  /**
+   * Tests are compiled to `lib/TESTDIR`, so we don't need jest to compile them
+   * for us. just run them directly from javascript.
+   */
+  private addJestCompiled(jest: Jest) {
+    this.addDevDeps("@types/jest");
+
+    const testout = path.posix.relative(this.srcdir, this.testdir);
+    const libtest = path.posix.join(this.libdir, testout);
+    const srctest = this.testdir;
+
+    this.npmignore?.exclude(`/${libtest}/`);
+    jest.addTestMatch(`**/${libtest}/**/?(*.)+(spec|test).js?(x)`);
+    jest.addWatchIgnorePattern(`/${this.srcdir}/`);
+
+    const resolveSnapshotPath = (test: string, ext: string) => {
+      const fullpath = test.replace(libtest, srctest);
+      return path.join(
+        path.dirname(fullpath),
+        "__snapshots__",
+        path.basename(fullpath, ".js") + ".ts" + ext
+      );
+    };
+
+    const resolveTestPath = (snap: string, ext: string) => {
+      const filename = path.basename(snap, ".ts" + ext) + ".js";
+      const dir = path.dirname(path.dirname(snap)).replace(srctest, libtest);
+      return path.join(dir, filename);
+    };
+
+    const resolver = new TextFile(
+      this,
+      path.posix.join(PROJEN_DIR, "jest-snapshot-resolver.js")
+    );
+    resolver.addLine(`// ${TextFile.PROJEN_MARKER}`);
+    resolver.addLine('const path = require("path");');
+    resolver.addLine(`const libtest = "${libtest}";`);
+    resolver.addLine(`const srctest= "${srctest}";`);
+    resolver.addLine("module.exports = {");
+    resolver.addLine(
+      `  resolveSnapshotPath: ${resolveSnapshotPath.toString()},`
+    );
+    resolver.addLine(`  resolveTestPath: ${resolveTestPath.toString()},`);
+    resolver.addLine(
+      "  testPathForConsistencyCheck: path.join('some', '__tests__', 'example.test.js')"
+    );
+    resolver.addLine("};");
+
+    jest.addSnapshotResolver(`./${resolver.path}`);
+  }
+
+  private addJestNoCompile(jest: Jest) {
+    this.addDevDeps("@types/jest", "ts-jest");
+
+    jest.addTestMatch(`<rootDir>/${this.srcdir}/**/__tests__/**/*.ts?(x)`);
+    jest.addTestMatch(
+      `<rootDir>/(${this.testdir}|${this.srcdir})/**/?(*.)+(spec|test).ts?(x)`
+    );
+
+    // add relevant deps
+    jest.config.preset = "ts-jest";
+    jest.config.globals = {
+      "ts-jest": {
+        tsconfig: this.tsconfigDev.fileName,
+      },
+    };
   }
 }
 

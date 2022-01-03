@@ -186,3 +186,29 @@ jobs:
         run: cd .repo && npx projen package:go
       - name: Collect go Artifact
         run: mv .repo/dist dist
+  post-build-integ:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    if: "! needs.build.outputs.self_mutation_happened"
+    steps:
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.16.x
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: dist
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+      - name: Install dependencies
+        run: yarn install --check-files --frozen-lockfile
+      - run: /bin/bash ./projen.bash integ

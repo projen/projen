@@ -2,7 +2,6 @@ import * as path from "path";
 import * as semver from "semver";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
-import { TypescriptConfig } from "./typescript-config";
 
 const DEFAULT_TEST_REPORTS_DIR = "test-reports";
 
@@ -705,31 +704,6 @@ export class Jest {
 
   public addSnapshotResolver(file: string) {
     this._snapshotResolver = file;
-  }
-
-  /**
-   * Configures jest for TypeScript.
-   *
-   * @param tsconfig The typescript config file.
-   */
-  public addTypeScriptSupport(tsconfig: TypescriptConfig) {
-    this.config.preset = "ts-jest";
-
-    // only process .ts files
-    this.config.testMatch = this.jestConfig?.testMatch ?? [
-      "**/__tests__/**/*.ts?(x)",
-      "**/?(*.)+(spec|test).ts?(x)",
-    ];
-
-    // specify tsconfig.json
-    this.config.globals = {
-      "ts-jest": {
-        tsconfig: tsconfig.fileName,
-      },
-    };
-
-    // add relevant deps
-    this.project.addDevDeps("@types/jest", "ts-jest");
   }
 
   private configureTestCommand() {

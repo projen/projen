@@ -184,6 +184,8 @@ Name|Description
 [awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)|Options for `IntegrationTest`.
 [awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)|Common options for `LambdaFunction`.
 [awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)|Options for `Function`.
+[build.AddPostBuildJobCommandsOptions](#projen-build-addpostbuildjobcommandsoptions)|Options for `BuildWorkflow.addPostBuildJobCommands`.
+[build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)|Options for `BuildWorkflow.addPostBuildJobTask`.
 [build.BuildWorkflowOptions](#projen-build-buildworkflowoptions)|*No description*
 [cdk.Catalog](#projen-cdk-catalog)|*No description*
 [cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)|*No description*
@@ -4065,6 +4067,50 @@ addPostBuildJob(id: string, job: Job): void
 
 
 
+#### addPostBuildJobCommands(id, commands, options?)🔹 <a id="projen-build-buildworkflow-addpostbuildjobcommands"></a>
+
+Run a sequence of commands as a job within the build workflow which is executed after the build job succeeded.
+
+Jobs are executed _only_ if the build did NOT self mutate. If the build
+self-mutate, the branch will either be updated or the build will fail (in
+forks), so there is no point in executing the post-build job.
+
+```ts
+addPostBuildJobCommands(id: string, commands: Array<string>, options?: AddPostBuildJobCommandsOptions): void
+```
+
+* **id** (<code>string</code>)  *No description*
+* **commands** (<code>Array<string></code>)  *No description*
+* **options** (<code>[build.AddPostBuildJobCommandsOptions](#projen-build-addpostbuildjobcommandsoptions)</code>)  Specify tools and other options.
+  * **checkoutRepo** (<code>boolean</code>)  Check out the repository at the pull request branch before commands are run. __*Default*__: false
+  * **installDeps** (<code>boolean</code>)  Install project dependencies before running commands. `checkoutRepo` must also be set to true. __*Default*__: false
+  * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools that should be installed before the commands are run. __*Optional*__
+
+
+
+
+#### addPostBuildJobTask(task, options)🔹 <a id="projen-build-buildworkflow-addpostbuildjobtask"></a>
+
+Run a task as a job within the build workflow which is executed after the build job succeeded.
+
+The job will have access to build artifacts and will install project
+dependencies in order to be able to run any commands used in the tasks.
+
+Jobs are executed _only_ if the build did NOT self mutate. If the build
+self-mutate, the branch will either be updated or the build will fail (in
+forks), so there is no point in executing the post-build job.
+
+```ts
+addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions): void
+```
+
+* **task** (<code>[Task](#projen-task)</code>)  *No description*
+* **options** (<code>[build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)</code>)  Specify tools and other options.
+  * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools that should be installed before the task is run. __*Optional*__
+
+
+
+
 #### addPostBuildSteps(...steps)🔹 <a id="projen-build-buildworkflow-addpostbuildsteps"></a>
 
 Adds steps that are executed after the build.
@@ -6646,19 +6692,6 @@ addTestMatch(pattern: string): void
 ```
 
 * **pattern** (<code>string</code>)  glob pattern to match for tests.
-
-
-
-
-#### addTypeScriptSupport(tsconfig)🔹 <a id="projen-javascript-jest-addtypescriptsupport"></a>
-
-Configures jest for TypeScript.
-
-```ts
-addTypeScriptSupport(tsconfig: TypescriptConfig): void
-```
-
-* **tsconfig** (<code>[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)</code>)  The typescript config file.
 
 
 
@@ -11796,6 +11829,34 @@ Name | Type | Description
 **constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
 **constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
 **runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
+
+
+
+## struct AddPostBuildJobCommandsOptions 🔹 <a id="projen-build-addpostbuildjobcommandsoptions"></a>
+
+
+Options for `BuildWorkflow.addPostBuildJobCommands`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**checkoutRepo**?🔹 | <code>boolean</code> | Check out the repository at the pull request branch before commands are run.<br/>__*Default*__: false
+**installDeps**?🔹 | <code>boolean</code> | Install project dependencies before running commands. `checkoutRepo` must also be set to true.<br/>__*Default*__: false
+**tools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Tools that should be installed before the commands are run.<br/>__*Optional*__
+
+
+
+## struct AddPostBuildJobTaskOptions 🔹 <a id="projen-build-addpostbuildjobtaskoptions"></a>
+
+
+Options for `BuildWorkflow.addPostBuildJobTask`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**tools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Tools that should be installed before the task is run.<br/>__*Optional*__
 
 
 
