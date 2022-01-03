@@ -275,7 +275,7 @@ test("add constructFile to prettierignore if prettier is enabled", () => {
     defaultReleaseBranch: "main",
     prettier: true,
   });
-   
+
   new awscdk.LambdaFunction(project, {
     entrypoint: join("src", "hello.lambda.ts"),
     cdkDeps: cdkDepsForProject(project),
