@@ -282,7 +282,7 @@ jobs:
         with:
           node-version: 14.0.0
       - name: Install dependencies
-        run: yarn install --check-files --frozen-lockfile
+        run: yarn install --check-files
       - name: build
         run: npx projen build
       - id: self_mutation
@@ -4961,7 +4961,7 @@ jobs:
         with:
           version: 6.14.7
       - name: Install dependencies
-        run: pnpm i --frozen-lockfile
+        run: pnpm i
       - name: build
         run: npx projen build
       - id: self_mutation
