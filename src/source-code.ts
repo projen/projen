@@ -23,7 +23,7 @@ export class SourceCode extends Component {
 
   constructor(
     project: Project,
-    filePath: string,
+    public readonly filePath: string,
     options: SourceCodeOptions = {}
   ) {
     super(project);
