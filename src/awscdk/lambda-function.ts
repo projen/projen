@@ -2,7 +2,7 @@ import { basename, dirname, extname, join, relative, sep, posix } from "path";
 import { pascal } from "case";
 import { Component } from "../component";
 import { FileBase } from "../file";
-import { Bundler, BundlingOptions, Eslint, Prettier } from "../javascript";
+import { Bundler, BundlingOptions, Eslint } from "../javascript";
 import { Project } from "../project";
 import { SourceCode } from "../source-code";
 import { AwsCdkDeps } from "./awscdk-deps";
@@ -203,8 +203,6 @@ export class LambdaFunction extends Component {
     src.close("});");
     src.close("}");
     src.close("}");
-
-    Prettier.of(this.project)?.addIgnorePattern(constructFile);
 
     this.project.logger.verbose(
       `${basePath}: construct "${constructName}" generated under "${constructFile}"`
