@@ -29,8 +29,8 @@ test("main configuration inherits child configuration stages", () => {
     stale: true,
   });
   const c = new GitlabConfiguration(p);
-  c.createNestedTemplates({ foo: { jobs: { bar: { stage: 'baz' } } } });
+  c.createNestedTemplates({ foo: { jobs: { bar: { stage: "baz" } } } });
   // THEN
-  console.log(c.stages)
-  expect(c.stages).toContain('baz');
+  console.log(c.stages);
+  expect(c.stages).toContain("baz");
 });
