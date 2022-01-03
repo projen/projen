@@ -269,6 +269,23 @@ test("generates cdkv2-compatible imports", () => {
   expect(snapshot["src/hello-function.ts"]).toMatchSnapshot();
 });
 
+test("add constructFile to prettierignore if prettier is enabled", () => {
+  const project = new TypeScriptProject({
+    name: "hello",
+    defaultReleaseBranch: "main",
+    prettier: true,
+  });
+   
+  new awscdk.LambdaFunction(project, {
+    entrypoint: join("src", "hello.lambda.ts"),
+    cdkDeps: cdkDepsForProject(project),
+  });
+
+  const snapshot = Testing.synth(project);
+  const prettierignore = snapshot[".prettierignore"].split("\n");
+  expect(prettierignore).toContain("src/hello-function.ts");
+});
+
 function cdkDepsForProject(
   project: TypeScriptProject,
   cdkVersion = "1.0.0"
