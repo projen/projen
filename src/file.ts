@@ -3,7 +3,7 @@ import { resolve } from './_resolve';
 import { PROJEN_MARKER, PROJEN_RC } from './common';
 import { Component } from './component';
 import { Project } from './project';
-import { writeFile } from './util';
+import { tryReadFileSync, writeFile } from './util';
 
 export interface FileBaseOptions {
   /**
@@ -63,6 +63,8 @@ export abstract class FileBase extends Component {
    */
   public readonly absolutePath: string;
 
+  private _changed?: boolean;
+
   constructor(project: Project, filePath: string, options: FileBaseOptions = { }) {
     super(project);
 
@@ -115,10 +117,30 @@ export abstract class FileBase extends Component {
     if (content === undefined) {
       return; // skip
     }
+
+    // check if the file was changed.
+    const prev = tryReadFileSync(filePath);
+    if (prev !== undefined && content === prev) {
+      this.project.logger.debug(`no change in ${filePath}`);
+      this._changed = false;
+      return;
+    }
+
     writeFile(filePath, content, {
       readonly: this.readonly,
       executable: this.executable,
     });
+
+    this._changed = true;
+  }
+
+  /**
+   * Indicates if the file has been changed during synthesis. This property is
+   * only available in `postSynthesize()` hooks. If this is `undefined`, the
+   * file has not been synthesized yet.
+   */
+  public get changed(): boolean | undefined {
+    return this._changed;
   }
 }
 

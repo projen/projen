@@ -75,14 +75,14 @@ describe('constructs dependency selection', () => {
     expect(() => new TestProject({
       cdkVersion: '2.0.0-alpha.5',
       cdkDependencies: ['@aws-cdk/aws-lambda'],
-    })).toThrow(/cdkDependencies is not used for CDK 2.x. Use "peerDeps" instead/);
+    })).toThrow(/cdkDependencies is not used for CDK 2.x. Use "peerDeps" or "deps" instead/);
   });
 
   test('for cdk 2.x, throws if cdkTestDependencies provided', () => {
     expect(() => new TestProject({
       cdkVersion: '2.0.0-alpha.5',
       cdkTestDependencies: ['@aws-cdk/aws-lambda'],
-    })).toThrow(/cdkTestDependencies is not used for CDK 2.x. Use "devDeps" instead/);
+    })).toThrow(/cdkTestDependencies is not used for CDK 2.x. Use "devDeps" or "testDeps" instead/);
   });
 
   test('for cdk 2.x, throws if cdkDependenciesAsDeps provided', () => {

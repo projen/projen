@@ -2,7 +2,7 @@ import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import { DependencyType } from '../../src';
 import * as awscdk from '../../src/awscdk';
-import { AwsCdkDeps } from '../../src/awscdk';
+import { AwsCdkDepsJs } from '../../src/awscdk/awscdk-deps-js';
 import { Testing } from '../../src/testing';
 import { TypeScriptProject } from '../../src/typescript';
 
@@ -164,7 +164,7 @@ test('auto-discover', () => {
     srcdir: project.srcdir,
     testdir: project.testdir,
     tsconfigPath: project.tsconfigDev.fileName,
-    cdkDeps: new AwsCdkDeps(project, { cdkVersion: '1.23.0', dependencyType: DependencyType.RUNTIME }),
+    cdkDeps: new AwsCdkDepsJs(project, { cdkVersion: '1.23.0', dependencyType: DependencyType.RUNTIME }),
     lambdaOptions: {
       runtime: awscdk.LambdaRuntime.NODEJS_12_X,
     },
@@ -205,5 +205,5 @@ test('generates cdkv2-compatible imports', () => {
 });
 
 function cdkDepsForProject(project: TypeScriptProject, cdkVersion = '1.0.0'): awscdk.AwsCdkDeps {
-  return new AwsCdkDeps(project, { cdkVersion: cdkVersion, dependencyType: DependencyType.RUNTIME });
+  return new AwsCdkDepsJs(project, { cdkVersion: cdkVersion, dependencyType: DependencyType.RUNTIME });
 }

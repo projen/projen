@@ -900,7 +900,6 @@ pull_request_rules:
         "not op_mini all",
       ],
     },
-    "bundledDependencies": Array [],
     "dependencies": Object {
       "react": "*",
       "react-dom": "*",
@@ -924,7 +923,6 @@ pull_request_rules:
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test-nextjs-project",
-    "peerDependencies": Object {},
     "scripts": Object {
       "build": "npx projen build",
       "bump": "npx projen bump",
