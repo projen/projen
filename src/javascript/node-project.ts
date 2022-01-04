@@ -22,6 +22,7 @@ import { Publisher, Release, ReleaseProjectOptions } from "../release";
 import { Task } from "../task";
 import { deepMerge } from "../util";
 import { Version } from "../version";
+import { YamlFile } from "../yaml";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import {
@@ -455,6 +456,11 @@ export class NodeProject extends GitHubProject {
    */
   public readonly upgradeWorkflow?: UpgradeDependencies;
 
+  /**
+   * The packages that are ignored during the upgrade workflow.
+   */
+  public readonly ignoredUpgrades: string[] = [];
+
   private readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
   public readonly prettier?: Prettier;
@@ -709,6 +715,14 @@ export class NodeProject extends GitHubProject {
       );
       ignoresProjen = upgradeDependencies.ignoresProjen;
       this.upgradeWorkflow = upgradeDependencies;
+      new YamlFile(this, ".ncurc.yml", {
+        obj: {
+          reject: this.ignoredUpgrades,
+        },
+      });
+      if (options.projenVersion) {
+        this.ignoredUpgrades.push("projen");
+      }
     }
 
     // create a dedicated workflow to upgrade projen itself if needed
