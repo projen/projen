@@ -203,7 +203,7 @@ test("throw when 'autoApproveProjenUpgrades' is used with 'projenUpgradeAutoMerg
 describe("deps upgrade", () => {
   test("throws when trying to auto approve projen but auto approve is not defined", () => {
     const message =
-      "Autoamtic approval of projen upgrades requires configuring `autoApproveOptions`";
+      "Automatic approval of projen upgrades requires configuring `autoApproveOptions`";
     expect(() => {
       new TestNodeProject({ autoApproveProjenUpgrades: true });
     }).toThrow(message);
@@ -216,7 +216,7 @@ describe("deps upgrade", () => {
     expect(() => {
       new TestNodeProject({ autoApproveUpgrades: true });
     }).toThrow(
-      "Autoamtic approval of dependencies upgrades requires configuring `autoApproveOptions`"
+      "Automatic approval of dependencies upgrades requires configuring `autoApproveOptions`"
     );
   });
 
@@ -760,6 +760,44 @@ test("workflowGitIdentity can be used to customize the git identity used in buil
       'git config user.email "there@z.com"',
     ].join("\n"),
   });
+});
+
+test("ignoring projen with depsUpgrade creates seperate upgrade-projen workflow", () => {
+  // GIVEN
+  const project = new TestNodeProject({
+    projenUpgradeSecret: "PROJEN_GITHUB_TOKEN",
+    depsUpgrade: true,
+    depsUpgradeOptions: { ignoreProjen: true },
+  });
+
+  // THEN
+  const output = synthSnapshot(project);
+  expect(output[".projen/tasks.json"]?.tasks?.upgrade?.steps[0]?.exec).toMatch(
+    /reject='(.*,)?projen/
+  );
+  expect(output[".projen/tasks.json"]?.tasks?.["upgrade-projen"]).toBeDefined();
+});
+
+test("using projenVersion disables upgrades of the projen package and adds it to existing excludes", () => {
+  // GIVEN
+  const project = new TestNodeProject({
+    projenUpgradeSecret: "PROJEN_GITHUB_TOKEN",
+    depsUpgrade: true,
+    depsUpgradeOptions: { ignoreProjen: false, exclude: ["foo"] },
+    projenVersion: "0.42.0",
+  });
+
+  // THEN
+  const output = synthSnapshot(project);
+  expect(output[".projen/tasks.json"]?.tasks?.upgrade?.steps[0]?.exec).toMatch(
+    /reject='(.*,)?projen/
+  );
+  expect(output[".projen/tasks.json"]?.tasks?.upgrade?.steps[0]?.exec).toMatch(
+    /reject='(.*,)?foo/
+  );
+  expect(
+    output[".projen/tasks.json"]?.tasks?.["upgrade-projen"]
+  ).toBeUndefined();
 });
 
 class TestNodeProject extends NodeProject {

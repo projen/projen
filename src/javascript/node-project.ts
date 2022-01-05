@@ -661,13 +661,13 @@ export class NodeProject extends GitHubProject {
 
     if (projenAutoApprove && !this.autoApprove) {
       throw new Error(
-        "Autoamtic approval of projen upgrades requires configuring `autoApproveOptions`"
+        "Automatic approval of projen upgrades requires configuring `autoApproveOptions`"
       );
     }
 
     if (depsAutoApprove && !this.autoApprove) {
       throw new Error(
-        "Autoamtic approval of dependencies upgrades requires configuring `autoApproveOptions`"
+        "Automatic approval of dependencies upgrades requires configuring `autoApproveOptions`"
       );
     }
 
@@ -703,16 +703,34 @@ export class NodeProject extends GitHubProject {
           gitIdentity: this.workflowGitIdentity,
         },
       };
+      const depsUpgradeOptions = options.depsUpgradeOptions ?? {};
+      const projenExclude = depsUpgradeOptions?.exclude ?? [];
+      if (
+        (options.projenVersion ?? false) &&
+        !projenExclude.includes("projen")
+      ) {
+        projenExclude.push("projen");
+      }
       const upgradeDependencies = new UpgradeDependencies(
         this,
-        deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}])
+        deepMerge([
+          defaultOptions,
+          <UpgradeDependenciesOptions>{
+            ...depsUpgradeOptions,
+            exclude: projenExclude,
+          },
+        ])
       );
       ignoresProjen = upgradeDependencies.ignoresProjen;
       this.upgradeWorkflow = upgradeDependencies;
     }
 
     // create a dedicated workflow to upgrade projen itself if needed
-    if (ignoresProjen && this.package.packageName !== "projen") {
+    if (
+      !options.projenVersion &&
+      ignoresProjen &&
+      this.package.packageName !== "projen"
+    ) {
       new UpgradeDependencies(this, {
         include: ["projen"],
         taskName: "upgrade-projen",
