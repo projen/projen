@@ -7029,7 +7029,6 @@ Name | Type | Description
 **artifactsJavascriptDirectory**🔹 | <code>string</code> | The location of the npm tarball after build (`${artifactsDirectory}/js`).
 **bundler**🔹 | <code>[javascript.Bundler](#projen-javascript-bundler)</code> | <span></span>
 **entrypoint**⚠️ | <code>string</code> | <span></span>
-**ignoredUpgrades**🔹 | <code>Array<string></code> | The packages that are ignored during the upgrade workflow.
 **manifest**⚠️ | <code>any</code> | <span></span>
 **package**🔹 | <code>[javascript.NodePackage](#projen-javascript-nodepackage)</code> | API for managing the node package.
 **packageManager**⚠️ | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The package manager to use.
