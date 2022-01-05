@@ -705,10 +705,7 @@ export class NodeProject extends GitHubProject {
       };
       const depsUpgradeOptions = options.depsUpgradeOptions ?? {};
       const projenExclude = depsUpgradeOptions?.exclude ?? [];
-      if (
-        (options.projenVersion ?? false) &&
-        !projenExclude.includes("projen")
-      ) {
+      if (options.projenVersion && !projenExclude.includes("projen")) {
         projenExclude.push("projen");
       }
       const upgradeDependencies = new UpgradeDependencies(
