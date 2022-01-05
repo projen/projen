@@ -1,10 +1,12 @@
 import * as path from "path";
 import * as fs from "fs-extra";
+import * as semver from "semver";
 import * as yargs from "yargs";
 import * as inventory from "../../inventory";
+import * as logging from "../../logging";
 import { InitProjectOptionHints } from "../../option-hints";
 import { Projects } from "../../projects";
-import { exec, isTruthy } from "../../util";
+import { exec, execCapture, isTruthy } from "../../util";
 import { tryProcessMacro } from "../macros";
 import { installPackage, renderInstallCommand } from "../util";
 
@@ -315,9 +317,25 @@ async function initProject(
 
   if (args.git) {
     const git = (cmd: string) => exec(`git ${cmd}`, { cwd: baseDir });
-    git("init -b main");
-    git("add .");
-    git('commit --allow-empty -m "chore: project created with projen"');
+    const gitversion: string = execCapture("git --version", { cwd: baseDir })
+      .toString()
+      .replace(/[a-z,/s]/g, "")
+      .trim();
+    logging.debug("system using git version ", gitversion);
+    if (gitversion && semver.gte(gitversion, "2.28.0")) {
+      git("init -b main");
+      git("add .");
+      git('commit --allow-empty -m "chore: project created with projen"');
+      logging.debug("default branch name set to main");
+    } else {
+      git("init");
+      git("add .");
+      git('commit --allow-empty -m "chore: project created with projen"');
+      logging.debug(
+        "older version of git detected, changed default branch name to main"
+      );
+      git("branch -M main");
+    }
   }
 }
 
