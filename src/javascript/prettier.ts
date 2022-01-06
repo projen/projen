@@ -3,6 +3,7 @@ import { IgnoreFile } from "../ignore-file";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 import { Project } from "../project";
+import { SourceCode } from "../source-code";
 /**
  * Options for Prettier
  *
@@ -404,5 +405,14 @@ export class Prettier extends Component {
    */
   public get overrides() {
     return [...this._overrides];
+  }
+
+  public preSynthesize() {
+    // Add automatically generated SourceCode files to .prettierignore as they may not be formatted correctly.
+    const isSourceCode = (c: Component): c is SourceCode =>
+      c instanceof SourceCode;
+    this.project.components.filter(isSourceCode).forEach((c) => {
+      this.addIgnorePattern(c.filePath);
+    });
   }
 }

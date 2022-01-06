@@ -274,6 +274,7 @@ Name|Description
 [javascript.PrettierOverride](#projen-javascript-prettieroverride)|*No description*
 [javascript.PrettierSettings](#projen-javascript-prettiersettings)|Options to set in Prettier directly or through overrides.
 [javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)|*No description*
+[javascript.RenderWorkflowSetupOptions](#projen-javascript-renderworkflowsetupoptions)|Options for `renderInstallSteps()`.
 [javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)|*No description*
 [javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)|*No description*
 [javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)|Options for `UpgradeDependencies`.
@@ -2231,6 +2232,14 @@ new SourceCode(project: Project, filePath: string, options?: SourceCodeOptions)
 * **options** (<code>[SourceCodeOptions](#projen-sourcecodeoptions)</code>)  *No description*
   * **indent** (<code>number</code>)  Indentation size. __*Default*__: 2
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**filePath**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
@@ -5907,22 +5916,6 @@ Name | Type | Description
 -----|------|-------------
 **parent**🔹 | <code>[gitlab.GitlabConfiguration](#projen-gitlab-gitlabconfiguration)</code> | <span></span>
 
-### Methods
-
-
-#### addStages(...stages)🔹 <a id="projen-gitlab-nestedconfiguration-addstages"></a>
-
-Add stages to the Nested configuration and the main CI file if not already present.
-
-```ts
-addStages(...stages: string[]): void
-```
-
-* **stages** (<code>string</code>)  stages to add.
-
-
-
-
 
 
 ## class JavaProject 🔹 <a id="projen-java-javaproject"></a>
@@ -7145,7 +7138,6 @@ Name | Type | Description
 **artifactsJavascriptDirectory**🔹 | <code>string</code> | The location of the npm tarball after build (`${artifactsDirectory}/js`).
 **bundler**🔹 | <code>[javascript.Bundler](#projen-javascript-bundler)</code> | <span></span>
 **entrypoint**⚠️ | <code>string</code> | <span></span>
-**installWorkflowSteps**🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | <span></span>
 **manifest**⚠️ | <code>any</code> | <span></span>
 **package**🔹 | <code>[javascript.NodePackage](#projen-javascript-nodepackage)</code> | API for managing the node package.
 **packageManager**⚠️ | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The package manager to use.
@@ -7332,6 +7324,20 @@ removeScript(name: string): void
 
 
 
+#### renderWorkflowSetup(options?)🔹 <a id="projen-javascript-nodeproject-renderworkflowsetup"></a>
+
+Returns the set of workflow steps which should be executed to bootstrap a workflow.
+
+```ts
+renderWorkflowSetup(options?: RenderWorkflowSetupOptions): Array<JobStep>
+```
+
+* **options** (<code>[javascript.RenderWorkflowSetupOptions](#projen-javascript-renderworkflowsetupoptions)</code>)  Options.
+  * **mutable** (<code>boolean</code>)  Should the pacakge lockfile be updated? __*Default*__: false
+
+__Returns__:
+* <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>
+
 #### runTaskCommand(task)🔹 <a id="projen-javascript-nodeproject-runtaskcommand"></a>
 
 Returns the shell command to execute in order to run a task.
@@ -7481,6 +7487,18 @@ addOverride(override: PrettierOverride): void
   * **files** (<code>string &#124; Array<string></code>)  Include these files in this override. 
   * **settings** (<code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code>)  The options to apply for this override. 
   * **excludeFiles** (<code>string &#124; Array<string></code>)  Exclude these files from this override. __*Optional*__
+
+
+
+
+#### preSynthesize()🔹 <a id="projen-javascript-prettier-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
 
 
 
@@ -14384,6 +14402,19 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.js"
+
+
+
+## struct RenderWorkflowSetupOptions 🔹 <a id="projen-javascript-renderworkflowsetupoptions"></a>
+
+
+Options for `renderInstallSteps()`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**mutable**?🔹 | <code>boolean</code> | Should the pacakge lockfile be updated?<br/>__*Default*__: false
 
 
 
