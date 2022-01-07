@@ -122,7 +122,7 @@ export class Husky {
    * @param commands The command to add.
    */
   public addHookCommands(hook: GitClientHook, commands: string[]) {
-    if (this.tryFindHook(hook) ?? true) {
+    if (!this.tryFindHook(hook)) {
       this.hooks[hook] = this.createHook(hook);
     }
     commands.forEach((c) => this.hooks[hook]?.addLine(c));
