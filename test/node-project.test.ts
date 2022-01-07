@@ -762,6 +762,36 @@ test("workflowGitIdentity can be used to customize the git identity used in buil
   });
 });
 
+describe("workflowRunsOn", () => {
+  test("default to ubuntu-latest", () => {
+    // WHEN
+    const project = new TestNodeProject();
+
+    // THEN
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build["runs-on"]).toEqual("ubuntu-latest");
+    expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
+      "ubuntu-latest"
+    );
+  });
+
+  test("use github runner specified in workflowRunsOn", () => {
+    // WHEN
+    const project = new TestNodeProject({
+      workflowRunsOn: ["self-hosted"],
+    });
+
+    // THEN
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build["runs-on"]).toEqual("self-hosted");
+    expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
+      "self-hosted"
+    );
+  });
+});
+
 class TestNodeProject extends NodeProject {
   constructor(options: Partial<NodeProjectOptions> = {}) {
     super({
