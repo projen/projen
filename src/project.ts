@@ -208,7 +208,10 @@ export class Project {
     new JsonFile(this, FILE_MANIFEST, {
       omitEmpty: true,
       obj: () => ({
-        files: this.managedFiles(),
+        // replace `\` with `/` to ensure paths match across platforms
+        files: this.files
+          .filter((f) => f.readonly)
+          .map((f) => f.path.replace(/\\/g, "/")),
       }),
     });
   }
@@ -423,8 +426,12 @@ export class Project {
       this.addExcludeFromCleanup(subproject.outdir + "/**");
     }
 
-    // delete all generated files before we start synthesizing new ones
-    cleanup(outdir, this.managedFiles(), this.excludeFromCleanup);
+    // delete orphaned files before we start synthesizing new ones
+    cleanup(
+      outdir,
+      this.files.map((f) => f.path.replace(/\\/g, "/")),
+      this.excludeFromCleanup
+    );
 
     for (const subproject of this.subprojects) {
       subproject.synth();
@@ -488,17 +495,6 @@ export class Project {
     }
 
     this.subprojects.push(subproject);
-  }
-
-  /**
-   * Files that are fully managed by projen. 
-   * 
-   * `\` replaced with `/` to ensure paths match across platforms.
-   */
-  private managedFiles() {
-    return this.files
-      .filter((f) => f.readonly)
-      .map((f) => f.path.replace(/\\/g, "/"));
   }
 
   /**
