@@ -209,9 +209,7 @@ export class Project {
       omitEmpty: true,
       obj: () => ({
         // replace `\` with `/` to ensure paths match across platforms
-        files: this.files
-          .filter((f) => f.readonly)
-          .map((f) => f.path.replace(/\\/g, "/")),
+        files: this.managedFiles(),
       }),
     });
   }
@@ -427,7 +425,7 @@ export class Project {
     }
 
     // delete all generated files before we start synthesizing new ones
-    cleanup(outdir, this.excludeFromCleanup);
+    cleanup(outdir, this.managedFiles(), this.excludeFromCleanup);
 
     for (const subproject of this.subprojects) {
       subproject.synth();
@@ -491,6 +489,12 @@ export class Project {
     }
 
     this.subprojects.push(subproject);
+  }
+
+  private managedFiles() {
+    return this.files
+      .filter((f) => f.readonly)
+      .map((f) => f.path.replace(/\\/g, "/"));
   }
 
   /**

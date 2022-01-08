@@ -7,22 +7,28 @@ import * as logging from "./logging";
 
 export const FILE_MANIFEST = `${PROJEN_DIR}/files.json`;
 
-export function cleanup(dir: string, exclude: string[]) {
+export function cleanup(dir: string, newFiles: string[], exclude: string[]) {
   try {
-    for (const f of findGeneratedFiles(dir, exclude)) {
-      fs.removeSync(f);
+    const manifestFiles = getFilesFromManifest(dir);
+    if (manifestFiles.length > 0) {
+      // Use `FILE_MANIFEST` to remove files that are no longer managed by projen
+      cleanOrphanedFiles(dir, manifestFiles, newFiles);
+    } else {
+      // Remove all files managed by projen
+      removeFiles(findGeneratedFiles(dir, exclude));
     }
   } catch (e) {
     logging.warn(`warning: failed to clean up generated files: ${e.stack}`);
   }
 }
 
-function findGeneratedFiles(dir: string, exclude: string[]) {
-  let files = getFilesFromManifest(dir);
-  if (files.length > 0) {
-    return files;
+function removeFiles(files: string[]) {
+  for (const file of files) {
+    fs.removeSync(file);
   }
+}
 
+function findGeneratedFiles(dir: string, exclude: string[]) {
   const ignore = [
     ...readGitIgnore(dir),
     "node_modules/**",
@@ -30,7 +36,7 @@ function findGeneratedFiles(dir: string, exclude: string[]) {
     ".git/**",
   ];
 
-  files = glob.sync("**", {
+  const files = glob.sync("**", {
     ignore,
     cwd: dir,
     dot: true,
@@ -51,13 +57,23 @@ function findGeneratedFiles(dir: string, exclude: string[]) {
   return generated;
 }
 
+function cleanOrphanedFiles(
+  dir: string,
+  oldFiles: string[],
+  newFiles: string[]
+) {
+  const orphaned = oldFiles.filter((old) => !newFiles.includes(old));
+
+  removeFiles(orphaned.map((f: string) => path.resolve(dir, f)));
+}
+
 function getFilesFromManifest(dir: string): string[] {
   try {
     const fileManifestPath = path.resolve(dir, FILE_MANIFEST);
     if (existsSync(fileManifestPath)) {
       const fileManifest = JSON.parse(readFileSync(fileManifestPath, "utf-8"));
       if (fileManifest.files) {
-        return fileManifest.files.map((f: string) => path.resolve(dir, f));
+        return fileManifest.files;
       }
     }
   } catch (e) {
