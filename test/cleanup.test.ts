@@ -70,7 +70,6 @@ test("cleanup falls back to greedy method", () => {
 test("cleanup only orphaned files", () => {
   // GIVEN
   const p = new TestProject();
-  p.deps.addDependency("test", DependencyType.BUILD);
   const keepFile = new TextFile(p, "keep-this");
   const deleteFile = new TextFile(p, "not-this");
 
