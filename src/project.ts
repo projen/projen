@@ -208,7 +208,6 @@ export class Project {
     new JsonFile(this, FILE_MANIFEST, {
       omitEmpty: true,
       obj: () => ({
-        // replace `\` with `/` to ensure paths match across platforms
         files: this.managedFiles(),
       }),
     });
@@ -491,6 +490,11 @@ export class Project {
     this.subprojects.push(subproject);
   }
 
+  /**
+   * Files that are fully managed by projen. 
+   * 
+   * `\` replaced with `/` to ensure paths match across platforms.
+   */
   private managedFiles() {
     return this.files
       .filter((f) => f.readonly)

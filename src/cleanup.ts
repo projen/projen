@@ -14,7 +14,7 @@ export function cleanup(dir: string, newFiles: string[], exclude: string[]) {
       // Use `FILE_MANIFEST` to remove files that are no longer managed by projen
       cleanOrphanedFiles(dir, manifestFiles, newFiles);
     } else {
-      // Remove all files managed by projen
+      // Remove all files managed by projen with legacy logic
       removeFiles(findGeneratedFiles(dir, exclude));
     }
   } catch (e) {
