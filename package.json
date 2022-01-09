@@ -40,9 +40,9 @@
     "projen": "/bin/bash ./projen.bash"
   },
   "author": {
-    "name": "Elad Ben-Israel",
-    "email": "benisrae@amazon.com",
-    "organization": false
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com",
+    "organization": true
   },
   "devDependencies": {
     "@types/conventional-changelog-config-spec": "^2.1.1",

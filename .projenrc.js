@@ -5,8 +5,11 @@ const project = new cdk.JsiiProject({
   name: "projen",
   description: "CDK for software projects",
   repository: "https://github.com/projen/projen.git",
-  authorName: "Elad Ben-Israel",
-  authorEmail: "benisrae@amazon.com",
+
+  authorName: "Amazon Web Services",
+  authorUrl: "https://aws.amazon.com",
+  authorOrganization: true,
+
   stability: "experimental",
   keywords: [
     "scaffolding",
