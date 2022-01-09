@@ -73,7 +73,7 @@ export class ProjectBuild extends Component {
 
     // if this is not subproject, execute the "default" task which will
     // synthesize project files.
-    if (!this.project.parent && !this.project.ejected) {
+    if (!this.project.parent && this.project.defaultTask) {
       this.buildTask.spawn(this.project.defaultTask);
     }
 

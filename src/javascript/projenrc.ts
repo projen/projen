@@ -23,7 +23,7 @@ export class Projenrc extends Component {
     this.rcfile = options.filename ?? ".projenrc.js";
 
     // this is the task projen executes when running `projen`
-    project.defaultTask.exec(`node ${this.rcfile}`);
+    project.defaultTask?.exec(`node ${this.rcfile}`);
 
     this.generateProjenrc();
   }

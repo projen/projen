@@ -1681,9 +1681,7 @@ Name | Type | Description
 **buildTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
 **compileTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
 **components**🔹 | <code>Array<[Component](#projen-component)></code> | Returns all the components within this project.
-**defaultTask**🔹 | <code>[Task](#projen-task)</code> | This is the "default" task, the one that executes "projen".
 **deps**🔹 | <code>[Dependencies](#projen-dependencies)</code> | Project dependencies.
-**ejectTask**🔹 | <code>[Task](#projen-task)</code> | This task ejects the project from projen. This includes but is not limited to:.
 **ejected**🔹 | <code>boolean</code> | Whether or not the project is being ejected.
 **files**🔹 | <code>Array<[FileBase](#projen-filebase)></code> | All files in this project.
 **gitattributes**🔹 | <code>[GitAttributesFile](#projen-gitattributesfile)</code> | The .gitattributes file for this repository.
@@ -1699,6 +1697,8 @@ Name | Type | Description
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
 **tasks**🔹 | <code>[Tasks](#projen-tasks)</code> | Project tasks.
 **testTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
+**defaultTask**?🔹 | <code>[Task](#projen-task)</code> | This is the "default" task, the one that executes "projen".<br/>__*Optional*__
+**ejectTask**?🔹 | <code>[Task](#projen-task)</code> | This task ejects the project from projen. This is undefined if the project it self is being ejected.<br/>__*Optional*__
 **initProject**?🔹 | <code>[InitProject](#projen-initproject)</code> | The options used when this project is bootstrapped via `projen new`.<br/>__*Optional*__
 **marker**?🔹 | <code>string</code> | The projen marker, used to identify files as projen-generated.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
