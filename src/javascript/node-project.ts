@@ -552,8 +552,9 @@ export class NodeProject extends GitHubProject {
         containerImage: options.workflowContainerImage,
         gitIdentity: this.workflowGitIdentity,
         mutableBuild: options.mutableBuild,
-        preBuildSteps: this.installWorkflowSteps,
+        preBuildSteps: this.renderWorkflowSetup({ mutable: true }),
         postBuildSteps: options.postBuildSteps,
+        runsOn: options.workflowRunsOn,
       });
 
       // run codecov if enabled or a secret token name is passed in
@@ -592,7 +593,7 @@ export class NodeProject extends GitHubProject {
         ...options,
 
         releaseWorkflowSetupSteps: [
-          ...this.installWorkflowSteps,
+          ...this.renderWorkflowSetup({ mutable: false }),
           ...(options.releaseWorkflowSetupSteps ?? []),
         ],
       });
@@ -832,7 +833,16 @@ export class NodeProject extends GitHubProject {
     this.package.addKeywords(...keywords);
   }
 
-  public get installWorkflowSteps(): JobStep[] {
+  /**
+   * Returns the set of workflow steps which should be executed to bootstrap a
+   * workflow.
+   *
+   * @param options Options.
+   * @returns Job steps
+   */
+  public renderWorkflowSetup(
+    options: RenderWorkflowSetupOptions = {}
+  ): JobStep[] {
     const install = new Array<JobStep>();
 
     // first run the workflow bootstrap steps
@@ -854,9 +864,13 @@ export class NodeProject extends GitHubProject {
       });
     }
 
+    const mutable = options.mutable ?? false;
+
     install.push({
       name: "Install dependencies",
-      run: this.package.installCommand,
+      run: mutable
+        ? this.package.installAndUpdateLockfileCommand
+        : this.package.installCommand,
     });
 
     return install;
@@ -1004,4 +1018,15 @@ export class NodeProject extends GitHubProject {
   public get buildWorkflowJobId() {
     return this.buildWorkflow?.buildJobIds[0];
   }
+}
+
+/**
+ * Options for `renderInstallSteps()`.
+ */
+export interface RenderWorkflowSetupOptions {
+  /**
+   * Should the pacakge lockfile be updated?
+   * @default false
+   */
+  readonly mutable?: boolean;
 }

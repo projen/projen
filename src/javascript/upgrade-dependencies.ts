@@ -248,7 +248,7 @@ export class UpgradeDependencies extends Component {
         uses: "actions/checkout@v2",
         with: branch ? { ref: branch } : undefined,
       },
-      ...this._project.installWorkflowSteps,
+      ...this._project.renderWorkflowSetup({ mutable: false }),
       {
         name: "Upgrade dependencies",
         run: this._project.runTaskCommand(task),
