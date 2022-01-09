@@ -552,6 +552,7 @@ export class NodeProject extends GitHubProject {
         mutableBuild: options.mutableBuild,
         preBuildSteps: this.renderWorkflowSetup({ mutable: true }),
         postBuildSteps: options.postBuildSteps,
+        runsOn: options.workflowRunsOn,
       });
 
       // run codecov if enabled or a secret token name is passed in
