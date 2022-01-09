@@ -101,7 +101,7 @@ test("cleanup only orphaned files", () => {
   expect(deletedFiles).toMatchSnapshot();
 });
 
-test("cleanup only orphaned files 2", () => {
+test("cleanup empty files", () => {
   // GIVEN
   const p = new TestProject();
   const emptyFile = new JsonFile(p, "will-be-empty", { obj: { test: "test" } });

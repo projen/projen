@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`cleanup empty files 1`] = `
+Array [
+  "will-be-empty",
+]
+`;
+
 exports[`cleanup falls back to greedy method 1`] = `
 Array [
   ".gitattributes",
@@ -22,12 +28,6 @@ Array [
   ".projen/files.json",
   ".projen/tasks.json",
   "not-this",
-]
-`;
-
-exports[`cleanup only orphaned files 2 1`] = `
-Array [
-  "will-be-empty",
 ]
 `;
 
