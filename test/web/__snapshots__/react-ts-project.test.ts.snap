@@ -487,11 +487,14 @@ tsconfig.tsbuildinfo
         ],
       },
       "eject": Object {
-        "description": "Ejects your React application from react-scripts",
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
         "name": "eject",
         "steps": Array [
           Object {
-            "exec": "react-scripts eject",
+            "spawn": "default",
           },
         ],
       },

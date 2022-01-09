@@ -1,8 +1,6 @@
 import { basename, dirname, extname, join, relative, sep, posix } from "path";
 import { pascal } from "case";
-import { IS_PROJEN_EJECTING } from "../common";
 import { Component } from "../component";
-import { FileBase } from "../file";
 import { Bundler, BundlingOptions, Eslint } from "../javascript";
 import { Project } from "../project";
 import { SourceCode } from "../source-code";
@@ -160,8 +158,8 @@ export class LambdaFunction extends Component {
     );
 
     const src = new SourceCode(project, constructFile);
-    if (IS_PROJEN_EJECTING) {
-      src.line(`// ${FileBase.PROJEN_MARKER}`);
+    if (!project.ejected) {
+      src.line(`// ${project.marker}`);
     }
     src.line("import * as path from 'path';");
 

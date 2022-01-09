@@ -1,7 +1,6 @@
-import { unlinkSync } from "fs";
 import * as path from "path";
 import { resolve } from "./_resolve";
-import { PROJEN_MARKER, PROJEN_RC } from "./common";
+import { PROJEN_MARKER } from "./common";
 import { Component } from "./component";
 import { Project } from "./project";
 import { isExecutable, isWritable, tryReadFileSync, writeFile } from "./util";
@@ -47,12 +46,6 @@ export interface FileBaseOptions {
 
 export abstract class FileBase extends Component {
   /**
-   * The marker to embed in files in order to identify them as projen files.
-   * This marker is used to prune these files before synthesis.
-   */
-  public static readonly PROJEN_MARKER = `${PROJEN_MARKER}. To modify, edit ${PROJEN_RC} and run "npx projen".`;
-
-  /**
    * The file path, relative to the project root.
    */
   public readonly path: string;
@@ -86,9 +79,9 @@ export abstract class FileBase extends Component {
   ) {
     super(project);
 
-    this.readonly = options.readonly ?? true;
+    this.readonly = !project.ejected && (options.readonly ?? true);
     this.executable = options.executable ?? false;
-    this.marker = options.marker ?? true;
+    this.marker = !project.ejected && (options.marker ?? true);
     this.path = filePath;
 
     const globPattern = `/${this.path}`;
@@ -170,33 +163,38 @@ export abstract class FileBase extends Component {
     this._changed = true;
   }
 
+  /**
+   * For debuggin, check whether a file was incorrectly generated with
+   * or without the projen marker. The projen marker does not *need* to be
+   * included on projen-generated files, but it's recommended since it signals
+   * that it probably should not be edited directly.
+   */
   private checkForProjenMarker() {
     const filePath = path.join(this.project.outdir, this.path);
     const contents = tryReadFileSync(filePath);
     const containsMarker = contents?.includes(PROJEN_MARKER);
     if (this.marker && !containsMarker) {
       this.project.logger.debug(
-        `Expected ${this.path} to contain marker but found none - possible bug?`
+        `note: expected ${this.path} to contain marker but found none.`
       );
     } else if (!this.marker && containsMarker) {
       this.project.logger.debug(
-        `Expected ${this.path} to not contain marker but found one anyway - possible bug?`
+        `note: expected ${this.path} to not contain marker but found one anyway.`
       );
     }
   }
 
-  public eject() {
-    this.readonly = false;
-    this.marker = false;
-    if (
-      !this.path.startsWith(".projen/") ||
-      this.path === ".projen/tasks.json"
-    ) {
-      this.synthesize();
-    } else {
-      unlinkSync(this.absolutePath);
-    }
-  }
+  // TODO: check if this is needed
+  // public eject() {
+  //   if (
+  //     !this.path.startsWith(".projen/") ||
+  //     this.path === ".projen/tasks.json"
+  //   ) {
+  //     this.synthesize();
+  //   } else {
+  //     unlinkSync(this.absolutePath);
+  //   }
+  // }
 
   /**
    * Indicates if the file has been changed during synthesis. This property is

@@ -41,7 +41,7 @@ export class GitAttributesFile extends FileBase {
     }
 
     return [
-      ...(this.marker ? [`# ${FileBase.PROJEN_MARKER}`] : []),
+      ...(this.marker ? [`# ${this.project.marker}`] : []),
       "",
       ...entries.map(
         ([name, attributes]) => `${name} ${Array.from(attributes).join(" ")}`

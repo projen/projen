@@ -3,7 +3,12 @@ import { tmpdir } from "os";
 import * as path from "path";
 import * as glob from "glob";
 import { cleanup, FILE_MANIFEST } from "./cleanup";
-import { IS_TEST_RUN, IS_PROJEN_EJECTING, PROJEN_VERSION } from "./common";
+import {
+  IS_TEST_RUN,
+  PROJEN_VERSION,
+  PROJEN_MARKER,
+  PROJEN_RC,
+} from "./common";
 import { Component } from "./component";
 import { Dependencies } from "./dependencies";
 import { FileBase } from "./file";
@@ -173,6 +178,7 @@ export class Project {
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
+  private _ejected = false;
 
   constructor(options: ProjectOptions) {
     this.initProject = resolveInitProject(options);
@@ -181,7 +187,9 @@ export class Project {
     this.parent = options.parent;
     this.excludeFromCleanup = [];
 
-    if (IS_PROJEN_EJECTING) {
+    this._ejected = isTruthy(process.env.PROJEN_EJECTING);
+
+    if (this.ejected) {
       this.projenCommand = "node task-runner.js";
     } else {
       this.projenCommand = options.projenCommand ?? "npx projen";
@@ -230,15 +238,17 @@ export class Project {
       new Projenrc(this, options.projenrcJsonOptions);
     }
 
-    new JsonFile(this, FILE_MANIFEST, {
-      omitEmpty: true,
-      obj: () => ({
-        // replace `\` with `/` to ensure paths match across platforms
-        files: this.files
-          .filter((f) => f.readonly)
-          .map((f) => f.path.replace(/\\/g, "/")),
-      }),
-    });
+    if (!this.ejected) {
+      new JsonFile(this, FILE_MANIFEST, {
+        omitEmpty: true,
+        obj: () => ({
+          // replace `\` with `/` to ensure paths match across platforms
+          files: this.files
+            .filter((f) => f.readonly)
+            .map((f) => f.path.replace(/\\/g, "/")),
+        }),
+      });
+    }
   }
 
   /**
@@ -471,33 +481,41 @@ export class Project {
       this.postSynthesize();
     }
 
-    if (IS_PROJEN_EJECTING) {
+    if (this.ejected) {
       this.logger.debug("Ejecting project...");
 
-      for (const comp of this._components) {
-        comp.eject();
-      }
+      // Backup projenrc files
+      const files = glob.sync(".projenrc.*", {
+        cwd: this.outdir,
+        dot: true,
+        nodir: true,
+        absolute: true,
+      });
 
-      this.eject();
+      for (const file of files) {
+        renameSync(file, `${file}.bak`);
+      }
     }
 
     this.logger.debug("Synthesis complete");
   }
 
   /**
-   * Called when `projen eject` is run, after individual components are ejected.
+   * Whether or not the project is being ejected.
    */
-  public eject() {
-    // Backup projenrc files
-    const files = glob.sync(".projenrc.*", {
-      cwd: this.outdir,
-      dot: true,
-      nodir: true,
-      absolute: true,
-    });
-    for (const file of files) {
-      renameSync(file, `${file}.bak`);
-    }
+  public get ejected(): boolean {
+    return this._ejected;
+  }
+
+  /**
+   * The projen marker, used to identify files as projen-generated.
+   *
+   * Value is undefined if the project is being ejected.
+   */
+  public get marker(): string | undefined {
+    return this.ejected
+      ? undefined
+      : `${PROJEN_MARKER}. To modify, edit ${PROJEN_RC} and run "npx projen".`;
   }
 
   /**

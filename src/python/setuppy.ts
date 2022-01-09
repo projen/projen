@@ -87,7 +87,7 @@ export class SetupPy extends FileBase {
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
     const lines = [
-      ...(this.marker ? [`# ${FileBase.PROJEN_MARKER}`] : []),
+      ...(this.marker ? [`# ${this.project.marker}`] : []),
       "",
       "import json",
       "from setuptools import setup",

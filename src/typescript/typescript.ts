@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as semver from "semver";
-import { IS_PROJEN_EJECTING, PROJEN_RC } from "../common";
+import { PROJEN_RC } from "../common";
 import { Component } from "../component";
 import {
   Eslint,
@@ -394,8 +394,8 @@ export class TypeScriptProject extends NodeProject {
     };
 
     const resolver = new TextFile(this, "jest-snapshot-resolver.js");
-    if (!IS_PROJEN_EJECTING) {
-      resolver.addLine(`// ${TextFile.PROJEN_MARKER}`);
+    if (!this.ejected) {
+      resolver.addLine(`// ${this.marker}`);
     }
     resolver.addLine('const path = require("path");');
     resolver.addLine(`const libtest = "${libtest}";`);

@@ -36,7 +36,6 @@ test("rewire replaces react-scripts", () => {
   assertExec("compile", "react-app-rewired build");
   assertExec("test", "react-app-rewired test --watchAll=false");
   assertExec("dev", "react-app-rewired start");
-  assertExec("eject", "react-scripts eject");
 });
 
 test("rewire add a dependency on react-app-rewired", () => {

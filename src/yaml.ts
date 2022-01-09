@@ -23,7 +23,7 @@ export class YamlFile extends ObjectFile {
     }
 
     return [
-      ...(this.marker ? [`# ${YamlFile.PROJEN_MARKER}`] : []),
+      ...(this.marker ? [`# ${this.project.marker}`] : []),
       "",
       YAML.stringify(JSON.parse(json), { indent: 2 }),
     ].join("\n");

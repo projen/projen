@@ -245,6 +245,18 @@ cython_debug/
           },
         ],
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "install": Object {
         "description": "Install and upgrade dependencies",
         "name": "install",

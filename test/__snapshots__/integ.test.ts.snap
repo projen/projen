@@ -1245,6 +1245,18 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "eslint": Object {
         "description": "Runs eslint against the codebase",
         "name": "eslint",
@@ -1863,6 +1875,7 @@ project.synth();
       "compile": "npx projen compile",
       "default": "npx projen default",
       "docgen": "npx projen docgen",
+      "eject": "npx projen eject",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
       "package-all": "npx projen package-all",
@@ -2657,6 +2670,18 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "eslint": Object {
         "description": "Runs eslint against the codebase",
         "name": "eslint",
@@ -3406,6 +3431,7 @@ project.synth();
       "compile": "npx projen compile",
       "default": "npx projen default",
       "docgen": "npx projen docgen",
+      "eject": "npx projen eject",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
       "package-all": "npx projen package-all",
@@ -4182,6 +4208,18 @@ tsconfig.tsbuildinfo
           },
         ],
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "eslint": Object {
         "description": "Runs eslint against the codebase",
         "name": "eslint",
@@ -4814,6 +4852,7 @@ project.synth();
       "clobber": "npx projen clobber",
       "compile": "npx projen compile",
       "default": "npx projen default",
+      "eject": "npx projen eject",
       "eslint": "npx projen eslint",
       "package": "npx projen package",
       "post-compile": "npx projen post-compile",
@@ -5472,6 +5511,18 @@ junit.xml
           },
         ],
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "package": Object {
         "description": "Creates the distribution package",
         "name": "package",
@@ -5900,6 +5951,7 @@ project.synth();
       "clobber": "npx projen clobber",
       "compile": "npx projen compile",
       "default": "npx projen default",
+      "eject": "npx projen eject",
       "package": "npx projen package",
       "post-compile": "npx projen post-compile",
       "pre-compile": "npx projen pre-compile",

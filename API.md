@@ -416,18 +416,6 @@ Name | Type | Description
 ### Methods
 
 
-#### eject()🔹 <a id="projen-component-eject"></a>
-
-Called when `projen eject` is run, after synthesizing all files.
-
-```ts
-eject(): void
-```
-
-
-
-
-
 #### postSynthesize()🔹 <a id="projen-component-postsynthesize"></a>
 
 Called after synthesis.
@@ -883,21 +871,8 @@ Name | Type | Description
 **path**🔹 | <code>string</code> | The file path, relative to the project root.
 **readonly**🔹 | <code>boolean</code> | Indicates if the file should be read-only or read-write.
 **changed**?🔹 | <code>boolean</code> | Indicates if the file has been changed during synthesis.<br/>__*Optional*__
-*static* **PROJEN_MARKER**🔹 | <code>string</code> | The marker to embed in files in order to identify them as projen files.
 
 ### Methods
-
-
-#### eject()🔹 <a id="projen-filebase-eject"></a>
-
-Called when `projen eject` is run, after synthesizing all files.
-
-```ts
-eject(): void
-```
-
-
-
 
 
 #### synthesize()🔹 <a id="projen-filebase-synthesize"></a>
@@ -1709,6 +1684,7 @@ Name | Type | Description
 **defaultTask**🔹 | <code>[Task](#projen-task)</code> | This is the "default" task, the one that executes "projen".
 **deps**🔹 | <code>[Dependencies](#projen-dependencies)</code> | Project dependencies.
 **ejectTask**🔹 | <code>[Task](#projen-task)</code> | This task ejects the project from projen. This includes but is not limited to:.
+**ejected**🔹 | <code>boolean</code> | Whether or not the project is being ejected.
 **files**🔹 | <code>Array<[FileBase](#projen-filebase)></code> | All files in this project.
 **gitattributes**🔹 | <code>[GitAttributesFile](#projen-gitattributesfile)</code> | The .gitattributes file for this repository.
 **gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | .gitignore.
@@ -1724,6 +1700,7 @@ Name | Type | Description
 **tasks**🔹 | <code>[Tasks](#projen-tasks)</code> | Project tasks.
 **testTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
 **initProject**?🔹 | <code>[InitProject](#projen-initproject)</code> | The options used when this project is bootstrapped via `projen new`.<br/>__*Optional*__
+**marker**?🔹 | <code>string</code> | The projen marker, used to identify files as projen-generated.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 *static* **DEFAULT_TASK**🔹 | <code>string</code> | The name of the default task (the task executed when `projen` is run without arguments).
 
@@ -1824,18 +1801,6 @@ annotateGenerated(_glob: string): void
 ```
 
 * **_glob** (<code>string</code>)  the glob pattern to match (could be a file path).
-
-
-
-
-#### eject()🔹 <a id="projen-project-eject"></a>
-
-Called when `projen eject` is run, after individual components are ejected.
-
-```ts
-eject(): void
-```
-
 
 
 
@@ -2663,18 +2628,6 @@ addTask(name: string, options?: TaskOptions): Task
 __Returns__:
 * <code>[Task](#projen-task)</code>
 
-#### eject()🔹 <a id="projen-tasks-eject"></a>
-
-Called when `projen eject` is run, after synthesizing all files.
-
-```ts
-eject(): void
-```
-
-
-
-
-
 #### removeTask(name)🔹 <a id="projen-tasks-removetask"></a>
 
 Removes a task from a project.
@@ -2687,6 +2640,18 @@ removeTask(name: string): Task
 
 __Returns__:
 * <code>[Task](#projen-task)</code>
+
+#### synthesize()🔹 <a id="projen-tasks-synthesize"></a>
+
+Synthesizes files to the project output directory.
+
+```ts
+synthesize(): void
+```
+
+
+
+
 
 #### tryFind(name)🔹 <a id="projen-tasks-tryfind"></a>
 

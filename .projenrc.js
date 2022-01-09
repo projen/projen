@@ -95,7 +95,7 @@ const project = new cdk.JsiiProject({
 new TextFile(project, "projen.bash", {
   lines: [
     "#!/bin/bash",
-    `# ${TextFile.PROJEN_MARKER}`,
+    `# ${project.marker}`,
     "set -euo pipefail",
     "if [ ! -f lib/cli/index.js ]; then",
     '  echo "bootstrapping..."',

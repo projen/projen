@@ -117,12 +117,14 @@ export class Tasks extends Component {
     return this._tasks[name];
   }
 
-  public eject() {
-    // Insert a task-runner script so that tasks still work after ejecting
-    fs.copyFileSync(
-      path.join(__dirname, "..", "lib", "task-runner.js"),
-      "task-runner.js"
-    );
+  public synthesize(): void {
+    if (this.project.ejected) {
+      // Insert a task-runner script so that tasks can be run after ejecting
+      fs.copyFileSync(
+        path.join(__dirname, "..", "lib", "task-runner.js"),
+        "task-runner.js"
+      );
+    }
   }
 
   private renderTasks() {

@@ -33,5 +33,5 @@ test("yaml file can contain projen marker", () => {
 
   const firstLine = output.split("\n")[0];
 
-  expect(firstLine).toBe(`# ${YamlFile.PROJEN_MARKER}`);
+  expect(firstLine).toBe(`# ${prj.marker}`);
 });

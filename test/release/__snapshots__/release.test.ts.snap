@@ -239,6 +239,18 @@ node_modules/
         "description": "Synthesize project files",
         "name": "default",
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "package": Object {
         "description": "Creates the distribution package",
         "name": "package",
@@ -575,6 +587,18 @@ node_modules/
       "default": Object {
         "description": "Synthesize project files",
         "name": "default",
+      },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
       },
       "package": Object {
         "description": "Creates the distribution package",
@@ -913,6 +937,18 @@ node_modules/
       "default": Object {
         "description": "Synthesize project files",
         "name": "default",
+      },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
       },
       "package": Object {
         "description": "Creates the distribution package",
@@ -1364,6 +1400,18 @@ node_modules/
       "default": Object {
         "description": "Synthesize project files",
         "name": "default",
+      },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
       },
       "package": Object {
         "description": "Creates the distribution package",
@@ -1870,6 +1918,18 @@ node_modules/
         "description": "Synthesize project files",
         "name": "default",
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "package": Object {
         "description": "Creates the distribution package",
         "name": "package",
@@ -2241,6 +2301,18 @@ node_modules/
       "default": Object {
         "description": "Synthesize project files",
         "name": "default",
+      },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
       },
       "package": Object {
         "description": "Creates the distribution package",
@@ -2681,6 +2753,18 @@ node_modules/
         "description": "Synthesize project files",
         "name": "default",
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "package": Object {
         "description": "Creates the distribution package",
         "name": "package",
@@ -2897,6 +2981,18 @@ Object {
     "default": Object {
       "description": "Synthesize project files",
       "name": "default",
+    },
+    "eject": Object {
+      "description": "Remove projen from the project",
+      "env": Object {
+        "PROJEN_EJECTING": "true",
+      },
+      "name": "eject",
+      "steps": Array [
+        Object {
+          "spawn": "default",
+        },
+      ],
     },
     "package": Object {
       "description": "Creates the distribution package",
@@ -3191,6 +3287,18 @@ node_modules/
         "description": "Synthesize project files",
         "name": "default",
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "package": Object {
         "description": "Creates the distribution package",
         "name": "package",
@@ -3390,6 +3498,18 @@ Object {
     "default": Object {
       "description": "Synthesize project files",
       "name": "default",
+    },
+    "eject": Object {
+      "description": "Remove projen from the project",
+      "env": Object {
+        "PROJEN_EJECTING": "true",
+      },
+      "name": "eject",
+      "steps": Array [
+        Object {
+          "spawn": "default",
+        },
+      ],
     },
     "package": Object {
       "description": "Creates the distribution package",
@@ -3751,6 +3871,18 @@ Object {
     "default": Object {
       "description": "Synthesize project files",
       "name": "default",
+    },
+    "eject": Object {
+      "description": "Remove projen from the project",
+      "env": Object {
+        "PROJEN_EJECTING": "true",
+      },
+      "name": "eject",
+      "steps": Array [
+        Object {
+          "spawn": "default",
+        },
+      ],
     },
     "package": Object {
       "description": "Creates the distribution package",
@@ -4198,6 +4330,18 @@ node_modules/
       "default": Object {
         "description": "Synthesize project files",
         "name": "default",
+      },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
       },
       "package": Object {
         "description": "Creates the distribution package",
@@ -4674,6 +4818,18 @@ node_modules/
         "description": "Synthesize project files",
         "name": "default",
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "package": Object {
         "description": "Creates the distribution package",
         "name": "package",
@@ -5054,6 +5210,18 @@ node_modules/
         "description": "Synthesize project files",
         "name": "default",
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "package": Object {
         "description": "Creates the distribution package",
         "name": "package",
@@ -5348,6 +5516,18 @@ node_modules/
       "default": Object {
         "description": "Synthesize project files",
         "name": "default",
+      },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
       },
       "package": Object {
         "description": "Creates the distribution package",

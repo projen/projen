@@ -72,7 +72,7 @@ export class RequirementsFile extends FileBase {
 
     return `${resolver
       .resolve([
-        ...(this.marker ? [`# ${FileBase.PROJEN_MARKER}`] : []),
+        ...(this.marker ? [`# ${this.project.marker}`] : []),
         ...allPackages,
       ])
       .join("\n")}\n`;

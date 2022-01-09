@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import { JsonFile } from "../src";
+import { writeFile } from "../src/util";
 import { synthSnapshot, TestProject } from "./util";
 
 test("json object can be mutated before synthesis", () => {
@@ -87,7 +88,7 @@ test("json file can contain projen marker", () => {
 
   const output = synthSnapshot(prj)["my/json/file-marker.json"];
 
-  expect(output["//"]).toBe(JsonFile.PROJEN_MARKER);
+  expect(output["//"]).toBe(prj.marker);
 });
 
 describe("newline", () => {
@@ -143,6 +144,22 @@ describe("changed", () => {
     expect(file.changed).toBeTruthy();
   });
 
+  it('is set to "true" if the file permissions changed', () => {
+    const prj = new TestProject();
+    const file = new JsonFile(prj, "hello.json", {
+      obj,
+      newline: false,
+      marker: false,
+    });
+    writeFile(
+      join(prj.outdir, "hello.json"),
+      JSON.stringify(obj, undefined, 2),
+      { readonly: true, executable: true }
+    );
+    prj.synth();
+    expect(file.changed).toBeTruthy();
+  });
+
   it('is set to "false" if the file did not change', () => {
     const prj = new TestProject();
     const file = new JsonFile(prj, "hello.json", {
@@ -150,9 +167,10 @@ describe("changed", () => {
       newline: false,
       marker: false,
     });
-    writeFileSync(
+    writeFile(
       join(prj.outdir, "hello.json"),
-      JSON.stringify(obj, undefined, 2)
+      JSON.stringify(obj, undefined, 2),
+      { readonly: true, executable: false }
     );
     prj.synth();
     expect(file.changed).toStrictEqual(false);

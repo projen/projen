@@ -1,6 +1,6 @@
 import { join } from "path";
 import { BuildWorkflow } from "../build";
-import { PROJEN_DIR, IS_PROJEN_EJECTING, PROJEN_RC } from "../common";
+import { PROJEN_DIR, PROJEN_RC } from "../common";
 import {
   AutoMerge,
   DependabotOptions,
@@ -517,7 +517,7 @@ export class NodeProject extends GitHubProject {
       }
     }
 
-    if (!IS_PROJEN_EJECTING) {
+    if (!this.ejected) {
       this.setScript(PROJEN_SCRIPT, this.package.projenCommand);
     }
 
@@ -526,7 +526,7 @@ export class NodeProject extends GitHubProject {
     this.gitignore.include(`/${PROJEN_RC}`);
 
     const projen = options.projenDevDependency ?? true;
-    if (projen && !IS_PROJEN_EJECTING) {
+    if (projen && !this.ejected) {
       const postfix = options.projenVersion ? `@${options.projenVersion}` : "";
       this.addDevDeps(`projen${postfix}`);
     }

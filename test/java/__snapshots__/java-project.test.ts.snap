@@ -302,6 +302,18 @@ dist/java
           },
         ],
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "package": Object {
         "description": "Creates the distribution package",
         "env": Object {
@@ -1054,6 +1066,18 @@ dist/java
           },
           Object {
             "exec": "mvn exec:java --quiet -Dexec.mainClass=projenrc -Dexec.classpathScope=\\"test\\"",
+          },
+        ],
+      },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
           },
         ],
       },

@@ -1,5 +1,4 @@
 import * as path from "path";
-import { IS_PROJEN_EJECTING } from "../common";
 import { Component } from "../component";
 import { FileBase, FileBaseOptions, IResolver } from "../file";
 import {
@@ -216,8 +215,8 @@ export class ReactComponent extends Component {
       project.addFields({ "config-overrides-path": overridesPath });
 
       const configOverrides = new SourceCode(this.project, overridesPath);
-      if (!IS_PROJEN_EJECTING) {
-        configOverrides.line(`// ${FileBase.PROJEN_MARKER}`);
+      if (!project.ejected) {
+        configOverrides.line(`// ${project.marker}`);
       }
       configOverrides.line("/**");
       configOverrides.line(
@@ -245,12 +244,6 @@ export class ReactComponent extends Component {
     });
 
     project.compileTask.exec(`${reactScripts} build`);
-
-    project.addTask("eject", {
-      description: "Ejects your React application from react-scripts",
-      // eject is not necessary to rewire
-      exec: "react-scripts eject",
-    });
 
     project.testTask.exec(`${reactScripts} test --watchAll=false`);
 

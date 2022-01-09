@@ -34,5 +34,5 @@ test("toml file can contain projen marker", () => {
 
   const firstLine = output.split("\n")[0];
 
-  expect(firstLine).toBe(`# ${TomlFile.PROJEN_MARKER}`);
+  expect(firstLine).toBe(`# ${prj.marker}`);
 });
