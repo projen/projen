@@ -80,22 +80,29 @@ Array [
     },
   },
   Object {
-    "name": "Install dependencies",
     "run": "yarn install --check-files",
   },
   Object {
-    "name": "build",
     "run": "npx projen build",
   },
   Object {
-    "id": "self_mutation",
-    "name": "Find mutations",
-    "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"",
+    "run": "git add .",
   },
   Object {
-    "if": "steps.self_mutation.outputs.self_mutation_happened",
-    "name": "Upload patch",
+    "run": "if git diff --staged --patch --exit-code > .repo.patch; then
+  self_mutation_happened=1
+else
+  echo \\"Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+  cat .repo.patch
+  exit 1
+fi",
+  },
+  Object {
+    "id": "export-self_mutation_happened",
+    "run": "echo \\"::set-output name=self_mutation_happened::$self_mutation_happened\\"",
+  },
+  Object {
+    "name": "Upload .repo.patch",
     "uses": "actions/upload-artifact@v2",
     "with": Object {
       "name": ".repo.patch",
@@ -103,11 +110,12 @@ git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name
     },
   },
   Object {
-    "if": "steps.self_mutation.outputs.self_mutation_happened",
-    "name": "Fail build on mutation",
-    "run": "echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
-cat .repo.patch
-exit 1",
+    "name": "Upload dist",
+    "uses": "actions/upload-artifact@v2",
+    "with": Object {
+      "name": "dist",
+      "path": "dist",
+    },
   },
 ]
 `;
@@ -145,11 +153,19 @@ fi",
     "run": "echo \\"::set-output name=self_mutation_happened::$self_mutation_happened\\"",
   },
   Object {
-    "name": "Upload patch",
+    "name": "Upload .repo.patch",
     "uses": "actions/upload-artifact@v2",
     "with": Object {
       "name": ".repo.patch",
       "path": ".repo.patch",
+    },
+  },
+  Object {
+    "name": "Upload dist",
+    "uses": "actions/upload-artifact@v2",
+    "with": Object {
+      "name": "dist",
+      "path": "dist",
     },
   },
 ]
@@ -167,27 +183,33 @@ Array [
     },
   },
   Object {
-    "name": "Download patch",
+    "name": "Download .repo.patch",
     "uses": "actions/download-artifact@v2",
     "with": Object {
       "name": ".repo.patch",
-      "path": "\${{ runner.temp }}",
+      "path": ".repo.patch",
     },
   },
   Object {
-    "name": "Apply patch",
-    "run": "[ -s \${{ runner.temp }}/.repo.patch ] && git apply \${{ runner.temp }}/.repo.patch || echo \\"Empty patch. Skipping.\\"",
+    "run": "[ -s ./.repo.patch ] && git apply ./.repo.patch || echo \\"Empty patch. Skipping.\\"",
   },
   Object {
-    "name": "Set git identity",
-    "run": "git config user.name \\"github-actions\\"
-git config user.email \\"github-actions@github.com\\"",
+    "run": "rm -f ./.repo.patch",
   },
   Object {
-    "name": "Push changes",
-    "run": "  git add .
-  git commit -m \\"chore: self mutation\\"
-  git push origin HEAD:\${{ github.event.pull_request.head.ref }}",
+    "run": "git config user.name \\"github-actions\\"",
+  },
+  Object {
+    "run": "git config user.email \\"github-actions@github.com\\"",
+  },
+  Object {
+    "run": "git add .",
+  },
+  Object {
+    "run": "git commit -m \\"chore: self mutation\\"",
+  },
+  Object {
+    "run": "git push origin HEAD:\${{ github.event.pull_request.head.ref }}",
   },
 ]
 `;

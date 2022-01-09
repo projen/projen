@@ -292,19 +292,32 @@ jobs:
           fi
       - id: export-self_mutation_happened
         run: echo \\"::set-output name=self_mutation_happened::$self_mutation_happened\\"
-      - name: Upload patch
+      - name: Upload .repo.patch
         uses: actions/upload-artifact@v2
         with:
           name: .repo.patch
           path: .repo.patch
+      - name: Upload dist
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist
   self-mutation:
     needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
     outputs: {}
+    if: (always()) && (needs.build.outputs.self_mutation_happened) && (!
+      (github.event.pull_request.head.repo.full_name != github.repository))
     steps:
-      - name: Download build artifacts
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
+          ref: \${{ github.event.pull_request.head.ref }}
+          repository: \${{ github.event.pull_request.head.repo.full_name }}
+      - name: Download .repo.patch
         uses: actions/download-artifact@v2
         with:
           name: .repo.patch
@@ -323,11 +336,12 @@ jobs:
     permissions:
       contents: read
     outputs: {}
+    if: \\"! (needs.build.outputs.self_mutation_happened)\\"
     steps:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - name: Download build artifacts
+      - name: Download dist
         uses: actions/download-artifact@v2
         with:
           name: dist
@@ -342,6 +356,7 @@ jobs:
     permissions:
       contents: read
     outputs: {}
+    if: \\"! (needs.build.outputs.self_mutation_happened)\\"
     steps:
       - uses: actions/setup-java@v2
         with:
@@ -350,7 +365,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
-      - name: Download build artifacts
+      - name: Download dist
         uses: actions/download-artifact@v2
         with:
           name: dist
@@ -365,6 +380,7 @@ jobs:
     permissions:
       contents: read
     outputs: {}
+    if: \\"! (needs.build.outputs.self_mutation_happened)\\"
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -372,7 +388,7 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
-      - name: Download build artifacts
+      - name: Download dist
         uses: actions/download-artifact@v2
         with:
           name: dist
@@ -4900,19 +4916,32 @@ jobs:
           fi
       - id: export-self_mutation_happened
         run: echo \\"::set-output name=self_mutation_happened::$self_mutation_happened\\"
-      - name: Upload patch
+      - name: Upload .repo.patch
         uses: actions/upload-artifact@v2
         with:
           name: .repo.patch
           path: .repo.patch
+      - name: Upload dist
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist
   self-mutation:
     needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
     outputs: {}
+    if: (always()) && (needs.build.outputs.self_mutation_happened) && (!
+      (github.event.pull_request.head.repo.full_name != github.repository))
     steps:
-      - name: Download build artifacts
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
+          ref: \${{ github.event.pull_request.head.ref }}
+          repository: \${{ github.event.pull_request.head.repo.full_name }}
+      - name: Download .repo.patch
         uses: actions/download-artifact@v2
         with:
           name: .repo.patch

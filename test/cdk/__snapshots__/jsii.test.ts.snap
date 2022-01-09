@@ -370,6 +370,7 @@ Object {
 
 exports[`language bindings snapshot dotnet 1`] = `
 Object {
+  "if": "! (needs.build.outputs.self_mutation_happened)",
   "needs": "build",
   "outputs": Object {},
   "permissions": Object {
@@ -390,7 +391,7 @@ Object {
       },
     },
     Object {
-      "name": "Download build artifacts",
+      "name": "Download dist",
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "dist",
@@ -415,6 +416,7 @@ Object {
 
 exports[`language bindings snapshot go 1`] = `
 Object {
+  "if": "! (needs.build.outputs.self_mutation_happened)",
   "needs": "build",
   "outputs": Object {},
   "permissions": Object {
@@ -435,7 +437,7 @@ Object {
       },
     },
     Object {
-      "name": "Download build artifacts",
+      "name": "Download dist",
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "dist",
@@ -460,6 +462,7 @@ Object {
 
 exports[`language bindings snapshot java 1`] = `
 Object {
+  "if": "! (needs.build.outputs.self_mutation_happened)",
   "needs": "build",
   "outputs": Object {},
   "permissions": Object {
@@ -481,7 +484,7 @@ Object {
       },
     },
     Object {
-      "name": "Download build artifacts",
+      "name": "Download dist",
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "dist",
@@ -506,6 +509,7 @@ Object {
 
 exports[`language bindings snapshot js 1`] = `
 Object {
+  "if": "! (needs.build.outputs.self_mutation_happened)",
   "needs": "build",
   "outputs": Object {},
   "permissions": Object {
@@ -520,7 +524,7 @@ Object {
       },
     },
     Object {
-      "name": "Download build artifacts",
+      "name": "Download dist",
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "dist",
@@ -545,6 +549,7 @@ Object {
 
 exports[`language bindings snapshot python 1`] = `
 Object {
+  "if": "! (needs.build.outputs.self_mutation_happened)",
   "needs": "build",
   "outputs": Object {},
   "permissions": Object {
@@ -565,7 +570,7 @@ Object {
       },
     },
     Object {
-      "name": "Download build artifacts",
+      "name": "Download dist",
       "uses": "actions/download-artifact@v2",
       "with": Object {
         "name": "dist",
