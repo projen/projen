@@ -12,7 +12,7 @@ export function cleanup(dir: string, newFiles: string[], exclude: string[]) {
     const manifestFiles = getFilesFromManifest(dir);
     if (manifestFiles.length > 0) {
       // Use `FILE_MANIFEST` to remove files that are no longer managed by projen
-      cleanOrphanedFiles(dir, manifestFiles, newFiles);
+      removeFiles(findOrphanedFiles(dir, manifestFiles, newFiles));
     } else {
       // Remove all files managed by projen with legacy logic
       removeFiles(findGeneratedFiles(dir, exclude));
@@ -57,14 +57,14 @@ function findGeneratedFiles(dir: string, exclude: string[]) {
   return generated;
 }
 
-function cleanOrphanedFiles(
+function findOrphanedFiles(
   dir: string,
   oldFiles: string[],
   newFiles: string[]
 ) {
-  const orphaned = oldFiles.filter((old) => !newFiles.includes(old));
-
-  removeFiles(orphaned.map((f: string) => path.resolve(dir, f)));
+  return oldFiles
+    .filter((old) => !newFiles.includes(old))
+    .map((f: string) => path.resolve(dir, f));
 }
 
 function getFilesFromManifest(dir: string): string[] {
