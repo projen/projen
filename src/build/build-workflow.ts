@@ -88,7 +88,7 @@ export class BuildWorkflow extends Component {
   private readonly buildTask: Task;
   private readonly workflow: Workflow;
   private readonly artifactsDirectory: string;
-  private readonly defaultRunners: string[] = ["ubuntu-latest"];
+  // TODO: private readonly defaultRunners: string[] = ["ubuntu-latest"];
 
   private readonly _postBuildJobs: string[] = [];
 
@@ -113,14 +113,14 @@ export class BuildWorkflow extends Component {
     this.addBuildJob(options);
 
     if (mutableBuilds) {
-      this.addSelfMutationJob(options);
+      this.addSelfMutationJob();
     }
   }
 
   private addBuildJob(options: BuildWorkflowOptions) {
     this.workflow.addJob(BUILD_JOBID, {
       image: options.containerImage,
-      runsOn: options.runsOn ?? this.defaultRunners,
+      // TODO: runsOn: options.runsOn ?? this.defaultRunners,
       env: {
         ...options.env,
         CI: "true",
@@ -258,14 +258,14 @@ export class BuildWorkflow extends Component {
     this.addPostBuildJob(id, {
       checkout: options?.checkoutRepo,
       tools: options?.tools,
-      runsOn: options?.runsOn ?? this.defaultRunners,
+      // TODO: runsOn: options?.runsOn ?? this.defaultRunners,
       steps,
     });
   }
 
-  private addSelfMutationJob(options: BuildWorkflowOptions) {
+  private addSelfMutationJob() {
     this.workflow.addJob("self-mutation", {
-      runsOn: options.runsOn ?? this.defaultRunners,
+      // TODO: runsOn: options.runsOn ?? this.defaultRunners,
       mutable: true,
       checkout: true,
       needs: [BUILD_JOBID],
