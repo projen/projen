@@ -6,10 +6,10 @@ const project = new cdk.JsiiProject({
   description: "CDK for software projects",
   repository: "https://github.com/projen/projen.git",
 
-  authorName: 'Amazon Web Services',
-  authorUrl: 'https://aws.amazon.com',
+  authorName: "Amazon Web Services",
+  authorUrl: "https://aws.amazon.com",
   authorOrganization: true,
-  
+
   stability: "experimental",
   keywords: [
     "scaffolding",
