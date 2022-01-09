@@ -25,6 +25,12 @@ Array [
 ]
 `;
 
+exports[`cleanup only orphaned files 2 1`] = `
+Array [
+  "will-be-empty",
+]
+`;
+
 exports[`cleanup uses cache file 1`] = `
 Array [
   ".gitattributes",
