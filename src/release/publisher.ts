@@ -9,10 +9,10 @@ import {
   JobPermission,
   JobPermissions,
   JobStep,
-  Tools,
 } from "../github/workflows-model";
 import { defaultNpmToken } from "../javascript/node-package";
 import { Project } from "../project";
+import { Step, Tools } from "../workflows";
 import { BranchOptions } from "./release";
 
 const JSII_RELEASE_VERSION = "latest";
@@ -635,7 +635,7 @@ export interface CommonPublishOptions {
    *
    * Note that when using this in `publishToGitHubReleases` this will override steps added via `addGitHubPrePublishingSteps`.
    */
-  readonly prePublishSteps?: JobStep[];
+  readonly prePublishSteps?: Step[];
 
   /**
    * Additional tools to install in the publishing job.

@@ -5,6 +5,7 @@ import { BUILD_ARTIFACT_NAME } from "../github/constants";
 import { Job, JobPermission, JobStep } from "../github/workflows-model";
 import { Task } from "../task";
 import { Version } from "../version";
+import { Step } from "../workflows";
 import { Publisher } from "./publisher";
 import { ReleaseTrigger } from "./release-trigger";
 
@@ -64,7 +65,7 @@ export interface ReleaseProjectOptions {
    * Steps to execute after build as part of the release workflow.
    * @default []
    */
-  readonly postBuildSteps?: JobStep[];
+  readonly postBuildSteps?: Step[];
 
   /**
    * Major version to release from the default branch.

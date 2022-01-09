@@ -13,6 +13,7 @@ import { Gitpod } from "../gitpod";
 import { Project, ProjectOptions, ProjectType } from "../project";
 import { SampleReadme, SampleReadmeProps } from "../readme";
 import { DevContainer, VsCode } from "../vscode";
+import { WorkflowProvider } from "./workflow-provider";
 
 /**
  * Options for `GitHubProject`.
@@ -222,6 +223,8 @@ export class GitHubProject extends Project {
     if (stale && this.github) {
       new Stale(this.github, options.staleOptions);
     }
+
+    new WorkflowProvider(this);
   }
 
   /**

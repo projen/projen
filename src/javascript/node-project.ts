@@ -9,7 +9,6 @@ import {
   GitIdentity,
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
-import { JobStep } from "../github/workflows-model";
 import { IgnoreFile } from "../ignore-file";
 import {
   Prettier,
@@ -22,6 +21,7 @@ import { Publisher, Release, ReleaseProjectOptions } from "../release";
 import { Task } from "../task";
 import { deepMerge } from "../util";
 import { Version } from "../version";
+import { Step } from "../workflows";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import {
@@ -455,7 +455,7 @@ export class NodeProject extends GitHubProject {
    */
   public readonly upgradeWorkflow?: UpgradeDependencies;
 
-  private readonly workflowBootstrapSteps: JobStep[];
+  private readonly workflowBootstrapSteps: Step[];
   private readonly workflowGitIdentity: GitIdentity;
   public readonly prettier?: Prettier;
 
@@ -553,27 +553,32 @@ export class NodeProject extends GitHubProject {
         preBuildSteps: this.renderWorkflowSetup({ mutable: true }),
         postBuildSteps: options.postBuildSteps,
         runsOn: options.workflowRunsOn,
+        tools: this.nodeVersion
+          ? {
+              node: { version: this.nodeVersion },
+            }
+          : undefined,
       });
 
-      // run codecov if enabled or a secret token name is passed in
-      // AND jest must be configured
-      if (
-        (options.codeCov || options.codeCovTokenSecret) &&
-        this.jest?.config
-      ) {
-        this.buildWorkflow.addPostBuildSteps({
-          name: "Upload coverage to Codecov",
-          uses: "codecov/codecov-action@v1",
-          with: options.codeCovTokenSecret
-            ? {
-                token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
-                directory: this.jest.config.coverageDirectory,
-              }
-            : {
-                directory: this.jest.config.coverageDirectory,
-              },
-        });
-      }
+      // // run codecov if enabled or a secret token name is passed in
+      // // AND jest must be configured
+      // if (
+      //   (options.codeCov || options.codeCovTokenSecret) &&
+      //   this.jest?.config
+      // ) {
+      //   this.buildWorkflow.addPostBuildSteps({
+      //     name: "Upload coverage to Codecov",
+      //     uses: "codecov/codecov-action@v1",
+      //     with: options.codeCovTokenSecret
+      //       ? {
+      //           token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
+      //           directory: this.jest.config.coverageDirectory,
+      //         }
+      //       : {
+      //           directory: this.jest.config.coverageDirectory,
+      //         },
+      //   });
+      // }
     }
 
     const release =
@@ -838,34 +843,23 @@ export class NodeProject extends GitHubProject {
    * @param options Options.
    * @returns Job steps
    */
-  public renderWorkflowSetup(
-    options: RenderWorkflowSetupOptions = {}
-  ): JobStep[] {
-    const install = new Array<JobStep>();
+  public renderWorkflowSetup(options: RenderWorkflowSetupOptions = {}): Step[] {
+    const install = new Array<Step>();
 
     // first run the workflow bootstrap steps
     install.push(...this.workflowBootstrapSteps);
 
-    if (this.nodeVersion) {
-      install.push({
-        name: "Setup Node.js",
-        uses: "actions/setup-node@v2.2.0",
-        with: { "node-version": this.nodeVersion },
-      });
-    }
-
-    if (this.package.packageManager === NodePackageManager.PNPM) {
-      install.push({
-        name: "Setup pnpm",
-        uses: "pnpm/action-setup@v2.0.1",
-        with: { version: "6.14.7" }, // current latest. Should probably become tunable.
-      });
-    }
+    // if (this.package.packageManager === NodePackageManager.PNPM) {
+    //   install.push({
+    //     name: "Setup pnpm",
+    //     uses: "pnpm/action-setup@v2.0.1",
+    //     with: { version: "6.14.7" }, // current latest. Should probably become tunable.
+    //   });
+    // }
 
     const mutable = options.mutable ?? false;
 
     install.push({
-      name: "Install dependencies",
       run: mutable
         ? this.package.installAndUpdateLockfileCommand
         : this.package.installCommand,

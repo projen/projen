@@ -130,19 +130,15 @@ Object {
       },
     },
     Object {
-      "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
     Object {
-      "name": "Install Dependencies",
       "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
-      "name": "Create go artifact",
       "run": "cd .repo && npx projen package:go",
     },
     Object {
-      "name": "Collect go Artifact",
       "run": "mv .repo/dist dist",
     },
     Object {
@@ -190,19 +186,15 @@ Object {
       },
     },
     Object {
-      "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
     Object {
-      "name": "Install Dependencies",
       "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
-      "name": "Create java artifact",
       "run": "cd .repo && npx projen package:java",
     },
     Object {
-      "name": "Collect java Artifact",
       "run": "mv .repo/dist dist",
     },
     Object {
@@ -245,19 +237,15 @@ Object {
       },
     },
     Object {
-      "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
     Object {
-      "name": "Install Dependencies",
       "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
-      "name": "Create js artifact",
       "run": "cd .repo && npx projen package:js",
     },
     Object {
-      "name": "Collect js Artifact",
       "run": "mv .repo/dist dist",
     },
     Object {
@@ -304,19 +292,15 @@ Object {
       },
     },
     Object {
-      "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
     Object {
-      "name": "Install Dependencies",
       "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
-      "name": "Create dotnet artifact",
       "run": "cd .repo && npx projen package:dotnet",
     },
     Object {
-      "name": "Collect dotnet Artifact",
       "run": "mv .repo/dist dist",
     },
     Object {
@@ -361,19 +345,15 @@ Object {
       },
     },
     Object {
-      "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
     Object {
-      "name": "Install Dependencies",
       "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
-      "name": "Create python artifact",
       "run": "cd .repo && npx projen package:python",
     },
     Object {
-      "name": "Collect python Artifact",
       "run": "mv .repo/dist dist",
     },
     Object {
@@ -390,9 +370,11 @@ Object {
 
 exports[`language bindings snapshot dotnet 1`] = `
 Object {
-  "if": "! needs.build.outputs.self_mutation_happened",
   "needs": "build",
-  "permissions": Object {},
+  "outputs": Object {},
+  "permissions": Object {
+    "contents": "read",
+  },
   "runs-on": "ubuntu-latest",
   "steps": Array [
     Object {
@@ -411,24 +393,20 @@ Object {
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v2",
       "with": Object {
-        "name": "build-artifact",
+        "name": "dist",
         "path": "dist",
       },
     },
     Object {
-      "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
     Object {
-      "name": "Install Dependencies",
       "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
-      "name": "Create dotnet artifact",
       "run": "cd .repo && npx projen package:dotnet",
     },
     Object {
-      "name": "Collect dotnet Artifact",
       "run": "mv .repo/dist dist",
     },
   ],
@@ -437,9 +415,11 @@ Object {
 
 exports[`language bindings snapshot go 1`] = `
 Object {
-  "if": "! needs.build.outputs.self_mutation_happened",
   "needs": "build",
-  "permissions": Object {},
+  "outputs": Object {},
+  "permissions": Object {
+    "contents": "read",
+  },
   "runs-on": "ubuntu-latest",
   "steps": Array [
     Object {
@@ -458,24 +438,20 @@ Object {
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v2",
       "with": Object {
-        "name": "build-artifact",
+        "name": "dist",
         "path": "dist",
       },
     },
     Object {
-      "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
     Object {
-      "name": "Install Dependencies",
       "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
-      "name": "Create go artifact",
       "run": "cd .repo && npx projen package:go",
     },
     Object {
-      "name": "Collect go Artifact",
       "run": "mv .repo/dist dist",
     },
   ],
@@ -484,9 +460,11 @@ Object {
 
 exports[`language bindings snapshot java 1`] = `
 Object {
-  "if": "! needs.build.outputs.self_mutation_happened",
   "needs": "build",
-  "permissions": Object {},
+  "outputs": Object {},
+  "permissions": Object {
+    "contents": "read",
+  },
   "runs-on": "ubuntu-latest",
   "steps": Array [
     Object {
@@ -506,24 +484,20 @@ Object {
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v2",
       "with": Object {
-        "name": "build-artifact",
+        "name": "dist",
         "path": "dist",
       },
     },
     Object {
-      "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
     Object {
-      "name": "Install Dependencies",
       "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
-      "name": "Create java artifact",
       "run": "cd .repo && npx projen package:java",
     },
     Object {
-      "name": "Collect java Artifact",
       "run": "mv .repo/dist dist",
     },
   ],
@@ -532,9 +506,11 @@ Object {
 
 exports[`language bindings snapshot js 1`] = `
 Object {
-  "if": "! needs.build.outputs.self_mutation_happened",
   "needs": "build",
-  "permissions": Object {},
+  "outputs": Object {},
+  "permissions": Object {
+    "contents": "read",
+  },
   "runs-on": "ubuntu-latest",
   "steps": Array [
     Object {
@@ -547,24 +523,20 @@ Object {
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v2",
       "with": Object {
-        "name": "build-artifact",
+        "name": "dist",
         "path": "dist",
       },
     },
     Object {
-      "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
     Object {
-      "name": "Install Dependencies",
       "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
-      "name": "Create js artifact",
       "run": "cd .repo && npx projen package:js",
     },
     Object {
-      "name": "Collect js Artifact",
       "run": "mv .repo/dist dist",
     },
   ],
@@ -573,9 +545,11 @@ Object {
 
 exports[`language bindings snapshot python 1`] = `
 Object {
-  "if": "! needs.build.outputs.self_mutation_happened",
   "needs": "build",
-  "permissions": Object {},
+  "outputs": Object {},
+  "permissions": Object {
+    "contents": "read",
+  },
   "runs-on": "ubuntu-latest",
   "steps": Array [
     Object {
@@ -594,24 +568,20 @@ Object {
       "name": "Download build artifacts",
       "uses": "actions/download-artifact@v2",
       "with": Object {
-        "name": "build-artifact",
+        "name": "dist",
         "path": "dist",
       },
     },
     Object {
-      "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
     Object {
-      "name": "Install Dependencies",
       "run": "cd .repo && yarn install --check-files --frozen-lockfile",
     },
     Object {
-      "name": "Create python artifact",
       "run": "cd .repo && npx projen package:python",
     },
     Object {
-      "name": "Collect python Artifact",
       "run": "mv .repo/dist dist",
     },
   ],
@@ -645,8 +615,7 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Install dependencies
-        run: yarn install --check-files --frozen-lockfile
+      - run: yarn install --check-files --frozen-lockfile
       - name: release
         run: npx projen release
       - name: Check for new commits
@@ -705,14 +674,10 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Prepare Repository
-        run: mv dist .repo
-      - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
-      - name: Create js artifact
-        run: cd .repo && npx projen package:js
-      - name: Collect js Artifact
-        run: mv .repo/dist dist
+      - run: mv dist .repo
+      - run: cd .repo && yarn install --check-files --frozen-lockfile
+      - run: cd .repo && npx projen package:js
+      - run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -738,14 +703,10 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Prepare Repository
-        run: mv dist .repo
-      - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
-      - name: Create go artifact
-        run: cd .repo && npx projen package:go
-      - name: Collect go Artifact
-        run: mv .repo/dist dist
+      - run: mv dist .repo
+      - run: cd .repo && yarn install --check-files --frozen-lockfile
+      - run: cd .repo && npx projen package:go
+      - run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:
@@ -785,8 +746,7 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
-      - name: Install dependencies
-        run: yarn install --check-files --frozen-lockfile
+      - run: yarn install --check-files --frozen-lockfile
       - name: release
         run: npx projen release
       - name: Check for new commits
@@ -845,14 +805,10 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Prepare Repository
-        run: mv dist .repo
-      - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
-      - name: Create js artifact
-        run: cd .repo && npx projen package:js
-      - name: Collect js Artifact
-        run: mv .repo/dist dist
+      - run: mv dist .repo
+      - run: cd .repo && yarn install --check-files --frozen-lockfile
+      - run: cd .repo && npx projen package:js
+      - run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -878,14 +834,10 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Prepare Repository
-        run: mv dist .repo
-      - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
-      - name: Create go artifact
-        run: cd .repo && npx projen package:go
-      - name: Collect go Artifact
-        run: mv .repo/dist dist
+      - run: mv dist .repo
+      - run: cd .repo && yarn install --check-files --frozen-lockfile
+      - run: cd .repo && npx projen package:go
+      - run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:

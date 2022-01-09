@@ -1,5 +1,7 @@
 // @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 
+import { Tools } from "../workflows";
+
 /**
  * A GitHub Workflow job definition.
  */
@@ -138,49 +140,6 @@ export interface Job {
    */
   readonly tools?: Tools;
 }
-
-/**
- * Supported tools.
- */
-export interface Tools {
-  /**
-   * Setup java (temurin distribution).
-   * @default - not installed
-   */
-  readonly java?: ToolRequirement;
-
-  /**
-   * Setup python.
-   * @default - not installed
-   */
-  readonly python?: ToolRequirement;
-
-  /**
-   * Setup golang.
-   * @default - not installed
-   */
-  readonly go?: ToolRequirement;
-
-  /**
-   * Setup node.js
-   * @default - not installed
-   */
-  readonly node?: ToolRequirement;
-
-  /**
-   * Setup .NET Core
-   * @default - not installed
-   */
-  readonly dotnet?: ToolRequirement;
-}
-
-/**
- * Version requirement for tools.
- */
-export interface ToolRequirement {
-  readonly version: string;
-}
-
 /**
  * The available scopes and access values for workflow permissions. If you
  * specify the access for any of these scopes, all those that are not

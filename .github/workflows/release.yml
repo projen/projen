@@ -24,12 +24,7 @@ jobs:
         run: |-
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-      - name: Setup Node.js
-        uses: actions/setup-node@v2.2.0
-        with:
-          node-version: 12.22.0
-      - name: Install dependencies
-        run: yarn install --check-files --frozen-lockfile
+      - run: yarn install --check-files --frozen-lockfile
       - name: release
         run: /bin/bash ./projen.bash release
       - name: Check for new commits
@@ -105,14 +100,10 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Prepare Repository
-        run: mv dist .repo
-      - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
-      - name: Create js artifact
-        run: cd .repo && npx projen package:js
-      - name: Collect js Artifact
-        run: mv .repo/dist dist
+      - run: mv dist .repo
+      - run: cd .repo && yarn install --check-files --frozen-lockfile
+      - run: cd .repo && npx projen package:js
+      - run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -154,14 +145,10 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Prepare Repository
-        run: mv dist .repo
-      - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
-      - name: Create java artifact
-        run: cd .repo && npx projen package:java
-      - name: Collect java Artifact
-        run: mv .repo/dist dist
+      - run: mv dist .repo
+      - run: cd .repo && yarn install --check-files --frozen-lockfile
+      - run: cd .repo && npx projen package:java
+      - run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-maven
         env:
@@ -206,14 +193,10 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Prepare Repository
-        run: mv dist .repo
-      - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
-      - name: Create python artifact
-        run: cd .repo && npx projen package:python
-      - name: Collect python Artifact
-        run: mv .repo/dist dist
+      - run: mv dist .repo
+      - run: cd .repo && yarn install --check-files --frozen-lockfile
+      - run: cd .repo && npx projen package:python
+      - run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -253,14 +236,10 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - name: Prepare Repository
-        run: mv dist .repo
-      - name: Install Dependencies
-        run: cd .repo && yarn install --check-files --frozen-lockfile
-      - name: Create go artifact
-        run: cd .repo && npx projen package:go
-      - name: Collect go Artifact
-        run: mv .repo/dist dist
+      - run: mv dist .repo
+      - run: cd .repo && yarn install --check-files --frozen-lockfile
+      - run: cd .repo && npx projen package:go
+      - run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:

@@ -341,8 +341,6 @@ export class JsiiProject extends TypeScriptProject {
     const pacmak = this.pacmakForLanguage(language, packTask);
 
     this.buildWorkflow.addPostBuildJob(`package-${language}`, {
-      runsOn: ["ubuntu-latest"],
-      permissions: {},
       tools: {
         node: { version: "14.x" },
         ...pacmak.publishTools,
@@ -376,19 +374,15 @@ export class JsiiProject extends TypeScriptProject {
       publishTools: JSII_TOOLCHAIN[target],
       prePublishSteps: [
         {
-          name: "Prepare Repository",
           run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
         },
         {
-          name: "Install Dependencies",
           run: `cd ${REPO_TEMP_DIRECTORY} && ${this.package.installCommand}`,
         },
         {
-          name: `Create ${target} artifact`,
           run: `cd ${REPO_TEMP_DIRECTORY} && npx projen ${packTask.name}`,
         },
         {
-          name: `Collect ${target} Artifact`,
           run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
         },
       ],

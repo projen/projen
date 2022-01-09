@@ -2,6 +2,7 @@ import { snake } from "case";
 import { resolve } from "../_resolve";
 import { Component } from "../component";
 import { kebabCaseKeys } from "../util";
+import { Tools } from "../workflows";
 import { YamlFile } from "../yaml";
 import { GitHub } from "./github";
 
@@ -263,7 +264,7 @@ export interface IJobProvider {
   renderJobs(): Record<string, workflows.Job>;
 }
 
-function setupTools(tools: workflows.Tools) {
+function setupTools(tools: Tools) {
   const steps: workflows.JobStep[] = [];
 
   if (tools.java) {

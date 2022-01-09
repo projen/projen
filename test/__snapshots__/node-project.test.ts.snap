@@ -123,34 +123,34 @@ Array [
     },
   },
   Object {
-    "name": "Install dependencies",
     "run": "yarn install --check-files",
   },
   Object {
-    "name": "build",
     "run": "npx projen build",
   },
   Object {
-    "id": "self_mutation",
-    "name": "Find mutations",
-    "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"",
+    "run": "git add .",
   },
   Object {
-    "if": "steps.self_mutation.outputs.self_mutation_happened",
+    "run": "if git diff --staged --patch --exit-code > .repo.patch; then
+  self_mutation_happened=1
+else
+  echo \\"Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+  cat .repo.patch
+  exit 1
+fi",
+  },
+  Object {
+    "id": "export-self_mutation_happened",
+    "run": "echo \\"::set-output name=self_mutation_happened::$self_mutation_happened\\"",
+  },
+  Object {
     "name": "Upload patch",
     "uses": "actions/upload-artifact@v2",
     "with": Object {
       "name": ".repo.patch",
       "path": ".repo.patch",
     },
-  },
-  Object {
-    "if": "steps.self_mutation.outputs.self_mutation_happened",
-    "name": "Fail build on mutation",
-    "run": "echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
-cat .repo.patch
-exit 1",
   },
 ]
 `;

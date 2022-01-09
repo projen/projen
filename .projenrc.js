@@ -1,5 +1,4 @@
-const { cdk, github, JsonFile, TextFile } = require("./lib");
-const { workflows } = require("./lib/github");
+const { cdk, JsonFile, TextFile, gitlab } = require("./lib");
 
 const project = new cdk.JsiiProject({
   name: "projen",
@@ -191,5 +190,7 @@ integTask.spawn(pythonCompatTask);
 project.buildWorkflow.addPostBuildJobTask(integTask, {
   tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
 });
+
+new gitlab.WorkflowProvider(project);
 
 project.synth();

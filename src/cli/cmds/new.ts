@@ -320,6 +320,7 @@ async function initProject(
     const gitversion: string = execCapture("git --version", { cwd: baseDir })
       .toString()
       .replace(/[a-z,/s]/g, "")
+      .split(" ")[0]
       .trim();
     logging.debug("system using git version ", gitversion);
     if (gitversion && semver.gte(gitversion, "2.28.0")) {
