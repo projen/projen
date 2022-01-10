@@ -1,4 +1,5 @@
 import * as yaml from "yaml";
+import { PROJEN_MARKER } from "../src/common";
 import { DependencyType } from "../src/dependencies";
 import { JobPermission } from "../src/github/workflows-model";
 import {
@@ -825,11 +826,14 @@ test("node project can be ejected", () => {
   // THEN
   const outdir = synthSnapshot(p);
   expect(outdir["package.json"]).toMatchSnapshot();
+  expect(outdir["package.json"]).not.toContain(PROJEN_MARKER);
   expect(outdir["package.json"]["//"]).toBeUndefined();
   expect(outdir["package.json"].scripts.eject).toBeUndefined();
   expect(outdir["package.json"].scripts.default).toBeUndefined();
   expect(outdir["package.json"].devDependencies.projen).toBeUndefined();
   expect(outdir["task-runner.js"]).toBeDefined();
+  expect(outdir["foo/bar.json"]).not.toContain(PROJEN_MARKER);
+  expect(outdir["sample.txt"]).not.toContain(PROJEN_MARKER);
   expect(outdir[".projenrc.js"]).toBeUndefined();
   expect(outdir[".projen/deps.json"]).toBeUndefined();
   expect(outdir[".projen/files.json"]).toBeUndefined();

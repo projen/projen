@@ -1,7 +1,7 @@
 import { Project } from "../../src";
 import { TasksManifest, TaskStep } from "../../src/task-model";
 import { Tasks } from "../../src/tasks";
-import { TestProject as BaseTestProject, synthSnapshot } from "../util";
+import { TestProject, synthSnapshot } from "../util";
 
 test("default tasks", () => {
   const p = new TestProject();
@@ -368,18 +368,11 @@ function expectManifest(p: Project, toStrictEqual: TasksManifest) {
   delete manifest.tasks.test;
   delete manifest.tasks.default;
   delete manifest.tasks.package;
+  delete manifest.tasks.eject;
 
   expect(manifest).toStrictEqual(toStrictEqual);
 }
 
 function synthTasksManifest(p: Project) {
   return synthSnapshot(p)[Tasks.MANIFEST_FILE];
-}
-
-class TestProject extends BaseTestProject {
-  constructor() {
-    super();
-
-    this.tasks.removeTask("eject");
-  }
 }

@@ -358,10 +358,6 @@ export function isExecutable(file: string) {
   }
 }
 
-export function rmDir(dir: string) {
-  fs.removeSync(dir);
-}
-
 function decamelize(s: string, sep: string = "_") {
   if (Case.of(s) === "camel") {
     return Case.lower(s, sep);
