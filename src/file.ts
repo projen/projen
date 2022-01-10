@@ -172,7 +172,7 @@ export abstract class FileBase extends Component {
   }
 
   /**
-   * For debuggin, check whether a file was incorrectly generated with
+   * For debugging, check whether a file was incorrectly generated with
    * or without the projen marker. The projen marker does not *need* to be
    * included on projen-generated files, but it's recommended since it signals
    * that it probably should not be edited directly.
@@ -191,18 +191,6 @@ export abstract class FileBase extends Component {
       );
     }
   }
-
-  // TODO: check if this is needed
-  // public eject() {
-  //   if (
-  //     !this.path.startsWith(".projen/") ||
-  //     this.path === ".projen/tasks.json"
-  //   ) {
-  //     this.synthesize();
-  //   } else {
-  //     unlinkSync(this.absolutePath);
-  //   }
-  // }
 
   /**
    * Indicates if the file has been changed during synthesis. This property is
