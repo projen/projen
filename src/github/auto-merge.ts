@@ -41,23 +41,19 @@ export class AutoMerge extends Component {
       : [];
 
     const mergeAction = {
-      merge: {
+      delete_head_branch: {},
+
+      queue: {
         // squash all commits into a single commit when merging
         // method: "squash",
-
+        method: "squash",
+        name: "default",
         // use PR title+body as the commit message
         commit_message_template: [
           "{{ title }} (#{{ number }})",
           "",
           "{{ body }}",
         ].join("\n"),
-      },
-
-      delete_head_branch: {},
-
-      queue: {
-        method: "merge",
-        name: "default",
       },
     };
 

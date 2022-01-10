@@ -70,8 +70,7 @@ export class Mergify extends Component {
     }
   }
 
-  public addRule(rule: MergifyRule) {
-    this.rules.push(rule);
+  private createYamlFile() {
     if (this.yamlFile == null) {
       this.yamlFile = new YamlFile(this.project, ".mergify.yml", {
         obj: {
@@ -82,15 +81,13 @@ export class Mergify extends Component {
     }
   }
 
+  public addRule(rule: MergifyRule) {
+    this.rules.push(rule);
+    this.createYamlFile();
+  }
+
   public addQueue(queue: MergifyQueue) {
     this.queues.push(queue);
-    if (this.yamlFile == null) {
-      this.yamlFile = new YamlFile(this.project, ".mergify.yml", {
-        obj: {
-          queue_rules: this.queues,
-          pull_request_rules: this.rules,
-        },
-      });
-    }
+    this.createYamlFile();
   }
 }
