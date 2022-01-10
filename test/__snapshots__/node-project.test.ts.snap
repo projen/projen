@@ -111,3 +111,68 @@ exit 1",
   },
 ]
 `;
+
+exports[`node project can be ejected 1`] = `
+Object {
+  "devDependencies": Object {
+    "jest": "*",
+    "jest-junit": "^13",
+    "npm-check-updates": "^12",
+    "standard-version": "^9",
+    "test": "*",
+  },
+  "jest": Object {
+    "clearMocks": true,
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coveragePathIgnorePatterns": Array [
+      "/node_modules/",
+    ],
+    "coverageReporters": Array [
+      "json",
+      "lcov",
+      "clover",
+      "text",
+    ],
+    "reporters": Array [
+      "default",
+      Array [
+        "jest-junit",
+        Object {
+          "outputDirectory": "test-reports",
+        },
+      ],
+    ],
+    "testMatch": Array [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[tj]s?(x)",
+    ],
+    "testPathIgnorePatterns": Array [
+      "/node_modules/",
+    ],
+    "watchPathIgnorePatterns": Array [
+      "/node_modules/",
+    ],
+  },
+  "license": "Apache-2.0",
+  "main": "lib/index.js",
+  "name": "test-node-project",
+  "scripts": Object {
+    "build": "node task-runner.js build",
+    "bump": "node task-runner.js bump",
+    "clobber": "node task-runner.js clobber",
+    "compile": "node task-runner.js compile",
+    "package": "node task-runner.js package",
+    "post-compile": "node task-runner.js post-compile",
+    "pre-compile": "node task-runner.js pre-compile",
+    "release": "node task-runner.js release",
+    "test": "node task-runner.js test",
+    "test:update": "node task-runner.js test:update",
+    "test:watch": "node task-runner.js test:watch",
+    "unbump": "node task-runner.js unbump",
+    "upgrade": "node task-runner.js upgrade",
+    "upgrade-projen": "node task-runner.js upgrade-projen",
+  },
+  "version": "0.0.0",
+}
+`;

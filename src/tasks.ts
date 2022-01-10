@@ -122,7 +122,7 @@ export class Tasks extends Component {
       // Insert a task-runner script so that tasks can be run after ejecting
       fs.copyFileSync(
         path.join(__dirname, "..", "lib", "task-runner.js"),
-        "task-runner.js"
+        path.join(this.project.outdir, "task-runner.js")
       );
     }
   }

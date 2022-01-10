@@ -7,8 +7,10 @@ import {
   NodePackage,
   NpmAccess,
 } from "../src/javascript";
+import { JsonFile } from "../src/json";
 import * as logging from "../src/logging";
 import { Project } from "../src/project";
+import { SampleFile } from "../src/sample-file";
 import { Tasks } from "../src/tasks";
 import { synthSnapshot, TestProject } from "./util";
 
@@ -790,6 +792,32 @@ describe("workflowRunsOn", () => {
       "self-hosted"
     );
   });
+});
+
+test("node project can be ejected", () => {
+  // GIVEN
+  // equivalent to running "eject" task - needs to be enabled at construction time
+  process.env.PROJEN_EJECTING = "true";
+
+  // WHEN
+  const p = new TestNodeProject();
+  p.deps.addDependency("test", DependencyType.BUILD);
+  new JsonFile(p, "foo/bar.json", { obj: { hello: "world!" } });
+  new SampleFile(p, "sample.txt", {
+    contents: "the file",
+  });
+
+  // THEN
+  const outdir = synthSnapshot(p);
+  expect(outdir["package.json"]).toMatchSnapshot();
+  expect(outdir["package.json"]["//"]).toBeUndefined();
+  expect(outdir["package.json"].scripts.eject).toBeUndefined();
+  expect(outdir["package.json"].scripts.default).toBeUndefined();
+  expect(outdir["package.json"].devDependencies.projen).toBeUndefined();
+  expect(outdir["task-runner.js"]).toBeDefined();
+  expect(outdir[".projenrc.js"]).toBeUndefined();
+  expect(outdir[".projen/deps.json"]).toBeUndefined();
+  expect(outdir[".projen/files.json"]).toBeUndefined();
 });
 
 class TestNodeProject extends NodeProject {
