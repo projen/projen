@@ -393,7 +393,7 @@ export class TypeScriptProject extends NodeProject {
       return path.join(dir, filename);
     };
 
-    const resolver = new TextFile(this, "jest-snapshot-resolver.js");
+    const resolver = new TextFile(this, ".projen/jest-snapshot-resolver.js");
     if (!this.ejected) {
       resolver.addLine(`// ${this.marker}`);
     }

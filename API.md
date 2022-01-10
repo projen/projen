@@ -871,6 +871,7 @@ Name | Type | Description
 **path**🔹 | <code>string</code> | The file path, relative to the project root.
 **readonly**🔹 | <code>boolean</code> | Indicates if the file should be read-only or read-write.
 **changed**?🔹 | <code>boolean</code> | Indicates if the file has been changed during synthesis.<br/>__*Optional*__
+*static* **PROJEN_MARKER**⚠️ | <code>string</code> | The marker to embed in files in order to identify them as projen files.
 
 ### Methods
 
