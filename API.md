@@ -13902,7 +13902,7 @@ Name | Type | Description
 **coverageDirectory**?🔹 | <code>string</code> | The directory where Jest should output its coverage files.<br/>__*Default*__: "coverage"
 **coveragePathIgnorePatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all file paths before executing the test.<br/>__*Default*__: "/node_modules/"
 **coverageProvider**?🔹 | <code>string</code> | Indicates which provider should be used to instrument code for coverage.<br/>__*Default*__: "babel"
-**coverageReporters**?🔹 | <code>Array<string></code> | A list of reporter names that Jest uses when writing coverage reports.<br/>__*Default*__: ["json", "lcov", "text", "clover"]
+**coverageReporters**?🔹 | <code>Array<string></code> | A list of reporter names that Jest uses when writing coverage reports.<br/>__*Default*__: ["json", "lcov", "text", "clover", "cobertura"]
 **coverageThreshold**?🔹 | <code>[javascript.CoverageThreshold](#projen-javascript-coveragethreshold)</code> | Specify the global coverage thresholds.<br/>__*Default*__: undefined
 **dependencyExtractor**?🔹 | <code>string</code> | This option allows the use of a custom dependency extractor.<br/>__*Default*__: undefined
 **displayName**?🔹 | <code>any</code> | Allows for a label to be printed alongside a test while it is running.<br/>__*Default*__: undefined

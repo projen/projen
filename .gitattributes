@@ -15,6 +15,7 @@
 /.gitpod.yml linguist-generated
 /.markdownlint.json linguist-generated
 /.mergify.yml linguist-generated
+/.ncurc.yml linguist-generated
 /.npmignore linguist-generated
 /.prettierignore linguist-generated
 /.prettierrc.json linguist-generated

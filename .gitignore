@@ -43,6 +43,7 @@ junit.xml
 /dist/version.txt
 !/.github/workflows/release.yml
 !/.mergify.yml
+!/.ncurc.yml
 !/.github/pull_request_template.md
 !/.prettierignore
 !/.prettierrc.json

@@ -1777,6 +1777,7 @@ project.synth();
         "json",
         "lcov",
         "clover",
+        "cobertura",
         "text",
       ],
       "globals": Object {
@@ -3331,6 +3332,7 @@ project.synth();
         "json",
         "lcov",
         "clover",
+        "cobertura",
         "text",
       ],
       "globals": Object {
@@ -4767,6 +4769,7 @@ project.synth();
         "json",
         "lcov",
         "clover",
+        "cobertura",
         "text",
       ],
       "globals": Object {
@@ -5869,6 +5872,7 @@ project.synth();
         "json",
         "lcov",
         "clover",
+        "cobertura",
         "text",
       ],
       "reporters": Array [
