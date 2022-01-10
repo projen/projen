@@ -34,12 +34,27 @@ export interface MergifyRule {
   readonly actions: { [action: string]: any };
 }
 
+export interface MergifyQueue {
+  /**
+   * The name of the queue.
+   */
+  readonly name: string;
+  /**
+   * A list of Conditions string that must match against the
+   * pull request for the pull request to be added to the queue.
+   * @see https://docs.mergify.com/conditions/#conditions
+   */
+  readonly conditions: MergifyCondition[];
+}
+
 export interface MergifyOptions {
   readonly rules?: MergifyRule[];
+  readonly queues?: MergifyQueue[];
 }
 
 export class Mergify extends Component {
   private readonly rules = new Array<MergifyRule>();
+  private readonly queues = new Array<MergifyQueue>();
   // The actual YAML file will only be created if at least 1 rule is added.
   private yamlFile?: YamlFile;
 
@@ -49,6 +64,10 @@ export class Mergify extends Component {
     for (const rule of options.rules ?? []) {
       this.addRule(rule);
     }
+
+    for (const queue of options.queues ?? []) {
+      this.addQueue(queue);
+    }
   }
 
   public addRule(rule: MergifyRule) {
@@ -56,6 +75,19 @@ export class Mergify extends Component {
     if (this.yamlFile == null) {
       this.yamlFile = new YamlFile(this.project, ".mergify.yml", {
         obj: {
+          queue_rules: this.queues,
+          pull_request_rules: this.rules,
+        },
+      });
+    }
+  }
+
+  public addQueue(queue: MergifyQueue) {
+    this.queues.push(queue);
+    if (this.yamlFile == null) {
+      this.yamlFile = new YamlFile(this.project, ".mergify.yml", {
+        obj: {
+          queue_rules: this.queues,
           pull_request_rules: this.rules,
         },
       });

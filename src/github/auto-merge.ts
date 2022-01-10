@@ -43,7 +43,7 @@ export class AutoMerge extends Component {
     const mergeAction = {
       merge: {
         // squash all commits into a single commit when merging
-        method: "squash",
+        // method: "squash",
 
         // use PR title+body as the commit message
         commit_message_template: [
@@ -51,13 +51,14 @@ export class AutoMerge extends Component {
           "",
           "{{ body }}",
         ].join("\n"),
-
-        // update PR branch so it's up-to-date before merging
-        strict: "smart",
-        strict_method: "merge",
       },
 
       delete_head_branch: {},
+
+      queue: {
+        method: "merge",
+        name: "default",
+      },
     };
 
     const approvedReviews = options.approvedReviews ?? 1;
@@ -69,6 +70,11 @@ export class AutoMerge extends Component {
     mergify.addRule({
       name: "Automatic merge on approval and successful build",
       actions: mergeAction,
+      conditions: (() => this.renderConditions()) as any,
+    });
+
+    mergify.addQueue({
+      name: "default",
       conditions: (() => this.renderConditions()) as any,
     });
 
