@@ -41,7 +41,7 @@ export class WorkflowProvider extends Component {
           };
 
           for (const e of exports) {
-            script.push(`echo "${e}="\$${e}" >> ${exportsFile}`);
+            script.push(`echo "${e}=\"\$${e}\"" >> ${exportsFile}`);
           }
         }
 
