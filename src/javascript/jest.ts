@@ -206,12 +206,12 @@ export interface JestConfigOptions {
    * @default - failure-change
    */
   readonly notifyMode?:
-  | "always"
-  | "failure"
-  | "success"
-  | "change"
-  | "success-change"
-  | "failure-change";
+    | "always"
+    | "failure"
+    | "success"
+    | "change"
+    | "success-change"
+    | "failure-change";
 
   /**
    * A preset that is used as a base for Jest's configuration. A preset should point to an npm module
@@ -598,7 +598,7 @@ export class Jest {
       "json",
       "lcov",
       "clover",
-      "cobertura"
+      "cobertura",
     ];
     this.testMatch = this.jestConfig?.testMatch ?? [
       "**/__tests__/**/*.[jt]s?(x)",
