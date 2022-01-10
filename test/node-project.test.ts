@@ -647,6 +647,21 @@ test("mutableBuild will push changes to PR branches", () => {
   const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
   const workflow = yaml.parse(workflowYaml);
   expect(workflow.jobs.build.steps).toMatchSnapshot();
+  expect(Object.keys(workflow.jobs)).toContain("self-mutation");
+  expect(workflow.jobs["self-mutation"].steps).toMatchSnapshot();
+});
+
+test("disabling mutableBuild will skip pushing changes to PR branches", () => {
+  // WHEN
+  const project = new TestNodeProject({
+    mutableBuild: false,
+  });
+
+  // THEN
+  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
+  const workflow = yaml.parse(workflowYaml);
+  expect(workflow.jobs.build.steps).toMatchSnapshot();
+  expect(Object.keys(workflow.jobs)).not.toContain("self-mutation");
 });
 
 test("projen synth is only executed for subprojects", () => {
