@@ -207,6 +207,7 @@ Name|Description
 [github.GithubWorkflowOptions](#projen-github-githubworkflowoptions)|Options for `GithubWorkflow`.
 [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
+[github.MergifyQueue](#projen-github-mergifyqueue)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
 [github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)|Options for PullRequestLint.
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
@@ -4019,6 +4020,7 @@ new build.BuildWorkflow(project: Project, options: BuildWorkflowOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build. __*Default*__: []
   * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before the build. __*Default*__: []
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
 
 
 
@@ -4084,6 +4086,7 @@ addPostBuildJobCommands(id: string, commands: Array<string>, options?: AddPostBu
 * **options** (<code>[build.AddPostBuildJobCommandsOptions](#projen-build-addpostbuildjobcommandsoptions)</code>)  Specify tools and other options.
   * **checkoutRepo** (<code>boolean</code>)  Check out the repository at the pull request branch before commands are run. __*Default*__: false
   * **installDeps** (<code>boolean</code>)  Install project dependencies before running commands. `checkoutRepo` must also be set to true. __*Default*__: false
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools that should be installed before the commands are run. __*Optional*__
 
 
@@ -4106,6 +4109,7 @@ addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions): void
 
 * **task** (<code>[Task](#projen-task)</code>)  *No description*
 * **options** (<code>[build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)</code>)  Specify tools and other options.
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools that should be installed before the task is run. __*Optional*__
 
 
@@ -5511,10 +5515,26 @@ new github.Mergify(github: GitHub, options?: MergifyOptions)
 
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **options** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  *No description*
+  * **queues** (<code>Array<[github.MergifyQueue](#projen-github-mergifyqueue)></code>)  *No description* __*Optional*__
   * **rules** (<code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code>)  *No description* __*Optional*__
 
 
 ### Methods
+
+
+#### addQueue(queue)🔹 <a id="projen-github-mergify-addqueue"></a>
+
+
+
+```ts
+addQueue(queue: MergifyQueue): void
+```
+
+* **queue** (<code>[github.MergifyQueue](#projen-github-mergifyqueue)</code>)  *No description*
+  * **conditions** (<code>Array<string &#124; [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)></code>)  A list of Conditions string that must match against the pull request for the pull request to be added to the queue. 
+  * **name** (<code>string</code>)  The name of the queue. 
+
+
 
 
 #### addRule(rule)🔹 <a id="projen-github-mergify-addrule"></a>
@@ -5896,22 +5916,6 @@ new gitlab.NestedConfiguration(project: Project, parent: GitlabConfiguration, na
 Name | Type | Description 
 -----|------|-------------
 **parent**🔹 | <code>[gitlab.GitlabConfiguration](#projen-gitlab-gitlabconfiguration)</code> | <span></span>
-
-### Methods
-
-
-#### addStages(...stages)🔹 <a id="projen-gitlab-nestedconfiguration-addstages"></a>
-
-Add stages to the Nested configuration and the main CI file if not already present.
-
-```ts
-addStages(...stages: string[]): void
-```
-
-* **stages** (<code>string</code>)  stages to add.
-
-
-
 
 
 
@@ -11748,6 +11752,7 @@ Name | Type | Description
 -----|------|-------------
 **checkoutRepo**?🔹 | <code>boolean</code> | Check out the repository at the pull request branch before commands are run.<br/>__*Default*__: false
 **installDeps**?🔹 | <code>boolean</code> | Install project dependencies before running commands. `checkoutRepo` must also be set to true.<br/>__*Default*__: false
+**runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **tools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Tools that should be installed before the commands are run.<br/>__*Optional*__
 
 
@@ -11761,6 +11766,7 @@ Options for `BuildWorkflow.addPostBuildJobTask`.
 
 Name | Type | Description 
 -----|------|-------------
+**runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **tools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Tools that should be installed before the task is run.<br/>__*Optional*__
 
 
@@ -11782,6 +11788,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build.<br/>__*Default*__: []
 **preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before the build.<br/>__*Default*__: []
+**runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
 
@@ -12881,7 +12888,22 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**queues**?🔹 | <code>Array<[github.MergifyQueue](#projen-github-mergifyqueue)></code> | __*Optional*__
 **rules**?🔹 | <code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code> | __*Optional*__
+
+
+
+## struct MergifyQueue 🔹 <a id="projen-github-mergifyqueue"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**conditions**🔹 | <code>Array<string &#124; [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)></code> | A list of Conditions string that must match against the pull request for the pull request to be added to the queue.
+**name**🔹 | <code>string</code> | The name of the queue.
 
 
 
@@ -13913,7 +13935,7 @@ Name | Type | Description
 **coverageDirectory**?🔹 | <code>string</code> | The directory where Jest should output its coverage files.<br/>__*Default*__: "coverage"
 **coveragePathIgnorePatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all file paths before executing the test.<br/>__*Default*__: "/node_modules/"
 **coverageProvider**?🔹 | <code>string</code> | Indicates which provider should be used to instrument code for coverage.<br/>__*Default*__: "babel"
-**coverageReporters**?🔹 | <code>Array<string></code> | A list of reporter names that Jest uses when writing coverage reports.<br/>__*Default*__: ["json", "lcov", "text", "clover"]
+**coverageReporters**?🔹 | <code>Array<string></code> | A list of reporter names that Jest uses when writing coverage reports.<br/>__*Default*__: ["json", "lcov", "text", "clover", "cobertura"]
 **coverageThreshold**?🔹 | <code>[javascript.CoverageThreshold](#projen-javascript-coveragethreshold)</code> | Specify the global coverage thresholds.<br/>__*Default*__: undefined
 **dependencyExtractor**?🔹 | <code>string</code> | This option allows the use of a custom dependency extractor.<br/>__*Default*__: undefined
 **displayName**?🔹 | <code>any</code> | Allows for a label to be printed alongside a test while it is running.<br/>__*Default*__: undefined

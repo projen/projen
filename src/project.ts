@@ -426,8 +426,12 @@ export class Project {
       this.addExcludeFromCleanup(subproject.outdir + "/**");
     }
 
-    // delete all generated files before we start synthesizing new ones
-    cleanup(outdir, this.excludeFromCleanup);
+    // delete orphaned files before we start synthesizing new ones
+    cleanup(
+      outdir,
+      this.files.map((f) => f.path.replace(/\\/g, "/")),
+      this.excludeFromCleanup
+    );
 
     for (const subproject of this.subprojects) {
       subproject.synth();

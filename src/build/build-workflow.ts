@@ -76,6 +76,12 @@ export interface BuildWorkflowOptions {
    * @default {}
    */
   readonly env?: { [key: string]: string };
+
+  /**
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
+   */
+  readonly runsOn?: string[];
 }
 
 export class BuildWorkflow extends Component {
@@ -86,6 +92,7 @@ export class BuildWorkflow extends Component {
   private readonly github: GitHub;
   private readonly workflow: GithubWorkflow;
   private readonly artifactsDirectory: string;
+  private readonly defaultRunners: string[] = ["ubuntu-latest"];
 
   private readonly _postBuildJobs: string[] = [];
 
@@ -116,13 +123,13 @@ export class BuildWorkflow extends Component {
     this.addBuildJob(options);
 
     if (mutableBuilds) {
-      this.addSelfMutationJob();
+      this.addSelfMutationJob(options);
     }
   }
 
   private addBuildJob(options: BuildWorkflowOptions) {
     this.workflow.addJob(BUILD_JOBID, {
-      runsOn: ["ubuntu-latest"],
+      runsOn: options.runsOn ?? this.defaultRunners,
       container: options.containerImage
         ? { image: options.containerImage }
         : undefined,
@@ -218,6 +225,7 @@ export class BuildWorkflow extends Component {
         checkoutRepo: true,
         installDeps: true,
         tools: options.tools,
+        runsOn: options.runsOn,
       }
     );
   }
@@ -268,14 +276,14 @@ export class BuildWorkflow extends Component {
         contents: JobPermission.READ,
       },
       tools: options?.tools,
-      runsOn: ["ubuntu-latest"],
+      runsOn: options?.runsOn ?? this.defaultRunners,
       steps,
     });
   }
 
-  private addSelfMutationJob() {
+  private addSelfMutationJob(options: BuildWorkflowOptions) {
     this.workflow.addJob("self-mutation", {
-      runsOn: ["ubuntu-latest"],
+      runsOn: options.runsOn ?? this.defaultRunners,
       permissions: {
         contents: JobPermission.WRITE,
       },
@@ -293,7 +301,7 @@ export class BuildWorkflow extends Component {
           name: "Push changes",
           run: [
             "  git add .",
-            '  git commit -m "chore: self mutation"',
+            '  git commit -m -s "chore: self mutation"',
             `  git push origin HEAD:${PULL_REQUEST_REF}`,
           ].join("\n"),
         },
@@ -357,6 +365,12 @@ export interface AddPostBuildJobTaskOptions {
    * Tools that should be installed before the task is run.
    */
   readonly tools?: Tools;
+
+  /**
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
+   */
+  readonly runsOn?: string[];
 }
 
 /**
@@ -385,4 +399,10 @@ export interface AddPostBuildJobCommandsOptions {
    * @default false
    */
   readonly installDeps?: boolean;
+
+  /**
+   * Github Runner selection labels
+   * @default ["ubuntu-latest"]
+   */
+  readonly runsOn?: string[];
 }

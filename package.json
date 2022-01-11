@@ -41,9 +41,9 @@
     "projen": "/bin/bash ./projen.bash"
   },
   "author": {
-    "name": "Elad Ben-Israel",
-    "email": "benisrae@amazon.com",
-    "organization": false
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com",
+    "organization": true
   },
   "devDependencies": {
     "@types/conventional-changelog-config-spec": "^2.1.1",
@@ -63,13 +63,13 @@
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-prettier": "^4.0.0",
-    "jest": "^27.4.5",
+    "jest": "^27.4.7",
     "jest-junit": "^13",
-    "jsii": "^1.50.0",
-    "jsii-diff": "^1.50.0",
+    "jsii": "^1.52.1",
+    "jsii-diff": "^1.52.1",
     "jsii-docgen": "^1.8.110",
     "json-schema": "^0.4.0",
-    "markmac": "^0.1.126",
+    "markmac": "^0.1.134",
     "npm-check-updates": "^12",
     "prettier": "^2.5.1",
     "standard-version": "^9",
@@ -85,7 +85,7 @@
     "glob": "^7",
     "ini": "^2.0.0",
     "semver": "^7.3.5",
-    "shx": "^0.3.3",
+    "shx": "^0.3.4",
     "xmlbuilder2": "^2.4.1",
     "yaml": "^1.10.2",
     "yargs": "^16.2.0"
@@ -128,7 +128,8 @@
     "coverageReporters": [
       "json",
       "lcov",
-      "clover"
+      "clover",
+      "cobertura"
     ],
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [

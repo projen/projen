@@ -645,6 +645,21 @@ test("mutableBuild will push changes to PR branches", () => {
   const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
   const workflow = yaml.parse(workflowYaml);
   expect(workflow.jobs.build.steps).toMatchSnapshot();
+  expect(Object.keys(workflow.jobs)).toContain("self-mutation");
+  expect(workflow.jobs["self-mutation"].steps).toMatchSnapshot();
+});
+
+test("disabling mutableBuild will skip pushing changes to PR branches", () => {
+  // WHEN
+  const project = new TestNodeProject({
+    mutableBuild: false,
+  });
+
+  // THEN
+  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
+  const workflow = yaml.parse(workflowYaml);
+  expect(workflow.jobs.build.steps).toMatchSnapshot();
+  expect(Object.keys(workflow.jobs)).not.toContain("self-mutation");
 });
 
 test("projen synth is only executed for subprojects", () => {
@@ -759,6 +774,36 @@ test("workflowGitIdentity can be used to customize the git identity used in buil
       'git config user.name "heya"',
       'git config user.email "there@z.com"',
     ].join("\n"),
+  });
+});
+
+describe("workflowRunsOn", () => {
+  test("default to ubuntu-latest", () => {
+    // WHEN
+    const project = new TestNodeProject();
+
+    // THEN
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build["runs-on"]).toEqual("ubuntu-latest");
+    expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
+      "ubuntu-latest"
+    );
+  });
+
+  test("use github runner specified in workflowRunsOn", () => {
+    // WHEN
+    const project = new TestNodeProject({
+      workflowRunsOn: ["self-hosted"],
+    });
+
+    // THEN
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build["runs-on"]).toEqual("self-hosted");
+    expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
+      "self-hosted"
+    );
   });
 });
 

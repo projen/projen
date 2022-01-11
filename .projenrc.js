@@ -5,8 +5,11 @@ const project = new cdk.JsiiProject({
   name: "projen",
   description: "CDK for software projects",
   repository: "https://github.com/projen/projen.git",
-  authorName: "Elad Ben-Israel",
-  authorEmail: "benisrae@amazon.com",
+
+  authorName: "Amazon Web Services",
+  authorUrl: "https://aws.amazon.com",
+  authorOrganization: true,
+
   stability: "experimental",
   keywords: [
     "scaffolding",
@@ -188,5 +191,10 @@ integTask.spawn(pythonCompatTask);
 project.buildWorkflow.addPostBuildJobTask(integTask, {
   tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
 });
+
+// we are projen, so re-synth after compiling.
+// fixes feedback loop where projen contibutors run "build"
+// but not all files are updated
+project.postCompileTask.spawn(project.defaultTask);
 
 project.synth();
