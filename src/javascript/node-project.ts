@@ -455,13 +455,6 @@ export class NodeProject extends GitHubProject {
    */
   public readonly upgradeWorkflow?: UpgradeDependencies;
 
-  /**
-   * A task run after the upgrade task.
-   */
-  public get postUpgradeTask() {
-    return this.upgradeWorkflow?.postUpgradeTask;
-  }
-
   private readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
   public readonly prettier?: Prettier;
