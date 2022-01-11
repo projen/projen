@@ -27,7 +27,7 @@ build:
         cat .repo.patch
         exit 1
       fi
-    - echo "self_mutation_happened="$self_mutation_happened" >> .exports.env
+    - echo "self_mutation_happened="$self_mutation_happened"" >> .exports.env
 self_mutation:
   image:
     name: alpine
@@ -42,7 +42,7 @@ self_mutation:
     - git config user.name "github-actions"
     - git config user.email "github-actions@github.com"
     - git add .
-    - 'git commit -m "chore: self mutation"'
+    - 'git commit -m -s "chore: self mutation"'
     - git push origin HEAD:${{ github.event.pull_request.head.ref }}
 package_js:
   image:

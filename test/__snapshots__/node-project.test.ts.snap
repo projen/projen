@@ -206,7 +206,7 @@ Array [
     "run": "git add .",
   },
   Object {
-    "run": "git commit -m \\"chore: self mutation\\"",
+    "run": "git commit -m -s \\"chore: self mutation\\"",
   },
   Object {
     "run": "git push origin HEAD:\${{ github.event.pull_request.head.ref }}",

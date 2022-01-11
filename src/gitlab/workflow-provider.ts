@@ -62,16 +62,14 @@ export class WorkflowProvider extends Component {
 }
 
 function setupAlpineTools(tools: Tools | undefined): string[] {
-  if (!tools) {
-    return [];
-  }
-
-  const clone = { ...tools };
+  const clone: Writeable<Tools> = { ...tools };
 
   const script: string[] = [];
 
+  // always install node.js
+  script.push(`apk add --update nodejs npm yarn`);
+
   if (clone.node) {
-    script.push(`apk add --update nodejs npm yarn`);
     delete clone.node;
   }
 
