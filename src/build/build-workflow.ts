@@ -135,11 +135,10 @@ export class BuildWorkflow extends Component {
         { run: "git add ." },
         {
           run: [
-            `if git diff --staged --patch --exit-code > ${GIT_PATCH_FILE}; then`,
-            `  ${SELF_MUTATION_HAPPENED_OUTPUT}=1`,
-            `else`,
+            `if ! git diff --staged --patch --exit-code > ${GIT_PATCH_FILE}; then`,
             '  echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."',
             `  cat ${GIT_PATCH_FILE}`,
+            `  ${SELF_MUTATION_HAPPENED_OUTPUT}=1`,
             "  exit 1",
             `fi`,
           ].join("\n"),

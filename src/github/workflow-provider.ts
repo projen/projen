@@ -62,6 +62,7 @@ export class WorkflowProvider extends Component {
           const stepId = `export-${e}`;
           steps.push({
             id: stepId,
+            if: "always()",
             run: `echo "::set-output name=${e}::$${e}"`,
           });
 
@@ -75,6 +76,7 @@ export class WorkflowProvider extends Component {
           steps.push({
             name: `Upload ${path}`,
             uses: "actions/upload-artifact@v2",
+            if: "always()",
             with: { name: path, path: path },
           });
         }

@@ -1,7 +1,14 @@
 import * as semver from "semver";
-import { Artifacts, CiConfiguration, Job } from ".";
+import {
+  Artifacts,
+  CacheWhen,
+  CiConfiguration,
+  IncludeRule,
+  Job,
+  JobWhen,
+} from ".";
 import { Component, Project } from "..";
-import { Tools, Workflow } from "../workflows";
+import { ConditionSpec, Tools, Workflow } from "../workflows";
 
 type Writeable<T> = { -readonly [P in keyof T]: T[P] };
 
@@ -18,18 +25,21 @@ export class WorkflowProvider extends Component {
 
       for (const job of workflow.jobs) {
         const artifacts: Writeable<Artifacts> = {};
-        const script = new Array<string>();
+        const commands = new Array<string>();
+        const image = job.options.image ?? "alpine";
+        const afterScript = new Array<string>();
         // ?? readonly mutable?: boolean;
         // ?? readonly download?: string[];
         // ?? readonly checkout?: boolean;
         // readonly exports?: string[];
 
-        script.push(`apk add --update git bash rsync`);
-        script.push(...setupAlpineTools(job.options.tools));
-        script.push(...(job.options.steps?.map((s) => s.run) ?? []));
+        commands.push(`apk add --update git bash rsync`);
+        commands.push(...setupAlpineTools(job.options.tools));
+        commands.push(...(job.options.steps?.map((s) => s.run) ?? []));
 
         if (job.options.upload) {
           artifacts.paths = job.options.upload;
+          artifacts.when = CacheWhen.ALWAYS;
         }
 
         const exports = job.options.exports ?? [];
@@ -41,18 +51,84 @@ export class WorkflowProvider extends Component {
           };
 
           for (const e of exports) {
-            script.push(`echo "${e}=\"\$${e}\"" >> ${exportsFile}`);
+            afterScript.push(`echo "${e}=\"\$${e}\"" >> ${exportsFile}`);
           }
         }
 
-        const image = job.options.image ?? "alpine";
+        const renderCondition = (spec?: ConditionSpec): string | undefined => {
+          if (!spec || Object.keys(spec).length === 0) {
+            return undefined;
+          }
+
+          if (spec.always) {
+            return `true`;
+          }
+
+          if (spec.and) {
+            return spec.and
+              .map((c) => `${renderCondition(c.spec)}`)
+              .join(" && ");
+          }
+
+          if (spec.isFork) {
+            return `false`; // not supported at the moment, so we just assume it's false
+          }
+
+          if (spec.not) {
+            return `! ${renderCondition(spec.not.spec)}`;
+          }
+
+          if (spec.isOutputDefined) {
+            return `[ -n "$${spec.isOutputDefined.output}" ]`;
+          }
+
+          throw new Error(`unsupported condition ${JSON.stringify(spec)}`);
+        };
+
+        const condition: Writable<ConditionSpec> = {
+          ...job.options.condition?.spec,
+        };
+
+        // if we have _any_ conditions, we want this job to ALWAYS run because
+        // we only evaluate the condition in the `script` section of the job.
+        const rules: IncludeRule[] | undefined =
+          Object.keys(condition).length > 0
+            ? [{ when: JobWhen.ALWAYS }]
+            : undefined;
+
+        const script = new Array<string>();
+
+        const condVar = "__cond__";
+        const cond = renderCondition(condition);
+        if (cond) {
+          script.push(
+            [
+              `if ${cond}; then`,
+              `  ${condVar}=true`,
+              `else`,
+              `  echo "Job skipped"`,
+              `  ${condVar}=false`,
+              `fi`,
+            ].join("\n")
+          );
+        }
+
+        for (const c of commands) {
+          if (cond) {
+            script.push(`$\{${condVar}\} && (${c})`);
+          } else {
+            script.push(c);
+          }
+        }
 
         const j: Job = {
           image: image ? { name: image } : undefined,
           needs: job.options.needs ?? [],
+          rules: rules,
           variables: job.options.env,
           artifacts: artifacts,
           script: script,
+          afterScript: afterScript,
         };
 
         ci.addJobs({ [job.name]: j });
@@ -101,3 +177,7 @@ function setupAlpineTools(tools: Tools | undefined): string[] {
 
   return script;
 }
+
+type Writable<T> = {
+  -readonly [K in keyof T]: T[K];
+};
