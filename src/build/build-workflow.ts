@@ -283,7 +283,7 @@ export class BuildWorkflow extends Component {
         { run: `git config user.name "${this.gitIdentity.name}"` },
         { run: `git config user.email "${this.gitIdentity.email}"` },
         { run: `git add .` },
-        { run: `git commit -m "chore: self mutation"` },
+        { run: `git commit -m -s "chore: self mutation"` },
         { run: `git push origin HEAD:${PULL_REQUEST_REF}` },
       ],
     });

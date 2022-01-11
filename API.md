@@ -209,6 +209,7 @@ Name|Description
 [github.GithubWorkflowOptions](#projen-github-githubworkflowoptions)|Options for `GithubWorkflow`.
 [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
+[github.MergifyQueue](#projen-github-mergifyqueue)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
 [github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)|Options for PullRequestLint.
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
@@ -4857,6 +4858,7 @@ new github.Mergify(github: GitHub, options?: MergifyOptions)
 
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **options** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  *No description*
+  * **queues** (<code>Array<[github.MergifyQueue](#projen-github-mergifyqueue)></code>)  *No description* __*Optional*__
   * **rules** (<code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code>)  *No description* __*Optional*__
 
 ### Methods
@@ -11139,6 +11141,7 @@ Name | Type | Description
 
 Name | Type | Description
 -----|------|-------------
+**queues**?🔹 | <code>Array<[github.MergifyQueue](#projen-github-mergifyqueue)></code> | __*Optional*__
 **rules**?🔹 | <code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code> | __*Optional*__
 
 ## struct MergifyRule 🔹 <a id="projen-github-mergifyrule"></a>
@@ -11874,7 +11877,7 @@ Name | Type | Description
 **coverageDirectory**?🔹 | <code>string</code> | The directory where Jest should output its coverage files.<br/>__*Default*__: "coverage"
 **coveragePathIgnorePatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all file paths before executing the test.<br/>__*Default*__: "/node_modules/"
 **coverageProvider**?🔹 | <code>string</code> | Indicates which provider should be used to instrument code for coverage.<br/>__*Default*__: "babel"
-**coverageReporters**?🔹 | <code>Array<string></code> | A list of reporter names that Jest uses when writing coverage reports.<br/>__*Default*__: ["json", "lcov", "text", "clover"]
+**coverageReporters**?🔹 | <code>Array<string></code> | A list of reporter names that Jest uses when writing coverage reports.<br/>__*Default*__: ["json", "lcov", "text", "clover", "cobertura"]
 **coverageThreshold**?🔹 | <code>[javascript.CoverageThreshold](#projen-javascript-coveragethreshold)</code> | Specify the global coverage thresholds.<br/>__*Default*__: undefined
 **dependencyExtractor**?🔹 | <code>string</code> | This option allows the use of a custom dependency extractor.<br/>__*Default*__: undefined
 **displayName**?🔹 | <code>any</code> | Allows for a label to be printed alongside a test while it is running.<br/>__*Default*__: undefined
