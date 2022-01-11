@@ -513,6 +513,10 @@ tsconfig.tsbuildinfo
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
+      "post-upgrade": Object {
+        "description": "Runs after upgrading dependencies",
+        "name": "post-upgrade",
+      },
       "pre-compile": Object {
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
@@ -570,6 +574,9 @@ tsconfig.tsbuildinfo
           Object {
             "exec": "npx projen",
           },
+          Object {
+            "spawn": "post-upgrade",
+          },
         ],
       },
       "upgrade-projen": Object {
@@ -602,6 +609,9 @@ tsconfig.tsbuildinfo
           },
           Object {
             "exec": "npx projen",
+          },
+          Object {
+            "spawn": "post-upgrade",
           },
         ],
       },
@@ -857,6 +867,7 @@ tsconfig.tsbuildinfo
       "export": "npx projen export",
       "package": "npx projen package",
       "post-compile": "npx projen post-compile",
+      "post-upgrade": "npx projen post-upgrade",
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "server": "npx projen server",

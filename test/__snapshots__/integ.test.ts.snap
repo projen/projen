@@ -1334,6 +1334,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
+      "post-upgrade": Object {
+        "description": "Runs after upgrading dependencies",
+        "name": "post-upgrade",
+      },
       "pre-compile": Object {
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
@@ -1437,6 +1441,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
           Object {
             "exec": "npx projen",
+          },
+          Object {
+            "spawn": "post-upgrade",
           },
         ],
       },
@@ -1879,6 +1886,7 @@ project.synth();
       "package:js": "npx projen package:js",
       "package:python": "npx projen package:python",
       "post-compile": "npx projen post-compile",
+      "post-upgrade": "npx projen post-upgrade",
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "release": "npx projen release",
@@ -2762,6 +2770,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
+      "post-upgrade": Object {
+        "description": "Runs after upgrading dependencies",
+        "name": "post-upgrade",
+      },
       "pre-compile": Object {
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
@@ -2830,6 +2842,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           Object {
             "exec": "npx projen",
           },
+          Object {
+            "spawn": "post-upgrade",
+          },
         ],
       },
       "upgrade-projen": Object {
@@ -2862,6 +2877,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
           Object {
             "exec": "npx projen",
+          },
+          Object {
+            "spawn": "post-upgrade",
           },
         ],
       },
@@ -3424,6 +3442,7 @@ project.synth();
       "package:js": "npx projen package:js",
       "package:python": "npx projen package:python",
       "post-compile": "npx projen post-compile",
+      "post-upgrade": "npx projen post-upgrade",
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "test": "npx projen test",
@@ -4217,6 +4236,10 @@ tsconfig.tsbuildinfo
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
+      "post-upgrade": Object {
+        "description": "Runs after upgrading dependencies",
+        "name": "post-upgrade",
+      },
       "pre-compile": Object {
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
@@ -4285,6 +4308,9 @@ tsconfig.tsbuildinfo
           Object {
             "exec": "npx projen",
           },
+          Object {
+            "spawn": "post-upgrade",
+          },
         ],
       },
       "upgrade-projen": Object {
@@ -4317,6 +4343,9 @@ tsconfig.tsbuildinfo
           },
           Object {
             "exec": "npx projen",
+          },
+          Object {
+            "spawn": "post-upgrade",
           },
         ],
       },
@@ -4828,6 +4857,7 @@ project.synth();
       "eslint": "npx projen eslint",
       "package": "npx projen package",
       "post-compile": "npx projen post-compile",
+      "post-upgrade": "npx projen post-upgrade",
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "test": "npx projen test",
@@ -5504,6 +5534,10 @@ junit.xml
         "description": "Runs after successful compilation",
         "name": "post-compile",
       },
+      "post-upgrade": Object {
+        "description": "Runs after upgrading dependencies",
+        "name": "post-upgrade",
+      },
       "pre-compile": Object {
         "description": "Prepare the project for compilation",
         "name": "pre-compile",
@@ -5605,6 +5639,9 @@ junit.xml
           Object {
             "exec": "npx projen",
           },
+          Object {
+            "spawn": "post-upgrade",
+          },
         ],
       },
       "upgrade-projen": Object {
@@ -5637,6 +5674,9 @@ junit.xml
           },
           Object {
             "exec": "npx projen",
+          },
+          Object {
+            "spawn": "post-upgrade",
           },
         ],
       },
@@ -5919,6 +5959,7 @@ project.synth();
       "default": "npx projen default",
       "package": "npx projen package",
       "post-compile": "npx projen post-compile",
+      "post-upgrade": "npx projen post-upgrade",
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "release": "npx projen release",

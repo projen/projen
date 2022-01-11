@@ -7555,6 +7555,7 @@ new javascript.UpgradeDependencies(project: NodeProject, options?: UpgradeDepend
 Name | Type | Description 
 -----|------|-------------
 **ignoresProjen**🔹 | <code>boolean</code> | Whether or not projen is also upgraded in this workflow,.
+**postUpgradeTask**🔹 | <code>[Task](#projen-task)</code> | A task run after the upgrade task.
 **workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | The workflows that execute the upgrades.
 **containerOptions**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Container definitions for the upgrade workflow.<br/>__*Optional*__
 
