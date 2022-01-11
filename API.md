@@ -207,6 +207,7 @@ Name|Description
 [github.GithubWorkflowOptions](#projen-github-githubworkflowoptions)|Options for `GithubWorkflow`.
 [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
+[github.MergifyQueue](#projen-github-mergifyqueue)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
 [github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)|Options for PullRequestLint.
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
@@ -5514,10 +5515,26 @@ new github.Mergify(github: GitHub, options?: MergifyOptions)
 
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **options** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  *No description*
+  * **queues** (<code>Array<[github.MergifyQueue](#projen-github-mergifyqueue)></code>)  *No description* __*Optional*__
   * **rules** (<code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code>)  *No description* __*Optional*__
 
 
 ### Methods
+
+
+#### addQueue(queue)🔹 <a id="projen-github-mergify-addqueue"></a>
+
+
+
+```ts
+addQueue(queue: MergifyQueue): void
+```
+
+* **queue** (<code>[github.MergifyQueue](#projen-github-mergifyqueue)</code>)  *No description*
+  * **conditions** (<code>Array<string &#124; [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)></code>)  A list of Conditions string that must match against the pull request for the pull request to be added to the queue. 
+  * **name** (<code>string</code>)  The name of the queue. 
+
+
 
 
 #### addRule(rule)🔹 <a id="projen-github-mergify-addrule"></a>
@@ -12870,7 +12887,22 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**queues**?🔹 | <code>Array<[github.MergifyQueue](#projen-github-mergifyqueue)></code> | __*Optional*__
 **rules**?🔹 | <code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code> | __*Optional*__
+
+
+
+## struct MergifyQueue 🔹 <a id="projen-github-mergifyqueue"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**conditions**🔹 | <code>Array<string &#124; [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)></code> | A list of Conditions string that must match against the pull request for the pull request to be added to the queue.
+**name**🔹 | <code>string</code> | The name of the queue.
 
 
 
