@@ -127,7 +127,8 @@
     "coverageReporters": [
       "json",
       "lcov",
-      "clover"
+      "clover",
+      "cobertura"
     ],
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
