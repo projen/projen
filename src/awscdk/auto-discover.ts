@@ -1,4 +1,4 @@
-import { join } from "path";
+import { join, basename } from "path";
 import * as glob from "glob";
 import { Component } from "../component";
 import { Project } from "../project";
@@ -70,6 +70,7 @@ export class AutoDiscover extends Component {
 
     for (const entrypoint of entrypoints) {
       new IntegrationTest(this.project, {
+        name: basename(entrypoint, TYPESCRIPT_INTEG_EXT),
         entrypoint: join(options.testdir, entrypoint),
         cdkDeps: options.cdkDeps,
         tsconfigPath: options.tsconfigPath,

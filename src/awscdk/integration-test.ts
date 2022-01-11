@@ -1,10 +1,10 @@
-import { basename, dirname, join } from "path";
+import { dirname, join } from "path";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
 import { Task } from "../task";
 import { AwsCdkDeps } from "./awscdk-deps";
-import { FEATURE_FLAGS, TYPESCRIPT_INTEG_EXT } from "./internal";
+import { FEATURE_FLAGS } from "./internal";
 
 export interface IntegrationTestCommonOptions {
   /**
@@ -21,9 +21,8 @@ export interface IntegrationTestCommonOptions {
 export interface IntegrationTestOptions extends IntegrationTestCommonOptions {
   /**
    * Name of the integration test
-   * @default - Derived from the entrypoint by removing ".integ.ts"
    */
-  readonly name?: string;
+  readonly name: string;
 
   /**
    * A list of stacks within the integration test to deploy/destroy.
@@ -84,7 +83,7 @@ export class IntegrationTest extends Component {
   constructor(project: Project, options: IntegrationTestOptions) {
     super(project);
     const entry = options.entrypoint;
-    const name = options.name ?? basename(entry, TYPESCRIPT_INTEG_EXT);
+    const name = options.name;
     const dir = dirname(entry);
 
     const deploydir = join(dir, ".tmp", `${name}.integ`, "deploy.cdk.out");
