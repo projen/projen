@@ -247,6 +247,9 @@
         },
         {
           "spawn": "readme-macros"
+        },
+        {
+          "spawn": "default"
         }
       ]
     },
