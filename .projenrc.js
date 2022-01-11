@@ -192,4 +192,9 @@ project.buildWorkflow.addPostBuildJobTask(integTask, {
   tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
 });
 
+// we are projen, so re-synth after compiling.
+// fixes feedback loop where projen contibutors run "build"
+// but not all files are updated
+project.postCompileTask.spawn(project.defaultTask);
+
 project.synth();
