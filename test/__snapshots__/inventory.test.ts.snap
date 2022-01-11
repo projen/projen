@@ -202,6 +202,7 @@ Array [
         },
         "jsonLike": true,
         "name": "cdkVersion",
+        "optional": true,
         "parent": "AwsCdkDepsCommonOptions",
         "path": Array [
           "cdkVersion",
@@ -1467,6 +1468,7 @@ Array [
         },
         "jsonLike": true,
         "name": "cdkVersion",
+        "optional": true,
         "parent": "AwsCdkDepsCommonOptions",
         "path": Array [
           "cdkVersion",
@@ -4115,6 +4117,7 @@ Array [
         },
         "jsonLike": true,
         "name": "cdkVersion",
+        "optional": true,
         "parent": "AwsCdkDepsCommonOptions",
         "path": Array [
           "cdkVersion",

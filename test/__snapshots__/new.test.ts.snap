@@ -61,7 +61,6 @@ public class projenrc {
     public static void main(String[] args) {
         AwsCdkJavaApp project = new AwsCdkJavaApp(AwsCdkJavaAppOptions.builder()
             .artifactId(\\"my-app\\")
-            .cdkVersion(\\"2.1.0\\")
             .groupId(\\"org.acme\\")
             .mainClass(\\"org.acme.MyApp\\")
             .name(\\"my-project\\")
@@ -77,7 +76,6 @@ exports[`projen new awscdk-app-ts 1`] = `
 Object {
   ".projenrc.js": "const { awscdk } = require(\\"projen\\");
 const project = new awscdk.AwsCdkTypeScriptApp({
-  cdkVersion: \\"2.1.0\\",
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
 
@@ -96,7 +94,6 @@ Object {
 const project = new awscdk.AwsCdkConstructLibrary({
   author: \\"My User Name\\",
   authorAddress: \\"my@user.email.com\\",
-  cdkVersion: \\"2.1.0\\",
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
   repositoryUrl: \\"git@boom.com:foo/bar.git\\",

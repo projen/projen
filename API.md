@@ -3100,12 +3100,12 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **python** (<code>[cdk.JsiiPythonTarget](#projen-cdk-jsiipythontarget)</code>)  *No description* __*Optional*__
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **catalog** (<code>[cdk.Catalog](#projen-cdk-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
-  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
   * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
   * **cdkAssertions** (<code>boolean</code>)  Install the assertions library? __*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDKv1 modules this project requires. __*Optional*__
   * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. __*Default*__: "2.1.0"
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
   * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. __*Default*__: true
@@ -3175,12 +3175,12 @@ new awscdk.AwsCdkDeps(project: Project, options: AwsCdkDepsOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)</code>)  *No description*
-  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
   * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
   * **cdkAssertions** (<code>boolean</code>)  Install the assertions library? __*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDKv1 modules this project requires. __*Optional*__
   * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. __*Default*__: "2.1.0"
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
   * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime AWS CDK and `constructs` modules. 
@@ -3267,12 +3267,12 @@ new awscdk.AwsCdkDepsJava(project: Project, options: AwsCdkDepsOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)</code>)  *No description*
-  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
   * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
   * **cdkAssertions** (<code>boolean</code>)  Install the assertions library? __*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDKv1 modules this project requires. __*Optional*__
   * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. __*Default*__: "2.1.0"
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
   * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime AWS CDK and `constructs` modules. 
@@ -3314,12 +3314,12 @@ new awscdk.AwsCdkDepsJs(project: Project, options: AwsCdkDepsOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)</code>)  *No description*
-  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
   * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
   * **cdkAssertions** (<code>boolean</code>)  Install the assertions library? __*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDKv1 modules this project requires. __*Optional*__
   * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. __*Default*__: "2.1.0"
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
   * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime AWS CDK and `constructs` modules. 
@@ -3406,12 +3406,12 @@ new awscdk.AwsCdkJavaApp(options: AwsCdkJavaAppOptions)
   * **requireApproval** (<code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code>)  To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. __*Default*__: ApprovalLevel.BROADENING
   * **watchExcludes** (<code>Array<string></code>)  Glob patterns to exclude from `cdk watch`. __*Default*__: []
   * **watchIncludes** (<code>Array<string></code>)  Glob patterns to include in `cdk watch`. __*Default*__: []
-  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
   * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
   * **cdkAssertions** (<code>boolean</code>)  Install the assertions library? __*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDKv1 modules this project requires. __*Optional*__
   * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. __*Default*__: "2.1.0"
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
   * **mainClass** (<code>string</code>)  The name of the Java class with the static `main()` method. 
@@ -3601,12 +3601,12 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **requireApproval** (<code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code>)  To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. __*Default*__: ApprovalLevel.BROADENING
   * **watchExcludes** (<code>Array<string></code>)  Glob patterns to exclude from `cdk watch`. __*Default*__: []
   * **watchIncludes** (<code>Array<string></code>)  Glob patterns to include in `cdk watch`. __*Default*__: []
-  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
   * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
   * **cdkAssertions** (<code>boolean</code>)  Install the assertions library? __*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDKv1 modules this project requires. __*Optional*__
   * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. __*Default*__: "2.1.0"
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
   * **appEntrypoint** (<code>string</code>)  The CDK app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
@@ -3879,12 +3879,12 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **python** (<code>[cdk.JsiiPythonTarget](#projen-cdk-jsiipythontarget)</code>)  *No description* __*Optional*__
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **catalog** (<code>[cdk.Catalog](#projen-cdk-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
-  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
   * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
   * **cdkAssertions** (<code>boolean</code>)  Install the assertions library? __*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
   * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDKv1 modules this project requires. __*Optional*__
   * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. __*Default*__: "2.1.0"
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
   * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. __*Default*__: true
@@ -11036,7 +11036,6 @@ Name | Type | Description
 -----|------|-------------
 **author**🔹 | <code>string</code> | The name of the library author.
 **authorAddress**🔹 | <code>string</code> | Email or URL of the library author.
-**cdkVersion**🔹 | <code>string</code> | Minimum version of the AWS CDK to depend on.
 **defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **repositoryUrl**🔹 | <code>string</code> | Git repository URL.
@@ -11063,6 +11062,7 @@ Name | Type | Description
 **cdkDependencies**?⚠️ | <code>Array<string></code> | Which AWS CDKv1 modules this project requires.<br/>__*Optional*__
 **cdkDependenciesAsDeps**?⚠️ | <code>boolean</code> | If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`).<br/>__*Default*__: true
 **cdkTestDependencies**?⚠️ | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
+**cdkVersion**?🔹 | <code>string</code> | Minimum version of the AWS CDK to depend on.<br/>__*Default*__: "2.1.0"
 **cdkVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
@@ -11198,12 +11198,12 @@ Options for `AwsCdkDeps`.
 
 Name | Type | Description 
 -----|------|-------------
-**cdkVersion**🔹 | <code>string</code> | Minimum version of the AWS CDK to depend on.
 **cdkAssert**?⚠️ | <code>boolean</code> | Warning: NodeJS only.<br/>__*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
 **cdkAssertions**?🔹 | <code>boolean</code> | Install the assertions library?<br/>__*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
 **cdkDependencies**?⚠️ | <code>Array<string></code> | Which AWS CDKv1 modules this project requires.<br/>__*Optional*__
 **cdkDependenciesAsDeps**?⚠️ | <code>boolean</code> | If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`).<br/>__*Default*__: true
 **cdkTestDependencies**?⚠️ | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
+**cdkVersion**?🔹 | <code>string</code> | Minimum version of the AWS CDK to depend on.<br/>__*Default*__: "2.1.0"
 **cdkVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Optional*__
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
 
@@ -11218,13 +11218,13 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**cdkVersion**🔹 | <code>string</code> | Minimum version of the AWS CDK to depend on.
 **dependencyType**🔹 | <code>[DependencyType](#projen-dependencytype)</code> | The type of dependency to use for runtime AWS CDK and `constructs` modules.
 **cdkAssert**?⚠️ | <code>boolean</code> | Warning: NodeJS only.<br/>__*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
 **cdkAssertions**?🔹 | <code>boolean</code> | Install the assertions library?<br/>__*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
 **cdkDependencies**?⚠️ | <code>Array<string></code> | Which AWS CDKv1 modules this project requires.<br/>__*Optional*__
 **cdkDependenciesAsDeps**?⚠️ | <code>boolean</code> | If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`).<br/>__*Default*__: true
 **cdkTestDependencies**?⚠️ | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
+**cdkVersion**?🔹 | <code>string</code> | Minimum version of the AWS CDK to depend on.<br/>__*Default*__: "2.1.0"
 **cdkVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Optional*__
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
 
@@ -11240,7 +11240,6 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **artifactId**🔹 | <code>string</code> | The artifactId is generally the name that the project is known by.
-**cdkVersion**🔹 | <code>string</code> | Minimum version of the AWS CDK to depend on.
 **groupId**🔹 | <code>string</code> | This is generally unique amongst an organization or a project.
 **mainClass**🔹 | <code>string</code> | The name of the Java class with the static `main()` method.
 **name**🔹 | <code>string</code> | This is the name of your project.
@@ -11253,6 +11252,7 @@ Name | Type | Description
 **cdkDependencies**?⚠️ | <code>Array<string></code> | Which AWS CDKv1 modules this project requires.<br/>__*Optional*__
 **cdkDependenciesAsDeps**?⚠️ | <code>boolean</code> | If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`).<br/>__*Default*__: true
 **cdkTestDependencies**?⚠️ | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
+**cdkVersion**?🔹 | <code>string</code> | Minimum version of the AWS CDK to depend on.<br/>__*Default*__: "2.1.0"
 **cdkVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Optional*__
 **cdkout**?🔹 | <code>string</code> | cdk.out directory.<br/>__*Default*__: "cdk.out"
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
@@ -11324,7 +11324,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**cdkVersion**🔹 | <code>string</code> | Minimum version of the AWS CDK to depend on.
 **defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
@@ -11351,6 +11350,7 @@ Name | Type | Description
 **cdkDependencies**?⚠️ | <code>Array<string></code> | Which AWS CDKv1 modules this project requires.<br/>__*Optional*__
 **cdkDependenciesAsDeps**?⚠️ | <code>boolean</code> | If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`).<br/>__*Default*__: true
 **cdkTestDependencies**?⚠️ | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
+**cdkVersion**?🔹 | <code>string</code> | Minimum version of the AWS CDK to depend on.<br/>__*Default*__: "2.1.0"
 **cdkVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Optional*__
 **cdkout**?🔹 | <code>string</code> | cdk.out directory.<br/>__*Default*__: "cdk.out"
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
@@ -11523,7 +11523,6 @@ Name | Type | Description
 -----|------|-------------
 **author**⚠️ | <code>string</code> | The name of the library author.
 **authorAddress**⚠️ | <code>string</code> | Email or URL of the library author.
-**cdkVersion**⚠️ | <code>string</code> | Minimum version of the AWS CDK to depend on.
 **defaultReleaseBranch**⚠️ | <code>string</code> | The name of the main release branch.
 **name**⚠️ | <code>string</code> | This is the name of your project.
 **repositoryUrl**⚠️ | <code>string</code> | Git repository URL.
@@ -11550,6 +11549,7 @@ Name | Type | Description
 **cdkDependencies**?⚠️ | <code>Array<string></code> | Which AWS CDKv1 modules this project requires.<br/>__*Optional*__
 **cdkDependenciesAsDeps**?⚠️ | <code>boolean</code> | If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`).<br/>__*Default*__: true
 **cdkTestDependencies**?⚠️ | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
+**cdkVersion**?⚠️ | <code>string</code> | Minimum version of the AWS CDK to depend on.<br/>__*Default*__: "2.1.0"
 **cdkVersionPinning**?⚠️ | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Optional*__
 **clobber**?⚠️ | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?⚠️ | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined

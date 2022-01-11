@@ -12,7 +12,7 @@ export interface AwsCdkDepsCommonOptions {
    *
    * @default "2.1.0"
    */
-  readonly cdkVersion: string;
+  readonly cdkVersion?: string;
 
   /**
    * Minimum version of the `constructs` library to depend on.
@@ -344,7 +344,8 @@ export abstract class AwsCdkDeps extends Component {
 }
 
 function determineFrameworkVersion(options: AwsCdkDepsOptions) {
-  const ver = semver.parse(options.cdkVersion);
+  const cdkVersion = options.cdkVersion ?? "2.1.0";
+  const ver = semver.parse(cdkVersion);
   if (!ver) {
     throw new Error(
       `"cdkVersion" cannot be parsed as a semver version: ${options.cdkVersion}`
@@ -353,9 +354,7 @@ function determineFrameworkVersion(options: AwsCdkDepsOptions) {
 
   return {
     minimum: ver.format(),
-    range: options.cdkVersionPinning
-      ? options.cdkVersion
-      : `^${options.cdkVersion}`,
+    range: options.cdkVersionPinning ? cdkVersion : `^${cdkVersion}`,
     major: ver.major,
   };
 }
