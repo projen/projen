@@ -301,7 +301,7 @@ export class BuildWorkflow extends Component {
           name: "Push changes",
           run: [
             "  git add .",
-            '  git commit -m -s "chore: self mutation"',
+            '  git commit -s -m "chore: self mutation"',
             `  git push origin HEAD:${PULL_REQUEST_REF}`,
           ].join("\n"),
         },

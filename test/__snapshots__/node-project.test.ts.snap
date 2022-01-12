@@ -186,7 +186,7 @@ git config user.email \\"github-actions@github.com\\"",
   Object {
     "name": "Push changes",
     "run": "  git add .
-  git commit -m -s \\"chore: self mutation\\"
+  git commit -s -m \\"chore: self mutation\\"
   git push origin HEAD:\${{ github.event.pull_request.head.ref }}",
   },
 ]
