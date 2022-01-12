@@ -1,9 +1,9 @@
-import { join } from 'path';
-import { Component } from '../component';
-import { DependencyType } from '../deps';
-import { Project } from '../project';
-import { Task } from '../tasks';
-import { renderBundleName } from './util';
+import { join } from "path";
+import { Component } from "../component";
+import { DependencyType } from "../dependencies";
+import { Project } from "../project";
+import { Task } from "../task";
+import { renderBundleName } from "./util";
 
 /**
  * Options for `Bundler`.
@@ -17,10 +17,17 @@ export interface BundlerOptions {
   readonly esbuildVersion?: string;
 
   /**
-    * Output directory for all bundles.
-    * @default "assets"
-    */
+   * Output directory for all bundles.
+   * @default "assets"
+   */
   readonly assetsDir?: string;
+
+  /**
+   * Install the `bundle` command as a pre-compile phase.
+   *
+   * @default true
+   */
+  readonly addToPreCompile?: boolean;
 }
 
 /**
@@ -50,6 +57,7 @@ export class Bundler extends Component {
   public readonly bundledir: string;
 
   private _task: Task | undefined;
+  private readonly addToPreCompile: boolean;
 
   /**
    * Creates a `Bundler`.
@@ -58,8 +66,8 @@ export class Bundler extends Component {
     super(project);
 
     this.esbuildVersion = options.esbuildVersion;
-    this.bundledir = options.assetsDir ?? 'assets';
-
+    this.bundledir = options.assetsDir ?? "assets";
+    this.addToPreCompile = options.addToPreCompile ?? true;
   }
 
   /**
@@ -71,10 +79,14 @@ export class Bundler extends Component {
   public get bundleTask(): Task {
     if (!this._task) {
       this.addBundlingSupport();
-      this._task = this.project.tasks.addTask('bundle', {
-        description: 'Prepare assets',
+      this._task = this.project.tasks.addTask("bundle", {
+        description: "Prepare assets",
       });
-      this.project.preCompileTask.spawn(this._task);
+
+      // install the bundle task into the pre-compile phase.
+      if (this.addToPreCompile) {
+        this.project.preCompileTask.spawn(this._task);
+      }
     }
 
     return this._task;
@@ -90,10 +102,10 @@ export class Bundler extends Component {
   public addBundle(entrypoint: string, options: AddBundleOptions): Bundle {
     const name = renderBundleName(entrypoint);
 
-    const outfile = join(this.bundledir, name, 'index.js');
+    const outfile = join(this.bundledir, name, "index.js");
     const args = [
-      'esbuild',
-      '--bundle',
+      "esbuild",
+      "--bundle",
       entrypoint,
       `--target="${options.target}"`,
       `--platform="${options.platform}"`,
@@ -106,12 +118,12 @@ export class Bundler extends Component {
 
     const sourcemap = options.sourcemap ?? false;
     if (sourcemap) {
-      args.push('--sourcemap');
+      args.push("--sourcemap");
     }
 
     const bundleTask = this.project.addTask(`bundle:${name}`, {
       description: `Create a JavaScript bundle from ${entrypoint}`,
-      exec: args.join(' '),
+      exec: args.join(" "),
     });
 
     this.bundleTask.spawn(bundleTask);
@@ -121,7 +133,7 @@ export class Bundler extends Component {
     if (watch) {
       watchTask = this.project.addTask(`bundle:${name}:watch`, {
         description: `Continuously update the JavaScript bundle from ${entrypoint}`,
-        exec: `${args.join(' ')} --watch`,
+        exec: `${args.join(" ")} --watch`,
       });
     }
 
@@ -141,7 +153,9 @@ export class Bundler extends Component {
     const ignoreEntry = `/${this.bundledir}/`;
     this.project.addGitIgnore(ignoreEntry);
     this.project.addPackageIgnore(`!${ignoreEntry}`); // include in tarball
-    const dep = this.esbuildVersion ? `esbuild@${this.esbuildVersion}` : 'esbuild';
+    const dep = this.esbuildVersion
+      ? `esbuild@${this.esbuildVersion}`
+      : "esbuild";
     this.project.deps.addDependency(dep, DependencyType.BUILD);
   }
 }
@@ -214,10 +228,9 @@ export interface AddBundleOptions extends BundlingOptions {
   readonly target: string;
 
   /**
-    * esbuild platform.
-    *
-    * @example "node"
-    */
+   * esbuild platform.
+   *
+   * @example "node"
+   */
   readonly platform: string;
 }
-

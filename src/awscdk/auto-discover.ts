@@ -1,10 +1,11 @@
-import { join } from 'path';
-import * as glob from 'glob';
-import { IntegrationTest } from '.';
-import { Component } from '../component';
-import { Project } from '../project';
-import { TYPESCRIPT_INTEG_EXT, TYPESCRIPT_LAMBDA_EXT } from './internal';
-import { LambdaFunction, LambdaFunctionCommonOptions } from './lambda-function';
+import { join } from "path";
+import * as glob from "glob";
+import { Component } from "../component";
+import { Project } from "../project";
+import { AwsCdkDeps } from "./awscdk-deps";
+import { IntegrationTest } from "./integration-test";
+import { TYPESCRIPT_INTEG_EXT, TYPESCRIPT_LAMBDA_EXT } from "./internal";
+import { LambdaFunction, LambdaFunctionCommonOptions } from "./lambda-function";
 
 /**
  * Options for `AutoDiscover`.
@@ -24,6 +25,16 @@ export interface AutoDiscoverOptions {
    * Test source tree.
    */
   readonly testdir: string;
+
+  /**
+   * Path to the tsconfig file to use for integration tests.
+   */
+  readonly tsconfigPath: string;
+
+  /**
+   * AWS CDK dependency manager.
+   */
+  readonly cdkDeps: AwsCdkDeps;
 }
 
 /**
@@ -31,8 +42,6 @@ export interface AutoDiscoverOptions {
  * the source directory of the project.
  */
 export class AutoDiscover extends Component {
-
-
   constructor(project: Project, options: AutoDiscoverOptions) {
     super(project);
 
@@ -48,6 +57,7 @@ export class AutoDiscover extends Component {
     for (const entrypoint of entrypoints) {
       new LambdaFunction(this.project, {
         entrypoint: join(options.srcdir, entrypoint),
+        cdkDeps: options.cdkDeps,
         ...options.lambdaOptions,
       });
     }
@@ -61,8 +71,9 @@ export class AutoDiscover extends Component {
     for (const entrypoint of entrypoints) {
       new IntegrationTest(this.project, {
         entrypoint: join(options.testdir, entrypoint),
+        cdkDeps: options.cdkDeps,
+        tsconfigPath: options.tsconfigPath,
       });
     }
   }
-
 }

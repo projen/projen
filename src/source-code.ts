@@ -1,6 +1,6 @@
-import { Component } from './component';
-import { Project } from './project';
-import { TextFile } from './textfile';
+import { Component } from "./component";
+import { Project } from "./project";
+import { TextFile } from "./textfile";
 
 /**
  * Options for `SourceCodeFile`.
@@ -21,7 +21,11 @@ export class SourceCode extends Component {
   private indentLevel = 0;
   private readonly indent: number;
 
-  constructor(project: Project, filePath: string, options: SourceCodeOptions = {}) {
+  constructor(
+    project: Project,
+    public readonly filePath: string,
+    options: SourceCodeOptions = {}
+  ) {
     super(project);
     this.indent = options.indent ?? 2;
     this.file = new TextFile(project, filePath);
@@ -33,8 +37,8 @@ export class SourceCode extends Component {
    */
   public line(code?: string) {
     const spaces: number = this.indent * this.indentLevel;
-    const prefix = ' '.repeat(spaces);
-    this.file.addLine((prefix + (code ?? '')).trimEnd());
+    const prefix = " ".repeat(spaces);
+    this.file.addLine((prefix + (code ?? "")).trimEnd());
   }
 
   /**
@@ -57,7 +61,7 @@ export class SourceCode extends Component {
    */
   public close(code?: string) {
     if (this.indentLevel === 0) {
-      throw new Error('Cannot decrease indent level below zero');
+      throw new Error("Cannot decrease indent level below zero");
     }
     this.indentLevel--;
 

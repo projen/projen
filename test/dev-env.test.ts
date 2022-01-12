@@ -1,34 +1,36 @@
-import * as path from 'path';
-import * as fs from 'fs-extra';
-import { DevEnvironmentDockerImage } from '../src/dev-env';
-import { FileBase } from '../src/file';
-import { Gitpod, GitpodOpenIn, GitpodOpenMode } from '../src/gitpod';
-import * as logging from '../src/logging';
-import { synthSnapshot, TestProject } from '../src/util/synth';
+import * as path from "path";
+import * as fs from "fs-extra";
+import { DevEnvironmentDockerImage } from "../src/dev-env";
+import { FileBase } from "../src/file";
+import { Gitpod, GitpodOpenIn, GitpodOpenMode } from "../src/gitpod";
+import * as logging from "../src/logging";
+import { synthSnapshot, TestProject } from "./util";
 
 // This is duplicated vs exported
-const GITPOD_FILE = '.gitpod.yml';
-const DEVCONTAINER_FILE = '.devcontainer.json';
+const GITPOD_FILE = ".gitpod.yml";
+const DEVCONTAINER_FILE = ".devcontainer.json";
 
 logging.disable();
 
-describe('dev environment constructor', () => {
-  test('for gitpod', () => {
+describe("dev environment constructor", () => {
+  test("for gitpod", () => {
     // GIVEN
     const project = new TestProject({
       gitpod: false,
     });
-    const task = project.addTask('dummy-task', { exec: 'echo hello' });
+    const task = project.addTask("dummy-task", { exec: "echo hello" });
 
     // WHEN
     new Gitpod(project, {
-      dockerImage: DevEnvironmentDockerImage.fromImage('ubuntu:latest'),
+      dockerImage: DevEnvironmentDockerImage.fromImage("ubuntu:latest"),
       prebuilds: {
         pullRequests: true,
       },
       tasks: [task],
-      ports: ['3000'],
-      vscodeExtensions: ['dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw=='],
+      ports: ["3000"],
+      vscodeExtensions: [
+        "dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw==",
+      ],
     });
     project.synth();
 
@@ -38,8 +40,8 @@ describe('dev environment constructor', () => {
   });
 });
 
-describe('dev environment enable/disable', () => {
-  test('given gitpod and devContainer are false', () => {
+describe("dev environment enable/disable", () => {
+  test("given gitpod and devContainer are false", () => {
     // GIVEN
     const project = new TestProject({
       gitpod: false,
@@ -56,7 +58,7 @@ describe('dev environment enable/disable', () => {
     expect(fs.existsSync(devContainerFilePath)).toBeFalsy();
   });
 
-  test('no gitpod/devcontainer files if they are empty', () => {
+  test("no gitpod/devcontainer files if they are empty", () => {
     // WHEN
     const project = new TestProject({
       gitpod: true,
@@ -71,7 +73,7 @@ describe('dev environment enable/disable', () => {
     expect(fs.existsSync(devContainerFilePath)).toBeFalsy();
   });
 
-  test('given gitpod and devContainer are true', () => {
+  test("given gitpod and devContainer are true", () => {
     // GIVEN
     const project = new TestProject({
       gitpod: true,
@@ -79,8 +81,8 @@ describe('dev environment enable/disable', () => {
     });
 
     // WHEN
-    project.gitpod?.addDockerImage({ image: 'foo' });
-    project.devContainer?.addPorts('1234');
+    project.gitpod?.addDockerImage({ image: "foo" });
+    project.devContainer?.addPorts("1234");
 
     // THEN
     project.synth();
@@ -91,8 +93,8 @@ describe('dev environment enable/disable', () => {
   });
 });
 
-describe('dev environment docker options', () => {
-  test('given an image', () => {
+describe("dev environment docker options", () => {
+  test("given an image", () => {
     // GIVEN
     const project = new TestProject({
       gitpod: true,
@@ -100,23 +102,26 @@ describe('dev environment docker options', () => {
     });
 
     // WHEN
-    project.gitpod?.addDockerImage(DevEnvironmentDockerImage.fromImage('jsii/superchain:node14'));
-    project.devContainer?.addDockerImage(DevEnvironmentDockerImage.fromImage('jsii/uberchain'));
-
+    project.gitpod?.addDockerImage(
+      DevEnvironmentDockerImage.fromImage("jsii/superchain:node14")
+    );
+    project.devContainer?.addDockerImage(
+      DevEnvironmentDockerImage.fromImage("jsii/uberchain")
+    );
 
     // THEN
     const outdir = synthSnapshot(project);
     const gitpodSnapshot = outdir[GITPOD_FILE];
-    expect(gitpodSnapshot).toContain('image: jsii/superchain:node14');
+    expect(gitpodSnapshot).toContain("image: jsii/superchain:node14");
 
     const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
     expect(devContainerSnapshot).toStrictEqual({
-      '//': FileBase.PROJEN_MARKER,
-      'image': 'jsii/uberchain',
+      "//": FileBase.PROJEN_MARKER,
+      image: "jsii/uberchain",
     });
   });
 
-  test('given a docker file dep', () => {
+  test("given a docker file dep", () => {
     // GIVEN
     const project = new TestProject({
       gitpod: true,
@@ -124,25 +129,29 @@ describe('dev environment docker options', () => {
     });
 
     // WHEN
-    project.gitpod?.addDockerImage(DevEnvironmentDockerImage.fromFile('.gitpod.Dockerfile'));
-    project.devContainer?.addDockerImage(DevEnvironmentDockerImage.fromFile('Dockerfile'));
+    project.gitpod?.addDockerImage(
+      DevEnvironmentDockerImage.fromFile(".gitpod.Dockerfile")
+    );
+    project.devContainer?.addDockerImage(
+      DevEnvironmentDockerImage.fromFile("Dockerfile")
+    );
 
     // THEN
     const outdir = synthSnapshot(project);
     const gitpodSnapshot = outdir[GITPOD_FILE];
-    expect(gitpodSnapshot).toContain('image:');
-    expect(gitpodSnapshot).toContain('file: .gitpod.Dockerfile');
+    expect(gitpodSnapshot).toContain("image:");
+    expect(gitpodSnapshot).toContain("file: .gitpod.Dockerfile");
 
     const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
     expect(devContainerSnapshot).toStrictEqual({
-      '//': FileBase.PROJEN_MARKER,
-      'build': { dockerfile: 'Dockerfile' },
+      "//": FileBase.PROJEN_MARKER,
+      build: { dockerfile: "Dockerfile" },
     });
   });
 });
 
-describe('dev environment tasks', () => {
-  test('given custom task', () => {
+describe("dev environment tasks", () => {
+  test("given custom task", () => {
     // GIVEN
     const project = new TestProject({
       gitpod: true,
@@ -150,21 +159,21 @@ describe('dev environment tasks', () => {
     });
 
     // WHEN
-    const task = project.addTask('gitpod-test', { exec: 'text' });
+    const task = project.addTask("gitpod-test", { exec: "text" });
     project.gitpod?.addTasks(task);
     project.devContainer?.addTasks(task);
 
     // THEN
     const outdir = synthSnapshot(project);
     const gitpodSnapshot = outdir[GITPOD_FILE];
-    expect(gitpodSnapshot).toContain('command');
-    expect(gitpodSnapshot).toContain('gitpod-test');
+    expect(gitpodSnapshot).toContain("command");
+    expect(gitpodSnapshot).toContain("gitpod-test");
 
     const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
-    expect(devContainerSnapshot.postCreateCommand).toContain('gitpod-test');
+    expect(devContainerSnapshot.postCreateCommand).toContain("gitpod-test");
   });
 
-  test('given gitpod task options', () => {
+  test("given gitpod task options", () => {
     // GIVEN
     const project = new TestProject({
       gitpod: true,
@@ -172,9 +181,9 @@ describe('dev environment tasks', () => {
     });
 
     // WHEN
-    const task = project.addTask('gitpod-test', { exec: 'text' });
+    const task = project.addTask("gitpod-test", { exec: "text" });
     project.gitpod?.addCustomTask({
-      init: 'echo Initializing',
+      init: "echo Initializing",
       openIn: GitpodOpenIn.LEFT,
       openMode: GitpodOpenMode.SPLIT_BOTTOM,
       command: `npx projen ${task.name}`,
@@ -182,14 +191,14 @@ describe('dev environment tasks', () => {
 
     // THEN
     const snapshot = synthSnapshot(project)[GITPOD_FILE];
-    expect(snapshot).toContain('init: echo Initializing');
-    expect(snapshot).toContain('openIn: left');
-    expect(snapshot).toContain('openMode: split-bottom');
-    expect(snapshot).toContain('command: npx projen gitpod-test');
+    expect(snapshot).toContain("init: echo Initializing");
+    expect(snapshot).toContain("openIn: left");
+    expect(snapshot).toContain("openMode: split-bottom");
+    expect(snapshot).toContain("command: npx projen gitpod-test");
   });
 });
 
-test('dev environment ports', () => {
+test("dev environment ports", () => {
   // GIVEN
   const project = new TestProject({
     gitpod: true,
@@ -197,23 +206,23 @@ test('dev environment ports', () => {
   });
 
   // WHEN
-  project.gitpod?.addPorts('8080', '3000-3999');
-  project.devContainer?.addPorts('8080', '3000');
+  project.gitpod?.addPorts("8080", "3000-3999");
+  project.devContainer?.addPorts("8080", "3000");
 
   // THEN
   const outdir = synthSnapshot(project);
   const gitpodSnapshot = outdir[GITPOD_FILE];
   expect(gitpodSnapshot).toContain('port: "8080"');
-  expect(gitpodSnapshot).toContain('port: 3000-3999');
+  expect(gitpodSnapshot).toContain("port: 3000-3999");
 
   const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
   expect(devContainerSnapshot).toStrictEqual({
-    '//': FileBase.PROJEN_MARKER,
-    'forwardPorts': ['8080', '3000'],
+    "//": FileBase.PROJEN_MARKER,
+    forwardPorts: ["8080", "3000"],
   });
 });
 
-test('gitpod prebuilds config', () => {
+test("gitpod prebuilds config", () => {
   // GIVEN
   const project = new TestProject({
     gitpod: true,
@@ -230,15 +239,15 @@ test('gitpod prebuilds config', () => {
 
   // THEN
   const gitpodSnapshot = synthSnapshot(project)[GITPOD_FILE];
-  expect(gitpodSnapshot).toContain('github');
-  expect(gitpodSnapshot).toContain('prebuilds');
-  expect(gitpodSnapshot).toContain('master');
-  expect(gitpodSnapshot).toContain('branches');
-  expect(gitpodSnapshot).toContain('pullRequestsFromForks');
-  expect(gitpodSnapshot).toContain('addBadge');
+  expect(gitpodSnapshot).toContain("github");
+  expect(gitpodSnapshot).toContain("prebuilds");
+  expect(gitpodSnapshot).toContain("master");
+  expect(gitpodSnapshot).toContain("branches");
+  expect(gitpodSnapshot).toContain("pullRequestsFromForks");
+  expect(gitpodSnapshot).toContain("addBadge");
 });
 
-test('dev environment vscode extensions', () => {
+test("dev environment vscode extensions", () => {
   // GIVEN
   const project = new TestProject({
     gitpod: true,
@@ -246,18 +255,22 @@ test('dev environment vscode extensions', () => {
   });
 
   // WHEN
-  project.gitpod?.addVscodeExtensions('dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw==');
-  project.devContainer?.addVscodeExtensions('dbaeumer.vscode-eslint');
+  project.gitpod?.addVscodeExtensions(
+    "dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw=="
+  );
+  project.devContainer?.addVscodeExtensions("dbaeumer.vscode-eslint");
 
   // THEN
   const outdir = synthSnapshot(project);
   const gitpodSnapshot = outdir[GITPOD_FILE];
-  expect(gitpodSnapshot).toContain('extensions:');
-  expect(gitpodSnapshot).toContain('dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw==');
+  expect(gitpodSnapshot).toContain("extensions:");
+  expect(gitpodSnapshot).toContain(
+    "dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw=="
+  );
 
   const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
   expect(devContainerSnapshot).toStrictEqual({
-    '//': FileBase.PROJEN_MARKER,
-    'extensions': ['dbaeumer.vscode-eslint'],
+    "//": FileBase.PROJEN_MARKER,
+    extensions: ["dbaeumer.vscode-eslint"],
   });
 });

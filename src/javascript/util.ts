@@ -1,8 +1,8 @@
-import { basename, dirname, extname, join, sep } from 'path';
+import { basename, dirname, extname, join, sep } from "path";
 
 export function renderBundleName(entrypoint: string) {
   const parts = join(entrypoint).split(sep);
-  if (parts[0] === 'src') {
+  if (parts[0] === "src") {
     parts.shift(); // just remove 'src' if its the first element for ergonomics
   }
 

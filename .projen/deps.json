@@ -23,7 +23,7 @@
     },
     {
       "name": "@types/node",
-      "version": "^12.7.0",
+      "version": "^12",
       "type": "build"
     },
     {
@@ -49,6 +49,10 @@
       "type": "build"
     },
     {
+      "name": "eslint-config-prettier",
+      "type": "build"
+    },
+    {
       "name": "eslint-import-resolver-node",
       "type": "build"
     },
@@ -58,6 +62,10 @@
     },
     {
       "name": "eslint-plugin-import",
+      "type": "build"
+    },
+    {
+      "name": "eslint-plugin-prettier",
       "type": "build"
     },
     {
@@ -87,10 +95,6 @@
       "type": "build"
     },
     {
-      "name": "jsii-pacmak",
-      "type": "build"
-    },
-    {
       "name": "json-schema",
       "type": "build"
     },
@@ -100,7 +104,11 @@
     },
     {
       "name": "npm-check-updates",
-      "version": "^11",
+      "version": "^12",
+      "type": "build"
+    },
+    {
+      "name": "prettier",
       "type": "build"
     },
     {

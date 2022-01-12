@@ -1,12 +1,7 @@
-import { Component } from '../component';
-import { GitHub } from './github';
+import { Component } from "../component";
+import { GitHub } from "./github";
 
 export interface AutoMergeOptions {
-  /**
-   * The GitHub job ID of the build workflow.
-   */
-  readonly buildJob?: string;
-
   /**
    * Number of approved code reviews.
    * @default 1
@@ -30,51 +25,85 @@ export interface AutoMergeOptions {
  * the PR to be merged.
  */
 export class AutoMerge extends Component {
-  constructor(github: GitHub, options: AutoMergeOptions) {
+  private readonly lazyConditions = new Array<IAddConditionsLater>();
+
+  constructor(github: GitHub, options: AutoMergeOptions = {}) {
     super(github.project);
 
     const mergify = github.mergify;
     if (!mergify) {
-      throw new Error('auto merging requires mergify to be enabled');
+      throw new Error("auto merging requires mergify to be enabled");
     }
 
-    const successfulBuild = options.buildJob
-      ? [`status-success=${options.buildJob}`]
-      : [];
-
-    const blockingLabels = options.blockingLabels ?? ['do-not-merge'];
+    const blockingLabels = options.blockingLabels ?? ["do-not-merge"];
     const blockingCondition = blockingLabels?.length
-      ? [`-label~=(${blockingLabels.join('|')})`]
+      ? [`-label~=(${blockingLabels.join("|")})`]
       : [];
 
     const mergeAction = {
-      merge: {
-      // squash all commits into a single commit when merging
-        method: 'squash',
+      delete_head_branch: {},
 
+      queue: {
+        // squash all commits into a single commit when merging
+        // method: "squash",
+        method: "squash",
+        name: "default",
         // use PR title+body as the commit message
-        commit_message: 'title+body',
-
-        // update PR branch so it's up-to-date before merging
-        strict: 'smart',
-        strict_method: 'merge',
+        commit_message_template: [
+          "{{ title }} (#{{ number }})",
+          "",
+          "{{ body }}",
+        ].join("\n"),
       },
-
-      delete_head_branch: { },
     };
 
     const approvedReviews = options.approvedReviews ?? 1;
 
+    // add initial conditions (additional conditions can be added later)
+    this.addConditions(`#approved-reviews-by>=${approvedReviews}`);
+    this.addConditions(...blockingCondition);
+
     mergify.addRule({
-      name: 'Automatic merge on approval and successful build',
+      name: "Automatic merge on approval and successful build",
       actions: mergeAction,
-      conditions: [
-        `#approved-reviews-by>=${approvedReviews}`,
-        ...blockingCondition,
-        ...successfulBuild,
-      ],
+      conditions: (() => this.renderConditions()) as any,
     });
 
-    this.project.addPackageIgnore('/.mergify.yml');
+    mergify.addQueue({
+      name: "default",
+      conditions: (() => this.renderConditions()) as any,
+    });
+
+    this.project.addPackageIgnore("/.mergify.yml");
   }
+
+  /**
+   * Adds conditions to the auto merge rule.
+   * @param conditions The conditions to add (mergify syntax)
+   */
+  public addConditions(...conditions: string[]) {
+    this.addConditionsLater({ render: () => conditions });
+  }
+
+  /**
+   * Adds conditions that will be rendered only during synthesis.
+   * @param later The later
+   */
+  public addConditionsLater(later: IAddConditionsLater) {
+    this.lazyConditions.push(later);
+  }
+
+  private renderConditions() {
+    const output = new Array<string>();
+
+    for (const later of this.lazyConditions) {
+      output.push(...later.render());
+    }
+
+    return output;
+  }
+}
+
+export interface IAddConditionsLater {
+  render(): string[];
 }

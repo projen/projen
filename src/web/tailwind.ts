@@ -1,5 +1,5 @@
-import { JsonFile } from '../json';
-import { NodeProject } from '../node-project';
+import { NodeProject } from "../javascript";
+import { JsonFile } from "../json";
 
 export interface TailwindConfigOptions {
   /**
@@ -21,7 +21,7 @@ export class TailwindConfig {
   public readonly file: JsonFile;
 
   constructor(project: NodeProject, options?: TailwindConfigOptions) {
-    this.fileName = options?.fileName ?? 'tailwind.config.json';
+    this.fileName = options?.fileName ?? "tailwind.config.json";
 
     this.file = new JsonFile(project, this.fileName, {
       obj: {

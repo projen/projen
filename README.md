@@ -1,15 +1,15 @@
-[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-59-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/projen/projen)
-![Build](https://github.com/projen/projen/workflows/Build/badge.svg)
-![Release](https://github.com/projen/projen/workflows/Release/badge.svg)
-
 # projen
 
 ![projen logo](./logo/projen.svg)
 
+[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/projen/projen)
+![Build](https://github.com/projen/projen/workflows/Build/badge.svg)
+![Release](https://github.com/projen/projen/workflows/Release/badge.svg)
+![Commit activity](https://img.shields.io/github/commit-activity/w/projen/projen)
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-63-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Define and maintain complex project configuration through code.
 
@@ -47,22 +47,22 @@ list):
 
 <!-- <macro exec="node ./scripts/readme-projects.js"> -->
 * [awscdk-app-java](https://github.com/projen/projen/blob/main/API.md#projen-awscdk-awscdkjavaapp) - AWS CDK app in Java.
-* [awscdk-app-ts](https://github.com/projen/projen/blob/main/API.md#projen-awscdktypescriptapp) - AWS CDK app in TypeScript.
-* [awscdk-construct](https://github.com/projen/projen/blob/main/API.md#projen-awscdkconstructlibrary) - AWS CDK construct library project.
-* [cdk8s-app-ts](https://github.com/projen/projen/blob/main/API.md#projen-cdk8stypescriptapp) - CDK8s app in TypeScript.
-* [cdk8s-construct](https://github.com/projen/projen/blob/main/API.md#projen-constructlibrarycdk8s) - CDK8s construct library project.
-* [cdktf-construct](https://github.com/projen/projen/blob/main/API.md#projen-constructlibrarycdktf) - CDKTF construct library project.
+* [awscdk-app-ts](https://github.com/projen/projen/blob/main/API.md#projen-awscdk-awscdktypescriptapp) - AWS CDK app in TypeScript.
+* [awscdk-construct](https://github.com/projen/projen/blob/main/API.md#projen-awscdk-awscdkconstructlibrary) - AWS CDK construct library project.
+* [cdk8s-app-ts](https://github.com/projen/projen/blob/main/API.md#projen-cdk8s-cdk8stypescriptapp) - CDK8s app in TypeScript.
+* [cdk8s-construct](https://github.com/projen/projen/blob/main/API.md#projen-cdk8s-constructlibrarycdk8s) - CDK8s construct library project.
+* [cdktf-construct](https://github.com/projen/projen/blob/main/API.md#projen-cdktf-constructlibrarycdktf) - CDKTF construct library project.
 * [java](https://github.com/projen/projen/blob/main/API.md#projen-java-javaproject) - Java project.
-* [jsii](https://github.com/projen/projen/blob/main/API.md#projen-jsiiproject) - Multi-language jsii library project.
+* [jsii](https://github.com/projen/projen/blob/main/API.md#projen-cdk-jsiiproject) - Multi-language jsii library project.
 * [nextjs](https://github.com/projen/projen/blob/main/API.md#projen-web-nextjsproject) - Next.js project without TypeScript.
 * [nextjs-ts](https://github.com/projen/projen/blob/main/API.md#projen-web-nextjstypescriptproject) - Next.js project with TypeScript.
-* [node](https://github.com/projen/projen/blob/main/API.md#projen-nodeproject) - Node.js project.
+* [node](https://github.com/projen/projen/blob/main/API.md#projen-javascript-nodeproject) - Node.js project.
 * [project](https://github.com/projen/projen/blob/main/API.md#projen-project) - Base project.
 * [python](https://github.com/projen/projen/blob/main/API.md#projen-python-pythonproject) - Python project.
 * [react](https://github.com/projen/projen/blob/main/API.md#projen-web-reactproject) - React project without TypeScript.
 * [react-ts](https://github.com/projen/projen/blob/main/API.md#projen-web-reacttypescriptproject) - React project with TypeScript.
-* [typescript](https://github.com/projen/projen/blob/main/API.md#projen-typescriptproject) - TypeScript project.
-* [typescript-app](https://github.com/projen/projen/blob/main/API.md#projen-typescriptappproject) - TypeScript app.
+* [typescript](https://github.com/projen/projen/blob/main/API.md#projen-typescript-typescriptproject) - TypeScript project.
+* [typescript-app](https://github.com/projen/projen/blob/main/API.md#projen-typescript-typescriptappproject) - TypeScript app.
 <!-- </macro> -->
 
 > Use `npx projen new PROJECT-TYPE --help` to view a list of command line
@@ -355,6 +355,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/mKeRix"><img src="https://avatars.githubusercontent.com/u/770596?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Heiko Rothe</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=mKeRix" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/hyandell"><img src="https://avatars.githubusercontent.com/u/477715?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Henri Yandell</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=hyandell" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/mwg-rea"><img src="https://avatars.githubusercontent.com/u/82480228?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Matthew Gamble</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=mwg-rea" title="Code">💻</a></td>
+    <td align="center"><a href="https://willdady.com/"><img src="https://avatars.githubusercontent.com/u/204259?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Will Dady</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=willdady" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/msessa"><img src="https://avatars.githubusercontent.com/u/1912143?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Matteo Sessa</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=msessa" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Hi-Fi"><img src="https://avatars.githubusercontent.com/u/1499780?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Juho Saarinen</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=Hi-Fi" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/njlynch"><img src="https://avatars.githubusercontent.com/u/1376292?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nick Lynch</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=njlynch" title="Code">💻</a></td>
   </tr>
 </table>
 
@@ -366,3 +370,4 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 ## License
 
 Distributed under the [Apache-2.0](./LICENSE) license.
+

@@ -25,6 +25,13 @@ export interface ManualReleaseOptions {
    * @default 'CHANGELOG.md'
    */
   readonly changelogPath?: string;
+
+  /**
+   * Override git-push command.
+   *
+   * Set to an empty string to disable pushing.
+   */
+  readonly gitPushCommand?: string;
 }
 
 interface ReleaseTriggerOptions {
@@ -50,6 +57,13 @@ interface ReleaseTriggerOptions {
    * @example '0 17 * * *' - every day at 5 pm
    */
   readonly schedule?: string;
+
+  /**
+   * Override git-push command.
+   *
+   * Set to an empty string to disable pushing.
+   */
+  readonly gitPushCommand?: string;
 }
 
 /**
@@ -67,6 +81,9 @@ export class ReleaseTrigger {
    * handle project-level changelog management, release tagging, and pushing
    * these artifacts to origin.
    *
+   * The command used for pushing can be customised by specifying
+   * `gitPushCommand`. Set to an empty string to disable pushing entirely.
+   *
    * Simply run `yarn release` to trigger a manual release.
    *
    * @param options release options
@@ -75,11 +92,12 @@ export class ReleaseTrigger {
     let changelogPath;
 
     if (options.changelog ?? true) {
-      changelogPath = options.changelogPath ?? 'CHANGELOG.md';
+      changelogPath = options.changelogPath ?? "CHANGELOG.md";
     }
 
     return new ReleaseTrigger({
       changelogPath: changelogPath,
+      gitPushCommand: options.gitPushCommand,
     });
   }
 
@@ -126,10 +144,18 @@ export class ReleaseTrigger {
    */
   public readonly isContinuous: boolean;
 
+  /**
+   * Override git-push command used when releasing manually.
+   *
+   * Set to an empty string to disable pushing.
+   */
+  public readonly gitPushCommand?: string;
+
   private constructor(options: ReleaseTriggerOptions = {}) {
     this.isContinuous = options.continuous ?? false;
     this.schedule = options.schedule;
     this.changelogPath = options.changelogPath;
+    this.gitPushCommand = options.gitPushCommand;
   }
 
   /**

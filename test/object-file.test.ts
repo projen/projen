@@ -1,75 +1,78 @@
-import { ObjectFile } from '../src';
-import { JsonFile } from '../src/json';
-import { synthSnapshot, TestProject } from '../src/util/synth';
+import { ObjectFile } from "../src";
+import { JsonFile } from "../src/json";
+import { synthSnapshot, TestProject } from "./util";
 
 class ChildObjectFile extends ObjectFile {}
 
-test('json object can be mutated before synthesis', () => {
+test("json object can be mutated before synthesis", () => {
   const prj = new TestProject();
 
   const obj: any = {
-    hello: 'world',
+    hello: "world",
   };
 
-  new ChildObjectFile(prj, 'my/object/file.json', { obj, marker: false });
+  new ChildObjectFile(prj, "my/object/file.json", { obj, marker: false });
 
   // mutate obj (should be reflected in the output)
   obj.anotherField = {
     foo: 1234,
   };
 
-  expect(synthSnapshot(prj)['my/object/file.json']).toStrictEqual({
-    hello: 'world',
+  expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+    hello: "world",
     anotherField: { foo: 1234 },
   });
 });
 
-describe('overrides', () => {
-  test('addOverride(p, v) allows assigning arbitrary values to synthesized resource definitions', () => {
+describe("overrides", () => {
+  test("addOverride(p, v) allows assigning arbitrary values to synthesized resource definitions", () => {
     // GIVEN
     const prj = new TestProject();
-    const file = new JsonFile(prj, 'my/object/file.json', { obj: { initialObj: 'must be nonempty' }, marker: false });
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: { initialObj: "must be nonempty" },
+      marker: false,
+    });
 
     // WHEN
-    file.addOverride('metadata', { key: 12 });
-    file.addOverride('use.dot.notation', 'to create subtrees');
+    file.addOverride("metadata", { key: 12 });
+    file.addOverride("use.dot.notation", "to create subtrees");
 
     // THEN
-    expect(synthSnapshot(prj)['my/object/file.json']).toStrictEqual({
-      initialObj: 'must be nonempty',
-      use: { dot: { notation: 'to create subtrees' } },
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      initialObj: "must be nonempty",
+      use: { dot: { notation: "to create subtrees" } },
       metadata: { key: 12 },
     });
   });
 
-  test('addOverride(p, v) allows indexing into arrays to reach particular paths', () => {
+  test("addOverride(p, v) allows indexing into arrays to reach particular paths", () => {
     // GIVEN
     const prj = new TestProject();
-    const file = new JsonFile(prj, 'my/object/file.json', {
+    const file = new JsonFile(prj, "my/object/file.json", {
       obj: {
-        myArray: [1, 2, { foo: 'bar' }],
+        myArray: [1, 2, { foo: "bar" }],
       },
       marker: false,
     });
 
     // WHEN
-    file.addOverride('myArray.0', 123);
-    file.addOverride('myArray.2.foo', 'baz');
+    file.addOverride("myArray.0", 123);
+    file.addOverride("myArray.2.foo", "baz");
 
     // THEN
-    expect(synthSnapshot(prj)['my/object/file.json']).toStrictEqual({
-      myArray: [123, 2, { foo: 'baz' }],
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      myArray: [123, 2, { foo: "baz" }],
     });
   });
 
-  test('addOverride(p, undefined) can be used to delete a value', () => {
+  test("addOverride(p, undefined) can be used to delete a value", () => {
     // GIVEN
     const prj = new TestProject();
-    const file = new JsonFile(prj, 'my/object/file.json', {
+    const file = new JsonFile(prj, "my/object/file.json", {
       obj: {
         hello: {
           world: {
-            value1: 'Hello',
+            value1: "Hello",
             value2: 129,
           },
         },
@@ -78,46 +81,49 @@ describe('overrides', () => {
     });
 
     // WHEN
-    file.addOverride('hello.world.value2', undefined);
+    file.addOverride("hello.world.value2", undefined);
 
     // THEN
-    expect(synthSnapshot(prj)['my/object/file.json']).toStrictEqual({
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
       hello: {
         world: {
-          value1: 'Hello',
+          value1: "Hello",
         },
       },
     });
   });
 
-  test('addOverride(p, undefined) will not create empty trees', () => {
+  test("addOverride(p, undefined) will not create empty trees", () => {
     // GIVEN
     const prj = new TestProject();
-    const file = new JsonFile(prj, 'my/object/file.json', { obj: { initialObj: 'must be nonempty' }, marker: false });
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: { initialObj: "must be nonempty" },
+      marker: false,
+    });
 
     // WHEN
-    file.addOverride('tree.exists', 42);
-    file.addOverride('tree.does.not.exist', undefined);
+    file.addOverride("tree.exists", 42);
+    file.addOverride("tree.does.not.exist", undefined);
 
     // THEN
-    expect(synthSnapshot(prj)['my/object/file.json']).toStrictEqual({
-      initialObj: 'must be nonempty',
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      initialObj: "must be nonempty",
       tree: {
         exists: 42,
       },
     });
   });
 
-  test('addDeletionOverride(p) is sugar for `undefined`', () => {
+  test("addDeletionOverride(p) is sugar for `undefined`", () => {
     // GIVEN
     const prj = new TestProject();
-    const file = new JsonFile(prj, 'my/object/file.json', {
+    const file = new JsonFile(prj, "my/object/file.json", {
       obj: {
         hello: {
           world: {
-            value1: 'Hello',
+            value1: "Hello",
             value2: 129,
-            value3: ['foo', 'bar'],
+            value3: ["foo", "bar"],
           },
         },
       },
@@ -125,23 +131,23 @@ describe('overrides', () => {
     });
 
     // WHEN
-    file.addDeletionOverride('hello.world.value2');
+    file.addDeletionOverride("hello.world.value2");
 
     // THEN
-    expect(synthSnapshot(prj)['my/object/file.json']).toStrictEqual({
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
       hello: {
         world: {
-          value1: 'Hello',
-          value3: ['foo', 'bar'],
+          value1: "Hello",
+          value3: ["foo", "bar"],
         },
       },
     });
   });
 
-  test('addOverride(p, v) will overwrite any non-objects along the path', () => {
+  test("addOverride(p, v) will overwrite any non-objects along the path", () => {
     // GIVEN
     const prj = new TestProject();
-    const file = new JsonFile(prj, 'my/object/file.json', {
+    const file = new JsonFile(prj, "my/object/file.json", {
       obj: {
         hello: {
           world: 42,
@@ -151,12 +157,12 @@ describe('overrides', () => {
     });
 
     // WHEN
-    file.addOverride('override1', ['Hello', 123]);
-    file.addOverride('override1.override2', { foo: [1] });
-    file.addOverride('hello.world.foo.bar', 42);
+    file.addOverride("override1", ["Hello", 123]);
+    file.addOverride("override1.override2", { foo: [1] });
+    file.addOverride("hello.world.foo.bar", 42);
 
     // THEN
-    expect(synthSnapshot(prj)['my/object/file.json']).toStrictEqual({
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
       hello: { world: { foo: { bar: 42 } } },
       override1: {
         override2: { foo: [1] },
@@ -164,26 +170,29 @@ describe('overrides', () => {
     });
   });
 
-  test('addOverride(p, v) will not split on escaped dots', () => {
+  test("addOverride(p, v) will not split on escaped dots", () => {
     // GIVEN
     const prj = new TestProject();
-    const file = new JsonFile(prj, 'my/object/file.json', { obj: { initialObj: 'cannot be empty' }, marker: false });
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: { initialObj: "cannot be empty" },
+      marker: false,
+    });
 
     // WHEN
     file.addOverride(String.raw`Hello\.World.Foo\.Bar\.Baz`, 42);
     file.addOverride(String.raw`Single\Back\Slashes`, 42);
     file.addOverride(String.raw`Escaped\\.Back\\.Slashes`, 42);
     file.addOverride(String.raw`DoublyEscaped\\\\Back\\\\Slashes`, 42);
-    file.addOverride('EndWith\\', 42); // Raw string cannot end with a backslash
+    file.addOverride("EndWith\\", 42); // Raw string cannot end with a backslash
 
     // THEN
-    expect(synthSnapshot(prj)['my/object/file.json']).toStrictEqual({
-      'initialObj': 'cannot be empty',
-      'Hello.World': { 'Foo.Bar.Baz': 42 },
-      'SingleBackSlashes': 42,
-      'Escaped\\': { 'Back\\': { Slashes: 42 } },
-      'DoublyEscaped\\\\Back\\\\Slashes': 42,
-      'EndWith\\': 42,
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      initialObj: "cannot be empty",
+      "Hello.World": { "Foo.Bar.Baz": 42 },
+      SingleBackSlashes: 42,
+      "Escaped\\": { "Back\\": { Slashes: 42 } },
+      "DoublyEscaped\\\\Back\\\\Slashes": 42,
+      "EndWith\\": 42,
     });
   });
 });

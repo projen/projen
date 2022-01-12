@@ -40,10 +40,8 @@ jobs:
         if: ${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
         with:
-          name: dist
+          name: build-artifact
           path: dist
-    container:
-      image: jsii/superchain:1-buster-slim-node12
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -53,11 +51,18 @@ jobs:
       issues: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Collect GitHub Metadata
+        run: mv .repo/dist dist
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
           $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
@@ -92,11 +97,22 @@ jobs:
       issues: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Create js artifact
+        run: cd .repo && npx projen package:js
+      - name: Collect js Artifact
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -117,8 +133,6 @@ jobs:
             github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    container:
-      image: jsii/superchain:1-buster-slim-node14
   release_maven:
     name: Publish to Maven Central
     needs: release
@@ -128,11 +142,26 @@ jobs:
       issues: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
+      - uses: actions/setup-java@v2
+        with:
+          distribution: temurin
+          java-version: 11.x
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Create java artifact
+        run: cd .repo && npx projen package:java
+      - name: Collect java Artifact
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-maven
         env:
@@ -157,8 +186,6 @@ jobs:
             github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    container:
-      image: jsii/superchain:1-buster-slim-node14
   release_pypi:
     name: Publish to PyPI
     needs: release
@@ -168,11 +195,25 @@ jobs:
       issues: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
-          name: dist
+          name: build-artifact
           path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Create python artifact
+        run: cd .repo && npx projen package:python
+      - name: Collect python Artifact
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -192,5 +233,52 @@ jobs:
             github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    container:
-      image: jsii/superchain:1-buster-slim-node14
+  release_golang:
+    name: Publish to GitHub Go Module Repository
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    if: needs.release.outputs.latest_commit == github.sha
+    steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ^1.16.0
+      - name: Download build artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: build-artifact
+          path: dist
+      - name: Prepare Repository
+        run: mv dist .repo
+      - name: Install Dependencies
+        run: cd .repo && yarn install --check-files --frozen-lockfile
+      - name: Create go artifact
+        run: cd .repo && npx projen package:go
+      - name: Collect go Artifact
+        run: mv .repo/dist dist
+      - name: Release
+        run: npx -p jsii-release@latest jsii-release-golang
+        env:
+          GIT_USER_NAME: github-actions
+          GIT_USER_EMAIL: github-actions@github.com
+          GITHUB_TOKEN: ${{ secrets.GO_GITHUB_TOKEN }}
+      - name: Extract Version
+        if: ${{ failure() }}
+        id: extract-version
+        run: echo "::set-output name=VERSION::$(cat dist/version.txt)"
+      - name: Create Issue
+        if: ${{ failure() }}
+        uses: imjohnbo/issue-bot@v3
+        with:
+          labels: failed-release
+          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to GitHub Go
+            Module Repository failed
+          body: See https://github.com/${{ github.repository }}/actions/runs/${{
+            github.run_id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -15,7 +15,7 @@
  * - RELEASE_TAG_PREFIX: (optional) a prefix to apply to the release tag
  *
  */
-import { bump, BumpOptions } from './bump-version';
+import { bump, BumpOptions } from "./bump-version";
 
 const versionFile = process.env.OUTFILE;
 const prerelease = process.env.PRERELEASE;
@@ -27,22 +27,23 @@ const prefix = process.env.RELEASE_TAG_PREFIX;
 const versionrcOptions = process.env.VERSIONRCOPTIONS;
 
 if (!versionFile) {
-  throw new Error('OUTFILE is required');
+  throw new Error("OUTFILE is required");
 }
 
 if (!changelog) {
-  throw new Error('CHANGELOG is required');
+  throw new Error("CHANGELOG is required");
 }
 
 if (!bumpFile) {
-  throw new Error('BUMPFILE is required');
+  throw new Error("BUMPFILE is required");
 }
 
 if (!releaseTagFile) {
-  throw new Error('RELEASETAG is required');
+  throw new Error("RELEASETAG is required");
 }
 
-const majorVersion = (major == null || major === '') ? undefined : parseInt(major);
+const majorVersion =
+  major == null || major === "" ? undefined : parseInt(major);
 if (majorVersion === NaN) {
   throw new Error(`MAJOR must be a number: ${majorVersion}`);
 }
@@ -56,7 +57,7 @@ const opts: BumpOptions = {
   releaseTagFile: releaseTagFile,
   tagPrefix: prefix,
   // doesn't work with long customization
-  versionrcOptions: JSON.parse(versionrcOptions ?? '{}'),
+  versionrcOptions: JSON.parse(versionrcOptions ?? "{}"),
 };
 
 bump(process.cwd(), opts).catch((e: Error) => {

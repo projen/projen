@@ -1,7 +1,7 @@
-import * as path from 'path';
-import * as fs from 'fs-extra';
-import * as logging from '../logging';
-import { exec } from '../util';
+import * as path from "path";
+import * as fs from "fs-extra";
+import * as logging from "../logging";
+import { exec } from "../util";
 
 /**
  * Installs the npm module (through `npm install`) to node_modules under `projectDir`.
@@ -9,12 +9,12 @@ import { exec } from '../util';
  * @returns The installed package name (e.g. `@foo/bar`)
  */
 export function installPackage(baseDir: string, spec: string): string {
-  const packageJsonPath = path.join(baseDir, 'package.json');
+  const packageJsonPath = path.join(baseDir, "package.json");
   const packageJsonExisted = fs.existsSync(packageJsonPath);
 
   if (!packageJsonExisted) {
     // Make sure we have a package.json to read from later
-    exec('npm init --yes', { cwd: baseDir });
+    exec("npm init --yes", { cwd: baseDir });
   }
 
   logging.info(`installing external module ${spec}...`);
@@ -22,7 +22,9 @@ export function installPackage(baseDir: string, spec: string): string {
 
   // Get the true installed package name
   const packageJson = fs.readJsonSync(packageJsonPath);
-  const packageName = Object.keys(packageJson.devDependencies).find(name => name !== 'projen');
+  const packageName = Object.keys(packageJson.devDependencies).find(
+    (name) => name !== "projen"
+  );
 
   if (!packageName) {
     throw new Error(`Unable to resolve package name from spec ${spec}`);

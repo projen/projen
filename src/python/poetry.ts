@@ -1,18 +1,22 @@
-import { Component } from '../component';
-import { DependencyType } from '../deps';
-import { Task, TaskRuntime } from '../tasks';
-import { TomlFile } from '../toml';
-import { decamelizeKeysRecursively, exec, execOrUndefined } from '../util';
-import { IPythonDeps } from './python-deps';
-import { IPythonEnv } from './python-env';
-import { IPythonPackaging, PythonPackagingOptions } from './python-packaging';
-import { PythonProject } from './python-project';
+import { Component } from "../component";
+import { DependencyType } from "../dependencies";
+import { Task } from "../task";
+import { TaskRuntime } from "../task-runtime";
+import { TomlFile } from "../toml";
+import { decamelizeKeysRecursively, exec, execOrUndefined } from "../util";
+import { IPythonDeps } from "./python-deps";
+import { IPythonEnv } from "./python-env";
+import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
+import { PythonProject } from "./python-project";
 
 /**
  * Manage project dependencies, virtual environments, and packaging through the
  * poetry CLI tool.
  */
-export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPythonPackaging {
+export class Poetry
+  extends Component
+  implements IPythonDeps, IPythonEnv, IPythonPackaging
+{
   public readonly installTask: Task;
   public readonly publishTask: Task;
 
@@ -24,30 +28,33 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
   constructor(project: PythonProject, options: PythonPackagingOptions) {
     super(project);
 
-    this.installTask = project.addTask('install', {
-      description: 'Install and upgrade dependencies',
-      exec: 'poetry update',
+    this.installTask = project.addTask("install", {
+      description: "Install and upgrade dependencies",
+      exec: "poetry update",
     });
 
-    this.project.tasks.addEnvironment('VIRTUAL_ENV', '$(poetry env info -p)');
-    this.project.tasks.addEnvironment('PATH', '$(echo $(poetry env info -p)/bin:$PATH)');
+    this.project.tasks.addEnvironment("VIRTUAL_ENV", "$(poetry env info -p)");
+    this.project.tasks.addEnvironment(
+      "PATH",
+      "$(echo $(poetry env info -p)/bin:$PATH)"
+    );
 
-    project.packageTask.exec('poetry build');
+    project.packageTask.exec("poetry build");
 
-    this.publishTestTask = project.addTask('publish:test', {
-      description: 'Uploads the package against a test PyPI endpoint.',
-      exec: 'poetry publish -r testpypi',
+    this.publishTestTask = project.addTask("publish:test", {
+      description: "Uploads the package against a test PyPI endpoint.",
+      exec: "poetry publish -r testpypi",
     });
 
-    this.publishTask = project.addTask('publish', {
-      description: 'Uploads the package to PyPI.',
-      exec: 'poetry publish',
+    this.publishTask = project.addTask("publish", {
+      description: "Uploads the package to PyPI.",
+      exec: "poetry publish",
     });
 
     new PoetryPyproject(project, {
       name: project.name,
       version: options.version,
-      description: options.description ?? '',
+      description: options.description ?? "",
       license: options.license,
       authors: [`${options.authorName} <${options.authorEmail}>`],
       homepage: options.homepage,
@@ -57,12 +64,12 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
       devDependencies: () => this.synthDevDependencies(),
     });
 
-    new TomlFile(project, 'poetry.toml', {
+    new TomlFile(project, "poetry.toml", {
       committed: false,
       obj: {
         repositories: {
           testpypi: {
-            url: 'https://test.pypi.org/legacy/',
+            url: "https://test.pypi.org/legacy/",
           },
         },
       },
@@ -73,7 +80,7 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
     const dependencies: { [key: string]: any } = {};
     let pythonDefined: boolean = false;
     for (const pkg of this.project.deps.all) {
-      if (pkg.name === 'python') {
+      if (pkg.name === "python") {
         pythonDefined = true;
       }
       if (pkg.type === DependencyType.RUNTIME) {
@@ -82,7 +89,7 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
     }
     if (!pythonDefined) {
       // Python version must be defined for poetry projects. Default to ^3.6.
-      dependencies.python = '^3.6';
+      dependencies.python = "^3.6";
     }
     return dependencies;
   }
@@ -119,17 +126,27 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
    * Initializes the virtual environment if it doesn't exist (called during post-synthesis).
    */
   public setupEnvironment() {
-    const result = execOrUndefined('which poetry', { cwd: this.project.outdir });
+    const result = execOrUndefined("which poetry", {
+      cwd: this.project.outdir,
+    });
     if (!result) {
-      this.project.logger.info('Unable to setup an environment since poetry is not installed. Please install poetry (https://python-poetry.org/docs/) or use a different component for managing environments such as \'venv\'.');
+      this.project.logger.info(
+        "Unable to setup an environment since poetry is not installed. Please install poetry (https://python-poetry.org/docs/) or use a different component for managing environments such as 'venv'."
+      );
     }
 
-    let envPath = execOrUndefined('poetry env info -p', { cwd: this.project.outdir });
+    let envPath = execOrUndefined("poetry env info -p", {
+      cwd: this.project.outdir,
+    });
     if (!envPath) {
-      this.project.logger.info('Setting up a virtual environment...');
-      exec('poetry env use python', { cwd: this.project.outdir });
-      envPath = execOrUndefined('poetry env info -p', { cwd: this.project.outdir });
-      this.project.logger.info(`Environment successfully created (located in ${envPath}}).`);
+      this.project.logger.info("Setting up a virtual environment...");
+      exec("poetry env use python", { cwd: this.project.outdir });
+      envPath = execOrUndefined("poetry env info -p", {
+        cwd: this.project.outdir,
+      });
+      this.project.logger.info(
+        `Environment successfully created (located in ${envPath}}).`
+      );
     }
   }
 
@@ -137,7 +154,7 @@ export class Poetry extends Component implements IPythonDeps, IPythonEnv, IPytho
    * Installs dependencies (called during post-synthesis).
    */
   public installDependencies() {
-    this.project.logger.info('Installing dependencies...');
+    this.project.logger.info("Installing dependencies...");
     const runtime = new TaskRuntime(this.project.outdir);
     runtime.runTask(this.installTask.name);
   }
@@ -263,7 +280,8 @@ export interface PoetryPyprojectOptionsWithoutDeps {
  * Poetry-specific options.
  * @see https://python-poetry.org/docs/pyproject/
  */
-export interface PoetryPyprojectOptions extends PoetryPyprojectOptionsWithoutDeps {
+export interface PoetryPyprojectOptions
+  extends PoetryPyprojectOptionsWithoutDeps {
   /**
    * A list of dependencies for the project.
    *
@@ -292,16 +310,18 @@ export class PoetryPyproject extends Component {
   constructor(project: PythonProject, options: PoetryPyprojectOptions) {
     super(project);
 
-    const decamelisedOptions = decamelizeKeysRecursively(options, { separator: '-' });
+    const decamelisedOptions = decamelizeKeysRecursively(options, {
+      separator: "-",
+    });
 
-    this.file = new TomlFile(project, 'pyproject.toml', {
+    this.file = new TomlFile(project, "pyproject.toml", {
       omitEmpty: false,
       obj: {
-        'build-system': {
-          'requires': ['poetry_core>=1.0.0'],
-          'build-backend': 'poetry.core.masonry.api',
+        "build-system": {
+          requires: ["poetry_core>=1.0.0"],
+          "build-backend": "poetry.core.masonry.api",
         },
-        'tool': {
+        tool: {
           poetry: {
             ...decamelisedOptions,
           },

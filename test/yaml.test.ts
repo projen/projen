@@ -1,37 +1,37 @@
-import * as YAML from 'yaml';
-import { YamlFile } from '../src';
-import { synthSnapshot, TestProject } from '../src/util/synth';
+import * as YAML from "yaml";
+import { YamlFile } from "../src";
+import { synthSnapshot, TestProject } from "./util";
 
-test('yaml object can be mutated before synthesis', () => {
+test("yaml object can be mutated before synthesis", () => {
   const prj = new TestProject();
 
   const obj: any = {
-    hello: 'world',
+    hello: "world",
   };
 
-  new YamlFile(prj, 'my/yaml/file.yaml', { obj });
+  new YamlFile(prj, "my/yaml/file.yaml", { obj });
 
   // mutate obj (should be reflected in the output)
   obj.anotherField = {
     foo: 1234,
   };
 
-  expect(YAML.parse(synthSnapshot(prj)['my/yaml/file.yaml'])).toStrictEqual({
-    hello: 'world',
+  expect(YAML.parse(synthSnapshot(prj)["my/yaml/file.yaml"])).toStrictEqual({
+    hello: "world",
     anotherField: { foo: 1234 },
   });
 });
 
-test('yaml file can contain projen marker', () => {
+test("yaml file can contain projen marker", () => {
   const prj = new TestProject();
 
   const obj: any = {};
 
-  new YamlFile(prj, 'my/yaml/file-marker.yaml', { obj, marker: true });
+  new YamlFile(prj, "my/yaml/file-marker.yaml", { obj, marker: true });
 
-  const output = synthSnapshot(prj)['my/yaml/file-marker.yaml'];
+  const output = synthSnapshot(prj)["my/yaml/file-marker.yaml"];
 
-  const firstLine = output.split('\n')[0];
+  const firstLine = output.split("\n")[0];
 
   expect(firstLine).toBe(`# ${YamlFile.PROJEN_MARKER}`);
 });

@@ -1,7 +1,7 @@
-import { Component } from '../component';
-import { JsonFile } from '../json';
-import { Project } from '../project';
-import { FEATURE_FLAGS } from './internal';
+import { Component } from "../component";
+import { JsonFile } from "../json";
+import { Project } from "../project";
+import { FEATURE_FLAGS } from "./internal";
 
 /**
  * Common options for `cdk.json`.
@@ -12,13 +12,13 @@ export interface CdkConfigCommonOptions {
    *
    * @default - no additional context
    */
-  readonly context?: { [key: string]: string };
+  readonly context?: { [key: string]: any };
 
   /**
-    * Include all feature flags in cdk.json
-    *
-    * @default true
-    */
+   * Include all feature flags in cdk.json
+   *
+   * @default true
+   */
   readonly featureFlags?: boolean;
 
   /**
@@ -35,6 +35,15 @@ export interface CdkConfigCommonOptions {
    * @default "cdk.out"
    */
   readonly cdkout?: string;
+
+  /**
+   * A command to execute before synthesis. This command will be called when
+   * running `cdk synth` or when `cdk watch` identifies a change in your source
+   * code before redeployment.
+   *
+   * @default - no build command
+   */
+  readonly buildCommand?: string;
 
   /**
    * Glob patterns to include in `cdk watch`.
@@ -66,7 +75,6 @@ export interface CdkConfigOptions extends CdkConfigCommonOptions {
  * Represents cdk.json file.
  */
 export class CdkConfig extends Component {
-
   /**
    * Represents the JSON file.
    */
@@ -80,7 +88,7 @@ export class CdkConfig extends Component {
   constructor(project: Project, options: CdkConfigOptions) {
     super(project);
 
-    this.cdkout = options.cdkout ?? 'cdk.out';
+    this.cdkout = options.cdkout ?? "cdk.out";
 
     const context: Record<string, any> = { ...options.context };
     const fflags = options.featureFlags ?? true;
@@ -90,13 +98,14 @@ export class CdkConfig extends Component {
       }
     }
 
-    this.json = new JsonFile(project, 'cdk.json', {
+    this.json = new JsonFile(project, "cdk.json", {
       omitEmpty: true,
       obj: {
         app: options.app,
         context: context,
         requireApproval: options.requireApproval,
         output: this.cdkout,
+        build: options.buildCommand,
         watch: {
           include: options.watchIncludes ?? [],
           exclude: options.watchExcludes ?? [],
@@ -105,7 +114,7 @@ export class CdkConfig extends Component {
     });
 
     project.gitignore.exclude(`/${this.cdkout}/`);
-    project.gitignore.exclude('.cdk.staging/');
+    project.gitignore.exclude(".cdk.staging/");
   }
 }
 
@@ -116,14 +125,13 @@ export enum ApprovalLevel {
   /**
    * Approval is never required
    */
-  NEVER = 'never',
+  NEVER = "never",
   /**
    * Requires approval on any IAM or security-group-related change
    */
-  ANY_CHANGE = 'any-change',
+  ANY_CHANGE = "any-change",
   /**
    * Requires approval when IAM statements or traffic rules are added; removals don't require approval
    */
-  BROADENING = 'broadening',
+  BROADENING = "broadening",
 }
-

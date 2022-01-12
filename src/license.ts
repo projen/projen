@@ -1,6 +1,6 @@
-import * as fs from 'fs-extra';
-import { FileBase, IResolver } from './file';
-import { Project } from './project';
+import * as fs from "fs-extra";
+import { FileBase, IResolver } from "./file";
+import { Project } from "./project";
 
 export interface LicenseOptions {
   /**
@@ -33,7 +33,7 @@ export class License extends FileBase {
   private readonly text: string;
 
   constructor(project: Project, options: LicenseOptions) {
-    super(project, 'LICENSE');
+    super(project, "LICENSE");
 
     const spdx = options.spdx;
 
@@ -42,20 +42,23 @@ export class License extends FileBase {
       throw new Error(`unsupported license ${spdx}`);
     }
 
-    const years = options.copyrightPeriod ?? new Date().getFullYear().toString();
+    const years =
+      options.copyrightPeriod ?? new Date().getFullYear().toString();
     const owner = options.copyrightOwner;
 
-    let text = fs.readFileSync(textFile, 'utf-8');
+    let text = fs.readFileSync(textFile, "utf-8");
 
-    text = text.replace('$copyright_period', years);
+    text = text.replace("$copyright_period", years);
 
     // if the license text includes $copyright_owner, then `copyrightOwner` is required.
-    if (text.indexOf('$copyright_owner') !== -1) {
+    if (text.indexOf("$copyright_owner") !== -1) {
       if (!owner) {
-        throw new Error(`The ${spdx} license requires "copyrightOwner" to be specified`);
+        throw new Error(
+          `The ${spdx} license requires "copyrightOwner" to be specified`
+        );
       }
 
-      text = text.replace('$copyright_owner', owner);
+      text = text.replace("$copyright_owner", owner);
     }
 
     this.text = text;

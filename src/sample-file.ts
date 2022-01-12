@@ -1,9 +1,9 @@
-import * as path from 'path';
-import * as fs from 'fs-extra';
-import * as glob from 'glob';
-import { Component } from './component';
-import { Project } from './project';
-import { getFilePermissions, writeFile } from './util';
+import * as path from "path";
+import * as fs from "fs-extra";
+import * as glob from "glob";
+import { Component } from "./component";
+import { Project } from "./project";
+import { getFilePermissions, writeFile } from "./util";
 
 /**
  * Options for the SampleFile object.
@@ -46,10 +46,10 @@ export class SampleFile extends Component {
     super(project);
 
     if (options.contents && options.sourcePath) {
-      throw new Error('Cannot specify both \'contents\' and \'source\' fields.');
+      throw new Error("Cannot specify both 'contents' and 'source' fields.");
     }
     if (!options.contents && !options.sourcePath) {
-      throw new Error('Must specify at least one of \'contents\' or \'source\'.');
+      throw new Error("Must specify at least one of 'contents' or 'source'.");
     }
     this.filePath = filePath;
     this.options = options;
@@ -62,7 +62,11 @@ export class SampleFile extends Component {
     } else if (this.options.sourcePath) {
       contents = fs.readFileSync(this.options.sourcePath);
     }
-    this.writeOnceFileContents(this.project.outdir, this.filePath, contents ?? '');
+    this.writeOnceFileContents(
+      this.project.outdir,
+      this.filePath,
+      contents ?? ""
+    );
   }
 
   /**
@@ -123,7 +127,7 @@ export class SampleDir extends Component {
   constructor(project: Project, dir: string, options: SampleDirOptions) {
     super(project);
     if (!options.files && !options.sourceDir) {
-      throw new Error('Must specify at least one of \'files\' or \'source\'.');
+      throw new Error("Must specify at least one of 'files' or 'source'.");
     }
 
     this.dir = dir;
@@ -138,7 +142,7 @@ export class SampleDir extends Component {
 
     if (this.options.sourceDir) {
       const basedir = this.options.sourceDir;
-      const files = glob.sync('**', {
+      const files = glob.sync("**", {
         cwd: basedir,
         nodir: true,
         dot: true,
@@ -150,7 +154,10 @@ export class SampleDir extends Component {
 
         fs.mkdirpSync(path.dirname(targetPath));
         fs.copyFileSync(sourcePath, targetPath);
-        fs.chmodSync(targetPath, getFilePermissions({ readonly: false, executable: false }));
+        fs.chmodSync(
+          targetPath,
+          getFilePermissions({ readonly: false, executable: false })
+        );
       }
     }
 

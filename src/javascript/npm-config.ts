@@ -1,6 +1,6 @@
-import { Component } from '../component';
-import { IniFile } from '../ini';
-import { NodeProject } from '../node-project';
+import { Component } from "../component";
+import { IniFile } from "../ini";
+import { NodeProject } from "../javascript";
 
 /**
  * Options to configure the local NPM config
@@ -20,7 +20,6 @@ export interface NpmConfigOptions {
  * File representing the local NPM config in .npmrc
  */
 export class NpmConfig extends Component {
-
   /**
    * The config object. This object can be mutated until the project is
    * synthesized.
@@ -30,7 +29,7 @@ export class NpmConfig extends Component {
   constructor(project: NodeProject, options: NpmConfigOptions = {}) {
     super(project);
 
-    new IniFile(project, '.npmrc', { obj: this.config });
+    new IniFile(project, ".npmrc", { obj: this.config });
 
     if (options.registry) {
       this.addRegistry(options.registry);
@@ -44,7 +43,7 @@ export class NpmConfig extends Component {
    * @param scope the scope the registry is used for; leave empty for the default registry
    */
   public addRegistry(url: string, scope?: string) {
-    this.addConfig(scope ? `${scope}:registry` : 'registry', url);
+    this.addConfig(scope ? `${scope}:registry` : "registry", url);
   }
 
   /**
@@ -56,5 +55,4 @@ export class NpmConfig extends Component {
   public addConfig(name: string, value: string) {
     this.config[name] = value;
   }
-
 }

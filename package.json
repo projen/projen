@@ -19,13 +19,17 @@
     "devenv:setup": "/bin/bash ./projen.bash devenv:setup",
     "docgen": "/bin/bash ./projen.bash docgen",
     "eslint": "/bin/bash ./projen.bash eslint",
+    "integ": "/bin/bash ./projen.bash integ",
+    "integ:python-compat": "/bin/bash ./projen.bash integ:python-compat",
     "package": "/bin/bash ./projen.bash package",
+    "package-all": "/bin/bash ./projen.bash package-all",
+    "package:go": "/bin/bash ./projen.bash package:go",
+    "package:java": "/bin/bash ./projen.bash package:java",
+    "package:js": "/bin/bash ./projen.bash package:js",
+    "package:python": "/bin/bash ./projen.bash package:python",
     "post-compile": "/bin/bash ./projen.bash post-compile",
+    "post-upgrade": "/bin/bash ./projen.bash post-upgrade",
     "pre-compile": "/bin/bash ./projen.bash pre-compile",
-    "publish:github": "/bin/bash ./projen.bash publish:github",
-    "publish:maven": "/bin/bash ./projen.bash publish:maven",
-    "publish:npm": "/bin/bash ./projen.bash publish:npm",
-    "publish:pypi": "/bin/bash ./projen.bash publish:pypi",
     "readme-macros": "/bin/bash ./projen.bash readme-macros",
     "release": "/bin/bash ./projen.bash release",
     "test": "/bin/bash ./projen.bash test",
@@ -37,37 +41,39 @@
     "projen": "/bin/bash ./projen.bash"
   },
   "author": {
-    "name": "Elad Ben-Israel",
-    "email": "benisrae@amazon.com",
-    "organization": false
+    "name": "Amazon Web Services",
+    "url": "https://aws.amazon.com",
+    "organization": true
   },
   "devDependencies": {
     "@types/conventional-changelog-config-spec": "^2.1.1",
     "@types/fs-extra": "^8",
     "@types/glob": "^7.2.0",
     "@types/ini": "^1.3.31",
-    "@types/jest": "^27.0.3",
-    "@types/node": "^12.7.0",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^12",
     "@types/semver": "^7.3.9",
     "@types/yargs": "^15.0.14",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "all-contributors-cli": "^6.20.0",
     "eslint": "^8",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-import-resolver-typescript": "^2.5.0",
-    "eslint-plugin-import": "^2.25.3",
-    "jest": "^27.4.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.4.7",
     "jest-junit": "^13",
-    "jsii": "^1.46.0",
-    "jsii-diff": "^1.46.0",
+    "jsii": "^1.52.1",
+    "jsii-diff": "^1.52.1",
     "jsii-docgen": "^1.8.110",
-    "jsii-pacmak": "^1.46.0",
     "json-schema": "^0.4.0",
-    "markmac": "^0.1.109",
-    "npm-check-updates": "^11",
+    "markmac": "^0.1.135",
+    "npm-check-updates": "^12",
+    "prettier": "^2.5.1",
     "standard-version": "^9",
-    "ts-jest": "^27.0.7",
+    "ts-jest": "^27.1.2",
     "typescript": "^3.9.10"
   },
   "dependencies": {
@@ -79,7 +85,7 @@
     "glob": "^7",
     "ini": "^2.0.0",
     "semver": "^7.3.5",
-    "shx": "^0.3.3",
+    "shx": "^0.3.4",
     "xmlbuilder2": "^2.4.1",
     "yaml": "^1.10.2",
     "yargs": "^16.2.0"
@@ -114,15 +120,16 @@
   "version": "0.0.0",
   "jest": {
     "testMatch": [
-      "**/__tests__/**/*.ts?(x)",
-      "**/?(*.)+(spec|test).ts?(x)"
+      "<rootDir>/src/**/__tests__/**/*.ts?(x)",
+      "<rootDir>/(test|src)/**/?(*.)+(spec|test).ts?(x)"
     ],
     "clearMocks": true,
     "collectCoverage": true,
     "coverageReporters": [
       "json",
       "lcov",
-      "clover"
+      "clover",
+      "cobertura"
     ],
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [
@@ -165,6 +172,9 @@
       "python": {
         "distName": "projen",
         "module": "projen"
+      },
+      "go": {
+        "moduleName": "github.com/projen/projen-go"
       }
     },
     "tsc": {

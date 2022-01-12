@@ -1,15 +1,15 @@
-import * as TOML from '@iarna/toml';
-import { TomlFile } from '../src';
-import { synthSnapshot, TestProject } from '../src/util/synth';
+import * as TOML from "@iarna/toml";
+import { TomlFile } from "../src";
+import { synthSnapshot, TestProject } from "./util";
 
-test('toml object can be mutated before synthesis', () => {
+test("toml object can be mutated before synthesis", () => {
   const prj = new TestProject();
 
   const obj: any = {
-    hello: 'world',
+    hello: "world",
   };
 
-  new TomlFile(prj, 'my/toml/file.toml', { obj });
+  new TomlFile(prj, "my/toml/file.toml", { obj });
 
   // mutate obj (should be reflected in the output)
   obj.anotherField = {
@@ -17,22 +17,22 @@ test('toml object can be mutated before synthesis', () => {
   };
 
   const out = synthSnapshot(prj);
-  expect(TOML.parse(out['my/toml/file.toml'])).toStrictEqual({
-    hello: 'world',
+  expect(TOML.parse(out["my/toml/file.toml"])).toStrictEqual({
+    hello: "world",
     anotherField: { foo: 1234 },
   });
 });
 
-test('toml file can contain projen marker', () => {
+test("toml file can contain projen marker", () => {
   const prj = new TestProject();
 
   const obj: any = {};
 
-  new TomlFile(prj, 'my/toml/file-marker.toml', { obj, marker: true });
+  new TomlFile(prj, "my/toml/file-marker.toml", { obj, marker: true });
 
-  const output = synthSnapshot(prj)['my/toml/file-marker.toml'];
+  const output = synthSnapshot(prj)["my/toml/file-marker.toml"];
 
-  const firstLine = output.split('\n')[0];
+  const firstLine = output.split("\n")[0];
 
   expect(firstLine).toBe(`# ${TomlFile.PROJEN_MARKER}`);
 });

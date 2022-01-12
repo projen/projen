@@ -1,4 +1,4 @@
-import { Task } from './tasks';
+import { Task } from "./task";
 
 /**
  * Base options for configuring a container-based development environment.
@@ -58,7 +58,7 @@ export class DevEnvironmentDockerImage {
    */
   public readonly dockerFile?: string;
 
-  private constructor() { }
+  private constructor() {}
 }
 
 /**
