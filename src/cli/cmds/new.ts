@@ -6,7 +6,7 @@ import * as inventory from "../../inventory";
 import * as logging from "../../logging";
 import { InitProjectOptionHints } from "../../option-hints";
 import { Projects } from "../../projects";
-import { exec, execCapture, isTruthy } from "../../util";
+import { exec, execCapture, getGitVersion, isTruthy } from "../../util";
 import { tryProcessMacro } from "../macros";
 import { installPackage, renderInstallCommand } from "../util";
 
@@ -317,10 +317,9 @@ async function initProject(
 
   if (args.git) {
     const git = (cmd: string) => exec(`git ${cmd}`, { cwd: baseDir });
-    const gitversion: string = execCapture("git --version", { cwd: baseDir })
-      .toString()
-      .replace(/[a-z,/s]/g, "")
-      .trim();
+    const gitversion: string = getGitVersion(
+      execCapture("git --version", { cwd: baseDir }).toString()
+    );
     logging.debug("system using git version ", gitversion);
     if (gitversion && semver.gte(gitversion, "2.28.0")) {
       git("init -b main");
