@@ -28,6 +28,7 @@
     "package:js": "/bin/bash ./projen.bash package:js",
     "package:python": "/bin/bash ./projen.bash package:python",
     "post-compile": "/bin/bash ./projen.bash post-compile",
+    "post-upgrade": "/bin/bash ./projen.bash post-upgrade",
     "pre-compile": "/bin/bash ./projen.bash pre-compile",
     "readme-macros": "/bin/bash ./projen.bash readme-macros",
     "release": "/bin/bash ./projen.bash release",
@@ -68,7 +69,7 @@
     "jsii-diff": "^1.52.1",
     "jsii-docgen": "^1.8.110",
     "json-schema": "^0.4.0",
-    "markmac": "^0.1.134",
+    "markmac": "^0.1.135",
     "npm-check-updates": "^12",
     "prettier": "^2.5.1",
     "standard-version": "^9",
@@ -127,7 +128,8 @@
     "coverageReporters": [
       "json",
       "lcov",
-      "clover"
+      "clover",
+      "cobertura"
     ],
     "coverageDirectory": "coverage",
     "coveragePathIgnorePatterns": [

@@ -72,7 +72,7 @@ export interface JestConfigOptions {
 
   /**
    * A list of reporter names that Jest uses when writing coverage reports. Any istanbul reporter can be used
-   * @default - ["json", "lcov", "text", "clover"]
+   * @default - ["json", "lcov", "text", "clover", "cobertura"]
    */
   readonly coverageReporters?: string[];
 
@@ -598,6 +598,7 @@ export class Jest {
       "json",
       "lcov",
       "clover",
+      "cobertura",
     ];
     this.testMatch = this.jestConfig?.testMatch ?? [
       "**/__tests__/**/*.[jt]s?(x)",

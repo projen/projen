@@ -106,6 +106,11 @@ export class UpgradeDependencies extends Component {
    */
   public containerOptions?: ContainerOptions;
 
+  /**
+   * A task run after the upgrade task.
+   */
+  public readonly postUpgradeTask: Task;
+
   private readonly gitIdentity: GitIdentity;
   private readonly postBuildSteps: JobStep[];
 
@@ -122,6 +127,12 @@ export class UpgradeDependencies extends Component {
     this.containerOptions = options.workflowOptions?.container;
 
     project.addDevDeps("npm-check-updates@^12");
+
+    this.postUpgradeTask =
+      project.tasks.tryFind("post-upgrade") ??
+      project.tasks.addTask("post-upgrade", {
+        description: "Runs after upgrading dependencies",
+      });
   }
 
   /**
@@ -196,6 +207,8 @@ export class UpgradeDependencies extends Component {
 
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
     task.exec(this._project.projenCommand);
+
+    task.spawn(this.postUpgradeTask);
 
     return task;
   }

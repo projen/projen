@@ -247,8 +247,15 @@
         },
         {
           "spawn": "readme-macros"
+        },
+        {
+          "spawn": "default"
         }
       ]
+    },
+    "post-upgrade": {
+      "name": "post-upgrade",
+      "description": "Runs after upgrading dependencies"
     },
     "pre-compile": {
       "name": "pre-compile",
@@ -367,6 +374,9 @@
         },
         {
           "exec": "/bin/bash ./projen.bash"
+        },
+        {
+          "spawn": "post-upgrade"
         }
       ]
     },
