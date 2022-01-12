@@ -5,7 +5,7 @@ build:
     name: alpine
   needs: []
   variables:
-    ci: "true"
+    CI: "true"
   artifacts:
     paths:
       - .repo.patch
@@ -24,13 +24,15 @@ build:
         exit 1
       fi
   after_script: []
-self_mutation:
+self-mutation:
   image:
     name: alpine
   needs:
     - build
   rules:
     - when: always
+  variables:
+    PROJEN_TOKEN: $PROJEN_TOKEN
   artifacts: {}
   script:
     - |-
@@ -40,36 +42,42 @@ self_mutation:
         echo "Job skipped"
         __cond__=false
       fi
-    - ${__cond__} && (apk add --update git bash rsync)
-    - ${__cond__} && (apk add --update nodejs npm yarn)
-    - ${__cond__} && ([ -s ./.repo.patch ] || exit 0)
-    - ${__cond__} && (git apply ./.repo.patch)
-    - ${__cond__} && (rm -f ./.repo.patch)
-    - ${__cond__} && (git config user.name "github-actions")
-    - ${__cond__} && (git config user.email "github-actions@github.com")
-    - ${__cond__} && (git add .)
-    - '${__cond__} && (git commit -s -m "chore: self mutation")'
+    - ${__cond__} && apk add --update git bash rsync
+    - ${__cond__} && apk add --update nodejs npm yarn
+    - ${__cond__} && [ -s ./.repo.patch ] || exit 0
+    - ${__cond__} && git apply ./.repo.patch
+    - ${__cond__} && rm -f ./.repo.patch
+    - ${__cond__} && git config user.name "github-actions"
+    - ${__cond__} && git config user.email "github-actions@github.com"
+    - ${__cond__} && git add .
+    - '${__cond__} && git commit -s -m "chore: self mutation"'
+    - apk add --update openssh
+    - git remote set-url --push origin
+      https://${GITLAB_USER_LOGIN}:${PROJEN_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}.git
+    - git push origin HEAD:${CI_COMMIT_REF_NAME}
   after_script: []
-package_js:
+package-js:
   image:
     name: alpine
   needs:
     - build
+  variables: {}
   artifacts: {}
   script:
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
     - "[ -s ./.repo.patch ] && exit 0"
     - mv dist .repo
-    - cd .repo && yarn install --check-files --frozen-lockfile
-    - cd .repo && npx projen package:js
+    - (cd .repo && yarn install --check-files --frozen-lockfile)
+    - (cd .repo && npx projen package:js)
     - mv .repo/dist dist
   after_script: []
-package_java:
+package-java:
   image:
     name: alpine
   needs:
     - build
+  variables: {}
   artifacts: {}
   script:
     - apk add --update git bash rsync
@@ -77,15 +85,16 @@ package_java:
     - apk add --update openjdk11-jre
     - "[ -s ./.repo.patch ] && exit 0"
     - mv dist .repo
-    - cd .repo && yarn install --check-files --frozen-lockfile
-    - cd .repo && npx projen package:java
+    - (cd .repo && yarn install --check-files --frozen-lockfile)
+    - (cd .repo && npx projen package:java)
     - mv .repo/dist dist
   after_script: []
-package_python:
+package-python:
   image:
     name: alpine
   needs:
     - build
+  variables: {}
   artifacts: {}
   script:
     - apk add --update git bash rsync
@@ -93,15 +102,16 @@ package_python:
     - apk add --update python3
     - "[ -s ./.repo.patch ] && exit 0"
     - mv dist .repo
-    - cd .repo && yarn install --check-files --frozen-lockfile
-    - cd .repo && npx projen package:python
+    - (cd .repo && yarn install --check-files --frozen-lockfile)
+    - (cd .repo && npx projen package:python)
     - mv .repo/dist dist
   after_script: []
-package_go:
+package-go:
   image:
     name: alpine
   needs:
     - build
+  variables: {}
   artifacts: {}
   script:
     - apk add --update git bash rsync
@@ -109,15 +119,16 @@ package_go:
     - apk add --update go
     - "[ -s ./.repo.patch ] && exit 0"
     - mv dist .repo
-    - cd .repo && yarn install --check-files --frozen-lockfile
-    - cd .repo && npx projen package:go
+    - (cd .repo && yarn install --check-files --frozen-lockfile)
+    - (cd .repo && npx projen package:go)
     - mv .repo/dist dist
   after_script: []
-post_build_integ:
+post-build-integ:
   image:
     name: alpine
   needs:
     - build
+  variables: {}
   artifacts: {}
   script:
     - apk add --update git bash rsync

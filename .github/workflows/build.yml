@@ -88,8 +88,8 @@ jobs:
           path: dist
       - run: "[ -s ./.repo.patch ] && exit 0"
       - run: mv dist .repo
-      - run: cd .repo && yarn install --check-files --frozen-lockfile
-      - run: cd .repo && npx projen package:js
+      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - run: (cd .repo && npx projen package:js)
       - run: mv .repo/dist dist
   package-java:
     needs: build
@@ -112,8 +112,8 @@ jobs:
           path: dist
       - run: "[ -s ./.repo.patch ] && exit 0"
       - run: mv dist .repo
-      - run: cd .repo && yarn install --check-files --frozen-lockfile
-      - run: cd .repo && npx projen package:java
+      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - run: (cd .repo && npx projen package:java)
       - run: mv .repo/dist dist
   package-python:
     needs: build
@@ -135,8 +135,8 @@ jobs:
           path: dist
       - run: "[ -s ./.repo.patch ] && exit 0"
       - run: mv dist .repo
-      - run: cd .repo && yarn install --check-files --frozen-lockfile
-      - run: cd .repo && npx projen package:python
+      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - run: (cd .repo && npx projen package:python)
       - run: mv .repo/dist dist
   package-go:
     needs: build
@@ -158,8 +158,8 @@ jobs:
           path: dist
       - run: "[ -s ./.repo.patch ] && exit 0"
       - run: mv dist .repo
-      - run: cd .repo && yarn install --check-files --frozen-lockfile
-      - run: cd .repo && npx projen package:go
+      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - run: (cd .repo && npx projen package:go)
       - run: mv .repo/dist dist
   post-build-integ:
     needs: build

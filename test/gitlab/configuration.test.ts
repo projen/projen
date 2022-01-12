@@ -1,5 +1,6 @@
+import * as YAML from "yaml";
 import { CiConfiguration } from "../../src/gitlab";
-import { TestProject } from "../util";
+import { synthSnapshot, TestProject } from "../util";
 
 test("throws when adding an existing service with same name and alias", () => {
   // GIVEN
@@ -91,4 +92,29 @@ test("throws when adding an existing includes", () => {
   expect(() => c.addIncludes({ template: "foo" })).toThrowError(
     /already contains one or more templates specified in/
   );
+});
+
+test("variables", () => {
+  // GIVEN
+  const p = new TestProject();
+
+  // WHEN
+  const c = new CiConfiguration(p, "gitlab-ci");
+  c.addJobs({
+    MyJob: {
+      variables: {
+        FOO_BAR: "BAZ",
+      },
+    },
+  });
+
+  // THEN
+  const output = YAML.parse(synthSnapshot(p)[".gitlab-ci.yml"]);
+  expect(output).toStrictEqual({
+    MyJob: {
+      variables: {
+        FOO_BAR: "BAZ",
+      },
+    },
+  });
 });

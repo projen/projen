@@ -328,8 +328,20 @@ export class CiConfiguration extends Component {
         Object.entries(this.variables).length > 0 ? this.variables : undefined,
       workflow: snakeCaseKeys(this.workflow),
       stages: this.stages.length > 0 ? this.stages : undefined,
-      ...snakeCaseKeys(this.jobs),
+      ...this.renderJobs(this.jobs),
     };
+  }
+
+  private renderJobs(jobs: Record<string, Job> = {}): Record<string, Job> {
+    const result: Record<string, Job> = {};
+    for (const [name, job] of Object.entries(jobs)) {
+      result[name] = {
+        ...snakeCaseKeys(job),
+        variables: job.variables, //<-- overrides snake casing
+      };
+    }
+
+    return result;
   }
 
   private renderDefault() {

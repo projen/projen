@@ -28,6 +28,7 @@ export class WorkflowProvider extends Component {
         const commands = new Array<string>();
         const image = job.options.image ?? "alpine";
         const afterScript = new Array<string>();
+        const variables: Record<string, string> = { ...job.options.env };
         // ?? readonly mutable?: boolean;
         // ?? readonly download?: string[];
         // ?? readonly checkout?: boolean;
@@ -115,17 +116,27 @@ export class WorkflowProvider extends Component {
 
         for (const c of commands) {
           if (cond) {
-            script.push(`$\{${condVar}\} && (${c})`);
+            script.push(`$\{${condVar}\} && ${c}`);
           } else {
             script.push(c);
           }
+        }
+
+        if (job.options.push) {
+          script.push(
+            "apk add --update openssh",
+            "git remote set-url --push origin https://${GITLAB_USER_LOGIN}:${PROJEN_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}.git",
+            "git push origin HEAD:${CI_COMMIT_REF_NAME}"
+          );
+
+          variables.PROJEN_TOKEN = "$PROJEN_TOKEN";
         }
 
         const j: Job = {
           image: image ? { name: image } : undefined,
           needs: job.options.needs ?? [],
           rules: rules,
-          variables: job.options.env,
+          variables: variables,
           artifacts: artifacts,
           script: script,
           afterScript: afterScript,

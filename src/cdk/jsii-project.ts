@@ -377,10 +377,10 @@ export class JsiiProject extends TypeScriptProject {
           run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
         },
         {
-          run: `cd ${REPO_TEMP_DIRECTORY} && ${this.package.installCommand}`,
+          run: `(cd ${REPO_TEMP_DIRECTORY} && ${this.package.installCommand})`,
         },
         {
-          run: `cd ${REPO_TEMP_DIRECTORY} && npx projen ${packTask.name}`,
+          run: `(cd ${REPO_TEMP_DIRECTORY} && npx projen ${packTask.name})`,
         },
         {
           run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
