@@ -34,7 +34,7 @@ export class WorkflowProvider extends Component {
             name: "Checkout",
             uses: "actions/checkout@v2",
             with: {
-              token: job.options.mutable
+              token: job.options.push
                 ? `\${{ secrets.${wf.projenTokenSecret} }}`
                 : undefined,
               ref: PULL_REQUEST_REF,
@@ -58,19 +58,19 @@ export class WorkflowProvider extends Component {
           steps.push({ run: step.run });
         }
 
-        for (const e of job.options.exports ?? []) {
-          const stepId = `export-${e}`;
-          steps.push({
-            id: stepId,
-            if: "always()",
-            run: `echo "::set-output name=${e}::$${e}"`,
-          });
+        // for (const e of job.options.exports ?? []) {
+        //   const stepId = `export-${e}`;
+        //   steps.push({
+        //     id: stepId,
+        //     if: "always()",
+        //     run: `echo "::set-output name=${e}::$${e}"`,
+        //   });
 
-          outputs[e] = {
-            stepId: stepId,
-            outputName: e,
-          };
-        }
+        //   outputs[e] = {
+        //     stepId: stepId,
+        //     outputName: e,
+        //   };
+        // }
 
         for (const path of job.options.upload ?? []) {
           steps.push({
@@ -78,6 +78,13 @@ export class WorkflowProvider extends Component {
             uses: "actions/upload-artifact@v2",
             if: "always()",
             with: { name: path, path: path },
+          });
+        }
+
+        if (job.options.push) {
+          steps.push({
+            name: "Push changes",
+            run: `git push origin HEAD:${PULL_REQUEST_REF}`,
           });
         }
 
@@ -121,7 +128,7 @@ export class WorkflowProvider extends Component {
           needs: job.options.needs,
           tools: job.options.tools,
           permissions: {
-            contents: job.options.mutable
+            contents: job.options.push
               ? JobPermission.WRITE
               : JobPermission.READ,
           },

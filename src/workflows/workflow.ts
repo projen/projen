@@ -40,7 +40,6 @@ export class Workflow extends Component {
 }
 
 export interface JobOptions {
-  readonly mutable?: boolean;
   readonly image?: string;
   readonly env?: Record<string, string>;
   readonly steps?: Step[];
@@ -50,7 +49,8 @@ export interface JobOptions {
   readonly download?: string[];
   readonly tools?: Tools;
   readonly checkout?: boolean;
-  readonly exports?: string[];
+  readonly push?: boolean;
+  // readonly exports?: string[];
 }
 
 export interface Step {

@@ -8,9 +8,7 @@ import { Condition, JobOptions, Step, Tools, Workflow } from "../workflows";
 
 const GIT_PATCH_FILE = ".repo.patch";
 
-const PULL_REQUEST_REF = "${{ github.event.pull_request.head.ref }}";
 const BUILD_JOBID = "build";
-const SELF_MUTATION_HAPPENED_OUTPUT = "self_mutation_happened";
 
 export interface BuildWorkflowOptions {
   /**
@@ -138,13 +136,11 @@ export class BuildWorkflow extends Component {
             `if ! git diff --staged --patch --exit-code > ${GIT_PATCH_FILE}; then`,
             '  echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."',
             `  cat ${GIT_PATCH_FILE}`,
-            `  ${SELF_MUTATION_HAPPENED_OUTPUT}=1`,
             "  exit 1",
             `fi`,
           ].join("\n"),
         },
       ],
-      exports: [SELF_MUTATION_HAPPENED_OUTPUT],
     });
     // this.workflow.addJob(, {
     //   steps: (() => this.renderBuildSteps()) as any,
@@ -187,12 +183,11 @@ export class BuildWorkflow extends Component {
     this.workflow.addJob(id, {
       needs: [BUILD_JOBID],
       download: this.artifactsDirectory ? [this.artifactsDirectory] : [],
-      // only run if build did not self-mutate
-      condition: Condition.not(
-        Condition.isOutputDefined(BUILD_JOBID, SELF_MUTATION_HAPPENED_OUTPUT)
-      ),
       ...job,
-      steps: job.steps,
+      steps: [
+        { run: `[ -s ./${GIT_PATCH_FILE} ] && exit 0` }, // self mutation happened - skipping
+        ...(job.steps ?? []),
+      ],
     });
 
     // add to the list of build job IDs
@@ -265,25 +260,22 @@ export class BuildWorkflow extends Component {
   private addSelfMutationJob() {
     this.workflow.addJob("self-mutation", {
       // TODO: runsOn: options.runsOn ?? this.defaultRunners,
-      mutable: true,
       checkout: true,
+      push: true,
       needs: [BUILD_JOBID],
       condition: Condition.and(
         Condition.always(),
-        Condition.isOutputDefined(BUILD_JOBID, SELF_MUTATION_HAPPENED_OUTPUT),
         Condition.not(Condition.isFork())
       ),
       download: [GIT_PATCH_FILE],
       steps: [
-        {
-          run: `[ -s ./${GIT_PATCH_FILE} ] && git apply ./${GIT_PATCH_FILE} || echo "Empty patch. Skipping."`,
-        },
+        { run: `[ -s ./${GIT_PATCH_FILE} ] || exit 0` }, // skipping, no patch
+        { run: `git apply ./${GIT_PATCH_FILE}` },
         { run: `rm -f ./${GIT_PATCH_FILE}` },
         { run: `git config user.name "${this.gitIdentity.name}"` },
         { run: `git config user.email "${this.gitIdentity.email}"` },
         { run: `git add .` },
-        { run: `git commit -m -s "chore: self mutation"` },
-        { run: `git push origin HEAD:${PULL_REQUEST_REF}` },
+        { run: `git commit -s -m "chore: self mutation"` },
       ],
     });
   }

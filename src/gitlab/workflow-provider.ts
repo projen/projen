@@ -42,18 +42,18 @@ export class WorkflowProvider extends Component {
           artifacts.when = CacheWhen.ALWAYS;
         }
 
-        const exports = job.options.exports ?? [];
-        const exportsFile = ".exports.env";
+        // const exports = job.options.exports ?? [];
+        // const exportsFile = ".exports.env";
 
-        if (exports.length) {
-          artifacts.reports = {
-            dotenv: [exportsFile],
-          };
+        // if (exports.length) {
+        //   artifacts.reports = {
+        //     dotenv: [exportsFile],
+        //   };
 
-          for (const e of exports) {
-            afterScript.push(`echo "${e}=\"\$${e}\"" >> ${exportsFile}`);
-          }
-        }
+        //   for (const e of exports) {
+        //     afterScript.push(`echo "${e}=\"\$${e}\"" >> ${exportsFile}`);
+        //   }
+        // }
 
         const renderCondition = (spec?: ConditionSpec): string | undefined => {
           if (!spec || Object.keys(spec).length === 0) {

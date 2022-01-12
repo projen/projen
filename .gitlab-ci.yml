@@ -11,9 +11,6 @@ build:
       - .repo.patch
       - dist
     when: always
-    reports:
-      dotenv:
-        - .exports.env
   script:
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
@@ -24,11 +21,9 @@ build:
       if ! git diff --staged --patch --exit-code > .repo.patch; then
         echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
         cat .repo.patch
-        self_mutation_happened=1
         exit 1
       fi
-  after_script:
-    - echo "self_mutation_happened="$self_mutation_happened"" >> .exports.env
+  after_script: []
 self_mutation:
   image:
     name: alpine
@@ -39,7 +34,7 @@ self_mutation:
   artifacts: {}
   script:
     - |-
-      if true && [ -n "$self_mutation_happened" ] && ! false; then
+      if true && ! false; then
         __cond__=true
       else
         echo "Job skipped"
@@ -47,131 +42,89 @@ self_mutation:
       fi
     - ${__cond__} && (apk add --update git bash rsync)
     - ${__cond__} && (apk add --update nodejs npm yarn)
-    - ${__cond__} && ([ -s ./.repo.patch ] && git apply ./.repo.patch || echo
-      "Empty patch. Skipping.")
+    - ${__cond__} && ([ -s ./.repo.patch ] || exit 0)
+    - ${__cond__} && (git apply ./.repo.patch)
     - ${__cond__} && (rm -f ./.repo.patch)
     - ${__cond__} && (git config user.name "github-actions")
     - ${__cond__} && (git config user.email "github-actions@github.com")
     - ${__cond__} && (git add .)
-    - '${__cond__} && (git commit -m -s "chore: self mutation")'
-    - ${__cond__} && (git push origin HEAD:${{
-      github.event.pull_request.head.ref }})
+    - '${__cond__} && (git commit -s -m "chore: self mutation")'
   after_script: []
 package_js:
   image:
     name: alpine
   needs:
     - build
-  rules:
-    - when: always
   artifacts: {}
   script:
-    - |-
-      if ! [ -n "$self_mutation_happened" ]; then
-        __cond__=true
-      else
-        echo "Job skipped"
-        __cond__=false
-      fi
-    - ${__cond__} && (apk add --update git bash rsync)
-    - ${__cond__} && (apk add --update nodejs npm yarn)
-    - ${__cond__} && (mv dist .repo)
-    - ${__cond__} && (cd .repo && yarn install --check-files --frozen-lockfile)
-    - ${__cond__} && (cd .repo && npx projen package:js)
-    - ${__cond__} && (mv .repo/dist dist)
+    - apk add --update git bash rsync
+    - apk add --update nodejs npm yarn
+    - "[ -s ./.repo.patch ] && exit 0"
+    - mv dist .repo
+    - cd .repo && yarn install --check-files --frozen-lockfile
+    - cd .repo && npx projen package:js
+    - mv .repo/dist dist
   after_script: []
 package_java:
   image:
     name: alpine
   needs:
     - build
-  rules:
-    - when: always
   artifacts: {}
   script:
-    - |-
-      if ! [ -n "$self_mutation_happened" ]; then
-        __cond__=true
-      else
-        echo "Job skipped"
-        __cond__=false
-      fi
-    - ${__cond__} && (apk add --update git bash rsync)
-    - ${__cond__} && (apk add --update nodejs npm yarn)
-    - ${__cond__} && (apk add --update openjdk11-jre)
-    - ${__cond__} && (mv dist .repo)
-    - ${__cond__} && (cd .repo && yarn install --check-files --frozen-lockfile)
-    - ${__cond__} && (cd .repo && npx projen package:java)
-    - ${__cond__} && (mv .repo/dist dist)
+    - apk add --update git bash rsync
+    - apk add --update nodejs npm yarn
+    - apk add --update openjdk11-jre
+    - "[ -s ./.repo.patch ] && exit 0"
+    - mv dist .repo
+    - cd .repo && yarn install --check-files --frozen-lockfile
+    - cd .repo && npx projen package:java
+    - mv .repo/dist dist
   after_script: []
 package_python:
   image:
     name: alpine
   needs:
     - build
-  rules:
-    - when: always
   artifacts: {}
   script:
-    - |-
-      if ! [ -n "$self_mutation_happened" ]; then
-        __cond__=true
-      else
-        echo "Job skipped"
-        __cond__=false
-      fi
-    - ${__cond__} && (apk add --update git bash rsync)
-    - ${__cond__} && (apk add --update nodejs npm yarn)
-    - ${__cond__} && (apk add --update python3)
-    - ${__cond__} && (mv dist .repo)
-    - ${__cond__} && (cd .repo && yarn install --check-files --frozen-lockfile)
-    - ${__cond__} && (cd .repo && npx projen package:python)
-    - ${__cond__} && (mv .repo/dist dist)
+    - apk add --update git bash rsync
+    - apk add --update nodejs npm yarn
+    - apk add --update python3
+    - "[ -s ./.repo.patch ] && exit 0"
+    - mv dist .repo
+    - cd .repo && yarn install --check-files --frozen-lockfile
+    - cd .repo && npx projen package:python
+    - mv .repo/dist dist
   after_script: []
 package_go:
   image:
     name: alpine
   needs:
     - build
-  rules:
-    - when: always
   artifacts: {}
   script:
-    - |-
-      if ! [ -n "$self_mutation_happened" ]; then
-        __cond__=true
-      else
-        echo "Job skipped"
-        __cond__=false
-      fi
-    - ${__cond__} && (apk add --update git bash rsync)
-    - ${__cond__} && (apk add --update nodejs npm yarn)
-    - ${__cond__} && (apk add --update go)
-    - ${__cond__} && (mv dist .repo)
-    - ${__cond__} && (cd .repo && yarn install --check-files --frozen-lockfile)
-    - ${__cond__} && (cd .repo && npx projen package:go)
-    - ${__cond__} && (mv .repo/dist dist)
+    - apk add --update git bash rsync
+    - apk add --update nodejs npm yarn
+    - apk add --update go
+    - "[ -s ./.repo.patch ] && exit 0"
+    - mv dist .repo
+    - cd .repo && yarn install --check-files --frozen-lockfile
+    - cd .repo && npx projen package:go
+    - mv .repo/dist dist
   after_script: []
 post_build_integ:
   image:
     name: alpine
   needs:
     - build
-  rules:
-    - when: always
   artifacts: {}
   script:
-    - |-
-      if ! [ -n "$self_mutation_happened" ]; then
-        __cond__=true
-      else
-        echo "Job skipped"
-        __cond__=false
-      fi
-    - ${__cond__} && (apk add --update git bash rsync)
-    - ${__cond__} && (apk add --update nodejs npm yarn)
-    - ${__cond__} && (apk add --update python3)
-    - ${__cond__} && (apk add --update go)
-    - ${__cond__} && (yarn install --check-files --frozen-lockfile)
-    - ${__cond__} && (/bin/bash ./projen.bash integ)
+    - apk add --update git bash rsync
+    - apk add --update nodejs npm yarn
+    - apk add --update python3
+    - apk add --update go
+    - "[ -s ./.repo.patch ] && exit 0"
+    - yarn install --check-files --frozen-lockfile
+    - /bin/bash ./projen.bash integ
   after_script: []

@@ -9,8 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs:
-      self_mutation_happened: ${{ steps.export-self_mutation_happened.outputs.self_mutation_happened }}
+    outputs: {}
     env:
       CI: "true"
     steps:
@@ -29,12 +28,8 @@ jobs:
           if ! git diff --staged --patch --exit-code > .repo.patch; then
             echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
             cat .repo.patch
-            self_mutation_happened=1
             exit 1
           fi
-      - id: export-self_mutation_happened
-        if: always()
-        run: echo "::set-output name=self_mutation_happened::$self_mutation_happened"
       - name: Upload .repo.patch
         uses: actions/upload-artifact@v2
         if: always()
@@ -53,8 +48,8 @@ jobs:
     permissions:
       contents: write
     outputs: {}
-    if: (always()) && (needs.build.outputs.self_mutation_happened) && (!
-      (github.event.pull_request.head.repo.full_name != github.repository))
+    if: (always()) && (! (github.event.pull_request.head.repo.full_name !=
+      github.repository))
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -67,21 +62,21 @@ jobs:
         with:
           name: .repo.patch
           path: .repo.patch
-      - run: '[ -s ./.repo.patch ] && git apply ./.repo.patch || echo "Empty patch.
-          Skipping."'
+      - run: "[ -s ./.repo.patch ] || exit 0"
+      - run: git apply ./.repo.patch
       - run: rm -f ./.repo.patch
       - run: git config user.name "github-actions"
       - run: git config user.email "github-actions@github.com"
       - run: git add .
-      - run: 'git commit -m -s "chore: self mutation"'
-      - run: git push origin HEAD:${{ github.event.pull_request.head.ref }}
+      - run: 'git commit -s -m "chore: self mutation"'
+      - name: Push changes
+        run: git push origin HEAD:${{ github.event.pull_request.head.ref }}
   package-js:
     needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: read
     outputs: {}
-    if: "! (needs.build.outputs.self_mutation_happened)"
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -91,6 +86,7 @@ jobs:
         with:
           name: dist
           path: dist
+      - run: "[ -s ./.repo.patch ] && exit 0"
       - run: mv dist .repo
       - run: cd .repo && yarn install --check-files --frozen-lockfile
       - run: cd .repo && npx projen package:js
@@ -101,7 +97,6 @@ jobs:
     permissions:
       contents: read
     outputs: {}
-    if: "! (needs.build.outputs.self_mutation_happened)"
     steps:
       - uses: actions/setup-java@v2
         with:
@@ -115,6 +110,7 @@ jobs:
         with:
           name: dist
           path: dist
+      - run: "[ -s ./.repo.patch ] && exit 0"
       - run: mv dist .repo
       - run: cd .repo && yarn install --check-files --frozen-lockfile
       - run: cd .repo && npx projen package:java
@@ -125,7 +121,6 @@ jobs:
     permissions:
       contents: read
     outputs: {}
-    if: "! (needs.build.outputs.self_mutation_happened)"
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -138,6 +133,7 @@ jobs:
         with:
           name: dist
           path: dist
+      - run: "[ -s ./.repo.patch ] && exit 0"
       - run: mv dist .repo
       - run: cd .repo && yarn install --check-files --frozen-lockfile
       - run: cd .repo && npx projen package:python
@@ -148,7 +144,6 @@ jobs:
     permissions:
       contents: read
     outputs: {}
-    if: "! (needs.build.outputs.self_mutation_happened)"
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -161,6 +156,7 @@ jobs:
         with:
           name: dist
           path: dist
+      - run: "[ -s ./.repo.patch ] && exit 0"
       - run: mv dist .repo
       - run: cd .repo && yarn install --check-files --frozen-lockfile
       - run: cd .repo && npx projen package:go
@@ -171,7 +167,6 @@ jobs:
     permissions:
       contents: read
     outputs: {}
-    if: "! (needs.build.outputs.self_mutation_happened)"
     steps:
       - uses: actions/setup-python@v2
         with:
@@ -189,5 +184,6 @@ jobs:
         with:
           name: dist
           path: dist
+      - run: "[ -s ./.repo.patch ] && exit 0"
       - run: yarn install --check-files --frozen-lockfile
       - run: /bin/bash ./projen.bash integ
