@@ -14,7 +14,6 @@ describe("IntegrationTest", () => {
 
   // WHEN
   new awscdk.IntegrationTest(project, {
-    name: "foo",
     entrypoint: "test/foo.integ.ts",
     tsconfigPath: project.tsconfigDev.fileName,
     cdkDeps: project.cdkDeps,
@@ -77,7 +76,6 @@ test("installs ts-node if needed", () => {
   });
 
   new IntegrationTest(project, {
-    name: "foo",
     entrypoint: "test/foo.integ.ts",
     tsconfigPath: project.tsconfigDev.fileName,
     cdkDeps: new AwsCdkDepsJs(project, {
@@ -102,7 +100,6 @@ test("synthesizing cdk v2 integration tests", () => {
 
   // WHEN
   new awscdk.IntegrationTest(project, {
-    name: "foo",
     entrypoint: "test/foo.integ.ts",
     tsconfigPath: project.tsconfigDev.fileName,
     cdkDeps: project.cdkDeps,

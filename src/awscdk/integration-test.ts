@@ -1,10 +1,10 @@
-import { dirname, join } from "path";
+import { basename, dirname, join } from "path";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
 import { Task } from "../task";
 import { AwsCdkDeps } from "./awscdk-deps";
-import { FEATURE_FLAGS } from "./internal";
+import { FEATURE_FLAGS, TYPESCRIPT_INTEG_EXT } from "./internal";
 
 export interface IntegrationTestCommonOptions {
   /**
@@ -21,12 +21,13 @@ export interface IntegrationTestCommonOptions {
 export interface IntegrationTestOptions extends IntegrationTestCommonOptions {
   /**
    * Name of the integration test
+   * @default - Derived from the entrypoint filename.
    */
-  readonly name: string;
+  readonly name?: string;
 
   /**
    * A list of stacks within the integration test to deploy/destroy.
-   * @default - The CLI is not told any one stack in particular
+   * @default ["*"]
    */
   readonly stacks?: string[];
 
@@ -83,7 +84,7 @@ export class IntegrationTest extends Component {
   constructor(project: Project, options: IntegrationTestOptions) {
     super(project);
     const entry = options.entrypoint;
-    const name = options.name;
+    const name = options.name ?? basename(entry, TYPESCRIPT_INTEG_EXT);
     const dir = dirname(entry);
 
     const deploydir = join(dir, ".tmp", `${name}.integ`, "deploy.cdk.out");
@@ -119,11 +120,8 @@ export class IntegrationTest extends Component {
     const cdkopts = opts.join(" ");
 
     // Determine which stacks to deploy
-    const stacks = options.stacks ?? [];
-    const stackOpts =
-      stacks.length > 0
-        ? " " + stacks.map((stack) => `'${stack}'`).join(" ")
-        : "";
+    const stacks = options.stacks ?? ["*"];
+    const stackOpts = stacks.map((stack) => `'${stack}'`).join(" ");
 
     const deployTask = project.addTask(`integ:${name}:deploy`, {
       description: `deploy integration test '${name}' and capture snapshot`,
@@ -131,7 +129,7 @@ export class IntegrationTest extends Component {
 
     deployTask.exec(`rm -fr ${deploydir}`);
     deployTask.exec(
-      `cdk deploy ${cdkopts}${stackOpts} --require-approval=never -o ${deploydir}`
+      `cdk deploy ${cdkopts} ${stackOpts} --require-approval=never -o ${deploydir}`
     );
 
     // if deployment was successful, copy the deploy dir to the expected dir
@@ -140,12 +138,12 @@ export class IntegrationTest extends Component {
 
     const watchTask = project.addTask(`integ:${name}:watch`, {
       description: `watch integration test '${name}' (without updating snapshots)`,
-      exec: `cdk watch ${cdkopts}${stackOpts} -o ${deploydir}`,
+      exec: `cdk watch ${cdkopts} ${stackOpts} -o ${deploydir}`,
     });
 
     const destroyTask = project.addTask(`integ:${name}:destroy`, {
       description: `destroy integration test '${name}'`,
-      exec: `cdk destroy --app ${snapshotdir}${stackOpts} --no-version-reporting`,
+      exec: `cdk destroy --app ${snapshotdir} ${stackOpts} --no-version-reporting`,
     });
 
     const destroyAfterDeploy = options.destroyAfterDeploy ?? true;
