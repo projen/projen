@@ -10,7 +10,7 @@ export interface Job {
    *
    * @example ["ubuntu-latest"]
    */
-  readonly runsOn: string[];
+  readonly runsOn: string | string[];
 
   /**
    * A job contains a sequence of tasks called steps. Steps can run commands,
@@ -131,6 +131,32 @@ export interface Job {
    * cycle of the service containers.
    */
   readonly services?: Record<string, ContainerOptions>;
+
+  /**
+   * The location and version of a reusable workflow file to run as a job.
+   * `{owner}/{repo}/{path}/{filename}@{ref}`
+   * `{ref}` can be a SHA, a release tag, or a branch name.
+   * Using the commit SHA is the safest for stability and security.
+   */
+  readonly uses?: string;
+
+  /**
+   * When a job is used to call a reusable workflow, you can use `with` to
+   * provide a map of inputs that are passed to the called workflow.
+   * Any inputs that you pass must match the input specifications defined
+   * in the called workflow.
+   * Unlike `JobStep.with`, the inputs you pass are not be available as
+   * environment variables in the called workflow. Instead, you can
+   * reference the inputs by using the inputs context.
+   */
+  readonly with?: Record<string, any>;
+
+  /**
+   * When a job is used to call a reusable workflow, you can use secrets to
+   * provide a map of secrets that are passed to the called workflow.
+   * Any secrets that you pass must match the names defined in the called workflow.
+   */
+  readonly secrets?: Record<string, any>;
 
   /**
    * Tools required for this job. Traslates into `actions/setup-xxx` steps at
