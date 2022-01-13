@@ -6,7 +6,8 @@ import { Project } from "../project";
 import { Task } from "../task";
 import { Condition, JobOptions, Step, Tools, Workflow } from "../workflows";
 
-const GIT_PATCH_FILE = ".repo.patch";
+const GIT_PATCH_DIR = ".self-mutation";
+const GIT_PATCH_FILE = `${GIT_PATCH_DIR}/patch.diff`;
 
 const BUILD_JOBID = "build";
 
@@ -123,10 +124,10 @@ export class BuildWorkflow extends Component {
         ...options.env,
         CI: "true",
       },
-      checkout: true,
-      upload: [GIT_PATCH_FILE, "dist"],
       tools: options.tools,
+      checkout: true,
       steps: [
+        { run: `mkdir -p ${GIT_PATCH_DIR}` },
         { run: `touch ${GIT_PATCH_FILE}` },
         ...this.preBuildSteps,
         { run: this.project.runTaskCommand(this.buildTask) },
@@ -142,6 +143,7 @@ export class BuildWorkflow extends Component {
           ].join("\n"),
         },
       ],
+      upload: [GIT_PATCH_DIR, "dist"],
     });
     // this.workflow.addJob(, {
     //   steps: (() => this.renderBuildSteps()) as any,
@@ -181,9 +183,14 @@ export class BuildWorkflow extends Component {
    * @param job The job specification
    */
   public addPostBuildJob(id: string, job: JobOptions) {
+    const download = [GIT_PATCH_DIR];
+    if (this.artifactsDirectory) {
+      download.push(this.artifactsDirectory);
+    }
+
     this.workflow.addJob(id, {
       needs: [BUILD_JOBID],
-      download: this.artifactsDirectory ? [this.artifactsDirectory] : [],
+      download: download,
       ...job,
       steps: [
         { run: `[ -s ./${GIT_PATCH_FILE} ] && exit 0` }, // self mutation happened - skipping
@@ -268,11 +275,11 @@ export class BuildWorkflow extends Component {
         Condition.always(),
         Condition.not(Condition.isFork())
       ),
-      download: [GIT_PATCH_FILE],
+      download: [GIT_PATCH_DIR],
       steps: [
         { run: `[ -s ./${GIT_PATCH_FILE} ] || exit 0` }, // skipping, no patch
         { run: `git apply ./${GIT_PATCH_FILE}` },
-        { run: `rm -f ./${GIT_PATCH_FILE}` },
+        { run: `rm -f ./${GIT_PATCH_DIR}` },
         { run: `git config user.name "${this.gitIdentity.name}"` },
         { run: `git config user.email "${this.gitIdentity.email}"` },
         { run: `git add .` },

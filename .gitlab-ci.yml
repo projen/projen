@@ -8,19 +8,22 @@ build:
     CI: "true"
   artifacts:
     paths:
-      - .repo.patch
+      - .self-mutation
       - dist
     when: always
   script:
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
+    - mkdir -p .self-mutation
+    - touch .self-mutation/patch.diff
     - yarn install --check-files
     - /bin/bash ./projen.bash build
     - git add .
     - >-
-      if ! git diff --staged --patch --exit-code > .repo.patch; then
+      if ! git diff --staged --patch --exit-code > .self-mutation/patch.diff;
+      then
         echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
-        cat .repo.patch
+        cat .self-mutation/patch.diff
         exit 1
       fi
   after_script: []
@@ -44,9 +47,9 @@ self-mutation:
       fi
     - ${__cond__} && apk add --update git bash rsync
     - ${__cond__} && apk add --update nodejs npm yarn
-    - ${__cond__} && [ -s ./.repo.patch ] || exit 0
-    - ${__cond__} && git apply ./.repo.patch
-    - ${__cond__} && rm -f ./.repo.patch
+    - ${__cond__} && [ -s ./.self-mutation/patch.diff ] || exit 0
+    - ${__cond__} && git apply ./.self-mutation/patch.diff
+    - ${__cond__} && rm -f ./.self-mutation
     - ${__cond__} && git config user.name "github-actions"
     - ${__cond__} && git config user.email "github-actions@github.com"
     - ${__cond__} && git add .
@@ -66,7 +69,7 @@ package-js:
   script:
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
-    - "[ -s ./.repo.patch ] && exit 0"
+    - "[ -s ./.self-mutation/patch.diff ] && exit 0"
     - mv dist .repo
     - (cd .repo && yarn install --check-files --frozen-lockfile)
     - (cd .repo && npx projen package:js)
@@ -83,7 +86,7 @@ package-java:
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
     - apk add --update openjdk11-jre
-    - "[ -s ./.repo.patch ] && exit 0"
+    - "[ -s ./.self-mutation/patch.diff ] && exit 0"
     - mv dist .repo
     - (cd .repo && yarn install --check-files --frozen-lockfile)
     - (cd .repo && npx projen package:java)
@@ -100,7 +103,7 @@ package-python:
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
     - apk add --update python3
-    - "[ -s ./.repo.patch ] && exit 0"
+    - "[ -s ./.self-mutation/patch.diff ] && exit 0"
     - mv dist .repo
     - (cd .repo && yarn install --check-files --frozen-lockfile)
     - (cd .repo && npx projen package:python)
@@ -117,7 +120,7 @@ package-go:
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
     - apk add --update go
-    - "[ -s ./.repo.patch ] && exit 0"
+    - "[ -s ./.self-mutation/patch.diff ] && exit 0"
     - mv dist .repo
     - (cd .repo && yarn install --check-files --frozen-lockfile)
     - (cd .repo && npx projen package:go)
@@ -135,7 +138,7 @@ post-build-integ:
     - apk add --update nodejs npm yarn
     - apk add --update python3
     - apk add --update go
-    - "[ -s ./.repo.patch ] && exit 0"
+    - "[ -s ./.self-mutation/patch.diff ] && exit 0"
     - yarn install --check-files --frozen-lockfile
     - /bin/bash ./projen.bash integ
   after_script: []
