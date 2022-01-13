@@ -1,6 +1,6 @@
 import { GitHub } from ".";
 import { Component } from "../component";
-import { Job, JobPermission } from "./workflows-model";
+import { JobPermission, RegularJob } from "./workflows-model";
 
 /**
  * Options for PullRequestLint
@@ -59,7 +59,7 @@ export class PullRequestLint extends Component {
       const opts = options.semanticTitleOptions ?? {};
       const types = opts.types ?? ["feat", "fix", "chore"];
 
-      const validateJob: Job = {
+      const validateJob: RegularJob = {
         name: "Validate PR title",
         runsOn: options.runsOn ?? ["ubuntu-latest"],
         permissions: {

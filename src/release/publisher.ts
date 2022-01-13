@@ -5,10 +5,10 @@ import {
   DEFAULT_GITHUB_ACTIONS_USER,
 } from "../github/constants";
 import {
-  Job,
   JobPermission,
   JobPermissions,
   JobStep,
+  RegularJob,
   Tools,
 } from "../github/workflows-model";
 import { defaultNpmToken } from "../javascript/node-package";
@@ -144,8 +144,8 @@ export class Publisher extends Component {
   public _renderJobsForBranch(
     branch: string,
     options: Partial<BranchOptions>
-  ): Record<string, Job> {
-    let jobs: Record<string, Job> = {};
+  ): Record<string, RegularJob> {
+    let jobs: Record<string, RegularJob> = {};
 
     for (const factory of this._jobFactories) {
       jobs = {
@@ -565,7 +565,7 @@ export class Publisher extends Component {
           needs: [this.buildJobId],
           runsOn: this.runsOn,
           steps,
-        },
+        } as RegularJob,
       };
     });
   }
@@ -975,4 +975,4 @@ export interface GitPublishOptions extends VersionArtifactOptions {
 type PublishJobFactory = (
   branch: string,
   branchOptions: Partial<BranchOptions>
-) => Record<string, Job>;
+) => Record<string, RegularJob>;

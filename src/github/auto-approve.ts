@@ -1,6 +1,6 @@
 import { Component } from "../component";
 import { GitHub } from "./github";
-import { Job, JobPermission } from "./workflows-model";
+import { JobPermission, RegularJob } from "./workflows-model";
 
 /**
  * Options for 'AutoApprove'
@@ -64,7 +64,7 @@ export class AutoApprove extends Component {
 
     const secret = options.secret ?? "GITHUB_TOKEN";
 
-    const approveJob: Job = {
+    const approveJob: RegularJob = {
       runsOn: options.runsOn ?? ["ubuntu-latest"],
       permissions: {
         pullRequests: JobPermission.WRITE,

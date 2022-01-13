@@ -1,7 +1,7 @@
 import { Component } from "../component";
 import { GitHub } from "./github";
 import { renderBehavior } from "./stale-util";
-import { JobPermission } from "./workflows-model";
+import { JobPermission, RegularJob } from "./workflows-model";
 
 /**
  * Options for `Stale`.
@@ -138,7 +138,7 @@ export class Stale extends Component {
             },
           },
         ],
-      },
+      } as RegularJob,
     });
   }
 }

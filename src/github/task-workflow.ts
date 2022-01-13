@@ -5,10 +5,10 @@ import { WorkflowActions } from "./workflow-actions";
 import { GithubWorkflow } from "./workflows";
 import {
   ContainerOptions,
-  Job,
   JobPermissions,
   JobStep,
   JobStepOutput,
+  RegularJob,
   Triggers,
 } from "./workflows-model";
 
@@ -166,7 +166,7 @@ export class TaskWorkflow extends GithubWorkflow {
       });
     }
 
-    const job: Job = {
+    const job: RegularJob = {
       runsOn: options.runsOn ?? ["ubuntu-latest"],
       container: options.container,
       env: options.env,

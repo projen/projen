@@ -6,7 +6,7 @@ import {
   DEFAULT_GITHUB_ACTIONS_USER,
 } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
-import { Job, JobPermission, JobStep, Tools } from "../github/workflows-model";
+import { JobPermission, JobStep, RegularJob, Tools } from "../github/workflows-model";
 import { NodeProject } from "../javascript";
 import { Project } from "../project";
 
@@ -176,7 +176,7 @@ export class BuildWorkflow extends Component {
    * @param id The id of the new job
    * @param job The job specification
    */
-  public addPostBuildJob(id: string, job: Job) {
+  public addPostBuildJob(id: string, job: RegularJob) {
     const steps = [];
 
     if (this.artifactsDirectory) {

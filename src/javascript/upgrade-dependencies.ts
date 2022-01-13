@@ -2,7 +2,11 @@ import { Component } from "../component";
 import { GitHub, GithubWorkflow, GitIdentity, workflows } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
-import { ContainerOptions, JobStep } from "../github/workflows-model";
+import {
+  ContainerOptions,
+  JobStep,
+  RegularJob,
+} from "../github/workflows-model";
 import { NodeProject } from "../javascript";
 import { warn } from "../logging";
 import { Task } from "../task";
@@ -289,7 +293,7 @@ export class UpgradeDependencies extends Component {
             outputName: PATCH_CREATED_OUTPUT,
           },
         },
-      },
+      } as RegularJob,
       jobId: "upgrade",
       ref: branch,
     };
@@ -359,7 +363,7 @@ export class UpgradeDependencies extends Component {
         },
         runsOn: runsOn ?? ["ubuntu-latest"],
         steps: steps,
-      },
+      } as RegularJob,
       jobId: "pr",
     };
   }
