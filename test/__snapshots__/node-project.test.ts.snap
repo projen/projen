@@ -89,19 +89,14 @@ Array [
     "run": "git add .",
   },
   Object {
-    "run": "if git diff --staged --patch --exit-code > .repo.patch; then
-  self_mutation_happened=1
-else
+    "run": "if ! git diff --staged --patch --exit-code > .repo.patch; then
   echo \\"Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
   cat .repo.patch
   exit 1
 fi",
   },
   Object {
-    "id": "export-self_mutation_happened",
-    "run": "echo \\"::set-output name=self_mutation_happened::$self_mutation_happened\\"",
-  },
-  Object {
+    "if": "always()",
     "name": "Upload .repo.patch",
     "uses": "actions/upload-artifact@v2",
     "with": Object {
@@ -110,6 +105,7 @@ fi",
     },
   },
   Object {
+    "if": "always()",
     "name": "Upload dist",
     "uses": "actions/upload-artifact@v2",
     "with": Object {
@@ -140,19 +136,14 @@ Array [
     "run": "git add .",
   },
   Object {
-    "run": "if git diff --staged --patch --exit-code > .repo.patch; then
-  self_mutation_happened=1
-else
+    "run": "if ! git diff --staged --patch --exit-code > .repo.patch; then
   echo \\"Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
   cat .repo.patch
   exit 1
 fi",
   },
   Object {
-    "id": "export-self_mutation_happened",
-    "run": "echo \\"::set-output name=self_mutation_happened::$self_mutation_happened\\"",
-  },
-  Object {
+    "if": "always()",
     "name": "Upload .repo.patch",
     "uses": "actions/upload-artifact@v2",
     "with": Object {
@@ -161,6 +152,7 @@ fi",
     },
   },
   Object {
+    "if": "always()",
     "name": "Upload dist",
     "uses": "actions/upload-artifact@v2",
     "with": Object {
@@ -191,7 +183,10 @@ Array [
     },
   },
   Object {
-    "run": "[ -s ./.repo.patch ] && git apply ./.repo.patch || echo \\"Empty patch. Skipping.\\"",
+    "run": "[ -s ./.repo.patch ] || exit 0",
+  },
+  Object {
+    "run": "git apply ./.repo.patch",
   },
   Object {
     "run": "rm -f ./.repo.patch",
@@ -206,9 +201,10 @@ Array [
     "run": "git add .",
   },
   Object {
-    "run": "git commit -m -s \\"chore: self mutation\\"",
+    "run": "git commit -s -m \\"chore: self mutation\\"",
   },
   Object {
+    "name": "Push changes",
     "run": "git push origin HEAD:\${{ github.event.pull_request.head.ref }}",
   },
 ]

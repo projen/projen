@@ -807,6 +807,18 @@ test("workflowGitIdentity can be used to customize the git identity used in buil
 //   });
 // });
 
+test("post-upgrade workflow", () => {
+  // GIVEN
+  const project = new TestNodeProject();
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  const tasks = snapshot[Tasks.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[tasks.upgrade.steps.length - 1]).toStrictEqual({
+    spawn: "post-upgrade",
+  });
+});
+
 class TestNodeProject extends NodeProject {
   constructor(options: Partial<NodeProjectOptions> = {}) {
     super({

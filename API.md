@@ -3928,6 +3928,8 @@ new awscdk.IntegrationTest(project: Project, options: IntegrationTestOptions)
   * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the integration test app. 
   * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use when running integration test cdk apps. 
+  * **name** (<code>string</code>)  Name of the integration test. __*Default*__: Derived from the entrypoint filename.
+  * **stacks** (<code>Array<string></code>)  A list of stacks within the integration test to deploy/destroy. __*Default*__: ["**"]
 
 
 
@@ -4065,10 +4067,9 @@ addPostBuildJob(id: string, job: JobOptions): void
   * **condition** (<code>[workflows.Condition](#projen-workflows-condition)</code>)  *No description* __*Optional*__
   * **download** (<code>Array<string></code>)  *No description* __*Optional*__
   * **env** (<code>Map<string, string></code>)  *No description* __*Optional*__
-  * **exports** (<code>Array<string></code>)  *No description* __*Optional*__
   * **image** (<code>string</code>)  *No description* __*Optional*__
-  * **mutable** (<code>boolean</code>)  *No description* __*Optional*__
   * **needs** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **push** (<code>boolean</code>)  *No description* __*Optional*__
   * **steps** (<code>Array<[workflows.Step](#projen-workflows-step)></code>)  *No description* __*Optional*__
   * **tools** (<code>[workflows.Tools](#projen-workflows-tools)</code>)  *No description* __*Optional*__
   * **upload** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -7591,6 +7592,7 @@ new javascript.UpgradeDependencies(project: NodeProject, options?: UpgradeDepend
 Name | Type | Description 
 -----|------|-------------
 **ignoresProjen**🔹 | <code>boolean</code> | Whether or not projen is also upgraded in this workflow,.
+**postUpgradeTask**🔹 | <code>[Task](#projen-task)</code> | A task run after the upgrade task.
 **workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | The workflows that execute the upgrades.
 **containerOptions**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Container definitions for the upgrade workflow.<br/>__*Optional*__
 
@@ -10257,10 +10259,9 @@ new workflows.Job(name: string, options?: JobOptions)
   * **condition** (<code>[workflows.Condition](#projen-workflows-condition)</code>)  *No description* __*Optional*__
   * **download** (<code>Array<string></code>)  *No description* __*Optional*__
   * **env** (<code>Map<string, string></code>)  *No description* __*Optional*__
-  * **exports** (<code>Array<string></code>)  *No description* __*Optional*__
   * **image** (<code>string</code>)  *No description* __*Optional*__
-  * **mutable** (<code>boolean</code>)  *No description* __*Optional*__
   * **needs** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **push** (<code>boolean</code>)  *No description* __*Optional*__
   * **steps** (<code>Array<[workflows.Step](#projen-workflows-step)></code>)  *No description* __*Optional*__
   * **tools** (<code>[workflows.Tools](#projen-workflows-tools)</code>)  *No description* __*Optional*__
   * **upload** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -10327,10 +10328,9 @@ addJob(name: string, options: JobOptions): Job
   * **condition** (<code>[workflows.Condition](#projen-workflows-condition)</code>)  *No description* __*Optional*__
   * **download** (<code>Array<string></code>)  *No description* __*Optional*__
   * **env** (<code>Map<string, string></code>)  *No description* __*Optional*__
-  * **exports** (<code>Array<string></code>)  *No description* __*Optional*__
   * **image** (<code>string</code>)  *No description* __*Optional*__
-  * **mutable** (<code>boolean</code>)  *No description* __*Optional*__
   * **needs** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **push** (<code>boolean</code>)  *No description* __*Optional*__
   * **steps** (<code>Array<[workflows.Step](#projen-workflows-step)></code>)  *No description* __*Optional*__
   * **tools** (<code>[workflows.Tools](#projen-workflows-tools)</code>)  *No description* __*Optional*__
   * **upload** (<code>Array<string></code>)  *No description* __*Optional*__
@@ -11952,6 +11952,8 @@ Name | Type | Description
 **entrypoint**🔹 | <code>string</code> | A path from the project root directory to a TypeScript file which contains the integration test app.
 **tsconfigPath**🔹 | <code>string</code> | The path of the tsconfig.json file to use when running integration test cdk apps.
 **destroyAfterDeploy**?🔹 | <code>boolean</code> | Destroy the test app after a successful deployment.<br/>__*Default*__: true
+**name**?🔹 | <code>string</code> | Name of the integration test.<br/>__*Default*__: Derived from the entrypoint filename.
+**stacks**?🔹 | <code>Array<string></code> | A list of stacks within the integration test to deploy/destroy.<br/>__*Default*__: ["**"]
 
 
 
@@ -16405,10 +16407,9 @@ Name | Type | Description
 **condition**?🔹 | <code>[workflows.Condition](#projen-workflows-condition)</code> | __*Optional*__
 **download**?🔹 | <code>Array<string></code> | __*Optional*__
 **env**?🔹 | <code>Map<string, string></code> | __*Optional*__
-**exports**?🔹 | <code>Array<string></code> | __*Optional*__
 **image**?🔹 | <code>string</code> | __*Optional*__
-**mutable**?🔹 | <code>boolean</code> | __*Optional*__
 **needs**?🔹 | <code>Array<string></code> | __*Optional*__
+**push**?🔹 | <code>boolean</code> | __*Optional*__
 **steps**?🔹 | <code>Array<[workflows.Step](#projen-workflows-step)></code> | __*Optional*__
 **tools**?🔹 | <code>[workflows.Tools](#projen-workflows-tools)</code> | __*Optional*__
 **upload**?🔹 | <code>Array<string></code> | __*Optional*__

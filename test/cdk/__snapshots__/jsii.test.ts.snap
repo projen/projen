@@ -133,10 +133,10 @@ Object {
       "run": "mv dist .repo",
     },
     Object {
-      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
+      "run": "(cd .repo && yarn install --check-files --frozen-lockfile)",
     },
     Object {
-      "run": "cd .repo && npx projen package:go",
+      "run": "(cd .repo && npx projen package:go)",
     },
     Object {
       "run": "mv .repo/dist dist",
@@ -189,10 +189,10 @@ Object {
       "run": "mv dist .repo",
     },
     Object {
-      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
+      "run": "(cd .repo && yarn install --check-files --frozen-lockfile)",
     },
     Object {
-      "run": "cd .repo && npx projen package:java",
+      "run": "(cd .repo && npx projen package:java)",
     },
     Object {
       "run": "mv .repo/dist dist",
@@ -240,10 +240,10 @@ Object {
       "run": "mv dist .repo",
     },
     Object {
-      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
+      "run": "(cd .repo && yarn install --check-files --frozen-lockfile)",
     },
     Object {
-      "run": "cd .repo && npx projen package:js",
+      "run": "(cd .repo && npx projen package:js)",
     },
     Object {
       "run": "mv .repo/dist dist",
@@ -295,10 +295,10 @@ Object {
       "run": "mv dist .repo",
     },
     Object {
-      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
+      "run": "(cd .repo && yarn install --check-files --frozen-lockfile)",
     },
     Object {
-      "run": "cd .repo && npx projen package:dotnet",
+      "run": "(cd .repo && npx projen package:dotnet)",
     },
     Object {
       "run": "mv .repo/dist dist",
@@ -348,10 +348,10 @@ Object {
       "run": "mv dist .repo",
     },
     Object {
-      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
+      "run": "(cd .repo && yarn install --check-files --frozen-lockfile)",
     },
     Object {
-      "run": "cd .repo && npx projen package:python",
+      "run": "(cd .repo && npx projen package:python)",
     },
     Object {
       "run": "mv .repo/dist dist",
@@ -370,7 +370,6 @@ Object {
 
 exports[`language bindings snapshot dotnet 1`] = `
 Object {
-  "if": "! (needs.build.outputs.self_mutation_happened)",
   "needs": "build",
   "outputs": Object {},
   "permissions": Object {
@@ -399,13 +398,16 @@ Object {
       },
     },
     Object {
+      "run": "[ -s ./.repo.patch ] && exit 0",
+    },
+    Object {
       "run": "mv dist .repo",
     },
     Object {
-      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
+      "run": "(cd .repo && yarn install --check-files --frozen-lockfile)",
     },
     Object {
-      "run": "cd .repo && npx projen package:dotnet",
+      "run": "(cd .repo && npx projen package:dotnet)",
     },
     Object {
       "run": "mv .repo/dist dist",
@@ -416,7 +418,6 @@ Object {
 
 exports[`language bindings snapshot go 1`] = `
 Object {
-  "if": "! (needs.build.outputs.self_mutation_happened)",
   "needs": "build",
   "outputs": Object {},
   "permissions": Object {
@@ -445,13 +446,16 @@ Object {
       },
     },
     Object {
+      "run": "[ -s ./.repo.patch ] && exit 0",
+    },
+    Object {
       "run": "mv dist .repo",
     },
     Object {
-      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
+      "run": "(cd .repo && yarn install --check-files --frozen-lockfile)",
     },
     Object {
-      "run": "cd .repo && npx projen package:go",
+      "run": "(cd .repo && npx projen package:go)",
     },
     Object {
       "run": "mv .repo/dist dist",
@@ -462,7 +466,6 @@ Object {
 
 exports[`language bindings snapshot java 1`] = `
 Object {
-  "if": "! (needs.build.outputs.self_mutation_happened)",
   "needs": "build",
   "outputs": Object {},
   "permissions": Object {
@@ -492,13 +495,16 @@ Object {
       },
     },
     Object {
+      "run": "[ -s ./.repo.patch ] && exit 0",
+    },
+    Object {
       "run": "mv dist .repo",
     },
     Object {
-      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
+      "run": "(cd .repo && yarn install --check-files --frozen-lockfile)",
     },
     Object {
-      "run": "cd .repo && npx projen package:java",
+      "run": "(cd .repo && npx projen package:java)",
     },
     Object {
       "run": "mv .repo/dist dist",
@@ -509,7 +515,6 @@ Object {
 
 exports[`language bindings snapshot js 1`] = `
 Object {
-  "if": "! (needs.build.outputs.self_mutation_happened)",
   "needs": "build",
   "outputs": Object {},
   "permissions": Object {
@@ -532,13 +537,16 @@ Object {
       },
     },
     Object {
+      "run": "[ -s ./.repo.patch ] && exit 0",
+    },
+    Object {
       "run": "mv dist .repo",
     },
     Object {
-      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
+      "run": "(cd .repo && yarn install --check-files --frozen-lockfile)",
     },
     Object {
-      "run": "cd .repo && npx projen package:js",
+      "run": "(cd .repo && npx projen package:js)",
     },
     Object {
       "run": "mv .repo/dist dist",
@@ -549,7 +557,6 @@ Object {
 
 exports[`language bindings snapshot python 1`] = `
 Object {
-  "if": "! (needs.build.outputs.self_mutation_happened)",
   "needs": "build",
   "outputs": Object {},
   "permissions": Object {
@@ -578,13 +585,16 @@ Object {
       },
     },
     Object {
+      "run": "[ -s ./.repo.patch ] && exit 0",
+    },
+    Object {
       "run": "mv dist .repo",
     },
     Object {
-      "run": "cd .repo && yarn install --check-files --frozen-lockfile",
+      "run": "(cd .repo && yarn install --check-files --frozen-lockfile)",
     },
     Object {
-      "run": "cd .repo && npx projen package:python",
+      "run": "(cd .repo && npx projen package:python)",
     },
     Object {
       "run": "mv .repo/dist dist",
@@ -680,8 +690,8 @@ jobs:
           name: build-artifact
           path: dist
       - run: mv dist .repo
-      - run: cd .repo && yarn install --check-files --frozen-lockfile
-      - run: cd .repo && npx projen package:js
+      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - run: (cd .repo && npx projen package:js)
       - run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
@@ -709,8 +719,8 @@ jobs:
           name: build-artifact
           path: dist
       - run: mv dist .repo
-      - run: cd .repo && yarn install --check-files --frozen-lockfile
-      - run: cd .repo && npx projen package:go
+      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - run: (cd .repo && npx projen package:go)
       - run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
@@ -811,8 +821,8 @@ jobs:
           name: build-artifact
           path: dist
       - run: mv dist .repo
-      - run: cd .repo && yarn install --check-files --frozen-lockfile
-      - run: cd .repo && npx projen package:js
+      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - run: (cd .repo && npx projen package:js)
       - run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
@@ -840,8 +850,8 @@ jobs:
           name: build-artifact
           path: dist
       - run: mv dist .repo
-      - run: cd .repo && yarn install --check-files --frozen-lockfile
-      - run: cd .repo && npx projen package:go
+      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - run: (cd .repo && npx projen package:go)
       - run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
