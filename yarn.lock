@@ -1358,9 +1358,9 @@ camelcase@^6.2.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001286:
-  version "1.0.30001298"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001298.tgz#0e690039f62e91c3ea581673d716890512e7ec52"
-  integrity sha512-AcKqikjMLlvghZL/vfTHorlQsLDhGRalYf1+GmWCf5SCMziSGjRYQW/JEksj14NaYHIR6KIhrFAy0HV5C25UzQ==
+  version "1.0.30001299"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001299.tgz#d753bf6444ed401eb503cbbe17aa3e1451b5a68c"
+  integrity sha512-iujN4+x7QzqA2NCSrS5VUy+4gLmRd4xv6vbBBsmfVqTx8bLAD8097euLqQgKxSVLvxjSDcvF1T/i9ocgnUFexw==
 
 case@^1.6.3:
   version "1.6.3"
@@ -2011,9 +2011,9 @@ duplexer3@^0.1.4:
   integrity sha1-7gHdHKwO08vH/b6jfcCo8c4ALOI=
 
 electron-to-chromium@^1.4.17:
-  version "1.4.41"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.41.tgz#0b2e126796e7fafb9fd71e29304468b9d0af5d65"
-  integrity sha512-VQEXEJc+8rJIva85H8EPtB5Ux9g8TzkNGBanqphM9ZWMZ34elueKJ+5g+BPhz3Lk8gkujfQRcIZ+fpA0btUIuw==
+  version "1.4.44"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.44.tgz#8a41923afdd6ef5ddabe001626036ba5d1d64ae6"
+  integrity sha512-tHGWiUUmY7GABK8+DNcr474cnZDTzD8x1736SlDosVH8+/vRJeqfaIBAEHFtMjddz/0T4rKKYsxEc8BwQRdBpw==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -4114,10 +4114,10 @@ map-obj@^4.0.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-markmac@^0.1.135:
-  version "0.1.135"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.135.tgz#838c90deb01a47f81d2e502c8bf21c23f77a5d99"
-  integrity sha512-X/D9KcYAaK0APxUwYGq52k/8naqatmdkT2xTbIQbtZczwommcje2ZaFpo7SOp8TwZwxXVNr3/UmkLeVvqjrdxw==
+markmac@^0.1.136:
+  version "0.1.136"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.136.tgz#647215ba81ea4231df6b49bc0dee16a3a1aa5d34"
+  integrity sha512-wKuwcl5pWB2hnB5oBdoos+DhLHWxMRk0grqlDviZFTbE6mZfY/SzjvmXBTy76dDiH4k8dtXfSCKilMs2T82ahw==
 
 meow@^8.0.0:
   version "8.1.2"
