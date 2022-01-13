@@ -111,22 +111,30 @@ export class GithubWorkflow extends Component {
    * @param jobs Jobs to add.
    */
   public addJobs(jobs: Record<string, workflows.Job>) {
-    // verify that job has a "permissions" statement to ensure workflow can
-    // operate in repos with default tokens set to readonly
-    for (const [id, job] of Object.entries(jobs)) {
-      if (!job.permissions) {
-        throw new Error(
-          `${id}: all workflow jobs must have a "permissions" clause to ensure workflow can operate in restricted repositories`
-        );
-      }
-    }
-
-    // verify that job has a "runsOn" statement to ensure a worker can be selected appropriately
-    for (const [id, job] of Object.entries(jobs)) {
-      if (job.runsOn.length === 0) {
-        throw new Error(
-          `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
-        );
+    for (let [id, job] of Object.entries(jobs)) {
+      if (isReusableJob(job)) {
+        job = {
+          ...job,
+          kind: workflows.JobKind.REUSABLE,
+        };
+      } else {
+        job = {
+          ...job,
+          kind: workflows.JobKind.REGULAR,
+        };
+        // verify that job has a "permissions" statement to ensure workflow can
+        // operate in repos with default tokens set to readonly
+        if (!job.permissions) {
+          throw new Error(
+            `${id}: all workflow jobs must have a "permissions" clause to ensure workflow can operate in restricted repositories`
+          );
+        }
+        // verify that job has a "runsOn" statement to ensure a worker can be selected appropriately
+        if (job.runsOn.length === 0) {
+          throw new Error(
+            `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
+          );
+        }
       }
     }
 
@@ -174,6 +182,27 @@ function renderJobs(jobs: Record<string, workflows.Job>) {
 
   /** @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions */
   function renderJob(job: workflows.Job) {
+    const baseJob = {
+      name: job.name,
+      needs: arrayOrScalar(job.needs),
+      environment: job.environment,
+      concurrency: job.concurrency,
+      outputs: renderJobOutputs(job.outputs),
+      env: job.env,
+      if: job.if,
+      "timeout-minutes": job.timeoutMinutes,
+      "continue-on-error": job.continueOnError,
+    };
+
+    if (isReusableJob(job)) {
+      return {
+        ...baseJob,
+        uses: job.uses,
+        with: job.with,
+        secrets: job.secrets,
+      };
+    }
+
     const steps = new Array<workflows.JobStep>();
 
     if (job.tools) {
@@ -184,20 +213,12 @@ function renderJobs(jobs: Record<string, workflows.Job>) {
     steps.push(...userDefinedSteps);
 
     return {
-      name: job.name,
-      needs: arrayOrScalar(job.needs),
+      ...baseJob,
       "runs-on": arrayOrScalar(job.runsOn),
       permissions: kebabCaseKeys(job.permissions),
-      environment: job.environment,
-      concurrency: job.concurrency,
-      outputs: renderJobOutputs(job.outputs),
-      env: job.env,
       defaults: kebabCaseKeys(job.defaults),
-      if: job.if,
       steps: steps,
-      "timeout-minutes": job.timeoutMinutes,
       strategy: renderJobStrategy(job.strategy),
-      "continue-on-error": job.continueOnError,
       container: job.container,
       services: job.services,
     };
@@ -215,7 +236,7 @@ function renderJobs(jobs: Record<string, workflows.Job>) {
     return rendered;
   }
 
-  function renderJobStrategy(strategy: workflows.Job["strategy"]) {
+  function renderJobStrategy(strategy: workflows.RegularJob["strategy"]) {
     if (strategy == null) {
       return undefined;
     }
@@ -244,6 +265,15 @@ function renderJobs(jobs: Record<string, workflows.Job>) {
 
     return rendered;
   }
+}
+
+function isReusableJob(
+  job: workflows.RegularJob | workflows.ReusableJob
+): job is workflows.ReusableJob {
+  const reusableJob = job as workflows.ReusableJob;
+  return (
+    reusableJob.uses !== undefined || job.kind === workflows.JobKind.REUSABLE
+  );
 }
 
 function arrayOrScalar<T>(arr: T[] | undefined): T | T[] | undefined {
