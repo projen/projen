@@ -27,7 +27,7 @@ export interface IntegrationTestOptions extends IntegrationTestCommonOptions {
 
   /**
    * A list of stacks within the integration test to deploy/destroy.
-   * @default ["*"]
+   * @default ["**"]
    */
   readonly stacks?: string[];
 
@@ -120,7 +120,7 @@ export class IntegrationTest extends Component {
     const cdkopts = opts.join(" ");
 
     // Determine which stacks to deploy
-    const stacks = options.stacks ?? ["*"];
+    const stacks = options.stacks ?? ["**"];
     const stackOpts = stacks.map((stack) => `'${stack}'`).join(" ");
 
     const deployTask = project.addTask(`integ:${name}:deploy`, {
