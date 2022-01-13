@@ -21,8 +21,6 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-      - run: mkdir -p .self-mutation
-      - run: touch .self-mutation/patch.diff
       - run: yarn install --check-files
       - run: /bin/bash ./projen.bash build
       - run: git add .
@@ -33,12 +31,30 @@ jobs:
             cat .self-mutation/patch.diff
             exit 1
           fi
+      - if: always()
+        run: |-
+          if [ ! -e .self-mutation ]; then
+            mkdir -p .self-mutation
+            touch .self-mutation/.empty
+          elif [ ! -d .self-mutation ]; then
+            echo "Artifact in .self-mutation must be a directory"
+            exit 1
+          fi
       - name: Upload .self-mutation
         uses: actions/upload-artifact@v2
         if: always()
         with:
           name: .self-mutation
           path: .self-mutation
+      - if: always()
+        run: |-
+          if [ ! -e dist ]; then
+            mkdir -p dist
+            touch dist/.empty
+          elif [ ! -d dist ]; then
+            echo "Artifact in dist must be a directory"
+            exit 1
+          fi
       - name: Upload dist
         uses: actions/upload-artifact@v2
         if: always()

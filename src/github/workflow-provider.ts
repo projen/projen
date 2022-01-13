@@ -74,6 +74,19 @@ export class WorkflowProvider extends Component {
 
         for (const path of job.options.upload ?? []) {
           steps.push({
+            if: "always()",
+            run: [
+              `if [ ! -e ${path} ]; then`,
+              `  mkdir -p ${path}`,
+              `  touch ${path}/.empty`,
+              `elif [ ! -d ${path} ]; then`,
+              `  echo "Artifact in ${path} must be a directory"`,
+              `  exit 1`,
+              `fi`,
+            ].join("\n"),
+          });
+
+          steps.push({
             name: `Upload ${path}`,
             uses: "actions/upload-artifact@v2",
             if: "always()",

@@ -127,8 +127,6 @@ export class BuildWorkflow extends Component {
       tools: options.tools,
       checkout: true,
       steps: [
-        { run: `mkdir -p ${GIT_PATCH_DIR}` },
-        { run: `touch ${GIT_PATCH_FILE}` },
         ...this.preBuildSteps,
         { run: this.project.runTaskCommand(this.buildTask) },
         ...this.postBuildSteps,

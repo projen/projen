@@ -14,8 +14,6 @@ build:
   script:
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
-    - mkdir -p .self-mutation
-    - touch .self-mutation/patch.diff
     - yarn install --check-files
     - /bin/bash ./projen.bash build
     - git add .
