@@ -6,7 +6,12 @@ import {
   DEFAULT_GITHUB_ACTIONS_USER,
 } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
-import { JobPermission, JobStep, RegularJob, Tools } from "../github/workflows-model";
+import {
+  JobPermission,
+  JobStep,
+  RegularJob,
+  Tools,
+} from "../github/workflows-model";
 import { NodeProject } from "../javascript";
 import { Project } from "../project";
 

@@ -272,7 +272,8 @@ function isReusableJob(
 ): job is workflows.ReusableJob {
   const reusableJob = job as workflows.ReusableJob;
   return (
-    reusableJob.uses !== undefined || job.kind === workflows.JobKind.REUSABLE
+    reusableJob.uses !== undefined ||
+    reusableJob.kind === workflows.JobKind.REUSABLE
   );
 }
 
