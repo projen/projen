@@ -1,3 +1,4 @@
+import { RegularJob, ReusableJob } from "../../src/github/workflows-model";
 import { Project } from "../../src/project";
 import { synthSnapshot, TestProject } from "../util";
 
@@ -24,6 +25,27 @@ test("adding empty workflow", () => {
   // THEN
   const workflows = synthWorkflows(p);
   expect(workflows[".github/workflows/my-workflow.yml"]).toMatchSnapshot();
+});
+
+test("adding reusable workflow", () => {
+  // GIVEN
+  const p = new TestProject();
+
+  // WHEN
+  const workflow = p.github?.addWorkflow("workflow");
+  workflow?.addJob("job", {
+    uses: "octo-org/example-repo/.github/workflows/workflow-A.yml@v1",
+    with: {
+      username: "mona",
+    },
+    secrets: {
+      token: "${{ secrets.TOKEN }}",
+    },
+  } as ReusableJob);
+
+  // THEN
+  const workflows = synthWorkflows(p);
+  expect(workflows[".github/workflows/workflow.yml"]).toBeDefined();
 });
 
 test("throws when adding workflow with existing name", () => {
@@ -53,7 +75,7 @@ test("throws when adding workflow with adding a job with no runners specified", 
         permissions: {},
         steps: [],
         runsOn: [],
-      },
+      } as RegularJob,
     })
   ).toThrow(/at least one runner selector labels must be provided/);
 });

@@ -1,5 +1,5 @@
 import * as YAML from "yaml";
-import { JobPermission } from "../../src/github/workflows-model";
+import { JobPermission, RegularJob } from "../../src/github/workflows-model";
 import { Release, ReleaseTrigger } from "../../src/release";
 import { synthSnapshot, TestProject } from "../util";
 
@@ -246,7 +246,7 @@ test("addJobs() can be used to add arbitrary jobs to the release workflows", () 
         actions: JobPermission.NONE,
       },
       steps: [],
-    },
+    } as RegularJob,
   });
 
   // THEN
