@@ -127,6 +127,7 @@ export class BuildWorkflow extends Component {
       upload: [GIT_PATCH_FILE, "dist"],
       tools: options.tools,
       steps: [
+        { run: `touch ${GIT_PATCH_FILE}` },
         ...this.preBuildSteps,
         { run: this.project.runTaskCommand(this.buildTask) },
         ...this.postBuildSteps,

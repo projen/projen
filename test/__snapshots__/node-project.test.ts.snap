@@ -80,6 +80,9 @@ Array [
     },
   },
   Object {
+    "run": "touch .repo.patch",
+  },
+  Object {
     "run": "yarn install --check-files",
   },
   Object {
@@ -125,6 +128,9 @@ Array [
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
     },
+  },
+  Object {
+    "run": "touch .repo.patch",
   },
   Object {
     "run": "yarn install --check-files",
