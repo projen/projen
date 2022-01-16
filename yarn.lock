@@ -2236,9 +2236,9 @@ eslint-visitor-keys@^2.0.0:
   integrity sha512-0rSmRBzXgDzIsD6mGdJgevzgezI534Cer5L/vyMX0kHzT/jiB43jRhd9YUlMGYLQy2zprNmoT8qasCGtY+QaKw==
 
 eslint-visitor-keys@^3.0.0, eslint-visitor-keys@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-3.1.0.tgz#eee4acea891814cda67a7d8812d9647dd0179af2"
-  integrity sha512-yWJFpu4DtjsWKkt5GeNBBuZMlNcYVs6vRCLoCVEJrTjaSB6LC98gFipNK/erM2Heg/E8mIK+hXG/pJMLK+eRZA==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-3.2.0.tgz#6fbb166a6798ee5991358bc2daa1ba76cc1254a1"
+  integrity sha512-IOzT0X126zn7ALX0dwFiUQEdsfzrm4+ISsQS8nukaJXwEyYKRSnEIIDULYg1mCtGp7UUXgfGl7BIolXREQK+XQ==
 
 eslint@^8:
   version "8.6.0"
@@ -4114,10 +4114,10 @@ map-obj@^4.0.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-markmac@^0.1.138:
-  version "0.1.138"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.138.tgz#9daf6593da22f58bb6d0839d8752c43fb3dcae53"
-  integrity sha512-p+tYjG53dcfeGhhEarGJNQxANur6VBsWWN/skFbAaU24US7hoEUh5eNdB54d2QuW0vtjm8ppA+Y1fpNX4IWAWQ==
+markmac@^0.1.139:
+  version "0.1.139"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.139.tgz#2ebf81b50411ea79e6c6505405a77ac0f3b4ccb3"
+  integrity sha512-vsTRmJz8fPBM6j/Zey3mwzLKCPa7IrR9WwqZBeO/MXKOhnmW97BmK2+Ql9WRdXr/NaS/hiZwSjOqb8nM3U8xew==
 
 meow@^8.0.0:
   version "8.1.2"
