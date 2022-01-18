@@ -168,7 +168,7 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
 
     this.addTask("import", {
       description: "Imports API objects to your app by generating constructs.",
-      exec: "cdk8s import",
+      exec: "cdk8s import -o src/imports",
     });
 
     this.gitignore.include("imports/");

@@ -22,6 +22,13 @@ test("test if cdk8s synth is possible", () => {
     },
   ]);
 
+  // expect an import task
+  expect(output[".projen/tasks.json"].tasks.import.steps).toStrictEqual([
+    {
+      exec: "cdk8s import -o src/imports",
+    },
+  ]);
+
   // expect postcompile step to contain synth
   expect(
     output[".projen/tasks.json"].tasks["post-compile"].steps
