@@ -662,13 +662,13 @@ export class NodeProject extends GitHubProject {
 
     if (projenAutoApprove && !this.autoApprove) {
       throw new Error(
-        "Autoamtic approval of projen upgrades requires configuring `autoApproveOptions`"
+        "Automatic approval of projen upgrades requires configuring `autoApproveOptions`"
       );
     }
 
     if (depsAutoApprove && !this.autoApprove) {
       throw new Error(
-        "Autoamtic approval of dependencies upgrades requires configuring `autoApproveOptions`"
+        "Automatic approval of dependencies upgrades requires configuring `autoApproveOptions`"
       );
     }
 

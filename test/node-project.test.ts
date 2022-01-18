@@ -203,7 +203,7 @@ test("throw when 'autoApproveProjenUpgrades' is used with 'projenUpgradeAutoMerg
 describe("deps upgrade", () => {
   test("throws when trying to auto approve projen but auto approve is not defined", () => {
     const message =
-      "Autoamtic approval of projen upgrades requires configuring `autoApproveOptions`";
+      "Automatic approval of projen upgrades requires configuring `autoApproveOptions`";
     expect(() => {
       new TestNodeProject({ autoApproveProjenUpgrades: true });
     }).toThrow(message);
@@ -216,7 +216,7 @@ describe("deps upgrade", () => {
     expect(() => {
       new TestNodeProject({ autoApproveUpgrades: true });
     }).toThrow(
-      "Autoamtic approval of dependencies upgrades requires configuring `autoApproveOptions`"
+      "Automatic approval of dependencies upgrades requires configuring `autoApproveOptions`"
     );
   });
 
