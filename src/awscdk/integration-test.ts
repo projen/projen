@@ -94,7 +94,10 @@ export class IntegrationTest extends Component {
     const app = `ts-node -P ${options.tsconfigPath} ${entry}`;
 
     if (!project.deps.tryGetDependency("aws-cdk")) {
-      project.deps.addDependency(`aws-cdk@^${options.cdkDeps.cdkMajorVersion}`, DependencyType.BUILD);
+      project.deps.addDependency(
+        `aws-cdk@^${options.cdkDeps.cdkMajorVersion}`,
+        DependencyType.BUILD
+      );
     }
 
     if (!project.deps.tryGetDependency("ts-node")) {
