@@ -717,6 +717,8 @@ test("github: false disables github integration", () => {
   // WHEN
   const project = new TestNodeProject({
     github: false,
+    autoApproveUpgrades: true,
+    autoApproveOptions: {},
   });
 
   // THEN
