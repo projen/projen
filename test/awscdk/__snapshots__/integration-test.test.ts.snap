@@ -78,6 +78,21 @@ Object {
 }
 `;
 
+exports[`IntegrationTest tasks 6`] = `
+Object {
+  "description": "update snapshot for all integration tests",
+  "name": "integ:snapshot-all",
+  "steps": Array [
+    Object {
+      "spawn": "integ:foo:snapshot",
+    },
+    Object {
+      "spawn": "integ:bar:snapshot",
+    },
+  ],
+}
+`;
+
 exports[`synthesizing an integration test containing a multi-stack stage 1`] = `
 Object {
   "description": "deploy integration test 'my-stage' and capture snapshot",

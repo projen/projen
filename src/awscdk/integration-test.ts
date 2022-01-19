@@ -179,6 +179,14 @@ export class IntegrationTest extends Component {
       exec: `cdk synth ${cdkopts} -o ${snapshotdir} > /dev/null`,
     });
 
+    let snapshotAllTask = project.tasks.tryFind("integ:snapshot-all");
+    if (!snapshotAllTask) {
+      snapshotAllTask = project.addTask("integ:snapshot-all", {
+        description: "update snapshot for all integration tests",
+      });
+    }
+    snapshotAllTask.spawn(snapshotTask);
+
     // synth as part of our tests, which means that if outdir changes, anti-tamper will fail
     project.testTask.spawn(assertTask);
     project.addGitIgnore(`!${snapshotdir}`); // commit outdir to git but not assets
