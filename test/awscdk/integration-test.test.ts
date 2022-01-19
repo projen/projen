@@ -19,6 +19,12 @@ describe("IntegrationTest", () => {
     cdkDeps: project.cdkDeps,
   });
 
+  new awscdk.IntegrationTest(project, {
+    entrypoint: "test/bar.integ.ts",
+    tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: project.cdkDeps,
+  });
+
   // THEN
   const output = Testing.synth(project);
 
@@ -59,6 +65,7 @@ describe("IntegrationTest", () => {
       "integ:foo:destroy",
       "integ:foo:snapshot",
       "integ:foo:watch",
+      "integ:snapshot-all",
     ];
 
     const actualTaskNames = Object.keys(output[".projen/tasks.json"].tasks);
