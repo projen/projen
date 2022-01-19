@@ -70,9 +70,16 @@ export interface StaleBehavior {
 
   /**
    * The label to apply to the issue/PR when it becomes stale.
-   * @default "Stale"
+   * @default "stale"
    */
   readonly staleLabel?: string;
+
+  /**
+   * Label which exempt an issue/PR from becoming stale. Set to `""` to disable.
+   *
+   * @default "backlog"
+   */
+  readonly exemptLabel?: string;
 }
 
 /**
@@ -128,6 +135,7 @@ export class Stale extends Component {
               "stale-pr-message": pullRequests.staleMessage,
               "close-pr-message": pullRequests.closeMessage,
               "stale-pr-label": pullRequests.staleLabel,
+              "exempt-pr-label": pullRequests.exemptLabel,
 
               // issues
               "days-before-issue-stale": issues.daysBeforeStale,
@@ -135,6 +143,7 @@ export class Stale extends Component {
               "stale-issue-message": issues.staleMessage,
               "close-issue-message": issues.closeMessage,
               "stale-issue-label": issues.staleLabel,
+              "exempt-issue-labels": issues.exemptLabel,
             },
           },
         ],
