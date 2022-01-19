@@ -69,7 +69,7 @@
     "jsii-diff": "^1.52.1",
     "jsii-docgen": "^1.8.110",
     "json-schema": "^0.4.0",
-    "markmac": "^0.1.141",
+    "markmac": "^0.1.142",
     "npm-check-updates": "^12",
     "prettier": "^2.5.1",
     "standard-version": "^9",
