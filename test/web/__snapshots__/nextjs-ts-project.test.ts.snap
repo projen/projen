@@ -35,7 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs: {}
     env:
       CI: \\"true\\"
     steps:
@@ -83,7 +82,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    outputs: {}
     if: (always()) && (! (github.event.pull_request.head.repo.full_name !=
       github.repository))
     steps:
