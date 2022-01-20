@@ -167,6 +167,7 @@
     },
     {
       "name": "yaml",
+      "version": "next",
       "type": "bundled"
     },
     {

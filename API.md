@@ -2888,7 +2888,16 @@ new YamlFile(project: Project, filePath: string, options: YamlFileOptions)
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
+  * **lineWidth** (<code>number</code>)  Maximum line width (set to 0 to disable folding). __*Default*__: 0
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**lineWidth**🔹 | <code>number</code> | Maximum line width (set to 0 to disable folding).
 
 ### Methods
 
@@ -11005,6 +11014,7 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
+**lineWidth**?🔹 | <code>number</code> | Maximum line width (set to 0 to disable folding).<br/>__*Default*__: 0
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: true
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
