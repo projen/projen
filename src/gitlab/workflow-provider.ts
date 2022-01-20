@@ -25,50 +25,14 @@ export class WorkflowProvider extends Component {
 
       for (const job of workflow.jobs) {
         const artifacts: Writeable<Artifacts> = {};
-        const commands = new Array<string>();
         const image = job.options.image ?? "alpine";
         const afterScript = new Array<string>();
         const variables: Record<string, string> = { ...job.options.env };
-        // ?? readonly mutable?: boolean;
-        // ?? readonly download?: string[];
-        // ?? readonly checkout?: boolean;
-        // readonly exports?: string[];
-
-        const pushSection = (section: string, script: string[]) => {
-          const sectionId = `section_${script.length}`;
-          commands.push(
-            `echo -e "e[0Ksection_start:$(date +%s):${sectionId}\re[0K${section}"`,
-            ...script,
-            `echo -e "\e[0Ksection_end:$(date +%s):${sectionId}\r\e[0K"`
-          );
-        };
-
-        pushSection("Setup tools", [
-          `apk add --update git bash rsync`,
-          ...setupAlpineTools(job.options.tools),
-        ]);
-
-        for (const step of job.options.steps ?? []) {
-          pushSection(step.title, [step.run]);
-        }
 
         if (job.options.upload) {
           artifacts.paths = job.options.upload;
           artifacts.when = CacheWhen.ALWAYS;
         }
-
-        // const exports = job.options.exports ?? [];
-        // const exportsFile = ".exports.env";
-
-        // if (exports.length) {
-        //   artifacts.reports = {
-        //     dotenv: [exportsFile],
-        //   };
-
-        //   for (const e of exports) {
-        //     afterScript.push(`echo "${e}=\"\$${e}\"" >> ${exportsFile}`);
-        //   }
-        // }
 
         const renderCondition = (spec?: ConditionSpec): string | undefined => {
           if (!spec || Object.keys(spec).length === 0) {
@@ -113,8 +77,9 @@ export class WorkflowProvider extends Component {
 
         const script = new Array<string>();
 
-        const condVar = "__cond__";
         const cond = renderCondition(condition);
+
+        const condVar = "__cond__";
         if (cond) {
           script.push(
             [
@@ -128,20 +93,35 @@ export class WorkflowProvider extends Component {
           );
         }
 
-        for (const c of commands) {
-          if (cond) {
-            script.push(`$\{${condVar}\} && ${c}`);
-          } else {
-            script.push(c);
+        const addToScript = (section: string, exec: string[]) => {
+          const setColor = "\\e[4m\\e[1m\\e[95m";
+          const resetColor = "\\e[0m";
+          script.push(`echo -e "${setColor}${section}${resetColor}"`);
+
+          for (const c of exec) {
+            if (cond) {
+              script.push(`$\{${condVar}\} && ${c}`);
+            } else {
+              script.push(c);
+            }
           }
+        };
+
+        addToScript("Setup tools", [
+          `apk add --update git bash rsync`,
+          ...setupAlpineTools(job.options.tools),
+        ]);
+
+        for (const step of job.options.steps ?? []) {
+          addToScript(step.title, [step.run]);
         }
 
         if (job.options.push) {
-          script.push(
+          addToScript("Push to remote", [
             "apk add --update openssh",
             "git remote set-url --push origin https://${GITLAB_USER_LOGIN}:${PROJEN_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}.git",
-            "git push origin HEAD:${CI_COMMIT_REF_NAME}"
-          );
+            "git push origin HEAD:${CI_COMMIT_REF_NAME}",
+          ]);
 
           variables.PROJEN_TOKEN = "$PROJEN_TOKEN";
         }

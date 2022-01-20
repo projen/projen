@@ -4133,6 +4133,7 @@ addPostBuildSteps(...steps: Step[]): void
 
 * **steps** (<code>[workflows.Step](#projen-workflows-step)</code>)  The job steps.
   * **run** (<code>string</code>)  *No description* 
+  * **title** (<code>string</code>)  *No description* 
 
 
 
@@ -16426,6 +16427,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **run**🔹 | <code>string</code> | <span></span>
+**title**🔹 | <code>string</code> | <span></span>
 
 
 

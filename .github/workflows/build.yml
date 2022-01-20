@@ -37,13 +37,13 @@ jobs:
             exit 1
           fi
       - if: always()
-        name: Check artifact directory dist
+        name: Prepare artifact directory "dist"
         run: |-
           if [ ! -e dist ]; then
             mkdir -p dist
             touch dist/.empty
           elif [ ! -d dist ]; then
-            echo "Artifact in dist must be a directory"
+            echo "Artifact in "dist" must be a directory"
             exit 1
           fi
       - name: Upload dist

@@ -769,11 +769,13 @@ test("workflowGitIdentity can be used to customize the git identity used in buil
   const output = synthSnapshot(project);
   const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
   const selfMutation = buildWorkflow.jobs["self-mutation"];
-  expect(selfMutation.steps[5].run).toStrictEqual(
-    'git config user.name "heya"'
-  );
-  expect(selfMutation.steps[6].run).toStrictEqual(
-    'git config user.email "there@z.com"'
+  expect(selfMutation.steps[4].run).toStrictEqual(
+    [
+      'git config user.name "heya"',
+      'git config user.email "there@z.com"',
+      "git add .",
+      'git commit -s -m "chore: self mutation"',
+    ].join("\n")
   );
 });
 
