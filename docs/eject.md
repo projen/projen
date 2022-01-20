@@ -20,11 +20,10 @@ customization provided by projen are no longer suitable your project.
 
 ## Tasks
 
-A `task-runner.js` file will be added to the root of your project so that you
-can continue using your existing tasks by running `node task-runner.js <task>`
-in your command line (or running `npm run <task>` in node-based projects) if you
-so choose. You must retain the `tasks.json` file found in the `.projen/` folder
-to use the task runner.
+A script will be added to your project so that you can continue using existing
+tasks by running `scripts/run-task <task>` in your command line (or running `npm
+run <task>` in node-based projects) if you so choose. You must retain the
+`tasks.json` file found in the `.projen/` folder to use the task runner.
 
 > Note: it is possible some tasks may not work after projen is ejected due to
 the use of projen "builtin" steps.

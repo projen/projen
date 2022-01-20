@@ -194,17 +194,21 @@ function setupIntegTest() {
   });
 }
 
-// build `task-runner.js` script needed for "projen eject" functionality
+// build `run-task` script needed for "projen eject" functionality
 function setupBundleTaskRunner() {
-  const taskRunnerPath = "lib/task-runner.js";
+  const taskRunnerPath = "lib/run-task.js";
   const task = project.addTask("bundle:task-runner", {
-    description: 'Bundle the task-runner.js script needed for "projen eject"',
+    description: 'Bundle the run-task script needed for "projen eject"',
     exec: `esbuild src/task-runtime.ts --outfile=${taskRunnerPath} --bundle --platform=node --external:"*/package.json"`,
   });
-  // replace "../package.json" with "./package.json" everywhere
+  // insert Node shebang
   task.exec(
-    `sed -i -e 's/\\.\\.\\/package.json/\\.\\/package.json/g' ${taskRunnerPath}`
+    `echo "#!/usr/bin/env node" | cat - lib/run-task.js | tee lib/run-task.js > /dev/null`
   );
+  // // replace "../package.json" with "./package.json" everywhere
+  // task.exec(
+  //   `sed -i -e 's/\\.\\.\\/package.json/\\.\\/package.json/g' ${taskRunnerPath}`
+  // );
   // add driver code
   task.exec(
     `echo "const runtime = new TaskRuntime(\\".\\");" >> ${taskRunnerPath}`

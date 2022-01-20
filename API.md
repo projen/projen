@@ -2528,6 +2528,7 @@ Name | Type | Description
 **manifest**🔹 | <code>[TasksManifest](#projen-tasksmanifest)</code> | The contents of tasks.json.
 **tasks**🔹 | <code>Array<[TaskSpec](#projen-taskspec)></code> | The tasks in this project.
 **workdir**🔹 | <code>string</code> | The root directory of the project and the cwd for executing tasks.
+*static* **MANIFEST_PATH**🔹 | <code>string</code> | The project-relative path of the tasks manifest file.
 
 ### Methods
 
@@ -2590,7 +2591,6 @@ Name | Type | Description
 -----|------|-------------
 **all**🔹 | <code>Array<[Task](#projen-task)></code> | All tasks.
 **env**🔹 | <code>Map<string, string></code> | Returns a copy of the currently global environment for this project.
-*static* **MANIFEST_FILE**🔹 | <code>string</code> | The project-relative path of the tasks manifest file.
 
 ### Methods
 

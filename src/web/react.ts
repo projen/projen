@@ -215,7 +215,7 @@ export class ReactComponent extends Component {
       project.addFields({ "config-overrides-path": overridesPath });
 
       const configOverrides = new SourceCode(this.project, overridesPath);
-      if (!project.ejected) {
+      if (!project.marker) {
         configOverrides.line(`// ${project.marker}`);
       }
       configOverrides.line("/**");

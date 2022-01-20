@@ -42,19 +42,19 @@
     },
     "bundle:task-runner": {
       "name": "bundle:task-runner",
-      "description": "Bundle the task-runner.js script needed for \"projen eject\"",
+      "description": "Bundle the run-task script needed for \"projen eject\"",
       "steps": [
         {
-          "exec": "esbuild src/task-runtime.ts --outfile=lib/task-runner.js --bundle --platform=node --external:\"*/package.json\""
+          "exec": "esbuild src/task-runtime.ts --outfile=lib/run-task.js --bundle --platform=node --external:\"*/package.json\""
         },
         {
-          "exec": "sed -i -e 's/\\.\\.\\/package.json/\\.\\/package.json/g' lib/task-runner.js"
+          "exec": "echo \"#!/usr/bin/env node\" | cat - lib/run-task.js | tee lib/run-task.js > /dev/null"
         },
         {
-          "exec": "echo \"const runtime = new TaskRuntime(\\\".\\\");\" >> lib/task-runner.js"
+          "exec": "echo \"const runtime = new TaskRuntime(\\\".\\\");\" >> lib/run-task.js"
         },
         {
-          "exec": "echo \"runtime.runTask(process.argv[2]);\" >> lib/task-runner.js"
+          "exec": "echo \"runtime.runTask(process.argv[2]);\" >> lib/run-task.js"
         }
       ]
     },

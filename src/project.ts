@@ -188,7 +188,7 @@ export class Project {
     this._ejected = isTruthy(process.env.PROJEN_EJECTING);
 
     if (this.ejected) {
-      this.projenCommand = "node task-runner.js";
+      this.projenCommand = "scripts/run-task";
     } else {
       this.projenCommand = options.projenCommand ?? "npx projen";
     }
