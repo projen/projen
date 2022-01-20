@@ -72,7 +72,7 @@ jobs:
             you wish to exclude this issue from being marked as stale, add the
             \\"backlog\\" label.
           stale-pr-label: stale
-          exempt-pr-label: backlog
+          exempt-pr-labels: backlog
           days-before-issue-stale: 60
           days-before-issue-close: 7
           stale-issue-message: This issue is now marked as stale because it hasn't seen
@@ -401,7 +401,7 @@ jobs:
             you wish to exclude this issue from being marked as stale, add the
             \\"backlog\\" label.
           stale-pr-label: stale
-          exempt-pr-label: backlog
+          exempt-pr-labels: backlog
           days-before-issue-stale: 60
           days-before-issue-close: 7
           stale-issue-message: This issue is now marked as stale because it hasn't seen
@@ -748,7 +748,7 @@ jobs:
             you wish to exclude this issue from being marked as stale, add the
             \\"backlog\\" label.
           stale-pr-label: stale
-          exempt-pr-label: backlog
+          exempt-pr-labels: backlog
           days-before-issue-stale: 60
           days-before-issue-close: 7
           stale-issue-message: This issue is now marked as stale because it hasn't seen
@@ -1094,7 +1094,7 @@ jobs:
             you wish to exclude this issue from being marked as stale, add the
             \\"backlog\\" label.
           stale-pr-label: stale
-          exempt-pr-label: backlog
+          exempt-pr-labels: backlog
           days-before-issue-stale: 60
           days-before-issue-close: 7
           stale-issue-message: This issue is now marked as stale because it hasn't seen

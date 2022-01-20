@@ -75,11 +75,11 @@ export interface StaleBehavior {
   readonly staleLabel?: string;
 
   /**
-   * Label which exempt an issue/PR from becoming stale. Set to `""` to disable.
+   * Label which exempt an issue/PR from becoming stale. Set to `[]` to disable.
    *
-   * @default "backlog"
+   * @default - ["backlog"]
    */
-  readonly exemptLabel?: string;
+  readonly exemptLabels?: string[];
 }
 
 /**
@@ -114,6 +114,13 @@ export class Stale extends Component {
       type: "issue",
     });
 
+    const renderExemptLabels = (exemptLabels?: string[]) => {
+      if (!exemptLabels || exemptLabels.length === 0) {
+        return undefined;
+      }
+      return exemptLabels.join(",");
+    };
+
     stale.addJobs({
       stale: {
         runsOn: options.runsOn ?? ["ubuntu-latest"],
@@ -135,7 +142,7 @@ export class Stale extends Component {
               "stale-pr-message": pullRequests.staleMessage,
               "close-pr-message": pullRequests.closeMessage,
               "stale-pr-label": pullRequests.staleLabel,
-              "exempt-pr-label": pullRequests.exemptLabel,
+              "exempt-pr-labels": renderExemptLabels(pullRequests.exemptLabels),
 
               // issues
               "days-before-issue-stale": issues.daysBeforeStale,
@@ -143,7 +150,7 @@ export class Stale extends Component {
               "stale-issue-message": issues.staleMessage,
               "close-issue-message": issues.closeMessage,
               "stale-issue-label": issues.staleLabel,
-              "exempt-issue-labels": issues.exemptLabel,
+              "exempt-issue-labels": renderExemptLabels(issues.exemptLabels),
             },
           },
         ],

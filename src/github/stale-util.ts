@@ -15,10 +15,10 @@ export function renderBehavior(
     return { daysBeforeStale: -1, daysBeforeClose: -1 };
   }
 
-  const exemptLabel = behavior?.exemptLabel ?? "backlog";
+  const exemptLabels = behavior?.exemptLabels ?? ["backlog"];
   const messageSuffix =
-    exemptLabel.length > 0
-      ? ` If you wish to exclude this issue from being marked as stale, add the "${exemptLabel}" label.`
+    exemptLabels.length > 0
+      ? ` If you wish to exclude this issue from being marked as stale, add the "${exemptLabels[0]}" label.`
       : "";
 
   return {
@@ -31,6 +31,6 @@ export function renderBehavior(
       behavior?.closeMessage ??
       `Closing this ${opts.type} as it hasn\'t seen activity for a while. Please add a comment @mentioning a maintainer to reopen.${messageSuffix}`,
     staleLabel: behavior?.staleLabel ?? "stale",
-    exemptLabel: exemptLabel.length > 0 ? exemptLabel : undefined,
+    exemptLabels: exemptLabels,
   };
 }
