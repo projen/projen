@@ -84,7 +84,7 @@ jobs:
           path: .self-mutation
       - run: "[ -s ./.self-mutation/patch.diff ] || exit 0"
       - run: git apply ./.self-mutation/patch.diff
-      - run: rm -f ./.self-mutation
+      - run: rm -rf ./.self-mutation
       - run: git config user.name "github-actions"
       - run: git config user.email "github-actions@github.com"
       - run: git add .

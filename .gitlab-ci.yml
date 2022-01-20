@@ -48,7 +48,7 @@ self-mutation:
     - ${__cond__} && apk add --update nodejs npm yarn
     - ${__cond__} && [ -s ./.self-mutation/patch.diff ] || exit 0
     - ${__cond__} && git apply ./.self-mutation/patch.diff
-    - ${__cond__} && rm -f ./.self-mutation
+    - ${__cond__} && rm -rf ./.self-mutation
     - ${__cond__} && git config user.name "github-actions"
     - ${__cond__} && git config user.email "github-actions@github.com"
     - ${__cond__} && git add .

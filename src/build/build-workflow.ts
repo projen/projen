@@ -278,7 +278,7 @@ export class BuildWorkflow extends Component {
       steps: [
         { run: `[ -s ./${GIT_PATCH_FILE} ] || exit 0` }, // skipping, no patch
         { run: `git apply ./${GIT_PATCH_FILE}` },
-        { run: `rm -f ./${GIT_PATCH_DIR}` },
+        { run: `rm -rf ./${GIT_PATCH_DIR}` },
         { run: `git config user.name "${this.gitIdentity.name}"` },
         { run: `git config user.email "${this.gitIdentity.email}"` },
         { run: `git add .` },
