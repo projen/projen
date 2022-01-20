@@ -276,7 +276,7 @@ function setupTools(tools: workflows.Tools) {
   if (tools.node) {
     steps.push({
       uses: "actions/setup-node@v2",
-      with: { "node-version": tools.node.version },
+      with: { "node-version": tools.node.version, cache: "npm" },
     });
   }
 
