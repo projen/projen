@@ -136,7 +136,7 @@ export class WorkflowProvider extends Component {
               : JobPermission.READ,
           },
           steps: steps,
-          outputs: outputs,
+          outputs: Object.keys(outputs).length ? outputs : undefined,
         });
       }
     }
