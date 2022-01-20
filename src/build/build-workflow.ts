@@ -4,6 +4,7 @@ import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { NodeProject } from "../javascript";
 import { Project } from "../project";
 import { Task } from "../task";
+import { ANSI_COLORS } from "../util";
 import { Condition, JobOptions, Step, Tools, Workflow } from "../workflows";
 
 const BUILD_OUTPUT_DIR = "dist";
@@ -137,13 +138,12 @@ export class BuildWorkflow extends Component {
         {
           title: "Check for self-mutation",
           run: [
-            `mkdir -p ${BUILD_OUTPUT_DIR}`,
-            `touch ${GIT_PATCH_PATH}`,
+            `mkdir -p ${BUILD_OUTPUT_DIR} && touch ${GIT_PATCH_PATH}`,
             "git add .",
             `if ! git diff --staged --patch --exit-code > ${GIT_PATCH_FILENAME}; then`,
-            '  echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."',
+            `  echo -e "${ANSI_COLORS.yellow}${ANSI_COLORS.bold}Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.${ANSI_COLORS.reset}"`,
             `  cat ${GIT_PATCH_FILENAME}`,
-            `  rm -fr ${BUILD_OUTPUT_DIR}`,
+            `  rm -fr ${BUILD_OUTPUT_DIR} && mkdir -p ${BUILD_OUTPUT_DIR}`,
             `  mv ${GIT_PATCH_FILENAME} ${BUILD_OUTPUT_DIR}`,
             "  exit 1",
             `fi`,

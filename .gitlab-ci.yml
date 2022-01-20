@@ -11,25 +11,23 @@ build:
       - dist
     when: always
   script:
-    - echo -e "\e[4m\e[1m\e[95mSetup tools\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mSetup tools\e[0m"
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
-    - echo -e "\e[4m\e[1m\e[95mInstall dependencies\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mInstall dependencies\e[0m"
     - yarn install --check-files
-    - echo -e "\e[4m\e[1m\e[95mBuild\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mBuild\e[0m"
     - /bin/bash ./projen.bash build
-    - echo -e "\e[4m\e[1m\e[95mCheck for self-mutation\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mCheck for self-mutation\e[0m"
     - >-
-      mkdir -p dist
-
-      touch dist/patch.diff
+      mkdir -p dist && touch dist/patch.diff
 
       git add .
 
       if ! git diff --staged --patch --exit-code > patch.diff; then
-        echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
+        echo -e "\e[93m\e[1mFiles were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\e[0m"
         cat patch.diff
-        rm -fr dist
+        rm -fr dist && mkdir -p dist
         mv patch.diff dist
         exit 1
       fi
@@ -52,22 +50,22 @@ self-mutation:
         echo "Job skipped"
         __cond__=false
       fi
-    - echo -e "\e[4m\e[1m\e[95mSetup tools\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mSetup tools\e[0m"
     - ${__cond__} && apk add --update git bash rsync
     - ${__cond__} && apk add --update nodejs npm yarn
-    - echo -e "\e[4m\e[1m\e[95mSkip if there was no self-mutation\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mSkip if there was no self-mutation\e[0m"
     - ${__cond__} && [ -s ./dist/patch.diff ] || exit 0
-    - echo -e "\e[4m\e[1m\e[95mApply self-mutation\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mApply self-mutation\e[0m"
     - |-
       ${__cond__} && git apply ./dist/patch.diff
       rm -rf ./dist
-    - echo -e "\e[4m\e[1m\e[95mPush changes\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mPush changes\e[0m"
     - |-
       ${__cond__} && git config user.name "github-actions"
       git config user.email "github-actions@github.com"
       git add .
       git commit -s -m "chore: self mutation"
-    - echo -e "\e[4m\e[1m\e[95mPush to remote\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mPush to remote\e[0m"
     - ${__cond__} && apk add --update openssh
     - ${__cond__} && git remote set-url --push origin
       https://${GITLAB_USER_LOGIN}:${PROJEN_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}.git
@@ -81,18 +79,18 @@ package-js:
   variables: {}
   artifacts: {}
   script:
-    - echo -e "\e[4m\e[1m\e[95mSetup tools\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mSetup tools\e[0m"
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
-    - echo -e "\e[4m\e[1m\e[95mSkip if self-mutation happened\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mSkip if self-mutation happened\e[0m"
     - "[ -s ./dist/patch.diff ] && exit 0"
-    - echo -e "\e[4m\e[1m\e[95mPrepare repository\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mPrepare repository\e[0m"
     - mv dist .repo
-    - echo -e "\e[4m\e[1m\e[95mInstall dependencies\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mInstall dependencies\e[0m"
     - (cd .repo && yarn install --check-files --frozen-lockfile)
-    - echo -e "\e[4m\e[1m\e[95mPackage for js\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mPackage for js\e[0m"
     - (cd .repo && npx projen package:js)
-    - echo -e "\e[4m\e[1m\e[95mExtract build artifacts\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mExtract build artifacts\e[0m"
     - mv .repo/dist dist
   after_script: []
 package-java:
@@ -103,19 +101,19 @@ package-java:
   variables: {}
   artifacts: {}
   script:
-    - echo -e "\e[4m\e[1m\e[95mSetup tools\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mSetup tools\e[0m"
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
     - apk add --update openjdk11-jre
-    - echo -e "\e[4m\e[1m\e[95mSkip if self-mutation happened\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mSkip if self-mutation happened\e[0m"
     - "[ -s ./dist/patch.diff ] && exit 0"
-    - echo -e "\e[4m\e[1m\e[95mPrepare repository\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mPrepare repository\e[0m"
     - mv dist .repo
-    - echo -e "\e[4m\e[1m\e[95mInstall dependencies\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mInstall dependencies\e[0m"
     - (cd .repo && yarn install --check-files --frozen-lockfile)
-    - echo -e "\e[4m\e[1m\e[95mPackage for java\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mPackage for java\e[0m"
     - (cd .repo && npx projen package:java)
-    - echo -e "\e[4m\e[1m\e[95mExtract build artifacts\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mExtract build artifacts\e[0m"
     - mv .repo/dist dist
   after_script: []
 package-python:
@@ -126,19 +124,19 @@ package-python:
   variables: {}
   artifacts: {}
   script:
-    - echo -e "\e[4m\e[1m\e[95mSetup tools\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mSetup tools\e[0m"
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
     - apk add --update python3
-    - echo -e "\e[4m\e[1m\e[95mSkip if self-mutation happened\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mSkip if self-mutation happened\e[0m"
     - "[ -s ./dist/patch.diff ] && exit 0"
-    - echo -e "\e[4m\e[1m\e[95mPrepare repository\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mPrepare repository\e[0m"
     - mv dist .repo
-    - echo -e "\e[4m\e[1m\e[95mInstall dependencies\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mInstall dependencies\e[0m"
     - (cd .repo && yarn install --check-files --frozen-lockfile)
-    - echo -e "\e[4m\e[1m\e[95mPackage for python\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mPackage for python\e[0m"
     - (cd .repo && npx projen package:python)
-    - echo -e "\e[4m\e[1m\e[95mExtract build artifacts\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mExtract build artifacts\e[0m"
     - mv .repo/dist dist
   after_script: []
 package-go:
@@ -149,19 +147,19 @@ package-go:
   variables: {}
   artifacts: {}
   script:
-    - echo -e "\e[4m\e[1m\e[95mSetup tools\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mSetup tools\e[0m"
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
     - apk add --update go
-    - echo -e "\e[4m\e[1m\e[95mSkip if self-mutation happened\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mSkip if self-mutation happened\e[0m"
     - "[ -s ./dist/patch.diff ] && exit 0"
-    - echo -e "\e[4m\e[1m\e[95mPrepare repository\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mPrepare repository\e[0m"
     - mv dist .repo
-    - echo -e "\e[4m\e[1m\e[95mInstall dependencies\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mInstall dependencies\e[0m"
     - (cd .repo && yarn install --check-files --frozen-lockfile)
-    - echo -e "\e[4m\e[1m\e[95mPackage for go\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mPackage for go\e[0m"
     - (cd .repo && npx projen package:go)
-    - echo -e "\e[4m\e[1m\e[95mExtract build artifacts\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mExtract build artifacts\e[0m"
     - mv .repo/dist dist
   after_script: []
 post-build-integ:
@@ -172,15 +170,15 @@ post-build-integ:
   variables: {}
   artifacts: {}
   script:
-    - echo -e "\e[4m\e[1m\e[95mSetup tools\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mSetup tools\e[0m"
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
     - apk add --update python3
     - apk add --update go
-    - echo -e "\e[4m\e[1m\e[95mSkip if self-mutation happened\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mSkip if self-mutation happened\e[0m"
     - "[ -s ./dist/patch.diff ] && exit 0"
-    - echo -e "\e[4m\e[1m\e[95mInstall dependencies\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mInstall dependencies\e[0m"
     - yarn install --check-files --frozen-lockfile
-    - echo -e "\e[4m\e[1m\e[95mpost-build-integ\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mpost-build-integ\e[0m"
     - /bin/bash ./projen.bash integ
   after_script: []

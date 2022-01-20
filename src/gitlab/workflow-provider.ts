@@ -8,6 +8,7 @@ import {
   JobWhen,
 } from ".";
 import { Component, Project } from "..";
+import { ANSI_COLORS } from "../util";
 import { ConditionSpec, Tools, Workflow } from "../workflows";
 
 type Writeable<T> = { -readonly [P in keyof T]: T[P] };
@@ -94,9 +95,9 @@ export class WorkflowProvider extends Component {
         }
 
         const addToScript = (section: string, exec: string[]) => {
-          const setColor = "\\e[4m\\e[1m\\e[95m";
-          const resetColor = "\\e[0m";
-          script.push(`echo -e "${setColor}${section}${resetColor}"`);
+          script.push(
+            `echo -e "${ANSI_COLORS.bold}${ANSI_COLORS.underline}${ANSI_COLORS.magenta}${section}${ANSI_COLORS.reset}"`
+          );
 
           for (const c of exec) {
             if (cond) {

@@ -6,6 +6,14 @@ import * as logging from "./logging";
 
 const MAX_BUFFER = 10 * 1024 * 1024;
 
+export const ANSI_COLORS = {
+  reset: "\\e[0m",
+  bold: "\\e[1m",
+  underline: "\\e[4m",
+  yellow: "\\e[93m",
+  magenta: "\\e[95m",
+};
+
 /**
  * Executes a command with STDOUT > STDERR.
  */
