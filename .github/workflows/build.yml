@@ -26,12 +26,16 @@ jobs:
         run: /bin/bash ./projen.bash build
       - name: Check for self-mutation
         run: >-
+          mkdir -p ${BUILD_OUTPUT_DIR}
+
+          touch dist/patch.diff
+
           git add .
 
           if ! git diff --staged --patch --exit-code > patch.diff; then
             echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
             cat patch.diff
-            rm -fr dist && mkdir -p dist
+            rm -fr dist
             mv patch.diff dist
             exit 1
           fi

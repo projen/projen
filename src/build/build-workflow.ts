@@ -137,11 +137,13 @@ export class BuildWorkflow extends Component {
         {
           title: "Check for self-mutation",
           run: [
+            "mkdir -p ${BUILD_OUTPUT_DIR}",
+            `touch ${GIT_PATCH_PATH}`,
             "git add .",
             `if ! git diff --staged --patch --exit-code > ${GIT_PATCH_FILENAME}; then`,
             '  echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."',
             `  cat ${GIT_PATCH_FILENAME}`,
-            `  rm -fr ${BUILD_OUTPUT_DIR} && mkdir -p ${BUILD_OUTPUT_DIR}`,
+            `  rm -fr ${BUILD_OUTPUT_DIR}`,
             `  mv ${GIT_PATCH_FILENAME} ${BUILD_OUTPUT_DIR}`,
             "  exit 1",
             `fi`,
