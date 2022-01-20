@@ -42,9 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: contains(github.event.pull_request.labels.*.name, 'my-approve') &&
-      (github.event.pull_request.user.login == 'bot-1' ||
-      github.event.pull_request.user.login == 'bot-2')
+    if: contains(github.event.pull_request.labels.*.name, 'my-approve') && (github.event.pull_request.user.login == 'bot-1' || github.event.pull_request.user.login == 'bot-2')
     steps:
       - uses: hmarr/auto-approve-action@v2.1.0
         with:
@@ -69,8 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
-    if: contains(github.event.pull_request.labels.*.name, 'auto-approve') &&
-      (github.event.pull_request.user.login == 'github-actions[bot]')
+    if: contains(github.event.pull_request.labels.*.name, 'auto-approve') && (github.event.pull_request.user.login == 'github-actions[bot]')
     steps:
       - uses: hmarr/auto-approve-action@v2.1.0
         with:

@@ -167,6 +167,7 @@
     },
     {
       "name": "yaml",
+      "version": "2",
       "type": "bundled"
     },
     {
