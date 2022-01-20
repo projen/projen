@@ -6,8 +6,8 @@ import { Project } from "../project";
 import { Task } from "../task";
 import { Condition, JobOptions, Step, Tools, Workflow } from "../workflows";
 
-const GIT_PATCH_DIR = ".self-mutation";
-const GIT_PATCH_FILE = `${GIT_PATCH_DIR}/patch.diff`;
+const BUILD_OUTPUT_DIR = "dist";
+const GIT_PATCH_FILE = `${BUILD_OUTPUT_DIR}/patch.diff`;
 
 const BUILD_JOBID = "build";
 
@@ -127,13 +127,13 @@ export class BuildWorkflow extends Component {
       tools: options.tools,
       checkout: true,
       steps: [
+        { run: `mkdir -p ${BUILD_OUTPUT_DIR}` },
         ...this.preBuildSteps,
         { run: this.project.runTaskCommand(this.buildTask) },
         ...this.postBuildSteps,
         { run: "git add ." },
         {
           run: [
-            `mkdir -p ${GIT_PATCH_DIR}`,
             `if ! git diff --staged --patch --exit-code > ${GIT_PATCH_FILE}; then`,
             '  echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."',
             `  cat ${GIT_PATCH_FILE}`,
@@ -142,7 +142,7 @@ export class BuildWorkflow extends Component {
           ].join("\n"),
         },
       ],
-      upload: [GIT_PATCH_DIR, "dist"],
+      upload: [BUILD_OUTPUT_DIR],
     });
     // this.workflow.addJob(, {
     //   steps: (() => this.renderBuildSteps()) as any,
@@ -182,7 +182,7 @@ export class BuildWorkflow extends Component {
    * @param job The job specification
    */
   public addPostBuildJob(id: string, job: JobOptions) {
-    const download = [GIT_PATCH_DIR];
+    const download = [BUILD_OUTPUT_DIR];
     if (this.artifactsDirectory) {
       download.push(this.artifactsDirectory);
     }
@@ -274,11 +274,11 @@ export class BuildWorkflow extends Component {
         Condition.always(),
         Condition.not(Condition.isFork())
       ),
-      download: [GIT_PATCH_DIR],
+      download: [BUILD_OUTPUT_DIR],
       steps: [
         { run: `[ -s ./${GIT_PATCH_FILE} ] || exit 0` }, // skipping, no patch
         { run: `git apply ./${GIT_PATCH_FILE}` },
-        { run: `rm -rf ./${GIT_PATCH_DIR}` },
+        { run: `rm -rf ./${BUILD_OUTPUT_DIR}` },
         { run: `git config user.name "${this.gitIdentity.name}"` },
         { run: `git config user.email "${this.gitIdentity.email}"` },
         { run: `git add .` },
