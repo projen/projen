@@ -26,7 +26,7 @@ jobs:
         run: /bin/bash ./projen.bash build
       - name: Check for self-mutation
         run: >-
-          mkdir -p ${BUILD_OUTPUT_DIR}
+          mkdir -p dist
 
           touch dist/patch.diff
 

@@ -20,7 +20,7 @@ build:
     - /bin/bash ./projen.bash build
     - echo -e "\e[4m\e[1m\e[95mCheck for self-mutation\e[0m"
     - >-
-      mkdir -p ${BUILD_OUTPUT_DIR}
+      mkdir -p dist
 
       touch dist/patch.diff
 

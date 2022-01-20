@@ -137,7 +137,7 @@ export class BuildWorkflow extends Component {
         {
           title: "Check for self-mutation",
           run: [
-            "mkdir -p ${BUILD_OUTPUT_DIR}",
+            `mkdir -p ${BUILD_OUTPUT_DIR}`,
             `touch ${GIT_PATCH_PATH}`,
             "git add .",
             `if ! git diff --staged --patch --exit-code > ${GIT_PATCH_FILENAME}; then`,
