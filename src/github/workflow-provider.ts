@@ -58,20 +58,6 @@ export class WorkflowProvider extends Component {
           steps.push({ run: step.run });
         }
 
-        // for (const e of job.options.exports ?? []) {
-        //   const stepId = `export-${e}`;
-        //   steps.push({
-        //     id: stepId,
-        //     if: "always()",
-        //     run: `echo "::set-output name=${e}::$${e}"`,
-        //   });
-
-        //   outputs[e] = {
-        //     stepId: stepId,
-        //     outputName: e,
-        //   };
-        // }
-
         for (const path of job.options.upload ?? []) {
           steps.push({
             if: "always()",

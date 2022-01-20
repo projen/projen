@@ -133,6 +133,7 @@ export class BuildWorkflow extends Component {
         { run: "git add ." },
         {
           run: [
+            `mkdir -p ${GIT_PATCH_DIR}`,
             `if ! git diff --staged --patch --exit-code > ${GIT_PATCH_FILE}; then`,
             '  echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."',
             `  cat ${GIT_PATCH_FILE}`,

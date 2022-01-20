@@ -25,8 +25,9 @@ jobs:
       - run: /bin/bash ./projen.bash build
       - run: git add .
       - run: >-
-          if ! git diff --staged --patch --exit-code >
-          .self-mutation/patch.diff; then
+          mkdir -p .self-mutation
+
+          if ! git diff --staged --patch --exit-code > .self-mutation/patch.diff; then
             echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
             cat .self-mutation/patch.diff
             exit 1
