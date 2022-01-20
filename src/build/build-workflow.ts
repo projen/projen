@@ -7,7 +7,8 @@ import { Task } from "../task";
 import { Condition, JobOptions, Step, Tools, Workflow } from "../workflows";
 
 const BUILD_OUTPUT_DIR = "dist";
-const GIT_PATCH_FILE = `${BUILD_OUTPUT_DIR}/patch.diff`;
+const GIT_PATCH_FILENAME = `patch.diff`;
+const GIT_PATCH_PATH = `${BUILD_OUTPUT_DIR}/${GIT_PATCH_FILENAME}`;
 
 const BUILD_JOBID = "build";
 
@@ -137,10 +138,11 @@ export class BuildWorkflow extends Component {
           title: "Check for self-mutation",
           run: [
             "git add .",
-            `mkdir -p ${BUILD_OUTPUT_DIR}`,
-            `if ! git diff --staged --patch --exit-code > ${GIT_PATCH_FILE}; then`,
+            `if ! git diff --staged --patch --exit-code > ${GIT_PATCH_FILENAME}; then`,
             '  echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."',
-            `  cat ${GIT_PATCH_FILE}`,
+            `  cat ${GIT_PATCH_FILENAME}`,
+            `  rm -fr ${BUILD_OUTPUT_DIR} && mkdir -p ${BUILD_OUTPUT_DIR}`,
+            `  mv ${GIT_PATCH_FILENAME} ${BUILD_OUTPUT_DIR}`,
             "  exit 1",
             `fi`,
           ].join("\n"),
@@ -148,15 +150,6 @@ export class BuildWorkflow extends Component {
       ],
       upload: [BUILD_OUTPUT_DIR],
     });
-    // this.workflow.addJob(, {
-    //   steps: (() => this.renderBuildSteps()) as any,
-    //   outputs: {
-    //     [SELF_MUTATION_HAPPENED_OUTPUT]: {
-    //       stepId: SELF_MUTATION_STEP,
-    //       outputName: SELF_MUTATION_HAPPENED_OUTPUT,
-    //     },
-    //   },
-    // });
   }
 
   /**
@@ -198,7 +191,7 @@ export class BuildWorkflow extends Component {
       steps: [
         {
           title: "Skip if self-mutation happened",
-          run: `[ -s ./${GIT_PATCH_FILE} ] && exit 0`,
+          run: `[ -s ./${GIT_PATCH_PATH} ] && exit 0`,
         },
         ...(job.steps ?? []),
       ],
@@ -289,12 +282,12 @@ export class BuildWorkflow extends Component {
       steps: [
         {
           title: "Skip if there was no self-mutation",
-          run: `[ -s ./${GIT_PATCH_FILE} ] || exit 0`,
+          run: `[ -s ./${GIT_PATCH_PATH} ] || exit 0`,
         },
         {
           title: "Apply self-mutation",
           run: [
-            `git apply ./${GIT_PATCH_FILE}`,
+            `git apply ./${GIT_PATCH_PATH}`,
             `rm -rf ./${BUILD_OUTPUT_DIR}`,
           ].join("\n"),
         },
