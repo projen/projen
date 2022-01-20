@@ -59,7 +59,7 @@ self-mutation:
     - |-
       ${__cond__} && git apply ./dist/patch.diff
       rm -rf ./dist
-    - echo -e "\e[1m\e[4m\e[95mPush changes\e[0m"
+    - echo -e "\e[1m\e[4m\e[95mCommit changes\e[0m"
     - |-
       ${__cond__} && git config user.name "github-actions"
       git config user.email "github-actions@github.com"

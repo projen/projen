@@ -294,7 +294,7 @@ export class BuildWorkflow extends Component {
           ].join("\n"),
         },
         {
-          title: "Push changes",
+          title: "Commit changes",
           run: [
             `git config user.name "${this.gitIdentity.name}"`,
             `git config user.email "${this.gitIdentity.email}"`,
