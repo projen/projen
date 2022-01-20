@@ -51,10 +51,12 @@ jobs:
         run: npx projen build
       - name: Check for self-mutation
         run: >-
+          mkdir -p dist && touch dist/patch.diff
+
           git add .
 
           if ! git diff --staged --patch --exit-code > patch.diff; then
-            echo \\"Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
+            echo -e \\"\\\\e[93m\\\\e[1mFiles were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\\\e[0m\\"
             cat patch.diff
             rm -fr dist && mkdir -p dist
             mv patch.diff dist
