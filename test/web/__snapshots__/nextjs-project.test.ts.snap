@@ -46,22 +46,41 @@ jobs:
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
-      - run: touch .repo.patch
       - run: yarn install --check-files
       - run: npx projen build
       - run: git add .
       - run: >-
-          if ! git diff --staged --patch --exit-code > .repo.patch; then
+          mkdir -p .self-mutation
+
+          if ! git diff --staged --patch --exit-code > .self-mutation/patch.diff; then
             echo \\"Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
-            cat .repo.patch
+            cat .self-mutation/patch.diff
             exit 1
           fi
-      - name: Upload .repo.patch
+      - if: always()
+        run: |-
+          if [ ! -e .self-mutation ]; then
+            mkdir -p .self-mutation
+            touch .self-mutation/.empty
+          elif [ ! -d .self-mutation ]; then
+            echo \\"Artifact in .self-mutation must be a directory\\"
+            exit 1
+          fi
+      - name: Upload .self-mutation
         uses: actions/upload-artifact@v2
         if: always()
         with:
-          name: .repo.patch
-          path: .repo.patch
+          name: .self-mutation
+          path: .self-mutation
+      - if: always()
+        run: |-
+          if [ ! -e dist ]; then
+            mkdir -p dist
+            touch dist/.empty
+          elif [ ! -d dist ]; then
+            echo \\"Artifact in dist must be a directory\\"
+            exit 1
+          fi
       - name: Upload dist
         uses: actions/upload-artifact@v2
         if: always()
@@ -83,14 +102,14 @@ jobs:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
-      - name: Download .repo.patch
+      - name: Download .self-mutation
         uses: actions/download-artifact@v2
         with:
-          name: .repo.patch
-          path: .repo.patch
-      - run: \\"[ -s ./.repo.patch ] || exit 0\\"
-      - run: git apply ./.repo.patch
-      - run: rm -f ./.repo.patch
+          name: .self-mutation
+          path: .self-mutation
+      - run: \\"[ -s ./.self-mutation/patch.diff ] || exit 0\\"
+      - run: git apply ./.self-mutation/patch.diff
+      - run: rm -rf ./.self-mutation
       - run: git config user.name \\"github-actions\\"
       - run: git config user.email \\"github-actions@github.com\\"
       - run: git add .

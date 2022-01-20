@@ -390,6 +390,14 @@ Object {
       },
     },
     Object {
+      "name": "Download .self-mutation",
+      "uses": "actions/download-artifact@v2",
+      "with": Object {
+        "name": ".self-mutation",
+        "path": ".self-mutation",
+      },
+    },
+    Object {
       "name": "Download dist",
       "uses": "actions/download-artifact@v2",
       "with": Object {
@@ -398,7 +406,7 @@ Object {
       },
     },
     Object {
-      "run": "[ -s ./.repo.patch ] && exit 0",
+      "run": "[ -s ./.self-mutation/patch.diff ] && exit 0",
     },
     Object {
       "run": "mv dist .repo",
@@ -438,6 +446,14 @@ Object {
       },
     },
     Object {
+      "name": "Download .self-mutation",
+      "uses": "actions/download-artifact@v2",
+      "with": Object {
+        "name": ".self-mutation",
+        "path": ".self-mutation",
+      },
+    },
+    Object {
       "name": "Download dist",
       "uses": "actions/download-artifact@v2",
       "with": Object {
@@ -446,7 +462,7 @@ Object {
       },
     },
     Object {
-      "run": "[ -s ./.repo.patch ] && exit 0",
+      "run": "[ -s ./.self-mutation/patch.diff ] && exit 0",
     },
     Object {
       "run": "mv dist .repo",
@@ -487,6 +503,14 @@ Object {
       },
     },
     Object {
+      "name": "Download .self-mutation",
+      "uses": "actions/download-artifact@v2",
+      "with": Object {
+        "name": ".self-mutation",
+        "path": ".self-mutation",
+      },
+    },
+    Object {
       "name": "Download dist",
       "uses": "actions/download-artifact@v2",
       "with": Object {
@@ -495,7 +519,7 @@ Object {
       },
     },
     Object {
-      "run": "[ -s ./.repo.patch ] && exit 0",
+      "run": "[ -s ./.self-mutation/patch.diff ] && exit 0",
     },
     Object {
       "run": "mv dist .repo",
@@ -529,6 +553,14 @@ Object {
       },
     },
     Object {
+      "name": "Download .self-mutation",
+      "uses": "actions/download-artifact@v2",
+      "with": Object {
+        "name": ".self-mutation",
+        "path": ".self-mutation",
+      },
+    },
+    Object {
       "name": "Download dist",
       "uses": "actions/download-artifact@v2",
       "with": Object {
@@ -537,7 +569,7 @@ Object {
       },
     },
     Object {
-      "run": "[ -s ./.repo.patch ] && exit 0",
+      "run": "[ -s ./.self-mutation/patch.diff ] && exit 0",
     },
     Object {
       "run": "mv dist .repo",
@@ -577,6 +609,14 @@ Object {
       },
     },
     Object {
+      "name": "Download .self-mutation",
+      "uses": "actions/download-artifact@v2",
+      "with": Object {
+        "name": ".self-mutation",
+        "path": ".self-mutation",
+      },
+    },
+    Object {
       "name": "Download dist",
       "uses": "actions/download-artifact@v2",
       "with": Object {
@@ -585,7 +625,7 @@ Object {
       },
     },
     Object {
-      "run": "[ -s ./.repo.patch ] && exit 0",
+      "run": "[ -s ./.self-mutation/patch.diff ] && exit 0",
     },
     Object {
       "run": "mv dist .repo",
