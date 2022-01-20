@@ -98,7 +98,7 @@ jobs:
         run: |-
           git apply ./dist/patch.diff
           rm -rf ./dist
-      - name: Push changes
+      - name: Commit changes
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
