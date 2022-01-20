@@ -12983,7 +12983,7 @@ Name | Type | Description
 **daysBeforeClose**?🔹 | <code>number</code> | Days until the issue/PR is closed after it is marked as "Stale".<br/>__*Default*__: -
 **daysBeforeStale**?🔹 | <code>number</code> | How many days until the issue or pull request is marked as "Stale".<br/>__*Default*__: -
 **enabled**?🔹 | <code>boolean</code> | Determines if this behavior is enabled.<br/>__*Default*__: true
-**exemptLabel**?🔹 | <code>string</code> | Label which exempt an issue/PR from becoming stale.<br/>__*Default*__: "backlog"
+**exemptLabels**?🔹 | <code>Array<string></code> | Label which exempt an issue/PR from becoming stale.<br/>__*Default*__: ["backlog"]
 **staleLabel**?🔹 | <code>string</code> | The label to apply to the issue/PR when it becomes stale.<br/>__*Default*__: "stale"
 **staleMessage**?🔹 | <code>string</code> | The comment to add to the issue/PR when it becomes stale.<br/>__*Default*__: "This pull request is now marked as stale because hasn\'t seen activity for a while. Add a comment or it will be closed soon."
 
