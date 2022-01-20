@@ -80,6 +80,9 @@ Array [
     },
   },
   Object {
+    "run": "mkdir -p dist",
+  },
+  Object {
     "run": "yarn install --check-files",
   },
   Object {
@@ -89,31 +92,11 @@ Array [
     "run": "git add .",
   },
   Object {
-    "run": "mkdir -p .self-mutation
-if ! git diff --staged --patch --exit-code > .self-mutation/patch.diff; then
+    "run": "if ! git diff --staged --patch --exit-code > dist/patch.diff; then
   echo \\"Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
-  cat .self-mutation/patch.diff
+  cat dist/patch.diff
   exit 1
 fi",
-  },
-  Object {
-    "if": "always()",
-    "run": "if [ ! -e .self-mutation ]; then
-  mkdir -p .self-mutation
-  touch .self-mutation/.empty
-elif [ ! -d .self-mutation ]; then
-  echo \\"Artifact in .self-mutation must be a directory\\"
-  exit 1
-fi",
-  },
-  Object {
-    "if": "always()",
-    "name": "Upload .self-mutation",
-    "uses": "actions/upload-artifact@v2",
-    "with": Object {
-      "name": ".self-mutation",
-      "path": ".self-mutation",
-    },
   },
   Object {
     "if": "always()",
@@ -148,6 +131,9 @@ Array [
     },
   },
   Object {
+    "run": "mkdir -p dist",
+  },
+  Object {
     "run": "yarn install --check-files",
   },
   Object {
@@ -157,31 +143,11 @@ Array [
     "run": "git add .",
   },
   Object {
-    "run": "mkdir -p .self-mutation
-if ! git diff --staged --patch --exit-code > .self-mutation/patch.diff; then
+    "run": "if ! git diff --staged --patch --exit-code > dist/patch.diff; then
   echo \\"Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
-  cat .self-mutation/patch.diff
+  cat dist/patch.diff
   exit 1
 fi",
-  },
-  Object {
-    "if": "always()",
-    "run": "if [ ! -e .self-mutation ]; then
-  mkdir -p .self-mutation
-  touch .self-mutation/.empty
-elif [ ! -d .self-mutation ]; then
-  echo \\"Artifact in .self-mutation must be a directory\\"
-  exit 1
-fi",
-  },
-  Object {
-    "if": "always()",
-    "name": "Upload .self-mutation",
-    "uses": "actions/upload-artifact@v2",
-    "with": Object {
-      "name": ".self-mutation",
-      "path": ".self-mutation",
-    },
   },
   Object {
     "if": "always()",
@@ -217,21 +183,21 @@ Array [
     },
   },
   Object {
-    "name": "Download .self-mutation",
+    "name": "Download dist",
     "uses": "actions/download-artifact@v2",
     "with": Object {
-      "name": ".self-mutation",
-      "path": ".self-mutation",
+      "name": "dist",
+      "path": "dist",
     },
   },
   Object {
-    "run": "[ -s ./.self-mutation/patch.diff ] || exit 0",
+    "run": "[ -s ./dist/patch.diff ] || exit 0",
   },
   Object {
-    "run": "git apply ./.self-mutation/patch.diff",
+    "run": "git apply ./dist/patch.diff",
   },
   Object {
-    "run": "rm -rf ./.self-mutation",
+    "run": "rm -rf ./dist",
   },
   Object {
     "run": "git config user.name \\"github-actions\\"",
