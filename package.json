@@ -87,7 +87,7 @@
     "semver": "^7.3.5",
     "shx": "^0.3.4",
     "xmlbuilder2": "^2.4.1",
-    "yaml": "2",
+    "yaml": "next",
     "yargs": "^16.2.0"
   },
   "bundledDependencies": [
