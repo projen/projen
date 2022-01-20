@@ -266,7 +266,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs: {}
     env:
       CI: \\"true\\"
     steps:
@@ -286,11 +285,11 @@ jobs:
         run: >-
           git add .
 
-          mkdir -p dist
-
-          if ! git diff --staged --patch --exit-code > dist/patch.diff; then
+          if ! git diff --staged --patch --exit-code > patch.diff; then
             echo \\"Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
-            cat dist/patch.diff
+            cat patch.diff
+            rm -fr dist && mkdir -p dist
+            mv patch.diff dist
             exit 1
           fi
       - if: always()
@@ -314,7 +313,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    outputs: {}
     if: (always()) && (! (github.event.pull_request.head.repo.full_name !=
       github.repository))
     steps:
@@ -348,7 +346,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs: {}
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -378,7 +375,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs: {}
     steps:
       - uses: actions/setup-java@v2
         with:
@@ -412,7 +408,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs: {}
     steps:
       - uses: actions/setup-node@v2
         with:
@@ -4993,7 +4988,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-    outputs: {}
     env:
       CI: \\"true\\"
     steps:
@@ -5010,11 +5004,11 @@ jobs:
         run: >-
           git add .
 
-          mkdir -p dist
-
-          if ! git diff --staged --patch --exit-code > dist/patch.diff; then
+          if ! git diff --staged --patch --exit-code > patch.diff; then
             echo \\"Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
-            cat dist/patch.diff
+            cat patch.diff
+            rm -fr dist && mkdir -p dist
+            mv patch.diff dist
             exit 1
           fi
       - if: always()
@@ -5038,7 +5032,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    outputs: {}
     if: (always()) && (! (github.event.pull_request.head.repo.full_name !=
       github.repository))
     steps:
