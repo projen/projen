@@ -11,18 +11,30 @@ build:
       - dist
     when: always
   script:
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_2\re[0KSetup tools\""
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
-    - mkdir -p dist
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_2\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KInstall
+      dependencies\""
     - yarn install --check-files
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KBuild\""
     - /bin/bash ./projen.bash build
-    - git add .
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KCheck for
+      self-mutation\""
     - >-
+      git add .
+
+      mkdir -p dist
+
       if ! git diff --staged --patch --exit-code > dist/patch.diff; then
         echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
         cat dist/patch.diff
         exit 1
       fi
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
   after_script: []
 self-mutation:
   image:
@@ -42,15 +54,29 @@ self-mutation:
         echo "Job skipped"
         __cond__=false
       fi
+    - "${__cond__} && echo -e \"e[0Ksection_start:$(date
+      +%s):section_2\re[0KSetup tools\""
     - ${__cond__} && apk add --update git bash rsync
     - ${__cond__} && apk add --update nodejs npm yarn
+    - "${__cond__} && echo -e \"e[0Ksection_end:$(date +%s):section_2\re[0K\""
+    - "${__cond__} && echo -e \"e[0Ksection_start:$(date
+      +%s):section_1\re[0KSkip if there was no self-mutation\""
     - ${__cond__} && [ -s ./dist/patch.diff ] || exit 0
-    - ${__cond__} && git apply ./dist/patch.diff
-    - ${__cond__} && rm -rf ./dist
-    - ${__cond__} && git config user.name "github-actions"
-    - ${__cond__} && git config user.email "github-actions@github.com"
-    - ${__cond__} && git add .
-    - '${__cond__} && git commit -s -m "chore: self mutation"'
+    - "${__cond__} && echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "${__cond__} && echo -e \"e[0Ksection_start:$(date
+      +%s):section_1\re[0KApply self-mutation\""
+    - |-
+      ${__cond__} && git apply ./dist/patch.diff
+      rm -rf ./dist
+    - "${__cond__} && echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "${__cond__} && echo -e \"e[0Ksection_start:$(date
+      +%s):section_1\re[0KPush changes\""
+    - |-
+      ${__cond__} && git config user.name "github-actions"
+      git config user.email "github-actions@github.com"
+      git add .
+      git commit -s -m "chore: self mutation"
+    - "${__cond__} && echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
     - apk add --update openssh
     - git remote set-url --push origin
       https://${GITLAB_USER_LOGIN}:${PROJEN_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}.git
@@ -64,13 +90,29 @@ package-js:
   variables: {}
   artifacts: {}
   script:
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_2\re[0KSetup tools\""
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_2\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KSkip if
+      self-mutation happened\""
     - "[ -s ./dist/patch.diff ] && exit 0"
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KPrepare
+      repository\""
     - mv dist .repo
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KInstall
+      dependencies\""
     - (cd .repo && yarn install --check-files --frozen-lockfile)
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KPackage for js\""
     - (cd .repo && npx projen package:js)
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KExtract build
+      artifacts\""
     - mv .repo/dist dist
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
   after_script: []
 package-java:
   image:
@@ -80,14 +122,30 @@ package-java:
   variables: {}
   artifacts: {}
   script:
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_3\re[0KSetup tools\""
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
     - apk add --update openjdk11-jre
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_3\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KSkip if
+      self-mutation happened\""
     - "[ -s ./dist/patch.diff ] && exit 0"
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KPrepare
+      repository\""
     - mv dist .repo
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KInstall
+      dependencies\""
     - (cd .repo && yarn install --check-files --frozen-lockfile)
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KPackage for java\""
     - (cd .repo && npx projen package:java)
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KExtract build
+      artifacts\""
     - mv .repo/dist dist
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
   after_script: []
 package-python:
   image:
@@ -97,14 +155,31 @@ package-python:
   variables: {}
   artifacts: {}
   script:
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_3\re[0KSetup tools\""
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
     - apk add --update python3
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_3\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KSkip if
+      self-mutation happened\""
     - "[ -s ./dist/patch.diff ] && exit 0"
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KPrepare
+      repository\""
     - mv dist .repo
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KInstall
+      dependencies\""
     - (cd .repo && yarn install --check-files --frozen-lockfile)
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KPackage for
+      python\""
     - (cd .repo && npx projen package:python)
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KExtract build
+      artifacts\""
     - mv .repo/dist dist
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
   after_script: []
 package-go:
   image:
@@ -114,14 +189,30 @@ package-go:
   variables: {}
   artifacts: {}
   script:
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_3\re[0KSetup tools\""
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
     - apk add --update go
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_3\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KSkip if
+      self-mutation happened\""
     - "[ -s ./dist/patch.diff ] && exit 0"
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KPrepare
+      repository\""
     - mv dist .repo
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KInstall
+      dependencies\""
     - (cd .repo && yarn install --check-files --frozen-lockfile)
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KPackage for go\""
     - (cd .repo && npx projen package:go)
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KExtract build
+      artifacts\""
     - mv .repo/dist dist
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
   after_script: []
 post-build-integ:
   image:
@@ -131,11 +222,21 @@ post-build-integ:
   variables: {}
   artifacts: {}
   script:
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_4\re[0KSetup tools\""
     - apk add --update git bash rsync
     - apk add --update nodejs npm yarn
     - apk add --update python3
     - apk add --update go
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_4\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KSkip if
+      self-mutation happened\""
     - "[ -s ./dist/patch.diff ] && exit 0"
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0KInstall
+      dependencies\""
     - yarn install --check-files --frozen-lockfile
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
+    - "echo -e \"e[0Ksection_start:$(date +%s):section_1\re[0Kpost-build-integ\""
     - /bin/bash ./projen.bash integ
+    - "echo -e \"e[0Ksection_end:$(date +%s):section_1\re[0K\""
   after_script: []

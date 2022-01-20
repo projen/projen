@@ -374,15 +374,19 @@ export class JsiiProject extends TypeScriptProject {
       publishTools: JSII_TOOLCHAIN[target],
       prePublishSteps: [
         {
+          title: "Prepare repository",
           run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
         },
         {
+          title: "Install dependencies",
           run: `(cd ${REPO_TEMP_DIRECTORY} && ${this.package.installCommand})`,
         },
         {
+          title: `Package for ${target}`,
           run: `(cd ${REPO_TEMP_DIRECTORY} && npx projen ${packTask.name})`,
         },
         {
+          title: "Extract build artifacts",
           run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
         },
       ],

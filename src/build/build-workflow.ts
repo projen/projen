@@ -127,13 +127,17 @@ export class BuildWorkflow extends Component {
       tools: options.tools,
       checkout: true,
       steps: [
-        { run: `mkdir -p ${BUILD_OUTPUT_DIR}` },
         ...this.preBuildSteps,
-        { run: this.project.runTaskCommand(this.buildTask) },
-        ...this.postBuildSteps,
-        { run: "git add ." },
         {
+          title: "Build",
+          run: this.project.runTaskCommand(this.buildTask),
+        },
+        ...this.postBuildSteps,
+        {
+          title: "Check for self-mutation",
           run: [
+            "git add .",
+            `mkdir -p ${BUILD_OUTPUT_DIR}`,
             `if ! git diff --staged --patch --exit-code > ${GIT_PATCH_FILE}; then`,
             '  echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."',
             `  cat ${GIT_PATCH_FILE}`,
@@ -192,7 +196,10 @@ export class BuildWorkflow extends Component {
       download: download,
       ...job,
       steps: [
-        { run: `[ -s ./${GIT_PATCH_FILE} ] && exit 0` }, // self mutation happened - skipping
+        {
+          title: "Skip if self-mutation happened",
+          run: `[ -s ./${GIT_PATCH_FILE} ] && exit 0`,
+        },
         ...(job.steps ?? []),
       ],
     });
@@ -250,11 +257,15 @@ export class BuildWorkflow extends Component {
       this.project instanceof NodeProject
     ) {
       steps.push({
+        title: "Install dependencies",
         run: `${this.project.package.installCommand}`,
       });
     }
 
-    steps.push({ run: commands.join("\n") });
+    steps.push({
+      title: id,
+      run: commands.join("\n"),
+    });
 
     this.addPostBuildJob(id, {
       checkout: options?.checkoutRepo,
@@ -276,13 +287,26 @@ export class BuildWorkflow extends Component {
       ),
       download: [BUILD_OUTPUT_DIR],
       steps: [
-        { run: `[ -s ./${GIT_PATCH_FILE} ] || exit 0` }, // skipping, no patch
-        { run: `git apply ./${GIT_PATCH_FILE}` },
-        { run: `rm -rf ./${BUILD_OUTPUT_DIR}` },
-        { run: `git config user.name "${this.gitIdentity.name}"` },
-        { run: `git config user.email "${this.gitIdentity.email}"` },
-        { run: `git add .` },
-        { run: `git commit -s -m "chore: self mutation"` },
+        {
+          title: "Skip if there was no self-mutation",
+          run: `[ -s ./${GIT_PATCH_FILE} ] || exit 0`,
+        },
+        {
+          title: "Apply self-mutation",
+          run: [
+            `git apply ./${GIT_PATCH_FILE}`,
+            `rm -rf ./${BUILD_OUTPUT_DIR}`,
+          ].join("\n"),
+        },
+        {
+          title: "Push changes",
+          run: [
+            `git config user.name "${this.gitIdentity.name}"`,
+            `git config user.email "${this.gitIdentity.email}"`,
+            `git add .`,
+            `git commit -s -m "chore: self mutation"`,
+          ].join("\n"),
+        },
       ],
     });
   }

@@ -18,7 +18,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: main
-      - run: yarn install --check-files --frozen-lockfile
+      - title: Install dependencies
+        run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: /bin/bash ./projen.bash upgrade
       - id: create_patch

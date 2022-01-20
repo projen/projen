@@ -24,7 +24,8 @@ jobs:
         run: |-
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-      - run: yarn install --check-files --frozen-lockfile
+      - title: Install dependencies
+        run: yarn install --check-files --frozen-lockfile
       - name: release
         run: /bin/bash ./projen.bash release
       - name: Check for new commits
@@ -100,10 +101,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - run: mv dist .repo
-      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
-      - run: (cd .repo && npx projen package:js)
-      - run: mv .repo/dist dist
+      - title: Prepare repository
+        run: mv dist .repo
+      - title: Install dependencies
+        run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - title: Package for js
+        run: (cd .repo && npx projen package:js)
+      - title: Extract build artifacts
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-npm
         env:
@@ -145,10 +150,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - run: mv dist .repo
-      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
-      - run: (cd .repo && npx projen package:java)
-      - run: mv .repo/dist dist
+      - title: Prepare repository
+        run: mv dist .repo
+      - title: Install dependencies
+        run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - title: Package for java
+        run: (cd .repo && npx projen package:java)
+      - title: Extract build artifacts
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-maven
         env:
@@ -193,10 +202,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - run: mv dist .repo
-      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
-      - run: (cd .repo && npx projen package:python)
-      - run: mv .repo/dist dist
+      - title: Prepare repository
+        run: mv dist .repo
+      - title: Install dependencies
+        run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - title: Package for python
+        run: (cd .repo && npx projen package:python)
+      - title: Extract build artifacts
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-pypi
         env:
@@ -236,10 +249,14 @@ jobs:
         with:
           name: build-artifact
           path: dist
-      - run: mv dist .repo
-      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
-      - run: (cd .repo && npx projen package:go)
-      - run: mv .repo/dist dist
+      - title: Prepare repository
+        run: mv dist .repo
+      - title: Install dependencies
+        run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - title: Package for go
+        run: (cd .repo && npx projen package:go)
+      - title: Extract build artifacts
+        run: mv .repo/dist dist
       - name: Release
         run: npx -p jsii-release@latest jsii-release-golang
         env:

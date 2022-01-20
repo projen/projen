@@ -860,6 +860,7 @@ export class NodeProject extends GitHubProject {
     const mutable = options.mutable ?? false;
 
     install.push({
+      title: "Install dependencies",
       run: mutable
         ? this.package.installAndUpdateLockfileCommand
         : this.package.installCommand,

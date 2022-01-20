@@ -54,6 +54,7 @@ export interface JobOptions {
 }
 
 export interface Step {
+  readonly title: string;
   readonly run: string;
 }
 

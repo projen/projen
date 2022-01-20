@@ -34,9 +34,23 @@ export class WorkflowProvider extends Component {
         // ?? readonly checkout?: boolean;
         // readonly exports?: string[];
 
-        commands.push(`apk add --update git bash rsync`);
-        commands.push(...setupAlpineTools(job.options.tools));
-        commands.push(...(job.options.steps?.map((s) => s.run) ?? []));
+        const pushSection = (section: string, script: string[]) => {
+          const sectionId = `section_${script.length}`;
+          commands.push(
+            `echo -e "e[0Ksection_start:$(date +%s):${sectionId}\re[0K${section}"`,
+            ...script,
+            `echo -e "\e[0Ksection_end:$(date +%s):${sectionId}\r\e[0K"`
+          );
+        };
+
+        pushSection("Setup tools", [
+          `apk add --update git bash rsync`,
+          ...setupAlpineTools(job.options.tools),
+        ]);
+
+        for (const step of job.options.steps ?? []) {
+          pushSection(step.title, [step.run]);
+        }
 
         if (job.options.upload) {
           artifacts.paths = job.options.upload;

@@ -21,17 +21,23 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
-      - run: mkdir -p dist
-      - run: yarn install --check-files
-      - run: /bin/bash ./projen.bash build
-      - run: git add .
-      - run: >-
+      - name: Install dependencies
+        run: yarn install --check-files
+      - name: Build
+        run: /bin/bash ./projen.bash build
+      - name: Check for self-mutation
+        run: >-
+          git add .
+
+          mkdir -p dist
+
           if ! git diff --staged --patch --exit-code > dist/patch.diff; then
             echo "Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
             cat dist/patch.diff
             exit 1
           fi
       - if: always()
+        name: Check artifact directory dist
         run: |-
           if [ ! -e dist ]; then
             mkdir -p dist
@@ -66,13 +72,18 @@ jobs:
         with:
           name: dist
           path: dist
-      - run: "[ -s ./dist/patch.diff ] || exit 0"
-      - run: git apply ./dist/patch.diff
-      - run: rm -rf ./dist
-      - run: git config user.name "github-actions"
-      - run: git config user.email "github-actions@github.com"
-      - run: git add .
-      - run: 'git commit -s -m "chore: self mutation"'
+      - name: Skip if there was no self-mutation
+        run: "[ -s ./dist/patch.diff ] || exit 0"
+      - name: Apply self-mutation
+        run: |-
+          git apply ./dist/patch.diff
+          rm -rf ./dist
+      - name: Push changes
+        run: |-
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git commit -s -m "chore: self mutation"
       - name: Push changes
         run: git push origin HEAD:${{ github.event.pull_request.head.ref }}
   package-js:
@@ -95,11 +106,16 @@ jobs:
         with:
           name: dist
           path: dist
-      - run: "[ -s ./dist/patch.diff ] && exit 0"
-      - run: mv dist .repo
-      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
-      - run: (cd .repo && npx projen package:js)
-      - run: mv .repo/dist dist
+      - name: Skip if self-mutation happened
+        run: "[ -s ./dist/patch.diff ] && exit 0"
+      - name: Prepare repository
+        run: mv dist .repo
+      - name: Install dependencies
+        run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - name: Package for js
+        run: (cd .repo && npx projen package:js)
+      - name: Extract build artifacts
+        run: mv .repo/dist dist
   package-java:
     needs: build
     runs-on: ubuntu-latest
@@ -124,11 +140,16 @@ jobs:
         with:
           name: dist
           path: dist
-      - run: "[ -s ./dist/patch.diff ] && exit 0"
-      - run: mv dist .repo
-      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
-      - run: (cd .repo && npx projen package:java)
-      - run: mv .repo/dist dist
+      - name: Skip if self-mutation happened
+        run: "[ -s ./dist/patch.diff ] && exit 0"
+      - name: Prepare repository
+        run: mv dist .repo
+      - name: Install dependencies
+        run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - name: Package for java
+        run: (cd .repo && npx projen package:java)
+      - name: Extract build artifacts
+        run: mv .repo/dist dist
   package-python:
     needs: build
     runs-on: ubuntu-latest
@@ -152,11 +173,16 @@ jobs:
         with:
           name: dist
           path: dist
-      - run: "[ -s ./dist/patch.diff ] && exit 0"
-      - run: mv dist .repo
-      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
-      - run: (cd .repo && npx projen package:python)
-      - run: mv .repo/dist dist
+      - name: Skip if self-mutation happened
+        run: "[ -s ./dist/patch.diff ] && exit 0"
+      - name: Prepare repository
+        run: mv dist .repo
+      - name: Install dependencies
+        run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - name: Package for python
+        run: (cd .repo && npx projen package:python)
+      - name: Extract build artifacts
+        run: mv .repo/dist dist
   package-go:
     needs: build
     runs-on: ubuntu-latest
@@ -180,11 +206,16 @@ jobs:
         with:
           name: dist
           path: dist
-      - run: "[ -s ./dist/patch.diff ] && exit 0"
-      - run: mv dist .repo
-      - run: (cd .repo && yarn install --check-files --frozen-lockfile)
-      - run: (cd .repo && npx projen package:go)
-      - run: mv .repo/dist dist
+      - name: Skip if self-mutation happened
+        run: "[ -s ./dist/patch.diff ] && exit 0"
+      - name: Prepare repository
+        run: mv dist .repo
+      - name: Install dependencies
+        run: (cd .repo && yarn install --check-files --frozen-lockfile)
+      - name: Package for go
+        run: (cd .repo && npx projen package:go)
+      - name: Extract build artifacts
+        run: mv .repo/dist dist
   post-build-integ:
     needs: build
     runs-on: ubuntu-latest
@@ -213,6 +244,9 @@ jobs:
         with:
           name: dist
           path: dist
-      - run: "[ -s ./dist/patch.diff ] && exit 0"
-      - run: yarn install --check-files --frozen-lockfile
-      - run: /bin/bash ./projen.bash integ
+      - name: Skip if self-mutation happened
+        run: "[ -s ./dist/patch.diff ] && exit 0"
+      - name: Install dependencies
+        run: yarn install --check-files --frozen-lockfile
+      - name: post-build-integ
+        run: /bin/bash ./projen.bash integ

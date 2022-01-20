@@ -55,12 +55,16 @@ export class WorkflowProvider extends Component {
         }
 
         for (const step of job.options.steps ?? []) {
-          steps.push({ run: step.run });
+          steps.push({
+            name: step.title,
+            run: step.run,
+          });
         }
 
         for (const path of job.options.upload ?? []) {
           steps.push({
             if: "always()",
+            name: `Check artifact directory ${path}`,
             run: [
               `if [ ! -e ${path} ]; then`,
               `  mkdir -p ${path}`,
