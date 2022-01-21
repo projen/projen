@@ -345,6 +345,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
+          cache: npm
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -371,6 +372,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
+          cache: npm
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -393,6 +395,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
+          cache: npm
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
@@ -493,6 +496,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
+          cache: npm
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -519,6 +523,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
+          cache: npm
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -553,6 +558,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
+          cache: npm
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
@@ -585,6 +591,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
+          cache: npm
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
@@ -5091,6 +5098,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14.x
+          cache: npm
       - name: Download build artifacts
         uses: actions/download-artifact@v2
         with:
