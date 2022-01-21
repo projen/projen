@@ -4082,10 +4082,10 @@ map-obj@^4.0.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-markmac@^0.1.143:
-  version "0.1.143"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.143.tgz#180448247400ae788abbfabfe61f98fe2418484c"
-  integrity sha512-ddpubddigfLgBiYtmI98WAMuAELGtbKJ6SIzyswCMSjQEAAOoc/dEdN81/U0fcy1WPOeqUROKkDnERWeCRpF0A==
+markmac@^0.1.144:
+  version "0.1.144"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.144.tgz#1b67ae63f76b807e4f7d5f0549346d02ce3d757b"
+  integrity sha512-7cIpuK1Bu7RE7nbSmaa9leC1/ad9n2Ev9NyNwvz6SnS/ZP+61ieBiCLLCcdEtit+RvGMkmQO2iA9S7vZCfPr1Q==
 
 meow@^8.0.0:
   version "8.1.2"
@@ -4355,9 +4355,9 @@ npm-bundled@^1.1.1:
     npm-normalize-package-bin "^1.0.1"
 
 npm-check-updates@^12:
-  version "12.1.0"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.1.0.tgz#bf316bc35f90817880df9de175f2d69755eb9ff5"
-  integrity sha512-9GtSetBvcth7MuL+0MpOmWgdfiEgZcWRfnvoYnNZxbZpleHZCT0Z3HnbsL6/EAT2M+ye7FTZ+YjmDmZptt7Rkg==
+  version "12.2.0"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.2.0.tgz#f332fff0df44fcc23d84ced192370a4480ad1e7f"
+  integrity sha512-upiHqivxtjtj/iHO7Amnd+Q5Nx5HzTwxMlu9lUzNFQvCAAFhJnPK8Weuoyz3OSwErpHVxJMry7W5d0H7Cokxdg==
   dependencies:
     chalk "^4.1.2"
     cint "^8.2.1"
