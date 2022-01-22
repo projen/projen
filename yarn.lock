@@ -1353,9 +1353,9 @@ camelcase@^6.2.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001286:
-  version "1.0.30001300"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001300.tgz#11ab6c57d3eb6f964cba950401fd00a146786468"
-  integrity sha512-cVjiJHWGcNlJi8TZVKNMnvMid3Z3TTdDHmLDzlOdIiZq138Exvo0G+G0wTdVYolxKb4AYwC+38pxodiInVtJSA==
+  version "1.0.30001301"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001301.tgz#ebc9086026534cab0dab99425d9c3b4425e5f450"
+  integrity sha512-csfD/GpHMqgEL3V3uIgosvh+SVIQvCh43SNu9HRbP1lnxkKm1kjDG4f32PP571JplkLjfS+mg2p1gxR7MYrrIA==
 
 case@^1.6.3:
   version "1.6.3"
@@ -2001,9 +2001,9 @@ duplexer3@^0.1.4:
   integrity sha1-7gHdHKwO08vH/b6jfcCo8c4ALOI=
 
 electron-to-chromium@^1.4.17:
-  version "1.4.49"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.49.tgz#5b6a3dc032590beef4be485a4b0b3fe7d0e3dfd7"
-  integrity sha512-k/0t1TRfonHIp8TJKfjBu2cKj8MqYTiEpOhci+q7CVEE5xnCQnx1pTa+V8b/sdhe4S3PR4p4iceEQWhGrKQORQ==
+  version "1.4.50"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.50.tgz#edbeeca145494b1cd4a6a2aa1fe3d28abc0b08a4"
+  integrity sha512-g5X/6oVoqLyzKfsZ1HsJvxKoUAToFMCuq1USbmp/GPIwJDRYV1IEcv+plYTdh6h11hg140hycCBId0vf7rL0+Q==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -2797,7 +2797,7 @@ hosted-git-info@^2.1.4:
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-2.8.9.tgz#dffc0bf9a21c02209090f2aa69429e1414daf3f9"
   integrity sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==
 
-hosted-git-info@^4.0.0, hosted-git-info@^4.0.1, hosted-git-info@^4.0.2:
+hosted-git-info@^4.0.0, hosted-git-info@^4.0.1, hosted-git-info@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/hosted-git-info/-/hosted-git-info-4.1.0.tgz#827b82867e9ff1c8d0c4d9d53880397d2c86d224"
   integrity sha512-kyCuEOWjJqZuDbRHzL8V93NzQhwIB71oFWSyzVo+KPZI+pnQPPxucdkrOZvkLRnrf5URsQM+IJ09Dw29cRALIA==
@@ -4082,10 +4082,10 @@ map-obj@^4.0.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-markmac@^0.1.144:
-  version "0.1.144"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.144.tgz#1b67ae63f76b807e4f7d5f0549346d02ce3d757b"
-  integrity sha512-7cIpuK1Bu7RE7nbSmaa9leC1/ad9n2Ev9NyNwvz6SnS/ZP+61ieBiCLLCcdEtit+RvGMkmQO2iA9S7vZCfPr1Q==
+markmac@^0.1.145:
+  version "0.1.145"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.145.tgz#016742bce55ff07679dc2b64bd785821586f320d"
+  integrity sha512-C8FYc5Cf5kzJ/4epK1bZfP0OhhLhWP87XLzAOB47TSeo3FAODw3/oaTetoiulLSK6uNfxtCfadWTGsypEUZ2pQ==
 
 meow@^8.0.0:
   version "8.1.2"
@@ -4355,9 +4355,9 @@ npm-bundled@^1.1.1:
     npm-normalize-package-bin "^1.0.1"
 
 npm-check-updates@^12:
-  version "12.2.0"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.2.0.tgz#f332fff0df44fcc23d84ced192370a4480ad1e7f"
-  integrity sha512-upiHqivxtjtj/iHO7Amnd+Q5Nx5HzTwxMlu9lUzNFQvCAAFhJnPK8Weuoyz3OSwErpHVxJMry7W5d0H7Cokxdg==
+  version "12.2.1"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.2.1.tgz#1f25fec9863c149e4bae84833599050701dcd530"
+  integrity sha512-fqfH2USwTLgho8HaC79i5Bl+RH3zV15AbdtJQTCaOAp9L3D2W8k+jsfuwee2vSTUrt6IUTXPbzwUIYo4/TQdYA==
   dependencies:
     chalk "^4.1.2"
     cint "^8.2.1"
@@ -4368,7 +4368,7 @@ npm-check-updates@^12:
     fp-and-or "^0.1.3"
     get-stdin "^8.0.0"
     globby "^11.0.4"
-    hosted-git-info "^4.0.2"
+    hosted-git-info "^4.1.0"
     json-parse-helpfulerror "^1.0.3"
     jsonlines "^0.1.1"
     libnpmconfig "^1.2.1"
@@ -5061,9 +5061,9 @@ resolve.exports@^1.1.0:
   integrity sha512-J1l+Zxxp4XK3LUDZ9m60LRJF/mAe4z6a4xyabPHk7pvK5t35dACV32iIjJDFeWZFfZlO29w6SZ67knR0tHzJtQ==
 
 resolve@^1.1.6, resolve@^1.10.0, resolve@^1.20.0:
-  version "1.21.0"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.21.0.tgz#b51adc97f3472e6a5cf4444d34bc9d6b9037591f"
-  integrity sha512-3wCbTpk5WJlyE4mSOtDLhqQmGFi0/TD9VPwmiolnk8U0wRgMEktqCXd3vy5buTO3tljvalNvKrjHEfrd2WpEKA==
+  version "1.21.1"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.21.1.tgz#1a88c73f5ca8ab0aabc8b888c4170de26c92c4cc"
+  integrity sha512-lfEImVbnolPuaSZuLQ52cAxPBHeI77sPwCOWRdy12UG/CNa8an7oBHH1R+Fp1/mUqSJi4c8TIP6FOIPSZAUrEQ==
   dependencies:
     is-core-module "^2.8.0"
     path-parse "^1.0.7"
