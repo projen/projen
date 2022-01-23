@@ -51,7 +51,7 @@ const project = new cdk.JsiiProject({
   ],
 
   depsUpgradeOptions: {
-    exclude: ["markmac"]
+    exclude: ["markmac"],
   },
 
   projenDevDependency: false, // because I am projen
