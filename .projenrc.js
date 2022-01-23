@@ -51,6 +51,7 @@ const project = new cdk.JsiiProject({
   ],
 
   depsUpgradeOptions: {
+    // markmac depends on projen, we are excluding it here to avoid a circular update loop
     exclude: ["markmac"],
   },
 
