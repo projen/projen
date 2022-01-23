@@ -1,5 +1,4 @@
-const { cdk, github, JsonFile, TextFile } = require("./lib");
-const { workflows } = require("./lib/github");
+const { cdk, JsonFile, TextFile } = require("./lib");
 
 const project = new cdk.JsiiProject({
   name: "projen",
@@ -50,6 +49,10 @@ const project = new cdk.JsiiProject({
     "markmac",
     "all-contributors-cli",
   ],
+
+  depsUpgradeOptions: {
+    exclude: ["markmac"]
+  },
 
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
