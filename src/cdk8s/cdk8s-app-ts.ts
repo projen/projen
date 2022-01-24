@@ -13,6 +13,13 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   readonly cdk8sVersion: string;
 
   /**
+   * Import additional specs
+   *
+   * @default - no additional specs imported
+   */
+  readonly cdk8sImports?: string[];
+
+  /**
    * constructs verion
    *
    * @default "3.2.34"
@@ -166,10 +173,14 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
       exec: "cdk8s synth",
     });
 
-    this.addTask("import", {
+    const importTask = this.addTask("import", {
       description: "Imports API objects to your app by generating constructs.",
-      exec: "cdk8s import",
+      exec: "cdk8s import -o src/imports",
     });
+
+    for (const importSpec of options.cdk8sImports ?? []) {
+      importTask.exec(`cdk8s import ${importSpec} -o src/imports`);
+    }
 
     this.gitignore.include("imports/");
     this.gitignore.include("cdk8s.yaml");

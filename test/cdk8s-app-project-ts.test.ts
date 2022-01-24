@@ -22,6 +22,13 @@ test("test if cdk8s synth is possible", () => {
     },
   ]);
 
+  // expect an import task
+  expect(output[".projen/tasks.json"].tasks.import.steps).toStrictEqual([
+    {
+      exec: "cdk8s import -o src/imports",
+    },
+  ]);
+
   // expect postcompile step to contain synth
   expect(
     output[".projen/tasks.json"].tasks["post-compile"].steps
@@ -31,6 +38,30 @@ test("test if cdk8s synth is possible", () => {
     cdk8s: "^1.0.0-beta.18",
     constructs: "^3.3.75",
   });
+});
+
+test("adding cdk8sImports", () => {
+  const project = new Cdk8sTypeScriptApp({
+    cdk8sVersion: "1.0.0-beta.18",
+    name: "project",
+    defaultReleaseBranch: "main",
+    releaseWorkflow: true,
+    constructsVersion: "3.3.75",
+    cdk8sImports: ["github:crossplane/crossplane@0.14.0"],
+  });
+
+  // WHEN
+  const output = synthSnapshot(project);
+
+  // THEN
+  expect(output[".projen/tasks.json"].tasks.import.steps).toStrictEqual([
+    {
+      exec: "cdk8s import -o src/imports",
+    },
+    {
+      exec: "cdk8s import github:crossplane/crossplane@0.14.0 -o src/imports",
+    },
+  ]);
 });
 
 test("constructs version undefined", () => {

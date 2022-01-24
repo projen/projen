@@ -19,6 +19,12 @@ describe("IntegrationTest", () => {
     cdkDeps: project.cdkDeps,
   });
 
+  new awscdk.IntegrationTest(project, {
+    entrypoint: "test/bar.integ.ts",
+    tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: project.cdkDeps,
+  });
+
   // THEN
   const output = Testing.synth(project);
 
@@ -59,6 +65,7 @@ describe("IntegrationTest", () => {
       "integ:foo:destroy",
       "integ:foo:snapshot",
       "integ:foo:watch",
+      "integ:snapshot-all",
     ];
 
     const actualTaskNames = Object.keys(output[".projen/tasks.json"].tasks);
@@ -87,6 +94,50 @@ test("installs ts-node if needed", () => {
   expect(project.deps.getDependency("ts-node")).toStrictEqual({
     name: "ts-node",
     type: "build",
+  });
+});
+
+test("installs aws-cdk v1 if needed", () => {
+  const project = new TypeScriptProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+  });
+
+  new IntegrationTest(project, {
+    entrypoint: "test/foo.integ.ts",
+    tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: new AwsCdkDepsJs(project, {
+      cdkVersion: "1.0.0",
+      dependencyType: DependencyType.RUNTIME,
+    }),
+  });
+
+  expect(project.deps.getDependency("aws-cdk")).toStrictEqual({
+    name: "aws-cdk",
+    type: "build",
+    version: "^1",
+  });
+});
+
+test("installs aws-cdk v2 if needed", () => {
+  const project = new TypeScriptProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+  });
+
+  new IntegrationTest(project, {
+    entrypoint: "test/foo.integ.ts",
+    tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: new AwsCdkDepsJs(project, {
+      cdkVersion: "2.8.0",
+      dependencyType: DependencyType.RUNTIME,
+    }),
+  });
+
+  expect(project.deps.getDependency("aws-cdk")).toStrictEqual({
+    name: "aws-cdk",
+    type: "build",
+    version: "^2",
   });
 });
 

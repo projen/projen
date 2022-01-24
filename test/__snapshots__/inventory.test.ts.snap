@@ -6755,6 +6755,28 @@ Array [
         "switch": "cdk8s-cli-version-pinning",
       },
       Object {
+        "default": "- no additional specs imported",
+        "docs": "Import additional specs.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "cdk8sImports",
+        "optional": true,
+        "parent": "Cdk8sTypeScriptAppOptions",
+        "path": Array [
+          "cdk8sImports",
+        ],
+        "simpleType": "unknown",
+        "switch": "cdk8s-imports",
+      },
+      Object {
         "default": "false",
         "docs": "Use pinned version instead of caret version for cdk8s-plus-17.",
         "featured": false,

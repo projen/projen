@@ -2900,7 +2900,16 @@ new YamlFile(project: Project, filePath: string, options: YamlFileOptions)
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
+  * **lineWidth** (<code>number</code>)  Maximum line width (set to 0 to disable folding). __*Default*__: 0
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**lineWidth**🔹 | <code>number</code> | Maximum line width (set to 0 to disable folding).
 
 ### Methods
 
@@ -4647,6 +4656,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
   * **cdk8sCliVersion** (<code>string</code>)  cdk8s-cli version. __*Default*__: "cdk8sVersion"
   * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s-cli. __*Default*__: false
+  * **cdk8sImports** (<code>Array<string></code>)  Import additional specs. __*Default*__: no additional specs imported
   * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
@@ -11252,6 +11262,7 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
+**lineWidth**?🔹 | <code>number</code> | Maximum line width (set to 0 to disable folding).<br/>__*Default*__: 0
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: true
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
@@ -12480,6 +12491,7 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **cdk8sCliVersion**?🔹 | <code>string</code> | cdk8s-cli version.<br/>__*Default*__: "cdk8sVersion"
 **cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s-cli.<br/>__*Default*__: false
+**cdk8sImports**?🔹 | <code>Array<string></code> | Import additional specs.<br/>__*Default*__: no additional specs imported
 **cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
@@ -13230,7 +13242,8 @@ Name | Type | Description
 **daysBeforeClose**?🔹 | <code>number</code> | Days until the issue/PR is closed after it is marked as "Stale".<br/>__*Default*__: -
 **daysBeforeStale**?🔹 | <code>number</code> | How many days until the issue or pull request is marked as "Stale".<br/>__*Default*__: -
 **enabled**?🔹 | <code>boolean</code> | Determines if this behavior is enabled.<br/>__*Default*__: true
-**staleLabel**?🔹 | <code>string</code> | The label to apply to the issue/PR when it becomes stale.<br/>__*Default*__: "Stale"
+**exemptLabels**?🔹 | <code>Array<string></code> | Label which exempt an issue/PR from becoming stale.<br/>__*Default*__: ["backlog"]
+**staleLabel**?🔹 | <code>string</code> | The label to apply to the issue/PR when it becomes stale.<br/>__*Default*__: "stale"
 **staleMessage**?🔹 | <code>string</code> | The comment to add to the issue/PR when it becomes stale.<br/>__*Default*__: "This pull request is now marked as stale because hasn\'t seen activity for a while. Add a comment or it will be closed soon."
 
 

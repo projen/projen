@@ -26,7 +26,7 @@ const project = new cdk.JsiiProject({
 
   bundledDeps: [
     "conventional-changelog-config-spec",
-    "yaml",
+    "yaml@next",
     "fs-extra",
     "yargs",
     "case",
@@ -49,6 +49,11 @@ const project = new cdk.JsiiProject({
     "markmac",
     "all-contributors-cli",
   ],
+
+  depsUpgradeOptions: {
+    // markmac depends on projen, we are excluding it here to avoid a circular update loop
+    exclude: ["markmac"],
+  },
 
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,

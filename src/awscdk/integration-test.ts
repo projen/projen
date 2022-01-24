@@ -93,6 +93,13 @@ export class IntegrationTest extends Component {
 
     const app = `ts-node -P ${options.tsconfigPath} ${entry}`;
 
+    if (!project.deps.tryGetDependency("aws-cdk")) {
+      project.deps.addDependency(
+        `aws-cdk@^${options.cdkDeps.cdkMajorVersion}`,
+        DependencyType.BUILD
+      );
+    }
+
     if (!project.deps.tryGetDependency("ts-node")) {
       project.deps.addDependency("ts-node", DependencyType.BUILD);
     }
@@ -171,6 +178,14 @@ export class IntegrationTest extends Component {
       description: `update snapshot for integration test "${name}"`,
       exec: `cdk synth ${cdkopts} -o ${snapshotdir} > /dev/null`,
     });
+
+    let snapshotAllTask = project.tasks.tryFind("integ:snapshot-all");
+    if (!snapshotAllTask) {
+      snapshotAllTask = project.addTask("integ:snapshot-all", {
+        description: "update snapshot for all integration tests",
+      });
+    }
+    snapshotAllTask.spawn(snapshotTask);
 
     // synth as part of our tests, which means that if outdir changes, anti-tamper will fail
     project.testTask.spawn(assertTask);
