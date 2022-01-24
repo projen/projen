@@ -50,11 +50,9 @@ jobs:
       - name: Build
         run: npx projen build
       - name: Check for self-mutation
-        run: >-
+        run: |-
           mkdir -p dist && touch dist/patch.diff
-
           git add .
-
           if ! git diff --staged --patch --exit-code > patch.diff; then
             echo -e \\"\\\\e[93m\\\\e[1mFiles were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\\\e[0m\\"
             cat patch.diff
@@ -83,8 +81,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    if: (always()) && (! (github.event.pull_request.head.repo.full_name !=
-      github.repository))
+    if: (always()) && (! (github.event.pull_request.head.repo.full_name != github.repository))
     steps:
       - name: Checkout
         uses: actions/checkout@v2
