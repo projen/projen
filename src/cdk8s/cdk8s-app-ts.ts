@@ -190,7 +190,7 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
     this.postCompileTask.spawn(synth);
 
     const cdk8sImports = options.cdk8sImports ?? [];
-    const cdk8sSpec = options.k8sSpecVersion
+    const k8sSpec = options.k8sSpecVersion
       ? `k8s@${options.k8sSpecVersion}`
       : "k8s";
 
@@ -201,7 +201,7 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
       obj: {
         language: "typescript",
         app: `node lib/${appEntrypointName}`,
-        imports: [cdk8sSpec, ...cdk8sImports],
+        imports: [k8sSpec, ...cdk8sImports],
       },
     });
 
