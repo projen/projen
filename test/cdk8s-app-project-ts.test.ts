@@ -64,6 +64,27 @@ test("adding cdk8sImports", () => {
   ]);
 });
 
+test("adding an explicit k8s version to cdk8sImports", () => {
+  const project = new Cdk8sTypeScriptApp({
+    cdk8sVersion: "1.0.0-beta.18",
+    name: "project",
+    defaultReleaseBranch: "main",
+    releaseWorkflow: true,
+    constructsVersion: "3.3.75",
+    cdk8sImports: ["k8s@1.20.0"],
+  });
+
+  // WHEN
+  const output = synthSnapshot(project);
+
+  // THEN
+  expect(output[".projen/tasks.json"].tasks.import.steps).toStrictEqual([
+    {
+      exec: "cdk8s import k8s@1.20.0 -o src/imports",
+    },
+  ]);
+});
+
 test("constructs version undefined", () => {
   const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: "1.0.0-beta.11",

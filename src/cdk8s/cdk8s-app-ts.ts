@@ -175,10 +175,17 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
 
     const importTask = this.addTask("import", {
       description: "Imports API objects to your app by generating constructs.",
-      exec: "cdk8s import -o src/imports",
     });
 
-    for (const importSpec of options.cdk8sImports ?? []) {
+    const cdk8sImports = options.cdk8sImports ?? [];
+
+    // Import cdk8s' default spec unless the user specifies the k8s version in
+    // `cdk8sImports`.
+    if (!cdk8sImports.some((spec) => spec.startsWith("k8s@"))) {
+      importTask.exec(`cdk8s import -o src/imports`);
+    }
+
+    for (const importSpec of cdk8sImports) {
       importTask.exec(`cdk8s import ${importSpec} -o src/imports`);
     }
 
