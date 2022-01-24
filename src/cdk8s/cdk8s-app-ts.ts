@@ -13,6 +13,13 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   readonly cdk8sVersion: string;
 
   /**
+   * Import a specific Kubernetes API version
+   *
+   * @default - Use the cdk8s default
+   */
+  readonly cdk8sApiVersion?: string;
+
+  /**
    * Import additional specs
    *
    * @default - no additional specs imported
@@ -173,19 +180,16 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
       exec: "cdk8s synth",
     });
 
+    const k8sSpec = options.cdk8sApiVersion
+      ? `k8s@${options.cdk8sApiVersion}`
+      : "k8s";
+
     const importTask = this.addTask("import", {
       description: "Imports API objects to your app by generating constructs.",
+      exec: `cdk8s import ${k8sSpec} -o src/imports`,
     });
 
-    const cdk8sImports = options.cdk8sImports ?? [];
-
-    // Import cdk8s' default spec unless the user specifies the k8s version in
-    // `cdk8sImports`.
-    if (!cdk8sImports.some((spec) => spec.startsWith("k8s@"))) {
-      importTask.exec(`cdk8s import -o src/imports`);
-    }
-
-    for (const importSpec of cdk8sImports) {
+    for (const importSpec of options.cdk8sImports ?? []) {
       importTask.exec(`cdk8s import ${importSpec} -o src/imports`);
     }
 

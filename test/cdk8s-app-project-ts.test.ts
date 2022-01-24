@@ -25,7 +25,7 @@ test("test if cdk8s synth is possible", () => {
   // expect an import task
   expect(output[".projen/tasks.json"].tasks.import.steps).toStrictEqual([
     {
-      exec: "cdk8s import -o src/imports",
+      exec: "cdk8s import k8s -o src/imports",
     },
   ]);
 
@@ -56,7 +56,7 @@ test("adding cdk8sImports", () => {
   // THEN
   expect(output[".projen/tasks.json"].tasks.import.steps).toStrictEqual([
     {
-      exec: "cdk8s import -o src/imports",
+      exec: "cdk8s import k8s -o src/imports",
     },
     {
       exec: "cdk8s import github:crossplane/crossplane@0.14.0 -o src/imports",
@@ -71,7 +71,7 @@ test("adding an explicit k8s version to cdk8sImports", () => {
     defaultReleaseBranch: "main",
     releaseWorkflow: true,
     constructsVersion: "3.3.75",
-    cdk8sImports: ["k8s@1.20.0"],
+    cdk8sApiVersion: "1.20.0",
   });
 
   // WHEN
