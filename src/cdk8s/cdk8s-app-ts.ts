@@ -194,13 +194,14 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
       ? `k8s@${options.k8sSpecVersion}`
       : "k8s";
 
-    const appEntrypointName = path.basename(this.appEntrypoint, ".ts") + ".js";
+    const appEntrypointBaseName = path.basename(this.appEntrypoint, ".ts");
+
     new YamlFile(this, "cdk8s.yaml", {
       committed: true,
       editGitignore: true,
       obj: {
         language: "typescript",
-        app: `node lib/${appEntrypointName}`,
+        app: `node lib/${appEntrypointBaseName}.js`,
         imports: [k8sSpec, ...cdk8sImports],
       },
     });
