@@ -59,7 +59,7 @@ test("adding cdk8sImports", () => {
     defaultReleaseBranch: "main",
     releaseWorkflow: true,
     constructsVersion: "3.3.75",
-    cdk8sSpecVersion: "1.20.0",
+    k8sSpecVersion: "1.20.0",
     cdk8sImports: ["github:crossplane/crossplane@0.14.0"],
   });
 

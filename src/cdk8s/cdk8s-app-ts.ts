@@ -18,7 +18,7 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
    *
    * @default - Use the cdk8s default
    */
-  readonly cdk8sSpecVersion?: string;
+  readonly k8sSpecVersion?: string;
 
   /**
    * Import additional specs
@@ -190,8 +190,8 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
     this.postCompileTask.spawn(synth);
 
     const cdk8sImports = options.cdk8sImports ?? [];
-    const cdk8sSpec = options.cdk8sSpecVersion
-      ? `k8s@${options.cdk8sSpecVersion}`
+    const cdk8sSpec = options.k8sSpecVersion
+      ? `k8s@${options.k8sSpecVersion}`
       : "k8s";
 
     const appEntrypointName = path.basename(this.appEntrypoint, ".ts") + ".js";
