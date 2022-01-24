@@ -6721,23 +6721,6 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "- Use the cdk8s default",
-        "docs": "Import a specific Kubernetes API version.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "cdk8sApiVersion",
-        "optional": true,
-        "parent": "Cdk8sTypeScriptAppOptions",
-        "path": Array [
-          "cdk8sApiVersion",
-        ],
-        "simpleType": "string",
-        "switch": "cdk8s-api-version",
-      },
-      Object {
         "default": "\\"cdk8sVersion\\"",
         "docs": "cdk8s-cli version.",
         "featured": false,
@@ -6809,6 +6792,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "cdk8s-plus-version-pinning",
+      },
+      Object {
+        "default": "- Use the cdk8s default",
+        "docs": "Import a specific Kubernetes spec version.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "cdk8sSpecVersion",
+        "optional": true,
+        "parent": "Cdk8sTypeScriptAppOptions",
+        "path": Array [
+          "cdk8sSpecVersion",
+        ],
+        "simpleType": "string",
+        "switch": "cdk8s-spec-version",
       },
       Object {
         "default": "\\"1.0.0-beta.10\\"",

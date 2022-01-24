@@ -2,6 +2,7 @@ import * as path from "path";
 import * as fs from "fs-extra";
 import { Component } from "../component";
 import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
+import { YamlFile } from "../yaml";
 
 export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
@@ -13,11 +14,11 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   readonly cdk8sVersion: string;
 
   /**
-   * Import a specific Kubernetes API version
+   * Import a specific Kubernetes spec version.
    *
    * @default - Use the cdk8s default
    */
-  readonly cdk8sApiVersion?: string;
+  readonly cdk8sSpecVersion?: string;
 
   /**
    * Import additional specs
@@ -180,24 +181,29 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
       exec: "cdk8s synth",
     });
 
-    const k8sSpec = options.cdk8sApiVersion
-      ? `k8s@${options.cdk8sApiVersion}`
-      : "k8s";
-
-    const importTask = this.addTask("import", {
+    this.addTask("import", {
       description: "Imports API objects to your app by generating constructs.",
-      exec: `cdk8s import ${k8sSpec} -o src/imports`,
+      exec: "cdk8s import -o src/imports",
     });
-
-    for (const importSpec of options.cdk8sImports ?? []) {
-      importTask.exec(`cdk8s import ${importSpec} -o src/imports`);
-    }
-
-    this.gitignore.include("imports/");
-    this.gitignore.include("cdk8s.yaml");
 
     // add synth to the build
     this.postCompileTask.spawn(synth);
+
+    const cdk8sImports = options.cdk8sImports ?? [];
+    const cdk8sSpec = options.cdk8sSpecVersion
+      ? `k8s@${options.cdk8sSpecVersion}`
+      : "k8s";
+
+    const appEntrypointName = path.basename(this.appEntrypoint, ".ts") + ".js";
+    new YamlFile(this, "cdk8s.yaml", {
+      committed: true,
+      editGitignore: true,
+      obj: {
+        language: "typescript",
+        app: `node lib/${appEntrypointName}`,
+        imports: [cdk8sSpec, ...cdk8sImports],
+      },
+    });
 
     if (options.sampleCode ?? true) {
       new SampleCode(this);
@@ -263,18 +269,5 @@ app.synth();`;
 
     fs.mkdirpSync(srcdir);
     fs.writeFileSync(path.join(srcdir, this.appProject.appEntrypoint), srcCode);
-
-    const appEntrypointName = path.basename(
-      this.appProject.appEntrypoint,
-      ".ts"
-    );
-
-    const cdk8sYaml = `language: typescript
-app: node lib/${appEntrypointName}.js
-imports:
-  - k8s
-    `;
-
-    fs.writeFileSync(path.join(outdir, "cdk8s.yaml"), cdk8sYaml);
   }
 }
