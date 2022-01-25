@@ -6,7 +6,13 @@ import {
   DEFAULT_GITHUB_ACTIONS_USER,
 } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
-import { Job, JobPermission, JobStep, Tools } from "../github/workflows-model";
+import {
+  Job,
+  JobPermission,
+  JobStep,
+  Tools,
+  Triggers,
+} from "../github/workflows-model";
 import { NodeProject } from "../javascript";
 import { Project } from "../project";
 
@@ -82,6 +88,12 @@ export interface BuildWorkflowOptions {
    * @default ["ubuntu-latest"]
    */
   readonly runsOn?: string[];
+
+  /**
+   * Build workflow triggers
+   * @default "{ pullRequest: {}, workflowDispatch: {} }"
+   */
+  readonly workflowTriggers?: Triggers;
 }
 
 export class BuildWorkflow extends Component {
@@ -115,10 +127,12 @@ export class BuildWorkflow extends Component {
     const mutableBuilds = options.mutableBuild ?? true;
 
     this.workflow = new GithubWorkflow(github, "build");
-    this.workflow.on({
-      pullRequest: {},
-      workflowDispatch: {}, // allow manual triggering
-    });
+    this.workflow.on(
+      options.workflowTriggers ?? {
+        pullRequest: {},
+        workflowDispatch: {}, // allow manual triggering
+      }
+    );
 
     this.addBuildJob(options);
 
