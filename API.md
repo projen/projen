@@ -2239,8 +2239,8 @@ new SourceCode(project: Project, filePath: string, options?: SourceCodeOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**file**🔹 | <code>[TextFile](#projen-textfile)</code> | <span></span>
 **filePath**🔹 | <code>string</code> | <span></span>
+**marker**?🔹 | <code>string</code> | __*Optional*__
 
 ### Methods
 
