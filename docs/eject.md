@@ -1,7 +1,7 @@
 # Ejecting
 
-If you aren't satisfied with managing your project configuration with projen,
-you can `eject` at any time.
+To stop from using projen to manage your project configuration,
+you can `eject` at any time and continue to manage your configuration manually.
 
 Running `projen eject` will do the following:
 
