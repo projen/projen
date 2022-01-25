@@ -37,8 +37,7 @@ export interface FileBaseOptions {
   readonly executable?: boolean;
 
   /**
-   * Adds the projen marker to the file. This should be managed by the class
-   * that subclasses from FileBase.
+   * Adds the projen marker to the file.
    *
    * @default - marker will be included as long as the project is not ejected
    */

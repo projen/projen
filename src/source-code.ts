@@ -17,7 +17,7 @@ export interface SourceCodeOptions {
  * Represents a source file.
  */
 export class SourceCode extends Component {
-  public readonly file: TextFile;
+  private readonly file: TextFile;
   private indentLevel = 0;
   private readonly indent: number;
 
@@ -29,6 +29,10 @@ export class SourceCode extends Component {
     super(project);
     this.indent = options.indent ?? 2;
     this.file = new TextFile(project, filePath);
+  }
+
+  public get marker(): string | undefined {
+    return this.file.marker;
   }
 
   /**

@@ -11,7 +11,7 @@ Running `projen eject` will do the following:
 - remove projen metadata files
 - remove the projen synthesis step from the `build` task
 - remove the `default` and `eject` tasks
-- "backup" projenrc files from `.projenrc.xyz` to `.projenrc.xyz.bak`
+- "backup" projenrc files to `.projenrc.xyz.bak`
 - a separate task runner file is added to the root directory (see Tasks below
   for more information)
 
@@ -26,4 +26,5 @@ run <task>` in node-based projects) if you so choose. You must retain the
 `tasks.json` file found in the `.projen/` folder to use the task runner.
 
 > Note: it is possible some tasks may not work after projen is ejected due to
-the use of projen "builtin" steps.
+the use of projen "builtin" steps. See
+https://github.com/projen/projen/issues/1563 for more information.

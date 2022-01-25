@@ -1,4 +1,5 @@
 const { cdk, JsonFile, TextFile } = require("./lib");
+const { PROJEN_MARKER } = require("./lib/common");
 
 const project = new cdk.JsiiProject({
   name: "projen",
@@ -102,7 +103,7 @@ const project = new cdk.JsiiProject({
 new TextFile(project, "projen.bash", {
   lines: [
     "#!/bin/bash",
-    `# ${project.marker}`,
+    `# ${PROJEN_MARKER}`,
     "set -euo pipefail",
     "if [ ! -f lib/cli/index.js ]; then",
     '  echo "bootstrapping..."',
@@ -205,19 +206,18 @@ function setupBundleTaskRunner() {
     description: 'Bundle the run-task script needed for "projen eject"',
     exec: `esbuild src/task-runtime.ts --outfile=${taskRunnerPath} --bundle --platform=node --external:"*/package.json"`,
   });
-  // insert Node shebang
   task.exec(
-    `echo "#!/usr/bin/env node" | cat - lib/run-task.js | tee lib/run-task.js > /dev/null`
+    `echo "#!/usr/bin/env node" | cat - lib/run-task.js | tee lib/run-task.js > /dev/null`,
+    {
+      name: "Insert Node shebang to beginning of the file",
+    }
   );
-  // // replace "../package.json" with "./package.json" everywhere
-  // task.exec(
-  //   `sed -i -e 's/\\.\\.\\/package.json/\\.\\/package.json/g' ${taskRunnerPath}`
-  // );
-  // add driver code
   task.exec(
-    `echo "const runtime = new TaskRuntime(\\".\\");" >> ${taskRunnerPath}`
+    `echo "const runtime = new TaskRuntime(\\".\\");\nruntime.runTask(process.argv[2]);" >> ${taskRunnerPath}`,
+    {
+      name: "Add driver code to end of the file",
+    }
   );
-  task.exec(`echo "runtime.runTask(process.argv[2]);" >> ${taskRunnerPath}`);
   project.postCompileTask.spawn(task);
 }
 
