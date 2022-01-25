@@ -7394,6 +7394,23 @@ Array [
         "switch": "jsii-release-version",
       },
       Object {
+        "default": "- Use the cdk8s default",
+        "docs": "Import a specific Kubernetes spec version.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "k8sSpecVersion",
+        "optional": true,
+        "parent": "Cdk8sTypeScriptAppOptions",
+        "path": Array [
+          "k8sSpecVersion",
+        ],
+        "simpleType": "string",
+        "switch": "k8s-spec-version",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "featured": false,
         "fullType": Object {
