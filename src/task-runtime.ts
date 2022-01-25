@@ -2,11 +2,12 @@ import { SpawnOptions, spawnSync } from "child_process";
 import { existsSync, readFileSync, statSync } from "fs";
 import { platform } from "os";
 import { dirname, join, resolve } from "path";
+import * as path from "path";
 import { format } from "util";
 import * as chalk from "chalk";
+import { PROJEN_DIR } from "./common";
 import * as logging from "./logging";
 import { TasksManifest, TaskSpec } from "./task-model";
-import { Tasks } from "./tasks";
 
 const ENV_TRIM_LEN = 20;
 
@@ -14,6 +15,14 @@ const ENV_TRIM_LEN = 20;
  * The runtime component of the tasks engine.
  */
 export class TaskRuntime {
+  /**
+   * The project-relative path of the tasks manifest file.
+   */
+  public static readonly MANIFEST_FILE = path.posix.join(
+    PROJEN_DIR,
+    "tasks.json"
+  );
+
   /**
    * The contents of tasks.json
    */
@@ -26,7 +35,7 @@ export class TaskRuntime {
 
   constructor(workdir: string) {
     this.workdir = resolve(workdir);
-    const manifestPath = join(this.workdir, Tasks.MANIFEST_FILE);
+    const manifestPath = join(this.workdir, TaskRuntime.MANIFEST_FILE);
     this.manifest = existsSync(manifestPath)
       ? JSON.parse(readFileSync(manifestPath, "utf-8"))
       : { tasks: {} };
@@ -155,7 +164,7 @@ class RunTask {
           hasError = result.status !== 0;
         } catch (e) {
           // This is the error 'shx' will throw
-          if (e?.message?.startsWith("non-zero exit code:")) {
+          if ((e as any)?.message?.startsWith("non-zero exit code:")) {
             hasError = true;
           }
           throw e;

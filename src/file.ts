@@ -4,7 +4,7 @@ import { resolve } from "./_resolve";
 import { PROJEN_MARKER, PROJEN_RC } from "./common";
 import { Component } from "./component";
 import { Project } from "./project";
-import { tryReadFileSync, writeFile } from "./util";
+import { isExecutable, isWritable, tryReadFileSync, writeFile } from "./util";
 
 export interface FileBaseOptions {
   /**
@@ -35,15 +35,16 @@ export interface FileBaseOptions {
    * @default false
    */
   readonly executable?: boolean;
+
+  /**
+   * Adds the projen marker to the file.
+   *
+   * @default - marker will be included as long as the project is not ejected
+   */
+  readonly marker?: boolean;
 }
 
 export abstract class FileBase extends Component {
-  /**
-   * The marker to embed in files in order to identify them as projen files.
-   * This marker is used to prune these files before synthesis.
-   */
-  public static readonly PROJEN_MARKER = `${PROJEN_MARKER}. To modify, edit ${PROJEN_RC} and run "npx projen".`;
-
   /**
    * The file path, relative to the project root.
    */
@@ -60,6 +61,13 @@ export abstract class FileBase extends Component {
   public executable: boolean;
 
   /**
+   * The projen marker, used to identify files as projen-generated.
+   *
+   * Value is undefined if the project is being ejected.
+   */
+  public readonly marker: string | undefined;
+
+  /**
    * The absolute path of this file.
    */
   public readonly absolutePath: string;
@@ -73,9 +81,15 @@ export abstract class FileBase extends Component {
   ) {
     super(project);
 
-    this.readonly = options.readonly ?? true;
+    this.readonly = !project.ejected && (options.readonly ?? true);
     this.executable = options.executable ?? false;
     this.path = filePath;
+
+    // `marker` is empty if project is being ejected or if explicitly disabled
+    this.marker =
+      project.ejected || options.marker === false
+        ? undefined
+        : `${PROJEN_MARKER}. To modify, edit ${PROJEN_RC} and run "npx projen".`;
 
     const globPattern = `/${this.path}`;
     const committed = options.committed ?? true;
@@ -135,7 +149,14 @@ export abstract class FileBase extends Component {
 
     // check if the file was changed.
     const prev = tryReadFileSync(filePath);
-    if (prev !== undefined && content === prev) {
+    const prevReadonly = !isWritable(filePath);
+    const prevExecutable = isExecutable(filePath);
+    if (
+      prev !== undefined &&
+      content === prev &&
+      prevReadonly === this.readonly &&
+      prevExecutable === this.executable
+    ) {
       this.project.logger.debug(`no change in ${filePath}`);
       this._changed = false;
       return;
@@ -146,7 +167,30 @@ export abstract class FileBase extends Component {
       executable: this.executable,
     });
 
+    this.checkForProjenMarker();
+
     this._changed = true;
+  }
+
+  /**
+   * For debugging, check whether a file was incorrectly generated with
+   * or without the projen marker. The projen marker does not *need* to be
+   * included on projen-generated files, but it's recommended since it signals
+   * that it probably should not be edited directly.
+   */
+  private checkForProjenMarker() {
+    const filePath = path.join(this.project.outdir, this.path);
+    const contents = tryReadFileSync(filePath);
+    const containsMarker = contents?.includes(PROJEN_MARKER);
+    if (this.marker && !containsMarker) {
+      this.project.logger.debug(
+        `note: expected ${this.path} to contain marker but found none.`
+      );
+    } else if (!this.marker && containsMarker) {
+      this.project.logger.debug(
+        `note: expected ${this.path} to not contain marker but found one anyway.`
+      );
+    }
   }
 
   /**

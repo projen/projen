@@ -19,13 +19,6 @@ export interface ObjectFileOptions extends FileBaseOptions {
    * @default false
    */
   readonly omitEmpty?: boolean;
-
-  /**
-   * Adds the projen marker to the file.
-   *
-   * @default true
-   */
-  readonly marker?: boolean;
 }
 
 /**
@@ -37,12 +30,6 @@ export abstract class ObjectFile extends FileBase {
    * synthesized.
    */
   private readonly obj: object;
-
-  /**
-   * Indicates if the projen marker JSON-comment will be added to the output
-   * object.
-   */
-  public marker: boolean;
 
   /**
    * An object to be merged on top of `obj` after the resolver is called
@@ -58,7 +45,6 @@ export abstract class ObjectFile extends FileBase {
     super(project, filePath, options);
 
     this.obj = options.obj ?? {};
-    this.marker = options.marker ?? true;
     this.omitEmpty = options.omitEmpty ?? false;
     this.rawOverrides = {};
   }

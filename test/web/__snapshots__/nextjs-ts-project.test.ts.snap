@@ -479,6 +479,18 @@ tsconfig.tsbuildinfo
           },
         ],
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "export": Object {
         "description": "Exports the application for production deployment",
         "name": "export",
@@ -847,6 +859,7 @@ tsconfig.tsbuildinfo
       "compile": "npx projen compile",
       "default": "npx projen default",
       "dev": "npx projen dev",
+      "eject": "npx projen eject",
       "export": "npx projen export",
       "package": "npx projen package",
       "post-compile": "npx projen post-compile",

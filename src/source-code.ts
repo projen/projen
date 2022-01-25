@@ -31,6 +31,10 @@ export class SourceCode extends Component {
     this.file = new TextFile(project, filePath);
   }
 
+  public get marker(): string | undefined {
+    return this.file.marker;
+  }
+
   /**
    * Emit a line of code.
    * @param code The contents, if not specified, just adds a newline

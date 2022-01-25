@@ -121,6 +121,7 @@ test("no install if package.json did not change at all", () => {
       build: "npx projen build",
       compile: "npx projen compile",
       default: "npx projen default",
+      eject: "npx projen eject",
       package: "npx projen package",
       "post-compile": "npx projen post-compile",
       "pre-compile": "npx projen pre-compile",

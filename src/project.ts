@@ -1,6 +1,7 @@
-import { mkdtempSync, realpathSync } from "fs";
+import { mkdtempSync, realpathSync, renameSync } from "fs";
 import { tmpdir } from "os";
 import * as path from "path";
+import * as glob from "glob";
 import { cleanup, FILE_MANIFEST } from "./cleanup";
 import { IS_TEST_RUN, PROJEN_VERSION } from "./common";
 import { Component } from "./component";
@@ -148,9 +149,18 @@ export class Project {
   public readonly projenCommand: string;
 
   /**
-   * This is the "default" task, the one that executes "projen".
+   * This is the "default" task, the one that executes "projen". Undefined if
+   * the project is being ejected.
    */
-  public readonly defaultTask: Task;
+  public readonly defaultTask?: Task;
+
+  /**
+   * This task ejects the project from projen. This is undefined if the project
+   * it self is being ejected.
+   *
+   * See docs for more information.
+   */
+  private readonly ejectTask?: Task;
 
   /**
    * Manages the build process of the project.
@@ -161,6 +171,7 @@ export class Project {
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
+  private readonly _ejected: boolean;
 
   constructor(options: ProjectOptions) {
     this.initProject = resolveInitProject(options);
@@ -168,7 +179,14 @@ export class Project {
     this.name = options.name;
     this.parent = options.parent;
     this.excludeFromCleanup = [];
-    this.projenCommand = options.projenCommand ?? "npx projen";
+
+    this._ejected = isTruthy(process.env.PROJEN_EJECTING);
+
+    if (this.ejected) {
+      this.projenCommand = "scripts/run-task";
+    } else {
+      this.projenCommand = options.projenCommand ?? "npx projen";
+    }
 
     this.outdir = this.determineOutdir(options.outdir);
     this.root = this.parent ? this.parent.root : this;
@@ -190,9 +208,19 @@ export class Project {
     // smells like dep injectionn but god forbid.
     this.tasks = new Tasks(this);
 
-    this.defaultTask = this.tasks.addTask(Project.DEFAULT_TASK, {
-      description: "Synthesize project files",
-    });
+    if (!this.ejected) {
+      this.defaultTask = this.tasks.addTask(Project.DEFAULT_TASK, {
+        description: "Synthesize project files",
+      });
+
+      this.ejectTask = this.tasks.addTask("eject", {
+        description: "Remove projen from the project",
+        env: {
+          PROJEN_EJECTING: "true",
+        },
+      });
+      this.ejectTask.spawn(this.defaultTask);
+    }
 
     this.projectBuild = new ProjectBuild(this);
 
@@ -205,15 +233,17 @@ export class Project {
       new Projenrc(this, options.projenrcJsonOptions);
     }
 
-    new JsonFile(this, FILE_MANIFEST, {
-      omitEmpty: true,
-      obj: () => ({
-        // replace `\` with `/` to ensure paths match across platforms
-        files: this.files
-          .filter((f) => f.readonly)
-          .map((f) => f.path.replace(/\\/g, "/")),
-      }),
-    });
+    if (!this.ejected) {
+      new JsonFile(this, FILE_MANIFEST, {
+        omitEmpty: true,
+        obj: () => ({
+          // replace `\` with `/` to ensure paths match across platforms
+          files: this.files
+            .filter((f) => f.readonly)
+            .map((f) => f.path.replace(/\\/g, "/")),
+        }),
+      });
+    }
   }
 
   /**
@@ -450,7 +480,30 @@ export class Project {
       this.postSynthesize();
     }
 
+    if (this.ejected) {
+      this.logger.debug("Ejecting project...");
+
+      // Backup projenrc files
+      const files = glob.sync(".projenrc.*", {
+        cwd: this.outdir,
+        dot: true,
+        nodir: true,
+        absolute: true,
+      });
+
+      for (const file of files) {
+        renameSync(file, `${file}.bak`);
+      }
+    }
+
     this.logger.debug("Synthesis complete");
+  }
+
+  /**
+   * Whether or not the project is being ejected.
+   */
+  public get ejected(): boolean {
+    return this._ejected;
   }
 
   /**

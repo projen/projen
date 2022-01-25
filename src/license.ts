@@ -33,7 +33,7 @@ export class License extends FileBase {
   private readonly text: string;
 
   constructor(project: Project, options: LicenseOptions) {
-    super(project, "LICENSE");
+    super(project, "LICENSE", { marker: false });
 
     const spdx = options.spdx;
 

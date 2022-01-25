@@ -235,6 +235,18 @@ cython_debug/
           },
         ],
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "install": Object {
         "description": "Install and upgrade dependencies",
         "name": "install",
@@ -564,6 +576,18 @@ cython_debug/
         "steps": Array [
           Object {
             "exec": "python .projenrc.py",
+          },
+        ],
+      },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
           },
         ],
       },
@@ -901,6 +925,18 @@ cython_debug/
           },
         ],
       },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
+          },
+        ],
+      },
       "install": Object {
         "description": "Install and upgrade dependencies",
         "name": "install",
@@ -1213,6 +1249,18 @@ cython_debug/
         "steps": Array [
           Object {
             "exec": "python .projenrc.py",
+          },
+        ],
+      },
+      "eject": Object {
+        "description": "Remove projen from the project",
+        "env": Object {
+          "PROJEN_EJECTING": "true",
+        },
+        "name": "eject",
+        "steps": Array [
+          Object {
+            "spawn": "default",
           },
         ],
       },

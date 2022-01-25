@@ -48,7 +48,7 @@ export class Projenrc extends Component {
     );
 
     // set up the "default" task which is the task executed when `projen` is executed for this project.
-    project.defaultTask.exec("python .projenrc.py");
+    project.defaultTask?.exec("python .projenrc.py");
 
     // if this is a new project, generate a skeleton for projenrc.py
     this.generateProjenrc();

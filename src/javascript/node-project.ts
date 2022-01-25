@@ -523,14 +523,16 @@ export class NodeProject extends GitHubProject {
       }
     }
 
-    this.setScript(PROJEN_SCRIPT, this.package.projenCommand);
+    if (!this.ejected) {
+      this.setScript(PROJEN_SCRIPT, this.package.projenCommand);
+    }
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.npmignore?.exclude(`/${PROJEN_DIR}/`);
     this.gitignore.include(`/${PROJEN_RC}`);
 
     const projen = options.projenDevDependency ?? true;
-    if (projen) {
+    if (projen && !this.ejected) {
       const postfix = options.projenVersion ? `@${options.projenVersion}` : "";
       this.addDevDeps(`projen${postfix}`);
     }

@@ -1,4 +1,5 @@
 import * as yaml from "yaml";
+import { PROJEN_MARKER } from "../src/common";
 import { DependencyType } from "../src/dependencies";
 import { JobPermission } from "../src/github/workflows-model";
 import {
@@ -7,9 +8,11 @@ import {
   NodePackage,
   NpmAccess,
 } from "../src/javascript";
+import { JsonFile } from "../src/json";
 import * as logging from "../src/logging";
 import { Project } from "../src/project";
-import { Tasks } from "../src/tasks";
+import { SampleFile } from "../src/sample-file";
+import { TaskRuntime } from "../src/task-runtime";
 import { synthSnapshot, TestProject } from "./util";
 
 logging.disable();
@@ -277,7 +280,7 @@ describe("deps upgrade", () => {
     ).toBeUndefined();
 
     // make sure yarn upgrade all deps, including projen.
-    const tasks = snapshot[Tasks.MANIFEST_FILE].tasks;
+    const tasks = snapshot[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks.upgrade.steps[6].exec).toStrictEqual("yarn upgrade");
   });
 
@@ -850,10 +853,39 @@ test("post-upgrade workflow", () => {
 
   // THEN
   const snapshot = synthSnapshot(project);
-  const tasks = snapshot[Tasks.MANIFEST_FILE].tasks;
+  const tasks = snapshot[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[tasks.upgrade.steps.length - 1]).toStrictEqual({
     spawn: "post-upgrade",
   });
+});
+
+test("node project can be ejected", () => {
+  // GIVEN
+  // equivalent to running "eject" task - needs to be enabled at construction time
+  process.env.PROJEN_EJECTING = "true";
+
+  // WHEN
+  const p = new TestNodeProject();
+  p.deps.addDependency("test", DependencyType.BUILD);
+  new JsonFile(p, "foo/bar.json", { obj: { hello: "world!" } });
+  new SampleFile(p, "sample.txt", {
+    contents: "the file",
+  });
+
+  // THEN
+  const outdir = synthSnapshot(p);
+  expect(outdir["package.json"]).toMatchSnapshot();
+  expect(outdir["package.json"]).not.toContain(PROJEN_MARKER);
+  expect(outdir["package.json"]["//"]).toBeUndefined();
+  expect(outdir["package.json"].scripts.eject).toBeUndefined();
+  expect(outdir["package.json"].scripts.default).toBeUndefined();
+  expect(outdir["package.json"].devDependencies.projen).toBeUndefined();
+  expect(outdir["scripts/run-task"]).toBeDefined();
+  expect(outdir["foo/bar.json"]).not.toContain(PROJEN_MARKER);
+  expect(outdir["sample.txt"]).not.toContain(PROJEN_MARKER);
+  expect(outdir[".projenrc.js"]).toBeUndefined();
+  expect(outdir[".projen/deps.json"]).toBeUndefined();
+  expect(outdir[".projen/files.json"]).toBeUndefined();
 });
 
 class TestNodeProject extends NodeProject {
