@@ -4,7 +4,7 @@ import {
   NodeProjectOptions,
   UpgradeDependenciesSchedule,
 } from "../src/javascript";
-import { Tasks } from "../src/tasks";
+import { TaskRuntime } from "../src/task-runtime";
 import { synthSnapshot } from "./util";
 
 test("upgrades command includes all dependencies", () => {

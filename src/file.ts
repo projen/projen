@@ -87,9 +87,9 @@ export abstract class FileBase extends Component {
 
     // `marker` is empty if project is being ejected or if explicitly disabled
     this.marker =
-      project.ejected && (options.marker ?? true)
-        ? `${PROJEN_MARKER}. To modify, edit ${PROJEN_RC} and run "npx projen".`
-        : undefined;
+      project.ejected || options.marker === false
+        ? undefined
+        : `${PROJEN_MARKER}. To modify, edit ${PROJEN_RC} and run "npx projen".`;
 
     const globPattern = `/${this.path}`;
     const committed = options.committed ?? true;

@@ -867,10 +867,10 @@ Name | Type | Description
 -----|------|-------------
 **absolutePath**🔹 | <code>string</code> | The absolute path of this file.
 **executable**🔹 | <code>boolean</code> | Indicates if the file should be marked as executable.
-**marker**🔹 | <code>boolean</code> | Indicates if the projen marker will be added to the output file.
 **path**🔹 | <code>string</code> | The file path, relative to the project root.
 **readonly**🔹 | <code>boolean</code> | Indicates if the file should be read-only or read-write.
 **changed**?🔹 | <code>boolean</code> | Indicates if the file has been changed during synthesis.<br/>__*Optional*__
+**marker**?🔹 | <code>string</code> | The projen marker, used to identify files as projen-generated.<br/>__*Optional*__
 
 ### Methods
 
@@ -1698,9 +1698,7 @@ Name | Type | Description
 **tasks**🔹 | <code>[Tasks](#projen-tasks)</code> | Project tasks.
 **testTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
 **defaultTask**?🔹 | <code>[Task](#projen-task)</code> | This is the "default" task, the one that executes "projen".<br/>__*Optional*__
-**ejectTask**?🔹 | <code>[Task](#projen-task)</code> | This task ejects the project from projen. This is undefined if the project it self is being ejected.<br/>__*Optional*__
 **initProject**?🔹 | <code>[InitProject](#projen-initproject)</code> | The options used when this project is bootstrapped via `projen new`.<br/>__*Optional*__
-**marker**?🔹 | <code>string</code> | The projen marker, used to identify files as projen-generated.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 *static* **DEFAULT_TASK**🔹 | <code>string</code> | The name of the default task (the task executed when `projen` is run without arguments).
 
@@ -2240,6 +2238,7 @@ new SourceCode(project: Project, filePath: string, options?: SourceCodeOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**file**🔹 | <code>[TextFile](#projen-textfile)</code> | <span></span>
 **filePath**🔹 | <code>string</code> | <span></span>
 
 ### Methods
@@ -2527,7 +2526,7 @@ Name | Type | Description
 **manifest**🔹 | <code>[TasksManifest](#projen-tasksmanifest)</code> | The contents of tasks.json.
 **tasks**🔹 | <code>Array<[TaskSpec](#projen-taskspec)></code> | The tasks in this project.
 **workdir**🔹 | <code>string</code> | The root directory of the project and the cwd for executing tasks.
-*static* **MANIFEST_PATH**🔹 | <code>string</code> | The project-relative path of the tasks manifest file.
+*static* **MANIFEST_FILE**🔹 | <code>string</code> | The project-relative path of the tasks manifest file.
 
 ### Methods
 

@@ -11,7 +11,7 @@ test("cleanup uses cache file", () => {
   p.deps.addDependency("test", DependencyType.BUILD);
   const textFile = new TextFile(p, "foo/bar.txt");
   new SampleFile(p, "sample.txt", {
-    contents: p.marker,
+    contents: PROJEN_MARKER,
   });
 
   // WHEN

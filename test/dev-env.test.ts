@@ -115,7 +115,7 @@ describe("dev environment docker options", () => {
 
     const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
     expect(devContainerSnapshot).toStrictEqual({
-      "//": project.marker,
+      "//": expect.anything(),
       image: "jsii/uberchain",
     });
   });
@@ -143,7 +143,7 @@ describe("dev environment docker options", () => {
 
     const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
     expect(devContainerSnapshot).toStrictEqual({
-      "//": project.marker,
+      "//": expect.anything(),
       build: { dockerfile: "Dockerfile" },
     });
   });
@@ -216,7 +216,7 @@ test("dev environment ports", () => {
 
   const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
   expect(devContainerSnapshot).toStrictEqual({
-    "//": project.marker,
+    "//": expect.anything(),
     forwardPorts: ["8080", "3000"],
   });
 });
@@ -269,7 +269,7 @@ test("dev environment vscode extensions", () => {
 
   const devContainerSnapshot = outdir[DEVCONTAINER_FILE];
   expect(devContainerSnapshot).toStrictEqual({
-    "//": project.marker,
+    "//": expect.anything(),
     extensions: ["dbaeumer.vscode-eslint"],
   });
 });

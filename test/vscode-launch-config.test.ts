@@ -12,7 +12,7 @@ test("empty launch configuration", () => {
 
   // THEN
   expect(synthSnapshot(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
-    "//": project.marker,
+    "//": expect.anything(),
     version: "0.2.0",
     configurations: [],
   });
@@ -35,7 +35,7 @@ test("adding a launch configuration entry", () => {
 
   // THEN
   expect(synthSnapshot(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
-    "//": project.marker,
+    "//": expect.anything(),
     version: "0.2.0",
     configurations: [
       {
@@ -87,7 +87,7 @@ test("adding multiple launch configuration entries", () => {
 
   // THEN
   expect(synthSnapshot(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
-    "//": project.marker,
+    "//": expect.anything(),
     version: "0.2.0",
     configurations: [
       {

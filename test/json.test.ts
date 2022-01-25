@@ -84,11 +84,14 @@ test("json file can contain projen marker", () => {
 
   const obj: any = {};
 
-  new JsonFile(prj, "my/json/file-marker.json", { obj, marker: true });
+  const file = new JsonFile(prj, "my/json/file-marker.json", {
+    obj,
+    marker: true,
+  });
 
   const output = synthSnapshot(prj)["my/json/file-marker.json"];
 
-  expect(output["//"]).toBe(prj.marker);
+  expect(output["//"]).toBe(file.marker);
 });
 
 describe("newline", () => {

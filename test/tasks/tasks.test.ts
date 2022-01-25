@@ -1,6 +1,5 @@
 import { Project, TaskRuntime } from "../../src";
 import { TasksManifest, TaskStep } from "../../src/task-model";
-import { Tasks } from "../../src/tasks";
 import { TestProject, synthSnapshot } from "../util";
 
 test("default tasks", () => {
