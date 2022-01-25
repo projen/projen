@@ -165,7 +165,7 @@ export class Project {
    *
    * See docs for more information.
    */
-  public readonly ejectTask?: Task;
+  private readonly ejectTask?: Task;
 
   /**
    * Manages the build process of the project.
