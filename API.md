@@ -176,7 +176,7 @@ Name|Description
 [awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)|*No description*
 [awscdk.AwsCdkJavaAppOptions](#projen-awscdk-awscdkjavaappoptions)|*No description*
 [awscdk.AwsCdkPackageNames](#projen-awscdk-awscdkpackagenames)|Language-specific AWS CDK package names.
-[awscdk.AwsCdkPythonAppOptions](#projen-awscdk-awscdkpythonappoptions)|yarn yarn build && yarn bump --release-as 0.51.0 yarn link.
+[awscdk.AwsCdkPythonAppOptions](#projen-awscdk-awscdkpythonappoptions)|*No description*
 [awscdk.AwsCdkTypeScriptAppOptions](#projen-awscdk-awscdktypescriptappoptions)|*No description*
 [awscdk.CdkConfigCommonOptions](#projen-awscdk-cdkconfigcommonoptions)|Common options for `cdk.json`.
 [awscdk.CdkConfigOptions](#projen-awscdk-cdkconfigoptions)|Options for `CdkJson`.
@@ -11467,14 +11467,7 @@ Name | Type | Description
 ## struct AwsCdkPythonAppOptions 🔹 <a id="projen-awscdk-awscdkpythonappoptions"></a>
 
 
-yarn yarn build && yarn bump --release-as 0.51.0 yarn link.
 
-mkdir marcio
-cd marcio
-yarn link projen
-alias pj="/home/marcio/marciocadev/dev/projen/bin/projen"
-pj new awscdk-app-py
-yarn link projen
 
 
 

@@ -9,26 +9,6 @@ import { AwsCdkDepsPy } from "./awscdk-deps-py";
 import { CdkConfig } from "./cdk-config";
 import { CdkTasks } from "./cdk-tasks";
 
-/**
-// no projen
-yarn
-yarn build && yarn bump --release-as 0.51.0
-yarn link
-
-// no final
-yarn unlink
-
-// no projeto de teste
-mkdir marcio
-cd marcio
-npm init
-yarn link projen
-alias pj="node_modules/projen/bin/projen"
-// alias pj="/home/marcio/marciocadev/dev/projen/bin/projen"
-pj new awscdk-app-py
-yarn link projen
-*/
-
 export interface AwsCdkPythonAppOptions
   extends PythonProjectOptions,
     CdkConfigCommonOptions,
