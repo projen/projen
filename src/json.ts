@@ -38,7 +38,7 @@ export class JsonFile extends ObjectFile {
     const sanitized = JSON.parse(json);
 
     if (this.marker) {
-      sanitized["//"] = this.project.marker;
+      sanitized["//"] = this.marker;
     }
 
     let content = JSON.stringify(sanitized, undefined, 2);

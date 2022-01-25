@@ -23,7 +23,7 @@ export class IniFile extends ObjectFile {
     }
 
     return [
-      ...(this.marker ? [`# ${this.project.marker}`] : []),
+      ...(this.marker ? [`# ${this.marker}`] : []),
       "",
       INI.stringify(JSON.parse(json)),
     ].join("\n");

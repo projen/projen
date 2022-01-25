@@ -36,7 +36,7 @@ export class XmlFile extends ObjectFile {
 
     return [
       xmlString,
-      ...(this.marker ? [`<!-- ${this.project.marker} -->`] : []),
+      ...(this.marker ? [`<!-- ${this.marker} -->`] : []),
     ].join("\n");
   }
 }

@@ -1,6 +1,6 @@
 import * as path from "path";
 import { resolve } from "./_resolve";
-import { PROJEN_MARKER } from "./common";
+import { PROJEN_MARKER, PROJEN_RC } from "./common";
 import { Component } from "./component";
 import { Project } from "./project";
 import { isExecutable, isWritable, tryReadFileSync, writeFile } from "./util";
@@ -61,9 +61,11 @@ export abstract class FileBase extends Component {
   public executable: boolean;
 
   /**
-   * Indicates if the projen marker will be added to the output file.
+   * The projen marker, used to identify files as projen-generated.
+   *
+   * Value is undefined if the project is being ejected.
    */
-  public marker: boolean;
+  public readonly marker: string | undefined;
 
   /**
    * The absolute path of this file.
@@ -81,8 +83,13 @@ export abstract class FileBase extends Component {
 
     this.readonly = !project.ejected && (options.readonly ?? true);
     this.executable = options.executable ?? false;
-    this.marker = !project.ejected && (options.marker ?? true);
     this.path = filePath;
+
+    // `marker` is empty if project is being ejected or if explicitly disabled
+    this.marker =
+      project.ejected && (options.marker ?? true)
+        ? `${PROJEN_MARKER}. To modify, edit ${PROJEN_RC} and run "npx projen".`
+        : undefined;
 
     const globPattern = `/${this.path}`;
     const committed = options.committed ?? true;

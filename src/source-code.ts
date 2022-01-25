@@ -17,7 +17,7 @@ export interface SourceCodeOptions {
  * Represents a source file.
  */
 export class SourceCode extends Component {
-  private readonly file: TextFile;
+  public readonly file: TextFile;
   private indentLevel = 0;
   private readonly indent: number;
 

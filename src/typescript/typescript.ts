@@ -394,8 +394,8 @@ export class TypeScriptProject extends NodeProject {
     };
 
     const resolver = new TextFile(this, ".projen/jest-snapshot-resolver.js");
-    if (!this.ejected) {
-      resolver.addLine(`// ${this.marker}`);
+    if (!resolver.marker) {
+      resolver.addLine(`// ${resolver.marker}`);
     }
     resolver.addLine('const path = require("path");');
     resolver.addLine(`const libtest = "${libtest}";`);

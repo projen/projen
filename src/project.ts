@@ -3,12 +3,7 @@ import { tmpdir } from "os";
 import * as path from "path";
 import * as glob from "glob";
 import { cleanup, FILE_MANIFEST } from "./cleanup";
-import {
-  IS_TEST_RUN,
-  PROJEN_VERSION,
-  PROJEN_MARKER,
-  PROJEN_RC,
-} from "./common";
+import { IS_TEST_RUN, PROJEN_VERSION } from "./common";
 import { Component } from "./component";
 import { Dependencies } from "./dependencies";
 import { FileBase } from "./file";
@@ -505,17 +500,6 @@ export class Project {
    */
   public get ejected(): boolean {
     return this._ejected;
-  }
-
-  /**
-   * The projen marker, used to identify files as projen-generated.
-   *
-   * Value is undefined if the project is being ejected.
-   */
-  public get marker(): string | undefined {
-    return this.ejected
-      ? undefined
-      : `${PROJEN_MARKER}. To modify, edit ${PROJEN_RC} and run "npx projen".`;
   }
 
   /**

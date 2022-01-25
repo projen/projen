@@ -158,8 +158,8 @@ export class LambdaFunction extends Component {
     );
 
     const src = new SourceCode(project, constructFile);
-    if (!project.marker) {
-      src.line(`// ${project.marker}`);
+    if (src.file.marker) {
+      src.line(`// ${src.file.marker}`);
     }
     src.line("import * as path from 'path';");
 

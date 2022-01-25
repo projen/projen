@@ -12,7 +12,7 @@ import { JsonFile } from "../src/json";
 import * as logging from "../src/logging";
 import { Project } from "../src/project";
 import { SampleFile } from "../src/sample-file";
-import { Tasks } from "../src/tasks";
+import { TaskRuntime } from "../src/task-runtime";
 import { synthSnapshot, TestProject } from "./util";
 
 logging.disable();
