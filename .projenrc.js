@@ -1,4 +1,5 @@
 const { cdk, JsonFile, TextFile } = require("./lib");
+const { PROJEN_MARKER } = require("./lib/common");
 
 const project = new cdk.JsiiProject({
   name: "projen",
@@ -47,6 +48,7 @@ const project = new cdk.JsiiProject({
     "@types/semver",
     "@types/ini",
     "markmac",
+    "esbuild",
     "all-contributors-cli",
   ],
 
@@ -101,7 +103,7 @@ const project = new cdk.JsiiProject({
 new TextFile(project, "projen.bash", {
   lines: [
     "#!/bin/bash",
-    `# ${TextFile.PROJEN_MARKER}`,
+    `# ${PROJEN_MARKER}`,
     "set -euo pipefail",
     "if [ ! -f lib/cli/index.js ]; then",
     '  echo "bootstrapping..."',
@@ -179,22 +181,48 @@ project.npmignore.exclude("/SECURITY.md");
 project.npmignore.exclude("/.gitattributes");
 project.npmignore.exclude("/.gitpod.yml");
 
-// integ test
-const pythonCompatTask = project.addTask("integ:python-compat", {
-  exec: "scripts/python-compat.sh",
-  description:
-    "Checks that projen's submodule structure does not cause import failures for python. Expects python to be installed and projen to be fully built.",
-});
-const integTask = project.addTask("integ", {
-  description: "Run integration tests",
-});
-integTask.spawn(project.compileTask);
-integTask.spawn(project.tasks.tryFind("package:python"));
-integTask.spawn(pythonCompatTask);
+function setupIntegTest() {
+  const pythonCompatTask = project.addTask("integ:python-compat", {
+    exec: "scripts/python-compat.sh",
+    description:
+      "Checks that projen's submodule structure does not cause import failures for python. Expects python to be installed and projen to be fully built.",
+  });
+  const integTask = project.addTask("integ", {
+    description: "Run integration tests",
+  });
+  integTask.spawn(project.compileTask);
+  integTask.spawn(project.tasks.tryFind("package:python"));
+  integTask.spawn(pythonCompatTask);
 
-project.buildWorkflow.addPostBuildJobTask(integTask, {
-  tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
-});
+  project.buildWorkflow.addPostBuildJobTask(integTask, {
+    tools: { python: { version: "3.x" }, go: { version: "1.16.x" } },
+  });
+}
+
+// build `run-task` script needed for "projen eject" functionality
+function setupBundleTaskRunner() {
+  const taskRunnerPath = "lib/run-task.js";
+  const task = project.addTask("bundle:task-runner", {
+    description: 'Bundle the run-task script needed for "projen eject"',
+    exec: `esbuild src/task-runtime.ts --outfile=${taskRunnerPath} --bundle --platform=node --external:"*/package.json"`,
+  });
+  task.exec(
+    `echo "#!/usr/bin/env node" | cat - lib/run-task.js | tee lib/run-task.js > /dev/null`,
+    {
+      name: "Insert Node shebang to beginning of the file",
+    }
+  );
+  task.exec(
+    `echo "const runtime = new TaskRuntime(\\".\\");\nruntime.runTask(process.argv[2]);" >> ${taskRunnerPath}`,
+    {
+      name: "Add driver code to end of the file",
+    }
+  );
+  project.postCompileTask.spawn(task);
+}
+
+setupIntegTest();
+setupBundleTaskRunner();
 
 // we are projen, so re-synth after compiling.
 // fixes feedback loop where projen contibutors run "build"

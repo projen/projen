@@ -44,7 +44,7 @@ if (!releaseTagFile) {
 
 const majorVersion =
   major == null || major === "" ? undefined : parseInt(major);
-if (majorVersion === NaN) {
+if (Number.isNaN(majorVersion)) {
   throw new Error(`MAJOR must be a number: ${majorVersion}`);
 }
 

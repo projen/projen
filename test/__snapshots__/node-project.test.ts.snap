@@ -191,3 +191,70 @@ git config user.email \\"github-actions@github.com\\"",
   },
 ]
 `;
+
+exports[`node project can be ejected 1`] = `
+Object {
+  "devDependencies": Object {
+    "jest": "*",
+    "jest-junit": "^13",
+    "npm-check-updates": "^12",
+    "standard-version": "^9",
+    "test": "*",
+  },
+  "jest": Object {
+    "clearMocks": true,
+    "collectCoverage": true,
+    "coverageDirectory": "coverage",
+    "coveragePathIgnorePatterns": Array [
+      "/node_modules/",
+    ],
+    "coverageReporters": Array [
+      "json",
+      "lcov",
+      "clover",
+      "cobertura",
+      "text",
+    ],
+    "reporters": Array [
+      "default",
+      Array [
+        "jest-junit",
+        Object {
+          "outputDirectory": "test-reports",
+        },
+      ],
+    ],
+    "testMatch": Array [
+      "**/__tests__/**/*.[jt]s?(x)",
+      "**/?(*.)+(spec|test).[tj]s?(x)",
+    ],
+    "testPathIgnorePatterns": Array [
+      "/node_modules/",
+    ],
+    "watchPathIgnorePatterns": Array [
+      "/node_modules/",
+    ],
+  },
+  "license": "Apache-2.0",
+  "main": "lib/index.js",
+  "name": "test-node-project",
+  "scripts": Object {
+    "build": "scripts/run-task build",
+    "bump": "scripts/run-task bump",
+    "clobber": "scripts/run-task clobber",
+    "compile": "scripts/run-task compile",
+    "package": "scripts/run-task package",
+    "post-compile": "scripts/run-task post-compile",
+    "post-upgrade": "scripts/run-task post-upgrade",
+    "pre-compile": "scripts/run-task pre-compile",
+    "release": "scripts/run-task release",
+    "test": "scripts/run-task test",
+    "test:update": "scripts/run-task test:update",
+    "test:watch": "scripts/run-task test:watch",
+    "unbump": "scripts/run-task unbump",
+    "upgrade": "scripts/run-task upgrade",
+    "upgrade-projen": "scripts/run-task upgrade-projen",
+  },
+  "version": "0.0.0",
+}
+`;

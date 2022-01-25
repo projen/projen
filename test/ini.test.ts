@@ -28,11 +28,14 @@ test("ini file can contain projen marker", () => {
 
   const obj: any = {};
 
-  new IniFile(prj, "my/ini/file-marker.ini", { obj, marker: true });
+  const file = new IniFile(prj, "my/ini/file-marker.ini", {
+    obj,
+    marker: true,
+  });
 
   const output = synthSnapshot(prj)["my/ini/file-marker.ini"];
 
   const firstLine = output.split("\n")[0];
 
-  expect(firstLine).toBe(`# ${IniFile.PROJEN_MARKER}`);
+  expect(firstLine).toBe(`# ${file.marker}`);
 });

@@ -71,7 +71,7 @@ export class RequirementsFile extends FileBase {
     }
 
     return `${resolver
-      .resolve([`# ${FileBase.PROJEN_MARKER}`, ...allPackages])
+      .resolve([...(this.marker ? [`# ${this.marker}`] : []), ...allPackages])
       .join("\n")}\n`;
   }
 }

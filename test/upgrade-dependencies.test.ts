@@ -4,7 +4,7 @@ import {
   NodeProjectOptions,
   UpgradeDependenciesSchedule,
 } from "../src/javascript";
-import { Tasks } from "../src/tasks";
+import { TaskRuntime } from "../src/task-runtime";
 import { synthSnapshot } from "./util";
 
 test("upgrades command includes all dependencies", () => {
@@ -14,7 +14,7 @@ test("upgrades command includes all dependencies", () => {
 
   const deps = "jest jest-junit npm-check-updates standard-version some-dep";
 
-  const tasks = synthSnapshot(project)[Tasks.MANIFEST_FILE].tasks;
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[6].exec).toStrictEqual(`yarn upgrade ${deps}`);
 });
 
@@ -25,7 +25,7 @@ test("upgrades command includes dependencies added post instantiation", () => {
 
   const deps = "jest jest-junit npm-check-updates standard-version some-dep";
 
-  const tasks = synthSnapshot(project)[Tasks.MANIFEST_FILE].tasks;
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[6].exec).toStrictEqual(`yarn upgrade ${deps}`);
 });
 
@@ -40,7 +40,7 @@ test("upgrades command doesnt include ignored packages", () => {
 
   const deps = "jest jest-junit npm-check-updates projen standard-version dep1";
 
-  const tasks = synthSnapshot(project)[Tasks.MANIFEST_FILE].tasks;
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[6].exec).toStrictEqual(`yarn upgrade ${deps}`);
 });
 
@@ -55,7 +55,7 @@ test("upgrades command includes only included packages", () => {
 
   const deps = "dep1";
 
-  const tasks = synthSnapshot(project)[Tasks.MANIFEST_FILE].tasks;
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[6].exec).toStrictEqual(`yarn upgrade ${deps}`);
 });
 

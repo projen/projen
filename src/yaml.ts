@@ -36,7 +36,7 @@ export class YamlFile extends ObjectFile {
     }
 
     return [
-      ...(this.marker ? [`# ${YamlFile.PROJEN_MARKER}`] : []),
+      ...(this.marker ? [`# ${this.marker}`] : []),
       "",
       YAML.stringify(JSON.parse(json), {
         indent: 2,

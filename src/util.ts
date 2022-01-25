@@ -355,6 +355,24 @@ export function tryReadFileSync(file: string) {
   return fs.readFileSync(file, "utf8");
 }
 
+export function isWritable(file: string) {
+  try {
+    fs.accessSync(file, fs.constants.W_OK);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function isExecutable(file: string) {
+  try {
+    fs.accessSync(file, fs.constants.X_OK);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function decamelize(s: string, sep: string = "_") {
   if (Case.of(s) === "camel") {
     return Case.lower(s, sep);

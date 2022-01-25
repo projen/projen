@@ -9,7 +9,7 @@ import {
   GitIdentity,
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
-import { JobStep } from "../github/workflows-model";
+import { JobStep, Triggers } from "../github/workflows-model";
 import { IgnoreFile } from "../ignore-file";
 import {
   Prettier,
@@ -324,6 +324,12 @@ export interface NodeProjectOptions
    * @default true
    */
   readonly package?: boolean;
+
+  /**
+   * Build workflow triggers
+   * @default "{ pullRequest: {}, workflowDispatch: {} }"
+   */
+  readonly buildWorkflowTriggers?: Triggers;
 }
 
 /**
@@ -517,14 +523,16 @@ export class NodeProject extends GitHubProject {
       }
     }
 
-    this.setScript(PROJEN_SCRIPT, this.package.projenCommand);
+    if (!this.ejected) {
+      this.setScript(PROJEN_SCRIPT, this.package.projenCommand);
+    }
 
     this.npmignore?.exclude(`/${PROJEN_RC}`);
     this.npmignore?.exclude(`/${PROJEN_DIR}/`);
     this.gitignore.include(`/${PROJEN_RC}`);
 
     const projen = options.projenDevDependency ?? true;
-    if (projen) {
+    if (projen && !this.ejected) {
       const postfix = options.projenVersion ? `@${options.projenVersion}` : "";
       this.addDevDeps(`projen${postfix}`);
     }
@@ -553,6 +561,7 @@ export class NodeProject extends GitHubProject {
         preBuildSteps: this.renderWorkflowSetup({ mutable: true }),
         postBuildSteps: options.postBuildSteps,
         runsOn: options.workflowRunsOn,
+        workflowTriggers: options.buildWorkflowTriggers,
       });
 
       // run codecov if enabled or a secret token name is passed in

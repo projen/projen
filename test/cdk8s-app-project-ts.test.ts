@@ -1,5 +1,5 @@
+import * as yaml from "yaml";
 import { Cdk8sTypeScriptApp } from "../src/cdk8s";
-import { YamlFile } from "../src/yaml";
 import { synthSnapshot } from "./util";
 
 test("test if cdk8s synth is possible", () => {
@@ -31,15 +31,11 @@ test("test if cdk8s synth is possible", () => {
   ]);
 
   // expect cdk8s.yaml to contain the k8s import
-  expect(output["cdk8s.yaml"].split("\n")).toStrictEqual([
-    `# ${YamlFile.PROJEN_MARKER}`,
-    "",
-    "language: typescript",
-    "app: node lib/main.js",
-    "imports:",
-    "  - k8s",
-    "",
-  ]);
+  expect(yaml.parse(output["cdk8s.yaml"])).toStrictEqual({
+    app: "node lib/main.js",
+    imports: ["k8s"],
+    language: "typescript",
+  });
 
   // expect postcompile step to contain synth
   expect(
@@ -72,16 +68,11 @@ test("adding cdk8sImports", () => {
       exec: "cdk8s import -o src/imports",
     },
   ]);
-  expect(output["cdk8s.yaml"].split("\n")).toStrictEqual([
-    `# ${YamlFile.PROJEN_MARKER}`,
-    "",
-    "language: typescript",
-    "app: node lib/main.js",
-    "imports:",
-    "  - k8s@1.20.0",
-    "  - github:crossplane/crossplane@0.14.0",
-    "",
-  ]);
+  expect(yaml.parse(output["cdk8s.yaml"])).toStrictEqual({
+    app: "node lib/main.js",
+    imports: ["k8s@1.20.0", "github:crossplane/crossplane@0.14.0"],
+    language: "typescript",
+  });
 });
 
 test("constructs version undefined", () => {

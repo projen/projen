@@ -27,11 +27,14 @@ test("yaml file can contain projen marker", () => {
 
   const obj: any = {};
 
-  new YamlFile(prj, "my/yaml/file-marker.yaml", { obj, marker: true });
+  const file = new YamlFile(prj, "my/yaml/file-marker.yaml", {
+    obj,
+    marker: true,
+  });
 
   const output = synthSnapshot(prj)["my/yaml/file-marker.yaml"];
 
   const firstLine = output.split("\n")[0];
 
-  expect(firstLine).toBe(`# ${YamlFile.PROJEN_MARKER}`);
+  expect(firstLine).toBe(`# ${file.marker}`);
 });

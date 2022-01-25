@@ -1,13 +1,8 @@
 import { join } from "path";
 import { readJsonSync } from "fs-extra";
-import {
-  DependencyType,
-  FileBase,
-  JsonFile,
-  SampleFile,
-  TextFile,
-} from "../src";
+import { DependencyType, JsonFile, SampleFile, TextFile } from "../src";
 import { cleanup, FILE_MANIFEST } from "../src/cleanup";
+import { PROJEN_MARKER } from "../src/common";
 import { directorySnapshot, TestProject } from "./util";
 
 test("cleanup uses cache file", () => {
@@ -16,7 +11,7 @@ test("cleanup uses cache file", () => {
   p.deps.addDependency("test", DependencyType.BUILD);
   const textFile = new TextFile(p, "foo/bar.txt");
   new SampleFile(p, "sample.txt", {
-    contents: FileBase.PROJEN_MARKER,
+    contents: PROJEN_MARKER,
   });
 
   // WHEN
@@ -49,7 +44,7 @@ test("cleanup falls back to greedy method", () => {
   // This file would not normally get cleaned up up by the file manifest
   new TextFile(p, "delete.txt", {
     readonly: false,
-    lines: [FileBase.PROJEN_MARKER],
+    lines: [PROJEN_MARKER],
   });
 
   // corrupt file manifest

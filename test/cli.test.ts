@@ -28,7 +28,7 @@ test('running "projen" with no arguments will execute .projenrc.js', () => {
 
 test('running "projen" for projects with a "default" task will execute it', () => {
   const project = new Project({ name: "my-project" });
-  project.defaultTask.exec('echo "foo" > bar.txt');
+  project.defaultTask?.exec('echo "foo" > bar.txt');
   project.synth();
 
   execProjenCLI(project.outdir);
