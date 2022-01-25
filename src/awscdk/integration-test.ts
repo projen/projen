@@ -20,6 +20,18 @@ export interface IntegrationTestCommonOptions {
  */
 export interface IntegrationTestOptions extends IntegrationTestCommonOptions {
   /**
+   * Name of the integration test
+   * @default - Derived from the entrypoint filename.
+   */
+  readonly name?: string;
+
+  /**
+   * A list of stacks within the integration test to deploy/destroy.
+   * @default ["**"]
+   */
+  readonly stacks?: string[];
+
+  /**
    * A path from the project root directory to a TypeScript file which contains
    * the integration test app.
    *
@@ -72,7 +84,7 @@ export class IntegrationTest extends Component {
   constructor(project: Project, options: IntegrationTestOptions) {
     super(project);
     const entry = options.entrypoint;
-    const name = basename(entry, TYPESCRIPT_INTEG_EXT);
+    const name = options.name ?? basename(entry, TYPESCRIPT_INTEG_EXT);
     const dir = dirname(entry);
 
     const deploydir = join(dir, ".tmp", `${name}.integ`, "deploy.cdk.out");
@@ -80,6 +92,13 @@ export class IntegrationTest extends Component {
     const snapshotdir = join(dir, `${name}.integ.snapshot`);
 
     const app = `ts-node -P ${options.tsconfigPath} ${entry}`;
+
+    if (!project.deps.tryGetDependency("aws-cdk")) {
+      project.deps.addDependency(
+        `aws-cdk@^${options.cdkDeps.cdkMajorVersion}`,
+        DependencyType.BUILD
+      );
+    }
 
     if (!project.deps.tryGetDependency("ts-node")) {
       project.deps.addDependency("ts-node", DependencyType.BUILD);
@@ -107,13 +126,17 @@ export class IntegrationTest extends Component {
 
     const cdkopts = opts.join(" ");
 
+    // Determine which stacks to deploy
+    const stacks = options.stacks ?? ["**"];
+    const stackOpts = stacks.map((stack) => `'${stack}'`).join(" ");
+
     const deployTask = project.addTask(`integ:${name}:deploy`, {
       description: `deploy integration test '${name}' and capture snapshot`,
     });
 
     deployTask.exec(`rm -fr ${deploydir}`);
     deployTask.exec(
-      `cdk deploy ${cdkopts} --require-approval=never -o ${deploydir}`
+      `cdk deploy ${cdkopts} ${stackOpts} --require-approval=never -o ${deploydir}`
     );
 
     // if deployment was successful, copy the deploy dir to the expected dir
@@ -122,12 +145,12 @@ export class IntegrationTest extends Component {
 
     const watchTask = project.addTask(`integ:${name}:watch`, {
       description: `watch integration test '${name}' (without updating snapshots)`,
-      exec: `cdk watch ${cdkopts} -o ${deploydir}`,
+      exec: `cdk watch ${cdkopts} ${stackOpts} -o ${deploydir}`,
     });
 
     const destroyTask = project.addTask(`integ:${name}:destroy`, {
       description: `destroy integration test '${name}'`,
-      exec: `cdk destroy --app ${snapshotdir} --no-version-reporting`,
+      exec: `cdk destroy --app ${snapshotdir} ${stackOpts} --no-version-reporting`,
     });
 
     const destroyAfterDeploy = options.destroyAfterDeploy ?? true;
@@ -155,6 +178,14 @@ export class IntegrationTest extends Component {
       description: `update snapshot for integration test "${name}"`,
       exec: `cdk synth ${cdkopts} -o ${snapshotdir} > /dev/null`,
     });
+
+    let snapshotAllTask = project.tasks.tryFind("integ:snapshot-all");
+    if (!snapshotAllTask) {
+      snapshotAllTask = project.addTask("integ:snapshot-all", {
+        description: "update snapshot for all integration tests",
+      });
+    }
+    snapshotAllTask.spawn(snapshotTask);
 
     // synth as part of our tests, which means that if outdir changes, anti-tamper will fail
     project.testTask.spawn(assertTask);

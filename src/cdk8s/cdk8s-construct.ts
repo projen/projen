@@ -1,10 +1,11 @@
+import * as semver from "semver";
 import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
 
 export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
   /**
    * Minimum target version this library is tested against.
    *
-   * @default "1.0.0-beta.10"
+   * @default "1.4.10"
    * @featured
    */
   readonly cdk8sVersion: string;
@@ -12,7 +13,7 @@ export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
   /**
    * constructs verion
    *
-   * @default "3.2.34"
+   * @default "3.3.196"
    */
 
   readonly constructsVersion?: string;
@@ -75,17 +76,47 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
       throw new Error("Required field cdk8sVersion is not specified.");
     }
 
+    const cdk8sVersion = semver.parse(options.cdk8sVersion);
+    if (!cdk8sVersion) {
+      throw new Error(
+        `"cdk8sVersion" cannot be parsed as a semver version: ${options.cdk8sVersion}`
+      );
+    }
+
     this.cdk8sVersion = options.cdk8sVersionPinning
       ? options.cdk8sVersion
       : `^${options.cdk8sVersion}`;
 
-    if (options.constructsVersion) {
-      this.constructsVersion = options.constructsVersionPinning
-        ? options.constructsVersion
-        : `^${options.constructsVersion}`;
-    } else {
-      this.constructsVersion = "^3.2.34";
+    const defaultConstructsVersion =
+      cdk8sVersion.major === 1 ? "3.3.196" : "10.0.0";
+    const resolvedConstructsVersion =
+      options.constructsVersion ?? defaultConstructsVersion;
+    const resolvedMajorConstructVersion = semver.parse(
+      resolvedConstructsVersion
+    )?.major;
+
+    if (!resolvedMajorConstructVersion) {
+      throw new Error(
+        `"constructsVersion" cannot be parsed as a semver version: ${options.constructsVersion}`
+      );
     }
+
+    switch (cdk8sVersion.major) {
+      case 1:
+        if (resolvedMajorConstructVersion !== 3) {
+          throw new Error("cdk8s 1.x requires constructs 3.x");
+        }
+        break;
+      case 2:
+        if (resolvedMajorConstructVersion !== 10) {
+          throw new Error("cdk8s 2.x requires constructs 10.x");
+        }
+        break;
+    }
+
+    this.constructsVersion = options.constructsVersionPinning
+      ? resolvedConstructsVersion
+      : `^${resolvedConstructsVersion}`;
 
     this.addPeerDeps(
       `constructs@${this.constructsVersion}`,

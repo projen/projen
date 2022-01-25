@@ -34,8 +34,7 @@ jobs:
         run: /bin/bash ./projen.bash release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::"$(git ls-remote origin -h ${{
-          github.ref }} | cut -f1)"
+        run: echo ::set-output name=latest_commit::"$(git ls-remote origin -h ${{ github.ref }} | cut -f1)"
       - name: Upload artifact
         if: ${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
@@ -64,11 +63,7 @@ jobs:
       - name: Collect GitHub Metadata
         run: mv .repo/dist dist
       - name: Release
-        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R
-          $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt)
-          --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode
-          -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then
-          cat $errout; exit $exitcode; fi
+        run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then cat $errout; exit $exitcode; fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
@@ -82,10 +77,8 @@ jobs:
         uses: imjohnbo/issue-bot@v3
         with:
           labels: failed-release
-          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to GitHub
-            Releases failed
-          body: See https://github.com/${{ github.repository }}/actions/runs/${{
-            github.run_id }}
+          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to GitHub Releases failed
+          body: See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release_npm:
@@ -129,8 +122,7 @@ jobs:
         with:
           labels: failed-release
           title: Publishing v${{ steps.extract-version.outputs.VERSION }} to npm failed
-          body: See https://github.com/${{ github.repository }}/actions/runs/${{
-            github.run_id }}
+          body: See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release_maven:
@@ -180,10 +172,8 @@ jobs:
         uses: imjohnbo/issue-bot@v3
         with:
           labels: failed-release
-          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to Maven Central
-            failed
-          body: See https://github.com/${{ github.repository }}/actions/runs/${{
-            github.run_id }}
+          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to Maven Central failed
+          body: See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release_pypi:
@@ -229,8 +219,7 @@ jobs:
         with:
           labels: failed-release
           title: Publishing v${{ steps.extract-version.outputs.VERSION }} to PyPI failed
-          body: See https://github.com/${{ github.repository }}/actions/runs/${{
-            github.run_id }}
+          body: See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release_golang:
@@ -276,9 +265,7 @@ jobs:
         uses: imjohnbo/issue-bot@v3
         with:
           labels: failed-release
-          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to GitHub Go
-            Module Repository failed
-          body: See https://github.com/${{ github.repository }}/actions/runs/${{
-            github.run_id }}
+          title: Publishing v${{ steps.extract-version.outputs.VERSION }} to GitHub Go Module Repository failed
+          body: See https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

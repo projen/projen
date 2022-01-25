@@ -207,6 +207,7 @@ Name|Description
 [github.GithubWorkflowOptions](#projen-github-githubworkflowoptions)|Options for `GithubWorkflow`.
 [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)|The Mergify conditional operators that can be used are: `or` and `and`.
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
+[github.MergifyQueue](#projen-github-mergifyqueue)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
 [github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)|Options for PullRequestLint.
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
@@ -2903,7 +2904,16 @@ new YamlFile(project: Project, filePath: string, options: YamlFileOptions)
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
+  * **lineWidth** (<code>number</code>)  Maximum line width (set to 0 to disable folding). __*Default*__: 0
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**lineWidth**🔹 | <code>number</code> | Maximum line width (set to 0 to disable folding).
 
 ### Methods
 
@@ -3931,6 +3941,8 @@ new awscdk.IntegrationTest(project: Project, options: IntegrationTestOptions)
   * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the integration test app. 
   * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use when running integration test cdk apps. 
+  * **name** (<code>string</code>)  Name of the integration test. __*Default*__: Derived from the entrypoint filename.
+  * **stacks** (<code>Array<string></code>)  A list of stacks within the integration test to deploy/destroy. __*Default*__: ["**"]
 
 
 
@@ -4661,10 +4673,12 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
   * **cdk8sCliVersion** (<code>string</code>)  cdk8s-cli version. __*Default*__: "cdk8sVersion"
   * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s-cli. __*Default*__: false
+  * **cdk8sImports** (<code>Array<string></code>)  Import additional specs. __*Default*__: no additional specs imported
   * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
   * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
+  * **k8sSpecVersion** (<code>string</code>)  Import a specific Kubernetes spec version. __*Default*__: Use the cdk8s default
 
 
 
@@ -4847,7 +4861,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
   * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
-  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
+  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.3.196"
   * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
 
 
@@ -5530,10 +5544,26 @@ new github.Mergify(github: GitHub, options?: MergifyOptions)
 
 * **github** (<code>[github.GitHub](#projen-github-github)</code>)  *No description*
 * **options** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  *No description*
+  * **queues** (<code>Array<[github.MergifyQueue](#projen-github-mergifyqueue)></code>)  *No description* __*Optional*__
   * **rules** (<code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code>)  *No description* __*Optional*__
 
 
 ### Methods
+
+
+#### addQueue(queue)🔹 <a id="projen-github-mergify-addqueue"></a>
+
+
+
+```ts
+addQueue(queue: MergifyQueue): void
+```
+
+* **queue** (<code>[github.MergifyQueue](#projen-github-mergifyqueue)</code>)  *No description*
+  * **conditions** (<code>Array<string &#124; [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)></code>)  A list of Conditions string that must match against the pull request for the pull request to be added to the queue. 
+  * **name** (<code>string</code>)  The name of the queue. 
+
+
 
 
 #### addRule(rule)🔹 <a id="projen-github-mergify-addrule"></a>
@@ -7554,6 +7584,7 @@ new javascript.UpgradeDependencies(project: NodeProject, options?: UpgradeDepend
 Name | Type | Description 
 -----|------|-------------
 **ignoresProjen**🔹 | <code>boolean</code> | Whether or not projen is also upgraded in this workflow,.
+**postUpgradeTask**🔹 | <code>[Task](#projen-task)</code> | A task run after the upgrade task.
 **workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | The workflows that execute the upgrades.
 **containerOptions**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Container definitions for the upgrade workflow.<br/>__*Optional*__
 
@@ -11004,6 +11035,7 @@ Name | Type | Description
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
+**lineWidth**?🔹 | <code>number</code> | Maximum line width (set to 0 to disable folding).<br/>__*Default*__: 0
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected
 **obj**?🔹 | <code>any</code> | The object that will be serialized.<br/>__*Default*__: {} an empty object (use `file.obj` to mutate).
 **omitEmpty**?🔹 | <code>boolean</code> | Omits empty objects and arrays.<br/>__*Default*__: false
@@ -11705,6 +11737,8 @@ Name | Type | Description
 **entrypoint**🔹 | <code>string</code> | A path from the project root directory to a TypeScript file which contains the integration test app.
 **tsconfigPath**🔹 | <code>string</code> | The path of the tsconfig.json file to use when running integration test cdk apps.
 **destroyAfterDeploy**?🔹 | <code>boolean</code> | Destroy the test app after a successful deployment.<br/>__*Default*__: true
+**name**?🔹 | <code>string</code> | Name of the integration test.<br/>__*Default*__: Derived from the entrypoint filename.
+**stacks**?🔹 | <code>Array<string></code> | A list of stacks within the integration test to deploy/destroy.<br/>__*Default*__: ["**"]
 
 
 
@@ -12229,6 +12263,7 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **cdk8sCliVersion**?🔹 | <code>string</code> | cdk8s-cli version.<br/>__*Default*__: "cdk8sVersion"
 **cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s-cli.<br/>__*Default*__: false
+**cdk8sImports**?🔹 | <code>Array<string></code> | Import additional specs.<br/>__*Default*__: no additional specs imported
 **cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
@@ -12262,6 +12297,7 @@ Name | Type | Description
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
+**k8sSpecVersion**?🔹 | <code>string</code> | Import a specific Kubernetes spec version.<br/>__*Default*__: Use the cdk8s default
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
@@ -12386,7 +12422,7 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
-**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.2.34"
+**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.3.196"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -12890,7 +12926,22 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**queues**?🔹 | <code>Array<[github.MergifyQueue](#projen-github-mergifyqueue)></code> | __*Optional*__
 **rules**?🔹 | <code>Array<[github.MergifyRule](#projen-github-mergifyrule)></code> | __*Optional*__
+
+
+
+## struct MergifyQueue 🔹 <a id="projen-github-mergifyqueue"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**conditions**🔹 | <code>Array<string &#124; [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)></code> | A list of Conditions string that must match against the pull request for the pull request to be added to the queue.
+**name**🔹 | <code>string</code> | The name of the queue.
 
 
 
@@ -12964,7 +13015,8 @@ Name | Type | Description
 **daysBeforeClose**?🔹 | <code>number</code> | Days until the issue/PR is closed after it is marked as "Stale".<br/>__*Default*__: -
 **daysBeforeStale**?🔹 | <code>number</code> | How many days until the issue or pull request is marked as "Stale".<br/>__*Default*__: -
 **enabled**?🔹 | <code>boolean</code> | Determines if this behavior is enabled.<br/>__*Default*__: true
-**staleLabel**?🔹 | <code>string</code> | The label to apply to the issue/PR when it becomes stale.<br/>__*Default*__: "Stale"
+**exemptLabels**?🔹 | <code>Array<string></code> | Label which exempt an issue/PR from becoming stale.<br/>__*Default*__: ["backlog"]
+**staleLabel**?🔹 | <code>string</code> | The label to apply to the issue/PR when it becomes stale.<br/>__*Default*__: "stale"
 **staleMessage**?🔹 | <code>string</code> | The comment to add to the issue/PR when it becomes stale.<br/>__*Default*__: "This pull request is now marked as stale because hasn\'t seen activity for a while. Add a comment or it will be closed soon."
 
 
@@ -13922,7 +13974,7 @@ Name | Type | Description
 **coverageDirectory**?🔹 | <code>string</code> | The directory where Jest should output its coverage files.<br/>__*Default*__: "coverage"
 **coveragePathIgnorePatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all file paths before executing the test.<br/>__*Default*__: "/node_modules/"
 **coverageProvider**?🔹 | <code>string</code> | Indicates which provider should be used to instrument code for coverage.<br/>__*Default*__: "babel"
-**coverageReporters**?🔹 | <code>Array<string></code> | A list of reporter names that Jest uses when writing coverage reports.<br/>__*Default*__: ["json", "lcov", "text", "clover"]
+**coverageReporters**?🔹 | <code>Array<string></code> | A list of reporter names that Jest uses when writing coverage reports.<br/>__*Default*__: ["json", "lcov", "text", "clover", "cobertura"]
 **coverageThreshold**?🔹 | <code>[javascript.CoverageThreshold](#projen-javascript-coveragethreshold)</code> | Specify the global coverage thresholds.<br/>__*Default*__: undefined
 **dependencyExtractor**?🔹 | <code>string</code> | This option allows the use of a custom dependency extractor.<br/>__*Default*__: undefined
 **displayName**?🔹 | <code>any</code> | Allows for a label to be printed alongside a test while it is running.<br/>__*Default*__: undefined

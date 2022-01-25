@@ -19,6 +19,12 @@ describe("IntegrationTest", () => {
     cdkDeps: project.cdkDeps,
   });
 
+  new awscdk.IntegrationTest(project, {
+    entrypoint: "test/bar.integ.ts",
+    tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: project.cdkDeps,
+  });
+
   // THEN
   const output = Testing.synth(project);
 
@@ -59,6 +65,7 @@ describe("IntegrationTest", () => {
       "integ:foo:destroy",
       "integ:foo:snapshot",
       "integ:foo:watch",
+      "integ:snapshot-all",
     ];
 
     const actualTaskNames = Object.keys(output[".projen/tasks.json"].tasks);
@@ -90,6 +97,50 @@ test("installs ts-node if needed", () => {
   });
 });
 
+test("installs aws-cdk v1 if needed", () => {
+  const project = new TypeScriptProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+  });
+
+  new IntegrationTest(project, {
+    entrypoint: "test/foo.integ.ts",
+    tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: new AwsCdkDepsJs(project, {
+      cdkVersion: "1.0.0",
+      dependencyType: DependencyType.RUNTIME,
+    }),
+  });
+
+  expect(project.deps.getDependency("aws-cdk")).toStrictEqual({
+    name: "aws-cdk",
+    type: "build",
+    version: "^1",
+  });
+});
+
+test("installs aws-cdk v2 if needed", () => {
+  const project = new TypeScriptProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+  });
+
+  new IntegrationTest(project, {
+    entrypoint: "test/foo.integ.ts",
+    tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: new AwsCdkDepsJs(project, {
+      cdkVersion: "2.8.0",
+      dependencyType: DependencyType.RUNTIME,
+    }),
+  });
+
+  expect(project.deps.getDependency("aws-cdk")).toStrictEqual({
+    name: "aws-cdk",
+    type: "build",
+    version: "^2",
+  });
+});
+
 test("synthesizing cdk v2 integration tests", () => {
   // GIVEN
   const project = new awscdk.AwsCdkTypeScriptApp({
@@ -116,5 +167,36 @@ test("synthesizing cdk v2 integration tests", () => {
   ).toMatchSnapshot();
   expect(
     output[".projen/tasks.json"].tasks["integ:foo:watch"]
+  ).toMatchSnapshot();
+});
+
+test("synthesizing an integration test containing a multi-stack stage", () => {
+  // GIVEN
+  const project = new awscdk.AwsCdkTypeScriptApp({
+    name: "test",
+    defaultReleaseBranch: "main",
+    cdkVersion: "2.3.1",
+  });
+
+  // WHEN
+  new awscdk.IntegrationTest(project, {
+    name: "my-stage",
+    entrypoint: "test/my-stage.myinteg.ts",
+    stacks: ["my-stage/*"],
+    tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: project.cdkDeps,
+  });
+
+  // THEN
+  const output = Testing.synth(project);
+
+  expect(
+    output[".projen/tasks.json"].tasks["integ:my-stage:deploy"]
+  ).toMatchSnapshot();
+  expect(
+    output[".projen/tasks.json"].tasks["integ:my-stage:snapshot"]
+  ).toMatchSnapshot();
+  expect(
+    output[".projen/tasks.json"].tasks["integ:my-stage:watch"]
   ).toMatchSnapshot();
 });

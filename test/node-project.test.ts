@@ -206,7 +206,7 @@ test("throw when 'autoApproveProjenUpgrades' is used with 'projenUpgradeAutoMerg
 describe("deps upgrade", () => {
   test("throws when trying to auto approve projen but auto approve is not defined", () => {
     const message =
-      "Autoamtic approval of projen upgrades requires configuring `autoApproveOptions`";
+      "Automatic approval of projen upgrades requires configuring `autoApproveOptions`";
     expect(() => {
       new TestNodeProject({ autoApproveProjenUpgrades: true });
     }).toThrow(message);
@@ -219,7 +219,7 @@ describe("deps upgrade", () => {
     expect(() => {
       new TestNodeProject({ autoApproveUpgrades: true });
     }).toThrow(
-      "Autoamtic approval of dependencies upgrades requires configuring `autoApproveOptions`"
+      "Automatic approval of dependencies upgrades requires configuring `autoApproveOptions`"
     );
   });
 
@@ -720,6 +720,8 @@ test("github: false disables github integration", () => {
   // WHEN
   const project = new TestNodeProject({
     github: false,
+    autoApproveUpgrades: true,
+    autoApproveOptions: {},
   });
 
   // THEN
@@ -807,6 +809,18 @@ describe("workflowRunsOn", () => {
     expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
       "self-hosted"
     );
+  });
+});
+
+test("post-upgrade workflow", () => {
+  // GIVEN
+  const project = new TestNodeProject();
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  const tasks = snapshot[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[tasks.upgrade.steps.length - 1]).toStrictEqual({
+    spawn: "post-upgrade",
   });
 });
 

@@ -186,7 +186,7 @@ git config user.email \\"github-actions@github.com\\"",
   Object {
     "name": "Push changes",
     "run": "  git add .
-  git commit -m \\"chore: self mutation\\"
+  git commit -s -m \\"chore: self mutation\\"
   git push origin HEAD:\${{ github.event.pull_request.head.ref }}",
   },
 ]
@@ -212,6 +212,7 @@ Object {
       "json",
       "lcov",
       "clover",
+      "cobertura",
       "text",
     ],
     "reporters": Array [
@@ -244,6 +245,7 @@ Object {
     "compile": "scripts/run-task compile",
     "package": "scripts/run-task package",
     "post-compile": "scripts/run-task post-compile",
+    "post-upgrade": "scripts/run-task post-upgrade",
     "pre-compile": "scripts/run-task pre-compile",
     "release": "scripts/run-task release",
     "test": "scripts/run-task test",

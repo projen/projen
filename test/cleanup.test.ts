@@ -1,6 +1,6 @@
 import { join } from "path";
 import { readJsonSync } from "fs-extra";
-import { DependencyType, SampleFile, TextFile } from "../src";
+import { DependencyType, JsonFile, SampleFile, TextFile } from "../src";
 import { cleanup, FILE_MANIFEST } from "../src/cleanup";
 import { PROJEN_MARKER } from "../src/common";
 import { directorySnapshot, TestProject } from "./util";
@@ -22,7 +22,7 @@ test("cleanup uses cache file", () => {
 
   const fileList: string[] = readJsonSync(join(p.outdir, FILE_MANIFEST)).files;
 
-  cleanup(p.outdir, []);
+  cleanup(p.outdir, [], []);
 
   const postDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const postFiles = Object.keys(postDirSnapshot);
@@ -56,7 +56,7 @@ test("cleanup falls back to greedy method", () => {
   const preDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const preFiles = Object.keys(preDirSnapshot);
 
-  cleanup(p.outdir, []);
+  cleanup(p.outdir, [], []);
 
   const postDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const postFiles = Object.keys(postDirSnapshot);
@@ -65,5 +65,60 @@ test("cleanup falls back to greedy method", () => {
 
   // THEN
   expect(postFiles).not.toContain("delete.txt");
+  expect(deletedFiles).toMatchSnapshot();
+});
+
+test("cleanup only orphaned files", () => {
+  // GIVEN
+  const p = new TestProject();
+  const keepFile = new TextFile(p, "keep-this");
+  const deleteFile = new TextFile(p, "not-this");
+
+  // WHEN
+  p.synth();
+
+  const preDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
+  const preFiles = Object.keys(preDirSnapshot);
+
+  const fileList: string[] = readJsonSync(join(p.outdir, FILE_MANIFEST)).files;
+
+  cleanup(p.outdir, ["keep-this"], []);
+
+  const postDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
+  const postFiles = Object.keys(postDirSnapshot);
+
+  const deletedFiles = preFiles.filter((f) => !postFiles.includes(f));
+
+  // THEN
+  expect(deletedFiles).not.toEqual(fileList);
+  expect(deletedFiles).toContain(deleteFile.path);
+  expect(deletedFiles).not.toContain(keepFile.path);
+  expect(deletedFiles).toMatchSnapshot();
+});
+
+test("cleanup empty files", () => {
+  // GIVEN
+  const p = new TestProject();
+  const emptyFile = new JsonFile(p, "will-be-empty", { obj: { test: "test" } });
+
+  // WHEN
+  p.synth();
+
+  // Force file to be empty on next synth
+  (emptyFile as any).synthesizeContent = () => undefined;
+
+  const preDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
+  const preFiles = Object.keys(preDirSnapshot);
+  const fileList: string[] = readJsonSync(join(p.outdir, FILE_MANIFEST)).files;
+
+  p.synth();
+
+  const postDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
+  const postFiles = Object.keys(postDirSnapshot);
+  const deletedFiles = preFiles.filter((f) => !postFiles.includes(f));
+
+  // THEN
+  expect(deletedFiles).not.toEqual(fileList);
+  expect(deletedFiles).toContain(emptyFile.path);
   expect(deletedFiles).toMatchSnapshot();
 });

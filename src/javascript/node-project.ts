@@ -662,15 +662,15 @@ export class NodeProject extends GitHubProject {
       false;
     const depsAutoApprove = options.autoApproveUpgrades ?? false;
 
-    if (projenAutoApprove && !this.autoApprove) {
+    if (projenAutoApprove && !this.autoApprove && this.github) {
       throw new Error(
-        "Autoamtic approval of projen upgrades requires configuring `autoApproveOptions`"
+        "Automatic approval of projen upgrades requires configuring `autoApproveOptions`"
       );
     }
 
-    if (depsAutoApprove && !this.autoApprove) {
+    if (depsAutoApprove && !this.autoApprove && this.github) {
       throw new Error(
-        "Autoamtic approval of dependencies upgrades requires configuring `autoApproveOptions`"
+        "Automatic approval of dependencies upgrades requires configuring `autoApproveOptions`"
       );
     }
 
