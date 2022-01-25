@@ -1306,6 +1306,25 @@ Array [
         "switch": "build-workflow",
       },
       Object {
+        "default": "\\"{ pullRequest: {}, workflowDispatch: {} }\\"",
+        "docs": "Build workflow triggers.",
+        "featured": false,
+        "fqn": "projen.github.workflows.Triggers",
+        "fullType": Object {
+          "fqn": "projen.github.workflows.Triggers",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowTriggers",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowTriggers",
+        ],
+        "simpleType": "Triggers",
+        "switch": "build-workflow-triggers",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": Object {
@@ -3950,6 +3969,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "\\"{ pullRequest: {}, workflowDispatch: {} }\\"",
+        "docs": "Build workflow triggers.",
+        "featured": false,
+        "fqn": "projen.github.workflows.Triggers",
+        "fullType": Object {
+          "fqn": "projen.github.workflows.Triggers",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowTriggers",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowTriggers",
+        ],
+        "simpleType": "Triggers",
+        "switch": "build-workflow-triggers",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",
@@ -6682,6 +6720,25 @@ Array [
         "switch": "build-workflow",
       },
       Object {
+        "default": "\\"{ pullRequest: {}, workflowDispatch: {} }\\"",
+        "docs": "Build workflow triggers.",
+        "featured": false,
+        "fqn": "projen.github.workflows.Triggers",
+        "fullType": Object {
+          "fqn": "projen.github.workflows.Triggers",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowTriggers",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowTriggers",
+        ],
+        "simpleType": "Triggers",
+        "switch": "build-workflow-triggers",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": Object {
@@ -9181,6 +9238,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "\\"{ pullRequest: {}, workflowDispatch: {} }\\"",
+        "docs": "Build workflow triggers.",
+        "featured": false,
+        "fqn": "projen.github.workflows.Triggers",
+        "fullType": Object {
+          "fqn": "projen.github.workflows.Triggers",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowTriggers",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowTriggers",
+        ],
+        "simpleType": "Triggers",
+        "switch": "build-workflow-triggers",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",
@@ -11827,6 +11903,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "\\"{ pullRequest: {}, workflowDispatch: {} }\\"",
+        "docs": "Build workflow triggers.",
+        "featured": false,
+        "fqn": "projen.github.workflows.Triggers",
+        "fullType": Object {
+          "fqn": "projen.github.workflows.Triggers",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowTriggers",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowTriggers",
+        ],
+        "simpleType": "Triggers",
+        "switch": "build-workflow-triggers",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",
@@ -15114,6 +15209,25 @@ Array [
         "switch": "build-workflow",
       },
       Object {
+        "default": "\\"{ pullRequest: {}, workflowDispatch: {} }\\"",
+        "docs": "Build workflow triggers.",
+        "featured": false,
+        "fqn": "projen.github.workflows.Triggers",
+        "fullType": Object {
+          "fqn": "projen.github.workflows.Triggers",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowTriggers",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowTriggers",
+        ],
+        "simpleType": "Triggers",
+        "switch": "build-workflow-triggers",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": Object {
@@ -17642,6 +17756,25 @@ Array [
         "switch": "build-workflow",
       },
       Object {
+        "default": "\\"{ pullRequest: {}, workflowDispatch: {} }\\"",
+        "docs": "Build workflow triggers.",
+        "featured": false,
+        "fqn": "projen.github.workflows.Triggers",
+        "fullType": Object {
+          "fqn": "projen.github.workflows.Triggers",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowTriggers",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowTriggers",
+        ],
+        "simpleType": "Triggers",
+        "switch": "build-workflow-triggers",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": Object {
@@ -19741,6 +19874,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "\\"{ pullRequest: {}, workflowDispatch: {} }\\"",
+        "docs": "Build workflow triggers.",
+        "featured": false,
+        "fqn": "projen.github.workflows.Triggers",
+        "fullType": Object {
+          "fqn": "projen.github.workflows.Triggers",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowTriggers",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowTriggers",
+        ],
+        "simpleType": "Triggers",
+        "switch": "build-workflow-triggers",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",
@@ -22070,6 +22222,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "\\"{ pullRequest: {}, workflowDispatch: {} }\\"",
+        "docs": "Build workflow triggers.",
+        "featured": false,
+        "fqn": "projen.github.workflows.Triggers",
+        "fullType": Object {
+          "fqn": "projen.github.workflows.Triggers",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowTriggers",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowTriggers",
+        ],
+        "simpleType": "Triggers",
+        "switch": "build-workflow-triggers",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",
@@ -25035,6 +25206,25 @@ Array [
         "switch": "build-workflow",
       },
       Object {
+        "default": "\\"{ pullRequest: {}, workflowDispatch: {} }\\"",
+        "docs": "Build workflow triggers.",
+        "featured": false,
+        "fqn": "projen.github.workflows.Triggers",
+        "fullType": Object {
+          "fqn": "projen.github.workflows.Triggers",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowTriggers",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowTriggers",
+        ],
+        "simpleType": "Triggers",
+        "switch": "build-workflow-triggers",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": Object {
@@ -27122,6 +27312,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "\\"{ pullRequest: {}, workflowDispatch: {} }\\"",
+        "docs": "Build workflow triggers.",
+        "featured": false,
+        "fqn": "projen.github.workflows.Triggers",
+        "fullType": Object {
+          "fqn": "projen.github.workflows.Triggers",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowTriggers",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowTriggers",
+        ],
+        "simpleType": "Triggers",
+        "switch": "build-workflow-triggers",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",
@@ -29458,6 +29667,25 @@ Array [
         "switch": "build-workflow",
       },
       Object {
+        "default": "\\"{ pullRequest: {}, workflowDispatch: {} }\\"",
+        "docs": "Build workflow triggers.",
+        "featured": false,
+        "fqn": "projen.github.workflows.Triggers",
+        "fullType": Object {
+          "fqn": "projen.github.workflows.Triggers",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowTriggers",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowTriggers",
+        ],
+        "simpleType": "Triggers",
+        "switch": "build-workflow-triggers",
+      },
+      Object {
         "docs": "List of dependencies to bundle into this module.",
         "featured": false,
         "fullType": Object {
@@ -31768,6 +31996,25 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "build-workflow",
+      },
+      Object {
+        "default": "\\"{ pullRequest: {}, workflowDispatch: {} }\\"",
+        "docs": "Build workflow triggers.",
+        "featured": false,
+        "fqn": "projen.github.workflows.Triggers",
+        "fullType": Object {
+          "fqn": "projen.github.workflows.Triggers",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "buildWorkflowTriggers",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "buildWorkflowTriggers",
+        ],
+        "simpleType": "Triggers",
+        "switch": "build-workflow-triggers",
       },
       Object {
         "docs": "List of dependencies to bundle into this module.",

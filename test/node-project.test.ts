@@ -809,6 +809,41 @@ describe("workflowRunsOn", () => {
   });
 });
 
+describe("buildWorkflowTriggers", () => {
+  test("default to pull request and workflow dispatch", () => {
+    // WHEN
+    const project = new TestNodeProject();
+
+    // THEN
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(buildWorkflow.on).toEqual({
+      pull_request: {},
+      workflow_dispatch: {},
+    });
+  });
+
+  test("use custom triggers in build workflow", () => {
+    // WHEN
+    const project = new TestNodeProject({
+      buildWorkflowTriggers: {
+        push: {
+          branches: ["feature/*"],
+        },
+      },
+    });
+
+    // THEN
+    const output = synthSnapshot(project);
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(buildWorkflow.on).toEqual({
+      push: {
+        branches: ["feature/*"],
+      },
+    });
+  });
+});
+
 test("post-upgrade workflow", () => {
   // GIVEN
   const project = new TestNodeProject();
