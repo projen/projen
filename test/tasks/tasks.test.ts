@@ -1,4 +1,4 @@
-import { Project } from "../../src";
+import { Project, TaskRuntime } from "../../src";
 import { TasksManifest, TaskStep } from "../../src/task-model";
 import { Tasks } from "../../src/tasks";
 import { TestProject, synthSnapshot } from "../util";
@@ -374,5 +374,5 @@ function expectManifest(p: Project, toStrictEqual: TasksManifest) {
 }
 
 function synthTasksManifest(p: Project) {
-  return synthSnapshot(p)[Tasks.MANIFEST_FILE];
+  return synthSnapshot(p)[TaskRuntime.MANIFEST_FILE];
 }

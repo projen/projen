@@ -176,7 +176,7 @@ export class Project {
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
-  private _ejected = false;
+  private readonly _ejected: boolean;
 
   constructor(options: ProjectOptions) {
     this.initProject = resolveInitProject(options);

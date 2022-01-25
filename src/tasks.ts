@@ -23,7 +23,7 @@ export class Tasks extends Component {
     this._tasks = {};
     this._env = {};
 
-    new JsonFile(project, TaskRuntime.MANIFEST_PATH, {
+    new JsonFile(project, TaskRuntime.MANIFEST_FILE, {
       omitEmpty: true,
       obj: {
         tasks: (() => this.renderTasks()) as any,

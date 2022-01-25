@@ -1,6 +1,6 @@
 import * as path from "path";
 import { resolve } from "./_resolve";
-import { PROJEN_MARKER, PROJEN_RC } from "./common";
+import { PROJEN_MARKER } from "./common";
 import { Component } from "./component";
 import { Project } from "./project";
 import { isExecutable, isWritable, tryReadFileSync, writeFile } from "./util";
@@ -39,20 +39,12 @@ export interface FileBaseOptions {
    * Adds the projen marker to the file. This should be managed by the class
    * that subclasses from FileBase.
    *
-   * @default true
+   * @default - marker will be included as long as the project is not ejected
    */
   readonly marker?: boolean;
 }
 
 export abstract class FileBase extends Component {
-  /**
-   * The marker to embed in files in order to identify them as projen files.
-   * This marker is used to prune these files before synthesis.
-   *
-   * @deprecated use `project.marker` instead
-   */
-  public static readonly PROJEN_MARKER = `${PROJEN_MARKER}. To modify, edit ${PROJEN_RC} and run "npx projen".`;
-
   /**
    * The file path, relative to the project root.
    */

@@ -18,7 +18,7 @@ export class TaskRuntime {
   /**
    * The project-relative path of the tasks manifest file.
    */
-  public static readonly MANIFEST_PATH = path.posix.join(
+  public static readonly MANIFEST_FILE = path.posix.join(
     PROJEN_DIR,
     "tasks.json"
   );
@@ -35,7 +35,7 @@ export class TaskRuntime {
 
   constructor(workdir: string) {
     this.workdir = resolve(workdir);
-    const manifestPath = join(this.workdir, TaskRuntime.MANIFEST_PATH);
+    const manifestPath = join(this.workdir, TaskRuntime.MANIFEST_FILE);
     this.manifest = existsSync(manifestPath)
       ? JSON.parse(readFileSync(manifestPath, "utf-8"))
       : { tasks: {} };

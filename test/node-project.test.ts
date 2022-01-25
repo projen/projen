@@ -280,7 +280,7 @@ describe("deps upgrade", () => {
     ).toBeUndefined();
 
     // make sure yarn upgrade all deps, including projen.
-    const tasks = snapshot[Tasks.MANIFEST_FILE].tasks;
+    const tasks = snapshot[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks.upgrade.steps[6].exec).toStrictEqual("yarn upgrade");
   });
 
