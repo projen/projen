@@ -310,21 +310,41 @@ describe("publish to go", () => {
   });
 });
 
-test("docgen: true should just work", () => {
-  const project = new JsiiProject({
-    author: "My name",
-    name: "testproject",
-    authorAddress: "https://foo.bar",
-    defaultReleaseBranch: "main",
-    repositoryUrl: "https://github.com/foo/bar.git",
-    docgen: true,
-    publishTasks: true,
+describe("docgen", () => {
+  test("true should just work", () => {
+    const project = new JsiiProject({
+      author: "My name",
+      name: "testproject",
+      authorAddress: "https://foo.bar",
+      defaultReleaseBranch: "main",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      docgen: true,
+      publishTasks: true,
+    });
+
+    const output = synthSnapshot(project);
+    expect(
+      output[".projen/tasks.json"].tasks.docgen.steps[0].exec
+    ).toStrictEqual("jsii-docgen -o API.md");
   });
 
-  const output = synthSnapshot(project);
-  expect(output[".projen/tasks.json"].tasks.docgen.steps[0].exec).toStrictEqual(
-    "jsii-docgen"
-  );
+  test("can customize output", () => {
+    const project = new JsiiProject({
+      author: "My name",
+      name: "testproject",
+      authorAddress: "https://foo.bar",
+      defaultReleaseBranch: "main",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      docgen: true,
+      docgenFilePath: "docs.md",
+      publishTasks: true,
+    });
+
+    const output = synthSnapshot(project);
+    expect(
+      output[".projen/tasks.json"].tasks.docgen.steps[0].exec
+    ).toStrictEqual("jsii-docgen -o docs.md");
+  });
 });
 
 describe("language bindings", () => {

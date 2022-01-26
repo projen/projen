@@ -4532,6 +4532,23 @@ Array [
         "switch": "docgen",
       },
       Object {
+        "default": "\\"API.md\\"",
+        "docs": "File path for generated docs.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "docgenFilePath",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "docgenFilePath",
+        ],
+        "simpleType": "string",
+        "switch": "docgen-file-path",
+      },
+      Object {
         "default": "\\"docs\\"",
         "docs": "Docs directory.",
         "featured": false,
@@ -9738,6 +9755,23 @@ Array [
         "switch": "docgen",
       },
       Object {
+        "default": "\\"API.md\\"",
+        "docs": "File path for generated docs.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "docgenFilePath",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "docgenFilePath",
+        ],
+        "simpleType": "string",
+        "switch": "docgen-file-path",
+      },
+      Object {
         "default": "\\"docs\\"",
         "docs": "Docs directory.",
         "featured": false,
@@ -12333,6 +12367,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "docgen",
+      },
+      Object {
+        "default": "\\"API.md\\"",
+        "docs": "File path for generated docs.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "docgenFilePath",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "docgenFilePath",
+        ],
+        "simpleType": "string",
+        "switch": "docgen-file-path",
       },
       Object {
         "default": "\\"docs\\"",
@@ -15602,6 +15653,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "docgen",
+      },
+      Object {
+        "default": "\\"API.md\\"",
+        "docs": "File path for generated docs.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "docgenFilePath",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "docgenFilePath",
+        ],
+        "simpleType": "string",
+        "switch": "docgen-file-path",
       },
       Object {
         "default": "\\"docs\\"",
