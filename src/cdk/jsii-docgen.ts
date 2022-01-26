@@ -21,15 +21,15 @@ export class JsiiDocgen {
   constructor(project: JsiiProject, options: JsiiDocgenOptions = {}) {
     project.addDevDeps("jsii-docgen");
 
-    const outputPath = options.filePath ?? "API.md";
+    const filePath = options.filePath ?? "API.md";
 
     const docgen = project.addTask("docgen", {
       description: "Generate API.md from .jsii manifest",
-      exec: `jsii-docgen -o ${outputPath}`,
+      exec: `jsii-docgen -o ${filePath}`,
     });
 
     // spawn docgen after compilation (requires the .jsii manifest).
     project.postCompileTask.spawn(docgen);
-    project.gitignore.include(`/${outputPath}`);
+    project.gitignore.include(`/${filePath}`);
   }
 }
