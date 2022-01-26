@@ -4,7 +4,7 @@ exports[`inventory 1`] = `
 Array [
   Object {
     "docs": "AWS CDK app in Java.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-awscdk-awscdkjavaapp",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-awscdk-awscdkjavaapp",
     "fqn": "projen.awscdk.AwsCdkJavaApp",
     "moduleName": "projen",
     "options": Array [
@@ -1010,7 +1010,7 @@ Array [
   },
   Object {
     "docs": "AWS CDK app in TypeScript.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-awscdk-awscdktypescriptapp",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-awscdk-awscdktypescriptapp",
     "fqn": "projen.awscdk.AwsCdkTypeScriptApp",
     "moduleName": "projen",
     "options": Array [
@@ -3677,7 +3677,7 @@ Array [
   },
   Object {
     "docs": "AWS CDK construct library project.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-awscdk-awscdkconstructlibrary",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-awscdk-awscdkconstructlibrary",
     "fqn": "projen.awscdk.AwsCdkConstructLibrary",
     "moduleName": "projen",
     "options": Array [
@@ -6458,7 +6458,7 @@ Array [
   },
   Object {
     "docs": "CDK8s app in TypeScript.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-cdk8s-cdk8stypescriptapp",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-cdk8s-cdk8stypescriptapp",
     "fqn": "projen.cdk8s.Cdk8sTypeScriptApp",
     "moduleName": "projen",
     "options": Array [
@@ -8963,7 +8963,7 @@ Array [
   },
   Object {
     "docs": "CDK8s construct library project.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-cdk8s-constructlibrarycdk8s",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-cdk8s-constructlibrarycdk8s",
     "fqn": "projen.cdk8s.ConstructLibraryCdk8s",
     "moduleName": "projen",
     "options": Array [
@@ -11645,7 +11645,7 @@ Array [
   },
   Object {
     "docs": "CDKTF construct library project.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-cdktf-constructlibrarycdktf",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-cdktf-constructlibrarycdktf",
     "fqn": "projen.cdktf.ConstructLibraryCdktf",
     "moduleName": "projen",
     "options": Array [
@@ -14259,7 +14259,7 @@ Array [
   },
   Object {
     "docs": "Java project.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-java-javaproject",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-java-javaproject",
     "fqn": "projen.java.JavaProject",
     "moduleName": "projen",
     "options": Array [
@@ -14966,7 +14966,7 @@ Array [
   },
   Object {
     "docs": "Multi-language jsii library project.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-cdk-jsiiproject",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-cdk-jsiiproject",
     "fqn": "projen.cdk.JsiiProject",
     "moduleName": "projen",
     "options": Array [
@@ -17545,7 +17545,7 @@ Array [
   },
   Object {
     "docs": "Next.js project without TypeScript.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-web-nextjsproject",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-web-nextjsproject",
     "fqn": "projen.web.NextJsProject",
     "moduleName": "projen",
     "options": Array [
@@ -19665,7 +19665,7 @@ Array [
   },
   Object {
     "docs": "Next.js project with TypeScript.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-web-nextjstypescriptproject",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-web-nextjstypescriptproject",
     "fqn": "projen.web.NextJsTypeScriptProject",
     "moduleName": "projen",
     "options": Array [
@@ -22030,7 +22030,7 @@ Array [
   },
   Object {
     "docs": "Node.js project.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-javascript-nodeproject",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-javascript-nodeproject",
     "fqn": "projen.javascript.NodeProject",
     "moduleName": "projen",
     "options": Array [
@@ -24082,7 +24082,7 @@ Array [
   },
   Object {
     "docs": "Base project.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-project",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-project",
     "fqn": "projen.Project",
     "moduleName": "projen",
     "options": Array [
@@ -24215,7 +24215,7 @@ Array [
   },
   Object {
     "docs": "Python project.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-python-pythonproject",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-python-pythonproject",
     "fqn": "projen.python.PythonProject",
     "moduleName": "projen",
     "options": Array [
@@ -25012,7 +25012,7 @@ Array [
   },
   Object {
     "docs": "React project without TypeScript.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-web-reactproject",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-web-reactproject",
     "fqn": "projen.web.ReactProject",
     "moduleName": "projen",
     "options": Array [
@@ -27120,7 +27120,7 @@ Array [
   },
   Object {
     "docs": "React project with TypeScript.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-web-reacttypescriptproject",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-web-reacttypescriptproject",
     "fqn": "projen.web.ReactTypeScriptProject",
     "moduleName": "projen",
     "options": Array [
@@ -29473,7 +29473,7 @@ Array [
   },
   Object {
     "docs": "TypeScript project.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-typescript-typescriptproject",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-typescript-typescriptproject",
     "fqn": "projen.typescript.TypeScriptProject",
     "moduleName": "projen",
     "options": Array [
@@ -31804,7 +31804,7 @@ Array [
   },
   Object {
     "docs": "TypeScript app.",
-    "docsurl": "https://github.com/projen/projen/blob/main/API.md#projen-typescript-typescriptappproject",
+    "docsurl": "https://projen.github.io/projen/api/API.html#projen-typescript-typescriptappproject",
     "fqn": "projen.typescript.TypeScriptAppProject",
     "moduleName": "projen",
     "options": Array [
