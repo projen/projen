@@ -229,4 +229,6 @@ setupBundleTaskRunner();
 // but not all files are updated
 project.postCompileTask.spawn(project.defaultTask);
 
+project.tasks.tryFind("docgen").reset("jsii-docgen -o docs/api/API.md");
+
 project.synth();
