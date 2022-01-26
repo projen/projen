@@ -1,22 +1,35 @@
 import { JsiiProject } from "./jsii-project";
 
 /**
- * Creates an API.md file based on the jsii manifest:
+ * Options for `JsiiDocgen`
+ */
+export interface JsiiDocgenOptions {
+  /**
+   * File path for generated docs.
+   * @default "API.md"
+   */
+  readonly filePath?: string;
+}
+
+/**
+ * Creates a markdown file based on the jsii manifest:
  * - Adds a `docgen` script to package.json
  * - Runs `jsii-docgen` after compilation
- * - Enforces that API.md is checked in
+ * - Enforces that markdown file is checked in
  */
 export class JsiiDocgen {
-  constructor(project: JsiiProject) {
+  constructor(project: JsiiProject, options: JsiiDocgenOptions = {}) {
     project.addDevDeps("jsii-docgen");
+
+    const outputPath = options.filePath ?? "API.md";
 
     const docgen = project.addTask("docgen", {
       description: "Generate API.md from .jsii manifest",
-      exec: "jsii-docgen",
+      exec: `jsii-docgen -o ${outputPath}`,
     });
 
     // spawn docgen after compilation (requires the .jsii manifest).
     project.postCompileTask.spawn(docgen);
-    project.gitignore.include("/API.md");
+    project.gitignore.include(`/${outputPath}`);
   }
 }

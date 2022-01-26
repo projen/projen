@@ -96,6 +96,8 @@ const project = new cdk.JsiiProject({
 
   autoApproveUpgrades: true,
   autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
+
+  docgenFilePath: "docs/api/API.md",
 });
 
 // this script is what we use as the projen command in this project
@@ -228,7 +230,5 @@ setupBundleTaskRunner();
 // fixes feedback loop where projen contibutors run "build"
 // but not all files are updated
 project.postCompileTask.spawn(project.defaultTask);
-
-project.tasks.tryFind("docgen").reset("jsii-docgen -o docs/api/API.md");
 
 project.synth();
