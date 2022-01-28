@@ -86,3 +86,33 @@ Object {
   ],
 }
 `;
+
+exports[`IntegrationTest explicit name 1`] = `
+Object {
+  "description": "update snapshot for all integration tests",
+  "name": "integ:snapshot-all",
+  "steps": Array [
+    Object {
+      "spawn": "integ:foobar:snapshot",
+    },
+  ],
+}
+`;
+
+exports[`IntegrationTest explicit name 2`] = `
+Object {
+  "description": "Run tests",
+  "name": "test",
+  "steps": Array [
+    Object {
+      "exec": "jest --passWithNoTests --all --updateSnapshot",
+    },
+    Object {
+      "spawn": "eslint",
+    },
+    Object {
+      "spawn": "integ:foobar:assert",
+    },
+  ],
+}
+`;
