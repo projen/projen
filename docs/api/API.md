@@ -54,6 +54,7 @@ Name|Description
 [cdk.ConstructLibrary](#projen-cdk-constructlibrary)|A multi-language library for CDK constructs.
 [cdk.JsiiDocgen](#projen-cdk-jsiidocgen)|Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
 [cdk.JsiiProject](#projen-cdk-jsiiproject)|Multi-language jsii library project.
+[cdk8s.AutoDiscover](#projen-cdk8s-autodiscover)|Automatically creates integration test tasks for all .integ.ts files under the test directory of the project.
 [cdk8s.Cdk8sTypeScriptApp](#projen-cdk8s-cdk8stypescriptapp)|CDK8s app in TypeScript.
 [cdk8s.ConstructLibraryCdk8s](#projen-cdk8s-constructlibrarycdk8s)|CDK8s construct library project.
 [cdk8s.IntegrationTest](#projen-cdk8s-integrationtest)|CDK8S integration test.
@@ -195,6 +196,7 @@ Name|Description
 [cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)|*No description*
 [cdk.JsiiProjectOptions](#projen-cdk-jsiiprojectoptions)|*No description*
 [cdk.JsiiPythonTarget](#projen-cdk-jsiipythontarget)|*No description*
+[cdk8s.AutoDiscoverOptions](#projen-cdk8s-autodiscoveroptions)|Options for `AutoDiscover`.
 [cdk8s.Cdk8sTypeScriptAppOptions](#projen-cdk8s-cdk8stypescriptappoptions)|*No description*
 [cdk8s.ConstructLibraryCdk8sOptions](#projen-cdk8s-constructlibrarycdk8soptions)|*No description*
 [cdk8s.IntegrationTestOptions](#projen-cdk8s-integrationtestoptions)|Options for IntegrationTest.
@@ -4538,6 +4540,31 @@ Name | Type | Description
 
 
 
+## class AutoDiscover 🔹 <a id="projen-cdk8s-autodiscover"></a>
+
+Automatically creates integration test tasks for all .integ.ts files under the test directory of the project.
+
+__Submodule__: cdk8s
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new cdk8s.AutoDiscover(project: Project, options: AutoDiscoverOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[cdk8s.AutoDiscoverOptions](#projen-cdk8s-autodiscoveroptions)</code>)  *No description*
+  * **testdir** (<code>string</code>)  Test source tree. 
+  * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
+
+
+
+
 ## class Cdk8sTypeScriptApp 🔹 <a id="projen-cdk8s-cdk8stypescriptapp"></a>
 
 CDK8s app in TypeScript.
@@ -4694,6 +4721,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
   * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
+  * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically adds an `cdk8s.IntegrationTest` for each `.integ.ts` app in your test directory. If this is disabled, you can manually add an `cdk8s.AutoDiscover` component to your project. __*Default*__: true
   * **k8sSpecVersion** (<code>string</code>)  Import a specific Kubernetes spec version. __*Default*__: Use the cdk8s default
 
 
@@ -4881,6 +4909,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.3.196"
   * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
+  * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically adds an `cdk8s.IntegrationTest` for each `.integ.ts` app in your test directory. If this is disabled, you can manually add an `cdk8s.AutoDiscover` component to your project. __*Default*__: true
 
 
 
@@ -12318,6 +12347,20 @@ Name | Type | Description
 
 
 
+## struct AutoDiscoverOptions 🔹 <a id="projen-cdk8s-autodiscoveroptions"></a>
+
+
+Options for `AutoDiscover`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**testdir**🔹 | <code>string</code> | Test source tree.
+**tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
+
+
+
 ## struct Cdk8sTypeScriptAppOptions 🔹 <a id="projen-cdk8s-cdk8stypescriptappoptions"></a>
 
 
@@ -12382,6 +12425,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**integrationTestAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `cdk8s.IntegrationTest` for each `.integ.ts` app in your test directory. If this is disabled, you can manually add an `cdk8s.AutoDiscover` component to your project.<br/>__*Default*__: true
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"
@@ -12538,6 +12582,7 @@ Name | Type | Description
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | Package's Homepage / Website.<br/>__*Optional*__
+**integrationTestAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `cdk8s.IntegrationTest` for each `.integ.ts` app in your test directory. If this is disabled, you can manually add an `cdk8s.AutoDiscover` component to your project.<br/>__*Default*__: true
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `jsii-release` which is used to publish modules to npm.<br/>__*Default*__: "latest"

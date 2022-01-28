@@ -1,5 +1,6 @@
 import * as semver from "semver";
 import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
+import { AutoDiscover } from "./auto-discover";
 
 export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
   /**
@@ -47,6 +48,15 @@ export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
    * @default false
    */
   readonly cdk8sPlusVersionPinning?: boolean;
+
+  /**
+   * Automatically adds an `cdk8s.IntegrationTest` for each `.integ.ts` app
+   * in your test directory. If this is disabled, you can manually add an
+   * `cdk8s.AutoDiscover` component to your project.
+   *
+   * @default true
+   */
+  readonly integrationTestAutoDiscover?: boolean;
 }
 
 /**
@@ -122,5 +132,12 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
       `constructs@${this.constructsVersion}`,
       `cdk8s@${this.cdk8sVersion}`
     );
+
+    if (options.integrationTestAutoDiscover ?? true) {
+      new AutoDiscover(this, {
+        testdir: this.testdir,
+        tsconfigPath: this.tsconfigDev.fileName,
+      });
+    }
   }
 }

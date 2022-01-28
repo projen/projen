@@ -3,6 +3,7 @@ import * as fs from "fs-extra";
 import { Component } from "../component";
 import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 import { YamlFile } from "../yaml";
+import { AutoDiscover } from "./auto-discover";
 
 export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
   /**
@@ -90,6 +91,15 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
    * @default "main.ts"
    */
   readonly appEntrypoint?: string;
+
+  /**
+   * Automatically adds an `cdk8s.IntegrationTest` for each `.integ.ts` app
+   * in your test directory. If this is disabled, you can manually add an
+   * `cdk8s.AutoDiscover` component to your project.
+   *
+   * @default true
+   */
+  readonly integrationTestAutoDiscover?: boolean;
 }
 
 /**
@@ -208,6 +218,13 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
 
     if (options.sampleCode ?? true) {
       new SampleCode(this);
+    }
+
+    if (options.integrationTestAutoDiscover ?? true) {
+      new AutoDiscover(this, {
+        testdir: this.testdir,
+        tsconfigPath: this.tsconfigDev.fileName,
+      });
     }
   }
 }

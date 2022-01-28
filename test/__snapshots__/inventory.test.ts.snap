@@ -7416,6 +7416,23 @@ Array [
       },
       Object {
         "default": "true",
+        "docs": "Automatically adds an \`cdk8s.IntegrationTest\` for each \`.integ.ts\` app in your test directory. If this is disabled, you can manually add an \`cdk8s.AutoDiscover\` component to your project.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "integrationTestAutoDiscover",
+        "optional": true,
+        "parent": "Cdk8sTypeScriptAppOptions",
+        "path": Array [
+          "integrationTestAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "integration-test-auto-discover",
+      },
+      Object {
+        "default": "true",
         "docs": "Setup jest unit tests.",
         "featured": false,
         "fullType": Object {
@@ -9986,6 +10003,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically adds an \`cdk8s.IntegrationTest\` for each \`.integ.ts\` app in your test directory. If this is disabled, you can manually add an \`cdk8s.AutoDiscover\` component to your project.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "integrationTestAutoDiscover",
+        "optional": true,
+        "parent": "ConstructLibraryCdk8sOptions",
+        "path": Array [
+          "integrationTestAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "integration-test-auto-discover",
       },
       Object {
         "default": "true",
