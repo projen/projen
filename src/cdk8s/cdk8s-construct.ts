@@ -133,11 +133,10 @@ export class ConstructLibraryCdk8s extends ConstructLibrary {
       `cdk8s@${this.cdk8sVersion}`
     );
 
-    if (options.integrationTestAutoDiscover ?? true) {
-      new AutoDiscover(this, {
-        testdir: this.testdir,
-        tsconfigPath: this.tsconfigDev.fileName,
-      });
-    }
+    new AutoDiscover(this, {
+      testdir: this.testdir,
+      tsconfigPath: this.tsconfigDev.fileName,
+      integrationTestAutoDiscover: options.integrationTestAutoDiscover ?? true,
+    });
   }
 }

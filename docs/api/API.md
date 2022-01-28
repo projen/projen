@@ -4561,6 +4561,7 @@ new cdk8s.AutoDiscover(project: Project, options: AutoDiscoverOptions)
 * **options** (<code>[cdk8s.AutoDiscoverOptions](#projen-cdk8s-autodiscoveroptions)</code>)  *No description*
   * **testdir** (<code>string</code>)  Test source tree. 
   * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
+  * **integrationTestAutoDiscover** (<code>boolean</code>)  Auto-discover integration test files. __*Default*__: false
 
 
 
@@ -12358,6 +12359,7 @@ Name | Type | Description
 -----|------|-------------
 **testdir**🔹 | <code>string</code> | Test source tree.
 **tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
+**integrationTestAutoDiscover**?🔹 | <code>boolean</code> | Auto-discover integration test files.<br/>__*Default*__: false
 
 
 

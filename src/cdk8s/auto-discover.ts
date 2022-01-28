@@ -18,6 +18,13 @@ export interface AutoDiscoverOptions {
    * Path to the tsconfig file to use for integration tests.
    */
   readonly tsconfigPath: string;
+
+  /**
+   * Auto-discover integration test files.
+   *
+   * @default false
+   */
+  readonly integrationTestAutoDiscover?: boolean;
 }
 
 /**
@@ -28,7 +35,9 @@ export class AutoDiscover extends Component {
   constructor(project: Project, options: AutoDiscoverOptions) {
     super(project);
 
-    this.autoDiscoverIntegrationTests(options);
+    if (options.integrationTestAutoDiscover ?? false) {
+      this.autoDiscoverIntegrationTests(options);
+    }
   }
 
   private autoDiscoverIntegrationTests(options: AutoDiscoverOptions) {
