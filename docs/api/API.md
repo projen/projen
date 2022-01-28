@@ -56,6 +56,7 @@ Name|Description
 [cdk.JsiiProject](#projen-cdk-jsiiproject)|Multi-language jsii library project.
 [cdk8s.Cdk8sTypeScriptApp](#projen-cdk8s-cdk8stypescriptapp)|CDK8s app in TypeScript.
 [cdk8s.ConstructLibraryCdk8s](#projen-cdk8s-constructlibrarycdk8s)|CDK8s construct library project.
+[cdk8s.IntegrationTest](#projen-cdk8s-integrationtest)|CDK8S integration test.
 [cdktf.ConstructLibraryCdktf](#projen-cdktf-constructlibrarycdktf)|CDKTF construct library project.
 [github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
@@ -196,6 +197,7 @@ Name|Description
 [cdk.JsiiPythonTarget](#projen-cdk-jsiipythontarget)|*No description*
 [cdk8s.Cdk8sTypeScriptAppOptions](#projen-cdk8s-cdk8stypescriptappoptions)|*No description*
 [cdk8s.ConstructLibraryCdk8sOptions](#projen-cdk8s-constructlibrarycdk8soptions)|*No description*
+[cdk8s.IntegrationTestOptions](#projen-cdk8s-integrationtestoptions)|Options for IntegrationTest.
 [cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)|*No description*
 [github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
@@ -4889,6 +4891,42 @@ Name | Type | Description
 -----|------|-------------
 **cdk8sVersion**🔹 | <code>string</code> | The CDK8s version this app is using.
 **constructsVersion**🔹 | <code>string</code> | The constructs version this app is using.
+
+
+
+## class IntegrationTest 🔹 <a id="projen-cdk8s-integrationtest"></a>
+
+CDK8S integration test.
+
+__Submodule__: cdk8s
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new cdk8s.IntegrationTest(project: Project, options: IntegrationTestOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[cdk8s.IntegrationTestOptions](#projen-cdk8s-integrationtestoptions)</code>)  *No description*
+  * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the integration test app. 
+  * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use when running integration test cdk apps. 
+  * **name** (<code>string</code>)  Name of the integration test. __*Default*__: Derived from the entrypoint filename.
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**assertTask**🔹 | <code>[Task](#projen-task)</code> | Synthesizes the integration test and compares against a local copy (runs during build).
+**deployTask**🔹 | <code>[Task](#projen-task)</code> | Deploy the integration test and update the snapshot upon success.
+**snapshotTask**🔹 | <code>[Task](#projen-task)</code> | Just update snapshot (without deployment).
 
 
 
@@ -12589,6 +12627,21 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+
+
+
+## struct IntegrationTestOptions 🔹 <a id="projen-cdk8s-integrationtestoptions"></a>
+
+
+Options for IntegrationTest.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**entrypoint**🔹 | <code>string</code> | A path from the project root directory to a TypeScript file which contains the integration test app.
+**tsconfigPath**🔹 | <code>string</code> | The path of the tsconfig.json file to use when running integration test cdk apps.
+**name**?🔹 | <code>string</code> | Name of the integration test.<br/>__*Default*__: Derived from the entrypoint filename.
 
 
 
