@@ -75,39 +75,44 @@ export class IntegrationTest extends Component {
       project.deps.addDependency("ts-node", DependencyType.BUILD);
     }
 
+    // Synth, deploy, and capture the snapshot
     const deployTask = project.addTask(`integ:${name}:deploy`, {
       description: `deploy integration test '${name}' and capture snapshot`,
     });
     deployTask.exec(`rm -fr ${deployDir}`);
     deployTask.exec(`cdk8s synth --app "${app}" -o ${deployDir}`);
     deployTask.exec(`kubectl apply -f ${deployDir}`);
-    // if deployment was successful, copy the deploy dir to the expected dir
+    // If deployment was successful, copy the deploy dir to the expected dir
     deployTask.exec(`rm -fr ${snapshotDir}`);
     deployTask.exec(`mv ${deployDir} ${snapshotDir}`);
 
+    // Run a snapshot
     const snapshotTask = project.addTask(`integ:${name}:snapshot`, {
       description: `update snapshot for integration test "${name}"`,
     });
     snapshotTask.exec(`rm -fr ${snapshotDir}`);
     snapshotTask.exec(`cdk8s synth --app "${app}" -o ${snapshotDir}`);
 
+    // Assert that the snapshot has not changed (run during tests)
     const assertTask = project.addTask(`integ:${name}:assert`, {
       description: `assert the snapshot of integration test '${name}'`,
     });
     project.testTask.spawn(assertTask);
-
     assertTask.exec(
       `[ -d "${snapshotDir}" ] || (echo "No snapshot available for integration test '${name}'. Run 'projen ${deployTask.name}' to capture." && exit 1)`
     );
     assertTask.exec(`cdk8s synth --app "${app}" -o ${assertDir} > /dev/null`);
     assertTask.exec(`diff ${snapshotDir}/ ${assertDir}/`);
 
+    // Add integ:snapshot-all if it doesn't already exist.
     let snapshotAllTask = project.tasks.tryFind("integ:snapshot-all");
     if (!snapshotAllTask) {
       snapshotAllTask = project.addTask("integ:snapshot-all", {
         description: "update snapshot for all integration tests",
       });
     }
+    // integ:snapshot-all should snapshot all integration tests, including
+    // this one.
     snapshotAllTask.spawn(snapshotTask);
 
     this.deployTask = deployTask;
