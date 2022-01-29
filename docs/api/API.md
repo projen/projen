@@ -7959,6 +7959,14 @@ new python.Pytest(project: PythonProject, options?: PytestOptions)
 
 
 
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**testdir**🔹 | <code>string</code> | <span></span>
+
+
 
 ## class PythonProject 🔹 <a id="projen-python-pythonproject"></a>
 
