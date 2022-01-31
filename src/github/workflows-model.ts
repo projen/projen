@@ -349,6 +349,8 @@ export interface JobStrategy {
   readonly maxParallel?: number;
 }
 
+type JobMatrixValue = string | boolean | number;
+
 /**
  * A job matrix.
  */
@@ -361,7 +363,7 @@ export interface JobMatrix {
    * matrix.os property as the value of the runs-on keyword to create a job
    * for each operating system.
    */
-  readonly domain?: Record<string, string[]>;
+  readonly domain?: Record<string, JobMatrixValue[]>;
 
   /**
    * You can add additional configuration options to a build matrix job that
@@ -369,14 +371,14 @@ export interface JobMatrix {
    * when the job that uses windows-latest and version 8 of node runs, you can
    * use include to specify that additional option.
    */
-  readonly include?: Array<Record<string, string>>;
+  readonly include?: Array<Record<string, JobMatrixValue>>;
 
   /**
    * You can remove a specific configurations defined in the build matrix
    * using the exclude option. Using exclude removes a job defined by the
    * build matrix.
    */
-  readonly exclude?: Array<Record<string, string>>;
+  readonly exclude?: Array<Record<string, JobMatrixValue>>;
 }
 
 /**
