@@ -349,7 +349,7 @@ export interface JobStrategy {
   readonly maxParallel?: number;
 }
 
-type JobMatrixValue = string | boolean | number
+type JobMatrixValue = string | boolean | number;
 
 /**
  * A job matrix.
