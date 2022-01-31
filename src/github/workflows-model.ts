@@ -1037,11 +1037,23 @@ export interface WatchOptions {
  */
 export interface WorkflowRunOptions {
   /**
+   * Which workflow to trigger on.
+   *
+   * @defaults - any workflows
+   */
+  readonly workflows?: Array<string>;
+  /**
    * Which activity types to trigger on.
    *
    * @defaults - all activity types
    */
   readonly types?: Array<"completed" | "requested">;
+  /**
+   * Which branches or branch-ignore to limit the trigger to.
+   *
+   * @defaults - no branch limits
+   */
+  readonly branches?: Array<string>;
 }
 
 //#region Empty Options (future-proofing the API)
