@@ -123,6 +123,24 @@ test("select latest with major", async () => {
   expect(result10.tag).toStrictEqual("v10.21.1");
 });
 
+test("bump with major equal to 0", async () => {
+  const commits = [
+    { message: "first version", tag: "v0.1.0" },
+    { message: "second version", tag: "v0.1.1" },
+    { message: "stable branch", tag: "v1.0.0" },
+    { message: "fix: bug" },
+  ];
+
+  const result1 = await testBump({
+    options: { majorVersion: 0 },
+    commits: commits,
+  });
+
+  expect(result1.version).toEqual("0.1.2");
+  expect(result1.bumpfile).toEqual("0.1.2");
+  expect(result1.tag).toStrictEqual("v0.1.2");
+});
+
 test("already tagged version is not bumped again", async () => {
   const result = await testBump({
     commits: [

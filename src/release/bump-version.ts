@@ -245,7 +245,8 @@ function determineLatestTag(options: LatestTagOptions): {
   const { cwd, major, prerelease, prefix } = options;
 
   // filter only tags for this prefix and major version if specified (start with "vNN.").
-  const prefixFilter = major ? `${prefix}v${major}.*` : `${prefix}v*`;
+  const prefixFilter =
+    major !== undefined ? `${prefix}v${major}.*` : `${prefix}v*`;
 
   const listGitTags = [
     "git",
