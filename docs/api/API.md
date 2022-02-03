@@ -3994,6 +3994,7 @@ new awscdk.LambdaFunction(project: Project, options: LambdaFunctionOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  The project to use.
 * **options** (<code>[awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)</code>)  Options.
+  * **awsSdkConnectionReuse** (<code>boolean</code>)  Whether to automatically reuse TCP connections when working with the AWS SDK for JavaScript. __*Default*__: true
   * **bundlingOptions** (<code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code>)  Bundling options for this AWS Lambda function. __*Default*__: defaults
   * **runtime** (<code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code>)  The node.js version to target. __*Default*__: Runtime.NODEJS_14_X
   * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
@@ -11785,6 +11786,7 @@ auto-discovery.
 
 Name | Type | Description 
 -----|------|-------------
+**awsSdkConnectionReuse**?🔹 | <code>boolean</code> | Whether to automatically reuse TCP connections when working with the AWS SDK for JavaScript.<br/>__*Default*__: true
 **bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda function.<br/>__*Default*__: defaults
 **runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
 
@@ -11801,6 +11803,7 @@ Name | Type | Description
 -----|------|-------------
 **cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | AWS CDK dependency manager.
 **entrypoint**🔹 | <code>string</code> | A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function).
+**awsSdkConnectionReuse**?🔹 | <code>boolean</code> | Whether to automatically reuse TCP connections when working with the AWS SDK for JavaScript.<br/>__*Default*__: true
 **bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda function.<br/>__*Default*__: defaults
 **constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
 **constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
