@@ -52,6 +52,7 @@ Name|Description
 [awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)|The runtime for the AWS Lambda function.
 [build.BuildWorkflow](#projen-build-buildworkflow)|*No description*
 [cdk.ConstructLibrary](#projen-cdk-constructlibrary)|A multi-language library for CDK constructs.
+[cdk.IntegrationTestBase](#projen-cdk-integrationtestbase)|*No description*
 [cdk.JsiiDocgen](#projen-cdk-jsiidocgen)|Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
 [cdk.JsiiProject](#projen-cdk-jsiiproject)|Multi-language jsii library project.
 [cdk8s.AutoDiscover](#projen-cdk8s-autodiscover)|Automatically creates integration test tasks for all .integ.ts files under the test directory of the project.
@@ -190,6 +191,7 @@ Name|Description
 [build.BuildWorkflowOptions](#projen-build-buildworkflowoptions)|*No description*
 [cdk.Catalog](#projen-cdk-catalog)|*No description*
 [cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)|*No description*
+[cdk.IntegrationTestBaseOptions](#projen-cdk-integrationtestbaseoptions)|Options for IntegrationTest.
 [cdk.JsiiDocgenOptions](#projen-cdk-jsiidocgenoptions)|Options for `JsiiDocgen`.
 [cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)|*No description*
 [cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)|Go target configuration.
@@ -4345,6 +4347,47 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
 
 
 
+## class IntegrationTestBase 🔹 <a id="projen-cdk-integrationtestbase"></a>
+
+
+
+__Submodule__: cdk
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new cdk.IntegrationTestBase(project: Project, options: IntegrationTestBaseOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[cdk.IntegrationTestBaseOptions](#projen-cdk-integrationtestbaseoptions)</code>)  *No description*
+  * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the integration test app. 
+  * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use when running integration test cdk apps. 
+  * **name** (<code>string</code>)  Name of the integration test. __*Default*__: Derived from the entrypoint filename.
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**assertTask**🔹 | <code>[Task](#projen-task)</code> | Synthesizes the integration test and compares against a local copy (runs during build).
+**deployTask**🔹 | <code>[Task](#projen-task)</code> | Deploy the integration test and update the snapshot upon success.
+**destroyTask**🔹 | <code>[Task](#projen-task)</code> | Destroy the integration test resources.
+**name**🔹 | <code>string</code> | Integration test name.
+**snapshotDir**🔹 | <code>string</code> | Snapshot output directory.
+**snapshotTask**🔹 | <code>[Task](#projen-task)</code> | Just update snapshot (without deployment).
+**tmpDir**🔹 | <code>string</code> | Temporary directory for each integration test.
+**watchTask**🔹 | <code>[Task](#projen-task)</code> | The watch task.
+
+
+
 ## class JsiiDocgen 🔹 <a id="projen-cdk-jsiidocgen"></a>
 
 Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
@@ -4931,7 +4974,7 @@ CDK8S integration test.
 
 __Submodule__: cdk8s
 
-__Extends__: [Component](#projen-component)
+__Extends__: [cdk.IntegrationTestBase](#projen-cdk-integrationtestbase)
 
 ### Initializer
 
@@ -4948,16 +4991,6 @@ new cdk8s.IntegrationTest(project: Project, options: IntegrationTestOptions)
   * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use when running integration test cdk apps. 
   * **name** (<code>string</code>)  Name of the integration test. __*Default*__: Derived from the entrypoint filename.
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**assertTask**🔹 | <code>[Task](#projen-task)</code> | Synthesizes the integration test and compares against a local copy (runs during build).
-**deployTask**🔹 | <code>[Task](#projen-task)</code> | Deploy the integration test and update the snapshot upon success.
-**snapshotTask**🔹 | <code>[Task](#projen-task)</code> | Just update snapshot (without deployment).
 
 
 
@@ -12098,6 +12131,21 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+
+
+
+## struct IntegrationTestBaseOptions 🔹 <a id="projen-cdk-integrationtestbaseoptions"></a>
+
+
+Options for IntegrationTest.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**entrypoint**🔹 | <code>string</code> | A path from the project root directory to a TypeScript file which contains the integration test app.
+**tsconfigPath**🔹 | <code>string</code> | The path of the tsconfig.json file to use when running integration test cdk apps.
+**name**?🔹 | <code>string</code> | Name of the integration test.<br/>__*Default*__: Derived from the entrypoint filename.
 
 
 

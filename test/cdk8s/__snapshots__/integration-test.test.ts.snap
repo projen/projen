@@ -48,10 +48,10 @@ Object {
       "exec": "[ -d \\"test/my-test-name.integ.snapshot\\" ] || (echo \\"No snapshot available for integration test 'my-test-name'. Run 'projen integ:my-test-name:deploy' to capture.\\" && exit 1)",
     },
     Object {
-      "exec": "cdk8s synth --app \\"ts-node -P tsconfig.dev.json test/my-test-name.integ.ts\\" -o test/.tmp/my-test-name.integ/synth.cdk.out > /dev/null",
+      "exec": "cdk8s synth --app \\"ts-node -P tsconfig.dev.json test/my-test-name.integ.ts\\" -o test/.tmp/my-test-name.integ/assert.cdk.out > /dev/null",
     },
     Object {
-      "exec": "diff test/my-test-name.integ.snapshot/ test/.tmp/my-test-name.integ/synth.cdk.out/",
+      "exec": "diff test/my-test-name.integ.snapshot/ test/.tmp/my-test-name.integ/assert.cdk.out/",
     },
   ],
 }
