@@ -15,6 +15,7 @@
  * - RELEASE_TAG_PREFIX: (optional) a prefix to apply to the release tag
  *
  */
+import * as logging from "../logging";
 import { bump, BumpOptions } from "./bump-version";
 
 const versionFile = process.env.OUTFILE;
@@ -59,6 +60,7 @@ const opts: BumpOptions = {
   // doesn't work with long customization
   versionrcOptions: JSON.parse(versionrcOptions ?? "{}"),
 };
+logging.debug(opts);
 
 bump(process.cwd(), opts).catch((e: Error) => {
   console.log(e.stack);
