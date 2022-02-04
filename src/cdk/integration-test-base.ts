@@ -80,6 +80,7 @@ export class IntegrationTestBase extends Component {
     const dir = dirname(entry);
 
     this.snapshotDir = join(dir, `${name}.integ.snapshot`);
+    project.addPackageIgnore(this.snapshotDir);
 
     this.tmpDir = join(dir, ".tmp", `${name}.integ`);
     project.addGitIgnore(this.tmpDir);
@@ -106,6 +107,7 @@ export class IntegrationTestBase extends Component {
       exec: `[ -d "${this.snapshotDir}" ] || (echo "No snapshot available for integration test '${name}'. Run 'projen ${this.deployTask.name}' to capture." && exit 1)`,
     });
 
+    // synth as part of our tests, which means that if outdir changes, anti-tamper will fail
     project.testTask.spawn(this.assertTask);
 
     let snapshotAllTask = project.tasks.tryFind("integ:snapshot-all");

@@ -3936,7 +3936,7 @@ Cloud integration tests.
 
 __Submodule__: awscdk
 
-__Extends__: [Component](#projen-component)
+__Extends__: [cdk.IntegrationTestBase](#projen-cdk-integrationtestbase)
 
 ### Initializer
 
@@ -3950,24 +3950,12 @@ new awscdk.IntegrationTest(project: Project, options: IntegrationTestOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)</code>)  *No description*
   * **destroyAfterDeploy** (<code>boolean</code>)  Destroy the test app after a successful deployment. __*Default*__: true
-  * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the integration test app. 
   * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use when running integration test cdk apps. 
   * **name** (<code>string</code>)  Name of the integration test. __*Default*__: Derived from the entrypoint filename.
+  * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
   * **stacks** (<code>Array<string></code>)  A list of stacks within the integration test to deploy/destroy. __*Default*__: ["**"]
 
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**assertTask**🔹 | <code>[Task](#projen-task)</code> | Synthesizes the integration test and compares against a local copy (runs during build).
-**deployTask**🔹 | <code>[Task](#projen-task)</code> | Deploy the integration test and update the snapshot upon success.
-**destroyTask**🔹 | <code>[Task](#projen-task)</code> | Destroys a deployed stack.
-**snapshotTask**🔹 | <code>[Task](#projen-task)</code> | Just update snapshot (without deployment).
-**watchTask**🔹 | <code>[Task](#projen-task)</code> | The watch task.
 
 
 
