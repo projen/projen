@@ -21,9 +21,9 @@ deployed.
 To create/update the snapshot, developers are expected to execute the task
 `integ:NAME:deploy` with a kubectl configuration for their personal development
 environment, such as K3s, Microk8s, Kind, Rancher Desktop, or otherwise. This
-task will deploy the test app to their Kubernetes. Upon successful deployment
-(i.e. the test passed), the snapshot will be captured and stored under a
-directory called `xxx.integ.snapshot` next to the test entrypoint. This
+task will deploy the test app by applying it with kubectl. Upon successful
+deployment (i.e. the test passed), the snapshot will be captured and stored
+under a directory called `xxx.integ.snapshot` next to the test entrypoint. This
 directory should be committed to the repository.
 
 During builds (either local or within a workflow), the task `integ:NAME:assert`
@@ -34,6 +34,6 @@ For each integration test, the following set of tasks are created:
 
 |Task|Description|
 |----|-----------|
-|`integ:NAME:deploy`|Deploys & destroys the test app and updates the snapshot.|
+|`integ:NAME:deploy`|Deploys the test app and updates the snapshot.|
 |`integ:NAME:assert`|Synthesizes the test app and compares it with the snapshot (this is the task that runs during build)|
 |`integ:NAME:snapshot`|Synthesizes the test app and updates the snapshot (not recommended to use because it bypasses deployment).|
