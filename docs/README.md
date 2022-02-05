@@ -6,6 +6,7 @@
 * [Build](build.md)
 * [Bundling](bundling.md)
 * [Components](components.md)
+* [CDK8s](cdk8s.md)
 * [Dependencies](deps.md)
 * [Escape hatches](escape-hatches.md)
 * [Ejecting](eject.md)
