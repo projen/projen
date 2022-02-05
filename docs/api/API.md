@@ -3958,6 +3958,15 @@ new awscdk.IntegrationTest(project: Project, options: IntegrationTestOptions)
 
 
 
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**destroyTask**🔹 | <code>[Task](#projen-task)</code> | Destroy the integration test resources.
+**watchTask**🔹 | <code>[Task](#projen-task)</code> | The watch task.
+
+
 
 ## class LambdaFunction 🔹 <a id="projen-awscdk-lambdafunction"></a>
 
@@ -4367,12 +4376,10 @@ Name | Type | Description
 -----|------|-------------
 **assertTask**🔹 | <code>[Task](#projen-task)</code> | Synthesizes the integration test and compares against a local copy (runs during build).
 **deployTask**🔹 | <code>[Task](#projen-task)</code> | Deploy the integration test and update the snapshot upon success.
-**destroyTask**🔹 | <code>[Task](#projen-task)</code> | Destroy the integration test resources.
 **name**🔹 | <code>string</code> | Integration test name.
 **snapshotDir**🔹 | <code>string</code> | Snapshot output directory.
 **snapshotTask**🔹 | <code>[Task](#projen-task)</code> | Just update snapshot (without deployment).
 **tmpDir**🔹 | <code>string</code> | Temporary directory for each integration test.
-**watchTask**🔹 | <code>[Task](#projen-task)</code> | The watch task.
 
 
 

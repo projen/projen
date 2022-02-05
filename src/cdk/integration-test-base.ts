@@ -37,11 +37,6 @@ export class IntegrationTestBase extends Component {
   public readonly deployTask: Task;
 
   /**
-   * Destroy the integration test resources
-   */
-  public readonly destroyTask: Task;
-
-  /**
    * Synthesizes the integration test and compares against a local copy (runs during build).
    */
   public readonly assertTask: Task;
@@ -50,11 +45,6 @@ export class IntegrationTestBase extends Component {
    * Just update snapshot (without deployment).
    */
   public readonly snapshotTask: Task;
-
-  /**
-   * The watch task.
-   */
-  public readonly watchTask: Task;
 
   /**
    * Temporary directory for each integration test.
@@ -79,23 +69,17 @@ export class IntegrationTestBase extends Component {
     this.name = name;
     const dir = dirname(entry);
 
+    const tmpRoot = join(dir, ".tmp");
+    project.addGitIgnore(tmpRoot);
+    project.addPackageIgnore(tmpRoot);
+
+    this.tmpDir = join(tmpRoot, `${name}.integ`);
+
     this.snapshotDir = join(dir, `${name}.integ.snapshot`);
     project.addPackageIgnore(this.snapshotDir);
 
-    this.tmpDir = join(dir, ".tmp", `${name}.integ`);
-    project.addGitIgnore(this.tmpDir);
-    project.addPackageIgnore(this.tmpDir);
-
-    this.watchTask = project.addTask(`integ:${name}:watch`, {
-      description: `watch integration test '${name}' (without updating snapshots)`,
-    });
-
     this.deployTask = project.addTask(`integ:${name}:deploy`, {
       description: `deploy integration test '${name}' and capture snapshot`,
-    });
-
-    this.destroyTask = project.addTask(`integ:${name}:destroy`, {
-      description: `destroy integration test '${name}'`,
     });
 
     this.snapshotTask = project.addTask(`integ:${name}:snapshot`, {

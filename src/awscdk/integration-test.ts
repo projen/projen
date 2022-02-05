@@ -2,6 +2,7 @@ import { join } from "path";
 import { IntegrationTestBase, IntegrationTestBaseOptions } from "../cdk";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
+import { Task } from "../task";
 import { AwsCdkDeps } from "./awscdk-deps";
 import { FEATURE_FLAGS } from "./internal";
 
@@ -36,11 +37,21 @@ export interface IntegrationTestOptions
  * Cloud integration tests.
  */
 export class IntegrationTest extends IntegrationTestBase {
+  /**
+   * Destroy the integration test resources
+   */
+  public readonly destroyTask: Task;
+
+  /**
+   * The watch task.
+   */
+  public readonly watchTask: Task;
+
   constructor(project: Project, options: IntegrationTestOptions) {
     super(project, options);
 
     const deployDir = join(this.tmpDir, "deploy.cdk.out");
-    const synthDir = join(this.tmpDir, "synth.cdk.out");
+    const assertDir = join(this.tmpDir, "assert.cdk.out");
 
     const app = `ts-node -P ${options.tsconfigPath} ${options.entrypoint}`;
 
@@ -90,11 +101,15 @@ export class IntegrationTest extends IntegrationTestBase {
     this.deployTask.exec(`rm -fr ${this.snapshotDir}`);
     this.deployTask.exec(`mv ${deployDir} ${this.snapshotDir}`);
 
-    this.watchTask.exec(`cdk watch ${cdkopts} ${stackOpts} -o ${deployDir}`);
+    this.watchTask = project.addTask(`integ:${this.name}:watch`, {
+      description: `watch integration test '${this.name}' (without updating snapshots)`,
+      exec: `cdk watch ${cdkopts} ${stackOpts} -o ${deployDir}`,
+    });
 
-    this.destroyTask.exec(
-      `cdk destroy --app ${this.snapshotDir} ${stackOpts} --no-version-reporting`
-    );
+    this.destroyTask = project.addTask(`integ:${this.name}:destroy`, {
+      description: `destroy integration test '${this.name}'`,
+      exec: `cdk destroy --app ${this.snapshotDir} ${stackOpts} --no-version-reporting`,
+    });
 
     const destroyAfterDeploy = options.destroyAfterDeploy ?? true;
     if (destroyAfterDeploy) {
@@ -103,11 +118,11 @@ export class IntegrationTest extends IntegrationTestBase {
 
     const exclude = ["asset.*", "cdk.out", "manifest.json", "tree.json"];
 
-    this.assertTask.exec(`cdk synth ${cdkopts} -o ${synthDir} > /dev/null`);
+    this.assertTask.exec(`cdk synth ${cdkopts} -o ${assertDir} > /dev/null`);
     this.assertTask.exec(
       `diff -r ${exclude.map((x) => `-x ${x}`).join(" ")} ${
         this.snapshotDir
-      }/ ${synthDir}/`
+      }/ ${assertDir}/`
     );
 
     this.snapshotTask.exec(
