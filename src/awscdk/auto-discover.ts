@@ -1,4 +1,8 @@
-import { AutoDiscoverBase, IntegrationTestAutoDiscoverBase } from "../cdk";
+import {
+  AutoDiscoverBase,
+  IntegrationTestAutoDiscoverBase,
+  IntegrationTestAutoDiscoverBaseOptions,
+} from "../cdk";
 import { Component } from "../component";
 import { Project } from "../project";
 import { AwsCdkDeps } from "./awscdk-deps";
@@ -25,12 +29,8 @@ export interface AutoDiscoverCommonOptions {
  * Options for `IntegrationTestAutoDiscover`
  */
 export interface IntegrationTestAutoDiscoverOptions
-  extends AutoDiscoverCommonOptions {
-  /**
-   * Test source tree.
-   */
-  readonly testdir: string;
-}
+  extends AutoDiscoverCommonOptions,
+    IntegrationTestAutoDiscoverBaseOptions {}
 
 /**
  * Creates integration tests from entry points discovered in the test tree.
