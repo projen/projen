@@ -37,7 +37,7 @@ Name|Description
 [Version](#projen-version)|*No description*
 [XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|Represents a YAML file.
-[awscdk.AutoDiscover](#projen-awscdk-autodiscover)|Automatically discovers and creates `IntegrationTest`s and `LambdaFunction`s from entry points found in the project source and test trees.
+[awscdk.AutoDiscover](#projen-awscdk-autodiscover)|Discovers and creates integration tests and lambdas from code in the project's source and test trees.
 [awscdk.AwsCdkConstructLibrary](#projen-awscdk-awscdkconstructlibrary)|AWS CDK construct library project.
 [awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)|Manages dependencies on the AWS CDK.
 [awscdk.AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava)|Manages dependencies on the AWS CDK for Java projects.
@@ -48,11 +48,14 @@ Name|Description
 [awscdk.CdkTasks](#projen-awscdk-cdktasks)|Adds standard AWS CDK tasks to your project.
 [awscdk.ConstructLibraryAws](#projen-awscdk-constructlibraryaws)|*No description*
 [awscdk.IntegrationTest](#projen-awscdk-integrationtest)|Cloud integration tests.
+[awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover)|Creates integration tests from entry points discovered in the test tree.
+[awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover)|Creates lambdas from entry points discovered in the project's source tree.
 [awscdk.LambdaFunction](#projen-awscdk-lambdafunction)|Generates a pre-bundled AWS Lambda function construct from handler code.
 [awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)|The runtime for the AWS Lambda function.
 [build.BuildWorkflow](#projen-build-buildworkflow)|*No description*
 [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)|Base class for auto-discovering and creating project subcomponents.
 [cdk.ConstructLibrary](#projen-cdk-constructlibrary)|A multi-language library for CDK constructs.
+[cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase)|Base class for locating integration tests in the project's test tree.
 [cdk.IntegrationTestBase](#projen-cdk-integrationtestbase)|*No description*
 [cdk.JsiiDocgen](#projen-cdk-jsiidocgen)|Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
 [cdk.JsiiProject](#projen-cdk-jsiiproject)|Multi-language jsii library project.
@@ -60,6 +63,7 @@ Name|Description
 [cdk8s.Cdk8sTypeScriptApp](#projen-cdk8s-cdk8stypescriptapp)|CDK8s app in TypeScript.
 [cdk8s.ConstructLibraryCdk8s](#projen-cdk8s-constructlibrarycdk8s)|CDK8s construct library project.
 [cdk8s.IntegrationTest](#projen-cdk8s-integrationtest)|CDK8S integration test.
+[cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)|Discovers and creates integration tests from files in the test root.
 [cdktf.ConstructLibraryCdktf](#projen-cdktf-constructlibrarycdktf)|CDKTF construct library project.
 [github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
@@ -173,6 +177,7 @@ Name|Description
 [VersionOptions](#projen-versionoptions)|Options for `Version`.
 [XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
 [YamlFileOptions](#projen-yamlfileoptions)|Options for `JsonFile`.
+[awscdk.AutoDiscoverCommonOptions](#projen-awscdk-autodiscovercommonoptions)|Common options for auto discovering project subcomponents.
 [awscdk.AutoDiscoverOptions](#projen-awscdk-autodiscoveroptions)|Options for `AutoDiscover`.
 [awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)|Options for `AwsCdkConstructLibrary`.
 [awscdk.AwsCdkDepsCommonOptions](#projen-awscdk-awscdkdepscommonoptions)|Options for `AwsCdkDeps`.
@@ -183,16 +188,19 @@ Name|Description
 [awscdk.CdkConfigCommonOptions](#projen-awscdk-cdkconfigcommonoptions)|Common options for `cdk.json`.
 [awscdk.CdkConfigOptions](#projen-awscdk-cdkconfigoptions)|Options for `CdkJson`.
 [awscdk.ConstructLibraryAwsOptions](#projen-awscdk-constructlibraryawsoptions)|*No description*
+[awscdk.IntegrationTestAutoDiscoverOptions](#projen-awscdk-integrationtestautodiscoveroptions)|Options for `IntegrationTestAutoDiscover`.
 [awscdk.IntegrationTestCommonOptions](#projen-awscdk-integrationtestcommonoptions)|*No description*
 [awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)|Options for `IntegrationTest`.
+[awscdk.LambdaAutoDiscoverOptions](#projen-awscdk-lambdaautodiscoveroptions)|Options for `LambdaAutoDiscover`.
 [awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)|Common options for `LambdaFunction`.
 [awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)|Options for `Function`.
 [build.AddPostBuildJobCommandsOptions](#projen-build-addpostbuildjobcommandsoptions)|Options for `BuildWorkflow.addPostBuildJobCommands`.
 [build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)|Options for `BuildWorkflow.addPostBuildJobTask`.
 [build.BuildWorkflowOptions](#projen-build-buildworkflowoptions)|*No description*
-[cdk.AutoDiscoverIntegrationTestsOptions](#projen-cdk-autodiscoverintegrationtestsoptions)|Options for auto-discovering integration tests.
+[cdk.AutoDiscoverBaseOptions](#projen-cdk-autodiscoverbaseoptions)|Options for `AutoDiscoverBase`.
 [cdk.Catalog](#projen-cdk-catalog)|*No description*
 [cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)|*No description*
+[cdk.IntegrationTestAutoDiscoverBaseOptions](#projen-cdk-integrationtestautodiscoverbaseoptions)|Options for `IntegrationTestAutoDiscoverBase`.
 [cdk.IntegrationTestBaseOptions](#projen-cdk-integrationtestbaseoptions)|Options for IntegrationTest.
 [cdk.JsiiDocgenOptions](#projen-cdk-jsiidocgenoptions)|Options for `JsiiDocgen`.
 [cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)|*No description*
@@ -203,6 +211,7 @@ Name|Description
 [cdk8s.AutoDiscoverOptions](#projen-cdk8s-autodiscoveroptions)|Options for `AutoDiscover`.
 [cdk8s.Cdk8sTypeScriptAppOptions](#projen-cdk8s-cdk8stypescriptappoptions)|*No description*
 [cdk8s.ConstructLibraryCdk8sOptions](#projen-cdk8s-constructlibrarycdk8soptions)|*No description*
+[cdk8s.IntegrationTestAutoDiscoverOptions](#projen-cdk8s-integrationtestautodiscoveroptions)|*No description*
 [cdk8s.IntegrationTestOptions](#projen-cdk8s-integrationtestoptions)|Options for IntegrationTest.
 [cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)|*No description*
 [github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
@@ -2944,11 +2953,11 @@ __Returns__:
 
 ## class AutoDiscover 🔹 <a id="projen-awscdk-autodiscover"></a>
 
-Automatically discovers and creates `IntegrationTest`s and `LambdaFunction`s from entry points found in the project source and test trees.
+Discovers and creates integration tests and lambdas from code in the project's source and test trees.
 
 __Submodule__: awscdk
 
-__Extends__: [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)
+__Extends__: [Component](#projen-component)
 
 ### Initializer
 
@@ -2961,36 +2970,13 @@ new awscdk.AutoDiscover(project: Project, options: AutoDiscoverOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[awscdk.AutoDiscoverOptions](#projen-awscdk-autodiscoveroptions)</code>)  *No description*
-  * **testdir** (<code>string</code>)  Test source tree path. 
   * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
-  * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
   * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
+  * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
   * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for auto-discovery of AWS Lambda functions. __*Optional*__
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | <span></span>
-**tsconfigPath**🔹 | <code>string</code> | <span></span>
-
-### Methods
-
-
-#### protected createIntegrationTest(entrypoint)🔹 <a id="projen-awscdk-autodiscover-createintegrationtest"></a>
-
-Create an integration test from the given entrypoint file.
-
-```ts
-protected createIntegrationTest(entrypoint: string): void
-```
-
-* **entrypoint** (<code>string</code>)  *No description*
-
-
+  * **testdir** (<code>string</code>)  Test source tree. 
+  * **integrationTestAutoDiscover** (<code>boolean</code>)  Auto-discover integration tests. __*Default*__: true
+  * **lambdaAutoDiscover** (<code>boolean</code>)  Auto-discover lambda functions. __*Default*__: true
 
 
 
@@ -3995,6 +3981,59 @@ Name | Type | Description
 
 
 
+## class IntegrationTestAutoDiscover 🔹 <a id="projen-awscdk-integrationtestautodiscover"></a>
+
+Creates integration tests from entry points discovered in the test tree.
+
+__Submodule__: awscdk
+
+__Extends__: [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.IntegrationTestAutoDiscover(project: Project, options: IntegrationTestAutoDiscoverOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.IntegrationTestAutoDiscoverOptions](#projen-awscdk-integrationtestautodiscoveroptions)</code>)  *No description*
+  * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
+  * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
+  * **testdir** (<code>string</code>)  Test source tree. 
+
+
+
+
+## class LambdaAutoDiscover 🔹 <a id="projen-awscdk-lambdaautodiscover"></a>
+
+Creates lambdas from entry points discovered in the project's source tree.
+
+__Submodule__: awscdk
+
+__Extends__: [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.LambdaAutoDiscover(project: Project, options: LambdaAutoDiscoverOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.LambdaAutoDiscoverOptions](#projen-awscdk-lambdaautodiscoveroptions)</code>)  *No description*
+  * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
+  * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
+  * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
+  * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for auto-discovery of AWS Lambda functions. __*Optional*__
+
+
+
+
 ## class LambdaFunction 🔹 <a id="projen-awscdk-lambdafunction"></a>
 
 Generates a pre-bundled AWS Lambda function construct from handler code.
@@ -4211,7 +4250,6 @@ Base class for auto-discovering and creating project subcomponents.
 __Submodule__: cdk
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [awscdk.AutoDiscover](#projen-awscdk-autodiscover), [cdk8s.AutoDiscover](#projen-cdk8s-autodiscover)
 
 ### Initializer
 
@@ -4219,41 +4257,22 @@ __Implemented by__: [awscdk.AutoDiscover](#projen-awscdk-autodiscover), [cdk8s.A
 
 
 ```ts
-new cdk.AutoDiscoverBase(project: Project)
+new cdk.AutoDiscoverBase(project: Project, options: AutoDiscoverBaseOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
-
-
-### Methods
-
-
-#### protected autoDiscoverIntegrationTests(options)🔹 <a id="projen-cdk-autodiscoverbase-autodiscoverintegrationtests"></a>
+* **options** (<code>[cdk.AutoDiscoverBaseOptions](#projen-cdk-autodiscoverbaseoptions)</code>)  *No description*
+  * **extension** (<code>string</code>)  Locate files with the given extension. 
+  * **projectdir** (<code>string</code>)  Locate entrypoints in the given project directory. 
 
 
 
-```ts
-protected autoDiscoverIntegrationTests(options: AutoDiscoverIntegrationTestsOptions): void
-```
-
-* **options** (<code>[cdk.AutoDiscoverIntegrationTestsOptions](#projen-cdk-autodiscoverintegrationtestsoptions)</code>)  *No description*
-  * **testdir** (<code>string</code>)  Test source tree path. 
+### Properties
 
 
-
-
-#### protected createIntegrationTest(entrypoint)🔹 <a id="projen-cdk-autodiscoverbase-createintegrationtest"></a>
-
-Create an integration test from the given entrypoint file.
-
-```ts
-protected createIntegrationTest(entrypoint: string): void
-```
-
-* **entrypoint** (<code>string</code>)  *No description*
-
-
-
+Name | Type | Description 
+-----|------|-------------
+**entrypoints**🔹 | <code>Array<string></code> | Auto-discovered entry points with paths relative to the project directory.
 
 
 
@@ -4420,6 +4439,30 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **python** (<code>[cdk.JsiiPythonTarget](#projen-cdk-jsiipythontarget)</code>)  *No description* __*Optional*__
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **catalog** (<code>[cdk.Catalog](#projen-cdk-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
+
+
+
+
+## class IntegrationTestAutoDiscoverBase 🔹 <a id="projen-cdk-integrationtestautodiscoverbase"></a>
+
+Base class for locating integration tests in the project's test tree.
+
+__Submodule__: cdk
+
+__Extends__: [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)
+
+### Initializer
+
+
+
+
+```ts
+new cdk.IntegrationTestAutoDiscoverBase(project: Project, options: IntegrationTestAutoDiscoverBaseOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[cdk.IntegrationTestAutoDiscoverBaseOptions](#projen-cdk-integrationtestautodiscoverbaseoptions)</code>)  *No description*
+  * **testdir** (<code>string</code>)  Test source tree. 
 
 
 
@@ -4665,7 +4708,7 @@ Automatically discovers and creates `IntegrationTest`s from entry points found i
 
 __Submodule__: cdk8s
 
-__Extends__: [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)
+__Extends__: [Component](#projen-component)
 
 ### Initializer
 
@@ -4678,24 +4721,8 @@ new cdk8s.AutoDiscover(project: Project, options: AutoDiscoverOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[cdk8s.AutoDiscoverOptions](#projen-cdk8s-autodiscoveroptions)</code>)  *No description*
-  * **testdir** (<code>string</code>)  Test source tree path. 
+  * **testdir** (<code>string</code>)  Test source tree. 
   * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
-
-
-### Methods
-
-
-#### protected createIntegrationTest(entrypoint)🔹 <a id="projen-cdk8s-autodiscover-createintegrationtest"></a>
-
-Create an integration test from the given entrypoint file.
-
-```ts
-protected createIntegrationTest(entrypoint: string): void
-```
-
-* **entrypoint** (<code>string</code>)  *No description*
-
-
 
 
 
@@ -5080,6 +5107,31 @@ new cdk8s.IntegrationTest(project: Project, options: IntegrationTestOptions)
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the integration test app. 
   * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use when running integration test cdk apps. 
   * **name** (<code>string</code>)  Name of the integration test. __*Default*__: Derived from the entrypoint filename.
+
+
+
+
+## class IntegrationTestAutoDiscover 🔹 <a id="projen-cdk8s-integrationtestautodiscover"></a>
+
+Discovers and creates integration tests from files in the test root.
+
+__Submodule__: cdk8s
+
+__Extends__: [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase)
+
+### Initializer
+
+
+
+
+```ts
+new cdk8s.IntegrationTestAutoDiscover(project: Project, options: IntegrationTestAutoDiscoverOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[cdk8s.IntegrationTestAutoDiscoverOptions](#projen-cdk8s-integrationtestautodiscoveroptions)</code>)  *No description*
+  * **testdir** (<code>string</code>)  Test source tree. 
+  * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
 
 
 
@@ -11261,6 +11313,20 @@ Name | Type | Description
 
 
 
+## struct AutoDiscoverCommonOptions 🔹 <a id="projen-awscdk-autodiscovercommonoptions"></a>
+
+
+Common options for auto discovering project subcomponents.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | AWS CDK dependency manager.
+**tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
+
+
+
 ## struct AutoDiscoverOptions 🔹 <a id="projen-awscdk-autodiscoveroptions"></a>
 
 
@@ -11272,8 +11338,10 @@ Name | Type | Description
 -----|------|-------------
 **cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | AWS CDK dependency manager.
 **srcdir**🔹 | <code>string</code> | Project source tree (relative to project output directory).
-**testdir**🔹 | <code>string</code> | Test source tree path.
+**testdir**🔹 | <code>string</code> | Test source tree.
 **tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
+**integrationTestAutoDiscover**?🔹 | <code>boolean</code> | Auto-discover integration tests.<br/>__*Default*__: true
+**lambdaAutoDiscover**?🔹 | <code>boolean</code> | Auto-discover lambda functions.<br/>__*Default*__: true
 **lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Options for auto-discovery of AWS Lambda functions.<br/>__*Optional*__
 
 
@@ -11934,6 +12002,21 @@ Name | Type | Description
 
 
 
+## struct IntegrationTestAutoDiscoverOptions 🔹 <a id="projen-awscdk-integrationtestautodiscoveroptions"></a>
+
+
+Options for `IntegrationTestAutoDiscover`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | AWS CDK dependency manager.
+**testdir**🔹 | <code>string</code> | Test source tree.
+**tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
+
+
+
 ## struct IntegrationTestCommonOptions 🔹 <a id="projen-awscdk-integrationtestcommonoptions"></a>
 
 
@@ -11962,6 +12045,22 @@ Name | Type | Description
 **destroyAfterDeploy**?🔹 | <code>boolean</code> | Destroy the test app after a successful deployment.<br/>__*Default*__: true
 **name**?🔹 | <code>string</code> | Name of the integration test.<br/>__*Default*__: Derived from the entrypoint filename.
 **stacks**?🔹 | <code>Array<string></code> | A list of stacks within the integration test to deploy/destroy.<br/>__*Default*__: ["**"]
+
+
+
+## struct LambdaAutoDiscoverOptions 🔹 <a id="projen-awscdk-lambdaautodiscoveroptions"></a>
+
+
+Options for `LambdaAutoDiscover`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | AWS CDK dependency manager.
+**srcdir**🔹 | <code>string</code> | Project source tree (relative to project output directory).
+**tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
+**lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Options for auto-discovery of AWS Lambda functions.<br/>__*Optional*__
 
 
 
@@ -12054,16 +12153,17 @@ Name | Type | Description
 
 
 
-## struct AutoDiscoverIntegrationTestsOptions 🔹 <a id="projen-cdk-autodiscoverintegrationtestsoptions"></a>
+## struct AutoDiscoverBaseOptions 🔹 <a id="projen-cdk-autodiscoverbaseoptions"></a>
 
 
-Options for auto-discovering integration tests.
+Options for `AutoDiscoverBase`.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**testdir**🔹 | <code>string</code> | Test source tree path.
+**extension**🔹 | <code>string</code> | Locate files with the given extension.
+**projectdir**🔹 | <code>string</code> | Locate entrypoints in the given project directory.
 
 
 
@@ -12234,6 +12334,19 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+
+
+
+## struct IntegrationTestAutoDiscoverBaseOptions 🔹 <a id="projen-cdk-integrationtestautodiscoverbaseoptions"></a>
+
+
+Options for `IntegrationTestAutoDiscoverBase`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**testdir**🔹 | <code>string</code> | Test source tree.
 
 
 
@@ -12511,7 +12624,7 @@ Options for `AutoDiscover`.
 
 Name | Type | Description 
 -----|------|-------------
-**testdir**🔹 | <code>string</code> | Test source tree path.
+**testdir**🔹 | <code>string</code> | Test source tree.
 **tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
 
 
@@ -12827,6 +12940,20 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+
+
+
+## struct IntegrationTestAutoDiscoverOptions 🔹 <a id="projen-cdk8s-integrationtestautodiscoveroptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**testdir**🔹 | <code>string</code> | Test source tree.
+**tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
 
 
 

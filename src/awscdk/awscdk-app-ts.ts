@@ -139,16 +139,14 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       new SampleCode(this, this.cdkDeps.cdkMajorVersion);
     }
 
-    const lambdaAutoDiscover = options.lambdaAutoDiscover ?? true;
-    if (lambdaAutoDiscover) {
-      new AutoDiscover(this, {
-        srcdir: this.srcdir,
-        testdir: this.testdir,
-        lambdaOptions: options.lambdaOptions,
-        tsconfigPath: this.tsconfigDev.fileName,
-        cdkDeps: this.cdkDeps,
-      });
-    }
+    new AutoDiscover(this, {
+      srcdir: this.srcdir,
+      testdir: this.testdir,
+      lambdaOptions: options.lambdaOptions,
+      tsconfigPath: this.tsconfigDev.fileName,
+      cdkDeps: this.cdkDeps,
+      lambdaAutoDiscover: options.lambdaAutoDiscover ?? true,
+    });
   }
 
   /**
