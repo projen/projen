@@ -50,11 +50,6 @@ export class IntegrationTest extends IntegrationTestBase {
   constructor(project: Project, options: IntegrationTestOptions) {
     super(project, options);
 
-    const deployDir = join(this.tmpDir, "deploy.cdk.out");
-    const assertDir = join(this.tmpDir, "assert.cdk.out");
-
-    const app = `ts-node -P ${options.tsconfigPath} ${options.entrypoint}`;
-
     if (!project.deps.tryGetDependency("aws-cdk")) {
       project.deps.addDependency(
         `aws-cdk@^${options.cdkDeps.cdkMajorVersion}`,
@@ -65,6 +60,10 @@ export class IntegrationTest extends IntegrationTestBase {
     if (!project.deps.tryGetDependency("ts-node")) {
       project.deps.addDependency("ts-node", DependencyType.BUILD);
     }
+
+    const deployDir = join(this.tmpDir, "deploy.cdk.out");
+    const assertDir = join(this.tmpDir, "assert.cdk.out");
+    const app = `ts-node -P ${options.tsconfigPath} ${options.entrypoint}`;
 
     const opts = [
       `--app "${app}"`,
@@ -116,6 +115,10 @@ export class IntegrationTest extends IntegrationTestBase {
       this.deployTask.spawn(this.destroyTask);
     }
 
+    this.snapshotTask.exec(
+      `cdk synth ${cdkopts} -o ${this.snapshotDir} > /dev/null`
+    );
+
     const exclude = ["asset.*", "cdk.out", "manifest.json", "tree.json"];
 
     this.assertTask.exec(`cdk synth ${cdkopts} -o ${assertDir} > /dev/null`);
@@ -123,10 +126,6 @@ export class IntegrationTest extends IntegrationTestBase {
       `diff -r ${exclude.map((x) => `-x ${x}`).join(" ")} ${
         this.snapshotDir
       }/ ${assertDir}/`
-    );
-
-    this.snapshotTask.exec(
-      `cdk synth ${cdkopts} -o ${this.snapshotDir} > /dev/null`
     );
 
     // do not commit all files we are excluding
