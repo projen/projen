@@ -1,16 +1,17 @@
 import { join } from "path";
 import * as glob from "glob";
-import { Component } from "../component";
+import { AutoDiscoverBase, AutoDiscoverIntegrationTestsOptions } from "../cdk";
 import { Project } from "../project";
 import { AwsCdkDeps } from "./awscdk-deps";
 import { IntegrationTest } from "./integration-test";
-import { TYPESCRIPT_INTEG_EXT, TYPESCRIPT_LAMBDA_EXT } from "./internal";
+import { TYPESCRIPT_LAMBDA_EXT } from "./internal";
 import { LambdaFunction, LambdaFunctionCommonOptions } from "./lambda-function";
 
 /**
  * Options for `AutoDiscover`.
  */
-export interface AutoDiscoverOptions {
+export interface AutoDiscoverOptions
+  extends AutoDiscoverIntegrationTestsOptions {
   /**
    * Options for auto-discovery of AWS Lambda functions.
    */
@@ -20,11 +21,6 @@ export interface AutoDiscoverOptions {
    * Project source tree (relative to project output directory).
    */
   readonly srcdir: string;
-
-  /**
-   * Test source tree.
-   */
-  readonly testdir: string;
 
   /**
    * Path to the tsconfig file to use for integration tests.
@@ -38,12 +34,18 @@ export interface AutoDiscoverOptions {
 }
 
 /**
- * Automatically creates a `LambdaFunction` for all `.lambda.ts` files under
- * the source directory of the project.
+ * Automatically discovers and creates `IntegrationTest`s and `LambdaFunction`s
+ * from entry points found in the project source and test trees.
  */
-export class AutoDiscover extends Component {
+export class AutoDiscover extends AutoDiscoverBase {
+  protected readonly tsconfigPath: string;
+  protected readonly cdkDeps: AwsCdkDeps;
+
   constructor(project: Project, options: AutoDiscoverOptions) {
     super(project);
+
+    this.cdkDeps = options.cdkDeps;
+    this.tsconfigPath = options.tsconfigPath;
 
     this.autoDiscoverLambdaFunctions(options);
     this.autoDiscoverIntegrationTests(options);
@@ -63,17 +65,11 @@ export class AutoDiscover extends Component {
     }
   }
 
-  private autoDiscoverIntegrationTests(options: AutoDiscoverOptions) {
-    const entrypoints = glob.sync(`**/*${TYPESCRIPT_INTEG_EXT}`, {
-      cwd: join(this.project.outdir, options.testdir),
+  protected createIntegrationTest(entrypoint: string): void {
+    new IntegrationTest(this.project, {
+      entrypoint,
+      cdkDeps: this.cdkDeps,
+      tsconfigPath: this.tsconfigPath,
     });
-
-    for (const entrypoint of entrypoints) {
-      new IntegrationTest(this.project, {
-        entrypoint: join(options.testdir, entrypoint),
-        cdkDeps: options.cdkDeps,
-        tsconfigPath: options.tsconfigPath,
-      });
-    }
   }
 }

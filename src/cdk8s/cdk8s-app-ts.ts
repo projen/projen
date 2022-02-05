@@ -223,7 +223,6 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
     new AutoDiscover(this, {
       testdir: this.testdir,
       tsconfigPath: this.tsconfigDev.fileName,
-      integrationTestAutoDiscover: options.integrationTestAutoDiscover ?? true,
     });
   }
 }
