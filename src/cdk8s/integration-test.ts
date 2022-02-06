@@ -1,6 +1,5 @@
 import { join } from "path";
-import { IntegrationTestBaseOptions } from "../cdk";
-import { IntegrationTestBase } from "../cdk/integration-test-base";
+import { IntegrationTestBaseOptions, IntegrationTestBase } from "../cdk";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
 

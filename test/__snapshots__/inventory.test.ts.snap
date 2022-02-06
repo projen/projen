@@ -2048,6 +2048,23 @@ Array [
       },
       Object {
         "default": "true",
+        "docs": "Automatically discovers and creates integration tests for each \`.integ.ts\` file in under your test directory.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "integrationTestAutoDiscover",
+        "optional": true,
+        "parent": "AwsCdkTypeScriptAppOptions",
+        "path": Array [
+          "integrationTestAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "integration-test-auto-discover",
+      },
+      Object {
+        "default": "true",
         "docs": "Setup jest unit tests.",
         "featured": false,
         "fullType": Object {
@@ -4763,6 +4780,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically discovers and creates integration tests for each \`.integ.ts\` file in under your test directory.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "integrationTestAutoDiscover",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": Array [
+          "integrationTestAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "integration-test-auto-discover",
       },
       Object {
         "default": "true",

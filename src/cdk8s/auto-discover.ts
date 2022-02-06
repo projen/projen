@@ -10,7 +10,14 @@ import { IntegrationTest } from "./integration-test";
  * Options for `AutoDiscover`.
  */
 export interface AutoDiscoverOptions
-  extends IntegrationTestAutoDiscoverOptions {}
+  extends IntegrationTestAutoDiscoverOptions {
+  /**
+   * Automatically discover integration tests
+   *
+   * @default true
+   */
+  readonly integrationTestAutoDiscover?: boolean;
+}
 
 /**
  * Automatically discovers and creates `IntegrationTest`s from entry points
@@ -20,7 +27,9 @@ export class AutoDiscover extends Component {
   constructor(project: Project, options: AutoDiscoverOptions) {
     super(project);
 
-    new IntegrationTestAutoDiscover(this.project, options);
+    if (options.integrationTestAutoDiscover ?? true) {
+      new IntegrationTestAutoDiscover(this.project, options);
+    }
   }
 }
 

@@ -32,6 +32,14 @@ export interface AwsCdkTypeScriptAppOptions
   readonly lambdaAutoDiscover?: boolean;
 
   /**
+   * Automatically discovers and creates integration tests for each `.integ.ts`
+   * file in under your test directory.
+   *
+   * @default true
+   */
+  readonly integrationTestAutoDiscover?: boolean;
+
+  /**
    * Common options for all AWS Lambda functions.
    *
    * @default - default options
@@ -146,6 +154,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       tsconfigPath: this.tsconfigDev.fileName,
       cdkDeps: this.cdkDeps,
       lambdaAutoDiscover: options.lambdaAutoDiscover ?? true,
+      integrationTestAutoDiscover: options.integrationTestAutoDiscover ?? true,
     });
   }
 
