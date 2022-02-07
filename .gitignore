@@ -57,6 +57,7 @@ tsconfig.json
 !/docs/api/API.md
 !/projen.bash
 !templates/**
+/.idea
 !/.markdownlint.json
 !/.vscode/launch.json
 !/.github/workflows/upgrade-main.yml
