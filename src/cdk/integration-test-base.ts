@@ -30,7 +30,7 @@ export interface IntegrationTestBaseOptions {
   readonly tsconfigPath: string;
 }
 
-export class IntegrationTestBase extends Component {
+export abstract class IntegrationTestBase extends Component {
   /**
    * Deploy the integration test and update the snapshot upon success.
    */

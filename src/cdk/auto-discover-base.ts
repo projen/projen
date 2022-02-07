@@ -26,7 +26,7 @@ export interface AutoDiscoverBaseOptions {
 /**
  * Base class for auto-discovering and creating project subcomponents.
  */
-export class AutoDiscoverBase extends Component {
+export abstract class AutoDiscoverBase extends Component {
   /**
    * Auto-discovered entry points with paths relative to the project
    * directory.

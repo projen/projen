@@ -4253,6 +4253,7 @@ Base class for auto-discovering and creating project subcomponents.
 __Submodule__: cdk
 
 __Extends__: [Component](#projen-component)
+__Implemented by__: [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover), [awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover), [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase), [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)
 
 ### Initializer
 
@@ -4477,6 +4478,7 @@ new cdk.IntegrationTestAutoDiscoverBase(project: Project, options: IntegrationTe
 __Submodule__: cdk
 
 __Extends__: [Component](#projen-component)
+__Implemented by__: [awscdk.IntegrationTest](#projen-awscdk-integrationtest), [cdk8s.IntegrationTest](#projen-cdk8s-integrationtest)
 
 ### Initializer
 
