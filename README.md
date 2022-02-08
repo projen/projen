@@ -180,9 +180,9 @@ Some examples for features built-in to project types:
 
 ## API Reference
 
-See [API Reference](https://projen.github.io/projen/api/API.html) for API details.
+See [API Reference](https://projen.io/api/API.html) for API details.
 
-In addition, several projen components and project types are explained with examples at <https://projen.github.io/projen/> (currently a work in progress!).
+In addition, several projen components and project types are explained with examples at <https://projen.io/> (currently a work in progress!).
 
 ## Ecosystem
 
