@@ -906,6 +906,21 @@ synthesize(): void
 
 
 
+#### protected addProjenMarker(content)🔹 <a id="projen-filebase-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(content: string): string
+```
+
+* **content** (<code>string</code>)  The synthesized content of the file.
+
+__Returns__:
+* <code>string</code>
+
 #### protected synthesizeContent(resolver)🔹 <a id="projen-filebase-synthesizecontent"></a>
 
 Implemented by derived classes and returns the contents of the file to emit.
@@ -955,6 +970,21 @@ addAttributes(glob: string, ...attributes: string[]): void
 
 
 
+
+#### protected addProjenMarker(content)🔹 <a id="projen-gitattributesfile-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(content: string): string
+```
+
+* **content** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
 
 #### protected synthesizeContent(_)🔹 <a id="projen-gitattributesfile-synthesizecontent"></a>
 
@@ -1192,6 +1222,21 @@ removePatterns(...patterns: string[]): void
 
 
 
+#### protected addProjenMarker(content)🔹 <a id="projen-ignorefile-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(content: string): string
+```
+
+* **content** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
 #### protected synthesizeContent(resolver)🔹 <a id="projen-ignorefile-synthesizecontent"></a>
 
 Implemented by derived classes and returns the contents of the file to emit.
@@ -1236,6 +1281,21 @@ new IniFile(project: Project, filePath: string, options: IniFileOptions)
 
 ### Methods
 
+
+#### protected addProjenMarker(content)🔹 <a id="projen-inifile-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(content: string): string
+```
+
+* **content** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
 
 #### protected synthesizeContent(resolver)🔹 <a id="projen-inifile-synthesizecontent"></a>
 
@@ -1283,6 +1343,21 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
 ### Methods
 
 
+#### protected addProjenMarker(content)🔹 <a id="projen-jsonfile-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(content: string): string
+```
+
+* **content** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
 #### protected synthesizeContent(resolver)🔹 <a id="projen-jsonfile-synthesizecontent"></a>
 
 Implemented by derived classes and returns the contents of the file to emit.
@@ -1322,6 +1397,21 @@ new License(project: Project, options: LicenseOptions)
 
 ### Methods
 
+
+#### protected addProjenMarker(_)🔹 <a id="projen-license-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(_: string): string
+```
+
+* **_** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
 
 #### protected synthesizeContent(_)🔹 <a id="projen-license-synthesizecontent"></a>
 
@@ -1543,6 +1633,21 @@ addRules(...rules: Rule[]): Makefile
 
 __Returns__:
 * <code>[Makefile](#projen-makefile)</code>
+
+#### protected addProjenMarker(content)🔹 <a id="projen-makefile-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(content: string): string
+```
+
+* **content** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
 
 #### protected synthesizeContent(resolver)🔹 <a id="projen-makefile-synthesizecontent"></a>
 
@@ -2249,6 +2354,9 @@ new SourceCode(project: Project, filePath: string, options?: SourceCodeOptions)
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[SourceCodeOptions](#projen-sourcecodeoptions)</code>)  *No description*
   * **indent** (<code>number</code>)  Indentation size. __*Default*__: 2
+  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: false
+  * **projenMarkerAtStart** (<code>boolean</code>)  Whether the projen marker should be added to the start of the file. __*Default*__: true
+  * **projenMarkerPrefix** (<code>string</code>)  Prefix to attach to the PROJEN_MARKER string Required if options.marker is true A space will be left between prefix and marker. __*Default*__: undefined
 
 
 
@@ -2735,6 +2843,8 @@ new TextFile(project: Project, filePath: string, options?: TextFileOptions)
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: marker will be included as long as the project is not ejected
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
   * **lines** (<code>Array<string></code>)  The contents of the text file. __*Default*__: [] empty file
+  * **projenMarkerAtStart** (<code>boolean</code>)  Whether the projen marker should be added to the start of the file. __*Default*__: true
+  * **projenMarkerPrefix** (<code>string</code>)  Prefix to attach to the PROJEN_MARKER string Required if options.marker is true A space will be left between prefix and marker. __*Default*__: undefined
 
 
 ### Methods
@@ -2752,6 +2862,21 @@ addLine(line: string): void
 
 
 
+
+#### protected addProjenMarker(content)🔹 <a id="projen-textfile-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(content: string): string
+```
+
+* **content** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
 
 #### protected synthesizeContent(_)🔹 <a id="projen-textfile-synthesizecontent"></a>
 
@@ -2797,6 +2922,21 @@ new TomlFile(project: Project, filePath: string, options: TomlFileOptions)
 
 ### Methods
 
+
+#### protected addProjenMarker(content)🔹 <a id="projen-tomlfile-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(content: string): string
+```
+
+* **content** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
 
 #### protected synthesizeContent(resolver)🔹 <a id="projen-tomlfile-synthesizecontent"></a>
 
@@ -2882,6 +3022,21 @@ new XmlFile(project: Project, filePath: string, options?: XmlFileOptions)
 ### Methods
 
 
+#### protected addProjenMarker(content)🔹 <a id="projen-xmlfile-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(content: string): string
+```
+
+* **content** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
 #### protected synthesizeContent(resolver)🔹 <a id="projen-xmlfile-synthesizecontent"></a>
 
 Implemented by derived classes and returns the contents of the file to emit.
@@ -2935,6 +3090,21 @@ Name | Type | Description
 
 ### Methods
 
+
+#### protected addProjenMarker(content)🔹 <a id="projen-yamlfile-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(content: string): string
+```
+
+* **content** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
 
 #### protected synthesizeContent(resolver)🔹 <a id="projen-yamlfile-synthesizecontent"></a>
 
@@ -8396,6 +8566,21 @@ addPackages(...packages: string[]): void
 
 
 
+#### protected addProjenMarker(content)🔹 <a id="projen-python-requirementsfile-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(content: string): string
+```
+
+* **content** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
 #### protected synthesizeContent(resolver)🔹 <a id="projen-python-requirementsfile-synthesizecontent"></a>
 
 Implemented by derived classes and returns the contents of the file to emit.
@@ -8443,6 +8628,21 @@ new python.SetupPy(project: PythonProject, options: SetupPyOptions)
 
 ### Methods
 
+
+#### protected addProjenMarker(content)🔹 <a id="projen-python-setuppy-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(content: string): string
+```
+
+* **content** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
 
 #### protected synthesizeContent(resolver)🔹 <a id="projen-python-setuppy-synthesizecontent"></a>
 
@@ -10211,6 +10411,21 @@ new web.ReactTypeDef(project: ReactTypeScriptProject, filePath: string, options?
 ### Methods
 
 
+#### protected addProjenMarker(_)🔹 <a id="projen-web-reacttypedef-addprojenmarker"></a>
+
+Implemented by derived classes to add the projen marker in an appropriate format.
+
+Called during synthesis if marker is defined.
+
+```ts
+protected addProjenMarker(_: string): string
+```
+
+* **_** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
 #### protected synthesizeContent(_)🔹 <a id="projen-web-reacttypedef-synthesizecontent"></a>
 
 Implemented by derived classes and returns the contents of the file to emit.
@@ -11121,6 +11336,9 @@ Options for `SourceCodeFile`.
 Name | Type | Description 
 -----|------|-------------
 **indent**?🔹 | <code>number</code> | Indentation size.<br/>__*Default*__: 2
+**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: false
+**projenMarkerAtStart**?🔹 | <code>boolean</code> | Whether the projen marker should be added to the start of the file.<br/>__*Default*__: true
+**projenMarkerPrefix**?🔹 | <code>string</code> | Prefix to attach to the PROJEN_MARKER string Required if options.marker is true A space will be left between prefix and marker.<br/>__*Default*__: undefined
 
 
 
@@ -11242,6 +11460,8 @@ Name | Type | Description
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected
+**projenMarkerAtStart**?🔹 | <code>boolean</code> | Whether the projen marker should be added to the start of the file.<br/>__*Default*__: true
+**projenMarkerPrefix**?🔹 | <code>string</code> | Prefix to attach to the PROJEN_MARKER string Required if options.marker is true A space will be left between prefix and marker.<br/>__*Default*__: undefined
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 

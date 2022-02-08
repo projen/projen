@@ -11,6 +11,30 @@ export interface SourceCodeOptions {
    * @default 2
    */
   readonly indent?: number;
+
+  /**
+   * Adds the projen marker to the file.
+   *
+   * @default false
+   */
+  readonly marker?: boolean;
+
+  /**
+   * Prefix to attach to the PROJEN_MARKER string
+   * Required if options.marker is true
+   * A space will be left between prefix and marker
+   *
+   * @default undefined
+   */
+  readonly projenMarkerPrefix?: string;
+
+  /**
+   * Whether the projen marker should be added to the start of the file.
+   * If false, appends to end instead.
+   *
+   * @default true
+   */
+  readonly projenMarkerAtStart?: boolean;
 }
 
 /**
@@ -28,7 +52,12 @@ export class SourceCode extends Component {
   ) {
     super(project);
     this.indent = options.indent ?? 2;
-    this.file = new TextFile(project, filePath);
+    const fileOptions = {
+      marker: options.marker ?? false,
+      projenMarkerPrefix: options.projenMarkerPrefix,
+      projenMarkerAtStart: options.projenMarkerAtStart ?? true,
+    };
+    this.file = new TextFile(project, filePath, fileOptions);
   }
 
   public get marker(): string | undefined {

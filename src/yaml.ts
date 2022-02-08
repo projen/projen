@@ -35,13 +35,14 @@ export class YamlFile extends ObjectFile {
       return undefined;
     }
 
-    return [
-      ...(this.marker ? [`# ${this.marker}`] : []),
-      "",
-      YAML.stringify(JSON.parse(json), {
-        indent: 2,
-        lineWidth: this.lineWidth,
-      }),
-    ].join("\n");
+    return YAML.stringify(JSON.parse(json), {
+      indent: 2,
+      lineWidth: this.lineWidth,
+    });
+  }
+
+  protected addProjenMarker(content: string): string {
+    content = content === "\n" ? "" : content;
+    return [`# ${this.marker}`, "", content].join("\n");
   }
 }

@@ -34,9 +34,11 @@ export class XmlFile extends ObjectFile {
       indent: " ".repeat(4),
     });
 
-    return [
-      xmlString,
-      ...(this.marker ? [`<!-- ${this.marker} -->`] : []),
-    ].join("\n");
+    return xmlString;
+  }
+
+  protected addProjenMarker(content: string): string {
+    content = content === "\n" ? "" : content;
+    return [content, `<!-- ${this.marker} -->`].join("\n");
   }
 }

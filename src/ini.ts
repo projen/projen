@@ -22,10 +22,11 @@ export class IniFile extends ObjectFile {
       return undefined;
     }
 
-    return [
-      ...(this.marker ? [`# ${this.marker}`] : []),
-      "",
-      INI.stringify(JSON.parse(json)),
-    ].join("\n");
+    return INI.stringify(JSON.parse(json));
+  }
+
+  protected addProjenMarker(content: string): string {
+    content = content === "\n" ? "" : content;
+    return [`# ${this.marker}`, "", content].join("\n");
   }
 }

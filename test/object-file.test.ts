@@ -2,7 +2,11 @@ import { ObjectFile } from "../src";
 import { JsonFile } from "../src/json";
 import { synthSnapshot, TestProject } from "./util";
 
-class ChildObjectFile extends ObjectFile {}
+class ChildObjectFile extends ObjectFile {
+  protected addProjenMarker(_: string): string {
+    throw new Error("Method not implemented.");
+  }
+}
 
 test("json object can be mutated before synthesis", () => {
   const prj = new TestProject();

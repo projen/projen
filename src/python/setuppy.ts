@@ -87,8 +87,6 @@ export class SetupPy extends FileBase {
 
   protected synthesizeContent(resolver: IResolver): string | undefined {
     const lines = [
-      ...(this.marker ? [`# ${this.marker}`] : []),
-      "",
       "import json",
       "from setuptools import setup",
       "",
@@ -102,6 +100,11 @@ export class SetupPy extends FileBase {
     ];
 
     return `${resolver.resolve(lines).join("\n")}\n`;
+  }
+
+  protected addProjenMarker(content: string): string {
+    content = content === "\n" ? "" : content;
+    return [`# ${this.marker}`, "", content].join("\n");
   }
 
   // modify some key names since JSII interfaces require fields to be camelCase

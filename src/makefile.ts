@@ -40,6 +40,7 @@ interface AllRule extends Rule {
 
 /**
  * Options for Makefiles.
+ * @prop {boolean} [marker=false] - Adds the projen marker to the file.
  */
 export interface MakefileOptions extends FileBaseOptions {
   /**
@@ -73,6 +74,10 @@ export class Makefile extends FileBase {
     filePath: string,
     options: MakefileOptions = {}
   ) {
+    options = {
+      marker: false,
+      ...options,
+    };
     super(project, filePath, options);
 
     const all = options.all ? options.all : [];
@@ -151,5 +156,10 @@ export class Makefile extends FileBase {
     ];
 
     return `${lines.join("\n\n")}\n`;
+  }
+
+  protected addProjenMarker(content: string): string {
+    content = content === "\n" ? "" : content;
+    return [`# ${this.marker}`, "", content].join("\n");
   }
 }

@@ -29,23 +29,30 @@ export class JsonFile extends ObjectFile {
     }
   }
 
+  private stringifyJson(value: any): string {
+    let content = JSON.stringify(value, undefined, 2);
+    if (this.newline) {
+      content += "\n";
+    }
+    return content;
+  }
+
   protected synthesizeContent(resolver: IResolver): string | undefined {
     const json = super.synthesizeContent(resolver);
     if (!json) {
       return undefined;
     }
 
+    // Parse and re-stringify json to ensure consistency.
     const sanitized = JSON.parse(json);
+    return this.stringifyJson(sanitized);
+  }
 
+  protected addProjenMarker(content: string): string {
+    const sanitized = JSON.parse(content);
     if (this.marker) {
       sanitized["//"] = this.marker;
     }
-
-    let content = JSON.stringify(sanitized, undefined, 2);
-    if (this.newline) {
-      content += "\n";
-    }
-
-    return content;
+    return this.stringifyJson(sanitized);
   }
 }

@@ -214,10 +214,10 @@ export class ReactComponent extends Component {
       project.addDevDeps("react-app-rewired");
       project.addFields({ "config-overrides-path": overridesPath });
 
-      const configOverrides = new SourceCode(this.project, overridesPath);
-      if (!configOverrides.marker) {
-        configOverrides.line(`// ${configOverrides.marker}`);
-      }
+      const configOverrides = new SourceCode(this.project, overridesPath, {
+        marker: true,
+        projenMarkerPrefix: "//",
+      });
       configOverrides.line("/**");
       configOverrides.line(
         " * Override CRA configuration without needing to eject."
@@ -469,6 +469,9 @@ class ReactSampleCode extends Component {
   }
 }
 
+/**
+ * @prop {boolean} [marker=false] - Ignored by ReactTypeDef. Marker will never be added to file.
+ */
 export interface ReactTypeDefOptions extends FileBaseOptions {}
 
 export class ReactTypeDef extends FileBase {
@@ -477,10 +480,18 @@ export class ReactTypeDef extends FileBase {
     filePath: string,
     options: ReactTypeDefOptions = {}
   ) {
+    options = {
+      ...options,
+      marker: false,
+    };
     super(project, filePath, options);
   }
 
   protected synthesizeContent(_: IResolver): string | undefined {
     return ['/// <reference types="react-scripts" />'].join("\n");
+  }
+
+  protected addProjenMarker(_: string): string {
+    throw new Error("Method not implemented.");
   }
 }

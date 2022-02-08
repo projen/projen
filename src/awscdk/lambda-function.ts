@@ -170,10 +170,10 @@ export class LambdaFunction extends Component {
       dirname(outfileAbs)
     );
 
-    const src = new SourceCode(project, constructFile);
-    if (src.marker) {
-      src.line(`// ${src.marker}`);
-    }
+    const src = new SourceCode(project, constructFile, {
+      marker: true,
+      projenMarkerPrefix: "//",
+    });
     src.line("import * as path from 'path';");
 
     if (cdkDeps.cdkMajorVersion === 1) {

@@ -132,6 +132,14 @@ export abstract class FileBase extends Component {
   protected abstract synthesizeContent(resolver: IResolver): string | undefined;
 
   /**
+   * Implemented by derived classes to add the projen marker in an
+   * appropriate format. Called during synthesis if marker is defined.
+   * @param content The synthesized content of the file
+   * @returns The synthesized content with the projen marker included
+   */
+  protected abstract addProjenMarker(content: string): string;
+
+  /**
    * Writes the file to the project's output directory
    */
   public synthesize() {
@@ -140,11 +148,14 @@ export abstract class FileBase extends Component {
     const resolver: IResolver = {
       resolve: (obj, options) => resolve(obj, options),
     };
-    const content = this.synthesizeContent(resolver);
+    let content = this.synthesizeContent(resolver);
     if (content === undefined) {
       // remove file (if exists) and skip rest of synthesis
       removeSync(filePath);
       return;
+    }
+    if (this.marker) {
+      content = this.addProjenMarker(content);
     }
 
     // check if the file was changed.

@@ -67,4 +67,9 @@ export class License extends FileBase {
   protected synthesizeContent(_: IResolver): string | undefined {
     return this.text;
   }
+
+  // Marker is never used for License
+  protected addProjenMarker(_: string): string {
+    throw new Error("Method not implemented.");
+  }
 }

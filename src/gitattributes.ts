@@ -40,12 +40,15 @@ export class GitAttributesFile extends FileBase {
       return undefined;
     }
 
-    return [
-      ...(this.marker ? [`# ${this.marker}`] : []),
-      "",
-      ...entries.map(
+    return entries
+      .map(
         ([name, attributes]) => `${name} ${Array.from(attributes).join(" ")}`
-      ),
-    ].join("\n");
+      )
+      .join("\n");
+  }
+
+  protected addProjenMarker(content: string): string {
+    content = content === "\n" ? "" : content;
+    return [`# ${this.marker}`, "", content].join("\n");
   }
 }

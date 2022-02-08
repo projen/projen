@@ -57,3 +57,38 @@ test("trailing whitespace is trimmed", () => {
     ["", "        hello, world."].join("\n")
   );
 });
+
+test("include projen marker at start of file", () => {
+  const project = new TestProject();
+  const sourceFile = new SourceCode(project, "test.txt", {
+    indent: 2,
+    marker: true,
+    projenMarkerPrefix: "//",
+  });
+  sourceFile.open();
+  sourceFile.line("line 1");
+  sourceFile.line("line 2");
+  sourceFile.close();
+
+  expect(synthSnapshot(project)["test.txt"]).toStrictEqual(
+    [`// ${sourceFile.marker}`, "  line 1", "  line 2"].join("\n")
+  );
+});
+
+test("include projen marker at end of file", () => {
+  const project = new TestProject();
+  const sourceFile = new SourceCode(project, "test.txt", {
+    indent: 2,
+    marker: true,
+    projenMarkerPrefix: "//",
+    projenMarkerAtStart: false,
+  });
+  sourceFile.open();
+  sourceFile.line("line 1");
+  sourceFile.line("line 2");
+  sourceFile.close();
+
+  expect(synthSnapshot(project)["test.txt"]).toStrictEqual(
+    ["  line 1", "  line 2", `// ${sourceFile.marker}`].join("\n")
+  );
+});

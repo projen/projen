@@ -22,10 +22,11 @@ export class TomlFile extends ObjectFile {
       return undefined;
     }
 
-    return [
-      ...(this.marker ? [`# ${this.marker}`] : []),
-      "",
-      TOML.stringify(JSON.parse(json)),
-    ].join("\n");
+    return TOML.stringify(JSON.parse(json));
+  }
+
+  protected addProjenMarker(content: string): string {
+    content = content === "\n" ? "" : content;
+    return [`# ${this.marker}`, "", content].join("\n");
   }
 }

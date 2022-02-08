@@ -70,8 +70,11 @@ export class RequirementsFile extends FileBase {
       );
     }
 
-    return `${resolver
-      .resolve([...(this.marker ? [`# ${this.marker}`] : []), ...allPackages])
-      .join("\n")}\n`;
+    return `${resolver.resolve(allPackages).join("\n")}\n`;
+  }
+
+  protected addProjenMarker(content: string): string {
+    content = content === "\n" ? "" : content;
+    return [`# ${this.marker}`, content].join("\n");
   }
 }
