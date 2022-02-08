@@ -7868,7 +7868,7 @@ Add steps to execute a successful build.
 addPostBuildSteps(...steps: JobStep[]): void
 ```
 
-* **steps** (<code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code>)  worklfow steps.
+* **steps** (<code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code>)  workflow steps.
   * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
   * **env** (<code>Map<string, string></code>)  Sets environment variables for steps to use in the runner environment. __*Optional*__
   * **id** (<code>string</code>)  A unique identifier for the step. __*Optional*__
