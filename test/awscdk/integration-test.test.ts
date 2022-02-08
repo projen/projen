@@ -31,11 +31,9 @@ describe("IntegrationTest", () => {
   // we expect .npmignore to exclude the integration test's cdkout directory
   // and the various temporary directories created during execution.
   test("npmignore", () => {
-    [
-      "test/.tmp/foo.integ/deploy.cdk.out",
-      "test/.tmp/foo.integ/synth.cdk.out",
-      "test/foo.integ.snapshot",
-    ].forEach((i) => expect(output[".npmignore"]).toContain(i));
+    ["test/.tmp", "test/foo.integ.snapshot"].forEach((i) =>
+      expect(output[".npmignore"]).toContain(i)
+    );
   });
 
   // exclude cloud assembly manifests and assets from
@@ -51,9 +49,7 @@ describe("IntegrationTest", () => {
       "test/foo.integ.snapshot/**/manifest.json",
       "test/foo.integ.snapshot/tree.json",
       "test/foo.integ.snapshot/**/tree.json",
-      "test/.tmp/foo.integ/deploy.cdk.out",
-      "test/.tmp/foo.integ/synth.cdk.out",
-      "!test/foo.integ.snapshot",
+      "test/.tmp",
     ].forEach((i) => expect(output[".gitignore"]).toContain(i));
   });
 
