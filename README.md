@@ -46,23 +46,23 @@ Currently supported project types (use `npx projen new` without a type for a
 list):
 
 <!-- <macro exec="node ./scripts/readme-projects.js"> -->
-* [awscdk-app-java](https://projen.github.io/projen/api/API.html#projen-awscdk-awscdkjavaapp) - AWS CDK app in Java.
-* [awscdk-app-ts](https://projen.github.io/projen/api/API.html#projen-awscdk-awscdktypescriptapp) - AWS CDK app in TypeScript.
-* [awscdk-construct](https://projen.github.io/projen/api/API.html#projen-awscdk-awscdkconstructlibrary) - AWS CDK construct library project.
-* [cdk8s-app-ts](https://projen.github.io/projen/api/API.html#projen-cdk8s-cdk8stypescriptapp) - CDK8s app in TypeScript.
-* [cdk8s-construct](https://projen.github.io/projen/api/API.html#projen-cdk8s-constructlibrarycdk8s) - CDK8s construct library project.
-* [cdktf-construct](https://projen.github.io/projen/api/API.html#projen-cdktf-constructlibrarycdktf) - CDKTF construct library project.
-* [java](https://projen.github.io/projen/api/API.html#projen-java-javaproject) - Java project.
-* [jsii](https://projen.github.io/projen/api/API.html#projen-cdk-jsiiproject) - Multi-language jsii library project.
-* [nextjs](https://projen.github.io/projen/api/API.html#projen-web-nextjsproject) - Next.js project without TypeScript.
-* [nextjs-ts](https://projen.github.io/projen/api/API.html#projen-web-nextjstypescriptproject) - Next.js project with TypeScript.
-* [node](https://projen.github.io/projen/api/API.html#projen-javascript-nodeproject) - Node.js project.
-* [project](https://projen.github.io/projen/api/API.html#projen-project) - Base project.
-* [python](https://projen.github.io/projen/api/API.html#projen-python-pythonproject) - Python project.
-* [react](https://projen.github.io/projen/api/API.html#projen-web-reactproject) - React project without TypeScript.
-* [react-ts](https://projen.github.io/projen/api/API.html#projen-web-reacttypescriptproject) - React project with TypeScript.
-* [typescript](https://projen.github.io/projen/api/API.html#projen-typescript-typescriptproject) - TypeScript project.
-* [typescript-app](https://projen.github.io/projen/api/API.html#projen-typescript-typescriptappproject) - TypeScript app.
+* [awscdk-app-java](https://projen.io/api/API.html#projen-awscdk-awscdkjavaapp) - AWS CDK app in Java.
+* [awscdk-app-ts](https://projen.io/api/API.html#projen-awscdk-awscdktypescriptapp) - AWS CDK app in TypeScript.
+* [awscdk-construct](https://projen.io/api/API.html#projen-awscdk-awscdkconstructlibrary) - AWS CDK construct library project.
+* [cdk8s-app-ts](https://projen.io/api/API.html#projen-cdk8s-cdk8stypescriptapp) - CDK8s app in TypeScript.
+* [cdk8s-construct](https://projen.io/api/API.html#projen-cdk8s-constructlibrarycdk8s) - CDK8s construct library project.
+* [cdktf-construct](https://projen.io/api/API.html#projen-cdktf-constructlibrarycdktf) - CDKTF construct library project.
+* [java](https://projen.io/api/API.html#projen-java-javaproject) - Java project.
+* [jsii](https://projen.io/api/API.html#projen-cdk-jsiiproject) - Multi-language jsii library project.
+* [nextjs](https://projen.io/api/API.html#projen-web-nextjsproject) - Next.js project without TypeScript.
+* [nextjs-ts](https://projen.io/api/API.html#projen-web-nextjstypescriptproject) - Next.js project with TypeScript.
+* [node](https://projen.io/api/API.html#projen-javascript-nodeproject) - Node.js project.
+* [project](https://projen.io/api/API.html#projen-project) - Base project.
+* [python](https://projen.io/api/API.html#projen-python-pythonproject) - Python project.
+* [react](https://projen.io/api/API.html#projen-web-reactproject) - React project without TypeScript.
+* [react-ts](https://projen.io/api/API.html#projen-web-reacttypescriptproject) - React project with TypeScript.
+* [typescript](https://projen.io/api/API.html#projen-typescript-typescriptproject) - TypeScript project.
+* [typescript-app](https://projen.io/api/API.html#projen-typescript-typescriptappproject) - TypeScript app.
 <!-- </macro> -->
 
 > Use `npx projen new PROJECT-TYPE --help` to view a list of command line
@@ -180,9 +180,9 @@ Some examples for features built-in to project types:
 
 ## API Reference
 
-See [API Reference](https://projen.github.io/projen/api/API.html) for API details.
+See [API Reference](https://projen.io/api/API.html) for API details.
 
-In addition, several projen components and project types are explained with examples at <https://projen.github.io/projen/> (currently a work in progress!).
+In addition, several projen components and project types are explained with examples at <https://projen.io/> (currently a work in progress!).
 
 ## Ecosystem
 

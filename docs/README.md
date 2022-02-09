@@ -10,6 +10,7 @@
 * [Dependencies](deps.md)
 * [Escape hatches](escape-hatches.md)
 * [Ejecting](eject.md)
+* [GitHub](github.md)
 * [GitLab](gitlab.md)
 * [Java Projects](java.md)
 * [Node.js Projects](node.md)
