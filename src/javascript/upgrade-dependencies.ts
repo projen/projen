@@ -94,6 +94,7 @@ export class UpgradeDependencies extends Component {
 
   private readonly options: UpgradeDependenciesOptions;
   private readonly _project: NodeProject;
+  private readonly _task: Task;
   private readonly pullRequestTitle: string;
 
   /**
@@ -133,20 +134,21 @@ export class UpgradeDependencies extends Component {
       project.tasks.addTask("post-upgrade", {
         description: "Runs after upgrading dependencies",
       });
+
+    // create the upgrade task
+    this._task = this.createTask();
   }
 
   /**
    * Add steps to execute a successful build.
-   * @param steps worklfow steps
+   * @param steps workflow steps
    */
   public addPostBuildSteps(...steps: JobStep[]) {
     this.postBuildSteps.push(...steps);
   }
 
-  // create the upgrade task and a corresponding github workflow
-  // for each requested branch.
+  // create a corresponding github workflow for each requested branch.
   public preSynthesize() {
-    const task = this.createTask();
     if (this._project.github && (this.options.workflow ?? true)) {
       // represents the default repository branch.
       // just like not specifying anything.
@@ -156,7 +158,7 @@ export class UpgradeDependencies extends Component {
         this._project.release?.branches ?? [defaultBranch];
       for (const branch of branches) {
         this.workflows.push(
-          this.createWorkflow(task, this._project.github, branch)
+          this.createWorkflow(this._task, this._project.github, branch)
         );
       }
     }
@@ -320,7 +322,7 @@ export class UpgradeDependencies extends Component {
       `*Automatically created by projen via the "${workflow.name}" workflow*`,
     ].join("\n");
 
-    const comitter = `${this.gitIdentity.name} <${this.gitIdentity.email}>`;
+    const committer = `${this.gitIdentity.name} <${this.gitIdentity.email}>`;
 
     const steps: workflows.JobStep[] = [
       ...WorkflowActions.checkoutWithPatch({
@@ -341,8 +343,8 @@ export class UpgradeDependencies extends Component {
           title: title,
           labels: this.options.workflowOptions?.labels?.join(",") || undefined,
           body: description,
-          author: comitter,
-          committer: comitter,
+          author: committer,
+          committer: committer,
           signoff: this.options.signoff ?? true,
         },
       },
