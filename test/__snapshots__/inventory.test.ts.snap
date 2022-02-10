@@ -2101,7 +2101,7 @@ Array [
       },
       Object {
         "default": "\\"latest\\"",
-        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "docs": "Version requirement of \`publib\` which is used to publish modules to npm.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -4836,7 +4836,7 @@ Array [
       },
       Object {
         "default": "\\"latest\\"",
-        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "docs": "Version requirement of \`publib\` which is used to publish modules to npm.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -7503,7 +7503,7 @@ Array [
       },
       Object {
         "default": "\\"latest\\"",
-        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "docs": "Version requirement of \`publib\` which is used to publish modules to npm.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -10093,7 +10093,7 @@ Array [
       },
       Object {
         "default": "\\"latest\\"",
-        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "docs": "Version requirement of \`publib\` which is used to publish modules to npm.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -12707,7 +12707,7 @@ Array [
       },
       Object {
         "default": "\\"latest\\"",
-        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "docs": "Version requirement of \`publib\` which is used to publish modules to npm.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -15993,7 +15993,7 @@ Array [
       },
       Object {
         "default": "\\"latest\\"",
-        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "docs": "Version requirement of \`publib\` which is used to publish modules to npm.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -18363,7 +18363,7 @@ Array [
       },
       Object {
         "default": "\\"latest\\"",
-        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "docs": "Version requirement of \`publib\` which is used to publish modules to npm.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -20587,7 +20587,7 @@ Array [
       },
       Object {
         "default": "\\"latest\\"",
-        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "docs": "Version requirement of \`publib\` which is used to publish modules to npm.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -22831,7 +22831,7 @@ Array [
       },
       Object {
         "default": "\\"latest\\"",
-        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "docs": "Version requirement of \`publib\` which is used to publish modules to npm.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -25813,7 +25813,7 @@ Array [
       },
       Object {
         "default": "\\"latest\\"",
-        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "docs": "Version requirement of \`publib\` which is used to publish modules to npm.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -28025,7 +28025,7 @@ Array [
       },
       Object {
         "default": "\\"latest\\"",
-        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "docs": "Version requirement of \`publib\` which is used to publish modules to npm.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -30378,7 +30378,7 @@ Array [
       },
       Object {
         "default": "\\"latest\\"",
-        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "docs": "Version requirement of \`publib\` which is used to publish modules to npm.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -32709,7 +32709,7 @@ Array [
       },
       Object {
         "default": "\\"latest\\"",
-        "docs": "Version requirement of \`jsii-release\` which is used to publish modules to npm.",
+        "docs": "Version requirement of \`publib\` which is used to publish modules to npm.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
