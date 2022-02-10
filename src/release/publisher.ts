@@ -64,7 +64,7 @@ export interface PublisherOptions {
    *
    * @default "latest"
    */
- readonly publibVersion?: string;
+  readonly publibVersion?: string;
 
   /**
    * Create an issue when a publish task fails.
@@ -136,8 +136,9 @@ export class Publisher extends Component {
 
     this.buildJobId = options.buildJobId;
     this.artifactName = options.artifactName;
-    this.publibVersion = options.publibVersion ?? options.jsiiReleaseVersion ?? PUBLIB_VERSION;
-    this.jsiiReleaseVersion = this.publibVersion;;
+    this.publibVersion =
+      options.publibVersion ?? options.jsiiReleaseVersion ?? PUBLIB_VERSION;
+    this.jsiiReleaseVersion = this.publibVersion;
     this.condition = options.condition;
     this.dryRun = options.dryRun ?? false;
 
