@@ -55,7 +55,7 @@ export interface ReleaseProjectOptions {
   readonly workflowContainerImage?: string;
 
   /**
-   * Version requirement of `jsii-release` which is used to publish modules to npm.
+   * Version requirement of `publib` which is used to publish modules to npm.
    * @default "latest"
    */
   readonly jsiiReleaseVersion?: string;

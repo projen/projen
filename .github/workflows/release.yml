@@ -107,7 +107,7 @@ jobs:
       - name: Collect js Artifact
         run: mv .repo/dist dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-npm
+        run: npx -p publib@latest publib-npm
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: registry.npmjs.org
@@ -155,7 +155,7 @@ jobs:
       - name: Collect java Artifact
         run: mv .repo/dist dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-maven
+        run: npx -p publib@latest publib-maven
         env:
           MAVEN_ENDPOINT: https://s01.oss.sonatype.org
           MAVEN_GPG_PRIVATE_KEY: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
@@ -205,7 +205,7 @@ jobs:
       - name: Collect python Artifact
         run: mv .repo/dist dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-pypi
+        run: npx -p publib@latest publib-pypi
         env:
           TWINE_USERNAME: ${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: ${{ secrets.TWINE_PASSWORD }}
@@ -251,7 +251,7 @@ jobs:
       - name: Collect go Artifact
         run: mv .repo/dist dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-golang
+        run: npx -p publib@latest publib-golang
         env:
           GIT_USER_NAME: github-actions
           GIT_USER_EMAIL: github-actions@github.com

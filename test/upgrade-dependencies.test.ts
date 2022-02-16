@@ -59,6 +59,20 @@ test("upgrades command includes only included packages", () => {
   expect(tasks.upgrade.steps[6].exec).toStrictEqual(`yarn upgrade ${deps}`);
 });
 
+test("upgrade task can be overwritten", () => {
+  const project = createProject({
+    depsUpgrade: true,
+  });
+
+  project.removeTask("upgrade");
+  const newTask = project.addTask("upgrade");
+  newTask.exec("echo 'hello world'");
+
+  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+
+  expect(tasks.upgrade.steps[0].exec).toStrictEqual(`echo 'hello world'`);
+});
+
 test("default options", () => {
   const project = createProject({
     projenUpgradeSecret: "PROJEN_SECRET",

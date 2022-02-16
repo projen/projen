@@ -71,14 +71,12 @@ describe("maven repository options", () => {
       ],
       steps: [
         { exec: 'test "$(git branch --show-current)" = "master"' },
-        { exec: "npx -p jsii-release@latest jsii-release-maven" },
+        { exec: "npx -p publib@latest publib-maven" },
       ],
     });
 
     const workflow = outdir[".github/workflows/release.yml"];
-    expect(workflow).toContain(
-      "run: npx -p jsii-release@latest jsii-release-maven"
-    );
+    expect(workflow).toContain("run: npx -p publib@latest publib-maven");
     expect(workflow).toContain("MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}");
     expect(workflow).not.toContainEqual("MAVEN_SERVER_ID");
     expect(workflow).not.toContainEqual("MAVEN_REPOSITORY_URL");
@@ -119,14 +117,12 @@ describe("maven repository options", () => {
       ],
       steps: [
         { exec: 'test "$(git branch --show-current)" = "master"' },
-        { exec: "npx -p jsii-release@latest jsii-release-maven" },
+        { exec: "npx -p publib@latest publib-maven" },
       ],
     });
 
     const workflow = outdir[".github/workflows/release.yml"];
-    expect(workflow).toContain(
-      "run: npx -p jsii-release@latest jsii-release-maven"
-    );
+    expect(workflow).toContain("run: npx -p publib@latest publib-maven");
     expect(workflow).toContain("MAVEN_ENDPOINT: https://s01.oss.sonatype.org");
     expect(workflow).toContain("MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}");
     expect(workflow).not.toContainEqual("MAVEN_SERVER_ID");
@@ -163,7 +159,7 @@ describe("maven repository options", () => {
       requiredEnv: ["MAVEN_PASSWORD", "MAVEN_USERNAME"],
       steps: [
         { exec: 'test "$(git branch --show-current)" = "master"' },
-        { exec: "npx -p jsii-release@latest jsii-release-maven" },
+        { exec: "npx -p publib@latest publib-maven" },
       ],
     });
 

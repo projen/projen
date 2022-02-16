@@ -28,6 +28,19 @@ export interface LambdaFunctionCommonOptions {
    * @default - defaults
    */
   readonly bundlingOptions?: BundlingOptions;
+
+  /**
+   * Whether to automatically reuse TCP connections when working with the AWS
+   * SDK for JavaScript.
+   *
+   * This sets the `AWS_NODEJS_CONNECTION_REUSE_ENABLED` environment variable
+   * to `1`.
+   *
+   * @see https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/node-reusing-connections.html
+   *
+   * @default true
+   */
+  readonly awsSdkConnectionReuse?: boolean;
 }
 
 /**
@@ -202,6 +215,11 @@ export class LambdaFunction extends Component {
       )}')),`
     );
     src.close("});");
+    if (options.awsSdkConnectionReuse ?? true) {
+      src.line(
+        "this.addEnvironment('AWS_NODEJS_CONNECTION_REUSE_ENABLED', '1', { removeInEdge: true });"
+      );
+    }
     src.close("}");
     src.close("}");
 

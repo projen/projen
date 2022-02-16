@@ -118,7 +118,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-npm
+        run: npx -p publib@latest publib-npm
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/
@@ -289,7 +289,7 @@ node_modules/
             "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
           },
           Object {
-            "exec": "npx -p jsii-release@latest jsii-release-npm",
+            "exec": "npx -p publib@latest publib-npm",
           },
         ],
       },
@@ -460,7 +460,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-npm
+        run: npx -p publib@latest publib-npm
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/
@@ -631,7 +631,7 @@ node_modules/
             "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
           },
           Object {
-            "exec": "npx -p jsii-release@latest jsii-release-npm",
+            "exec": "npx -p publib@latest publib-npm",
           },
         ],
       },
@@ -802,7 +802,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-npm
+        run: npx -p publib@latest publib-npm
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/
@@ -975,7 +975,7 @@ node_modules/
             "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
           },
           Object {
-            "exec": "npx -p jsii-release@latest jsii-release-npm",
+            "exec": "npx -p publib@latest publib-npm",
           },
         ],
       },
@@ -1631,7 +1631,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-pypi
+        run: npx -p publib@latest publib-pypi
         env:
           TWINE_USERNAME: \${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: \${{ secrets.TWINE_PASSWORD }}
@@ -1749,7 +1749,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-pypi
+        run: npx -p publib@latest publib-pypi
         env:
           TWINE_USERNAME: \${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: \${{ secrets.TWINE_PASSWORD }}
@@ -1938,7 +1938,7 @@ node_modules/
             "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
           },
           Object {
-            "exec": "npx -p jsii-release@latest jsii-release-pypi",
+            "exec": "npx -p publib@latest publib-pypi",
           },
         ],
       },
@@ -1954,7 +1954,7 @@ node_modules/
             "exec": "test \\"$(git branch --show-current)\\" = \\"foo\\"",
           },
           Object {
-            "exec": "npx -p jsii-release@latest jsii-release-pypi",
+            "exec": "npx -p publib@latest publib-pypi",
           },
         ],
       },
@@ -2428,7 +2428,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-npm
+        run: npx -p publib@latest publib-npm
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: npm.pkg.github.com
@@ -2568,7 +2568,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-npm
+        run: npx -p publib@latest publib-npm
         env:
           NPM_DIST_TAG: latest
           NPM_REGISTRY: npm.pkg.github.com
@@ -2737,7 +2737,7 @@ node_modules/
             "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
           },
           Object {
-            "exec": "npx -p jsii-release@latest jsii-release-npm",
+            "exec": "npx -p publib@latest publib-npm",
           },
         ],
       },
@@ -3622,7 +3622,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-golang
+        run: npx -p publib@latest publib-golang
         env:
           GIT_USER_NAME: github-actions
           GIT_USER_EMAIL: github-actions@github.com
@@ -3648,7 +3648,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-maven
+        run: npx -p publib@latest publib-maven
         env:
           MAVEN_GPG_PRIVATE_KEY: \${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
           MAVEN_GPG_PRIVATE_KEY_PASSPHRASE: \${{ secrets.MAVEN_GPG_PRIVATE_KEY_PASSPHRASE }}
@@ -3672,7 +3672,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-npm
+        run: npx -p publib@latest publib-npm
         env:
           NPM_DIST_TAG: latest
           NPM_TOKEN: \${{ secrets.NPM_TOKEN }}
@@ -3696,7 +3696,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-nuget
+        run: npx -p publib@latest publib-nuget
         env:
           NUGET_API_KEY: \${{ secrets.NUGET_API_KEY }}
   release_pypi:
@@ -3719,7 +3719,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Release
-        run: npx -p jsii-release@latest jsii-release-pypi
+        run: npx -p publib@latest publib-pypi
         env:
           TWINE_USERNAME: \${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: \${{ secrets.TWINE_PASSWORD }}
@@ -3834,7 +3834,7 @@ Object {
           "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
         },
         Object {
-          "exec": "npx -p jsii-release@latest jsii-release-golang",
+          "exec": "npx -p publib@latest publib-golang",
         },
       ],
     },
@@ -3853,7 +3853,7 @@ Object {
           "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
         },
         Object {
-          "exec": "npx -p jsii-release@latest jsii-release-maven",
+          "exec": "npx -p publib@latest publib-maven",
         },
       ],
     },
@@ -3871,7 +3871,7 @@ Object {
           "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
         },
         Object {
-          "exec": "npx -p jsii-release@latest jsii-release-npm",
+          "exec": "npx -p publib@latest publib-npm",
         },
       ],
     },
@@ -3886,7 +3886,7 @@ Object {
           "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
         },
         Object {
-          "exec": "npx -p jsii-release@latest jsii-release-nuget",
+          "exec": "npx -p publib@latest publib-nuget",
         },
       ],
     },
@@ -3902,7 +3902,7 @@ Object {
           "exec": "test \\"$(git branch --show-current)\\" = \\"main\\"",
         },
         Object {
-          "exec": "npx -p jsii-release@latest jsii-release-pypi",
+          "exec": "npx -p publib@latest publib-pypi",
         },
       ],
     },

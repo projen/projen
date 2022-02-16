@@ -127,6 +127,43 @@ test("runtime can be used to customize the lambda runtime and esbuild target", (
   });
 });
 
+test("AWS SDK connection reuse", () => {
+  const project = new TypeScriptProject({
+    name: "hello",
+    defaultReleaseBranch: "main",
+  });
+
+  new awscdk.LambdaFunction(project, {
+    entrypoint: join("src", "hello.lambda.ts"),
+    cdkDeps: cdkDepsForProject(project),
+  });
+
+  const snapshot = Testing.synth(project);
+  const generatedSource = snapshot["src/hello-function.ts"];
+  expect(generatedSource).toContain(
+    "this.addEnvironment('AWS_NODEJS_CONNECTION_REUSE_ENABLED', '1', { removeInEdge: true });"
+  );
+});
+
+test("AWS SDK connection reuse can be disabled", () => {
+  const project = new TypeScriptProject({
+    name: "hello",
+    defaultReleaseBranch: "main",
+  });
+
+  new awscdk.LambdaFunction(project, {
+    entrypoint: join("src", "hello.lambda.ts"),
+    cdkDeps: cdkDepsForProject(project),
+    awsSdkConnectionReuse: false,
+  });
+
+  const snapshot = Testing.synth(project);
+  const generatedSource = snapshot["src/hello-function.ts"];
+  expect(generatedSource).not.toContain(
+    "this.addEnvironment('AWS_NODEJS_CONNECTION_REUSE_ENABLED', '1', { removeInEdge: true });"
+  );
+});
+
 test("eslint allows handlers to import dev dependencies", () => {
   const project = new TypeScriptProject({
     name: "hello",

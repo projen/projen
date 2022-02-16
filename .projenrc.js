@@ -118,6 +118,7 @@ project.npmignore.exclude("/projen.bash");
 
 project.addExcludeFromCleanup("test/**"); // because snapshots include the projen marker...
 project.gitignore.include("templates/**");
+project.gitignore.exclude("/.idea");
 
 // expand markdown macros in readme
 const macros = project.addTask("readme-macros");
