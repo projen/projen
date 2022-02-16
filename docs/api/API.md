@@ -3967,7 +3967,7 @@ new awscdk.IntegrationTest(project: Project, options: IntegrationTestOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)</code>)  *No description*
   * **destroyAfterDeploy** (<code>boolean</code>)  Destroy the test app after a successful deployment. __*Default*__: true
-  * **pathMetadata** (<code>boolean</code>)  Enables path metadata. __*Default*__: false
+  * **pathMetadata** (<code>boolean</code>)  Enables path metadata, adding `aws:cdk:path`, with the defining construct's path, to the CloudFormation metadata for each synthesized resource. __*Default*__: false
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the integration test app. 
   * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use when running integration test cdk apps. 
   * **name** (<code>string</code>)  Name of the integration test. __*Default*__: Derived from the entrypoint filename.
@@ -12043,7 +12043,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **destroyAfterDeploy**?🔹 | <code>boolean</code> | Destroy the test app after a successful deployment.<br/>__*Default*__: true
-**pathMetadata**?🔹 | <code>boolean</code> | Enables path metadata.<br/>__*Default*__: false
+**pathMetadata**?🔹 | <code>boolean</code> | Enables path metadata, adding `aws:cdk:path`, with the defining construct's path, to the CloudFormation metadata for each synthesized resource.<br/>__*Default*__: false
 
 
 
@@ -12061,7 +12061,7 @@ Name | Type | Description
 **tsconfigPath**🔹 | <code>string</code> | The path of the tsconfig.json file to use when running integration test cdk apps.
 **destroyAfterDeploy**?🔹 | <code>boolean</code> | Destroy the test app after a successful deployment.<br/>__*Default*__: true
 **name**?🔹 | <code>string</code> | Name of the integration test.<br/>__*Default*__: Derived from the entrypoint filename.
-**pathMetadata**?🔹 | <code>boolean</code> | Enables path metadata.<br/>__*Default*__: false
+**pathMetadata**?🔹 | <code>boolean</code> | Enables path metadata, adding `aws:cdk:path`, with the defining construct's path, to the CloudFormation metadata for each synthesized resource.<br/>__*Default*__: false
 **stacks**?🔹 | <code>Array<string></code> | A list of stacks within the integration test to deploy/destroy.<br/>__*Default*__: ["**"]
 
 
