@@ -13,6 +13,13 @@ export interface IntegrationTestCommonOptions {
    * @default true
    */
   readonly destroyAfterDeploy?: boolean;
+
+  /**
+   * Enables path metadata
+   *
+   * @default false
+   */
+  readonly pathMetadata?: boolean;
 }
 
 /**
@@ -69,9 +76,13 @@ export class IntegrationTest extends IntegrationTestBase {
       `--app "${app}"`,
       "--no-version-reporting",
       // don't inject cloudformation metadata into template
-      "--no-path-metadata",
       "--no-asset-metadata",
     ];
+
+    const pathMetadata = options.pathMetadata ?? false;
+    if (!pathMetadata) {
+      opts.push("--no-path-metadata");
+    }
 
     if (options.cdkDeps.cdkMajorVersion === 1) {
       // add all feature flags
