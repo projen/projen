@@ -15,8 +15,8 @@ export interface IntegrationTestCommonOptions {
   readonly destroyAfterDeploy?: boolean;
 
   /**
-   * Enables path metadata
-   *
+   * Enables path metadata, adding `aws:cdk:path` with the defining construct's
+   * path to the CloudFormation metadata for each synthesized resource.
    * @default false
    */
   readonly pathMetadata?: boolean;

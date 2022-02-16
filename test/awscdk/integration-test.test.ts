@@ -219,12 +219,26 @@ test("enabling path metadata", () => {
   const output = Testing.synth(project);
 
   expect(
-    output[".projen/tasks.json"].tasks["integ:my-stage:deploy"]
-  ).toMatchSnapshot();
+    output[".projen/tasks.json"].tasks["integ:my-stage:deploy"].steps
+  ).not.toEqual(
+    expect.arrayContaining([
+      { exec: expect.stringContaining("--no-path-metadata") },
+    ])
+  );
+
   expect(
-    output[".projen/tasks.json"].tasks["integ:my-stage:snapshot"]
-  ).toMatchSnapshot();
+    output[".projen/tasks.json"].tasks["integ:my-stage:snapshot"].steps
+  ).not.toEqual(
+    expect.arrayContaining([
+      { exec: expect.stringContaining("--no-path-metadata") },
+    ])
+  );
+
   expect(
-    output[".projen/tasks.json"].tasks["integ:my-stage:watch"]
-  ).toMatchSnapshot();
+    output[".projen/tasks.json"].tasks["integ:my-stage:watch"].steps
+  ).not.toEqual(
+    expect.arrayContaining([
+      { exec: expect.stringContaining("--no-path-metadata") },
+    ])
+  );
 });
