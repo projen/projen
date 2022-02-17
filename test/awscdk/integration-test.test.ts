@@ -196,3 +196,49 @@ test("synthesizing an integration test containing a multi-stack stage", () => {
     output[".projen/tasks.json"].tasks["integ:my-stage:watch"]
   ).toMatchSnapshot();
 });
+
+test("enabling path metadata", () => {
+  // GIVEN
+  const project = new awscdk.AwsCdkTypeScriptApp({
+    name: "test",
+    defaultReleaseBranch: "main",
+    cdkVersion: "2.3.1",
+  });
+
+  // WHEN
+  new awscdk.IntegrationTest(project, {
+    name: "my-stage",
+    entrypoint: "test/my-stage.myinteg.ts",
+    stacks: ["my-stage/*"],
+    tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: project.cdkDeps,
+    pathMetadata: true,
+  });
+
+  // THEN
+  const output = Testing.synth(project);
+
+  expect(
+    output[".projen/tasks.json"].tasks["integ:my-stage:deploy"].steps
+  ).not.toEqual(
+    expect.arrayContaining([
+      { exec: expect.stringContaining("--no-path-metadata") },
+    ])
+  );
+
+  expect(
+    output[".projen/tasks.json"].tasks["integ:my-stage:snapshot"].steps
+  ).not.toEqual(
+    expect.arrayContaining([
+      { exec: expect.stringContaining("--no-path-metadata") },
+    ])
+  );
+
+  expect(
+    output[".projen/tasks.json"].tasks["integ:my-stage:watch"].steps
+  ).not.toEqual(
+    expect.arrayContaining([
+      { exec: expect.stringContaining("--no-path-metadata") },
+    ])
+  );
+});

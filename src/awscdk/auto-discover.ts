@@ -6,7 +6,10 @@ import {
 import { Component } from "../component";
 import { Project } from "../project";
 import { AwsCdkDeps } from "./awscdk-deps";
-import { IntegrationTest } from "./integration-test";
+import {
+  IntegrationTest,
+  IntegrationTestCommonOptions,
+} from "./integration-test";
 import { TYPESCRIPT_LAMBDA_EXT } from "./internal";
 import { LambdaFunction, LambdaFunctionCommonOptions } from "./lambda-function";
 
@@ -30,7 +33,12 @@ export interface AutoDiscoverCommonOptions {
  */
 export interface IntegrationTestAutoDiscoverOptions
   extends AutoDiscoverCommonOptions,
-    IntegrationTestAutoDiscoverBaseOptions {}
+    IntegrationTestAutoDiscoverBaseOptions {
+  /**
+   * Options for integration tests.
+   */
+  readonly integrationTestOptions?: IntegrationTestCommonOptions;
+}
 
 /**
  * Creates integration tests from entry points discovered in the test tree.
@@ -44,6 +52,7 @@ export class IntegrationTestAutoDiscover extends IntegrationTestAutoDiscoverBase
         entrypoint,
         cdkDeps: options.cdkDeps,
         tsconfigPath: options.tsconfigPath,
+        ...options.integrationTestOptions,
       });
     }
   }
@@ -127,6 +136,7 @@ export class AutoDiscover extends Component {
         cdkDeps: options.cdkDeps,
         testdir: options.testdir,
         tsconfigPath: options.tsconfigPath,
+        integrationTestOptions: options.integrationTestOptions,
       });
     }
   }
