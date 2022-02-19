@@ -197,12 +197,7 @@ export class ReactComponent extends Component {
     // No compile for react app
     project.compileTask.reset();
 
-    project.addDeps("react", "react-dom", "react-scripts@^5", "web-vitals");
-    project.addDevDeps(
-      "@testing-library/jest-dom",
-      "@testing-library/react",
-      "@testing-library/user-event"
-    );
+    project.addDeps("react", "react-dom", "react-scripts@^5", "web-vitals", "@testing-library/jest-dom", "@testing-library/react", "@testing-library/user-event");
     if (this.typescript) {
       project.addDevDeps("@types/jest", "@types/react", "@types/react-dom");
     }
