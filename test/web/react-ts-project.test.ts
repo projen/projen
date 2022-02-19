@@ -17,6 +17,9 @@ test("deps can be overridden", () => {
   p.deps.removeDependency("react-dom");
   p.deps.removeDependency("react-scripts");
   p.deps.removeDependency("web-vitals");
+  p.deps.removeDependency("@testing-library/jest-dom");
+  p.deps.removeDependency("@testing-library/react");
+  p.deps.removeDependency("@testing-library/user-event");
   p.addDevDeps(
     "react@^2",
     "react-dom@^4",
