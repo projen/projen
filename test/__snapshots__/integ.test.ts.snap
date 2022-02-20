@@ -1257,7 +1257,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "[[ ! -z \${CI} ]] && mkdir -p dist && rsync -a . dist --exclude .git --exclude node_modules || npx projen package-all",
+            "exec": "if [ ! -z \${CI} ]; then mkdir -p dist && rsync -a . dist --exclude .git --exclude node_modules; else npx projen package-all; fi",
           },
         ],
       },
@@ -2677,7 +2677,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "[[ ! -z \${CI} ]] && mkdir -p dist && rsync -a . dist --exclude .git --exclude node_modules || npx projen package-all",
+            "exec": "if [ ! -z \${CI} ]; then mkdir -p dist && rsync -a . dist --exclude .git --exclude node_modules; else npx projen package-all; fi",
           },
         ],
       },
