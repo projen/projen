@@ -100,6 +100,12 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
    * that cannot be compiled with jsii's compiler settings.
    */
   readonly excludeTypescript?: string[];
+
+  /**
+   * File path for generated docs.
+   * @default "API.md"
+   */
+  readonly docgenFilePath?: string;
 }
 
 export enum Stability {
@@ -328,7 +334,7 @@ export class JsiiProject extends TypeScriptProject {
     this.npmignore?.include(".jsii");
 
     if (options.docgen ?? true) {
-      new JsiiDocgen(this);
+      new JsiiDocgen(this, { filePath: options.docgenFilePath });
     }
 
     // jsii updates .npmignore, so we make it writable

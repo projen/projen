@@ -31,11 +31,9 @@ describe("IntegrationTest", () => {
   // we expect .npmignore to exclude the integration test's cdkout directory
   // and the various temporary directories created during execution.
   test("npmignore", () => {
-    [
-      "test/.tmp/foo.integ/deploy.cdk.out",
-      "test/.tmp/foo.integ/synth.cdk.out",
-      "test/foo.integ.snapshot",
-    ].forEach((i) => expect(output[".npmignore"]).toContain(i));
+    ["test/.tmp", "test/foo.integ.snapshot"].forEach((i) =>
+      expect(output[".npmignore"]).toContain(i)
+    );
   });
 
   // exclude cloud assembly manifests and assets from
@@ -51,9 +49,7 @@ describe("IntegrationTest", () => {
       "test/foo.integ.snapshot/**/manifest.json",
       "test/foo.integ.snapshot/tree.json",
       "test/foo.integ.snapshot/**/tree.json",
-      "test/.tmp/foo.integ/deploy.cdk.out",
-      "test/.tmp/foo.integ/synth.cdk.out",
-      "!test/foo.integ.snapshot",
+      "test/.tmp",
     ].forEach((i) => expect(output[".gitignore"]).toContain(i));
   });
 
@@ -199,4 +195,50 @@ test("synthesizing an integration test containing a multi-stack stage", () => {
   expect(
     output[".projen/tasks.json"].tasks["integ:my-stage:watch"]
   ).toMatchSnapshot();
+});
+
+test("enabling path metadata", () => {
+  // GIVEN
+  const project = new awscdk.AwsCdkTypeScriptApp({
+    name: "test",
+    defaultReleaseBranch: "main",
+    cdkVersion: "2.3.1",
+  });
+
+  // WHEN
+  new awscdk.IntegrationTest(project, {
+    name: "my-stage",
+    entrypoint: "test/my-stage.myinteg.ts",
+    stacks: ["my-stage/*"],
+    tsconfigPath: project.tsconfigDev.fileName,
+    cdkDeps: project.cdkDeps,
+    pathMetadata: true,
+  });
+
+  // THEN
+  const output = Testing.synth(project);
+
+  expect(
+    output[".projen/tasks.json"].tasks["integ:my-stage:deploy"].steps
+  ).not.toEqual(
+    expect.arrayContaining([
+      { exec: expect.stringContaining("--no-path-metadata") },
+    ])
+  );
+
+  expect(
+    output[".projen/tasks.json"].tasks["integ:my-stage:snapshot"].steps
+  ).not.toEqual(
+    expect.arrayContaining([
+      { exec: expect.stringContaining("--no-path-metadata") },
+    ])
+  );
+
+  expect(
+    output[".projen/tasks.json"].tasks["integ:my-stage:watch"].steps
+  ).not.toEqual(
+    expect.arrayContaining([
+      { exec: expect.stringContaining("--no-path-metadata") },
+    ])
+  );
 });

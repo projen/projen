@@ -1,0 +1,118 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IntegrationTest adding an integration test 1`] = `
+Object {
+  "description": "update snapshot for integration test \\"my-test-name\\"",
+  "name": "integ:my-test-name:snapshot",
+  "steps": Array [
+    Object {
+      "exec": "rm -fr test/my-test-name.integ.snapshot",
+    },
+    Object {
+      "exec": "cdk8s synth --app \\"ts-node -P tsconfig.dev.json test/my-test-name.integ.ts\\" -o test/my-test-name.integ.snapshot",
+    },
+  ],
+}
+`;
+
+exports[`IntegrationTest adding an integration test 2`] = `
+Object {
+  "description": "deploy integration test 'my-test-name' and capture snapshot",
+  "name": "integ:my-test-name:deploy",
+  "steps": Array [
+    Object {
+      "exec": "rm -fr test/.tmp/my-test-name.integ/deploy.cdk.out",
+    },
+    Object {
+      "exec": "cdk8s synth --app \\"ts-node -P tsconfig.dev.json test/my-test-name.integ.ts\\" -o test/.tmp/my-test-name.integ/deploy.cdk.out",
+    },
+    Object {
+      "exec": "kubectl apply -f test/.tmp/my-test-name.integ/deploy.cdk.out",
+    },
+    Object {
+      "exec": "rm -fr test/my-test-name.integ.snapshot",
+    },
+    Object {
+      "exec": "mv test/.tmp/my-test-name.integ/deploy.cdk.out test/my-test-name.integ.snapshot",
+    },
+  ],
+}
+`;
+
+exports[`IntegrationTest adding an integration test 3`] = `
+Object {
+  "description": "assert the snapshot of integration test 'my-test-name'",
+  "name": "integ:my-test-name:assert",
+  "steps": Array [
+    Object {
+      "exec": "[ -d \\"test/my-test-name.integ.snapshot\\" ] || (echo \\"No snapshot available for integration test 'my-test-name'. Run 'projen integ:my-test-name:deploy' to capture.\\" && exit 1)",
+    },
+    Object {
+      "exec": "cdk8s synth --app \\"ts-node -P tsconfig.dev.json test/my-test-name.integ.ts\\" -o test/.tmp/my-test-name.integ/assert.cdk.out > /dev/null",
+    },
+    Object {
+      "exec": "diff test/my-test-name.integ.snapshot/ test/.tmp/my-test-name.integ/assert.cdk.out/",
+    },
+  ],
+}
+`;
+
+exports[`IntegrationTest adding an integration test 4`] = `
+Object {
+  "description": "update snapshot for all integration tests",
+  "name": "integ:snapshot-all",
+  "steps": Array [
+    Object {
+      "spawn": "integ:my-test-name:snapshot",
+    },
+  ],
+}
+`;
+
+exports[`IntegrationTest adding an integration test 5`] = `
+Object {
+  "description": "Run tests",
+  "name": "test",
+  "steps": Array [
+    Object {
+      "exec": "jest --passWithNoTests --all --updateSnapshot",
+    },
+    Object {
+      "spawn": "eslint",
+    },
+    Object {
+      "spawn": "integ:my-test-name:assert",
+    },
+  ],
+}
+`;
+
+exports[`IntegrationTest explicit name 1`] = `
+Object {
+  "description": "update snapshot for all integration tests",
+  "name": "integ:snapshot-all",
+  "steps": Array [
+    Object {
+      "spawn": "integ:foobar:snapshot",
+    },
+  ],
+}
+`;
+
+exports[`IntegrationTest explicit name 2`] = `
+Object {
+  "description": "Run tests",
+  "name": "test",
+  "steps": Array [
+    Object {
+      "exec": "jest --passWithNoTests --all --updateSnapshot",
+    },
+    Object {
+      "spawn": "eslint",
+    },
+    Object {
+      "spawn": "integ:foobar:assert",
+    },
+  ],
+}
+`;

@@ -71,14 +71,12 @@ describe("maven repository options", () => {
       ],
       steps: [
         { exec: 'test "$(git branch --show-current)" = "master"' },
-        { exec: "npx -p jsii-release@latest jsii-release-maven" },
+        { exec: "npx -p publib@latest publib-maven" },
       ],
     });
 
     const workflow = outdir[".github/workflows/release.yml"];
-    expect(workflow).toContain(
-      "run: npx -p jsii-release@latest jsii-release-maven"
-    );
+    expect(workflow).toContain("run: npx -p publib@latest publib-maven");
     expect(workflow).toContain("MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}");
     expect(workflow).not.toContainEqual("MAVEN_SERVER_ID");
     expect(workflow).not.toContainEqual("MAVEN_REPOSITORY_URL");
@@ -119,14 +117,12 @@ describe("maven repository options", () => {
       ],
       steps: [
         { exec: 'test "$(git branch --show-current)" = "master"' },
-        { exec: "npx -p jsii-release@latest jsii-release-maven" },
+        { exec: "npx -p publib@latest publib-maven" },
       ],
     });
 
     const workflow = outdir[".github/workflows/release.yml"];
-    expect(workflow).toContain(
-      "run: npx -p jsii-release@latest jsii-release-maven"
-    );
+    expect(workflow).toContain("run: npx -p publib@latest publib-maven");
     expect(workflow).toContain("MAVEN_ENDPOINT: https://s01.oss.sonatype.org");
     expect(workflow).toContain("MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}");
     expect(workflow).not.toContainEqual("MAVEN_SERVER_ID");
@@ -163,7 +159,7 @@ describe("maven repository options", () => {
       requiredEnv: ["MAVEN_PASSWORD", "MAVEN_USERNAME"],
       steps: [
         { exec: 'test "$(git branch --show-current)" = "master"' },
-        { exec: "npx -p jsii-release@latest jsii-release-maven" },
+        { exec: "npx -p publib@latest publib-maven" },
       ],
     });
 
@@ -310,21 +306,41 @@ describe("publish to go", () => {
   });
 });
 
-test("docgen: true should just work", () => {
-  const project = new JsiiProject({
-    author: "My name",
-    name: "testproject",
-    authorAddress: "https://foo.bar",
-    defaultReleaseBranch: "main",
-    repositoryUrl: "https://github.com/foo/bar.git",
-    docgen: true,
-    publishTasks: true,
+describe("docgen", () => {
+  test("true should just work", () => {
+    const project = new JsiiProject({
+      author: "My name",
+      name: "testproject",
+      authorAddress: "https://foo.bar",
+      defaultReleaseBranch: "main",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      docgen: true,
+      publishTasks: true,
+    });
+
+    const output = synthSnapshot(project);
+    expect(
+      output[".projen/tasks.json"].tasks.docgen.steps[0].exec
+    ).toStrictEqual("jsii-docgen -o API.md");
   });
 
-  const output = synthSnapshot(project);
-  expect(output[".projen/tasks.json"].tasks.docgen.steps[0].exec).toStrictEqual(
-    "jsii-docgen"
-  );
+  test("can customize output", () => {
+    const project = new JsiiProject({
+      author: "My name",
+      name: "testproject",
+      authorAddress: "https://foo.bar",
+      defaultReleaseBranch: "main",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      docgen: true,
+      docgenFilePath: "docs.md",
+      publishTasks: true,
+    });
+
+    const output = synthSnapshot(project);
+    expect(
+      output[".projen/tasks.json"].tasks.docgen.steps[0].exec
+    ).toStrictEqual("jsii-docgen -o docs.md");
+  });
 });
 
 describe("language bindings", () => {

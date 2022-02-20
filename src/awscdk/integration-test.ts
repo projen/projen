@@ -1,10 +1,10 @@
-import { basename, dirname, join } from "path";
-import { Component } from "../component";
+import { join } from "path";
+import { IntegrationTestBase, IntegrationTestBaseOptions } from "../cdk";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
 import { Task } from "../task";
 import { AwsCdkDeps } from "./awscdk-deps";
-import { FEATURE_FLAGS, TYPESCRIPT_INTEG_EXT } from "./internal";
+import { FEATURE_FLAGS } from "./internal";
 
 export interface IntegrationTestCommonOptions {
   /**
@@ -13,38 +13,26 @@ export interface IntegrationTestCommonOptions {
    * @default true
    */
   readonly destroyAfterDeploy?: boolean;
+
+  /**
+   * Enables path metadata, adding `aws:cdk:path`, with the defining construct's
+   * path, to the CloudFormation metadata for each synthesized resource.
+   * @default false
+   */
+  readonly pathMetadata?: boolean;
 }
 
 /**
  * Options for `IntegrationTest`.
  */
-export interface IntegrationTestOptions extends IntegrationTestCommonOptions {
-  /**
-   * Name of the integration test
-   * @default - Derived from the entrypoint filename.
-   */
-  readonly name?: string;
-
+export interface IntegrationTestOptions
+  extends IntegrationTestCommonOptions,
+    IntegrationTestBaseOptions {
   /**
    * A list of stacks within the integration test to deploy/destroy.
    * @default ["**"]
    */
   readonly stacks?: string[];
-
-  /**
-   * A path from the project root directory to a TypeScript file which contains
-   * the integration test app.
-   *
-   * This is relative to the root directory of the project.
-   *
-   * @example "test/subdir/foo.integ.ts"
-   */
-  readonly entrypoint: string;
-
-  /**
-   * The path of the tsconfig.json file to use when running integration test cdk apps.
-   */
-  readonly tsconfigPath: string;
 
   /**
    * AWS CDK dependency manager.
@@ -55,26 +43,11 @@ export interface IntegrationTestOptions extends IntegrationTestCommonOptions {
 /**
  * Cloud integration tests.
  */
-export class IntegrationTest extends Component {
+export class IntegrationTest extends IntegrationTestBase {
   /**
-   * Deploy the integration test and update the snapshot upon success.
-   */
-  public readonly deployTask: Task;
-
-  /**
-   * Destroys a deployed stack.
+   * Destroy the integration test resources
    */
   public readonly destroyTask: Task;
-
-  /**
-   * Synthesizes the integration test and compares against a local copy (runs during build).
-   */
-  public readonly assertTask: Task;
-
-  /**
-   * Just update snapshot (without deployment).
-   */
-  public readonly snapshotTask: Task;
 
   /**
    * The watch task.
@@ -82,16 +55,7 @@ export class IntegrationTest extends Component {
   public readonly watchTask: Task;
 
   constructor(project: Project, options: IntegrationTestOptions) {
-    super(project);
-    const entry = options.entrypoint;
-    const name = options.name ?? basename(entry, TYPESCRIPT_INTEG_EXT);
-    const dir = dirname(entry);
-
-    const deploydir = join(dir, ".tmp", `${name}.integ`, "deploy.cdk.out");
-    const actualdir = join(dir, ".tmp", `${name}.integ`, "synth.cdk.out");
-    const snapshotdir = join(dir, `${name}.integ.snapshot`);
-
-    const app = `ts-node -P ${options.tsconfigPath} ${entry}`;
+    super(project, options);
 
     if (!project.deps.tryGetDependency("aws-cdk")) {
       project.deps.addDependency(
@@ -104,13 +68,21 @@ export class IntegrationTest extends Component {
       project.deps.addDependency("ts-node", DependencyType.BUILD);
     }
 
+    const deployDir = join(this.tmpDir, "deploy.cdk.out");
+    const assertDir = join(this.tmpDir, "assert.cdk.out");
+    const app = `ts-node -P ${options.tsconfigPath} ${options.entrypoint}`;
+
     const opts = [
       `--app "${app}"`,
       "--no-version-reporting",
       // don't inject cloudformation metadata into template
-      "--no-path-metadata",
       "--no-asset-metadata",
     ];
+
+    const pathMetadata = options.pathMetadata ?? false;
+    if (!pathMetadata) {
+      opts.push("--no-path-metadata");
+    }
 
     if (options.cdkDeps.cdkMajorVersion === 1) {
       // add all feature flags
@@ -130,86 +102,47 @@ export class IntegrationTest extends Component {
     const stacks = options.stacks ?? ["**"];
     const stackOpts = stacks.map((stack) => `'${stack}'`).join(" ");
 
-    const deployTask = project.addTask(`integ:${name}:deploy`, {
-      description: `deploy integration test '${name}' and capture snapshot`,
-    });
-
-    deployTask.exec(`rm -fr ${deploydir}`);
-    deployTask.exec(
-      `cdk deploy ${cdkopts} ${stackOpts} --require-approval=never -o ${deploydir}`
+    this.deployTask.exec(`rm -fr ${deployDir}`);
+    this.deployTask.exec(
+      `cdk deploy ${cdkopts} ${stackOpts} --require-approval=never -o ${deployDir}`
     );
 
     // if deployment was successful, copy the deploy dir to the expected dir
-    deployTask.exec(`rm -fr ${snapshotdir}`);
-    deployTask.exec(`mv ${deploydir} ${snapshotdir}`);
+    this.deployTask.exec(`rm -fr ${this.snapshotDir}`);
+    this.deployTask.exec(`mv ${deployDir} ${this.snapshotDir}`);
 
-    const watchTask = project.addTask(`integ:${name}:watch`, {
-      description: `watch integration test '${name}' (without updating snapshots)`,
-      exec: `cdk watch ${cdkopts} ${stackOpts} -o ${deploydir}`,
+    this.watchTask = project.addTask(`integ:${this.name}:watch`, {
+      description: `watch integration test '${this.name}' (without updating snapshots)`,
+      exec: `cdk watch ${cdkopts} ${stackOpts} -o ${deployDir}`,
     });
 
-    const destroyTask = project.addTask(`integ:${name}:destroy`, {
-      description: `destroy integration test '${name}'`,
-      exec: `cdk destroy --app ${snapshotdir} ${stackOpts} --no-version-reporting`,
+    this.destroyTask = project.addTask(`integ:${this.name}:destroy`, {
+      description: `destroy integration test '${this.name}'`,
+      exec: `cdk destroy --app ${this.snapshotDir} ${stackOpts} --no-version-reporting`,
     });
 
     const destroyAfterDeploy = options.destroyAfterDeploy ?? true;
     if (destroyAfterDeploy) {
-      deployTask.spawn(destroyTask);
+      this.deployTask.spawn(this.destroyTask);
     }
+
+    this.snapshotTask.exec(
+      `cdk synth ${cdkopts} -o ${this.snapshotDir} > /dev/null`
+    );
 
     const exclude = ["asset.*", "cdk.out", "manifest.json", "tree.json"];
 
-    const assertTask = project.addTask(`integ:${name}:assert`, {
-      description: `assert the snapshot of integration test '${name}'`,
-    });
-
-    assertTask.exec(
-      `[ -d "${snapshotdir}" ] || (echo "No snapshot available for integration test '${name}'. Run 'projen ${deployTask.name}' to capture." && exit 1)`
+    this.assertTask.exec(`cdk synth ${cdkopts} -o ${assertDir} > /dev/null`);
+    this.assertTask.exec(
+      `diff -r ${exclude.map((x) => `-x ${x}`).join(" ")} ${
+        this.snapshotDir
+      }/ ${assertDir}/`
     );
-    assertTask.exec(`cdk synth ${cdkopts} -o ${actualdir} > /dev/null`);
-    assertTask.exec(
-      `diff -r ${exclude
-        .map((x) => `-x ${x}`)
-        .join(" ")} ${snapshotdir}/ ${actualdir}/`
-    );
-
-    const snapshotTask = project.addTask(`integ:${name}:snapshot`, {
-      description: `update snapshot for integration test "${name}"`,
-      exec: `cdk synth ${cdkopts} -o ${snapshotdir} > /dev/null`,
-    });
-
-    let snapshotAllTask = project.tasks.tryFind("integ:snapshot-all");
-    if (!snapshotAllTask) {
-      snapshotAllTask = project.addTask("integ:snapshot-all", {
-        description: "update snapshot for all integration tests",
-      });
-    }
-    snapshotAllTask.spawn(snapshotTask);
-
-    // synth as part of our tests, which means that if outdir changes, anti-tamper will fail
-    project.testTask.spawn(assertTask);
-    project.addGitIgnore(`!${snapshotdir}`); // commit outdir to git but not assets
 
     // do not commit all files we are excluding
     for (const x of exclude) {
-      project.addGitIgnore(`${snapshotdir}/${x}`);
-      project.addGitIgnore(`${snapshotdir}/**/${x}`); // nested assemblies
+      project.addGitIgnore(`${this.snapshotDir}/${x}`);
+      project.addGitIgnore(`${this.snapshotDir}/**/${x}`); // nested assemblies
     }
-
-    project.addGitIgnore(deploydir);
-    project.addPackageIgnore(deploydir);
-    project.addGitIgnore(actualdir);
-    project.addPackageIgnore(actualdir);
-
-    // commit the snapshot (but not into the tarball)
-    project.addGitIgnore(`!${snapshotdir}`);
-    project.addPackageIgnore(snapshotdir);
-
-    this.deployTask = deployTask;
-    this.assertTask = assertTask;
-    this.destroyTask = destroyTask;
-    this.snapshotTask = snapshotTask;
-    this.watchTask = watchTask;
   }
 }

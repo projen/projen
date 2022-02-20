@@ -54,9 +54,10 @@ junit.xml
 !/.eslintrc.json
 .jsii
 tsconfig.json
-!/API.md
+!/docs/api/API.md
 !/projen.bash
 !templates/**
+/.idea
 !/.markdownlint.json
 !/.vscode/launch.json
 !/.github/workflows/upgrade-main.yml

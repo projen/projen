@@ -96,6 +96,8 @@ const project = new cdk.JsiiProject({
 
   autoApproveUpgrades: true,
   autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
+
+  docgenFilePath: "docs/api/API.md",
 });
 
 // this script is what we use as the projen command in this project
@@ -116,6 +118,7 @@ project.npmignore.exclude("/projen.bash");
 
 project.addExcludeFromCleanup("test/**"); // because snapshots include the projen marker...
 project.gitignore.include("templates/**");
+project.gitignore.exclude("/.idea");
 
 // expand markdown macros in readme
 const macros = project.addTask("readme-macros");
