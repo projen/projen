@@ -192,8 +192,11 @@ export interface JobPermissions {
   readonly checks?: JobPermission;
   readonly contents?: JobPermission;
   readonly deployments?: JobPermission;
+  readonly idToken?: JobPermission;
   readonly issues?: JobPermission;
+  readonly discussions?: JobPermission;
   readonly packages?: JobPermission;
+  readonly pages?: JobPermission;
   readonly pullRequests?: JobPermission;
   readonly repositoryProjects?: JobPermission;
   readonly securityEvents?: JobPermission;
