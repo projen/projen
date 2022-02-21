@@ -1287,9 +1287,9 @@ browser-process-hrtime@^1.0.0:
   integrity sha512-9o5UecI3GhkpM6DrXr69PblIuWxPKk9Y0jHBRhdocZ2y7YECBFCsHm79Pr3OyR2AvjhDkabFJaDJMYRazHgsow==
 
 browserslist@^4.17.5:
-  version "4.19.2"
-  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.19.2.tgz#9ba98791192a39e1242f0670bb265ceee1baf0a4"
-  integrity sha512-97XU1CTZ5TwU9Qy/Taj+RtiI6SQM1WIhZ9osT7EY0oO2aWXGABZT2OZeRL+6PfaQsiiMIjjwIoYFPq4APgspgQ==
+  version "4.19.3"
+  resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-4.19.3.tgz#29b7caad327ecf2859485f696f9604214bedd383"
+  integrity sha512-XK3X4xtKJ+Txj8G5c30B4gsm71s69lqXlkYui4s6EkKxuv49qjYlY6oVd+IFJ73d4YymtM3+djvvt/R/iJwwDg==
   dependencies:
     caniuse-lite "^1.0.30001312"
     electron-to-chromium "^1.4.71"
@@ -2285,10 +2285,10 @@ escodegen@^2.0.0:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-prettier@^8.3.0:
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.3.0.tgz#f7471b20b6fe8a9a9254cc684454202886a2dd7a"
-  integrity sha512-BgZuLUSeKzvlL/VUjx/Yb787VQ26RU3gGjA3iiFvdsp/2bMfVIWUVP7tjxtjS0e+HP409cPlPvNkQloz8C91ew==
+eslint-config-prettier@^8.4.0:
+  version "8.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.4.0.tgz#8e6d17c7436649e98c4c2189868562921ef563de"
+  integrity sha512-CFotdUcMY18nGRo5KGsnNxpznzhkopOcOo0InID+sgQssPrzjvsyKZPvOgymTFeHrFuC3Tzdf2YndhXtULK9Iw==
 
 eslint-import-resolver-node@^0.3.6:
   version "0.3.6"
@@ -4552,9 +4552,9 @@ npm-bundled@^1.1.1:
     npm-normalize-package-bin "^1.0.1"
 
 npm-check-updates@^12:
-  version "12.3.1"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.3.1.tgz#48339da0331e9c857b94be04b33dfe7f5ec34fbd"
-  integrity sha512-rvXyiUnc9zw3WXakqv0LsdFDc1V4T8DHG8AdWEjJiqfOZdBI4q8ekTt/BFqLQAtcXo5Pu6WGqjA9oDnFi4UV3g==
+  version "12.4.0"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.4.0.tgz#67e8e1b88551167368ec246dfd4302ce3007d83d"
+  integrity sha512-X14H74M8SVFkStmP1NDOMh0OjLB3mU2dwUeM71zyITJHkm08MASwwTcydW6YuGcNW1RUlVq1cQY2yWijv4zKUQ==
   dependencies:
     chalk "^4.1.2"
     cint "^8.2.1"
