@@ -19,7 +19,6 @@ export * from "./projects";
 export * from "./projenrc-json";
 export * from "./readme";
 export * from "./sample-file";
-export * from "./shared";
 export * from "./semver";
 export * from "./source-code";
 export * from "./task";

@@ -1,4 +1,4 @@
-import { Dependabot, DependabotRegistryType } from "../../src/github";
+import { Dependabot, DependabotRegistryType, GitHub } from "../../src/github";
 import { NodeProject, NodeProjectOptions } from "../../src/javascript";
 import { synthSnapshot } from "../util";
 
@@ -6,7 +6,7 @@ describe("dependabot", () => {
   test("default", () => {
     const project = createProject();
 
-    new Dependabot(project.github!);
+    new Dependabot(GitHub.of(project)!);
 
     const snapshot = synthSnapshot(project);
     expect(snapshot[".github/dependabot.yml"]).toBeDefined();
@@ -18,7 +18,7 @@ describe("dependabot", () => {
 
     const registryName = "npm-registry-npm-pkg-github-com";
 
-    new Dependabot(project.github!, {
+    new Dependabot(GitHub.of(project)!, {
       registries: {
         [registryName]: {
           type: DependabotRegistryType.NPM_REGISTRY,
@@ -43,7 +43,7 @@ describe("dependabot", () => {
   describe("ignoring", () => {
     test("ignores projen by default", () => {
       const project = createProject();
-      new Dependabot(project.github!, {});
+      new Dependabot(GitHub.of(project)!);
       const snapshot = synthSnapshot(project);
       const dependabot = snapshot[".github/dependabot.yml"];
       expect(dependabot).toMatchSnapshot();
@@ -53,7 +53,7 @@ describe("dependabot", () => {
 
     test("ignore with ignoreProjen set to false", () => {
       const project = createProject();
-      new Dependabot(project.github!, { ignoreProjen: false });
+      new Dependabot(GitHub.of(project)!, { ignoreProjen: false });
       const snapshot = synthSnapshot(project);
       const dependabot = snapshot[".github/dependabot.yml"];
       expect(dependabot).toMatchSnapshot();
@@ -63,7 +63,7 @@ describe("dependabot", () => {
 
     test("ignore with no version", () => {
       const project = createProject();
-      new Dependabot(project.github!, {
+      new Dependabot(GitHub.of(project)!, {
         ignore: [{ dependencyName: "testlib" }],
       });
 
@@ -77,7 +77,7 @@ describe("dependabot", () => {
 
     test("ignore with a single version", () => {
       const project = createProject();
-      new Dependabot(project.github!, {
+      new Dependabot(GitHub.of(project)!, {
         ignore: [{ dependencyName: "testlib", versions: [">10.x"] }],
       });
 
@@ -92,7 +92,7 @@ describe("dependabot", () => {
 
     test("ignore with multiple versions", () => {
       const project = createProject();
-      new Dependabot(project.github!, {
+      new Dependabot(GitHub.of(project)!, {
         ignore: [{ dependencyName: "testlib", versions: ["10.x", "20.x"] }],
       });
 

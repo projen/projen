@@ -12,6 +12,6 @@ export * from "./pull-request-lint";
 
 export * from "./task-workflow";
 
-export * from "./github-project";
+export * from "./shared";
 
 export * as workflows from "./workflows-model";

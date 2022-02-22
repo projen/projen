@@ -1,14 +1,9 @@
 import { join } from "path";
 import { BuildWorkflow } from "../build";
 import { PROJEN_DIR, PROJEN_RC } from "../common";
-import {
-  AutoMerge,
-  DependabotOptions,
-  GitHubProject,
-  GitHubProjectOptions,
-  GitIdentity,
-} from "../github";
+import { AutoMerge, DependabotOptions, GitHub, GitIdentity } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
+import { SharedComponents, SharedComponentsOptions } from "../github/shared";
 import { JobStep, Triggers } from "../github/workflows-model";
 import { Gitpod } from "../gitpod";
 import { IgnoreFile } from "../ignore-file";
@@ -19,8 +14,8 @@ import {
   UpgradeDependenciesOptions,
 } from "../javascript";
 import { License } from "../license";
+import { Project, ProjectOptions } from "../project";
 import { Publisher, Release, ReleaseProjectOptions } from "../release";
-import { SharedComponents, SharedComponentsOptions } from "../shared";
 import { Task } from "../task";
 import { deepMerge } from "../util";
 import { Version } from "../version";
@@ -38,7 +33,7 @@ import { UpgradeDependenciesSchedule } from "./upgrade-dependencies";
 const PROJEN_SCRIPT = "projen";
 
 export interface NodeProjectOptions
-  extends GitHubProjectOptions,
+  extends ProjectOptions,
     NodePackageOptions,
     ReleaseProjectOptions,
     SharedComponentsOptions {
@@ -195,7 +190,7 @@ export interface NodeProjectOptions
    *
    * @default - no automatic projen upgrade pull requests
    *
-   * @deprecated use `githubTokenSecret` instead.
+   * @deprecated use `projenTokenSecret` instead.
    */
   readonly projenUpgradeSecret?: string;
 
@@ -356,7 +351,7 @@ export enum AutoRelease {
  *
  * @pjid node
  */
-export class NodeProject extends GitHubProject {
+export class NodeProject extends Project {
   /**
    * API for managing the node package.
    */
@@ -473,6 +468,9 @@ export class NodeProject extends GitHubProject {
   constructor(options: NodeProjectOptions) {
     super(options);
 
+    this._sharedComponents = new SharedComponents(this, options);
+    const github = GitHub.of(this);
+
     this.package = new NodePackage(this, options);
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];
     this.workflowGitIdentity =
@@ -556,7 +554,7 @@ export class NodeProject extends GitHubProject {
       this.jest = new Jest(this, options.jestOptions);
     }
 
-    if (buildEnabled && this.github) {
+    if (buildEnabled && github) {
       this.buildWorkflow = new BuildWorkflow(this, {
         buildTask: this.buildTask,
         artifactsDirectory: this.artifactsDirectory,
@@ -643,8 +641,11 @@ export class NodeProject extends GitHubProject {
       }
     }
 
-    if (this.github?.mergify && this.buildWorkflow?.buildJobIds) {
-      this.autoMerge = new AutoMerge(this.github, options.autoMergeOptions);
+    if (github?.mergify && this.buildWorkflow?.buildJobIds) {
+      this.autoMerge = new AutoMerge(
+        github,
+        options.githubOptions?.autoMergeOptions
+      );
       this.autoMerge.addConditionsLater({
         render: () =>
           this.buildWorkflow?.buildJobIds.map((id) => `status-success=${id}`) ??
@@ -676,21 +677,21 @@ export class NodeProject extends GitHubProject {
       false;
     const depsAutoApprove = options.autoApproveUpgrades ?? false;
 
-    if (projenAutoApprove && !this.autoApprove && this.github) {
+    if (projenAutoApprove && !github?.autoApprove && github) {
       throw new Error(
-        "Automatic approval of projen upgrades requires configuring `autoApproveOptions`"
+        "Automatic approval of projen upgrades requires configuring `githubOptions.autoApproveOptions`"
       );
     }
 
-    if (depsAutoApprove && !this.autoApprove && this.github) {
+    if (depsAutoApprove && !github?.autoApprove && github) {
       throw new Error(
-        "Automatic approval of dependencies upgrades requires configuring `autoApproveOptions`"
+        "Automatic approval of dependencies upgrades requires configuring `githubOptions.autoApproveOptions`"
       );
     }
 
     const autoApproveLabel = (condition: boolean) =>
-      condition && this.autoApprove?.label
-        ? [this.autoApprove.label]
+      condition && github?.autoApprove?.label
+        ? [github.autoApprove.label]
         : undefined;
 
     let ignoresProjen;
@@ -698,7 +699,7 @@ export class NodeProject extends GitHubProject {
       const defaultOptions = {
         labels: autoApproveLabel(depsAutoApprove),
       };
-      const dependabotConf = this.github?.addDependabot(
+      const dependabotConf = github?.addDependabot(
         deepMerge([defaultOptions, options.dependabotOptions ?? {}])
       );
       ignoresProjen = dependabotConf?.ignoresProjen;
@@ -751,7 +752,7 @@ export class NodeProject extends GitHubProject {
     }
 
     if (options.pullRequestTemplate ?? true) {
-      this.github?.addPullRequestTemplate(
+      github?.addPullRequestTemplate(
         ...(options.pullRequestTemplateContents ?? [])
       );
     }
@@ -777,8 +778,6 @@ export class NodeProject extends GitHubProject {
     if (options.prettier ?? false) {
       this.prettier = new Prettier(this, { ...options.prettierOptions });
     }
-
-    this._sharedComponents = new SharedComponents(this, options);
   }
 
   /**

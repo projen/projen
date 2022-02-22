@@ -149,7 +149,8 @@ export class UpgradeDependencies extends Component {
 
   // create a corresponding github workflow for each requested branch.
   public preSynthesize() {
-    if (this._project.github && (this.options.workflow ?? true)) {
+    const github = GitHub.of(this._project);
+    if (github && (this.options.workflow ?? true)) {
       // represents the default repository branch.
       // just like not specifying anything.
       const defaultBranch = undefined;
@@ -157,9 +158,7 @@ export class UpgradeDependencies extends Component {
       const branches = this.options.workflowOptions?.branches ??
         this._project.release?.branches ?? [defaultBranch];
       for (const branch of branches) {
-        this.workflows.push(
-          this.createWorkflow(this._task, this._project.github, branch)
-        );
+        this.workflows.push(this.createWorkflow(this._task, github, branch));
       }
     }
   }

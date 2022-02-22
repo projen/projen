@@ -16,9 +16,11 @@ describe("mergify", () => {
   test("with options", () => {
     // GIVEN
     const project = createProject({
-      autoMergeOptions: {
-        approvedReviews: 3,
-        blockingLabels: ["do-not-merge", "missing-tests"],
+      githubOptions: {
+        autoMergeOptions: {
+          approvedReviews: 3,
+          blockingLabels: ["do-not-merge", "missing-tests"],
+        },
       },
     });
 

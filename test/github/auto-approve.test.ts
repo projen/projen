@@ -1,3 +1,4 @@
+import { GitHub } from "../../src/github";
 import { AutoApprove } from "../../src/github/auto-approve";
 import { NodeProject, NodeProjectOptions } from "../../src/javascript";
 import { synthSnapshot } from "../util";
@@ -6,7 +7,7 @@ describe("auto-approve", () => {
   test("default", () => {
     const project = createProject();
 
-    new AutoApprove(project.github!);
+    new AutoApprove(GitHub.of(project)!);
 
     const snapshot = synthSnapshot(project);
 
@@ -17,7 +18,7 @@ describe("auto-approve", () => {
   test("configure options", () => {
     const project = createProject();
 
-    new AutoApprove(project.github!, {
+    new AutoApprove(GitHub.of(project)!, {
       secret: "MY_SECRET",
       label: "my-approve",
       allowedUsernames: ["bot-1", "bot-2"],
@@ -31,7 +32,7 @@ describe("auto-approve", () => {
   test("all users", () => {
     const project = createProject();
 
-    new AutoApprove(project.github!, {
+    new AutoApprove(GitHub.of(project)!, {
       secret: "MY_SECRET",
       allowedUsernames: [],
     });
@@ -44,7 +45,7 @@ describe("auto-approve", () => {
   test("with custom runner", () => {
     const project = createProject();
 
-    new AutoApprove(project.github!, {
+    new AutoApprove(GitHub.of(project)!, {
       secret: "MY_SECRET",
       runsOn: ["self-hosted"],
     });

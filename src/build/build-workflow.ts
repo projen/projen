@@ -1,4 +1,3 @@
-import { Task } from "..";
 import { Component } from "../component";
 import { GitHub, GithubWorkflow, GitIdentity } from "../github";
 import {
@@ -15,6 +14,7 @@ import {
 } from "../github/workflows-model";
 import { NodeProject } from "../javascript";
 import { Project } from "../project";
+import { Task } from "../task";
 
 const PULL_REQUEST_REF = "${{ github.event.pull_request.head.ref }}";
 const PULL_REQUEST_REPOSITORY =
@@ -51,7 +51,7 @@ export interface BuildWorkflowOptions {
    *
    * Implies that PR builds do not have anti-tamper checks.
    *
-   * This is enabled by default only if `githubTokenSecret` is set. Otherwise it
+   * This is enabled by default only if `projenTokenSecret` is set. Otherwise it
    * is disabled, which implies that file changes that happen during build will
    * not be pushed back to the branch.
    *

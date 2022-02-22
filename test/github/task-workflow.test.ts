@@ -1,3 +1,4 @@
+import { GitHub } from "../../src/github";
 import { TaskWorkflow } from "../../src/github/task-workflow";
 import { Task } from "../../src/task";
 import { synthSnapshot, TestProject } from "../util";
@@ -5,8 +6,9 @@ import { synthSnapshot, TestProject } from "../util";
 describe("task-workflow", () => {
   test("default", () => {
     const project = new TestProject();
+    const github = new GitHub(project);
 
-    new TaskWorkflow(project.github!, {
+    new TaskWorkflow(github, {
       name: "task-workflow",
       task,
       permissions: {},
@@ -20,8 +22,9 @@ describe("task-workflow", () => {
 
   test("upload artifacts", () => {
     const project = new TestProject();
+    const github = new GitHub(project);
 
-    new TaskWorkflow(project.github!, {
+    new TaskWorkflow(github, {
       name: "task-workflow",
       task,
       artifactsDirectory: "./artifacts/",
@@ -35,10 +38,11 @@ describe("task-workflow", () => {
 
   test("issue comment error", () => {
     const project = new TestProject();
+    const github = new GitHub(project);
 
     expect(
       () =>
-        new TaskWorkflow(project.github!, {
+        new TaskWorkflow(github, {
           name: "task-workflow",
           task,
           triggers: {
@@ -53,8 +57,9 @@ describe("task-workflow", () => {
 
   test("with custom runner", () => {
     const project = new TestProject();
+    const github = new GitHub(project);
 
-    new TaskWorkflow(project.github!, {
+    new TaskWorkflow(github, {
       name: "task-workflow",
       task,
       permissions: {},
@@ -70,8 +75,9 @@ describe("task-workflow", () => {
 
   test("with custom runner, multiple labels", () => {
     const project = new TestProject();
+    const github = new GitHub(project);
 
-    new TaskWorkflow(project.github!, {
+    new TaskWorkflow(github, {
       name: "task-workflow",
       task,
       permissions: {},

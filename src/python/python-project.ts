@@ -1,6 +1,6 @@
-import { GitHubProject, GitHubProjectOptions } from "../github";
+import { SharedComponents, SharedComponentsOptions } from "../github/shared";
 import { Gitpod } from "../gitpod";
-import { SharedComponents, SharedComponentsOptions } from "../shared";
+import { Project, ProjectOptions } from "../project";
 import { DevContainer, VsCode } from "../vscode";
 import { Pip } from "./pip";
 import { Poetry } from "./poetry";
@@ -20,7 +20,7 @@ const PYTHON_PROJECT_NAME_REGEX = /^[A-Za-z0-9-_\.]+$/;
  * Options for `PythonProject`.
  */
 export interface PythonProjectOptions
-  extends GitHubProjectOptions,
+  extends ProjectOptions,
     PythonPackagingOptions,
     SharedComponentsOptions {
   // -- required options --
@@ -144,7 +144,7 @@ export interface PythonProjectOptions
  *
  * @pjid python
  */
-export class PythonProject extends GitHubProject {
+export class PythonProject extends Project {
   /**
    * Python module name (the project name, with any hyphens or periods replaced
    * with underscores).

@@ -2,8 +2,7 @@ import * as cp from "child_process";
 import * as os from "os";
 import * as path from "path";
 import * as fs from "fs-extra";
-import { Project } from "../src";
-import { GitHubProject, GitHubProjectOptions } from "../src/github";
+import { Project, ProjectOptions } from "../src";
 import * as logging from "../src/logging";
 import { Task } from "../src/task";
 import { exec } from "../src/util";
@@ -13,8 +12,8 @@ const PROJEN_CLI = require.resolve("../lib/cli/index.js");
 
 logging.disable(); // no logging during tests
 
-export class TestProject extends GitHubProject {
-  constructor(options: Omit<GitHubProjectOptions, "name"> = {}) {
+export class TestProject extends Project {
+  constructor(options: Omit<ProjectOptions, "name"> = {}) {
     super({
       name: "my-project",
       ...options,

@@ -3,9 +3,7 @@ import { TestProject } from "../util";
 
 test("throws when adding an existing service with same name and alias", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new TestProject();
   const c = new CiConfiguration(p, "foo");
   c.addServices({ name: "bar" });
   // THEN
@@ -19,9 +17,7 @@ test("throws when adding an existing service with same name and alias", () => {
 
 test("does not throw when adding an services with same name and different alias", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new TestProject();
   const c = new CiConfiguration(p, "foo");
   c.addServices({ name: "foo", alias: "foobar" });
   // THEN
@@ -32,9 +28,7 @@ test("does not throw when adding an services with same name and different alias"
 
 test("does not throw when adding an valid include", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new TestProject();
   const c = new CiConfiguration(p, "foo");
   // THEN
   expect(() => c.addIncludes({ local: "foo" })).not.toThrowError(
@@ -53,9 +47,7 @@ test("does not throw when adding an valid include", () => {
 
 test("throws when adding an invalid include", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new TestProject();
   const c = new CiConfiguration(p, "foo");
   // THEN
   expect(() =>
@@ -68,9 +60,7 @@ test("throws when adding an invalid include", () => {
 
 test("throws when adding an existing includes", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new TestProject();
   const c = new CiConfiguration(p, "foo");
   c.addIncludes(
     { local: "foo" },

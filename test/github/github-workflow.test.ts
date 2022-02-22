@@ -1,3 +1,4 @@
+import { GitHub } from "../../src/github";
 import { GithubWorkflow } from "../../src/github/workflows";
 import { synthSnapshot, TestProject } from "../util";
 
@@ -6,8 +7,9 @@ describe("github-workflow", () => {
 
   test("Default concurrency allowed", () => {
     const project = new TestProject();
+    const github = new GitHub(project);
 
-    new GithubWorkflow(project.github!, workflowName);
+    new GithubWorkflow(github, workflowName);
 
     const snapshot = synthSnapshot(project);
 
@@ -19,8 +21,9 @@ describe("github-workflow", () => {
   test("concurrency set", () => {
     const concurrencyName = "my-concurrency";
     const project = new TestProject();
+    const github = new GitHub(project);
 
-    new GithubWorkflow(project.github!, workflowName, {
+    new GithubWorkflow(github, workflowName, {
       concurrency: concurrencyName,
     });
 

@@ -1,6 +1,7 @@
 import * as yaml from "yaml";
 import { PROJEN_MARKER } from "../src/common";
 import { DependencyType } from "../src/dependencies";
+import { GitHub } from "../src/github";
 import { JobPermission } from "../src/github/workflows-model";
 import {
   NodeProject,
@@ -206,7 +207,7 @@ test("throw when 'autoApproveProjenUpgrades' is used with 'projenUpgradeAutoMerg
 describe("deps upgrade", () => {
   test("throws when trying to auto approve projen but auto approve is not defined", () => {
     const message =
-      "Automatic approval of projen upgrades requires configuring `autoApproveOptions`";
+      "Automatic approval of projen upgrades requires configuring `githubOptions.autoApproveOptions`";
     expect(() => {
       new TestNodeProject({ autoApproveProjenUpgrades: true });
     }).toThrow(message);
@@ -219,7 +220,7 @@ describe("deps upgrade", () => {
     expect(() => {
       new TestNodeProject({ autoApproveUpgrades: true });
     }).toThrow(
-      "Automatic approval of dependencies upgrades requires configuring `autoApproveOptions`"
+      "Automatic approval of dependencies upgrades requires configuring `githubOptions.autoApproveOptions`"
     );
   });
 
@@ -236,7 +237,7 @@ describe("deps upgrade", () => {
       synthSnapshot(project)[".github/workflows/upgrade-main.yml"]
     );
     expect(snapshot.jobs.pr.steps[4].with.labels).toStrictEqual(
-      project.autoApprove?.label
+      GitHub.of(project)?.autoApprove?.label
     );
   });
 
@@ -705,7 +706,7 @@ test("enabling dependabot does not overturn mergify: false", () => {
   // WHEN
   const project = new TestNodeProject({
     dependabot: true,
-    mergify: false,
+    githubOptions: { mergify: false },
   });
 
   // THEN
@@ -857,6 +858,16 @@ test("post-upgrade workflow", () => {
   expect(tasks.upgrade.steps[tasks.upgrade.steps.length - 1]).toStrictEqual({
     spawn: "post-upgrade",
   });
+});
+
+test("github: false disables github integration", () => {
+  // WHEN
+  const project = new TestNodeProject({
+    github: false,
+  });
+
+  // THEN
+  expect(GitHub.of(project)).toBeUndefined();
 });
 
 test("node project can be ejected", () => {

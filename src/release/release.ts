@@ -1,8 +1,9 @@
 import * as path from "path";
 import { Component } from "../component";
-import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from "../github";
+import { GitHub, GithubWorkflow, TaskWorkflow } from "../github";
 import { BUILD_ARTIFACT_NAME } from "../github/constants";
 import { Job, JobPermission, JobStep } from "../github/workflows-model";
+import { Project } from "../project";
 import { Task } from "../task";
 import { Version } from "../version";
 import { Publisher } from "./publisher";
@@ -247,7 +248,7 @@ export class Release extends Component {
    */
   public readonly artifactsDirectory: string;
 
-  constructor(project: GitHubProject, options: ReleaseOptions) {
+  constructor(project: Project, options: ReleaseOptions) {
     super(project);
 
     if (Array.isArray(options.releaseBranches)) {
@@ -256,7 +257,7 @@ export class Release extends Component {
       );
     }
 
-    this.github = project.github;
+    this.github = GitHub.of(project);
     this.buildTask = options.task;
     this.preBuildSteps = options.releaseWorkflowSetupSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];

@@ -1,6 +1,6 @@
-import { GitHubProject, GitHubProjectOptions } from "../github";
+import { SharedComponents, SharedComponentsOptions } from "../github/shared";
 import { Gitpod } from "../gitpod";
-import { SharedComponents, SharedComponentsOptions } from "../shared";
+import { Project, ProjectOptions } from "../project";
 import { DevContainer, VsCode } from "../vscode";
 import { Junit, JunitOptions } from "./junit";
 import { MavenCompile, MavenCompileOptions } from "./maven-compile";
@@ -13,7 +13,7 @@ import { Projenrc as ProjenrcJava, ProjenrcOptions } from "./projenrc";
  * Options for `JavaProject`.
  */
 export interface JavaProjectCommonOptions
-  extends GitHubProjectOptions,
+  extends ProjectOptions,
     PomOptions,
     SharedComponentsOptions {
   /**
@@ -114,7 +114,7 @@ export interface JavaProjectOptions extends JavaProjectCommonOptions {
  *
  * @pjid java
  */
-export class JavaProject extends GitHubProject {
+export class JavaProject extends Project {
   /**
    * API for managing `pom.xml`.
    */

@@ -1,5 +1,5 @@
 import * as YAML from "yaml";
-import { StaleBehavior } from "../../src/github";
+import { GitHub, StaleBehavior } from "../../src/github";
 import { renderBehavior } from "../../src/github/stale-util";
 import { synthSnapshot, TestProject } from "../util";
 
@@ -13,15 +13,14 @@ test("default project behavior", () => {
 });
 
 test("stale disabled", () => {
-  const project = new TestProject({
-    stale: false,
-  });
+  const project = new TestProject();
 
   expect(synthSnapshot(project)[".github/workflows/stale.yml"]).toBeUndefined();
 });
 
 test("customizations", () => {
-  const project = new TestProject({
+  const project = new TestProject();
+  new GitHub(project, {
     staleOptions: {
       issues: { enabled: false },
       pullRequest: {
@@ -38,7 +37,8 @@ test("customizations", () => {
 });
 
 test("with custom runner", () => {
-  const project = new TestProject({
+  const project = new TestProject();
+  new GitHub(project, {
     staleOptions: {
       runsOn: ["self-hosted"],
     },
@@ -120,7 +120,8 @@ describe("renderBehavior()", () => {
 });
 
 describe("exempt labels in workflow output", () => {
-  const project = new TestProject({
+  const project = new TestProject();
+  new GitHub(project, {
     staleOptions: {
       issues: { exemptLabels: [] },
       pullRequest: { exemptLabels: ["foo", "bar"] },

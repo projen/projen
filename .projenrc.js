@@ -1,5 +1,6 @@
 const { cdk, JsonFile, TextFile } = require("./lib");
 const { PROJEN_MARKER } = require("./lib/common");
+const { GitHub } = require("./lib/github");
 
 const project = new cdk.JsiiProject({
   name: "projen",
@@ -147,7 +148,7 @@ project.vscode.launchConfiguration.addConfiguration({
   outFiles: ["${workspaceFolder}/lib/**/*.js"],
 });
 
-project.github.mergify.addRule({
+GitHub.of(project).mergify.addRule({
   name: "Label core contributions",
   actions: {
     label: {

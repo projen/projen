@@ -62,26 +62,3 @@ test("findFile() will also look up files in subprojects", () => {
   expect(result1 === fchild).toBeTruthy();
   expect(result2 === fchild).toBeTruthy();
 });
-
-test("autoApprove is configured", () => {
-  // WHEN
-  const p = new TestProject({
-    autoApproveOptions: {
-      secret: "MY_SECRET",
-    },
-  });
-
-  // THEN
-  expect(p.autoApprove).toBeDefined();
-  expect(p.autoApprove?.label).toEqual("auto-approve");
-});
-
-test("github: false disables github integration", () => {
-  // WHEN
-  const p = new TestProject({
-    github: false,
-  });
-
-  // THEN
-  expect(p.github).toBeUndefined();
-});

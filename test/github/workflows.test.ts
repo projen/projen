@@ -1,12 +1,12 @@
+import { GitHub } from "../../src/github";
 import { Project } from "../../src/project";
 import { synthSnapshot, TestProject } from "../util";
 
 test("no workflow", () => {
   // GIVEN
-  const p = new TestProject({
-    githubOptions: {
-      workflows: false,
-    },
+  const p = new TestProject();
+  new GitHub(p, {
+    workflows: false,
   });
 
   // THEN
@@ -17,9 +17,10 @@ test("no workflow", () => {
 test("adding empty workflow", () => {
   // GIVEN
   const p = new TestProject();
+  const github = new GitHub(p);
 
   // WHEN
-  p.github?.addWorkflow("my-workflow");
+  github.addWorkflow("my-workflow");
 
   // THEN
   const workflows = synthWorkflows(p);
@@ -28,23 +29,25 @@ test("adding empty workflow", () => {
 
 test("throws when adding workflow with existing name", () => {
   // GIVEN
-  const p = new TestProject({
+  const p = new TestProject();
+  const github = new GitHub(p, {
     stale: true,
   });
 
   // THEN
-  expect(() => p.github?.addWorkflow("stale")).toThrow(
+  expect(() => github.addWorkflow("stale")).toThrow(
     /there is already a file under/
   );
 });
 
 test("throws when adding workflow with adding a job with no runners specified", () => {
   // GIVEN
-  const p = new TestProject({
+  const p = new TestProject();
+  const github = new GitHub(p, {
     stale: true,
   });
   // WHEN
-  const workflow = p.github?.addWorkflow("my-workflow");
+  const workflow = github.addWorkflow("my-workflow");
 
   // THEN
   expect(() =>
@@ -61,11 +64,12 @@ test("throws when adding workflow with adding a job with no runners specified", 
 test("tryFind valid workflow", () => {
   // GIVEN
   const p = new TestProject();
+  const github = new GitHub(p);
 
   // WHEN
-  p.github?.addWorkflow("workflow1");
-  p.github?.addWorkflow("workflow2");
-  const workflow1 = p.github?.tryFindWorkflow("workflow1");
+  github.addWorkflow("workflow1");
+  github.addWorkflow("workflow2");
+  const workflow1 = github.tryFindWorkflow("workflow1");
 
   // THEN
   const workflows = synthWorkflows(p);
@@ -78,11 +82,12 @@ test("tryFind valid workflow", () => {
 test("tryFind unknown workflow", () => {
   // GIVEN
   const p = new TestProject();
+  const github = new GitHub(p);
 
   // WHEN
-  p.github?.addWorkflow("workflow1");
-  p.github?.addWorkflow("workflow2");
-  const workflow3 = p.github?.tryFindWorkflow("workflow3");
+  github.addWorkflow("workflow1");
+  github.addWorkflow("workflow2");
+  const workflow3 = github.tryFindWorkflow("workflow3");
 
   // THEN
   const workflows = synthWorkflows(p);

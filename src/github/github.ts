@@ -1,9 +1,12 @@
 import { Component } from "../component";
 import { Project } from "../project";
+import { AutoApprove, AutoApproveOptions } from "./auto-approve";
+import { AutoMergeOptions } from "./auto-merge";
 import { Dependabot, DependabotOptions } from "./dependabot";
 import { Mergify, MergifyOptions } from "./mergify";
 import { PullRequestTemplate } from "./pr-template";
 import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
+import { Stale, StaleOptions } from "./stale";
 import { GithubWorkflow } from "./workflows";
 
 export interface GitHubOptions {
@@ -51,6 +54,34 @@ export interface GitHubOptions {
    * @default "PROJEN_GITHUB_TOKEN"
    */
   readonly projenTokenSecret?: string;
+
+  /**
+   * Enable and configure the 'auto approve' workflow.
+   * @default - auto approve is disabled
+   */
+  readonly autoApproveOptions?: AutoApproveOptions;
+
+  /**
+   * Configure options for automatic merging on GitHub. Has no effect if
+   * `github.mergify` is set to false.
+   *
+   * @default - see defaults in `AutoMergeOptions`
+   */
+  readonly autoMergeOptions?: AutoMergeOptions;
+
+  /**
+   * Auto-close stale issues and pull requests. To disable set `stale` to `false`.
+   *
+   * @default - see defaults in `StaleOptions`
+   */
+  readonly staleOptions?: StaleOptions;
+
+  /**
+   * Auto-close of stale issues and pull request. See `staleOptions` for options.
+   *
+   * @default true
+   */
+  readonly stale?: boolean;
 }
 
 export class GitHub extends Component {
@@ -68,6 +99,11 @@ export class GitHub extends Component {
    * was not enabled when creating the repository.
    */
   public readonly mergify?: Mergify;
+
+  /**
+   * Auto approve set up for this project.
+   */
+  public readonly autoApprove?: AutoApprove;
 
   /**
    * Are workflows enabled?
@@ -92,6 +128,14 @@ export class GitHub extends Component {
 
     if (options.pullRequestLint ?? true) {
       new PullRequestLint(this, options.pullRequestLintOptions);
+    }
+
+    if (options.autoApproveOptions) {
+      this.autoApprove = new AutoApprove(this, options.autoApproveOptions);
+    }
+
+    if (options.stale ?? true) {
+      new Stale(this, options.staleOptions);
     }
   }
 

@@ -33,7 +33,7 @@ const compilerOptionDefaults = {
 test("Node Project Jest Defaults Configured", () => {
   const project = new NodeProject({
     name: "test-node-project",
-    mergify: false,
+    github: false,
     projenDevDependency: false,
     defaultReleaseBranch: "master",
     jest: true,
@@ -56,7 +56,7 @@ test("Node Project Jest With Options Configured", () => {
   const project = new NodeProject({
     name: "test-node-project",
     defaultReleaseBranch: "master",
-    mergify: false,
+    github: false,
     projenDevDependency: false,
     jest: true,
     jestOptions: {
@@ -81,7 +81,7 @@ test("Node Project Jest With Path Configured", () => {
   const project = new NodeProject({
     name: "test-node-project",
     defaultReleaseBranch: "master",
-    mergify: false,
+    github: false,
     projenDevDependency: false,
     jest: true,
     jestOptions: {
@@ -108,7 +108,7 @@ test("Typescript Project Jest Defaults Configured", () => {
   const project = new TypeScriptProject({
     name: "test-typescript-project",
     defaultReleaseBranch: "master",
-    mergify: false,
+    github: false,
     projenDevDependency: false,
     jest: true,
   });
@@ -137,7 +137,7 @@ test("Typescript Project Jest With Compiler Options", () => {
   const project = new TypeScriptProject({
     name: "test-typescript-project",
     defaultReleaseBranch: "master",
-    mergify: false,
+    github: false,
     projenDevDependency: false,
     jest: true,
     tsconfigDev: {
@@ -165,7 +165,7 @@ test("jestOptions.typeScriptCompilerOptions is deprecated", () => {
       new TypeScriptProject({
         name: "test-typescript-project",
         defaultReleaseBranch: "master",
-        mergify: false,
+        github: false,
         projenDevDependency: false,
         jestOptions: {
           typescriptConfig: {

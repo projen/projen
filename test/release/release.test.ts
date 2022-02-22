@@ -1,11 +1,13 @@
 import * as YAML from "yaml";
+import { GitHub } from "../../src/github";
 import { JobPermission } from "../../src/github/workflows-model";
+import { Project, ProjectOptions } from "../../src/project";
 import { Release, ReleaseTrigger } from "../../src/release";
 import { synthSnapshot, TestProject } from "../util";
 
 test("minimal", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   // WHEN
   new Release(project, {
@@ -22,7 +24,7 @@ test("minimal", () => {
 
 test("with major version filter", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   // WHEN
   new Release(project, {
@@ -43,7 +45,7 @@ test("with major version filter", () => {
 
 test("with release tag prefix", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   // WHEN
   new Release(project, {
@@ -65,7 +67,7 @@ test("with release tag prefix", () => {
 
 test("addBranch() can be used for additional release branches", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -90,7 +92,7 @@ test("addBranch() can be used for additional release branches", () => {
 
 test('if multiple branches are defined, the default branch requires a "majorVersion"', () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -111,7 +113,7 @@ test('if multiple branches are defined, the default branch requires a "majorVers
 
 test("publisher (defaults)", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -136,7 +138,7 @@ test("publisher (defaults)", () => {
 
 test("publishers are added as jobs to all release workflows", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -179,7 +181,7 @@ test("publishers are added as jobs to all release workflows", () => {
 
 test("manual releases do not generate a release workflow", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   // WHEN
   new Release(project, {
@@ -199,7 +201,7 @@ test("manual releases do not generate a release workflow", () => {
 test("releaseSchedule schedules releases", () => {
   // GIVEN
   const schedule = "0 17 * * *";
-  const project = new TestProject();
+  const project = createProject();
 
   // WHEN
   new Release(project, {
@@ -224,7 +226,7 @@ test("releaseSchedule schedules releases", () => {
 
 test("addJobs() can be used to add arbitrary jobs to the release workflows", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -256,7 +258,7 @@ test("addJobs() can be used to add arbitrary jobs to the release workflows", () 
 
 test("majorVersion can be 0", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   // WHEN
   new Release(project, {
@@ -276,7 +278,7 @@ test("majorVersion can be 0", () => {
 
 test("prerelease can be specified per branch", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   // WHEN
   const release = new Release(project, {
@@ -299,7 +301,7 @@ test("prerelease can be specified per branch", () => {
 
 test("releaseBranches can be use to define additional branches", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   // WHEN
   new Release(project, {
@@ -321,7 +323,7 @@ test("releaseBranches can be use to define additional branches", () => {
 
 test("releaseBranches can be defined with different tag prefixes to the same major version", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   // WHEN
   new Release(project, {
@@ -344,7 +346,7 @@ test("releaseBranches can be defined with different tag prefixes to the same maj
 
 test("releaseBranches as an array throws an error since type was changed", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   // WHEN
   expect(
@@ -362,7 +364,7 @@ test("releaseBranches as an array throws an error since type was changed", () =>
 
 test("github packages are supported by npm", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -383,7 +385,7 @@ test("github packages are supported by npm", () => {
 });
 
 test("can enable issue creation on failed releases with a custom label", () => {
-  const project = new TestProject();
+  const project = createProject();
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -406,7 +408,7 @@ test("can enable issue creation on failed releases with a custom label", () => {
 
 test("AWS CodeArtifact is supported by npm", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -429,7 +431,7 @@ test("AWS CodeArtifact is supported by npm", () => {
 
 test("AWS CodeArtifact is supported by npm with AWS access keys", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -456,7 +458,7 @@ test("AWS CodeArtifact is supported by npm with AWS access keys", () => {
 
 test("AWS CodeArtifact is supported with role to assume", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
   const roleArn = "role-arn";
 
   const release = new Release(project, {
@@ -483,7 +485,7 @@ test("AWS CodeArtifact is supported with role to assume", () => {
 
 test("can be modified with escape hatches", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
   new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
@@ -493,11 +495,11 @@ test("can be modified with escape hatches", () => {
   });
 
   // WHEN
-  project
-    .github!.tryFindWorkflow("release")!
+  GitHub.of(project)
+    ?.tryFindWorkflow("release")!
     .file!.addOverride("jobs.release.env.FOO", "VALUE1");
-  project
-    .github!.tryFindWorkflow("release")!
+  GitHub.of(project)
+    ?.tryFindWorkflow("release")!
     .file!.addOverride("jobs.release_github.env.BAR", "VALUE2");
 
   // THEN
@@ -509,7 +511,7 @@ test("can be modified with escape hatches", () => {
 
 test("manual release with custom git-push", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
   new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
@@ -535,7 +537,7 @@ test("manual release with custom git-push", () => {
 
 test("publisher can use custom github runner", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -564,7 +566,7 @@ test("publisher can use custom github runner", () => {
 describe("npmDistTag", () => {
   test("determines npm dist-tag used in the workflow", () => {
     // GIVEN
-    const project = new TestProject();
+    const project = createProject();
 
     // WHEN
     const release = new Release(project, {
@@ -597,7 +599,7 @@ describe("npmDistTag", () => {
 
   test("the dist-tag for the default branch is set at the root", () => {
     // GIVEN
-    const project = new TestProject();
+    const project = createProject();
 
     // WHEN
     const release = new Release(project, {
@@ -631,7 +633,7 @@ describe("npmDistTag", () => {
 
   test("if branch-level dist-tag is set, then publishToNpm cannot specify dist-tag", () => {
     // GIVEN
-    const project = new TestProject();
+    const project = createProject();
 
     // WHEN
     const release = new Release(project, {
@@ -656,7 +658,7 @@ describe("npmDistTag", () => {
 
 test("if publishTasks is disabled, no publish tasks are created", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -683,7 +685,7 @@ test("if publishTasks is disabled, no publish tasks are created", () => {
 
 test("dryRun", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = createProject();
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -713,3 +715,10 @@ test("dryRun", () => {
     ).toBeTruthy();
   }
 });
+
+function createProject(options: Omit<ProjectOptions, "name"> = {}): Project {
+  const project = new TestProject(options);
+  new GitHub(project);
+
+  return project;
+}

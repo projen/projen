@@ -6,6 +6,8 @@
 !/.github/workflows/pull-request-lint.yml
 !/.github/workflows/auto-approve.yml
 !/.github/workflows/stale.yml
+!/.gitpod.yml
+!/.devcontainer.json
 !/package.json
 !/LICENSE
 !/.npmignore
@@ -44,8 +46,6 @@ junit.xml
 !/.github/pull_request_template.md
 !/.prettierignore
 !/.prettierrc.json
-!/.gitpod.yml
-!/.devcontainer.json
 !/test/
 !/tsconfig.dev.json
 !/src/

@@ -1,3 +1,4 @@
+import { GitHub } from "../../src/github";
 import { PullRequestLint } from "../../src/github/pull-request-lint";
 import { NodeProject, NodeProjectOptions } from "../../src/javascript";
 import { synthSnapshot } from "../util";
@@ -7,7 +8,7 @@ test("default", () => {
   const project = createProject();
 
   // WHEN
-  new PullRequestLint(project.github!);
+  new PullRequestLint(GitHub.of(project)!);
 
   // THEN
   const snapshot = synthSnapshot(project);
@@ -21,7 +22,7 @@ describe("semantic titles", () => {
     const project = createProject();
 
     // WHEN
-    new PullRequestLint(project.github!, {
+    new PullRequestLint(GitHub.of(project)!, {
       semanticTitle: true,
       semanticTitleOptions: {
         types: ["feat", "fix"],
@@ -40,7 +41,7 @@ describe("semantic titles", () => {
     const project = createProject();
 
     // WHEN
-    new PullRequestLint(project.github!, {
+    new PullRequestLint(GitHub.of(project)!, {
       semanticTitle: true,
       semanticTitleOptions: {
         requireScope: true,
@@ -60,7 +61,7 @@ test("with custom runner", () => {
   const project = createProject();
 
   // WHEN
-  new PullRequestLint(project.github!, {
+  new PullRequestLint(GitHub.of(project)!, {
     runsOn: ["self-hosted"],
   });
 
