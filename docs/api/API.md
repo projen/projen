@@ -27,7 +27,6 @@ Name|Description
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [SampleReadme](#projen-samplereadme)|Represents a README.md sample file. You are expected to manage this file after creation.
 [Semver](#projen-semver)|*No description*
-[SharedComponents](#projen-sharedcomponents)|A collection of unrelated, language-agnostic components that projen includes in all project types besides the base `Project`.
 [SourceCode](#projen-sourcecode)|Represents a source file.
 [Task](#projen-task)|A task that can be performed on the project.
 [TaskRuntime](#projen-taskruntime)|The runtime component of the tasks engine.
@@ -74,6 +73,7 @@ Name|Description
 [github.Mergify](#projen-github-mergify)|*No description*
 [github.PullRequestLint](#projen-github-pullrequestlint)|Configure validations to run on GitHub pull requests.
 [github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
+[github.SharedComponents](#projen-github-sharedcomponents)|A collection of unrelated, language-agnostic components that projen includes in all project types besides the base `Project`.
 [github.Stale](#projen-github-stale)|Warns and then closes issues and PRs that have had no activity for a specified amount of time.
 [github.TaskWorkflow](#projen-github-taskworkflow)|A GitHub workflow for common build tasks within a project.
 [gitlab.CiConfiguration](#projen-gitlab-ciconfiguration)|CI for GitLab.
@@ -164,7 +164,6 @@ Name|Description
 [SampleDirOptions](#projen-samplediroptions)|SampleDir options.
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
 [SampleReadmeProps](#projen-samplereadmeprops)|SampleReadme Properties.
-[SharedComponentsOptions](#projen-sharedcomponentsoptions)|Options for `SharedComponents`.
 [SourceCodeOptions](#projen-sourcecodeoptions)|Options for `SourceCodeFile`.
 [TaskCommonOptions](#projen-taskcommonoptions)|*No description*
 [TaskOptions](#projen-taskoptions)|*No description*
@@ -229,6 +228,7 @@ Name|Description
 [github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)|Options for PullRequestLint.
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
 [github.SemanticTitleOptions](#projen-github-semantictitleoptions)|Options for linting that PR titles follow Conventional Commits.
+[github.SharedComponentsOptions](#projen-github-sharedcomponentsoptions)|Options for `SharedComponents`.
 [github.StaleBehavior](#projen-github-stalebehavior)|Stale behavior.
 [github.StaleOptions](#projen-github-staleoptions)|Options for `Stale`.
 [github.TaskWorkflowOptions](#projen-github-taskworkflowoptions)|*No description*
@@ -2224,50 +2224,6 @@ static tilde(version: string): Semver
 
 __Returns__:
 * <code>[Semver](#projen-semver)</code>
-
-
-
-## class SharedComponents 🔹 <a id="projen-sharedcomponents"></a>
-
-A collection of unrelated, language-agnostic components that projen includes in all project types besides the base `Project`.
-
-This exists mostly to reduce code repetition and to avoid using an extra
-layer of inheritance.
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new SharedComponents(project: Project, options: SharedComponentsOptions)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[SharedComponentsOptions](#projen-sharedcomponentsoptions)</code>)  *No description*
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
-  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
-  * **github** (<code>boolean</code>)  Enable GitHub integration. __*Default*__: true
-  * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
-  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**devContainer**?🔹 | <code>[vscode.DevContainer](#projen-vscode-devcontainer)</code> | Access for .devcontainer.json (used for GitHub Codespaces).<br/>__*Optional*__
-**github**?🔹 | <code>[github.GitHub](#projen-github-github)</code> | Access for GitHub component.<br/>__*Optional*__
-**gitpod**?🔹 | <code>[Gitpod](#projen-gitpod)</code> | Access for Gitpod component.<br/>__*Optional*__
-**vscode**?🔹 | <code>[vscode.VsCode](#projen-vscode-vscode)</code> | Access for VSCode component.<br/>__*Optional*__
 
 
 
@@ -5820,6 +5776,52 @@ new github.PullRequestTemplate(github: GitHub, options?: PullRequestTemplateOpti
 * **options** (<code>[github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)</code>)  *No description*
   * **lines** (<code>Array<string></code>)  The contents of the template. __*Default*__: a standard default template will be created.
 
+
+
+
+## class SharedComponents 🔹 <a id="projen-github-sharedcomponents"></a>
+
+A collection of unrelated, language-agnostic components that projen includes in all project types besides the base `Project`.
+
+This exists mostly to reduce code repetition and to avoid using an extra
+layer of inheritance.
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.SharedComponents(project: Project, options: SharedComponentsOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[github.SharedComponentsOptions](#projen-github-sharedcomponentsoptions)</code>)  *No description*
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
+  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **github** (<code>boolean</code>)  Enable GitHub integration. __*Default*__: true
+  * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
+  * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
+  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**devContainer**?🔹 | <code>[vscode.DevContainer](#projen-vscode-devcontainer)</code> | Access for .devcontainer.json (used for GitHub Codespaces).<br/>__*Optional*__
+**github**?🔹 | <code>[github.GitHub](#projen-github-github)</code> | Access for GitHub component.<br/>__*Optional*__
+**gitpod**?🔹 | <code>[Gitpod](#projen-gitpod)</code> | Access for Gitpod component.<br/>__*Optional*__
+**vscode**?🔹 | <code>[vscode.VsCode](#projen-vscode-vscode)</code> | Access for VSCode component.<br/>__*Optional*__
 
 
 
@@ -11014,27 +11016,6 @@ Name | Type | Description
 
 
 
-## struct SharedComponentsOptions 🔹 <a id="projen-sharedcomponentsoptions"></a>
-
-
-Options for `SharedComponents`.
-
-
-
-Name | Type | Description 
------|------|-------------
-**autoApproveOptions**?⚠️ | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
-**clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
-**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
-**github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
-**githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
-**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
-**projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-
-
-
 ## struct SourceCodeOptions 🔹 <a id="projen-sourcecodeoptions"></a>
 
 
@@ -13288,6 +13269,27 @@ Name | Type | Description
 -----|------|-------------
 **requireScope**?🔹 | <code>boolean</code> | Configure that a scope must always be provided.<br/>__*Default*__: false
 **types**?🔹 | <code>Array<string></code> | Configure a list of commit types that are allowed.<br/>__*Default*__: ["feat", "fix", "chore"]
+
+
+
+## struct SharedComponentsOptions 🔹 <a id="projen-github-sharedcomponentsoptions"></a>
+
+
+Options for `SharedComponents`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**autoApproveOptions**?⚠️ | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
+**clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
+**githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
+**projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
+**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 
 
 
