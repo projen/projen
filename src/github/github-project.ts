@@ -4,7 +4,6 @@ import {
   AutoMergeOptions,
   GitHub,
   GitHubOptions,
-  MergifyOptions,
   Stale,
   StaleOptions,
 } from ".";
@@ -29,22 +28,6 @@ export interface GitHubProjectOptions extends ProjectOptions {
    * @default - see GitHubOptions
    */
   readonly githubOptions?: GitHubOptions;
-
-  /**
-   * Whether mergify should be enabled on this repository or not.
-   *
-   * @default true
-   * @deprecated use `githubOptions.mergify` instead
-   */
-  readonly mergify?: boolean;
-
-  /**
-   * Options for mergify
-   *
-   * @default - default options
-   * @deprecated use `githubOptions.mergifyOptions` instead
-   */
-  readonly mergifyOptions?: MergifyOptions;
 
   /**
    * Enable and configure the 'auto approve' workflow.
@@ -114,8 +97,6 @@ export class GitHubProject extends Project {
     this.github = github
       ? new GitHub(this, {
           projenTokenSecret: options.projenTokenSecret,
-          mergify: options.mergify,
-          mergifyOptions: options.mergifyOptions,
           ...options.githubOptions,
         })
       : undefined;
