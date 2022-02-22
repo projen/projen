@@ -5627,26 +5627,6 @@ Name | Type | Description
 **gitpod**?⚠️ | <code>[Gitpod](#projen-gitpod)</code> | Access for Gitpod.<br/>__*Optional*__
 **vscode**?⚠️ | <code>[vscode.VsCode](#projen-vscode-vscode)</code> | Access all VSCode components.<br/>__*Optional*__
 
-### Methods
-
-
-#### annotateGenerated(glob)⚠️ <a id="projen-github-githubproject-annotategenerated"></a>
-
-Marks the provided file(s) as being generated.
-
-This is achieved using the
-github-linguist attributes. Generated files do not count against the
-repository statistics and language breakdown.
-
-```ts
-annotateGenerated(glob: string): void
-```
-
-* **glob** (<code>string</code>)  the glob pattern to match (could be a file path).
-
-
-
-
 
 
 ## class GithubWorkflow 🔹 <a id="projen-github-githubworkflow"></a>
@@ -6320,6 +6300,23 @@ addTestDependency(spec: string): void
 ```
 
 * **spec** (<code>string</code>)  Format `<groupId>/<artifactId>@<semver>`.
+
+
+
+
+#### annotateGenerated(glob)🔹 <a id="projen-java-javaproject-annotategenerated"></a>
+
+Marks the provided file(s) as being generated.
+
+This is achieved using the
+github-linguist attributes. Generated files do not count against the
+repository statistics and language breakdown.
+
+```ts
+annotateGenerated(glob: string): void
+```
+
+* **glob** (<code>string</code>)  the glob pattern to match (could be a file path).
 
 
 
@@ -7493,6 +7490,23 @@ addTestCommand(...commands: string[]): void
 
 
 
+#### annotateGenerated(glob)🔹 <a id="projen-javascript-nodeproject-annotategenerated"></a>
+
+Marks the provided file(s) as being generated.
+
+This is achieved using the
+github-linguist attributes. Generated files do not count against the
+repository statistics and language breakdown.
+
+```ts
+annotateGenerated(glob: string): void
+```
+
+* **glob** (<code>string</code>)  the glob pattern to match (could be a file path).
+
+
+
+
 #### hasScript(name)🔹 <a id="projen-javascript-nodeproject-hasscript"></a>
 
 Indicates if a script by the name name is defined.
@@ -8298,6 +8312,23 @@ addDevDependency(spec: string): void
 ```
 
 * **spec** (<code>string</code>)  Format `<module>@<semver>`.
+
+
+
+
+#### annotateGenerated(glob)🔹 <a id="projen-python-pythonproject-annotategenerated"></a>
+
+Marks the provided file(s) as being generated.
+
+This is achieved using the
+github-linguist attributes. Generated files do not count against the
+repository statistics and language breakdown.
+
+```ts
+annotateGenerated(glob: string): void
+```
+
+* **glob** (<code>string</code>)  the glob pattern to match (could be a file path).
 
 
 

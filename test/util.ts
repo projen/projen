@@ -28,6 +28,10 @@ export class TestProject extends GitHubProject {
     return `projen ${task.name}`;
   }
 
+  public annotateGenerated(glob: string): void {
+    this.gitattributes.addAttributes(glob, "linguist-generated");
+  }
+
   postSynthesize() {
     fs.writeFileSync(path.join(this.outdir, ".postsynth"), "# postsynth");
   }

@@ -197,17 +197,4 @@ export class GitHubProject extends Project {
       new Stale(this.github, options.staleOptions);
     }
   }
-
-  /**
-   * Marks the provided file(s) as being generated. This is achieved using the
-   * github-linguist attributes. Generated files do not count against the
-   * repository statistics and language breakdown.
-   *
-   * @param glob the glob pattern to match (could be a file path).
-   *
-   * @see https://github.com/github/linguist/blob/master/docs/overrides.md
-   */
-  public annotateGenerated(glob: string): void {
-    this.gitattributes.addAttributes(glob, "linguist-generated");
-  }
 }
