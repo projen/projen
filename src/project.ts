@@ -140,8 +140,10 @@ export class Project {
    * The options used when this project is bootstrapped via `projen new`. It
    * includes the original set of options passed to the CLI and also the JSII
    * FQN of the project type.
+   *
+   * @internal
    */
-  public readonly initProject?: InitProject;
+  public readonly _initProject?: InitProject;
 
   /**
    * The command to use in order to run the projen CLI.
@@ -174,7 +176,7 @@ export class Project {
   private readonly _ejected: boolean;
 
   constructor(options: ProjectOptions) {
-    this.initProject = resolveInitProject(options);
+    this._initProject = resolveInitProject(options);
 
     this.name = options.name;
     this.parent = options.parent;
@@ -585,32 +587,10 @@ export class Project {
 }
 
 /**
- * Which type of project this is.
- *
- * @deprecated no longer supported at the base project level
- */
-export enum ProjectType {
-  /**
-   * This module may be a either a library or an app.
-   */
-  UNKNOWN = "unknown",
-
-  /**
-   * This is a library, intended to be published to a package manager and
-   * consumed by other projects.
-   */
-  LIB = "lib",
-
-  /**
-   * This is an app (service, tool, website, etc). Its artifacts are intended to
-   * be deployed or published for end-user consumption.
-   */
-  APP = "app",
-}
-
-/**
  * Information passed from `projen new` to the project object when the project
  * is first created. It is used to generate projenrc files in various languages.
+ *
+ * @internal
  */
 export interface InitProject {
   /**

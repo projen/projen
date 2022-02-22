@@ -10,7 +10,7 @@ import {
 } from ".";
 import { Clobber } from "../clobber";
 import { Gitpod } from "../gitpod";
-import { Project, ProjectOptions, ProjectType } from "../project";
+import { Project, ProjectOptions } from "../project";
 import { SampleReadme, SampleReadmeProps } from "../readme";
 import { DevContainer, VsCode } from "../vscode";
 
@@ -88,13 +88,6 @@ export interface GitHubProjectOptions extends ProjectOptions {
   readonly readme?: SampleReadmeProps;
 
   /**
-   * Which type of project this is (library/app).
-   * @default ProjectType.UNKNOWN
-   * @deprecated no longer supported at the base project level
-   */
-  readonly projectType?: ProjectType;
-
-  /**
    * Enable and configure the 'auto approve' workflow.
    * @default - auto approve is disabled
    */
@@ -170,13 +163,6 @@ export class GitHubProject extends Project {
    */
   public readonly devContainer: DevContainer | undefined;
 
-  /*
-   * Which project type this is.
-   *
-   * @deprecated
-   */
-  public readonly projectType: ProjectType;
-
   /**
    * Auto approve set up for this project.
    */
@@ -185,7 +171,6 @@ export class GitHubProject extends Project {
   constructor(options: GitHubProjectOptions) {
     super(options);
 
-    this.projectType = options.projectType ?? ProjectType.UNKNOWN;
     // we only allow these global services to be used in root projects
     const github = options.github ?? (this.parent ? false : true);
     this.github = github

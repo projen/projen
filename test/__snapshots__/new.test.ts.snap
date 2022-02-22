@@ -3,7 +3,6 @@
 exports[`creating java project with enum-typed CLI arg 1`] = `
 "import io.github.cdklabs.projen.java.JavaProject;
 import io.github.cdklabs.projen.java.JavaProjectOptions;
-import io.github.cdklabs.projen.ProjectType;
 
 public class projenrc {
     public static void main(String[] args) {
@@ -12,7 +11,6 @@ public class projenrc {
             .groupId(\\"org.acme\\")
             .name(\\"my-project\\")
             .version(\\"0.1.0\\")
-            .projectType(ProjectType.LIB)
             .projenrcJava(true)
             .build());
         project.synth();
@@ -37,7 +35,6 @@ project.synth();"
 
 exports[`creating python project with enum-typed CLI arg 1`] = `
 "from projen.python import PythonProject
-from projen import ProjectType
 
 project = PythonProject(
     author_email=\\"my@user.email.com\\",
@@ -45,7 +42,6 @@ project = PythonProject(
     module_name=\\"my_project\\",
     name=\\"my-project\\",
     version=\\"0.1.0\\",
-    project_type=ProjectType.LIB,
     projenrc_python=True,
 )
 

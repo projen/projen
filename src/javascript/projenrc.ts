@@ -34,7 +34,7 @@ export class Projenrc extends Component {
       return; // already exists
     }
 
-    const bootstrap = this.project.initProject;
+    const bootstrap = this.project._initProject;
     if (!bootstrap) {
       return;
     }

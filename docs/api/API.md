@@ -152,7 +152,6 @@ Name|Description
 [GitpodPrebuilds](#projen-gitpodprebuilds)|Configure the Gitpod App for prebuilds.
 [GitpodTask](#projen-gitpodtask)|Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
 [IniFileOptions](#projen-inifileoptions)|Options for `IniFile`.
-[InitProject](#projen-initproject)|Information passed from `projen new` to the project object when the project is first created.
 [JsonFileOptions](#projen-jsonfileoptions)|Options for `JsonFile`.
 [LicenseOptions](#projen-licenseoptions)|*No description*
 [LoggerOptions](#projen-loggeroptions)|Options for logging utilities.
@@ -376,7 +375,6 @@ Name|Description
 [GitpodPortVisibility](#projen-gitpodportvisibility)|Whether the port visibility should be private or public.
 [InitProjectOptionHints](#projen-initprojectoptionhints)|Choices for how to display commented out options in projenrc files.
 [LogLevel](#projen-loglevel)|Logging verbosity.
-[ProjectType](#projen-projecttype)|Which type of project this is.
 [awscdk.ApprovalLevel](#projen-awscdk-approvallevel)|Which approval is required when deploying CDK apps.
 [cdk.Stability](#projen-cdk-stability)|*No description*
 [github.DependabotRegistryType](#projen-github-dependabotregistrytype)|Each configuration type requires you to provide particular settings.
@@ -1717,7 +1715,6 @@ Name | Type | Description
 **tasks**🔹 | <code>[Tasks](#projen-tasks)</code> | Project tasks.
 **testTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
 **defaultTask**?🔹 | <code>[Task](#projen-task)</code> | This is the "default" task, the one that executes "projen".<br/>__*Optional*__
-**initProject**?🔹 | <code>[InitProject](#projen-initproject)</code> | The options used when this project is bootstrapped via `projen new`.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
 *static* **DEFAULT_TASK**🔹 | <code>string</code> | The name of the default task (the task executed when `projen` is run without arguments).
 
@@ -3020,7 +3017,6 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -3425,7 +3421,6 @@ new awscdk.AwsCdkJavaApp(options: AwsCdkJavaAppOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -3531,7 +3526,6 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -3804,7 +3798,6 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -4318,7 +4311,6 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -4571,7 +4563,6 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -4770,7 +4761,6 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -4947,7 +4937,6 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -5183,7 +5172,6 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -5621,7 +5609,6 @@ new github.GitHubProject(options: GitHubProjectOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -5635,7 +5622,6 @@ new github.GitHubProject(options: GitHubProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**projectType**⚠️ | <code>[ProjectType](#projen-projecttype)</code> | <span></span>
 **autoApprove**?⚠️ | <code>[github.AutoApprove](#projen-github-autoapprove)</code> | Auto approve set up for this project.<br/>__*Optional*__
 **devContainer**?⚠️ | <code>[vscode.DevContainer](#projen-vscode-devcontainer)</code> | Access for .devcontainer.json (used for GitHub Codespaces).<br/>__*Optional*__
 **github**?⚠️ | <code>[github.GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
@@ -6254,7 +6240,6 @@ new java.JavaProject(options: JavaProjectOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -7241,7 +7226,6 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -8248,7 +8232,6 @@ new python.PythonProject(options: PythonProjectOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -9007,7 +8990,6 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -9158,7 +9140,6 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -9309,7 +9290,6 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -9705,7 +9685,6 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -9854,7 +9833,6 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -10075,7 +10053,6 @@ new web.ReactProject(options: ReactProjectOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -10266,7 +10243,6 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
@@ -10908,24 +10884,6 @@ Name | Type | Description
 
 
 
-## struct InitProject 🔹 <a id="projen-initproject"></a>
-
-
-Information passed from `projen new` to the project object when the project is first created.
-
-It is used to generate projenrc files in various languages.
-
-
-
-Name | Type | Description 
------|------|-------------
-**args**🔹 | <code>Map<string, any></code> | Initial arguments passed to `projen new`.
-**comments**🔹 | <code>[InitProjectOptionHints](#projen-initprojectoptionhints)</code> | Include commented out options.
-**fqn**🔹 | <code>string</code> | The JSII FQN of the project type.
-**type**🔹 | <code>[ProjectType](#projen-projecttype)</code> | Project metadata.
-
-
-
 ## struct JsonFileOptions 🔹 <a id="projen-jsonfileoptions"></a>
 
 
@@ -11466,7 +11424,6 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -11613,7 +11570,6 @@ Name | Type | Description
 **packaging**?🔹 | <code>string</code> | Project packaging format.<br/>__*Default*__: "jar"
 **packagingOptions**?🔹 | <code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code> | Packaging options.<br/>__*Default*__: defaults
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
 **projenrcJava**?🔹 | <code>boolean</code> | Use projenrc in java.<br/>__*Default*__: true
@@ -11755,7 +11711,6 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -11958,7 +11913,6 @@ Name | Type | Description
 **prerelease**?⚠️ | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?⚠️ | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?⚠️ | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?⚠️ | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?⚠️ | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?⚠️ | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -12296,7 +12250,6 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -12555,7 +12508,6 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -12747,7 +12699,6 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -12903,7 +12854,6 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -13090,7 +13040,6 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -13274,7 +13223,6 @@ Name | Type | Description
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
@@ -14077,7 +14025,6 @@ Name | Type | Description
 **packaging**?🔹 | <code>string</code> | Project packaging format.<br/>__*Default*__: "jar"
 **packagingOptions**?🔹 | <code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code> | Packaging options.<br/>__*Default*__: defaults
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
 **projenrcJava**?🔹 | <code>boolean</code> | Use projenrc in java.<br/>__*Default*__: true
@@ -14126,7 +14073,6 @@ Name | Type | Description
 **packaging**?🔹 | <code>string</code> | Project packaging format.<br/>__*Default*__: "jar"
 **packagingOptions**?🔹 | <code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code> | Packaging options.<br/>__*Default*__: defaults
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
 **projenrcJava**?🔹 | <code>boolean</code> | Use projenrc in java.<br/>__*Default*__: true
@@ -14632,7 +14578,6 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -15164,7 +15109,6 @@ Name | Type | Description
 **pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
 **poetry**?🔹 | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.<br/>__*Default*__: false
 **poetryOptions**?🔹 | <code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code> | Additional options to set for poetry if using poetry.<br/>__*Optional*__
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
@@ -15701,7 +15645,6 @@ Name | Type | Description
 **prerelease**?⚠️ | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?⚠️ | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?⚠️ | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?⚠️ | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?⚠️ | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?⚠️ | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -15842,7 +15785,6 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -16081,7 +16023,6 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -16217,7 +16158,6 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -16381,7 +16321,6 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -16546,7 +16485,6 @@ Name | Type | Description
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
 **prettierOptions**?🔹 | <code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code> | Prettier options.<br/>__*Default*__: default options
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenDevDependency**?🔹 | <code>boolean</code> | Indicates of "projen" should be installed as a devDependency.<br/>__*Default*__: true
 **projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
@@ -16711,17 +16649,6 @@ Name | Description
 **INFO** 🔹|
 **DEBUG** 🔹|
 **VERBOSE** 🔹|
-
-
-## enum ProjectType ⚠️ <a id="projen-projecttype"></a>
-
-Which type of project this is.
-
-Name | Description
------|-----
-**UNKNOWN** ⚠️|This module may be a either a library or an app.
-**LIB** ⚠️|This is a library, intended to be published to a package manager and consumed by other projects.
-**APP** ⚠️|This is an app (service, tool, website, etc).
 
 
 ## enum ApprovalLevel 🔹 <a id="projen-awscdk-approvallevel"></a>

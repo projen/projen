@@ -1,5 +1,4 @@
 import { GitHubProject, GitHubProjectOptions } from "../github";
-import { ProjectType } from "../project";
 import { Pip } from "./pip";
 import { Poetry } from "./poetry";
 import { Projenrc as ProjenrcPython, ProjenrcOptions } from "./projenrc";
@@ -197,7 +196,7 @@ export class PythonProject extends GitHubProject {
       this.depsManager = new Pip(this);
     }
 
-    if (options.setuptools ?? this.projectType === ProjectType.LIB) {
+    if (options.setuptools ?? true) {
       this.packagingManager = new Setuptools(this, {
         version: options.version,
         description: options.description,
@@ -248,12 +247,6 @@ export class PythonProject extends GitHubProject {
     if (!this.depsManager) {
       throw new Error(
         "At least one tool must be chosen for managing dependencies (pip, conda, pipenv, or poetry)."
-      );
-    }
-
-    if (!this.packagingManager && this.projectType === ProjectType.LIB) {
-      throw new Error(
-        "At least one tool must be chosen for managing packaging (setuptools or poetry)."
       );
     }
 
