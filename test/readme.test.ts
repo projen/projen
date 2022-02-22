@@ -1,3 +1,4 @@
+import { SampleReadme } from "../src";
 import * as logging from "../src/logging";
 import { synthSnapshot, TestProject } from "./util";
 
@@ -7,6 +8,7 @@ describe("SampleReadProps", () => {
   test("default SampleReadme", () => {
     // GIVEN
     const project = new TestProject();
+    new SampleReadme(project);
 
     // WHEN
     const output = synthSnapshot(project);
@@ -20,10 +22,9 @@ describe("SampleReadProps", () => {
 
   test("customized w/ default SampleReadme", () => {
     // GIVEN
-    const project = new TestProject({
-      readme: {
-        filename: "README.md",
-      },
+    const project = new TestProject();
+    new SampleReadme(project, {
+      filename: "README.md",
     });
 
     // WHEN
@@ -38,10 +39,9 @@ describe("SampleReadProps", () => {
 
   test("customized SampleReadme", () => {
     // GIVEN
-    const project = new TestProject({
-      readme: {
-        filename: "readme.md",
-      },
+    const project = new TestProject();
+    new SampleReadme(project, {
+      filename: "readme.md",
     });
 
     // WHEN
@@ -56,10 +56,9 @@ describe("SampleReadProps", () => {
 
   test("SampleReadme customized contents in constructor", () => {
     // GIVEN
-    const project = new TestProject({
-      readme: {
-        contents: "my stuff",
-      },
+    const project = new TestProject();
+    new SampleReadme(project, {
+      contents: "my stuff",
     });
 
     // WHEN

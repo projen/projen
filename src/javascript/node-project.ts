@@ -18,6 +18,7 @@ import {
   UpgradeDependenciesOptions,
 } from "../javascript";
 import { License } from "../license";
+import { SampleReadme, SampleReadmeProps } from "../readme";
 import { Publisher, Release, ReleaseProjectOptions } from "../release";
 import { Task } from "../task";
 import { deepMerge } from "../util";
@@ -330,6 +331,14 @@ export interface NodeProjectOptions
    * @default "{ pullRequest: {}, workflowDispatch: {} }"
    */
   readonly buildWorkflowTriggers?: Triggers;
+
+  /**
+   * The README setup.
+   *
+   * @default - { filename: 'README.md', contents: '# replace this' }
+   * @example "{ filename: 'readme.md', contents: '# title' }"
+   */
+  readonly readme?: SampleReadmeProps;
 }
 
 /**
@@ -772,6 +781,8 @@ export class NodeProject extends GitHubProject {
     if (options.prettier ?? false) {
       this.prettier = new Prettier(this, { ...options.prettierOptions });
     }
+
+    new SampleReadme(this, options.readme);
   }
 
   public addBins(bins: Record<string, string>) {

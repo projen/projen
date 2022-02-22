@@ -773,7 +773,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "JavaProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -2994,7 +2994,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -5803,7 +5803,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -8337,7 +8337,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -10984,7 +10984,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -13595,7 +13595,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -14757,7 +14757,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "JavaProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -16841,7 +16841,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -19045,7 +19045,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -21301,7 +21301,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -23473,7 +23473,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -24684,7 +24684,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "PythonProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -26415,7 +26415,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -28659,7 +28659,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -30992,7 +30992,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "readme",
         ],
@@ -33303,7 +33303,7 @@ Array [
         "kind": "interface",
         "name": "readme",
         "optional": true,
-        "parent": "GitHubProjectOptions",
+        "parent": "NodeProjectOptions",
         "path": Array [
           "readme",
         ],

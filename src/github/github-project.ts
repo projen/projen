@@ -11,7 +11,6 @@ import {
 import { Clobber } from "../clobber";
 import { Gitpod } from "../gitpod";
 import { Project, ProjectOptions } from "../project";
-import { SampleReadme, SampleReadmeProps } from "../readme";
 import { DevContainer, VsCode } from "../vscode";
 
 /**
@@ -78,14 +77,6 @@ export interface GitHubProjectOptions extends ProjectOptions {
    * @default true
    */
   readonly clobber?: boolean;
-
-  /**
-   * The README setup.
-   *
-   * @default - { filename: 'README.md', contents: '# replace this' }
-   * @example "{ filename: 'readme.md', contents: '# title' }"
-   */
-  readonly readme?: SampleReadmeProps;
 
   /**
    * Enable and configure the 'auto approve' workflow.
@@ -193,8 +184,6 @@ export class GitHubProject extends Project {
     if (options.clobber ?? true) {
       new Clobber(this);
     }
-
-    new SampleReadme(this, options.readme);
 
     if (options.autoApproveOptions && this.github) {
       this.autoApprove = new AutoApprove(

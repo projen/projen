@@ -1,4 +1,5 @@
 import { GitHubProject, GitHubProjectOptions } from "../github";
+import { SampleReadme, SampleReadmeProps } from "../readme";
 import { Junit, JunitOptions } from "./junit";
 import { MavenCompile, MavenCompileOptions } from "./maven-compile";
 import { MavenPackaging, MavenPackagingOptions } from "./maven-packaging";
@@ -103,6 +104,14 @@ export interface JavaProjectOptions extends JavaProjectCommonOptions {
    * @default "org.acme"
    */
   readonly sampleJavaPackage?: string;
+
+  /**
+   * The README setup.
+   *
+   * @default - { filename: 'README.md', contents: '# replace this' }
+   * @example "{ filename: 'readme.md', contents: '# title' }"
+   */
+  readonly readme?: SampleReadmeProps;
 }
 
 /**
@@ -197,6 +206,8 @@ export class JavaProject extends GitHubProject {
     for (const dep of options.testDeps ?? []) {
       this.addTestDependency(dep);
     }
+
+    new SampleReadme(this, options.readme);
   }
 
   /**

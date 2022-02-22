@@ -166,7 +166,6 @@ node_modules/
       },
     },
   },
-  "README.md": "# replace this",
 }
 `;
 
@@ -345,6 +344,5 @@ node_modules/
     },
     "type": "projen.typescript.TypeScriptProject",
   },
-  "README.md": "# replace this",
 }
 `;

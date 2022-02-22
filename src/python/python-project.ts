@@ -1,4 +1,5 @@
 import { GitHubProject, GitHubProjectOptions } from "../github";
+import { SampleReadme, SampleReadmeProps } from "../readme";
 import { Pip } from "./pip";
 import { Poetry } from "./poetry";
 import { Projenrc as ProjenrcPython, ProjenrcOptions } from "./projenrc";
@@ -117,6 +118,14 @@ export interface PythonProjectOptions
    * @default true
    */
   readonly sample?: boolean;
+
+  /**
+   * The README setup.
+   *
+   * @default - { filename: 'README.md', contents: '# replace this' }
+   * @example "{ filename: 'readme.md', contents: '# title' }"
+   */
+  readonly readme?: SampleReadmeProps;
 
   /**
    * Use projenrc in python.
@@ -278,6 +287,8 @@ export class PythonProject extends GitHubProject {
     if (options.sample ?? true) {
       new PythonSample(this, {});
     }
+
+    new SampleReadme(this, options.readme);
 
     for (const dep of options.deps ?? []) {
       this.addDependency(dep);
