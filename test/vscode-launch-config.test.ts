@@ -1,4 +1,4 @@
-import { InternalConsoleOptions } from "../src/vscode";
+import { InternalConsoleOptions, VsCode } from "../src/vscode";
 import { synthSnapshot, TestProject } from "./util";
 
 const VSCODE_DEBUGGER_FILE = ".vscode/launch.json";
@@ -8,7 +8,8 @@ test("empty launch configuration", () => {
   const project = new TestProject();
 
   // WHEN
-  project.vscode?.launchConfiguration;
+  const vscode = new VsCode(project);
+  vscode.launchConfiguration;
 
   // THEN
   expect(synthSnapshot(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
@@ -23,8 +24,8 @@ test("adding a launch configuration entry", () => {
   const project = new TestProject();
 
   // WHEN
-  const launchConfig = project.vscode?.launchConfiguration;
-  launchConfig?.addConfiguration({
+  const vscode = new VsCode(project);
+  vscode.launchConfiguration.addConfiguration({
     type: "node",
     request: "launch",
     name: "CDK Debugger",
@@ -55,8 +56,8 @@ test("adding multiple launch configuration entries", () => {
   const project = new TestProject();
 
   // WHEN
-  const launchConfig = project.vscode?.launchConfiguration;
-  launchConfig?.addConfiguration({
+  const vscode = new VsCode(project);
+  vscode.launchConfiguration.addConfiguration({
     type: "node",
     request: "launch",
     name: "CDK Debugger",
@@ -65,7 +66,7 @@ test("adding multiple launch configuration entries", () => {
     args: ["${workspaceFolder}/src/main.ts"],
   });
 
-  launchConfig?.addConfiguration({
+  vscode.launchConfiguration.addConfiguration({
     type: "node",
     request: "launch",
     name: "Launch Program",
@@ -76,7 +77,7 @@ test("adding multiple launch configuration entries", () => {
     internalConsoleOptions: InternalConsoleOptions.OPEN_ON_SESSION_START,
   });
 
-  launchConfig?.addConfiguration({
+  vscode.launchConfiguration.addConfiguration({
     type: "pwa-chrome",
     request: "launch",
     name: "Launch Chrome against localhost",

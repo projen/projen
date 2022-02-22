@@ -10,6 +10,7 @@ import {
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { JobStep, Triggers } from "../github/workflows-model";
+import { Gitpod } from "../gitpod";
 import { IgnoreFile } from "../ignore-file";
 import {
   Prettier,
@@ -18,11 +19,12 @@ import {
   UpgradeDependenciesOptions,
 } from "../javascript";
 import { License } from "../license";
-import { SampleReadme, SampleReadmeProps } from "../readme";
 import { Publisher, Release, ReleaseProjectOptions } from "../release";
+import { SharedComponents, SharedComponentsOptions } from "../shared";
 import { Task } from "../task";
 import { deepMerge } from "../util";
 import { Version } from "../version";
+import { DevContainer, VsCode } from "../vscode";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import {
@@ -38,7 +40,8 @@ const PROJEN_SCRIPT = "projen";
 export interface NodeProjectOptions
   extends GitHubProjectOptions,
     NodePackageOptions,
-    ReleaseProjectOptions {
+    ReleaseProjectOptions,
+    SharedComponentsOptions {
   /**
    * License copyright owner.
    *
@@ -331,14 +334,6 @@ export interface NodeProjectOptions
    * @default "{ pullRequest: {}, workflowDispatch: {} }"
    */
   readonly buildWorkflowTriggers?: Triggers;
-
-  /**
-   * The README setup.
-   *
-   * @default - { filename: 'README.md', contents: '# replace this' }
-   * @example "{ filename: 'readme.md', contents: '# title' }"
-   */
-  readonly readme?: SampleReadmeProps;
 }
 
 /**
@@ -472,6 +467,7 @@ export class NodeProject extends GitHubProject {
 
   private readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
+  private readonly _sharedComponents: SharedComponents;
   public readonly prettier?: Prettier;
 
   constructor(options: NodeProjectOptions) {
@@ -782,7 +778,34 @@ export class NodeProject extends GitHubProject {
       this.prettier = new Prettier(this, { ...options.prettierOptions });
     }
 
-    new SampleReadme(this, options.readme);
+    this._sharedComponents = new SharedComponents(this, options);
+  }
+
+  /**
+   * Access for VSCode component.
+   *
+   * This will be `undefined` for subprojects or if gitpod boolean is false.
+   */
+  public get vscode(): VsCode | undefined {
+    return this._sharedComponents.vscode;
+  }
+
+  /**
+   * Access for Gitpod component.
+   *
+   * This will be `undefined` if gitpod boolean is false.
+   */
+  public get gitpod(): Gitpod | undefined {
+    return this._sharedComponents.gitpod;
+  }
+
+  /**
+   * Access for .devcontainer.json (used for GitHub Codespaces)
+   *
+   * This will be `undefined` if devContainer boolean is false.
+   */
+  public get devContainer(): DevContainer | undefined {
+    return this._sharedComponents.devContainer;
   }
 
   public addBins(bins: Record<string, string>) {

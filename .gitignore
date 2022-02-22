@@ -4,8 +4,6 @@
 !/.projen/deps.json
 !/.projen/files.json
 !/.github/workflows/pull-request-lint.yml
-!/.gitpod.yml
-!/.devcontainer.json
 !/.github/workflows/auto-approve.yml
 !/.github/workflows/stale.yml
 !/package.json
@@ -46,6 +44,8 @@ junit.xml
 !/.github/pull_request_template.md
 !/.prettierignore
 !/.prettierrc.json
+!/.gitpod.yml
+!/.devcontainer.json
 !/test/
 !/tsconfig.dev.json
 !/src/

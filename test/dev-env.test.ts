@@ -3,6 +3,7 @@ import * as fs from "fs-extra";
 import { DevEnvironmentDockerImage } from "../src/dev-env";
 import { Gitpod, GitpodOpenIn, GitpodOpenMode } from "../src/gitpod";
 import * as logging from "../src/logging";
+import { DevContainer } from "../src/vscode";
 import { synthSnapshot, TestProject } from "./util";
 
 // This is duplicated vs exported
@@ -14,9 +15,7 @@ logging.disable();
 describe("dev environment constructor", () => {
   test("for gitpod", () => {
     // GIVEN
-    const project = new TestProject({
-      gitpod: false,
-    });
+    const project = new TestProject();
     const task = project.addTask("dummy-task", { exec: "echo hello" });
 
     // WHEN
@@ -42,10 +41,7 @@ describe("dev environment constructor", () => {
 describe("dev environment enable/disable", () => {
   test("given gitpod and devContainer are false", () => {
     // GIVEN
-    const project = new TestProject({
-      gitpod: false,
-      devContainer: false,
-    });
+    const project = new TestProject();
 
     // WHEN
     project.synth();
@@ -59,10 +55,9 @@ describe("dev environment enable/disable", () => {
 
   test("no gitpod/devcontainer files if they are empty", () => {
     // WHEN
-    const project = new TestProject({
-      gitpod: true,
-      devContainer: true,
-    });
+    const project = new TestProject();
+    new Gitpod(project);
+    new DevContainer(project);
 
     // THEN
     project.synth();
@@ -74,14 +69,13 @@ describe("dev environment enable/disable", () => {
 
   test("given gitpod and devContainer are true", () => {
     // GIVEN
-    const project = new TestProject({
-      gitpod: true,
-      devContainer: true,
-    });
+    const project = new TestProject();
+    const gitpod = new Gitpod(project);
+    const devContainer = new DevContainer(project);
 
     // WHEN
-    project.gitpod?.addDockerImage({ image: "foo" });
-    project.devContainer?.addPorts("1234");
+    gitpod.addDockerImage({ image: "foo" });
+    devContainer.addPorts("1234");
 
     // THEN
     project.synth();
@@ -95,16 +89,15 @@ describe("dev environment enable/disable", () => {
 describe("dev environment docker options", () => {
   test("given an image", () => {
     // GIVEN
-    const project = new TestProject({
-      gitpod: true,
-      devContainer: true,
-    });
+    const project = new TestProject();
+    const gitpod = new Gitpod(project);
+    const devContainer = new DevContainer(project);
 
     // WHEN
-    project.gitpod?.addDockerImage(
+    gitpod.addDockerImage(
       DevEnvironmentDockerImage.fromImage("jsii/superchain:node14")
     );
-    project.devContainer?.addDockerImage(
+    devContainer.addDockerImage(
       DevEnvironmentDockerImage.fromImage("jsii/uberchain")
     );
 
@@ -122,16 +115,15 @@ describe("dev environment docker options", () => {
 
   test("given a docker file dep", () => {
     // GIVEN
-    const project = new TestProject({
-      gitpod: true,
-      devContainer: true,
-    });
+    const project = new TestProject();
+    const gitpod = new Gitpod(project);
+    const devContainer = new DevContainer(project);
 
     // WHEN
-    project.gitpod?.addDockerImage(
+    gitpod.addDockerImage(
       DevEnvironmentDockerImage.fromFile(".gitpod.Dockerfile")
     );
-    project.devContainer?.addDockerImage(
+    devContainer.addDockerImage(
       DevEnvironmentDockerImage.fromFile("Dockerfile")
     );
 
@@ -152,15 +144,14 @@ describe("dev environment docker options", () => {
 describe("dev environment tasks", () => {
   test("given custom task", () => {
     // GIVEN
-    const project = new TestProject({
-      gitpod: true,
-      devContainer: true,
-    });
+    const project = new TestProject();
+    const gitpod = new Gitpod(project);
+    const devContainer = new DevContainer(project);
 
     // WHEN
     const task = project.addTask("gitpod-test", { exec: "text" });
-    project.gitpod?.addTasks(task);
-    project.devContainer?.addTasks(task);
+    gitpod.addTasks(task);
+    devContainer.addTasks(task);
 
     // THEN
     const outdir = synthSnapshot(project);
@@ -174,14 +165,12 @@ describe("dev environment tasks", () => {
 
   test("given gitpod task options", () => {
     // GIVEN
-    const project = new TestProject({
-      gitpod: true,
-      devContainer: true,
-    });
+    const project = new TestProject();
+    const gitpod = new Gitpod(project);
 
     // WHEN
     const task = project.addTask("gitpod-test", { exec: "text" });
-    project.gitpod?.addCustomTask({
+    gitpod.addCustomTask({
       init: "echo Initializing",
       openIn: GitpodOpenIn.LEFT,
       openMode: GitpodOpenMode.SPLIT_BOTTOM,
@@ -199,14 +188,13 @@ describe("dev environment tasks", () => {
 
 test("dev environment ports", () => {
   // GIVEN
-  const project = new TestProject({
-    gitpod: true,
-    devContainer: true,
-  });
+  const project = new TestProject();
+  const gitpod = new Gitpod(project);
+  const devContainer = new DevContainer(project);
 
   // WHEN
-  project.gitpod?.addPorts("8080", "3000-3999");
-  project.devContainer?.addPorts("8080", "3000");
+  gitpod.addPorts("8080", "3000-3999");
+  devContainer.addPorts("8080", "3000");
 
   // THEN
   const outdir = synthSnapshot(project);
@@ -223,13 +211,11 @@ test("dev environment ports", () => {
 
 test("gitpod prebuilds config", () => {
   // GIVEN
-  const project = new TestProject({
-    gitpod: true,
-    devContainer: false,
-  });
+  const project = new TestProject();
+  const gitpod = new Gitpod(project);
 
   // WHEN
-  project.gitpod?.addPrebuilds({
+  gitpod.addPrebuilds({
     master: true,
     branches: true,
     pullRequestsFromForks: true,
@@ -248,16 +234,15 @@ test("gitpod prebuilds config", () => {
 
 test("dev environment vscode extensions", () => {
   // GIVEN
-  const project = new TestProject({
-    gitpod: true,
-    devContainer: true,
-  });
+  const project = new TestProject();
+  const gitpod = new Gitpod(project);
+  const devContainer = new DevContainer(project);
 
   // WHEN
-  project.gitpod?.addVscodeExtensions(
+  gitpod.addVscodeExtensions(
     "dbaeumer.vscode-eslint@2.1.13:5sYlSD6wJi5s3xqD8hupUw=="
   );
-  project.devContainer?.addVscodeExtensions("dbaeumer.vscode-eslint");
+  devContainer.addVscodeExtensions("dbaeumer.vscode-eslint");
 
   // THEN
   const outdir = synthSnapshot(project);

@@ -8,31 +8,12 @@ import {
   Stale,
   StaleOptions,
 } from ".";
-import { Clobber } from "../clobber";
-import { Gitpod } from "../gitpod";
 import { Project, ProjectOptions } from "../project";
-import { DevContainer, VsCode } from "../vscode";
 
 /**
  * Options for `GitHubProject`.
  */
 export interface GitHubProjectOptions extends ProjectOptions {
-  /**
-   * Add a Gitpod development environment
-   *
-   * @default false
-   */
-  readonly gitpod?: boolean;
-
-  /**
-   * Enable VSCode integration.
-   *
-   * Enabled by default for root projects. Disabled for non-root projects.
-   *
-   * @default true
-   */
-  readonly vscode?: boolean;
-
   /**
    * Enable GitHub integration.
    *
@@ -64,19 +45,6 @@ export interface GitHubProjectOptions extends ProjectOptions {
    * @deprecated use `githubOptions.mergifyOptions` instead
    */
   readonly mergifyOptions?: MergifyOptions;
-
-  /**
-   * Add a VSCode development environment (used for GitHub Codespaces)
-   *
-   * @default false
-   */
-  readonly devContainer?: boolean;
-
-  /**
-   * Add a `clobber` task which resets the repo to origin.
-   * @default true
-   */
-  readonly clobber?: boolean;
 
   /**
    * Enable and configure the 'auto approve' workflow.
@@ -134,27 +102,6 @@ export class GitHubProject extends Project {
   public readonly github: GitHub | undefined;
 
   /**
-   * Access all VSCode components.
-   *
-   * This will be `undefined` for subprojects.
-   */
-  public readonly vscode: VsCode | undefined;
-
-  /**
-   * Access for Gitpod
-   *
-   * This will be `undefined` if gitpod boolean is false
-   */
-  public readonly gitpod: Gitpod | undefined;
-
-  /**
-   * Access for .devcontainer.json (used for GitHub Codespaces)
-   *
-   * This will be `undefined` if devContainer boolean is false
-   */
-  public readonly devContainer: DevContainer | undefined;
-
-  /**
    * Auto approve set up for this project.
    */
   public readonly autoApprove?: AutoApprove;
@@ -172,18 +119,6 @@ export class GitHubProject extends Project {
           ...options.githubOptions,
         })
       : undefined;
-
-    const vscode = options.vscode ?? (this.parent ? false : true);
-    this.vscode = vscode ? new VsCode(this) : undefined;
-
-    this.gitpod = options.gitpod ? new Gitpod(this) : undefined;
-    this.devContainer = options.devContainer
-      ? new DevContainer(this)
-      : undefined;
-
-    if (options.clobber ?? true) {
-      new Clobber(this);
-    }
 
     if (options.autoApproveOptions && this.github) {
       this.autoApprove = new AutoApprove(

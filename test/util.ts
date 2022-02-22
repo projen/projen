@@ -17,7 +17,6 @@ export class TestProject extends GitHubProject {
   constructor(options: Omit<GitHubProjectOptions, "name"> = {}) {
     super({
       name: "my-project",
-      clobber: false,
       ...options,
     });
   }

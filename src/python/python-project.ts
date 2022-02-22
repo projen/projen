@@ -1,5 +1,7 @@
 import { GitHubProject, GitHubProjectOptions } from "../github";
-import { SampleReadme, SampleReadmeProps } from "../readme";
+import { Gitpod } from "../gitpod";
+import { SharedComponents, SharedComponentsOptions } from "../shared";
+import { DevContainer, VsCode } from "../vscode";
 import { Pip } from "./pip";
 import { Poetry } from "./poetry";
 import { Projenrc as ProjenrcPython, ProjenrcOptions } from "./projenrc";
@@ -19,7 +21,8 @@ const PYTHON_PROJECT_NAME_REGEX = /^[A-Za-z0-9-_\.]+$/;
  */
 export interface PythonProjectOptions
   extends GitHubProjectOptions,
-    PythonPackagingOptions {
+    PythonPackagingOptions,
+    SharedComponentsOptions {
   // -- required options --
 
   /**
@@ -120,14 +123,6 @@ export interface PythonProjectOptions
   readonly sample?: boolean;
 
   /**
-   * The README setup.
-   *
-   * @default - { filename: 'README.md', contents: '# replace this' }
-   * @example "{ filename: 'readme.md', contents: '# title' }"
-   */
-  readonly readme?: SampleReadmeProps;
-
-  /**
    * Use projenrc in python.
    *
    * This will install `projen` as a python dependency and will add a `synth`
@@ -180,6 +175,8 @@ export class PythonProject extends GitHubProject {
    * Pytest component.
    */
   public readonly pytest?: Pytest;
+
+  private readonly _sharedComponents: SharedComponents;
 
   constructor(options: PythonProjectOptions) {
     super(options);
@@ -238,7 +235,7 @@ export class PythonProject extends GitHubProject {
         homepage: options.homepage,
         classifiers: options.classifiers,
         poetryOptions: {
-          readme: options.readme?.filename ?? "README.md",
+          readme: "README.md",
           ...options.poetryOptions,
         },
       });
@@ -288,8 +285,6 @@ export class PythonProject extends GitHubProject {
       new PythonSample(this, {});
     }
 
-    new SampleReadme(this, options.readme);
-
     for (const dep of options.deps ?? []) {
       this.addDependency(dep);
     }
@@ -299,6 +294,35 @@ export class PythonProject extends GitHubProject {
     }
 
     this.addDefaultGitIgnore();
+
+    this._sharedComponents = new SharedComponents(this, options);
+  }
+
+  /**
+   * Access for VSCode component.
+   *
+   * This will be `undefined` for subprojects or if gitpod boolean is false.
+   */
+  public get vscode(): VsCode | undefined {
+    return this._sharedComponents.vscode;
+  }
+
+  /**
+   * Access for Gitpod component.
+   *
+   * This will be `undefined` if gitpod boolean is false.
+   */
+  public get gitpod(): Gitpod | undefined {
+    return this._sharedComponents.gitpod;
+  }
+
+  /**
+   * Access for .devcontainer.json (used for GitHub Codespaces)
+   *
+   * This will be `undefined` if devContainer boolean is false.
+   */
+  public get devContainer(): DevContainer | undefined {
+    return this._sharedComponents.devContainer;
   }
 
   /**

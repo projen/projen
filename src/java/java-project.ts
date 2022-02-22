@@ -1,5 +1,7 @@
 import { GitHubProject, GitHubProjectOptions } from "../github";
-import { SampleReadme, SampleReadmeProps } from "../readme";
+import { Gitpod } from "../gitpod";
+import { SharedComponents, SharedComponentsOptions } from "../shared";
+import { DevContainer, VsCode } from "../vscode";
 import { Junit, JunitOptions } from "./junit";
 import { MavenCompile, MavenCompileOptions } from "./maven-compile";
 import { MavenPackaging, MavenPackagingOptions } from "./maven-packaging";
@@ -12,7 +14,8 @@ import { Projenrc as ProjenrcJava, ProjenrcOptions } from "./projenrc";
  */
 export interface JavaProjectCommonOptions
   extends GitHubProjectOptions,
-    PomOptions {
+    PomOptions,
+    SharedComponentsOptions {
   /**
    * Final artifact output directory.
    *
@@ -104,14 +107,6 @@ export interface JavaProjectOptions extends JavaProjectCommonOptions {
    * @default "org.acme"
    */
   readonly sampleJavaPackage?: string;
-
-  /**
-   * The README setup.
-   *
-   * @default - { filename: 'README.md', contents: '# replace this' }
-   * @example "{ filename: 'readme.md', contents: '# title' }"
-   */
-  readonly readme?: SampleReadmeProps;
 }
 
 /**
@@ -149,6 +144,8 @@ export class JavaProject extends GitHubProject {
    * Maven artifact output directory.
    */
   public readonly distdir: string;
+
+  private readonly _sharedComponents: SharedComponents;
 
   constructor(options: JavaProjectOptions) {
     super(options);
@@ -207,7 +204,34 @@ export class JavaProject extends GitHubProject {
       this.addTestDependency(dep);
     }
 
-    new SampleReadme(this, options.readme);
+    this._sharedComponents = new SharedComponents(this, options);
+  }
+
+  /**
+   * Access for VSCode component.
+   *
+   * This will be `undefined` for subprojects or if gitpod boolean is false.
+   */
+  public get vscode(): VsCode | undefined {
+    return this._sharedComponents.vscode;
+  }
+
+  /**
+   * Access for Gitpod component.
+   *
+   * This will be `undefined` if gitpod boolean is false.
+   */
+  public get gitpod(): Gitpod | undefined {
+    return this._sharedComponents.gitpod;
+  }
+
+  /**
+   * Access for .devcontainer.json (used for GitHub Codespaces)
+   *
+   * This will be `undefined` if devContainer boolean is false.
+   */
+  public get devContainer(): DevContainer | undefined {
+    return this._sharedComponents.devContainer;
   }
 
   /**
