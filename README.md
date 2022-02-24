@@ -117,7 +117,7 @@ npx projen
 ```
 
 And you'll notice that your `package.json` file now contains a `python` section in
-it's `jsii` config and the GitHub `release.yml` workflow includes a PyPI
+its `jsii` config and the GitHub `release.yml` workflow includes a PyPI
 publishing step.
 
 We recommend to put this in your shell profile, so you can simply run `pj` every
@@ -191,7 +191,7 @@ the box (we are just getting started). Think `projen new react`, `projen new ang
 `projen new awscdk-typescript`, `projen new cdk8s-python` (nothing in projen is tied to javascript or npm!)...
 
 Adding new project types is as simple as submitting a pull request to this repo and exporting a class that
-extends `projen.Project` (or one of it's derivatives). Projen automatically discovers project types so your
+extends `projen.Project` (or one of its derivatives). Projen automatically discovers project types so your
 type will immediately be available in `projen new`.
 
 ### Projects in external modules

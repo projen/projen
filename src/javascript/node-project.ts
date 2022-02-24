@@ -558,7 +558,9 @@ export class NodeProject extends GitHubProject {
         containerImage: options.workflowContainerImage,
         gitIdentity: this.workflowGitIdentity,
         mutableBuild: options.mutableBuild,
-        preBuildSteps: this.renderWorkflowSetup({ mutable: true }),
+        preBuildSteps: this.renderWorkflowSetup({
+          mutable: options.mutableBuild ?? true,
+        }),
         postBuildSteps: options.postBuildSteps,
         runsOn: options.workflowRunsOn,
         workflowTriggers: options.buildWorkflowTriggers,

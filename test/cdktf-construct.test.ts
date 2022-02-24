@@ -14,9 +14,29 @@ describe("constructs dependency selection", () => {
     const snapshot = synthSnapshot(project);
 
     // THEN
-    expect(snapshot["package.json"]?.peerDependencies?.cdktf).toBe("^0.99");
+    expect(snapshot["package.json"]?.peerDependencies?.cdktf).toBe("0.99");
     expect(snapshot["package.json"]?.devDependencies?.cdktf).toBe("0.99.0");
     expect(snapshot["package.json"]?.dependencies?.cdktf).toBeUndefined();
+  });
+
+  test("user-selected constructs version", () => {
+    // GIVEN
+    const project = new TestProject({
+      cdktfVersion: "0.99",
+      constructsVersion: "10.0.1",
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(project);
+
+    // THEN
+    expect(snapshot["package.json"]?.peerDependencies?.constructs).toBe(
+      "10.0.1"
+    );
+    expect(snapshot["package.json"]?.devDependencies?.constructs).toBe(
+      "10.0.1"
+    );
+    expect(snapshot["package.json"]?.dependencies?.constructs).toBeUndefined();
   });
 });
 

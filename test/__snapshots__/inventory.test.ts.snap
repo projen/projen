@@ -12084,7 +12084,7 @@ Array [
         "switch": "catalog",
       },
       Object {
-        "default": "\\"0.4.0\\"",
+        "default": "\\"^0.8.3\\"",
         "docs": "Minimum target version this library is tested against.",
         "featured": true,
         "fullType": Object {
@@ -12202,6 +12202,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "compat-ignore",
+      },
+      Object {
+        "default": "\\"^10.0.12\\"",
+        "docs": "Construct version to use.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "constructsVersion",
+        "optional": true,
+        "parent": "ConstructLibraryCdktfOptions",
+        "path": Array [
+          "constructsVersion",
+        ],
+        "simpleType": "string",
+        "switch": "constructs-version",
       },
       Object {
         "default": "- defaults to the value of authorName or \\"\\" if \`authorName\` is undefined.",

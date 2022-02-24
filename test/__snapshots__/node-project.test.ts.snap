@@ -81,7 +81,7 @@ Array [
   },
   Object {
     "name": "Install dependencies",
-    "run": "yarn install --check-files",
+    "run": "yarn install --check-files --frozen-lockfile",
   },
   Object {
     "name": "build",
