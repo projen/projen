@@ -11,6 +11,9 @@ import { PythonProject, PythonProjectOptions } from "../python/python-project";
 import { AwsCdkDepsPy } from "./awscdk-deps-py";
 import { AwsCdkPytestSample } from "./awscdk-pytest-sample";
 
+/**
+ * Options for `AwsCdkPythonApp`
+ */
 export interface AwsCdkPythonAppOptions
   extends PythonProjectOptions,
     CdkConfigCommonOptions,
