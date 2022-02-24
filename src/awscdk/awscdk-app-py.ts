@@ -6,8 +6,7 @@ import {
   CdkTasks,
 } from ".";
 import { Component, DependencyType, SampleDir, SourceCode } from "..";
-import { Pytest } from "../python";
-import { PythonProject, PythonProjectOptions } from "../python/python-project";
+import { Pytest, PythonProject, PythonProjectOptions } from "../python";
 import { AwsCdkDepsPy } from "./awscdk-deps-py";
 import { AwsCdkPytestSample } from "./awscdk-pytest-sample";
 
