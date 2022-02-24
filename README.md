@@ -47,7 +47,7 @@ list):
 
 <!-- <macro exec="node ./scripts/readme-projects.js"> -->
 * [awscdk-app-java](https://projen.io/api/API.html#projen-awscdk-awscdkjavaapp) - AWS CDK app in Java.
-* [awscdk-app-py](https://projen.github.io/projen/api/API.html#projen-awscdk-awscdkpythonapp) - AWS CDK app in Python.
+* [awscdk-app-py](https://projen.io/api/API.html#projen-awscdk-awscdkpythonapp) - AWS CDK app in Python.
 * [awscdk-app-ts](https://projen.io/api/API.html#projen-awscdk-awscdktypescriptapp) - AWS CDK app in TypeScript.
 * [awscdk-construct](https://projen.io/api/API.html#projen-awscdk-awscdkconstructlibrary) - AWS CDK construct library project.
 * [cdk8s-app-ts](https://projen.io/api/API.html#projen-cdk8s-cdk8stypescriptapp) - CDK8s app in TypeScript.

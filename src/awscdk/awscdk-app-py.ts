@@ -6,7 +6,8 @@ import {
   CdkTasks,
 } from ".";
 import { Component, DependencyType, SampleDir, SourceCode } from "..";
-import { Pytest, PythonProject, PythonProjectOptions } from "../python";
+import { Pytest } from "../python/pytest";
+import { PythonProject, PythonProjectOptions } from "../python/python-project";
 import { AwsCdkDepsPy } from "./awscdk-deps-py";
 import { AwsCdkPytestSample } from "./awscdk-pytest-sample";
 
@@ -98,16 +99,6 @@ export class AwsCdkPythonApp extends PythonProject {
         "python/__pycache__",
         "tests",
       ],
-      context: {
-        "@aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId": true,
-        "@aws-cdk/core:stackRelativeExports": true,
-        "@aws-cdk/aws-rds:lowercaseDbIdentifier": true,
-        "@aws-cdk/aws-lambda:recognizeVersionProps": true,
-        "@aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021": true,
-        "@aws-cdk-containers/ecs-service-extensions:enableDefaultLogDriver":
-          true,
-        "@aws-cdk/core:target-partitions": ["aws", "aws-cn"],
-      },
       ...options,
     });
 

@@ -186,7 +186,7 @@ Name|Description
 [awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)|*No description*
 [awscdk.AwsCdkJavaAppOptions](#projen-awscdk-awscdkjavaappoptions)|*No description*
 [awscdk.AwsCdkPackageNames](#projen-awscdk-awscdkpackagenames)|Language-specific AWS CDK package names.
-[awscdk.AwsCdkPythonAppOptions](#projen-awscdk-awscdkpythonappoptions)|*No description*
+[awscdk.AwsCdkPythonAppOptions](#projen-awscdk-awscdkpythonappoptions)|Options for `AwsCdkPythonApp`.
 [awscdk.AwsCdkTypeScriptAppOptions](#projen-awscdk-awscdktypescriptappoptions)|*No description*
 [awscdk.CdkConfigCommonOptions](#projen-awscdk-cdkconfigcommonoptions)|Common options for `cdk.json`.
 [awscdk.CdkConfigOptions](#projen-awscdk-cdkconfigoptions)|Options for `CdkJson`.
@@ -11781,7 +11781,7 @@ Name | Type | Description
 ## struct AwsCdkPythonAppOptions 🔹 <a id="projen-awscdk-awscdkpythonappoptions"></a>
 
 
-
+Options for `AwsCdkPythonApp`.
 
 
 

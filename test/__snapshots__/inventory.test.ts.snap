@@ -1010,7 +1010,7 @@ Array [
   },
   Object {
     "docs": "AWS CDK app in Python.",
-    "docsurl": "https://projen.github.io/projen/api/API.html#projen-awscdk-awscdkpythonapp",
+    "docsurl": "https://projen.io/api/API.html#projen-awscdk-awscdkpythonapp",
     "fqn": "projen.awscdk.AwsCdkPythonApp",
     "moduleName": "projen",
     "options": Array [
