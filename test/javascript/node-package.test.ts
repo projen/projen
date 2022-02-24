@@ -284,7 +284,7 @@ test("manually set devDependencies are not changed when a peerDependency is adde
   expect(pkgFile.devDependencies).toStrictEqual({ ms: "^1.3.0" });
 });
 
-test("devDependencies are not pinned by peerDependencies if dependency exists", () => {
+test("devDependencies are not pinned by peerDependencies if a regular (runtime) dependency also exists", () => {
   // Post-synth dependency version resolution uses installed package from node_modules folder
   // Mock install command to add this folder with a fixed dependency version,
   // mimicking yarn installing the latest package for "*"
