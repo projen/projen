@@ -3592,7 +3592,6 @@ Name | Type | Description
 **cdkTasks**🔹 | <code>[awscdk.CdkTasks](#projen-awscdk-cdktasks)</code> | Common CDK tasks.
 **cdkVersion**🔹 | <code>string</code> | The CDK version this app is using.
 **testdir**🔹 | <code>string</code> | The directory in which the python tests reside.
-**pytest**?🔹 | <code>[python.Pytest](#projen-python-pytest)</code> | Pytest component.<br/>__*Optional*__
 
 
 
