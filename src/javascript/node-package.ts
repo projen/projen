@@ -403,7 +403,10 @@ export class NodePackage extends Component {
     super(project);
 
     this.packageName = options.packageName ?? project.name;
-    this.peerDependencyOptions = options.peerDependencyOptions ?? {};
+    this.peerDependencyOptions = {
+      pinnedDevDependency: true,
+      ...options.peerDependencyOptions,
+    };
     this.allowLibraryDependencies = options.allowLibraryDependencies ?? true;
     this.packageManager = options.packageManager ?? NodePackageManager.YARN;
     this.entrypoint = options.entrypoint ?? "lib/index.js";
@@ -887,8 +890,7 @@ export class NodePackage extends Component {
 
     // synthetic dependencies: add a pinned build dependency to ensure we are
     // testing against the minimum requirement of the peer.
-    const pinned = this.peerDependencyOptions.pinnedDevDependency ?? true;
-    if (pinned) {
+    if (this.peerDependencyOptions.pinnedDevDependency) {
       for (const dep of this.project.deps.all.filter(
         (d) => d.type === DependencyType.PEER
       )) {
@@ -1056,22 +1058,45 @@ export class NodePackage extends Component {
         }
       }
 
-      return sorted(result);
+      return result;
     };
 
     const rendered = this._renderedDeps;
     if (!rendered) {
       throw new Error("assertion failed");
     }
-    pkg.dependencies = resolveDeps(pkg.dependencies, rendered.dependencies);
-    pkg.devDependencies = resolveDeps(
-      pkg.devDependencies,
-      rendered.devDependencies
-    );
-    pkg.peerDependencies = resolveDeps(
+
+    const deps = resolveDeps(pkg.dependencies, rendered.dependencies);
+    const devDeps = resolveDeps(pkg.devDependencies, rendered.devDependencies);
+    const peerDeps = resolveDeps(
       pkg.peerDependencies,
       rendered.peerDependencies
     );
+
+    if (this.peerDependencyOptions.pinnedDevDependency) {
+      for (const [name, version] of Object.entries(peerDeps)) {
+        // Skip if we already have a runtime dependency on this peer
+        // or if devDependency version is already set.
+        // Relies on the "*" devDependency added in the presynth step
+        if (deps[name] || rendered.devDependencies[name] !== "*") {
+          continue;
+        }
+
+        // Take version and pin as dev dependency
+        const ver = semver.minVersion(version)?.version;
+        if (!ver) {
+          throw new Error(
+            `unable to determine minimum semver for peer dependency ${name}@${version}`
+          );
+        }
+
+        devDeps[name] = ver;
+      }
+    }
+
+    pkg.dependencies = sorted(deps);
+    pkg.devDependencies = sorted(devDeps);
+    pkg.peerDependencies = sorted(peerDeps);
 
     const updated = JSON.stringify(pkg, undefined, 2);
 

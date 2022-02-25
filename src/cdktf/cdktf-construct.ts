@@ -1,12 +1,19 @@
+import * as semver from "semver";
 import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
 
 export interface ConstructLibraryCdktfOptions extends ConstructLibraryOptions {
   /**
    * Minimum target version this library is tested against.
-   * @default "0.4.0"
+   * @default "^0.8.3"
    * @featured
    */
   readonly cdktfVersion: string;
+
+  /**
+   * Construct version to use
+   * @default "^10.0.12"
+   */
+  readonly constructsVersion?: string;
 }
 
 /**
@@ -26,8 +33,20 @@ export class ConstructLibraryCdktf extends ConstructLibrary {
       throw new Error("Required field cdktfVersion is not specified.");
     }
 
-    const ver = options.cdktfVersion;
+    function getDefaultConstructVersion() {
+      const semverCDKTFVersion = semver.coerce(options.cdktfVersion);
+      if (semverCDKTFVersion && semver.lte(semverCDKTFVersion, "0.5.0")) {
+        return "^3.0.0";
+      }
 
-    this.addPeerDeps("constructs@^10", `cdktf@^${ver}`);
+      return "^10.0.12";
+    }
+
+    const ver = options.cdktfVersion;
+    const constructVersion =
+      options.constructsVersion ?? getDefaultConstructVersion();
+
+    this.addPeerDeps(`constructs@${constructVersion}`, `cdktf@${ver}`);
+    this.addKeywords("cdktf");
   }
 }
