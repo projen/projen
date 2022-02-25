@@ -172,7 +172,7 @@ export class PythonProject extends GitHubProject {
   /**
    * Pytest component.
    */
-  public readonly pytest?: Pytest;
+  public pytest?: Pytest;
 
   constructor(options: PythonProjectOptions) {
     super(options);
