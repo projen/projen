@@ -73,6 +73,23 @@ public class projenrc {
 }
 `;
 
+exports[`projen new awscdk-app-py 1`] = `
+Object {
+  ".projenrc.py": "from projen.awscdk import AwsCdkPythonApp
+
+project = AwsCdkPythonApp(
+    author_email=\\"my@user.email.com\\",
+    author_name=\\"My User Name\\",
+    cdk_version=\\"2.1.0\\",
+    module_name=\\"my_project\\",
+    name=\\"my-project\\",
+    version=\\"0.1.0\\",
+)
+
+project.synth()",
+}
+`;
+
 exports[`projen new awscdk-app-ts 1`] = `
 Object {
   ".projenrc.js": "const { awscdk } = require(\\"projen\\");
