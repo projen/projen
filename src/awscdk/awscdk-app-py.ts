@@ -62,11 +62,6 @@ export class AwsCdkPythonApp extends PythonProject {
   public readonly testdir: string;
 
   /**
-   * Pytest component.
-   */
-  public readonly pytest?: Pytest;
-
-  /**
    * The CDK version this app is using.
    */
   public get cdkVersion() {
