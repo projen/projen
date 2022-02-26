@@ -127,8 +127,8 @@ Example extension:
 
 ```ts
 #!/usr/bin/env node
-// ^ Do not remove this shebang, as Lambda executes the bundled version of this
-// file directly.
+// ^ Do not forget this shebang - Lambda executes the bundled version of this
+// file directly without otherwise knowing it's a node script.
 
 import { basename } from 'path';
 import got from 'got';
@@ -147,8 +147,9 @@ async function main() {
     switch (event.eventType) {
       case ExtensionEventType.SHUTDOWN:
         return 0;
+
       default:
-        console.log(`Unknown event type ${event.eventType}`);
+        console.log(`Unhandled event type ${event.eventType}`);
     }
   }
 }
@@ -162,6 +163,8 @@ enum ExtensionEventType {
 
 interface ExtensionEvent {
   readonly eventType: ExtensionEventType;
+  // For complete event structures, see:
+  // https://docs.aws.amazon.com/lambda/latest/dg/runtimes-extensions-api.html
 }
 
 async function registerExtension(events: ExtensionEventType[]) {
