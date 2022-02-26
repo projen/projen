@@ -102,7 +102,8 @@ export class Bundler extends Component {
   public addBundle(entrypoint: string, options: AddBundleOptions): Bundle {
     const name = renderBundleName(entrypoint);
 
-    const outfile = join(this.bundledir, name, "index.js");
+    const outdir = join(this.bundledir, name);
+    const outfile = join(outdir, options.outfile ?? "index.js");
     const args = [
       "esbuild",
       "--bundle",
@@ -140,6 +141,7 @@ export class Bundler extends Component {
     return {
       bundleTask: bundleTask,
       watchTask: watchTask,
+      outdir: outdir,
       outfile: outfile,
     };
   }
@@ -175,6 +177,11 @@ export interface Bundle {
    * Location of the output file (relative to project root).
    */
   readonly outfile: string;
+
+  /**
+   * Base directory containing the output file (relative to project root).
+   */
+  readonly outdir: string;
 }
 
 /**
@@ -233,4 +240,10 @@ export interface AddBundleOptions extends BundlingOptions {
    * @example "node"
    */
   readonly platform: string;
+
+  /**
+   * Bundler output path relative to the asset's output directory.
+   * @default "index.js"
+   */
+  readonly outfile?: string;
 }

@@ -1,3 +1,4 @@
+import { LambdaExtension, LambdaExtensionCommonOptions } from ".";
 import {
   AutoDiscoverBase,
   IntegrationTestAutoDiscoverBase,
@@ -10,7 +11,10 @@ import {
   IntegrationTest,
   IntegrationTestCommonOptions,
 } from "./integration-test";
-import { TYPESCRIPT_LAMBDA_EXT } from "./internal";
+import {
+  TYPESCRIPT_LAMBDA_EXT,
+  TYPESCRIPT_LAMBDA_EXTENSION_EXT,
+} from "./internal";
 import { LambdaFunction, LambdaFunctionCommonOptions } from "./lambda-function";
 
 /**
@@ -68,7 +72,7 @@ export interface LambdaAutoDiscoverOptions extends AutoDiscoverCommonOptions {
   readonly srcdir: string;
 
   /**
-   * Options for auto-discovery of AWS Lambda functions.
+   * Options for AWS Lambda functions.
    */
   readonly lambdaOptions?: LambdaFunctionCommonOptions;
 }
@@ -93,11 +97,46 @@ export class LambdaAutoDiscover extends AutoDiscoverBase {
   }
 }
 
+export interface LambdaExtensionAutoDiscoverOptions
+  extends AutoDiscoverCommonOptions {
+  /**
+   * Project source tree (relative to project output directory).
+   */
+  readonly srcdir: string;
+
+  /**
+   * Options for lambda extensions.
+   */
+  readonly lambdaExtensionOptions?: LambdaExtensionCommonOptions;
+}
+
+/**
+ * Creates Lambda Extensions from entrypoints discovered in the project's
+ * source tree.
+ */
+export class LambdaExtensionAutoDiscover extends AutoDiscoverBase {
+  constructor(project: Project, options: LambdaExtensionAutoDiscoverOptions) {
+    super(project, {
+      projectdir: options.srcdir,
+      extension: TYPESCRIPT_LAMBDA_EXTENSION_EXT,
+    });
+
+    for (const entrypoint of this.entrypoints) {
+      new LambdaExtension(this.project, {
+        entrypoint,
+        cdkDeps: options.cdkDeps,
+        ...options.lambdaExtensionOptions,
+      });
+    }
+  }
+}
+
 /**
  * Options for `AutoDiscover`
  */
 export interface AutoDiscoverOptions
   extends LambdaAutoDiscoverOptions,
+    LambdaExtensionAutoDiscoverOptions,
     IntegrationTestAutoDiscoverOptions {
   /**
    * Auto-discover lambda functions.
@@ -105,6 +144,13 @@ export interface AutoDiscoverOptions
    * @default true
    */
   readonly lambdaAutoDiscover?: boolean;
+
+  /**
+   * Auto-discover lambda extensions.
+   *
+   * @default true
+   */
+  readonly lambdaExtensionAutoDiscover?: boolean;
 
   /**
    * Auto-discover integration tests.
@@ -128,6 +174,15 @@ export class AutoDiscover extends Component {
         tsconfigPath: options.tsconfigPath,
         srcdir: options.srcdir,
         lambdaOptions: options.lambdaOptions,
+      });
+    }
+
+    if (options.lambdaExtensionAutoDiscover ?? true) {
+      new LambdaExtensionAutoDiscover(this.project, {
+        cdkDeps: options.cdkDeps,
+        tsconfigPath: options.tsconfigPath,
+        srcdir: options.srcdir,
+        lambdaExtensionOptions: options.lambdaExtensionOptions,
       });
     }
 

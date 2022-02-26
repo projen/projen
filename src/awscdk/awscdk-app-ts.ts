@@ -32,6 +32,15 @@ export interface AwsCdkTypeScriptAppOptions
   readonly lambdaAutoDiscover?: boolean;
 
   /**
+   * Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts`
+   * entrypoint in your source tree. If this is disabled, you can manually add an
+   * `awscdk.AutoDiscover` component to your project
+   *
+   * @default true
+   */
+  readonly lambdaExtensionAutoDiscover?: boolean;
+
+  /**
    * Automatically discovers and creates integration tests for each `.integ.ts`
    * file in under your test directory.
    *
@@ -154,6 +163,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       tsconfigPath: this.tsconfigDev.fileName,
       cdkDeps: this.cdkDeps,
       lambdaAutoDiscover: options.lambdaAutoDiscover ?? true,
+      lambdaExtensionAutoDiscover: options.lambdaExtensionAutoDiscover ?? true,
       integrationTestAutoDiscover: options.integrationTestAutoDiscover ?? true,
     });
   }

@@ -10,3 +10,4 @@ export * from "./cdk-config";
 export * from "./cdk-tasks";
 export * from "./integration-test";
 export * from "./lambda-function";
+export * from "./lambda-extension";

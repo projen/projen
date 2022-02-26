@@ -3269,6 +3269,23 @@ Array [
         "switch": "lambda-auto-discover",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically adds an \`awscdk.LambdaExtension\` for each \`.lambda-extension.ts\` entrypoint in your source tree. If this is disabled, you can manually add an \`awscdk.AutoDiscover\` component to your project.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "lambdaExtensionAutoDiscover",
+        "optional": true,
+        "parent": "AwsCdkTypeScriptAppOptions",
+        "path": Array [
+          "lambdaExtensionAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "lambda-extension-auto-discover",
+      },
+      Object {
         "default": "- default options",
         "docs": "Common options for all AWS Lambda functions.",
         "featured": false,
@@ -6002,6 +6019,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "lambda-auto-discover",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically adds an \`awscdk.LambdaExtension\` for each \`.lambda-extension.ts\` entrypoint in your source tree. If this is disabled, you can manually add an \`awscdk.AutoDiscover\` component to your project.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "lambdaExtensionAutoDiscover",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": Array [
+          "lambdaExtensionAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "lambda-extension-auto-discover",
       },
       Object {
         "default": "- default options",

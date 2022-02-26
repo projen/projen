@@ -1,11 +1,11 @@
-import { basename, dirname, extname, join, relative, sep, posix } from "path";
+import { basename, dirname, extname, join, relative } from "path";
 import { pascal } from "case";
 import { Component } from "../component";
 import { Bundler, BundlingOptions, Eslint } from "../javascript";
 import { Project } from "../project";
 import { SourceCode } from "../source-code";
 import { AwsCdkDeps } from "./awscdk-deps";
-import { TYPESCRIPT_LAMBDA_EXT } from "./internal";
+import { convertToPosixPath, TYPESCRIPT_LAMBDA_EXT } from "./internal";
 
 /**
  * Common options for `LambdaFunction`. Applies to all functions in
@@ -278,11 +278,4 @@ export class LambdaRuntime {
      */
     public readonly esbuildTarget: string
   ) {}
-}
-
-/**
- * Converts the given path string to posix if it wasn't already.
- */
-function convertToPosixPath(p: string) {
-  return p.split(sep).join(posix.sep);
 }
