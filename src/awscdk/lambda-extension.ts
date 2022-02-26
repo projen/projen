@@ -133,7 +133,7 @@ export class LambdaExtension extends Component {
       constructName: options.constructName,
       assetDir: bundle.outdir,
       compatibleRuntimes: compatibleRuntimes,
-      description: `\`${name}\` lambda extension from ${convertToPosixPath(
+      description: `Provides a Lambda Extension \`${name}\` from ${convertToPosixPath(
         options.entrypoint
       )}`,
       cdkDeps: options.cdkDeps,
@@ -190,7 +190,7 @@ class LambdaLayerConstruct extends SourceCode {
     src.line();
 
     src.line("/**");
-    src.line(` * An AWS Lambda Layer`);
+    src.line(` * ${options.description}`);
     src.line(" */");
     src.open(`export class ${constructName} extends lambda.LayerVersion {`);
     src.open(

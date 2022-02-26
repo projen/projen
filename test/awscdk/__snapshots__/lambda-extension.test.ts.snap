@@ -13,12 +13,12 @@ export interface ExampleLayerVersionProps extends lambda.LayerVersionOptions {
 }
 
 /**
- * An AWS Lambda Layer
+ * Provides a Lambda Extension \`example\` from src/example.lambda-extension.ts
  */
 export class ExampleLayerVersion extends lambda.LayerVersion {
   constructor(scope: Construct, id: string, props?: ExampleLayerVersionProps) {
     super(scope, id, {
-      description: '\`example\` lambda extension from src/example.lambda-extension.ts',
+      description: 'Provides a Lambda Extension \`example\` from src/example.lambda-extension.ts',
       ...props,
       compatibleRuntimes: [
         lambda.Runtime.NODEJS_12_X,
