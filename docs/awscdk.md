@@ -105,7 +105,7 @@ new awscdk.LambdaFunction(p, {
 
 AWS [Lambda Extensions][lambda-extensions-blog] are long-running executable
 files that run alongside your Lambda Functions in their execution environment.
-AWS Lambda Extensions interact with both your function's runtime and the
+AWS Lambda Extensions interact with your function's runtime and the
 [Lambda extension API][lambda-extensions-api] to integrate with tools outside
 the Lambda environment. Projen assists by helping with the bundling.
 
@@ -155,12 +155,12 @@ async function main() {
 
 const EXTENSION_API_BASE_URL = `http://${process.env.AWS_LAMBDA_RUNTIME_API}/2020-01-01/extension`;
 
-export enum ExtensionEventType {
+enum ExtensionEventType {
   INVOKE = 'INVOKE',
   SHUTDOWN = 'SHUTDOWN',
 }
 
-export interface ExtensionEvent {
+interface ExtensionEvent {
   readonly eventType: ExtensionEventType;
 }
 
