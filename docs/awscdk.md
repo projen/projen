@@ -127,7 +127,7 @@ Example extension:
 
 ```ts
 #!/usr/bin/env node
-// ^ Do not forget this shebang - Lambda executes the bundled version of this
+// ^ Don't forget this shebang - Lambda executes the bundled version of this
 // file directly and doesn't otherwise know it's a node script.
 
 import { basename } from 'path';
