@@ -197,7 +197,7 @@ Name|Description
 [awscdk.IntegrationTestCommonOptions](#projen-awscdk-integrationtestcommonoptions)|*No description*
 [awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)|Options for `IntegrationTest`.
 [awscdk.LambdaAutoDiscoverOptions](#projen-awscdk-lambdaautodiscoveroptions)|Options for `LambdaAutoDiscover`.
-[awscdk.LambdaExtensionAutoDiscoverOptions](#projen-awscdk-lambdaextensionautodiscoveroptions)|*No description*
+[awscdk.LambdaExtensionAutoDiscoverOptions](#projen-awscdk-lambdaextensionautodiscoveroptions)|Options for `LambdaExtensionAutoDiscover`.
 [awscdk.LambdaExtensionCommonOptions](#projen-awscdk-lambdaextensioncommonoptions)|Common options for creating lambda extensions.
 [awscdk.LambdaExtensionOptions](#projen-awscdk-lambdaextensionoptions)|Options for creating lambda extensions.
 [awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)|Common options for `LambdaFunction`.
@@ -12362,7 +12362,7 @@ Name | Type | Description
 ## struct LambdaExtensionAutoDiscoverOptions 🔹 <a id="projen-awscdk-lambdaextensionautodiscoveroptions"></a>
 
 
-
+Options for `LambdaExtensionAutoDiscover`.
 
 
 
