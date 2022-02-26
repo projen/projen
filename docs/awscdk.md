@@ -128,9 +128,12 @@ Example extension:
 ```ts
 #!/usr/bin/env node
 // ^ Do not forget this shebang - Lambda executes the bundled version of this
-// file directly without otherwise knowing it's a node script.
+// file directly and doesn't otherwise know it's a node script.
 
 import { basename } from 'path';
+
+// This example uses the `got` HTTP client and assumes that you have included
+// `got` in your `devDependencies`. But, you can use any HTTP client you like.
 import got from 'got';
 
 /**
