@@ -101,6 +101,106 @@ new awscdk.LambdaFunction(p, {
 });
 ```
 
+## AWS Lambda Extensions
+
+AWS [Lambda Extensions][lambda-extensions-blog] are long-running executable
+files that run alongside your Lambda Functions in their execution environment.
+AWS Lambda Extensions interact with both your function's runtime and the
+[Lambda extension API][lambda-extensions-api] to integrate with tools outside
+the Lambda environment. Projen assists by helping with the bundling.
+
+[lambda-extensions-blog]: https://aws.amazon.com/blogs/aws/getting-started-with-using-your-favorite-operational-tools-on-aws-lambda-extensions-are-now-generally-available/
+[lambda-extensions-api]: https://docs.aws.amazon.com/lambda/latest/dg/runtimes-extensions-api.html
+
+To create an AWS Lambda Extension with Projen:
+
+- Create a file in your project's source tree called
+  `my-extension.lambda-extension.ts`
+- Run `npx projen`
+- Projen will automatically discover this file, generating an AWS Lambda Layer
+  Version named `MyExtensionLayerVersion` in a file named
+  `my-extension-layer-version.ts`.
+- Now you can instantiate `MyExtensionLayerVersion` and add it to your Lambda
+  functions.
+
+Example extension:
+
+```ts
+#!/usr/bin/env node
+// ^ Do not remove this shebang, as Lambda executes the bundled version of this
+// file directly.
+
+import { basename } from 'path';
+import got from 'got';
+
+/**
+ * Your Lambda Extension's main loop
+ */
+async function main() {
+  const extensionInfo = await registerExtension([
+    ExtensionEventType.SHUTDOWN,
+  ]);
+
+  while (true) {
+    const event = await getNextEvent(extensionInfo.extensionId);
+
+    switch (event.eventType) {
+      case ExtensionEventType.SHUTDOWN:
+        return 0;
+      default:
+        console.log(`Unknown event type ${event.eventType}`);
+    }
+  }
+}
+
+const EXTENSION_API_BASE_URL = `http://${process.env.AWS_LAMBDA_RUNTIME_API}/2020-01-01/extension`;
+
+export enum ExtensionEventType {
+  INVOKE = 'INVOKE',
+  SHUTDOWN = 'SHUTDOWN',
+}
+
+export interface ExtensionEvent {
+  readonly eventType: ExtensionEventType;
+}
+
+async function registerExtension(events: ExtensionEventType[]) {
+  const res = await got.post(`${EXTENSION_API_BASE_URL}/register`, {
+    json: { events },
+    headers: {
+      'Lambda-Extension-Name': basename(__filename),
+    },
+  });
+
+  const header = res.headers['lambda-extension-identifier'];
+  const extensionId = Array.isArray(header) ? header[0] : header;
+  const json = JSON.parse(res.body);
+
+  return {
+    extensionId,
+    functionName: json.functionName as string,
+    functionVersion: json.functionVersion as string,
+  };
+}
+
+function getNextEvent(extensionId: string): Promise<ExtensionEvent> {
+  return got(`${EXTENSION_API_BASE_URL}/event/next`, {
+    headers: {
+      'Lambda-Extension-Identifier': extensionId,
+    },
+  }).json();
+}
+
+main()
+  .then(statusCode => {
+    process.exit(statusCode);
+  })
+  .catch(e => {
+    console.error(e);
+    process.exit(1);
+  });
+```
+
 ## Integration Snapshot Tests
 
 Files in the `test/` tree with the `.integ.ts` suffix are recognized as
