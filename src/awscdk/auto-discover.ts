@@ -97,6 +97,9 @@ export class LambdaAutoDiscover extends AutoDiscoverBase {
   }
 }
 
+/**
+ * Options for `LambdaExtensionAutoDiscover`
+ */
 export interface LambdaExtensionAutoDiscoverOptions
   extends AutoDiscoverCommonOptions {
   /**
