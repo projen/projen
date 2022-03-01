@@ -1098,7 +1098,12 @@ export class NodePackage extends Component {
     pkg.devDependencies = sorted(devDeps);
     pkg.peerDependencies = sorted(peerDeps);
 
-    const updated = `${JSON.stringify(pkg, undefined, 2)}\n`;
+    const jsonContent = JSON.stringify(pkg, undefined, 2);
+
+    const updated =
+      this.packageManager === NodePackageManager.NPM
+        ? `${jsonContent}\n`
+        : jsonContent;
 
     if (original === updated) {
       return false;
