@@ -66,6 +66,9 @@ Name|Description
 [cdk8s.IntegrationTest](#projen-cdk8s-integrationtest)|CDK8S integration test.
 [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)|Discovers and creates integration tests from files in the test root.
 [cdktf.ConstructLibraryCdktf](#projen-cdktf-constructlibrarycdktf)|CDKTF construct library project.
+[circleci.Circleci](#projen-circleci-circleci)|*No description*
+[circleci.Orb](#projen-circleci-orb)|*No description*
+[circleci.Workflow](#projen-circleci-workflow)|*No description*
 [github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
@@ -217,6 +220,7 @@ Name|Description
 [cdk8s.IntegrationTestAutoDiscoverOptions](#projen-cdk8s-integrationtestautodiscoveroptions)|*No description*
 [cdk8s.IntegrationTestOptions](#projen-cdk8s-integrationtestoptions)|Options for IntegrationTest.
 [cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)|*No description*
+[circleci.CircleCiProps](#projen-circleci-circleciprops)|*No description*
 [github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
@@ -359,6 +363,9 @@ Name|Description
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
 [IResolvable](#projen-iresolvable)|*No description*
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
+[circleci.IJob](#projen-circleci-ijob)|*No description*
+[circleci.IOrb](#projen-circleci-iorb)|*No description*
+[circleci.IWorkflow](#projen-circleci-iworkflow)|*No description*
 [github.IAddConditionsLater](#projen-github-iaddconditionslater)|*No description*
 [github.IJobProvider](#projen-github-ijobprovider)|*No description*
 [python.IPackageProvider](#projen-python-ipackageprovider)|*No description*
@@ -5413,6 +5420,151 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **cdktfVersion** (<code>string</code>)  Minimum target version this library is tested against. 
   * **constructsVersion** (<code>string</code>)  Construct version to use. __*Default*__: "^10.0.12"
 
+
+
+
+## class Circleci 🔹 <a id="projen-circleci-circleci"></a>
+
+
+
+__Submodule__: circleci
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new circleci.Circleci(project: Project, options?: CircleCiProps)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[circleci.CircleCiProps](#projen-circleci-circleciprops)</code>)  *No description*
+  * **enabled** (<code>boolean</code>)  *No description* __*Optional*__
+  * **orbs** (<code>Array<[circleci.IOrb](#projen-circleci-iorb)></code>)  *No description* __*Optional*__
+  * **version** (<code>string</code>)  *No description* __*Optional*__
+  * **workflows** (<code>Array<[circleci.IWorkflow](#projen-circleci-iworkflow)></code>)  *No description* __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**?🔹 | <code>[YamlFile](#projen-yamlfile)</code> | __*Optional*__
+
+### Methods
+
+
+#### addOrb(orb)🔹 <a id="projen-circleci-circleci-addorb"></a>
+
+
+
+```ts
+addOrb(orb: IOrb): void
+```
+
+* **orb** (<code>[circleci.IOrb](#projen-circleci-iorb)</code>)  *No description*
+
+
+
+
+#### addWorkflow(workflow)🔹 <a id="projen-circleci-circleci-addworkflow"></a>
+
+
+
+```ts
+addWorkflow(workflow: IWorkflow): void
+```
+
+* **workflow** (<code>[circleci.IWorkflow](#projen-circleci-iworkflow)</code>)  *No description*
+
+
+
+
+
+
+## class Orb 🔹 <a id="projen-circleci-orb"></a>
+
+
+
+__Implements__: [circleci.IOrb](#projen-circleci-iorb)
+__Submodule__: circleci
+
+
+### Initializer
+
+
+
+
+```ts
+new circleci.Orb(key: string, name: string, version: string)
+```
+
+* **key** (<code>string</code>)  *No description*
+* **name** (<code>string</code>)  *No description*
+* **version** (<code>string</code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**key**🔹 | <code>string</code> | <span></span>
+**name**🔹 | <code>string</code> | <span></span>
+**version**🔹 | <code>string</code> | <span></span>
+
+### Methods
+
+
+#### fullOrbName()🔹 <a id="projen-circleci-orb-fullorbname"></a>
+
+
+
+```ts
+fullOrbName(): string
+```
+
+
+__Returns__:
+* <code>string</code>
+
+
+
+## class Workflow 🔹 <a id="projen-circleci-workflow"></a>
+
+
+
+__Implements__: [circleci.IWorkflow](#projen-circleci-iworkflow)
+__Submodule__: circleci
+
+
+### Initializer
+
+
+
+
+```ts
+new circleci.Workflow(name: string, jobs?: Array<IJob>)
+```
+
+* **name** (<code>string</code>)  *No description*
+* **jobs** (<code>Array<[circleci.IJob](#projen-circleci-ijob)></code>)  *No description*
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**jobs**🔹 | <code>Array<[circleci.IJob](#projen-circleci-ijob)></code> | <span></span>
+**name**🔹 | <code>string</code> | <span></span>
 
 
 
@@ -13350,6 +13502,88 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+
+
+
+## struct CircleCiProps 🔹 <a id="projen-circleci-circleciprops"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**enabled**?🔹 | <code>boolean</code> | __*Optional*__
+**orbs**?🔹 | <code>Array<[circleci.IOrb](#projen-circleci-iorb)></code> | __*Optional*__
+**version**?🔹 | <code>string</code> | __*Optional*__
+**workflows**?🔹 | <code>Array<[circleci.IWorkflow](#projen-circleci-iworkflow)></code> | __*Optional*__
+
+
+
+## interface IJob 🔹 <a id="projen-circleci-ijob"></a>
+
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | <span></span>
+**context**?🔹 | <code>Array<string></code> | __*Optional*__
+**filters**?🔹 | <code>any</code> | __*Optional*__
+**params**?🔹 | <code>any</code> | __*Optional*__
+**requires**?🔹 | <code>Array<string></code> | __*Optional*__
+
+
+
+## interface IOrb 🔹 <a id="projen-circleci-iorb"></a>
+
+__Implemented by__: [circleci.Orb](#projen-circleci-orb)
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**key**🔹 | <code>string</code> | <span></span>
+**name**🔹 | <code>string</code> | <span></span>
+**version**🔹 | <code>string</code> | <span></span>
+
+### Methods
+
+
+#### fullOrbName()🔹 <a id="projen-circleci-iorb-fullorbname"></a>
+
+
+
+```ts
+fullOrbName(): string
+```
+
+
+__Returns__:
+* <code>string</code>
+
+
+
+## interface IWorkflow 🔹 <a id="projen-circleci-iworkflow"></a>
+
+__Implemented by__: [circleci.Workflow](#projen-circleci-workflow)
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**jobs**🔹 | <code>Array<[circleci.IJob](#projen-circleci-ijob)></code> | <span></span>
+**name**🔹 | <code>string</code> | <span></span>
 
 
 
