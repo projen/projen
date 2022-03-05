@@ -3,4 +3,5 @@ node_modules/
 !/.gitattributes
 !/.projen/tasks.json
 !/.projen/deps.json
+/yarn.lock
 !/.circleci/config.yml

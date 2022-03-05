@@ -4,6 +4,8 @@ const project = new Project({
     name: 'projen-exanple',
 });
 
+project.addGitIgnore("/yarn.lock")
+
 const circle = new CircleCi(project, {
     orbs: [
         new Orb('cdk', 'signavio/cdk-orb', '0.10.8' ),
@@ -27,8 +29,6 @@ const jobs = [
         filters: FilterMainBranchOnly,
     },
 ]
-
-circle.addWorkflow(new Workflow('asd'))
 
 const envs = [
     {
