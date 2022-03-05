@@ -31,7 +31,8 @@
         "OUTFILE": "package.json",
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
-        "RELEASETAG": "dist/releasetag.txt"
+        "RELEASETAG": "dist/releasetag.txt",
+        "RELEASE_TAG_PREFIX": ""
       },
       "steps": [
         {
@@ -365,7 +366,8 @@
         "OUTFILE": "package.json",
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
-        "RELEASETAG": "dist/releasetag.txt"
+        "RELEASETAG": "dist/releasetag.txt",
+        "RELEASE_TAG_PREFIX": ""
       },
       "steps": [
         {

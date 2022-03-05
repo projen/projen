@@ -1153,6 +1153,7 @@ tsconfig.tsbuildinfo
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -1390,6 +1391,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [
@@ -5432,6 +5434,7 @@ junit.xml
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -5579,6 +5582,7 @@ junit.xml
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [

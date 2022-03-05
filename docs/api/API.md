@@ -2832,6 +2832,7 @@ new Version(project: Project, options: VersionOptions)
 * **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
   * **artifactsDirectory** (<code>string</code>)  The name of the directory into which `changelog.md` and `version.txt` files are emitted. 
   * **versionInputFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
+  * **tagPrefix** (<code>string</code>)  The tag prefix corresponding to this version. __*Optional*__
   * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration for versionrc file used by standard-release. __*Optional*__
 
 
@@ -11282,6 +11283,7 @@ Name | Type | Description
 -----|------|-------------
 **artifactsDirectory**🔹 | <code>string</code> | The name of the directory into which `changelog.md` and `version.txt` files are emitted.
 **versionInputFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
+**tagPrefix**?🔹 | <code>string</code> | The tag prefix corresponding to this version.<br/>__*Optional*__
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration for versionrc file used by standard-release.<br/>__*Optional*__
 
 
