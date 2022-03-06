@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { Project } from "../project";
 import { Task } from "../task";
@@ -36,8 +37,10 @@ export class CdkTasks extends Component {
    */
   public readonly watch: Task;
 
-  constructor(project: Project) {
-    super(project);
+  constructor(scope: Construct) {
+    super(scope, "CdkTasks");
+
+    const project = Project.of(this);
 
     this.synth = project.addTask("synth", {
       description: "Synthesizes your cdk app into cdk.out",

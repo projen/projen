@@ -1,3 +1,4 @@
+import { Construct, IConstruct } from "constructs";
 import * as semver from "semver";
 import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
 import { AutoDiscover } from "./auto-discover";
@@ -69,6 +70,24 @@ export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
  * @pjid cdk8s-construct
  */
 export class ConstructLibraryCdk8s extends ConstructLibrary {
+  /**
+   * Returns the immediate ConstructLibraryCdk8s a construct belongs to.
+   * @param construct the construct
+   */
+  public static ofCdk8sConstruct(construct: IConstruct): ConstructLibraryCdk8s {
+    if (construct instanceof ConstructLibraryCdk8s) {
+      return construct;
+    }
+
+    const parent = construct.node.scope as Construct;
+    if (!parent) {
+      throw new Error(
+        "cannot find a parent ConstructLibraryCdk8s (directly or indirectly)"
+      );
+    }
+
+    return ConstructLibraryCdk8s.ofCdk8sConstruct(parent);
+  }
   /**
    * The CDK8s version this app is using.
    */

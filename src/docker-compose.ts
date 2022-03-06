@@ -1,5 +1,5 @@
+import { Construct } from "constructs";
 import { Component } from "./component";
-import { Project } from "./project";
 import { decamelizeKeysRecursively } from "./util";
 import { YamlFile } from "./yaml";
 
@@ -121,11 +121,11 @@ export class DockerCompose extends Component {
   private readonly services: Record<string, DockerComposeService>;
   private readonly version: string;
 
-  constructor(project: Project, props?: DockerComposeProps) {
-    super(project);
+  constructor(scope: Construct, props?: DockerComposeProps) {
+    super(scope, "DockerCompose");
 
     const nameSuffix = props?.nameSuffix ? `${props!.nameSuffix}.yml` : "yml";
-    new YamlFile(project, `docker-compose.${nameSuffix}`, {
+    new YamlFile(scope, `docker-compose.${nameSuffix}`, {
       committed: true,
       readonly: true,
       obj: () => this._synthesizeDockerCompose(),

@@ -1,11 +1,12 @@
+import { Construct } from "constructs";
 import { Component } from "./component";
 import { Project } from "./project";
 
 export class Clobber extends Component {
-  constructor(project: Project) {
-    super(project);
+  constructor(scope: Construct) {
+    super(scope, "Clobber");
 
-    const task = this.project.addTask("clobber", {
+    const task = Project.of(this).addTask("clobber", {
       description: "hard resets to HEAD of origin and cleans the local repo",
       condition: "git diff --exit-code > /dev/null",
       env: {

@@ -1,0 +1,541 @@
+{
+  "version": "tree-0.1",
+  "tree": {
+    "id": "projen",
+    "path": "projen",
+    "children": {
+      ".gitattributes": {
+        "id": ".gitattributes",
+        "path": "projen/.gitattributes",
+        "constructInfo": {
+          "fqn": "projen.GitAttributesFile",
+          "version": "0.0.0"
+        }
+      },
+      ".gitignore": {
+        "id": ".gitignore",
+        "path": "projen/.gitignore",
+        "constructInfo": {
+          "fqn": "projen.IgnoreFile",
+          "version": "0.0.0"
+        }
+      },
+      "Tasks": {
+        "id": "Tasks",
+        "path": "projen/Tasks",
+        "children": {
+          ".projen--tasks.json": {
+            "id": ".projen--tasks.json",
+            "path": "projen/Tasks/.projen--tasks.json",
+            "constructInfo": {
+              "fqn": "projen.JsonFile",
+              "version": "0.0.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "projen.Tasks",
+          "version": "0.0.0"
+        }
+      },
+      "ProjectBuild": {
+        "id": "ProjectBuild",
+        "path": "projen/ProjectBuild",
+        "constructInfo": {
+          "fqn": "projen.ProjectBuild",
+          "version": "0.0.0"
+        }
+      },
+      "Dependencies": {
+        "id": "Dependencies",
+        "path": "projen/Dependencies",
+        "children": {
+          ".projen--deps.json": {
+            "id": ".projen--deps.json",
+            "path": "projen/Dependencies/.projen--deps.json",
+            "constructInfo": {
+              "fqn": "projen.JsonFile",
+              "version": "0.0.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "projen.Dependencies",
+          "version": "0.0.0"
+        }
+      },
+      "Logger": {
+        "id": "Logger",
+        "path": "projen/Logger",
+        "constructInfo": {
+          "fqn": "projen.Logger",
+          "version": "0.0.0"
+        }
+      },
+      ".projen--files.json": {
+        "id": ".projen--files.json",
+        "path": "projen/.projen--files.json",
+        "constructInfo": {
+          "fqn": "projen.JsonFile",
+          "version": "0.0.0"
+        }
+      },
+      "GitHub": {
+        "id": "GitHub",
+        "path": "projen/GitHub",
+        "children": {
+          "Mergify": {
+            "id": "Mergify",
+            "path": "projen/GitHub/Mergify",
+            "constructInfo": {
+              "fqn": "projen.github.Mergify",
+              "version": "0.0.0"
+            }
+          },
+          "PullRequestLint": {
+            "id": "PullRequestLint",
+            "path": "projen/GitHub/PullRequestLint",
+            "children": {
+              "pull-request-lint": {
+                "id": "pull-request-lint",
+                "path": "projen/GitHub/PullRequestLint/pull-request-lint",
+                "children": {
+                  ".github--workflows--pull-request-lint.yml": {
+                    "id": ".github--workflows--pull-request-lint.yml",
+                    "path": "projen/GitHub/PullRequestLint/pull-request-lint/.github--workflows--pull-request-lint.yml",
+                    "constructInfo": {
+                      "fqn": "projen.YamlFile",
+                      "version": "0.0.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "projen.github.GithubWorkflow",
+                  "version": "0.0.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "projen.github.PullRequestLint",
+              "version": "0.0.0"
+            }
+          },
+          "AutoApprove": {
+            "id": "AutoApprove",
+            "path": "projen/GitHub/AutoApprove",
+            "children": {
+              "auto-approve": {
+                "id": "auto-approve",
+                "path": "projen/GitHub/AutoApprove/auto-approve",
+                "children": {
+                  ".github--workflows--auto-approve.yml": {
+                    "id": ".github--workflows--auto-approve.yml",
+                    "path": "projen/GitHub/AutoApprove/auto-approve/.github--workflows--auto-approve.yml",
+                    "constructInfo": {
+                      "fqn": "projen.YamlFile",
+                      "version": "0.0.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "projen.github.GithubWorkflow",
+                  "version": "0.0.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "projen.github.AutoApprove",
+              "version": "0.0.0"
+            }
+          },
+          "Stale": {
+            "id": "Stale",
+            "path": "projen/GitHub/Stale",
+            "children": {
+              "stale": {
+                "id": "stale",
+                "path": "projen/GitHub/Stale/stale",
+                "children": {
+                  ".github--workflows--stale.yml": {
+                    "id": ".github--workflows--stale.yml",
+                    "path": "projen/GitHub/Stale/stale/.github--workflows--stale.yml",
+                    "constructInfo": {
+                      "fqn": "projen.YamlFile",
+                      "version": "0.0.0"
+                    }
+                  }
+                },
+                "constructInfo": {
+                  "fqn": "projen.github.GithubWorkflow",
+                  "version": "0.0.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "projen.github.Stale",
+              "version": "0.0.0"
+            }
+          },
+          "build": {
+            "id": "build",
+            "path": "projen/GitHub/build",
+            "children": {
+              ".github--workflows--build.yml": {
+                "id": ".github--workflows--build.yml",
+                "path": "projen/GitHub/build/.github--workflows--build.yml",
+                "constructInfo": {
+                  "fqn": "projen.YamlFile",
+                  "version": "0.0.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "projen.github.GithubWorkflow",
+              "version": "0.0.0"
+            }
+          },
+          "release": {
+            "id": "release",
+            "path": "projen/GitHub/release",
+            "children": {
+              ".github--workflows--release.yml": {
+                "id": ".github--workflows--release.yml",
+                "path": "projen/GitHub/release/.github--workflows--release.yml",
+                "constructInfo": {
+                  "fqn": "projen.YamlFile",
+                  "version": "0.0.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "projen.github.TaskWorkflow",
+              "version": "0.0.0"
+            }
+          },
+          "AutoMerge": {
+            "id": "AutoMerge",
+            "path": "projen/GitHub/AutoMerge",
+            "constructInfo": {
+              "fqn": "projen.github.AutoMerge",
+              "version": "0.0.0"
+            }
+          },
+          ".github--pull_request_template.md": {
+            "id": ".github--pull_request_template.md",
+            "path": "projen/GitHub/.github--pull_request_template.md",
+            "constructInfo": {
+              "fqn": "projen.github.PullRequestTemplate",
+              "version": "0.0.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "projen.github.GitHub",
+          "version": "0.0.0"
+        }
+      },
+      "VsCode": {
+        "id": "VsCode",
+        "path": "projen/VsCode",
+        "children": {
+          "VsCodeLaunchConfig": {
+            "id": "VsCodeLaunchConfig",
+            "path": "projen/VsCode/VsCodeLaunchConfig",
+            "children": {
+              ".vscode--launch.json": {
+                "id": ".vscode--launch.json",
+                "path": "projen/VsCode/VsCodeLaunchConfig/.vscode--launch.json",
+                "constructInfo": {
+                  "fqn": "projen.JsonFile",
+                  "version": "0.0.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "projen.vscode.VsCodeLaunchConfig",
+              "version": "0.0.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "projen.vscode.VsCode",
+          "version": "0.0.0"
+        }
+      },
+      "Gitpod": {
+        "id": "Gitpod",
+        "path": "projen/Gitpod",
+        "constructInfo": {
+          "fqn": "projen.Gitpod",
+          "version": "0.0.0"
+        }
+      },
+      ".gitpod.yml": {
+        "id": ".gitpod.yml",
+        "path": "projen/.gitpod.yml",
+        "constructInfo": {
+          "fqn": "projen.YamlFile",
+          "version": "0.0.0"
+        }
+      },
+      "DevContainer": {
+        "id": "DevContainer",
+        "path": "projen/DevContainer",
+        "constructInfo": {
+          "fqn": "projen.vscode.DevContainer",
+          "version": "0.0.0"
+        }
+      },
+      ".devcontainer.json": {
+        "id": ".devcontainer.json",
+        "path": "projen/.devcontainer.json",
+        "constructInfo": {
+          "fqn": "projen.JsonFile",
+          "version": "0.0.0"
+        }
+      },
+      "Clobber": {
+        "id": "Clobber",
+        "path": "projen/Clobber",
+        "constructInfo": {
+          "fqn": "projen.Component",
+          "version": "0.0.0"
+        }
+      },
+      "README.md": {
+        "id": "README.md",
+        "path": "projen/README.md",
+        "constructInfo": {
+          "fqn": "projen.SampleReadme",
+          "version": "0.0.0"
+        }
+      },
+      "NodePackage": {
+        "id": "NodePackage",
+        "path": "projen/NodePackage",
+        "constructInfo": {
+          "fqn": "projen.javascript.NodePackage",
+          "version": "0.0.0"
+        }
+      },
+      "package.json": {
+        "id": "package.json",
+        "path": "projen/package.json",
+        "constructInfo": {
+          "fqn": "projen.JsonFile",
+          "version": "0.0.0"
+        }
+      },
+      "LICENSE": {
+        "id": "LICENSE",
+        "path": "projen/LICENSE",
+        "constructInfo": {
+          "fqn": "projen.License",
+          "version": "0.0.0"
+        }
+      },
+      ".npmignore": {
+        "id": ".npmignore",
+        "path": "projen/.npmignore",
+        "constructInfo": {
+          "fqn": "projen.IgnoreFile",
+          "version": "0.0.0"
+        }
+      },
+      "Jest": {
+        "id": "Jest",
+        "path": "projen/Jest",
+        "constructInfo": {
+          "fqn": "projen.javascript.Jest",
+          "version": "0.0.0"
+        }
+      },
+      "BuildWorkflow": {
+        "id": "BuildWorkflow",
+        "path": "projen/BuildWorkflow",
+        "constructInfo": {
+          "fqn": "projen.build.BuildWorkflow",
+          "version": "0.0.0"
+        }
+      },
+      "Release": {
+        "id": "Release",
+        "path": "projen/Release",
+        "constructInfo": {
+          "fqn": "projen.release.Release",
+          "version": "0.0.0"
+        }
+      },
+      "Version": {
+        "id": "Version",
+        "path": "projen/Version",
+        "constructInfo": {
+          "fqn": "projen.Version",
+          "version": "0.0.0"
+        }
+      },
+      "Publisher": {
+        "id": "Publisher",
+        "path": "projen/Publisher",
+        "constructInfo": {
+          "fqn": "projen.release.Publisher",
+          "version": "0.0.0"
+        }
+      },
+      ".mergify.yml": {
+        "id": ".mergify.yml",
+        "path": "projen/.mergify.yml",
+        "constructInfo": {
+          "fqn": "projen.YamlFile",
+          "version": "0.0.0"
+        }
+      },
+      "UpgradeDependencies": {
+        "id": "UpgradeDependencies",
+        "path": "projen/UpgradeDependencies",
+        "children": {
+          "upgrade-main": {
+            "id": "upgrade-main",
+            "path": "projen/UpgradeDependencies/upgrade-main",
+            "children": {
+              ".github--workflows--upgrade-main.yml": {
+                "id": ".github--workflows--upgrade-main.yml",
+                "path": "projen/UpgradeDependencies/upgrade-main/.github--workflows--upgrade-main.yml",
+                "constructInfo": {
+                  "fqn": "projen.YamlFile",
+                  "version": "0.0.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "projen.github.GithubWorkflow",
+              "version": "0.0.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "projen.javascript.UpgradeDependencies",
+          "version": "0.0.0"
+        }
+      },
+      "Projenrc": {
+        "id": "Projenrc",
+        "path": "projen/Projenrc",
+        "constructInfo": {
+          "fqn": "projen.javascript.Projenrc",
+          "version": "0.0.0"
+        }
+      },
+      "Bundler": {
+        "id": "Bundler",
+        "path": "projen/Bundler",
+        "constructInfo": {
+          "fqn": "projen.javascript.Bundler",
+          "version": "0.0.0"
+        }
+      },
+      "Prettier": {
+        "id": "Prettier",
+        "path": "projen/Prettier",
+        "constructInfo": {
+          "fqn": "projen.javascript.Prettier",
+          "version": "0.0.0"
+        }
+      },
+      ".prettierignore": {
+        "id": ".prettierignore",
+        "path": "projen/.prettierignore",
+        "constructInfo": {
+          "fqn": "projen.IgnoreFile",
+          "version": "0.0.0"
+        }
+      },
+      ".prettierrc.json": {
+        "id": ".prettierrc.json",
+        "path": "projen/.prettierrc.json",
+        "constructInfo": {
+          "fqn": "projen.JsonFile",
+          "version": "0.0.0"
+        }
+      },
+      "tsconfig.dev.json": {
+        "id": "tsconfig.dev.json",
+        "path": "projen/tsconfig.dev.json",
+        "constructInfo": {
+          "fqn": "projen.JsonFile",
+          "version": "0.0.0"
+        }
+      },
+      "Eslint": {
+        "id": "Eslint",
+        "path": "projen/Eslint",
+        "children": {
+          ".eslintrc.json": {
+            "id": ".eslintrc.json",
+            "path": "projen/Eslint/.eslintrc.json",
+            "constructInfo": {
+              "fqn": "projen.JsonFile",
+              "version": "0.0.0"
+            }
+          }
+        },
+        "constructInfo": {
+          "fqn": "projen.javascript.Eslint",
+          "version": "0.0.0"
+        }
+      },
+      "TypeScriptSampleCode": {
+        "id": "TypeScriptSampleCode",
+        "path": "projen/TypeScriptSampleCode",
+        "constructInfo": {
+          "fqn": "projen.Component",
+          "version": "0.0.0"
+        }
+      },
+      "src": {
+        "id": "src",
+        "path": "projen/src",
+        "constructInfo": {
+          "fqn": "projen.SampleDir",
+          "version": "0.0.0"
+        }
+      },
+      "test": {
+        "id": "test",
+        "path": "projen/test",
+        "constructInfo": {
+          "fqn": "projen.SampleDir",
+          "version": "0.0.0"
+        }
+      },
+      "JsiiDocgen": {
+        "id": "JsiiDocgen",
+        "path": "projen/JsiiDocgen",
+        "constructInfo": {
+          "fqn": "projen.cdk.JsiiDocgen",
+          "version": "0.0.0"
+        }
+      },
+      "projen.bash": {
+        "id": "projen.bash",
+        "path": "projen/projen.bash",
+        "constructInfo": {
+          "fqn": "projen.TextFile",
+          "version": "0.0.0"
+        }
+      },
+      ".markdownlint.json": {
+        "id": ".markdownlint.json",
+        "path": "projen/.markdownlint.json",
+        "constructInfo": {
+          "fqn": "projen.JsonFile",
+          "version": "0.0.0"
+        }
+      }
+    },
+    "constructInfo": {
+      "fqn": "projen.cdk.JsiiProject",
+      "version": "0.0.0"
+    }
+  }
+}

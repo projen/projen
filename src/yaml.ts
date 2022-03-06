@@ -1,7 +1,7 @@
+import { Construct } from "constructs";
 import * as YAML from "yaml";
 import { IResolver } from "./file";
 import { ObjectFile, ObjectFileOptions } from "./object-file";
-import { Project } from "./project";
 
 /**
  * Options for `JsonFile`.
@@ -24,8 +24,8 @@ export class YamlFile extends ObjectFile {
    */
   public lineWidth: number;
 
-  constructor(project: Project, filePath: string, options: YamlFileOptions) {
-    super(project, filePath, options);
+  constructor(scope: Construct, filePath: string, options: YamlFileOptions) {
+    super(scope, filePath, options);
     this.lineWidth = options.lineWidth ?? 0;
   }
 

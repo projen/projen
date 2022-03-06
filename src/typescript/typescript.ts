@@ -1,4 +1,5 @@
 import * as path from "path";
+import { Construct, IConstruct } from "constructs";
 import * as semver from "semver";
 import { PROJEN_DIR, PROJEN_RC } from "../common";
 import { Component } from "../component";
@@ -142,6 +143,25 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
  * @pjid typescript
  */
 export class TypeScriptProject extends NodeProject {
+  /**
+   * Returns the immediate TypeScriptProject a construct belongs to.
+   * @param construct the construct
+   */
+  public static ofTypescript(construct: IConstruct): TypeScriptProject {
+    if (construct instanceof TypeScriptProject) {
+      return construct;
+    }
+
+    const parent = construct.node.scope as Construct;
+    if (!parent) {
+      throw new Error(
+        "cannot find a parent TypeScriptProject (directly or indirectly)"
+      );
+    }
+
+    return TypeScriptProject.ofTypescript(parent);
+  }
+
   public readonly docgen?: boolean;
   public readonly docsDirectory: string;
   public readonly eslint?: Eslint;
@@ -436,7 +456,7 @@ export class TypeScriptProject extends NodeProject {
 
 class SampleCode extends Component {
   constructor(project: TypeScriptProject) {
-    super(project);
+    super(project, "TypeScriptSampleCode");
     const srcCode = [
       "export class Hello {",
       "  public sayHello() {",

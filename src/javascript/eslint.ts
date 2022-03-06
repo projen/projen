@@ -1,8 +1,9 @@
-import { Project } from "..";
+import { Construct } from "constructs";
 import { PROJEN_RC } from "../common";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
+import { Project } from "../project";
 import { Prettier } from "./prettier";
 
 export interface EslintOptions {
@@ -123,12 +124,12 @@ export class Eslint extends Component {
   private readonly _extends = new Array<string>();
   private readonly nodeProject: NodeProject;
 
-  constructor(project: NodeProject, options: EslintOptions) {
-    super(project);
+  constructor(scope: Construct, options: EslintOptions) {
+    super(scope, "Eslint");
 
-    this.nodeProject = project;
+    this.nodeProject = NodeProject.ofNode(this);
 
-    project.addDevDeps(
+    this.nodeProject.addDevDeps(
       "eslint@^8",
       "@typescript-eslint/eslint-plugin@^5",
       "@typescript-eslint/parser@^5",
@@ -139,7 +140,7 @@ export class Eslint extends Component {
     );
 
     if (options.aliasMap) {
-      project.addDevDeps("eslint-import-resolver-alias");
+      this.nodeProject.addDevDeps("eslint-import-resolver-alias");
     }
 
     const devdirs = options.devdirs ?? [];
@@ -151,7 +152,7 @@ export class Eslint extends Component {
 
     const lintProjenRc = options.lintProjenRc ?? true;
 
-    const eslint = project.addTask("eslint", {
+    const eslint = this.nodeProject.addTask("eslint", {
       description: "Runs eslint against the codebase",
       exec: [
         "eslint",
@@ -163,10 +164,10 @@ export class Eslint extends Component {
       ].join(" "),
     });
 
-    project.testTask.spawn(eslint);
+    this.nodeProject.testTask.spawn(eslint);
 
     // exclude some files
-    project.npmignore?.exclude("/.eslintrc.json");
+    this.nodeProject.npmignore?.exclude("/.eslintrc.json");
 
     this._formattingRules = {
       // see https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/indent.md
@@ -356,14 +357,14 @@ export class Eslint extends Component {
       overrides: this.overrides,
     };
 
-    new JsonFile(project, ".eslintrc.json", {
+    new JsonFile(this, ".eslintrc.json", {
       obj: this.config,
       marker: false,
     });
 
     // if the user enabled prettier explicitly _or_ if the project has a
     // `Prettier` component, we shall tweak our configuration accordingly.
-    if (options.prettier || Prettier.of(project)) {
+    if (options.prettier || Prettier.of(this.nodeProject)) {
       this.enablePrettier();
     }
   }

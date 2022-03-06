@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { resolve } from "../_resolve";
 import { Component } from "../component";
 import {
@@ -141,19 +142,19 @@ export class Pom extends Component {
 
   private readonly properties: Record<string, any> = {};
 
-  constructor(project: Project, options: PomOptions) {
-    super(project);
+  constructor(scope: Construct, options: PomOptions) {
+    super(scope, "Pom");
 
     this.fileName = "pom.xml";
     this.groupId = options.groupId;
     this.artifactId = options.artifactId;
     this.version = options.version;
     this.packaging = options.packaging ?? "jar";
-    this.name = project.name;
+    this.name = Project.of(this).name;
     this.description = options.description;
     this.url = options.url;
 
-    new XmlFile(project, this.fileName, { obj: () => this.synthPom() });
+    new XmlFile(this, this.fileName, { obj: () => this.synthPom() });
   }
 
   /**
@@ -171,7 +172,7 @@ export class Pom extends Component {
    * @param spec Format `<groupId>/<artifactId>@<semver>`
    */
   public addDependency(spec: string) {
-    this.project.deps.addDependency(spec, DependencyType.RUNTIME);
+    Project.of(this).deps.addDependency(spec, DependencyType.RUNTIME);
   }
 
   /**
@@ -180,7 +181,7 @@ export class Pom extends Component {
    * @param spec Format `<groupId>/<artifactId>@<semver>`
    */
   public addTestDependency(spec: string) {
-    this.project.deps.addDependency(spec, DependencyType.TEST);
+    Project.of(this).deps.addDependency(spec, DependencyType.TEST);
   }
 
   /**
@@ -193,9 +194,13 @@ export class Pom extends Component {
    */
   public addPlugin(spec: string, options: PluginOptions = {}) {
     for (const dep of options.dependencies ?? []) {
-      this.project.deps.addDependency(dep, DependencyType.BUILD);
+      Project.of(this).deps.addDependency(dep, DependencyType.BUILD);
     }
-    return this.project.deps.addDependency(spec, DependencyType.BUILD, options);
+    return Project.of(this).deps.addDependency(
+      spec,
+      DependencyType.BUILD,
+      options
+    );
   }
 
   private synthPom() {
@@ -220,7 +225,7 @@ export class Pom extends Component {
   }
 
   private synthDependencies() {
-    const deps = this.project.deps.all;
+    const deps = Project.of(this).deps.all;
     if (deps.length === 0) {
       return;
     }

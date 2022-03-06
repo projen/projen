@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { JsonFile } from "../json";
 import { Project } from "../project";
@@ -85,8 +86,10 @@ export class CdkConfig extends Component {
    */
   public readonly cdkout: string;
 
-  constructor(project: Project, options: CdkConfigOptions) {
-    super(project);
+  constructor(scope: Construct, options: CdkConfigOptions) {
+    super(scope, "CdkConfig");
+
+    const project = Project.of(this);
 
     this.cdkout = options.cdkout ?? "cdk.out";
 
@@ -98,7 +101,7 @@ export class CdkConfig extends Component {
       }
     }
 
-    this.json = new JsonFile(project, "cdk.json", {
+    this.json = new JsonFile(this, "cdk.json", {
       omitEmpty: true,
       obj: {
         app: options.app,

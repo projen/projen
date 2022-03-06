@@ -1,4 +1,5 @@
 import { join } from "path";
+import { Construct } from "constructs";
 import * as glob from "glob";
 import { Component } from "../component";
 import { Project } from "../project";
@@ -33,10 +34,10 @@ export abstract class AutoDiscoverBase extends Component {
    */
   public readonly entrypoints: string[];
 
-  constructor(project: Project, options: AutoDiscoverBaseOptions) {
-    super(project);
+  constructor(scope: Construct, id: string, options: AutoDiscoverBaseOptions) {
+    super(scope, id);
 
-    const cwd = join(this.project.outdir, options.projectdir);
+    const cwd = join(Project.of(this).outdir, options.projectdir);
 
     this.entrypoints = glob
       .sync(`**/*${options.extension}`, { cwd })
@@ -59,10 +60,11 @@ export interface IntegrationTestAutoDiscoverBaseOptions {
  */
 export class IntegrationTestAutoDiscoverBase extends AutoDiscoverBase {
   constructor(
-    project: Project,
+    scope: Construct,
+    id: string,
     options: IntegrationTestAutoDiscoverBaseOptions
   ) {
-    super(project, {
+    super(scope, id, {
       extension: TYPESCRIPT_INTEG_EXT,
       projectdir: options.testdir,
     });

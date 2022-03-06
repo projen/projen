@@ -1,7 +1,7 @@
+import { Construct } from "constructs";
 import * as INI from "ini";
 import { IResolver } from "./file";
 import { ObjectFile, ObjectFileOptions } from "./object-file";
-import { Project } from "./project";
 
 /**
  * Options for `IniFile`.
@@ -12,8 +12,8 @@ export interface IniFileOptions extends ObjectFileOptions {}
  * Represents an INI file.
  */
 export class IniFile extends ObjectFile {
-  constructor(project: Project, filePath: string, options: IniFileOptions) {
-    super(project, filePath, options);
+  constructor(scope: Construct, filePath: string, options: IniFileOptions) {
+    super(scope, filePath, options);
   }
 
   protected synthesizeContent(resolver: IResolver): string | undefined {

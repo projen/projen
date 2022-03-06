@@ -201,6 +201,7 @@ test("addTestMatch() can be used to add patterns", () => {
     outdir: mkdtemp(),
     defaultReleaseBranch: "master",
     name: "test",
+    jest: false,
   });
   const jest = new Jest(project, { jestConfig: { testMatch: [] } });
 

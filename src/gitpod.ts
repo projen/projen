@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Component } from "./component";
 import {
   IDevEnvironment,
@@ -284,8 +285,8 @@ export class Gitpod extends Component implements IDevEnvironment {
    */
   public readonly config: any;
 
-  constructor(project: Project, options: GitpodOptions = {}) {
-    super(project);
+  constructor(scope: Construct, options: GitpodOptions = {}) {
+    super(scope, "Gitpod");
 
     this.dockerImage = options?.dockerImage;
 
@@ -317,7 +318,7 @@ export class Gitpod extends Component implements IDevEnvironment {
       },
     };
 
-    new YamlFile(this.project, GITPOD_FILE, {
+    new YamlFile(Project.of(this), GITPOD_FILE, {
       obj: this.config,
       omitEmpty: true,
     });

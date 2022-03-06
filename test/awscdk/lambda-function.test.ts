@@ -169,13 +169,14 @@ test("eslint allows handlers to import dev dependencies", () => {
     name: "hello",
     defaultReleaseBranch: "main",
   });
+  const cdkDeps = cdkDepsForProject(project);
   new awscdk.LambdaFunction(project, {
     entrypoint: join("src", "hello.lambda.ts"),
-    cdkDeps: cdkDepsForProject(project),
+    cdkDeps,
   });
   new awscdk.LambdaFunction(project, {
     entrypoint: join("src", "world.lambda.ts"),
-    cdkDeps: cdkDepsForProject(project),
+    cdkDeps,
   });
 
   const snapshot = Testing.synth(project);
@@ -201,13 +202,14 @@ test("esbuild dependency is added", () => {
     name: "hello",
     defaultReleaseBranch: "main",
   });
+  const cdkDeps = cdkDepsForProject(project);
   new awscdk.LambdaFunction(project, {
     entrypoint: join("src", "hello.lambda.ts"),
-    cdkDeps: cdkDepsForProject(project),
+    cdkDeps,
   });
   new awscdk.LambdaFunction(project, {
     entrypoint: join("src", "world.lambda.ts"),
-    cdkDeps: cdkDepsForProject(project),
+    cdkDeps,
   });
 
   const snapshot = Testing.synth(project);
@@ -220,13 +222,14 @@ test("multiple functions", () => {
     name: "hello",
     defaultReleaseBranch: "main",
   });
+  const cdkDeps = cdkDepsForProject(project);
   new awscdk.LambdaFunction(project, {
     entrypoint: join("src", "hello.lambda.ts"),
-    cdkDeps: cdkDepsForProject(project),
+    cdkDeps,
   });
   new awscdk.LambdaFunction(project, {
     entrypoint: join("src", "world.lambda.ts"),
-    cdkDeps: cdkDepsForProject(project),
+    cdkDeps,
   });
 
   const snapshot = Testing.synth(project);

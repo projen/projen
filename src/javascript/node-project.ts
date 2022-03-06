@@ -1,4 +1,5 @@
 import { join } from "path";
+import { Construct, IConstruct } from "constructs";
 import { BuildWorkflow } from "../build";
 import { PROJEN_DIR, PROJEN_RC } from "../common";
 import {
@@ -353,6 +354,25 @@ export enum AutoRelease {
  * @pjid node
  */
 export class NodeProject extends GitHubProject {
+  /**
+   * Returns the immediate NodeProject a construct belongs to.
+   * @param construct the construct
+   */
+  public static ofNode(construct: IConstruct): NodeProject {
+    if (construct instanceof NodeProject) {
+      return construct;
+    }
+
+    const parent = construct.node.scope as Construct;
+    if (!parent) {
+      throw new Error(
+        "cannot find a parent NodeProject (directly or indirectly)"
+      );
+    }
+
+    return NodeProject.ofNode(parent);
+  }
+
   /**
    * API for managing the node package.
    */
@@ -717,6 +737,7 @@ export class NodeProject extends GitHubProject {
       };
       const upgradeDependencies = new UpgradeDependencies(
         this,
+        "UpgradeDependencies",
         deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}])
       );
       ignoresProjen = upgradeDependencies.ignoresProjen;
@@ -725,7 +746,7 @@ export class NodeProject extends GitHubProject {
 
     // create a dedicated workflow to upgrade projen itself if needed
     if (ignoresProjen && this.package.packageName !== "projen") {
-      new UpgradeDependencies(this, {
+      new UpgradeDependencies(this, "UpgradeDependencies-projen", {
         include: ["projen"],
         taskName: "upgrade-projen",
         pullRequestTitle: "upgrade projen",

@@ -1,6 +1,6 @@
 import { join } from "path";
+import { Construct } from "constructs";
 import { Component } from "../component";
-import { Project } from "../project";
 import { SampleDir } from "../sample-file";
 
 export interface MavenSampleOptions {
@@ -14,11 +14,11 @@ export interface MavenSampleOptions {
  * Java code sample.
  */
 export class MavenSample extends Component {
-  constructor(project: Project, options: MavenSampleOptions) {
-    super(project);
+  constructor(scope: Construct, options: MavenSampleOptions) {
+    super(scope, "MavenSample");
 
     const pkg = options.package.split(".");
-    new SampleDir(project, join("src", "main", "java", ...pkg), {
+    new SampleDir(this, join("src", "main", "java", ...pkg), {
       files: {
         "Main.java": [
           ...(options.package ? [`package ${options.package};`] : []),

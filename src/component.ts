@@ -1,11 +1,11 @@
-import { Project } from "./project";
+import { Construct } from "constructs";
 
 /**
  * Represents a project component.
  */
-export class Component {
-  constructor(public readonly project: Project) {
-    project._addComponent(this);
+export class Component extends Construct {
+  constructor(scope: Construct, id: string) {
+    super(scope, id);
   }
 
   /**

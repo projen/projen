@@ -1,5 +1,5 @@
+import { GitHubProject, GitHubProjectOptions } from "../../src/github";
 import { PullRequestLint } from "../../src/github/pull-request-lint";
-import { NodeProject, NodeProjectOptions } from "../../src/javascript";
 import { synthSnapshot } from "../util";
 
 test("default", () => {
@@ -72,17 +72,14 @@ test("with custom runner", () => {
 });
 
 type ProjectOptions = Omit<
-  NodeProjectOptions,
+  GitHubProjectOptions,
   "outdir" | "defaultReleaseBranch" | "name"
 >;
-function createProject(options: ProjectOptions = {}): NodeProject {
-  return new NodeProject({
-    defaultReleaseBranch: "main",
+function createProject(options: ProjectOptions = {}): GitHubProject {
+  return new GitHubProject({
     name: "node-project",
     githubOptions: {
-      pullRequestLintOptions: {
-        semanticTitle: false,
-      },
+      pullRequestLint: false,
     },
     ...options,
   });

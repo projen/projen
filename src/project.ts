@@ -1,12 +1,13 @@
-import { mkdtempSync, realpathSync, renameSync } from "fs";
+import { mkdtempSync, realpathSync, renameSync, writeFileSync } from "fs";
 import { tmpdir } from "os";
 import * as path from "path";
+import { Construct, IConstruct } from "constructs";
 import * as glob from "glob";
 import { cleanup, FILE_MANIFEST } from "./cleanup";
-import { IS_TEST_RUN, PROJEN_VERSION } from "./common";
+import { IS_TEST_RUN, PROJEN_DIR, PROJEN_VERSION } from "./common";
 import { Component } from "./component";
 import { Dependencies } from "./dependencies";
-import { FileBase } from "./file";
+import { FileBase, PROJECT_SYMBOL } from "./file";
 import { GitAttributesFile } from "./gitattributes";
 import { IgnoreFile } from "./ignore-file";
 import * as inventory from "./inventory";
@@ -84,12 +85,34 @@ export interface ProjectOptions {
 /**
  * Base project
  */
-export class Project {
+export class Project extends Construct {
   /**
    * The name of the default task (the task executed when `projen` is run without arguments). Normally
    * this task should synthesize the project files.
    */
   public static readonly DEFAULT_TASK = "default";
+
+  /**
+   * Returns the immediate Project a construct belongs to.
+   * @param construct the construct
+   */
+  public static of(construct: IConstruct): Project {
+    if (construct instanceof Project) {
+      return construct;
+    }
+
+    const parent = construct.node.scope as Construct;
+    if (!parent) {
+      throw new Error("cannot find a parent project (directly or indirectly)");
+    }
+
+    return Project.of(parent);
+  }
+
+  /**
+   * @internal
+   */
+  public readonly [PROJECT_SYMBOL] = PROJECT_SYMBOL;
 
   /**
    * Project name.
@@ -167,13 +190,13 @@ export class Project {
    */
   public readonly projectBuild: ProjectBuild;
 
-  private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
   private readonly _ejected: boolean;
 
   constructor(options: ProjectOptions) {
+    super(undefined as any, options.name);
     this.initProject = resolveInitProject(options);
 
     this.name = options.name;
@@ -250,7 +273,9 @@ export class Project {
    * Returns all the components within this project.
    */
   public get components() {
-    return [...this._components];
+    const isComponent = (c: IConstruct): c is Component =>
+      c instanceof Component;
+    return this.node.findAll().filter(isComponent);
   }
 
   /**
@@ -258,7 +283,7 @@ export class Project {
    */
   public get files(): FileBase[] {
     const isFile = (c: Component): c is FileBase => c instanceof FileBase;
-    return this._components
+    return this.components
       .filter(isFile)
       .sort((f1, f2) => f1.path.localeCompare(f2.path));
   }
@@ -446,7 +471,7 @@ export class Project {
 
     this.preSynthesize();
 
-    for (const comp of this._components) {
+    for (const comp of this.components) {
       comp.preSynthesize();
     }
 
@@ -467,12 +492,12 @@ export class Project {
       subproject.synth();
     }
 
-    for (const comp of this._components) {
+    for (const comp of this.components) {
       comp.synthesize();
     }
 
     if (!isTruthy(process.env.PROJEN_DISABLE_POST)) {
-      for (const comp of this._components) {
+      for (const comp of this.components) {
         comp.postSynthesize();
       }
 
@@ -496,7 +521,55 @@ export class Project {
       }
     }
 
+    this.generateTreeMetadata();
+
     this.logger.debug("Synthesis complete");
+  }
+
+  // copied from https://github.com/aws/aws-cdk/blob/v2-main/packages/@aws-cdk/core/lib/private/tree-metadata.ts
+  private generateTreeMetadata() {
+    const FILE_PATH = "tree.json";
+
+    const lookup: { [path: string]: Node } = {};
+
+    const visit = (construct: IConstruct): Node => {
+      const children = construct.node.children.map((c) => {
+        try {
+          return visit(c);
+        } catch (e) {
+          console.error(
+            `Failed to render tree metadata for node [${c.node.id}]. Reason: ${e}`
+          );
+          return undefined;
+        }
+      });
+      const childrenMap = children
+        .filter((child) => child !== undefined)
+        .reduce((map, child) => Object.assign(map, { [child!.id]: child }), {});
+
+      const node: Node = {
+        id: construct.node.id || "App",
+        path: construct.node.path,
+        children:
+          Object.keys(childrenMap).length === 0 ? undefined : childrenMap,
+        constructInfo: constructInfoFromConstruct(construct),
+      };
+
+      lookup[node.path] = node;
+
+      return node;
+    };
+
+    const tree = {
+      version: "tree-0.1",
+      tree: visit(this.node.root),
+    };
+
+    writeFileSync(
+      path.join(this.outdir, PROJEN_DIR, FILE_PATH),
+      JSON.stringify(tree, undefined, 2),
+      { encoding: "utf-8" }
+    );
   }
 
   /**
@@ -515,14 +588,6 @@ export class Project {
    * Called after all components are synthesized. Order is *not* guaranteed.
    */
   public postSynthesize() {}
-
-  /**
-   * Adds a component to the project.
-   * @internal
-   */
-  public _addComponent(component: Component) {
-    this._components.push(component);
-  }
 
   /**
    * Adds a sub-project to this project.
@@ -633,4 +698,52 @@ export interface InitProject {
    * @default InitProjectOptionHints.FEATURED
    */
   readonly comments: InitProjectOptionHints;
+}
+
+/**
+ * Symbol for accessing jsii runtime information
+ *
+ * Introduced in jsii 1.19.0, cdk 1.90.0.
+ */
+const JSII_RUNTIME_SYMBOL = Symbol.for("jsii.rtti");
+
+/**
+ * Source information on a construct (class fqn and version)
+ */
+export interface ConstructInfo {
+  readonly fqn: string;
+  readonly version: string;
+}
+
+export function constructInfoFromConstruct(
+  construct: IConstruct
+): ConstructInfo | undefined {
+  const jsiiRuntimeInfo =
+    Object.getPrototypeOf(construct).constructor[JSII_RUNTIME_SYMBOL];
+  if (
+    typeof jsiiRuntimeInfo === "object" &&
+    jsiiRuntimeInfo !== null &&
+    typeof jsiiRuntimeInfo.fqn === "string" &&
+    typeof jsiiRuntimeInfo.version === "string"
+  ) {
+    return { fqn: jsiiRuntimeInfo.fqn, version: jsiiRuntimeInfo.version };
+  } else if (jsiiRuntimeInfo) {
+    // There is something defined, but doesn't match our expectations. Fail fast and hard.
+    throw new Error(
+      `malformed jsii runtime info for construct: '${construct.node.path}'`
+    );
+  }
+  return undefined;
+}
+
+interface Node {
+  readonly id: string;
+  readonly path: string;
+  readonly children?: { [key: string]: Node };
+  readonly attributes?: { [key: string]: any };
+
+  /**
+   * Information on the construct class that led to this node, if available
+   */
+  readonly constructInfo?: ConstructInfo;
 }

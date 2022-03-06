@@ -1,3 +1,4 @@
+import { Construct, IConstruct } from "constructs";
 import { GitHubProject, GitHubProjectOptions } from "../github";
 import { Junit, JunitOptions } from "./junit";
 import { MavenCompile, MavenCompileOptions } from "./maven-compile";
@@ -111,6 +112,25 @@ export interface JavaProjectOptions extends JavaProjectCommonOptions {
  * @pjid java
  */
 export class JavaProject extends GitHubProject {
+  /**
+   * Returns the immediate JavaProject a construct belongs to.
+   * @param construct the construct
+   */
+  public static ofJava(construct: IConstruct): JavaProject {
+    if (construct instanceof JavaProject) {
+      return construct;
+    }
+
+    const parent = construct.node.scope as Construct;
+    if (!parent) {
+      throw new Error(
+        "cannot find a parent JavaProject (directly or indirectly)"
+      );
+    }
+
+    return JavaProject.ofJava(parent);
+  }
+
   /**
    * API for managing `pom.xml`.
    */

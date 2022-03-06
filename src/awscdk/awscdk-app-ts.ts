@@ -1,4 +1,5 @@
 import * as path from "path";
+import { Construct, IConstruct } from "constructs";
 import * as fs from "fs-extra";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -53,6 +54,24 @@ export interface AwsCdkTypeScriptAppOptions
  * @pjid awscdk-app-ts
  */
 export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
+  /**
+   * Returns the immediate AwsCdkTypeScriptApp a construct belongs to.
+   * @param construct the construct
+   */
+  public static ofAwscdkAppTs(construct: IConstruct): AwsCdkTypeScriptApp {
+    if (construct instanceof AwsCdkTypeScriptApp) {
+      return construct;
+    }
+
+    const parent = construct.node.scope as Construct;
+    if (!parent) {
+      throw new Error(
+        "cannot find a parent AwsCdkTypeScriptApp (directly or indirectly)"
+      );
+    }
+
+    return AwsCdkTypeScriptApp.ofAwscdkAppTs(parent);
+  }
   /**
    * The CDK version this app is using.
    */
@@ -168,19 +187,14 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
 }
 
 class SampleCode extends Component {
-  private readonly appProject: AwsCdkTypeScriptApp;
-
-  constructor(
-    project: AwsCdkTypeScriptApp,
-    private readonly cdkMajorVersion: number
-  ) {
-    super(project);
-    this.appProject = project;
+  constructor(scope: Construct, private readonly cdkMajorVersion: number) {
+    super(scope, "SampleCode");
   }
 
   public synthesize() {
-    const outdir = this.project.outdir;
-    const srcdir = path.join(outdir, this.appProject.srcdir);
+    const project = AwsCdkTypeScriptApp.ofAwscdkAppTs(this);
+    const outdir = project.outdir;
+    const srcdir = path.join(outdir, project.srcdir);
     if (
       fs.pathExistsSync(srcdir) &&
       fs.readdirSync(srcdir).filter((x) => x.endsWith(".ts"))
@@ -222,9 +236,9 @@ new MyStack(app, 'my-stack-dev', { env: devEnv });
 app.synth();`;
 
     fs.mkdirpSync(srcdir);
-    fs.writeFileSync(path.join(srcdir, this.appProject.appEntrypoint), srcCode);
+    fs.writeFileSync(path.join(srcdir, project.appEntrypoint), srcCode);
 
-    const testdir = path.join(outdir, this.appProject.testdir);
+    const testdir = path.join(outdir, project.testdir);
     if (
       fs.pathExistsSync(testdir) &&
       fs.readdirSync(testdir).filter((x) => x.endsWith(".ts"))
@@ -241,10 +255,7 @@ app.synth();`;
       testImports.push("import { Template } from 'aws-cdk-lib/assertions';");
     }
 
-    const appEntrypointName = path.basename(
-      this.appProject.appEntrypoint,
-      ".ts"
-    );
+    const appEntrypointName = path.basename(project.appEntrypoint, ".ts");
     const testCode = `${testImports.join("\n")}
 import { MyStack } from '../src/${appEntrypointName}';
 

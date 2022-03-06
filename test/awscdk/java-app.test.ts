@@ -21,6 +21,7 @@ test("happy flow", () => {
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",
+    ".projen/tree.json",
     "cdk.json",
     "pom.xml",
     "README.md",

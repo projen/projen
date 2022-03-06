@@ -1,11 +1,11 @@
+import { Construct } from "constructs";
 import { FileBase, IResolver } from "./file";
-import { Project } from "./project";
 
 export class IgnoreFile extends FileBase {
   private readonly _patterns = new Array<string>();
 
-  constructor(project: Project, filePath: string) {
-    super(project, filePath, { editGitignore: filePath !== ".gitignore" });
+  constructor(scope: Construct, filePath: string) {
+    super(scope, filePath, { editGitignore: filePath !== ".gitignore" });
   }
 
   /**

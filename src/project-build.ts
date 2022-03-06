@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Component } from "./component";
 import { Project } from "./project";
 import { Task } from "./task";
@@ -44,8 +45,10 @@ export class ProjectBuild extends Component {
    */
   public readonly packageTask: Task;
 
-  constructor(project: Project) {
-    super(project);
+  constructor(scope: Construct) {
+    super(scope, "ProjectBuild");
+
+    const project = Project.of(this);
 
     this.preCompileTask = project.tasks.addTask("pre-compile", {
       description: "Prepare the project for compilation",
@@ -73,8 +76,9 @@ export class ProjectBuild extends Component {
 
     // if this is not subproject, execute the "default" task which will
     // synthesize project files.
-    if (!this.project.parent && this.project.defaultTask) {
-      this.buildTask.spawn(this.project.defaultTask);
+    const defaultTask = Project.of(this).defaultTask;
+    if (!Project.of(this).parent && defaultTask) {
+      this.buildTask.spawn(defaultTask);
     }
 
     this.buildTask.spawn(this.preCompileTask);

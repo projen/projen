@@ -1,6 +1,9 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
+import { Project } from "../project";
 import { GitHub } from "./github";
 import { renderBehavior } from "./stale-util";
+import { GithubWorkflow } from "./workflows";
 import { JobPermission } from "./workflows-model";
 
 /**
@@ -94,10 +97,16 @@ export interface StaleBehavior {
  * @see https://github.com/actions/stale
  */
 export class Stale extends Component {
-  constructor(github: GitHub, options: StaleOptions = {}) {
-    super(github.project);
+  constructor(scope: Construct, options: StaleOptions = {}) {
+    super(scope, "Stale");
 
-    const stale = github.addWorkflow("stale");
+    const github = GitHub.of(Project.of(this));
+    if (!github) {
+      throw new Error(
+        "Stale can only be added to projects with a GitHub component."
+      );
+    }
+    const stale = new GithubWorkflow(this, "stale");
     stale.on({
       schedule: [{ cron: "0 1 * * *" }], // at 1am every day
       workflowDispatch: {},

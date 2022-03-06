@@ -1,3 +1,4 @@
+import { Construct, IConstruct } from "constructs";
 import * as semver from "semver";
 import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
 import { DependencyType } from "../dependencies";
@@ -48,6 +49,26 @@ export interface AwsCdkConstructLibraryOptions
  * @pjid awscdk-construct
  */
 export class AwsCdkConstructLibrary extends ConstructLibrary {
+  /**
+   * Returns the immediate AwsCdkConstructLibrary a construct belongs to.
+   * @param construct the construct
+   */
+  public static ofAwscdkConstruct(
+    construct: IConstruct
+  ): AwsCdkConstructLibrary {
+    if (construct instanceof AwsCdkConstructLibrary) {
+      return construct;
+    }
+
+    const parent = construct.node.scope as Construct;
+    if (!parent) {
+      throw new Error(
+        "cannot find a parent AwsCdkConstructLibrary (directly or indirectly)"
+      );
+    }
+
+    return AwsCdkConstructLibrary.ofAwscdkConstruct(parent);
+  }
   public readonly cdkDeps: AwsCdkDeps;
 
   constructor(options: AwsCdkConstructLibraryOptions) {

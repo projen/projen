@@ -1,4 +1,5 @@
 import * as YAML from "yaml";
+import { GithubWorkflow } from "../../src/github";
 import { JobPermission } from "../../src/github/workflows-model";
 import { Release, ReleaseTrigger } from "../../src/release";
 import { synthSnapshot, TestProject } from "../util";
@@ -493,12 +494,14 @@ test("can be modified with escape hatches", () => {
   });
 
   // WHEN
-  project
-    .github!.tryFindWorkflow("release")!
-    .file!.addOverride("jobs.release.env.FOO", "VALUE1");
-  project
-    .github!.tryFindWorkflow("release")!
-    .file!.addOverride("jobs.release_github.env.BAR", "VALUE2");
+  GithubWorkflow.tryFind(project, "release")!.file!.addOverride(
+    "jobs.release.env.FOO",
+    "VALUE1"
+  );
+  GithubWorkflow.tryFind(project, "release")!.file!.addOverride(
+    "jobs.release_github.env.BAR",
+    "VALUE2"
+  );
 
   // THEN
   const outdir = synthSnapshot(project);

@@ -1,10 +1,28 @@
 import * as path from "path";
+import { Construct, IConstruct } from "constructs";
 import { removeSync } from "fs-extra";
 import { resolve } from "./_resolve";
 import { PROJEN_MARKER, PROJEN_RC } from "./common";
 import { Component } from "./component";
 import { Project } from "./project";
 import { isExecutable, isWritable, tryReadFileSync, writeFile } from "./util";
+
+// This is a hack to prevent a circular runtime dependency issue between
+// Project and FileBase...
+export const PROJECT_SYMBOL = Symbol("PROJECT_SYMBOL");
+
+function findProject(construct: IConstruct): Project {
+  if ((construct as any)[PROJECT_SYMBOL] !== undefined) {
+    return construct as Project;
+  }
+
+  const parent = construct.node.scope as Construct;
+  if (!parent) {
+    throw new Error("cannot find a parent project (directly or indirectly)");
+  }
+
+  return findProject(parent);
+}
 
 export interface FileBaseOptions {
   /**
@@ -75,11 +93,13 @@ export abstract class FileBase extends Component {
   private _changed?: boolean;
 
   constructor(
-    project: Project,
+    scope: Construct,
     filePath: string,
     options: FileBaseOptions = {}
   ) {
-    super(project);
+    super(scope, filePath);
+
+    const project = findProject(this); // to prevent circular dependency
 
     this.readonly = !project.ejected && (options.readonly ?? true);
     this.executable = options.executable ?? false;
@@ -112,7 +132,7 @@ export abstract class FileBase extends Component {
 
     const editGitignore = options.editGitignore ?? true;
     if (editGitignore) {
-      this.project.addGitIgnore(`${committed ? "!" : ""}${globPattern}`);
+      project.addGitIgnore(`${committed ? "!" : ""}${globPattern}`);
     } else {
       if (options.committed != null) {
         throw new Error(
@@ -135,7 +155,8 @@ export abstract class FileBase extends Component {
    * Writes the file to the project's output directory
    */
   public synthesize() {
-    const outdir = this.project.outdir;
+    const project = findProject(this);
+    const outdir = project.outdir;
     const filePath = path.join(outdir, this.path);
     const resolver: IResolver = {
       resolve: (obj, options) => resolve(obj, options),
@@ -157,7 +178,7 @@ export abstract class FileBase extends Component {
       prevReadonly === this.readonly &&
       prevExecutable === this.executable
     ) {
-      this.project.logger.debug(`no change in ${filePath}`);
+      project.logger.debug(`no change in ${filePath}`);
       this._changed = false;
       return;
     }
@@ -179,15 +200,16 @@ export abstract class FileBase extends Component {
    * that it probably should not be edited directly.
    */
   private checkForProjenMarker() {
-    const filePath = path.join(this.project.outdir, this.path);
+    const project = findProject(this);
+    const filePath = path.join(project.outdir, this.path);
     const contents = tryReadFileSync(filePath);
     const containsMarker = contents?.includes(PROJEN_MARKER);
     if (this.marker && !containsMarker) {
-      this.project.logger.debug(
+      project.logger.debug(
         `note: expected ${this.path} to contain marker but found none.`
       );
     } else if (!this.marker && containsMarker) {
-      this.project.logger.debug(
+      project.logger.debug(
         `note: expected ${this.path} to not contain marker but found one anyway.`
       );
     }

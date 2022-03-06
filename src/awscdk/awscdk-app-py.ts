@@ -1,15 +1,14 @@
-import {
-  AwsCdkDeps,
-  AwsCdkDepsCommonOptions,
-  CdkConfig,
-  CdkConfigCommonOptions,
-  CdkTasks,
-} from ".";
-import { Component, DependencyType, SampleDir, SourceCode } from "..";
-import { Pytest } from "../python/pytest";
-import { PythonProject, PythonProjectOptions } from "../python/python-project";
+import { Construct, IConstruct } from "constructs";
+import { Component } from "../component";
+import { DependencyType } from "../dependencies";
+import { Pytest, PythonProject, PythonProjectOptions } from "../python";
+import { SampleDir } from "../sample-file";
+import { SourceCode } from "../source-code";
+import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsPy } from "./awscdk-deps-py";
 import { AwsCdkPytestSample } from "./awscdk-pytest-sample";
+import { CdkConfig, CdkConfigCommonOptions } from "./cdk-config";
+import { CdkTasks } from "./cdk-tasks";
 
 /**
  * Options for `AwsCdkPythonApp`
@@ -39,6 +38,24 @@ export interface AwsCdkPythonAppOptions
  * @pjid awscdk-app-py
  */
 export class AwsCdkPythonApp extends PythonProject {
+  /**
+   * Returns the immediate AwsCdkPythonApp a construct belongs to.
+   * @param construct the construct
+   */
+  public static ofAwscdkAppPy(construct: IConstruct): AwsCdkPythonApp {
+    if (construct instanceof AwsCdkPythonApp) {
+      return construct;
+    }
+
+    const parent = construct.node.scope as Construct;
+    if (!parent) {
+      throw new Error(
+        "cannot find a parent AwsCdkPythonApp (directly or indirectly)"
+      );
+    }
+
+    return AwsCdkPythonApp.ofAwscdkAppPy(parent);
+  }
   /**
    * Common CDK tasks.
    */
@@ -97,23 +114,30 @@ export class AwsCdkPythonApp extends PythonProject {
       ...options,
     });
 
-    if (options.sample ?? true) {
+    const sample = options.sample ?? true;
+    const pytest = options.pytest ?? true;
+
+    if (sample) {
       new AppCode(this, "app.py", this.cdkDeps.cdkMajorVersion);
       new MyStackCode(this, this.moduleName, this.cdkDeps.cdkMajorVersion);
     }
 
-    if (options.pytest ?? true) {
+    if (pytest) {
       this.pytest = new Pytest(this, options.pytestOptions);
-      new AwsCdkPytestSample(this, this.pytest.testdir);
+      if (sample) {
+        new AwsCdkPytestSample(this, this.pytest.testdir);
+      }
     }
   }
 }
 
 class AppCode extends Component {
-  constructor(project: AwsCdkPythonApp, fileName: string, cdkVersion: number) {
-    super(project);
+  constructor(scope: Construct, fileName: string, cdkVersion: number) {
+    super(scope, "AppCode");
 
-    const src = new SourceCode(project, fileName);
+    const project = AwsCdkPythonApp.ofAwscdkAppPy(this);
+
+    const src = new SourceCode(this, fileName);
 
     src.line("import os");
     if (cdkVersion < 2) {
@@ -138,12 +162,8 @@ class AppCode extends Component {
 }
 
 class MyStackCode extends Component {
-  constructor(
-    project: AwsCdkPythonApp,
-    sampleFile: string,
-    cdkMajorVersion: number
-  ) {
-    super(project);
+  constructor(scope: Construct, sampleFile: string, cdkMajorVersion: number) {
+    super(scope, "MyStackCode");
 
     let appFile: string[] = [];
     appFile.push("import os");
@@ -165,7 +185,7 @@ class MyStackCode extends Component {
     appFile.push("    # The code that defines your stack goes here");
     appFile.push("");
 
-    new SampleDir(project, sampleFile, {
+    new SampleDir(this, sampleFile, {
       files: {
         "__init__.py": "",
         "my_stack.py": appFile.join("\n"),

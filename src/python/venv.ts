@@ -1,6 +1,7 @@
 import * as path from "path";
 import * as fs from "fs-extra";
 import { Component } from "../component";
+import { Project } from "../project";
 import { exec } from "../util";
 import { IPythonEnv } from "./python-env";
 import { PythonProject } from "./python-project";
@@ -27,16 +28,16 @@ export class Venv extends Component implements IPythonEnv {
   private readonly envdir: string;
 
   constructor(project: PythonProject, options: VenvOptions = {}) {
-    super(project);
+    super(project, "Venv");
 
     this.envdir = options.envdir ?? ".env";
 
-    this.project.addGitIgnore(`/${this.envdir}`);
-    this.project.tasks.addEnvironment(
+    Project.of(this).addGitIgnore(`/${this.envdir}`);
+    Project.of(this).tasks.addEnvironment(
       "VIRTUAL_ENV",
       `$(echo $PWD/${this.envdir})`
     );
-    this.project.tasks.addEnvironment(
+    Project.of(this).tasks.addEnvironment(
       "PATH",
       `$(echo $PWD/${this.envdir}/bin:$PATH)`
     );
@@ -46,11 +47,11 @@ export class Venv extends Component implements IPythonEnv {
    * Initializes the virtual environment if it doesn't exist (called during post-synthesis).
    */
   public setupEnvironment() {
-    const absoluteEnvdir = path.join(this.project.outdir, this.envdir);
+    const absoluteEnvdir = path.join(Project.of(this).outdir, this.envdir);
     if (!fs.pathExistsSync(absoluteEnvdir)) {
-      this.project.logger.info("Setting up a virtual environment...");
-      exec(`python -m venv ${this.envdir}`, { cwd: this.project.outdir });
-      this.project.logger.info(
+      Project.of(this).logger.info("Setting up a virtual environment...");
+      exec(`python -m venv ${this.envdir}`, { cwd: Project.of(this).outdir });
+      Project.of(this).logger.info(
         `Environment successfully created (located in ./${this.envdir}).`
       );
     }

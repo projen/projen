@@ -1,10 +1,10 @@
+import { Construct } from "constructs";
 import {
   AutoDiscoverBase,
   IntegrationTestAutoDiscoverBase,
   IntegrationTestAutoDiscoverBaseOptions,
 } from "../cdk";
 import { Component } from "../component";
-import { Project } from "../project";
 import { AwsCdkDeps } from "./awscdk-deps";
 import {
   IntegrationTest,
@@ -44,11 +44,11 @@ export interface IntegrationTestAutoDiscoverOptions
  * Creates integration tests from entry points discovered in the test tree.
  */
 export class IntegrationTestAutoDiscover extends IntegrationTestAutoDiscoverBase {
-  constructor(project: Project, options: IntegrationTestAutoDiscoverOptions) {
-    super(project, options);
+  constructor(scope: Construct, options: IntegrationTestAutoDiscoverOptions) {
+    super(scope, "IntegrationTestAutoDiscover", options);
 
     for (const entrypoint of this.entrypoints) {
-      new IntegrationTest(this.project, {
+      new IntegrationTest(this, {
         entrypoint,
         cdkDeps: options.cdkDeps,
         tsconfigPath: options.tsconfigPath,
@@ -77,14 +77,14 @@ export interface LambdaAutoDiscoverOptions extends AutoDiscoverCommonOptions {
  * Creates lambdas from entry points discovered in the project's source tree.
  */
 export class LambdaAutoDiscover extends AutoDiscoverBase {
-  constructor(project: Project, options: LambdaAutoDiscoverOptions) {
-    super(project, {
+  constructor(scope: Construct, options: LambdaAutoDiscoverOptions) {
+    super(scope, "LambdaAutoDiscover", {
       projectdir: options.srcdir,
       extension: TYPESCRIPT_LAMBDA_EXT,
     });
 
     for (const entrypoint of this.entrypoints) {
-      new LambdaFunction(this.project, {
+      new LambdaFunction(this, {
         entrypoint,
         cdkDeps: options.cdkDeps,
         ...options.lambdaOptions,
@@ -119,11 +119,11 @@ export interface AutoDiscoverOptions
  * project's source and test trees.
  */
 export class AutoDiscover extends Component {
-  constructor(project: Project, options: AutoDiscoverOptions) {
-    super(project);
+  constructor(scope: Construct, options: AutoDiscoverOptions) {
+    super(scope, "AutoDiscover");
 
     if (options.lambdaAutoDiscover ?? true) {
-      new LambdaAutoDiscover(this.project, {
+      new LambdaAutoDiscover(this, {
         cdkDeps: options.cdkDeps,
         tsconfigPath: options.tsconfigPath,
         srcdir: options.srcdir,
@@ -132,7 +132,7 @@ export class AutoDiscover extends Component {
     }
 
     if (options.integrationTestAutoDiscover ?? true) {
-      new IntegrationTestAutoDiscover(this.project, {
+      new IntegrationTestAutoDiscover(this, {
         cdkDeps: options.cdkDeps,
         testdir: options.testdir,
         tsconfigPath: options.tsconfigPath,

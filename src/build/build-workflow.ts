@@ -1,4 +1,4 @@
-import { Task } from "..";
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { GitHub, GithubWorkflow, GitIdentity } from "../github";
 import {
@@ -15,6 +15,7 @@ import {
 } from "../github/workflows-model";
 import { NodeProject } from "../javascript";
 import { Project } from "../project";
+import { Task } from "../task";
 
 const PULL_REQUEST_REF = "${{ github.event.pull_request.head.ref }}";
 const PULL_REQUEST_REPOSITORY =
@@ -101,24 +102,22 @@ export class BuildWorkflow extends Component {
   private readonly preBuildSteps: JobStep[];
   private readonly gitIdentity: GitIdentity;
   private readonly buildTask: Task;
-  private readonly github: GitHub;
   private readonly workflow: GithubWorkflow;
   private readonly artifactsDirectory: string;
   private readonly defaultRunners: string[] = ["ubuntu-latest"];
 
   private readonly _postBuildJobs: string[] = [];
 
-  constructor(project: Project, options: BuildWorkflowOptions) {
-    super(project);
+  constructor(scope: Construct, options: BuildWorkflowOptions) {
+    super(scope, "BuildWorkflow");
 
-    const github = GitHub.of(project);
+    const github = GitHub.of(Project.of(this));
     if (!github) {
       throw new Error(
         "BuildWorkflow is currently only supported for GitHub projects"
       );
     }
 
-    this.github = github;
     this.preBuildSteps = options.preBuildSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
     this.gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
@@ -234,7 +233,7 @@ export class BuildWorkflow extends Component {
   public addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions) {
     this.addPostBuildJobCommands(
       `post-build-${task.name}`,
-      [`${this.project.projenCommand} ${task.name}`],
+      [`${Project.of(this).projenCommand} ${task.name}`],
       {
         checkoutRepo: true,
         installDeps: true,
@@ -275,11 +274,11 @@ export class BuildWorkflow extends Component {
     if (
       options?.checkoutRepo &&
       options?.installDeps &&
-      this.project instanceof NodeProject
+      NodeProject.ofNode(this)
     ) {
       steps.push({
         name: "Install dependencies",
-        run: `${this.project.package.installCommand}`,
+        run: `${NodeProject.ofNode(this).package.installCommand}`,
       });
     }
 
@@ -341,7 +340,7 @@ export class BuildWorkflow extends Component {
 
       {
         name: this.buildTask.name,
-        run: this.github.project.runTaskCommand(this.buildTask),
+        run: Project.of(this).runTaskCommand(this.buildTask),
       },
 
       ...this.postBuildSteps,

@@ -1,5 +1,6 @@
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
+import { Project } from "../project";
 import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { TomlFile } from "../toml";
@@ -26,15 +27,18 @@ export class Poetry
   public readonly publishTestTask: Task;
 
   constructor(project: PythonProject, options: PythonPackagingOptions) {
-    super(project);
+    super(project, "Poetry");
 
     this.installTask = project.addTask("install", {
       description: "Install and upgrade dependencies",
       exec: "poetry update",
     });
 
-    this.project.tasks.addEnvironment("VIRTUAL_ENV", "$(poetry env info -p)");
-    this.project.tasks.addEnvironment(
+    Project.of(this).tasks.addEnvironment(
+      "VIRTUAL_ENV",
+      "$(poetry env info -p)"
+    );
+    Project.of(this).tasks.addEnvironment(
       "PATH",
       "$(echo $(poetry env info -p)/bin:$PATH)"
     );
@@ -79,7 +83,7 @@ export class Poetry
   private synthDependencies() {
     const dependencies: { [key: string]: any } = {};
     let pythonDefined: boolean = false;
-    for (const pkg of this.project.deps.all) {
+    for (const pkg of Project.of(this).deps.all) {
       if (pkg.name === "python") {
         pythonDefined = true;
       }
@@ -96,7 +100,7 @@ export class Poetry
 
   private synthDevDependencies() {
     const dependencies: { [key: string]: any } = {};
-    for (const pkg of this.project.deps.all) {
+    for (const pkg of Project.of(this).deps.all) {
       if ([DependencyType.DEVENV].includes(pkg.type)) {
         dependencies[pkg.name] = pkg.version;
       }
@@ -110,7 +114,7 @@ export class Poetry
    * @param spec Format `<module>@<semver>`
    */
   public addDependency(spec: string) {
-    this.project.deps.addDependency(spec, DependencyType.RUNTIME);
+    Project.of(this).deps.addDependency(spec, DependencyType.RUNTIME);
   }
 
   /**
@@ -119,7 +123,7 @@ export class Poetry
    * @param spec Format `<module>@<semver>`
    */
   public addDevDependency(spec: string) {
-    this.project.deps.addDependency(spec, DependencyType.DEVENV);
+    Project.of(this).deps.addDependency(spec, DependencyType.DEVENV);
   }
 
   /**
@@ -127,24 +131,24 @@ export class Poetry
    */
   public setupEnvironment() {
     const result = execOrUndefined("which poetry", {
-      cwd: this.project.outdir,
+      cwd: Project.of(this).outdir,
     });
     if (!result) {
-      this.project.logger.info(
+      Project.of(this).logger.info(
         "Unable to setup an environment since poetry is not installed. Please install poetry (https://python-poetry.org/docs/) or use a different component for managing environments such as 'venv'."
       );
     }
 
     let envPath = execOrUndefined("poetry env info -p", {
-      cwd: this.project.outdir,
+      cwd: Project.of(this).outdir,
     });
     if (!envPath) {
-      this.project.logger.info("Setting up a virtual environment...");
-      exec("poetry env use python", { cwd: this.project.outdir });
+      Project.of(this).logger.info("Setting up a virtual environment...");
+      exec("poetry env use python", { cwd: Project.of(this).outdir });
       envPath = execOrUndefined("poetry env info -p", {
-        cwd: this.project.outdir,
+        cwd: Project.of(this).outdir,
       });
-      this.project.logger.info(
+      Project.of(this).logger.info(
         `Environment successfully created (located in ${envPath}}).`
       );
     }
@@ -154,8 +158,8 @@ export class Poetry
    * Installs dependencies (called during post-synthesis).
    */
   public installDependencies() {
-    this.project.logger.info("Installing dependencies...");
-    const runtime = new TaskRuntime(this.project.outdir);
+    Project.of(this).logger.info("Installing dependencies...");
+    const runtime = new TaskRuntime(Project.of(this).outdir);
     runtime.runTask(this.installTask.name);
   }
 }
@@ -308,7 +312,7 @@ export class PoetryPyproject extends Component {
   public readonly file: TomlFile;
 
   constructor(project: PythonProject, options: PoetryPyprojectOptions) {
-    super(project);
+    super(project, "PoetryPyproject");
 
     const decamelisedOptions = decamelizeKeysRecursively(options, {
       separator: "-",

@@ -1,4 +1,6 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
+import { Project } from "../project";
 import { YamlFile } from "../yaml";
 import { GitHub } from "./github";
 
@@ -58,8 +60,15 @@ export class Mergify extends Component {
   // The actual YAML file will only be created if at least 1 rule is added.
   private yamlFile?: YamlFile;
 
-  constructor(github: GitHub, options: MergifyOptions = {}) {
-    super(github.project);
+  constructor(scope: Construct, options: MergifyOptions = {}) {
+    super(scope, "Mergify");
+
+    const github = GitHub.of(Project.of(this));
+    if (!github) {
+      throw new Error(
+        "Mergify can only be added to projects with a GitHub component."
+      );
+    }
 
     for (const rule of options.rules ?? []) {
       this.addRule(rule);
@@ -72,7 +81,7 @@ export class Mergify extends Component {
 
   private createYamlFile() {
     if (this.yamlFile == null) {
-      this.yamlFile = new YamlFile(this.project, ".mergify.yml", {
+      this.yamlFile = new YamlFile(Project.of(this), ".mergify.yml", {
         obj: {
           queue_rules: this.queues,
           pull_request_rules: this.rules,

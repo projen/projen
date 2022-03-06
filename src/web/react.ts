@@ -7,6 +7,7 @@ import {
   TypeScriptJsxMode,
   TypeScriptModuleResolution,
 } from "../javascript";
+import { Project } from "../project";
 import { SampleDir } from "../sample-file";
 import { SourceCode } from "../source-code";
 import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
@@ -190,7 +191,7 @@ export class ReactComponent extends Component {
   private readonly typescript: boolean;
 
   constructor(project: NodeProject, options: ReactComponentOptions) {
-    super(project);
+    super(project, "ReactComponent");
 
     this.typescript = options.typescript ?? false;
 
@@ -214,7 +215,7 @@ export class ReactComponent extends Component {
       project.addDevDeps("react-app-rewired");
       project.addFields({ "config-overrides-path": overridesPath });
 
-      const configOverrides = new SourceCode(this.project, overridesPath);
+      const configOverrides = new SourceCode(Project.of(this), overridesPath);
       if (!configOverrides.marker) {
         configOverrides.line(`// ${configOverrides.marker}`);
       }
@@ -287,7 +288,7 @@ class ReactSampleCode extends Component {
   private readonly srcdir: string;
 
   constructor(project: NodeProject, options: ReactSampleCodeOptions) {
-    super(project);
+    super(project, "ReactSampleCode");
 
     this.fileExt = options.fileExt ?? "jsx";
     this.srcdir = options.srcdir;

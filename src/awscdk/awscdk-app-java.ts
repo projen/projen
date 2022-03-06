@@ -1,4 +1,5 @@
 import { join } from "path";
+import { Construct, IConstruct } from "constructs";
 import { DependencyType, SampleDir } from "..";
 import { JavaProject, JavaProjectOptions } from "../java";
 import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
@@ -25,6 +26,24 @@ export interface AwsCdkJavaAppOptions
  * @pjid awscdk-app-java
  */
 export class AwsCdkJavaApp extends JavaProject {
+  /**
+   * Returns the immediate AwsCdkJavaApp a construct belongs to.
+   * @param construct the construct
+   */
+  public static ofAwscdkAppJava(construct: IConstruct): AwsCdkJavaApp {
+    if (construct instanceof AwsCdkJavaApp) {
+      return construct;
+    }
+
+    const parent = construct.node.scope as Construct;
+    if (!parent) {
+      throw new Error(
+        "cannot find a parent AwsCdkJavaApp (directly or indirectly)"
+      );
+    }
+
+    return AwsCdkJavaApp.ofAwscdkAppJava(parent);
+  }
   /**
    * The `cdk.json` file.
    */

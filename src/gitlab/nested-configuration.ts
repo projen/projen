@@ -1,5 +1,5 @@
+import { Construct } from "constructs";
 import { CiConfigurationOptions } from ".";
-import { Project } from "../project";
 import { CiConfiguration } from "./configuration";
 import { GitlabConfiguration } from "./gitlab-configuration";
 
@@ -9,12 +9,12 @@ import { GitlabConfiguration } from "./gitlab-configuration";
 export class NestedConfiguration extends CiConfiguration {
   public readonly parent: GitlabConfiguration;
   constructor(
-    project: Project,
+    scope: Construct,
     parent: GitlabConfiguration,
     name: string,
     options?: CiConfigurationOptions
   ) {
-    super(project, name, options);
+    super(scope, name, options);
     this.parent = parent;
   }
 }

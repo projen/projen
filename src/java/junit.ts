@@ -1,4 +1,5 @@
 import { join } from "path";
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { Project } from "../project";
 import { SampleDir } from "../sample-file";
@@ -33,8 +34,8 @@ export interface JunitOptions {
  * Implements JUnit-based testing.
  */
 export class Junit extends Component {
-  constructor(project: Project, options: JunitOptions) {
-    super(project);
+  constructor(scope: Construct, options: JunitOptions) {
+    super(scope, "Junit");
 
     const pom = options.pom;
     const version = options.version ?? "5.7.0";
@@ -42,11 +43,11 @@ export class Junit extends Component {
     pom.addTestDependency(`org.junit.jupiter/junit-jupiter-api@${version}`);
     pom.addTestDependency(`org.junit.jupiter/junit-jupiter-engine@${version}`);
 
-    project.testTask.exec("mvn test");
+    Project.of(this).testTask.exec("mvn test");
 
     const javaPackage = options.sampleJavaPackage ?? "org.acme";
     const javaPackagePath = javaPackage.split(".");
-    new SampleDir(project, join(TESTDIR, ...javaPackagePath), {
+    new SampleDir(this, join(TESTDIR, ...javaPackagePath), {
       files: {
         "MyTest.java": [
           `package ${javaPackage};`,

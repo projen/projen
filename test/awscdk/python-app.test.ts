@@ -20,6 +20,7 @@ test("create cdk python project", () => {
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",
+    ".projen/tree.json",
     "app.py",
     "cdk.json",
     "README.md",

@@ -285,6 +285,265 @@ cython_debug/
       },
     },
   },
+  ".projen/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        ".gitattributes": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitattributes",
+          "path": "test-python-project/.gitattributes",
+        },
+        ".gitignore": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitignore",
+          "path": "test-python-project/.gitignore",
+        },
+        ".projen--files.json": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".projen--files.json",
+          "path": "test-python-project/.projen--files.json",
+        },
+        "Dependencies": Object {
+          "children": Object {
+            ".projen--deps.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--deps.json",
+              "path": "test-python-project/Dependencies/.projen--deps.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Dependencies",
+          "path": "test-python-project/Dependencies",
+        },
+        "GitHub": Object {
+          "children": Object {
+            "Mergify": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Mergify",
+              "path": "test-python-project/GitHub/Mergify",
+            },
+            "PullRequestLint": Object {
+              "children": Object {
+                "pull-request-lint": Object {
+                  "children": Object {
+                    ".github--workflows--pull-request-lint.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--pull-request-lint.yml",
+                      "path": "test-python-project/GitHub/PullRequestLint/pull-request-lint/.github--workflows--pull-request-lint.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "pull-request-lint",
+                  "path": "test-python-project/GitHub/PullRequestLint/pull-request-lint",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "PullRequestLint",
+              "path": "test-python-project/GitHub/PullRequestLint",
+            },
+            "Stale": Object {
+              "children": Object {
+                "stale": Object {
+                  "children": Object {
+                    ".github--workflows--stale.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--stale.yml",
+                      "path": "test-python-project/GitHub/Stale/stale/.github--workflows--stale.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "stale",
+                  "path": "test-python-project/GitHub/Stale/stale",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Stale",
+              "path": "test-python-project/GitHub/Stale",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "GitHub",
+          "path": "test-python-project/GitHub",
+        },
+        "Logger": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Logger",
+          "path": "test-python-project/Logger",
+        },
+        "Pip": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Pip",
+          "path": "test-python-project/Pip",
+        },
+        "ProjectBuild": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "ProjectBuild",
+          "path": "test-python-project/ProjectBuild",
+        },
+        "Projenrc": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Projenrc",
+          "path": "test-python-project/Projenrc",
+        },
+        "Pytest": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Pytest",
+          "path": "test-python-project/Pytest",
+        },
+        "PytestSample": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "PytestSample",
+          "path": "test-python-project/PytestSample",
+        },
+        "PythonSample": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "PythonSample",
+          "path": "test-python-project/PythonSample",
+        },
+        "README.md": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "README.md",
+          "path": "test-python-project/README.md",
+        },
+        "Tasks": Object {
+          "children": Object {
+            ".projen--tasks.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--tasks.json",
+              "path": "test-python-project/Tasks/.projen--tasks.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Tasks",
+          "path": "test-python-project/Tasks",
+        },
+        "Venv": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Venv",
+          "path": "test-python-project/Venv",
+        },
+        "VsCode": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "VsCode",
+          "path": "test-python-project/VsCode",
+        },
+        "requirements-dev.txt": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "requirements-dev.txt",
+          "path": "test-python-project/requirements-dev.txt",
+        },
+        "requirements.txt": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "requirements.txt",
+          "path": "test-python-project/requirements.txt",
+        },
+        "test_python_project": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "test_python_project",
+          "path": "test-python-project/test_python_project",
+        },
+        "tests": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "tests",
+          "path": "test-python-project/tests",
+        },
+      },
+      "constructInfo": Object {
+        "fqn": "constructs.Construct",
+        "version": "10.0.78",
+      },
+      "id": "test-python-project",
+      "path": "test-python-project",
+    },
+    "version": "tree-0.1",
+  },
   "README.md": "# replace this",
   "requirements-dev.txt": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 projen==99.99.99
@@ -628,6 +887,265 @@ cython_debug/
         ],
       },
     },
+  },
+  ".projen/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        ".gitattributes": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitattributes",
+          "path": "test-python-project/.gitattributes",
+        },
+        ".gitignore": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitignore",
+          "path": "test-python-project/.gitignore",
+        },
+        ".projen--files.json": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".projen--files.json",
+          "path": "test-python-project/.projen--files.json",
+        },
+        "Dependencies": Object {
+          "children": Object {
+            ".projen--deps.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--deps.json",
+              "path": "test-python-project/Dependencies/.projen--deps.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Dependencies",
+          "path": "test-python-project/Dependencies",
+        },
+        "GitHub": Object {
+          "children": Object {
+            "Mergify": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Mergify",
+              "path": "test-python-project/GitHub/Mergify",
+            },
+            "PullRequestLint": Object {
+              "children": Object {
+                "pull-request-lint": Object {
+                  "children": Object {
+                    ".github--workflows--pull-request-lint.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--pull-request-lint.yml",
+                      "path": "test-python-project/GitHub/PullRequestLint/pull-request-lint/.github--workflows--pull-request-lint.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "pull-request-lint",
+                  "path": "test-python-project/GitHub/PullRequestLint/pull-request-lint",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "PullRequestLint",
+              "path": "test-python-project/GitHub/PullRequestLint",
+            },
+            "Stale": Object {
+              "children": Object {
+                "stale": Object {
+                  "children": Object {
+                    ".github--workflows--stale.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--stale.yml",
+                      "path": "test-python-project/GitHub/Stale/stale/.github--workflows--stale.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "stale",
+                  "path": "test-python-project/GitHub/Stale/stale",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Stale",
+              "path": "test-python-project/GitHub/Stale",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "GitHub",
+          "path": "test-python-project/GitHub",
+        },
+        "Logger": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Logger",
+          "path": "test-python-project/Logger",
+        },
+        "Pip": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Pip",
+          "path": "test-python-project/Pip",
+        },
+        "ProjectBuild": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "ProjectBuild",
+          "path": "test-python-project/ProjectBuild",
+        },
+        "Projenrc": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Projenrc",
+          "path": "test-python-project/Projenrc",
+        },
+        "Pytest": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Pytest",
+          "path": "test-python-project/Pytest",
+        },
+        "PytestSample": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "PytestSample",
+          "path": "test-python-project/PytestSample",
+        },
+        "PythonSample": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "PythonSample",
+          "path": "test-python-project/PythonSample",
+        },
+        "README.md": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "README.md",
+          "path": "test-python-project/README.md",
+        },
+        "Tasks": Object {
+          "children": Object {
+            ".projen--tasks.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--tasks.json",
+              "path": "test-python-project/Tasks/.projen--tasks.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Tasks",
+          "path": "test-python-project/Tasks",
+        },
+        "Venv": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Venv",
+          "path": "test-python-project/Venv",
+        },
+        "VsCode": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "VsCode",
+          "path": "test-python-project/VsCode",
+        },
+        "requirements-dev.txt": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "requirements-dev.txt",
+          "path": "test-python-project/requirements-dev.txt",
+        },
+        "requirements.txt": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "requirements.txt",
+          "path": "test-python-project/requirements.txt",
+        },
+        "test_python_project": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "test_python_project",
+          "path": "test-python-project/test_python_project",
+        },
+        "tests": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "tests",
+          "path": "test-python-project/tests",
+        },
+      },
+      "constructInfo": Object {
+        "fqn": "constructs.Construct",
+        "version": "10.0.78",
+      },
+      "id": "test-python-project",
+      "path": "test-python-project",
+    },
+    "version": "tree-0.1",
   },
   "README.md": "# replace this",
   "requirements-dev.txt": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
@@ -975,6 +1493,265 @@ cython_debug/
       },
     },
   },
+  ".projen/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        ".gitattributes": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitattributes",
+          "path": "test-python-project/.gitattributes",
+        },
+        ".gitignore": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitignore",
+          "path": "test-python-project/.gitignore",
+        },
+        ".projen--files.json": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".projen--files.json",
+          "path": "test-python-project/.projen--files.json",
+        },
+        "Dependencies": Object {
+          "children": Object {
+            ".projen--deps.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--deps.json",
+              "path": "test-python-project/Dependencies/.projen--deps.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Dependencies",
+          "path": "test-python-project/Dependencies",
+        },
+        "GitHub": Object {
+          "children": Object {
+            "Mergify": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Mergify",
+              "path": "test-python-project/GitHub/Mergify",
+            },
+            "PullRequestLint": Object {
+              "children": Object {
+                "pull-request-lint": Object {
+                  "children": Object {
+                    ".github--workflows--pull-request-lint.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--pull-request-lint.yml",
+                      "path": "test-python-project/GitHub/PullRequestLint/pull-request-lint/.github--workflows--pull-request-lint.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "pull-request-lint",
+                  "path": "test-python-project/GitHub/PullRequestLint/pull-request-lint",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "PullRequestLint",
+              "path": "test-python-project/GitHub/PullRequestLint",
+            },
+            "Stale": Object {
+              "children": Object {
+                "stale": Object {
+                  "children": Object {
+                    ".github--workflows--stale.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--stale.yml",
+                      "path": "test-python-project/GitHub/Stale/stale/.github--workflows--stale.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "stale",
+                  "path": "test-python-project/GitHub/Stale/stale",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Stale",
+              "path": "test-python-project/GitHub/Stale",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "GitHub",
+          "path": "test-python-project/GitHub",
+        },
+        "Logger": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Logger",
+          "path": "test-python-project/Logger",
+        },
+        "Pip": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Pip",
+          "path": "test-python-project/Pip",
+        },
+        "ProjectBuild": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "ProjectBuild",
+          "path": "test-python-project/ProjectBuild",
+        },
+        "Projenrc": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Projenrc",
+          "path": "test-python-project/Projenrc",
+        },
+        "Pytest": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Pytest",
+          "path": "test-python-project/Pytest",
+        },
+        "PytestSample": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "PytestSample",
+          "path": "test-python-project/PytestSample",
+        },
+        "PythonSample": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "PythonSample",
+          "path": "test-python-project/PythonSample",
+        },
+        "README.md": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "README.md",
+          "path": "test-python-project/README.md",
+        },
+        "Tasks": Object {
+          "children": Object {
+            ".projen--tasks.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--tasks.json",
+              "path": "test-python-project/Tasks/.projen--tasks.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Tasks",
+          "path": "test-python-project/Tasks",
+        },
+        "Venv": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Venv",
+          "path": "test-python-project/Venv",
+        },
+        "VsCode": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "VsCode",
+          "path": "test-python-project/VsCode",
+        },
+        "requirements-dev.txt": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "requirements-dev.txt",
+          "path": "test-python-project/requirements-dev.txt",
+        },
+        "requirements.txt": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "requirements.txt",
+          "path": "test-python-project/requirements.txt",
+        },
+        "test_python_project": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "test_python_project",
+          "path": "test-python-project/test_python_project",
+        },
+        "tests": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "tests",
+          "path": "test-python-project/tests",
+        },
+      },
+      "constructInfo": Object {
+        "fqn": "constructs.Construct",
+        "version": "10.0.78",
+      },
+      "id": "test-python-project",
+      "path": "test-python-project",
+    },
+    "version": "tree-0.1",
+  },
   "README.md": "# replace this",
   "requirements-dev.txt": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 hypothesis>=6.0.3, <7.0.0
@@ -1296,6 +2073,241 @@ cython_debug/
         "name": "test",
       },
     },
+  },
+  ".projen/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        ".gitattributes": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitattributes",
+          "path": "test-python-project/.gitattributes",
+        },
+        ".gitignore": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitignore",
+          "path": "test-python-project/.gitignore",
+        },
+        ".projen--files.json": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".projen--files.json",
+          "path": "test-python-project/.projen--files.json",
+        },
+        "Dependencies": Object {
+          "children": Object {
+            ".projen--deps.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--deps.json",
+              "path": "test-python-project/Dependencies/.projen--deps.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Dependencies",
+          "path": "test-python-project/Dependencies",
+        },
+        "GitHub": Object {
+          "children": Object {
+            "Mergify": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Mergify",
+              "path": "test-python-project/GitHub/Mergify",
+            },
+            "PullRequestLint": Object {
+              "children": Object {
+                "pull-request-lint": Object {
+                  "children": Object {
+                    ".github--workflows--pull-request-lint.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--pull-request-lint.yml",
+                      "path": "test-python-project/GitHub/PullRequestLint/pull-request-lint/.github--workflows--pull-request-lint.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "pull-request-lint",
+                  "path": "test-python-project/GitHub/PullRequestLint/pull-request-lint",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "PullRequestLint",
+              "path": "test-python-project/GitHub/PullRequestLint",
+            },
+            "Stale": Object {
+              "children": Object {
+                "stale": Object {
+                  "children": Object {
+                    ".github--workflows--stale.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--stale.yml",
+                      "path": "test-python-project/GitHub/Stale/stale/.github--workflows--stale.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "stale",
+                  "path": "test-python-project/GitHub/Stale/stale",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Stale",
+              "path": "test-python-project/GitHub/Stale",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "GitHub",
+          "path": "test-python-project/GitHub",
+        },
+        "Logger": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Logger",
+          "path": "test-python-project/Logger",
+        },
+        "Pip": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Pip",
+          "path": "test-python-project/Pip",
+        },
+        "ProjectBuild": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "ProjectBuild",
+          "path": "test-python-project/ProjectBuild",
+        },
+        "Projenrc": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Projenrc",
+          "path": "test-python-project/Projenrc",
+        },
+        "PythonSample": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "PythonSample",
+          "path": "test-python-project/PythonSample",
+        },
+        "README.md": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "README.md",
+          "path": "test-python-project/README.md",
+        },
+        "Tasks": Object {
+          "children": Object {
+            ".projen--tasks.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--tasks.json",
+              "path": "test-python-project/Tasks/.projen--tasks.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Tasks",
+          "path": "test-python-project/Tasks",
+        },
+        "Venv": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Venv",
+          "path": "test-python-project/Venv",
+        },
+        "VsCode": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "VsCode",
+          "path": "test-python-project/VsCode",
+        },
+        "requirements-dev.txt": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "requirements-dev.txt",
+          "path": "test-python-project/requirements-dev.txt",
+        },
+        "requirements.txt": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "requirements.txt",
+          "path": "test-python-project/requirements.txt",
+        },
+        "test_python_project": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "test_python_project",
+          "path": "test-python-project/test_python_project",
+        },
+      },
+      "constructInfo": Object {
+        "fqn": "constructs.Construct",
+        "version": "10.0.78",
+      },
+      "id": "test-python-project",
+      "path": "test-python-project",
+    },
+    "version": "tree-0.1",
   },
   "README.md": "# replace this",
   "requirements-dev.txt": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".

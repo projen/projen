@@ -1,6 +1,7 @@
+import { Construct } from "constructs";
+import { Project } from "../project";
 import { Task } from "../task";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
-import { GitHub } from "./github";
 import { WorkflowActions } from "./workflow-actions";
 import { GithubWorkflow } from "./workflows";
 import {
@@ -119,14 +120,12 @@ export interface TaskWorkflowOptions {
  * A GitHub workflow for common build tasks within a project.
  */
 export class TaskWorkflow extends GithubWorkflow {
-  private readonly github: GitHub;
   public readonly jobId: string;
   public readonly artifactsDirectory?: string;
 
-  constructor(github: GitHub, options: TaskWorkflowOptions) {
-    super(github, options.name);
+  constructor(scope: Construct, options: TaskWorkflowOptions) {
+    super(scope, options.name);
     this.jobId = options.jobId ?? DEFAULT_JOB_ID;
-    this.github = github;
     this.artifactsDirectory = options.artifactsDirectory;
 
     if (options.triggers) {
@@ -191,7 +190,7 @@ export class TaskWorkflow extends GithubWorkflow {
         // run the main build task
         {
           name: options.task.name,
-          run: this.github.project.runTaskCommand(options.task),
+          run: Project.of(this).runTaskCommand(options.task),
         },
 
         ...postBuildSteps,

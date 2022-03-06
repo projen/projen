@@ -2,6 +2,7 @@ import { existsSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import { Component } from "../component";
 import { renderJavaScriptOptions } from "../javascript/render-options";
+import { Project } from "../project";
 import { TypeScriptProject } from "../typescript";
 
 export interface ProjenrcOptions {
@@ -27,7 +28,7 @@ export class Projenrc extends Component {
   private readonly rcfile: string;
 
   constructor(project: TypeScriptProject, options: ProjenrcOptions = {}) {
-    super(project);
+    super(project, "Projenrc");
 
     this.rcfile = options.filename ?? ".projenrc.ts";
 
@@ -57,12 +58,12 @@ export class Projenrc extends Component {
   }
 
   private generateProjenrc() {
-    const rcfile = resolve(this.project.outdir, this.rcfile);
+    const rcfile = resolve(Project.of(this).outdir, this.rcfile);
     if (existsSync(rcfile)) {
       return; // already exists
     }
 
-    const bootstrap = this.project.initProject;
+    const bootstrap = Project.of(this).initProject;
     if (!bootstrap) {
       return;
     }
@@ -90,7 +91,7 @@ export class Projenrc extends Component {
     lines.push("project.synth();");
 
     writeFileSync(rcfile, lines.join("\n"));
-    this.project.logger.info(
+    Project.of(this).logger.info(
       `Project definition file was created at ${rcfile}`
     );
   }

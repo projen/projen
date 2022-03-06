@@ -1,9 +1,9 @@
+import { Construct } from "constructs";
 import {
   IntegrationTestAutoDiscoverBase,
   IntegrationTestAutoDiscoverBaseOptions,
 } from "../cdk";
 import { Component } from "../component";
-import { Project } from "../project";
 import { IntegrationTest } from "./integration-test";
 
 /**
@@ -24,11 +24,11 @@ export interface AutoDiscoverOptions
  * found in the test tree.
  */
 export class AutoDiscover extends Component {
-  constructor(project: Project, options: AutoDiscoverOptions) {
-    super(project);
+  constructor(scope: Construct, options: AutoDiscoverOptions) {
+    super(scope, "AutoDiscover");
 
     if (options.integrationTestAutoDiscover ?? true) {
-      new IntegrationTestAutoDiscover(this.project, options);
+      new IntegrationTestAutoDiscover(this, options);
     }
   }
 }
@@ -45,11 +45,11 @@ export interface IntegrationTestAutoDiscoverOptions
  * Discovers and creates integration tests from files in the test root.
  */
 export class IntegrationTestAutoDiscover extends IntegrationTestAutoDiscoverBase {
-  constructor(project: Project, options: IntegrationTestAutoDiscoverOptions) {
-    super(project, options);
+  constructor(scope: Construct, options: IntegrationTestAutoDiscoverOptions) {
+    super(scope, "IntegrationTestAutoDiscover", options);
 
     for (const entrypoint of this.entrypoints) {
-      new IntegrationTest(this.project, {
+      new IntegrationTest(this, {
         entrypoint,
         tsconfigPath: options.tsconfigPath,
       });

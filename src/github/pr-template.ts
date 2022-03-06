@@ -1,5 +1,5 @@
+import { Construct } from "constructs";
 import { TextFile } from "../textfile";
-import { GitHub } from "./github";
 
 /**
  * Options for `PullRequestTemplate`.
@@ -17,8 +17,8 @@ export interface PullRequestTemplateOptions {
  * Template for GitHub pull requests.
  */
 export class PullRequestTemplate extends TextFile {
-  constructor(github: GitHub, options: PullRequestTemplateOptions = {}) {
-    super(github.project, ".github/pull_request_template.md", {
+  constructor(scope: Construct, options: PullRequestTemplateOptions = {}) {
+    super(scope, ".github/pull_request_template.md", {
       lines:
         options.lines && options.lines?.length > 0
           ? options.lines

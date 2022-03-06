@@ -1,4 +1,6 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
+import { Project } from "../project";
 import { GitHub } from "./github";
 
 export interface AutoMergeOptions {
@@ -27,10 +29,10 @@ export interface AutoMergeOptions {
 export class AutoMerge extends Component {
   private readonly lazyConditions = new Array<IAddConditionsLater>();
 
-  constructor(github: GitHub, options: AutoMergeOptions = {}) {
-    super(github.project);
+  constructor(scope: Construct, options: AutoMergeOptions = {}) {
+    super(scope, "AutoMerge");
 
-    const mergify = github.mergify;
+    const mergify = GitHub.of(Project.of(this))?.mergify;
     if (!mergify) {
       throw new Error("auto merging requires mergify to be enabled");
     }
@@ -74,7 +76,7 @@ export class AutoMerge extends Component {
       conditions: (() => this.renderConditions()) as any,
     });
 
-    this.project.addPackageIgnore("/.mergify.yml");
+    Project.of(this).addPackageIgnore("/.mergify.yml");
   }
 
   /**

@@ -1,4 +1,5 @@
 import * as path from "path";
+import { Construct } from "constructs";
 import * as fs from "fs-extra";
 import { Component } from "./component";
 import { JsonFile } from "./json";
@@ -17,13 +18,13 @@ export class Tasks extends Component {
   private readonly _tasks: { [name: string]: Task };
   private readonly _env: { [name: string]: string };
 
-  constructor(project: Project) {
-    super(project);
+  constructor(scope: Construct) {
+    super(scope, "Tasks");
 
     this._tasks = {};
     this._env = {};
 
-    new JsonFile(project, TaskRuntime.MANIFEST_FILE, {
+    new JsonFile(this, TaskRuntime.MANIFEST_FILE, {
       omitEmpty: true,
       obj: {
         tasks: (() => this.renderTasks()) as any,
@@ -109,15 +110,15 @@ export class Tasks extends Component {
   }
 
   public synthesize(): void {
-    if (this.project.ejected) {
+    if (Project.of(this).ejected) {
       // Insert a task-runner script so that tasks can be run after ejecting
-      fs.mkdirpSync(path.join(this.project.outdir, "scripts"));
+      fs.mkdirpSync(path.join(Project.of(this).outdir, "scripts"));
       fs.copyFileSync(
         path.join(__dirname, "..", "lib", "run-task.js"),
-        path.join(this.project.outdir, "scripts", "run-task")
+        path.join(Project.of(this).outdir, "scripts", "run-task")
       );
       fs.chmodSync(
-        path.join(this.project.outdir, "scripts", "run-task"),
+        path.join(Project.of(this).outdir, "scripts", "run-task"),
         "755"
       );
     }

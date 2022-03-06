@@ -1,19 +1,23 @@
+import { Construct } from "constructs";
 import { DependencyType } from "../../src/dependencies";
 import { Pom, PomOptions } from "../../src/java";
+import { Project } from "../../src/project";
 import { synthSnapshot, TestProject } from "../util";
 
 test("group/artifact/version", () => {
-  const pom = new TestPom({
+  const project = new TestProject();
+  const pom = new TestPom(project, {
     groupId: "my.group.id",
     artifactId: "mfoo-bar",
     version: "1.2.3",
   });
 
-  expect(actualPom(pom)).toMatchSnapshot();
+  expect(actualPom(project, pom)).toMatchSnapshot();
 });
 
 test("optional metadata", () => {
-  const pom = new TestPom({
+  const project = new TestProject();
+  const pom = new TestPom(project, {
     groupId: "my.group.id",
     artifactId: "mfoo-bar",
     version: "1.2.3",
@@ -23,32 +27,34 @@ test("optional metadata", () => {
     packaging: "not_jar",
   });
 
-  expect(actualPom(pom)).toMatchSnapshot();
+  expect(actualPom(project, pom)).toMatchSnapshot();
 });
 
 test("addProperty()", () => {
-  const pom = new TestPom();
+  const project = new TestProject();
+  const pom = new TestPom(project);
   pom.addProperty("project.build.sourceEncoding", "UTF-8");
   pom.addProperty("junit.version", "5.7.0");
 
-  expect(actualPom(pom)).toMatchSnapshot();
+  expect(actualPom(project, pom)).toMatchSnapshot();
 });
 
 test("addDependency()", () => {
-  const pom = new TestPom();
+  const project = new TestProject();
+  const pom = new TestPom(project);
   pom.addDependency("software.amazon.awscdk/core");
 
   // dependencies are managed at the project level
-  pom.project.deps.addDependency(
+  project.deps.addDependency(
     "org.assertj/assertj-core@^3.18.1",
     DependencyType.TEST
   );
 
-  expect(actualPom(pom)).toMatchSnapshot();
+  expect(actualPom(project, pom)).toMatchSnapshot();
 
   // check that pom.addDependency() updates the project
   expect(
-    pom.project.deps.getDependency("software.amazon.awscdk/core")
+    project.deps.getDependency("software.amazon.awscdk/core")
   ).toStrictEqual({
     name: "software.amazon.awscdk/core",
     type: "runtime",
@@ -56,7 +62,8 @@ test("addDependency()", () => {
 });
 
 test("addPlugin()", () => {
-  const pom = new TestPom();
+  const project = new TestProject();
+  const pom = new TestPom(project);
 
   pom.addPlugin("org.apache.maven.plugins/maven-compiler-plugin@3.8.1", {
     dependencies: ["org.projen/projen@^0.14"],
@@ -67,7 +74,7 @@ test("addPlugin()", () => {
   });
 
   // alteratively
-  pom.project.deps.addDependency(
+  project.deps.addDependency(
     "org.codehaus.mojo/exec-maven-plugin@3.0.0",
     DependencyType.BUILD,
     {
@@ -77,18 +84,18 @@ test("addPlugin()", () => {
     }
   );
 
-  expect(actualPom(pom)).toMatchSnapshot();
+  expect(actualPom(project, pom)).toMatchSnapshot();
 });
 
-function actualPom(p: Pom) {
-  const snap = synthSnapshot(p.project);
-  return snap[p.fileName];
+function actualPom(project: Project, pom: Pom) {
+  const snap = synthSnapshot(project);
+  return snap[pom.fileName];
 }
 
 class TestPom extends Pom {
-  constructor(options?: PomOptions) {
+  constructor(scope: Construct, options?: PomOptions) {
     super(
-      new TestProject(),
+      scope,
       options ?? {
         groupId: "org.acme",
         artifactId: "my-artifact",

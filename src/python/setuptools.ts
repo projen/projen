@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { Task } from "../task";
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
@@ -15,8 +16,10 @@ export class Setuptools extends Component implements IPythonPackaging {
    */
   public readonly publishTestTask: Task;
 
-  constructor(project: PythonProject, options: PythonPackagingOptions) {
-    super(project);
+  constructor(scope: Construct, options: PythonPackagingOptions) {
+    super(scope, "Setuptools");
+
+    const project = PythonProject.ofPython(this);
 
     project.addDevDependency("wheel@0.36.2");
     project.addDevDependency("twine@3.3.0");

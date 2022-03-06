@@ -84,6 +84,95 @@ node_modules/
       },
     },
   },
+  ".projen/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        ".gitattributes": Object {
+          "constructInfo": Object {
+            "fqn": "projen.GitAttributesFile",
+            "version": "0.0.0",
+          },
+          "id": ".gitattributes",
+          "path": "foo/.gitattributes",
+        },
+        ".gitignore": Object {
+          "constructInfo": Object {
+            "fqn": "projen.IgnoreFile",
+            "version": "0.0.0",
+          },
+          "id": ".gitignore",
+          "path": "foo/.gitignore",
+        },
+        ".projen--files.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": ".projen--files.json",
+          "path": "foo/.projen--files.json",
+        },
+        "Dependencies": Object {
+          "children": Object {
+            ".projen--deps.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".projen--deps.json",
+              "path": "foo/Dependencies/.projen--deps.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.Dependencies",
+            "version": "0.0.0",
+          },
+          "id": "Dependencies",
+          "path": "foo/Dependencies",
+        },
+        "Logger": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Logger",
+            "version": "0.0.0",
+          },
+          "id": "Logger",
+          "path": "foo/Logger",
+        },
+        "ProjectBuild": Object {
+          "constructInfo": Object {
+            "fqn": "projen.ProjectBuild",
+            "version": "0.0.0",
+          },
+          "id": "ProjectBuild",
+          "path": "foo/ProjectBuild",
+        },
+        "Tasks": Object {
+          "children": Object {
+            ".projen--tasks.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".projen--tasks.json",
+              "path": "foo/Tasks/.projen--tasks.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.Tasks",
+            "version": "0.0.0",
+          },
+          "id": "Tasks",
+          "path": "foo/Tasks",
+        },
+      },
+      "constructInfo": Object {
+        "fqn": "projen.Project",
+        "version": "0.0.0",
+      },
+      "id": "foo",
+      "path": "foo",
+    },
+    "version": "tree-0.1",
+  },
   ".projenrc.js": "new (require('projen').Project)({ name: 'foo' }).synth()",
 }
 `;
@@ -171,6 +260,95 @@ node_modules/
         "name": "test",
       },
     },
+  },
+  ".projen/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        ".gitattributes": Object {
+          "constructInfo": Object {
+            "fqn": "projen.GitAttributesFile",
+            "version": "0.0.0",
+          },
+          "id": ".gitattributes",
+          "path": "foo/.gitattributes",
+        },
+        ".gitignore": Object {
+          "constructInfo": Object {
+            "fqn": "projen.IgnoreFile",
+            "version": "0.0.0",
+          },
+          "id": ".gitignore",
+          "path": "foo/.gitignore",
+        },
+        ".projen--files.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": ".projen--files.json",
+          "path": "foo/.projen--files.json",
+        },
+        "Dependencies": Object {
+          "children": Object {
+            ".projen--deps.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".projen--deps.json",
+              "path": "foo/Dependencies/.projen--deps.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.Dependencies",
+            "version": "0.0.0",
+          },
+          "id": "Dependencies",
+          "path": "foo/Dependencies",
+        },
+        "Logger": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Logger",
+            "version": "0.0.0",
+          },
+          "id": "Logger",
+          "path": "foo/Logger",
+        },
+        "ProjectBuild": Object {
+          "constructInfo": Object {
+            "fqn": "projen.ProjectBuild",
+            "version": "0.0.0",
+          },
+          "id": "ProjectBuild",
+          "path": "foo/ProjectBuild",
+        },
+        "Tasks": Object {
+          "children": Object {
+            ".projen--tasks.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".projen--tasks.json",
+              "path": "foo/Tasks/.projen--tasks.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.Tasks",
+            "version": "0.0.0",
+          },
+          "id": "Tasks",
+          "path": "foo/Tasks",
+        },
+      },
+      "constructInfo": Object {
+        "fqn": "projen.Project",
+        "version": "0.0.0",
+      },
+      "id": "foo",
+      "path": "foo",
+    },
+    "version": "tree-0.1",
   },
 }
 `;

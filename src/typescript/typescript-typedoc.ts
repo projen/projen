@@ -1,10 +1,16 @@
+import { Construct } from "constructs";
+import { Component } from "../component";
 import { TypeScriptProject } from "../typescript";
 
 /**
   Adds a simple Typescript documentation generator
  */
-export class TypedocDocgen {
-  constructor(project: TypeScriptProject) {
+export class TypedocDocgen extends Component {
+  constructor(scope: Construct) {
+    super(scope, "TypedocDocgen");
+
+    const project = TypeScriptProject.ofTypescript(this);
+
     project.addDevDeps("typedoc@^0.21.4");
 
     const docgen = project.addTask("docgen", {

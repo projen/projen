@@ -1,4 +1,5 @@
 import { basename, dirname, join } from "path";
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { Project } from "../project";
 import { Task } from "../task";
@@ -61,11 +62,13 @@ export abstract class IntegrationTestBase extends Component {
    */
   protected readonly name: string;
 
-  constructor(project: Project, options: IntegrationTestBaseOptions) {
-    super(project);
-
+  constructor(scope: Construct, options: IntegrationTestBaseOptions) {
     const entry = options.entrypoint;
     const name = options.name ?? basename(entry, TYPESCRIPT_INTEG_EXT);
+    super(scope, `IntegrationTest:${name}`);
+
+    const project = Project.of(this);
+
     this.name = name;
     const dir = dirname(entry);
 

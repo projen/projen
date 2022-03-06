@@ -1,5 +1,6 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
-import { GitHub, GithubWorkflow, GitIdentity, workflows } from "../github";
+import { GithubWorkflow, GitIdentity, workflows } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
 import { ContainerOptions, JobStep } from "../github/workflows-model";
@@ -115,10 +116,14 @@ export class UpgradeDependencies extends Component {
   private readonly gitIdentity: GitIdentity;
   private readonly postBuildSteps: JobStep[];
 
-  constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
-    super(project);
+  constructor(
+    scope: Construct,
+    id: string,
+    options: UpgradeDependenciesOptions = {}
+  ) {
+    super(scope, id);
 
-    this._project = project;
+    this._project = NodeProject.ofNode(this);
     this.options = options;
     this.pullRequestTitle = options.pullRequestTitle ?? "upgrade dependencies";
     this.ignoresProjen = this.options.ignoreProjen ?? true;
@@ -127,11 +132,11 @@ export class UpgradeDependencies extends Component {
     this.postBuildSteps = [];
     this.containerOptions = options.workflowOptions?.container;
 
-    project.addDevDeps("npm-check-updates@^12");
+    this._project.addDevDeps("npm-check-updates@^12");
 
     this.postUpgradeTask =
-      project.tasks.tryFind("post-upgrade") ??
-      project.tasks.addTask("post-upgrade", {
+      this._project.tasks.tryFind("post-upgrade") ??
+      this._project.tasks.addTask("post-upgrade", {
         description: "Runs after upgrading dependencies",
       });
 
@@ -157,9 +162,7 @@ export class UpgradeDependencies extends Component {
       const branches = this.options.workflowOptions?.branches ??
         this._project.release?.branches ?? [defaultBranch];
       for (const branch of branches) {
-        this.workflows.push(
-          this.createWorkflow(this._task, this._project.github, branch)
-        );
+        this.workflows.push(this.createWorkflow(this._task, branch));
       }
     }
   }
@@ -215,11 +218,7 @@ export class UpgradeDependencies extends Component {
     return task;
   }
 
-  private createWorkflow(
-    task: Task,
-    github: GitHub,
-    branch?: string
-  ): GithubWorkflow {
+  private createWorkflow(task: Task, branch?: string): GithubWorkflow {
     const schedule =
       this.options.workflowOptions?.schedule ??
       UpgradeDependenciesSchedule.DAILY;
@@ -227,7 +226,7 @@ export class UpgradeDependencies extends Component {
     const workflowName = `${task.name}${
       branch ? `-${branch.replace(/\//g, "-")}` : ""
     }`;
-    const workflow = github.addWorkflow(workflowName);
+    const workflow = new GithubWorkflow(this, workflowName);
     const triggers: workflows.Triggers = {
       workflowDispatch: {},
       schedule: schedule.cron

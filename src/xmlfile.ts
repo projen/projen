@@ -1,7 +1,7 @@
+import { Construct } from "constructs";
 import { create as createxml } from "xmlbuilder2";
 import { IResolver } from "./file";
 import { ObjectFile, ObjectFileOptions } from "./object-file";
-import { Project } from "./project";
 
 /**
  * Options for `XmlFile`.
@@ -16,11 +16,11 @@ export interface XmlFileOptions extends ObjectFileOptions {}
  */
 export class XmlFile extends ObjectFile {
   constructor(
-    project: Project,
+    scope: Construct,
     filePath: string,
     options: XmlFileOptions = {}
   ) {
-    super(project, filePath, options);
+    super(scope, filePath, options);
   }
 
   protected synthesizeContent(resolver: IResolver): string | undefined {

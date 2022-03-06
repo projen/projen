@@ -1,3 +1,4 @@
+import { GithubWorkflow } from "../../src/github";
 import { Project } from "../../src/project";
 import { synthSnapshot, TestProject } from "../util";
 
@@ -19,7 +20,7 @@ test("adding empty workflow", () => {
   const p = new TestProject();
 
   // WHEN
-  p.github?.addWorkflow("my-workflow");
+  new GithubWorkflow(p, "my-workflow");
 
   // THEN
   const workflows = synthWorkflows(p);
@@ -33,7 +34,7 @@ test("throws when adding workflow with existing name", () => {
   });
 
   // THEN
-  expect(() => p.github?.addWorkflow("stale")).toThrow(
+  expect(() => new GithubWorkflow(p, "stale")).toThrow(
     /there is already a file under/
   );
 });
@@ -44,7 +45,7 @@ test("throws when adding workflow with adding a job with no runners specified", 
     stale: true,
   });
   // WHEN
-  const workflow = p.github?.addWorkflow("my-workflow");
+  const workflow = new GithubWorkflow(p, "my-workflow");
 
   // THEN
   expect(() =>
@@ -63,9 +64,9 @@ test("tryFind valid workflow", () => {
   const p = new TestProject();
 
   // WHEN
-  p.github?.addWorkflow("workflow1");
-  p.github?.addWorkflow("workflow2");
-  const workflow1 = p.github?.tryFindWorkflow("workflow1");
+  new GithubWorkflow(p, "workflow1");
+  new GithubWorkflow(p, "workflow2");
+  const workflow1 = GithubWorkflow.tryFind(p, "workflow1");
 
   // THEN
   const workflows = synthWorkflows(p);
@@ -80,9 +81,9 @@ test("tryFind unknown workflow", () => {
   const p = new TestProject();
 
   // WHEN
-  p.github?.addWorkflow("workflow1");
-  p.github?.addWorkflow("workflow2");
-  const workflow3 = p.github?.tryFindWorkflow("workflow3");
+  new GithubWorkflow(p, "workflow1");
+  new GithubWorkflow(p, "workflow2");
+  const workflow3 = GithubWorkflow.tryFind(p, "workflow3");
 
   // THEN
   const workflows = synthWorkflows(p);

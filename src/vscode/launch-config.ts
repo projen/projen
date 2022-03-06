@@ -66,14 +66,14 @@ export class VsCodeLaunchConfig extends Component {
   private readonly content: VsCodeLaunchConfiguration;
 
   constructor(vscode: VsCode) {
-    super(vscode.project);
+    super(vscode, "VsCodeLaunchConfig");
 
     this.content = {
       version: "0.2.0",
       configurations: [],
     };
 
-    new JsonFile(vscode.project, ".vscode/launch.json", {
+    new JsonFile(this, ".vscode/launch.json", {
       obj: this.content,
     });
   }

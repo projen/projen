@@ -346,6 +346,271 @@ dist/java
       },
     },
   },
+  ".projen/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        ".gitattributes": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitattributes",
+          "path": "test-project/.gitattributes",
+        },
+        ".gitignore": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitignore",
+          "path": "test-project/.gitignore",
+        },
+        ".projen--files.json": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".projen--files.json",
+          "path": "test-project/.projen--files.json",
+        },
+        "Clobber": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Clobber",
+          "path": "test-project/Clobber",
+        },
+        "Dependencies": Object {
+          "children": Object {
+            ".projen--deps.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--deps.json",
+              "path": "test-project/Dependencies/.projen--deps.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Dependencies",
+          "path": "test-project/Dependencies",
+        },
+        "GitHub": Object {
+          "children": Object {
+            "Mergify": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Mergify",
+              "path": "test-project/GitHub/Mergify",
+            },
+            "PullRequestLint": Object {
+              "children": Object {
+                "pull-request-lint": Object {
+                  "children": Object {
+                    ".github--workflows--pull-request-lint.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--pull-request-lint.yml",
+                      "path": "test-project/GitHub/PullRequestLint/pull-request-lint/.github--workflows--pull-request-lint.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "pull-request-lint",
+                  "path": "test-project/GitHub/PullRequestLint/pull-request-lint",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "PullRequestLint",
+              "path": "test-project/GitHub/PullRequestLint",
+            },
+            "Stale": Object {
+              "children": Object {
+                "stale": Object {
+                  "children": Object {
+                    ".github--workflows--stale.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--stale.yml",
+                      "path": "test-project/GitHub/Stale/stale/.github--workflows--stale.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "stale",
+                  "path": "test-project/GitHub/Stale/stale",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Stale",
+              "path": "test-project/GitHub/Stale",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "GitHub",
+          "path": "test-project/GitHub",
+        },
+        "Junit": Object {
+          "children": Object {
+            "src--test--java--org--acme": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "src--test--java--org--acme",
+              "path": "test-project/Junit/src--test--java--org--acme",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Junit",
+          "path": "test-project/Junit",
+        },
+        "Logger": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Logger",
+          "path": "test-project/Logger",
+        },
+        "MavenCompile": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "MavenCompile",
+          "path": "test-project/MavenCompile",
+        },
+        "MavenPackaging": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "MavenPackaging",
+          "path": "test-project/MavenPackaging",
+        },
+        "MavenSample": Object {
+          "children": Object {
+            "src--main--java--org--acme": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "src--main--java--org--acme",
+              "path": "test-project/MavenSample/src--main--java--org--acme",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "MavenSample",
+          "path": "test-project/MavenSample",
+        },
+        "Pom": Object {
+          "children": Object {
+            "pom.xml": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "pom.xml",
+              "path": "test-project/Pom/pom.xml",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Pom",
+          "path": "test-project/Pom",
+        },
+        "ProjectBuild": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "ProjectBuild",
+          "path": "test-project/ProjectBuild",
+        },
+        "Projenrc": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Projenrc",
+          "path": "test-project/Projenrc",
+        },
+        "README.md": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "README.md",
+          "path": "test-project/README.md",
+        },
+        "Tasks": Object {
+          "children": Object {
+            ".projen--tasks.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--tasks.json",
+              "path": "test-project/Tasks/.projen--tasks.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Tasks",
+          "path": "test-project/Tasks",
+        },
+        "VsCode": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "VsCode",
+          "path": "test-project/VsCode",
+        },
+      },
+      "constructInfo": Object {
+        "fqn": "constructs.Construct",
+        "version": "10.0.78",
+      },
+      "id": "test-project",
+      "path": "test-project",
+    },
+    "version": "tree-0.1",
+  },
   "README.md": "# replace this",
   "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
 <project xsi:schemaLocation=\\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\\" xmlns=\\"http://maven.apache.org/POM/4.0.0\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\">
@@ -1105,6 +1370,253 @@ dist/java
         "name": "test",
       },
     },
+  },
+  ".projen/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        ".gitattributes": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitattributes",
+          "path": "test-project/.gitattributes",
+        },
+        ".gitignore": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitignore",
+          "path": "test-project/.gitignore",
+        },
+        ".projen--files.json": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".projen--files.json",
+          "path": "test-project/.projen--files.json",
+        },
+        "Clobber": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Clobber",
+          "path": "test-project/Clobber",
+        },
+        "Dependencies": Object {
+          "children": Object {
+            ".projen--deps.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--deps.json",
+              "path": "test-project/Dependencies/.projen--deps.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Dependencies",
+          "path": "test-project/Dependencies",
+        },
+        "GitHub": Object {
+          "children": Object {
+            "Mergify": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Mergify",
+              "path": "test-project/GitHub/Mergify",
+            },
+            "PullRequestLint": Object {
+              "children": Object {
+                "pull-request-lint": Object {
+                  "children": Object {
+                    ".github--workflows--pull-request-lint.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--pull-request-lint.yml",
+                      "path": "test-project/GitHub/PullRequestLint/pull-request-lint/.github--workflows--pull-request-lint.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "pull-request-lint",
+                  "path": "test-project/GitHub/PullRequestLint/pull-request-lint",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "PullRequestLint",
+              "path": "test-project/GitHub/PullRequestLint",
+            },
+            "Stale": Object {
+              "children": Object {
+                "stale": Object {
+                  "children": Object {
+                    ".github--workflows--stale.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--stale.yml",
+                      "path": "test-project/GitHub/Stale/stale/.github--workflows--stale.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "stale",
+                  "path": "test-project/GitHub/Stale/stale",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Stale",
+              "path": "test-project/GitHub/Stale",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "GitHub",
+          "path": "test-project/GitHub",
+        },
+        "Logger": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Logger",
+          "path": "test-project/Logger",
+        },
+        "MavenCompile": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "MavenCompile",
+          "path": "test-project/MavenCompile",
+        },
+        "MavenPackaging": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "MavenPackaging",
+          "path": "test-project/MavenPackaging",
+        },
+        "MavenSample": Object {
+          "children": Object {
+            "src--main--java--org--acme": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "src--main--java--org--acme",
+              "path": "test-project/MavenSample/src--main--java--org--acme",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "MavenSample",
+          "path": "test-project/MavenSample",
+        },
+        "Pom": Object {
+          "children": Object {
+            "pom.xml": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "pom.xml",
+              "path": "test-project/Pom/pom.xml",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Pom",
+          "path": "test-project/Pom",
+        },
+        "ProjectBuild": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "ProjectBuild",
+          "path": "test-project/ProjectBuild",
+        },
+        "Projenrc": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Projenrc",
+          "path": "test-project/Projenrc",
+        },
+        "README.md": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "README.md",
+          "path": "test-project/README.md",
+        },
+        "Tasks": Object {
+          "children": Object {
+            ".projen--tasks.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--tasks.json",
+              "path": "test-project/Tasks/.projen--tasks.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Tasks",
+          "path": "test-project/Tasks",
+        },
+        "VsCode": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "VsCode",
+          "path": "test-project/VsCode",
+        },
+      },
+      "constructInfo": Object {
+        "fqn": "constructs.Construct",
+        "version": "10.0.78",
+      },
+      "id": "test-project",
+      "path": "test-project",
+    },
+    "version": "tree-0.1",
   },
   "README.md": "# replace this",
   "pom.xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>

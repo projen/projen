@@ -1,9 +1,13 @@
-import { PythonProject } from ".";
-import { Component, SampleDir } from "..";
+import { Construct } from "constructs";
+import { Component } from "../component";
+import { SampleDir } from "../sample-file";
+import { PythonProject } from "./python-project";
 
 export class PytestSample extends Component {
-  constructor(project: PythonProject, testdir: string) {
-    super(project);
+  constructor(scope: Construct, testdir: string) {
+    super(scope, "PytestSample");
+
+    const project = PythonProject.ofPython(this);
 
     new SampleDir(project, testdir, {
       files: {

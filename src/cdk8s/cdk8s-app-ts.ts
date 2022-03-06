@@ -1,4 +1,5 @@
 import * as path from "path";
+import { Construct, IConstruct } from "constructs";
 import * as fs from "fs-extra";
 import { Component } from "../component";
 import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
@@ -110,6 +111,24 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
  */
 
 export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
+  /**
+   * Returns the immediate Cdk8sTypeScriptApp a construct belongs to.
+   * @param construct the construct
+   */
+  public static ofCdk8sAppTs(construct: IConstruct): Cdk8sTypeScriptApp {
+    if (construct instanceof Cdk8sTypeScriptApp) {
+      return construct;
+    }
+
+    const parent = construct.node.scope as Construct;
+    if (!parent) {
+      throw new Error(
+        "cannot find a parent Cdk8sTypeScriptApp (directly or indirectly)"
+      );
+    }
+
+    return Cdk8sTypeScriptApp.ofCdk8sAppTs(parent);
+  }
   /**
    * The CDK8s version this app is using.
    */
@@ -229,15 +248,14 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
 }
 
 class SampleCode extends Component {
-  private readonly appProject: Cdk8sTypeScriptApp;
-  constructor(project: Cdk8sTypeScriptApp) {
-    super(project);
-    this.appProject = project;
+  constructor(scope: Construct) {
+    super(scope, "SampleCode");
   }
 
   public synthesize() {
-    const outdir = this.project.outdir;
-    const srcdir = path.join(outdir, this.appProject.srcdir);
+    const project = Cdk8sTypeScriptApp.ofCdk8sAppTs(this);
+    const outdir = project.outdir;
+    const srcdir = path.join(outdir, project.srcdir);
     if (
       fs.pathExistsSync(srcdir) &&
       fs.readdirSync(srcdir).filter((x) => x.endsWith(".ts"))
@@ -285,6 +303,6 @@ new MyChart(app, 'hello');
 app.synth();`;
 
     fs.mkdirpSync(srcdir);
-    fs.writeFileSync(path.join(srcdir, this.appProject.appEntrypoint), srcCode);
+    fs.writeFileSync(path.join(srcdir, project.appEntrypoint), srcCode);
   }
 }

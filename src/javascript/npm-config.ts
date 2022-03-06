@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { IniFile } from "../ini";
 import { NodeProject } from "../javascript";
@@ -26,8 +27,10 @@ export class NpmConfig extends Component {
    */
   private readonly config: any = {};
 
-  constructor(project: NodeProject, options: NpmConfigOptions = {}) {
-    super(project);
+  constructor(scope: Construct, options: NpmConfigOptions = {}) {
+    super(scope, "NpmConfig");
+
+    const project = NodeProject.ofNode(this);
 
     new IniFile(project, ".npmrc", { obj: this.config });
 

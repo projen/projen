@@ -1445,6 +1445,461 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       },
     },
   },
+  ".projen/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        ".gitattributes": Object {
+          "constructInfo": Object {
+            "fqn": "projen.GitAttributesFile",
+            "version": "0.0.0",
+          },
+          "id": ".gitattributes",
+          "path": "cdk-watchful/.gitattributes",
+        },
+        ".gitignore": Object {
+          "constructInfo": Object {
+            "fqn": "projen.IgnoreFile",
+            "version": "0.0.0",
+          },
+          "id": ".gitignore",
+          "path": "cdk-watchful/.gitignore",
+        },
+        ".mergify.yml": Object {
+          "constructInfo": Object {
+            "fqn": "projen.YamlFile",
+            "version": "0.0.0",
+          },
+          "id": ".mergify.yml",
+          "path": "cdk-watchful/.mergify.yml",
+        },
+        ".npmignore": Object {
+          "constructInfo": Object {
+            "fqn": "projen.IgnoreFile",
+            "version": "0.0.0",
+          },
+          "id": ".npmignore",
+          "path": "cdk-watchful/.npmignore",
+        },
+        ".projen--files.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": ".projen--files.json",
+          "path": "cdk-watchful/.projen--files.json",
+        },
+        "AutoDiscover": Object {
+          "children": Object {
+            "IntegrationTestAutoDiscover": Object {
+              "constructInfo": Object {
+                "fqn": "projen.awscdk.IntegrationTestAutoDiscover",
+                "version": "0.0.0",
+              },
+              "id": "IntegrationTestAutoDiscover",
+              "path": "cdk-watchful/AutoDiscover/IntegrationTestAutoDiscover",
+            },
+            "LambdaAutoDiscover": Object {
+              "constructInfo": Object {
+                "fqn": "projen.awscdk.LambdaAutoDiscover",
+                "version": "0.0.0",
+              },
+              "id": "LambdaAutoDiscover",
+              "path": "cdk-watchful/AutoDiscover/LambdaAutoDiscover",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.awscdk.AutoDiscover",
+            "version": "0.0.0",
+          },
+          "id": "AutoDiscover",
+          "path": "cdk-watchful/AutoDiscover",
+        },
+        "AwsCdkDeps": Object {
+          "constructInfo": Object {
+            "fqn": "projen.awscdk.AwsCdkDepsJs",
+            "version": "0.0.0",
+          },
+          "id": "AwsCdkDeps",
+          "path": "cdk-watchful/AwsCdkDeps",
+        },
+        "BuildWorkflow": Object {
+          "constructInfo": Object {
+            "fqn": "projen.build.BuildWorkflow",
+            "version": "0.0.0",
+          },
+          "id": "BuildWorkflow",
+          "path": "cdk-watchful/BuildWorkflow",
+        },
+        "Bundler": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Bundler",
+            "version": "0.0.0",
+          },
+          "id": "Bundler",
+          "path": "cdk-watchful/Bundler",
+        },
+        "Clobber": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Component",
+            "version": "0.0.0",
+          },
+          "id": "Clobber",
+          "path": "cdk-watchful/Clobber",
+        },
+        "Dependencies": Object {
+          "children": Object {
+            ".projen--deps.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".projen--deps.json",
+              "path": "cdk-watchful/Dependencies/.projen--deps.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.Dependencies",
+            "version": "0.0.0",
+          },
+          "id": "Dependencies",
+          "path": "cdk-watchful/Dependencies",
+        },
+        "Eslint": Object {
+          "children": Object {
+            ".eslintrc.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".eslintrc.json",
+              "path": "cdk-watchful/Eslint/.eslintrc.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Eslint",
+            "version": "0.0.0",
+          },
+          "id": "Eslint",
+          "path": "cdk-watchful/Eslint",
+        },
+        "GitHub": Object {
+          "children": Object {
+            ".github--pull_request_template.md": Object {
+              "constructInfo": Object {
+                "fqn": "projen.github.PullRequestTemplate",
+                "version": "0.0.0",
+              },
+              "id": ".github--pull_request_template.md",
+              "path": "cdk-watchful/GitHub/.github--pull_request_template.md",
+            },
+            "AutoMerge": Object {
+              "constructInfo": Object {
+                "fqn": "projen.github.AutoMerge",
+                "version": "0.0.0",
+              },
+              "id": "AutoMerge",
+              "path": "cdk-watchful/GitHub/AutoMerge",
+            },
+            "Mergify": Object {
+              "constructInfo": Object {
+                "fqn": "projen.github.Mergify",
+                "version": "0.0.0",
+              },
+              "id": "Mergify",
+              "path": "cdk-watchful/GitHub/Mergify",
+            },
+            "PullRequestLint": Object {
+              "children": Object {
+                "pull-request-lint": Object {
+                  "children": Object {
+                    ".github--workflows--pull-request-lint.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "projen.YamlFile",
+                        "version": "0.0.0",
+                      },
+                      "id": ".github--workflows--pull-request-lint.yml",
+                      "path": "cdk-watchful/GitHub/PullRequestLint/pull-request-lint/.github--workflows--pull-request-lint.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "projen.github.GithubWorkflow",
+                    "version": "0.0.0",
+                  },
+                  "id": "pull-request-lint",
+                  "path": "cdk-watchful/GitHub/PullRequestLint/pull-request-lint",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.PullRequestLint",
+                "version": "0.0.0",
+              },
+              "id": "PullRequestLint",
+              "path": "cdk-watchful/GitHub/PullRequestLint",
+            },
+            "Stale": Object {
+              "children": Object {
+                "stale": Object {
+                  "children": Object {
+                    ".github--workflows--stale.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "projen.YamlFile",
+                        "version": "0.0.0",
+                      },
+                      "id": ".github--workflows--stale.yml",
+                      "path": "cdk-watchful/GitHub/Stale/stale/.github--workflows--stale.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "projen.github.GithubWorkflow",
+                    "version": "0.0.0",
+                  },
+                  "id": "stale",
+                  "path": "cdk-watchful/GitHub/Stale/stale",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.Stale",
+                "version": "0.0.0",
+              },
+              "id": "Stale",
+              "path": "cdk-watchful/GitHub/Stale",
+            },
+            "build": Object {
+              "children": Object {
+                ".github--workflows--build.yml": Object {
+                  "constructInfo": Object {
+                    "fqn": "projen.YamlFile",
+                    "version": "0.0.0",
+                  },
+                  "id": ".github--workflows--build.yml",
+                  "path": "cdk-watchful/GitHub/build/.github--workflows--build.yml",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.GithubWorkflow",
+                "version": "0.0.0",
+              },
+              "id": "build",
+              "path": "cdk-watchful/GitHub/build",
+            },
+            "release": Object {
+              "children": Object {
+                ".github--workflows--release.yml": Object {
+                  "constructInfo": Object {
+                    "fqn": "projen.YamlFile",
+                    "version": "0.0.0",
+                  },
+                  "id": ".github--workflows--release.yml",
+                  "path": "cdk-watchful/GitHub/release/.github--workflows--release.yml",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.TaskWorkflow",
+                "version": "0.0.0",
+              },
+              "id": "release",
+              "path": "cdk-watchful/GitHub/release",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.github.GitHub",
+            "version": "0.0.0",
+          },
+          "id": "GitHub",
+          "path": "cdk-watchful/GitHub",
+        },
+        "Jest": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Jest",
+            "version": "0.0.0",
+          },
+          "id": "Jest",
+          "path": "cdk-watchful/Jest",
+        },
+        "JsiiDocgen": Object {
+          "constructInfo": Object {
+            "fqn": "projen.cdk.JsiiDocgen",
+            "version": "0.0.0",
+          },
+          "id": "JsiiDocgen",
+          "path": "cdk-watchful/JsiiDocgen",
+        },
+        "LICENSE": Object {
+          "constructInfo": Object {
+            "fqn": "projen.License",
+            "version": "0.0.0",
+          },
+          "id": "LICENSE",
+          "path": "cdk-watchful/LICENSE",
+        },
+        "Logger": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Logger",
+            "version": "0.0.0",
+          },
+          "id": "Logger",
+          "path": "cdk-watchful/Logger",
+        },
+        "NodePackage": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.NodePackage",
+            "version": "0.0.0",
+          },
+          "id": "NodePackage",
+          "path": "cdk-watchful/NodePackage",
+        },
+        "ProjectBuild": Object {
+          "constructInfo": Object {
+            "fqn": "projen.ProjectBuild",
+            "version": "0.0.0",
+          },
+          "id": "ProjectBuild",
+          "path": "cdk-watchful/ProjectBuild",
+        },
+        "Projenrc": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Projenrc",
+            "version": "0.0.0",
+          },
+          "id": "Projenrc",
+          "path": "cdk-watchful/Projenrc",
+        },
+        "Publisher": Object {
+          "constructInfo": Object {
+            "fqn": "projen.release.Publisher",
+            "version": "0.0.0",
+          },
+          "id": "Publisher",
+          "path": "cdk-watchful/Publisher",
+        },
+        "README.md": Object {
+          "constructInfo": Object {
+            "fqn": "projen.SampleReadme",
+            "version": "0.0.0",
+          },
+          "id": "README.md",
+          "path": "cdk-watchful/README.md",
+        },
+        "Release": Object {
+          "constructInfo": Object {
+            "fqn": "projen.release.Release",
+            "version": "0.0.0",
+          },
+          "id": "Release",
+          "path": "cdk-watchful/Release",
+        },
+        "Tasks": Object {
+          "children": Object {
+            ".projen--tasks.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".projen--tasks.json",
+              "path": "cdk-watchful/Tasks/.projen--tasks.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.Tasks",
+            "version": "0.0.0",
+          },
+          "id": "Tasks",
+          "path": "cdk-watchful/Tasks",
+        },
+        "TypeScriptSampleCode": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Component",
+            "version": "0.0.0",
+          },
+          "id": "TypeScriptSampleCode",
+          "path": "cdk-watchful/TypeScriptSampleCode",
+        },
+        "UpgradeDependencies": Object {
+          "children": Object {
+            "upgrade-master": Object {
+              "children": Object {
+                ".github--workflows--upgrade-master.yml": Object {
+                  "constructInfo": Object {
+                    "fqn": "projen.YamlFile",
+                    "version": "0.0.0",
+                  },
+                  "id": ".github--workflows--upgrade-master.yml",
+                  "path": "cdk-watchful/UpgradeDependencies/upgrade-master/.github--workflows--upgrade-master.yml",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.GithubWorkflow",
+                "version": "0.0.0",
+              },
+              "id": "upgrade-master",
+              "path": "cdk-watchful/UpgradeDependencies/upgrade-master",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.javascript.UpgradeDependencies",
+            "version": "0.0.0",
+          },
+          "id": "UpgradeDependencies",
+          "path": "cdk-watchful/UpgradeDependencies",
+        },
+        "Version": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Version",
+            "version": "0.0.0",
+          },
+          "id": "Version",
+          "path": "cdk-watchful/Version",
+        },
+        "VsCode": Object {
+          "constructInfo": Object {
+            "fqn": "projen.vscode.VsCode",
+            "version": "0.0.0",
+          },
+          "id": "VsCode",
+          "path": "cdk-watchful/VsCode",
+        },
+        "package.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": "package.json",
+          "path": "cdk-watchful/package.json",
+        },
+        "src": Object {
+          "constructInfo": Object {
+            "fqn": "projen.SampleDir",
+            "version": "0.0.0",
+          },
+          "id": "src",
+          "path": "cdk-watchful/src",
+        },
+        "test": Object {
+          "constructInfo": Object {
+            "fqn": "projen.SampleDir",
+            "version": "0.0.0",
+          },
+          "id": "test",
+          "path": "cdk-watchful/test",
+        },
+        "tsconfig.dev.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": "tsconfig.dev.json",
+          "path": "cdk-watchful/tsconfig.dev.json",
+        },
+      },
+      "constructInfo": Object {
+        "fqn": "projen.awscdk.ConstructLibraryAws",
+        "version": "0.0.0",
+      },
+      "id": "cdk-watchful",
+      "path": "cdk-watchful",
+    },
+    "version": "tree-0.1",
+  },
   ".projenrc.js": "const { awscdk, Semver } = require('projen');
 
 const project = new awscdk.ConstructLibraryAws({
@@ -2879,6 +3334,335 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         ],
       },
     },
+  },
+  ".projen/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        ".gitattributes": Object {
+          "constructInfo": Object {
+            "fqn": "projen.GitAttributesFile",
+            "version": "0.0.0",
+          },
+          "id": ".gitattributes",
+          "path": "cdk8s/.gitattributes",
+        },
+        ".gitignore": Object {
+          "constructInfo": Object {
+            "fqn": "projen.IgnoreFile",
+            "version": "0.0.0",
+          },
+          "id": ".gitignore",
+          "path": "cdk8s/.gitignore",
+        },
+        ".npmignore": Object {
+          "constructInfo": Object {
+            "fqn": "projen.IgnoreFile",
+            "version": "0.0.0",
+          },
+          "id": ".npmignore",
+          "path": "cdk8s/.npmignore",
+        },
+        ".projen--files.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": ".projen--files.json",
+          "path": "cdk8s/.projen--files.json",
+        },
+        "Bundler": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Bundler",
+            "version": "0.0.0",
+          },
+          "id": "Bundler",
+          "path": "cdk8s/Bundler",
+        },
+        "Clobber": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Component",
+            "version": "0.0.0",
+          },
+          "id": "Clobber",
+          "path": "cdk8s/Clobber",
+        },
+        "Dependencies": Object {
+          "children": Object {
+            ".projen--deps.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".projen--deps.json",
+              "path": "cdk8s/Dependencies/.projen--deps.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.Dependencies",
+            "version": "0.0.0",
+          },
+          "id": "Dependencies",
+          "path": "cdk8s/Dependencies",
+        },
+        "Eslint": Object {
+          "children": Object {
+            ".eslintrc.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".eslintrc.json",
+              "path": "cdk8s/Eslint/.eslintrc.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Eslint",
+            "version": "0.0.0",
+          },
+          "id": "Eslint",
+          "path": "cdk8s/Eslint",
+        },
+        "GitHub": Object {
+          "children": Object {
+            "PullRequestLint": Object {
+              "children": Object {
+                "pull-request-lint": Object {
+                  "children": Object {
+                    ".github--workflows--pull-request-lint.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "projen.YamlFile",
+                        "version": "0.0.0",
+                      },
+                      "id": ".github--workflows--pull-request-lint.yml",
+                      "path": "cdk8s/GitHub/PullRequestLint/pull-request-lint/.github--workflows--pull-request-lint.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "projen.github.GithubWorkflow",
+                    "version": "0.0.0",
+                  },
+                  "id": "pull-request-lint",
+                  "path": "cdk8s/GitHub/PullRequestLint/pull-request-lint",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.PullRequestLint",
+                "version": "0.0.0",
+              },
+              "id": "PullRequestLint",
+              "path": "cdk8s/GitHub/PullRequestLint",
+            },
+            "Stale": Object {
+              "children": Object {
+                "stale": Object {
+                  "children": Object {
+                    ".github--workflows--stale.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "projen.YamlFile",
+                        "version": "0.0.0",
+                      },
+                      "id": ".github--workflows--stale.yml",
+                      "path": "cdk8s/GitHub/Stale/stale/.github--workflows--stale.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "projen.github.GithubWorkflow",
+                    "version": "0.0.0",
+                  },
+                  "id": "stale",
+                  "path": "cdk8s/GitHub/Stale/stale",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.Stale",
+                "version": "0.0.0",
+              },
+              "id": "Stale",
+              "path": "cdk8s/GitHub/Stale",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.github.GitHub",
+            "version": "0.0.0",
+          },
+          "id": "GitHub",
+          "path": "cdk8s/GitHub",
+        },
+        "Jest": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Jest",
+            "version": "0.0.0",
+          },
+          "id": "Jest",
+          "path": "cdk8s/Jest",
+        },
+        "JsiiDocgen": Object {
+          "constructInfo": Object {
+            "fqn": "projen.cdk.JsiiDocgen",
+            "version": "0.0.0",
+          },
+          "id": "JsiiDocgen",
+          "path": "cdk8s/JsiiDocgen",
+        },
+        "LICENSE": Object {
+          "constructInfo": Object {
+            "fqn": "projen.License",
+            "version": "0.0.0",
+          },
+          "id": "LICENSE",
+          "path": "cdk8s/LICENSE",
+        },
+        "Logger": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Logger",
+            "version": "0.0.0",
+          },
+          "id": "Logger",
+          "path": "cdk8s/Logger",
+        },
+        "NodePackage": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.NodePackage",
+            "version": "0.0.0",
+          },
+          "id": "NodePackage",
+          "path": "cdk8s/NodePackage",
+        },
+        "ProjectBuild": Object {
+          "constructInfo": Object {
+            "fqn": "projen.ProjectBuild",
+            "version": "0.0.0",
+          },
+          "id": "ProjectBuild",
+          "path": "cdk8s/ProjectBuild",
+        },
+        "Projenrc": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Projenrc",
+            "version": "0.0.0",
+          },
+          "id": "Projenrc",
+          "path": "cdk8s/Projenrc",
+        },
+        "README.md": Object {
+          "constructInfo": Object {
+            "fqn": "projen.SampleReadme",
+            "version": "0.0.0",
+          },
+          "id": "README.md",
+          "path": "cdk8s/README.md",
+        },
+        "Tasks": Object {
+          "children": Object {
+            ".projen--tasks.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".projen--tasks.json",
+              "path": "cdk8s/Tasks/.projen--tasks.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.Tasks",
+            "version": "0.0.0",
+          },
+          "id": "Tasks",
+          "path": "cdk8s/Tasks",
+        },
+        "TypeScriptSampleCode": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Component",
+            "version": "0.0.0",
+          },
+          "id": "TypeScriptSampleCode",
+          "path": "cdk8s/TypeScriptSampleCode",
+        },
+        "UpgradeDependencies": Object {
+          "children": Object {
+            "upgrade": Object {
+              "children": Object {
+                ".github--workflows--upgrade.yml": Object {
+                  "constructInfo": Object {
+                    "fqn": "projen.YamlFile",
+                    "version": "0.0.0",
+                  },
+                  "id": ".github--workflows--upgrade.yml",
+                  "path": "cdk8s/UpgradeDependencies/upgrade/.github--workflows--upgrade.yml",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.GithubWorkflow",
+                "version": "0.0.0",
+              },
+              "id": "upgrade",
+              "path": "cdk8s/UpgradeDependencies/upgrade",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.javascript.UpgradeDependencies",
+            "version": "0.0.0",
+          },
+          "id": "UpgradeDependencies",
+          "path": "cdk8s/UpgradeDependencies",
+        },
+        "UpgradeDependencies-projen": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.UpgradeDependencies",
+            "version": "0.0.0",
+          },
+          "id": "UpgradeDependencies-projen",
+          "path": "cdk8s/UpgradeDependencies-projen",
+        },
+        "VsCode": Object {
+          "constructInfo": Object {
+            "fqn": "projen.vscode.VsCode",
+            "version": "0.0.0",
+          },
+          "id": "VsCode",
+          "path": "cdk8s/VsCode",
+        },
+        "package.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": "package.json",
+          "path": "cdk8s/package.json",
+        },
+        "src": Object {
+          "constructInfo": Object {
+            "fqn": "projen.SampleDir",
+            "version": "0.0.0",
+          },
+          "id": "src",
+          "path": "cdk8s/src",
+        },
+        "test": Object {
+          "constructInfo": Object {
+            "fqn": "projen.SampleDir",
+            "version": "0.0.0",
+          },
+          "id": "test",
+          "path": "cdk8s/test",
+        },
+        "tsconfig.dev.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": "tsconfig.dev.json",
+          "path": "cdk8s/tsconfig.dev.json",
+        },
+      },
+      "constructInfo": Object {
+        "fqn": "projen.cdk.JsiiProject",
+        "version": "0.0.0",
+      },
+      "id": "cdk8s",
+      "path": "cdk8s",
+    },
+    "version": "tree-0.1",
   },
   ".projenrc.js": "const { cdk } = require('projen');
 
@@ -4348,6 +5132,335 @@ tsconfig.tsbuildinfo
       },
     },
   },
+  ".projen/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        ".gitattributes": Object {
+          "constructInfo": Object {
+            "fqn": "projen.GitAttributesFile",
+            "version": "0.0.0",
+          },
+          "id": ".gitattributes",
+          "path": "cdk8s-cli/.gitattributes",
+        },
+        ".gitignore": Object {
+          "constructInfo": Object {
+            "fqn": "projen.IgnoreFile",
+            "version": "0.0.0",
+          },
+          "id": ".gitignore",
+          "path": "cdk8s-cli/.gitignore",
+        },
+        ".npmignore": Object {
+          "constructInfo": Object {
+            "fqn": "projen.IgnoreFile",
+            "version": "0.0.0",
+          },
+          "id": ".npmignore",
+          "path": "cdk8s-cli/.npmignore",
+        },
+        ".projen--files.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": ".projen--files.json",
+          "path": "cdk8s-cli/.projen--files.json",
+        },
+        "Bundler": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Bundler",
+            "version": "0.0.0",
+          },
+          "id": "Bundler",
+          "path": "cdk8s-cli/Bundler",
+        },
+        "Clobber": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Component",
+            "version": "0.0.0",
+          },
+          "id": "Clobber",
+          "path": "cdk8s-cli/Clobber",
+        },
+        "Dependencies": Object {
+          "children": Object {
+            ".projen--deps.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".projen--deps.json",
+              "path": "cdk8s-cli/Dependencies/.projen--deps.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.Dependencies",
+            "version": "0.0.0",
+          },
+          "id": "Dependencies",
+          "path": "cdk8s-cli/Dependencies",
+        },
+        "Eslint": Object {
+          "children": Object {
+            ".eslintrc.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".eslintrc.json",
+              "path": "cdk8s-cli/Eslint/.eslintrc.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Eslint",
+            "version": "0.0.0",
+          },
+          "id": "Eslint",
+          "path": "cdk8s-cli/Eslint",
+        },
+        "GitHub": Object {
+          "children": Object {
+            "PullRequestLint": Object {
+              "children": Object {
+                "pull-request-lint": Object {
+                  "children": Object {
+                    ".github--workflows--pull-request-lint.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "projen.YamlFile",
+                        "version": "0.0.0",
+                      },
+                      "id": ".github--workflows--pull-request-lint.yml",
+                      "path": "cdk8s-cli/GitHub/PullRequestLint/pull-request-lint/.github--workflows--pull-request-lint.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "projen.github.GithubWorkflow",
+                    "version": "0.0.0",
+                  },
+                  "id": "pull-request-lint",
+                  "path": "cdk8s-cli/GitHub/PullRequestLint/pull-request-lint",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.PullRequestLint",
+                "version": "0.0.0",
+              },
+              "id": "PullRequestLint",
+              "path": "cdk8s-cli/GitHub/PullRequestLint",
+            },
+            "Stale": Object {
+              "children": Object {
+                "stale": Object {
+                  "children": Object {
+                    ".github--workflows--stale.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "projen.YamlFile",
+                        "version": "0.0.0",
+                      },
+                      "id": ".github--workflows--stale.yml",
+                      "path": "cdk8s-cli/GitHub/Stale/stale/.github--workflows--stale.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "projen.github.GithubWorkflow",
+                    "version": "0.0.0",
+                  },
+                  "id": "stale",
+                  "path": "cdk8s-cli/GitHub/Stale/stale",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.Stale",
+                "version": "0.0.0",
+              },
+              "id": "Stale",
+              "path": "cdk8s-cli/GitHub/Stale",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.github.GitHub",
+            "version": "0.0.0",
+          },
+          "id": "GitHub",
+          "path": "cdk8s-cli/GitHub",
+        },
+        "Jest": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Jest",
+            "version": "0.0.0",
+          },
+          "id": "Jest",
+          "path": "cdk8s-cli/Jest",
+        },
+        "LICENSE": Object {
+          "constructInfo": Object {
+            "fqn": "projen.License",
+            "version": "0.0.0",
+          },
+          "id": "LICENSE",
+          "path": "cdk8s-cli/LICENSE",
+        },
+        "Logger": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Logger",
+            "version": "0.0.0",
+          },
+          "id": "Logger",
+          "path": "cdk8s-cli/Logger",
+        },
+        "NodePackage": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.NodePackage",
+            "version": "0.0.0",
+          },
+          "id": "NodePackage",
+          "path": "cdk8s-cli/NodePackage",
+        },
+        "ProjectBuild": Object {
+          "constructInfo": Object {
+            "fqn": "projen.ProjectBuild",
+            "version": "0.0.0",
+          },
+          "id": "ProjectBuild",
+          "path": "cdk8s-cli/ProjectBuild",
+        },
+        "Projenrc": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Projenrc",
+            "version": "0.0.0",
+          },
+          "id": "Projenrc",
+          "path": "cdk8s-cli/Projenrc",
+        },
+        "README.md": Object {
+          "constructInfo": Object {
+            "fqn": "projen.SampleReadme",
+            "version": "0.0.0",
+          },
+          "id": "README.md",
+          "path": "cdk8s-cli/README.md",
+        },
+        "Tasks": Object {
+          "children": Object {
+            ".projen--tasks.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".projen--tasks.json",
+              "path": "cdk8s-cli/Tasks/.projen--tasks.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.Tasks",
+            "version": "0.0.0",
+          },
+          "id": "Tasks",
+          "path": "cdk8s-cli/Tasks",
+        },
+        "TypeScriptSampleCode": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Component",
+            "version": "0.0.0",
+          },
+          "id": "TypeScriptSampleCode",
+          "path": "cdk8s-cli/TypeScriptSampleCode",
+        },
+        "UpgradeDependencies": Object {
+          "children": Object {
+            "upgrade": Object {
+              "children": Object {
+                ".github--workflows--upgrade.yml": Object {
+                  "constructInfo": Object {
+                    "fqn": "projen.YamlFile",
+                    "version": "0.0.0",
+                  },
+                  "id": ".github--workflows--upgrade.yml",
+                  "path": "cdk8s-cli/UpgradeDependencies/upgrade/.github--workflows--upgrade.yml",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.GithubWorkflow",
+                "version": "0.0.0",
+              },
+              "id": "upgrade",
+              "path": "cdk8s-cli/UpgradeDependencies/upgrade",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.javascript.UpgradeDependencies",
+            "version": "0.0.0",
+          },
+          "id": "UpgradeDependencies",
+          "path": "cdk8s-cli/UpgradeDependencies",
+        },
+        "UpgradeDependencies-projen": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.UpgradeDependencies",
+            "version": "0.0.0",
+          },
+          "id": "UpgradeDependencies-projen",
+          "path": "cdk8s-cli/UpgradeDependencies-projen",
+        },
+        "VsCode": Object {
+          "constructInfo": Object {
+            "fqn": "projen.vscode.VsCode",
+            "version": "0.0.0",
+          },
+          "id": "VsCode",
+          "path": "cdk8s-cli/VsCode",
+        },
+        "package.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": "package.json",
+          "path": "cdk8s-cli/package.json",
+        },
+        "src": Object {
+          "constructInfo": Object {
+            "fqn": "projen.SampleDir",
+            "version": "0.0.0",
+          },
+          "id": "src",
+          "path": "cdk8s-cli/src",
+        },
+        "test": Object {
+          "constructInfo": Object {
+            "fqn": "projen.SampleDir",
+            "version": "0.0.0",
+          },
+          "id": "test",
+          "path": "cdk8s-cli/test",
+        },
+        "tsconfig.dev.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": "tsconfig.dev.json",
+          "path": "cdk8s-cli/tsconfig.dev.json",
+        },
+        "tsconfig.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": "tsconfig.json",
+          "path": "cdk8s-cli/tsconfig.json",
+        },
+      },
+      "constructInfo": Object {
+        "fqn": "projen.typescript.TypeScriptLibraryProject",
+        "version": "0.0.0",
+      },
+      "id": "cdk8s-cli",
+      "path": "cdk8s-cli",
+    },
+    "version": "tree-0.1",
+  },
   ".projenrc.js": "const { typescript } = require('projen');
 
 const common = require('./cdk8s.common');
@@ -5660,6 +6773,377 @@ junit.xml
         ],
       },
     },
+  },
+  ".projen/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        ".gitattributes": Object {
+          "constructInfo": Object {
+            "fqn": "projen.GitAttributesFile",
+            "version": "0.0.0",
+          },
+          "id": ".gitattributes",
+          "path": "pnpm-project/.gitattributes",
+        },
+        ".gitignore": Object {
+          "constructInfo": Object {
+            "fqn": "projen.IgnoreFile",
+            "version": "0.0.0",
+          },
+          "id": ".gitignore",
+          "path": "pnpm-project/.gitignore",
+        },
+        ".mergify.yml": Object {
+          "constructInfo": Object {
+            "fqn": "projen.YamlFile",
+            "version": "0.0.0",
+          },
+          "id": ".mergify.yml",
+          "path": "pnpm-project/.mergify.yml",
+        },
+        ".npmignore": Object {
+          "constructInfo": Object {
+            "fqn": "projen.IgnoreFile",
+            "version": "0.0.0",
+          },
+          "id": ".npmignore",
+          "path": "pnpm-project/.npmignore",
+        },
+        ".projen--files.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": ".projen--files.json",
+          "path": "pnpm-project/.projen--files.json",
+        },
+        "BuildWorkflow": Object {
+          "constructInfo": Object {
+            "fqn": "projen.build.BuildWorkflow",
+            "version": "0.0.0",
+          },
+          "id": "BuildWorkflow",
+          "path": "pnpm-project/BuildWorkflow",
+        },
+        "Bundler": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Bundler",
+            "version": "0.0.0",
+          },
+          "id": "Bundler",
+          "path": "pnpm-project/Bundler",
+        },
+        "Clobber": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Component",
+            "version": "0.0.0",
+          },
+          "id": "Clobber",
+          "path": "pnpm-project/Clobber",
+        },
+        "Dependencies": Object {
+          "children": Object {
+            ".projen--deps.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".projen--deps.json",
+              "path": "pnpm-project/Dependencies/.projen--deps.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.Dependencies",
+            "version": "0.0.0",
+          },
+          "id": "Dependencies",
+          "path": "pnpm-project/Dependencies",
+        },
+        "GitHub": Object {
+          "children": Object {
+            ".github--pull_request_template.md": Object {
+              "constructInfo": Object {
+                "fqn": "projen.github.PullRequestTemplate",
+                "version": "0.0.0",
+              },
+              "id": ".github--pull_request_template.md",
+              "path": "pnpm-project/GitHub/.github--pull_request_template.md",
+            },
+            "AutoMerge": Object {
+              "constructInfo": Object {
+                "fqn": "projen.github.AutoMerge",
+                "version": "0.0.0",
+              },
+              "id": "AutoMerge",
+              "path": "pnpm-project/GitHub/AutoMerge",
+            },
+            "Mergify": Object {
+              "constructInfo": Object {
+                "fqn": "projen.github.Mergify",
+                "version": "0.0.0",
+              },
+              "id": "Mergify",
+              "path": "pnpm-project/GitHub/Mergify",
+            },
+            "PullRequestLint": Object {
+              "children": Object {
+                "pull-request-lint": Object {
+                  "children": Object {
+                    ".github--workflows--pull-request-lint.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "projen.YamlFile",
+                        "version": "0.0.0",
+                      },
+                      "id": ".github--workflows--pull-request-lint.yml",
+                      "path": "pnpm-project/GitHub/PullRequestLint/pull-request-lint/.github--workflows--pull-request-lint.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "projen.github.GithubWorkflow",
+                    "version": "0.0.0",
+                  },
+                  "id": "pull-request-lint",
+                  "path": "pnpm-project/GitHub/PullRequestLint/pull-request-lint",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.PullRequestLint",
+                "version": "0.0.0",
+              },
+              "id": "PullRequestLint",
+              "path": "pnpm-project/GitHub/PullRequestLint",
+            },
+            "Stale": Object {
+              "children": Object {
+                "stale": Object {
+                  "children": Object {
+                    ".github--workflows--stale.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "projen.YamlFile",
+                        "version": "0.0.0",
+                      },
+                      "id": ".github--workflows--stale.yml",
+                      "path": "pnpm-project/GitHub/Stale/stale/.github--workflows--stale.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "projen.github.GithubWorkflow",
+                    "version": "0.0.0",
+                  },
+                  "id": "stale",
+                  "path": "pnpm-project/GitHub/Stale/stale",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.Stale",
+                "version": "0.0.0",
+              },
+              "id": "Stale",
+              "path": "pnpm-project/GitHub/Stale",
+            },
+            "build": Object {
+              "children": Object {
+                ".github--workflows--build.yml": Object {
+                  "constructInfo": Object {
+                    "fqn": "projen.YamlFile",
+                    "version": "0.0.0",
+                  },
+                  "id": ".github--workflows--build.yml",
+                  "path": "pnpm-project/GitHub/build/.github--workflows--build.yml",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.GithubWorkflow",
+                "version": "0.0.0",
+              },
+              "id": "build",
+              "path": "pnpm-project/GitHub/build",
+            },
+            "release": Object {
+              "children": Object {
+                ".github--workflows--release.yml": Object {
+                  "constructInfo": Object {
+                    "fqn": "projen.YamlFile",
+                    "version": "0.0.0",
+                  },
+                  "id": ".github--workflows--release.yml",
+                  "path": "pnpm-project/GitHub/release/.github--workflows--release.yml",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.TaskWorkflow",
+                "version": "0.0.0",
+              },
+              "id": "release",
+              "path": "pnpm-project/GitHub/release",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.github.GitHub",
+            "version": "0.0.0",
+          },
+          "id": "GitHub",
+          "path": "pnpm-project/GitHub",
+        },
+        "Jest": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Jest",
+            "version": "0.0.0",
+          },
+          "id": "Jest",
+          "path": "pnpm-project/Jest",
+        },
+        "LICENSE": Object {
+          "constructInfo": Object {
+            "fqn": "projen.License",
+            "version": "0.0.0",
+          },
+          "id": "LICENSE",
+          "path": "pnpm-project/LICENSE",
+        },
+        "Logger": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Logger",
+            "version": "0.0.0",
+          },
+          "id": "Logger",
+          "path": "pnpm-project/Logger",
+        },
+        "NodePackage": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.NodePackage",
+            "version": "0.0.0",
+          },
+          "id": "NodePackage",
+          "path": "pnpm-project/NodePackage",
+        },
+        "ProjectBuild": Object {
+          "constructInfo": Object {
+            "fqn": "projen.ProjectBuild",
+            "version": "0.0.0",
+          },
+          "id": "ProjectBuild",
+          "path": "pnpm-project/ProjectBuild",
+        },
+        "Projenrc": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.Projenrc",
+            "version": "0.0.0",
+          },
+          "id": "Projenrc",
+          "path": "pnpm-project/Projenrc",
+        },
+        "Publisher": Object {
+          "constructInfo": Object {
+            "fqn": "projen.release.Publisher",
+            "version": "0.0.0",
+          },
+          "id": "Publisher",
+          "path": "pnpm-project/Publisher",
+        },
+        "README.md": Object {
+          "constructInfo": Object {
+            "fqn": "projen.SampleReadme",
+            "version": "0.0.0",
+          },
+          "id": "README.md",
+          "path": "pnpm-project/README.md",
+        },
+        "Release": Object {
+          "constructInfo": Object {
+            "fqn": "projen.release.Release",
+            "version": "0.0.0",
+          },
+          "id": "Release",
+          "path": "pnpm-project/Release",
+        },
+        "Tasks": Object {
+          "children": Object {
+            ".projen--tasks.json": Object {
+              "constructInfo": Object {
+                "fqn": "projen.JsonFile",
+                "version": "0.0.0",
+              },
+              "id": ".projen--tasks.json",
+              "path": "pnpm-project/Tasks/.projen--tasks.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.Tasks",
+            "version": "0.0.0",
+          },
+          "id": "Tasks",
+          "path": "pnpm-project/Tasks",
+        },
+        "UpgradeDependencies": Object {
+          "children": Object {
+            "upgrade-master": Object {
+              "children": Object {
+                ".github--workflows--upgrade-master.yml": Object {
+                  "constructInfo": Object {
+                    "fqn": "projen.YamlFile",
+                    "version": "0.0.0",
+                  },
+                  "id": ".github--workflows--upgrade-master.yml",
+                  "path": "pnpm-project/UpgradeDependencies/upgrade-master/.github--workflows--upgrade-master.yml",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "projen.github.GithubWorkflow",
+                "version": "0.0.0",
+              },
+              "id": "upgrade-master",
+              "path": "pnpm-project/UpgradeDependencies/upgrade-master",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "projen.javascript.UpgradeDependencies",
+            "version": "0.0.0",
+          },
+          "id": "UpgradeDependencies",
+          "path": "pnpm-project/UpgradeDependencies",
+        },
+        "UpgradeDependencies-projen": Object {
+          "constructInfo": Object {
+            "fqn": "projen.javascript.UpgradeDependencies",
+            "version": "0.0.0",
+          },
+          "id": "UpgradeDependencies-projen",
+          "path": "pnpm-project/UpgradeDependencies-projen",
+        },
+        "Version": Object {
+          "constructInfo": Object {
+            "fqn": "projen.Version",
+            "version": "0.0.0",
+          },
+          "id": "Version",
+          "path": "pnpm-project/Version",
+        },
+        "VsCode": Object {
+          "constructInfo": Object {
+            "fqn": "projen.vscode.VsCode",
+            "version": "0.0.0",
+          },
+          "id": "VsCode",
+          "path": "pnpm-project/VsCode",
+        },
+        "package.json": Object {
+          "constructInfo": Object {
+            "fqn": "projen.JsonFile",
+            "version": "0.0.0",
+          },
+          "id": "package.json",
+          "path": "pnpm-project/package.json",
+        },
+      },
+      "constructInfo": Object {
+        "fqn": "projen.javascript.NodeProject",
+        "version": "0.0.0",
+      },
+      "id": "pnpm-project",
+      "path": "pnpm-project",
+    },
+    "version": "tree-0.1",
   },
   ".projenrc.js": "const { javascript } = require(\\"projen\\");
 

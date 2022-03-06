@@ -1,5 +1,8 @@
+import { Construct } from "constructs";
 import { GitHub } from ".";
 import { Component } from "../component";
+import { Project } from "../project";
+import { GithubWorkflow } from "./workflows";
 import { Job, JobPermission } from "./workflows-model";
 
 /**
@@ -51,8 +54,15 @@ export interface SemanticTitleOptions {
  * Only generates a file if at least one linter is configured.
  */
 export class PullRequestLint extends Component {
-  constructor(github: GitHub, options: PullRequestLintOptions = {}) {
-    super(github.project);
+  constructor(scope: Construct, options: PullRequestLintOptions = {}) {
+    super(scope, "PullRequestLint");
+
+    const github = GitHub.of(Project.of(this));
+    if (!github) {
+      throw new Error(
+        "PullRequestLint can only be added to projects with a GitHub component."
+      );
+    }
 
     // should only create a workflow if one or more linters are enabled
     if (options.semanticTitle ?? true) {
@@ -79,7 +89,7 @@ export class PullRequestLint extends Component {
         ],
       };
 
-      const workflow = github.addWorkflow("pull-request-lint");
+      const workflow = new GithubWorkflow(this, "pull-request-lint");
       workflow.on({
         pullRequestTarget: {
           types: [

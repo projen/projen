@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
 import {
   BUILD_ARTIFACT_NAME,
@@ -131,8 +132,8 @@ export class Publisher extends Component {
 
   private readonly dryRun: boolean;
 
-  constructor(project: Project, options: PublisherOptions) {
-    super(project);
+  constructor(scope: Construct, options: PublisherOptions) {
+    super(scope, "Publisher");
 
     this.buildJobId = options.buildJobId;
     this.artifactName = options.artifactName;
@@ -200,7 +201,7 @@ export class Publisher extends Component {
         ? "publish:git"
         : `publish:git:${gitBranch}`;
 
-    const publishTask = this.project.addTask(taskName, {
+    const publishTask = Project.of(this).addTask(taskName, {
       description:
         "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
       env: {
@@ -285,7 +286,7 @@ export class Publisher extends Component {
     const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
 
     if (options.distTag) {
-      this.project.logger.warn(
+      Project.of(this).logger.warn(
         "The `distTag` option is deprecated. Use the npmDistTag option instead."
       );
     }
@@ -505,7 +506,7 @@ export class Publisher extends Component {
           branch === "main" || branch === "master" ? "" : `:${branch}`;
 
         // define a task which can be used through `projen publish:xxx`.
-        const task = this.project.addTask(
+        const task = Project.of(this).addTask(
           `publish:${opts.name.toLocaleLowerCase()}${branchSuffix}`,
           {
             description: `Publish this package to ${opts.registryName}`,

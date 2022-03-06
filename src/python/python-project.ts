@@ -1,3 +1,4 @@
+import { Construct, IConstruct } from "constructs";
 import { GitHubProject, GitHubProjectOptions } from "../github";
 import { ProjectType } from "../project";
 import { Pip } from "./pip";
@@ -143,6 +144,25 @@ export interface PythonProjectOptions
  * @pjid python
  */
 export class PythonProject extends GitHubProject {
+  /**
+   * Returns the immediate PythonProject a construct belongs to.
+   * @param construct the construct
+   */
+  public static ofPython(construct: IConstruct): PythonProject {
+    if (construct instanceof PythonProject) {
+      return construct;
+    }
+
+    const parent = construct.node.scope as Construct;
+    if (!parent) {
+      throw new Error(
+        "cannot find a parent PythonProject (directly or indirectly)"
+      );
+    }
+
+    return PythonProject.ofPython(parent);
+  }
+
   /**
    * Python module name (the project name, with any hyphens or periods replaced
    * with underscores).

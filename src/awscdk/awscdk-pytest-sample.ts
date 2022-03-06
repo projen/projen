@@ -1,11 +1,15 @@
-import { Component, SampleDir } from "..";
+import { Construct } from "constructs";
+import { Component } from "../component";
+import { SampleDir } from "../sample-file";
 import { AwsCdkPythonApp } from "./awscdk-app-py";
 
 export class AwsCdkPytestSample extends Component {
-  constructor(project: AwsCdkPythonApp, testdir: string) {
-    super(project);
+  constructor(scope: Construct, testdir: string) {
+    super(scope, "AwsCdkPytestSample");
 
-    new SampleDir(project, testdir, {
+    const project = AwsCdkPythonApp.ofAwscdkAppPy(this);
+
+    new SampleDir(this, testdir, {
       files: {
         "__init__.py": "",
         "test_example.py": [

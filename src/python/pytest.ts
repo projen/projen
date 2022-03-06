@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { PythonProject } from "./python-project";
 
@@ -25,8 +26,10 @@ export interface PytestOptions {
 export class Pytest extends Component {
   readonly testdir: string;
 
-  constructor(project: PythonProject, options: PytestOptions = {}) {
-    super(project);
+  constructor(scope: Construct, options: PytestOptions = {}) {
+    super(scope, "Pytest");
+
+    const project = PythonProject.ofPython(this);
 
     const version = options.version ?? "6.2.1";
 

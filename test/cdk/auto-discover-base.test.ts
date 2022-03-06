@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Project } from "../../src";
 import { AutoDiscoverBase } from "../../src/cdk";
 
@@ -16,8 +17,8 @@ test("auto discover entrypoints", () => {
 });
 
 class TestAutoDiscover extends AutoDiscoverBase {
-  constructor(project: Project) {
-    super(project, {
+  constructor(scope: Construct) {
+    super(scope, "TestAutoDiscover", {
       extension: ".myext.ts",
       projectdir: "testtree",
     });

@@ -52,6 +52,8 @@ const project = new cdk.JsiiProject({
     "all-contributors-cli",
   ],
 
+  peerDeps: ["constructs"],
+
   depsUpgradeOptions: {
     // markmac depends on projen, we are excluding it here to avoid a circular update loop
     exclude: ["markmac"],

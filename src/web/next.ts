@@ -205,7 +205,7 @@ export class NextComponent extends Component {
   private readonly tailwind: boolean;
 
   constructor(project: NodeProject, options: NextComponentOptions) {
-    super(project);
+    super(project, "NextComponent");
 
     this.typescript = options.typescript ?? false;
     this.tailwind = options.tailwind ?? true;
@@ -277,7 +277,7 @@ class NextSampleCode extends Component {
   private readonly tailwind: boolean;
 
   constructor(project: NodeProject, options: NextSampleCodeOptions) {
-    super(project);
+    super(project, "NextSampleCode");
 
     this.fileExt = options.fileExt ?? "js";
     this.srcdir = options.srcdir;

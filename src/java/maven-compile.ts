@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { Project } from "../project";
 import { Pom } from "./pom";
@@ -25,10 +26,10 @@ export interface MavenCompileOptions {
  * Adds the maven-compiler plugin to a POM file and the `compile` task.
  */
 export class MavenCompile extends Component {
-  constructor(project: Project, pom: Pom, options: MavenCompileOptions = {}) {
-    super(project);
+  constructor(scope: Construct, pom: Pom, options: MavenCompileOptions = {}) {
+    super(scope, "MavenCompile");
 
-    project.gitignore.exclude("target");
+    Project.of(this).gitignore.exclude("target");
 
     pom.addPlugin("org.apache.maven.plugins/maven-compiler-plugin@3.8.1", {
       configuration: {
@@ -37,6 +38,6 @@ export class MavenCompile extends Component {
       },
     });
 
-    project.compileTask.exec("mvn compiler:compile");
+    Project.of(this).compileTask.exec("mvn compiler:compile");
   }
 }

@@ -1,5 +1,7 @@
 import * as path from "path";
+import { Construct } from "constructs";
 import * as semver from "semver";
+import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 
@@ -553,7 +555,7 @@ type JestReporter = [string, { [key: string]: any }] | string;
  * - `test:update` will run `jest -u`
  *
  */
-export class Jest {
+export class Jest extends Component {
   /**
    * Escape hatch.
    */
@@ -569,8 +571,9 @@ export class Jest {
   private readonly jestConfig?: JestConfigOptions;
   private _snapshotResolver: string | undefined;
 
-  constructor(project: NodeProject, options: JestOptions = {}) {
-    this.project = project;
+  constructor(scope: Construct, options: JestOptions = {}) {
+    super(scope, "Jest");
+    this.project = NodeProject.ofNode(this);
 
     // hard deprecation
     if ((options as any).typescriptConfig) {
@@ -580,12 +583,12 @@ export class Jest {
     }
 
     // Jest snapshot files are generated files!
-    project.root.annotateGenerated("*.snap");
+    this.project.root.annotateGenerated("*.snap");
 
     const jestDep = options.jestVersion
       ? `jest@${options.jestVersion}`
       : "jest";
-    project.addDevDeps(jestDep);
+    this.project.addDevDeps(jestDep);
 
     this.jestConfig = options.jestConfig;
 
@@ -634,14 +637,14 @@ export class Jest {
 
       this.addReporter(["jest-junit", { outputDirectory: reportsDir }]);
 
-      project.addDevDeps("jest-junit@^13");
+      this.project.addDevDeps("jest-junit@^13");
 
-      project.gitignore.exclude(
+      this.project.gitignore.exclude(
         "# jest-junit artifacts",
         `/${reportsDir}/`,
         "junit.xml"
       );
-      project.npmignore?.exclude(
+      this.project.npmignore?.exclude(
         "# jest-junit artifacts",
         `/${reportsDir}/`,
         "junit.xml"
@@ -663,16 +666,16 @@ export class Jest {
     this.configureTestCommand();
 
     if (options.configFilePath) {
-      this.file = new JsonFile(project, options.configFilePath, {
+      this.file = new JsonFile(this.project, options.configFilePath, {
         obj: this.config,
       });
     } else {
-      project.addFields({ jest: this.config });
+      this.project.addFields({ jest: this.config });
     }
 
     const coverageDirectoryPath = path.posix.join("/", coverageDirectory, "/");
-    project.npmignore?.exclude(coverageDirectoryPath);
-    project.gitignore.exclude(coverageDirectoryPath);
+    this.project.npmignore?.exclude(coverageDirectoryPath);
+    this.project.gitignore.exclude(coverageDirectoryPath);
 
     if (options.coverageText ?? true) {
       this.coverageReporters.push("text");

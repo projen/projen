@@ -1,4 +1,5 @@
 import * as chalk from "chalk";
+import { Construct } from "constructs";
 import { IS_TEST_RUN } from "./common";
 import { Component } from "./component";
 import { ICON } from "./logging";
@@ -32,8 +33,8 @@ export class Logger extends Component {
   private readonly level: LogLevel;
   private readonly usePrefix: boolean;
 
-  constructor(project: Project, options: LoggerOptions = {}) {
-    super(project);
+  constructor(scope: Construct, options: LoggerOptions = {}) {
+    super(scope, "Logger");
 
     // if we are running inside a test, default to no logs
     const defaultLevel = IS_TEST_RUN ? LogLevel.OFF : LogLevel.INFO;
@@ -63,7 +64,7 @@ export class Logger extends Component {
 
     if (level <= maxLevel) {
       const color = this.colorForLogLevel(level);
-      const prefix = this.usePrefix ? `[${this.project.name}] ` : "";
+      const prefix = this.usePrefix ? `[${Project.of(this).name}] ` : "";
       console.error(`${ICON} ${prefix}${color(...text)}`);
     }
   }

@@ -1,6 +1,8 @@
 import { snake } from "case";
+import { Construct, IConstruct } from "constructs";
 import { resolve } from "../_resolve";
 import { Component } from "../component";
+import { Project } from "../project";
 import { kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
 import { GitHub } from "./github";
@@ -35,6 +37,21 @@ export interface GithubWorkflowOptions {
  */
 export class GithubWorkflow extends Component {
   /**
+   * Finds a GitHub workflow by name. Returns `undefined` if the workflow cannot be found.
+   * @param name The name of the GitHub workflow
+   */
+  public static tryFind(
+    scope: IConstruct,
+    name: string
+  ): GithubWorkflow | undefined {
+    const isWorkflow = (c: Component): c is GithubWorkflow =>
+      c instanceof GithubWorkflow;
+    return Project.of(scope)
+      .components.filter(isWorkflow)
+      .find((w) => w.name === name);
+  }
+
+  /**
    * The name of the workflow.
    */
   public readonly name: string;
@@ -61,11 +78,18 @@ export class GithubWorkflow extends Component {
   private jobs: Record<string, workflows.Job> = {};
 
   constructor(
-    github: GitHub,
+    scope: Construct,
     name: string,
     options: GithubWorkflowOptions = {}
   ) {
-    super(github.project);
+    super(scope, name);
+
+    const github = GitHub.of(Project.of(this));
+    if (!github) {
+      throw new Error(
+        "GithubWorkflow can only be added to projects with a GitHub component."
+      );
+    }
 
     this.name = name;
     this.concurrency = options.concurrency;
@@ -75,7 +99,7 @@ export class GithubWorkflow extends Component {
 
     if (workflowsEnabled) {
       this.file = new YamlFile(
-        this.project,
+        this,
         `.github/workflows/${name.toLocaleLowerCase()}.yml`,
         {
           obj: () => this.renderWorkflow(),

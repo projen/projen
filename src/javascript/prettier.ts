@@ -1,12 +1,13 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { IgnoreFile } from "../ignore-file";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 import { Project } from "../project";
 import { SourceCode } from "../source-code";
+
 /**
  * Options for Prettier
- *
  */
 export interface PrettierOptions {
   /**
@@ -30,6 +31,7 @@ export interface PrettierOptions {
    */
   readonly overrides?: PrettierOverride[];
 }
+
 /**
  * Options to set in Prettier directly or through overrides
  *
@@ -360,8 +362,10 @@ export class Prettier extends Component {
    */
   private readonly _overrides: PrettierOverride[];
 
-  constructor(project: NodeProject, options: PrettierOptions) {
-    super(project);
+  constructor(scope: Construct, options: PrettierOptions) {
+    super(scope, "Prettier");
+
+    const project = NodeProject.ofNode(this);
 
     this._overrides = options.overrides ?? [];
 
@@ -411,8 +415,10 @@ export class Prettier extends Component {
     // Add automatically generated SourceCode files to .prettierignore as they may not be formatted correctly.
     const isSourceCode = (c: Component): c is SourceCode =>
       c instanceof SourceCode;
-    this.project.components.filter(isSourceCode).forEach((c) => {
-      this.addIgnorePattern(c.filePath);
-    });
+    Project.of(this)
+      .components.filter(isSourceCode)
+      .forEach((c) => {
+        this.addIgnorePattern(c.filePath);
+      });
   }
 }

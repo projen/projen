@@ -1,4 +1,5 @@
 import { dirname, join } from "path";
+import { Construct } from "constructs";
 import { existsSync, mkdirpSync, writeFileSync } from "fs-extra";
 import { PROJEN_VERSION } from "../common";
 import { Component } from "../component";
@@ -56,8 +57,10 @@ export class Projenrc extends Component {
    */
   private readonly testScope: boolean;
 
-  constructor(project: Project, pom: Pom, options: ProjenrcOptions = {}) {
-    super(project);
+  constructor(scope: Construct, pom: Pom, options: ProjenrcOptions = {}) {
+    super(scope, "Projenrc");
+
+    const project = Project.of(this);
 
     const projenVersion = options.projenVersion ?? PROJEN_VERSION;
     this.className = options.className ?? "projenrc";
@@ -88,7 +91,7 @@ export class Projenrc extends Component {
   }
 
   private generateProjenrc() {
-    const bootstrap = this.project.initProject;
+    const bootstrap = Project.of(this).initProject;
     if (!bootstrap) {
       return;
     }
@@ -98,14 +101,14 @@ export class Projenrc extends Component {
     const javaTarget = jsiiManifest.targets.java;
     const optionsTypeFqn = jsiiType.initializer?.parameters?.[0].type?.fqn;
     if (!optionsTypeFqn) {
-      this.project.logger.warn(
+      Project.of(this).logger.warn(
         "cannot determine jsii type for project options"
       );
       return;
     }
     const jsiiOptionsType = jsiiManifest.types[optionsTypeFqn];
     if (!jsiiOptionsType) {
-      this.project.logger.warn(
+      Project.of(this).logger.warn(
         `cannot find jsii type for project options: ${optionsTypeFqn}`
       );
       return;
@@ -123,7 +126,7 @@ export class Projenrc extends Component {
     }
 
     const javaFile = join(
-      this.project.outdir,
+      Project.of(this).outdir,
       dir,
       ...javaPackage,
       javaClass + ".java"
@@ -189,7 +192,7 @@ export class Projenrc extends Component {
     mkdirpSync(dirname(javaFile));
     writeFileSync(javaFile, lines.join("\n"));
 
-    this.project.logger.info(
+    Project.of(this).logger.info(
       `Project definition file was created at ${javaFile}`
     );
   }

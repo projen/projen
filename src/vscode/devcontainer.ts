@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
 import {
   DevEnvironmentDockerImage,
@@ -36,8 +37,8 @@ export class DevContainer extends Component implements IDevEnvironment {
    */
   public readonly config: any;
 
-  constructor(project: Project, options: DevContainerOptions = {}) {
-    super(project);
+  constructor(scope: Construct, options: DevContainerOptions = {}) {
+    super(scope, "DevContainer");
 
     this.postCreateTasks = new Array<Task>();
     this.ports = new Array<string>();
@@ -67,7 +68,7 @@ export class DevContainer extends Component implements IDevEnvironment {
       extensions: this.vscodeExtensions,
     };
 
-    new JsonFile(this.project, DEVCONTAINER_FILE, {
+    new JsonFile(Project.of(this), DEVCONTAINER_FILE, {
       obj: this.config,
       omitEmpty: true,
     });

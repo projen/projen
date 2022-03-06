@@ -513,7 +513,7 @@ describe("npm publishing options", () => {
     );
   });
 
-  test("throw when 'codeArtifactOptions.accessKeyIdSecret' or 'codeArtifactOptions.secretAccessKeySecret' is used without AWS CodeArtifact", () => {
+  test("throw when 'codeArtifactOptions.accessKeyIdSecret' is used without AWS CodeArtifact", () => {
     // GIVEN
     const project = new TestProject();
 
@@ -527,6 +527,13 @@ describe("npm publishing options", () => {
     }).toThrow(
       "codeArtifactOptions must only be specified when publishing AWS CodeArtifact."
     );
+  });
+
+  test("throw when 'codeArtifactOptions.secretAccessKeySecret' is used without AWS CodeArtifact", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // THEN
     expect(() => {
       new NodePackage(project, {
         codeArtifactOptions: {

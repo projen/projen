@@ -1,3 +1,5 @@
+import { Construct } from "constructs";
+import { Component } from "../component";
 import { JsiiProject } from "./jsii-project";
 
 /**
@@ -17,8 +19,11 @@ export interface JsiiDocgenOptions {
  * - Runs `jsii-docgen` after compilation
  * - Enforces that markdown file is checked in
  */
-export class JsiiDocgen {
-  constructor(project: JsiiProject, options: JsiiDocgenOptions = {}) {
+export class JsiiDocgen extends Component {
+  constructor(scope: Construct, options: JsiiDocgenOptions = {}) {
+    super(scope, "JsiiDocgen");
+
+    const project = JsiiProject.ofJsii(this);
     project.addDevDeps("jsii-docgen");
 
     const filePath = options.filePath ?? "API.md";

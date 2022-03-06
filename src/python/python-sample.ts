@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { SampleDir } from "../sample-file";
 import { PythonProject } from "./python-project";
@@ -11,8 +12,10 @@ export interface PythonSampleOptions {}
  * Python code sample.
  */
 export class PythonSample extends Component {
-  constructor(project: PythonProject, _options: PythonSampleOptions) {
-    super(project);
+  constructor(scope: Construct, _options: PythonSampleOptions) {
+    super(scope, "PythonSample");
+
+    const project = PythonProject.ofPython(this);
 
     new SampleDir(project, project.moduleName, {
       files: {

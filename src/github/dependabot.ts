@@ -1,4 +1,6 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
+import { Project } from "../project";
 import { kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
 import { GitHub } from "./github";
@@ -271,10 +273,14 @@ export class Dependabot extends Component {
 
   private readonly ignore: any[];
 
-  constructor(github: GitHub, options: DependabotOptions = {}) {
-    super(github.project);
+  constructor(scope: Construct, options: DependabotOptions = {}) {
+    super(scope, "Dependabot");
 
-    const project = github.project;
+    if (!GitHub.of(Project.of(this))) {
+      throw new Error(
+        "Dependabot can only be added to projects with a GitHub component."
+      );
+    }
 
     this.ignore = [];
     this.ignoresProjen = options.ignoreProjen ?? true;
@@ -302,7 +308,7 @@ export class Dependabot extends Component {
       ],
     };
 
-    new YamlFile(project, ".github/dependabot.yml", {
+    new YamlFile(this, ".github/dependabot.yml", {
       obj: this.config,
       committed: true,
     });

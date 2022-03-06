@@ -1,4 +1,5 @@
 import { join } from "path";
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
@@ -62,8 +63,8 @@ export class Bundler extends Component {
   /**
    * Creates a `Bundler`.
    */
-  constructor(project: Project, options: BundlerOptions = {}) {
-    super(project);
+  constructor(scope: Construct, options: BundlerOptions = {}) {
+    super(scope, "Bundler");
 
     this.esbuildVersion = options.esbuildVersion;
     this.bundledir = options.assetsDir ?? "assets";
@@ -79,13 +80,13 @@ export class Bundler extends Component {
   public get bundleTask(): Task {
     if (!this._task) {
       this.addBundlingSupport();
-      this._task = this.project.tasks.addTask("bundle", {
+      this._task = Project.of(this).tasks.addTask("bundle", {
         description: "Prepare assets",
       });
 
       // install the bundle task into the pre-compile phase.
       if (this.addToPreCompile) {
-        this.project.preCompileTask.spawn(this._task);
+        Project.of(this).preCompileTask.spawn(this._task);
       }
     }
 
@@ -121,7 +122,7 @@ export class Bundler extends Component {
       args.push("--sourcemap");
     }
 
-    const bundleTask = this.project.addTask(`bundle:${name}`, {
+    const bundleTask = Project.of(this).addTask(`bundle:${name}`, {
       description: `Create a JavaScript bundle from ${entrypoint}`,
       exec: args.join(" "),
     });
@@ -131,7 +132,7 @@ export class Bundler extends Component {
     let watchTask;
     const watch = options.watchTask ?? true;
     if (watch) {
-      watchTask = this.project.addTask(`bundle:${name}:watch`, {
+      watchTask = Project.of(this).addTask(`bundle:${name}:watch`, {
         description: `Continuously update the JavaScript bundle from ${entrypoint}`,
         exec: `${args.join(" ")} --watch`,
       });
@@ -151,12 +152,12 @@ export class Bundler extends Component {
    */
   private addBundlingSupport() {
     const ignoreEntry = `/${this.bundledir}/`;
-    this.project.addGitIgnore(ignoreEntry);
-    this.project.addPackageIgnore(`!${ignoreEntry}`); // include in tarball
+    Project.of(this).addGitIgnore(ignoreEntry);
+    Project.of(this).addPackageIgnore(`!${ignoreEntry}`); // include in tarball
     const dep = this.esbuildVersion
       ? `esbuild@${this.esbuildVersion}`
       : "esbuild";
-    this.project.deps.addDependency(dep, DependencyType.BUILD);
+    Project.of(this).deps.addDependency(dep, DependencyType.BUILD);
   }
 }
 

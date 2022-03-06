@@ -678,6 +678,393 @@ pull_request_rules:
       },
     },
   },
+  ".projen/tree.json": Object {
+    "tree": Object {
+      "children": Object {
+        ".gitattributes": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitattributes",
+          "path": "test-nextjs-project/.gitattributes",
+        },
+        ".gitignore": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".gitignore",
+          "path": "test-nextjs-project/.gitignore",
+        },
+        ".mergify.yml": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".mergify.yml",
+          "path": "test-nextjs-project/.mergify.yml",
+        },
+        ".npmignore": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".npmignore",
+          "path": "test-nextjs-project/.npmignore",
+        },
+        ".projen--files.json": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": ".projen--files.json",
+          "path": "test-nextjs-project/.projen--files.json",
+        },
+        "BuildWorkflow": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "BuildWorkflow",
+          "path": "test-nextjs-project/BuildWorkflow",
+        },
+        "Bundler": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Bundler",
+          "path": "test-nextjs-project/Bundler",
+        },
+        "Dependencies": Object {
+          "children": Object {
+            ".projen--deps.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--deps.json",
+              "path": "test-nextjs-project/Dependencies/.projen--deps.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Dependencies",
+          "path": "test-nextjs-project/Dependencies",
+        },
+        "GitHub": Object {
+          "children": Object {
+            ".github--pull_request_template.md": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".github--pull_request_template.md",
+              "path": "test-nextjs-project/GitHub/.github--pull_request_template.md",
+            },
+            "AutoMerge": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "AutoMerge",
+              "path": "test-nextjs-project/GitHub/AutoMerge",
+            },
+            "Mergify": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Mergify",
+              "path": "test-nextjs-project/GitHub/Mergify",
+            },
+            "PullRequestLint": Object {
+              "children": Object {
+                "pull-request-lint": Object {
+                  "children": Object {
+                    ".github--workflows--pull-request-lint.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--pull-request-lint.yml",
+                      "path": "test-nextjs-project/GitHub/PullRequestLint/pull-request-lint/.github--workflows--pull-request-lint.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "pull-request-lint",
+                  "path": "test-nextjs-project/GitHub/PullRequestLint/pull-request-lint",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "PullRequestLint",
+              "path": "test-nextjs-project/GitHub/PullRequestLint",
+            },
+            "Stale": Object {
+              "children": Object {
+                "stale": Object {
+                  "children": Object {
+                    ".github--workflows--stale.yml": Object {
+                      "constructInfo": Object {
+                        "fqn": "constructs.Construct",
+                        "version": "10.0.78",
+                      },
+                      "id": ".github--workflows--stale.yml",
+                      "path": "test-nextjs-project/GitHub/Stale/stale/.github--workflows--stale.yml",
+                    },
+                  },
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": "stale",
+                  "path": "test-nextjs-project/GitHub/Stale/stale",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "Stale",
+              "path": "test-nextjs-project/GitHub/Stale",
+            },
+            "build": Object {
+              "children": Object {
+                ".github--workflows--build.yml": Object {
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": ".github--workflows--build.yml",
+                  "path": "test-nextjs-project/GitHub/build/.github--workflows--build.yml",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "build",
+              "path": "test-nextjs-project/GitHub/build",
+            },
+            "release": Object {
+              "children": Object {
+                ".github--workflows--release.yml": Object {
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": ".github--workflows--release.yml",
+                  "path": "test-nextjs-project/GitHub/release/.github--workflows--release.yml",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "release",
+              "path": "test-nextjs-project/GitHub/release",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "GitHub",
+          "path": "test-nextjs-project/GitHub",
+        },
+        "LICENSE": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "LICENSE",
+          "path": "test-nextjs-project/LICENSE",
+        },
+        "Logger": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Logger",
+          "path": "test-nextjs-project/Logger",
+        },
+        "NodePackage": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "NodePackage",
+          "path": "test-nextjs-project/NodePackage",
+        },
+        "ProjectBuild": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "ProjectBuild",
+          "path": "test-nextjs-project/ProjectBuild",
+        },
+        "Projenrc": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Projenrc",
+          "path": "test-nextjs-project/Projenrc",
+        },
+        "Publisher": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Publisher",
+          "path": "test-nextjs-project/Publisher",
+        },
+        "README.md": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "README.md",
+          "path": "test-nextjs-project/README.md",
+        },
+        "ReactComponent": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "ReactComponent",
+          "path": "test-nextjs-project/ReactComponent",
+        },
+        "ReactSampleCode": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "ReactSampleCode",
+          "path": "test-nextjs-project/ReactSampleCode",
+        },
+        "Release": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Release",
+          "path": "test-nextjs-project/Release",
+        },
+        "Tasks": Object {
+          "children": Object {
+            ".projen--tasks.json": Object {
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": ".projen--tasks.json",
+              "path": "test-nextjs-project/Tasks/.projen--tasks.json",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Tasks",
+          "path": "test-nextjs-project/Tasks",
+        },
+        "UpgradeDependencies": Object {
+          "children": Object {
+            "upgrade-main": Object {
+              "children": Object {
+                ".github--workflows--upgrade-main.yml": Object {
+                  "constructInfo": Object {
+                    "fqn": "constructs.Construct",
+                    "version": "10.0.78",
+                  },
+                  "id": ".github--workflows--upgrade-main.yml",
+                  "path": "test-nextjs-project/UpgradeDependencies/upgrade-main/.github--workflows--upgrade-main.yml",
+                },
+              },
+              "constructInfo": Object {
+                "fqn": "constructs.Construct",
+                "version": "10.0.78",
+              },
+              "id": "upgrade-main",
+              "path": "test-nextjs-project/UpgradeDependencies/upgrade-main",
+            },
+          },
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "UpgradeDependencies",
+          "path": "test-nextjs-project/UpgradeDependencies",
+        },
+        "UpgradeDependencies-projen": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "UpgradeDependencies-projen",
+          "path": "test-nextjs-project/UpgradeDependencies-projen",
+        },
+        "Version": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "Version",
+          "path": "test-nextjs-project/Version",
+        },
+        "VsCode": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "VsCode",
+          "path": "test-nextjs-project/VsCode",
+        },
+        "package.json": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "package.json",
+          "path": "test-nextjs-project/package.json",
+        },
+        "public": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "public",
+          "path": "test-nextjs-project/public",
+        },
+        "src": Object {
+          "constructInfo": Object {
+            "fqn": "constructs.Construct",
+            "version": "10.0.78",
+          },
+          "id": "src",
+          "path": "test-nextjs-project/src",
+        },
+      },
+      "constructInfo": Object {
+        "fqn": "constructs.Construct",
+        "version": "10.0.78",
+      },
+      "id": "test-nextjs-project",
+      "path": "test-nextjs-project",
+    },
+    "version": "tree-0.1",
+  },
   "LICENSE": "
                                  Apache License
                            Version 2.0, January 2004

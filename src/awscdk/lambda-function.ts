@@ -1,5 +1,6 @@
 import { basename, dirname, extname, join, relative, sep, posix } from "path";
 import { pascal } from "case";
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { Bundler, BundlingOptions, Eslint } from "../javascript";
 import { Project } from "../project";
@@ -107,11 +108,11 @@ export class LambdaFunction extends Component {
    * @param project The project to use
    * @param options Options
    */
-  constructor(project: Project, options: LambdaFunctionOptions) {
-    super(project);
+  constructor(scope: Construct, options: LambdaFunctionOptions) {
+    super(scope, `LambdaFunction-${options.entrypoint}`);
 
     const cdkDeps = options.cdkDeps;
-    const bundler = Bundler.of(project);
+    const bundler = Bundler.of(Project.of(this));
     if (!bundler) {
       throw new Error(
         "No bundler found. Please add a Bundler component to your project."
@@ -122,7 +123,7 @@ export class LambdaFunction extends Component {
 
     // allow Lambda handler code to import dev-deps since they are only needed
     // during bundling
-    const eslint = Eslint.of(project);
+    const eslint = Eslint.of(Project.of(this));
     eslint?.allowDevDeps(options.entrypoint);
 
     const entrypoint = options.entrypoint;
@@ -163,14 +164,14 @@ export class LambdaFunction extends Component {
     // e.g:
     //  - outfileAbs => `/project-outdir/assets/foo/bar/baz/foo-function/index.js`
     //  - constructAbs => `/project-outdir/src/foo/bar/baz/foo-function.ts`
-    const outfileAbs = join(project.outdir, bundle.outfile);
-    const constructAbs = join(project.outdir, constructFile);
+    const outfileAbs = join(Project.of(this).outdir, bundle.outfile);
+    const constructAbs = join(Project.of(this).outdir, constructFile);
     const relativeOutfile = relative(
       dirname(constructAbs),
       dirname(outfileAbs)
     );
 
-    const src = new SourceCode(project, constructFile);
+    const src = new SourceCode(this, constructFile);
     if (src.marker) {
       src.line(`// ${src.marker}`);
     }
@@ -223,14 +224,14 @@ export class LambdaFunction extends Component {
     src.close("}");
     src.close("}");
 
-    this.project.logger.verbose(
+    Project.of(this).logger.verbose(
       `${basePath}: construct "${constructName}" generated under "${constructFile}"`
     );
-    this.project.logger.verbose(
+    Project.of(this).logger.verbose(
       `${basePath}: bundle task "${bundle.bundleTask.name}"`
     );
     if (bundle.watchTask) {
-      this.project.logger.verbose(
+      Project.of(this).logger.verbose(
         `${basePath}: bundle watch task "${bundle.watchTask.name}"`
       );
     }

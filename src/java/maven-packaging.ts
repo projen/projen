@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { Project } from "../project";
 import { Pom } from "./pom";
@@ -35,8 +36,8 @@ export interface MavenPackagingOptions {
  * Configures a maven project to produce a .jar archive with sources and javadocs.
  */
 export class MavenPackaging extends Component {
-  constructor(project: Project, pom: Pom, options: MavenPackagingOptions = {}) {
-    super(project);
+  constructor(scope: Construct, pom: Pom, options: MavenPackagingOptions = {}) {
+    super(scope, "MavenPackaging");
 
     pom.addPlugin("org.apache.maven.plugins/maven-jar-plugin@3.2.0", {
       configuration: {
@@ -81,13 +82,13 @@ export class MavenPackaging extends Component {
     const distdir = options.distdir ?? "dist/java";
 
     for (const [k, v] of Object.entries(env)) {
-      this.project.packageTask.env(k, v);
+      Project.of(this).packageTask.env(k, v);
     }
-    this.project.packageTask.exec(`mkdir -p ${distdir}`);
-    this.project.packageTask.exec(
+    Project.of(this).packageTask.exec(`mkdir -p ${distdir}`);
+    Project.of(this).packageTask.exec(
       `mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${distdir}`
     );
 
-    project.gitignore.exclude(distdir);
+    Project.of(this).gitignore.exclude(distdir);
   }
 }

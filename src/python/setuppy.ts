@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { FileBase, IResolver } from "../file";
 import { PythonProject } from "./python-project";
 
@@ -66,8 +67,10 @@ export interface SetupPyOptions {
 export class SetupPy extends FileBase {
   private readonly setupConfig: any;
 
-  constructor(project: PythonProject, options: SetupPyOptions) {
-    super(project, "setup.py");
+  constructor(scope: Construct, options: SetupPyOptions) {
+    super(scope, "setup.py");
+
+    const project = PythonProject.ofPython(this);
 
     this.setupConfig = {
       name: project.name,

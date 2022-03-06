@@ -1,6 +1,6 @@
+import { Construct } from "constructs";
 import { Dependencies, DependencyCoordinates } from "../dependencies";
 import { FileBase, IResolver } from "../file";
-import { Project } from "../project";
 import { toPythonVersionRange } from "../util/semver";
 import { IPackageProvider } from "./python-deps";
 
@@ -21,11 +21,11 @@ export class RequirementsFile extends FileBase {
   private readonly packageProvider?: IPackageProvider;
 
   constructor(
-    project: Project,
+    scope: Construct,
     filePath: string,
     options: RequirementsFileOptions
   ) {
-    super(project, filePath);
+    super(scope, filePath);
 
     this.packageProvider = options.packageProvider;
   }

@@ -3,6 +3,7 @@ import { Component } from "../component";
 import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from "../github";
 import { BUILD_ARTIFACT_NAME } from "../github/constants";
 import { Job, JobPermission, JobStep } from "../github/workflows-model";
+import { Project } from "../project";
 import { Task } from "../task";
 import { Version } from "../version";
 import { Publisher } from "./publisher";
@@ -248,7 +249,7 @@ export class Release extends Component {
   public readonly artifactsDirectory: string;
 
   constructor(project: GitHubProject, options: ReleaseOptions) {
-    super(project);
+    super(project, "Release");
 
     if (Array.isArray(options.releaseBranches)) {
       throw new Error(
@@ -466,7 +467,7 @@ export class Release extends Component {
       branchName === "main" || branchName === "master"
         ? "release"
         : `release:${branchName}`;
-    const releaseTask = this.project.addTask(releaseTaskName, {
+    const releaseTask = Project.of(this).addTask(releaseTaskName, {
       description: `Prepare a release from "${branchName}" branch`,
       env,
     });

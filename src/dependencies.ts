@@ -1,4 +1,5 @@
 import * as path from "path";
+import { Construct } from "constructs";
 import { PROJEN_DIR } from "./common";
 import { Component } from "./component";
 import { JsonFile } from "./json";
@@ -49,14 +50,14 @@ export class Dependencies extends Component {
    * Adds a dependencies component to the project.
    * @param project The parent project
    */
-  constructor(project: Project) {
-    super(project);
+  constructor(scope: Construct) {
+    super(scope, "Dependencies");
 
     // this is not really required at the moment, but actually quite useful as a
     // checked-in source of truth for dependencies and will potentially be
     // valuable in the future for CLI tools.
-    if (!project.ejected) {
-      new JsonFile(project, Dependencies.MANIFEST_FILE, {
+    if (!Project.of(this).ejected) {
+      new JsonFile(this, Dependencies.MANIFEST_FILE, {
         omitEmpty: true,
         obj: () => this.toJson(),
       });
@@ -136,7 +137,7 @@ export class Dependencies extends Component {
     type: DependencyType,
     metadata: { [key: string]: any } = {}
   ): Dependency {
-    this.project.logger.debug(`${type}-dep ${spec}`);
+    Project.of(this).logger.debug(`${type}-dep ${spec}`);
 
     const dep: Dependency = {
       ...Dependencies.parseDependency(spec),
@@ -147,7 +148,7 @@ export class Dependencies extends Component {
     const existingDepIndex = this.tryGetDependencyIndex(dep.name, type);
 
     if (existingDepIndex !== -1) {
-      this.project.logger.debug(
+      Project.of(this).logger.debug(
         `updating existing ${dep.type}-dep ${dep.name} with more specific version/metadata`
       );
       this._deps[existingDepIndex] = dep;

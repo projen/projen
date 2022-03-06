@@ -1,4 +1,4 @@
-import { Task } from "..";
+import { Construct, IConstruct } from "constructs";
 import { Eslint } from "../javascript";
 import {
   CommonPublishOptions,
@@ -7,6 +7,7 @@ import {
   NugetPublishOptions,
   PyPiPublishOptions,
 } from "../release";
+import { Task } from "../task";
 import { TypeScriptProject, TypeScriptProjectOptions } from "../typescript";
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
@@ -149,6 +150,25 @@ export interface JsiiGoTarget extends GoPublishOptions {
  * @pjid jsii
  */
 export class JsiiProject extends TypeScriptProject {
+  /**
+   * Returns the immediate JsiiProject a construct belongs to.
+   * @param construct the construct
+   */
+  public static ofJsii(construct: IConstruct): JsiiProject {
+    if (construct instanceof JsiiProject) {
+      return construct;
+    }
+
+    const parent = construct.node.scope as Construct;
+    if (!parent) {
+      throw new Error(
+        "cannot find a parent JsiiProject (directly or indirectly)"
+      );
+    }
+
+    return JsiiProject.ofJsii(parent);
+  }
+
   public readonly eslint?: Eslint;
 
   private readonly packageAllTask: Task;

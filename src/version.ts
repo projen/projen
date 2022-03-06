@@ -1,4 +1,5 @@
 import { posix } from "path";
+import { Construct } from "constructs";
 import { Component } from "./component";
 import { Project } from "./project";
 import { Task } from "./task";
@@ -47,8 +48,10 @@ export class Version extends Component {
    */
   public readonly releaseTagFileName: string;
 
-  constructor(project: Project, options: VersionOptions) {
-    super(project);
+  constructor(scope: Construct, options: VersionOptions) {
+    super(scope, "Version");
+
+    const project = Project.of(this);
 
     this.changelogFileName = "changelog.md";
     this.versionFileName = "version.txt";

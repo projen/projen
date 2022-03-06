@@ -1,5 +1,5 @@
+import { Construct } from "constructs";
 import { Component } from "./component";
-import { Project } from "./project";
 import { TextFile } from "./textfile";
 
 /**
@@ -22,13 +22,13 @@ export class SourceCode extends Component {
   private readonly indent: number;
 
   constructor(
-    project: Project,
+    scope: Construct,
     public readonly filePath: string,
     options: SourceCodeOptions = {}
   ) {
-    super(project);
+    super(scope, filePath);
     this.indent = options.indent ?? 2;
-    this.file = new TextFile(project, filePath);
+    this.file = new TextFile(this, filePath);
   }
 
   public get marker(): string | undefined {

@@ -1,5 +1,6 @@
 import { dirname, join } from "path";
 import { snake } from "case";
+import { Construct } from "constructs";
 import { existsSync, mkdirpSync, writeFileSync } from "fs-extra";
 import { PROJEN_VERSION } from "../common";
 import { Component } from "../component";
@@ -36,8 +37,10 @@ export class Projenrc extends Component {
    */
   private readonly rcfile: string;
 
-  constructor(project: Project, options: ProjenrcOptions = {}) {
-    super(project);
+  constructor(scope: Construct, options: ProjenrcOptions = {}) {
+    super(scope, "Projenrc");
+
+    const project = Project.of(this);
 
     const projenVersion = options.projenVersion ?? PROJEN_VERSION;
     this.rcfile = options.filename ?? ".projenrc.py";
@@ -55,7 +58,7 @@ export class Projenrc extends Component {
   }
 
   private generateProjenrc() {
-    const bootstrap = this.project.initProject;
+    const bootstrap = Project.of(this).initProject;
     if (!bootstrap) {
       return;
     }
@@ -64,13 +67,13 @@ export class Projenrc extends Component {
     const jsiiType = jsiiManifest.types[jsiiFqn];
     const optionsTypeFqn = jsiiType.initializer?.parameters?.[0].type?.fqn;
     if (!optionsTypeFqn) {
-      this.project.logger.warn(
+      Project.of(this).logger.warn(
         "cannot determine jsii type for project options"
       );
       return;
     }
 
-    const pythonFile = join(this.project.outdir, this.rcfile);
+    const pythonFile = join(Project.of(this).outdir, this.rcfile);
 
     // skip if file exists
     if (existsSync(pythonFile)) {
@@ -110,7 +113,7 @@ export class Projenrc extends Component {
     mkdirpSync(dirname(pythonFile));
     writeFileSync(pythonFile, lines.join("\n"));
 
-    this.project.logger.info(
+    Project.of(this).logger.info(
       `Project definition file was created at ${pythonFile}`
     );
   }

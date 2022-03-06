@@ -1,4 +1,4 @@
-import { Project } from "./project";
+import { Construct } from "constructs";
 import { SampleFile } from "./sample-file";
 
 /**
@@ -27,8 +27,8 @@ export interface SampleReadmeProps {
  * @param text - The initial contents of the README.md file. Defaults to '# replace this'
  */
 export class SampleReadme extends SampleFile {
-  constructor(project: Project, props?: SampleReadmeProps) {
-    super(project, props?.filename ?? "README.md", {
+  constructor(scope: Construct, props?: SampleReadmeProps) {
+    super(scope, props?.filename ?? "README.md", {
       contents: props?.contents ?? "# replace this",
     });
   }

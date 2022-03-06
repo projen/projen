@@ -1,5 +1,6 @@
 import * as path from "path";
 import { snake } from "case";
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { Project } from "../project";
 import { YamlFile } from "../yaml";
@@ -55,10 +56,6 @@ export interface CiConfigurationOptions {
  * @see https://docs.gitlab.com/ee/ci/yaml/
  */
 export class CiConfiguration extends Component {
-  /**
-   * The project the configuration belongs to.
-   */
-  public readonly project: Project;
   /**
    * The name of the configuration.
    */
@@ -143,18 +140,17 @@ export class CiConfiguration extends Component {
   public readonly jobs: Record<string, Job> = {};
 
   constructor(
-    project: Project,
+    scope: Construct,
     name: string,
     options?: CiConfigurationOptions
   ) {
-    super(project);
-    this.project = project;
+    super(scope, name);
     this.name = path.parse(name).name;
     this.path =
       this.name === "gitlab-ci"
         ? ".gitlab-ci.yml"
         : `.gitlab/ci-templates/${name.toLocaleLowerCase()}.yml`;
-    this.file = new YamlFile(this.project, this.path, {
+    this.file = new YamlFile(Project.of(this), this.path, {
       obj: () => this.renderCI(),
     });
     const defaults = options?.default;

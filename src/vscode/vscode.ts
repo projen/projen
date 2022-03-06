@@ -1,12 +1,12 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
-import { Project } from "../project";
 import { VsCodeLaunchConfig } from "./launch-config";
 
 export class VsCode extends Component {
   private _launchConfig?: VsCodeLaunchConfig;
 
-  constructor(project: Project) {
-    super(project);
+  constructor(scope: Construct) {
+    super(scope, "VsCode");
   }
 
   public get launchConfiguration() {

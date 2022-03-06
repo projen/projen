@@ -1,6 +1,6 @@
+import { Construct } from "constructs";
 import * as fs from "fs-extra";
 import { FileBase, IResolver } from "./file";
-import { Project } from "./project";
 
 export interface LicenseOptions {
   /**
@@ -32,8 +32,8 @@ export interface LicenseOptions {
 export class License extends FileBase {
   private readonly text: string;
 
-  constructor(project: Project, options: LicenseOptions) {
-    super(project, "LICENSE", { marker: false });
+  constructor(scope: Construct, options: LicenseOptions) {
+    super(scope, "LICENSE", { marker: false });
 
     const spdx = options.spdx;
 

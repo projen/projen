@@ -1,4 +1,5 @@
 import * as path from "path";
+import { Construct } from "constructs";
 import * as fs from "fs-extra";
 import * as glob from "glob";
 import { Component } from "./component";
@@ -42,8 +43,8 @@ export class SampleFile extends Component {
    * @param filePath - the relative path in the project to put the file
    * @param options - the options for the file.
    */
-  constructor(project: Project, filePath: string, options: SampleFileOptions) {
-    super(project);
+  constructor(scope: Construct, filePath: string, options: SampleFileOptions) {
+    super(scope, filePath);
 
     if (options.contents && options.sourcePath) {
       throw new Error("Cannot specify both 'contents' and 'source' fields.");
@@ -63,7 +64,7 @@ export class SampleFile extends Component {
       contents = fs.readFileSync(this.options.sourcePath);
     }
     this.writeOnceFileContents(
-      this.project.outdir,
+      Project.of(this).outdir,
       this.filePath,
       contents ?? ""
     );
@@ -124,8 +125,8 @@ export class SampleDir extends Component {
    * @param dir directory to add files to. If directory already exists, nothing is added.
    * @param options options for which files to create.
    */
-  constructor(project: Project, dir: string, options: SampleDirOptions) {
-    super(project);
+  constructor(scope: Construct, dir: string, options: SampleDirOptions) {
+    super(scope, dir);
     if (!options.files && !options.sourceDir) {
       throw new Error("Must specify at least one of 'files' or 'source'.");
     }
@@ -135,7 +136,7 @@ export class SampleDir extends Component {
   }
 
   public synthesize() {
-    const fullOutdir = path.join(this.project.outdir, this.dir);
+    const fullOutdir = path.join(Project.of(this).outdir, this.dir);
     if (fs.pathExistsSync(fullOutdir)) {
       return;
     }
