@@ -94,7 +94,6 @@ export class UpgradeDependencies extends Component {
 
   private readonly options: UpgradeDependenciesOptions;
   private readonly _project: NodeProject;
-  private readonly _task: Task;
   private readonly pullRequestTitle: string;
 
   /**
@@ -126,7 +125,6 @@ export class UpgradeDependencies extends Component {
       options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.postBuildSteps = [];
     this.containerOptions = options.workflowOptions?.container;
-
     project.addDevDeps("npm-check-updates@^12");
 
     this.postUpgradeTask =
@@ -134,9 +132,6 @@ export class UpgradeDependencies extends Component {
       project.tasks.addTask("post-upgrade", {
         description: "Runs after upgrading dependencies",
       });
-
-    // create the upgrade task
-    this._task = this.createTask();
   }
 
   /**
@@ -149,6 +144,8 @@ export class UpgradeDependencies extends Component {
 
   // create a corresponding github workflow for each requested branch.
   public preSynthesize() {
+    // Create task only here to consider also packages that are from extended classes
+    const task = this.createTask();
     if (this._project.github && (this.options.workflow ?? true)) {
       // represents the default repository branch.
       // just like not specifying anything.
@@ -158,7 +155,7 @@ export class UpgradeDependencies extends Component {
         this._project.release?.branches ?? [defaultBranch];
       for (const branch of branches) {
         this.workflows.push(
-          this.createWorkflow(this._task, this._project.github, branch)
+          this.createWorkflow(task, this._project.github, branch)
         );
       }
     }
@@ -178,6 +175,17 @@ export class UpgradeDependencies extends Component {
       exclude.push("projen");
     }
 
+    // exclude depedencies that has already version set by Projen with ncu (but not package manager upgrade)
+    // Getting only unique values through set
+    const ncuExcludes = [
+      ...new Set(
+        this.project.deps.all
+          .filter((dep) => dep.version)
+          .map((dep) => dep.name)
+          .concat(exclude)
+      ),
+    ];
+
     for (const dep of ["dev", "optional", "peer", "prod", "bundle"]) {
       const ncuCommand = [
         "npm-check-updates",
@@ -186,11 +194,11 @@ export class UpgradeDependencies extends Component {
         "--upgrade",
         "--target=minor",
       ];
-      if (exclude.length > 0) {
-        ncuCommand.push(`--reject='${exclude.join(",")}'`);
-      }
+      // Don't add includes and excludes same time
       if (this.options.include) {
         ncuCommand.push(`--filter='${this.options.include.join(",")}'`);
+      } else if (ncuExcludes.length > 0) {
+        ncuCommand.push(`--reject='${ncuExcludes.join(",")}'`);
       }
 
       task.exec(ncuCommand.join(" "));
