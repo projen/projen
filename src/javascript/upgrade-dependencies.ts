@@ -145,8 +145,11 @@ export class UpgradeDependencies extends Component {
   // create a corresponding github workflow for each requested branch.
   public preSynthesize() {
     // Create task only here to consider also packages that are from extended classes
-    const task = this.createTask();
-    if (this._project.github && (this.options.workflow ?? true)) {
+    // Create task only if hasn't been overwritten manually
+    const task =
+      this._project.tasks.tryFind(this.options.taskName ?? "upgrade") ??
+      this.createTask();
+    if (task && this._project.github && (this.options.workflow ?? true)) {
       // represents the default repository branch.
       // just like not specifying anything.
       const defaultBranch = undefined;
@@ -161,14 +164,8 @@ export class UpgradeDependencies extends Component {
     }
   }
 
-  private createTask(): Task {
+  private createTask(): Task | undefined {
     const taskName = this.options.taskName ?? "upgrade";
-    const task = this._project.addTask(taskName, {
-      // this task should not run in CI mode because its designed to
-      // update package.json and lock files.
-      env: { CI: "0" },
-      description: this.pullRequestTitle,
-    });
 
     const exclude = this.options.exclude ?? [];
     if (this.ignoresProjen) {
@@ -186,41 +183,58 @@ export class UpgradeDependencies extends Component {
       ),
     ];
 
-    for (const dep of ["dev", "optional", "peer", "prod", "bundle"]) {
-      const ncuCommand = [
-        "npm-check-updates",
-        "--dep",
-        dep,
-        "--upgrade",
-        "--target=minor",
-      ];
-      // Don't add includes and excludes same time
-      if (this.options.include) {
-        ncuCommand.push(`--filter='${this.options.include.join(",")}'`);
-      } else if (ncuExcludes.length > 0) {
-        ncuCommand.push(`--reject='${ncuExcludes.join(",")}'`);
-      }
-
-      task.exec(ncuCommand.join(" "));
-    }
-
-    // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
-    task.exec(this._project.package.installAndUpdateLockfileCommand);
-
-    // run upgrade command to upgrade transitive deps as well
-    task.exec(
-      this._project.package.renderUpgradePackagesCommand(
-        exclude,
-        this.options.include
-      )
+    const ncuIncludes = this.options.include?.filter(
+      (item) => !ncuExcludes.includes(item)
     );
 
-    // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
-    task.exec(this._project.projenCommand);
+    const includeLength = this.options.include?.length ?? 0;
+    const ncuIncludesLength = ncuIncludes?.length ?? 0;
+    // Don't add anything if there's only includes that are excluded by e.g. setting the version.
+    if (includeLength === 0 || (includeLength > 0 && ncuIncludesLength > 0)) {
+      const task = this._project.addTask(taskName, {
+        // this task should not run in CI mode because its designed to
+        // update package.json and lock files.
+        env: { CI: "0" },
+        description: this.pullRequestTitle,
+      });
 
-    task.spawn(this.postUpgradeTask);
+      for (const dep of ["dev", "optional", "peer", "prod", "bundle"]) {
+        const ncuCommand = [
+          "npm-check-updates",
+          "--dep",
+          dep,
+          "--upgrade",
+          "--target=minor",
+        ];
+        // Don't add includes and excludes same time
+        if (ncuIncludes) {
+          ncuCommand.push(`--filter='${ncuIncludes.join(",")}'`);
+        } else if (ncuExcludes.length > 0) {
+          ncuCommand.push(`--reject='${ncuExcludes.join(",")}'`);
+        }
 
-    return task;
+        task.exec(ncuCommand.join(" "));
+      }
+
+      // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
+      task.exec(this._project.package.installAndUpdateLockfileCommand);
+
+      // run upgrade command to upgrade transitive deps as well
+      task.exec(
+        this._project.package.renderUpgradePackagesCommand(
+          exclude,
+          this.options.include
+        )
+      );
+
+      // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
+      task.exec(this._project.projenCommand);
+
+      task.spawn(this.postUpgradeTask);
+
+      return task;
+    }
+    return undefined;
   }
 
   private createWorkflow(

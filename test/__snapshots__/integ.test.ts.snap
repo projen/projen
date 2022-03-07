@@ -1406,19 +1406,19 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,standard-version,@aws-cdk/aws-apigateway,@aws-cdk/aws-cloudwatch-actions,@aws-cdk/aws-cloudwatch,@aws-cdk/aws-dynamodb,@aws-cdk/aws-ecs-patterns,@aws-cdk/aws-ecs,@aws-cdk/aws-elasticloadbalancingv2,@aws-cdk/aws-events-targets,@aws-cdk/aws-events,@aws-cdk/aws-lambda,@aws-cdk/aws-rds,@aws-cdk/aws-sns-subscriptions,@aws-cdk/aws-sns,@aws-cdk/aws-sqs,@aws-cdk/core,constructs,@aws-cdk/assert'",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,standard-version,@aws-cdk/aws-apigateway,@aws-cdk/aws-cloudwatch-actions,@aws-cdk/aws-cloudwatch,@aws-cdk/aws-dynamodb,@aws-cdk/aws-ecs-patterns,@aws-cdk/aws-ecs,@aws-cdk/aws-elasticloadbalancingv2,@aws-cdk/aws-events-targets,@aws-cdk/aws-events,@aws-cdk/aws-lambda,@aws-cdk/aws-rds,@aws-cdk/aws-sns-subscriptions,@aws-cdk/aws-sns,@aws-cdk/aws-sqs,@aws-cdk/core,constructs,@aws-cdk/assert'",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,standard-version,@aws-cdk/aws-apigateway,@aws-cdk/aws-cloudwatch-actions,@aws-cdk/aws-cloudwatch,@aws-cdk/aws-dynamodb,@aws-cdk/aws-ecs-patterns,@aws-cdk/aws-ecs,@aws-cdk/aws-elasticloadbalancingv2,@aws-cdk/aws-events-targets,@aws-cdk/aws-events,@aws-cdk/aws-lambda,@aws-cdk/aws-rds,@aws-cdk/aws-sns-subscriptions,@aws-cdk/aws-sns,@aws-cdk/aws-sqs,@aws-cdk/core,constructs,@aws-cdk/assert'",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,standard-version,@aws-cdk/aws-apigateway,@aws-cdk/aws-cloudwatch-actions,@aws-cdk/aws-cloudwatch,@aws-cdk/aws-dynamodb,@aws-cdk/aws-ecs-patterns,@aws-cdk/aws-ecs,@aws-cdk/aws-elasticloadbalancingv2,@aws-cdk/aws-events-targets,@aws-cdk/aws-events,@aws-cdk/aws-lambda,@aws-cdk/aws-rds,@aws-cdk/aws-sns-subscriptions,@aws-cdk/aws-sns,@aws-cdk/aws-sqs,@aws-cdk/core,constructs,@aws-cdk/assert'",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,standard-version,@aws-cdk/aws-apigateway,@aws-cdk/aws-cloudwatch-actions,@aws-cdk/aws-cloudwatch,@aws-cdk/aws-dynamodb,@aws-cdk/aws-ecs-patterns,@aws-cdk/aws-ecs,@aws-cdk/aws-elasticloadbalancingv2,@aws-cdk/aws-events-targets,@aws-cdk/aws-events,@aws-cdk/aws-lambda,@aws-cdk/aws-rds,@aws-cdk/aws-sns-subscriptions,@aws-cdk/aws-sns,@aws-cdk/aws-sqs,@aws-cdk/core,constructs,@aws-cdk/assert'",
           },
           Object {
             "exec": "yarn install --check-files",
@@ -2805,19 +2805,19 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,projen'",
           },
           Object {
             "exec": "yarn install --check-files",
@@ -4273,19 +4273,19 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,cdk8s,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,cdk8s,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,cdk8s,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,cdk8s,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='@types/node,@typescript-eslint/eslint-plugin,@typescript-eslint/parser,eslint,jest-junit,npm-check-updates,cdk8s,projen'",
           },
           Object {
             "exec": "yarn install --check-files",
@@ -5595,19 +5595,19 @@ junit.xml
         "name": "upgrade",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jest-junit,npm-check-updates,standard-version,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jest-junit,npm-check-updates,standard-version,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jest-junit,npm-check-updates,standard-version,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jest-junit,npm-check-updates,standard-version,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jest-junit,npm-check-updates,standard-version,projen'",
           },
           Object {
             "exec": "pnpm i",

@@ -546,19 +546,19 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='@types/node,npm-check-updates,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='@types/node,npm-check-updates,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='@types/node,npm-check-updates,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='@types/node,npm-check-updates,projen'",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='@types/node,npm-check-updates,projen'",
           },
           Object {
             "exec": "yarn install --check-files",

@@ -461,6 +461,11 @@ export class NodeProject extends GitHubProject {
    */
   public readonly upgradeWorkflow?: UpgradeDependencies;
 
+  /**
+   * The projen upgrade workflow.
+   */
+  public readonly projenUpgradeWorkflow?: UpgradeDependencies;
+
   private readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
   public readonly prettier?: Prettier;
@@ -698,7 +703,6 @@ export class NodeProject extends GitHubProject {
       );
       ignoresProjen = dependabotConf?.ignoresProjen;
     }
-
     if (depsUpgrade) {
       const defaultOptions: UpgradeDependenciesOptions = {
         // if projen secret is defined we can also upgrade projen here.
@@ -715,17 +719,16 @@ export class NodeProject extends GitHubProject {
           gitIdentity: this.workflowGitIdentity,
         },
       };
-      const upgradeDependencies = new UpgradeDependencies(
+      this.upgradeWorkflow = new UpgradeDependencies(
         this,
         deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}])
       );
-      ignoresProjen = upgradeDependencies.ignoresProjen;
-      this.upgradeWorkflow = upgradeDependencies;
+      ignoresProjen = this.upgradeWorkflow.ignoresProjen;
     }
 
     // create a dedicated workflow to upgrade projen itself if needed
     if (ignoresProjen && this.package.packageName !== "projen") {
-      new UpgradeDependencies(this, {
+      this.projenUpgradeWorkflow = new UpgradeDependencies(this, {
         include: ["projen"],
         taskName: "upgrade-projen",
         pullRequestTitle: "upgrade projen",
