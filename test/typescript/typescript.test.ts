@@ -1,3 +1,4 @@
+import { TaskRuntime } from "../../src";
 import { PROJEN_RC } from "../../src/common";
 import { mergeTsconfigOptions, TypeScriptProject } from "../../src/typescript";
 import { synthSnapshot } from "../util";
@@ -163,4 +164,17 @@ test("projenrc.ts", () => {
     name: "default",
     steps: [{ exec: "ts-node --project tsconfig.dev.json .projenrc.ts" }],
   });
+});
+
+test("upgrade task ignores pinned versions", () => {
+  const prj = new TypeScriptProject({
+    defaultReleaseBranch: "main",
+    name: "test",
+    deps: ["npm@^8"],
+    typescriptVersion: "4.4.4",
+  });
+  const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[0].exec).toStrictEqual(
+    "npm-check-updates --dep dev --upgrade --target=minor --reject='typescript,projen'"
+  );
 });

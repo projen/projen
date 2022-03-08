@@ -461,11 +461,6 @@ export class NodeProject extends GitHubProject {
    */
   public readonly upgradeWorkflow?: UpgradeDependencies;
 
-  /**
-   * The projen upgrade workflow.
-   */
-  public readonly projenUpgradeWorkflow?: UpgradeDependencies;
-
   private readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
   public readonly prettier?: Prettier;
@@ -728,7 +723,7 @@ export class NodeProject extends GitHubProject {
 
     // create a dedicated workflow to upgrade projen itself if needed
     if (ignoresProjen && this.package.packageName !== "projen") {
-      this.projenUpgradeWorkflow = new UpgradeDependencies(this, {
+      new UpgradeDependencies(this, {
         include: ["projen"],
         taskName: "upgrade-projen",
         pullRequestTitle: "upgrade projen",

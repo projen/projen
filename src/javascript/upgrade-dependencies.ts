@@ -172,12 +172,12 @@ export class UpgradeDependencies extends Component {
       exclude.push("projen");
     }
 
-    // exclude depedencies that has already version set by Projen with ncu (but not package manager upgrade)
+    // exclude depedencies that has already version pinned (fully or with patch version) by Projen with ncu (but not package manager upgrade)
     // Getting only unique values through set
     const ncuExcludes = [
       ...new Set(
         this.project.deps.all
-          .filter((dep) => dep.version)
+          .filter((dep) => dep.version && dep.version[0] !== "^")
           .map((dep) => dep.name)
           .concat(exclude)
       ),
@@ -189,52 +189,55 @@ export class UpgradeDependencies extends Component {
 
     const includeLength = this.options.include?.length ?? 0;
     const ncuIncludesLength = ncuIncludes?.length ?? 0;
-    // Don't add anything if there's only includes that are excluded by e.g. setting the version.
-    if (includeLength === 0 || (includeLength > 0 && ncuIncludesLength > 0)) {
-      const task = this._project.addTask(taskName, {
-        // this task should not run in CI mode because its designed to
-        // update package.json and lock files.
-        env: { CI: "0" },
-        description: this.pullRequestTitle,
-      });
 
-      for (const dep of ["dev", "optional", "peer", "prod", "bundle"]) {
-        const ncuCommand = [
-          "npm-check-updates",
-          "--dep",
-          dep,
-          "--upgrade",
-          "--target=minor",
-        ];
-        // Don't add includes and excludes same time
-        if (ncuIncludes) {
-          ncuCommand.push(`--filter='${ncuIncludes.join(",")}'`);
-        } else if (ncuExcludes.length > 0) {
-          ncuCommand.push(`--reject='${ncuExcludes.join(",")}'`);
-        }
+    // If all explicit includes already have version pinned, don't add task.
+    // Note that without explicit includes task gets added
+    if (includeLength > 0 && ncuIncludesLength === 0) {
+      return undefined;
+    }
 
-        task.exec(ncuCommand.join(" "));
+    const task = this._project.addTask(taskName, {
+      // this task should not run in CI mode because its designed to
+      // update package.json and lock files.
+      env: { CI: "0" },
+      description: this.pullRequestTitle,
+    });
+
+    for (const dep of ["dev", "optional", "peer", "prod", "bundle"]) {
+      const ncuCommand = [
+        "npm-check-updates",
+        "--dep",
+        dep,
+        "--upgrade",
+        "--target=minor",
+      ];
+      // Don't add includes and excludes same time
+      if (ncuIncludes) {
+        ncuCommand.push(`--filter='${ncuIncludes.join(",")}'`);
+      } else if (ncuExcludes.length > 0) {
+        ncuCommand.push(`--reject='${ncuExcludes.join(",")}'`);
       }
 
-      // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
-      task.exec(this._project.package.installAndUpdateLockfileCommand);
-
-      // run upgrade command to upgrade transitive deps as well
-      task.exec(
-        this._project.package.renderUpgradePackagesCommand(
-          exclude,
-          this.options.include
-        )
-      );
-
-      // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
-      task.exec(this._project.projenCommand);
-
-      task.spawn(this.postUpgradeTask);
-
-      return task;
+      task.exec(ncuCommand.join(" "));
     }
-    return undefined;
+
+    // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
+    task.exec(this._project.package.installAndUpdateLockfileCommand);
+
+    // run upgrade command to upgrade transitive deps as well
+    task.exec(
+      this._project.package.renderUpgradePackagesCommand(
+        exclude,
+        this.options.include
+      )
+    );
+
+    // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
+    task.exec(this._project.projenCommand);
+
+    task.spawn(this.postUpgradeTask);
+
+    return task;
   }
 
   private createWorkflow(

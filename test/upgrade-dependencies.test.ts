@@ -1,12 +1,10 @@
 import * as yaml from "yaml";
-import { Cdk8sTypeScriptApp } from "../src/cdk8s";
 import {
   NodeProject,
   NodeProjectOptions,
   UpgradeDependenciesSchedule,
 } from "../src/javascript";
 import { TaskRuntime } from "../src/task-runtime";
-import { TypeScriptProject } from "../src/typescript";
 import { synthSnapshot } from "./util";
 
 test("upgrades command includes all dependencies", () => {
@@ -194,75 +192,16 @@ test("github runner can be customized", () => {
   expect(upgrade.jobs.pr["runs-on"]).toEqual("self-hosted");
 });
 
-describe("upgrade task created without projen defined versions", () => {
-  test("at NodeProject", () => {
-    const prj = new NodeProject({
-      defaultReleaseBranch: "main",
-      name: "test project",
-      deps: ["npm@^8"],
-    });
-    // Presynthesize upgradeWorkflow to get tasks to project that can be checked
-    prj.upgradeWorkflow?.preSynthesize();
-    const upgradeTask = prj.tasks.tryFind("upgrade");
-    expect(upgradeTask).toBeDefined();
-    if (upgradeTask) {
-      const execSteps = upgradeTask.steps.filter((step) =>
-        step.exec?.toString().includes("npm-check-updates")
-      );
-      execSteps.forEach((execStep) => {
-        expect(execStep.exec).toContain("npm");
-      });
-    }
+test("upgrade task created without projen defined versions at NodeProject", () => {
+  const prj = new NodeProject({
+    defaultReleaseBranch: "main",
+    name: "test project",
+    deps: ["npm@^8", "axios@~0.20.0", "markdownlint@0.24.0"],
   });
-
-  // Extends NodeProject
-  test("at TypeScriptProject", () => {
-    const prj = new TypeScriptProject({
-      defaultReleaseBranch: "main",
-      name: "test project",
-      deps: ["npm@^8"],
-      typescriptVersion: "4.4.4",
-    });
-    // Presynthesize upgradeWorkflow to get tasks to project that can be checked
-    prj.upgradeWorkflow?.preSynthesize();
-    const upgradeTask = prj.tasks.tryFind("upgrade");
-    expect(upgradeTask).toBeDefined();
-    if (upgradeTask) {
-      const execSteps = upgradeTask.steps.filter((step) =>
-        step.exec?.toString().includes("npm-check-updates")
-      );
-      execSteps.forEach((execStep) => {
-        expect(execStep.exec).toContain("npm");
-        expect(execStep.exec).toContain("typescript");
-      });
-    }
-  });
-
-  // Extends TypescriptAppProject that extends TypesciptProject that extends NodeProject
-  test("at Cdk8sTypeScriptApp", () => {
-    const prj = new Cdk8sTypeScriptApp({
-      defaultReleaseBranch: "main",
-      name: "test project",
-      typescriptVersion: "4.5.4",
-      deps: ["npm@^8"],
-      cdk8sVersion: "1.0.0-beta.10",
-    });
-    // Presynthesize upgradeWorkflow to get tasks to project that can be checked
-    prj.upgradeWorkflow?.preSynthesize();
-    const upgradeTask = prj.tasks.tryFind("upgrade");
-    expect(upgradeTask).toBeDefined();
-    if (upgradeTask) {
-      const execSteps = upgradeTask.steps.filter((step) =>
-        step.exec?.toString().includes("npm-check-updates")
-      );
-      execSteps.forEach((execStep) => {
-        expect(execStep.exec).toContain("npm");
-        expect(execStep.exec).toContain("typescript");
-        expect(execStep.exec).toContain("constructs");
-        expect(execStep.exec).toContain("cdk8s");
-      });
-    }
-  });
+  const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[0].exec).toStrictEqual(
+    "npm-check-updates --dep dev --upgrade --target=minor --reject='axios,markdownlint,projen'"
+  );
 });
 
 describe("projen-upgrade task is", () => {
@@ -273,10 +212,8 @@ describe("projen-upgrade task is", () => {
       packageName: "test-project",
       projenVersion: "0.50.0",
     });
-    // Presynthesize projenUpgradeWorkflow to get tasks to project that can be checked
-    prj.projenUpgradeWorkflow?.preSynthesize();
-    const upgradeTask = prj.tasks.tryFind("upgrade-projen");
-    expect(upgradeTask).toBeUndefined();
+    const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
+    expect(tasks["upgrade-projen"]).toBeUndefined();
   });
 
   test("defined for Projen if version is not set", () => {
@@ -284,18 +221,11 @@ describe("projen-upgrade task is", () => {
       defaultReleaseBranch: "main",
       name: "test project",
     });
-    // Presynthesize projenUpgradeWorkflow to get tasks to project that can be checked
-    prj.projenUpgradeWorkflow?.preSynthesize();
-    const upgradeTask = prj.tasks.tryFind("upgrade-projen");
-    expect(upgradeTask).toBeDefined();
-    if (upgradeTask) {
-      const execSteps = upgradeTask.steps.filter((step) =>
-        step.exec?.toString().includes("npm-check-updates")
-      );
-      execSteps.forEach((execStep) => {
-        expect(execStep.exec).toContain("npm");
-      });
-    }
+    const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
+    expect(tasks["upgrade-projen"]).toBeDefined();
+    expect(tasks["upgrade-projen"].steps[0].exec).toStrictEqual(
+      "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'"
+    );
   });
 });
 
