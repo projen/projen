@@ -116,7 +116,7 @@ export class JavaProject extends GitHubProject {
    * Returns the immediate JavaProject a construct belongs to.
    * @param construct the construct
    */
-  public static ofJava(construct: IConstruct): JavaProject {
+  public static ofJavaProject(construct: IConstruct): JavaProject {
     if (construct instanceof JavaProject) {
       return construct;
     }
@@ -128,7 +128,7 @@ export class JavaProject extends GitHubProject {
       );
     }
 
-    return JavaProject.ofJava(parent);
+    return JavaProject.ofJavaProject(parent);
   }
 
   /**

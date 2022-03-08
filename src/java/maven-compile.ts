@@ -29,7 +29,7 @@ export class MavenCompile extends Component {
   constructor(scope: Construct, pom: Pom, options: MavenCompileOptions = {}) {
     super(scope, "MavenCompile");
 
-    Project.of(this).gitignore.exclude("target");
+    Project.ofProject(this).gitignore.exclude("target");
 
     pom.addPlugin("org.apache.maven.plugins/maven-compiler-plugin@3.8.1", {
       configuration: {
@@ -38,6 +38,6 @@ export class MavenCompile extends Component {
       },
     });
 
-    Project.of(this).compileTask.exec("mvn compiler:compile");
+    Project.ofProject(this).compileTask.exec("mvn compiler:compile");
   }
 }

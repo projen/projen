@@ -46,7 +46,7 @@ export class GithubWorkflow extends Component {
   ): GithubWorkflow | undefined {
     const isWorkflow = (c: Component): c is GithubWorkflow =>
       c instanceof GithubWorkflow;
-    return Project.of(scope)
+    return Project.ofProject(scope)
       .components.filter(isWorkflow)
       .find((w) => w.name === name);
   }
@@ -84,7 +84,7 @@ export class GithubWorkflow extends Component {
   ) {
     super(scope, name);
 
-    const github = GitHub.of(Project.of(this));
+    const github = GitHub.of(Project.ofProject(this));
     if (!github) {
       throw new Error(
         "GithubWorkflow can only be added to projects with a GitHub component."

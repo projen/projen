@@ -40,7 +40,7 @@ export class CdkTasks extends Component {
   constructor(scope: Construct) {
     super(scope, "CdkTasks");
 
-    const project = Project.of(this);
+    const project = Project.ofProject(this);
 
     this.synth = project.addTask("synth", {
       description: "Synthesizes your cdk app into cdk.out",

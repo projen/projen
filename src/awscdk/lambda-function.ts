@@ -112,7 +112,7 @@ export class LambdaFunction extends Component {
     super(scope, `LambdaFunction-${options.entrypoint}`);
 
     const cdkDeps = options.cdkDeps;
-    const bundler = Bundler.of(Project.of(this));
+    const bundler = Bundler.of(Project.ofProject(this));
     if (!bundler) {
       throw new Error(
         "No bundler found. Please add a Bundler component to your project."
@@ -123,7 +123,7 @@ export class LambdaFunction extends Component {
 
     // allow Lambda handler code to import dev-deps since they are only needed
     // during bundling
-    const eslint = Eslint.of(Project.of(this));
+    const eslint = Eslint.of(Project.ofProject(this));
     eslint?.allowDevDeps(options.entrypoint);
 
     const entrypoint = options.entrypoint;
@@ -164,8 +164,8 @@ export class LambdaFunction extends Component {
     // e.g:
     //  - outfileAbs => `/project-outdir/assets/foo/bar/baz/foo-function/index.js`
     //  - constructAbs => `/project-outdir/src/foo/bar/baz/foo-function.ts`
-    const outfileAbs = join(Project.of(this).outdir, bundle.outfile);
-    const constructAbs = join(Project.of(this).outdir, constructFile);
+    const outfileAbs = join(Project.ofProject(this).outdir, bundle.outfile);
+    const constructAbs = join(Project.ofProject(this).outdir, constructFile);
     const relativeOutfile = relative(
       dirname(constructAbs),
       dirname(outfileAbs)
@@ -224,14 +224,14 @@ export class LambdaFunction extends Component {
     src.close("}");
     src.close("}");
 
-    Project.of(this).logger.verbose(
+    Project.ofProject(this).logger.verbose(
       `${basePath}: construct "${constructName}" generated under "${constructFile}"`
     );
-    Project.of(this).logger.verbose(
+    Project.ofProject(this).logger.verbose(
       `${basePath}: bundle task "${bundle.bundleTask.name}"`
     );
     if (bundle.watchTask) {
-      Project.of(this).logger.verbose(
+      Project.ofProject(this).logger.verbose(
         `${basePath}: bundle watch task "${bundle.watchTask.name}"`
       );
     }

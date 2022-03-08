@@ -573,7 +573,7 @@ export class Jest extends Component {
 
   constructor(scope: Construct, options: JestOptions = {}) {
     super(scope, "Jest");
-    this.project = NodeProject.ofNode(this);
+    this.project = NodeProject.ofNodeProject(this);
 
     // hard deprecation
     if ((options as any).typescriptConfig) {

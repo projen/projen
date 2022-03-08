@@ -147,7 +147,7 @@ export class TypeScriptProject extends NodeProject {
    * Returns the immediate TypeScriptProject a construct belongs to.
    * @param construct the construct
    */
-  public static ofTypescript(construct: IConstruct): TypeScriptProject {
+  public static ofTypeScriptProject(construct: IConstruct): TypeScriptProject {
     if (construct instanceof TypeScriptProject) {
       return construct;
     }
@@ -159,7 +159,7 @@ export class TypeScriptProject extends NodeProject {
       );
     }
 
-    return TypeScriptProject.ofTypescript(parent);
+    return TypeScriptProject.ofTypeScriptProject(parent);
   }
 
   public readonly docgen?: boolean;

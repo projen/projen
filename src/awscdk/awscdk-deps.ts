@@ -250,7 +250,7 @@ export abstract class AwsCdkDeps extends Component {
         break;
     }
 
-    Project.of(this).deps.addDependency(
+    Project.ofProject(this).deps.addDependency(
       `${this._packageNames.constructs}@${versionRequirement}`,
       this.dependencyType
     );
@@ -282,7 +282,7 @@ export abstract class AwsCdkDeps extends Component {
           );
         }
 
-        Project.of(this).deps.addDependency(
+        Project.ofProject(this).deps.addDependency(
           `${this._packageNames.coreV2}@${this.cdkVersion}`,
           this.dependencyType
         );
@@ -334,7 +334,10 @@ export abstract class AwsCdkDeps extends Component {
    */
   private addV1DependenciesByType(type: DependencyType, ...modules: string[]) {
     for (const module of modules) {
-      Project.of(this).deps.addDependency(`${module}@${this.cdkVersion}`, type);
+      Project.ofProject(this).deps.addDependency(
+        `${module}@${this.cdkVersion}`,
+        type
+      );
     }
   }
 

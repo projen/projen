@@ -89,7 +89,7 @@ export class CdkConfig extends Component {
   constructor(scope: Construct, options: CdkConfigOptions) {
     super(scope, "CdkConfig");
 
-    const project = Project.of(this);
+    const project = Project.ofProject(this);
 
     this.cdkout = options.cdkout ?? "cdk.out";
 

@@ -110,15 +110,15 @@ export class Tasks extends Component {
   }
 
   public synthesize(): void {
-    if (Project.of(this).ejected) {
+    if (Project.ofProject(this).ejected) {
       // Insert a task-runner script so that tasks can be run after ejecting
-      fs.mkdirpSync(path.join(Project.of(this).outdir, "scripts"));
+      fs.mkdirpSync(path.join(Project.ofProject(this).outdir, "scripts"));
       fs.copyFileSync(
         path.join(__dirname, "..", "lib", "run-task.js"),
-        path.join(Project.of(this).outdir, "scripts", "run-task")
+        path.join(Project.ofProject(this).outdir, "scripts", "run-task")
       );
       fs.chmodSync(
-        path.join(Project.of(this).outdir, "scripts", "run-task"),
+        path.join(Project.ofProject(this).outdir, "scripts", "run-task"),
         "755"
       );
     }

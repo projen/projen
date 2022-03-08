@@ -43,7 +43,7 @@ export class Junit extends Component {
     pom.addTestDependency(`org.junit.jupiter/junit-jupiter-api@${version}`);
     pom.addTestDependency(`org.junit.jupiter/junit-jupiter-engine@${version}`);
 
-    Project.of(this).testTask.exec("mvn test");
+    Project.ofProject(this).testTask.exec("mvn test");
 
     const javaPackage = options.sampleJavaPackage ?? "org.acme";
     const javaPackagePath = javaPackage.split(".");

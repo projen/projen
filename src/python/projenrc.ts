@@ -40,7 +40,7 @@ export class Projenrc extends Component {
   constructor(scope: Construct, options: ProjenrcOptions = {}) {
     super(scope, "Projenrc");
 
-    const project = Project.of(this);
+    const project = Project.ofProject(this);
 
     const projenVersion = options.projenVersion ?? PROJEN_VERSION;
     this.rcfile = options.filename ?? ".projenrc.py";
@@ -58,7 +58,7 @@ export class Projenrc extends Component {
   }
 
   private generateProjenrc() {
-    const bootstrap = Project.of(this).initProject;
+    const bootstrap = Project.ofProject(this).initProject;
     if (!bootstrap) {
       return;
     }
@@ -67,13 +67,13 @@ export class Projenrc extends Component {
     const jsiiType = jsiiManifest.types[jsiiFqn];
     const optionsTypeFqn = jsiiType.initializer?.parameters?.[0].type?.fqn;
     if (!optionsTypeFqn) {
-      Project.of(this).logger.warn(
+      Project.ofProject(this).logger.warn(
         "cannot determine jsii type for project options"
       );
       return;
     }
 
-    const pythonFile = join(Project.of(this).outdir, this.rcfile);
+    const pythonFile = join(Project.ofProject(this).outdir, this.rcfile);
 
     // skip if file exists
     if (existsSync(pythonFile)) {
@@ -113,7 +113,7 @@ export class Projenrc extends Component {
     mkdirpSync(dirname(pythonFile));
     writeFileSync(pythonFile, lines.join("\n"));
 
-    Project.of(this).logger.info(
+    Project.ofProject(this).logger.info(
       `Project definition file was created at ${pythonFile}`
     );
   }

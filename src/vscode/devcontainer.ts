@@ -68,7 +68,7 @@ export class DevContainer extends Component implements IDevEnvironment {
       extensions: this.vscodeExtensions,
     };
 
-    new JsonFile(Project.of(this), DEVCONTAINER_FILE, {
+    new JsonFile(Project.ofProject(this), DEVCONTAINER_FILE, {
       obj: this.config,
       omitEmpty: true,
     });

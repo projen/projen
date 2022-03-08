@@ -34,11 +34,11 @@ export class Poetry
       exec: "poetry update",
     });
 
-    Project.of(this).tasks.addEnvironment(
+    Project.ofProject(this).tasks.addEnvironment(
       "VIRTUAL_ENV",
       "$(poetry env info -p)"
     );
-    Project.of(this).tasks.addEnvironment(
+    Project.ofProject(this).tasks.addEnvironment(
       "PATH",
       "$(echo $(poetry env info -p)/bin:$PATH)"
     );
@@ -83,7 +83,7 @@ export class Poetry
   private synthDependencies() {
     const dependencies: { [key: string]: any } = {};
     let pythonDefined: boolean = false;
-    for (const pkg of Project.of(this).deps.all) {
+    for (const pkg of Project.ofProject(this).deps.all) {
       if (pkg.name === "python") {
         pythonDefined = true;
       }
@@ -100,7 +100,7 @@ export class Poetry
 
   private synthDevDependencies() {
     const dependencies: { [key: string]: any } = {};
-    for (const pkg of Project.of(this).deps.all) {
+    for (const pkg of Project.ofProject(this).deps.all) {
       if ([DependencyType.DEVENV].includes(pkg.type)) {
         dependencies[pkg.name] = pkg.version;
       }
@@ -114,7 +114,7 @@ export class Poetry
    * @param spec Format `<module>@<semver>`
    */
   public addDependency(spec: string) {
-    Project.of(this).deps.addDependency(spec, DependencyType.RUNTIME);
+    Project.ofProject(this).deps.addDependency(spec, DependencyType.RUNTIME);
   }
 
   /**
@@ -123,7 +123,7 @@ export class Poetry
    * @param spec Format `<module>@<semver>`
    */
   public addDevDependency(spec: string) {
-    Project.of(this).deps.addDependency(spec, DependencyType.DEVENV);
+    Project.ofProject(this).deps.addDependency(spec, DependencyType.DEVENV);
   }
 
   /**
@@ -131,24 +131,26 @@ export class Poetry
    */
   public setupEnvironment() {
     const result = execOrUndefined("which poetry", {
-      cwd: Project.of(this).outdir,
+      cwd: Project.ofProject(this).outdir,
     });
     if (!result) {
-      Project.of(this).logger.info(
+      Project.ofProject(this).logger.info(
         "Unable to setup an environment since poetry is not installed. Please install poetry (https://python-poetry.org/docs/) or use a different component for managing environments such as 'venv'."
       );
     }
 
     let envPath = execOrUndefined("poetry env info -p", {
-      cwd: Project.of(this).outdir,
+      cwd: Project.ofProject(this).outdir,
     });
     if (!envPath) {
-      Project.of(this).logger.info("Setting up a virtual environment...");
-      exec("poetry env use python", { cwd: Project.of(this).outdir });
+      Project.ofProject(this).logger.info(
+        "Setting up a virtual environment..."
+      );
+      exec("poetry env use python", { cwd: Project.ofProject(this).outdir });
       envPath = execOrUndefined("poetry env info -p", {
-        cwd: Project.of(this).outdir,
+        cwd: Project.ofProject(this).outdir,
       });
-      Project.of(this).logger.info(
+      Project.ofProject(this).logger.info(
         `Environment successfully created (located in ${envPath}}).`
       );
     }
@@ -158,8 +160,8 @@ export class Poetry
    * Installs dependencies (called during post-synthesis).
    */
   public installDependencies() {
-    Project.of(this).logger.info("Installing dependencies...");
-    const runtime = new TaskRuntime(Project.of(this).outdir);
+    Project.ofProject(this).logger.info("Installing dependencies...");
+    const runtime = new TaskRuntime(Project.ofProject(this).outdir);
     runtime.runTask(this.installTask.name);
   }
 }

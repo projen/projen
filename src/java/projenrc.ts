@@ -60,7 +60,7 @@ export class Projenrc extends Component {
   constructor(scope: Construct, pom: Pom, options: ProjenrcOptions = {}) {
     super(scope, "Projenrc");
 
-    const project = Project.of(this);
+    const project = Project.ofProject(this);
 
     const projenVersion = options.projenVersion ?? PROJEN_VERSION;
     this.className = options.className ?? "projenrc";
@@ -91,7 +91,7 @@ export class Projenrc extends Component {
   }
 
   private generateProjenrc() {
-    const bootstrap = Project.of(this).initProject;
+    const bootstrap = Project.ofProject(this).initProject;
     if (!bootstrap) {
       return;
     }
@@ -101,14 +101,14 @@ export class Projenrc extends Component {
     const javaTarget = jsiiManifest.targets.java;
     const optionsTypeFqn = jsiiType.initializer?.parameters?.[0].type?.fqn;
     if (!optionsTypeFqn) {
-      Project.of(this).logger.warn(
+      Project.ofProject(this).logger.warn(
         "cannot determine jsii type for project options"
       );
       return;
     }
     const jsiiOptionsType = jsiiManifest.types[optionsTypeFqn];
     if (!jsiiOptionsType) {
-      Project.of(this).logger.warn(
+      Project.ofProject(this).logger.warn(
         `cannot find jsii type for project options: ${optionsTypeFqn}`
       );
       return;
@@ -126,7 +126,7 @@ export class Projenrc extends Component {
     }
 
     const javaFile = join(
-      Project.of(this).outdir,
+      Project.ofProject(this).outdir,
       dir,
       ...javaPackage,
       javaClass + ".java"
@@ -192,7 +192,7 @@ export class Projenrc extends Component {
     mkdirpSync(dirname(javaFile));
     writeFileSync(javaFile, lines.join("\n"));
 
-    Project.of(this).logger.info(
+    Project.ofProject(this).logger.info(
       `Project definition file was created at ${javaFile}`
     );
   }

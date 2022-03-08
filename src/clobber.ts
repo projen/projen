@@ -6,7 +6,7 @@ export class Clobber extends Component {
   constructor(scope: Construct) {
     super(scope, "Clobber");
 
-    const task = Project.of(this).addTask("clobber", {
+    const task = Project.ofProject(this).addTask("clobber", {
       description: "hard resets to HEAD of origin and cleans the local repo",
       condition: "git diff --exit-code > /dev/null",
       env: {

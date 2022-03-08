@@ -7,7 +7,7 @@ export class PytestSample extends Component {
   constructor(scope: Construct, testdir: string) {
     super(scope, "PytestSample");
 
-    const project = PythonProject.ofPython(this);
+    const project = PythonProject.ofPythonProject(this);
 
     new SampleDir(project, testdir, {
       files: {

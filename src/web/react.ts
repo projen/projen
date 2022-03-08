@@ -215,7 +215,10 @@ export class ReactComponent extends Component {
       project.addDevDeps("react-app-rewired");
       project.addFields({ "config-overrides-path": overridesPath });
 
-      const configOverrides = new SourceCode(Project.of(this), overridesPath);
+      const configOverrides = new SourceCode(
+        Project.ofProject(this),
+        overridesPath
+      );
       if (!configOverrides.marker) {
         configOverrides.line(`// ${configOverrides.marker}`);
       }

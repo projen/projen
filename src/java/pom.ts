@@ -150,7 +150,7 @@ export class Pom extends Component {
     this.artifactId = options.artifactId;
     this.version = options.version;
     this.packaging = options.packaging ?? "jar";
-    this.name = Project.of(this).name;
+    this.name = Project.ofProject(this).name;
     this.description = options.description;
     this.url = options.url;
 
@@ -172,7 +172,7 @@ export class Pom extends Component {
    * @param spec Format `<groupId>/<artifactId>@<semver>`
    */
   public addDependency(spec: string) {
-    Project.of(this).deps.addDependency(spec, DependencyType.RUNTIME);
+    Project.ofProject(this).deps.addDependency(spec, DependencyType.RUNTIME);
   }
 
   /**
@@ -181,7 +181,7 @@ export class Pom extends Component {
    * @param spec Format `<groupId>/<artifactId>@<semver>`
    */
   public addTestDependency(spec: string) {
-    Project.of(this).deps.addDependency(spec, DependencyType.TEST);
+    Project.ofProject(this).deps.addDependency(spec, DependencyType.TEST);
   }
 
   /**
@@ -194,9 +194,9 @@ export class Pom extends Component {
    */
   public addPlugin(spec: string, options: PluginOptions = {}) {
     for (const dep of options.dependencies ?? []) {
-      Project.of(this).deps.addDependency(dep, DependencyType.BUILD);
+      Project.ofProject(this).deps.addDependency(dep, DependencyType.BUILD);
     }
-    return Project.of(this).deps.addDependency(
+    return Project.ofProject(this).deps.addDependency(
       spec,
       DependencyType.BUILD,
       options
@@ -225,7 +225,7 @@ export class Pom extends Component {
   }
 
   private synthDependencies() {
-    const deps = Project.of(this).deps.all;
+    const deps = Project.ofProject(this).deps.all;
     if (deps.length === 0) {
       return;
     }

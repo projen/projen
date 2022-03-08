@@ -154,7 +154,7 @@ export class JsiiProject extends TypeScriptProject {
    * Returns the immediate JsiiProject a construct belongs to.
    * @param construct the construct
    */
-  public static ofJsii(construct: IConstruct): JsiiProject {
+  public static ofJsiiProject(construct: IConstruct): JsiiProject {
     if (construct instanceof JsiiProject) {
       return construct;
     }
@@ -166,7 +166,7 @@ export class JsiiProject extends TypeScriptProject {
       );
     }
 
-    return JsiiProject.ofJsii(parent);
+    return JsiiProject.ofJsiiProject(parent);
   }
 
   public readonly eslint?: Eslint;

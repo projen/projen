@@ -190,7 +190,7 @@ export class TaskWorkflow extends GithubWorkflow {
         // run the main build task
         {
           name: options.task.name,
-          run: Project.of(this).runTaskCommand(options.task),
+          run: Project.ofProject(this).runTaskCommand(options.task),
         },
 
         ...postBuildSteps,

@@ -30,7 +30,7 @@ export class NpmConfig extends Component {
   constructor(scope: Construct, options: NpmConfigOptions = {}) {
     super(scope, "NpmConfig");
 
-    const project = NodeProject.ofNode(this);
+    const project = NodeProject.ofNodeProject(this);
 
     new IniFile(project, ".npmrc", { obj: this.config });
 

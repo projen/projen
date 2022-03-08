@@ -58,12 +58,12 @@ export class Projenrc extends Component {
   }
 
   private generateProjenrc() {
-    const rcfile = resolve(Project.of(this).outdir, this.rcfile);
+    const rcfile = resolve(Project.ofProject(this).outdir, this.rcfile);
     if (existsSync(rcfile)) {
       return; // already exists
     }
 
-    const bootstrap = Project.of(this).initProject;
+    const bootstrap = Project.ofProject(this).initProject;
     if (!bootstrap) {
       return;
     }
@@ -91,7 +91,7 @@ export class Projenrc extends Component {
     lines.push("project.synth();");
 
     writeFileSync(rcfile, lines.join("\n"));
-    Project.of(this).logger.info(
+    Project.ofProject(this).logger.info(
       `Project definition file was created at ${rcfile}`
     );
   }

@@ -111,7 +111,7 @@ export class BuildWorkflow extends Component {
   constructor(scope: Construct, options: BuildWorkflowOptions) {
     super(scope, "BuildWorkflow");
 
-    const github = GitHub.of(Project.of(this));
+    const github = GitHub.of(Project.ofProject(this));
     if (!github) {
       throw new Error(
         "BuildWorkflow is currently only supported for GitHub projects"
@@ -233,7 +233,7 @@ export class BuildWorkflow extends Component {
   public addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions) {
     this.addPostBuildJobCommands(
       `post-build-${task.name}`,
-      [`${Project.of(this).projenCommand} ${task.name}`],
+      [`${Project.ofProject(this).projenCommand} ${task.name}`],
       {
         checkoutRepo: true,
         installDeps: true,
@@ -274,11 +274,11 @@ export class BuildWorkflow extends Component {
     if (
       options?.checkoutRepo &&
       options?.installDeps &&
-      NodeProject.ofNode(this)
+      NodeProject.ofNodeProject(this)
     ) {
       steps.push({
         name: "Install dependencies",
-        run: `${NodeProject.ofNode(this).package.installCommand}`,
+        run: `${NodeProject.ofNodeProject(this).package.installCommand}`,
       });
     }
 
@@ -340,7 +340,7 @@ export class BuildWorkflow extends Component {
 
       {
         name: this.buildTask.name,
-        run: Project.of(this).runTaskCommand(this.buildTask),
+        run: Project.ofProject(this).runTaskCommand(this.buildTask),
       },
 
       ...this.postBuildSteps,

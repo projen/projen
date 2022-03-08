@@ -64,7 +64,7 @@ export class Logger extends Component {
 
     if (level <= maxLevel) {
       const color = this.colorForLogLevel(level);
-      const prefix = this.usePrefix ? `[${Project.of(this).name}] ` : "";
+      const prefix = this.usePrefix ? `[${Project.ofProject(this).name}] ` : "";
       console.error(`${ICON} ${prefix}${color(...text)}`);
     }
   }

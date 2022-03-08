@@ -467,7 +467,7 @@ export class Release extends Component {
       branchName === "main" || branchName === "master"
         ? "release"
         : `release:${branchName}`;
-    const releaseTask = Project.of(this).addTask(releaseTaskName, {
+    const releaseTask = Project.ofProject(this).addTask(releaseTaskName, {
       description: `Prepare a release from "${branchName}" branch`,
       env,
     });

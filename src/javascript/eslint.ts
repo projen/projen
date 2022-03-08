@@ -127,7 +127,7 @@ export class Eslint extends Component {
   constructor(scope: Construct, options: EslintOptions) {
     super(scope, "Eslint");
 
-    this.nodeProject = NodeProject.ofNode(this);
+    this.nodeProject = NodeProject.ofNodeProject(this);
 
     this.nodeProject.addDevDeps(
       "eslint@^8",

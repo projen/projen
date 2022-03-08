@@ -365,7 +365,7 @@ export class Prettier extends Component {
   constructor(scope: Construct, options: PrettierOptions) {
     super(scope, "Prettier");
 
-    const project = NodeProject.ofNode(this);
+    const project = NodeProject.ofNodeProject(this);
 
     this._overrides = options.overrides ?? [];
 
@@ -415,7 +415,7 @@ export class Prettier extends Component {
     // Add automatically generated SourceCode files to .prettierignore as they may not be formatted correctly.
     const isSourceCode = (c: Component): c is SourceCode =>
       c instanceof SourceCode;
-    Project.of(this)
+    Project.ofProject(this)
       .components.filter(isSourceCode)
       .forEach((c) => {
         this.addIgnorePattern(c.filePath);

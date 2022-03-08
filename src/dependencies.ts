@@ -56,7 +56,7 @@ export class Dependencies extends Component {
     // this is not really required at the moment, but actually quite useful as a
     // checked-in source of truth for dependencies and will potentially be
     // valuable in the future for CLI tools.
-    if (!Project.of(this).ejected) {
+    if (!Project.ofProject(this).ejected) {
       new JsonFile(this, Dependencies.MANIFEST_FILE, {
         omitEmpty: true,
         obj: () => this.toJson(),
@@ -137,7 +137,7 @@ export class Dependencies extends Component {
     type: DependencyType,
     metadata: { [key: string]: any } = {}
   ): Dependency {
-    Project.of(this).logger.debug(`${type}-dep ${spec}`);
+    Project.ofProject(this).logger.debug(`${type}-dep ${spec}`);
 
     const dep: Dependency = {
       ...Dependencies.parseDependency(spec),
@@ -148,7 +148,7 @@ export class Dependencies extends Component {
     const existingDepIndex = this.tryGetDependencyIndex(dep.name, type);
 
     if (existingDepIndex !== -1) {
-      Project.of(this).logger.debug(
+      Project.ofProject(this).logger.debug(
         `updating existing ${dep.type}-dep ${dep.name} with more specific version/metadata`
       );
       this._deps[existingDepIndex] = dep;

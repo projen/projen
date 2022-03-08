@@ -53,7 +53,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
    * Returns the immediate AwsCdkConstructLibrary a construct belongs to.
    * @param construct the construct
    */
-  public static ofAwscdkConstruct(
+  public static ofAwsCdkConstructLibrary(
     construct: IConstruct
   ): AwsCdkConstructLibrary {
     if (construct instanceof AwsCdkConstructLibrary) {
@@ -67,7 +67,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
       );
     }
 
-    return AwsCdkConstructLibrary.ofAwscdkConstruct(parent);
+    return AwsCdkConstructLibrary.ofAwsCdkConstructLibrary(parent);
   }
   public readonly cdkDeps: AwsCdkDeps;
 

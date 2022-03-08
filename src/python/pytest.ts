@@ -29,7 +29,7 @@ export class Pytest extends Component {
   constructor(scope: Construct, options: PytestOptions = {}) {
     super(scope, "Pytest");
 
-    const project = PythonProject.ofPython(this);
+    const project = PythonProject.ofPythonProject(this);
 
     const version = options.version ?? "6.2.1";
 

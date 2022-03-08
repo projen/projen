@@ -51,7 +51,7 @@ export class Version extends Component {
   constructor(scope: Construct, options: VersionOptions) {
     super(scope, "Version");
 
-    const project = Project.of(this);
+    const project = Project.ofProject(this);
 
     this.changelogFileName = "changelog.md";
     this.versionFileName = "version.txt";

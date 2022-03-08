@@ -82,13 +82,13 @@ export class MavenPackaging extends Component {
     const distdir = options.distdir ?? "dist/java";
 
     for (const [k, v] of Object.entries(env)) {
-      Project.of(this).packageTask.env(k, v);
+      Project.ofProject(this).packageTask.env(k, v);
     }
-    Project.of(this).packageTask.exec(`mkdir -p ${distdir}`);
-    Project.of(this).packageTask.exec(
+    Project.ofProject(this).packageTask.exec(`mkdir -p ${distdir}`);
+    Project.ofProject(this).packageTask.exec(
       `mvn deploy -D=altDeploymentRepository=local::default::file:///$PWD/${distdir}`
     );
 
-    Project.of(this).gitignore.exclude(distdir);
+    Project.ofProject(this).gitignore.exclude(distdir);
   }
 }

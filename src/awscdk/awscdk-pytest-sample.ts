@@ -7,7 +7,7 @@ export class AwsCdkPytestSample extends Component {
   constructor(scope: Construct, testdir: string) {
     super(scope, "AwsCdkPytestSample");
 
-    const project = AwsCdkPythonApp.ofAwscdkAppPy(this);
+    const project = AwsCdkPythonApp.ofAwsCdkPythonApp(this);
 
     new SampleDir(this, testdir, {
       files: {

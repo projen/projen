@@ -115,7 +115,9 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
    * Returns the immediate Cdk8sTypeScriptApp a construct belongs to.
    * @param construct the construct
    */
-  public static ofCdk8sAppTs(construct: IConstruct): Cdk8sTypeScriptApp {
+  public static ofCdk8sTypeScriptApp(
+    construct: IConstruct
+  ): Cdk8sTypeScriptApp {
     if (construct instanceof Cdk8sTypeScriptApp) {
       return construct;
     }
@@ -127,7 +129,7 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
       );
     }
 
-    return Cdk8sTypeScriptApp.ofCdk8sAppTs(parent);
+    return Cdk8sTypeScriptApp.ofCdk8sTypeScriptApp(parent);
   }
   /**
    * The CDK8s version this app is using.
@@ -253,7 +255,7 @@ class SampleCode extends Component {
   }
 
   public synthesize() {
-    const project = Cdk8sTypeScriptApp.ofCdk8sAppTs(this);
+    const project = Cdk8sTypeScriptApp.ofCdk8sTypeScriptApp(this);
     const outdir = project.outdir;
     const srcdir = path.join(outdir, project.srcdir);
     if (

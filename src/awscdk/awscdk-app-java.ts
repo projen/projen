@@ -30,7 +30,7 @@ export class AwsCdkJavaApp extends JavaProject {
    * Returns the immediate AwsCdkJavaApp a construct belongs to.
    * @param construct the construct
    */
-  public static ofAwscdkAppJava(construct: IConstruct): AwsCdkJavaApp {
+  public static ofAwsCdkJavaApp(construct: IConstruct): AwsCdkJavaApp {
     if (construct instanceof AwsCdkJavaApp) {
       return construct;
     }
@@ -42,7 +42,7 @@ export class AwsCdkJavaApp extends JavaProject {
       );
     }
 
-    return AwsCdkJavaApp.ofAwscdkAppJava(parent);
+    return AwsCdkJavaApp.ofAwsCdkJavaApp(parent);
   }
   /**
    * The `cdk.json` file.

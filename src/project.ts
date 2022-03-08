@@ -96,7 +96,7 @@ export class Project extends Construct {
    * Returns the immediate Project a construct belongs to.
    * @param construct the construct
    */
-  public static of(construct: IConstruct): Project {
+  public static ofProject(construct: IConstruct): Project {
     if (construct instanceof Project) {
       return construct;
     }
@@ -106,7 +106,7 @@ export class Project extends Construct {
       throw new Error("cannot find a parent project (directly or indirectly)");
     }
 
-    return Project.of(parent);
+    return Project.ofProject(parent);
   }
 
   /**

@@ -358,7 +358,7 @@ export class NodeProject extends GitHubProject {
    * Returns the immediate NodeProject a construct belongs to.
    * @param construct the construct
    */
-  public static ofNode(construct: IConstruct): NodeProject {
+  public static ofNodeProject(construct: IConstruct): NodeProject {
     if (construct instanceof NodeProject) {
       return construct;
     }
@@ -370,7 +370,7 @@ export class NodeProject extends GitHubProject {
       );
     }
 
-    return NodeProject.ofNode(parent);
+    return NodeProject.ofNodeProject(parent);
   }
 
   /**

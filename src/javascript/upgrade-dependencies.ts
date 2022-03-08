@@ -123,7 +123,7 @@ export class UpgradeDependencies extends Component {
   ) {
     super(scope, id);
 
-    this._project = NodeProject.ofNode(this);
+    this._project = NodeProject.ofNodeProject(this);
     this.options = options;
     this.pullRequestTitle = options.pullRequestTitle ?? "upgrade dependencies";
     this.ignoresProjen = this.options.ignoreProjen ?? true;

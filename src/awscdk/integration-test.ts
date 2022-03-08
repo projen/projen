@@ -58,7 +58,7 @@ export class IntegrationTest extends IntegrationTestBase {
   constructor(scope: Construct, options: IntegrationTestOptions) {
     super(scope, options);
 
-    const project = Project.of(this);
+    const project = Project.ofProject(this);
 
     if (!project.deps.tryGetDependency("aws-cdk")) {
       project.deps.addDependency(

@@ -67,7 +67,7 @@ export abstract class IntegrationTestBase extends Component {
     const name = options.name ?? basename(entry, TYPESCRIPT_INTEG_EXT);
     super(scope, `IntegrationTest:${name}`);
 
-    const project = Project.of(this);
+    const project = Project.ofProject(this);
 
     this.name = name;
     const dir = dirname(entry);

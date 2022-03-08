@@ -1946,12 +1946,12 @@ tryFindObjectFile(filePath: string): ObjectFile
 __Returns__:
 * <code>[ObjectFile](#projen-objectfile)</code>
 
-#### *static* of(construct)🔹 <a id="projen-project-of"></a>
+#### *static* ofProject(construct)🔹 <a id="projen-project-ofproject"></a>
 
 Returns the immediate Project a construct belongs to.
 
 ```ts
-static of(construct: IConstruct): Project
+static ofProject(construct: IConstruct): Project
 ```
 
 * **construct** (<code>[IConstruct](#constructs-iconstruct)</code>)  the construct.
@@ -3241,12 +3241,12 @@ addCdkTestDependencies(...deps: string[]): void
 
 
 
-#### *static* ofAwscdkConstruct(construct)🔹 <a id="projen-awscdk-awscdkconstructlibrary-ofawscdkconstruct"></a>
+#### *static* ofAwsCdkConstructLibrary(construct)🔹 <a id="projen-awscdk-awscdkconstructlibrary-ofawscdkconstructlibrary"></a>
 
 Returns the immediate AwsCdkConstructLibrary a construct belongs to.
 
 ```ts
-static ofAwscdkConstruct(construct: IConstruct): AwsCdkConstructLibrary
+static ofAwsCdkConstructLibrary(construct: IConstruct): AwsCdkConstructLibrary
 ```
 
 * **construct** (<code>[IConstruct](#constructs-iconstruct)</code>)  the construct.
@@ -3551,12 +3551,12 @@ addCdkDependency(...modules: string[]): void
 
 
 
-#### *static* ofAwscdkAppJava(construct)🔹 <a id="projen-awscdk-awscdkjavaapp-ofawscdkappjava"></a>
+#### *static* ofAwsCdkJavaApp(construct)🔹 <a id="projen-awscdk-awscdkjavaapp-ofawscdkjavaapp"></a>
 
 Returns the immediate AwsCdkJavaApp a construct belongs to.
 
 ```ts
-static ofAwscdkAppJava(construct: IConstruct): AwsCdkJavaApp
+static ofAwsCdkJavaApp(construct: IConstruct): AwsCdkJavaApp
 ```
 
 * **construct** (<code>[IConstruct](#constructs-iconstruct)</code>)  the construct.
@@ -3664,12 +3664,12 @@ Name | Type | Description
 ### Methods
 
 
-#### *static* ofAwscdkAppPy(construct)🔹 <a id="projen-awscdk-awscdkpythonapp-ofawscdkapppy"></a>
+#### *static* ofAwsCdkPythonApp(construct)🔹 <a id="projen-awscdk-awscdkpythonapp-ofawscdkpythonapp"></a>
 
 Returns the immediate AwsCdkPythonApp a construct belongs to.
 
 ```ts
-static ofAwscdkAppPy(construct: IConstruct): AwsCdkPythonApp
+static ofAwsCdkPythonApp(construct: IConstruct): AwsCdkPythonApp
 ```
 
 * **construct** (<code>[IConstruct](#constructs-iconstruct)</code>)  the construct.
@@ -3876,12 +3876,12 @@ addCdkDependency(...modules: string[]): void
 
 
 
-#### *static* ofAwscdkAppTs(construct)🔹 <a id="projen-awscdk-awscdktypescriptapp-ofawscdkappts"></a>
+#### *static* ofAwsCdkTypeScriptApp(construct)🔹 <a id="projen-awscdk-awscdktypescriptapp-ofawscdktypescriptapp"></a>
 
 Returns the immediate AwsCdkTypeScriptApp a construct belongs to.
 
 ```ts
-static ofAwscdkAppTs(construct: IConstruct): AwsCdkTypeScriptApp
+static ofAwsCdkTypeScriptApp(construct: IConstruct): AwsCdkTypeScriptApp
 ```
 
 * **construct** (<code>[IConstruct](#constructs-iconstruct)</code>)  the construct.
@@ -4924,12 +4924,12 @@ Name | Type | Description
 ### Methods
 
 
-#### *static* ofJsii(construct)🔹 <a id="projen-cdk-jsiiproject-ofjsii"></a>
+#### *static* ofJsiiProject(construct)🔹 <a id="projen-cdk-jsiiproject-ofjsiiproject"></a>
 
 Returns the immediate JsiiProject a construct belongs to.
 
 ```ts
-static ofJsii(construct: IConstruct): JsiiProject
+static ofJsiiProject(construct: IConstruct): JsiiProject
 ```
 
 * **construct** (<code>[IConstruct](#constructs-iconstruct)</code>)  the construct.
@@ -5141,12 +5141,12 @@ Name | Type | Description
 ### Methods
 
 
-#### *static* ofCdk8sAppTs(construct)🔹 <a id="projen-cdk8s-cdk8stypescriptapp-ofcdk8sappts"></a>
+#### *static* ofCdk8sTypeScriptApp(construct)🔹 <a id="projen-cdk8s-cdk8stypescriptapp-ofcdk8stypescriptapp"></a>
 
 Returns the immediate Cdk8sTypeScriptApp a construct belongs to.
 
 ```ts
-static ofCdk8sAppTs(construct: IConstruct): Cdk8sTypeScriptApp
+static ofCdk8sTypeScriptApp(construct: IConstruct): Cdk8sTypeScriptApp
 ```
 
 * **construct** (<code>[IConstruct](#constructs-iconstruct)</code>)  the construct.
@@ -6608,12 +6608,12 @@ addTestDependency(spec: string): void
 
 
 
-#### *static* ofJava(construct)🔹 <a id="projen-java-javaproject-ofjava"></a>
+#### *static* ofJavaProject(construct)🔹 <a id="projen-java-javaproject-ofjavaproject"></a>
 
 Returns the immediate JavaProject a construct belongs to.
 
 ```ts
-static ofJava(construct: IConstruct): JavaProject
+static ofJavaProject(construct: IConstruct): JavaProject
 ```
 
 * **construct** (<code>[IConstruct](#constructs-iconstruct)</code>)  the construct.
@@ -7873,12 +7873,12 @@ setScript(name: string, command: string): void
 
 
 
-#### *static* ofNode(construct)🔹 <a id="projen-javascript-nodeproject-ofnode"></a>
+#### *static* ofNodeProject(construct)🔹 <a id="projen-javascript-nodeproject-ofnodeproject"></a>
 
 Returns the immediate NodeProject a construct belongs to.
 
 ```ts
-static ofNode(construct: IConstruct): NodeProject
+static ofNodeProject(construct: IConstruct): NodeProject
 ```
 
 * **construct** (<code>[IConstruct](#constructs-iconstruct)</code>)  the construct.
@@ -8681,12 +8681,12 @@ postSynthesize(): void
 
 
 
-#### *static* ofPython(construct)🔹 <a id="projen-python-pythonproject-ofpython"></a>
+#### *static* ofPythonProject(construct)🔹 <a id="projen-python-pythonproject-ofpythonproject"></a>
 
 Returns the immediate PythonProject a construct belongs to.
 
 ```ts
-static ofPython(construct: IConstruct): PythonProject
+static ofPythonProject(construct: IConstruct): PythonProject
 ```
 
 * **construct** (<code>[IConstruct](#constructs-iconstruct)</code>)  the construct.
@@ -9813,12 +9813,12 @@ Name | Type | Description
 ### Methods
 
 
-#### *static* ofTypescript(construct)🔹 <a id="projen-typescript-typescriptproject-oftypescript"></a>
+#### *static* ofTypeScriptProject(construct)🔹 <a id="projen-typescript-typescriptproject-oftypescriptproject"></a>
 
 Returns the immediate TypeScriptProject a construct belongs to.
 
 ```ts
-static ofTypescript(construct: IConstruct): TypeScriptProject
+static ofTypeScriptProject(construct: IConstruct): TypeScriptProject
 ```
 
 * **construct** (<code>[IConstruct](#constructs-iconstruct)</code>)  the construct.

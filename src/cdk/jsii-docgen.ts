@@ -23,7 +23,7 @@ export class JsiiDocgen extends Component {
   constructor(scope: Construct, options: JsiiDocgenOptions = {}) {
     super(scope, "JsiiDocgen");
 
-    const project = JsiiProject.ofJsii(this);
+    const project = JsiiProject.ofJsiiProject(this);
     project.addDevDeps("jsii-docgen");
 
     const filePath = options.filePath ?? "API.md";

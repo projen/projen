@@ -63,7 +63,7 @@ export class Mergify extends Component {
   constructor(scope: Construct, options: MergifyOptions = {}) {
     super(scope, "Mergify");
 
-    const github = GitHub.of(Project.of(this));
+    const github = GitHub.of(Project.ofProject(this));
     if (!github) {
       throw new Error(
         "Mergify can only be added to projects with a GitHub component."
@@ -81,7 +81,7 @@ export class Mergify extends Component {
 
   private createYamlFile() {
     if (this.yamlFile == null) {
-      this.yamlFile = new YamlFile(Project.of(this), ".mergify.yml", {
+      this.yamlFile = new YamlFile(Project.ofProject(this), ".mergify.yml", {
         obj: {
           queue_rules: this.queues,
           pull_request_rules: this.rules,

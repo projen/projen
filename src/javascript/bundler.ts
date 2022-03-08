@@ -80,13 +80,13 @@ export class Bundler extends Component {
   public get bundleTask(): Task {
     if (!this._task) {
       this.addBundlingSupport();
-      this._task = Project.of(this).tasks.addTask("bundle", {
+      this._task = Project.ofProject(this).tasks.addTask("bundle", {
         description: "Prepare assets",
       });
 
       // install the bundle task into the pre-compile phase.
       if (this.addToPreCompile) {
-        Project.of(this).preCompileTask.spawn(this._task);
+        Project.ofProject(this).preCompileTask.spawn(this._task);
       }
     }
 
@@ -122,7 +122,7 @@ export class Bundler extends Component {
       args.push("--sourcemap");
     }
 
-    const bundleTask = Project.of(this).addTask(`bundle:${name}`, {
+    const bundleTask = Project.ofProject(this).addTask(`bundle:${name}`, {
       description: `Create a JavaScript bundle from ${entrypoint}`,
       exec: args.join(" "),
     });
@@ -132,7 +132,7 @@ export class Bundler extends Component {
     let watchTask;
     const watch = options.watchTask ?? true;
     if (watch) {
-      watchTask = Project.of(this).addTask(`bundle:${name}:watch`, {
+      watchTask = Project.ofProject(this).addTask(`bundle:${name}:watch`, {
         description: `Continuously update the JavaScript bundle from ${entrypoint}`,
         exec: `${args.join(" ")} --watch`,
       });
@@ -152,12 +152,12 @@ export class Bundler extends Component {
    */
   private addBundlingSupport() {
     const ignoreEntry = `/${this.bundledir}/`;
-    Project.of(this).addGitIgnore(ignoreEntry);
-    Project.of(this).addPackageIgnore(`!${ignoreEntry}`); // include in tarball
+    Project.ofProject(this).addGitIgnore(ignoreEntry);
+    Project.ofProject(this).addPackageIgnore(`!${ignoreEntry}`); // include in tarball
     const dep = this.esbuildVersion
       ? `esbuild@${this.esbuildVersion}`
       : "esbuild";
-    Project.of(this).deps.addDependency(dep, DependencyType.BUILD);
+    Project.ofProject(this).deps.addDependency(dep, DependencyType.BUILD);
   }
 }
 

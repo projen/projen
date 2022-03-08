@@ -9,7 +9,7 @@ export class TypedocDocgen extends Component {
   constructor(scope: Construct) {
     super(scope, "TypedocDocgen");
 
-    const project = TypeScriptProject.ofTypescript(this);
+    const project = TypeScriptProject.ofTypeScriptProject(this);
 
     project.addDevDeps("typedoc@^0.21.4");
 

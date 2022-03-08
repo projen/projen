@@ -21,7 +21,7 @@ export class Pip extends Component implements IPythonDeps {
   constructor(scope: Construct, _options: PipOptions = {}) {
     super(scope, "Pip");
 
-    const project = PythonProject.ofPython(this);
+    const project = PythonProject.ofPythonProject(this);
 
     new RequirementsFile(project, "requirements.txt", {
       packageProvider: new RuntimeDependencyProvider(project),
@@ -44,7 +44,7 @@ export class Pip extends Component implements IPythonDeps {
    * @param spec Format `<module>@<semver>`
    */
   public addDependency(spec: string) {
-    PythonProject.ofPython(this).deps.addDependency(
+    PythonProject.ofPythonProject(this).deps.addDependency(
       spec,
       DependencyType.RUNTIME
     );
@@ -56,7 +56,7 @@ export class Pip extends Component implements IPythonDeps {
    * @param spec Format `<module>@<semver>`
    */
   public addDevDependency(spec: string) {
-    PythonProject.ofPython(this).deps.addDependency(
+    PythonProject.ofPythonProject(this).deps.addDependency(
       spec,
       DependencyType.DEVENV
     );
@@ -66,9 +66,11 @@ export class Pip extends Component implements IPythonDeps {
    * Installs dependencies (called during post-synthesis).
    */
   public installDependencies() {
-    PythonProject.ofPython(this).logger.info("Installing dependencies...");
+    PythonProject.ofPythonProject(this).logger.info(
+      "Installing dependencies..."
+    );
 
-    const runtime = new TaskRuntime(PythonProject.ofPython(this).outdir);
+    const runtime = new TaskRuntime(PythonProject.ofPythonProject(this).outdir);
     runtime.runTask(this.installTask.name);
   }
 }

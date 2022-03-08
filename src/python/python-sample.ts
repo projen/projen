@@ -15,7 +15,7 @@ export class PythonSample extends Component {
   constructor(scope: Construct, _options: PythonSampleOptions) {
     super(scope, "PythonSample");
 
-    const project = PythonProject.ofPython(this);
+    const project = PythonProject.ofPythonProject(this);
 
     new SampleDir(project, project.moduleName, {
       files: {

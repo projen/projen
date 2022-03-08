@@ -53,7 +53,7 @@ export class AutoApprove extends Component {
   constructor(scope: Construct, options: AutoApproveOptions = {}) {
     super(scope, "AutoApprove");
 
-    const github = GitHub.of(Project.of(this));
+    const github = GitHub.of(Project.ofProject(this));
     if (!github) {
       throw new Error(
         "AutoApprove can only be added to projects with a GitHub component."

@@ -148,7 +148,7 @@ export class PythonProject extends GitHubProject {
    * Returns the immediate PythonProject a construct belongs to.
    * @param construct the construct
    */
-  public static ofPython(construct: IConstruct): PythonProject {
+  public static ofPythonProject(construct: IConstruct): PythonProject {
     if (construct instanceof PythonProject) {
       return construct;
     }
@@ -160,7 +160,7 @@ export class PythonProject extends GitHubProject {
       );
     }
 
-    return PythonProject.ofPython(parent);
+    return PythonProject.ofPythonProject(parent);
   }
 
   /**

@@ -58,7 +58,9 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
    * Returns the immediate AwsCdkTypeScriptApp a construct belongs to.
    * @param construct the construct
    */
-  public static ofAwscdkAppTs(construct: IConstruct): AwsCdkTypeScriptApp {
+  public static ofAwsCdkTypeScriptApp(
+    construct: IConstruct
+  ): AwsCdkTypeScriptApp {
     if (construct instanceof AwsCdkTypeScriptApp) {
       return construct;
     }
@@ -70,7 +72,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       );
     }
 
-    return AwsCdkTypeScriptApp.ofAwscdkAppTs(parent);
+    return AwsCdkTypeScriptApp.ofAwsCdkTypeScriptApp(parent);
   }
   /**
    * The CDK version this app is using.
@@ -192,7 +194,7 @@ class SampleCode extends Component {
   }
 
   public synthesize() {
-    const project = AwsCdkTypeScriptApp.ofAwscdkAppTs(this);
+    const project = AwsCdkTypeScriptApp.ofAwsCdkTypeScriptApp(this);
     const outdir = project.outdir;
     const srcdir = path.join(outdir, project.srcdir);
     if (

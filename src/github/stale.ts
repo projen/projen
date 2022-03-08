@@ -100,7 +100,7 @@ export class Stale extends Component {
   constructor(scope: Construct, options: StaleOptions = {}) {
     super(scope, "Stale");
 
-    const github = GitHub.of(Project.of(this));
+    const github = GitHub.of(Project.ofProject(this));
     if (!github) {
       throw new Error(
         "Stale can only be added to projects with a GitHub component."

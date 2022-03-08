@@ -37,7 +37,7 @@ export abstract class AutoDiscoverBase extends Component {
   constructor(scope: Construct, id: string, options: AutoDiscoverBaseOptions) {
     super(scope, id);
 
-    const cwd = join(Project.of(this).outdir, options.projectdir);
+    const cwd = join(Project.ofProject(this).outdir, options.projectdir);
 
     this.entrypoints = glob
       .sync(`**/*${options.extension}`, { cwd })

@@ -70,7 +70,7 @@ export class SetupPy extends FileBase {
   constructor(scope: Construct, options: SetupPyOptions) {
     super(scope, "setup.py");
 
-    const project = PythonProject.ofPython(this);
+    const project = PythonProject.ofPythonProject(this);
 
     this.setupConfig = {
       name: project.name,

@@ -201,7 +201,7 @@ export class Publisher extends Component {
         ? "publish:git"
         : `publish:git:${gitBranch}`;
 
-    const publishTask = Project.of(this).addTask(taskName, {
+    const publishTask = Project.ofProject(this).addTask(taskName, {
       description:
         "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
       env: {
@@ -286,7 +286,7 @@ export class Publisher extends Component {
     const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
 
     if (options.distTag) {
-      Project.of(this).logger.warn(
+      Project.ofProject(this).logger.warn(
         "The `distTag` option is deprecated. Use the npmDistTag option instead."
       );
     }
@@ -506,7 +506,7 @@ export class Publisher extends Component {
           branch === "main" || branch === "master" ? "" : `:${branch}`;
 
         // define a task which can be used through `projen publish:xxx`.
-        const task = Project.of(this).addTask(
+        const task = Project.ofProject(this).addTask(
           `publish:${opts.name.toLocaleLowerCase()}${branchSuffix}`,
           {
             description: `Publish this package to ${opts.registryName}`,

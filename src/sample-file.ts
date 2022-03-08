@@ -64,7 +64,7 @@ export class SampleFile extends Component {
       contents = fs.readFileSync(this.options.sourcePath);
     }
     this.writeOnceFileContents(
-      Project.of(this).outdir,
+      Project.ofProject(this).outdir,
       this.filePath,
       contents ?? ""
     );
@@ -136,7 +136,7 @@ export class SampleDir extends Component {
   }
 
   public synthesize() {
-    const fullOutdir = path.join(Project.of(this).outdir, this.dir);
+    const fullOutdir = path.join(Project.ofProject(this).outdir, this.dir);
     if (fs.pathExistsSync(fullOutdir)) {
       return;
     }

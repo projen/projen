@@ -42,7 +42,7 @@ export class AwsCdkPythonApp extends PythonProject {
    * Returns the immediate AwsCdkPythonApp a construct belongs to.
    * @param construct the construct
    */
-  public static ofAwscdkAppPy(construct: IConstruct): AwsCdkPythonApp {
+  public static ofAwsCdkPythonApp(construct: IConstruct): AwsCdkPythonApp {
     if (construct instanceof AwsCdkPythonApp) {
       return construct;
     }
@@ -54,7 +54,7 @@ export class AwsCdkPythonApp extends PythonProject {
       );
     }
 
-    return AwsCdkPythonApp.ofAwscdkAppPy(parent);
+    return AwsCdkPythonApp.ofAwsCdkPythonApp(parent);
   }
   /**
    * Common CDK tasks.
@@ -135,7 +135,7 @@ class AppCode extends Component {
   constructor(scope: Construct, fileName: string, cdkVersion: number) {
     super(scope, "AppCode");
 
-    const project = AwsCdkPythonApp.ofAwscdkAppPy(this);
+    const project = AwsCdkPythonApp.ofAwsCdkPythonApp(this);
 
     const src = new SourceCode(this, fileName);
 

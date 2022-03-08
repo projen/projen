@@ -28,7 +28,7 @@ export class GitlabConfiguration extends CiConfiguration {
         );
       }
       const template = new NestedConfiguration(
-        Project.of(this),
+        Project.ofProject(this),
         this,
         name,
         options

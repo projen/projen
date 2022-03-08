@@ -19,7 +19,7 @@ export class Setuptools extends Component implements IPythonPackaging {
   constructor(scope: Construct, options: PythonPackagingOptions) {
     super(scope, "Setuptools");
 
-    const project = PythonProject.ofPython(this);
+    const project = PythonProject.ofPythonProject(this);
 
     project.addDevDependency("wheel@0.36.2");
     project.addDevDependency("twine@3.3.0");

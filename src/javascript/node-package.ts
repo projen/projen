@@ -403,7 +403,7 @@ export class NodePackage extends Component {
   constructor(scope: Construct, options: NodePackageOptions = {}) {
     super(scope, "NodePackage");
 
-    const project = Project.of(this);
+    const project = Project.ofProject(this);
 
     this.packageName = options.packageName ?? project.name;
     this.peerDependencyOptions = {
@@ -415,7 +415,7 @@ export class NodePackage extends Component {
     this.entrypoint = options.entrypoint ?? "lib/index.js";
     this.lockFile = determineLockfile(this.packageManager);
 
-    Project.of(this).annotateGenerated(`/${this.lockFile}`);
+    Project.ofProject(this).annotateGenerated(`/${this.lockFile}`);
 
     const {
       npmAccess,
@@ -476,7 +476,7 @@ export class NodePackage extends Component {
       project.addTask(cmdname, { exec: shell });
     }
 
-    this.file = new JsonFile(Project.of(this), "package.json", {
+    this.file = new JsonFile(Project.ofProject(this), "package.json", {
       obj: this.manifest,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
       newline: false, // when file is edited by npm/yarn it doesn't include a newline
@@ -512,7 +512,7 @@ export class NodePackage extends Component {
    */
   public addDeps(...deps: string[]) {
     for (const dep of deps) {
-      Project.of(this).deps.addDependency(dep, DependencyType.RUNTIME);
+      Project.ofProject(this).deps.addDependency(dep, DependencyType.RUNTIME);
     }
   }
 
@@ -527,7 +527,7 @@ export class NodePackage extends Component {
    */
   public addDevDeps(...deps: string[]) {
     for (const dep of deps) {
-      Project.of(this).deps.addDependency(dep, DependencyType.BUILD);
+      Project.ofProject(this).deps.addDependency(dep, DependencyType.BUILD);
     }
   }
 
@@ -554,7 +554,7 @@ export class NodePackage extends Component {
     }
 
     for (const dep of deps) {
-      Project.of(this).deps.addDependency(dep, DependencyType.PEER);
+      Project.ofProject(this).deps.addDependency(dep, DependencyType.PEER);
     }
   }
 
@@ -578,7 +578,7 @@ export class NodePackage extends Component {
     }
 
     for (const dep of deps) {
-      Project.of(this).deps.addDependency(dep, DependencyType.BUNDLED);
+      Project.ofProject(this).deps.addDependency(dep, DependencyType.BUNDLED);
     }
   }
 
@@ -631,7 +631,7 @@ export class NodePackage extends Component {
    * @deprecated Use `project.tasks.tryFind(name)`
    */
   public hasScript(name: string) {
-    return Project.of(this).tasks.tryFind(name) !== undefined;
+    return Project.ofProject(this).tasks.tryFind(name) !== undefined;
   }
 
   /**
@@ -673,7 +673,7 @@ export class NodePackage extends Component {
     exclude: string[],
     include?: string[]
   ): string {
-    const project = Project.of(this);
+    const project = Project.ofProject(this);
     function upgradePackages(command: string) {
       return () => {
         if (exclude.length === 0 && !include) {
@@ -725,7 +725,7 @@ export class NodePackage extends Component {
     // `node_modules` directory.
     if (
       this.file.changed ||
-      !existsSync(join(Project.of(this).outdir, "node_modules"))
+      !existsSync(join(Project.ofProject(this).outdir, "node_modules"))
     ) {
       this.installDependencies();
     }
@@ -741,7 +741,7 @@ export class NodePackage extends Component {
    * The command which executes "projen".
    */
   public get projenCommand() {
-    return Project.of(this).projenCommand;
+    return Project.ofProject(this).projenCommand;
   }
 
   /**
@@ -894,14 +894,14 @@ export class NodePackage extends Component {
     // synthetic dependencies: add a pinned build dependency to ensure we are
     // testing against the minimum requirement of the peer.
     if (this.peerDependencyOptions.pinnedDevDependency) {
-      for (const dep of Project.of(this).deps.all.filter(
+      for (const dep of Project.ofProject(this).deps.all.filter(
         (d) => d.type === DependencyType.PEER
       )) {
         let req = dep.name;
 
         // skip if we already have a runtime dependency on this peer
         if (
-          Project.of(this).deps.tryGetDependency(
+          Project.ofProject(this).deps.tryGetDependency(
             dep.name,
             DependencyType.RUNTIME
           )
@@ -923,7 +923,7 @@ export class NodePackage extends Component {
       }
     }
 
-    for (const dep of Project.of(this).deps.all) {
+    for (const dep of Project.ofProject(this).deps.all) {
       const version = dep.version ?? "*";
 
       switch (dep.type) {
@@ -931,7 +931,7 @@ export class NodePackage extends Component {
           bundledDependencies.push(dep.name);
 
           if (
-            Project.of(this).deps.all.find(
+            Project.ofProject(this).deps.all.find(
               (d) => d.name === dep.name && d.type === DependencyType.PEER
             )
           ) {
@@ -994,7 +994,7 @@ export class NodePackage extends Component {
       // report removals
       for (const name of Object.keys(current ?? {})) {
         if (!user[name]) {
-          Project.of(this).logger.verbose(`${name}: removed`);
+          Project.ofProject(this).logger.verbose(`${name}: removed`);
         }
       }
     };
@@ -1013,7 +1013,7 @@ export class NodePackage extends Component {
    * @returns `true` if package.json was updated or `false` if not.
    */
   private resolveDepsAndWritePackageJson(): boolean {
-    const outdir = Project.of(this).outdir;
+    const outdir = Project.ofProject(this).outdir;
     const rootPackageJson = join(outdir, "package.json");
 
     const original = readFileSync(rootPackageJson, "utf8");
@@ -1041,7 +1041,7 @@ export class NodePackage extends Component {
           } catch (e) {}
 
           if (!desiredVersion) {
-            Project.of(this).logger.warn(
+            Project.ofProject(this).logger.warn(
               `unable to resolve version for ${name} from installed modules`
             );
             continue;
@@ -1049,7 +1049,7 @@ export class NodePackage extends Component {
         }
 
         if (currentDefinition !== desiredVersion) {
-          Project.of(this).logger.verbose(
+          Project.ofProject(this).logger.verbose(
             `${name}: ${currentDefinition} => ${desiredVersion}`
           );
         }
@@ -1060,7 +1060,7 @@ export class NodePackage extends Component {
       // print removed packages
       for (const name of Object.keys(current)) {
         if (!result[name]) {
-          Project.of(this).logger.verbose(`${name} removed`);
+          Project.ofProject(this).logger.verbose(`${name} removed`);
         }
       }
 
@@ -1142,7 +1142,7 @@ export class NodePackage extends Component {
 
   private autoDiscoverBinaries() {
     const binrel = "bin";
-    const bindir = join(Project.of(this).outdir, binrel);
+    const bindir = join(Project.ofProject(this).outdir, binrel);
     if (existsSync(bindir)) {
       for (const file of readdirSync(bindir)) {
         try {
@@ -1184,7 +1184,7 @@ export class NodePackage extends Component {
 
   private renderScripts() {
     const result: any = {};
-    for (const task of Project.of(this).tasks.all.sort((x, y) =>
+    for (const task of Project.ofProject(this).tasks.all.sort((x, y) =>
       x.name.localeCompare(y.name)
     )) {
       result[task.name] = this.npmScriptForTask(task);
@@ -1198,7 +1198,7 @@ export class NodePackage extends Component {
   }
 
   private readPackageJson() {
-    const file = join(Project.of(this).outdir, "package.json");
+    const file = join(Project.ofProject(this).outdir, "package.json");
     if (!existsSync(file)) {
       return undefined;
     }
@@ -1208,7 +1208,7 @@ export class NodePackage extends Component {
 
   private installDependencies() {
     exec(this.renderInstallCommand(this.isAutomatedBuild), {
-      cwd: Project.of(this).outdir,
+      cwd: Project.ofProject(this).outdir,
     });
   }
 }

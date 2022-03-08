@@ -24,19 +24,19 @@ export class Projenrc extends Component {
     this.rcfile = options.filename ?? ".projenrc.json";
 
     // this is the task projen executes when running `projen`
-    Project.of(this).defaultTask?.env("FILENAME", this.rcfile);
-    Project.of(this).defaultTask?.builtin("run-projenrc-json");
+    Project.ofProject(this).defaultTask?.env("FILENAME", this.rcfile);
+    Project.ofProject(this).defaultTask?.builtin("run-projenrc-json");
 
     this.generateProjenrc();
   }
 
   private generateProjenrc() {
-    const rcfile = resolve(Project.of(this).outdir, this.rcfile);
+    const rcfile = resolve(Project.ofProject(this).outdir, this.rcfile);
     if (existsSync(rcfile)) {
       return; // already exists
     }
 
-    const bootstrap = Project.of(this).initProject;
+    const bootstrap = Project.ofProject(this).initProject;
     if (!bootstrap) {
       return;
     }
@@ -47,7 +47,7 @@ export class Projenrc extends Component {
     };
 
     writeFileSync(rcfile, JSON.stringify(json, null, 2));
-    Project.of(this).logger.info(
+    Project.ofProject(this).logger.info(
       `Project definition file was created at ${rcfile}`
     );
   }

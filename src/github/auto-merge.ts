@@ -32,7 +32,7 @@ export class AutoMerge extends Component {
   constructor(scope: Construct, options: AutoMergeOptions = {}) {
     super(scope, "AutoMerge");
 
-    const mergify = GitHub.of(Project.of(this))?.mergify;
+    const mergify = GitHub.of(Project.ofProject(this))?.mergify;
     if (!mergify) {
       throw new Error("auto merging requires mergify to be enabled");
     }
@@ -76,7 +76,7 @@ export class AutoMerge extends Component {
       conditions: (() => this.renderConditions()) as any,
     });
 
-    Project.of(this).addPackageIgnore("/.mergify.yml");
+    Project.ofProject(this).addPackageIgnore("/.mergify.yml");
   }
 
   /**

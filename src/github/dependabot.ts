@@ -276,7 +276,7 @@ export class Dependabot extends Component {
   constructor(scope: Construct, options: DependabotOptions = {}) {
     super(scope, "Dependabot");
 
-    if (!GitHub.of(Project.of(this))) {
+    if (!GitHub.of(Project.ofProject(this))) {
       throw new Error(
         "Dependabot can only be added to projects with a GitHub component."
       );
