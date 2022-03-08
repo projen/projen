@@ -192,6 +192,43 @@ test("github runner can be customized", () => {
   expect(upgrade.jobs.pr["runs-on"]).toEqual("self-hosted");
 });
 
+test("upgrade task created without projen defined versions at NodeProject", () => {
+  const prj = new NodeProject({
+    defaultReleaseBranch: "main",
+    name: "test project",
+    deps: ["npm@^8", "axios@~0.20.0", "markdownlint@0.24.0"],
+  });
+  const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
+  expect(tasks.upgrade.steps[0].exec).toStrictEqual(
+    "npm-check-updates --dep dev --upgrade --target=minor --reject='axios,markdownlint,projen'"
+  );
+});
+
+describe("projen-upgrade task is", () => {
+  test("not defined for Projen if version is set", () => {
+    const prj = new NodeProject({
+      defaultReleaseBranch: "main",
+      name: "test project",
+      packageName: "test-project",
+      projenVersion: "0.50.0",
+    });
+    const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
+    expect(tasks["upgrade-projen"]).toBeUndefined();
+  });
+
+  test("defined for Projen if version is not set", () => {
+    const prj = new NodeProject({
+      defaultReleaseBranch: "main",
+      name: "test project",
+    });
+    const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
+    expect(tasks["upgrade-projen"]).toBeDefined();
+    expect(tasks["upgrade-projen"].steps[0].exec).toStrictEqual(
+      "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'"
+    );
+  });
+});
+
 function createProject(
   options: Omit<
     NodeProjectOptions,
