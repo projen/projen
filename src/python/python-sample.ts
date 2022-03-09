@@ -17,7 +17,7 @@ export class PythonSample extends Component {
 
     const project = PythonProject.ofPythonProject(this);
 
-    new SampleDir(project, project.moduleName, {
+    new SampleDir(this, project.moduleName, {
       files: {
         "__init__.py": '__version__ = "0.1.0"\n',
         "__main__.py": [

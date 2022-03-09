@@ -7,7 +7,6 @@ import {
   TypeScriptJsxMode,
   TypeScriptModuleResolution,
 } from "../javascript";
-import { Project } from "../project";
 import { SampleDir } from "../sample-file";
 import { SourceCode } from "../source-code";
 import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
@@ -215,10 +214,7 @@ export class ReactComponent extends Component {
       project.addDevDeps("react-app-rewired");
       project.addFields({ "config-overrides-path": overridesPath });
 
-      const configOverrides = new SourceCode(
-        Project.ofProject(this),
-        overridesPath
-      );
+      const configOverrides = new SourceCode(this, overridesPath);
       if (!configOverrides.marker) {
         configOverrides.line(`// ${configOverrides.marker}`);
       }

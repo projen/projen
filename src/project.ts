@@ -7,20 +7,21 @@ import { cleanup, FILE_MANIFEST } from "./cleanup";
 import { IS_TEST_RUN, PROJEN_DIR, PROJEN_VERSION } from "./common";
 import { Component } from "./component";
 import { Dependencies } from "./dependencies";
-import { FileBase, PROJECT_SYMBOL } from "./file";
+import { FileBase } from "./file";
 import { GitAttributesFile } from "./gitattributes";
 import { IgnoreFile } from "./ignore-file";
 import * as inventory from "./inventory";
 import { resolveInitProject } from "./javascript/render-options";
 import { JsonFile } from "./json";
 import { Logger, LoggerOptions } from "./logger";
-import { ObjectFile } from "./object-file";
 import { InitProjectOptionHints } from "./option-hints";
 import { ProjectBuild as ProjectBuild } from "./project-build";
 import { Projenrc, ProjenrcOptions } from "./projenrc-json";
 import { Task, TaskOptions } from "./task";
 import { Tasks } from "./tasks";
 import { isTruthy } from "./util";
+
+const PROJECT_SYMBOL = Symbol.for("projen.Project");
 
 /**
  * Options for `Project`.
@@ -93,11 +94,19 @@ export class Project extends Construct {
   public static readonly DEFAULT_TASK = "default";
 
   /**
+   * Return whether the given object is a Project.
+   */
+  public static isProject(x: any): x is Project {
+    return x !== null && typeof x === "object" && PROJECT_SYMBOL in x;
+  }
+
+  /**
    * Returns the immediate Project a construct belongs to.
    * @param construct the construct
    */
   public static ofProject(construct: IConstruct): Project {
-    if (construct instanceof Project) {
+    // TODO: cache this - see https://github.com/aws/aws-cdk/blob/cefdfd384eeac1752567f672452296def68b1206/packages/%40aws-cdk/core/lib/stack.ts#L171
+    if (Project.isProject(construct)) {
       return construct;
     }
 
@@ -108,11 +117,6 @@ export class Project extends Construct {
 
     return Project.ofProject(parent);
   }
-
-  /**
-   * @internal
-   */
-  public readonly [PROJECT_SYMBOL] = PROJECT_SYMBOL;
 
   /**
    * Project name.
@@ -198,6 +202,8 @@ export class Project extends Construct {
   constructor(options: ProjectOptions) {
     super(undefined as any, options.name);
     this.initProject = resolveInitProject(options);
+
+    Object.defineProperty(this, PROJECT_SYMBOL, { value: true });
 
     this.name = options.name;
     this.parent = options.parent;
@@ -327,73 +333,6 @@ export class Project extends Construct {
   }
   public get packageTask() {
     return this.projectBuild.packageTask;
-  }
-
-  /**
-   * Finds a file at the specified relative path within this project and all
-   * its subprojects.
-   *
-   * @param filePath The file path. If this path is relative, it will be resolved
-   * from the root of _this_ project.
-   * @returns a `FileBase` or undefined if there is no file in that path
-   */
-  public tryFindFile(filePath: string): FileBase | undefined {
-    const absolute = path.isAbsolute(filePath)
-      ? filePath
-      : path.resolve(this.outdir, filePath);
-    for (const file of this.files) {
-      if (absolute === file.absolutePath) {
-        return file;
-      }
-    }
-
-    for (const child of this.subprojects) {
-      const file = child.tryFindFile(absolute);
-      if (file) {
-        return file;
-      }
-    }
-
-    return undefined;
-  }
-
-  /**
-   * Finds a json file by name.
-   * @param filePath The file path.
-   * @deprecated use `tryFindObjectFile`
-   */
-  public tryFindJsonFile(filePath: string): JsonFile | undefined {
-    const file = this.tryFindObjectFile(filePath);
-    if (!file) {
-      return undefined;
-    }
-
-    if (!(file instanceof JsonFile)) {
-      throw new Error(
-        `found file ${filePath} but it is not a JsonFile. got: ${file.constructor.name}`
-      );
-    }
-
-    return file;
-  }
-
-  /**
-   * Finds an object file (like JsonFile, YamlFile, etc.) by name.
-   * @param filePath The file path.
-   */
-  public tryFindObjectFile(filePath: string): ObjectFile | undefined {
-    const file = this.tryFindFile(filePath);
-    if (!file) {
-      return undefined;
-    }
-
-    if (!(file instanceof ObjectFile)) {
-      throw new Error(
-        `found file ${filePath} but it is not a ObjectFile. got: ${file.constructor.name}`
-      );
-    }
-
-    return file;
   }
 
   /**

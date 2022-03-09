@@ -1,7 +1,9 @@
-import { Construct } from "constructs";
+import * as path from "path";
+import { Construct, IConstruct } from "constructs";
 import { create as createxml } from "xmlbuilder2";
 import { IResolver } from "./file";
 import { ObjectFile, ObjectFileOptions } from "./object-file";
+import { Project } from "./project";
 
 /**
  * Options for `XmlFile`.
@@ -15,6 +17,25 @@ export interface XmlFileOptions extends ObjectFileOptions {}
  * @see https://www.npmjs.com/package/xml
  */
 export class XmlFile extends ObjectFile {
+  /**
+   * Finds an XML file by name in the given scope.
+   * @param filePath The file path. If this path is relative, it will be resolved
+   * from the root of the nearest project.
+   */
+  public static tryFindXmlFile(
+    scope: IConstruct,
+    filePath: string
+  ): XmlFile | undefined {
+    const isXmlFile = (c: IConstruct): c is XmlFile => c instanceof XmlFile;
+    const absolutePath = path.isAbsolute(filePath)
+      ? filePath
+      : path.resolve(Project.ofProject(scope).outdir, filePath);
+    return scope.node
+      .findAll()
+      .filter(isXmlFile)
+      .find((file) => file.absolutePath === absolutePath);
+  }
+
   constructor(
     scope: Construct,
     filePath: string,

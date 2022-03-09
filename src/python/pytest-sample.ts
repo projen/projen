@@ -9,7 +9,7 @@ export class PytestSample extends Component {
 
     const project = PythonProject.ofPythonProject(this);
 
-    new SampleDir(project, testdir, {
+    new SampleDir(this, testdir, {
       files: {
         "__init__.py": "",
         "test_example.py": [

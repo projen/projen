@@ -1,5 +1,7 @@
-import { Construct } from "constructs";
+import { isAbsolute, resolve } from "path";
+import { Construct, IConstruct } from "constructs";
 import { FileBase, FileBaseOptions, IResolver } from "./file";
+import { Project } from "./project";
 import { deepMerge } from "./util";
 
 /**
@@ -25,6 +27,26 @@ export interface ObjectFileOptions extends FileBaseOptions {
  * Represents an Object file.
  */
 export abstract class ObjectFile extends FileBase {
+  /**
+   * Finds an object file by name in the given scope.
+   * @param filePath The file path. If this path is relative, it will be resolved
+   * from the root of the nearest project.
+   */
+  public static tryFindObjectFile(
+    scope: IConstruct,
+    filePath: string
+  ): ObjectFile | undefined {
+    const isObjectFile = (c: IConstruct): c is ObjectFile =>
+      c instanceof ObjectFile;
+    const absolutePath = isAbsolute(filePath)
+      ? filePath
+      : resolve(Project.ofProject(scope).outdir, filePath);
+    return scope.node
+      .findAll()
+      .filter(isObjectFile)
+      .find((file) => file.absolutePath === absolutePath);
+  }
+
   /**
    * The output object. This object can be mutated until the project is
    * synthesized.

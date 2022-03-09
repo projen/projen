@@ -36,7 +36,7 @@ export class Setuptools extends Component implements IPythonPackaging {
       exec: "twine upload dist/*",
     });
 
-    new SetupPy(project, {
+    new SetupPy(this, {
       name: project.name,
       packages: [project.moduleName],
       authorName: options.authorName,

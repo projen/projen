@@ -4,25 +4,7 @@ import { removeSync } from "fs-extra";
 import { resolve } from "./_resolve";
 import { PROJEN_MARKER, PROJEN_RC } from "./common";
 import { Component } from "./component";
-import { Project } from "./project";
 import { isExecutable, isWritable, tryReadFileSync, writeFile } from "./util";
-
-// This is a hack to prevent a circular runtime dependency issue between
-// Project and FileBase...
-export const PROJECT_SYMBOL = Symbol("PROJECT_SYMBOL");
-
-function findProject(construct: IConstruct): Project {
-  if ((construct as any)[PROJECT_SYMBOL] !== undefined) {
-    return construct as Project;
-  }
-
-  const parent = construct.node.scope as Construct;
-  if (!parent) {
-    throw new Error("cannot find a parent project (directly or indirectly)");
-  }
-
-  return findProject(parent);
-}
 
 export interface FileBaseOptions {
   /**
@@ -64,6 +46,25 @@ export interface FileBaseOptions {
 
 export abstract class FileBase extends Component {
   /**
+   * Finds a file by name within the given scope.
+   * @param filePath The file path. If this path is relative, it will be resolved
+   * from the root of the nearest project.
+   */
+  public static tryFindFile(
+    scope: IConstruct,
+    filePath: string
+  ): FileBase | undefined {
+    const isFile = (c: IConstruct): c is FileBase => c instanceof FileBase;
+    const absolutePath = path.isAbsolute(filePath)
+      ? filePath
+      : path.resolve(Project.ofProject(scope).outdir, filePath);
+    return scope.node
+      .findAll()
+      .filter(isFile)
+      .find((file) => file.absolutePath === absolutePath);
+  }
+
+  /**
    * The file path, relative to the project root.
    */
   public readonly path: string;
@@ -99,7 +100,7 @@ export abstract class FileBase extends Component {
   ) {
     super(scope, filePath);
 
-    const project = findProject(this); // to prevent circular dependency
+    const project = Project.ofProject(this);
 
     this.readonly = !project.ejected && (options.readonly ?? true);
     this.executable = options.executable ?? false;
@@ -120,7 +121,7 @@ export abstract class FileBase extends Component {
     this.absolutePath = path.resolve(project.outdir, filePath);
 
     // verify file path is unique within project tree
-    const existing = project.root.tryFindFile(this.absolutePath);
+    const existing = FileBase.tryFindFile(project.root, this.absolutePath);
     if (existing && existing !== this) {
       throw new Error(
         `there is already a file under ${path.relative(
@@ -155,7 +156,7 @@ export abstract class FileBase extends Component {
    * Writes the file to the project's output directory
    */
   public synthesize() {
-    const project = findProject(this);
+    const project = Project.ofProject(this);
     const outdir = project.outdir;
     const filePath = path.join(outdir, this.path);
     const resolver: IResolver = {
@@ -200,7 +201,7 @@ export abstract class FileBase extends Component {
    * that it probably should not be edited directly.
    */
   private checkForProjenMarker() {
-    const project = findProject(this);
+    const project = Project.ofProject(this);
     const filePath = path.join(project.outdir, this.path);
     const contents = tryReadFileSync(filePath);
     const containsMarker = contents?.includes(PROJEN_MARKER);
@@ -261,3 +262,7 @@ export interface IResolvable {
    */
   toJSON(): any;
 }
+
+// These imports have to be at the end to prevent circular imports
+// eslint-disable-next-line import/order
+import { Project } from "./project";

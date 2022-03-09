@@ -5,7 +5,6 @@ import {
   DevEnvironmentOptions,
   DevEnvironmentDockerImage,
 } from "./dev-env";
-import { Project } from "./project";
 import { Task } from "./task";
 import { YamlFile } from "./yaml";
 
@@ -318,7 +317,7 @@ export class Gitpod extends Component implements IDevEnvironment {
       },
     };
 
-    new YamlFile(Project.ofProject(this), GITPOD_FILE, {
+    new YamlFile(this, GITPOD_FILE, {
       obj: this.config,
       omitEmpty: true,
     });

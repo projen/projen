@@ -6,7 +6,6 @@ import {
   IDevEnvironment,
 } from "../dev-env";
 import { JsonFile } from "../json";
-import { Project } from "../project";
 import { Task } from "../task";
 
 /**
@@ -68,7 +67,7 @@ export class DevContainer extends Component implements IDevEnvironment {
       extensions: this.vscodeExtensions,
     };
 
-    new JsonFile(Project.ofProject(this), DEVCONTAINER_FILE, {
+    new JsonFile(this, DEVCONTAINER_FILE, {
       obj: this.config,
       omitEmpty: true,
     });

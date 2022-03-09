@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
@@ -8,7 +9,6 @@ import { decamelizeKeysRecursively, exec, execOrUndefined } from "../util";
 import { IPythonDeps } from "./python-deps";
 import { IPythonEnv } from "./python-env";
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
-import { PythonProject } from "./python-project";
 
 /**
  * Manage project dependencies, virtual environments, and packaging through the
@@ -26,8 +26,10 @@ export class Poetry
    */
   public readonly publishTestTask: Task;
 
-  constructor(project: PythonProject, options: PythonPackagingOptions) {
-    super(project, "Poetry");
+  constructor(scope: Construct, options: PythonPackagingOptions) {
+    super(scope, "Poetry");
+
+    const project = Project.ofProject(this);
 
     this.installTask = project.addTask("install", {
       description: "Install and upgrade dependencies",
@@ -55,7 +57,7 @@ export class Poetry
       exec: "poetry publish",
     });
 
-    new PoetryPyproject(project, {
+    new PoetryPyproject(this, {
       name: project.name,
       version: options.version,
       description: options.description ?? "",
@@ -313,14 +315,14 @@ export interface PoetryPyprojectOptions
 export class PoetryPyproject extends Component {
   public readonly file: TomlFile;
 
-  constructor(project: PythonProject, options: PoetryPyprojectOptions) {
-    super(project, "PoetryPyproject");
+  constructor(scope: Construct, options: PoetryPyprojectOptions) {
+    super(scope, "PoetryPyproject");
 
     const decamelisedOptions = decamelizeKeysRecursively(options, {
       separator: "-",
     });
 
-    this.file = new TomlFile(project, "pyproject.toml", {
+    this.file = new TomlFile(this, "pyproject.toml", {
       omitEmpty: false,
       obj: {
         "build-system": {

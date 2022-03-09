@@ -1,10 +1,10 @@
 import * as path from "path";
+import { Construct } from "constructs";
 import * as fs from "fs-extra";
 import { Component } from "../component";
 import { Project } from "../project";
 import { exec } from "../util";
 import { IPythonEnv } from "./python-env";
-import { PythonProject } from "./python-project";
 
 /**
  * Options for venv.
@@ -27,17 +27,16 @@ export class Venv extends Component implements IPythonEnv {
    */
   private readonly envdir: string;
 
-  constructor(project: PythonProject, options: VenvOptions = {}) {
-    super(project, "Venv");
+  constructor(scope: Construct, options: VenvOptions = {}) {
+    super(scope, "Venv");
 
     this.envdir = options.envdir ?? ".env";
 
-    Project.ofProject(this).addGitIgnore(`/${this.envdir}`);
-    Project.ofProject(this).tasks.addEnvironment(
-      "VIRTUAL_ENV",
-      `$(echo $PWD/${this.envdir})`
-    );
-    Project.ofProject(this).tasks.addEnvironment(
+    const project = Project.ofProject(this);
+
+    project.addGitIgnore(`/${this.envdir}`);
+    project.tasks.addEnvironment("VIRTUAL_ENV", `$(echo $PWD/${this.envdir})`);
+    project.tasks.addEnvironment(
       "PATH",
       `$(echo $PWD/${this.envdir}/bin:$PATH)`
     );
@@ -47,18 +46,14 @@ export class Venv extends Component implements IPythonEnv {
    * Initializes the virtual environment if it doesn't exist (called during post-synthesis).
    */
   public setupEnvironment() {
-    const absoluteEnvdir = path.join(
-      Project.ofProject(this).outdir,
-      this.envdir
-    );
+    const project = Project.ofProject(this);
+    const absoluteEnvdir = path.join(project.outdir, this.envdir);
     if (!fs.pathExistsSync(absoluteEnvdir)) {
-      Project.ofProject(this).logger.info(
-        "Setting up a virtual environment..."
-      );
+      project.logger.info("Setting up a virtual environment...");
       exec(`python -m venv ${this.envdir}`, {
-        cwd: Project.ofProject(this).outdir,
+        cwd: project.outdir,
       });
-      Project.ofProject(this).logger.info(
+      project.logger.info(
         `Environment successfully created (located in ./${this.envdir}).`
       );
     }

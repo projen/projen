@@ -265,32 +265,36 @@
       "Gitpod": {
         "id": "Gitpod",
         "path": "projen/Gitpod",
+        "children": {
+          ".gitpod.yml": {
+            "id": ".gitpod.yml",
+            "path": "projen/Gitpod/.gitpod.yml",
+            "constructInfo": {
+              "fqn": "projen.YamlFile",
+              "version": "0.0.0"
+            }
+          }
+        },
         "constructInfo": {
           "fqn": "projen.Gitpod",
-          "version": "0.0.0"
-        }
-      },
-      ".gitpod.yml": {
-        "id": ".gitpod.yml",
-        "path": "projen/.gitpod.yml",
-        "constructInfo": {
-          "fqn": "projen.YamlFile",
           "version": "0.0.0"
         }
       },
       "DevContainer": {
         "id": "DevContainer",
         "path": "projen/DevContainer",
+        "children": {
+          ".devcontainer.json": {
+            "id": ".devcontainer.json",
+            "path": "projen/DevContainer/.devcontainer.json",
+            "constructInfo": {
+              "fqn": "projen.JsonFile",
+              "version": "0.0.0"
+            }
+          }
+        },
         "constructInfo": {
           "fqn": "projen.vscode.DevContainer",
-          "version": "0.0.0"
-        }
-      },
-      ".devcontainer.json": {
-        "id": ".devcontainer.json",
-        "path": "projen/.devcontainer.json",
-        "constructInfo": {
-          "fqn": "projen.JsonFile",
           "version": "0.0.0"
         }
       },
