@@ -4712,7 +4712,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -7510,7 +7510,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -10032,7 +10032,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -12731,7 +12731,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -15362,7 +15362,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -18648,7 +18648,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -20768,7 +20768,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -23133,7 +23133,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -25185,7 +25185,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -28223,7 +28223,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -30576,7 +30576,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -32907,7 +32907,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -35238,7 +35238,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
