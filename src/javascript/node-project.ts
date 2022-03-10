@@ -125,7 +125,7 @@ export interface NodeProjectOptions
    *
    * @default "yarn install --frozen-lockfile && yarn projen"
    */
-  readonly workflowBootstrapSteps?: any[];
+  readonly workflowBootstrapSteps?: JobStep[];
 
   /**
    * The git identity to use in workflows.
