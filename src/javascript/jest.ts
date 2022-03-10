@@ -158,6 +158,15 @@ export interface JestConfigOptions {
   readonly maxConcurrency?: number;
 
   /**
+   * Specifies the maximum number of workers the worker-pool will spawn for running tests. In single run mode,
+   * this defaults to the number of the cores available on your machine minus one for the main thread
+   * In watch mode, this defaults to half of the available cores on your machine.
+   * For environments with variable CPUs available, you can use percentage based configuration: "maxWorkers": "50%"
+   * @default - the number of the cores available on your machine minus one for the main thread
+   */
+  readonly maxWorkers?: number | string;
+
+  /**
    * An array of directory names to be searched recursively up from the requiring module's location.
    * Setting this option will override the default, if you wish to still search node_modules for packages
    * include it along with any other options: ["node_modules", "bower_components"]
