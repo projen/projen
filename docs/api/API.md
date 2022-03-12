@@ -6815,6 +6815,7 @@ addBundle(entrypoint: string, options: AddBundleOptions): Bundle
   * **watchTask** (<code>boolean</code>)  In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag. __*Default*__: true
   * **platform** (<code>string</code>)  esbuild platform. 
   * **target** (<code>string</code>)  esbuild target. 
+  * **executable** (<code>boolean</code>)  Mark the output file as executable. __*Default*__: false
   * **outfile** (<code>string</code>)  Bundler output path relative to the asset's output directory. __*Default*__: "index.js"
 
 __Returns__:
@@ -14600,6 +14601,7 @@ Name | Type | Description
 -----|------|-------------
 **platform**🔹 | <code>string</code> | esbuild platform.
 **target**🔹 | <code>string</code> | esbuild target.
+**executable**?🔹 | <code>boolean</code> | Mark the output file as executable.<br/>__*Default*__: false
 **externals**?🔹 | <code>Array<string></code> | You can mark a file or a package as external to exclude it from your build.<br/>__*Default*__: []
 **outfile**?🔹 | <code>string</code> | Bundler output path relative to the asset's output directory.<br/>__*Default*__: "index.js"
 **sourcemap**?🔹 | <code>boolean</code> | Include a source map in the bundle.<br/>__*Default*__: false
