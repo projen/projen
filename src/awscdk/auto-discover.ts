@@ -1,4 +1,3 @@
-import { LambdaExtension, LambdaExtensionCommonOptions } from ".";
 import {
   AutoDiscoverBase,
   IntegrationTestAutoDiscoverBase,
@@ -15,6 +14,10 @@ import {
   TYPESCRIPT_LAMBDA_EXT,
   TYPESCRIPT_LAMBDA_EXTENSION_EXT,
 } from "./internal";
+import {
+  LambdaExtension,
+  LambdaExtensionCommonOptions,
+} from "./lambda-extension";
 import { LambdaFunction, LambdaFunctionCommonOptions } from "./lambda-function";
 
 /**
