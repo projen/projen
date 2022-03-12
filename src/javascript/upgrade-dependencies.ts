@@ -94,7 +94,6 @@ export class UpgradeDependencies extends Component {
 
   private readonly options: UpgradeDependenciesOptions;
   private readonly _project: NodeProject;
-  private readonly _task: Task;
   private readonly pullRequestTitle: string;
 
   /**
@@ -126,7 +125,6 @@ export class UpgradeDependencies extends Component {
       options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.postBuildSteps = [];
     this.containerOptions = options.workflowOptions?.container;
-
     project.addDevDeps("npm-check-updates@^12");
 
     this.postUpgradeTask =
@@ -134,9 +132,6 @@ export class UpgradeDependencies extends Component {
       project.tasks.addTask("post-upgrade", {
         description: "Runs after upgrading dependencies",
       });
-
-    // create the upgrade task
-    this._task = this.createTask();
   }
 
   /**
@@ -149,7 +144,12 @@ export class UpgradeDependencies extends Component {
 
   // create a corresponding github workflow for each requested branch.
   public preSynthesize() {
-    if (this._project.github && (this.options.workflow ?? true)) {
+    // Create task only here to consider also packages that are from extended classes
+    // Create task only if hasn't been overwritten manually
+    const task =
+      this._project.tasks.tryFind(this.options.taskName ?? "upgrade") ??
+      this.createTask();
+    if (task && this._project.github && (this.options.workflow ?? true)) {
       // represents the default repository branch.
       // just like not specifying anything.
       const defaultBranch = undefined;
@@ -158,25 +158,50 @@ export class UpgradeDependencies extends Component {
         this._project.release?.branches ?? [defaultBranch];
       for (const branch of branches) {
         this.workflows.push(
-          this.createWorkflow(this._task, this._project.github, branch)
+          this.createWorkflow(task, this._project.github, branch)
         );
       }
     }
   }
 
-  private createTask(): Task {
+  private createTask(): Task | undefined {
     const taskName = this.options.taskName ?? "upgrade";
+
+    const exclude = this.options.exclude ?? [];
+    if (this.ignoresProjen) {
+      exclude.push("projen");
+    }
+
+    // exclude depedencies that has already version pinned (fully or with patch version) by Projen with ncu (but not package manager upgrade)
+    // Getting only unique values through set
+    const ncuExcludes = [
+      ...new Set(
+        this.project.deps.all
+          .filter((dep) => dep.version && dep.version[0] !== "^")
+          .map((dep) => dep.name)
+          .concat(exclude)
+      ),
+    ];
+
+    const ncuIncludes = this.options.include?.filter(
+      (item) => !ncuExcludes.includes(item)
+    );
+
+    const includeLength = this.options.include?.length ?? 0;
+    const ncuIncludesLength = ncuIncludes?.length ?? 0;
+
+    // If all explicit includes already have version pinned, don't add task.
+    // Note that without explicit includes task gets added
+    if (includeLength > 0 && ncuIncludesLength === 0) {
+      return undefined;
+    }
+
     const task = this._project.addTask(taskName, {
       // this task should not run in CI mode because its designed to
       // update package.json and lock files.
       env: { CI: "0" },
       description: this.pullRequestTitle,
     });
-
-    const exclude = this.options.exclude ?? [];
-    if (this.ignoresProjen) {
-      exclude.push("projen");
-    }
 
     for (const dep of ["dev", "optional", "peer", "prod", "bundle"]) {
       const ncuCommand = [
@@ -186,11 +211,11 @@ export class UpgradeDependencies extends Component {
         "--upgrade",
         "--target=minor",
       ];
-      if (exclude.length > 0) {
-        ncuCommand.push(`--reject='${exclude.join(",")}'`);
-      }
-      if (this.options.include) {
-        ncuCommand.push(`--filter='${this.options.include.join(",")}'`);
+      // Don't add includes and excludes same time
+      if (ncuIncludes) {
+        ncuCommand.push(`--filter='${ncuIncludes.join(",")}'`);
+      } else if (ncuExcludes.length > 0) {
+        ncuCommand.push(`--reject='${ncuExcludes.join(",")}'`);
       }
 
       task.exec(ncuCommand.join(" "));

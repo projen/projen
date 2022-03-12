@@ -64,6 +64,7 @@ test("Node Project Jest With Options Configured", () => {
         automock: true,
         bail: 5,
         notify: false,
+        maxWorkers: 1,
       },
     },
   });
@@ -75,6 +76,7 @@ test("Node Project Jest With Options Configured", () => {
   expect(jest.automock).toEqual(true);
   expect(jest.bail).toEqual(5);
   expect(jest.notify).toEqual(false);
+  expect(jest.maxWorkers).toEqual(1);
 });
 
 test("Node Project Jest With Path Configured", () => {

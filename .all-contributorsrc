@@ -576,6 +576,42 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "dkaksl",
+      "name": "Amani Kilumanga",
+      "avatar_url": "https://avatars.githubusercontent.com/u/8690282?v=4",
+      "profile": "https://amani.kilumanga.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "gherlein",
+      "name": "Greg Herlein",
+      "avatar_url": "https://avatars.githubusercontent.com/u/173428?v=4",
+      "profile": "http://blog.herlein.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "kaizen3031593",
+      "name": "Kaizen Conroy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/36202692?v=4",
+      "profile": "https://github.com/kaizen3031593",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "saudkhanzada",
+      "name": "Saud Khanzada",
+      "avatar_url": "https://avatars.githubusercontent.com/u/30137907?v=4",
+      "profile": "https://github.com/saudkhanzada",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
