@@ -129,7 +129,15 @@ To create an AWS Lambda Extension with Projen:
 - Now you can instantiate `MyExtensionLayerVersion` and add it to your Lambda
   functions.
 
-Example extension:
+Offical AWS extension examples are available in the [AWS Samples][ext-samples]
+repository.
+
+[ext-samples]: https://github.com/aws-samples/aws-lambda-extensions
+
+**Example of an extension:**
+
+A skeleton for a Lambda extension follows below. Comments with `TODO` describe
+locations where you can provide your custom functionality.
 
 ```ts
 #!/usr/bin/env node
@@ -148,14 +156,28 @@ import got from 'got';
 async function main() {
   const extensionInfo = await registerExtension([
     ExtensionEventType.SHUTDOWN,
+    ExtensionEventType.INVOKE,
   ]);
+
+  // TODO: Put your initialization code here. You can do things like
+  // testing a connection to your external tooling here.
 
   while (true) {
     const event = await getNextEvent(extensionInfo.extensionId);
 
     switch (event.eventType) {
       case ExtensionEventType.SHUTDOWN:
+        // TODO: Do something when the lambda extension is being
+        // shut down. You might do things here like de-registering
+        // your extension from your external tooling.
         return 0;
+
+      case ExtensionEventType.INVOKE:
+        // TODO: Do something every time your function is invoked,
+        // such as re-establishing a connection with your external
+        // tooling after the Lambda has thawed from a period of
+        // freezing due to inactivity.
+        break;
 
       default:
         console.log(`Unhandled event type ${event.eventType}`);
@@ -177,6 +199,8 @@ interface ExtensionEvent {
 }
 
 async function registerExtension(events: ExtensionEventType[]) {
+  // Do not set a timeout on the GET call, as the extension can be suspended
+  // for a period of time until there is an event to return.
   const res = await got.post(`${EXTENSION_API_BASE_URL}/register`, {
     json: { events },
     headers: {
@@ -212,11 +236,6 @@ main()
     process.exit(1);
   });
 ```
-
-More examples of extensions are available in the [AWS Samples][ext-samples]
-repository.
-
-[ext-samples]: https://github.com/aws-samples/aws-lambda-extensions
 
 ## Integration Snapshot Tests
 
