@@ -103,11 +103,17 @@ new awscdk.LambdaFunction(p, {
 
 ## AWS Lambda Extensions
 
-AWS [Lambda Extensions][lambda-extensions-blog] are long-running executable
-files that run alongside your Lambda Functions in their execution environment.
-AWS Lambda Extensions interact with your function's runtime and the
-[Lambda extension API][lambda-extensions-api] to integrate with tools outside
-the Lambda environment. Projen assists by helping with the bundling.
+An AWS [Lambda Extension][lambda-extensions-blog] is a way to integrate your
+preferred development, monitoring, observability, and governance tools with
+AWS Lambda. 
+
+Functionally, AWS [Lambda Extensions][lambda-extensions-blog] are long-running
+executable files that reside in the `extensions` subdirectory of your code
+asset. AWS Lambda executes all extensions before starting your handler's main
+process. These AWS Lambda Extensions interact with your function's main process
+and the [Lambda Extension API][lambda-extensions-api] to integrate with tools
+outside the Lambda environment. Projen helps with bundling and preparing your
+code as reusable Lambda Layers.
 
 [lambda-extensions-blog]: https://aws.amazon.com/blogs/aws/getting-started-with-using-your-favorite-operational-tools-on-aws-lambda-extensions-are-now-generally-available/
 [lambda-extensions-api]: https://docs.aws.amazon.com/lambda/latest/dg/runtimes-extensions-api.html
@@ -206,6 +212,11 @@ main()
     process.exit(1);
   });
 ```
+
+More examples of extensions are available in the [AWS Samples][ext-samples]
+repository.
+
+[ext-samples]: https://github.com/aws-samples/aws-lambda-extensions
 
 ## Integration Snapshot Tests
 
