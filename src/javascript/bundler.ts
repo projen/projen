@@ -129,6 +129,10 @@ export class Bundler extends Component {
 
     this.bundleTask.spawn(bundleTask);
 
+    if (options.executable ?? false) {
+      bundleTask.exec(`chmod +x ${outfile}`);
+    }
+
     let watchTask;
     const watch = options.watchTask ?? true;
     if (watch) {
@@ -246,4 +250,10 @@ export interface AddBundleOptions extends BundlingOptions {
    * @default "index.js"
    */
   readonly outfile?: string;
+
+  /**
+   * Mark the output file as executable.
+   * @default false
+   */
+  readonly executable?: boolean;
 }

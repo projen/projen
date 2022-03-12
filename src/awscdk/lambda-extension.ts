@@ -120,10 +120,12 @@ export class LambdaExtension extends Component {
       target: bundlerRuntime.esbuildTarget,
       externals: ["aws-sdk"],
       outfile: `extensions/${name}`,
+      // Make the output executable because Lambda expects to run
+      // extensions as stand-alone programs alongside the main lambda
+      // process.
+      executable: true,
       ...options.bundlingOptions,
     });
-
-    bundle.bundleTask.exec(`chmod +x ${bundle.outfile}`);
 
     const constructFile =
       options.constructFile ?? `${basePath}-layer-version.ts`;
