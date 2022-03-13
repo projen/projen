@@ -3,79 +3,64 @@ import { Project } from "../project";
 import { YamlFile } from "../yaml";
 
 export interface CircleCiProps {
-  readonly orbs?: IOrb[];
+  readonly orbs?: Record<string, string>;
   readonly enabled?: boolean;
   readonly version?: string;
   readonly workflows?: IWorkflow[];
 }
 
-export interface IOrb {
-  readonly key: string;
-  readonly name: string;
-  readonly version: string;
-  fullOrbName(): string;
+interface INamed {
+  identifier: string;
 }
 
-export class Orb implements IOrb {
-  readonly key: string;
-  readonly name: string;
-  readonly version: string;
-
-  constructor(key: string, name: string, version: string) {
-    this.key = key;
-    this.name = name;
-    this.version = version;
-  }
-  public fullOrbName(): string {
-    return `${this.name}@${this.version}`;
-  }
+export interface IWorkflow extends INamed {
+  jobs?: IJob[];
 }
 
-export interface IWorkflow {
-  readonly name: string;
-  readonly jobs: IJob[];
+interface IWorkflowReduced {
+  jobs?: IJob[];
 }
 
-export class Workflow implements IWorkflow {
-  readonly jobs: IJob[];
-  readonly name: string;
-
-  constructor(name: string, jobs: IJob[] = []) {
-    this.jobs = jobs;
-    this.name = name;
-  }
+export enum JobType {
+  APPROVAL = "approval",
 }
 
-export interface IJob {
-  readonly name: string;
-  readonly requires?: string[];
-  readonly context?: string[];
-  readonly filters?: any;
-  readonly params?: any;
+export interface IJob extends INamed {
+  requires?: string[];
+  name?: string;
+  context?: string[];
+  type?: JobType;
+  filter?: IFilter;
+}
+
+export interface IFilter {
+  branches?: IFilterConfig;
+  tags?: IFilterConfig;
+}
+
+export interface IFilterConfig {
+  only?: string[];
+  ignore?: string[];
 }
 
 export class Circleci extends Component {
-  public readonly file: YamlFile | undefined;
+  public readonly file: YamlFile;
   private options: CircleCiProps;
   private orbs: Record<string, string> = {};
-  private workflows: Record<string, any> = {};
+  private workflows: Record<string, IWorkflowReduced> = {};
 
   constructor(project: Project, options: CircleCiProps = {}) {
     super(project);
     this.options = options;
-    const circleCiEnabled = options.enabled || true;
-    if (circleCiEnabled) {
-      this.file = new YamlFile(project, ".circleci/config.yml", {
-        committed: true,
-        readonly: true,
-        obj: () => this.renderCircleCi(),
-      });
-    }
+    // const circleCiEnabled = options.enabled || true;
+    this.file = new YamlFile(project, ".circleci/config.yml", {
+      obj: () => this.renderCircleCi(),
+    });
+    this.initWorkflow();
+    this.initOrbs();
+    this.printDebug();
   }
   private renderCircleCi() {
-    this.initOrbs();
-    this.initWorkflow();
-    // console.log("have orbs:", this.orbs);
     return {
       version: this.options.version || "2.1",
       orbs: this.orbs,
@@ -83,55 +68,59 @@ export class Circleci extends Component {
     };
   }
   private initOrbs() {
-    for (const orb of this.options.orbs ?? []) {
-      this.addOrb(orb);
-    }
+    this.orbs = this.options.orbs ?? {};
+  }
+  private printDebug() {
+    console.log(
+      "init config:\n ",
+      JSON.stringify(this.renderCircleCi(), null, 2)
+    );
   }
   private initWorkflow() {
     for (const workflow of this.options.workflows ?? []) {
       this.addWorkflow(workflow);
     }
   }
-  public addOrb(orb: IOrb) {
-    console.log("adding orb", orb);
-    this.orbs[orb.key] = orb.fullOrbName();
+
+  public addOrb(name: string, orb: string) {
+    if (this.orbs[name] !== undefined) {
+      throw new Error(`Circleci Config already contains an orb named ${name}.`);
+    }
+    this.orbs[name] = orb;
   }
+
+  private reduceJobs(jobs: IJob[]) {
+    const result: any = {};
+    for (const job of jobs ?? []) {
+      const { identifier, ...jobReduced } = job;
+      result[job.identifier] = jobReduced;
+    }
+    return result;
+  }
+
   public addWorkflow(workflow: IWorkflow) {
-    console.log("got workflow jobs", workflow.jobs);
-    if (workflow.jobs.length === 0) {
-      throw new Error("Workflow must have at least one job");
-    }
-    const jobs: Array<any> = [];
-    for (const job of workflow.jobs ?? []) {
-      if (hasJobParameters(job)) {
-        jobs.push({
-          [job.name]: renderJob(job),
-        });
-      } else {
-        jobs.push(job.name);
-      }
-    }
-    this.workflows[workflow.name] = {
-      jobs: jobs,
-    };
+    const { identifier, ...workflowReduced } = workflow;
+    workflowReduced.jobs = this.reduceJobs(workflow.jobs ?? []);
+    this.workflows[workflow.identifier] = workflowReduced;
+    console.log("add workflows:\n ", JSON.stringify(this.workflows, null, 2));
   }
 }
 
-function renderJob(job: IJob) {
-  return {
-    ...(job.params ?? {}),
-    ...(job.requires && job.requires.length > 0
-      ? { requires: job.requires }
-      : {}),
-    ...(job.context && job.context.length > 0 ? { context: job.context } : {}),
-    ...(job.filters ? { filters: job.filters } : {}),
-  };
-}
+// function renderJob(job: IJob) {
+//   return {
+//     ...(job.params ?? {}),
+//     ...(job.requires && job.requires.length > 0
+//       ? { requires: job.requires }
+//       : {}),
+//     ...(job.context && job.context.length > 0 ? { context: job.context } : {}),
+//     ...(job.filters ? { filters: job.filters } : {}),
+//   };
+// }
 
-function hasJobParameters(job: IJob) {
-  let hasParameters = false;
-  if (job.context || job.requires || job.filters) {
-    hasParameters = true;
-  }
-  return hasParameters;
-}
+// function hasJobParameters(job: IJob) {
+//   let hasParameters = false;
+//   if (job.context || job.requires || job.filters) {
+//     hasParameters = true;
+//   }
+//   return hasParameters;
+// }

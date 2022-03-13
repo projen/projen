@@ -2,6 +2,5 @@
   "name": "projen-example",
   "description": "CDK for software projects",
   "dependencies": {
-    "projen": "^0.28.34"
   }
 }
