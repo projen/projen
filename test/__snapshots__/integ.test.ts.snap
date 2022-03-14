@@ -908,6 +908,10 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
+        "name": "jsii-pacmak",
+        "type": "build",
+      },
+      Object {
         "name": "json-schema",
         "type": "build",
       },
@@ -1281,10 +1285,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:java",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target java",
+            "exec": "jsii-pacmak -v --target java",
           },
         ],
       },
@@ -1293,10 +1294,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:js",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target js",
+            "exec": "jsii-pacmak -v --target js",
           },
         ],
       },
@@ -1305,10 +1303,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:python",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target python",
+            "exec": "jsii-pacmak -v --target python",
           },
         ],
       },
@@ -1758,6 +1753,7 @@ project.synth();
       "jsii": "*",
       "jsii-diff": "*",
       "jsii-docgen": "*",
+      "jsii-pacmak": "*",
       "json-schema": "*",
       "npm-check-updates": "^12",
       "projen": "*",
@@ -2486,6 +2482,10 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
+        "name": "jsii-pacmak",
+        "type": "build",
+      },
+      Object {
         "name": "json-schema",
         "type": "build",
       },
@@ -2704,10 +2704,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:dotnet",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target dotnet",
+            "exec": "jsii-pacmak -v --target dotnet",
           },
         ],
       },
@@ -2716,10 +2713,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:java",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target java",
+            "exec": "jsii-pacmak -v --target java",
           },
         ],
       },
@@ -2728,10 +2722,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:js",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target js",
+            "exec": "jsii-pacmak -v --target js",
           },
         ],
       },
@@ -2740,10 +2731,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:python",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target python",
+            "exec": "jsii-pacmak -v --target python",
           },
         ],
       },
@@ -2823,7 +2811,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade @types/follow-redirects @types/jest @types/json-stable-stringify @types/node @types/yaml @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii jsii-diff jsii-docgen json-schema json-schema-to-typescript npm-check-updates ts-jest typescript fast-json-patch follow-redirects json-stable-stringify yaml constructs",
+            "exec": "yarn upgrade @types/follow-redirects @types/jest @types/json-stable-stringify @types/node @types/yaml @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema json-schema-to-typescript npm-check-updates ts-jest typescript fast-json-patch follow-redirects json-stable-stringify yaml constructs",
           },
           Object {
             "exec": "npx projen",
@@ -3323,6 +3311,7 @@ project.synth();
       "jsii": "*",
       "jsii-diff": "*",
       "jsii-docgen": "*",
+      "jsii-pacmak": "*",
       "json-schema": "*",
       "json-schema-to-typescript": "*",
       "npm-check-updates": "^12",

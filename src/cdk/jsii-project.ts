@@ -328,7 +328,7 @@ export class JsiiProject extends TypeScriptProject {
       this.addPackagingTarget("go", task);
     }
 
-    this.addDevDeps("jsii", "jsii-diff");
+    this.addDevDeps("jsii", "jsii-diff", "jsii-pacmak");
 
     this.gitignore.exclude(".jsii", "tsconfig.json");
     this.npmignore?.include(".jsii");
@@ -370,11 +370,7 @@ export class JsiiProject extends TypeScriptProject {
     const packageTask = this.tasks.addTask(`package:${language}`, {
       description: `Create ${language} language bindings`,
     });
-
-    packageTask.exec(
-      "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
-    );
-    packageTask.exec(`npx jsii-pacmak@$jsii_version -v --target ${language}`);
+    packageTask.exec(`jsii-pacmak -v --target ${language}`);
     this.packageAllTask.spawn(packageTask);
     return packageTask;
   }
