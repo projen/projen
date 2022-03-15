@@ -4445,6 +4445,27 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
+      },
+      Object {
         "default": "{}",
         "docs": "npm scripts to include.",
         "featured": false,
@@ -7249,6 +7270,27 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
+      },
+      Object {
         "default": "{}",
         "docs": "npm scripts to include.",
         "featured": false,
@@ -9714,6 +9756,27 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -12360,6 +12423,27 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
+      },
+      Object {
         "default": "{}",
         "docs": "npm scripts to include.",
         "featured": false,
@@ -14934,6 +15018,27 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -18187,6 +18292,27 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
+      },
+      Object {
         "default": "{}",
         "docs": "npm scripts to include.",
         "featured": false,
@@ -20322,6 +20448,27 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -22545,6 +22692,27 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
+      },
+      Object {
         "default": "{}",
         "docs": "npm scripts to include.",
         "featured": false,
@@ -24663,6 +24831,27 @@ Array [
         ],
         "simpleType": "string",
         "switch": "repository-directory",
+      },
+      Object {
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -27651,6 +27840,27 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
+      },
+      Object {
         "default": "{}",
         "docs": "npm scripts to include.",
         "featured": false,
@@ -29858,6 +30068,27 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -32136,6 +32367,27 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
+      },
+      Object {
         "default": "{}",
         "docs": "npm scripts to include.",
         "featured": false,
@@ -34410,6 +34662,27 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
