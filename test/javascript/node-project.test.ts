@@ -864,6 +864,220 @@ test("node project can be ejected", () => {
   expect(outdir[".projen/files.json"]).toBeUndefined();
 });
 
+describe("scoped private packages", () => {
+  const accountId = "123456789012";
+  const domain = "my-domain";
+  const region = "my-region-1";
+  const repository = "MyRepository";
+  const scope = "@stub-scope";
+  const accessKeyIdSecret = "stub-access-key-id";
+  const secretAccessKeySecret = "stub-secret-access-key";
+
+  test("adds AWS Code Artifact Login step prior to install to build workflow", () => {
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl: `https://${domain}-${accountId}.d.codeartifact.${region}.amazonaws.com/npm/${repository}/`,
+          scope,
+          accessKeyIdSecret,
+          secretAccessKeySecret,
+        },
+      ],
+    });
+    const output = synthSnapshot(project);
+
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build.steps).toEqual(
+      expect.arrayContaining([
+        {
+          name: `AWS CodeArtifact Login ${scope}`,
+          uses: "MondoPower/codeartifact-auth@1.2",
+          with: {
+            domain,
+            repository,
+            scope,
+            region,
+            accountId,
+          },
+        },
+        { name: "Install dependencies", run: "yarn install --check-files" },
+      ])
+    );
+  });
+
+  test("adds AWS Code Artifact Login step prior to install to release workflow", () => {
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl: `https://${domain}-${accountId}.d.codeartifact.${region}.amazonaws.com/npm/${repository}/`,
+          scope,
+          accessKeyIdSecret,
+          secretAccessKeySecret,
+        },
+      ],
+    });
+    const output = synthSnapshot(project);
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    expect(releaseWorkflow.jobs.release.steps).toEqual(
+      expect.arrayContaining([
+        {
+          name: `AWS CodeArtifact Login ${scope}`,
+          uses: "MondoPower/codeartifact-auth@1.2",
+          with: {
+            domain,
+            repository,
+            scope,
+            region,
+            accountId,
+          },
+        },
+        {
+          name: "Install dependencies",
+          run: "yarn install --check-files --frozen-lockfile",
+        },
+      ])
+    );
+  });
+
+  test("adds multiple AWS Code Artifact Login step prior to install to workflow when multiple scoped packages defined", () => {
+    const accountId2 = "123456789013";
+    const domain2 = "my-domain-2";
+    const region2 = "my-region-2";
+    const repository2 = "MyRepository2";
+    const scope2 = "@stub-scope-2";
+    const accessKeyIdSecret2 = "stub-access-key-id-2";
+    const secretAccessKeySecret2 = "stub-secret-access-key-2";
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl: `https://${domain}-${accountId}.d.codeartifact.${region}.amazonaws.com/npm/${repository}/`,
+          scope,
+          accessKeyIdSecret,
+          secretAccessKeySecret,
+        },
+        {
+          registryUrl: `https://${domain2}-${accountId2}.d.codeartifact.${region2}.amazonaws.com/npm/${repository2}/`,
+          scope: scope2,
+          accessKeyIdSecret: accessKeyIdSecret2,
+          secretAccessKeySecret: secretAccessKeySecret2,
+        },
+      ],
+    });
+    const output = synthSnapshot(project);
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    expect(releaseWorkflow.jobs.release.steps).toEqual(
+      expect.arrayContaining([
+        {
+          name: `AWS CodeArtifact Login ${scope}`,
+          uses: "MondoPower/codeartifact-auth@1.2",
+          with: {
+            domain,
+            repository,
+            scope,
+            region,
+            accountId,
+          },
+        },
+        {
+          name: `AWS CodeArtifact Login ${scope2}`,
+          uses: "MondoPower/codeartifact-auth@1.2",
+          with: {
+            domain: domain2,
+            repository: repository2,
+            scope: scope2,
+            region: region2,
+            accountId: accountId2,
+          },
+        },
+        {
+          name: "Install dependencies",
+          run: "yarn install --check-files --frozen-lockfile",
+        },
+      ])
+    );
+  });
+
+  test("adds AWS assume role and Code Artifact Login step prior to install to workflow", () => {
+    const roleToAssume = "stub-role-arn";
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl: `https://${domain}-${accountId}.d.codeartifact.${region}.amazonaws.com/npm/${repository}/`,
+          scope,
+          accessKeyIdSecret,
+          secretAccessKeySecret,
+          roleToAssume,
+        },
+      ],
+    });
+    const output = synthSnapshot(project);
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    expect(releaseWorkflow.jobs.release.steps).toEqual(
+      expect.arrayContaining([
+        {
+          name: `AWS Assume Role for ${scope}`,
+          uses: "aws-actions/configure-aws-credentials@v1",
+          with: {
+            "aws-access-key-id": accessKeyIdSecret,
+            "aws-secret-access-key": secretAccessKeySecret,
+            "aws-region": region,
+            "role-to-assume": roleToAssume,
+            "role-duration-seconds": 900,
+          },
+        },
+        {
+          name: `AWS CodeArtifact Login ${scope}`,
+          uses: "MondoPower/codeartifact-auth@1.2",
+          with: {
+            domain,
+            repository,
+            scope,
+            region,
+            accountId,
+          },
+        },
+        {
+          name: "Install dependencies",
+          run: "yarn install --check-files --frozen-lockfile",
+        },
+      ])
+    );
+  });
+
+  test("throws error if scope is invalid", () => {
+    const anotherScope = "another-scope";
+    expect(
+      () =>
+        new TestNodeProject({
+          scopedPackagesOptions: [
+            {
+              registryUrl: `https://${domain}-${accountId}.d.codeartifact.${region}.amazonaws.com/npm/${repository}/`,
+              scope: anotherScope,
+              accessKeyIdSecret,
+              secretAccessKeySecret,
+            },
+          ],
+        })
+    ).toThrow(`Scope must start with "@" in options, found ${anotherScope}`);
+  });
+
+  test("throws error if registryUrl is invalid", () => {
+    expect(
+      () =>
+        new TestNodeProject({
+          scopedPackagesOptions: [
+            {
+              registryUrl: `https://${accountId}.d.codeartifact.${region}.amazonaws.com/npm/${repository}/`,
+              scope,
+              accessKeyIdSecret,
+              secretAccessKeySecret,
+            },
+          ],
+        })
+    ).toThrow("Could not get CodeArtifact details from npm Registry");
+  });
+});
+
 class TestNodeProject extends NodeProject {
   constructor(options: Partial<NodeProjectOptions> = {}) {
     super({
