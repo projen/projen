@@ -854,7 +854,7 @@ Array [
         "switch": "sample-java-package",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -1953,7 +1953,7 @@ Array [
         "switch": "setuptools",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -4515,7 +4515,7 @@ Array [
         "switch": "stability",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -7374,7 +7374,7 @@ Array [
         "switch": "stability",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -9896,7 +9896,7 @@ Array [
         "switch": "stability",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -12595,7 +12595,7 @@ Array [
         "switch": "stability",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -15226,7 +15226,7 @@ Array [
         "switch": "stability",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -16087,7 +16087,7 @@ Array [
         "switch": "sample-java-package",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -18512,7 +18512,7 @@ Array [
         "switch": "stability",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -20704,7 +20704,7 @@ Array [
         "switch": "stability",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -22980,7 +22980,7 @@ Array [
         "switch": "stability",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -25138,7 +25138,7 @@ Array [
         "switch": "stability",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -26135,7 +26135,7 @@ Array [
         "switch": "setuptools",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -28176,7 +28176,7 @@ Array [
         "switch": "stability",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -30440,7 +30440,7 @@ Array [
         "switch": "stability",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -32771,7 +32771,7 @@ Array [
         "switch": "stability",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {
@@ -35102,7 +35102,7 @@ Array [
         "switch": "stability",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Auto-close of stale issues and pull request.",
         "featured": false,
         "fullType": Object {

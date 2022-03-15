@@ -7,7 +7,6 @@
 !/.gitpod.yml
 !/.devcontainer.json
 !/.github/workflows/auto-approve.yml
-!/.github/workflows/stale.yml
 !/package.json
 !/LICENSE
 !/.npmignore
