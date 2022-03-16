@@ -11,3 +11,23 @@ export function renderBundleName(entrypoint: string) {
   const base = basename(p, extname(p));
   return join(dir, base);
 }
+/**
+ * Regex for AWS CodeArtifact registry
+ */
+export const codeArtifactRegex =
+  /^https:\/\/(?<domain>[^\.]+)-(?<accountId>\d{12})\.d\.codeartifact\.(?<region>[^\.]+).*\.amazonaws\.com\/.*\/(?<repository>\w+)/;
+
+/**
+ * gets AWS details from the Code Artifact registry URL
+ * throws exception if not matching expected pattern
+ * @param registryUrl Code Artifact registry URL
+ * @returns object containing the (domain, accountId, region, repository)
+ */
+export function extractCodeArtifactDetails(registryUrl: string) {
+  const match = registryUrl.match(codeArtifactRegex);
+  if (match?.groups) {
+    const { domain, accountId, region, repository } = match.groups;
+    return { domain, accountId, region, repository };
+  }
+  throw new Error("Could not get CodeArtifact details from npm Registry");
+}

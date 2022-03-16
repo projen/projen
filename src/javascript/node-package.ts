@@ -347,6 +347,26 @@ export interface ScopedPackagesCodeArtifactOptions
 
 export type ScopedPackagesOptions = ScopedPackagesCodeArtifactOptions;
 
+export interface ParsedScopedPackagesOptions
+  extends ScopedPackagesBaseOptions,
+    CodeArtifactOptions {
+  /**
+   * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
+   * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
+   *
+   * @default "AWS_ACCESS_KEY_ID"
+   */
+  readonly accessKeyIdSecret: string;
+
+  /**
+   * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
+   * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
+   *
+   * @default "AWS_SECRET_ACCESS_KEY"
+   */
+  readonly secretAccessKeySecret: string;
+}
+
 /**
  * Represents the npm `package.json` file.
  */
@@ -420,7 +440,7 @@ export class NodePackage extends Component {
    *
    * @default undefined
    */
-  readonly scopedPackagesOptions?: ScopedPackagesOptions[];
+  readonly scopedPackagesOptions?: ParsedScopedPackagesOptions[];
 
   /**
    * npm package access level.
@@ -879,12 +899,12 @@ export class NodePackage extends Component {
 
   private parseScopedPackagesOptions(
     scopedPackagesOptions?: ScopedPackagesOptions[]
-  ): ScopedPackagesOptions[] {
+  ): ParsedScopedPackagesOptions[] {
     if (!scopedPackagesOptions) {
       return [];
     }
 
-    return scopedPackagesOptions.map((option): ScopedPackagesOptions => {
+    return scopedPackagesOptions.map((option): ParsedScopedPackagesOptions => {
       if (!isScoped(option.scope)) {
         throw new Error(
           `Scope must start with "@" in options, found ${option.scope}`
@@ -897,7 +917,7 @@ export class NodePackage extends Component {
         );
       }
 
-      const result: ScopedPackagesOptions = {
+      const result: ParsedScopedPackagesOptions = {
         registryUrl: option.registryUrl,
         scope: option.scope,
         accessKeyIdSecret: option.accessKeyIdSecret ?? "AWS_ACCESS_KEY_ID",

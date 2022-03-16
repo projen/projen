@@ -9,6 +9,7 @@ import {
   GitIdentity,
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
+import { secretToString } from "../github/util";
 import { JobStep, Triggers } from "../github/workflows-model";
 import { IgnoreFile } from "../ignore-file";
 import {
@@ -28,7 +29,7 @@ import {
   NodePackage,
   NodePackageManager,
   NodePackageOptions,
-  ScopedPackagesOptions,
+  ParsedScopedPackagesOptions,
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
 
@@ -308,27 +309,6 @@ export enum AutoRelease {
  */
 export class NodeProject extends GitHubProject {
   /**
-   * Regex for AWS CodeArtifact registry
-   */
-  private static readonly codeArtifactRegex =
-    /^https:\/\/(?<domain>[^\.]+)-(?<accountId>\d{12})\.d\.codeartifact\.(?<region>[^\.]+).*\.amazonaws\.com\/.*\/(?<repository>\w+)/;
-
-  /**
-   * gets AWS details from the Code Artifact registry URL
-   * throws exception if not matching expected pattern
-   * @param registryUrl Code Artifact registry URL
-   * @returns object containing the (domain, accountId, region, repository)
-   */
-  private static extractCodeArtifactDetails(registryUrl: string) {
-    const match = registryUrl.match(NodeProject.codeArtifactRegex);
-    if (match?.groups) {
-      const { domain, accountId, region, repository } = match.groups;
-      return { domain, accountId, region, repository };
-    }
-    throw new Error("Could not get CodeArtifact details from npm Registry");
-  }
-
-  /**
    * Get steps for scoped package
    * if required will add the assume role step
    *
@@ -336,9 +316,9 @@ export class NodeProject extends GitHubProject {
    * @returns array of job steps required for each private scoped packages
    */
   private static getScopedPackageSteps(
-    scopedPackageOptions: ScopedPackagesOptions
+    scopedPackageOptions: ParsedScopedPackagesOptions
   ): JobStep[] {
-    const codeArtifactDetails = NodeProject.extractCodeArtifactDetails(
+    const codeArtifactDetails = extractCodeArtifactDetails(
       scopedPackageOptions.registryUrl
     );
     const result: JobStep[] = [];
@@ -347,8 +327,12 @@ export class NodeProject extends GitHubProject {
         name: `AWS Assume Role for ${scopedPackageOptions.scope}`,
         uses: "aws-actions/configure-aws-credentials@v1",
         with: {
-          "aws-access-key-id": scopedPackageOptions.accessKeyIdSecret,
-          "aws-secret-access-key": scopedPackageOptions.secretAccessKeySecret,
+          "aws-access-key-id": secretToString(
+            scopedPackageOptions.accessKeyIdSecret
+          ),
+          "aws-secret-access-key": secretToString(
+            scopedPackageOptions.secretAccessKeySecret
+          ),
           "aws-region": codeArtifactDetails.region,
           "role-to-assume": scopedPackageOptions.roleToAssume,
           "role-duration-seconds": 900,
