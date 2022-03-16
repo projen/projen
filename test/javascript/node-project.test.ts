@@ -2,6 +2,7 @@ import * as yaml from "yaml";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
 import { GithubCredentials } from "../../src/github";
+import { secretToString } from "../../src/github/util";
 import { JobPermission } from "../../src/github/workflows-model";
 import {
   NodeProject,
@@ -1020,8 +1021,8 @@ describe("scoped private packages", () => {
           name: `AWS Assume Role for ${scope}`,
           uses: "aws-actions/configure-aws-credentials@v1",
           with: {
-            "aws-access-key-id": accessKeyIdSecret,
-            "aws-secret-access-key": secretAccessKeySecret,
+            "aws-access-key-id": secretToString(accessKeyIdSecret),
+            "aws-secret-access-key": secretToString(secretAccessKeySecret),
             "aws-region": region,
             "role-to-assume": roleToAssume,
             "role-duration-seconds": 900,
