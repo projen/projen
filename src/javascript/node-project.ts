@@ -125,7 +125,7 @@ export interface NodeProjectOptions
    *
    * @default "yarn install --frozen-lockfile && yarn projen"
    */
-  readonly workflowBootstrapSteps?: any[];
+  readonly workflowBootstrapSteps?: JobStep[];
 
   /**
    * The git identity to use in workflows.
@@ -698,7 +698,6 @@ export class NodeProject extends GitHubProject {
       );
       ignoresProjen = dependabotConf?.ignoresProjen;
     }
-
     if (depsUpgrade) {
       const defaultOptions: UpgradeDependenciesOptions = {
         // if projen secret is defined we can also upgrade projen here.
@@ -715,12 +714,11 @@ export class NodeProject extends GitHubProject {
           gitIdentity: this.workflowGitIdentity,
         },
       };
-      const upgradeDependencies = new UpgradeDependencies(
+      this.upgradeWorkflow = new UpgradeDependencies(
         this,
         deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}])
       );
-      ignoresProjen = upgradeDependencies.ignoresProjen;
-      this.upgradeWorkflow = upgradeDependencies;
+      ignoresProjen = this.upgradeWorkflow.ignoresProjen;
     }
 
     // create a dedicated workflow to upgrade projen itself if needed

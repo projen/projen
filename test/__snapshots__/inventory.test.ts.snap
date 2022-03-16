@@ -1009,6 +1009,1120 @@ Array [
     "typename": "awscdk.AwsCdkJavaApp",
   },
   Object {
+    "docs": "AWS CDK app in Python.",
+    "docsurl": "https://projen.io/api/API.html#projen-awscdk-awscdkpythonapp",
+    "fqn": "projen.awscdk.AwsCdkPythonApp",
+    "moduleName": "projen",
+    "options": Array [
+      Object {
+        "default": "\\"app.py\\"",
+        "docs": "The CDK app's entrypoint (relative to the source directory, which is \\"src\\" by default).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "appEntrypoint",
+        "optional": true,
+        "parent": "AwsCdkPythonAppOptions",
+        "path": Array [
+          "appEntrypoint",
+        ],
+        "simpleType": "string",
+        "switch": "app-entrypoint",
+      },
+      Object {
+        "default": "$GIT_USER_EMAIL",
+        "docs": "Author's e-mail.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "authorEmail",
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "authorEmail",
+        ],
+        "simpleType": "string",
+        "switch": "author-email",
+      },
+      Object {
+        "default": "$GIT_USER_NAME",
+        "docs": "Author's name.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "authorName",
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "authorName",
+        ],
+        "simpleType": "string",
+        "switch": "author-name",
+      },
+      Object {
+        "default": "- auto approve is disabled",
+        "docs": "Enable and configure the 'auto approve' workflow.",
+        "featured": false,
+        "fqn": "projen.github.AutoApproveOptions",
+        "fullType": Object {
+          "fqn": "projen.github.AutoApproveOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "autoApproveOptions",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoApproveOptions",
+        ],
+        "simpleType": "AutoApproveOptions",
+        "switch": "auto-approve-options",
+      },
+      Object {
+        "default": "- see defaults in \`AutoMergeOptions\`",
+        "docs": "Configure options for automatic merging on GitHub.",
+        "featured": false,
+        "fqn": "projen.github.AutoMergeOptions",
+        "fullType": Object {
+          "fqn": "projen.github.AutoMergeOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "autoMergeOptions",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMergeOptions",
+        ],
+        "simpleType": "AutoMergeOptions",
+        "switch": "auto-merge-options",
+      },
+      Object {
+        "default": "- no build command",
+        "docs": "A command to execute before synthesis.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "buildCommand",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "buildCommand",
+        ],
+        "simpleType": "string",
+        "switch": "build-command",
+      },
+      Object {
+        "default": "- will be included by default for AWS CDK >= 1.0.0 < 2.0.0",
+        "deprecated": true,
+        "docs": "Warning: NodeJS only.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "cdkAssert",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkAssert",
+        ],
+        "simpleType": "boolean",
+        "switch": "cdk-assert",
+      },
+      Object {
+        "default": "- will be included by default for AWS CDK >= 1.111.0 < 2.0.0",
+        "docs": "Install the assertions library?",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "cdkAssertions",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkAssertions",
+        ],
+        "simpleType": "boolean",
+        "switch": "cdk-assertions",
+      },
+      Object {
+        "deprecated": true,
+        "docs": "Which AWS CDKv1 modules this project requires.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "cdkDependencies",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkDependencies",
+        ],
+        "simpleType": "unknown",
+        "switch": "cdk-dependencies",
+      },
+      Object {
+        "default": "true",
+        "deprecated": true,
+        "docs": "If this is enabled (default), all modules declared in \`cdkDependencies\` will be also added as normal \`dependencies\` (as well as \`peerDependencies\`).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "cdkDependenciesAsDeps",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkDependenciesAsDeps",
+        ],
+        "simpleType": "boolean",
+        "switch": "cdk-dependencies-as-deps",
+      },
+      Object {
+        "default": "\\"cdk.out\\"",
+        "docs": "cdk.out directory.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "cdkout",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "cdkout",
+        ],
+        "simpleType": "string",
+        "switch": "cdkout",
+      },
+      Object {
+        "deprecated": true,
+        "docs": "AWS CDK modules required for testing.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "cdkTestDependencies",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkTestDependencies",
+        ],
+        "simpleType": "unknown",
+        "switch": "cdk-test-dependencies",
+      },
+      Object {
+        "default": "\\"2.1.0\\"",
+        "docs": "Minimum version of the AWS CDK to depend on.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "cdkVersion",
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkVersion",
+        ],
+        "simpleType": "string",
+        "switch": "cdk-version",
+      },
+      Object {
+        "docs": "Use pinned version instead of caret version for CDK.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "cdkVersionPinning",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "cdkVersionPinning",
+        ],
+        "simpleType": "boolean",
+        "switch": "cdk-version-pinning",
+      },
+      Object {
+        "docs": "A list of PyPI trove classifiers that describe the project.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "classifiers",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "classifiers",
+        ],
+        "simpleType": "unknown",
+        "switch": "classifiers",
+      },
+      Object {
+        "default": "true",
+        "docs": "Add a \`clobber\` task which resets the repo to origin.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "clobber",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "clobber",
+        ],
+        "simpleType": "boolean",
+        "switch": "clobber",
+      },
+      Object {
+        "default": "- for CDK 1.x the default is \\"3.2.27\\", for CDK 2.x the default is
+\\"10.0.5\\".",
+        "docs": "Minimum version of the \`constructs\` library to depend on.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "constructsVersion",
+        "optional": true,
+        "parent": "AwsCdkDepsCommonOptions",
+        "path": Array [
+          "constructsVersion",
+        ],
+        "simpleType": "string",
+        "switch": "constructs-version",
+      },
+      Object {
+        "default": "- no additional context",
+        "docs": "Additional context to include in \`cdk.json\`.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "context",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "context",
+        ],
+        "simpleType": "unknown",
+        "switch": "context",
+      },
+      Object {
+        "default": "[]",
+        "docs": "List of runtime dependencies for this project.",
+        "featured": true,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "deps",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "deps",
+        ],
+        "simpleType": "unknown",
+        "switch": "deps",
+      },
+      Object {
+        "docs": "A short description of the package.",
+        "featured": true,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "description",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "description",
+        ],
+        "simpleType": "string",
+        "switch": "description",
+      },
+      Object {
+        "default": "false",
+        "docs": "Add a VSCode development environment (used for GitHub Codespaces).",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "devContainer",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "devContainer",
+        ],
+        "simpleType": "boolean",
+        "switch": "dev-container",
+      },
+      Object {
+        "default": "[]",
+        "docs": "List of dev dependencies for this project.",
+        "featured": true,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "devDeps",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "devDeps",
+        ],
+        "simpleType": "unknown",
+        "switch": "dev-deps",
+      },
+      Object {
+        "default": "true",
+        "docs": "Include all feature flags in cdk.json.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "featureFlags",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "featureFlags",
+        ],
+        "simpleType": "boolean",
+        "switch": "feature-flags",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable GitHub integration.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "github",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "github",
+        ],
+        "simpleType": "boolean",
+        "switch": "github",
+      },
+      Object {
+        "default": "- see GitHubOptions",
+        "docs": "Options for GitHub integration.",
+        "featured": false,
+        "fqn": "projen.github.GitHubOptions",
+        "fullType": Object {
+          "fqn": "projen.github.GitHubOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "githubOptions",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "githubOptions",
+        ],
+        "simpleType": "GitHubOptions",
+        "switch": "github-options",
+      },
+      Object {
+        "default": "false",
+        "docs": "Add a Gitpod development environment.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "gitpod",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "gitpod",
+        ],
+        "simpleType": "boolean",
+        "switch": "gitpod",
+      },
+      Object {
+        "docs": "A URL to the website of the project.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "homepage",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "homepage",
+        ],
+        "simpleType": "string",
+        "switch": "homepage",
+      },
+      Object {
+        "docs": "License of this package as an SPDX identifier.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "license",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "license",
+        ],
+        "simpleType": "string",
+        "switch": "license",
+      },
+      Object {
+        "default": "{}",
+        "docs": "Configure logging options such as verbosity.",
+        "featured": false,
+        "fqn": "projen.LoggerOptions",
+        "fullType": Object {
+          "fqn": "projen.LoggerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "logging",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "logging",
+        ],
+        "simpleType": "LoggerOptions",
+        "switch": "logging",
+      },
+      Object {
+        "default": "true",
+        "deprecated": true,
+        "docs": "Whether mergify should be enabled on this repository or not.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "mergify",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "mergify",
+        ],
+        "simpleType": "boolean",
+        "switch": "mergify",
+      },
+      Object {
+        "default": "- default options",
+        "deprecated": true,
+        "docs": "Options for mergify.",
+        "featured": false,
+        "fqn": "projen.github.MergifyOptions",
+        "fullType": Object {
+          "fqn": "projen.github.MergifyOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "mergifyOptions",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "mergifyOptions",
+        ],
+        "simpleType": "MergifyOptions",
+        "switch": "mergify-options",
+      },
+      Object {
+        "default": "$PYTHON_MODULE_NAME",
+        "docs": "Name of the python package as used in imports and filenames.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "moduleName",
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "moduleName",
+        ],
+        "simpleType": "string",
+        "switch": "module-name",
+      },
+      Object {
+        "default": "$BASEDIR",
+        "docs": "This is the name of your project.",
+        "featured": true,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "name",
+        "parent": "ProjectOptions",
+        "path": Array [
+          "name",
+        ],
+        "simpleType": "string",
+        "switch": "name",
+      },
+      Object {
+        "default": "\\".\\"",
+        "docs": "The root directory of the project.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "outdir",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "outdir",
+        ],
+        "simpleType": "string",
+        "switch": "outdir",
+      },
+      Object {
+        "docs": "The parent project, if this project is part of a bigger project.",
+        "featured": false,
+        "fqn": "projen.Project",
+        "fullType": Object {
+          "fqn": "projen.Project",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "parent",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "parent",
+        ],
+        "simpleType": "Project",
+        "switch": "parent",
+      },
+      Object {
+        "default": "true",
+        "docs": "Use pip with a requirements.txt file to track project dependencies.",
+        "featured": true,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "pip",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "pip",
+        ],
+        "simpleType": "boolean",
+        "switch": "pip",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.",
+        "featured": true,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "poetry",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "poetry",
+        ],
+        "simpleType": "boolean",
+        "switch": "poetry",
+      },
+      Object {
+        "docs": "Additional options to set for poetry if using poetry.",
+        "featured": false,
+        "fqn": "projen.python.PoetryPyprojectOptionsWithoutDeps",
+        "fullType": Object {
+          "fqn": "projen.python.PoetryPyprojectOptionsWithoutDeps",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "poetryOptions",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "poetryOptions",
+        ],
+        "simpleType": "PoetryPyprojectOptionsWithoutDeps",
+        "switch": "poetry-options",
+      },
+      Object {
+        "default": "ProjectType.UNKNOWN",
+        "deprecated": true,
+        "docs": "Which type of project this is (library/app).",
+        "featured": false,
+        "fqn": "projen.ProjectType",
+        "fullType": Object {
+          "fqn": "projen.ProjectType",
+        },
+        "jsonLike": true,
+        "kind": "enum",
+        "name": "projectType",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projectType",
+        ],
+        "simpleType": "ProjectType",
+        "switch": "project-type",
+      },
+      Object {
+        "default": "\\"npx projen\\"",
+        "docs": "The shell command to use in order to run the projen CLI.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenCommand",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "projenCommand",
+        ],
+        "simpleType": "string",
+        "switch": "projen-command",
+      },
+      Object {
+        "default": "false",
+        "docs": "Generate (once) .projenrc.json (in JSON). Set to \`false\` in order to disable .projenrc.json generation.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projenrcJson",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "projenrcJson",
+        ],
+        "simpleType": "boolean",
+        "switch": "projenrc-json",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for .projenrc.json.",
+        "featured": false,
+        "fqn": "projen.ProjenrcOptions",
+        "fullType": Object {
+          "fqn": "projen.ProjenrcOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "projenrcJsonOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "projenrcJsonOptions",
+        ],
+        "simpleType": "ProjenrcOptions",
+        "switch": "projenrc-json-options",
+      },
+      Object {
+        "default": "true",
+        "docs": "Use projenrc in python.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projenrcPython",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcPython",
+        ],
+        "simpleType": "boolean",
+        "switch": "projenrc-python",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options related to projenrc in python.",
+        "featured": false,
+        "fqn": "projen.python.ProjenrcOptions",
+        "fullType": Object {
+          "fqn": "projen.python.ProjenrcOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "projenrcPythonOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcPythonOptions",
+        ],
+        "simpleType": "ProjenrcOptions",
+        "switch": "projenrc-python-options",
+      },
+      Object {
+        "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenTokenSecret",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenTokenSecret",
+        ],
+        "simpleType": "string",
+        "switch": "projen-token-secret",
+      },
+      Object {
+        "default": "true",
+        "docs": "Include pytest tests.",
+        "featured": true,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "pytest",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "pytest",
+        ],
+        "simpleType": "boolean",
+        "switch": "pytest",
+      },
+      Object {
+        "default": "- defaults",
+        "docs": "pytest options.",
+        "featured": false,
+        "fqn": "projen.python.PytestOptions",
+        "fullType": Object {
+          "fqn": "projen.python.PytestOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "pytestOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "pytestOptions",
+        ],
+        "simpleType": "PytestOptions",
+        "switch": "pytest-options",
+      },
+      Object {
+        "default": "- { filename: 'README.md', contents: '# replace this' }",
+        "docs": "The README setup.",
+        "featured": false,
+        "fqn": "projen.SampleReadmeProps",
+        "fullType": Object {
+          "fqn": "projen.SampleReadmeProps",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "readme",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "readme",
+        ],
+        "simpleType": "SampleReadmeProps",
+        "switch": "readme",
+      },
+      Object {
+        "default": "ApprovalLevel.BROADENING",
+        "docs": "To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.",
+        "featured": false,
+        "fqn": "projen.awscdk.ApprovalLevel",
+        "fullType": Object {
+          "fqn": "projen.awscdk.ApprovalLevel",
+        },
+        "jsonLike": true,
+        "kind": "enum",
+        "name": "requireApproval",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "requireApproval",
+        ],
+        "simpleType": "ApprovalLevel",
+        "switch": "require-approval",
+      },
+      Object {
+        "default": "true",
+        "docs": "Include sample code and test if the relevant directories don't exist.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "sample",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "sample",
+        ],
+        "simpleType": "boolean",
+        "switch": "sample",
+      },
+      Object {
+        "docs": "Additional fields to pass in the setup() function if using setuptools.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "any",
+            },
+            "kind": "map",
+          },
+        },
+        "jsonLike": true,
+        "name": "setupConfig",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "setupConfig",
+        ],
+        "simpleType": "unknown",
+        "switch": "setup-config",
+      },
+      Object {
+        "default": "- true if the project type is library",
+        "docs": "Use setuptools with a setup.py script for packaging and publishing.",
+        "featured": true,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "setuptools",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "setuptools",
+        ],
+        "simpleType": "boolean",
+        "switch": "setuptools",
+      },
+      Object {
+        "default": "true",
+        "docs": "Auto-close of stale issues and pull request.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "stale",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "stale",
+        ],
+        "simpleType": "boolean",
+        "switch": "stale",
+      },
+      Object {
+        "default": "- see defaults in \`StaleOptions\`",
+        "docs": "Auto-close stale issues and pull requests.",
+        "featured": false,
+        "fqn": "projen.github.StaleOptions",
+        "fullType": Object {
+          "fqn": "projen.github.StaleOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "staleOptions",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "staleOptions",
+        ],
+        "simpleType": "StaleOptions",
+        "switch": "stale-options",
+      },
+      Object {
+        "default": "\\"tests\\"",
+        "docs": "Python sources directory.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "testdir",
+        "optional": true,
+        "parent": "AwsCdkPythonAppOptions",
+        "path": Array [
+          "testdir",
+        ],
+        "simpleType": "string",
+        "switch": "testdir",
+      },
+      Object {
+        "default": "true",
+        "docs": "Use venv to manage a virtual environment for installing dependencies inside.",
+        "featured": true,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "venv",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "venv",
+        ],
+        "simpleType": "boolean",
+        "switch": "venv",
+      },
+      Object {
+        "default": "- defaults",
+        "docs": "Venv options.",
+        "featured": false,
+        "fqn": "projen.python.VenvOptions",
+        "fullType": Object {
+          "fqn": "projen.python.VenvOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "venvOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "venvOptions",
+        ],
+        "simpleType": "VenvOptions",
+        "switch": "venv-options",
+      },
+      Object {
+        "default": "\\"0.1.0\\"",
+        "docs": "Version of the package.",
+        "featured": true,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "version",
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "version",
+        ],
+        "simpleType": "string",
+        "switch": "version",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable VSCode integration.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "vscode",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "vscode",
+        ],
+        "simpleType": "boolean",
+        "switch": "vscode",
+      },
+      Object {
+        "default": "[]",
+        "docs": "Glob patterns to exclude from \`cdk watch\`.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "watchExcludes",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "watchExcludes",
+        ],
+        "simpleType": "unknown",
+        "switch": "watch-excludes",
+      },
+      Object {
+        "default": "[]",
+        "docs": "Glob patterns to include in \`cdk watch\`.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "primitive": "string",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "watchIncludes",
+        "optional": true,
+        "parent": "CdkConfigCommonOptions",
+        "path": Array [
+          "watchIncludes",
+        ],
+        "simpleType": "unknown",
+        "switch": "watch-includes",
+      },
+    ],
+    "pjid": "awscdk-app-py",
+    "typename": "awscdk.AwsCdkPythonApp",
+  },
+  Object {
     "docs": "AWS CDK app in TypeScript.",
     "docsurl": "https://projen.io/api/API.html#projen-awscdk-awscdktypescriptapp",
     "fqn": "projen.awscdk.AwsCdkTypeScriptApp",
@@ -2153,6 +3267,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "lambda-auto-discover",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically adds an \`awscdk.LambdaExtension\` for each \`.lambda-extension.ts\` entrypoint in your source tree. If this is disabled, you can manually add an \`awscdk.AutoDiscover\` component to your project.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "lambdaExtensionAutoDiscover",
+        "optional": true,
+        "parent": "AwsCdkTypeScriptAppOptions",
+        "path": Array [
+          "lambdaExtensionAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "lambda-extension-auto-discover",
       },
       Object {
         "default": "- default options",
@@ -3598,7 +4729,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -4888,6 +6019,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "lambda-auto-discover",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically adds an \`awscdk.LambdaExtension\` for each \`.lambda-extension.ts\` entrypoint in your source tree. If this is disabled, you can manually add an \`awscdk.AutoDiscover\` component to your project.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "lambdaExtensionAutoDiscover",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": Array [
+          "lambdaExtensionAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "lambda-extension-auto-discover",
       },
       Object {
         "default": "- default options",
@@ -6396,7 +7544,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -8918,7 +10066,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -11617,7 +12765,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -14248,7 +15396,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -17534,7 +18682,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -19654,7 +20802,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -22019,7 +23167,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -24071,7 +25219,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -27109,7 +28257,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -29462,7 +30610,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -31793,7 +32941,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },
@@ -34124,7 +35272,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "primitive": "any",
+              "fqn": "projen.github.workflows.JobStep",
             },
             "kind": "array",
           },

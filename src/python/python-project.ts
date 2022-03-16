@@ -4,6 +4,7 @@ import { Pip } from "./pip";
 import { Poetry } from "./poetry";
 import { Projenrc as ProjenrcPython, ProjenrcOptions } from "./projenrc";
 import { Pytest, PytestOptions } from "./pytest";
+import { PytestSample } from "./pytest-sample";
 import { IPythonDeps } from "./python-deps";
 import { IPythonEnv } from "./python-env";
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
@@ -171,7 +172,7 @@ export class PythonProject extends GitHubProject {
   /**
    * Pytest component.
    */
-  public readonly pytest?: Pytest;
+  public pytest?: Pytest;
 
   constructor(options: PythonProjectOptions) {
     super(options);
@@ -280,6 +281,7 @@ export class PythonProject extends GitHubProject {
 
     if (options.pytest ?? true) {
       this.pytest = new Pytest(this, options.pytestOptions);
+      new PytestSample(this, this.pytest.testdir);
     }
 
     if (options.sample ?? true) {

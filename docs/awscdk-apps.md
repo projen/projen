@@ -1,6 +1,6 @@
 # AWS CDK Applications
 
-Project types: `awscdk-app-java`, `awscdk-app-ts`.
+Project types: `awscdk-app-java`, `awscdk-app-py`, `awscdk-app-ts`.
 
 ## Deployment (NOT IMPLEMENTED YET)
 

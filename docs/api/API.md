@@ -43,6 +43,7 @@ Name|Description
 [awscdk.AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava)|Manages dependencies on the AWS CDK for Java projects.
 [awscdk.AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs)|Manages dependencies on the AWS CDK for Node.js projects.
 [awscdk.AwsCdkJavaApp](#projen-awscdk-awscdkjavaapp)|AWS CDK app in Java.
+[awscdk.AwsCdkPythonApp](#projen-awscdk-awscdkpythonapp)|AWS CDK app in Python.
 [awscdk.AwsCdkTypeScriptApp](#projen-awscdk-awscdktypescriptapp)|AWS CDK app in TypeScript.
 [awscdk.CdkConfig](#projen-awscdk-cdkconfig)|Represents cdk.json file.
 [awscdk.CdkTasks](#projen-awscdk-cdktasks)|Adds standard AWS CDK tasks to your project.
@@ -50,6 +51,8 @@ Name|Description
 [awscdk.IntegrationTest](#projen-awscdk-integrationtest)|Cloud integration tests.
 [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover)|Creates integration tests from entry points discovered in the test tree.
 [awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover)|Creates lambdas from entry points discovered in the project's source tree.
+[awscdk.LambdaExtension](#projen-awscdk-lambdaextension)|Create a Lambda Extension.
+[awscdk.LambdaExtensionAutoDiscover](#projen-awscdk-lambdaextensionautodiscover)|Creates Lambda Extensions from entrypoints discovered in the project's source tree.
 [awscdk.LambdaFunction](#projen-awscdk-lambdafunction)|Generates a pre-bundled AWS Lambda function construct from handler code.
 [awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)|The runtime for the AWS Lambda function.
 [build.BuildWorkflow](#projen-build-buildworkflow)|*No description*
@@ -102,6 +105,7 @@ Name|Description
 [python.PoetryPyproject](#projen-python-poetrypyproject)|Represents configuration of a pyproject.toml file for a Poetry project.
 [python.Projenrc](#projen-python-projenrc)|Allows writing projenrc files in python.
 [python.Pytest](#projen-python-pytest)|*No description*
+[python.PytestSample](#projen-python-pytestsample)|*No description*
 [python.PythonProject](#projen-python-pythonproject)|Python project.
 [python.PythonSample](#projen-python-pythonsample)|Python code sample.
 [python.RequirementsFile](#projen-python-requirementsfile)|Specifies a list of packages to be installed using pip.
@@ -184,6 +188,7 @@ Name|Description
 [awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)|*No description*
 [awscdk.AwsCdkJavaAppOptions](#projen-awscdk-awscdkjavaappoptions)|*No description*
 [awscdk.AwsCdkPackageNames](#projen-awscdk-awscdkpackagenames)|Language-specific AWS CDK package names.
+[awscdk.AwsCdkPythonAppOptions](#projen-awscdk-awscdkpythonappoptions)|Options for `AwsCdkPythonApp`.
 [awscdk.AwsCdkTypeScriptAppOptions](#projen-awscdk-awscdktypescriptappoptions)|*No description*
 [awscdk.CdkConfigCommonOptions](#projen-awscdk-cdkconfigcommonoptions)|Common options for `cdk.json`.
 [awscdk.CdkConfigOptions](#projen-awscdk-cdkconfigoptions)|Options for `CdkJson`.
@@ -192,6 +197,9 @@ Name|Description
 [awscdk.IntegrationTestCommonOptions](#projen-awscdk-integrationtestcommonoptions)|*No description*
 [awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)|Options for `IntegrationTest`.
 [awscdk.LambdaAutoDiscoverOptions](#projen-awscdk-lambdaautodiscoveroptions)|Options for `LambdaAutoDiscover`.
+[awscdk.LambdaExtensionAutoDiscoverOptions](#projen-awscdk-lambdaextensionautodiscoveroptions)|Options for `LambdaExtensionAutoDiscover`.
+[awscdk.LambdaExtensionCommonOptions](#projen-awscdk-lambdaextensioncommonoptions)|Common options for creating lambda extensions.
+[awscdk.LambdaExtensionOptions](#projen-awscdk-lambdaextensionoptions)|Options for creating lambda extensions.
 [awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)|Common options for `LambdaFunction`.
 [awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)|Options for `Function`.
 [build.AddPostBuildJobCommandsOptions](#projen-build-addpostbuildjobcommandsoptions)|Options for `BuildWorkflow.addPostBuildJobCommands`.
@@ -2974,11 +2982,13 @@ new awscdk.AutoDiscover(project: Project, options: AutoDiscoverOptions)
   * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
   * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
   * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
-  * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for auto-discovery of AWS Lambda functions. __*Optional*__
+  * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for AWS Lambda functions. __*Optional*__
+  * **lambdaExtensionOptions** (<code>[awscdk.LambdaExtensionCommonOptions](#projen-awscdk-lambdaextensioncommonoptions)</code>)  Options for lambda extensions. __*Optional*__
   * **testdir** (<code>string</code>)  Test source tree. 
   * **integrationTestOptions** (<code>[awscdk.IntegrationTestCommonOptions](#projen-awscdk-integrationtestcommonoptions)</code>)  Options for integration tests. __*Optional*__
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Auto-discover integration tests. __*Default*__: true
   * **lambdaAutoDiscover** (<code>boolean</code>)  Auto-discover lambda functions. __*Default*__: true
+  * **lambdaExtensionAutoDiscover** (<code>boolean</code>)  Auto-discover lambda extensions. __*Default*__: true
 
 
 
@@ -3115,7 +3125,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
@@ -3159,6 +3169,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically discovers and creates integration tests for each `.integ.ts` file in under your test directory. __*Default*__: true
   * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. __*Default*__: true
+  * **lambdaExtensionAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Common options for all AWS Lambda functions. __*Default*__: default options
 
 
@@ -3498,6 +3509,102 @@ addCdkDependency(...modules: string[]): void
 
 
 
+## class AwsCdkPythonApp 🔹 <a id="projen-awscdk-awscdkpythonapp"></a>
+
+AWS CDK app in Python.
+
+__Submodule__: awscdk
+
+__Extends__: [python.PythonProject](#projen-python-pythonproject)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
+```
+
+* **options** (<code>[awscdk.AwsCdkPythonAppOptions](#projen-awscdk-awscdkpythonappoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
+  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
+  * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
+  * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
+  * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
+  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **github** (<code>boolean</code>)  Enable GitHub integration. __*Default*__: true
+  * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
+  * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
+  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
+  * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
+  * **authorEmail** (<code>string</code>)  Author's e-mail. 
+  * **authorName** (<code>string</code>)  Author's name. 
+  * **version** (<code>string</code>)  Version of the package. 
+  * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
+  * **description** (<code>string</code>)  A short description of the package. __*Optional*__
+  * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
+  * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
+  * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
+  * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
+  * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
+  * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
+  * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
+  * **poetry** (<code>boolean</code>)  Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. __*Default*__: false
+  * **projenrcPython** (<code>boolean</code>)  Use projenrc in python. __*Default*__: true
+  * **projenrcPythonOptions** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  Options related to projenrc in python. __*Default*__: default options
+  * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
+  * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
+  * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true if the project type is library
+  * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true
+  * **venvOptions** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  Venv options. __*Default*__: defaults
+  * **buildCommand** (<code>string</code>)  A command to execute before synthesis. __*Default*__: no build command
+  * **cdkout** (<code>string</code>)  cdk.out directory. __*Default*__: "cdk.out"
+  * **context** (<code>Map<string, any></code>)  Additional context to include in `cdk.json`. __*Default*__: no additional context
+  * **featureFlags** (<code>boolean</code>)  Include all feature flags in cdk.json. __*Default*__: true
+  * **requireApproval** (<code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code>)  To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them. __*Default*__: ApprovalLevel.BROADENING
+  * **watchExcludes** (<code>Array<string></code>)  Glob patterns to exclude from `cdk watch`. __*Default*__: []
+  * **watchIncludes** (<code>Array<string></code>)  Glob patterns to include in `cdk watch`. __*Default*__: []
+  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
+  * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
+  * **cdkAssertions** (<code>boolean</code>)  Install the assertions library? __*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
+  * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDKv1 modules this project requires. __*Optional*__
+  * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
+  * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+  * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
+  * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
+  * **appEntrypoint** (<code>string</code>)  The CDK app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "app.py"
+  * **testdir** (<code>string</code>)  Python sources directory. __*Default*__: "tests"
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**appEntrypoint**🔹 | <code>string</code> | The CDK app entrypoint.
+**cdkConfig**🔹 | <code>[awscdk.CdkConfig](#projen-awscdk-cdkconfig)</code> | cdk.json configuration.
+**cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | <span></span>
+**cdkTasks**🔹 | <code>[awscdk.CdkTasks](#projen-awscdk-cdktasks)</code> | Common CDK tasks.
+**cdkVersion**🔹 | <code>string</code> | The CDK version this app is using.
+**testdir**🔹 | <code>string</code> | The directory in which the python tests reside.
+
+
+
 ## class AwsCdkTypeScriptApp 🔹 <a id="projen-awscdk-awscdktypescriptapp"></a>
 
 AWS CDK app in TypeScript.
@@ -3626,7 +3733,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
@@ -3663,6 +3770,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **appEntrypoint** (<code>string</code>)  The CDK app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically discovers and creates integration tests for each `.integ.ts` file in under your test directory. __*Default*__: true
   * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
+  * **lambdaExtensionAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Common options for all AWS Lambda functions. __*Default*__: default options
 
 
@@ -3899,7 +4007,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
@@ -3943,6 +4051,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically discovers and creates integration tests for each `.integ.ts` file in under your test directory. __*Default*__: true
   * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. __*Default*__: true
+  * **lambdaExtensionAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Common options for all AWS Lambda functions. __*Default*__: default options
 
 
@@ -4036,7 +4145,64 @@ new awscdk.LambdaAutoDiscover(project: Project, options: LambdaAutoDiscoverOptio
   * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
   * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
   * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
-  * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for auto-discovery of AWS Lambda functions. __*Optional*__
+  * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for AWS Lambda functions. __*Optional*__
+
+
+
+
+## class LambdaExtension 🔹 <a id="projen-awscdk-lambdaextension"></a>
+
+Create a Lambda Extension.
+
+__Submodule__: awscdk
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.LambdaExtension(project: Project, options: LambdaExtensionOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.LambdaExtensionOptions](#projen-awscdk-lambdaextensionoptions)</code>)  *No description*
+  * **bundlingOptions** (<code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code>)  Bundling options for this AWS Lambda extension. __*Default*__: defaults
+  * **compatibleRuntimes** (<code>Array<[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)></code>)  The extension's compatible runtimes. __*Optional*__
+  * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
+  * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the AWS Lambda extension entrypoint (stand-alone script). 
+  * **constructFile** (<code>string</code>)  The name of the generated TypeScript source file. __*Default*__: The name of the entrypoint file, with the `-layer-version.ts` suffix instead of `.lambda-extension.ts`.
+  * **constructName** (<code>string</code>)  The name of the generated `lambda.LayerVersion` subclass. __*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `LayerVersion` (e.g. `AppConfigLayerVersion`).
+  * **name** (<code>string</code>)  Name of the extension. __*Default*__: Derived from the entrypoint filename.
+
+
+
+
+## class LambdaExtensionAutoDiscover 🔹 <a id="projen-awscdk-lambdaextensionautodiscover"></a>
+
+Creates Lambda Extensions from entrypoints discovered in the project's source tree.
+
+__Submodule__: awscdk
+
+__Extends__: [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.LambdaExtensionAutoDiscover(project: Project, options: LambdaExtensionAutoDiscoverOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.LambdaExtensionAutoDiscoverOptions](#projen-awscdk-lambdaextensionautodiscoveroptions)</code>)  *No description*
+  * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
+  * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
+  * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
+  * **lambdaExtensionOptions** (<code>[awscdk.LambdaExtensionCommonOptions](#projen-awscdk-lambdaextensioncommonoptions)</code>)  Options for lambda extensions. __*Optional*__
 
 
 
@@ -4257,7 +4423,7 @@ Base class for auto-discovering and creating project subcomponents.
 __Submodule__: cdk
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover), [awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover), [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase), [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)
+__Implemented by__: [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover), [awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover), [awscdk.LambdaExtensionAutoDiscover](#projen-awscdk-lambdaextensionautodiscover), [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase), [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)
 
 ### Initializer
 
@@ -4413,7 +4579,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
@@ -4666,7 +4832,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
@@ -4865,7 +5031,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
@@ -5042,7 +5208,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
@@ -5278,7 +5444,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
@@ -6650,6 +6816,8 @@ addBundle(entrypoint: string, options: AddBundleOptions): Bundle
   * **watchTask** (<code>boolean</code>)  In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag. __*Default*__: true
   * **platform** (<code>string</code>)  esbuild platform. 
   * **target** (<code>string</code>)  esbuild target. 
+  * **executable** (<code>boolean</code>)  Mark the output file as executable. __*Default*__: false
+  * **outfile** (<code>string</code>)  Bundler output path relative to the asset's output directory. __*Default*__: "index.js"
 
 __Returns__:
 * <code>[javascript.Bundle](#projen-javascript-bundle)</code>
@@ -7336,7 +7504,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
 
@@ -8211,6 +8379,37 @@ new python.Pytest(project: PythonProject, options?: PytestOptions)
   * **maxFailures** (<code>number</code>)  Stop the testing process after the first N failures. __*Optional*__
   * **testdir** (<code>string</code>)  Directory with tests. __*Default*__: 'tests'
   * **version** (<code>string</code>)  Pytest version. __*Default*__: "6.2.1"
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**testdir**🔹 | <code>string</code> | <span></span>
+
+
+
+## class PytestSample 🔹 <a id="projen-python-pytestsample"></a>
+
+
+
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.PytestSample(project: PythonProject, testdir: string)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **testdir** (<code>string</code>)  *No description*
 
 
 
@@ -9102,7 +9301,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
@@ -9253,7 +9452,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
@@ -9404,7 +9603,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
@@ -9800,7 +9999,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `pages/` and `public/` if there are no files there. __*Default*__: true
@@ -9949,7 +10148,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
@@ -10170,7 +10369,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **rewire** (<code>Map<string, any></code>)  Rewire webpack configuration. __*Default*__: No rewired config.
@@ -10361,7 +10560,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
   * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
   * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
   * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
   * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
   * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
@@ -11357,7 +11556,9 @@ Name | Type | Description
 **integrationTestAutoDiscover**?🔹 | <code>boolean</code> | Auto-discover integration tests.<br/>__*Default*__: true
 **integrationTestOptions**?🔹 | <code>[awscdk.IntegrationTestCommonOptions](#projen-awscdk-integrationtestcommonoptions)</code> | Options for integration tests.<br/>__*Optional*__
 **lambdaAutoDiscover**?🔹 | <code>boolean</code> | Auto-discover lambda functions.<br/>__*Default*__: true
-**lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Options for auto-discovery of AWS Lambda functions.<br/>__*Optional*__
+**lambdaExtensionAutoDiscover**?🔹 | <code>boolean</code> | Auto-discover lambda extensions.<br/>__*Default*__: true
+**lambdaExtensionOptions**?🔹 | <code>[awscdk.LambdaExtensionCommonOptions](#projen-awscdk-lambdaextensioncommonoptions)</code> | Options for lambda extensions.<br/>__*Optional*__
+**lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Options for AWS Lambda functions.<br/>__*Optional*__
 
 
 
@@ -11439,6 +11640,7 @@ Name | Type | Description
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **lambdaAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler.<br/>__*Default*__: true
+**lambdaExtensionAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
 **lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Common options for all AWS Lambda functions.<br/>__*Default*__: default options
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
@@ -11520,7 +11722,7 @@ Name | Type | Description
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -11654,6 +11856,79 @@ Name | Type | Description
 
 
 
+## struct AwsCdkPythonAppOptions 🔹 <a id="projen-awscdk-awscdkpythonappoptions"></a>
+
+
+Options for `AwsCdkPythonApp`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**authorEmail**🔹 | <code>string</code> | Author's e-mail.
+**authorName**🔹 | <code>string</code> | Author's name.
+**cdkVersion**🔹 | <code>string</code> | Minimum version of the AWS CDK to depend on.
+**moduleName**🔹 | <code>string</code> | Name of the python package as used in imports and filenames.
+**name**🔹 | <code>string</code> | This is the name of your project.
+**version**🔹 | <code>string</code> | Version of the package.
+**appEntrypoint**?🔹 | <code>string</code> | The CDK app's entrypoint (relative to the source directory, which is "src" by default).<br/>__*Default*__: "app.py"
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
+**autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**buildCommand**?🔹 | <code>string</code> | A command to execute before synthesis.<br/>__*Default*__: no build command
+**cdkAssert**?⚠️ | <code>boolean</code> | Warning: NodeJS only.<br/>__*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
+**cdkAssertions**?🔹 | <code>boolean</code> | Install the assertions library?<br/>__*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
+**cdkDependencies**?⚠️ | <code>Array<string></code> | Which AWS CDKv1 modules this project requires.<br/>__*Optional*__
+**cdkDependenciesAsDeps**?⚠️ | <code>boolean</code> | If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`).<br/>__*Default*__: true
+**cdkTestDependencies**?⚠️ | <code>Array<string></code> | AWS CDK modules required for testing.<br/>__*Optional*__
+**cdkVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Optional*__
+**cdkout**?🔹 | <code>string</code> | cdk.out directory.<br/>__*Default*__: "cdk.out"
+**classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
+**clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
+**context**?🔹 | <code>Map<string, any></code> | Additional context to include in `cdk.json`.<br/>__*Default*__: no additional context
+**deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
+**featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
+**github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
+**githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
+**homepage**?🔹 | <code>string</code> | A URL to the website of the project.<br/>__*Optional*__
+**license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
+**logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
+**poetry**?🔹 | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.<br/>__*Default*__: false
+**poetryOptions**?🔹 | <code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code> | Additional options to set for poetry if using poetry.<br/>__*Optional*__
+**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+**projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
+**projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
+**projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
+**projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in python.<br/>__*Default*__: true
+**projenrcPythonOptions**?🔹 | <code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code> | Options related to projenrc in python.<br/>__*Default*__: default options
+**pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
+**pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**requireApproval**?🔹 | <code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: ApprovalLevel.BROADENING
+**sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
+**setupConfig**?🔹 | <code>Map<string, any></code> | Additional fields to pass in the setup() function if using setuptools.<br/>__*Optional*__
+**setuptools**?🔹 | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing.<br/>__*Default*__: true if the project type is library
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
+**testdir**?🔹 | <code>string</code> | Python sources directory.<br/>__*Default*__: "tests"
+**venv**?🔹 | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside.<br/>__*Default*__: true
+**venvOptions**?🔹 | <code>[python.VenvOptions](#projen-python-venvoptions)</code> | Venv options.<br/>__*Default*__: defaults
+**vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
+**watchExcludes**?🔹 | <code>Array<string></code> | Glob patterns to exclude from `cdk watch`.<br/>__*Default*__: []
+**watchIncludes**?🔹 | <code>Array<string></code> | Glob patterns to include in `cdk watch`.<br/>__*Default*__: []
+
+
+
 ## struct AwsCdkTypeScriptAppOptions 🔹 <a id="projen-awscdk-awscdktypescriptappoptions"></a>
 
 
@@ -11728,6 +12003,7 @@ Name | Type | Description
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **lambdaAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
+**lambdaExtensionAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
 **lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Common options for all AWS Lambda functions.<br/>__*Default*__: default options
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
@@ -11806,7 +12082,7 @@ Name | Type | Description
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 **watchExcludes**?🔹 | <code>Array<string></code> | Glob patterns to exclude from `cdk watch`.<br/>__*Default*__: []
 **watchIncludes**?🔹 | <code>Array<string></code> | Glob patterns to include in `cdk watch`.<br/>__*Default*__: []
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -11931,6 +12207,7 @@ Name | Type | Description
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **keywords**?⚠️ | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **lambdaAutoDiscover**?⚠️ | <code>boolean</code> | Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler.<br/>__*Default*__: true
+**lambdaExtensionAutoDiscover**?⚠️ | <code>boolean</code> | Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
 **lambdaOptions**?⚠️ | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Common options for all AWS Lambda functions.<br/>__*Default*__: default options
 **libdir**?⚠️ | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
 **license**?⚠️ | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
@@ -12012,7 +12289,7 @@ Name | Type | Description
 **typescriptVersion**?⚠️ | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
 **versionrcOptions**?⚠️ | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?⚠️ | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?⚠️ | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -12081,7 +12358,56 @@ Name | Type | Description
 **cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | AWS CDK dependency manager.
 **srcdir**🔹 | <code>string</code> | Project source tree (relative to project output directory).
 **tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
-**lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Options for auto-discovery of AWS Lambda functions.<br/>__*Optional*__
+**lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Options for AWS Lambda functions.<br/>__*Optional*__
+
+
+
+## struct LambdaExtensionAutoDiscoverOptions 🔹 <a id="projen-awscdk-lambdaextensionautodiscoveroptions"></a>
+
+
+Options for `LambdaExtensionAutoDiscover`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | AWS CDK dependency manager.
+**srcdir**🔹 | <code>string</code> | Project source tree (relative to project output directory).
+**tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
+**lambdaExtensionOptions**?🔹 | <code>[awscdk.LambdaExtensionCommonOptions](#projen-awscdk-lambdaextensioncommonoptions)</code> | Options for lambda extensions.<br/>__*Optional*__
+
+
+
+## struct LambdaExtensionCommonOptions 🔹 <a id="projen-awscdk-lambdaextensioncommonoptions"></a>
+
+
+Common options for creating lambda extensions.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda extension.<br/>__*Default*__: defaults
+**compatibleRuntimes**?🔹 | <code>Array<[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)></code> | The extension's compatible runtimes.<br/>__*Optional*__
+
+
+
+## struct LambdaExtensionOptions 🔹 <a id="projen-awscdk-lambdaextensionoptions"></a>
+
+
+Options for creating lambda extensions.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | AWS CDK dependency manager.
+**entrypoint**🔹 | <code>string</code> | A path from the project root directory to a TypeScript file which contains the AWS Lambda extension entrypoint (stand-alone script).
+**bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda extension.<br/>__*Default*__: defaults
+**compatibleRuntimes**?🔹 | <code>Array<[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)></code> | The extension's compatible runtimes.<br/>__*Optional*__
+**constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, with the `-layer-version.ts` suffix instead of `.lambda-extension.ts`.
+**constructName**?🔹 | <code>string</code> | The name of the generated `lambda.LayerVersion` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `LayerVersion` (e.g. `AppConfigLayerVersion`).
+**name**?🔹 | <code>string</code> | Name of the extension.<br/>__*Default*__: Derived from the entrypoint filename.
 
 
 
@@ -12350,7 +12676,7 @@ Name | Type | Description
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -12609,7 +12935,7 @@ Name | Type | Description
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -12795,7 +13121,7 @@ Name | Type | Description
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -12957,7 +13283,7 @@ Name | Type | Description
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -13144,7 +13470,7 @@ Name | Type | Description
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -14277,7 +14603,9 @@ Name | Type | Description
 -----|------|-------------
 **platform**🔹 | <code>string</code> | esbuild platform.
 **target**🔹 | <code>string</code> | esbuild target.
+**executable**?🔹 | <code>boolean</code> | Mark the output file as executable.<br/>__*Default*__: false
 **externals**?🔹 | <code>Array<string></code> | You can mark a file or a package as external to exclude it from your build.<br/>__*Default*__: []
+**outfile**?🔹 | <code>string</code> | Bundler output path relative to the asset's output directory.<br/>__*Default*__: "index.js"
 **sourcemap**?🔹 | <code>boolean</code> | Include a source map in the bundle.<br/>__*Default*__: false
 **watchTask**?🔹 | <code>boolean</code> | In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag.<br/>__*Default*__: true
 
@@ -14294,6 +14622,7 @@ __Obtainable from__: [Bundler](#projen-javascript-bundler).[addBundle](#projen-j
 Name | Type | Description 
 -----|------|-------------
 **bundleTask**🔹 | <code>[Task](#projen-task)</code> | The task that produces this bundle.
+**outdir**🔹 | <code>string</code> | Base directory containing the output file (relative to project root).
 **outfile**🔹 | <code>string</code> | Location of the output file (relative to project root).
 **watchTask**?🔹 | <code>[Task](#projen-task)</code> | The "watch" task for this bundle.<br/>__*Optional*__
 
@@ -14444,6 +14773,7 @@ Name | Type | Description
 **haste**?🔹 | <code>[javascript.HasteConfig](#projen-javascript-hasteconfig)</code> | This will be used to configure the behavior of jest-haste-map, Jest's internal file crawler/cache system.<br/>__*Default*__: {}
 **injectGlobals**?🔹 | <code>boolean</code> | Insert Jest's globals (expect, test, describe, beforeEach etc.) into the global environment. If you set this to false, you should import from @jest/globals.<br/>__*Default*__: true
 **maxConcurrency**?🔹 | <code>number</code> | A number limiting the number of tests that are allowed to run at the same time when using test.concurrent. Any test above this limit will be queued and executed once a slot is released.<br/>__*Default*__: 5
+**maxWorkers**?🔹 | <code>string &#124; number</code> | Specifies the maximum number of workers the worker-pool will spawn for running tests.<br/>__*Default*__: the number of the cores available on your machine minus one for the main thread
 **moduleDirectories**?🔹 | <code>Array<string></code> | An array of directory names to be searched recursively up from the requiring module's location.<br/>__*Default*__: ["node_modules"]
 **moduleFileExtensions**?🔹 | <code>Array<string></code> | An array of file extensions your modules use.<br/>__*Default*__: ["js", "json", "jsx", "ts", "tsx", "node"]
 **moduleNameMapper**?🔹 | <code>Map<string, string &#124; Array<string>></code> | A map from regular expressions to module names or to arrays of module names that allow to stub out resources, like images or styles with a single module.<br/>__*Default*__: null
@@ -14671,7 +15001,7 @@ Name | Type | Description
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -15749,7 +16079,7 @@ Name | Type | Description
 **typescriptVersion**?⚠️ | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
 **versionrcOptions**?⚠️ | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?⚠️ | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?⚠️ | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?⚠️ | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?⚠️ | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -15890,7 +16220,7 @@ Name | Type | Description
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -16123,7 +16453,7 @@ Name | Type | Description
 **tailwind**?🔹 | <code>boolean</code> | Setup Tailwind CSS as a PostCSS plugin.<br/>__*Default*__: true
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -16266,7 +16596,7 @@ Name | Type | Description
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -16423,7 +16753,7 @@ Name | Type | Description
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
@@ -16595,7 +16925,7 @@ Name | Type | Description
 **typescriptVersion**?🔹 | <code>string</code> | TypeScript version to use.<br/>__*Default*__: "latest"
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-**workflowBootstrapSteps**?🔹 | <code>Array<any></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
+**workflowBootstrapSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Workflow steps to use in order to bootstrap this repo.<br/>__*Default*__: "yarn install --frozen-lockfile && yarn projen"
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`

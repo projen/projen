@@ -1,5 +1,6 @@
 export * from "./auto-discover";
 export * from "./awscdk-app-java";
+export * from "./awscdk-app-py";
 export * from "./awscdk-app-ts";
 export * from "./awscdk-construct";
 export * from "./awscdk-deps";
@@ -9,3 +10,4 @@ export * from "./cdk-config";
 export * from "./cdk-tasks";
 export * from "./integration-test";
 export * from "./lambda-function";
+export * from "./lambda-extension";

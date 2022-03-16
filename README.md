@@ -8,7 +8,7 @@
 ![Release](https://github.com/projen/projen/workflows/Release/badge.svg)
 ![Commit activity](https://img.shields.io/github/commit-activity/w/projen/projen)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-63-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-67-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Define and maintain complex project configuration through code.
@@ -47,6 +47,7 @@ list):
 
 <!-- <macro exec="node ./scripts/readme-projects.js"> -->
 * [awscdk-app-java](https://projen.io/api/API.html#projen-awscdk-awscdkjavaapp) - AWS CDK app in Java.
+* [awscdk-app-py](https://projen.io/api/API.html#projen-awscdk-awscdkpythonapp) - AWS CDK app in Python.
 * [awscdk-app-ts](https://projen.io/api/API.html#projen-awscdk-awscdktypescriptapp) - AWS CDK app in TypeScript.
 * [awscdk-construct](https://projen.io/api/API.html#projen-awscdk-awscdkconstructlibrary) - AWS CDK construct library project.
 * [cdk8s-app-ts](https://projen.io/api/API.html#projen-cdk8s-cdk8stypescriptapp) - CDK8s app in TypeScript.
@@ -117,7 +118,7 @@ npx projen
 ```
 
 And you'll notice that your `package.json` file now contains a `python` section in
-it's `jsii` config and the GitHub `release.yml` workflow includes a PyPI
+its `jsii` config and the GitHub `release.yml` workflow includes a PyPI
 publishing step.
 
 We recommend to put this in your shell profile, so you can simply run `pj` every
@@ -191,7 +192,7 @@ the box (we are just getting started). Think `projen new react`, `projen new ang
 `projen new awscdk-typescript`, `projen new cdk8s-python` (nothing in projen is tied to javascript or npm!)...
 
 Adding new project types is as simple as submitting a pull request to this repo and exporting a class that
-extends `projen.Project` (or one of it's derivatives). Projen automatically discovers project types so your
+extends `projen.Project` (or one of its derivatives). Projen automatically discovers project types so your
 type will immediately be available in `projen new`.
 
 ### Projects in external modules
@@ -359,6 +360,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/msessa"><img src="https://avatars.githubusercontent.com/u/1912143?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Matteo Sessa</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=msessa" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Hi-Fi"><img src="https://avatars.githubusercontent.com/u/1499780?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Juho Saarinen</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=Hi-Fi" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/njlynch"><img src="https://avatars.githubusercontent.com/u/1376292?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nick Lynch</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=njlynch" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://amani.kilumanga.com/"><img src="https://avatars.githubusercontent.com/u/8690282?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Amani Kilumanga</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=dkaksl" title="Code">💻</a></td>
+    <td align="center"><a href="http://blog.herlein.com/"><img src="https://avatars.githubusercontent.com/u/173428?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Greg Herlein</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=gherlein" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/kaizen3031593"><img src="https://avatars.githubusercontent.com/u/36202692?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kaizen Conroy</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=kaizen3031593" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/saudkhanzada"><img src="https://avatars.githubusercontent.com/u/30137907?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Saud Khanzada</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=saudkhanzada" title="Code">💻</a></td>
   </tr>
 </table>
 

@@ -222,10 +222,7 @@
       "description": "Create go language bindings",
       "steps": [
         {
-          "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
-        },
-        {
-          "exec": "npx jsii-pacmak@$jsii_version -v --target go"
+          "exec": "jsii-pacmak -v --target go"
         }
       ]
     },
@@ -234,10 +231,7 @@
       "description": "Create java language bindings",
       "steps": [
         {
-          "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
-        },
-        {
-          "exec": "npx jsii-pacmak@$jsii_version -v --target java"
+          "exec": "jsii-pacmak -v --target java"
         }
       ]
     },
@@ -246,10 +240,7 @@
       "description": "Create js language bindings",
       "steps": [
         {
-          "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
-        },
-        {
-          "exec": "npx jsii-pacmak@$jsii_version -v --target js"
+          "exec": "jsii-pacmak -v --target js"
         }
       ]
     },
@@ -258,10 +249,7 @@
       "description": "Create python language bindings",
       "steps": [
         {
-          "exec": "jsii_version=$(node -p \"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\")"
-        },
-        {
-          "exec": "npx jsii-pacmak@$jsii_version -v --target python"
+          "exec": "jsii-pacmak -v --target python"
         }
       ]
     },
@@ -383,25 +371,25 @@
       },
       "steps": [
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='markmac,projen'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='yaml,markmac,projen'"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='markmac,projen'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='yaml,markmac,projen'"
         },
         {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='markmac,projen'"
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='yaml,markmac,projen'"
         },
         {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='markmac,projen'"
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='yaml,markmac,projen'"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='markmac,projen'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='yaml,markmac,projen'"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/conventional-changelog-config-spec @types/fs-extra @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii jsii-diff jsii-docgen json-schema npm-check-updates prettier standard-version ts-jest typescript @iarna/toml case chalk conventional-changelog-config-spec fs-extra glob ini semver shx xmlbuilder2 yaml yargs"
+          "exec": "yarn upgrade @types/conventional-changelog-config-spec @types/fs-extra @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema npm-check-updates prettier standard-version ts-jest typescript @iarna/toml case chalk conventional-changelog-config-spec fs-extra glob ini semver shx xmlbuilder2 yaml yargs"
         },
         {
           "exec": "/bin/bash ./projen.bash"

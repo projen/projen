@@ -6,10 +6,7 @@ Object {
   "name": "package:dotnet",
   "steps": Array [
     Object {
-      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-    },
-    Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --target dotnet",
+      "exec": "jsii-pacmak -v --target dotnet",
     },
   ],
 }
@@ -21,10 +18,7 @@ Object {
   "name": "package:go",
   "steps": Array [
     Object {
-      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-    },
-    Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --target go",
+      "exec": "jsii-pacmak -v --target go",
     },
   ],
 }
@@ -36,10 +30,7 @@ Object {
   "name": "package:java",
   "steps": Array [
     Object {
-      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-    },
-    Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --target java",
+      "exec": "jsii-pacmak -v --target java",
     },
   ],
 }
@@ -51,10 +42,7 @@ Object {
   "name": "package:js",
   "steps": Array [
     Object {
-      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-    },
-    Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --target js",
+      "exec": "jsii-pacmak -v --target js",
     },
   ],
 }
@@ -66,10 +54,7 @@ Object {
   "name": "package:python",
   "steps": Array [
     Object {
-      "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-    },
-    Object {
-      "exec": "npx jsii-pacmak@$jsii_version -v --target python",
+      "exec": "jsii-pacmak -v --target python",
     },
   ],
 }
