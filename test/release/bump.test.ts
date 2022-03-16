@@ -81,7 +81,7 @@ test("select latest, with prefix", async () => {
     commits: [
       { message: "first version", tag: "prefix/v1.1.0" },
       { message: "unrelated version", tag: "v2.0.0" },
-      { message: "second version", tag: "prefix/v1.2.0" },
+      { message: "feat: feature 1", tag: "prefix/v1.2.0" },
       { message: "fix: bug" },
       { message: "fix: another bug" },
     ],
@@ -91,6 +91,7 @@ test("select latest, with prefix", async () => {
   expect(result.changelog.includes("Bug Fixes")).toBeTruthy();
   expect(result.changelog.includes("another bug")).toBeTruthy();
   expect(result.changelog.includes("bug")).toBeTruthy();
+  expect(result.changelog.includes("feature 1")).toBeFalsy();
   expect(result.bumpfile).toStrictEqual("1.2.1");
   expect(result.tag).toStrictEqual("prefix/v1.2.1");
 });

@@ -292,6 +292,7 @@ export class Release extends Component {
       versionInputFile: this.versionFile,
       artifactsDirectory: this.artifactsDirectory,
       versionrcOptions: options.versionrcOptions,
+      tagPrefix: options.releaseTagPrefix,
     });
 
     this.publisher = new Publisher(project, {
