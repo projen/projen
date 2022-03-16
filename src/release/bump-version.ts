@@ -132,7 +132,7 @@ export async function bump(cwd: string, options: BumpOptions) {
     cmd.push("--first-release");
   }
   if (prefix) {
-    cmd.push(`--tag-prefix ${prefix}`);
+    cmd.push(`--tag-prefix ${prefix}v`);
   }
 
   exec(cmd.join(" "), { cwd });
