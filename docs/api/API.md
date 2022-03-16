@@ -297,6 +297,7 @@ Name|Description
 [javascript.NodePackageOptions](#projen-javascript-nodepackageoptions)|*No description*
 [javascript.NodeProjectOptions](#projen-javascript-nodeprojectoptions)|*No description*
 [javascript.NpmConfigOptions](#projen-javascript-npmconfigoptions)|Options to configure the local NPM config.
+[javascript.ParsedScopedPackagesOptions](#projen-javascript-parsedscopedpackagesoptions)|*No description*
 [javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)|*No description*
 [javascript.PrettierOptions](#projen-javascript-prettieroptions)|Options for Prettier.
 [javascript.PrettierOverride](#projen-javascript-prettieroverride)|*No description*
@@ -8503,7 +8504,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Default*__: no maximum.
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Default*__: no minimum
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Optional*__
-**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ParsedScopedPackagesOptions](#projen-javascript-parsedscopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 
 ### Methods
 
@@ -20280,6 +20281,23 @@ Options to configure the local NPM config.
 Name | Type | Description 
 -----|------|-------------
 **registry**?🔹 | <code>string</code> | URL of the registry mirror to use.<br/>__*Default*__: use npmjs default registry
+
+
+
+## struct ParsedScopedPackagesOptions 🔹 <a id="projen-javascript-parsedscopedpackagesoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**accessKeyIdSecret**🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
+**registryUrl**🔹 | <code>string</code> | Url of the registry for scoped packages.
+**scope**🔹 | <code>string</code> | scope of the packages.
+**secretAccessKeySecret**🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
+**roleToAssume**?🔹 | <code>string</code> | ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).<br/>__*Default*__: undefined
 
 
 
