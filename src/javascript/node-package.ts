@@ -347,9 +347,7 @@ export interface ScopedPackagesCodeArtifactOptions
 
 export type ScopedPackagesOptions = ScopedPackagesCodeArtifactOptions;
 
-export interface ParsedScopedPackagesOptions
-  extends ScopedPackagesBaseOptions,
-    CodeArtifactOptions {
+export interface ParsedScopedPackagesOptions extends ScopedPackagesBaseOptions {
   /**
    * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
    * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
@@ -365,6 +363,14 @@ export interface ParsedScopedPackagesOptions
    * @default "AWS_SECRET_ACCESS_KEY"
    */
   readonly secretAccessKeySecret: string;
+
+  /**
+   * ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact
+   * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+   *
+   * @default undefined
+   */
+  readonly roleToAssume?: string;
 }
 
 /**
