@@ -118,7 +118,7 @@ export interface GitHubProjectOptions extends ProjectOptions {
   /**
    * Auto-close of stale issues and pull request. See `staleOptions` for options.
    *
-   * @default true
+   * @default false
    */
   readonly stale?: boolean;
 
@@ -218,7 +218,7 @@ export class GitHubProject extends Project {
       );
     }
 
-    const stale = options.stale ?? true;
+    const stale = options.stale ?? false;
     if (stale && this.github) {
       new Stale(this.github, options.staleOptions);
     }

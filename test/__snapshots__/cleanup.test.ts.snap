@@ -10,7 +10,6 @@ exports[`cleanup falls back to greedy method 1`] = `
 Array [
   ".gitattributes",
   ".github/workflows/pull-request-lint.yml",
-  ".github/workflows/stale.yml",
   ".gitignore",
   ".projen/deps.json",
   ".projen/files.json",
@@ -23,7 +22,6 @@ exports[`cleanup only orphaned files 1`] = `
 Array [
   ".gitattributes",
   ".github/workflows/pull-request-lint.yml",
-  ".github/workflows/stale.yml",
   ".gitignore",
   ".projen/files.json",
   ".projen/tasks.json",
@@ -35,7 +33,6 @@ exports[`cleanup uses cache file 1`] = `
 Array [
   ".gitattributes",
   ".github/workflows/pull-request-lint.yml",
-  ".github/workflows/stale.yml",
   ".gitignore",
   ".projen/deps.json",
   ".projen/files.json",
