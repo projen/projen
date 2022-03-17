@@ -451,6 +451,7 @@ pull_request_rules:
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -562,6 +563,7 @@ pull_request_rules:
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [

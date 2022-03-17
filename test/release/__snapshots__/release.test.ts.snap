@@ -182,6 +182,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -294,6 +295,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [
@@ -490,6 +492,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -602,6 +605,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [
@@ -799,6 +803,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -912,6 +917,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [
@@ -1211,6 +1217,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -1388,6 +1395,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [
@@ -1682,6 +1690,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -1849,6 +1858,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [
@@ -2025,6 +2035,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -2117,6 +2128,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [
@@ -2427,6 +2439,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -2538,6 +2551,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [
@@ -2651,6 +2665,7 @@ Object {
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "goo.json",
         "RELEASETAG": "dist/releasetag.txt",
+        "RELEASE_TAG_PREFIX": "",
       },
       "name": "bump",
       "steps": Array [
@@ -2744,6 +2759,7 @@ Object {
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "goo.json",
         "RELEASETAG": "dist/releasetag.txt",
+        "RELEASE_TAG_PREFIX": "",
       },
       "name": "unbump",
       "steps": Array [
@@ -2915,6 +2931,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -3007,6 +3024,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [
@@ -3122,6 +3140,7 @@ Object {
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "goo.json",
         "RELEASETAG": "dist/releasetag.txt",
+        "RELEASE_TAG_PREFIX": "",
       },
       "name": "bump",
       "steps": Array [
@@ -3258,6 +3277,7 @@ Object {
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "goo.json",
         "RELEASETAG": "dist/releasetag.txt",
+        "RELEASE_TAG_PREFIX": "",
       },
       "name": "unbump",
       "steps": Array [
@@ -3490,6 +3510,7 @@ Object {
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "version.json",
         "RELEASETAG": "dist/releasetag.txt",
+        "RELEASE_TAG_PREFIX": "",
       },
       "name": "bump",
       "steps": Array [
@@ -3669,6 +3690,7 @@ Object {
         "CHANGELOG": "dist/changelog.md",
         "OUTFILE": "version.json",
         "RELEASETAG": "dist/releasetag.txt",
+        "RELEASE_TAG_PREFIX": "",
       },
       "name": "unbump",
       "steps": Array [
@@ -3903,6 +3925,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "goo.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "firefox/",
         },
         "name": "bump",
         "steps": Array [
@@ -4040,6 +4063,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "goo.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "firefox/",
         },
         "name": "unbump",
         "steps": Array [
@@ -4339,6 +4363,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "goo.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -4517,6 +4542,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "goo.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [
@@ -4690,6 +4716,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -4783,6 +4810,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [
@@ -4956,6 +4984,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "prefix/",
         },
         "name": "bump",
         "steps": Array [
@@ -5050,6 +5079,7 @@ node_modules/
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "version.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "prefix/",
         },
         "name": "unbump",
         "steps": Array [

@@ -24,6 +24,11 @@ export interface VersionOptions {
    * Custom configuration for versionrc file used by standard-release
    */
   readonly versionrcOptions?: Record<string, any>;
+
+  /**
+   * The tag prefix corresponding to this version.
+   */
+  readonly tagPrefix?: string;
 }
 
 export class Version extends Component {
@@ -80,6 +85,7 @@ export class Version extends Component {
       CHANGELOG: changelogFile,
       BUMPFILE: bumpFile,
       RELEASETAG: releaseTagFile,
+      RELEASE_TAG_PREFIX: options.tagPrefix ?? "",
       // doesn't work if custom configuration is long
       VERSIONRCOPTIONS: JSON.stringify(options.versionrcOptions),
     };
