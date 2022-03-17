@@ -15222,6 +15222,7 @@ Options for `UpgradeDependencies.workflowOptions`.
 
 Name | Type | Description 
 -----|------|-------------
+**assignees**?🔹 | <code>Array<string></code> | Assignees to add on the PR.<br/>__*Default*__: no assignees
 **branches**?🔹 | <code>Array<string></code> | List of branches to create PR's for.<br/>__*Default*__: All release branches configured for the project.
 **container**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Job container options.<br/>__*Default*__: defaults
 **gitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use for commits.<br/>__*Default*__: "github-actions
