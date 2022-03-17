@@ -192,6 +192,22 @@ test("github runner can be customized", () => {
   expect(upgrade.jobs.pr["runs-on"]).toEqual("self-hosted");
 });
 
+test("labels and assignees can be customized", () => {
+  const project = createProject({
+    depsUpgradeOptions: {
+      workflowOptions: {
+        labels: ["deps-upgrade-label"],
+        assignees: ["repo-maintainer"],
+      },
+    },
+  });
+
+  const snapshot = synthSnapshot(project);
+  const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
+  expect(upgrade.jobs.pr.steps[4].with.labels).toEqual("deps-upgrade-label");
+  expect(upgrade.jobs.pr.steps[4].with.assignees).toEqual("repo-maintainer");
+});
+
 test("upgrade task created without projen defined versions at NodeProject", () => {
   const prj = new NodeProject({
     defaultReleaseBranch: "main",

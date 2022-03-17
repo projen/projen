@@ -367,6 +367,8 @@ export class UpgradeDependencies extends Component {
           branch: branchName,
           title: title,
           labels: this.options.workflowOptions?.labels?.join(",") || undefined,
+          assignees:
+            this.options.workflowOptions?.assignees?.join(",") || undefined,
           body: description,
           author: committer,
           committer: committer,
@@ -436,6 +438,13 @@ export interface UpgradeDependenciesWorkflowOptions {
    * @default - no labels.
    */
   readonly labels?: string[];
+
+  /**
+   * Assignees to add on the PR.
+   *
+   * @default - no assignees
+   */
+  readonly assignees?: string[];
 
   /**
    * Job container options.
