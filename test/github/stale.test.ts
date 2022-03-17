@@ -7,21 +7,22 @@ const defaults = { stale: 10, close: 11, type: "issue" };
 
 test("default project behavior", () => {
   const project = new TestProject();
+  expect(synthSnapshot(project)[".github/workflows/stale.yml"]).toBeUndefined();
+});
+
+test("stale enabled", () => {
+  const project = new TestProject({
+    stale: true,
+  });
+
   expect(
     synthSnapshot(project)[".github/workflows/stale.yml"]
   ).toMatchSnapshot();
 });
 
-test("stale disabled", () => {
-  const project = new TestProject({
-    stale: false,
-  });
-
-  expect(synthSnapshot(project)[".github/workflows/stale.yml"]).toBeUndefined();
-});
-
 test("customizations", () => {
   const project = new TestProject({
+    stale: true,
     staleOptions: {
       issues: { enabled: false },
       pullRequest: {
@@ -39,6 +40,7 @@ test("customizations", () => {
 
 test("with custom runner", () => {
   const project = new TestProject({
+    stale: true,
     staleOptions: {
       runsOn: ["self-hosted"],
     },
@@ -121,6 +123,7 @@ describe("renderBehavior()", () => {
 
 describe("exempt labels in workflow output", () => {
   const project = new TestProject({
+    stale: true,
     staleOptions: {
       issues: { exemptLabels: [] },
       pullRequest: { exemptLabels: ["foo", "bar"] },
