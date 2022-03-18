@@ -27,26 +27,25 @@ code.
 The default options will setup a Python environment using `venv`, and will
 create a `requirements.txt` file for installing dependencies via `pip`.
 
-The `projen new` command will also generate a `.projenrc.js` file which includes
+The `projen new` command will also generate a `.projenrc.py` file which includes
 the definition of your project with any options you specified in the command
 line:
 
-```js
-const { python } = require('projen');
+```python
+from projen.python import PythonProject
 
-const project = new python.PythonProject({
-  jsiiFqn: "projen.python.PythonProject",
-  name: 'my-project',
-  moduleName: 'my_project',
-});
+project = PythonProject(
+    author_email="Author email",
+    author_name="Author name",
+    module_name="your_python_project",
+    name="project_name",
+    version="0.1.0",
+)
 
-project.synth();
+project.synth()
 ```
 
-> At this point, projenrc is in JavaScript, but in the future we plan to allow
-> specifying your project definitions in python.
-
-To modify your project definitions, edit `.projenrc.js` and run `projen` again
+To modify your project definitions, edit `.projenrc.py` and run `projen` again
 to re-synthesize your project. The following sections describe the various features of Python projects.
 
 ## Managing environments, dependencies, and packaging
@@ -65,22 +64,28 @@ requirements. See the list below:
 
 By default, pip, and venv will be used, along with setuptools if the project is a library:
 
-```js
-const project = new python.PythonProject({
-  ...
-  projectType: ProjectType.LIB
-});
+```python
+from projen import ProjectType
+from projen.python import PythonProject
+
+project = PythonProject(
+    ...
+    project_type=ProjectType.LIB
+)
 ```
 
 But these can be swapped out as needed by using the provided flags, for example:
 
-```js
-const project = new python.PythonProject({
-  pip: false,
-  venv: false,
-  setuptools: false,
-  poetry: true,
-});
+```python
+from projen.python import PythonProject
+
+project = PythonProject(
+    ...
+    pip=False,
+    venv=False,
+    setuptools=False,
+    poetry=True
+)
 ```
 
 ## Dependencies
@@ -92,22 +97,25 @@ Python projects have two types of supported dependencies:
 
 You can define dependencies when defining the project itself:
 
-```ts
-const project = new python.PythonProject({
-  deps: [
-    'Django@3.1.5',
-    'aws-cdk.core', // implies "@*"
-  ],
-  testDeps: [
-    'hypothesis@^6.0.3',
-  ],
-});
+```python
+from projen.python import PythonProject
+
+project = PythonProject(
+    ...
+    deps=[
+        'Django@3.1.5',
+        'aws-cdk.core',  # implies"@*"
+    ],
+    dev_deps=[
+        'hypothesis@^6.0.3',
+    ]
+)
 ```
 
 Or using the APIs:
 
-```ts
-project.addTestDependency('hypothesis@^6.0.3');
+```python
+project.add_dev_dependency('hypothesis@^6.0.3');
 ```
 
 Notice the syntax for dependencies:
@@ -151,10 +159,6 @@ To disable pytest tests, set `pytest: false` when you define the
 `PythonProject`.
 
 ## `projenrc.py`
-
-TBD
-
-> In the future, it will be possible to write your projenrc file in Python.
 
 ## Packaging and Publishing
 
