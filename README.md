@@ -1,33 +1,46 @@
-# projen
+<p align="center">
+  <a href="https://projen.io">
+    <img src="https://raw.githubusercontent.com/projen/projen/main/logo/projen.svg">
+    <h3 align="center">projen</h3>
+  </a>
+</p>
 
-![projen logo](./logo/projen.svg)
+<p align="center">
+  Define and maintain complex project configuration through code.
+</p>
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/projen/projen)
-![Build](https://github.com/projen/projen/workflows/Build/badge.svg)
-![Release](https://github.com/projen/projen/workflows/Release/badge.svg)
-![Commit activity](https://img.shields.io/github/commit-activity/w/projen/projen)
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-67-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<p align="center">
+  <a href="https://projen.io/"><strong>Documentation</strong></a> ·
+  <a href="https://github.com/projen/projen/releases"><strong>Changelog</strong></a> ·
+  <a href="#project-types"><strong>Project types</strong></a> ·
+  <a href="#community"><strong>Join the community</strong></a>
+</p>
 
-Define and maintain complex project configuration through code.
+<p align="center">
+  <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg" alt="Apache 2.0 License"></a>
+  <a href="https://gitpod.io/#https://github.com/projen/projen"><img src="https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod" alt="Gitpod ready-to-code"></a>
+  <a href="https://github.com/projen/projen/actions/workflows/build.yml"><img src="https://github.com/projen/projen/workflows/Build/badge.svg" alt="Build badge"></a>
+  <a href="https://github.com/projen/projen/actions/workflows/release.yml"><img src="https://github.com/projen/projen/workflows/Release/badge.svg" alt="Release badge"></a>
+  <a href="https://github.com/projen/projen/commits/main"><img src="https://img.shields.io/github/commit-activity/w/projen/projen" alt="Commit activity"></a>
+</p>
 
-> JOIN THE [#TemplatesAreEvil] MOVEMENT!
-
-[#TemplatesAreEvil]: https://twitter.com/search?q=%23TemplatesAreEvil
+<br/>
 
 *projen* synthesizes project configuration files such as `package.json`,
 `tsconfig.json`, `.gitignore`, GitHub Workflows, eslint, jest, etc from a
 well-typed definition written in JavaScript.
-
-Check out [this talk](https://youtu.be/SOWMPzXtTCw) about projen.
 
 As opposed to existing templating/scaffolding tools, *projen* is not a one-off
 generator. Synthesized files should never be manually edited (in fact, projen
 enforces that). To modify your project setup, users interact with rich
 strongly-typed class and execute `projen` to update their project configuration
 files.
+
+By defining a custom project type and using projen in multiple repositories, it's
+possible to update configuration files and CI/CD workflows across dozens (or
+hundreds!?) of projects.
+
+Check out [this talk](https://youtu.be/SOWMPzXtTCw) about projen from its creator.
 
 ## Getting Started
 
@@ -41,6 +54,8 @@ $ npx projen new PROJECT-TYPE
 🤖 Synthesizing project...
 ...
 ```
+
+### Project types
 
 Currently supported project types (use `npx projen new` without a type for a
 list):
@@ -170,20 +185,19 @@ Some examples for features built-in to project types:
 * eslint
 * Jest
 * jsii: compile, package, api compatibility checks, API.md
-* Bump & release scripts with CHANGELOG generation based on conventional commits (manual releases are currently broken! [#726](https://github.com/projen/projen/issues/726))
+* Bump & release scripts with CHANGELOG generation based on conventional commits
 * Automated PR builds
 * Automated releases to npm, maven, NuGet and PyPI
+* Automated dependency upgrades
 * Mergify configuration
 * LICENSE file generation
 * gitignore + npmignore management
 * Node "engines" support with coupling to CI build environment and @types/node
 * Anti-tamper: CI builds will fail if a synthesized file is modified manually
 
-## API Reference
+## Documentation
 
-See [API Reference](https://projen.io/api/API.html) for API details.
-
-In addition, several projen components and project types are explained with examples at <https://projen.io/> (currently a work in progress!).
+For documentation including examples and a full API reference, visit <https://projen.io/>.
 
 ## Ecosystem
 
@@ -260,6 +274,13 @@ Note: using a `.projenrc.json` file to specify configuration only allows
 accessing a subset of the entire API - the options which are passed to the
 constructor of each project type.
 
+## Community
+
+The projen community can be found within the #projen channel in the [cdk.dev]
+community Slack workspace.
+
+[cdk.dev]: https://cdk.dev/
+
 ## Contributions
 
 Contributions of all kinds are welcome! Check out our [contributor's
@@ -275,6 +296,10 @@ $ yarn watch # compile in the background
 ```
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-67-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
