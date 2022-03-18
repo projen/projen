@@ -274,6 +274,12 @@ Note: using a `.projenrc.json` file to specify configuration only allows
 accessing a subset of the entire API - the options which are passed to the
 constructor of each project type.
 
+### How does projen work with my IDE?
+
+projen has an unofficial [VS Code extension]. Check it out!
+
+[VS Code extension]: https://marketplace.visualstudio.com/items?itemName=MarkMcCulloh.vscode-projen
+
 ## Community
 
 The projen community can be found within the #projen channel in the [cdk.dev]
