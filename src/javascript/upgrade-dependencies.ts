@@ -5,7 +5,9 @@ import { WorkflowActions } from "../github/workflow-actions";
 import { ContainerOptions, JobStep } from "../github/workflows-model";
 import { NodeProject } from "../javascript";
 import { warn } from "../logging";
+import { Release } from "../release";
 import { Task } from "../task";
+import { TaskStep } from "../task-model";
 
 function context(value: string) {
   return `\${{ ${value} }}`;
@@ -107,6 +109,11 @@ export class UpgradeDependencies extends Component {
   public containerOptions?: ContainerOptions;
 
   /**
+   * The upgrade task.
+   */
+  public readonly upgradeTask: Task;
+
+  /**
    * A task run after the upgrade task.
    */
   public readonly postUpgradeTask: Task;
@@ -132,6 +139,39 @@ export class UpgradeDependencies extends Component {
       project.tasks.addTask("post-upgrade", {
         description: "Runs after upgrading dependencies",
       });
+
+    this.upgradeTask = project.addTask(options.taskName ?? "upgrade", {
+      // this task should not run in CI mode because its designed to
+      // update package.json and lock files.
+      env: { CI: "0" },
+      description: this.pullRequestTitle,
+      steps: { toJSON: () => this.renderTaskSteps() } as any,
+    });
+    this.upgradeTask.lock(); // this task is a lazy value, so make it readonly
+
+    if (this.upgradeTask && project.github && (options.workflow ?? true)) {
+      if (options.workflowOptions?.branches) {
+        for (const branch of options.workflowOptions.branches) {
+          this.workflows.push(
+            this.createWorkflow(this.upgradeTask, project.github, branch)
+          );
+        }
+      } else if (Release.of(project)) {
+        const release = Release.of(project)!;
+        release._forEachBranch((branch: string) => {
+          this.workflows.push(
+            this.createWorkflow(this.upgradeTask, project.github!, branch)
+          );
+        });
+      } else {
+        // represents the default repository branch.
+        // just like not specifying anything.
+        const defaultBranch = undefined;
+        this.workflows.push(
+          this.createWorkflow(this.upgradeTask, project.github, defaultBranch)
+        );
+      }
+    }
   }
 
   /**
@@ -142,31 +182,7 @@ export class UpgradeDependencies extends Component {
     this.postBuildSteps.push(...steps);
   }
 
-  // create a corresponding github workflow for each requested branch.
-  public preSynthesize() {
-    // Create task only here to consider also packages that are from extended classes
-    // Create task only if hasn't been overwritten manually
-    const task =
-      this._project.tasks.tryFind(this.options.taskName ?? "upgrade") ??
-      this.createTask();
-    if (task && this._project.github && (this.options.workflow ?? true)) {
-      // represents the default repository branch.
-      // just like not specifying anything.
-      const defaultBranch = undefined;
-
-      const branches = this.options.workflowOptions?.branches ??
-        this._project.release?.branches ?? [defaultBranch];
-      for (const branch of branches) {
-        this.workflows.push(
-          this.createWorkflow(task, this._project.github, branch)
-        );
-      }
-    }
-  }
-
-  private createTask(): Task | undefined {
-    const taskName = this.options.taskName ?? "upgrade";
-
+  private renderTaskSteps(): TaskStep[] {
     const exclude = this.options.exclude ?? [];
     if (this.ignoresProjen) {
       exclude.push("projen");
@@ -193,15 +209,10 @@ export class UpgradeDependencies extends Component {
     // If all explicit includes already have version pinned, don't add task.
     // Note that without explicit includes task gets added
     if (includeLength > 0 && ncuIncludesLength === 0) {
-      return undefined;
+      return [{ exec: "echo No dependencies to upgrade." }];
     }
 
-    const task = this._project.addTask(taskName, {
-      // this task should not run in CI mode because its designed to
-      // update package.json and lock files.
-      env: { CI: "0" },
-      description: this.pullRequestTitle,
-    });
+    const steps = new Array<TaskStep>();
 
     for (const dep of ["dev", "optional", "peer", "prod", "bundle"]) {
       const ncuCommand = [
@@ -218,26 +229,26 @@ export class UpgradeDependencies extends Component {
         ncuCommand.push(`--reject='${ncuExcludes.join(",")}'`);
       }
 
-      task.exec(ncuCommand.join(" "));
+      steps.push({ exec: ncuCommand.join(" ") });
     }
 
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
-    task.exec(this._project.package.installAndUpdateLockfileCommand);
+    steps.push({ exec: this._project.package.installAndUpdateLockfileCommand });
 
     // run upgrade command to upgrade transitive deps as well
-    task.exec(
-      this._project.package.renderUpgradePackagesCommand(
+    steps.push({
+      exec: this._project.package.renderUpgradePackagesCommand(
         exclude,
         this.options.include
-      )
-    );
+      ),
+    });
 
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
-    task.exec(this._project.projenCommand);
+    steps.push({ exec: this._project.projenCommand });
 
-    task.spawn(this.postUpgradeTask);
+    steps.push({ spawn: this.postUpgradeTask.name });
 
-    return task;
+    return steps;
   }
 
   private createWorkflow(
