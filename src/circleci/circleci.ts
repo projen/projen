@@ -1,79 +1,100 @@
 import { Component } from "../component";
 import { Project } from "../project";
-import { kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
 
-export interface CircleciOptions {
+export interface CircleCiProps {
   readonly orbs?: Record<string, string>;
   readonly enabled?: boolean;
   readonly version?: string;
-  readonly workflows?: { [name: string]: Workflow };
+  readonly workflows?: IWorkflow[];
 }
 
-export interface Workflow {
-  readonly jobs: { [name: string]: Job }[];
+interface INamed {
+  identifier: string;
+}
+
+export interface IWorkflow extends INamed {
+  jobs?: IJob[];
 }
 
 export enum JobType {
   APPROVAL = "approval",
 }
 
-export interface Job {
+export interface IJob extends INamed {
   requires?: string[];
   name?: string;
   context?: string[];
   type?: JobType;
-  filter?: Filter;
+  filter?: IFilter;
 }
 
-export interface Filter {
-  branches?: FilterConfig;
-  tags?: FilterConfig;
+export interface IFilter {
+  branches?: IFilterConfig;
+  tags?: IFilterConfig;
 }
 
-export interface FilterConfig {
+export interface IFilterConfig {
   only?: string[];
   ignore?: string[];
 }
 
 export class Circleci extends Component {
   public readonly file: YamlFile;
-  private options: CircleciOptions;
+  private options: CircleCiProps;
   private orbs: Record<string, string> = {};
-  private workflows?: { [name: string]: Workflow };
+  private workflows: IWorkflow[] = [];
 
-  constructor(project: Project, options: CircleciOptions = {}) {
+  constructor(project: Project, options: CircleCiProps = {}) {
     super(project);
     this.options = options;
-    this.workflows = options.workflows;
-    this.orbs = options.orbs ?? {};
+    this.workflows = options.workflows ?? [];
     // const circleCiEnabled = options.enabled || true;
     this.file = new YamlFile(project, ".circleci/config.yml", {
-      obj: () => this.renderCircleci(),
+      obj: () => this.renderCircleCi(),
     });
-    // this.initWorkflow();
-    // this.initOrbs();
-    // this.printDebug();
+    this.initOrbs();
+    this.printDebug();
   }
-  private renderCircleci() {
-    const workflows = kebabCaseKeys(this.workflows);
+
+  private renderCircleCi() {
+    const workflowRecords: Record<string, any> = {};
+    for (const workflow of this.workflows) {
+      const { identifier, ...reduced } = workflow;
+      reduced.jobs = this.renderJobs(workflow.jobs);
+      workflowRecords[identifier] = reduced;
+    }
+
     return {
       version: this.options.version || "2.1",
       orbs: this.orbs,
-      workflows: workflows,
+      workflows: workflowRecords,
     };
   }
-  // private initOrbs() {
-  //   this.orbs = this.options.orbs ?? {};
-  // }
-  public printDebug() {
-    return JSON.stringify(this.renderCircleci(), null, 2);
+
+  public addWorkflow(workflow: IWorkflow) {
+    this.workflows = [...this.workflows, workflow];
   }
-  // private initWorkflow() {
-  //   for (const workflow of this.options.workflows) {
-  //     this.addWorkflow(workflow);
-  //   }
-  // }
+
+  private renderJobs(jobs: IJob[] = []) {
+    let result: any = [];
+    for (const job of jobs ?? []) {
+      const { identifier, ...reduced } = job;
+      result = [...result, { [identifier]: reduced }];
+    }
+    return result;
+  }
+
+  private initOrbs() {
+    this.orbs = this.options.orbs ?? {};
+  }
+
+  public printDebug() {
+    console.log(
+      "init config:\n ",
+      JSON.stringify(this.renderCircleCi(), null, 2)
+    );
+  }
 
   public addOrb(name: string, orb: string) {
     if (this.orbs[name] !== undefined) {
@@ -81,43 +102,4 @@ export class Circleci extends Component {
     }
     this.orbs[name] = orb;
   }
-
-  // private reduceJobs(jobs: IJob[]) {
-  //   const result: any = {};
-  //   for (const job of jobs ?? []) {
-  //     const { identifier, ...jobReduced } = job;
-  //     result[job.identifier] = jobReduced;
-  //   }
-  //   return result;
-  // }
-
-  public addWorkflow(name: string, workflow: Workflow) {
-    this.workflows = {
-      ...this.workflows,
-      ...{ [name]: workflow },
-    };
-    // const { identifier, ...workflowReduced } = workflow;
-    // workflowReduced.jobs = this.reduceJobs(workflow.jobs ?? []);
-    // this.workflows[workflow.identifier] = workflowReduced;
-    // console.log("add workflows:\n ", JSON.stringify(this.workflows, null, 2));
-  }
 }
-
-// function renderJob(job: IJob) {
-//   return {
-//     ...(job.params ?? {}),
-//     ...(job.requires && job.requires.length > 0
-//       ? { requires: job.requires }
-//       : {}),
-//     ...(job.context && job.context.length > 0 ? { context: job.context } : {}),
-//     ...(job.filters ? { filters: job.filters } : {}),
-//   };
-// }
-
-// function hasJobParameters(job: IJob) {
-//   let hasParameters = false;
-//   if (job.context || job.requires || job.filters) {
-//     hasParameters = true;
-//   }
-//   return hasParameters;
-// }

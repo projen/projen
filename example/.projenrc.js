@@ -25,7 +25,7 @@ new circleci.Circleci(project, {
                     ],
                 },
                 {
-                    identifier: "job2",
+                    identifier: "job3",
                     context: [
                         "test"
                     ]
