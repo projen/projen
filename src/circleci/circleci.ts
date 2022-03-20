@@ -54,7 +54,6 @@ export class Circleci extends Component {
       obj: () => this.renderCircleCi(),
     });
     this.initOrbs();
-    this.printDebug();
   }
 
   private renderCircleCi() {
@@ -87,13 +86,6 @@ export class Circleci extends Component {
 
   private initOrbs() {
     this.orbs = this.options.orbs ?? {};
-  }
-
-  public printDebug() {
-    console.log(
-      "init config:\n ",
-      JSON.stringify(this.renderCircleCi(), null, 2)
-    );
   }
 
   public addOrb(name: string, orb: string) {

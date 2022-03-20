@@ -33,7 +33,11 @@ test("workflow needs to have jobs assigned", () => {
   // p.synth();
 
   const snapshot = synthSnapshot(p);
-  console.log(snapshot[".circleci/config.yml"]);
+  const circleci = snapshot[".circleci/config.yml"];
+  expect(circleci).toMatchSnapshot();
+  expect(circleci).toContain("customName2");
+  expect(circleci).toContain("context3");
+  console.log(circleci);
   // const workflow = new Workflow("test", []);
   // expect(() => circle.addWorkflow(workflow)).toThrowError(
   //   "Workflow must have at least one job"

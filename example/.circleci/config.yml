@@ -2,14 +2,14 @@
 
 version: "2.1"
 orbs:
-  hello: world:2.0
+  hello: world:3.0
 workflows:
   workflow1:
     jobs:
-      - job1:
+      - job2:
           context:
             - npm
             - github
-      - job3:
+      - job2:
           context:
             - test
