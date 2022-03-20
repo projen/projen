@@ -217,7 +217,7 @@ Name|Description
 [cdk8s.IntegrationTestAutoDiscoverOptions](#projen-cdk8s-integrationtestautodiscoveroptions)|*No description*
 [cdk8s.IntegrationTestOptions](#projen-cdk8s-integrationtestoptions)|Options for IntegrationTest.
 [cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)|*No description*
-[circleci.CircleCiProps](#projen-circleci-circleciprops)|*No description*
+[circleci.CircleciOptions](#projen-circleci-circleciprops)|*No description*
 [github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
@@ -360,8 +360,8 @@ Name|Description
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
 [IResolvable](#projen-iresolvable)|*No description*
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
-[circleci.IFilter](#projen-circleci-ifilter)|*No description*
-[circleci.IFilterConfig](#projen-circleci-ifilterconfig)|*No description*
+[circleci.Filter](#projen-circleci-ifilter)|*No description*
+[circleci.FilterConfig](#projen-circleci-ifilterconfig)|*No description*
 [circleci.IJob](#projen-circleci-ijob)|*No description*
 [circleci.IWorkflow](#projen-circleci-iworkflow)|*No description*
 [github.IAddConditionsLater](#projen-github-iaddconditionslater)|*No description*
@@ -5436,11 +5436,11 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new circleci.Circleci(project: Project, options?: CircleCiProps)
+new circleci.Circleci(project: Project, options?: CircleciOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[circleci.CircleCiProps](#projen-circleci-circleciprops)</code>)  *No description*
+* **options** (<code>[circleci.CircleciOptions](#projen-circleci-circleciprops)</code>)  *No description*
   * **enabled** (<code>boolean</code>)  *No description* __*Optional*__
   * **orbs** (<code>Map<string, string></code>)  *No description* __*Optional*__
   * **version** (<code>string</code>)  *No description* __*Optional*__
@@ -13424,7 +13424,7 @@ Name | Type | Description
 
 
 
-## struct CircleCiProps 🔹 <a id="projen-circleci-circleciprops"></a>
+## struct CircleciOptions 🔹 <a id="projen-circleci-circleciprops"></a>
 
 
 
@@ -13440,7 +13440,7 @@ Name | Type | Description
 
 
 
-## interface IFilter 🔹 <a id="projen-circleci-ifilter"></a>
+## interface Filter 🔹 <a id="projen-circleci-ifilter"></a>
 
 
 
@@ -13450,12 +13450,12 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**branches**?🔹 | <code>[circleci.IFilterConfig](#projen-circleci-ifilterconfig)</code> | __*Optional*__
-**tags**?🔹 | <code>[circleci.IFilterConfig](#projen-circleci-ifilterconfig)</code> | __*Optional*__
+**branches**?🔹 | <code>[circleci.FilterConfig](#projen-circleci-ifilterconfig)</code> | __*Optional*__
+**tags**?🔹 | <code>[circleci.FilterConfig](#projen-circleci-ifilterconfig)</code> | __*Optional*__
 
 
 
-## interface IFilterConfig 🔹 <a id="projen-circleci-ifilterconfig"></a>
+## interface FilterConfig 🔹 <a id="projen-circleci-ifilterconfig"></a>
 
 
 
@@ -13482,7 +13482,7 @@ Name | Type | Description
 -----|------|-------------
 **identifier**🔹 | <code>string</code> | <span></span>
 **context**?🔹 | <code>Array<string></code> | __*Optional*__
-**filter**?🔹 | <code>[circleci.IFilter](#projen-circleci-ifilter)</code> | __*Optional*__
+**filter**?🔹 | <code>[circleci.Filter](#projen-circleci-ifilter)</code> | __*Optional*__
 **name**?🔹 | <code>string</code> | __*Optional*__
 **requires**?🔹 | <code>Array<string></code> | __*Optional*__
 **type**?🔹 | <code>[circleci.JobType](#projen-circleci-jobtype)</code> | __*Optional*__
