@@ -281,7 +281,7 @@ describe("deps upgrade", () => {
 
     // make sure yarn upgrade all deps, including projen.
     const tasks = snapshot[TaskRuntime.MANIFEST_FILE].tasks;
-    expect(tasks.upgrade.steps[6].exec).toStrictEqual("yarn upgrade");
+    expect(tasks.upgrade.steps[7].exec).toStrictEqual("yarn upgrade");
   });
 
   test("dependabot - with projen secret", () => {
