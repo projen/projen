@@ -371,6 +371,9 @@
       },
       "steps": [
         {
+          "exec": "yarn upgrade npm-check-updates"
+        },
+        {
           "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='yaml,markmac,projen'"
         },
         {

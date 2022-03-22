@@ -580,6 +580,9 @@ pull_request_rules:
         "name": "upgrade",
         "steps": Array [
           Object {
+            "exec": "yarn upgrade npm-check-updates",
+          },
+          Object {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
           },
           Object {
@@ -615,6 +618,9 @@ pull_request_rules:
         },
         "name": "upgrade-projen",
         "steps": Array [
+          Object {
+            "exec": "yarn upgrade npm-check-updates",
+          },
           Object {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
           },

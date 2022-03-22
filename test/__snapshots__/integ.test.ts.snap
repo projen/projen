@@ -1369,6 +1369,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": Array [
           Object {
+            "exec": "yarn upgrade npm-check-updates",
+          },
+          Object {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
           Object {
@@ -2727,6 +2730,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": Array [
           Object {
+            "exec": "yarn upgrade npm-check-updates",
+          },
+          Object {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
           },
           Object {
@@ -2762,6 +2768,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         },
         "name": "upgrade-projen",
         "steps": Array [
+          Object {
+            "exec": "yarn upgrade npm-check-updates",
+          },
           Object {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
           },
@@ -4162,6 +4171,9 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": Array [
           Object {
+            "exec": "yarn upgrade npm-check-updates",
+          },
+          Object {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
           },
           Object {
@@ -4197,6 +4209,9 @@ tsconfig.tsbuildinfo
         },
         "name": "upgrade-projen",
         "steps": Array [
+          Object {
+            "exec": "yarn upgrade npm-check-updates",
+          },
           Object {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
           },
@@ -5452,6 +5467,9 @@ junit.xml
         "name": "upgrade",
         "steps": Array [
           Object {
+            "exec": "pnpm update npm-check-updates",
+          },
+          Object {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
           },
           Object {
@@ -5487,6 +5505,9 @@ junit.xml
         },
         "name": "upgrade-projen",
         "steps": Array [
+          Object {
+            "exec": "pnpm update npm-check-updates",
+          },
           Object {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
           },

@@ -15,7 +15,7 @@ test("upgrades command includes all dependencies", () => {
   const deps = "jest jest-junit npm-check-updates standard-version some-dep";
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[6].exec).toStrictEqual(`yarn upgrade ${deps}`);
+  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`);
 });
 
 test("upgrades command includes dependencies added post instantiation", () => {
@@ -26,7 +26,7 @@ test("upgrades command includes dependencies added post instantiation", () => {
   const deps = "jest jest-junit npm-check-updates standard-version some-dep";
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[6].exec).toStrictEqual(`yarn upgrade ${deps}`);
+  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`);
 });
 
 test("upgrades command doesnt include ignored packages", () => {
@@ -41,7 +41,7 @@ test("upgrades command doesnt include ignored packages", () => {
   const deps = "jest jest-junit npm-check-updates projen standard-version dep1";
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[6].exec).toStrictEqual(`yarn upgrade ${deps}`);
+  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`);
 });
 
 test("upgrades command includes only included packages", () => {
@@ -56,7 +56,7 @@ test("upgrades command includes only included packages", () => {
   const deps = "dep1";
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[6].exec).toStrictEqual(`yarn upgrade ${deps}`);
+  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`);
 });
 
 test("upgrade task can be overwritten", () => {
@@ -230,7 +230,7 @@ test("upgrade task created without projen defined versions at NodeProject", () =
     deps: ["npm@^8", "axios@~0.20.0", "markdownlint@0.24.0"],
   });
   const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[0].exec).toStrictEqual(
+  expect(tasks.upgrade.steps[1].exec).toStrictEqual(
     "npm-check-updates --dep dev --upgrade --target=minor --reject='axios,markdownlint,projen'"
   );
 });
@@ -256,7 +256,7 @@ describe("projen-upgrade task is", () => {
     });
     const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks["upgrade-projen"]).toBeDefined();
-    expect(tasks["upgrade-projen"].steps[0].exec).toStrictEqual(
+    expect(tasks["upgrade-projen"].steps[1].exec).toStrictEqual(
       "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'"
     );
   });
