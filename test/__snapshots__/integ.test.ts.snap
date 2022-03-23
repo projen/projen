@@ -2733,64 +2733,25 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "yarn upgrade npm-check-updates",
           },
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
-          },
-          Object {
-            "exec": "yarn install --check-files",
-          },
-          Object {
-            "exec": "yarn upgrade @types/follow-redirects @types/jest @types/json-stable-stringify @types/node @types/yaml @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema json-schema-to-typescript npm-check-updates ts-jest typescript fast-json-patch follow-redirects json-stable-stringify yaml constructs",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "upgrade-projen": Object {
-        "description": "upgrade projen",
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade-projen",
-        "steps": Array [
-          Object {
-            "exec": "yarn upgrade npm-check-updates",
-          },
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade projen",
+            "exec": "yarn upgrade",
           },
           Object {
             "exec": "npx projen",
@@ -3368,7 +3329,6 @@ project.synth();
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "upgrade": "npx projen upgrade",
-      "upgrade-projen": "npx projen upgrade-projen",
       "watch": "npx projen watch",
     },
     "stability": "experimental",
@@ -4174,64 +4134,25 @@ tsconfig.tsbuildinfo
             "exec": "yarn upgrade npm-check-updates",
           },
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
-          },
-          Object {
-            "exec": "yarn install --check-files",
-          },
-          Object {
-            "exec": "yarn upgrade @types/fs-extra @types/jest @types/json-schema @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit json-schema npm-check-updates ts-jest typescript @types/node cdk8s codemaker colors constructs fs-extra jsii-pacmak jsii-srcmak json2jsii sscaff yaml yargs",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "upgrade-projen": Object {
-        "description": "upgrade projen",
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade-projen",
-        "steps": Array [
-          Object {
-            "exec": "yarn upgrade npm-check-updates",
-          },
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade projen",
+            "exec": "yarn upgrade",
           },
           Object {
             "exec": "npx projen",
@@ -4757,7 +4678,6 @@ project.synth();
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "upgrade": "npx projen upgrade",
-      "upgrade-projen": "npx projen upgrade-projen",
       "watch": "npx projen watch",
     },
     "types": "lib/index.d.ts",
@@ -5470,64 +5390,25 @@ junit.xml
             "exec": "pnpm update npm-check-updates",
           },
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
-          },
-          Object {
-            "exec": "pnpm i",
-          },
-          Object {
-            "exec": "pnpm update aws-sdk jest jest-junit npm-check-updates standard-version esbuild",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "upgrade-projen": Object {
-        "description": "upgrade projen",
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade-projen",
-        "steps": Array [
-          Object {
-            "exec": "pnpm update npm-check-updates",
-          },
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
             "exec": "pnpm i",
           },
           Object {
-            "exec": "pnpm update projen",
+            "exec": "pnpm update",
           },
           Object {
             "exec": "npx projen",
@@ -5826,7 +5707,6 @@ project.synth();
       "test:watch": "npx projen test:watch",
       "unbump": "npx projen unbump",
       "upgrade": "npx projen upgrade",
-      "upgrade-projen": "npx projen upgrade-projen",
     },
     "version": "0.0.0",
   },

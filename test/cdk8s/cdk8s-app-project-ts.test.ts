@@ -174,6 +174,6 @@ test("upgrade task ignores pinned versions", () => {
   });
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[1].exec).toStrictEqual(
-    "npm-check-updates --dep dev --upgrade --target=minor --reject='cdk8s-cli,cdk8s,constructs,projen'"
+    "npm-check-updates --dep dev --upgrade --target=minor --reject='cdk8s-cli,cdk8s,constructs'"
   );
 });

@@ -6,6 +6,7 @@ import { YamlFile } from "../yaml";
 import { GitHub } from "./github";
 
 import * as workflows from "./workflows-model";
+import { ApiAccess } from "./api-access";
 
 /**
  * Options for `GithubWorkflow`.
@@ -53,9 +54,9 @@ export class GithubWorkflow extends Component {
   public readonly file: YamlFile | undefined;
 
   /**
-   * The name of a secret that includes a PAT that can be used by workflows.
+   * Authentication method that's used by projen workflows.
    */
-  public readonly projenTokenSecret: string;
+  public readonly projenApiAccess: ApiAccess;
 
   private events: workflows.Triggers = {};
   private jobs: Record<string, workflows.Job> = {};
@@ -69,7 +70,7 @@ export class GithubWorkflow extends Component {
 
     this.name = name;
     this.concurrency = options.concurrency;
-    this.projenTokenSecret = github.projenTokenSecret;
+    this.projenApiAccess = github.projenApiAccess;
 
     const workflowsEnabled = github.workflowsEnabled || options.force;
 

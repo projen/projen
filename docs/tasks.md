@@ -176,3 +176,6 @@ command to the projen CLI:
 
 This means that when `yarn compile` or `npm run compile` are executed, the
 projen CLI will be invoked and the task will be executed.
+
+You can see a list of all steps in a task from the command line by passing
+the `--inspect` flag, e.g. `yarn compile --inspect`.
