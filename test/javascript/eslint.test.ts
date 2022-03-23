@@ -1,5 +1,5 @@
-import { Eslint, NodeProject } from "../src/javascript";
-import { synthSnapshot } from "./util";
+import { Eslint, NodeProject } from "../../src/javascript";
+import { synthSnapshot } from "../util";
 
 test("devdirs", () => {
   // GIVEN

@@ -1,19 +1,19 @@
 import * as yaml from "yaml";
-import { PROJEN_MARKER } from "../src/common";
-import { DependencyType } from "../src/dependencies";
-import { JobPermission } from "../src/github/workflows-model";
+import { PROJEN_MARKER } from "../../src/common";
+import { DependencyType } from "../../src/dependencies";
+import { JobPermission } from "../../src/github/workflows-model";
 import {
   NodeProject,
   NodeProjectOptions,
   NodePackage,
   NpmAccess,
-} from "../src/javascript";
-import { JsonFile } from "../src/json";
-import * as logging from "../src/logging";
-import { Project } from "../src/project";
-import { SampleFile } from "../src/sample-file";
-import { TaskRuntime } from "../src/task-runtime";
-import { synthSnapshot, TestProject } from "./util";
+} from "../../src/javascript";
+import { JsonFile } from "../../src/json";
+import * as logging from "../../src/logging";
+import { Project } from "../../src/project";
+import { SampleFile } from "../../src/sample-file";
+import { TaskRuntime } from "../../src/task-runtime";
+import { synthSnapshot, TestProject } from "../util";
 
 logging.disable();
 
