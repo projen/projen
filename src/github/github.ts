@@ -1,10 +1,10 @@
 import { Component } from "../component";
 import { Project } from "../project";
+import { ApiAccess } from "./api-access";
 import { Dependabot, DependabotOptions } from "./dependabot";
 import { Mergify, MergifyOptions } from "./mergify";
 import { PullRequestTemplate } from "./pr-template";
 import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
-import { ApiAccess } from "./api-access";
 import { GithubWorkflow } from "./workflows";
 
 export interface GitHubOptions {
@@ -46,10 +46,10 @@ export interface GitHubOptions {
 
   /**
    * Choose a way of providing GitHub API access for projen workflows.
-   * 
+   *
    * @default - use a personal access token named PROJEN_GITHUB_TOKEN
    */
-   readonly projenApiAccess?: ApiAccess;
+  readonly projenApiAccess?: ApiAccess;
 
   /**
    * The name of a secret which includes a GitHub Personal Access Token to be
@@ -94,15 +94,21 @@ export class GitHub extends Component {
     this.workflowsEnabled = options.workflows ?? true;
 
     if (options.projenApiAccess && options.projenTokenSecret) {
-      throw new Error('projenTokenSecret is deprecated, please use projenApiAccess instead');
+      throw new Error(
+        "projenTokenSecret is deprecated, please use projenApiAccess instead"
+      );
     }
 
     if (options.projenTokenSecret) {
-      this.projenApiAccess = ApiAccess.fromPat({ secret: options.projenTokenSecret });
+      this.projenApiAccess = ApiAccess.fromPat({
+        secret: options.projenTokenSecret,
+      });
     } else if (options.projenApiAccess) {
       this.projenApiAccess = options.projenApiAccess;
     } else {
-      this.projenApiAccess = ApiAccess.fromPat({ secret: "PROJEN_GITHUB_TOKEN" });
+      this.projenApiAccess = ApiAccess.fromPat({
+        secret: "PROJEN_GITHUB_TOKEN",
+      });
     }
 
     if (options.mergify ?? true) {

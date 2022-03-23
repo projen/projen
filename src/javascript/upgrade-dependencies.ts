@@ -1,5 +1,11 @@
 import { Component } from "../component";
-import { ApiAccess, GitHub, GithubWorkflow, GitIdentity, workflows } from "../github";
+import {
+  ApiAccess,
+  GitHub,
+  GithubWorkflow,
+  GitIdentity,
+  workflows,
+} from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
 import { ContainerOptions, JobStep } from "../github/workflows-model";
@@ -318,7 +324,8 @@ export class UpgradeDependencies extends Component {
   private createPr(workflow: GithubWorkflow, upgrade: Upgrade): PR {
     // default to API access method used by all GitHub workflows, unless a
     // custom one is specified
-    const apiAccess = this.options.workflowOptions?.projenApiAccess ?? workflow.projenApiAccess;
+    const apiAccess =
+      this.options.workflowOptions?.projenApiAccess ?? workflow.projenApiAccess;
     const token = apiAccess.tokenRef;
     const runsOn = this.options.workflowOptions?.runsOn ?? ["ubuntu-latest"];
     const workflowName = workflow.name;

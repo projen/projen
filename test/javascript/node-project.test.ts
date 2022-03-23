@@ -263,7 +263,7 @@ describe("deps upgrade", () => {
       },
       depsUpgradeOptions: {
         workflowOptions: {
-          projenApiAccess: ApiAccess.fromPat({ secret: "PROJEN_SECRET"})
+          projenApiAccess: ApiAccess.fromPat({ secret: "PROJEN_SECRET" }),
         },
       },
     });
@@ -714,7 +714,7 @@ test("buildWorkflow can use GitHub App for API access", () => {
         appIdSecret: appId,
         privateKeySecret: privateKey,
       }),
-    }
+    },
   });
 
   // THEN
@@ -724,14 +724,14 @@ test("buildWorkflow can use GitHub App for API access", () => {
     name: "Generate token",
     with: {
       app_id: `\${{ secrets.${appId} }}`,
-      private_key: `\${{ secrets.${privateKey} }}`
-    }
+      private_key: `\${{ secrets.${privateKey} }}`,
+    },
   });
   expect(buildWorkflow.jobs["self-mutation"].steps[1]).toMatchObject({
     name: "Checkout",
     with: {
-      token: '${{ steps.generate_token.outputs.token }}',
-    }
+      token: "${{ steps.generate_token.outputs.token }}",
+    },
   });
 });
 

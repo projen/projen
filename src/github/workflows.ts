@@ -3,10 +3,10 @@ import { resolve } from "../_resolve";
 import { Component } from "../component";
 import { kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
+import { ApiAccess } from "./api-access";
 import { GitHub } from "./github";
 
 import * as workflows from "./workflows-model";
-import { ApiAccess } from "./api-access";
 
 /**
  * Options for `GithubWorkflow`.
