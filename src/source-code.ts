@@ -11,6 +11,13 @@ export interface SourceCodeOptions {
    * @default 2
    */
   readonly indent?: number;
+
+  /**
+   * Whether the generated file should be readonly.
+   *
+   * @default true
+   */
+  readonly readonly?: boolean;
 }
 
 /**
@@ -28,7 +35,9 @@ export class SourceCode extends Component {
   ) {
     super(project);
     this.indent = options.indent ?? 2;
-    this.file = new TextFile(project, filePath);
+    this.file = new TextFile(project, filePath, {
+      readonly: options.readonly ?? true,
+    });
   }
 
   public get marker(): string | undefined {
