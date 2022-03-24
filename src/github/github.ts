@@ -57,7 +57,7 @@ export interface GitHubOptions {
    * and `packages` scope.
    *
    * @default "PROJEN_GITHUB_TOKEN"
-   * @deprecated - use `projenWorkflowAuth`
+   * @deprecated - use `projenApiAccess`
    */
   readonly projenTokenSecret?: string;
 }
