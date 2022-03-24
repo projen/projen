@@ -127,8 +127,8 @@ class AppCode extends Component {
     src.line("");
     src.line("# for development, use account/region from cdk cli");
     src.open("dev_env = Environment(");
-    src.line("  account=os.getenv('CDK_DEFAULT_ACCOUNT'),");
-    src.line("  region=os.getenv('CDK_DEFAULT_REGION'),");
+    src.line("account=os.getenv('CDK_DEFAULT_ACCOUNT'),");
+    src.line("region=os.getenv('CDK_DEFAULT_REGION'),");
     src.close(")");
     src.line("");
     src.line("app = App()");
