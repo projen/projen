@@ -5,7 +5,7 @@ import {
   CdkConfigCommonOptions,
   CdkTasks,
 } from ".";
-import { Component, DependencyType, SampleDir, TextFile } from "..";
+import { Component, DependencyType, SampleDir, SourceCode } from "..";
 import { Pytest } from "../python/pytest";
 import { PythonProject, PythonProjectOptions } from "../python/python-project";
 import { AwsCdkDepsPy } from "./awscdk-deps-py";
@@ -113,29 +113,29 @@ class AppCode extends Component {
   constructor(project: AwsCdkPythonApp, fileName: string, cdkVersion: number) {
     super(project);
 
-    const src = new TextFile(project, fileName, {
+    const src = new SourceCode(project, fileName, {
       readonly: false,
     });
 
-    src.addLine("import os");
+    src.line("import os");
     if (cdkVersion < 2) {
-      src.addLine("from aws_cdk.core import App, Environment");
+      src.line("from aws_cdk.core import App, Environment");
     } else {
-      src.addLine("from aws_cdk import App, Environment");
+      src.line("from aws_cdk import App, Environment");
     }
-    src.addLine(`from ${project.moduleName}.main import MyStack`);
-    src.addLine("");
-    src.addLine("# for development, use account/region from cdk cli");
-    src.addLine("dev_env = Environment(");
-    src.addLine("  account=os.getenv('CDK_DEFAULT_ACCOUNT'),");
-    src.addLine("  region=os.getenv('CDK_DEFAULT_REGION'),");
-    src.addLine(")");
-    src.addLine("");
-    src.addLine("app = App()");
-    src.addLine(`MyStack(app, "${this.project.name}-dev", env=dev_env)`);
-    src.addLine(`# MyStack(app, "${this.project.name}-prod", env=prod_env)`);
-    src.addLine("");
-    src.addLine("app.synth()");
+    src.line(`from ${project.moduleName}.main import MyStack`);
+    src.line("");
+    src.line("# for development, use account/region from cdk cli");
+    src.open("dev_env = Environment(");
+    src.line("  account=os.getenv('CDK_DEFAULT_ACCOUNT'),");
+    src.line("  region=os.getenv('CDK_DEFAULT_REGION'),");
+    src.close(")");
+    src.line("");
+    src.line("app = App()");
+    src.line(`MyStack(app, "${this.project.name}-dev", env=dev_env)`);
+    src.line(`# MyStack(app, "${this.project.name}-prod", env=prod_env)`);
+    src.line("");
+    src.line("app.synth()");
   }
 }
 
