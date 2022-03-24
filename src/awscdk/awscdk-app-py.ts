@@ -5,7 +5,7 @@ import {
   CdkConfigCommonOptions,
   CdkTasks,
 } from ".";
-import { Component, DependencyType, SampleDir, SourceCode } from "..";
+import { Component, DependencyType, SampleDir, TextFile } from "..";
 import { Pytest } from "../python/pytest";
 import { PythonProject, PythonProjectOptions } from "../python/python-project";
 import { AwsCdkDepsPy } from "./awscdk-deps-py";
@@ -113,36 +113,34 @@ class AppCode extends Component {
   constructor(project: AwsCdkPythonApp, fileName: string, cdkVersion: number) {
     super(project);
 
-    const src = new SourceCode(project, fileName);
+    const src = new TextFile(project, fileName, {
+      readonly: false,
+    });
 
-    src.line("import os");
+    src.addLine("import os");
     if (cdkVersion < 2) {
-      src.line("from aws_cdk.core import App, Environment");
+      src.addLine("from aws_cdk.core import App, Environment");
     } else {
-      src.line("from aws_cdk import App, Environment");
+      src.addLine("from aws_cdk import App, Environment");
     }
-    src.line(`from ${project.moduleName}.my_stack import MyStack`);
-    src.line("");
-    src.line("# for development, use account/region from cdk cli");
-    src.open("dev_env = Environment(");
-    src.line("account=os.getenv('CDK_DEFAULT_ACCOUNT'),");
-    src.line("region=os.getenv('CDK_DEFAULT_REGION'),");
-    src.close(")");
-    src.line("");
-    src.line("app = App()");
-    src.line('MyStack(app, "my-stack-dev", env=dev_env)');
-    src.line('# MyStack(app, "my-stack-prod", env=prod_env)');
-    src.line("");
-    src.line("app.synth()");
+    src.addLine(`from ${project.moduleName}.main import MyStack`);
+    src.addLine("");
+    src.addLine("# for development, use account/region from cdk cli");
+    src.addLine("dev_env = Environment(");
+    src.addLine("  account=os.getenv('CDK_DEFAULT_ACCOUNT'),");
+    src.addLine("  region=os.getenv('CDK_DEFAULT_REGION'),");
+    src.addLine(")");
+    src.addLine("");
+    src.addLine("app = App()");
+    src.addLine(`MyStack(app, "${this.project.name}-dev", env=dev_env)`);
+    src.addLine(`# MyStack(app, "${this.project.name}-prod", env=prod_env)`);
+    src.addLine("");
+    src.addLine("app.synth()");
   }
 }
 
 class MyStackCode extends Component {
-  constructor(
-    project: AwsCdkPythonApp,
-    sampleFile: string,
-    cdkMajorVersion: number
-  ) {
+  constructor(project: AwsCdkPythonApp, dir: string, cdkMajorVersion: number) {
     super(project);
 
     let appFile: string[] = [];
@@ -165,10 +163,10 @@ class MyStackCode extends Component {
     appFile.push("    # The code that defines your stack goes here");
     appFile.push("");
 
-    new SampleDir(project, sampleFile, {
+    new SampleDir(project, dir, {
       files: {
         "__init__.py": "",
-        "my_stack.py": appFile.join("\n"),
+        "main.py": appFile.join("\n"),
       },
     });
   }
