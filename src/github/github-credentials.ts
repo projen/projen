@@ -1,16 +1,16 @@
 import { JobStep } from "./workflows-model";
 
 /**
- * Options for `ApiAccess.fromPersonalAccessToken`
+ * Options for `GithubCredentials.fromPersonalAccessToken`
  */
-export interface ApiAccessPatOptions {
+export interface GithubCredentialsPersonalAccessTokenOptions {
   readonly secret?: string;
 }
 
 /**
- * Options for `ApiAccess.fromApp`
+ * Options for `GithubCredentials.fromApp`
  */
-export interface ApiAccessAppOptions {
+export interface GithubCredentialsAppOptions {
   readonly appIdSecret?: string;
   readonly privateKeySecret?: string;
 }
@@ -18,7 +18,7 @@ export interface ApiAccessAppOptions {
 /**
  * Represents a method of providing GitHub API access for projen workflows.
  */
-export class ApiAccess {
+export class GithubCredentials {
   /**
    * Provide API access through a GitHub personal access token.
    *
@@ -28,8 +28,8 @@ export class ApiAccess {
    * @see https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
    * @default - a secret named "PROJEN_GITHUB_TOKEN"
    */
-  public static fromPersonalAccessToken(options: ApiAccessPatOptions = {}) {
-    return new ApiAccess({
+  public static fromPersonalAccessToken(options: GithubCredentialsPersonalAccessTokenOptions = {}) {
+    return new GithubCredentials({
       setupSteps: [],
       tokenRef: `\${{ secrets.${options.secret ?? "PROJEN_GITHUB_TOKEN"} }}`,
     });
@@ -45,12 +45,12 @@ export class ApiAccess {
    * @see https://docs.github.com/en/developers/apps/building-github-apps/creating-a-github-app
    * @default - app id stored in "PROJEN_GITHUB_TOKEN" and private key stored in "PROJEN_APP_PRIVATE_KEY"
    */
-  public static fromApp(options: ApiAccessAppOptions = {}) {
+  public static fromApp(options: GithubCredentialsAppOptions = {}) {
     const appIdSecret = options.appIdSecret ?? "PROJEN_APP_ID";
     const privateKeySecret =
       options.privateKeySecret ?? "PROJEN_APP_PRIVATE_KEY";
 
-    return new ApiAccess({
+    return new GithubCredentials({
       setupSteps: [
         {
           name: "Generate token",
@@ -66,10 +66,10 @@ export class ApiAccess {
     });
   }
 
-  private constructor(private readonly options: ApiAccessOptions) {}
+  private constructor(private readonly options: GithubCredentialsOptions) {}
 
   /**
-   * Setup steps to obtain API access.
+   * Setup steps to obtain GitHub credentials.
    */
   public get setupSteps(): JobStep[] {
     return [...this.options.setupSteps];
@@ -84,7 +84,7 @@ export class ApiAccess {
   }
 }
 
-interface ApiAccessOptions {
+interface GithubCredentialsOptions {
   readonly setupSteps: JobStep[];
   readonly tokenRef: string;
 }

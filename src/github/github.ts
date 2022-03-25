@@ -1,6 +1,6 @@
 import { Component } from "../component";
 import { Project } from "../project";
-import { ApiAccess } from "./api-access";
+import { GithubCredentials } from "./github-credentials";
 import { Dependabot, DependabotOptions } from "./dependabot";
 import { Mergify, MergifyOptions } from "./mergify";
 import { PullRequestTemplate } from "./pr-template";
@@ -45,11 +45,11 @@ export interface GitHubOptions {
   readonly pullRequestLintOptions?: PullRequestLintOptions;
 
   /**
-   * Choose a way of providing GitHub API access for projen workflows.
+   * Choose a method of providing GitHub API access for projen workflows.
    *
    * @default - use a personal access token named PROJEN_GITHUB_TOKEN
    */
-  readonly projenApiAccess?: ApiAccess;
+  readonly projenCredentials?: GithubCredentials;
 
   /**
    * The name of a secret which includes a GitHub Personal Access Token to be
@@ -57,7 +57,7 @@ export interface GitHubOptions {
    * and `packages` scope.
    *
    * @default "PROJEN_GITHUB_TOKEN"
-   * @deprecated - use `projenApiAccess`
+   * @deprecated - use `projenCredentials`
    */
   readonly projenTokenSecret?: string;
 }
@@ -84,29 +84,29 @@ export class GitHub extends Component {
   public readonly workflowsEnabled: boolean;
 
   /**
-   * Authentication method that's used by projen workflows.
+   * GitHub API authentication method used by projen workflows.
    */
-  public readonly projenApiAccess: ApiAccess;
+  public readonly projenCredentials: GithubCredentials;
 
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
 
     this.workflowsEnabled = options.workflows ?? true;
 
-    if (options.projenApiAccess && options.projenTokenSecret) {
+    if (options.projenCredentials && options.projenTokenSecret) {
       throw new Error(
-        "projenTokenSecret is deprecated, please use projenApiAccess instead"
+        "projenTokenSecret is deprecated, please use projenCredentials instead"
       );
     }
 
     if (options.projenTokenSecret) {
-      this.projenApiAccess = ApiAccess.fromPersonalAccessToken({
+      this.projenCredentials = GithubCredentials.fromPersonalAccessToken({
         secret: options.projenTokenSecret,
       });
-    } else if (options.projenApiAccess) {
-      this.projenApiAccess = options.projenApiAccess;
+    } else if (options.projenCredentials) {
+      this.projenCredentials = options.projenCredentials;
     } else {
-      this.projenApiAccess = ApiAccess.fromPersonalAccessToken({
+      this.projenCredentials = GithubCredentials.fromPersonalAccessToken({
         secret: "PROJEN_GITHUB_TOKEN",
       });
     }

@@ -1,7 +1,7 @@
 import * as yaml from "yaml";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
-import { ApiAccess } from "../../src/github";
+import { GithubCredentials } from "../../src/github";
 import { JobPermission } from "../../src/github/workflows-model";
 import {
   NodeProject,
@@ -263,7 +263,7 @@ describe("deps upgrade", () => {
       },
       depsUpgradeOptions: {
         workflowOptions: {
-          projenApiAccess: ApiAccess.fromPersonalAccessToken({ secret: "PROJEN_SECRET" }),
+          projenCredentials: GithubCredentials.fromPersonalAccessToken({ secret: "PROJEN_SECRET" }),
         },
       },
     });
@@ -710,7 +710,7 @@ test("buildWorkflow can use GitHub App for API access", () => {
   const privateKey = "PRIVATE_KEY";
   const project = new TestNodeProject({
     githubOptions: {
-      projenApiAccess: ApiAccess.fromApp({
+      projenCredentials: GithubCredentials.fromApp({
         appIdSecret: appId,
         privateKeySecret: privateKey,
       }),

@@ -1,6 +1,6 @@
 import { Component } from "../component";
 import {
-  ApiAccess,
+  GithubCredentials,
   GitHub,
   GithubWorkflow,
   GitIdentity,
@@ -325,7 +325,7 @@ export class UpgradeDependencies extends Component {
     // default to API access method used by all GitHub workflows, unless a
     // custom one is specified
     const apiAccess =
-      this.options.workflowOptions?.projenApiAccess ?? workflow.projenApiAccess;
+      this.options.workflowOptions?.projenCredentials ?? workflow.projenCredentials;
     const token = apiAccess.tokenRef;
     const runsOn = this.options.workflowOptions?.runsOn ?? ["ubuntu-latest"];
     const workflowName = workflow.name;
@@ -414,15 +414,17 @@ export interface UpgradeDependenciesWorkflowOptions {
   readonly schedule?: UpgradeDependenciesSchedule;
 
   /**
-   * Choose an API access method to use when creating the PR.
+   * Choose a method for authenticating with GitHub for creating the PR.
    *
    * When using the default github token, PR's created by this workflow
-   * will not trigger any subsequent workflows (i.e the build workflow).
+   * will not trigger any subsequent workflows (i.e the build workflow), so
+   * projen requires API access to be provided through e.g. a personal
+   * access token or other method.
    *
    * @see https://github.com/peter-evans/create-pull-request/issues/48
    * @default - personal access token named PROJEN_GITHUB_TOKEN
    */
-  readonly projenApiAccess?: ApiAccess;
+  readonly projenCredentials?: GithubCredentials;
 
   /**
    * Labels to apply on the PR.

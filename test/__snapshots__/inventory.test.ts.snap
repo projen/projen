@@ -693,6 +693,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Use projenrc in java.",
         "featured": false,
@@ -766,6 +785,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -1735,6 +1755,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "false",
         "docs": "Generate (once) .projenrc.json (in JSON). Set to \`false\` in order to disable .projenrc.json generation.",
         "featured": false,
@@ -1808,6 +1847,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -3848,6 +3888,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -3973,6 +4032,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -6525,6 +6585,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -6650,6 +6729,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -9098,6 +9178,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -9223,6 +9322,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -11596,6 +11696,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -11721,6 +11840,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -14152,6 +14272,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -14277,6 +14416,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -15570,6 +15710,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Use projenrc in java.",
         "featured": false,
@@ -15643,6 +15802,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -17363,6 +17523,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -17488,6 +17667,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -19641,6 +19821,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -19731,6 +19930,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -21807,6 +22007,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -21932,6 +22151,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -23959,6 +24179,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -24049,6 +24288,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -25261,6 +25501,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "false",
         "docs": "Generate (once) .projenrc.json (in JSON). Set to \`false\` in order to disable .projenrc.json generation.",
         "featured": false,
@@ -25334,6 +25593,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -26866,6 +27126,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -26956,6 +27235,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -29020,6 +29300,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -29145,6 +29444,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -31298,6 +31598,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -31423,6 +31742,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -33554,6 +33874,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -33679,6 +34018,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {

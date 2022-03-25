@@ -1,13 +1,9 @@
-import {
-  AutoApprove,
-  AutoApproveOptions,
-  AutoMergeOptions,
-  GitHub,
-  GitHubOptions,
-  MergifyOptions,
-  Stale,
-  StaleOptions,
-} from ".";
+import { AutoApprove, AutoApproveOptions } from "./auto-approve";
+import { AutoMergeOptions } from "./auto-merge";
+import { GitHub, GitHubOptions } from "./github";
+import { MergifyOptions } from "./mergify";
+import { Stale, StaleOptions } from "./stale";
+import { GithubCredentials } from "./github-credentials";
 import { Clobber } from "../clobber";
 import { Gitpod } from "../gitpod";
 import { Project, ProjectOptions, ProjectType } from "../project";
@@ -123,11 +119,19 @@ export interface GitHubProjectOptions extends ProjectOptions {
   readonly stale?: boolean;
 
   /**
+   * Choose a method of providing GitHub API access for projen workflows.
+   *
+   * @default - use a personal access token named PROJEN_GITHUB_TOKEN
+   */
+   readonly projenCredentials?: GithubCredentials;
+
+  /**
    * The name of a secret which includes a GitHub Personal Access Token to be
    * used by projen workflows. This token needs to have the `repo`, `workflows`
    * and `packages` scope.
    *
    * @default "PROJEN_GITHUB_TOKEN"
+   * @deprecated use `projenCredentials`
    */
   readonly projenTokenSecret?: string;
 }
@@ -191,6 +195,7 @@ export class GitHubProject extends Project {
     this.github = github
       ? new GitHub(this, {
           projenTokenSecret: options.projenTokenSecret,
+          projenCredentials: options.projenCredentials,
           mergify: options.mergify,
           mergifyOptions: options.mergifyOptions,
           ...options.githubOptions,

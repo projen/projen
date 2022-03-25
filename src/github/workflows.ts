@@ -3,7 +3,7 @@ import { resolve } from "../_resolve";
 import { Component } from "../component";
 import { kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
-import { ApiAccess } from "./api-access";
+import { GithubCredentials } from "./github-credentials";
 import { GitHub } from "./github";
 
 import * as workflows from "./workflows-model";
@@ -54,9 +54,9 @@ export class GithubWorkflow extends Component {
   public readonly file: YamlFile | undefined;
 
   /**
-   * Authentication method that's used by projen workflows.
+   * GitHub API authentication method used by projen workflows.
    */
-  public readonly projenApiAccess: ApiAccess;
+  public readonly projenCredentials: GithubCredentials;
 
   private events: workflows.Triggers = {};
   private jobs: Record<string, workflows.Job> = {};
@@ -70,7 +70,7 @@ export class GithubWorkflow extends Component {
 
     this.name = name;
     this.concurrency = options.concurrency;
-    this.projenApiAccess = github.projenApiAccess;
+    this.projenCredentials = github.projenCredentials;
 
     const workflowsEnabled = github.workflowsEnabled || options.force;
 

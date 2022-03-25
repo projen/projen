@@ -1,5 +1,5 @@
 import * as yaml from "yaml";
-import { ApiAccess } from "../../src/github";
+import { GithubCredentials } from "../../src/github";
 import {
   NodeProject,
   NodeProjectOptions,
@@ -93,7 +93,7 @@ test("custom options", () => {
 test("with a GitHub app for authentication", () => {
   const project = createProject({
     githubOptions: {
-      projenApiAccess: ApiAccess.fromApp(),
+      projenCredentials: GithubCredentials.fromApp(),
     },
     depsUpgradeOptions: {
       workflowOptions: {
