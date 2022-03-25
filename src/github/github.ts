@@ -100,13 +100,13 @@ export class GitHub extends Component {
     }
 
     if (options.projenTokenSecret) {
-      this.projenApiAccess = ApiAccess.fromPat({
+      this.projenApiAccess = ApiAccess.fromPersonalAccessToken({
         secret: options.projenTokenSecret,
       });
     } else if (options.projenApiAccess) {
       this.projenApiAccess = options.projenApiAccess;
     } else {
-      this.projenApiAccess = ApiAccess.fromPat({
+      this.projenApiAccess = ApiAccess.fromPersonalAccessToken({
         secret: "PROJEN_GITHUB_TOKEN",
       });
     }

@@ -1,7 +1,7 @@
 import { JobStep } from "./workflows-model";
 
 /**
- * Options for `ApiAccess.fromPat`
+ * Options for `ApiAccess.fromPersonalAccessToken`
  */
 export interface ApiAccessPatOptions {
   readonly secret?: string;
@@ -28,7 +28,7 @@ export class ApiAccess {
    * @see https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
    * @default - a secret named "PROJEN_GITHUB_TOKEN"
    */
-  public static fromPat(options: ApiAccessPatOptions = {}) {
+  public static fromPersonalAccessToken(options: ApiAccessPatOptions = {}) {
     return new ApiAccess({
       setupSteps: [],
       tokenRef: `\${{ secrets.${options.secret ?? "PROJEN_GITHUB_TOKEN"} }}`,

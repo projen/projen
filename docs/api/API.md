@@ -224,7 +224,7 @@ Name|Description
 [cdk8s.IntegrationTestOptions](#projen-cdk8s-integrationtestoptions)|Options for IntegrationTest.
 [cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)|*No description*
 [github.ApiAccessAppOptions](#projen-github-apiaccessappoptions)|Options for `ApiAccess.fromApp`.
-[github.ApiAccessPatOptions](#projen-github-apiaccesspatoptions)|Options for `ApiAccess.fromPat`.
+[github.ApiAccessPatOptions](#projen-github-apiaccesspatoptions)|Options for `ApiAccess.fromPersonalAccessToken`.
 [github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
@@ -5493,7 +5493,7 @@ static fromApp(options?: ApiAccessAppOptions): ApiAccess
 __Returns__:
 * <code>[github.ApiAccess](#projen-github-apiaccess)</code>
 
-#### *static* fromPat(options?)🔹 <a id="projen-github-apiaccess-frompat"></a>
+#### *static* fromPersonalAccessToken(options?)🔹 <a id="projen-github-apiaccess-frompersonalaccesstoken"></a>
 
 Provide API access through a GitHub personal access token.
 
@@ -5501,7 +5501,7 @@ The token must be added as a secret to the GitHub repo, and the name of the
 secret can be specified here.
 
 ```ts
-static fromPat(options?: ApiAccessPatOptions): ApiAccess
+static fromPersonalAccessToken(options?: ApiAccessPatOptions): ApiAccess
 ```
 
 * **options** (<code>[github.ApiAccessPatOptions](#projen-github-apiaccesspatoptions)</code>)  *No description*
@@ -13458,7 +13458,7 @@ Name | Type | Description
 ## struct ApiAccessPatOptions 🔹 <a id="projen-github-apiaccesspatoptions"></a>
 
 
-Options for `ApiAccess.fromPat`.
+Options for `ApiAccess.fromPersonalAccessToken`.
 
 
 

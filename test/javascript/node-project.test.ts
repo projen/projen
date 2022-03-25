@@ -263,7 +263,7 @@ describe("deps upgrade", () => {
       },
       depsUpgradeOptions: {
         workflowOptions: {
-          projenApiAccess: ApiAccess.fromPat({ secret: "PROJEN_SECRET" }),
+          projenApiAccess: ApiAccess.fromPersonalAccessToken({ secret: "PROJEN_SECRET" }),
         },
       },
     });
