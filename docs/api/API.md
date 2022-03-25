@@ -2258,6 +2258,7 @@ new SourceCode(project: Project, filePath: string, options?: SourceCodeOptions)
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[SourceCodeOptions](#projen-sourcecodeoptions)</code>)  *No description*
   * **indent** (<code>number</code>)  Indentation size. __*Default*__: 2
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
 
 
 
@@ -11332,6 +11333,7 @@ Options for `SourceCodeFile`.
 Name | Type | Description 
 -----|------|-------------
 **indent**?🔹 | <code>number</code> | Indentation size.<br/>__*Default*__: 2
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 

@@ -1,6 +1,6 @@
-import { SourceCode } from "../src";
-import { ArrowParens, NodeProject, TrailingComma } from "../src/javascript";
-import { synthSnapshot } from "./util";
+import { SourceCode } from "../../src";
+import { ArrowParens, NodeProject, TrailingComma } from "../../src/javascript";
+import { synthSnapshot } from "../util";
 
 describe("prettier", () => {
   test("snapshot", () => {

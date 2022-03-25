@@ -119,7 +119,7 @@ export class AwsCdkJavaApp extends JavaProject {
           `public class ${this.mainClassName} {`,
           "  public static void main(final String[] args) {",
           "    App app = new App();",
-          '    new Stack(app, "MyStack");',
+          `    new Stack(app, "${this.name}");`,
           "    app.synth();",
           "  }",
           "}",

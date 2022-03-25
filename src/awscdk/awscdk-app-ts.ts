@@ -226,8 +226,8 @@ const devEnv = {
 
 const app = new App();
 
-new MyStack(app, 'my-stack-dev', { env: devEnv });
-// new MyStack(app, 'my-stack-prod', { env: prodEnv });
+new MyStack(app, '${this.project.name}-dev', { env: devEnv });
+// new MyStack(app, '${this.project.name}-prod', { env: prodEnv });
 
 app.synth();`;
 

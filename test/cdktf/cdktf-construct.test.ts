@@ -1,9 +1,9 @@
 import {
   ConstructLibraryCdktf,
   ConstructLibraryCdktfOptions,
-} from "../src/cdktf";
-import { NpmAccess } from "../src/javascript";
-import { synthSnapshot } from "./util";
+} from "../../src/cdktf";
+import { NpmAccess } from "../../src/javascript";
+import { synthSnapshot } from "../util";
 
 describe("constructs dependency selection", () => {
   test("user-selected", () => {

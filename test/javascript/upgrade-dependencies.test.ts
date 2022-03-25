@@ -3,9 +3,9 @@ import {
   NodeProject,
   NodeProjectOptions,
   UpgradeDependenciesSchedule,
-} from "../src/javascript";
-import { TaskRuntime } from "../src/task-runtime";
-import { synthSnapshot } from "./util";
+} from "../../src/javascript";
+import { TaskRuntime } from "../../src/task-runtime";
+import { synthSnapshot } from "../util";
 
 test("upgrades command includes all dependencies", () => {
   const project = createProject({
