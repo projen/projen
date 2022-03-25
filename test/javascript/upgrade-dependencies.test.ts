@@ -73,6 +73,21 @@ test("upgrade task can be overwritten", () => {
   expect(tasks.upgrade.steps[0].exec).toStrictEqual(`echo 'hello world'`);
 });
 
+test("upgrade workflow can be overwritten", () => {
+  const project = createProject({
+    depsUpgrade: true,
+    github: true,
+  });
+
+  project
+    .tryFindObjectFile(".github/workflows/upgrade-main.yml")
+    ?.addOverride("hello", "world");
+
+  const snapshot = synthSnapshot(project);
+  const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
+  expect(upgrade.hello).toStrictEqual("world");
+});
+
 test("default options", () => {
   const project = createProject({
     projenUpgradeSecret: "PROJEN_SECRET",
@@ -221,7 +236,7 @@ test("upgrade task created without projen defined versions at NodeProject", () =
 });
 
 describe("projen-upgrade task is", () => {
-  test("not defined for Projen if version is set", () => {
+  test("empty if version is set", () => {
     const prj = new NodeProject({
       defaultReleaseBranch: "main",
       name: "test project",
@@ -229,7 +244,9 @@ describe("projen-upgrade task is", () => {
       projenVersion: "0.50.0",
     });
     const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
-    expect(tasks["upgrade-projen"]).toBeUndefined();
+    expect(tasks["upgrade-projen"].steps[0].exec).toEqual(
+      "echo No dependencies to upgrade."
+    );
   });
 
   test("defined for Projen if version is not set", () => {

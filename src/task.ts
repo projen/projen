@@ -11,6 +11,11 @@ export interface TaskOptions extends TaskCommonOptions {
    * @default - add steps using `task.exec(command)` or `task.spawn(subtask)`
    */
   readonly exec?: string;
+
+  /**
+   * List of task steps to run.
+   */
+  readonly steps?: TaskStep[];
 }
 
 /**
@@ -44,8 +49,12 @@ export class Task {
     this._locked = false;
 
     this._env = props.env ?? {};
-    this._steps = [];
+    this._steps = props.steps ?? [];
     this.requiredEnv = props.requiredEnv;
+
+    if (props.exec && props.steps) {
+      throw new Error("cannot specify both exec and steps");
+    }
 
     if (props.exec) {
       this.exec(props.exec);
@@ -197,6 +206,11 @@ export class Task {
    * Returns an immutable copy of all the step specifications of the task.
    */
   public get steps() {
+    // If the list of steps is a Lazy value, we can't know what the steps
+    // are until synthesis occurs, so just return an empty array.
+    if (!Array.isArray(this._steps)) {
+      return [];
+    }
     return [...this._steps];
   }
 
