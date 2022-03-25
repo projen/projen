@@ -1799,6 +1799,7 @@ addTask(name: string, props?: TaskOptions): Task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+  * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
 
 __Returns__:
 * <code>[Task](#projen-task)</code>
@@ -2260,6 +2261,7 @@ new SourceCode(project: Project, filePath: string, options?: SourceCodeOptions)
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[SourceCodeOptions](#projen-sourcecodeoptions)</code>)  *No description*
   * **indent** (<code>number</code>)  Indentation size. __*Default*__: 2
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
 
 
 
@@ -2340,6 +2342,7 @@ new Task(name: string, props?: TaskOptions)
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+  * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
 
 
 
@@ -2653,6 +2656,7 @@ addTask(name: string, options?: TaskOptions): Task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+  * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
 
 __Returns__:
 * <code>[Task](#projen-task)</code>
@@ -8063,6 +8067,7 @@ new javascript.UpgradeDependencies(project: NodeProject, options?: UpgradeDepend
 Name | Type | Description 
 -----|------|-------------
 **postUpgradeTask**🔹 | <code>[Task](#projen-task)</code> | A task run after the upgrade task.
+**upgradeTask**🔹 | <code>[Task](#projen-task)</code> | The upgrade task.
 **workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | The workflows that execute the upgrades.
 **containerOptions**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Container definitions for the upgrade workflow.<br/>__*Optional*__
 
@@ -8087,18 +8092,6 @@ addPostBuildSteps(...steps: JobStep[]): void
   * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
   * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
   * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
-
-
-
-
-#### preSynthesize()🔹 <a id="projen-javascript-upgradedependencies-presynthesize"></a>
-
-Called before synthesis.
-
-```ts
-preSynthesize(): void
-```
-
 
 
 
@@ -9097,6 +9090,19 @@ preSynthesize(): void
 
 
 
+
+#### *static* of(project)🔹 <a id="projen-release-release-of"></a>
+
+Returns the `Release` component of a project or `undefined` if the project does not have a Release component.
+
+```ts
+static of(project: GitHubProject): Release
+```
+
+* **project** (<code>[github.GitHubProject](#projen-github-githubproject)</code>)  *No description*
+
+__Returns__:
+* <code>[release.Release](#projen-release-release)</code>
 
 
 
@@ -11343,6 +11349,7 @@ Options for `SourceCodeFile`.
 Name | Type | Description 
 -----|------|-------------
 **indent**?🔹 | <code>number</code> | Indentation size.<br/>__*Default*__: 2
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 
@@ -11378,6 +11385,7 @@ Name | Type | Description
 **env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this task.<br/>__*Default*__: {}
 **exec**?🔹 | <code>string</code> | Shell command to execute as the first command of the task.<br/>__*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
 **requiredEnv**?🔹 | <code>Array<string></code> | A set of environment variables that must be defined in order to execute this task.<br/>__*Optional*__
+**steps**?🔹 | <code>Array<[TaskStep](#projen-taskstep)></code> | List of task steps to run.<br/>__*Optional*__
 
 
 

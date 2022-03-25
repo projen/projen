@@ -68,6 +68,21 @@ test("upgrade task can be overwritten", () => {
   expect(tasks.upgrade.steps[0].exec).toStrictEqual(`echo 'hello world'`);
 });
 
+test("upgrade workflow can be overwritten", () => {
+  const project = createProject({
+    depsUpgrade: true,
+    github: true,
+  });
+
+  project
+    .tryFindObjectFile(".github/workflows/upgrade-main.yml")
+    ?.addOverride("hello", "world");
+
+  const snapshot = synthSnapshot(project);
+  const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
+  expect(upgrade.hello).toStrictEqual("world");
+});
+
 test("default options", () => {
   const project = createProject();
 

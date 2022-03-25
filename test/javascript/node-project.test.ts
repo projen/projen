@@ -263,7 +263,9 @@ describe("deps upgrade", () => {
       },
       depsUpgradeOptions: {
         workflowOptions: {
-          projenCredentials: GithubCredentials.fromPersonalAccessToken({ secret: "PROJEN_SECRET" }),
+          projenCredentials: GithubCredentials.fromPersonalAccessToken({
+            secret: "PROJEN_SECRET",
+          }),
         },
       },
     });

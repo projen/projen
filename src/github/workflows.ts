@@ -3,8 +3,8 @@ import { resolve } from "../_resolve";
 import { Component } from "../component";
 import { kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
-import { GithubCredentials } from "./github-credentials";
 import { GitHub } from "./github";
+import { GithubCredentials } from "./github-credentials";
 
 import * as workflows from "./workflows-model";
 

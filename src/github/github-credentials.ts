@@ -28,7 +28,9 @@ export class GithubCredentials {
    * @see https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
    * @default - a secret named "PROJEN_GITHUB_TOKEN"
    */
-  public static fromPersonalAccessToken(options: GithubCredentialsPersonalAccessTokenOptions = {}) {
+  public static fromPersonalAccessToken(
+    options: GithubCredentialsPersonalAccessTokenOptions = {}
+  ) {
     return new GithubCredentials({
       setupSteps: [],
       tokenRef: `\${{ secrets.${options.secret ?? "PROJEN_GITHUB_TOKEN"} }}`,

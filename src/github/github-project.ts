@@ -1,14 +1,14 @@
-import { AutoApprove, AutoApproveOptions } from "./auto-approve";
-import { AutoMergeOptions } from "./auto-merge";
-import { GitHub, GitHubOptions } from "./github";
-import { MergifyOptions } from "./mergify";
-import { Stale, StaleOptions } from "./stale";
-import { GithubCredentials } from "./github-credentials";
 import { Clobber } from "../clobber";
 import { Gitpod } from "../gitpod";
 import { Project, ProjectOptions, ProjectType } from "../project";
 import { SampleReadme, SampleReadmeProps } from "../readme";
 import { DevContainer, VsCode } from "../vscode";
+import { AutoApprove, AutoApproveOptions } from "./auto-approve";
+import { AutoMergeOptions } from "./auto-merge";
+import { GitHub, GitHubOptions } from "./github";
+import { GithubCredentials } from "./github-credentials";
+import { MergifyOptions } from "./mergify";
+import { Stale, StaleOptions } from "./stale";
 
 /**
  * Options for `GitHubProject`.
@@ -123,7 +123,7 @@ export interface GitHubProjectOptions extends ProjectOptions {
    *
    * @default - use a personal access token named PROJEN_GITHUB_TOKEN
    */
-   readonly projenCredentials?: GithubCredentials;
+  readonly projenCredentials?: GithubCredentials;
 
   /**
    * The name of a secret which includes a GitHub Personal Access Token to be
