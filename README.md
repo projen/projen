@@ -68,6 +68,7 @@ list):
 * [cdk8s-app-ts](https://projen.io/api/API.html#projen-cdk8s-cdk8stypescriptapp) - CDK8s app in TypeScript.
 * [cdk8s-construct](https://projen.io/api/API.html#projen-cdk8s-constructlibrarycdk8s) - CDK8s construct library project.
 * [cdktf-construct](https://projen.io/api/API.html#projen-cdktf-constructlibrarycdktf) - CDKTF construct library project.
+* [github-action-ts](https://projen.io/api/API.html#projen-actions-githubactiontypescriptproject) - Create a GitHub action with TypeScript.
 * [java](https://projen.io/api/API.html#projen-java-javaproject) - Java project.
 * [jsii](https://projen.io/api/API.html#projen-cdk-jsiiproject) - Multi-language jsii library project.
 * [nextjs](https://projen.io/api/API.html#projen-web-nextjsproject) - Next.js project without TypeScript.

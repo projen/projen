@@ -184,6 +184,22 @@ project.synth();",
 }
 `;
 
+exports[`projen new github-action-ts 1`] = `
+Object {
+  ".projenrc.js": "const { actions } = require(\\"projen\\");
+const project = new actions.GithubActionTypeScriptProject({
+  defaultReleaseBranch: \\"main\\",
+  name: \\"my-project\\",
+
+  // deps: [],                /* Runtime dependencies of this module. */
+  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
+  // devDeps: [],             /* Build dependencies for this module. */
+  // packageName: undefined,  /* The \\"name\\" in package.json. */
+});
+project.synth();",
+}
+`;
+
 exports[`projen new java 1`] = `
 Object {
   "src/test/java/projenrc.java": "import io.github.cdklabs.projen.java.JavaProject;

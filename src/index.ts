@@ -35,6 +35,7 @@ export * from "./xmlfile";
 // export submobules
 export * as web from "./web";
 export * as github from "./github";
+export * as actions from "./github-actions";
 export * as gitlab from "./gitlab";
 export * as vscode from "./vscode";
 export * as java from "./java";

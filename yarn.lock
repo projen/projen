@@ -954,7 +954,7 @@
 
 "@xmldom/xmldom@^0.8.1":
   version "0.8.1"
-  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.8.1.tgz#70c239275fc6d6a84e41b9a8d623a93c0d59b6b4"
+  resolved "https://registry.npmjs.org/@xmldom/xmldom/-/xmldom-0.8.1.tgz#70c239275fc6d6a84e41b9a8d623a93c0d59b6b4"
   integrity sha512-4wOae+5N2RZ+CZXd9ZKwkaDi55IxrSTOjHpxTvQQ4fomtOJmqVxbmICA9jE1jvnqNhpfgz8cnfFagG86wV/xLQ==
 
 JSONStream@^1.0.4:
@@ -1513,7 +1513,7 @@ clone-response@^1.0.2:
 
 clone@^2.1.2:
   version "2.1.2"
-  resolved "https://registry.yarnpkg.com/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
+  resolved "https://registry.npmjs.org/clone/-/clone-2.1.2.tgz#1b7f4b9f591f1e8f83670401600345a02887435f"
   integrity sha1-G39Ln1kfHo+DZwQBYANFoCiHQ18=
 
 co@^4.6.0:
@@ -1523,7 +1523,7 @@ co@^4.6.0:
 
 codemaker@^1.55.1:
   version "1.55.1"
-  resolved "https://registry.yarnpkg.com/codemaker/-/codemaker-1.55.1.tgz#ca2ae0e3c7a3e9909740a603648e68d4a20e1a76"
+  resolved "https://registry.npmjs.org/codemaker/-/codemaker-1.55.1.tgz#ca2ae0e3c7a3e9909740a603648e68d4a20e1a76"
   integrity sha512-W0MZSFgqfr9mgKbYLHsTNYTMKiXQE9hDHs6qke5dC5S9ZlFgcWG2zdpznknwvPLDDuWP8Z5QL71MjAM21hEPOg==
   dependencies:
     camelcase "^6.3.0"
@@ -1583,7 +1583,7 @@ commander@^9.0.0:
 
 commonmark@^0.30.0:
   version "0.30.0"
-  resolved "https://registry.yarnpkg.com/commonmark/-/commonmark-0.30.0.tgz#38811dc7bbf0f59d277ae09054d4d73a332f2e45"
+  resolved "https://registry.npmjs.org/commonmark/-/commonmark-0.30.0.tgz#38811dc7bbf0f59d277ae09054d4d73a332f2e45"
   integrity sha512-j1yoUo4gxPND1JWV9xj5ELih0yMv1iCWDG6eEQIPLSWLxzCXiFoyS7kvB+WwU+tZMf4snwJMMtaubV0laFpiBA==
   dependencies:
     entities "~2.0"
@@ -1906,7 +1906,7 @@ decamelize@^1.1.0, decamelize@^1.2.0:
 
 decamelize@^5.0.1:
   version "5.0.1"
-  resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-5.0.1.tgz#db11a92e58c741ef339fb0a2868d8a06a9a7b1e9"
+  resolved "https://registry.npmjs.org/decamelize/-/decamelize-5.0.1.tgz#db11a92e58c741ef339fb0a2868d8a06a9a7b1e9"
   integrity sha512-VfxadyCECXgQlkoEAjeghAr5gY3Hf+IKjKb+X8tGVDtveCjN+USwprd2q3QXBR9T1+x2DG0XZF5/w+7HAtSaXA==
 
 decimal.js@^10.2.1:
@@ -2098,7 +2098,7 @@ end-of-stream@^1.1.0:
 
 entities@~2.0:
   version "2.0.3"
-  resolved "https://registry.yarnpkg.com/entities/-/entities-2.0.3.tgz#5c487e5742ab93c15abb5da22759b8590ec03b7f"
+  resolved "https://registry.npmjs.org/entities/-/entities-2.0.3.tgz#5c487e5742ab93c15abb5da22759b8590ec03b7f"
   integrity sha512-MyoZ0jgnLvB2X3Lg5HqpFmn1kybDiIfEQmKzTb5apr51Rb+T3KdmMiqa70T+bhGnyv7bQ6WMj2QMHpGMmlrUYQ==
 
 env-paths@^2.2.0:
@@ -3975,7 +3975,7 @@ jsii-docgen@^1.8.110:
 
 jsii-pacmak@^1.55.1:
   version "1.55.1"
-  resolved "https://registry.yarnpkg.com/jsii-pacmak/-/jsii-pacmak-1.55.1.tgz#9259a653b65ac570a10f86358b4a7b10e5b7856c"
+  resolved "https://registry.npmjs.org/jsii-pacmak/-/jsii-pacmak-1.55.1.tgz#9259a653b65ac570a10f86358b4a7b10e5b7856c"
   integrity sha512-E208pgMfxbPbXgmcskDG0/hBbkPLGlU7S79VoXESy1Kegf7TnZjLqpBdJ3mNxIroS5gIC8DToArMHUFAQ6z0lA==
   dependencies:
     "@jsii/check-node" "1.55.1"
@@ -4006,7 +4006,7 @@ jsii-reflect@^1.30.0, jsii-reflect@^1.55.1:
 
 jsii-rosetta@^1.55.1:
   version "1.55.1"
-  resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-1.55.1.tgz#30b44111d146534c42c8fef77931d3fdb888de7d"
+  resolved "https://registry.npmjs.org/jsii-rosetta/-/jsii-rosetta-1.55.1.tgz#30b44111d146534c42c8fef77931d3fdb888de7d"
   integrity sha512-ZUzuO2JgnxE01tgIdZorsUZj5jiHP8uxeLDU/vsnmnAU2ZbMHFDT1cWacoAKESDnCyFF8VRCuPXHx8e5/SOXig==
   dependencies:
     "@jsii/check-node" "1.55.1"
@@ -4339,7 +4339,7 @@ markmac@^0.1.146:
 
 mdurl@~1.0.1:
   version "1.0.1"
-  resolved "https://registry.yarnpkg.com/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
+  resolved "https://registry.npmjs.org/mdurl/-/mdurl-1.0.1.tgz#fe85b2ec75a59037f2adfec100fd6c601761152e"
   integrity sha1-/oWy7HWlkDfyrf7BAP1sYBdhFS4=
 
 meow@^8.0.0:
@@ -5704,7 +5704,7 @@ string-length@^4.0.1:
 
 string.prototype.repeat@^0.2.0:
   version "0.2.0"
-  resolved "https://registry.yarnpkg.com/string.prototype.repeat/-/string.prototype.repeat-0.2.0.tgz#aba36de08dcee6a5a337d49b2ea1da1b28fc0ecf"
+  resolved "https://registry.npmjs.org/string.prototype.repeat/-/string.prototype.repeat-0.2.0.tgz#aba36de08dcee6a5a337d49b2ea1da1b28fc0ecf"
   integrity sha1-q6Nt4I3O5qWjN9SbLqHaGyj8Ds8=
 
 string.prototype.trimend@^1.0.4:
@@ -6291,7 +6291,7 @@ wordwrap@^1.0.0:
 
 workerpool@^6.2.0:
   version "6.2.0"
-  resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-6.2.0.tgz#827d93c9ba23ee2019c3ffaff5c27fccea289e8b"
+  resolved "https://registry.npmjs.org/workerpool/-/workerpool-6.2.0.tgz#827d93c9ba23ee2019c3ffaff5c27fccea289e8b"
   integrity sha512-Rsk5qQHJ9eowMH28Jwhe8HEbmdYDX4lwoMWshiCXugjtHqMD9ZbiqSDLxcsfdqsETPzVUtX5s1Z5kStiIM6l4A==
 
 wrap-ansi@^6.2.0:
@@ -6360,7 +6360,7 @@ xmlbuilder2@^2.4.1:
 
 xmlbuilder@^15.1.1:
   version "15.1.1"
-  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-15.1.1.tgz#9dcdce49eea66d8d10b42cae94a79c3c8d0c2ec5"
+  resolved "https://registry.npmjs.org/xmlbuilder/-/xmlbuilder-15.1.1.tgz#9dcdce49eea66d8d10b42cae94a79c3c8d0c2ec5"
   integrity sha512-yMqGBqtXyeN1e3TGYvgNgDVZ3j84W4cwkOXQswghol6APgZWaff9lnbvN7MHYJOiXsvGPXtjTYJEiC9J2wv9Eg==
 
 xmlchars@^2.2.0:
