@@ -6,7 +6,7 @@ export interface ActionMetadata {
   readonly description: string;
   readonly inputs: Input[];
   readonly outputs: Output[];
-  readonly runs: Runs;
+  readonly runs: JavaScriptRuns | CompositeRuns | DockerRuns;
   readonly branding?: Branding;
 }
 
@@ -26,6 +26,25 @@ export interface Output {
 
 export interface Runs {
   readonly using: string;
+}
+
+export interface JavaScriptRuns extends Runs {
+  readonly main: string;
+  readonly pre?: string;
+  readonly preIf?: string;
+  readonly post?: string;
+  readonly postIf?: string;
+}
+
+export interface DockerRuns extends Runs {
+  readonly preEntrypoint?: string;
+  readonly entrypoint?: string;
+  readonly postEntrypoint?: string;
+  readonly image: string;
+  readonly env?: Record<string, string>;
+}
+
+export interface CompositeRuns extends Runs {
   readonly steps: ActionStep[];
 }
 
