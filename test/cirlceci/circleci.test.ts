@@ -1,7 +1,57 @@
-// @ts-ignore
-import { Workflow, Circleci, Orb, CircleCiProps } from "../../src/circleci";
+import * as YAML from "yaml";
+import { Circleci, CircleCiProps } from "../../src/circleci";
 // @ts-ignore
 import { synthSnapshot, TestProject } from "../util";
+
+test("full spec of api should be provided", () => {
+  // GIVEN
+  const p = new TestProject();
+  const options: CircleCiProps = {
+    orbs: {
+      hello: "world:2.0",
+    },
+    workflows: [
+      {
+        identifier: "workflow1",
+        jobs: [
+          {
+            identifier: "job1",
+            name: "renamedJob2",
+            triggers: [
+              {
+                schedule: {
+                  cron: "0 0 * * *",
+                  filters: {
+                    branches: {
+                      only: ["main", "beta"],
+                    },
+                  },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  };
+  const circle = new Circleci(p, options);
+  circle.addWorkflow({
+    identifier: "workflow3",
+    jobs: [{ identifier: "job3", context: ["context3"] }],
+  });
+  const snapshot = synthSnapshot(p);
+  const circleci = snapshot[".circleci/config.yml"];
+  const yaml = YAML.parse(circleci);
+
+  expect(circleci).toMatchSnapshot();
+  expect(circleci).toContain("renamedJob2");
+  expect(circleci).toContain("context3");
+  expect(circleci).toContain("0 0 * * *");
+
+  expect(yaml).toHaveProperty("orbs.hello");
+
+  console.log(circleci);
+});
 
 test("additional workflow can be added", () => {
   // GIVEN
@@ -52,7 +102,7 @@ test("orb with the same id can not be added", () => {
         jobs: [
           {
             identifier: "job1",
-            context: ["context1"],
+            name: "renamedJob2",
           },
         ],
       },
@@ -62,6 +112,7 @@ test("orb with the same id can not be added", () => {
   expect(() => circle.addOrb("hello", "world:3.0")).toThrowError(
     "Circleci Config already contains an orb named hello."
   );
+
   const snapshot = synthSnapshot(p);
   const circleci = snapshot[".circleci/config.yml"];
   expect(circleci).toMatchSnapshot();

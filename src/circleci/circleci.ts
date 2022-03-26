@@ -27,6 +27,16 @@ export interface IJob extends INamed {
   context?: string[];
   type?: JobType;
   filter?: IFilter;
+  triggers?: ITriggers[];
+}
+
+export interface ITriggers {
+  schedule?: ISchedule;
+}
+
+export interface ISchedule {
+  cron?: string;
+  filters: IFilter;
 }
 
 export interface IFilter {
