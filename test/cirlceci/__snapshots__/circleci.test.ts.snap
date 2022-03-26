@@ -8,22 +8,17 @@ orbs:
   hello: world:2.0
 workflows:
   workflow1:
+    triggers:
+      - schedule:
+          cron: 0 0 * * *
+          filters:
+            branches:
+              only:
+                - main
+                - beta
     jobs:
       - job1:
           name: renamedJob2
-          triggers:
-            - schedule:
-                cron: 0 0 * * *
-                filters:
-                  branches:
-                    only:
-                      - main
-                      - beta
-  workflow3:
-    jobs:
-      - job3:
-          context:
-            - context3
 "
 `;
 

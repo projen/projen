@@ -13,41 +13,35 @@ test("full spec of api should be provided", () => {
     workflows: [
       {
         identifier: "workflow1",
+        triggers: [
+          {
+            schedule: {
+              cron: "0 0 * * *",
+              filters: {
+                branches: {
+                  only: ["main", "beta"],
+                },
+              },
+            },
+          },
+        ],
         jobs: [
           {
             identifier: "job1",
             name: "renamedJob2",
-            triggers: [
-              {
-                schedule: {
-                  cron: "0 0 * * *",
-                  filters: {
-                    branches: {
-                      only: ["main", "beta"],
-                    },
-                  },
-                },
-              },
-            ],
           },
         ],
       },
     ],
   };
-  const circle = new Circleci(p, options);
-  circle.addWorkflow({
-    identifier: "workflow3",
-    jobs: [{ identifier: "job3", context: ["context3"] }],
-  });
+  new Circleci(p, options);
   const snapshot = synthSnapshot(p);
   const circleci = snapshot[".circleci/config.yml"];
   const yaml = YAML.parse(circleci);
 
   expect(circleci).toMatchSnapshot();
   expect(circleci).toContain("renamedJob2");
-  expect(circleci).toContain("context3");
   expect(circleci).toContain("0 0 * * *");
-
   expect(yaml).toHaveProperty("orbs.hello");
 
   console.log(circleci);
