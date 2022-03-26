@@ -18,7 +18,11 @@ interface INamed {
  */
 export interface Workflow extends INamed {
   readonly jobs?: WorkflowJob[];
-  readonly triggers?: ITriggers[];
+  readonly triggers?: Triggers[];
+  /** when is too dynamic to be casted to interfaces. Check Docu as reference
+   * @see https://circleci.com/docs/2.0/configuration-reference/#logic-statement-examples
+   */
+  readonly when?: any;
 }
 
 /**
@@ -51,7 +55,19 @@ export interface WorkflowJob extends INamed {
   /** A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed. */
   readonly type?: JobType;
   /** Job Filters can have the key branches or tags */
-  readonly filter?: IFilter;
+  readonly filter?: Filter;
+  readonly matrix?: Matrix;
+}
+
+/**
+ * The matrix stanza allows you to run a parameterized job multiple times with different arguments.
+ * @see https://circleci.com/docs/2.0/configuration-reference/#matrix-requires-version-21
+ */
+export interface Matrix {
+  /** A map of parameter names to every value the job should be called with */
+  readonly parameters?: Record<string, string[]>;
+  /** An alias for the matrix, usable from another job’s requires stanza. Defaults to the name of the job being executed */
+  readonly alias?: string;
 }
 
 /**
@@ -59,18 +75,18 @@ export interface WorkflowJob extends INamed {
  * Default behavior is to trigger the workflow when pushing to a branch.
  * @see https://circleci.com/docs/2.0/configuration-reference/#triggers
  */
-export interface ITriggers {
-  readonly schedule?: ISchedule;
+export interface Triggers {
+  readonly schedule?: Schedule;
 }
 
 /**
  *  A workflow may have a schedule indicating it runs at a certain time.
  *  @see https://circleci.com/docs/2.0/configuration-reference/#schedule
  */
-export interface ISchedule {
+export interface Schedule {
   /** The cron key is defined using POSIX crontab syntax. */
   readonly cron?: string;
-  readonly filters: IFilter;
+  readonly filters: Filter;
 }
 
 /**
@@ -88,16 +104,16 @@ export interface ISchedule {
  * If both only and ignore are specified the only is considered before ignore.
  * @see https://circleci.com/docs/2.0/configuration-reference/#filters
  */
-export interface IFilter {
-  readonly branches?: IFilterConfig;
-  readonly tags?: IFilterConfig;
+export interface Filter {
+  readonly branches?: FilterConfig;
+  readonly tags?: FilterConfig;
 }
 
 /**
  * set an inclusive or exclusive filter
  * @see https://circleci.com/docs/2.0/configuration-reference/#filters
  */
-export interface IFilterConfig {
+export interface FilterConfig {
   /** Either a single branch specifier, or a list of branch specifiers */
   readonly only?: string[];
   /** Either a single branch specifier, or a list of branch specifiers */

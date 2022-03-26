@@ -29,6 +29,12 @@ test("full spec of api should be provided", () => {
           {
             identifier: "job1",
             name: "renamedJob2",
+            matrix: {
+              parameters: {
+                version: ["0.1", "0.2", "0.3"],
+                platform: ["macos", "windows", "linux"],
+              },
+            },
           },
         ],
       },
@@ -42,6 +48,7 @@ test("full spec of api should be provided", () => {
   expect(circleci).toMatchSnapshot();
   expect(circleci).toContain("renamedJob2");
   expect(circleci).toContain("0 0 * * *");
+  expect(circleci).toContain("windows");
   expect(yaml).toHaveProperty("orbs.hello");
 
   console.log(circleci);
