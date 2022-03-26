@@ -40,20 +40,22 @@ export interface IFilterConfig {
 }
 
 export class Circleci extends Component {
-  public readonly file: YamlFile;
+  public readonly file: YamlFile | undefined;
   private options: CircleCiProps;
-  private orbs: Record<string, string> = {};
-  private workflows: IWorkflow[] = [];
+  private readonly orbs: Record<string, string>;
+  private workflows: IWorkflow[];
 
   constructor(project: Project, options: CircleCiProps = {}) {
     super(project);
     this.options = options;
+    this.orbs = options.orbs ?? {};
     this.workflows = options.workflows ?? [];
-    // const circleCiEnabled = options.enabled || true;
-    this.file = new YamlFile(project, ".circleci/config.yml", {
-      obj: () => this.renderCircleCi(),
-    });
-    this.initOrbs();
+    const circleCiEnabled = options.enabled || true;
+    if (circleCiEnabled) {
+      this.file = new YamlFile(project, ".circleci/config.yml", {
+        obj: () => this.renderCircleCi(),
+      });
+    }
   }
 
   private renderCircleCi() {
@@ -82,10 +84,6 @@ export class Circleci extends Component {
       result = [...result, { [identifier]: reduced }];
     }
     return result;
-  }
-
-  private initOrbs() {
-    this.orbs = this.options.orbs ?? {};
   }
 
   public addOrb(name: string, orb: string) {
