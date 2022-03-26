@@ -1,13 +1,14 @@
 import { Component } from "../component";
 import { Project } from "../project";
 import { YamlFile } from "../yaml";
-import { WorkflowJob, Workflow } from "./model";
+import { WorkflowJob, Workflow, Job } from "./model";
 
 export interface CircleCiProps {
   readonly orbs?: Record<string, string>;
   readonly enabled?: boolean;
-  readonly version?: string;
+  readonly version?: number;
   readonly workflows?: Workflow[];
+  readonly jobs?: Job[];
 }
 
 export class Circleci extends Component {
@@ -15,12 +16,14 @@ export class Circleci extends Component {
   private options: CircleCiProps;
   private readonly orbs: Record<string, string>;
   private workflows: Workflow[];
+  private readonly jobs: Job[];
 
   constructor(project: Project, options: CircleCiProps = {}) {
     super(project);
     this.options = options;
     this.orbs = options.orbs ?? {};
     this.workflows = options.workflows ?? [];
+    this.jobs = options.jobs ?? [];
     const circleCiEnabled = options.enabled || true;
     if (circleCiEnabled) {
       this.file = new YamlFile(project, ".circleci/config.yml", {
@@ -30,6 +33,7 @@ export class Circleci extends Component {
   }
 
   private renderCircleCi() {
+    // render dynamic keys for workflow
     const workflowRecords: Record<string, any> = {};
     for (const workflow of this.workflows) {
       const { identifier, ...reduced } = workflow;
@@ -37,9 +41,17 @@ export class Circleci extends Component {
       workflowRecords[identifier] = reduced;
     }
 
+    // render dynamic keys for jobs
+    const jobRecords: Record<string, any> = {};
+    for (const job of this.jobs) {
+      const { identifier, ...reduced } = job;
+      jobRecords[identifier] = reduced;
+    }
+
     return {
-      version: this.options.version || "2.1",
+      version: this.options.version || 2.1,
       orbs: this.orbs,
+      jobs: jobRecords,
       workflows: workflowRecords,
     };
   }

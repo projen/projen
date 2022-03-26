@@ -10,6 +10,24 @@ test("full spec of api should be provided", () => {
     orbs: {
       hello: "world:2.0",
     },
+    jobs: [
+      {
+        identifier: "custom-job-1",
+        steps: [
+          "checkout",
+          {
+            run: {
+              command: ["echo $HELLOW_WORLD", "echo this is multiline"].join(
+                "\n"
+              ),
+            },
+          },
+        ],
+        parameters: {
+          job1Param: "fluffy",
+        },
+      },
+    ],
     workflows: [
       {
         identifier: "workflow1",
@@ -31,7 +49,7 @@ test("full spec of api should be provided", () => {
             name: "renamedJob2",
             matrix: {
               parameters: {
-                version: ["0.1", "0.2", "0.3"],
+                version: [0.1, 0.2, 0.3],
                 platform: ["macos", "windows", "linux"],
               },
             },

@@ -6,6 +6,14 @@ exports[`full spec of api should be provided 1`] = `
 version: \\"2.1\\"
 orbs:
   hello: world:2.0
+jobs:
+  custom-job-1:
+    steps:
+      - checkout
+      - run:
+          command: echo $WORKSPACE
+    parameters:
+      job1Param: fluffy
 workflows:
   workflow1:
     triggers:
@@ -22,9 +30,9 @@ workflows:
           matrix:
             parameters:
               version:
-                - \\"0.1\\"
-                - \\"0.2\\"
-                - \\"0.3\\"
+                - 0.1
+                - 0.2
+                - 0.3
               platform:
                 - macos
                 - windows
