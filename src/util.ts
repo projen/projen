@@ -339,6 +339,38 @@ export function kebabCaseKeys<T = unknown>(obj: T, recursive = true): T {
   return result as any;
 }
 
+export function snakeCaseKeys<T = unknown>(
+  obj: T,
+  recursive = true,
+  exclusiveForRecordKeys: string[] = []
+): T {
+  if (typeof obj !== "object" || obj == null) {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    if (recursive) {
+      obj = obj.map((v) =>
+        snakeCaseKeys(v, recursive, exclusiveForRecordKeys)
+      ) as any;
+    }
+    return obj;
+  }
+
+  const result: Record<string, unknown> = {};
+  for (let [k, v] of Object.entries(obj)) {
+    if (recursive) {
+      v = snakeCaseKeys(v, recursive, exclusiveForRecordKeys);
+    }
+    const modifiedKey =
+      exclusiveForRecordKeys.length == 0 || exclusiveForRecordKeys.includes(k)
+        ? Case.snake(k)
+        : k;
+    result[modifiedKey] = v;
+  }
+  return result as any;
+}
+
 export async function tryReadFile(file: string) {
   if (!(await fs.pathExists(file))) {
     return "";

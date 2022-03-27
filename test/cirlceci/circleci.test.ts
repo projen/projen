@@ -1,5 +1,10 @@
 import * as YAML from "yaml";
-import { Circleci, CircleCiProps } from "../../src/circleci";
+import { WorkflowJob } from "../../lib/circleci";
+import {
+  Circleci,
+  CircleCiProps,
+  isObjectContaingFieldExactly,
+} from "../../src/circleci";
 // @ts-ignore
 import { synthSnapshot, TestProject } from "../util";
 
@@ -13,12 +18,15 @@ test("full spec of api should be provided", () => {
     jobs: [
       {
         identifier: "custom-job-1",
-        docker: {
-          image: "golang:alpine",
-          environment: {
-            GO111MODULE: true,
+        docker: [
+          {
+            image: "golang:alpine",
+            environment: {
+              GO111MODULE: true,
+            },
           },
-        },
+        ],
+        workingDirectory: ".",
         machine: {
           image: "node:alpine",
         },
@@ -62,12 +70,24 @@ test("full spec of api should be provided", () => {
           {
             identifier: "job1",
             name: "renamedJob2",
+            parameters: {
+              "hello-world-1": 12,
+              hello_world_2: true,
+              helloWorld3: "pansen",
+            },
+            orbParameters: {
+              "install-yarn": true,
+              node_version: 16.13,
+            },
             matrix: {
               parameters: {
                 version: [0.1, 0.2, 0.3],
                 platform: ["macos", "windows", "linux"],
               },
             },
+          },
+          {
+            identifier: "checkout",
           },
         ],
       },
@@ -77,19 +97,52 @@ test("full spec of api should be provided", () => {
   const snapshot = synthSnapshot(p);
   const circleci = snapshot[".circleci/config.yml"];
   const yaml = YAML.parse(circleci);
+  console.log(circleci);
 
   expect(circleci).toMatchSnapshot();
   expect(circleci).toContain("renamedJob2");
   expect(circleci).toContain("0 0 * * *");
   expect(circleci).toContain("windows");
+  const wJob = yaml.workflows.workflow1.jobs[0].job1;
+  // parameters should not be modified by snake case
+  expect(wJob).toEqual(
+    expect.objectContaining({
+      parameters: {
+        "hello-world-1": 12,
+        hello_world_2: true,
+        helloWorld3: "pansen",
+      },
+    })
+  );
+  // testing orb parameters and snake case should be ignored here
+  expect(wJob).toEqual(
+    expect.objectContaining({
+      "install-yarn": true,
+      node_version: 16.13,
+    })
+  );
 
   const customJob = yaml.jobs["custom-job-1"];
-  expect(customJob.docker.image).toEqual("golang:alpine");
+  expect(customJob.docker[0].image).toEqual("golang:alpine");
   expect(customJob.machine.image).toEqual("node:alpine");
   expect(customJob.steps).toHaveLength(2);
   expect(customJob.steps).toContain("checkout");
+  expect(customJob).toEqual(
+    // test snake case
+    expect.objectContaining({ working_directory: "." })
+  );
+});
 
-  console.log(circleci);
+test("test type conversion for workflow jobs with identifier only", () => {
+  const job1: WorkflowJob = {
+    identifier: "checkout",
+  };
+  const job2: WorkflowJob = {
+    identifier: "checkout",
+    name: "hello-world",
+  };
+  expect(isObjectContaingFieldExactly(job1, "identifier")).toEqual(true);
+  expect(isObjectContaingFieldExactly(job2, "identifier")).toEqual(false);
 });
 
 test("additional workflow can be added", () => {

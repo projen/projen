@@ -1,5 +1,6 @@
 import { Component } from "../component";
 import { Project } from "../project";
+import { snakeCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
 import { WorkflowJob, Workflow, Job } from "./model";
 
@@ -133,14 +134,14 @@ export class Circleci extends Component {
     for (const workflow of this.workflows) {
       const { identifier, ...reduced } = workflow;
       reduced.jobs = this.renderJobs(workflow.jobs);
-      workflowRecords[identifier] = reduced;
+      workflowRecords[identifier] = this.snakeCase(reduced);
     }
 
     // render dynamic keys for jobs
     const jobRecords: Record<string, any> = {};
     for (const job of this.jobs) {
       const { identifier, ...reduced } = job;
-      jobRecords[identifier] = reduced;
+      jobRecords[identifier] = this.snakeCase(reduced);
     }
 
     return {
@@ -161,14 +162,25 @@ export class Circleci extends Component {
   }
 
   /**
-   * reduce objects with `identifier` field
+   * reduce objects with `identifier` field for WorkflowJobs.
+   * A workflow job can contain `orbParameter` which are passed to orbs.
+   * This map is directly added as `Record<string,any>` to job.
+   * So we gonna add those after the default field of WorkflowJob.
+   * @see https://circleci.com/developer/orbs/orb/circleci/node#usage-install_nodejs
    * @param jobs
    */
   private renderJobs = (jobs: WorkflowJob[] = []): any => {
     let result: any = [];
     for (const job of jobs ?? []) {
-      const { identifier, ...reduced } = job;
-      result = [...result, { [identifier]: reduced }];
+      const { identifier, orbParameters, ...reduced } = job;
+      if (isObjectContaingFieldExactly(job, "identifier")) {
+        result = [...result, identifier];
+      } else {
+        result = [
+          ...result,
+          { [identifier]: { ...reduced, ...orbParameters } },
+        ];
+      }
     }
     return result;
   };
@@ -184,4 +196,27 @@ export class Circleci extends Component {
     }
     this.orbs[name] = orb;
   }
+
+  /**
+   * Snake case for listed keys. There are too many exceptions needed to do it recursive without a whitelist.
+   * This list needs to be updated once we add field with snake case like `aws_auth`.
+   * @param input
+   */
+  private snakeCase = (input: any): any => {
+    const snakeCaseKeyWords = [
+      "awsAuth",
+      "workingDirectory",
+      "resourceClass",
+      "dockerLayerCaching",
+      "noOutputTimeout",
+    ];
+    return snakeCaseKeys(input, true, snakeCaseKeyWords);
+  };
 }
+
+export const isObjectContaingFieldExactly = (
+  obj: any,
+  field: string
+): boolean => {
+  return Object.keys(obj).length == 1 && Object.keys(obj).includes(field);
+};

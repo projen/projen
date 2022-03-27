@@ -14,31 +14,38 @@ const project = new typescript.TypeScriptProject({
 
 });
 
-console.log(project.deps);
-
 // project.addGitIgnore("/yarn.lock")
 const c = new circleci.Circleci(project, {
-  enabled: true,
   orbs: {
-    hello: 'world:3.0',
+    node: 'circleci/node@5.0.1',
   },
+  jobs: [
+    {
+      identifier: "release",
+      resourceClass: circleci.ResourceClass.SMALL,
+      docker: [{
+        image: "cimg/node:lts"
+      }],
+      steps: [
+        "checkout",
+        {run: {command: "npx semantic-release"}},
+      ]
+    }
+  ],
   workflows: [
     {
-      identifier: 'workflow1',
+      identifier: 'build',
       jobs: [
         {
-          identifier: 'job2',
-          context: [
-            'npm',
-            'github',
-          ],
+          identifier: 'node/test',
+          orbParameters: {
+            "test-results-for": "jest"
+          }
         },
         {
-          identifier: 'job2',
-          context: [
-            'test',
-          ],
-        },
+          identifier: "release",
+          filters: circleci.FilterMainBranchOnly,
+        }
       ],
     },
   ],

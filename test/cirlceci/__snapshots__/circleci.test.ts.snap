@@ -6,7 +6,6 @@ exports[`additional workflow can be added 1`] = `
 version: 2.1
 orbs:
   hello: world:2.0
-jobs: {}
 workflows:
   workflow1:
     jobs:
@@ -32,9 +31,10 @@ orbs:
 jobs:
   custom-job-1:
     docker:
-      image: golang:alpine
-      environment:
-        GO111MODULE: true
+      - image: golang:alpine
+        environment:
+          GO111MODULE: true
+    working_directory: .
     machine:
       image: node:alpine
     steps:
@@ -66,6 +66,10 @@ workflows:
     jobs:
       - job1:
           name: renamedJob2
+          parameters:
+            hello-world-1: 12
+            hello_world_2: true
+            helloWorld3: pansen
           matrix:
             parameters:
               version:
@@ -76,6 +80,9 @@ workflows:
                 - macos
                 - windows
                 - linux
+          install-yarn: true
+          node_version: 16.13
+      - checkout
 "
 `;
 

@@ -81,6 +81,10 @@ export interface WorkflowJob extends INamed {
   /** Job Filters can have the key branches or tags */
   readonly filter?: Filter;
   readonly matrix?: Matrix;
+  /** Parameters for making a job explicitly configurable in a workflow. */
+  readonly parameters?: Record<string, string | number | boolean>;
+  /** Parameters passed to job when referencing a job from orb */
+  readonly orbParameters?: Record<string, string | number | boolean>;
 }
 
 /**
@@ -149,7 +153,7 @@ export interface FilterConfig {
  * @see https://circleci.com/docs/2.0/configuration-reference/#job_name
  */
 export interface Job {
-  readonly docker?: Docker;
+  readonly docker?: Docker[];
   readonly machine?: Machine;
   readonly macos?: Macos;
   /** Shell to use for execution command in all steps. Can be overridden by shell in each step */
@@ -159,15 +163,13 @@ export interface Job {
   /** no type support here, for syntax {@see https://circleci.com/docs/2.0/configuration-reference/#steps} */
   readonly steps?: any[];
   /** In which directory to run the steps. Will be interpreted as an absolute path. Default: `~/project` */
-  readonly working_directory?: string;
+  readonly workingDirectory?: string;
   /** Number of parallel instances of this job to run (default: 1) */
   readonly parallelism?: number;
   /** A map of environment variable names and values. */
   readonly environment?: Record<string, string | number | boolean>;
-  /** A map of environment variable names and values. */
-  readonly branches?: Record<string, string>;
   /** {@link ResourceClass} */
-  readonly resource_class?: ResourceClass | string;
+  readonly resourceClass?: ResourceClass | string;
 }
 
 /**
@@ -190,7 +192,7 @@ export interface Docker {
   /** Authentication for registries using standard docker login credentials */
   readonly auth?: Record<string, string>;
   /** Authentication for AWS Elastic Container Registry (ECR) */
-  readonly aws_auth?: Record<string, string>;
+  readonly awsAuth?: Record<string, string>;
 }
 
 export interface Machine {
@@ -202,7 +204,7 @@ export interface Machine {
   /** enable docker layer caching
    * @see https://circleci.com/docs/2.0/configuration-reference/#available-machine-images
    */
-  readonly docker_layer_caching?: string;
+  readonly dockerLayerCaching?: string;
 }
 
 /**
@@ -222,7 +224,7 @@ export interface Macos {
  * @see https://circleci.com/docs/2.0/configuration-reference/#steps
  */
 export interface StepRun {
-  run?: Run;
+  readonly run?: Run;
 }
 
 /**
@@ -247,9 +249,9 @@ export interface Run {
   /** Whether this step should run in the background (default: false) */
   readonly background?: string;
   /** In which directory to run this step. Will be interpreted relative to the working_directory of the job). (default: .) */
-  readonly working_directory?: string;
+  readonly workingDirectory?: string;
   /** Elapsed time the command can run without output such as “20m”, “1.25h”, “5s”. The default is 10 minutes */
-  readonly no_output_timeout?: string;
+  readonly noOutputTimeout?: string;
   /** Specify when to enable or disable the step. */
   readonly when?: JobWhen | string;
 }
