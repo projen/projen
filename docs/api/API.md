@@ -8115,10 +8115,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Pip(project: PythonProject, _options?: PipOptions)
+new python.Pip(project: Project, _options?: PipOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **_options** (<code>[python.PipOptions](#projen-python-pipoptions)</code>)  *No description*
 
 
@@ -8188,10 +8188,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Poetry(project: PythonProject, options: PythonPackagingOptions)
+new python.Poetry(project: Project, options: PythonPackagingOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.PythonPackagingOptions](#projen-python-pythonpackagingoptions)</code>)  *No description*
   * **authorEmail** (<code>string</code>)  Author's e-mail. 
   * **authorName** (<code>string</code>)  Author's name. 
@@ -8283,10 +8283,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.PoetryPyproject(project: PythonProject, options: PoetryPyprojectOptions)
+new python.PoetryPyproject(project: Project, options: PoetryPyprojectOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)</code>)  *No description*
   * **authors** (<code>Array<string></code>)  The authors of the package. __*Optional*__
   * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
@@ -8364,10 +8364,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Pytest(project: PythonProject, options?: PytestOptions)
+new python.Pytest(project: Project, options?: PytestOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  *No description*
   * **maxFailures** (<code>number</code>)  Stop the testing process after the first N failures. __*Optional*__
   * **testdir** (<code>string</code>)  Directory with tests. __*Default*__: 'tests'
@@ -8398,10 +8398,11 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.PytestSample(project: PythonProject, testdir: string)
+new python.PytestSample(project: PythonProject, moduleName: string, testdir: string)
 ```
 
 * **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **moduleName** (<code>string</code>)  *No description*
 * **testdir** (<code>string</code>)  *No description*
 
 
@@ -8543,10 +8544,11 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.PythonSample(project: PythonProject, _options: PythonSampleOptions)
+new python.PythonSample(project: Project, moduleName: string, _options: PythonSampleOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **moduleName** (<code>string</code>)  *No description*
 * **_options** (<code>[python.PythonSampleOptions](#projen-python-pythonsampleoptions)</code>)  *No description*
 
 
@@ -8622,10 +8624,10 @@ __Extends__: [FileBase](#projen-filebase)
 
 
 ```ts
-new python.SetupPy(project: PythonProject, options: SetupPyOptions)
+new python.SetupPy(project: Project, options: SetupPyOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.SetupPyOptions](#projen-python-setuppyoptions)</code>)  *No description*
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -8671,10 +8673,11 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Setuptools(project: PythonProject, options: PythonPackagingOptions)
+new python.Setuptools(project: Project, moduleName: string, options: PythonPackagingOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **moduleName** (<code>string</code>)  *No description*
 * **options** (<code>[python.PythonPackagingOptions](#projen-python-pythonpackagingoptions)</code>)  *No description*
   * **authorEmail** (<code>string</code>)  Author's e-mail. 
   * **authorName** (<code>string</code>)  Author's name. 
@@ -8713,10 +8716,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Venv(project: PythonProject, options?: VenvOptions)
+new python.Venv(project: Project, options?: VenvOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  *No description*
   * **envdir** (<code>string</code>)  Name of directory to store the environment in. __*Default*__: ".env"
 

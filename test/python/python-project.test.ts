@@ -1,4 +1,4 @@
-import { PythonProject, PythonProjectOptions } from "../../src/python";
+import { python } from "../../src";
 import { synthSnapshot } from "../util";
 
 test("defaults", () => {
@@ -42,8 +42,8 @@ test("pytest maxfailures", () => {
   ).toContain("--maxfail=3");
 });
 
-class TestPythonProject extends PythonProject {
-  constructor(options: Partial<PythonProjectOptions> = {}) {
+class TestPythonProject extends python.PythonProject {
+  constructor(options: Partial<python.PythonProjectOptions> = {}) {
     super({
       ...options,
       clobber: false,

@@ -136,11 +136,6 @@ cython_debug/
         "version": "99.99.99",
       },
       Object {
-        "name": "pytest",
-        "type": "devenv",
-        "version": "6.2.1",
-      },
-      Object {
         "name": "package1",
         "type": "runtime",
         "version": "0.0.1",
@@ -149,6 +144,11 @@ cython_debug/
         "name": "package2",
         "type": "runtime",
         "version": "0.0.2",
+      },
+      Object {
+        "name": "pytest",
+        "type": "test",
+        "version": "6.2.1",
       },
     ],
   },
@@ -331,7 +331,6 @@ exclude = [ \\"my_package/excluded.py\\" ]
 
   [tool.poetry.dev-dependencies]
   projen = \\"99.99.99\\"
-  pytest = \\"6.2.1\\"
 ",
   "test_python_project/__init__.py": "__version__ = \\"0.1.0\\"
 ",

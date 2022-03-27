@@ -2,7 +2,7 @@ import { PythonProject } from ".";
 import { Component, SampleDir } from "..";
 
 export class PytestSample extends Component {
-  constructor(project: PythonProject, testdir: string) {
+  constructor(project: PythonProject, moduleName: string, testdir: string) {
     super(project);
 
     new SampleDir(project, testdir, {
@@ -11,7 +11,7 @@ export class PytestSample extends Component {
         "test_example.py": [
           "import pytest",
           "",
-          `from ${project.moduleName}.example import hello`,
+          `from ${moduleName}.example import hello`,
           "",
           "@pytest.mark.parametrize(",
           '    ("name", "expected"),',

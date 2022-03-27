@@ -1,4 +1,4 @@
-import { PythonProject, PythonProjectOptions } from "../../src/python";
+import { python } from "../../src";
 import { synthSnapshot } from "../util";
 
 test("setuptools enabled", () => {
@@ -19,8 +19,8 @@ test("setuptools enabled", () => {
   expect(snapshot["setup.py"]).toContain("Development Status :: 4 - Beta");
 });
 
-class TestPythonProject extends PythonProject {
-  constructor(options: Partial<PythonProjectOptions> = {}) {
+class TestPythonProject extends python.PythonProject {
+  constructor(options: Partial<python.PythonProjectOptions> = {}) {
     super({
       ...options,
       clobber: false,
