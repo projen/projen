@@ -2,135 +2,136 @@
 
 **Classes**
 
-| Name                                                                                     | Description                                                                                                                                                                                                                                         |
-|------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Component](#projen-component)                                                           | Represents a project component.                                                                                                                                                                                                                     |
-| [Dependencies](#projen-dependencies)                                                     | The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files. |
-| [DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)                           | Options for specifying the Docker image of the container.                                                                                                                                                                                           |
-| [DockerCompose](#projen-dockercompose)                                                   | Create a docker-compose YAML file.                                                                                                                                                                                                                  |
-| [DockerComposeService](#projen-dockercomposeservice)                                     | A docker-compose service.                                                                                                                                                                                                                           |
-| [FileBase](#projen-filebase)                                                             | *No description*                                                                                                                                                                                                                                    |
-| [GitAttributesFile](#projen-gitattributesfile)                                           | Assign attributes to file names in a git repository.                                                                                                                                                                                                |
-| [Gitpod](#projen-gitpod)                                                                 | The Gitpod component which emits .gitpod.yml.                                                                                                                                                                                                       |
-| [IgnoreFile](#projen-ignorefile)                                                         | *No description*                                                                                                                                                                                                                                    |
-| [IniFile](#projen-inifile)                                                               | Represents an INI file.                                                                                                                                                                                                                             |
-| [JsonFile](#projen-jsonfile)                                                             | Represents a JSON file.                                                                                                                                                                                                                             |
-| [License](#projen-license)                                                               | *No description*                                                                                                                                                                                                                                    |
-| [Logger](#projen-logger)                                                                 | Project-level logging utilities.                                                                                                                                                                                                                    |
-| [Makefile](#projen-makefile)                                                             | Minimal Makefile.                                                                                                                                                                                                                                   |
-| [ObjectFile](#projen-objectfile)                                                         | Represents an Object file.                                                                                                                                                                                                                          |
-| [Project](#projen-project)                                                               | Base project.                                                                                                                                                                                                                                       |
-| [ProjectBuild](#projen-projectbuild)                                                     | Manages a standard build process for all projects.                                                                                                                                                                                                  |
-| [Projects](#projen-projects)                                                             | Programmatic API for projen.                                                                                                                                                                                                                        |
-| [Projenrc](#projen-projenrc)                                                             | Sets up a project to use JSON for projenrc.                                                                                                                                                                                                         |
-| [SampleDir](#projen-sampledir)                                                           | Renders the given files into the directory if the directory does not exist.                                                                                                                                                                         |
-| [SampleFile](#projen-samplefile)                                                         | Produces a file with the given contents but only once, if the file doesn't already exist.                                                                                                                                                           |
-| [SampleReadme](#projen-samplereadme)                                                     | Represents a README.md sample file. You are expected to manage this file after creation.                                                                                                                                                            |
-| [Semver](#projen-semver)                                                                 | *No description*                                                                                                                                                                                                                                    |
-| [SourceCode](#projen-sourcecode)                                                         | Represents a source file.                                                                                                                                                                                                                           |
-| [Task](#projen-task)                                                                     | A task that can be performed on the project.                                                                                                                                                                                                        |
-| [TaskRuntime](#projen-taskruntime)                                                       | The runtime component of the tasks engine.                                                                                                                                                                                                          |
-| [Tasks](#projen-tasks)                                                                   | Defines project tasks.                                                                                                                                                                                                                              |
-| [Testing](#projen-testing)                                                               | A Testing static class with a .synth helper for getting a snapshots of construct outputs. Useful for snapshot testing with Jest.                                                                                                                    |
-| [TextFile](#projen-textfile)                                                             | A text file.                                                                                                                                                                                                                                        |
-| [TomlFile](#projen-tomlfile)                                                             | Represents a TOML file.                                                                                                                                                                                                                             |
-| [Version](#projen-version)                                                               | *No description*                                                                                                                                                                                                                                    |
-| [XmlFile](#projen-xmlfile)                                                               | Represents an XML file.                                                                                                                                                                                                                             |
-| [YamlFile](#projen-yamlfile)                                                             | Represents a YAML file.                                                                                                                                                                                                                             |
-| [awscdk.AutoDiscover](#projen-awscdk-autodiscover)                                       | Discovers and creates integration tests and lambdas from code in the project's source and test trees.                                                                                                                                               |
-| [awscdk.AwsCdkConstructLibrary](#projen-awscdk-awscdkconstructlibrary)                   | AWS CDK construct library project.                                                                                                                                                                                                                  |
-| [awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)                                           | Manages dependencies on the AWS CDK.                                                                                                                                                                                                                |
-| [awscdk.AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava)                                   | Manages dependencies on the AWS CDK for Java projects.                                                                                                                                                                                              |
-| [awscdk.AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs)                                       | Manages dependencies on the AWS CDK for Node.js projects.                                                                                                                                                                                           |
-| [awscdk.AwsCdkJavaApp](#projen-awscdk-awscdkjavaapp)                                     | AWS CDK app in Java.                                                                                                                                                                                                                                |
-| [awscdk.AwsCdkPythonApp](#projen-awscdk-awscdkpythonapp)                                 | AWS CDK app in Python.                                                                                                                                                                                                                              |
-| [awscdk.AwsCdkTypeScriptApp](#projen-awscdk-awscdktypescriptapp)                         | AWS CDK app in TypeScript.                                                                                                                                                                                                                          |
-| [awscdk.CdkConfig](#projen-awscdk-cdkconfig)                                             | Represents cdk.json file.                                                                                                                                                                                                                           |
-| [awscdk.CdkTasks](#projen-awscdk-cdktasks)                                               | Adds standard AWS CDK tasks to your project.                                                                                                                                                                                                        |
-| [awscdk.ConstructLibraryAws](#projen-awscdk-constructlibraryaws)                         | *No description*                                                                                                                                                                                                                                    |
-| [awscdk.IntegrationTest](#projen-awscdk-integrationtest)                                 | Cloud integration tests.                                                                                                                                                                                                                            |
-| [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover)         | Creates integration tests from entry points discovered in the test tree.                                                                                                                                                                            |
-| [awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover)                           | Creates lambdas from entry points discovered in the project's source tree.                                                                                                                                                                          |
-| [awscdk.LambdaFunction](#projen-awscdk-lambdafunction)                                   | Generates a pre-bundled AWS Lambda function construct from handler code.                                                                                                                                                                            |
-| [awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)                                     | The runtime for the AWS Lambda function.                                                                                                                                                                                                            |
-| [build.BuildWorkflow](#projen-build-buildworkflow)                                       | *No description*                                                                                                                                                                                                                                    |
-| [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)                                     | Base class for auto-discovering and creating project subcomponents.                                                                                                                                                                                 |
-| [cdk.ConstructLibrary](#projen-cdk-constructlibrary)                                     | A multi-language library for CDK constructs.                                                                                                                                                                                                        |
-| [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase)       | Base class for locating integration tests in the project's test tree.                                                                                                                                                                               |
-| [cdk.IntegrationTestBase](#projen-cdk-integrationtestbase)                               | *No description*                                                                                                                                                                                                                                    |
-| [cdk.JsiiDocgen](#projen-cdk-jsiidocgen)                                                 | Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.                                                                    |
-| [cdk.JsiiProject](#projen-cdk-jsiiproject)                                               | Multi-language jsii library project.                                                                                                                                                                                                                |
-| [cdk8s.AutoDiscover](#projen-cdk8s-autodiscover)                                         | Automatically discovers and creates `IntegrationTest`s from entry points found in the test tree.                                                                                                                                                    |
-| [cdk8s.Cdk8sTypeScriptApp](#projen-cdk8s-cdk8stypescriptapp)                             | CDK8s app in TypeScript.                                                                                                                                                                                                                            |
-| [cdk8s.ConstructLibraryCdk8s](#projen-cdk8s-constructlibrarycdk8s)                       | CDK8s construct library project.                                                                                                                                                                                                                    |
-| [cdk8s.IntegrationTest](#projen-cdk8s-integrationtest)                                   | CDK8S integration test.                                                                                                                                                                                                                             |
-| [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)           | Discovers and creates integration tests from files in the test root.                                                                                                                                                                                |
-| [cdktf.ConstructLibraryCdktf](#projen-cdktf-constructlibrarycdktf)                       | CDKTF construct library project.                                                                                                                                                                                                                    |
-| [circleci.Circleci](#projen-circleci-circleci)                                           | *No description*                                                                                                                                                                                                                                    |
-| [github.AutoApprove](#projen-github-autoapprove)                                         | Auto approve pull requests that meet a criteria.                                                                                                                                                                                                    |
-| [github.AutoMerge](#projen-github-automerge)                                             | Sets up mergify to merging approved pull requests.                                                                                                                                                                                                  |
-| [github.Dependabot](#projen-github-dependabot)                                           | Defines dependabot configuration for node projects.                                                                                                                                                                                                 |
-| [github.GitHub](#projen-github-github)                                                   | *No description*                                                                                                                                                                                                                                    |
-| [github.GitHubProject](#projen-github-githubproject)                                     | GitHub-based project.                                                                                                                                                                                                                               |
-| [github.GithubWorkflow](#projen-github-githubworkflow)                                   | Workflow for GitHub.                                                                                                                                                                                                                                |
-| [github.Mergify](#projen-github-mergify)                                                 | *No description*                                                                                                                                                                                                                                    |
-| [github.PullRequestLint](#projen-github-pullrequestlint)                                 | Configure validations to run on GitHub pull requests.                                                                                                                                                                                               |
-| [github.PullRequestTemplate](#projen-github-pullrequesttemplate)                         | Template for GitHub pull requests.                                                                                                                                                                                                                  |
-| [github.Stale](#projen-github-stale)                                                     | Warns and then closes issues and PRs that have had no activity for a specified amount of time.                                                                                                                                                      |
-| [github.TaskWorkflow](#projen-github-taskworkflow)                                       | A GitHub workflow for common build tasks within a project.                                                                                                                                                                                          |
-| [gitlab.CiConfiguration](#projen-gitlab-ciconfiguration)                                 | CI for GitLab.                                                                                                                                                                                                                                      |
-| [gitlab.GitlabConfiguration](#projen-gitlab-gitlabconfiguration)                         | A GitLab CI for the main `.gitlab-ci.yml` file.                                                                                                                                                                                                     |
-| [gitlab.NestedConfiguration](#projen-gitlab-nestedconfiguration)                         | A GitLab CI for templates that are created and included in the `.gitlab-ci.yml` file.                                                                                                                                                               |
-| [java.JavaProject](#projen-java-javaproject)                                             | Java project.                                                                                                                                                                                                                                       |
-| [java.Junit](#projen-java-junit)                                                         | Implements JUnit-based testing.                                                                                                                                                                                                                     |
-| [java.MavenCompile](#projen-java-mavencompile)                                           | Adds the maven-compiler plugin to a POM file and the `compile` task.                                                                                                                                                                                |
-| [java.MavenPackaging](#projen-java-mavenpackaging)                                       | Configures a maven project to produce a .jar archive with sources and javadocs.                                                                                                                                                                     |
-| [java.MavenSample](#projen-java-mavensample)                                             | Java code sample.                                                                                                                                                                                                                                   |
-| [java.Pom](#projen-java-pom)                                                             | A Project Object Model or POM is the fundamental unit of work in Maven.                                                                                                                                                                             |
-| [java.Projenrc](#projen-java-projenrc)                                                   | Allows writing projenrc files in java.                                                                                                                                                                                                              |
-| [javascript.Bundler](#projen-javascript-bundler)                                         | Adds support for bundling JavaScript applications and dependencies into a single file.                                                                                                                                                              |
-| [javascript.Eslint](#projen-javascript-eslint)                                           | Represents eslint configuration.                                                                                                                                                                                                                    |
-| [javascript.Jest](#projen-javascript-jest)                                               | Installs the following npm scripts:.                                                                                                                                                                                                                |
-| [javascript.NodePackage](#projen-javascript-nodepackage)                                 | Represents the npm `package.json` file.                                                                                                                                                                                                             |
-| [javascript.NodeProject](#projen-javascript-nodeproject)                                 | Node.js project.                                                                                                                                                                                                                                    |
-| [javascript.NpmConfig](#projen-javascript-npmconfig)                                     | File representing the local NPM config in .npmrc.                                                                                                                                                                                                   |
-| [javascript.Prettier](#projen-javascript-prettier)                                       | Represents prettier configuration.                                                                                                                                                                                                                  |
-| [javascript.Projenrc](#projen-javascript-projenrc)                                       | Sets up a javascript project to use TypeScript for projenrc.                                                                                                                                                                                        |
-| [javascript.TypescriptConfig](#projen-javascript-typescriptconfig)                       | *No description*                                                                                                                                                                                                                                    |
-| [javascript.UpgradeDependencies](#projen-javascript-upgradedependencies)                 | Upgrade node project dependencies.                                                                                                                                                                                                                  |
-| [javascript.UpgradeDependenciesSchedule](#projen-javascript-upgradedependenciesschedule) | How often to check for new versions and raise pull requests for version upgrades.                                                                                                                                                                   |
-| [python.Pip](#projen-python-pip)                                                         | Manages dependencies using a requirements.txt file and the pip CLI tool.                                                                                                                                                                            |
-| [python.Poetry](#projen-python-poetry)                                                   | Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.                                                                                                                                                       |
-| [python.PoetryPyproject](#projen-python-poetrypyproject)                                 | Represents configuration of a pyproject.toml file for a Poetry project.                                                                                                                                                                             |
-| [python.Projenrc](#projen-python-projenrc)                                               | Allows writing projenrc files in python.                                                                                                                                                                                                            |
-| [python.Pytest](#projen-python-pytest)                                                   | *No description*                                                                                                                                                                                                                                    |
-| [python.PytestSample](#projen-python-pytestsample)                                       | *No description*                                                                                                                                                                                                                                    |
-| [python.PythonProject](#projen-python-pythonproject)                                     | Python project.                                                                                                                                                                                                                                     |
-| [python.PythonSample](#projen-python-pythonsample)                                       | Python code sample.                                                                                                                                                                                                                                 |
-| [python.RequirementsFile](#projen-python-requirementsfile)                               | Specifies a list of packages to be installed using pip.                                                                                                                                                                                             |
-| [python.SetupPy](#projen-python-setuppy)                                                 | Python packaging script where package metadata can be placed.                                                                                                                                                                                       |
-| [python.Setuptools](#projen-python-setuptools)                                           | Manages packaging through setuptools with a setup.py script.                                                                                                                                                                                        |
-| [python.Venv](#projen-python-venv)                                                       | Manages a virtual environment through the Python venv module.                                                                                                                                                                                       |
-| [release.Publisher](#projen-release-publisher)                                           | Implements GitHub jobs for publishing modules to package managers.                                                                                                                                                                                  |
-| [release.Release](#projen-release-release)                                               | Manages releases (currently through GitHub workflows).                                                                                                                                                                                              |
-| [release.ReleaseTrigger](#projen-release-releasetrigger)                                 | Used to manage release strategies.                                                                                                                                                                                                                  |
-| [typescript.Projenrc](#projen-typescript-projenrc)                                       | Sets up a typescript project to use TypeScript for projenrc.                                                                                                                                                                                        |
-| [typescript.TypeScriptAppProject](#projen-typescript-typescriptappproject)               | TypeScript app.                                                                                                                                                                                                                                     |
-| [typescript.TypeScriptLibraryProject](#projen-typescript-typescriptlibraryproject)       | *No description*                                                                                                                                                                                                                                    |
-| [typescript.TypeScriptProject](#projen-typescript-typescriptproject)                     | TypeScript project.                                                                                                                                                                                                                                 |
-| [typescript.TypedocDocgen](#projen-typescript-typedocdocgen)                             | Adds a simple Typescript documentation generator.                                                                                                                                                                                                   |
-| [vscode.DevContainer](#projen-vscode-devcontainer)                                       | A development environment running VSCode in a container;                                                                                                                                                                                            |
-| [vscode.VsCode](#projen-vscode-vscode)                                                   | *No description*                                                                                                                                                                                                                                    |
-| [vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)                           | VSCode launch configuration file (launch.json), useful for enabling in-editor debugger.                                                                                                                                                             |
-| [web.NextComponent](#projen-web-nextcomponent)                                           | *No description*                                                                                                                                                                                                                                    |
-| [web.NextJsProject](#projen-web-nextjsproject)                                           | Next.js project without TypeScript.                                                                                                                                                                                                                 |
-| [web.NextJsTypeScriptProject](#projen-web-nextjstypescriptproject)                       | Next.js project with TypeScript.                                                                                                                                                                                                                    |
-| [web.PostCss](#projen-web-postcss)                                                       | Declares a PostCSS dependency with a default config file.                                                                                                                                                                                           |
-| [web.ReactComponent](#projen-web-reactcomponent)                                         | *No description*                                                                                                                                                                                                                                    |
-| [web.ReactProject](#projen-web-reactproject)                                             | React project without TypeScript.                                                                                                                                                                                                                   |
-| [web.ReactTypeDef](#projen-web-reacttypedef)                                             | *No description*                                                                                                                                                                                                                                    |
-| [web.ReactTypeScriptProject](#projen-web-reacttypescriptproject)                         | React project with TypeScript.                                                                                                                                                                                                                      |
-| [web.TailwindConfig](#projen-web-tailwindconfig)                                         | Declares a Tailwind CSS configuration file.                                                                                                                                                                                                         |
+Name|Description
+----|-----------
+[Component](#projen-component)|Represents a project component.
+[Dependencies](#projen-dependencies)|The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
+[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)|Options for specifying the Docker image of the container.
+[DockerCompose](#projen-dockercompose)|Create a docker-compose YAML file.
+[DockerComposeService](#projen-dockercomposeservice)|A docker-compose service.
+[FileBase](#projen-filebase)|*No description*
+[GitAttributesFile](#projen-gitattributesfile)|Assign attributes to file names in a git repository.
+[Gitpod](#projen-gitpod)|The Gitpod component which emits .gitpod.yml.
+[IgnoreFile](#projen-ignorefile)|*No description*
+[IniFile](#projen-inifile)|Represents an INI file.
+[JsonFile](#projen-jsonfile)|Represents a JSON file.
+[License](#projen-license)|*No description*
+[Logger](#projen-logger)|Project-level logging utilities.
+[Makefile](#projen-makefile)|Minimal Makefile.
+[ObjectFile](#projen-objectfile)|Represents an Object file.
+[Project](#projen-project)|Base project.
+[ProjectBuild](#projen-projectbuild)|Manages a standard build process for all projects.
+[Projects](#projen-projects)|Programmatic API for projen.
+[Projenrc](#projen-projenrc)|Sets up a project to use JSON for projenrc.
+[SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
+[SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
+[SampleReadme](#projen-samplereadme)|Represents a README.md sample file. You are expected to manage this file after creation.
+[Semver](#projen-semver)|*No description*
+[SourceCode](#projen-sourcecode)|Represents a source file.
+[Task](#projen-task)|A task that can be performed on the project.
+[TaskRuntime](#projen-taskruntime)|The runtime component of the tasks engine.
+[Tasks](#projen-tasks)|Defines project tasks.
+[Testing](#projen-testing)|A Testing static class with a .synth helper for getting a snapshots of construct outputs. Useful for snapshot testing with Jest.
+[TextFile](#projen-textfile)|A text file.
+[TomlFile](#projen-tomlfile)|Represents a TOML file.
+[Version](#projen-version)|*No description*
+[XmlFile](#projen-xmlfile)|Represents an XML file.
+[YamlFile](#projen-yamlfile)|Represents a YAML file.
+[awscdk.AutoDiscover](#projen-awscdk-autodiscover)|Discovers and creates integration tests and lambdas from code in the project's source and test trees.
+[awscdk.AwsCdkConstructLibrary](#projen-awscdk-awscdkconstructlibrary)|AWS CDK construct library project.
+[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)|Manages dependencies on the AWS CDK.
+[awscdk.AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava)|Manages dependencies on the AWS CDK for Java projects.
+[awscdk.AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs)|Manages dependencies on the AWS CDK for Node.js projects.
+[awscdk.AwsCdkJavaApp](#projen-awscdk-awscdkjavaapp)|AWS CDK app in Java.
+[awscdk.AwsCdkPythonApp](#projen-awscdk-awscdkpythonapp)|AWS CDK app in Python.
+[awscdk.AwsCdkTypeScriptApp](#projen-awscdk-awscdktypescriptapp)|AWS CDK app in TypeScript.
+[awscdk.CdkConfig](#projen-awscdk-cdkconfig)|Represents cdk.json file.
+[awscdk.CdkTasks](#projen-awscdk-cdktasks)|Adds standard AWS CDK tasks to your project.
+[awscdk.ConstructLibraryAws](#projen-awscdk-constructlibraryaws)|*No description*
+[awscdk.IntegrationTest](#projen-awscdk-integrationtest)|Cloud integration tests.
+[awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover)|Creates integration tests from entry points discovered in the test tree.
+[awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover)|Creates lambdas from entry points discovered in the project's source tree.
+[awscdk.LambdaFunction](#projen-awscdk-lambdafunction)|Generates a pre-bundled AWS Lambda function construct from handler code.
+[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)|The runtime for the AWS Lambda function.
+[build.BuildWorkflow](#projen-build-buildworkflow)|*No description*
+[cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)|Base class for auto-discovering and creating project subcomponents.
+[cdk.ConstructLibrary](#projen-cdk-constructlibrary)|A multi-language library for CDK constructs.
+[cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase)|Base class for locating integration tests in the project's test tree.
+[cdk.IntegrationTestBase](#projen-cdk-integrationtestbase)|*No description*
+[cdk.JsiiDocgen](#projen-cdk-jsiidocgen)|Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
+[cdk.JsiiProject](#projen-cdk-jsiiproject)|Multi-language jsii library project.
+[cdk8s.AutoDiscover](#projen-cdk8s-autodiscover)|Automatically discovers and creates `IntegrationTest`s from entry points found in the test tree.
+[cdk8s.Cdk8sTypeScriptApp](#projen-cdk8s-cdk8stypescriptapp)|CDK8s app in TypeScript.
+[cdk8s.ConstructLibraryCdk8s](#projen-cdk8s-constructlibrarycdk8s)|CDK8s construct library project.
+[cdk8s.IntegrationTest](#projen-cdk8s-integrationtest)|CDK8S integration test.
+[cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)|Discovers and creates integration tests from files in the test root.
+[cdktf.ConstructLibraryCdktf](#projen-cdktf-constructlibrarycdktf)|CDKTF construct library project.
+[circleci.Circleci](#projen-circleci-circleci)|Circleci Class to manage `.circleci/config.yml`. Check test `circleci.test.ts` for more usage examples.
+[github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
+[github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
+[github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
+[github.GitHub](#projen-github-github)|*No description*
+[github.GitHubProject](#projen-github-githubproject)|GitHub-based project.
+[github.GithubWorkflow](#projen-github-githubworkflow)|Workflow for GitHub.
+[github.Mergify](#projen-github-mergify)|*No description*
+[github.PullRequestLint](#projen-github-pullrequestlint)|Configure validations to run on GitHub pull requests.
+[github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
+[github.Stale](#projen-github-stale)|Warns and then closes issues and PRs that have had no activity for a specified amount of time.
+[github.TaskWorkflow](#projen-github-taskworkflow)|A GitHub workflow for common build tasks within a project.
+[gitlab.CiConfiguration](#projen-gitlab-ciconfiguration)|CI for GitLab.
+[gitlab.GitlabConfiguration](#projen-gitlab-gitlabconfiguration)|A GitLab CI for the main `.gitlab-ci.yml` file.
+[gitlab.NestedConfiguration](#projen-gitlab-nestedconfiguration)|A GitLab CI for templates that are created and included in the `.gitlab-ci.yml` file.
+[java.JavaProject](#projen-java-javaproject)|Java project.
+[java.Junit](#projen-java-junit)|Implements JUnit-based testing.
+[java.MavenCompile](#projen-java-mavencompile)|Adds the maven-compiler plugin to a POM file and the `compile` task.
+[java.MavenPackaging](#projen-java-mavenpackaging)|Configures a maven project to produce a .jar archive with sources and javadocs.
+[java.MavenSample](#projen-java-mavensample)|Java code sample.
+[java.Pom](#projen-java-pom)|A Project Object Model or POM is the fundamental unit of work in Maven.
+[java.Projenrc](#projen-java-projenrc)|Allows writing projenrc files in java.
+[javascript.Bundler](#projen-javascript-bundler)|Adds support for bundling JavaScript applications and dependencies into a single file.
+[javascript.Eslint](#projen-javascript-eslint)|Represents eslint configuration.
+[javascript.Jest](#projen-javascript-jest)|Installs the following npm scripts:.
+[javascript.NodePackage](#projen-javascript-nodepackage)|Represents the npm `package.json` file.
+[javascript.NodeProject](#projen-javascript-nodeproject)|Node.js project.
+[javascript.NpmConfig](#projen-javascript-npmconfig)|File representing the local NPM config in .npmrc.
+[javascript.Prettier](#projen-javascript-prettier)|Represents prettier configuration.
+[javascript.Projenrc](#projen-javascript-projenrc)|Sets up a javascript project to use TypeScript for projenrc.
+[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)|*No description*
+[javascript.UpgradeDependencies](#projen-javascript-upgradedependencies)|Upgrade node project dependencies.
+[javascript.UpgradeDependenciesSchedule](#projen-javascript-upgradedependenciesschedule)|How often to check for new versions and raise pull requests for version upgrades.
+[python.Pip](#projen-python-pip)|Manages dependencies using a requirements.txt file and the pip CLI tool.
+[python.Poetry](#projen-python-poetry)|Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
+[python.PoetryPyproject](#projen-python-poetrypyproject)|Represents configuration of a pyproject.toml file for a Poetry project.
+[python.Projenrc](#projen-python-projenrc)|Allows writing projenrc files in python.
+[python.Pytest](#projen-python-pytest)|*No description*
+[python.PytestSample](#projen-python-pytestsample)|*No description*
+[python.PythonProject](#projen-python-pythonproject)|Python project.
+[python.PythonSample](#projen-python-pythonsample)|Python code sample.
+[python.RequirementsFile](#projen-python-requirementsfile)|Specifies a list of packages to be installed using pip.
+[python.SetupPy](#projen-python-setuppy)|Python packaging script where package metadata can be placed.
+[python.Setuptools](#projen-python-setuptools)|Manages packaging through setuptools with a setup.py script.
+[python.Venv](#projen-python-venv)|Manages a virtual environment through the Python venv module.
+[release.Publisher](#projen-release-publisher)|Implements GitHub jobs for publishing modules to package managers.
+[release.Release](#projen-release-release)|Manages releases (currently through GitHub workflows).
+[release.ReleaseTrigger](#projen-release-releasetrigger)|Used to manage release strategies.
+[typescript.Projenrc](#projen-typescript-projenrc)|Sets up a typescript project to use TypeScript for projenrc.
+[typescript.TypeScriptAppProject](#projen-typescript-typescriptappproject)|TypeScript app.
+[typescript.TypeScriptLibraryProject](#projen-typescript-typescriptlibraryproject)|*No description*
+[typescript.TypeScriptProject](#projen-typescript-typescriptproject)|TypeScript project.
+[typescript.TypedocDocgen](#projen-typescript-typedocdocgen)|Adds a simple Typescript documentation generator.
+[vscode.DevContainer](#projen-vscode-devcontainer)|A development environment running VSCode in a container;
+[vscode.VsCode](#projen-vscode-vscode)|*No description*
+[vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)|VSCode launch configuration file (launch.json), useful for enabling in-editor debugger.
+[web.NextComponent](#projen-web-nextcomponent)|*No description*
+[web.NextJsProject](#projen-web-nextjsproject)|Next.js project without TypeScript.
+[web.NextJsTypeScriptProject](#projen-web-nextjstypescriptproject)|Next.js project with TypeScript.
+[web.PostCss](#projen-web-postcss)|Declares a PostCSS dependency with a default config file.
+[web.ReactComponent](#projen-web-reactcomponent)|*No description*
+[web.ReactProject](#projen-web-reactproject)|React project without TypeScript.
+[web.ReactTypeDef](#projen-web-reacttypedef)|*No description*
+[web.ReactTypeScriptProject](#projen-web-reacttypescriptproject)|React project with TypeScript.
+[web.TailwindConfig](#projen-web-tailwindconfig)|Declares a Tailwind CSS configuration file.
+
 
 **Structs**
 
@@ -217,7 +218,20 @@ Name|Description
 [cdk8s.IntegrationTestAutoDiscoverOptions](#projen-cdk8s-integrationtestautodiscoveroptions)|*No description*
 [cdk8s.IntegrationTestOptions](#projen-cdk8s-integrationtestoptions)|Options for IntegrationTest.
 [cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)|*No description*
-[circleci.CircleciOptions](#projen-circleci-circleciprops)|*No description*
+[circleci.CircleCiProps](#projen-circleci-circleciprops)|Options for class {@link Circleci}.
+[circleci.Docker](#projen-circleci-docker)|Options for docker executor.
+[circleci.Filter](#projen-circleci-filter)|The branches key controls whether the current branch should have a schedule trigger created for it, where current branch is the branch containing the config.yml file with the trigger stanza. That is, a push on the main branch will only schedule a workflow for the main branch.
+[circleci.FilterConfig](#projen-circleci-filterconfig)|set an inclusive or exclusive filter.
+[circleci.Job](#projen-circleci-job)|A Workflow is comprised of one or more uniquely named jobs.
+[circleci.Machine](#projen-circleci-machine)|*No description*
+[circleci.Macos](#projen-circleci-macos)|CircleCI supports running jobs on macOS, to allow you to build, test, and deploy apps for macOS, iOS, tvOS and watchOS.
+[circleci.Matrix](#projen-circleci-matrix)|The matrix stanza allows you to run a parameterized job multiple times with different arguments.
+[circleci.Run](#projen-circleci-run)|Used for invoking all command-line programs, taking either a map of configuration values, or, when called in its short-form, a string that will be used as both the command and name.
+[circleci.Schedule](#projen-circleci-schedule)|A workflow may have a schedule indicating it runs at a certain time.
+[circleci.StepRun](#projen-circleci-steprun)|Execution steps for Job.
+[circleci.Triggers](#projen-circleci-triggers)|Specifies which triggers will cause this workflow to be executed.
+[circleci.Workflow](#projen-circleci-workflow)|Used for orchestrating all jobs.
+[circleci.WorkflowJob](#projen-circleci-workflowjob)|A Job is part of Workflow.
 [github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
@@ -360,10 +374,6 @@ Name|Description
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
 [IResolvable](#projen-iresolvable)|*No description*
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
-[circleci.Filter](#projen-circleci-ifilter)|*No description*
-[circleci.FilterConfig](#projen-circleci-ifilterconfig)|*No description*
-[circleci.IJob](#projen-circleci-ijob)|*No description*
-[circleci.IWorkflow](#projen-circleci-iworkflow)|*No description*
 [github.IAddConditionsLater](#projen-github-iaddconditionslater)|*No description*
 [github.IJobProvider](#projen-github-ijobprovider)|*No description*
 [python.IPackageProvider](#projen-python-ipackageprovider)|*No description*
@@ -387,7 +397,9 @@ Name|Description
 [ProjectType](#projen-projecttype)|Which type of project this is.
 [awscdk.ApprovalLevel](#projen-awscdk-approvallevel)|Which approval is required when deploying CDK apps.
 [cdk.Stability](#projen-cdk-stability)|*No description*
-[circleci.JobType](#projen-circleci-jobtype)|*No description*
+[circleci.JobType](#projen-circleci-jobtype)|A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed.
+[circleci.JobWhen](#projen-circleci-jobwhen)|Specify when to enable or disable the step.
+[circleci.ResourceClass](#projen-circleci-resourceclass)|The resource_class feature allows configuring CPU and RAM resources for each job.
 [github.DependabotRegistryType](#projen-github-dependabotregistrytype)|Each configuration type requires you to provide particular settings.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
@@ -5424,7 +5436,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
 
 ## class Circleci 🔹 <a id="projen-circleci-circleci"></a>
 
-
+Circleci Class to manage `.circleci/config.yml`. Check test `circleci.test.ts` for more usage examples.
 
 __Submodule__: circleci
 
@@ -5433,18 +5445,20 @@ __Extends__: [Component](#projen-component)
 ### Initializer
 
 
-
+create a Circleci Component within project.
 
 ```ts
-new circleci.Circleci(project: Project, options?: CircleciOptions)
+new circleci.Circleci(project: Project, options?: CircleCiProps)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[circleci.CircleciOptions](#projen-circleci-circleciprops)</code>)  *No description*
-  * **enabled** (<code>boolean</code>)  *No description* __*Optional*__
-  * **orbs** (<code>Map<string, string></code>)  *No description* __*Optional*__
-  * **version** (<code>string</code>)  *No description* __*Optional*__
-  * **workflows** (<code>Array<[circleci.IWorkflow](#projen-circleci-iworkflow)></code>)  *No description* __*Optional*__
+* **options** (<code>[circleci.CircleCiProps](#projen-circleci-circleciprops)</code>)  *No description*
+  * **enabled** (<code>boolean</code>)  enable the generation of Circleci config file. __*Default*__: enabled
+  * **jobs** (<code>Array<[circleci.Job](#projen-circleci-job)></code>)  List of Jobs to create unique steps per pipeline, e.g. ```json jobs: [{   identifier: "compile",   docker: { image: "golang:alpine" }   steps: ["checkout", run: {command: "go build ."}] }] ```. __*Optional*__
+  * **orbs** (<code>Map<string, string></code>)  Contains a map of CirclCi Orbs ```json orbs: {   node: "circleci/node@5.0.1"   slack: "circleci/slack@4.8.3" } ```. __*Optional*__
+  * **setup** (<code>boolean</code>)  The setup field enables you to conditionally trigger configurations from outside the primary .circleci parent directory, update pipeline parameters, or generate customized configurations. __*Optional*__
+  * **version** (<code>number</code>)  pipeline version. __*Default*__: 2.1
+  * **workflows** (<code>Array<[circleci.Workflow](#projen-circleci-workflow)></code>)  List of Workflows of pipeline, e.g. ```json workflows: {    {      identifier: "build",        jobs: [{           identifier: "node/install",           context: ["npm"],        }]    } } ```. __*Optional*__
 
 
 
@@ -5453,14 +5467,16 @@ new circleci.Circleci(project: Project, options?: CircleciOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | <span></span>
+**file**?🔹 | <code>[YamlFile](#projen-yamlfile)</code> | The yaml file for the Circleci pipeline.<br/>__*Optional*__
 
 ### Methods
 
 
 #### addOrb(name, orb)🔹 <a id="projen-circleci-circleci-addorb"></a>
 
+Add a Circleci Orb to pipeline.
 
+Will throw error if the orb already exists
 
 ```ts
 addOrb(name: string, orb: string): void
@@ -5474,13 +5490,17 @@ addOrb(name: string, orb: string): void
 
 #### addWorkflow(workflow)🔹 <a id="projen-circleci-circleci-addworkflow"></a>
 
-
+add new workflow to existing pipeline.
 
 ```ts
-addWorkflow(workflow: IWorkflow): void
+addWorkflow(workflow: Workflow): void
 ```
 
-* **workflow** (<code>[circleci.IWorkflow](#projen-circleci-iworkflow)</code>)  *No description*
+* **workflow** (<code>[circleci.Workflow](#projen-circleci-workflow)</code>)  *No description*
+  * **identifier** (<code>string</code>)  name of dynamic key *. 
+  * **jobs** (<code>Array<[circleci.WorkflowJob](#projen-circleci-workflowjob)></code>)  *No description* __*Optional*__
+  * **triggers** (<code>Array<[circleci.Triggers](#projen-circleci-triggers)></code>)  *No description* __*Optional*__
+  * **when** (<code>any</code>)  when is too dynamic to be casted to interfaces. __*Optional*__
 
 
 
@@ -13424,7 +13444,110 @@ Name | Type | Description
 
 
 
-## struct CircleciOptions 🔹 <a id="projen-circleci-circleciprops"></a>
+## struct CircleCiProps 🔹 <a id="projen-circleci-circleciprops"></a>
+
+
+Options for class {@link Circleci}.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**enabled**?🔹 | <code>boolean</code> | enable the generation of Circleci config file.<br/>__*Default*__: enabled
+**jobs**?🔹 | <code>Array<[circleci.Job](#projen-circleci-job)></code> | List of Jobs to create unique steps per pipeline, e.g. ```json jobs: [{   identifier: "compile",   docker: { image: "golang:alpine" }   steps: ["checkout", run: {command: "go build ."}] }] ```.<br/>__*Optional*__
+**orbs**?🔹 | <code>Map<string, string></code> | Contains a map of CirclCi Orbs ```json orbs: {   node: "circleci/node@5.0.1"   slack: "circleci/slack@4.8.3" } ```.<br/>__*Optional*__
+**setup**?🔹 | <code>boolean</code> | The setup field enables you to conditionally trigger configurations from outside the primary .circleci parent directory, update pipeline parameters, or generate customized configurations.<br/>__*Optional*__
+**version**?🔹 | <code>number</code> | pipeline version.<br/>__*Default*__: 2.1
+**workflows**?🔹 | <code>Array<[circleci.Workflow](#projen-circleci-workflow)></code> | List of Workflows of pipeline, e.g. ```json workflows: {    {      identifier: "build",        jobs: [{           identifier: "node/install",           context: ["npm"],        }]    } } ```.<br/>__*Optional*__
+
+
+
+## struct Docker 🔹 <a id="projen-circleci-docker"></a>
+
+
+Options for docker executor.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**image**🔹 | <code>string</code> | The name of a custom docker image to use.
+**auth**?🔹 | <code>Map<string, string></code> | Authentication for registries using standard docker login credentials.<br/>__*Optional*__
+**awsAuth**?🔹 | <code>Map<string, string></code> | Authentication for AWS Elastic Container Registry (ECR).<br/>__*Optional*__
+**command**?🔹 | <code>Array<string></code> | The command used as pid 1 (or args for entrypoint) when launching the container.<br/>__*Optional*__
+**entrypoint**?🔹 | <code>Array<string></code> | The command used as executable when launching the container.<br/>__*Optional*__
+**environment**?🔹 | <code>Map<string, string &#124; number &#124; boolean></code> | A map of environment variable names and values.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | The name the container is reachable by.<br/>__*Optional*__
+**user**?🔹 | <code>string</code> | Which user to run commands as within the Docker container.<br/>__*Optional*__
+
+
+
+## struct Filter 🔹 <a id="projen-circleci-filter"></a>
+
+
+The branches key controls whether the current branch should have a schedule trigger created for it, where current branch is the branch containing the config.yml file with the trigger stanza. That is, a push on the main branch will only schedule a workflow for the main branch.
+
+Branches can have the keys only and ignore which either map to a single string naming a branch.
+You may also use regular expressions to match against branches by enclosing them with /’s, or map to a list of such strings.
+Regular expressions must match the entire string.
+
+Any branches that match only will run the job.
+Any branches that match ignore will not run the job.
+If neither only nor ignore are specified then all branches will run the job.
+If both only and ignore are specified the only is considered before ignore.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**branches**?🔹 | <code>[circleci.FilterConfig](#projen-circleci-filterconfig)</code> | __*Optional*__
+**tags**?🔹 | <code>[circleci.FilterConfig](#projen-circleci-filterconfig)</code> | __*Optional*__
+
+
+
+## struct FilterConfig 🔹 <a id="projen-circleci-filterconfig"></a>
+
+
+set an inclusive or exclusive filter.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**ignore**?🔹 | <code>Array<string></code> | Either a single branch specifier, or a list of branch specifiers.<br/>__*Optional*__
+**only**?🔹 | <code>Array<string></code> | Either a single branch specifier, or a list of branch specifiers.<br/>__*Optional*__
+
+
+
+## struct Job 🔹 <a id="projen-circleci-job"></a>
+
+
+A Workflow is comprised of one or more uniquely named jobs.
+
+Jobs are specified in the jobs map,
+see Sample 2.0 config.yml for two examples of a job map.
+The name of the job is the key in the map, and the value is a map describing the job.
+Each job consists of the job’s name as a key and a map as a value. A name should be case insensitive unique within a current jobs list.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**identifier**🔹 | <code>string</code> | name of dynamic key *.
+**docker**?🔹 | <code>Array<[circleci.Docker](#projen-circleci-docker)></code> | __*Optional*__
+**environment**?🔹 | <code>Map<string, string &#124; number &#124; boolean></code> | A map of environment variable names and values.<br/>__*Optional*__
+**machine**?🔹 | <code>[circleci.Machine](#projen-circleci-machine)</code> | __*Optional*__
+**macos**?🔹 | <code>[circleci.Macos](#projen-circleci-macos)</code> | __*Optional*__
+**parallelism**?🔹 | <code>number</code> | Number of parallel instances of this job to run (default: 1).<br/>__*Optional*__
+**parameters**?🔹 | <code>Map<string, string></code> | Parameters for making a job explicitly configurable in a workflow.<br/>__*Optional*__
+**resourceClass**?🔹 | <code>string</code> | {@link ResourceClass}.<br/>__*Optional*__
+**shell**?🔹 | <code>string</code> | Shell to use for execution command in all steps.<br/>__*Optional*__
+**steps**?🔹 | <code>Array<any></code> | no type support here, for syntax {@see https://circleci.com/docs/2.0/configuration-reference/#steps}.<br/>__*Optional*__
+**workingDirectory**?🔹 | <code>string</code> | In which directory to run the steps.<br/>__*Optional*__
+
+
+
+## struct Machine 🔹 <a id="projen-circleci-machine"></a>
 
 
 
@@ -13433,74 +13556,149 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**enabled**?🔹 | <code>boolean</code> | __*Optional*__
-**orbs**?🔹 | <code>Map<string, string></code> | __*Optional*__
-**version**?🔹 | <code>string</code> | __*Optional*__
-**workflows**?🔹 | <code>Array<[circleci.IWorkflow](#projen-circleci-iworkflow)></code> | __*Optional*__
+**image**🔹 | <code>string</code> | The VM image to use.
+**dockerLayerCaching**?🔹 | <code>string</code> | enable docker layer caching.<br/>__*Optional*__
 
 
 
-## interface Filter 🔹 <a id="projen-circleci-ifilter"></a>
+## struct Macos 🔹 <a id="projen-circleci-macos"></a>
 
 
+CircleCI supports running jobs on macOS, to allow you to build, test, and deploy apps for macOS, iOS, tvOS and watchOS.
 
+To run a job in a macOS virtual machine,
+you must add the macos key to the top-level configuration for the job and specify
+the version of Xcode you would like to use.
 
-### Properties
 
 
 Name | Type | Description 
 -----|------|-------------
-**branches**?🔹 | <code>[circleci.FilterConfig](#projen-circleci-ifilterconfig)</code> | __*Optional*__
-**tags**?🔹 | <code>[circleci.FilterConfig](#projen-circleci-ifilterconfig)</code> | __*Optional*__
+**xcode**🔹 | <code>string</code> | The version of Xcode that is installed on the virtual machine.
 
 
 
-## interface FilterConfig 🔹 <a id="projen-circleci-ifilterconfig"></a>
+## struct Matrix 🔹 <a id="projen-circleci-matrix"></a>
 
 
+The matrix stanza allows you to run a parameterized job multiple times with different arguments.
 
-
-### Properties
 
 
 Name | Type | Description 
 -----|------|-------------
-**ignore**?🔹 | <code>Array<string></code> | __*Optional*__
-**only**?🔹 | <code>Array<string></code> | __*Optional*__
+**alias**?🔹 | <code>string</code> | An alias for the matrix, usable from another job’s requires stanza.<br/>__*Optional*__
+**parameters**?🔹 | <code>Map<string, Array<string> &#124; Array<number>></code> | A map of parameter names to every value the job should be called with.<br/>__*Optional*__
 
 
 
-## interface IJob 🔹 <a id="projen-circleci-ijob"></a>
+## struct Run 🔹 <a id="projen-circleci-run"></a>
 
 
+Used for invoking all command-line programs, taking either a map of configuration values, or, when called in its short-form, a string that will be used as both the command and name.
 
+Run commands are executed using non-login shells by default,
+so you must explicitly source any dotfiles as part of the command.
 
-### Properties
+Not used because type incompatible types in steps array
+
 
 
 Name | Type | Description 
 -----|------|-------------
-**identifier**🔹 | <code>string</code> | <span></span>
-**context**?🔹 | <code>Array<string></code> | __*Optional*__
-**filter**?🔹 | <code>[circleci.Filter](#projen-circleci-ifilter)</code> | __*Optional*__
-**name**?🔹 | <code>string</code> | __*Optional*__
-**requires**?🔹 | <code>Array<string></code> | __*Optional*__
-**type**?🔹 | <code>[circleci.JobType](#projen-circleci-jobtype)</code> | __*Optional*__
+**command**🔹 | <code>string</code> | Command to run via the shell.
+**background**?🔹 | <code>string</code> | Whether this step should run in the background (default: false).<br/>__*Optional*__
+**environment**?🔹 | <code>string</code> | Additional environmental variables, locally scoped to command.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | Title of the step to be shown in the CircleCI UI (default: full command).<br/>__*Optional*__
+**noOutputTimeout**?🔹 | <code>string</code> | Elapsed time the command can run without output such as “20m”, “1.25h”, “5s”. The default is 10 minutes.<br/>__*Optional*__
+**shell**?🔹 | <code>string</code> | Shell to use for execution command.<br/>__*Optional*__
+**when**?🔹 | <code>string</code> | Specify when to enable or disable the step.<br/>__*Optional*__
+**workingDirectory**?🔹 | <code>string</code> | In which directory to run this step.<br/>__*Optional*__
 
 
 
-## interface IWorkflow 🔹 <a id="projen-circleci-iworkflow"></a>
+## struct Schedule 🔹 <a id="projen-circleci-schedule"></a>
 
 
+A workflow may have a schedule indicating it runs at a certain time.
 
-
-### Properties
 
 
 Name | Type | Description 
 -----|------|-------------
-**identifier**🔹 | <code>string</code> | <span></span>
-**jobs**?🔹 | <code>Array<[circleci.IJob](#projen-circleci-ijob)></code> | __*Optional*__
+**filters**🔹 | <code>[circleci.Filter](#projen-circleci-filter)</code> | <span></span>
+**cron**?🔹 | <code>string</code> | The cron key is defined using POSIX crontab syntax.<br/>__*Optional*__
+
+
+
+## struct StepRun 🔹 <a id="projen-circleci-steprun"></a>
+
+
+Execution steps for Job.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**run**?🔹 | <code>[circleci.Run](#projen-circleci-run)</code> | __*Optional*__
+
+
+
+## struct Triggers 🔹 <a id="projen-circleci-triggers"></a>
+
+
+Specifies which triggers will cause this workflow to be executed.
+
+Default behavior is to trigger the workflow when pushing to a branch.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**schedule**?🔹 | <code>[circleci.Schedule](#projen-circleci-schedule)</code> | __*Optional*__
+
+
+
+## struct Workflow 🔹 <a id="projen-circleci-workflow"></a>
+
+
+Used for orchestrating all jobs.
+
+Each workflow consists of the workflow name as a key and a map as a value.
+A name should be unique within the current config.yml.
+The top-level keys for the Workflows configuration are version and jobs.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**identifier**🔹 | <code>string</code> | name of dynamic key *.
+**jobs**?🔹 | <code>Array<[circleci.WorkflowJob](#projen-circleci-workflowjob)></code> | __*Optional*__
+**triggers**?🔹 | <code>Array<[circleci.Triggers](#projen-circleci-triggers)></code> | __*Optional*__
+**when**?🔹 | <code>any</code> | when is too dynamic to be casted to interfaces.<br/>__*Optional*__
+
+
+
+## struct WorkflowJob 🔹 <a id="projen-circleci-workflowjob"></a>
+
+
+A Job is part of Workflow.
+
+A Job can be created with {@link Job} or it can be provided by the orb
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**identifier**🔹 | <code>string</code> | name of dynamic key *.
+**context**?🔹 | <code>Array<string></code> | The name of the context(s).<br/>__*Optional*__
+**filter**?🔹 | <code>[circleci.Filter](#projen-circleci-filter)</code> | Job Filters can have the key branches or tags.<br/>__*Optional*__
+**matrix**?🔹 | <code>[circleci.Matrix](#projen-circleci-matrix)</code> | __*Optional*__
+**name**?🔹 | <code>string</code> | A replacement for the job name.<br/>__*Optional*__
+**orbParameters**?🔹 | <code>Map<string, string &#124; number &#124; boolean></code> | Parameters passed to job when referencing a job from orb.<br/>__*Optional*__
+**parameters**?🔹 | <code>Map<string, string &#124; number &#124; boolean></code> | Parameters for making a job explicitly configurable in a workflow.<br/>__*Optional*__
+**requires**?🔹 | <code>Array<string></code> | A list of jobs that must succeed for the job to start.<br/>__*Optional*__
+**type**?🔹 | <code>[circleci.JobType](#projen-circleci-jobtype)</code> | A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed.<br/>__*Optional*__
 
 
 
@@ -17102,11 +17300,38 @@ Name | Description
 
 ## enum JobType 🔹 <a id="projen-circleci-jobtype"></a>
 
-
+A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed.
 
 Name | Description
 -----|-----
 **APPROVAL** 🔹|
+
+
+## enum JobWhen 🔹 <a id="projen-circleci-jobwhen"></a>
+
+Specify when to enable or disable the step.
+
+Name | Description
+-----|-----
+**ALWAYS** 🔹|
+**ON_SUCCESS** 🔹|
+**ON_FAIL** 🔹|
+
+
+## enum ResourceClass 🔹 <a id="projen-circleci-resourceclass"></a>
+
+The resource_class feature allows configuring CPU and RAM resources for each job.
+
+Different resource classes are available for different executors, as described in the tables below.
+
+Name | Description
+-----|-----
+**SMALL** 🔹|
+**MEDIUM** 🔹|
+**MEDIUM_PLUS** 🔹|
+**LARGE_X** 🔹|
+**LARGE_2X** 🔹|
+**LARGE_2X_PLUS** 🔹|
 
 
 ## enum DependabotRegistryType 🔹 <a id="projen-github-dependabotregistrytype"></a>
