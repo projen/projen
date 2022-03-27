@@ -1,8 +1,8 @@
-import { ConstructLibraryCdk8s } from "../../src/cdk8s";
+import { cdk8s } from "../../src";
 import { synthSnapshot } from "../util";
 
 test("constructs version defined", () => {
-  const project = new ConstructLibraryCdk8s({
+  const project = new cdk8s.ConstructLibraryCdk8s({
     cdk8sVersion: "1.4.9",
     name: "project",
     defaultReleaseBranch: "main",
@@ -22,7 +22,7 @@ test("constructs version defined", () => {
 });
 
 test("constructs version undefined", () => {
-  const project = new ConstructLibraryCdk8s({
+  const project = new cdk8s.ConstructLibraryCdk8s({
     cdk8sVersion: "1.4.9",
     name: "project",
     defaultReleaseBranch: "main",
@@ -41,7 +41,7 @@ test("constructs version undefined", () => {
 });
 
 test("constructs version pinning", () => {
-  const project = new ConstructLibraryCdk8s({
+  const project = new cdk8s.ConstructLibraryCdk8s({
     cdk8sVersion: "1.4.9",
     name: "project",
     defaultReleaseBranch: "main",
@@ -62,7 +62,7 @@ test("constructs version pinning", () => {
 });
 
 test("cdk8sPlusVersion undefined", () => {
-  const project = new ConstructLibraryCdk8s({
+  const project = new cdk8s.ConstructLibraryCdk8s({
     cdk8sVersion: "1.4.9",
     name: "project",
     defaultReleaseBranch: "main",
@@ -89,7 +89,7 @@ describe("cdk8s and consructs version", () => {
 
     // When
     const createCdk8sConstructLibrary = () => {
-      new ConstructLibraryCdk8s({
+      new cdk8s.ConstructLibraryCdk8s({
         cdk8sVersion,
         name: "project",
         defaultReleaseBranch: "main",
@@ -112,7 +112,7 @@ describe("cdk8s and consructs version", () => {
     const cdk8sVersion = "2.0.0";
 
     // When
-    const project = new ConstructLibraryCdk8s({
+    const project = new cdk8s.ConstructLibraryCdk8s({
       cdk8sVersion,
       name: "project",
       defaultReleaseBranch: "main",
@@ -135,7 +135,7 @@ describe("cdk8s and consructs version", () => {
     const cdk8sVersion = "1.0.0";
 
     // When
-    const project = new ConstructLibraryCdk8s({
+    const project = new cdk8s.ConstructLibraryCdk8s({
       cdk8sVersion,
       name: "project",
       defaultReleaseBranch: "main",
