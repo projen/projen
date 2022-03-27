@@ -163,7 +163,7 @@ export interface Job {
   /** Number of parallel instances of this job to run (default: 1) */
   readonly parallelism?: number;
   /** A map of environment variable names and values. */
-  readonly environment?: Record<string, string>;
+  readonly environment?: Record<string, string | number | boolean>;
   /** A map of environment variable names and values. */
   readonly branches?: Record<string, string>;
   /** {@link ResourceClass} */
@@ -186,7 +186,7 @@ export interface Docker {
   /** Which user to run commands as within the Docker container */
   readonly user?: string;
   /** A map of environment variable names and values */
-  readonly environment?: Record<string, string>;
+  readonly environment?: Record<string, string | number | boolean>;
   /** Authentication for registries using standard docker login credentials */
   readonly auth?: Record<string, string>;
   /** Authentication for AWS Elastic Container Registry (ECR) */

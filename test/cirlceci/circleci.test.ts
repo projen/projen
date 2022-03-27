@@ -13,6 +13,15 @@ test("full spec of api should be provided", () => {
     jobs: [
       {
         identifier: "custom-job-1",
+        docker: {
+          image: "golang:alpine",
+          environment: {
+            GO111MODULE: true,
+          },
+        },
+        machine: {
+          image: "node:alpine",
+        },
         steps: [
           "checkout",
           {
@@ -31,6 +40,12 @@ test("full spec of api should be provided", () => {
     workflows: [
       {
         identifier: "workflow1",
+        when: {
+          or: [
+            { equal: ["main", "<< pipeline.git.branch >>"] },
+            { equal: ["staging", "<< pipeline.git.branch >>"] },
+          ],
+        },
         triggers: [
           {
             schedule: {
@@ -67,7 +82,12 @@ test("full spec of api should be provided", () => {
   expect(circleci).toContain("renamedJob2");
   expect(circleci).toContain("0 0 * * *");
   expect(circleci).toContain("windows");
-  expect(yaml).toHaveProperty("orbs.hello");
+
+  const customJob = yaml.jobs["custom-job-1"];
+  expect(customJob.docker.image).toEqual("golang:alpine");
+  expect(customJob.machine.image).toEqual("node:alpine");
+  expect(customJob.steps).toHaveLength(2);
+  expect(customJob.steps).toContain("checkout");
 
   console.log(circleci);
 });

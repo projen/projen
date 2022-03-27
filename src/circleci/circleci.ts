@@ -9,6 +9,7 @@ export interface CircleCiProps {
   readonly version?: number;
   readonly workflows?: Workflow[];
   readonly jobs?: Job[];
+  readonly setup?: boolean;
 }
 
 export class Circleci extends Component {
@@ -50,6 +51,7 @@ export class Circleci extends Component {
 
     return {
       version: this.options.version || 2.1,
+      setup: this.options.setup,
       orbs: this.orbs,
       jobs: jobRecords,
       workflows: workflowRecords,
