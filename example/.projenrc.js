@@ -30,6 +30,22 @@ const c = new circleci.Circleci(project, {
         "checkout",
         {run: {command: "npx semantic-release"}},
       ]
+    },
+    {
+      identifier: 'integ-test',
+      docker: [{
+        image: "cimg/golang:lts"
+      }],
+      steps: [
+        "checkout",
+        {
+          "go/test": {
+            covermode: "atomic",
+            failfast: true,
+            race: true,
+          },
+        }
+      ]
     }
   ],
   workflows: [
@@ -50,5 +66,21 @@ const c = new circleci.Circleci(project, {
     },
   ],
 });
-
+c.addOrb("go", "circleci/go@1.7.1")
+c.addWorkflow({
+  identifier: 'nightly',
+  triggers: [
+    {
+      schedule: {
+        cron: '0 0 * * *',
+        filters: circleci.FilterMainBranchOnly,
+      }
+    }
+  ],
+  jobs: [
+    {
+      identifier: 'integ-test'
+    }
+  ]
+})
 project.synth();

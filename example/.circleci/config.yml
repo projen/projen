@@ -3,6 +3,7 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.1
+  go: circleci/go@1.7.1
 jobs:
   release:
     resource_class: small
@@ -12,6 +13,15 @@ jobs:
       - checkout
       - run:
           command: npx semantic-release
+  integ-test:
+    docker:
+      - image: cimg/golang:lts
+    steps:
+      - checkout
+      - go/test:
+          covermode: atomic
+          failfast: true
+          race: true
 workflows:
   build:
     jobs:
@@ -23,3 +33,14 @@ workflows:
               only:
                 - master
                 - main
+  nightly:
+    triggers:
+      - schedule:
+          cron: 0 0 * * *
+          filters:
+            branches:
+              only:
+                - master
+                - main
+    jobs:
+      - integ-test
