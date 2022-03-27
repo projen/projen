@@ -147,7 +147,7 @@ export class Circleci extends Component {
       version: this.options.version || 2.1,
       setup: this.options.setup,
       orbs: this.orbs,
-      jobs: jobRecords,
+      jobs: Object.keys(jobRecords).length > 0 ? jobRecords : undefined,
       workflows: workflowRecords,
     };
   }
