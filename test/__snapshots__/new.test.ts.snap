@@ -127,6 +127,23 @@ project.synth();",
 }
 `;
 
+exports[`projen new cdk8s-app-py 1`] = `
+Object {
+  ".projenrc.py": "from projen.cdk8s import Cdk8sPythonApp
+
+project = Cdk8sPythonApp(
+    author_email=\\"my@user.email.com\\",
+    author_name=\\"My User Name\\",
+    cdk8s_version=\\"1.0.0\\",
+    module_name=\\"my_project\\",
+    name=\\"my-project\\",
+    version=\\"0.1.0\\",
+)
+
+project.synth()",
+}
+`;
+
 exports[`projen new cdk8s-app-ts 1`] = `
 Object {
   ".projenrc.js": "const { cdk8s } = require(\\"projen\\");
