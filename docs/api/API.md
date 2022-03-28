@@ -63,6 +63,7 @@ Name|Description
 [cdk.JsiiDocgen](#projen-cdk-jsiidocgen)|Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
 [cdk.JsiiProject](#projen-cdk-jsiiproject)|Multi-language jsii library project.
 [cdk8s.AutoDiscover](#projen-cdk8s-autodiscover)|Automatically discovers and creates `IntegrationTest`s from entry points found in the test tree.
+[cdk8s.Cdk8sPythonApp](#projen-cdk8s-cdk8spythonapp)|CDK8s app in Python.
 [cdk8s.Cdk8sTypeScriptApp](#projen-cdk8s-cdk8stypescriptapp)|CDK8s app in TypeScript.
 [cdk8s.ConstructLibraryCdk8s](#projen-cdk8s-constructlibrarycdk8s)|CDK8s construct library project.
 [cdk8s.IntegrationTest](#projen-cdk8s-integrationtest)|CDK8S integration test.
@@ -217,6 +218,7 @@ Name|Description
 [cdk.JsiiProjectOptions](#projen-cdk-jsiiprojectoptions)|*No description*
 [cdk.JsiiPythonTarget](#projen-cdk-jsiipythontarget)|*No description*
 [cdk8s.AutoDiscoverOptions](#projen-cdk8s-autodiscoveroptions)|Options for `AutoDiscover`.
+[cdk8s.Cdk8sPythonOptions](#projen-cdk8s-cdk8spythonoptions)|*No description*
 [cdk8s.Cdk8sTypeScriptAppOptions](#projen-cdk8s-cdk8stypescriptappoptions)|*No description*
 [cdk8s.ConstructLibraryCdk8sOptions](#projen-cdk8s-constructlibrarycdk8soptions)|*No description*
 [cdk8s.IntegrationTestAutoDiscoverOptions](#projen-cdk8s-integrationtestautodiscoveroptions)|*No description*
@@ -4904,6 +4906,89 @@ new cdk8s.AutoDiscover(project: Project, options: AutoDiscoverOptions)
   * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically discover integration tests. __*Default*__: true
 
+
+
+
+## class Cdk8sPythonApp 🔹 <a id="projen-cdk8s-cdk8spythonapp"></a>
+
+CDK8s app in Python.
+
+__Submodule__: cdk8s
+
+__Extends__: [python.PythonProject](#projen-python-pythonproject)
+
+### Initializer
+
+
+
+
+```ts
+new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
+```
+
+* **options** (<code>[cdk8s.Cdk8sPythonOptions](#projen-cdk8s-cdk8spythonoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
+  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
+  * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
+  * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
+  * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
+  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **github** (<code>boolean</code>)  Enable GitHub integration. __*Default*__: true
+  * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
+  * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
+  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
+  * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
+  * **authorEmail** (<code>string</code>)  Author's e-mail. 
+  * **authorName** (<code>string</code>)  Author's name. 
+  * **version** (<code>string</code>)  Version of the package. 
+  * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
+  * **description** (<code>string</code>)  A short description of the package. __*Optional*__
+  * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
+  * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
+  * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
+  * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
+  * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
+  * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
+  * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
+  * **poetry** (<code>boolean</code>)  Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. __*Default*__: false
+  * **projenrcPython** (<code>boolean</code>)  Use projenrc in python. __*Default*__: true
+  * **projenrcPythonOptions** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  Options related to projenrc in python. __*Default*__: default options
+  * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
+  * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
+  * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true if the project type is library
+  * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true
+  * **venvOptions** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  Venv options. __*Default*__: defaults
+  * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
+  * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint. __*Default*__: "app.py"
+  * **cdk8sImports** (<code>Array<string></code>)  Import additional specs. __*Default*__: no additional specs imported
+  * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
+  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.3.251"
+  * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
+  * **k8sSpecVersion** (<code>string</code>)  Import a specific Kubernetes spec version. __*Default*__: Use the cdk8s default
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**appEntrypoint**🔹 | <code>string</code> | The CDK8s app entrypoint.
+**cdk8sVersion**🔹 | <code>string</code> | The CDK8s version this app is using.
+**constructsVersion**🔹 | <code>string</code> | The constructs version this app is using.
 
 
 
@@ -12985,6 +13070,69 @@ Name | Type | Description
 **testdir**🔹 | <code>string</code> | Test source tree.
 **tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
 **integrationTestAutoDiscover**?🔹 | <code>boolean</code> | Automatically discover integration tests.<br/>__*Default*__: true
+
+
+
+## struct Cdk8sPythonOptions 🔹 <a id="projen-cdk8s-cdk8spythonoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**authorEmail**🔹 | <code>string</code> | Author's e-mail.
+**authorName**🔹 | <code>string</code> | Author's name.
+**cdk8sVersion**🔹 | <code>string</code> | Minimum target version this library is tested against.
+**moduleName**🔹 | <code>string</code> | Name of the python package as used in imports and filenames.
+**name**🔹 | <code>string</code> | This is the name of your project.
+**version**🔹 | <code>string</code> | Version of the package.
+**appEntrypoint**?🔹 | <code>string</code> | The CDK8s app's entrypoint.<br/>__*Default*__: "app.py"
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
+**autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**cdk8sImports**?🔹 | <code>Array<string></code> | Import additional specs.<br/>__*Default*__: no additional specs imported
+**cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
+**classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
+**clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.3.251"
+**constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
+**deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
+**github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
+**githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
+**homepage**?🔹 | <code>string</code> | A URL to the website of the project.<br/>__*Optional*__
+**k8sSpecVersion**?🔹 | <code>string</code> | Import a specific Kubernetes spec version.<br/>__*Default*__: Use the cdk8s default
+**license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
+**logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
+**poetry**?🔹 | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.<br/>__*Default*__: false
+**poetryOptions**?🔹 | <code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code> | Additional options to set for poetry if using poetry.<br/>__*Optional*__
+**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+**projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
+**projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
+**projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
+**projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in python.<br/>__*Default*__: true
+**projenrcPythonOptions**?🔹 | <code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code> | Options related to projenrc in python.<br/>__*Default*__: default options
+**pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
+**pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
+**setupConfig**?🔹 | <code>Map<string, any></code> | Additional fields to pass in the setup() function if using setuptools.<br/>__*Optional*__
+**setuptools**?🔹 | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing.<br/>__*Default*__: true if the project type is library
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
+**venv**?🔹 | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside.<br/>__*Default*__: true
+**venvOptions**?🔹 | <code>[python.VenvOptions](#projen-python-venvoptions)</code> | Venv options.<br/>__*Default*__: defaults
+**vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 
 
 
