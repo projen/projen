@@ -2068,9 +2068,9 @@ duplexer3@^0.1.4:
   integrity sha1-7gHdHKwO08vH/b6jfcCo8c4ALOI=
 
 electron-to-chromium@^1.4.84:
-  version "1.4.95"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.95.tgz#49303dbe037c15e2e0cc851d71c4cb86119a9cd6"
-  integrity sha512-h2VAMV/hPtmAeiDkwA8c5sjS+cWt6GlQL4ERdrOUWu7cRIG5IRk9uwR9f0utP+hPJ9ZZsADTq9HpbuT46eBYAg==
+  version "1.4.96"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.96.tgz#a97438a01d5db1460343fea4a344960b09330990"
+  integrity sha512-DPNjvNGPabv6FcyjzLAN4C0psN/GgD9rSGvMTuv81SeXG/EX3mCz0wiw9N1tUEnfQXYCJi3H8M0oFPRziZh7rw==
 
 emittery@^0.8.1:
   version "0.8.1"
