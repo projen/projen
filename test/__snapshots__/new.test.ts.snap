@@ -134,7 +134,7 @@ Object {
 project = Cdk8sPythonApp(
     author_email=\\"my@user.email.com\\",
     author_name=\\"My User Name\\",
-    cdk8s_version=\\"1.0.0\\",
+    cdk8s_version=\\"1.5.53\\",
     module_name=\\"my_project\\",
     name=\\"my-project\\",
     version=\\"0.1.0\\",

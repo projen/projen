@@ -7,7 +7,7 @@ export interface Cdk8sPythonOptions extends PythonProjectOptions {
   /**
    * Minimum target version this library is tested against.
    *
-   * @default "1.0.0"
+   * @default "1.5.53"
    * @featured
    */
   readonly cdk8sVersion: string;
@@ -29,17 +29,9 @@ export interface Cdk8sPythonOptions extends PythonProjectOptions {
   /**
    * constructs verion
    *
-   * @default "3.2.34"
+   * @default "3.3.251"
    */
   readonly constructsVersion?: string;
-
-  /**
-   * cdk8s-cli version
-   *
-   * @default "cdk8sVersion"
-   */
-
-  readonly cdk8sCliVersion?: string;
 
   /**
    * Use pinned version instead of caret version for CDK8s.
@@ -52,16 +44,6 @@ export interface Cdk8sPythonOptions extends PythonProjectOptions {
   readonly cdk8sVersionPinning?: boolean;
 
   /**
-   * Use pinned version instead of caret version for CDK8s-cli.
-   *
-   * You can use this to prevent yarn to mix versions for your CDK8s package and to prevent auto-updates.
-   * If you use experimental features this will let you define the moment you include breaking changes.
-   *
-   * @default false
-   */
-  readonly cdk8sCliVersionPinning?: boolean;
-
-  /**
    * Use pinned version instead of caret version for constructs.
    *
    * You can use this to prevent yarn to mix versions for your consructs package and to prevent auto-updates.
@@ -72,8 +54,7 @@ export interface Cdk8sPythonOptions extends PythonProjectOptions {
   readonly constructsVersionPinning?: boolean;
 
   /**
-   * The CDK8s app's entrypoint (relative to the source directory, which is
-   * "src" by default).
+   * The CDK8s app's entrypoint
    *
    * @default "app.py"
    */
@@ -102,13 +83,8 @@ export class Cdk8sPythonApp extends PythonProject {
    */
   public readonly appEntrypoint: string;
 
-  /**
-   * The cdk8s-cli version this app is using.
-   */
-  public readonly cdk8sCliVersion: string;
-
   constructor(options: Cdk8sPythonOptions) {
-    super({ ...options, sample: false });
+    super({ ...options, pytest: false, sample: false });
 
     if (!options.cdk8sVersion) {
       throw new Error("Required field cdk8sVersion is not specified.");
@@ -125,15 +101,7 @@ export class Cdk8sPythonApp extends PythonProject {
         ? options.constructsVersion
         : `^${options.constructsVersion}`;
     } else {
-      this.constructsVersion = "^3.2.34";
-    }
-
-    if (!!options.cdk8sCliVersion) {
-      this.cdk8sCliVersion = options.cdk8sCliVersionPinning
-        ? options.cdk8sCliVersion
-        : `^${options.cdk8sCliVersion}`;
-    } else {
-      this.cdk8sCliVersion = this.cdk8sVersion;
+      this.constructsVersion = "^3.3.251";
     }
 
     this.addDependency(`cdk8s@${this.cdk8sVersion}`);

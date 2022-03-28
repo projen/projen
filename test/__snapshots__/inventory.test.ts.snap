@@ -7646,7 +7646,7 @@ Array [
     "options": Array [
       Object {
         "default": "\\"app.py\\"",
-        "docs": "The CDK8s app's entrypoint (relative to the source directory, which is \\"src\\" by default).",
+        "docs": "The CDK8s app's entrypoint.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -7732,40 +7732,6 @@ Array [
         "switch": "auto-merge-options",
       },
       Object {
-        "default": "\\"cdk8sVersion\\"",
-        "docs": "cdk8s-cli version.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "cdk8sCliVersion",
-        "optional": true,
-        "parent": "Cdk8sPythonOptions",
-        "path": Array [
-          "cdk8sCliVersion",
-        ],
-        "simpleType": "string",
-        "switch": "cdk8s-cli-version",
-      },
-      Object {
-        "default": "false",
-        "docs": "Use pinned version instead of caret version for CDK8s-cli.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "cdk8sCliVersionPinning",
-        "optional": true,
-        "parent": "Cdk8sPythonOptions",
-        "path": Array [
-          "cdk8sCliVersionPinning",
-        ],
-        "simpleType": "boolean",
-        "switch": "cdk8s-cli-version-pinning",
-      },
-      Object {
         "default": "- no additional specs imported",
         "docs": "Import additional specs.",
         "featured": false,
@@ -7788,7 +7754,7 @@ Array [
         "switch": "cdk8s-imports",
       },
       Object {
-        "default": "\\"1.0.0\\"",
+        "default": "\\"1.5.53\\"",
         "docs": "Minimum target version this library is tested against.",
         "featured": true,
         "fullType": Object {
@@ -7859,7 +7825,7 @@ Array [
         "switch": "clobber",
       },
       Object {
-        "default": "\\"3.2.34\\"",
+        "default": "\\"3.3.251\\"",
         "docs": "constructs verion.",
         "featured": false,
         "fullType": Object {
