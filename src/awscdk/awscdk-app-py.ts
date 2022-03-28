@@ -1,3 +1,4 @@
+import * as fs from "fs-extra";
 import {
   AwsCdkDeps,
   AwsCdkDepsCommonOptions,
@@ -111,6 +112,11 @@ export class AwsCdkPythonApp extends PythonProject {
 class AppCode extends Component {
   constructor(project: AwsCdkPythonApp, fileName: string, cdkVersion: number) {
     super(project);
+
+    // prevents the default task overwriting the app.py
+    if (fs.readdirSync("./").filter((x) => x.includes("app.py")).length > 0) {
+      return;
+    }
 
     const src = new SourceCode(project, fileName, {
       readonly: false,

@@ -1,3 +1,4 @@
+import * as fs from "fs-extra";
 import { Component } from "../component";
 import { PythonProject, PythonProjectOptions } from "../python";
 import { SourceCode } from "../source-code";
@@ -142,6 +143,11 @@ export class Cdk8sPythonApp extends PythonProject {
 class AppCode extends Component {
   constructor(project: Cdk8sPythonApp, filename: string) {
     super(project);
+
+    // prevents the default task overwriting the app.py
+    if (fs.readdirSync("./").filter((x) => x.includes("app.py")).length > 0) {
+      return;
+    }
 
     const src = new SourceCode(project, filename, {
       readonly: false,
