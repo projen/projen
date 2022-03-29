@@ -253,7 +253,6 @@ Object {
     "test:watch": "scripts/run-task test:watch",
     "unbump": "scripts/run-task unbump",
     "upgrade": "scripts/run-task upgrade",
-    "upgrade-projen": "scripts/run-task upgrade-projen",
   },
   "version": "0.0.0",
 }

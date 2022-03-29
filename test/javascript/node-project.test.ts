@@ -1,6 +1,7 @@
 import * as yaml from "yaml";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
+import { GithubCredentials } from "../../src/github";
 import { JobPermission } from "../../src/github/workflows-model";
 import {
   NodeProject,
@@ -192,29 +193,7 @@ describe("deps", () => {
   });
 });
 
-test("throw when 'autoApproveProjenUpgrades' is used with 'projenUpgradeAutoMerge'", () => {
-  expect(() => {
-    new TestNodeProject({
-      autoApproveProjenUpgrades: true,
-      projenUpgradeAutoMerge: true,
-    });
-  }).toThrow(
-    "'projenUpgradeAutoMerge' cannot be configured together with 'autoApproveProjenUpgrades'"
-  );
-});
-
 describe("deps upgrade", () => {
-  test("throws when trying to auto approve projen but auto approve is not defined", () => {
-    const message =
-      "Automatic approval of projen upgrades requires configuring `autoApproveOptions`";
-    expect(() => {
-      new TestNodeProject({ autoApproveProjenUpgrades: true });
-    }).toThrow(message);
-    expect(() => {
-      new TestNodeProject({ projenUpgradeAutoMerge: true });
-    }).toThrow(message);
-  });
-
   test("throws when trying to auto approve deps but auto approve is not defined", () => {
     expect(() => {
       new TestNodeProject({ autoApproveUpgrades: true });
@@ -269,42 +248,6 @@ describe("deps upgrade", () => {
     expect(snapshot.updates[0].labels).toStrictEqual(["auto-approve"]);
   });
 
-  test("default - with projen secret", () => {
-    const project = new TestNodeProject({
-      projenUpgradeSecret: "PROJEN_GITHUB_TOKEN",
-    });
-    const snapshot = synthSnapshot(project);
-    expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
-    expect(
-      snapshot[".github/workflows/upgrade-projen-main.yml"]
-    ).toBeUndefined();
-
-    // make sure yarn upgrade all deps, including projen.
-    const tasks = snapshot[TaskRuntime.MANIFEST_FILE].tasks;
-    expect(tasks.upgrade.steps[7].exec).toStrictEqual("yarn upgrade");
-  });
-
-  test("dependabot - with projen secret", () => {
-    const project = new TestNodeProject({
-      dependabot: true,
-      projenUpgradeSecret: "PROJEN_GITHUB_TOKEN",
-    });
-    const snapshot = synthSnapshot(project);
-    expect(snapshot[".github/dependabot.yml"]).toBeDefined();
-    expect(snapshot[".github/workflows/upgrade-projen-main.yml"]).toBeDefined();
-  });
-
-  test("github actions - with projen secret", () => {
-    const project = new TestNodeProject({
-      projenUpgradeSecret: "PROJEN_GITHUB_TOKEN",
-    });
-    const snapshot = synthSnapshot(project);
-    expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
-    expect(
-      snapshot[".github/workflows/upgrade-projen-main.yml"]
-    ).toBeUndefined();
-  });
-
   test("throws when dependabot is configued with depsUpgrade", () => {
     expect(() => {
       new TestNodeProject({ dependabot: true, depsUpgrade: true });
@@ -320,7 +263,9 @@ describe("deps upgrade", () => {
       },
       depsUpgradeOptions: {
         workflowOptions: {
-          secret: "PROJEN_SECRET",
+          projenCredentials: GithubCredentials.fromPersonalAccessToken({
+            secret: "PROJEN_SECRET",
+          }),
         },
       },
     });
@@ -760,6 +705,37 @@ test("using GitHub npm registry will default npm secret to GITHUB_TOKEN", () => 
 function packageJson(project: Project) {
   return synthSnapshot(project)["package.json"];
 }
+
+test("buildWorkflow can use GitHub App for API access", () => {
+  // GIVEN
+  const appId = "APP_ID";
+  const privateKey = "PRIVATE_KEY";
+  const project = new TestNodeProject({
+    githubOptions: {
+      projenCredentials: GithubCredentials.fromApp({
+        appIdSecret: appId,
+        privateKeySecret: privateKey,
+      }),
+    },
+  });
+
+  // THEN
+  const output = synthSnapshot(project);
+  const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+  expect(buildWorkflow.jobs["self-mutation"].steps[0]).toMatchObject({
+    name: "Generate token",
+    with: {
+      app_id: `\${{ secrets.${appId} }}`,
+      private_key: `\${{ secrets.${privateKey} }}`,
+    },
+  });
+  expect(buildWorkflow.jobs["self-mutation"].steps[1]).toMatchObject({
+    name: "Checkout",
+    with: {
+      token: "${{ steps.generate_token.outputs.token }}",
+    },
+  });
+});
 
 test("workflowGitIdentity can be used to customize the git identity used in build workflows", () => {
   // GIVEN

@@ -30,7 +30,6 @@ import {
   NodePackageOptions,
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
-import { UpgradeDependenciesSchedule } from "./upgrade-dependencies";
 
 const PROJEN_SCRIPT = "projen";
 
@@ -171,50 +170,11 @@ export interface NodeProjectOptions
   readonly depsUpgrade?: boolean;
 
   /**
-   * Options for depsUpgrade.
+   * Options for `UpgradeDependencies`.
    *
    * @default - default options
    */
   readonly depsUpgradeOptions?: UpgradeDependenciesOptions;
-
-  /**
-   * Periodically submits a pull request for projen upgrades (executes `yarn
-   * projen:upgrade`).
-   *
-   * This setting is a GitHub secret name which contains a GitHub Access Token
-   * with `repo` and `workflow` permissions.
-   *
-   * This token is used to submit the upgrade pull request, which will likely
-   * include workflow updates.
-   *
-   * To create a personal access token see https://github.com/settings/tokens
-   *
-   * @default - no automatic projen upgrade pull requests
-   *
-   * @deprecated use `githubTokenSecret` instead.
-   */
-  readonly projenUpgradeSecret?: string;
-
-  /**
-   * Automatically approve projen upgrade PRs, allowing them to be
-   * merged by mergify (if configued).
-   *
-   * Throw if set to true but `autoApproveOptions` are not defined.
-   *
-   * @default false
-   * @deprecated use `autoApproveProjenUpgrades`.
-   */
-  readonly projenUpgradeAutoMerge?: boolean;
-
-  /**
-   * Automatically approve projen upgrade PRs, allowing them to be
-   * merged by mergify (if configued).
-   *
-   * Throw if set to true but `autoApproveOptions` are not defined.
-   *
-   * @default false
-   */
-  readonly autoApproveProjenUpgrades?: boolean;
 
   /**
    * Automatically approve deps upgrade PRs, allowing them to be
@@ -225,13 +185,6 @@ export interface NodeProjectOptions
    * @default - true
    */
   readonly autoApproveUpgrades?: boolean;
-
-  /**
-   * Customize the projenUpgrade schedule in cron expression.
-   *
-   @default [ "0 6 * * *" ]
-   */
-  readonly projenUpgradeSchedule?: string[];
 
   /**
    * Defines an .npmignore file. Normally this is only needed for libraries that
@@ -656,26 +609,7 @@ export class NodeProject extends GitHubProject {
       );
     }
 
-    if (
-      options.projenUpgradeAutoMerge !== undefined &&
-      options.autoApproveProjenUpgrades !== undefined
-    ) {
-      throw new Error(
-        "'projenUpgradeAutoMerge' cannot be configured together with 'autoApproveProjenUpgrades'"
-      );
-    }
-
-    const projenAutoApprove =
-      options.autoApproveProjenUpgrades ??
-      options.projenUpgradeAutoMerge ??
-      false;
     const depsAutoApprove = options.autoApproveUpgrades ?? false;
-
-    if (projenAutoApprove && !this.autoApprove && this.github) {
-      throw new Error(
-        "Automatic approval of projen upgrades requires configuring `autoApproveOptions`"
-      );
-    }
 
     if (depsAutoApprove && !this.autoApprove && this.github) {
       throw new Error(
@@ -688,23 +622,18 @@ export class NodeProject extends GitHubProject {
         ? [this.autoApprove.label]
         : undefined;
 
-    let ignoresProjen;
     if (dependabot) {
       const defaultOptions = {
         labels: autoApproveLabel(depsAutoApprove),
       };
-      const dependabotConf = this.github?.addDependabot(
+      this.github?.addDependabot(
         deepMerge([defaultOptions, options.dependabotOptions ?? {}])
       );
-      ignoresProjen = dependabotConf?.ignoresProjen;
     }
+
     if (depsUpgrade) {
       const defaultOptions: UpgradeDependenciesOptions = {
-        // if projen secret is defined we can also upgrade projen here.
-        ignoreProjen: !options.projenUpgradeSecret,
         workflowOptions: {
-          // if projen secret is defined, use it (otherwise default to GITHUB_TOKEN).
-          secret: options.projenUpgradeSecret,
           container: options.workflowContainerImage
             ? {
                 image: options.workflowContainerImage,
@@ -718,29 +647,6 @@ export class NodeProject extends GitHubProject {
         this,
         deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}])
       );
-      ignoresProjen = this.upgradeWorkflow.ignoresProjen;
-    }
-
-    // create a dedicated workflow to upgrade projen itself if needed
-    if (ignoresProjen && this.package.packageName !== "projen") {
-      new UpgradeDependencies(this, {
-        include: ["projen"],
-        taskName: "upgrade-projen",
-        pullRequestTitle: "upgrade projen",
-        ignoreProjen: false,
-        workflow: !!options.projenUpgradeSecret,
-        workflowOptions: {
-          schedule: UpgradeDependenciesSchedule.expressions(
-            options.projenUpgradeSchedule ?? ["0 6 * * *"]
-          ),
-          container: options.workflowContainerImage
-            ? { image: options.workflowContainerImage }
-            : undefined,
-          secret: options.projenUpgradeSecret,
-          labels: autoApproveLabel(projenAutoApprove),
-          gitIdentity: this.workflowGitIdentity,
-        },
-      });
     }
 
     if (options.pullRequestTemplate ?? true) {

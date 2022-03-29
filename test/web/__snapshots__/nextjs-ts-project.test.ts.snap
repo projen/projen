@@ -515,64 +515,25 @@ tsconfig.tsbuildinfo
             "exec": "yarn upgrade npm-check-updates",
           },
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
-          },
-          Object {
-            "exec": "yarn install --check-files",
-          },
-          Object {
-            "exec": "yarn upgrade @types/node @types/react @types/react-dom npm-check-updates typescript autoprefixer next postcss react react-dom tailwindcss",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "upgrade-projen": Object {
-        "description": "upgrade projen",
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade-projen",
-        "steps": Array [
-          Object {
-            "exec": "yarn upgrade npm-check-updates",
-          },
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade projen",
+            "exec": "yarn upgrade",
           },
           Object {
             "exec": "npx projen",
@@ -842,7 +803,6 @@ tsconfig.tsbuildinfo
       "telemetry": "npx projen telemetry",
       "test": "npx projen test",
       "upgrade": "npx projen upgrade",
-      "upgrade-projen": "npx projen upgrade-projen",
       "watch": "npx projen watch",
     },
     "version": "0.0.0",

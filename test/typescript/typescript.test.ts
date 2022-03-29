@@ -175,6 +175,6 @@ test("upgrade task ignores pinned versions", () => {
   });
   const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[1].exec).toStrictEqual(
-    "npm-check-updates --dep dev --upgrade --target=minor --reject='typescript,projen'"
+    "npm-check-updates --dep dev --upgrade --target=minor --reject='typescript'"
   );
 });
