@@ -4450,7 +4450,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+              "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
           },
@@ -7275,7 +7275,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+              "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
           },
@@ -9763,7 +9763,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+              "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
           },
@@ -12428,7 +12428,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+              "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
           },
@@ -15025,7 +15025,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+              "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
           },
@@ -18297,7 +18297,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+              "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
           },
@@ -20455,7 +20455,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+              "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
           },
@@ -22697,7 +22697,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+              "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
           },
@@ -24838,7 +24838,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+              "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
           },
@@ -27845,7 +27845,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+              "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
           },
@@ -30075,7 +30075,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+              "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
           },
@@ -32372,7 +32372,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+              "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
           },
@@ -34669,7 +34669,7 @@ Array [
         "fullType": Object {
           "collection": Object {
             "elementtype": Object {
-              "fqn": "projen.javascript.ScopedPackagesCodeArtifactOptions",
+              "fqn": "projen.javascript.ScopedPackagesOptions",
             },
             "kind": "array",
           },
