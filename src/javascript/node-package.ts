@@ -915,19 +915,23 @@ export class NodePackage extends Component {
 
     this.project.addTask("ca:login", {
       requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
-      steps: this.scopedPackagesOptions.map((scopedPackagesOption) => {
-        const { registryUrl, scope } = scopedPackagesOption;
-        const { domain, repository } = extractCodeArtifactDetails(registryUrl);
-        const commands = [
-          `npm config set ${scope}:registry ${registryUrl}`,
-          `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-repository-endpoint --domain ${domain} --repository ${repository})`,
-          `npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
-          `npm config set //${registryUrl}:always-auth=true`,
-        ];
-        return {
-          exec: commands.join("; "),
-        };
-      }),
+      steps: [
+        { exec: "which aws" },
+        ...this.scopedPackagesOptions.map((scopedPackagesOption) => {
+          const { registryUrl, scope } = scopedPackagesOption;
+          const { domain, repository } =
+            extractCodeArtifactDetails(registryUrl);
+          const commands = [
+            `npm config set ${scope}:registry ${registryUrl}`,
+            `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-repository-endpoint --domain ${domain} --repository ${repository})`,
+            `npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
+            `npm config set //${registryUrl}:always-auth=true`,
+          ];
+          return {
+            exec: commands.join("; "),
+          };
+        }),
+      ],
     });
   }
 

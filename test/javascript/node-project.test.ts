@@ -1093,6 +1093,9 @@ describe("scoped private packages", () => {
       requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         {
+          exec: "which aws",
+        },
+        {
           exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-repository-endpoint --domain ${domain} --repository ${repository}); npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl}:always-auth=true`,
         },
       ],
@@ -1125,6 +1128,9 @@ describe("scoped private packages", () => {
       name: "ca:login",
       requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
+        {
+          exec: "which aws",
+        },
         {
           exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-repository-endpoint --domain ${domain} --repository ${repository}); npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl}:always-auth=true`,
         },
