@@ -17,6 +17,7 @@ import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
 import { exec, isTruthy, sorted, writeFile } from "../util";
+import { extractCodeArtifactDetails } from "./util";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -324,7 +325,7 @@ export interface CodeArtifactOptions {
 /**
  * Options for scoped packages
  */
-export interface ScopedPackagesBaseOptions {
+export interface ScopedPackagesOptions {
   /**
    * scope of the packages
    *
@@ -336,39 +337,6 @@ export interface ScopedPackagesBaseOptions {
    * Url of the registry for scoped packages
    */
   readonly registryUrl: string;
-}
-
-/**
- * Options for scoped packages
- */
-export interface ScopedPackagesOptions
-  extends ScopedPackagesBaseOptions,
-    CodeArtifactOptions {}
-
-export interface ParsedScopedPackagesOptions extends ScopedPackagesBaseOptions {
-  /**
-   * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
-   * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
-   *
-   * @default "AWS_ACCESS_KEY_ID"
-   */
-  readonly accessKeyIdSecret: string;
-
-  /**
-   * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
-   * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
-   *
-   * @default "AWS_SECRET_ACCESS_KEY"
-   */
-  readonly secretAccessKeySecret: string;
-
-  /**
-   * ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact
-   * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
-   *
-   * @default undefined
-   */
-  readonly roleToAssume?: string;
 }
 
 /**
@@ -444,7 +412,7 @@ export class NodePackage extends Component {
    *
    * @default undefined
    */
-  readonly scopedPackagesOptions?: ParsedScopedPackagesOptions[];
+  readonly scopedPackagesOptions?: ScopedPackagesOptions[];
 
   /**
    * npm package access level.
@@ -494,6 +462,8 @@ export class NodePackage extends Component {
     this.scopedPackagesOptions = scopedPackagesOptions;
 
     this.processDeps(options);
+
+    this.addCodeArtifactLoginScript();
 
     const prev = this.readPackageJson() ?? {};
 
@@ -858,6 +828,10 @@ export class NodePackage extends Component {
     }
 
     const isAwsCodeArtifact = isAwsCodeArtifactRegistry(npmRegistryUrl);
+    const hasScopedPackage =
+      options.scopedPackagesOptions &&
+      options.scopedPackagesOptions.length !== 0;
+
     if (isAwsCodeArtifact) {
       if (options.npmTokenSecret) {
         throw new Error(
@@ -866,19 +840,20 @@ export class NodePackage extends Component {
       }
     } else {
       if (
-        options.codeArtifactOptions?.accessKeyIdSecret ||
-        options.codeArtifactOptions?.secretAccessKeySecret ||
-        options.codeArtifactOptions?.roleToAssume
+        (options.codeArtifactOptions?.accessKeyIdSecret ||
+          options.codeArtifactOptions?.secretAccessKeySecret ||
+          options.codeArtifactOptions?.roleToAssume) &&
+        !hasScopedPackage
       ) {
         throw new Error(
-          "codeArtifactOptions must only be specified when publishing AWS CodeArtifact."
+          "codeArtifactOptions must only be specified when publishing AWS CodeArtifact or used in scoped packages."
         );
       }
     }
 
     // apply defaults for AWS CodeArtifact
     let codeArtifactOptions: CodeArtifactOptions | undefined;
-    if (isAwsCodeArtifact) {
+    if (isAwsCodeArtifact || hasScopedPackage) {
       codeArtifactOptions = {
         accessKeyIdSecret:
           options.codeArtifactOptions?.accessKeyIdSecret ?? "AWS_ACCESS_KEY_ID",
@@ -903,12 +878,12 @@ export class NodePackage extends Component {
 
   private parseScopedPackagesOptions(
     scopedPackagesOptions?: ScopedPackagesOptions[]
-  ): ParsedScopedPackagesOptions[] {
+  ): ScopedPackagesOptions[] | undefined {
     if (!scopedPackagesOptions) {
-      return [];
+      return undefined;
     }
 
-    return scopedPackagesOptions.map((option): ParsedScopedPackagesOptions => {
+    return scopedPackagesOptions.map((option): ScopedPackagesOptions => {
       if (!isScoped(option.scope)) {
         throw new Error(
           `Scope must start with "@" in options, found ${option.scope}`
@@ -921,16 +896,38 @@ export class NodePackage extends Component {
         );
       }
 
-      const result: ParsedScopedPackagesOptions = {
+      const result: ScopedPackagesOptions = {
         registryUrl: option.registryUrl,
         scope: option.scope,
-        accessKeyIdSecret: option.accessKeyIdSecret ?? "AWS_ACCESS_KEY_ID",
-        secretAccessKeySecret:
-          option.secretAccessKeySecret ?? "AWS_SECRET_ACCESS_KEY",
-        roleToAssume: option.roleToAssume,
       };
 
       return result;
+    });
+  }
+
+  private addCodeArtifactLoginScript() {
+    if (
+      !this.scopedPackagesOptions ||
+      this.scopedPackagesOptions.length === 0
+    ) {
+      return;
+    }
+
+    this.project.addTask("ca:login", {
+      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
+      steps: this.scopedPackagesOptions.map((scopedPackagesOption) => {
+        const { registryUrl, scope } = scopedPackagesOption;
+        const { domain, repository } = extractCodeArtifactDetails(registryUrl);
+        const commands = [
+          `npm config set ${scope}:registry ${registryUrl}`,
+          `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-repository-endpoint --domain ${domain} --repository ${repository})`,
+          `npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
+          `npm config set //${registryUrl}:always-auth=true`,
+        ];
+        return {
+          exec: commands.join("; "),
+        };
+      }),
     });
   }
 

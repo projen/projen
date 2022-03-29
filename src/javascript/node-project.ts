@@ -19,17 +19,22 @@ import {
   UpgradeDependenciesOptions,
 } from "../javascript";
 import { License } from "../license";
-import { Publisher, Release, ReleaseProjectOptions } from "../release";
+import {
+  isAwsCodeArtifactRegistry,
+  Publisher,
+  Release,
+  ReleaseProjectOptions,
+} from "../release";
 import { Task } from "../task";
 import { deepMerge } from "../util";
 import { Version } from "../version";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import {
+  CodeArtifactOptions,
   NodePackage,
   NodePackageManager,
   NodePackageOptions,
-  ParsedScopedPackagesOptions,
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
 
@@ -565,15 +570,20 @@ export class NodeProject extends GitHubProject {
       this.publisher = this.release.publisher;
 
       if (options.releaseToNpm ?? false) {
+        const codeArtifactOptions = isAwsCodeArtifactRegistry(
+          this.package.npmRegistry
+        )
+          ? {
+              accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret,
+              secretAccessKeySecret:
+                options.codeArtifactOptions?.secretAccessKeySecret,
+              roleToAssume: options.codeArtifactOptions?.roleToAssume,
+            }
+          : {};
         this.release.publisher.publishToNpm({
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,
-          codeArtifactOptions: {
-            accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret,
-            secretAccessKeySecret:
-              options.codeArtifactOptions?.secretAccessKeySecret,
-            roleToAssume: options.codeArtifactOptions?.roleToAssume,
-          },
+          codeArtifactOptions,
         });
       }
     } else {
@@ -750,49 +760,59 @@ export class NodeProject extends GitHubProject {
 
   /**
    * Get steps for scoped package
-   * if required will add the assume role step
    *
-   * @param scopedPackageOptions details of scoped package
+   * @param codeArtifactOptions Details of logging in to AWS
    * @returns array of job steps required for each private scoped packages
    */
   private getScopedPackageSteps(
-    scopedPackageOptions: ParsedScopedPackagesOptions
+    codeArtifactOptions: CodeArtifactOptions | undefined
   ): JobStep[] {
-    const codeArtifactDetails = extractCodeArtifactDetails(
-      scopedPackageOptions.registryUrl
-    );
-    const result: JobStep[] = [];
-    if (scopedPackageOptions.roleToAssume) {
-      result.push({
-        name: `AWS Assume Role for ${scopedPackageOptions.scope}`,
-        uses: "aws-actions/configure-aws-credentials@v1",
-        with: {
-          "aws-access-key-id": secretToString(
-            scopedPackageOptions.accessKeyIdSecret
-          ),
-          "aws-secret-access-key": secretToString(
-            scopedPackageOptions.secretAccessKeySecret
-          ),
-          "aws-region": codeArtifactDetails.region,
-          "role-to-assume": scopedPackageOptions.roleToAssume,
-          "role-duration-seconds": 900,
+    const parsedCodeArtifactOptions = {
+      accessKeyIdSecret:
+        codeArtifactOptions?.accessKeyIdSecret ?? "AWS_ACCESS_KEY_ID",
+      secretAccessKeySecret:
+        codeArtifactOptions?.secretAccessKeySecret ?? "AWS_SECRET_ACCESS_KEY",
+      roleToAssume: codeArtifactOptions?.roleToAssume,
+    };
+
+    if (parsedCodeArtifactOptions.roleToAssume) {
+      return [
+        {
+          name: "Configure AWS Credentials",
+          uses: "aws-actions/configure-aws-credentials@v1",
+          with: {
+            "aws-access-key-id": secretToString(
+              parsedCodeArtifactOptions.accessKeyIdSecret
+            ),
+            "aws-secret-access-key": secretToString(
+              parsedCodeArtifactOptions.secretAccessKeySecret
+            ),
+            "aws-region": "us-east-2",
+            "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
+            "role-duration-seconds": 900,
+          },
         },
-      });
+        {
+          name: "AWS CodeArtifact Login",
+          run: `${this.runScriptCommand} ca:login`,
+        },
+      ];
     }
 
-    result.push({
-      name: `AWS CodeArtifact Login ${scopedPackageOptions.scope}`,
-      uses: "MondoPower/codeartifact-auth@1.2",
-      with: {
-        domain: codeArtifactDetails.domain,
-        repository: codeArtifactDetails.repository,
-        scope: scopedPackageOptions.scope,
-        region: codeArtifactDetails.region,
-        accountId: codeArtifactDetails.accountId,
+    return [
+      {
+        name: "AWS CodeArtifact Login",
+        run: `${this.runScriptCommand} ca:login`,
+        env: {
+          AWS_ACCESS_KEY_ID: secretToString(
+            parsedCodeArtifactOptions.accessKeyIdSecret
+          ),
+          AWS_SECRET_ACCESS_KEY: secretToString(
+            parsedCodeArtifactOptions.secretAccessKeySecret
+          ),
+        },
       },
-    });
-
-    return result;
+    ];
   }
 
   /**
@@ -829,11 +849,9 @@ export class NodeProject extends GitHubProject {
     const mutable = options.mutable ?? false;
 
     if (this.package.scopedPackagesOptions) {
-      const scopedPackagesSteps = this.package.scopedPackagesOptions.flatMap(
-        this.getScopedPackageSteps
+      install.push(
+        ...this.getScopedPackageSteps(this.package.codeArtifactOptions)
       );
-
-      install.push(...scopedPackagesSteps);
     }
 
     install.push({

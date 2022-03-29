@@ -471,7 +471,7 @@ describe("npm publishing options", () => {
         },
       });
     }).toThrow(
-      "codeArtifactOptions must only be specified when publishing AWS CodeArtifact."
+      "codeArtifactOptions must only be specified when publishing AWS CodeArtifact or used in scoped packages."
     );
     expect(() => {
       new NodePackage(project, {
@@ -480,7 +480,7 @@ describe("npm publishing options", () => {
         },
       });
     }).toThrow(
-      "codeArtifactOptions must only be specified when publishing AWS CodeArtifact."
+      "codeArtifactOptions must only be specified when publishing AWS CodeArtifact or used in scoped packages."
     );
   });
 
@@ -871,8 +871,8 @@ describe("scoped private packages", () => {
   const region = "my-region-1";
   const repository = "MyRepository";
   const scope = "@stub-scope";
-  const accessKeyIdSecret = "stub-access-key-id";
-  const secretAccessKeySecret = "stub-secret-access-key";
+  const defaultAccessKeyIdSecret = "AWS_ACCESS_KEY_ID";
+  const defaultSecretAccessKeySecret = "AWS_SECRET_ACCESS_KEY";
   const registryUrl = `https://${domain}-${accountId}.d.codeartifact.${region}.amazonaws.com/npm/${repository}/`;
 
   test("adds AWS Code Artifact Login step prior to install to build workflow", () => {
@@ -890,14 +890,11 @@ describe("scoped private packages", () => {
     expect(buildWorkflow.jobs.build.steps).toEqual(
       expect.arrayContaining([
         {
-          name: `AWS CodeArtifact Login ${scope}`,
-          uses: "MondoPower/codeartifact-auth@1.2",
-          with: {
-            domain,
-            repository,
-            scope,
-            region,
-            accountId,
+          name: "AWS CodeArtifact Login",
+          run: "yarn run ca:login",
+          env: {
+            AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
+            AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
           },
         },
         { name: "Install dependencies", run: "yarn install --check-files" },
@@ -919,14 +916,11 @@ describe("scoped private packages", () => {
     expect(releaseWorkflow.jobs.release.steps).toEqual(
       expect.arrayContaining([
         {
-          name: `AWS CodeArtifact Login ${scope}`,
-          uses: "MondoPower/codeartifact-auth@1.2",
-          with: {
-            domain,
-            repository,
-            scope,
-            region,
-            accountId,
+          name: "AWS CodeArtifact Login",
+          run: "yarn run ca:login",
+          env: {
+            AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
+            AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
           },
         },
         {
@@ -937,7 +931,7 @@ describe("scoped private packages", () => {
     );
   });
 
-  test("adds multiple AWS Code Artifact Login step prior to install to workflow when multiple scoped packages defined", () => {
+  test("adds AWS Code Artifact Login step prior to install to workflow when multiple scoped packages defined", () => {
     const accountId2 = "123456789013";
     const domain2 = "my-domain-2";
     const region2 = "my-region-2";
@@ -961,25 +955,46 @@ describe("scoped private packages", () => {
     expect(releaseWorkflow.jobs.release.steps).toEqual(
       expect.arrayContaining([
         {
-          name: `AWS CodeArtifact Login ${scope}`,
-          uses: "MondoPower/codeartifact-auth@1.2",
-          with: {
-            domain,
-            repository,
-            scope,
-            region,
-            accountId,
+          name: "AWS CodeArtifact Login",
+          run: "yarn run ca:login",
+          env: {
+            AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
+            AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
           },
         },
         {
-          name: `AWS CodeArtifact Login ${scope2}`,
-          uses: "MondoPower/codeartifact-auth@1.2",
-          with: {
-            domain: domain2,
-            repository: repository2,
-            scope: scope2,
-            region: region2,
-            accountId: accountId2,
+          name: "Install dependencies",
+          run: "yarn install --check-files --frozen-lockfile",
+        },
+      ])
+    );
+  });
+
+  test("adds specified AWS secrets and Code Artifact Login step prior to install to workflow", () => {
+    const accessKeyIdSecret = "stub-access-key-id";
+    const secretAccessKeySecret = "stub-secret-access-key";
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl,
+          scope,
+        },
+      ],
+      codeArtifactOptions: {
+        accessKeyIdSecret,
+        secretAccessKeySecret,
+      },
+    });
+    const output = synthSnapshot(project);
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    expect(releaseWorkflow.jobs.release.steps).toEqual(
+      expect.arrayContaining([
+        {
+          name: "AWS CodeArtifact Login",
+          run: "yarn run ca:login",
+          env: {
+            AWS_ACCESS_KEY_ID: secretToString(accessKeyIdSecret),
+            AWS_SECRET_ACCESS_KEY: secretToString(secretAccessKeySecret),
           },
         },
         {
@@ -991,43 +1006,38 @@ describe("scoped private packages", () => {
   });
 
   test("adds AWS assume role and Code Artifact Login step prior to install to workflow", () => {
-    const roleToAssume = "stub-role-arn";
+    const roleToAssume = `stub-role-to-assume`;
     const project = new TestNodeProject({
       scopedPackagesOptions: [
         {
           registryUrl,
           scope,
-          accessKeyIdSecret,
-          secretAccessKeySecret,
-          roleToAssume,
         },
       ],
+      codeArtifactOptions: {
+        roleToAssume,
+      },
     });
     const output = synthSnapshot(project);
     const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
     expect(releaseWorkflow.jobs.release.steps).toEqual(
       expect.arrayContaining([
         {
-          name: `AWS Assume Role for ${scope}`,
+          name: "Configure AWS Credentials",
           uses: "aws-actions/configure-aws-credentials@v1",
           with: {
-            "aws-access-key-id": secretToString(accessKeyIdSecret),
-            "aws-secret-access-key": secretToString(secretAccessKeySecret),
-            "aws-region": region,
+            "aws-access-key-id": secretToString(defaultAccessKeyIdSecret),
+            "aws-secret-access-key": secretToString(
+              defaultSecretAccessKeySecret
+            ),
+            "aws-region": "us-east-2",
             "role-to-assume": roleToAssume,
             "role-duration-seconds": 900,
           },
         },
         {
-          name: `AWS CodeArtifact Login ${scope}`,
-          uses: "MondoPower/codeartifact-auth@1.2",
-          with: {
-            domain,
-            repository,
-            scope,
-            region,
-            accountId,
-          },
+          name: "AWS CodeArtifact Login",
+          run: "yarn run ca:login",
         },
         {
           name: "Install dependencies",
@@ -1064,6 +1074,65 @@ describe("scoped private packages", () => {
           ],
         })
     ).toThrow("Could not get CodeArtifact details from npm Registry");
+  });
+
+  test("adds ca:login script when single scoped package defined", () => {
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl,
+          scope,
+        },
+      ],
+    });
+    const output = synthSnapshot(project);
+
+    const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
+    expect(tasks["ca:login"]).toEqual({
+      name: "ca:login",
+      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
+      steps: [
+        {
+          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-repository-endpoint --domain ${domain} --repository ${repository}); npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl}:always-auth=true`,
+        },
+      ],
+    });
+  });
+
+  test("adds ca:login script when multiple scoped packages defined", () => {
+    const accountId2 = "123456789013";
+    const domain2 = "my-domain-2";
+    const region2 = "my-region-2";
+    const repository2 = "MyRepository2";
+    const scope2 = "@stub-scope-2";
+    const registryUrl2 = `https://${domain2}-${accountId2}.d.codeartifact.${region2}.amazonaws.com/npm/${repository2}/`;
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl,
+          scope,
+        },
+        {
+          registryUrl: registryUrl2,
+          scope: scope2,
+        },
+      ],
+    });
+    const output = synthSnapshot(project);
+
+    const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
+    expect(tasks["ca:login"]).toEqual({
+      name: "ca:login",
+      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
+      steps: [
+        {
+          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-repository-endpoint --domain ${domain} --repository ${repository}); npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl}:always-auth=true`,
+        },
+        {
+          exec: `npm config set ${scope2}:registry ${registryUrl2}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-repository-endpoint --domain ${domain2} --repository ${repository2}); npm config set //${registryUrl2}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl2}:always-auth=true`,
+        },
+      ],
+    });
   });
 });
 

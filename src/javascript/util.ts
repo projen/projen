@@ -11,6 +11,7 @@ export function renderBundleName(entrypoint: string) {
   const base = basename(p, extname(p));
   return join(dir, base);
 }
+
 /**
  * Regex for AWS CodeArtifact registry
  */
