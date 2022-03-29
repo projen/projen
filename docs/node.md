@@ -92,7 +92,7 @@ const project = new javascript.NodeProject({
   name: 'my-project',
   scopedPackagesOptions: [
       {
-          registryUrl: '<code-artifact-regitry-url>',
+          registryUrl: '<code-artifact-registry-url>',
           scope: '@somescope',
       }
   ]
