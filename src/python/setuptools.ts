@@ -18,7 +18,7 @@ export class Setuptools extends Component implements IPythonPackaging {
 
   constructor(
     project: Project,
-    moduleName: string,
+    //moduleName: string,
     options: PythonPackagingOptions
   ) {
     super(project);
@@ -38,9 +38,11 @@ export class Setuptools extends Component implements IPythonPackaging {
       exec: "twine upload dist/*",
     });
 
+    const packages = options.packageName ? [options.packageName] : undefined;
+
     new SetupPy(project, {
       name: project.name,
-      packages: [moduleName],
+      packages: packages,
       authorName: options.authorName,
       authorEmail: options.authorEmail,
       version: options.version,

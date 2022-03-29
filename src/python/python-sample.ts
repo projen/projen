@@ -5,20 +5,21 @@ import { SampleDir } from "../sample-file";
 /**
  * Options for python sample code.
  */
-export interface PythonSampleOptions {}
+export interface PythonSampleOptions {
+  /**
+   * Sample code directory
+   */
+  readonly dir: string;
+}
 
 /**
  * Python code sample.
  */
 export class PythonSample extends Component {
-  constructor(
-    project: Project,
-    moduleName: string,
-    _options: PythonSampleOptions
-  ) {
+  constructor(project: Project, options: PythonSampleOptions) {
     super(project);
 
-    new SampleDir(project, moduleName, {
+    new SampleDir(project, options.dir, {
       files: {
         "__init__.py": '__version__ = "0.1.0"\n',
         "__main__.py": [

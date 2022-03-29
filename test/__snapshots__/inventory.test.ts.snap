@@ -1628,6 +1628,22 @@ Array [
         "switch": "outdir",
       },
       Object {
+        "docs": "Package name.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "packageName",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "packageName",
+        ],
+        "simpleType": "string",
+        "switch": "package-name",
+      },
+      Object {
         "docs": "The parent project, if this project is part of a bigger project.",
         "featured": false,
         "fqn": "projen.Project",
@@ -8142,6 +8158,22 @@ Array [
         ],
         "simpleType": "string",
         "switch": "outdir",
+      },
+      Object {
+        "docs": "Package name.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "packageName",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "packageName",
+        ],
+        "simpleType": "string",
+        "switch": "package-name",
       },
       Object {
         "docs": "The parent project, if this project is part of a bigger project.",
@@ -26747,6 +26779,22 @@ Array [
         ],
         "simpleType": "string",
         "switch": "outdir",
+      },
+      Object {
+        "docs": "Package name.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "packageName",
+        "optional": true,
+        "parent": "PythonPackagingOptions",
+        "path": Array [
+          "packageName",
+        ],
+        "simpleType": "string",
+        "switch": "package-name",
       },
       Object {
         "docs": "The parent project, if this project is part of a bigger project.",

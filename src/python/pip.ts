@@ -65,18 +65,18 @@ export class Pip extends Component implements IPythonDeps {
 }
 
 class RuntimeDependencyProvider implements IPackageProvider {
-  constructor(private readonly pythonProject: Project) {}
+  constructor(private readonly project: Project) {}
   public get packages(): Dependency[] {
-    return this.pythonProject.deps.all.filter(
+    return this.project.deps.all.filter(
       (dep) => dep.type === DependencyType.RUNTIME
     );
   }
 }
 
 class DevDependencyProvider implements IPackageProvider {
-  constructor(private readonly pythonProject: Project) {}
+  constructor(private readonly project: Project) {}
   public get packages(): Dependency[] {
-    return this.pythonProject.deps.all.filter(
+    return this.project.deps.all.filter(
       (dep) => dep.type === DependencyType.DEVENV
     );
   }

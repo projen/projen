@@ -106,7 +106,7 @@ Name|Description
 [python.PoetryPyproject](#projen-python-poetrypyproject)|Represents configuration of a pyproject.toml file for a Poetry project.
 [python.Projenrc](#projen-python-projenrc)|Allows writing projenrc files in python.
 [python.Pytest](#projen-python-pytest)|*No description*
-[python.PytestSample](#projen-python-pytestsample)|*No description*
+[python.PytestSample](#projen-python-pytestsample)|Python test code sample.
 [python.PythonProject](#projen-python-pythonproject)|Python project.
 [python.PythonSample](#projen-python-pythonsample)|Python code sample.
 [python.RequirementsFile](#projen-python-requirementsfile)|Specifies a list of packages to be installed using pip.
@@ -311,6 +311,7 @@ Name|Description
 [python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)|Poetry-specific options.
 [python.ProjenrcOptions](#projen-python-projenrcoptions)|Options for `Projenrc`.
 [python.PytestOptions](#projen-python-pytestoptions)|*No description*
+[python.PytestSampleOptions](#projen-python-pytestsampleoptions)|Options for python test code sample.
 [python.PythonPackagingOptions](#projen-python-pythonpackagingoptions)|*No description*
 [python.PythonProjectOptions](#projen-python-pythonprojectoptions)|Options for `PythonProject`.
 [python.PythonSampleOptions](#projen-python-pythonsampleoptions)|Options for python sample code.
@@ -3562,6 +3563,7 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
   * **description** (<code>string</code>)  A short description of the package. __*Optional*__
   * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
   * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **packageName** (<code>string</code>)  Package name. __*Optional*__
   * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
   * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
   * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
@@ -4956,6 +4958,7 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
   * **description** (<code>string</code>)  A short description of the package. __*Optional*__
   * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
   * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **packageName** (<code>string</code>)  Package name. __*Optional*__
   * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
   * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
   * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
@@ -8285,6 +8288,7 @@ new python.Poetry(project: Project, options: PythonPackagingOptions)
   * **description** (<code>string</code>)  A short description of the package. __*Optional*__
   * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
   * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **packageName** (<code>string</code>)  Package name. __*Optional*__
   * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
   * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
 
@@ -8471,7 +8475,7 @@ Name | Type | Description
 
 ## class PytestSample 🔹 <a id="projen-python-pytestsample"></a>
 
-
+Python test code sample.
 
 __Submodule__: python
 
@@ -8483,12 +8487,13 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.PytestSample(project: PythonProject, moduleName: string, testdir: string)
+new python.PytestSample(project: Project, options: PytestSampleOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
-* **moduleName** (<code>string</code>)  *No description*
-* **testdir** (<code>string</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[python.PytestSampleOptions](#projen-python-pytestsampleoptions)</code>)  *No description*
+  * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
+  * **testdir** (<code>string</code>)  Test directory. 
 
 
 
@@ -8540,6 +8545,7 @@ new python.PythonProject(options: PythonProjectOptions)
   * **description** (<code>string</code>)  A short description of the package. __*Optional*__
   * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
   * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **packageName** (<code>string</code>)  Package name. __*Optional*__
   * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
   * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
   * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
@@ -8629,12 +8635,12 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.PythonSample(project: Project, moduleName: string, _options: PythonSampleOptions)
+new python.PythonSample(project: Project, options: PythonSampleOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **moduleName** (<code>string</code>)  *No description*
-* **_options** (<code>[python.PythonSampleOptions](#projen-python-pythonsampleoptions)</code>)  *No description*
+* **options** (<code>[python.PythonSampleOptions](#projen-python-pythonsampleoptions)</code>)  *No description*
+  * **dir** (<code>string</code>)  Sample code directory. 
 
 
 
@@ -8758,11 +8764,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Setuptools(project: Project, moduleName: string, options: PythonPackagingOptions)
+new python.Setuptools(project: Project, options: PythonPackagingOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **moduleName** (<code>string</code>)  *No description*
 * **options** (<code>[python.PythonPackagingOptions](#projen-python-pythonpackagingoptions)</code>)  *No description*
   * **authorEmail** (<code>string</code>)  Author's e-mail. 
   * **authorName** (<code>string</code>)  Author's name. 
@@ -8771,6 +8776,7 @@ new python.Setuptools(project: Project, moduleName: string, options: PythonPacka
   * **description** (<code>string</code>)  A short description of the package. __*Optional*__
   * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
   * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **packageName** (<code>string</code>)  Package name. __*Optional*__
   * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
   * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
 
@@ -11996,6 +12002,7 @@ Name | Type | Description
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**packageName**?🔹 | <code>string</code> | Package name.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
 **poetry**?🔹 | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.<br/>__*Default*__: false
@@ -13111,6 +13118,7 @@ Name | Type | Description
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**packageName**?🔹 | <code>string</code> | Package name.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
 **poetry**?🔹 | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.<br/>__*Default*__: false
@@ -15600,6 +15608,20 @@ Name | Type | Description
 
 
 
+## struct PytestSampleOptions 🔹 <a id="projen-python-pytestsampleoptions"></a>
+
+
+Options for python test code sample.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**moduleName**🔹 | <code>string</code> | Name of the python package as used in imports and filenames.
+**testdir**🔹 | <code>string</code> | Test directory.
+
+
+
 ## struct PythonPackagingOptions 🔹 <a id="projen-python-pythonpackagingoptions"></a>
 
 
@@ -15616,6 +15638,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
 **homepage**?🔹 | <code>string</code> | A URL to the website of the project.<br/>__*Optional*__
 **license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
+**packageName**?🔹 | <code>string</code> | Package name.<br/>__*Optional*__
 **poetryOptions**?🔹 | <code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code> | Additional options to set for poetry if using poetry.<br/>__*Optional*__
 **setupConfig**?🔹 | <code>Map<string, any></code> | Additional fields to pass in the setup() function if using setuptools.<br/>__*Optional*__
 
@@ -15652,6 +15675,7 @@ Name | Type | Description
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**packageName**?🔹 | <code>string</code> | Package name.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
 **poetry**?🔹 | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.<br/>__*Default*__: false
@@ -15681,6 +15705,13 @@ Name | Type | Description
 
 
 Options for python sample code.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**dir**🔹 | <code>string</code> | Sample code directory.
+
 
 
 ## struct RequirementsFileOptions 🔹 <a id="projen-python-requirementsfileoptions"></a>

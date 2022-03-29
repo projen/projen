@@ -1,17 +1,35 @@
-import { PythonProject } from ".";
 import { Component, SampleDir } from "..";
+import { Project } from "../project";
 
+/**
+ * Options for python test code sample.
+ */
+export interface PytestSampleOptions {
+  /**
+   * Name of the python package as used in imports and filenames.
+   */
+  readonly moduleName: string;
+
+  /**
+   * Test directory
+   */
+  readonly testdir: string;
+}
+
+/**
+ * Python test code sample.
+ */
 export class PytestSample extends Component {
-  constructor(project: PythonProject, moduleName: string, testdir: string) {
+  constructor(project: Project, options: PytestSampleOptions) {
     super(project);
 
-    new SampleDir(project, testdir, {
+    new SampleDir(project, options.testdir, {
       files: {
         "__init__.py": "",
         "test_example.py": [
           "import pytest",
           "",
-          `from ${moduleName}.example import hello`,
+          `from ${options.moduleName}.example import hello`,
           "",
           "@pytest.mark.parametrize(",
           '    ("name", "expected"),',

@@ -199,7 +199,7 @@ export class PythonProject extends GitHubProject {
     }
 
     if (options.setuptools ?? this.projectType === ProjectType.LIB) {
-      this.packagingManager = new Setuptools(this, this.moduleName, {
+      this.packagingManager = new Setuptools(this, {
         version: options.version,
         description: options.description,
         authorName: options.authorName,
@@ -281,11 +281,16 @@ export class PythonProject extends GitHubProject {
 
     if (options.pytest ?? true) {
       this.pytest = new Pytest(this, options.pytestOptions);
-      new PytestSample(this, this.moduleName, this.pytest.testdir);
+      new PytestSample(this, {
+        moduleName: this.moduleName,
+        testdir: this.pytest.testdir,
+      });
     }
 
     if (options.sample ?? true) {
-      new PythonSample(this, this.moduleName, {});
+      new PythonSample(this, {
+        dir: this.moduleName,
+      });
     }
 
     for (const dep of options.deps ?? []) {
