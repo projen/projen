@@ -339,13 +339,11 @@ export interface ScopedPackagesBaseOptions {
 }
 
 /**
- * Options for scoped packages hosted on AWS Code artifacts
+ * Options for scoped packages
  */
-export interface ScopedPackagesCodeArtifactOptions
+export interface ScopedPackagesOptions
   extends ScopedPackagesBaseOptions,
     CodeArtifactOptions {}
-
-export type ScopedPackagesOptions = ScopedPackagesCodeArtifactOptions;
 
 export interface ParsedScopedPackagesOptions extends ScopedPackagesBaseOptions {
   /**
