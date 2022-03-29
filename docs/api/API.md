@@ -305,7 +305,7 @@ Name|Description
 [javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)|*No description*
 [javascript.RenderWorkflowSetupOptions](#projen-javascript-renderworkflowsetupoptions)|Options for `renderInstallSteps()`.
 [javascript.ScopedPackagesBaseOptions](#projen-javascript-scopedpackagesbaseoptions)|Options for scoped packages.
-[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)|Options for scoped packages hosted on AWS Code artifacts.
+[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)|Options for scoped packages.
 [javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)|*No description*
 [javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)|*No description*
 [javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)|Options for `UpgradeDependencies`.
@@ -1375,15 +1375,6 @@ new Logger(project: Project, options?: LoggerOptions)
 
 ### Methods
 
-* **name** (<code>string</code>)  The task name to add.
-* **props** (<code>[TaskOptions](#projen-taskoptions)</code>)  Task properties.
-  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
-  * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
-  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
-  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
-  * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
-  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
-  * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
 
 #### debug(...text)🔹 <a id="projen-logger-debug"></a>
 
@@ -1811,6 +1802,7 @@ addTask(name: string, props?: TaskOptions): Task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+  * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
 
 __Returns__:
 * <code>[Task](#projen-task)</code>
@@ -1914,26 +1906,6 @@ Synthesize all project files into `outdir`.
 synth(): void
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **filePath** (<code>string</code>)  *No description*
-* **options** (<code>[SourceCodeOptions](#projen-sourcecodeoptions)</code>)  *No description*
-  * **indent** (<code>number</code>)  Indentation size. __*Default*__: 2
-  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**filePath**🔹 | <code>string</code> | <span></span>
-**marker**?🔹 | <code>string</code> | __*Optional*__
-
-### Methods
-
-
-
 
 
 
@@ -2002,16 +1974,27 @@ __Extends__: [Component](#projen-component)
 new ProjectBuild(project: Project)
 ```
 
-* **name** (<code>string</code>)  *No description*
-* **props** (<code>[TaskOptions](#projen-taskoptions)</code>)  *No description*
-  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
-  * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
-  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
-  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
-  * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
-  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
-  * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**buildTask**🔹 | <code>[Task](#projen-task)</code> | The task responsible for a full release build.
+**compileTask**🔹 | <code>[Task](#projen-task)</code> | Compiles the code.
+**packageTask**🔹 | <code>[Task](#projen-task)</code> | The "package" task.
+**postCompileTask**🔹 | <code>[Task](#projen-task)</code> | Post-compile task.
+**preCompileTask**🔹 | <code>[Task](#projen-task)</code> | Pre-compile task.
+**testTask**🔹 | <code>[Task](#projen-task)</code> | Tests the code.
+
+
+
+## class Projects 🔹 <a id="projen-projects"></a>
+
+Programmatic API for projen.
 
 
 ### Methods
@@ -2281,6 +2264,7 @@ new SourceCode(project: Project, filePath: string, options?: SourceCodeOptions)
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[SourceCodeOptions](#projen-sourcecodeoptions)</code>)  *No description*
   * **indent** (<code>number</code>)  Indentation size. __*Default*__: 2
+  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
 
 
 
@@ -2316,15 +2300,7 @@ Emit a line of code.
 line(code?: string): void
 ```
 
-* **name** (<code>string</code>)  The name of the task.
-* **options** (<code>[TaskOptions](#projen-taskoptions)</code>)  Task options.
-  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
-  * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
-  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
-  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
-  * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
-  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
-  * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
+* **code** (<code>string</code>)  The contents, if not specified, just adds a newline.
 
 
 
@@ -2369,6 +2345,7 @@ new Task(name: string, props?: TaskOptions)
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+  * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
 
 
 
@@ -2442,58 +2419,6 @@ lock(): void
 ```
 
 
-__Returns__:
-* <code>string</code>
-
-
-
-## class Version 🔹 <a id="projen-version"></a>
-
-
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new Version(project: Project, options: VersionOptions)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
-  * **artifactsDirectory** (<code>string</code>)  The name of the directory into which `changelog.md` and `version.txt` files are emitted. 
-  * **versionInputFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
-  * **tagPrefix** (<code>string</code>)  The tag prefix corresponding to this version. __*Optional*__
-  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration for versionrc file used by standard-release. __*Optional*__
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**bumpTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
-**changelogFileName**🔹 | <code>string</code> | The name of the changelog file (under `artifactsDirectory`).
-**releaseTagFileName**🔹 | <code>string</code> | The name of the file that contains the release tag (under `artifactsDirectory`).
-**unbumpTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
-**versionFileName**🔹 | <code>string</code> | The name of the file that contains the version (under `artifactsDirectory`).
-*static* **STANDARD_VERSION**🔹 | <code>string</code> | <span></span>
-
-
-
-## class XmlFile 🔹 <a id="projen-xmlfile"></a>
-
-Represents an XML file.
-
-Objects passed in will be synthesized using the npm "xml" library.
-
-__Extends__: [ObjectFile](#projen-objectfile)
-
-### Initializer
 
 
 
@@ -2834,6 +2759,7 @@ addTask(name: string, options?: TaskOptions): Task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+  * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
 
 __Returns__:
 * <code>[Task](#projen-task)</code>
@@ -2977,27 +2903,31 @@ new TextFile(project: Project, filePath: string, options?: TextFileOptions)
   * **mainClass** (<code>string</code>)  The name of the Java class with the static `main()` method. 
 
 
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**marker**🔹 | <code>boolean</code> | Indicates if the projen marker JSON-comment will be added to the output object.
-**omitEmpty**🔹 | <code>boolean</code> | Indicates if empty objects and arrays are omitted from the output object.
-
 ### Methods
 
 
-#### addDeletionOverride(path)🔹 <a id="projen-objectfile-adddeletionoverride"></a>
+#### addLine(line)🔹 <a id="projen-textfile-addline"></a>
 
-Syntactic sugar for `addOverride(path, undefined)`.
+Adds a line to the text file.
 
 ```ts
-addDeletionOverride(path: string): void
+addLine(line: string): void
 ```
 
-* **path** (<code>string</code>)  The path of the value to delete.
+* **line** (<code>string</code>)  the line to add (can use tokens).
+
+
+
+
+#### protected synthesizeContent(_)🔹 <a id="projen-textfile-synthesizecontent"></a>
+
+Implemented by derived classes and returns the contents of the file to emit.
+
+```ts
+protected synthesizeContent(_: IResolver): string
+```
+
+* **_** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
 
 __Returns__:
 * <code>string</code>
@@ -3457,7 +3387,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **projenCredentials** (<code>[github.GithubCredentials](#projen-github-githubcredentials)</code>)  Choose a method of providing GitHub API access for projen workflows. __*Default*__: use a personal access token named PROJEN_GITHUB_TOKEN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -3491,7 +3421,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
@@ -3755,51 +3685,37 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **lambdaExtensionAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Common options for all AWS Lambda functions. __*Default*__: default options
 
+### Methods
 
-__Returns__:
-* <code>[tasks.Task](#projen-tasks-task)</code>
 
-#### runTaskCommand(task)🔹 <a id="projen-project-runtaskcommand"></a>
+#### addCdkDependencies(...deps)⚠️ <a id="projen-awscdk-awscdkconstructlibrary-addcdkdependencies"></a>
 
-Returns the shell command to execute in order to run a task.
+Adds dependencies to AWS CDK modules.
 
-By default, this is `npx projen@<version> <task>`
-
-```ts
-runTaskCommand(task: Task): string
-```
-
-* **task** (<code>[tasks.Task](#projen-tasks-task)</code>)  The task for which the command is required.
-
-__Returns__:
-* <code>string</code>
-
-#### synth()🔹 <a id="projen-project-synth"></a>
-
-Synthesize all project files into `outdir`.
-
-1. Call "this.preSynthesize()"
-2. Delete all generated files
-3. Synthesize all sub-projects
-4. Synthesize all components of this project
-5. Call "postSynthesize()" for all components of this project
-6. Call "this.postSynthesize()"
+Since this is a library project, dependencies will be added as peer dependencies.
 
 ```ts
-synth(): void
+addCdkDependencies(...deps: string[]): void
 ```
 
+* **deps** (<code>string</code>)  names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
 
 
 
 
-#### tryFindFile(filePath)🔹 <a id="projen-project-tryfindfile"></a>
+#### addCdkTestDependencies(...deps)⚠️ <a id="projen-awscdk-awscdkconstructlibrary-addcdktestdependencies"></a>
 
-Finds a file at the specified relative path within this project and all its subprojects.
+Adds AWS CDK modules as dev dependencies.
 
 ```ts
-tryFindFile(filePath: string): FileBase
+addCdkTestDependencies(...deps: string[]): void
 ```
+
+* **deps** (<code>string</code>)  names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
+
+
+
+
 
 
 ## class AwsCdkDeps 🔹 <a id="projen-awscdk-awscdkdeps"></a>
@@ -4026,7 +3942,7 @@ new awscdk.AwsCdkJavaApp(options: AwsCdkJavaAppOptions)
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **artifactId** (<code>string</code>)  The artifactId is generally the name that the project is known by. 
@@ -4132,7 +4048,7 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. 
@@ -4263,7 +4179,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
@@ -4535,7 +4451,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
@@ -4656,128 +4572,15 @@ __Extends__: [cdk.IntegrationTestBase](#projen-cdk-integrationtestbase)
 new awscdk.IntegrationTest(project: Project, options: IntegrationTestOptions)
 ```
 
-* **options** (<code>[TypeScriptProjectOptions](#projen-typescriptprojectoptions)</code>)  *No description*
-  * **name** (<code>string</code>)  This is the name of your project. 
-  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
-  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
-  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
-  * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
-  * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
-  * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
-  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
-  * **github** (<code>boolean</code>)  Enable GitHub integration. __*Default*__: true
-  * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
-  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
-  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
-  * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
-  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
-  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
-  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
-  * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
-  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
-  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
-  * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
-  * **codeArtifactOptions** (<code>[CodeArtifactOptions](#projen-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
-  * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
-  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
-  * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
-  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: "lib/index.js"
-  * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
-  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
-  * **license** (<code>string</code>)  License's SPDX identifier. __*Default*__: "Apache-2.0"
-  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
-  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
-  * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
-  * **npmAccess** (<code>[NpmAccess](#projen-npmaccess)</code>)  Access level of the npm package. __*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
-  * **npmDistTag** (<code>string</code>)  Tags can be used to provide an alias instead of version numbers. __*Default*__: "latest"
-  * **npmRegistry** (<code>string</code>)  The host name of the npm registry to publish to. __*Optional*__
-  * **npmRegistryUrl** (<code>string</code>)  The base URL of the npm package registry. __*Default*__: "https://registry.npmjs.org"
-  * **npmTokenSecret** (<code>string</code>)  GitHub secret which contains the NPM token to use when publishing packages. __*Default*__: "NPM_TOKEN"
-  * **packageManager** (<code>[NodePackageManager](#projen-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
-  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
-  * **peerDependencyOptions** (<code>[PeerDependencyOptions](#projen-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
-  * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
-  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
-  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
-  * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
-  * **antitamper** (<code>boolean</code>)  Checks that after build there are no modified files on git. __*Default*__: true
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain artifacts to be published to npm. __*Default*__: "dist"
-  * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `jsii-release` which is used to publish modules to npm. __*Default*__: "latest"
-  * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
-  * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
-  * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
-  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
-  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
-  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
-  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
-  * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
-  * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
-  * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
-  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
-  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
-  * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
-  * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
-  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
-  * **bundlerOptions** (<code>[javascript.BundlerCommonOptions](#projen-javascript-bundlercommonoptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
-  * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
-  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
-  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
-  * **dependabot** (<code>boolean</code>)  Use dependabot to handle dependency upgrades. __*Default*__: false
-  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
-  * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
-  * **depsUpgradeOptions** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
-  * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
-  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
-  * **jestOptions** (<code>[JestOptions](#projen-jestoptions)</code>)  Jest options. __*Default*__: default options
-  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
-  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
-  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
-  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
-  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
-  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
-  * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
-  * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
-  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
-  * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
-  * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
-  * **pullRequestTemplateContents** (<code>Array<string></code>)  The contents of the pull request template. __*Default*__: default content
-  * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
-  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
-  * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
-  * **workflowBootstrapSteps** (<code>Array<any></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
-  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
-  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
-  * **disableTsconfig** (<code>boolean</code>)  Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler). __*Default*__: false
-  * **docgen** (<code>boolean</code>)  Docgen by Typedoc. __*Default*__: false
-  * **docsDirectory** (<code>string</code>)  Docs directory. __*Default*__: "docs"
-  * **entrypointTypes** (<code>string</code>)  The .d.ts file that includes the type declarations for this module. __*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
-  * **eslint** (<code>boolean</code>)  Setup eslint. __*Default*__: true
-  * **eslintOptions** (<code>[EslintOptions](#projen-eslintoptions)</code>)  Eslint options. __*Default*__: opinionated default options
-  * **libdir** (<code>string</code>)  Typescript  artifacts output directory. __*Default*__: "lib"
-  * **package** (<code>boolean</code>)  Defines a `yarn package` command that will produce a tarball and place it under `dist/js`. __*Default*__: true
-  * **projenrcTs** (<code>boolean</code>)  Use TypeScript for your projenrc file (`.projenrc.ts`). __*Default*__: false
-  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options for .projenrc.ts. __*Optional*__
-  * **sampleCode** (<code>boolean</code>)  Generate one-time sample in `src/` and `test/` if there are no files there. __*Default*__: true
-  * **srcdir** (<code>string</code>)  Typescript sources directory. __*Default*__: "src"
-  * **testdir** (<code>string</code>)  Jest tests directory. Tests files should be named `xxx.test.ts`. __*Default*__: "test"
-  * **tsconfig** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom TSConfig. __*Default*__: default options
-  * **tsconfigDev** (<code>[TypescriptConfigOptions](#projen-typescriptconfigoptions)</code>)  Custom tsconfig options for the development tsconfig.json file (used for testing). __*Default*__: use the production tsconfig options
-  * **tsconfigDevFile** (<code>string</code>)  The name of the development tsconfig.json file. __*Default*__: "tsconfig.dev.json"
-  * **typescriptVersion** (<code>string</code>)  TypeScript version to use. __*Default*__: "latest"
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)</code>)  *No description*
+  * **destroyAfterDeploy** (<code>boolean</code>)  Destroy the test app after a successful deployment. __*Default*__: true
+  * **pathMetadata** (<code>boolean</code>)  Enables path metadata, adding `aws:cdk:path`, with the defining construct's path, to the CloudFormation metadata for each synthesized resource. __*Default*__: false
+  * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the integration test app. 
+  * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use when running integration test cdk apps. 
+  * **name** (<code>string</code>)  Name of the integration test. __*Default*__: Derived from the entrypoint filename.
+  * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
+  * **stacks** (<code>Array<string></code>)  A list of stacks within the integration test to deploy/destroy. __*Default*__: ["**"]
 
 
 
@@ -4959,57 +4762,194 @@ new awscdk.IntegrationTestAutoDiscover(project: Project, options: IntegrationTes
 
 
 
+
+## class LambdaAutoDiscover 🔹 <a id="projen-awscdk-lambdaautodiscover"></a>
+
+Creates lambdas from entry points discovered in the project's source tree.
+
+__Submodule__: awscdk
+
+__Extends__: [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.LambdaAutoDiscover(project: Project, options: LambdaAutoDiscoverOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.LambdaAutoDiscoverOptions](#projen-awscdk-lambdaautodiscoveroptions)</code>)  *No description*
+  * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
+  * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
+  * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
+  * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for AWS Lambda functions. __*Optional*__
+
+
+
+
+## class LambdaExtension 🔹 <a id="projen-awscdk-lambdaextension"></a>
+
+Create a Lambda Extension.
+
+__Submodule__: awscdk
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.LambdaExtension(project: Project, options: LambdaExtensionOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.LambdaExtensionOptions](#projen-awscdk-lambdaextensionoptions)</code>)  *No description*
+  * **bundlingOptions** (<code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code>)  Bundling options for this AWS Lambda extension. __*Default*__: defaults
+  * **compatibleRuntimes** (<code>Array<[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)></code>)  The extension's compatible runtimes. __*Optional*__
+  * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
+  * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the AWS Lambda extension entrypoint (stand-alone script). 
+  * **constructFile** (<code>string</code>)  The name of the generated TypeScript source file. __*Default*__: The name of the entrypoint file, with the `-layer-version.ts` suffix instead of `.lambda-extension.ts`.
+  * **constructName** (<code>string</code>)  The name of the generated `lambda.LayerVersion` subclass. __*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `LayerVersion` (e.g. `AppConfigLayerVersion`).
+  * **name** (<code>string</code>)  Name of the extension. __*Default*__: Derived from the entrypoint filename.
+
+
+
+
+## class LambdaExtensionAutoDiscover 🔹 <a id="projen-awscdk-lambdaextensionautodiscover"></a>
+
+Creates Lambda Extensions from entrypoints discovered in the project's source tree.
+
+__Submodule__: awscdk
+
+__Extends__: [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.LambdaExtensionAutoDiscover(project: Project, options: LambdaExtensionAutoDiscoverOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.LambdaExtensionAutoDiscoverOptions](#projen-awscdk-lambdaextensionautodiscoveroptions)</code>)  *No description*
+  * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
+  * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
+  * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
+  * **lambdaExtensionOptions** (<code>[awscdk.LambdaExtensionCommonOptions](#projen-awscdk-lambdaextensioncommonoptions)</code>)  Options for lambda extensions. __*Optional*__
+
+
+
+
+## class LambdaFunction 🔹 <a id="projen-awscdk-lambdafunction"></a>
+
+Generates a pre-bundled AWS Lambda function construct from handler code.
+
+To use this, create an AWS Lambda handler file under your source tree with
+the `.lambda.ts` extension and add a `LambdaFunction` component to your
+typescript project pointing to this entrypoint.
+
+This will add a task to your "compile" step which will use `esbuild` to
+bundle the handler code into the build directory. It will also generate a
+file `src/foo-function.ts` with a custom AWS construct called `FooFunction`
+which extends `@aws-cdk/aws-lambda.Function` which is bound to the bundled
+handle through an asset.
+
+__Submodule__: awscdk
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+Defines a pre-bundled AWS Lambda function construct from handler code.
+
+```ts
+new awscdk.LambdaFunction(project: Project, options: LambdaFunctionOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  The project to use.
+* **options** (<code>[awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)</code>)  Options.
+  * **awsSdkConnectionReuse** (<code>boolean</code>)  Whether to automatically reuse TCP connections when working with the AWS SDK for JavaScript. __*Default*__: true
+  * **bundlingOptions** (<code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code>)  Bundling options for this AWS Lambda function. __*Default*__: defaults
+  * **runtime** (<code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code>)  The node.js version to target. __*Default*__: Runtime.NODEJS_14_X
+  * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
+  * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function). 
+  * **constructFile** (<code>string</code>)  The name of the generated TypeScript source file. __*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
+  * **constructName** (<code>string</code>)  The name of the generated `lambda.Function` subclass. __*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
+
+
+
+
+## class LambdaRuntime 🔹 <a id="projen-awscdk-lambdaruntime"></a>
+
+The runtime for the AWS Lambda function.
+
+__Submodule__: awscdk
+
+
+
 ### Properties
 
 
 Name | Type | Description 
 -----|------|-------------
-**compilerOptions**🔹 | <code>[TypeScriptCompilerOptions](#projen-typescriptcompileroptions)</code> | <span></span>
-**exclude**🔹 | <code>Array<string></code> | <span></span>
-**file**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | <span></span>
-**fileName**🔹 | <code>string</code> | <span></span>
-**include**🔹 | <code>Array<string></code> | <span></span>
-
-### Methods
-
-
-#### addExclude(pattern)🔹 <a id="projen-typescriptconfig-addexclude"></a>
+**esbuildPlatform**🔹 | <code>string</code> | <span></span>
+**esbuildTarget**🔹 | <code>string</code> | The esbuild setting to use.
+**functionRuntime**🔹 | <code>string</code> | The aws-lambda.Runtime member name to use.
+*static* **NODEJS_10_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 10.x.
+*static* **NODEJS_12_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 12.x.
+*static* **NODEJS_14_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 14.x.
 
 
 
-```ts
-addExclude(pattern: string): void
-```
+## class BuildWorkflow 🔹 <a id="projen-build-buildworkflow"></a>
 
-* **pattern** (<code>string</code>)  *No description*
+
 
 __Submodule__: build
-
-
-
-#### addInclude(pattern)🔹 <a id="projen-typescriptconfig-addinclude"></a>
-
-
-
-```ts
-addInclude(pattern: string): void
-```
-
-* **pattern** (<code>string</code>)  *No description*
-
-
-
-
-### Methods
-
-
-## class UpgradeDependencies 🔹 <a id="projen-upgradedependencies"></a>
-
-Upgrade node project dependencies.
 
 __Extends__: [Component](#projen-component)
 
 ### Initializer
+
+
+
+
+```ts
+new build.BuildWorkflow(project: Project, options: BuildWorkflowOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[build.BuildWorkflowOptions](#projen-build-buildworkflowoptions)</code>)  *No description*
+  * **artifactsDirectory** (<code>string</code>)  A name of a directory that includes build artifacts. 
+  * **buildTask** (<code>[Task](#projen-task)</code>)  The task to execute in order to build the project. 
+  * **containerImage** (<code>string</code>)  The container image to use for builds. __*Default*__: the default workflow container
+  * **env** (<code>Map<string, string></code>)  Build environment variables. __*Default*__: {}
+  * **gitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  Git identity to use for the workflow. __*Default*__: default identity
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
+  * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build. __*Default*__: []
+  * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before the build. __*Default*__: []
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **workflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**buildJobIds**🔹 | <code>Array<string></code> | Returns a list of job IDs that are part of the build.
+
+### Methods
+
 
 #### addPostBuildJob(id, job)🔹 <a id="projen-build-buildworkflow-addpostbuildjob"></a>
 
@@ -5020,49 +4960,58 @@ self-mutate, the branch will either be updated or the build will fail (in
 forks), so there is no point in executing the post-build job.
 
 ```ts
-new UpgradeDependencies(project: NodeProject, options?: UpgradeDependenciesOptions)
+addPostBuildJob(id: string, job: Job): void
 ```
 
-* **project** (<code>[NodeProject](#projen-nodeproject)</code>)  *No description*
-* **options** (<code>[UpgradeDependenciesOptions](#projen-upgradedependenciesoptions)</code>)  *No description*
-  * **exclude** (<code>Array<string></code>)  List of package names to exclude during the upgrade. __*Default*__: Nothing is excluded.
-  * **ignoreProjen** (<code>boolean</code>)  Whether or not to ignore projen upgrades. __*Default*__: true
-  * **include** (<code>Array<string></code>)  List of package names to include during the upgrade. __*Default*__: Everything is included.
-  * **pullRequestTitle** (<code>string</code>)  Title of the pull request to use (should be all lower-case). __*Default*__: "upgrade dependencies"
-  * **signoff** (<code>boolean</code>)  Add Signed-off-by line by the committer at the end of the commit log message. __*Default*__: true
-  * **taskName** (<code>string</code>)  The name of the task that will be created. __*Default*__: "upgrade".
-  * **workflow** (<code>boolean</code>)  Include a github workflow for creating PR's that upgrades the required dependencies, either by manual dispatch, or by a schedule. __*Default*__: true for root projects, false for sub-projects.
-  * **workflowOptions** (<code>[UpgradeDependenciesWorkflowOptions](#projen-upgradedependenciesworkflowoptions)</code>)  Options for the github workflow. __*Default*__: default options.
+* **id** (<code>string</code>)  The id of the new job.
+* **job** (<code>[github.workflows.Job](#projen-github-workflows-job)</code>)  The job specification.
+  * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  You can modify the default permissions granted to the GITHUB_TOKEN, adding or removing access as required, so that you only allow the minimum required access. 
+  * **runsOn** (<code>Array<string></code>)  The type of machine to run the job on. 
+  * **steps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A job contains a sequence of tasks called steps. 
+  * **concurrency** (<code>any</code>)  Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. __*Optional*__
+  * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  A container to run any steps in a job that don't already specify a container. __*Optional*__
+  * **continueOnError** (<code>boolean</code>)  Prevents a workflow run from failing when a job fails. __*Optional*__
+  * **defaults** (<code>[github.workflows.JobDefaults](#projen-github-workflows-jobdefaults)</code>)  A map of default settings that will apply to all steps in the job. __*Optional*__
+  * **env** (<code>Map<string, string></code>)  A map of environment variables that are available to all steps in the job. __*Optional*__
+  * **environment** (<code>any</code>)  The environment that the job references. __*Optional*__
+  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
+  * **name** (<code>string</code>)  The name of the job displayed on GitHub. __*Optional*__
+  * **needs** (<code>Array<string></code>)  Identifies any jobs that must complete successfully before this job will run. __*Optional*__
+  * **outputs** (<code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code>)  A map of outputs for a job. __*Optional*__
+  * **services** (<code>Map<string, [github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)></code>)  Used to host service containers for a job in a workflow. __*Optional*__
+  * **strategy** (<code>[github.workflows.JobStrategy](#projen-github-workflows-jobstrategy)</code>)  A strategy creates a build matrix for your jobs. __*Optional*__
+  * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to let a job run before GitHub automatically cancels it. __*Default*__: 360
+  * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools required for this job. __*Optional*__
 
 
 
-### Properties
 
+#### addPostBuildJobCommands(id, commands, options?)🔹 <a id="projen-build-buildworkflow-addpostbuildjobcommands"></a>
 
-Name | Type | Description 
------|------|-------------
-**ignoresProjen**🔹 | <code>boolean</code> | Whether or not projen is also upgraded in this workflow,.
-**workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | The workflows that execute the upgrades.
+Run a sequence of commands as a job within the build workflow which is executed after the build job succeeded.
 
-
-
-#### preSynthesize()🔹 <a id="projen-upgradedependencies-presynthesize"></a>
-
-Called before synthesis.
+Jobs are executed _only_ if the build did NOT self mutate. If the build
+self-mutate, the branch will either be updated or the build will fail (in
+forks), so there is no point in executing the post-build job.
 
 ```ts
-preSynthesize(): void
+addPostBuildJobCommands(id: string, commands: Array<string>, options?: AddPostBuildJobCommandsOptions): void
 ```
 
+* **id** (<code>string</code>)  *No description*
+* **commands** (<code>Array<string></code>)  *No description*
+* **options** (<code>[build.AddPostBuildJobCommandsOptions](#projen-build-addpostbuildjobcommandsoptions)</code>)  Specify tools and other options.
+  * **checkoutRepo** (<code>boolean</code>)  Check out the repository at the pull request branch before commands are run. __*Default*__: false
+  * **installDeps** (<code>boolean</code>)  Install project dependencies before running commands. `checkoutRepo` must also be set to true. __*Default*__: false
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools that should be installed before the commands are run. __*Optional*__
 
 
 
 
+#### addPostBuildJobTask(task, options)🔹 <a id="projen-build-buildworkflow-addpostbuildjobtask"></a>
 
-
-## class UpgradeDependenciesSchedule 🔹 <a id="projen-upgradedependenciesschedule"></a>
-
-How often to check for new versions and raise pull requests for version upgrades.
+Run a task as a job within the build workflow which is executed after the build job succeeded.
 
 The job will have access to build artifacts and will install project
 dependencies in order to be able to run any commands used in the tasks.
@@ -5071,29 +5020,95 @@ Jobs are executed _only_ if the build did NOT self mutate. If the build
 self-mutate, the branch will either be updated or the build will fail (in
 forks), so there is no point in executing the post-build job.
 
+```ts
+addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions): void
+```
+
+* **task** (<code>[Task](#projen-task)</code>)  *No description*
+* **options** (<code>[build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)</code>)  Specify tools and other options.
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools that should be installed before the task is run. __*Optional*__
+
+
+
+
+#### addPostBuildSteps(...steps)🔹 <a id="projen-build-buildworkflow-addpostbuildsteps"></a>
+
+Adds steps that are executed after the build.
+
+```ts
+addPostBuildSteps(...steps: JobStep[]): void
+```
+
+* **steps** (<code>[github.workflows.JobStep](#projen-github-workflows-jobstep)</code>)  The job steps.
+  * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
+  * **env** (<code>Map<string, string></code>)  Sets environment variables for steps to use in the runner environment. __*Optional*__
+  * **id** (<code>string</code>)  A unique identifier for the step. __*Optional*__
+  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
+  * **name** (<code>string</code>)  A name for your step to display on GitHub. __*Optional*__
+  * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
+  * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
+  * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
+  * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
+
+
+
+
+
+
+## class AutoDiscoverBase 🔹 <a id="projen-cdk-autodiscoverbase"></a>
+
+Base class for auto-discovering and creating project subcomponents.
+
+__Submodule__: cdk
+
+__Extends__: [Component](#projen-component)
+__Implemented by__: [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover), [awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover), [awscdk.LambdaExtensionAutoDiscover](#projen-awscdk-lambdaextensionautodiscover), [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase), [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)
+
+### Initializer
+
+
+
+
+```ts
+new cdk.AutoDiscoverBase(project: Project, options: AutoDiscoverBaseOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[cdk.AutoDiscoverBaseOptions](#projen-cdk-autodiscoverbaseoptions)</code>)  *No description*
+  * **extension** (<code>string</code>)  Locate files with the given extension. 
+  * **projectdir** (<code>string</code>)  Locate entrypoints in the given project directory. 
+
+
+
 ### Properties
 
 
 Name | Type | Description 
 -----|------|-------------
-**cron**🔹 | <code>Array<string></code> | <span></span>
-*static* **DAILY**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | At 00:00.
-*static* **MONTHLY**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | At 00:00 on day-of-month 1.
-*static* **NEVER**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | Disables automatic upgrades.
-*static* **WEEKDAY**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | At 00:00 on every day-of-week from Monday through Friday.
-*static* **WEEKLY**🔹 | <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code> | At 00:00 on Monday.
+**entrypoints**🔹 | <code>Array<string></code> | Auto-discovered entry points with paths relative to the project directory.
 
 
 
-#### *static* expressions(cron)🔹 <a id="projen-upgradedependenciesschedule-expressions"></a>
+## class ConstructLibrary 🔹 <a id="projen-cdk-constructlibrary"></a>
 
-Create a schedule from a raw cron expression.
+A multi-language library for CDK constructs.
+
+__Submodule__: cdk
+
+__Extends__: [cdk.JsiiProject](#projen-cdk-jsiiproject)
+__Implemented by__: [awscdk.AwsCdkConstructLibrary](#projen-awscdk-awscdkconstructlibrary), [awscdk.ConstructLibraryAws](#projen-awscdk-constructlibraryaws), [cdk8s.ConstructLibraryCdk8s](#projen-cdk8s-constructlibrarycdk8s), [cdktf.ConstructLibraryCdktf](#projen-cdktf-constructlibrarycdktf)
+
+### Initializer
+
+
+
 
 ```ts
-static expressions(cron: Array<string>): UpgradeDependenciesSchedule
+new cdk.ConstructLibrary(options: ConstructLibraryOptions)
 ```
 
-* **options** (<code>[cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)</code>)  *No description*
+* **options** (<code>[cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -5148,6 +5163,7 @@ static expressions(cron: Array<string>): UpgradeDependenciesSchedule
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
@@ -5235,19 +5251,17 @@ static expressions(cron: Array<string>): UpgradeDependenciesSchedule
   * **python** (<code>[cdk.JsiiPythonTarget](#projen-cdk-jsiipythontarget)</code>)  *No description* __*Optional*__
   * **rootdir** (<code>string</code>)  *No description* __*Default*__: "."
   * **catalog** (<code>[cdk.Catalog](#projen-cdk-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
-  * **cdktfVersion** (<code>string</code>)  Minimum target version this library is tested against. 
-  * **constructsVersion** (<code>string</code>)  Construct version to use. __*Default*__: "^10.0.12"
-
-__Returns__:
-* <code>[UpgradeDependenciesSchedule](#projen-upgradedependenciesschedule)</code>
 
 
 
-## class Version 🔹 <a id="projen-version"></a>
 
+## class IntegrationTestAutoDiscoverBase 🔹 <a id="projen-cdk-integrationtestautodiscoverbase"></a>
 
+Base class for locating integration tests in the project's test tree.
 
-__Extends__: [Component](#projen-component)
+__Submodule__: cdk
+
+__Extends__: [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)
 
 ### Initializer
 
@@ -5255,14 +5269,39 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new Version(project: Project, options: VersionOptions)
+new cdk.IntegrationTestAutoDiscoverBase(project: Project, options: IntegrationTestAutoDiscoverBaseOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
-  * **artifactsDirectory** (<code>string</code>)  The name of the directory into which `changelog.md` and `version.txt` files are emitted. 
-  * **versionInputFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
-  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration for versionrc file used by standard-release. __*Optional*__
+* **options** (<code>[cdk.IntegrationTestAutoDiscoverBaseOptions](#projen-cdk-integrationtestautodiscoverbaseoptions)</code>)  *No description*
+  * **testdir** (<code>string</code>)  Test source tree. 
+
+
+
+
+## class IntegrationTestBase 🔹 <a id="projen-cdk-integrationtestbase"></a>
+
+
+
+__Submodule__: cdk
+
+__Extends__: [Component](#projen-component)
+__Implemented by__: [awscdk.IntegrationTest](#projen-awscdk-integrationtest), [cdk8s.IntegrationTest](#projen-cdk8s-integrationtest)
+
+### Initializer
+
+
+
+
+```ts
+new cdk.IntegrationTestBase(project: Project, options: IntegrationTestBaseOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[cdk.IntegrationTestBaseOptions](#projen-cdk-integrationtestbaseoptions)</code>)  *No description*
+  * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the integration test app. 
+  * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use when running integration test cdk apps. 
+  * **name** (<code>string</code>)  Name of the integration test. __*Default*__: Derived from the entrypoint filename.
 
 
 
@@ -5271,119 +5310,21 @@ new Version(project: Project, options: VersionOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**bumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-**changelogFileName**🔹 | <code>string</code> | The name of the changelog file (under `artifactsDirectory`).
-**releaseTagFileName**🔹 | <code>string</code> | The name of the file that contains the release tag (under `artifactsDirectory`).
-**unbumpTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | <span></span>
-**versionFileName**🔹 | <code>string</code> | The name of the file that contains the version (under `artifactsDirectory`).
-*static* **STANDARD_VERSION**🔹 | <code>string</code> | <span></span>
+**assertTask**🔹 | <code>[Task](#projen-task)</code> | Synthesizes the integration test and compares against a local copy (runs during build).
+**deployTask**🔹 | <code>[Task](#projen-task)</code> | Deploy the integration test and update the snapshot upon success.
+**name**🔹 | <code>string</code> | Integration test name.
+**snapshotDir**🔹 | <code>string</code> | Snapshot output directory.
+**snapshotTask**🔹 | <code>[Task](#projen-task)</code> | Just update snapshot (without deployment).
+**tmpDir**🔹 | <code>string</code> | Temporary directory for each integration test.
 
 
 
-## class XmlFile 🔹 <a id="projen-xmlfile"></a>
+## class JsiiDocgen 🔹 <a id="projen-cdk-jsiidocgen"></a>
 
-Represents an XML file.
-
-Objects passed in will be synthesized using the npm "xml" library.
-
-__Extends__: [ObjectFile](#projen-objectfile)
-
-### Initializer
-
-
-
-
-```ts
-new XmlFile(project: Project, filePath: string, options?: XmlFileOptions)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **filePath** (<code>string</code>)  *No description*
-* **options** (<code>[XmlFileOptions](#projen-xmlfileoptions)</code>)  *No description*
-  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
-  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
-  * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
-  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: true
-  * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
-  * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
-
-
-### Methods
-
-
-#### protected synthesizeContent(resolver)🔹 <a id="projen-xmlfile-synthesizecontent"></a>
-
-Implemented by derived classes and returns the contents of the file to emit.
-
-```ts
-protected synthesizeContent(resolver: IResolver): string
-```
-
-* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
-
-__Returns__:
-* <code>string</code>
-
-
-
-## class YamlFile 🔹 <a id="projen-yamlfile"></a>
-
-Represents a YAML file.
-
-__Extends__: [ObjectFile](#projen-objectfile)
-
-### Initializer
-
-
-
-
-```ts
-new YamlFile(project: Project, filePath: string, options: YamlFileOptions)
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **filePath** (<code>string</code>)  *No description*
-* **options** (<code>[YamlFileOptions](#projen-yamlfileoptions)</code>)  *No description*
-  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
-  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
-  * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
-  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: true
-  * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
-  * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
-
-
-### Methods
-
-
-#### protected synthesizeContent(resolver)🔹 <a id="projen-yamlfile-synthesizecontent"></a>
-
-Implemented by derived classes and returns the contents of the file to emit.
-
-```ts
-protected synthesizeContent(resolver: IResolver): string
-```
-
-* **resolver** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
-
-__Returns__:
-* <code>string</code>
-
-
-
-## class AutoDiscover 🔹 <a id="projen-awscdk-autodiscover"></a>
-
-Automatically creates a `LambdaFunction` for all `.lambda.ts` files under the source directory of the project.
-
-## class AutoDiscoverBase 🔹 <a id="projen-cdk-autodiscoverbase"></a>
-
-Base class for auto-discovering and creating project subcomponents.
+Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
 
 __Submodule__: cdk
 
-__Extends__: [Component](#projen-component)
-__Implemented by__: [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover), [awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover), [awscdk.LambdaExtensionAutoDiscover](#projen-awscdk-lambdaextensionautodiscover), [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase), [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)
 
 ### Initializer
 
@@ -5391,33 +5332,23 @@ __Implemented by__: [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrat
 
 
 ```ts
-new cdk.AutoDiscoverBase(project: Project, options: AutoDiscoverBaseOptions)
+new cdk.JsiiDocgen(project: JsiiProject, options?: JsiiDocgenOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[cdk.AutoDiscoverBaseOptions](#projen-cdk-autodiscoverbaseoptions)</code>)  *No description*
-  * **extension** (<code>string</code>)  Locate files with the given extension. 
-  * **projectdir** (<code>string</code>)  Locate entrypoints in the given project directory. 
+* **project** (<code>[cdk.JsiiProject](#projen-cdk-jsiiproject)</code>)  *No description*
+* **options** (<code>[cdk.JsiiDocgenOptions](#projen-cdk-jsiidocgenoptions)</code>)  *No description*
+  * **filePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
 
 
 
-### Properties
 
+## class JsiiProject 🔹 <a id="projen-cdk-jsiiproject"></a>
 
-Name | Type | Description 
------|------|-------------
-**entrypoints**🔹 | <code>Array<string></code> | Auto-discovered entry points with paths relative to the project directory.
-
-
-
-## class ConstructLibrary 🔹 <a id="projen-cdk-constructlibrary"></a>
-
-A multi-language library for CDK constructs.
+Multi-language jsii library project.
 
 __Submodule__: cdk
 
-__Extends__: [cdk.JsiiProject](#projen-cdk-jsiiproject)
-__Implemented by__: [awscdk.AwsCdkConstructLibrary](#projen-awscdk-awscdkconstructlibrary), [awscdk.ConstructLibraryAws](#projen-awscdk-constructlibraryaws), [cdk8s.ConstructLibraryCdk8s](#projen-cdk8s-constructlibrarycdk8s), [cdktf.ConstructLibraryCdktf](#projen-cdktf-constructlibrarycdktf)
+__Extends__: [typescript.TypeScriptProject](#projen-typescript-typescriptproject)
 
 ### Initializer
 
@@ -5425,10 +5356,10 @@ __Implemented by__: [awscdk.AwsCdkConstructLibrary](#projen-awscdk-awscdkconstru
 
 
 ```ts
-new cdk.ConstructLibrary(options: ConstructLibraryOptions)
+new cdk.JsiiProject(options: JsiiProjectOptions)
 ```
 
-* **options** (<code>[cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)</code>)  *No description*
+* **options** (<code>[cdk.JsiiProjectOptions](#projen-cdk-jsiiprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -5449,7 +5380,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **projenCredentials** (<code>[github.GithubCredentials](#projen-github-githubcredentials)</code>)  Choose a method of providing GitHub API access for projen workflows. __*Default*__: use a personal access token named PROJEN_GITHUB_TOKEN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -5662,100 +5593,21 @@ new cdk.IntegrationTestBase(project: Project, options: IntegrationTestBaseOption
 
 Name | Type | Description 
 -----|------|-------------
-**assertTask**🔹 | <code>[Task](#projen-task)</code> | Synthesizes the integration test and compares against a local copy (runs during build).
-**deployTask**🔹 | <code>[Task](#projen-task)</code> | Deploy the integration test and update the snapshot upon success.
-**name**🔹 | <code>string</code> | Integration test name.
-**snapshotDir**🔹 | <code>string</code> | Snapshot output directory.
-**snapshotTask**🔹 | <code>[Task](#projen-task)</code> | Just update snapshot (without deployment).
-**tmpDir**🔹 | <code>string</code> | Temporary directory for each integration test.
+**eslint**?🔹 | <code>[javascript.Eslint](#projen-javascript-eslint)</code> | __*Optional*__
 
 
 
-## class JsiiDocgen 🔹 <a id="projen-cdk-jsiidocgen"></a>
+## class AutoDiscover 🔹 <a id="projen-cdk8s-autodiscover"></a>
 
-Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
+Automatically discovers and creates `IntegrationTest`s from entry points found in the test tree.
 
-__Submodule__: cdk
-
-
-### Initializer
-
-
-Defines a pre-bundled AWS Lambda function construct from handler code.
-
-```ts
-new awscdk.LambdaFunction(project: Project, options: LambdaFunctionOptions)
-```
-
-* **options** (<code>[github.GitHubProjectOptions](#projen-github-githubprojectoptions)</code>)  *No description*
-  * **name** (<code>string</code>)  This is the name of your project. 
-  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
-  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
-  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
-  * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
-  * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
-  * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
-  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
-  * **github** (<code>boolean</code>)  Enable GitHub integration. __*Default*__: true
-  * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
-  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
-  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
-  * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**bundleTask**🔹 | <code>[tasks.Task](#projen-tasks-task)</code> | The bundle task for this function.
-
-
-
-## class LambdaRuntime 🔹 <a id="projen-awscdk-lambdaruntime"></a>
-
-The runtime for the AWS Lambda function.
-
-__Submodule__: awscdk
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**esbuildPlatform**🔹 | <code>string</code> | <span></span>
-**esbuildTarget**🔹 | <code>string</code> | The esbuild setting to use.
-**functionRuntime**🔹 | <code>string</code> | The aws-lambda.Runtime member name to use.
-*static* **NODEJS_10_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 10.x.
-*static* **NODEJS_12_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 12.x.
-*static* **NODEJS_14_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 14.x.
-
-
-
-## class Dependencies 🔹 <a id="projen-deps-dependencies"></a>
-
-The `Dependencies` component is responsible to track the list of dependencies a project has, and then used by project types as the model for rendering project-specific dependency manifests such as the dependencies section `package.json` files.
-
-To add a dependency you can use a project-type specific API such as
-`nodeProject.addDeps()` or use the generic API of `project.deps`:
-
-__Submodule__: deps
+__Submodule__: cdk8s
 
 __Extends__: [Component](#projen-component)
 
 ### Initializer
+
+
 
 
 Adds a dependencies component to the project.
@@ -5843,23 +5695,25 @@ Given `foo@^3.4.0` returns `{ name: "foo", version: "^3.4.0" }`.
 Given `bar@npm:@bar/legacy` returns `{ name: "bar", version: "npm:@bar/legacy" }`.
 
 ```ts
-new cdk.JsiiDocgen(project: JsiiProject, options?: JsiiDocgenOptions)
+new cdk8s.AutoDiscover(project: Project, options: AutoDiscoverOptions)
 ```
 
-* **project** (<code>[cdk.JsiiProject](#projen-cdk-jsiiproject)</code>)  *No description*
-* **options** (<code>[cdk.JsiiDocgenOptions](#projen-cdk-jsiidocgenoptions)</code>)  *No description*
-  * **filePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[cdk8s.AutoDiscoverOptions](#projen-cdk8s-autodiscoveroptions)</code>)  *No description*
+  * **testdir** (<code>string</code>)  Test source tree. 
+  * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
+  * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically discover integration tests. __*Default*__: true
 
 
 
 
-## class JsiiProject 🔹 <a id="projen-cdk-jsiiproject"></a>
+## class Cdk8sTypeScriptApp 🔹 <a id="projen-cdk8s-cdk8stypescriptapp"></a>
 
-Multi-language jsii library project.
+CDK8s app in TypeScript.
 
-__Submodule__: cdk
+__Submodule__: cdk8s
 
-__Extends__: [typescript.TypeScriptProject](#projen-typescript-typescriptproject)
+__Extends__: [typescript.TypeScriptAppProject](#projen-typescript-typescriptappproject)
 
 ### Initializer
 
@@ -5867,7 +5721,7 @@ __Extends__: [typescript.TypeScriptProject](#projen-typescript-typescriptproject
 
 
 ```ts
-new cdk.JsiiProject(options: JsiiProjectOptions)
+new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 ```
 
 * **options** (<code>[github.GitHubProjectOptions](#projen-github-githubprojectoptions)</code>)  *No description*
@@ -6299,7 +6153,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -6333,7 +6187,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
@@ -6536,7 +6390,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -6570,7 +6424,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
@@ -7642,7 +7496,7 @@ new java.JavaProject(options: JavaProjectOptions)
   * **projenCredentials** (<code>[github.GithubCredentials](#projen-github-githubcredentials)</code>)  Choose a method of providing GitHub API access for projen workflows. __*Default*__: use a personal access token named PROJEN_GITHUB_TOKEN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -8032,50 +7886,12 @@ __Extends__: [Component](#projen-component)
 new java.Projenrc(project: Project, pom: Pom, options?: ProjenrcOptions)
 ```
 
-* **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
-  * **name** (<code>string</code>)  This is the name of your project. 
-  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
-  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
-  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
-  * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
-  * **projenrcJsonOptions** (<code>[json.ProjenrcOptions](#projen-json-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
-  * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
-  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
-  * **github** (<code>boolean</code>)  Enable GitHub integration. __*Default*__: true
-  * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
-  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
-  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
-  * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
-  * **authorEmail** (<code>string</code>)  Author's e-mail. 
-  * **authorName** (<code>string</code>)  Author's name. 
-  * **version** (<code>string</code>)  Version of the package. 
-  * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
-  * **description** (<code>string</code>)  A short description of the package. __*Optional*__
-  * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
-  * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
-  * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
-  * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
-  * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
-  * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
-  * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
-  * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
-  * **poetry** (<code>boolean</code>)  Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. __*Default*__: false
-  * **projenrcPython** (<code>boolean</code>)  Use projenrc in python. __*Default*__: false
-  * **projenrcPythonOptions** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  Options related to projenrc in python. __*Default*__: default options
-  * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
-  * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
-  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
-  * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true if the project type is library
-  * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true
-  * **venvOptions** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  Venv options. __*Default*__: defaults
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **pom** (<code>[java.Pom](#projen-java-pom)</code>)  *No description*
+* **options** (<code>[java.ProjenrcOptions](#projen-java-projenrcoptions)</code>)  *No description*
+  * **className** (<code>string</code>)  The name of the Java class which contains the `main()` method for projen. __*Default*__: "projenrc"
+  * **projenVersion** (<code>string</code>)  The projen version to use. __*Default*__: current version
+  * **testScope** (<code>boolean</code>)  Defines projenrc under the test scope instead of the main scope, which is reserved to the app. __*Default*__: true
 
 
 
@@ -8476,7 +8292,7 @@ new javascript.NodePackage(project: Project, options?: NodePackageOptions)
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
 
@@ -8734,13 +8550,7 @@ removeScript(name: string): void
 
 #### renderUpgradePackagesCommand(exclude, include?)🔹 <a id="projen-javascript-nodepackage-renderupgradepackagescommand"></a>
 
-Name | Type | Description 
------|------|-------------
-**ignoresProjen**🔹 | <code>boolean</code> | Whether or not projen is also upgraded in this workflow,.
-**postUpgradeTask**🔹 | <code>[Task](#projen-task)</code> | A task run after the upgrade task.
-**upgradeTask**🔹 | <code>[Task](#projen-task)</code> | The upgrade task.
-**workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | The workflows that execute the upgrades.
-**containerOptions**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Container definitions for the upgrade workflow.<br/>__*Optional*__
+Render a package manager specific command to upgrade all requested dependencies.
 
 ```ts
 renderUpgradePackagesCommand(exclude: Array<string>, include?: Array<string>): string
@@ -8764,6 +8574,172 @@ setScript(name: string, command: string): void
 * **command** (<code>string</code>)  The command to execute.
 
 
+
+
+
+
+## class NodeProject 🔹 <a id="projen-javascript-nodeproject"></a>
+
+Node.js project.
+
+__Submodule__: javascript
+
+__Extends__: [github.GitHubProject](#projen-github-githubproject)
+
+### Initializer
+
+
+
+
+```ts
+new javascript.NodeProject(options: NodeProjectOptions)
+```
+
+* **options** (<code>[javascript.NodeProjectOptions](#projen-javascript-nodeprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
+  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
+  * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
+  * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
+  * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
+  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **github** (<code>boolean</code>)  Enable GitHub integration. __*Default*__: true
+  * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
+  * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
+  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
+  * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
+  * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
+  * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
+  * **authorName** (<code>string</code>)  Author's name. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
+  * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
+  * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
+  * **bugsEmail** (<code>string</code>)  The email address to which issues should be reported. __*Optional*__
+  * **bugsUrl** (<code>string</code>)  The url to your project's issue tracker. __*Optional*__
+  * **bundledDeps** (<code>Array<string></code>)  List of dependencies to bundle into this module. __*Optional*__
+  * **codeArtifactOptions** (<code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code>)  Options for publishing npm package to AWS CodeArtifact. __*Default*__: undefined
+  * **deps** (<code>Array<string></code>)  Runtime dependencies of this module. __*Default*__: []
+  * **description** (<code>string</code>)  The description is just a string that helps people understand the purpose of the package. __*Optional*__
+  * **devDeps** (<code>Array<string></code>)  Build dependencies for this module. __*Default*__: []
+  * **entrypoint** (<code>string</code>)  Module entrypoint (`main` in `package.json`). __*Default*__: "lib/index.js"
+  * **homepage** (<code>string</code>)  Package's Homepage / Website. __*Optional*__
+  * **keywords** (<code>Array<string></code>)  Keywords to include in `package.json`. __*Optional*__
+  * **license** (<code>string</code>)  License's SPDX identifier. __*Default*__: "Apache-2.0"
+  * **licensed** (<code>boolean</code>)  Indicates if a license should be added. __*Default*__: true
+  * **maxNodeVersion** (<code>string</code>)  Minimum node.js version to require via `engines` (inclusive). __*Default*__: no max
+  * **minNodeVersion** (<code>string</code>)  Minimum Node.js version to require via package.json `engines` (inclusive). __*Default*__: no "engines" specified
+  * **npmAccess** (<code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code>)  Access level of the npm package. __*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
+  * **npmRegistry** (<code>string</code>)  The host name of the npm registry to publish to. __*Optional*__
+  * **npmRegistryUrl** (<code>string</code>)  The base URL of the npm package registry. __*Default*__: "https://registry.npmjs.org"
+  * **npmTokenSecret** (<code>string</code>)  GitHub secret which contains the NPM token to use when publishing packages. __*Default*__: "NPM_TOKEN"
+  * **packageManager** (<code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code>)  The Node Package Manager used to execute scripts. __*Default*__: NodePackageManager.YARN
+  * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
+  * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
+  * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
+  * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
+  * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
+  * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
+  * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
+  * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
+  * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
+  * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
+  * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
+  * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **defaultReleaseBranch** (<code>string</code>)  The name of the main release branch. 
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. __*Default*__: "dist"
+  * **autoApproveProjenUpgrades** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
+  * **autoApproveUpgrades** (<code>boolean</code>)  Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: true
+  * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
+  * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
+  * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
+  * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
+  * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
+  * **dependabot** (<code>boolean</code>)  Use dependabot to handle dependency upgrades. __*Default*__: false
+  * **dependabotOptions** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  Options for dependabot. __*Default*__: default options
+  * **depsUpgrade** (<code>boolean</code>)  Use github workflows to handle dependency upgrades. __*Default*__: true
+  * **depsUpgradeOptions** (<code>[javascript.UpgradeDependenciesOptions](#projen-javascript-upgradedependenciesoptions)</code>)  Options for depsUpgrade. __*Default*__: default options
+  * **gitignore** (<code>Array<string></code>)  Additional entries to .gitignore. __*Optional*__
+  * **jest** (<code>boolean</code>)  Setup jest unit tests. __*Default*__: true
+  * **jestOptions** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  Jest options. __*Default*__: default options
+  * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
+  * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
+  * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
+  * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
+  * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
+  * **projenDevDependency** (<code>boolean</code>)  Indicates of "projen" should be installed as a devDependency. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Generate (once) .projenrc.js (in JavaScript). Set to `false` in order to disable .projenrc.js generation. __*Default*__: true if projenrcJson is false
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options for .projenrc.js. __*Default*__: default options
+  * **projenUpgradeAutoMerge** (<code>boolean</code>)  Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued). __*Default*__: false
+  * **projenUpgradeSchedule** (<code>Array<string></code>)  Customize the projenUpgrade schedule in cron expression. __*Default*__: [ "0 6 * * *" ]
+  * **projenUpgradeSecret** (<code>string</code>)  Periodically submits a pull request for projen upgrades (executes `yarn projen:upgrade`). __*Default*__: no automatic projen upgrade pull requests
+  * **projenVersion** (<code>string</code>)  Version of projen to install. __*Default*__: Defaults to the latest version.
+  * **pullRequestTemplate** (<code>boolean</code>)  Include a GitHub pull request template. __*Default*__: true
+  * **pullRequestTemplateContents** (<code>Array<string></code>)  The contents of the pull request template. __*Default*__: default content
+  * **release** (<code>boolean</code>)  Add release management to this project. __*Default*__: true (false for subprojects)
+  * **releaseToNpm** (<code>boolean</code>)  Automatically release to npm when new versions are introduced. __*Default*__: false
+  * **releaseWorkflow** (<code>boolean</code>)  DEPRECATED: renamed to `release`. __*Default*__: true if not a subproject
+  * **workflowBootstrapSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Workflow steps to use in order to bootstrap this repo. __*Default*__: "yarn install --frozen-lockfile && yarn projen"
+  * **workflowGitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in workflows. __*Default*__: GitHub Actions
+  * **workflowNodeVersion** (<code>string</code>)  The node version to use in GitHub workflows. __*Default*__: same as `minNodeVersion`
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**allowLibraryDependencies**⚠️ | <code>boolean</code> | <span></span>
+**artifactsDirectory**🔹 | <code>string</code> | The build output directory.
+**artifactsJavascriptDirectory**🔹 | <code>string</code> | The location of the npm tarball after build (`${artifactsDirectory}/js`).
+**bundler**🔹 | <code>[javascript.Bundler](#projen-javascript-bundler)</code> | <span></span>
+**entrypoint**⚠️ | <code>string</code> | <span></span>
+**manifest**⚠️ | <code>any</code> | <span></span>
+**package**🔹 | <code>[javascript.NodePackage](#projen-javascript-nodepackage)</code> | API for managing the node package.
+**packageManager**⚠️ | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The package manager to use.
+**runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
+**autoMerge**?🔹 | <code>[github.AutoMerge](#projen-github-automerge)</code> | Automatic PR merges.<br/>__*Optional*__
+**buildWorkflow**?🔹 | <code>[build.BuildWorkflow](#projen-build-buildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
+**buildWorkflowJobId**?🔹 | <code>string</code> | The job ID of the build workflow.<br/>__*Optional*__
+**jest**?🔹 | <code>[javascript.Jest](#projen-javascript-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
+**maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
+**minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Optional*__
+**npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
+**prettier**?🔹 | <code>[javascript.Prettier](#projen-javascript-prettier)</code> | __*Optional*__
+**publisher**?⚠️ | <code>[release.Publisher](#projen-release-publisher)</code> | Package publisher.<br/>__*Optional*__
+**release**?🔹 | <code>[release.Release](#projen-release-release)</code> | Release management.<br/>__*Optional*__
+**upgradeWorkflow**?🔹 | <code>[javascript.UpgradeDependencies](#projen-javascript-upgradedependencies)</code> | The upgrade workflow.<br/>__*Optional*__
+
+### Methods
 
 
 #### addBins(bins)🔹 <a id="projen-javascript-nodeproject-addbins"></a>
@@ -9050,51 +9026,11 @@ __Extends__: [Component](#projen-component)
 new javascript.Prettier(project: NodeProject, options: PrettierOptions)
 ```
 
-* **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
-  * **name** (<code>string</code>)  This is the name of your project. 
-  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
-  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
-  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
-  * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
-  * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
-  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
-  * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
-  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
-  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
-  * **github** (<code>boolean</code>)  Enable GitHub integration. __*Default*__: true
-  * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
-  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
-  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
-  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
-  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
-  * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
-  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
-  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
-  * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
-  * **authorEmail** (<code>string</code>)  Author's e-mail. 
-  * **authorName** (<code>string</code>)  Author's name. 
-  * **version** (<code>string</code>)  Version of the package. 
-  * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
-  * **description** (<code>string</code>)  A short description of the package. __*Optional*__
-  * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
-  * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
-  * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
-  * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
-  * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
-  * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
-  * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
-  * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
-  * **poetry** (<code>boolean</code>)  Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. __*Default*__: false
-  * **projenrcPython** (<code>boolean</code>)  Use projenrc in python. __*Default*__: true
-  * **projenrcPythonOptions** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  Options related to projenrc in python. __*Default*__: default options
-  * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
-  * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
-  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
-  * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true if the project type is library
-  * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true
-  * **venvOptions** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  Venv options. __*Default*__: defaults
+* **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
+* **options** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  *No description*
+  * **ignoreFile** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: true
+  * **overrides** (<code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code>)  Provide a list of patterns to override prettier configuration. __*Default*__: []
+  * **settings** (<code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code>)  Prettier settings. __*Default*__: default settings
 
 
 
@@ -9294,6 +9230,7 @@ Name | Type | Description
 -----|------|-------------
 **ignoresProjen**🔹 | <code>boolean</code> | Whether or not projen is also upgraded in this workflow,.
 **postUpgradeTask**🔹 | <code>[Task](#projen-task)</code> | A task run after the upgrade task.
+**upgradeTask**🔹 | <code>[Task](#projen-task)</code> | The upgrade task.
 **workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | The workflows that execute the upgrades.
 **containerOptions**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Container definitions for the upgrade workflow.<br/>__*Optional*__
 
@@ -9318,18 +9255,6 @@ addPostBuildSteps(...steps: JobStep[]): void
   * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
   * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
   * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
-
-
-
-
-#### preSynthesize()🔹 <a id="projen-javascript-upgradedependencies-presynthesize"></a>
-
-Called before synthesis.
-
-```ts
-preSynthesize(): void
-```
-
 
 
 
@@ -9692,16 +9617,45 @@ Name | Type | Description
 **branches**🔹 | <code>Array<string></code> | Retrieve all release branch names.
 **publisher**🔹 | <code>[release.Publisher](#projen-release-publisher)</code> | Package publisher.
 
-### Methods
 
 
-#### addBranch(branch, options)🔹 <a id="projen-release-release-addbranch"></a>
 
-Adds a release branch.
+## class Pytest 🔹 <a id="projen-python-pytest"></a>
 
-It is a git branch from which releases are published. If a project has more than one release
-branch, we require that `majorVersion` is also specified for the primary branch in order to
-ensure branches always release the correct version.
+
+
+__Submodule__: python
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new python.Pytest(project: PythonProject, options?: PytestOptions)
+```
+
+* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **options** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  *No description*
+  * **maxFailures** (<code>number</code>)  Stop the testing process after the first N failures. __*Optional*__
+  * **testdir** (<code>string</code>)  Directory with tests. __*Default*__: 'tests'
+  * **version** (<code>string</code>)  Pytest version. __*Default*__: "6.2.1"
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**testdir**🔹 | <code>string</code> | <span></span>
+
+
+
+## class PytestSample 🔹 <a id="projen-python-pytestsample"></a>
+
 
 ```ts
 addBranch(branch: string, options: BranchOptions): void
@@ -13021,7 +12975,7 @@ new python.PythonProject(options: PythonProjectOptions)
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. 
@@ -13631,6 +13585,19 @@ preSynthesize(): void
 
 
 
+#### *static* of(project)🔹 <a id="projen-release-release-of"></a>
+
+Returns the `Release` component of a project or `undefined` if the project does not have a Release component.
+
+```ts
+static of(project: GitHubProject): Release
+```
+
+* **project** (<code>[github.GitHubProject](#projen-github-githubproject)</code>)  *No description*
+
+__Returns__:
+* <code>[release.Release](#projen-release-release)</code>
+
 
 
 ## class ReleaseTrigger 🔹 <a id="projen-release-releasetrigger"></a>
@@ -13780,7 +13747,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -13814,7 +13781,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
@@ -13932,7 +13899,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -13966,7 +13933,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
@@ -14084,7 +14051,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -14118,7 +14085,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
@@ -14481,7 +14448,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -14515,7 +14482,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
@@ -14631,7 +14598,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -14665,7 +14632,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
@@ -14853,7 +14820,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -14887,7 +14854,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
@@ -15045,7 +15012,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
-  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: true
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
   * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
   * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
@@ -15079,7 +15046,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
-  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
+  * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: undefined
   * **scripts** (<code>Map<string, string></code>)  npm scripts to include. __*Default*__: {}
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
@@ -16145,6 +16112,7 @@ Options for `SourceCodeFile`.
 Name | Type | Description 
 -----|------|-------------
 **indent**?🔹 | <code>number</code> | Indentation size.<br/>__*Default*__: 2
+**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 
@@ -16180,6 +16148,7 @@ Name | Type | Description
 **env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this task.<br/>__*Default*__: {}
 **exec**?🔹 | <code>string</code> | Shell command to execute as the first command of the task.<br/>__*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
 **requiredEnv**?🔹 | <code>Array<string></code> | A set of environment variables that must be defined in order to execute this task.<br/>__*Optional*__
+**steps**?🔹 | <code>Array<[TaskStep](#projen-taskstep)></code> | List of task steps to run.<br/>__*Optional*__
 
 
 
@@ -16300,6 +16269,7 @@ Name | Type | Description
 -----|------|-------------
 **artifactsDirectory**🔹 | <code>string</code> | The name of the directory into which `changelog.md` and `version.txt` files are emitted.
 **versionInputFile**🔹 | <code>string</code> | A name of a .json file to set the `version` field in after a bump.
+**tagPrefix**?🔹 | <code>string</code> | The tag prefix corresponding to this version.<br/>__*Optional*__
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration for versionrc file used by standard-release.<br/>__*Optional*__
 
 
@@ -16776,11 +16746,11 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
-**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
-**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Default*__: default options
@@ -16895,7 +16865,7 @@ Name | Type | Description
 **requireApproval**?🔹 | <code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: ApprovalLevel.BROADENING
 **sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
 **sampleJavaPackage**?🔹 | <code>string</code> | The java package to use for the code sample.<br/>__*Default*__: "org.acme"
-**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testDeps**?🔹 | <code>Array<string></code> | List of test dependencies for this project.<br/>__*Default*__: []
 **url**?🔹 | <code>string</code> | The URL, like the name, is not required.<br/>__*Default*__: undefined
@@ -16985,7 +16955,7 @@ Name | Type | Description
 **sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
 **setupConfig**?🔹 | <code>Map<string, any></code> | Additional fields to pass in the setup() function if using setuptools.<br/>__*Optional*__
 **setuptools**?🔹 | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing.<br/>__*Default*__: true if the project type is library
-**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?🔹 | <code>string</code> | Python sources directory.<br/>__*Default*__: "tests"
 **venv**?🔹 | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside.<br/>__*Default*__: true
@@ -17132,11 +17102,11 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **requireApproval**?🔹 | <code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: ApprovalLevel.BROADENING
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
-**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
-**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?🔹 | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?🔹 | <code>[javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Default*__: default options
@@ -17342,11 +17312,11 @@ Name | Type | Description
 **repositoryDirectory**?⚠️ | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?⚠️ | <code>string</code> | __*Default*__: "."
 **sampleCode**?⚠️ | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
-**scopedPackagesOptions**?⚠️ | <code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
+**scopedPackagesOptions**?⚠️ | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?⚠️ | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?⚠️ | <code>string</code> | Package's Stability.<br/>__*Optional*__
-**stale**?⚠️ | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**stale**?⚠️ | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
 **staleOptions**?⚠️ | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testdir**?⚠️ | <code>string</code> | Jest tests directory. Tests files should be named `xxx.test.ts`.<br/>__*Default*__: "test"
 **tsconfig**?⚠️ | <code>[javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)</code> | Custom TSConfig.<br/>__*Default*__: default options
@@ -17728,7 +17698,7 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
-**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
@@ -17976,7 +17946,7 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
-**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
@@ -18219,7 +18189,7 @@ Name | Type | Description
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
-**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
@@ -18382,7 +18352,7 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
-**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
@@ -18570,6 +18540,7 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
@@ -18663,95 +18634,14 @@ Use to add private registry support for dependabot.
 
 Name | Type | Description 
 -----|------|-------------
-**computeSha1**?🔹 | <code>boolean</code> | __*Optional*__
-**defaultPlatform**?🔹 | <code>string</code> | __*Optional*__
-**hasteImplModulePath**?🔹 | <code>string</code> | __*Optional*__
-**platforms**?🔹 | <code>Array<string></code> | __*Optional*__
-**throwOnModuleCollision**?🔹 | <code>boolean</code> | __*Optional*__
-
-
-
-## interface IDevEnvironment 🔹 <a id="projen-idevenvironment"></a>
-
-__Implemented by__: [vscode.DevContainer](#projen-vscode-devcontainer), [Gitpod](#projen-gitpod)
-
-Abstract interface for container-based development environments, such as Gitpod and GitHub Codespaces.
-### Methods
-
-
-#### addDockerImage(image)🔹 <a id="projen-idevenvironment-adddockerimage"></a>
-
-Add a custom Docker image or Dockerfile for the container.
-
-```ts
-addDockerImage(image: DevEnvironmentDockerImage): void
-```
-
-* **image** (<code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code>)  The Docker image.
-
-
-
-
-#### addPorts(...ports)🔹 <a id="projen-idevenvironment-addports"></a>
-
-Adds ports that should be exposed (forwarded) from the container.
-
-```ts
-addPorts(...ports: string[]): void
-```
-
-Name | Type | Description 
------|------|-------------
-**name**🔹 | <code>string</code> | This is the name of your project.
-**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
-**autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
-**clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
-**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
-**github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
-**githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
-**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
-**logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
-**mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
-**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
-**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
-**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
-**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
-**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
-**projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
-**projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
-**projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
-**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
-**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
-**vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
-
-
-
-
-#### addTasks(...tasks)🔹 <a id="projen-idevenvironment-addtasks"></a>
-
-Adds tasks to run when the container starts.
-
-```ts
-addTasks(...tasks: Task[]): void
-```
-
-* **tasks** (<code>[tasks.Task](#projen-tasks-task)</code>)  The new tasks.
-
-
-
-
-#### addVscodeExtensions(...extensions)🔹 <a id="projen-idevenvironment-addvscodeextensions"></a>
-
-Adds a list of VSCode extensions that should be automatically installed in the container.
-
-```ts
-addVscodeExtensions(...extensions: string[]): void
-```
-
-* **extensions** (<code>string</code>)  The extension IDs.
-
-
+**type**🔹 | <code>[github.DependabotRegistryType](#projen-github-dependabotregistrytype)</code> | Registry type e.g. 'npm-registry' or 'docker-registry'.
+**url**🔹 | <code>string</code> | Url for the registry e.g. 'https://npm.pkg.github.com' or 'registry.hub.docker.com'.
+**key**?🔹 | <code>string</code> | A reference to a Dependabot secret containing an access key for this registry.<br/>__*Default*__: undefined
+**organization**?🔹 | <code>string</code> | Used with the hex-organization registry type.<br/>__*Default*__: undefined
+**password**?🔹 | <code>string</code> | A reference to a Dependabot secret containing the password for the specified user.<br/>__*Default*__: undefined
+**replacesBase**?🔹 | <code>boolean</code> | For registries with type: python-index, if the boolean value is true, pip esolves dependencies by using the specified URL rather than the base URL of the Python Package Index (by default https://pypi.org/simple).<br/>__*Default*__: undefined
+**token**?🔹 | <code>string</code> | Secret token for dependabot access e.g. '${{ secrets.DEPENDABOT_PACKAGE_TOKEN }}'.<br/>__*Default*__: undefined
+**username**?🔹 | <code>string</code> | The username that Dependabot uses to access the registry.<br/>__*Default*__: do not authenticate
 
 
 
@@ -18801,7 +18691,7 @@ Name | Type | Description
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
-**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
 
@@ -19728,7 +19618,7 @@ Name | Type | Description
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
 **sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
 **sampleJavaPackage**?🔹 | <code>string</code> | The java package to use for the code sample.<br/>__*Default*__: "org.acme"
-**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: true
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testDeps**?🔹 | <code>Array<string></code> | List of test dependencies for this project.<br/>__*Default*__: []
 **url**?🔹 | <code>string</code> | The URL, like the name, is not required.<br/>__*Default*__: undefined
@@ -20143,7 +20033,7 @@ Name | Type | Description
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
-**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 
@@ -20257,6 +20147,7 @@ Name | Type | Description
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
@@ -20421,10 +20312,10 @@ Name | Type | Description
 
 
 
-## struct ScopedPackagesCodeArtifactOptions 🔹 <a id="projen-javascript-scopedpackagescodeartifactoptions"></a>
+## struct ScopedPackagesOptions 🔹 <a id="projen-javascript-scopedpackagesoptions"></a>
 
 
-Options for scoped packages hosted on AWS Code artifacts.
+Options for scoped packages.
 
 
 
@@ -21239,6 +21130,33 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**schedule**🔹 | <code>string</code> | Cron schedule for releases.
+
+
+
+## struct ProjenrcOptions 🔹 <a id="projen-typescript-projenrcoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
+**projenCodeDir**?🔹 | <code>string</code> | A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file.<br/>__*Default*__: "projenrc"
+
+
+
+## struct TypeScriptLibraryProjectOptions ⚠️ <a id="projen-typescript-typescriptlibraryprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
 **defaultReleaseBranch**⚠️ | <code>string</code> | The name of the main release branch.
 **name**⚠️ | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?⚠️ | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
@@ -21348,6 +21266,7 @@ Name | Type | Description
 **repository**?⚠️ | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?⚠️ | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?⚠️ | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
+**scopedPackagesOptions**?⚠️ | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?⚠️ | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?⚠️ | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?⚠️ | <code>string</code> | Package's Stability.<br/>__*Optional*__
@@ -21368,16 +21287,7 @@ Name | Type | Description
 
 
 
-
-
-Name | Type | Description 
------|------|-------------
-**filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
-**projenCodeDir**?🔹 | <code>string</code> | A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file.<br/>__*Default*__: "projenrc"
-
-
-
-## struct TypeScriptLibraryProjectOptions ⚠️ <a id="projen-typescript-typescriptlibraryprojectoptions"></a>
+## struct TypeScriptProjectOptions 🔹 <a id="projen-typescript-typescriptprojectoptions"></a>
 
 
 
@@ -21495,6 +21405,7 @@ Name | Type | Description
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
@@ -21729,7 +21640,7 @@ Name | Type | Description
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `pages/` and `public/` if there are no files there.<br/>__*Default*__: true
-**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
@@ -21865,7 +21776,7 @@ Name | Type | Description
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
-**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
@@ -22026,7 +21937,7 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rewire**?🔹 | <code>Map<string, any></code> | Rewire webpack configuration.<br/>__*Default*__: No rewired config.
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `public/` if there are no files there.<br/>__*Default*__: true
-**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Source directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
@@ -22191,7 +22102,7 @@ Name | Type | Description
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rewire**?🔹 | <code>Map<string, any></code> | Rewire webpack configuration.<br/>__*Default*__: No rewired config.
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
-**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesCodeArtifactOptions](#projen-javascript-scopedpackagescodeartifactoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
+**scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 **scripts**?🔹 | <code>Map<string, string></code> | npm scripts to include.<br/>__*Default*__: {}
 **srcdir**?🔹 | <code>string</code> | Typescript sources directory.<br/>__*Default*__: "src"
 **stability**?🔹 | <code>string</code> | Package's Stability.<br/>__*Optional*__
