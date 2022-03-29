@@ -309,53 +309,6 @@ export enum AutoRelease {
  */
 export class NodeProject extends GitHubProject {
   /**
-   * Get steps for scoped package
-   * if required will add the assume role step
-   *
-   * @param scopedPackageOptions details of scoped package
-   * @returns array of job steps required for each private scoped packages
-   */
-  private static getScopedPackageSteps(
-    scopedPackageOptions: ParsedScopedPackagesOptions
-  ): JobStep[] {
-    const codeArtifactDetails = extractCodeArtifactDetails(
-      scopedPackageOptions.registryUrl
-    );
-    const result: JobStep[] = [];
-    if (scopedPackageOptions.roleToAssume) {
-      result.push({
-        name: `AWS Assume Role for ${scopedPackageOptions.scope}`,
-        uses: "aws-actions/configure-aws-credentials@v1",
-        with: {
-          "aws-access-key-id": secretToString(
-            scopedPackageOptions.accessKeyIdSecret
-          ),
-          "aws-secret-access-key": secretToString(
-            scopedPackageOptions.secretAccessKeySecret
-          ),
-          "aws-region": codeArtifactDetails.region,
-          "role-to-assume": scopedPackageOptions.roleToAssume,
-          "role-duration-seconds": 900,
-        },
-      });
-    }
-
-    result.push({
-      name: `AWS CodeArtifact Login ${scopedPackageOptions.scope}`,
-      uses: "MondoPower/codeartifact-auth@1.2",
-      with: {
-        domain: codeArtifactDetails.domain,
-        repository: codeArtifactDetails.repository,
-        scope: scopedPackageOptions.scope,
-        region: codeArtifactDetails.region,
-        accountId: codeArtifactDetails.accountId,
-      },
-    });
-
-    return result;
-  }
-
-  /**
    * API for managing the node package.
    */
   public readonly package: NodePackage;
@@ -796,6 +749,53 @@ export class NodeProject extends GitHubProject {
   }
 
   /**
+   * Get steps for scoped package
+   * if required will add the assume role step
+   *
+   * @param scopedPackageOptions details of scoped package
+   * @returns array of job steps required for each private scoped packages
+   */
+  private getScopedPackageSteps(
+    scopedPackageOptions: ParsedScopedPackagesOptions
+  ): JobStep[] {
+    const codeArtifactDetails = extractCodeArtifactDetails(
+      scopedPackageOptions.registryUrl
+    );
+    const result: JobStep[] = [];
+    if (scopedPackageOptions.roleToAssume) {
+      result.push({
+        name: `AWS Assume Role for ${scopedPackageOptions.scope}`,
+        uses: "aws-actions/configure-aws-credentials@v1",
+        with: {
+          "aws-access-key-id": secretToString(
+            scopedPackageOptions.accessKeyIdSecret
+          ),
+          "aws-secret-access-key": secretToString(
+            scopedPackageOptions.secretAccessKeySecret
+          ),
+          "aws-region": codeArtifactDetails.region,
+          "role-to-assume": scopedPackageOptions.roleToAssume,
+          "role-duration-seconds": 900,
+        },
+      });
+    }
+
+    result.push({
+      name: `AWS CodeArtifact Login ${scopedPackageOptions.scope}`,
+      uses: "MondoPower/codeartifact-auth@1.2",
+      with: {
+        domain: codeArtifactDetails.domain,
+        repository: codeArtifactDetails.repository,
+        scope: scopedPackageOptions.scope,
+        region: codeArtifactDetails.region,
+        accountId: codeArtifactDetails.accountId,
+      },
+    });
+
+    return result;
+  }
+
+  /**
    * Returns the set of workflow steps which should be executed to bootstrap a
    * workflow.
    *
@@ -830,7 +830,7 @@ export class NodeProject extends GitHubProject {
 
     if (this.package.scopedPackagesOptions) {
       const scopedPackagesSteps = this.package.scopedPackagesOptions.flatMap(
-        NodeProject.getScopedPackageSteps
+        this.getScopedPackageSteps
       );
 
       install.push(...scopedPackagesSteps);
