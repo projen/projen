@@ -881,8 +881,6 @@ describe("scoped private packages", () => {
         {
           registryUrl,
           scope,
-          accessKeyIdSecret,
-          secretAccessKeySecret,
         },
       ],
     });
@@ -913,8 +911,6 @@ describe("scoped private packages", () => {
         {
           registryUrl,
           scope,
-          accessKeyIdSecret,
-          secretAccessKeySecret,
         },
       ],
     });
@@ -947,22 +943,16 @@ describe("scoped private packages", () => {
     const region2 = "my-region-2";
     const repository2 = "MyRepository2";
     const scope2 = "@stub-scope-2";
-    const accessKeyIdSecret2 = "stub-access-key-id-2";
-    const secretAccessKeySecret2 = "stub-secret-access-key-2";
     const registryUrl2 = `https://${domain2}-${accountId2}.d.codeartifact.${region2}.amazonaws.com/npm/${repository2}/`;
     const project = new TestNodeProject({
       scopedPackagesOptions: [
         {
           registryUrl,
           scope,
-          accessKeyIdSecret,
-          secretAccessKeySecret,
         },
         {
           registryUrl: registryUrl2,
           scope: scope2,
-          accessKeyIdSecret: accessKeyIdSecret2,
-          secretAccessKeySecret: secretAccessKeySecret2,
         },
       ],
     });
@@ -1056,8 +1046,6 @@ describe("scoped private packages", () => {
             {
               registryUrl,
               scope: anotherScope,
-              accessKeyIdSecret,
-              secretAccessKeySecret,
             },
           ],
         })
@@ -1072,8 +1060,6 @@ describe("scoped private packages", () => {
             {
               registryUrl: `https://${accountId}.d.codeartifact.${region}.amazonaws.com/npm/${repository}/`,
               scope,
-              accessKeyIdSecret,
-              secretAccessKeySecret,
             },
           ],
         })
