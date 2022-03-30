@@ -369,7 +369,7 @@ function snakeCaseKeys<T = unknown>(obj: T): T {
 
   const result: Record<string, unknown> = {};
   for (let [k, v] of Object.entries(obj)) {
-    if (typeof v === "object" && v != null && k !== "variables") {
+    if (typeof v === "object" && v != null && k.toLowerCase() !== "variables") {
       v = snakeCaseKeys(v);
     }
     result[snake(k)] = v;
