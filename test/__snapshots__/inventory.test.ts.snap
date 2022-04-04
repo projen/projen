@@ -16510,9 +16510,9 @@ Array [
       Object {
         "docs": "Every GitHub Action must have a metadata file named \`action.yml\`. Projen will manage this file for you using the specifications of this property.",
         "featured": false,
-        "fqn": "projen.github.metadata.ActionMetadata",
+        "fqn": "projen.actions.GitHubActionMetadata",
         "fullType": Object {
-          "fqn": "projen.github.metadata.ActionMetadata",
+          "fqn": "projen.actions.GitHubActionMetadata",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -16522,7 +16522,7 @@ Array [
         "path": Array [
           "metadata",
         ],
-        "simpleType": "ActionMetadata",
+        "simpleType": "GitHubActionMetadata",
         "switch": "metadata",
       },
       Object {

@@ -182,6 +182,7 @@ Name|Description
 [VersionOptions](#projen-versionoptions)|Options for `Version`.
 [XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
 [YamlFileOptions](#projen-yamlfileoptions)|Options for `JsonFile`.
+[actions.GitHubActionMetadata](#projen-actions-githubactionmetadata)|A Github Action Metadata file definition.
 [actions.GitHubActionTypeScriptOptions](#projen-actions-githubactiontypescriptoptions)|Properties for creating a GitHubActionTypeScriptProject.
 [awscdk.AutoDiscoverCommonOptions](#projen-awscdk-autodiscovercommonoptions)|Common options for auto discovering project subcomponents.
 [awscdk.AutoDiscoverOptions](#projen-awscdk-autodiscoveroptions)|Options for `AutoDiscover`.
@@ -3113,7 +3114,7 @@ new actions.GitHubActionTypeScriptProject(options: GitHubActionTypeScriptOptions
   * **tsconfigDev** (<code>[javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)</code>)  Custom tsconfig options for the development tsconfig.json file (used for testing). __*Default*__: use the production tsconfig options
   * **tsconfigDevFile** (<code>string</code>)  The name of the development tsconfig.json file. __*Default*__: "tsconfig.dev.json"
   * **typescriptVersion** (<code>string</code>)  TypeScript version to use. __*Default*__: "latest"
-  * **metadata** (<code>[github.metadata.ActionMetadata](#projen-github-metadata-actionmetadata)</code>)  Every GitHub Action must have a metadata file named `action.yml`. Projen will manage this file for you using the specifications of this property. __*Optional*__
+  * **metadata** (<code>[actions.GitHubActionMetadata](#projen-actions-githubactionmetadata)</code>)  Every GitHub Action must have a metadata file named `action.yml`. Projen will manage this file for you using the specifications of this property. __*Optional*__
 
 
 
@@ -11691,6 +11692,25 @@ Name | Type | Description
 
 
 
+## struct GitHubActionMetadata 🔹 <a id="projen-actions-githubactionmetadata"></a>
+
+
+A Github Action Metadata file definition.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**runs**🔹 | <code>[github.metadata.JavaScriptRuns](#projen-github-metadata-javascriptruns) &#124; [github.metadata.DockerRuns](#projen-github-metadata-dockerruns) &#124; [github.metadata.CompositeRuns](#projen-github-metadata-compositeruns)</code> | Specifies whether this is a JavaScript action, a composite action, or a Docker container action and how the action is executed.
+**author**?🔹 | <code>string</code> | The name of the action's author.<br/>__*Default*__: none
+**branding**?🔹 | <code>[github.metadata.Branding](#projen-github-metadata-branding)</code> | You can use a color and a Feather icon to create a badge to personalize and distinguish your action.<br/>__*Default*__: no branding
+**description**?🔹 | <code>string</code> | A short description of the action.<br/>__*Default*__: a basic description is provided for you
+**inputs**?🔹 | <code>Map<string, [github.metadata.Input](#projen-github-metadata-input)></code> | Input parameters allow you to specify data that the action expects to use during runtime.<br/>__*Default*__: {}
+**name**?🔹 | <code>string</code> | The name of your action.<br/>__*Default*__: this.name
+**outputs**?🔹 | <code>Map<string, [github.metadata.Output](#projen-github-metadata-output)></code> | Output parameters allow you to declare data that an action sets.<br/>__*Default*__: {}
+
+
+
 ## struct GitHubActionTypeScriptOptions 🔹 <a id="projen-actions-githubactiontypescriptoptions"></a>
 
 
@@ -11758,7 +11778,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
-**metadata**?🔹 | <code>[github.metadata.ActionMetadata](#projen-github-metadata-actionmetadata)</code> | Every GitHub Action must have a metadata file named `action.yml`. Projen will manage this file for you using the specifications of this property.<br/>__*Optional*__
+**metadata**?🔹 | <code>[actions.GitHubActionMetadata](#projen-actions-githubactionmetadata)</code> | Every GitHub Action must have a metadata file named `action.yml`. Projen will manage this file for you using the specifications of this property.<br/>__*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.

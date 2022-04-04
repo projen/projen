@@ -1,6 +1,7 @@
 import { ActionMetadata, RunsUsing } from "../github/actions-metadata-model";
 import { TypeScriptProject, TypeScriptProjectOptions } from "../typescript";
 import { YamlFile } from "../yaml";
+import { GitHubActionMetadata } from "./github-action-metadata";
 
 /**
  * Properties for creating a GitHubActionTypeScriptProject
@@ -12,7 +13,7 @@ export interface GitHubActionTypeScriptOptions
    * Projen will manage this file for you using the specifications of
    * this property.
    */
-  readonly metadata?: ActionMetadata;
+  readonly metadata?: GitHubActionMetadata;
 }
 
 /**
@@ -41,7 +42,7 @@ export class GitHubActionTypeScriptProject extends TypeScriptProject {
       description: `A GitHub Action for ${this.name}`,
       runs: {
         using: RunsUsing.NODE_16,
-        main: "lib/index.js",
+        main: "dist/index.js",
       },
     };
 

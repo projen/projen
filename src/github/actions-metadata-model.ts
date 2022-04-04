@@ -27,9 +27,9 @@ export interface ActionMetadata {
    * during runtime. GitHub stores input parameters as environment variables.
    * Input ids with uppercase letters are converted to lowercase during runtime.
    *
-   * @default []
+   * @default {}
    */
-  readonly inputs?: Input[];
+  readonly inputs?: Record<string, Input>;
 
   /**
    * Output parameters allow you to declare data that an action sets. This is
@@ -40,9 +40,9 @@ export interface ActionMetadata {
    * set outputs and use them in a workflow.
    * @see https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter
    *
-   * @default []
+   * @default {}
    */
-  readonly outputs?: Output[];
+  readonly outputs?: Record<string, Output>;
 
   /**
    * Specifies whether this is a JavaScript action, a composite action, or a Docker
@@ -66,11 +66,6 @@ export interface ActionMetadata {
  * Define an input to a GitHub Action
  */
 export interface Input {
-  /**
-   * The id of the input.
-   */
-  readonly id: string;
-
   /**
    * A description of the input parameter
    */
@@ -102,11 +97,6 @@ export interface Input {
  * Define an output in a GitHub Action
  */
 export interface Output {
-  /**
-   * The id of the output.
-   */
-  readonly id: string;
-
   /**
    * The description of the output parameter.
    */
