@@ -1,5 +1,6 @@
+import { ActionMetadata } from "../github/actions-metadata-model";
 import { TypeScriptProject, TypeScriptProjectOptions } from "../typescript";
-import { ActionMetadata } from "./metadata-model";
+import { YamlFile } from "../yaml";
 
 export interface GithubActionTypeScriptOptions
   extends TypeScriptProjectOptions {
@@ -25,5 +26,9 @@ export class GithubActionTypeScriptProject extends TypeScriptProject {
     this.package.addField("main", "lib/index.js");
     this.addGitIgnore("!/dist/");
     this.annotateGenerated("/dist/**");
+
+    new YamlFile(this, "action.yml", {
+      obj: options.metadata,
+    });
   }
 }

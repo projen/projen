@@ -15,3 +15,4 @@ export * from "./task-workflow";
 export * from "./github-project";
 
 export * as workflows from "./workflows-model";
+export * as metadata from "./actions-metadata-model";

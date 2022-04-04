@@ -1,4 +1,4 @@
-import { Step } from "../github/workflows-model";
+import { Step } from "./workflows-model";
 
 export interface ActionMetadata {
   readonly name: string;
