@@ -15491,9 +15491,9 @@ Array [
     "typename": "cdktf.ConstructLibraryCdktf",
   },
   Object {
-    "docs": "Create a GitHub action with TypeScript.",
+    "docs": "Create a GitHub Action with TypeScript.",
     "docsurl": "https://projen.io/api/API.html#projen-actions-githubactiontypescriptproject",
-    "fqn": "projen.actions.GithubActionTypeScriptProject",
+    "fqn": "projen.actions.GitHubActionTypeScriptProject",
     "moduleName": "projen",
     "options": Array [
       Object {
@@ -16508,15 +16508,16 @@ Array [
         "switch": "mergify-options",
       },
       Object {
+        "docs": "Every GitHub Action must have a metadata file named \`action.yml\`. Projen will manage this file for you using the specifications of this property.",
         "featured": false,
-        "fqn": "projen.actions.ActionMetadata",
+        "fqn": "projen.github.metadata.ActionMetadata",
         "fullType": Object {
-          "fqn": "projen.actions.ActionMetadata",
+          "fqn": "projen.github.metadata.ActionMetadata",
         },
         "jsonLike": true,
         "kind": "interface",
         "name": "metadata",
-        "parent": "GithubActionTypeScriptOptions",
+        "parent": "GitHubActionTypeScriptOptions",
         "path": Array [
           "metadata",
         ],
@@ -17835,7 +17836,7 @@ Array [
       },
     ],
     "pjid": "github-action-ts",
-    "typename": "actions.GithubActionTypeScriptProject",
+    "typename": "actions.GitHubActionTypeScriptProject",
   },
   Object {
     "docs": "Java project.",

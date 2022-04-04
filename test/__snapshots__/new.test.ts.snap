@@ -187,7 +187,7 @@ project.synth();",
 exports[`projen new github-action-ts 1`] = `
 Object {
   ".projenrc.js": "const { actions } = require(\\"projen\\");
-const project = new actions.GithubActionTypeScriptProject({
+const project = new actions.GitHubActionTypeScriptProject({
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
 

@@ -37,7 +37,7 @@ Name|Description
 [Version](#projen-version)|*No description*
 [XmlFile](#projen-xmlfile)|Represents an XML file.
 [YamlFile](#projen-yamlfile)|Represents a YAML file.
-[actions.GithubActionTypeScriptProject](#projen-actions-githubactiontypescriptproject)|Create a GitHub action with TypeScript.
+[actions.GitHubActionTypeScriptProject](#projen-actions-githubactiontypescriptproject)|Create a GitHub Action with TypeScript.
 [awscdk.AutoDiscover](#projen-awscdk-autodiscover)|Discovers and creates integration tests and lambdas from code in the project's source and test trees.
 [awscdk.AwsCdkConstructLibrary](#projen-awscdk-awscdkconstructlibrary)|AWS CDK construct library project.
 [awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)|Manages dependencies on the AWS CDK.
@@ -182,16 +182,7 @@ Name|Description
 [VersionOptions](#projen-versionoptions)|Options for `Version`.
 [XmlFileOptions](#projen-xmlfileoptions)|Options for `XmlFile`.
 [YamlFileOptions](#projen-yamlfileoptions)|Options for `JsonFile`.
-[actions.ActionMetadata](#projen-actions-actionmetadata)|*No description*
-[actions.ActionStep](#projen-actions-actionstep)|*No description*
-[actions.Branding](#projen-actions-branding)|*No description*
-[actions.CompositeRuns](#projen-actions-compositeruns)|*No description*
-[actions.DockerRuns](#projen-actions-dockerruns)|*No description*
-[actions.GithubActionTypeScriptOptions](#projen-actions-githubactiontypescriptoptions)|*No description*
-[actions.Input](#projen-actions-input)|*No description*
-[actions.JavaScriptRuns](#projen-actions-javascriptruns)|*No description*
-[actions.Output](#projen-actions-output)|*No description*
-[actions.Runs](#projen-actions-runs)|*No description*
+[actions.GitHubActionTypeScriptOptions](#projen-actions-githubactiontypescriptoptions)|Properties for creating a GitHubActionTypeScriptProject.
 [awscdk.AutoDiscoverCommonOptions](#projen-awscdk-autodiscovercommonoptions)|Common options for auto discovering project subcomponents.
 [awscdk.AutoDiscoverOptions](#projen-awscdk-autodiscoveroptions)|Options for `AutoDiscover`.
 [awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)|Options for `AwsCdkConstructLibrary`.
@@ -2975,9 +2966,9 @@ __Returns__:
 
 
 
-## class GithubActionTypeScriptProject 🔹 <a id="projen-actions-githubactiontypescriptproject"></a>
+## class GitHubActionTypeScriptProject 🔹 <a id="projen-actions-githubactiontypescriptproject"></a>
 
-Create a GitHub action with TypeScript.
+Create a GitHub Action with TypeScript.
 
 __Submodule__: actions
 
@@ -2989,10 +2980,10 @@ __Extends__: [typescript.TypeScriptProject](#projen-typescript-typescriptproject
 
 
 ```ts
-new actions.GithubActionTypeScriptProject(options: GithubActionTypeScriptOptions)
+new actions.GitHubActionTypeScriptProject(options: GitHubActionTypeScriptOptions)
 ```
 
-* **options** (<code>[actions.GithubActionTypeScriptOptions](#projen-actions-githubactiontypescriptoptions)</code>)  *No description*
+* **options** (<code>[actions.GitHubActionTypeScriptOptions](#projen-actions-githubactiontypescriptoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -3122,7 +3113,7 @@ new actions.GithubActionTypeScriptProject(options: GithubActionTypeScriptOptions
   * **tsconfigDev** (<code>[javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)</code>)  Custom tsconfig options for the development tsconfig.json file (used for testing). __*Default*__: use the production tsconfig options
   * **tsconfigDevFile** (<code>string</code>)  The name of the development tsconfig.json file. __*Default*__: "tsconfig.dev.json"
   * **typescriptVersion** (<code>string</code>)  TypeScript version to use. __*Default*__: "latest"
-  * **metadata** (<code>[actions.ActionMetadata](#projen-actions-actionmetadata)</code>)  *No description* 
+  * **metadata** (<code>[github.metadata.ActionMetadata](#projen-github-metadata-actionmetadata)</code>)  Every GitHub Action must have a metadata file named `action.yml`. Projen will manage this file for you using the specifications of this property. 
 
 
 
@@ -11700,103 +11691,17 @@ Name | Type | Description
 
 
 
-## struct ActionMetadata 🔹 <a id="projen-actions-actionmetadata"></a>
+## struct GitHubActionTypeScriptOptions 🔹 <a id="projen-actions-githubactiontypescriptoptions"></a>
 
 
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**author**🔹 | <code>string</code> | <span></span>
-**description**🔹 | <code>string</code> | <span></span>
-**inputs**🔹 | <code>Array<[actions.Input](#projen-actions-input)></code> | <span></span>
-**name**🔹 | <code>string</code> | <span></span>
-**outputs**🔹 | <code>Array<[actions.Output](#projen-actions-output)></code> | <span></span>
-**runs**🔹 | <code>[actions.JavaScriptRuns](#projen-actions-javascriptruns) &#124; [actions.DockerRuns](#projen-actions-dockerruns) &#124; [actions.CompositeRuns](#projen-actions-compositeruns)</code> | <span></span>
-**branding**?🔹 | <code>[actions.Branding](#projen-actions-branding)</code> | __*Optional*__
-
-
-
-## struct ActionStep 🔹 <a id="projen-actions-actionstep"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**workingDirectory**🔹 | <code>string</code> | <span></span>
-**env**?🔹 | <code>Map<string, string></code> | Sets environment variables for steps to use in the runner environment.<br/>__*Optional*__
-**id**?🔹 | <code>string</code> | A unique identifier for the step.<br/>__*Optional*__
-**if**?🔹 | <code>string</code> | You can use the if conditional to prevent a job from running unless a condition is met.<br/>__*Optional*__
-**name**?🔹 | <code>string</code> | A name for your step to display on GitHub.<br/>__*Optional*__
-**run**?🔹 | <code>string</code> | Runs command-line programs using the operating system's shell.<br/>__*Optional*__
-**shell**?🔹 | <code>string</code> | TBD.<br/>__*Optional*__
-**uses**?🔹 | <code>string</code> | Selects an action to run as part of a step in your job.<br/>__*Optional*__
-**with**?🔹 | <code>Map<string, any></code> | A map of the input parameters defined by the action.<br/>__*Optional*__
-
-
-
-## struct Branding 🔹 <a id="projen-actions-branding"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**color**?🔹 | <code>string</code> | __*Optional*__
-**icon**?🔹 | <code>string</code> | __*Optional*__
-
-
-
-## struct CompositeRuns 🔹 <a id="projen-actions-compositeruns"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**steps**🔹 | <code>Array<[actions.ActionStep](#projen-actions-actionstep)></code> | <span></span>
-**using**🔹 | <code>string</code> | <span></span>
-
-
-
-## struct DockerRuns 🔹 <a id="projen-actions-dockerruns"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**image**🔹 | <code>string</code> | <span></span>
-**using**🔹 | <code>string</code> | <span></span>
-**entrypoint**?🔹 | <code>string</code> | __*Optional*__
-**env**?🔹 | <code>Map<string, string></code> | __*Optional*__
-**postEntrypoint**?🔹 | <code>string</code> | __*Optional*__
-**preEntrypoint**?🔹 | <code>string</code> | __*Optional*__
-
-
-
-## struct GithubActionTypeScriptOptions 🔹 <a id="projen-actions-githubactiontypescriptoptions"></a>
-
-
-
+Properties for creating a GitHubActionTypeScriptProject.
 
 
 
 Name | Type | Description 
 -----|------|-------------
 **defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
-**metadata**🔹 | <code>[actions.ActionMetadata](#projen-actions-actionmetadata)</code> | <span></span>
+**metadata**🔹 | <code>[github.metadata.ActionMetadata](#projen-github-metadata-actionmetadata)</code> | Every GitHub Action must have a metadata file named `action.yml`. Projen will manage this file for you using the specifications of this property.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
@@ -11925,69 +11830,6 @@ Name | Type | Description
 **workflowGitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?🔹 | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
-
-
-
-## struct Input 🔹 <a id="projen-actions-input"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**description**🔹 | <code>string</code> | <span></span>
-**name**🔹 | <code>string</code> | <span></span>
-**default**?🔹 | <code>string</code> | __*Optional*__
-**deprecationMessage**?🔹 | <code>string</code> | __*Optional*__
-**required**?🔹 | <code>boolean</code> | __*Optional*__
-
-
-
-## struct JavaScriptRuns 🔹 <a id="projen-actions-javascriptruns"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**main**🔹 | <code>string</code> | <span></span>
-**using**🔹 | <code>string</code> | <span></span>
-**post**?🔹 | <code>string</code> | __*Optional*__
-**postIf**?🔹 | <code>string</code> | __*Optional*__
-**pre**?🔹 | <code>string</code> | __*Optional*__
-**preIf**?🔹 | <code>string</code> | __*Optional*__
-
-
-
-## struct Output 🔹 <a id="projen-actions-output"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**description**🔹 | <code>string</code> | <span></span>
-**name**🔹 | <code>string</code> | <span></span>
-**value**?🔹 | <code>string</code> | __*Optional*__
-
-
-
-## struct Runs 🔹 <a id="projen-actions-runs"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**using**🔹 | <code>string</code> | <span></span>
 
 
 

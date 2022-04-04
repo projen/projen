@@ -2,18 +2,26 @@ import { ActionMetadata } from "../github/actions-metadata-model";
 import { TypeScriptProject, TypeScriptProjectOptions } from "../typescript";
 import { YamlFile } from "../yaml";
 
-export interface GithubActionTypeScriptOptions
+/**
+ * Properties for creating a GitHubActionTypeScriptProject
+ */
+export interface GitHubActionTypeScriptOptions
   extends TypeScriptProjectOptions {
+  /**
+   * Every GitHub Action must have a metadata file named `action.yml`.
+   * Projen will manage this file for you using the specifications of
+   * this property.
+   */
   readonly metadata: ActionMetadata;
 }
 
 /**
- * Create a GitHub action with TypeScript
+ * Create a GitHub Action with TypeScript
  *
  * @pjid github-action-ts
  */
-export class GithubActionTypeScriptProject extends TypeScriptProject {
-  constructor(options: GithubActionTypeScriptOptions) {
+export class GitHubActionTypeScriptProject extends TypeScriptProject {
+  constructor(options: GitHubActionTypeScriptOptions) {
     super(options);
 
     // standard GitHub action packages
@@ -27,6 +35,7 @@ export class GithubActionTypeScriptProject extends TypeScriptProject {
     this.addGitIgnore("!/dist/");
     this.annotateGenerated("/dist/**");
 
+    // Projen managed `action.yml` file.
     new YamlFile(this, "action.yml", {
       obj: options.metadata,
     });
