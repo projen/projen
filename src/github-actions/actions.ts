@@ -16,7 +16,7 @@ export interface GitHubActionTypeScriptOptions
 }
 
 /**
- * Create a GitHub Action with TypeScript
+ * Create a GitHub Action with TypeScript.
  *
  * @pjid github-action-ts
  */
