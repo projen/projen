@@ -1,4 +1,4 @@
-import { ActionMetadata } from "../github/actions-metadata-model";
+import { ActionMetadata, RunsUsing } from "../github/actions-metadata-model";
 import { TypeScriptProject, TypeScriptProjectOptions } from "../typescript";
 import { YamlFile } from "../yaml";
 
@@ -12,7 +12,7 @@ export interface GitHubActionTypeScriptOptions
    * Projen will manage this file for you using the specifications of
    * this property.
    */
-  readonly metadata: ActionMetadata;
+  readonly metadata?: ActionMetadata;
 }
 
 /**
@@ -35,9 +35,21 @@ export class GitHubActionTypeScriptProject extends TypeScriptProject {
     this.addGitIgnore("!/dist/");
     this.annotateGenerated("/dist/**");
 
-    // Projen managed `action.yml` file.
+    // Create metadata for projen managed `action.yml` file.
+    const defaultMetadataOptions: ActionMetadata = {
+      name: this.name,
+      description: `A GitHub Action for ${this.name}`,
+      runs: {
+        using: RunsUsing.NODE_16,
+        main: "lib/index.js",
+      },
+    };
+
     new YamlFile(this, "action.yml", {
-      obj: options.metadata,
+      obj: {
+        ...defaultMetadataOptions,
+        ...options.metadata,
+      },
     });
   }
 }

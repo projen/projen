@@ -3113,7 +3113,7 @@ new actions.GitHubActionTypeScriptProject(options: GitHubActionTypeScriptOptions
   * **tsconfigDev** (<code>[javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)</code>)  Custom tsconfig options for the development tsconfig.json file (used for testing). __*Default*__: use the production tsconfig options
   * **tsconfigDevFile** (<code>string</code>)  The name of the development tsconfig.json file. __*Default*__: "tsconfig.dev.json"
   * **typescriptVersion** (<code>string</code>)  TypeScript version to use. __*Default*__: "latest"
-  * **metadata** (<code>[github.metadata.ActionMetadata](#projen-github-metadata-actionmetadata)</code>)  Every GitHub Action must have a metadata file named `action.yml`. Projen will manage this file for you using the specifications of this property. 
+  * **metadata** (<code>[github.metadata.ActionMetadata](#projen-github-metadata-actionmetadata)</code>)  Every GitHub Action must have a metadata file named `action.yml`. Projen will manage this file for you using the specifications of this property. __*Optional*__
 
 
 
@@ -11701,7 +11701,6 @@ Properties for creating a GitHubActionTypeScriptProject.
 Name | Type | Description 
 -----|------|-------------
 **defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
-**metadata**🔹 | <code>[github.metadata.ActionMetadata](#projen-github-metadata-actionmetadata)</code> | Every GitHub Action must have a metadata file named `action.yml`. Projen will manage this file for you using the specifications of this property.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
@@ -11759,6 +11758,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**metadata**?🔹 | <code>[github.metadata.ActionMetadata](#projen-github-metadata-actionmetadata)</code> | Every GitHub Action must have a metadata file named `action.yml`. Projen will manage this file for you using the specifications of this property.<br/>__*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.

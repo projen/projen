@@ -16517,6 +16517,7 @@ Array [
         "jsonLike": true,
         "kind": "interface",
         "name": "metadata",
+        "optional": true,
         "parent": "GitHubActionTypeScriptOptions",
         "path": Array [
           "metadata",

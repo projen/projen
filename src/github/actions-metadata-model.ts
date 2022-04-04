@@ -123,33 +123,26 @@ export interface Output {
 /**
  * The GitHub Action runtime or composite/docker identifier.
  */
-export class RunsUsing {
+export enum RunsUsing {
   /**
    * "node12"
    */
-  public static readonly NODE_12 = new RunsUsing("node12");
+  NODE_12 = "node12",
 
   /**
    * "node16"
    */
-  public static readonly NODE_16 = new RunsUsing("node16");
+  NODE_16 = "node16",
 
   /**
    * "composite"
    */
-  public static readonly COMPOSITE = new RunsUsing("composite");
+  COMPOSITE = "composite",
 
   /**
    * "docker"
    */
-  public static readonly DOCKER = new RunsUsing("docker");
-
-  /**
-   * Supply a custom value for `runs.using`.
-   *
-   * @param using the value for runs.using
-   */
-  public constructor(public readonly using: string) {}
+  DOCKER = "docker",
 }
 
 /**
@@ -169,7 +162,7 @@ interface Runs {
    * For docker container actions:
    * - use `RunsUsing.DOCKER`
    */
-  readonly using: string;
+  readonly using: RunsUsing;
 }
 
 /**
