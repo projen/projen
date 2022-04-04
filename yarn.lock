@@ -1578,7 +1578,7 @@ combined-stream@^1.0.8:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@^9.0.0:
+commander@^9.1.0:
   version "9.1.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-9.1.0.tgz#a6b263b2327f2e188c6402c42623327909f2dbec"
   integrity sha512-i0/MaqBtdbnJ4XQs4Pmyb+oFQl+q0lsAmokVUH92SlSw4fkeAcG3bVon+Qt7hmtF+u3Het6o4VgrcY3qAoEB6w==
@@ -2345,10 +2345,10 @@ eslint-import-resolver-node@^0.3.6:
     debug "^3.2.7"
     resolve "^1.20.0"
 
-eslint-import-resolver-typescript@^2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-2.7.0.tgz#1f9d391b636dccdbaa4a3b1a87eb9a8237e23963"
-  integrity sha512-MNHS3u5pebvROX4MjGP9coda589ZGfL1SqdxUV4kSrcclfDRWvNE2D+eljbnWVMvWDVRgT89nhscMHPKYGcObQ==
+eslint-import-resolver-typescript@^2.7.1:
+  version "2.7.1"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-2.7.1.tgz#a90a4a1c80da8d632df25994c4c5fdcdd02b8751"
+  integrity sha512-00UbgGwV8bSgUv34igBDbTOtKhqoRMy9bFjNehT40bXg6585PNIct8HhXZ0SybqB9rWtXj9crcku8ndDn/gIqQ==
   dependencies:
     debug "^4.3.4"
     glob "^7.2.0"
@@ -4631,14 +4631,14 @@ npm-bundled@^1.1.1, npm-bundled@^1.1.2:
     npm-normalize-package-bin "^1.0.1"
 
 npm-check-updates@^12:
-  version "12.5.5"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.5.5.tgz#3b274a56cc8ad6e770010716c03bb680a967d9bd"
-  integrity sha512-7LH6KN6F1fZMtY4zNYAQPpJU1ToxZ6sSCxk948vrLIz97aNqmPLSX72MrmbOWwpyBgLCPbFJWY/k3zE18pmxfw==
+  version "12.5.7"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-12.5.7.tgz#f51a8a1414f8c7b346ed444bac1a9a9b3da8548b"
+  integrity sha512-WDkqPBevmgphV1UH3FImsDEpTAq2UFvnMZC3GdXPknE2VL701kfKylnae8IA9ZeYfm/uU0249N9gjMXqA/9y3w==
   dependencies:
     chalk "^4.1.2"
     cint "^8.2.1"
     cli-table "^0.3.11"
-    commander "^9.0.0"
+    commander "^9.1.0"
     fast-memoize "^2.5.2"
     find-up "5.0.0"
     fp-and-or "^0.1.3"
@@ -4651,11 +4651,11 @@ npm-check-updates@^12:
     lodash "^4.17.21"
     minimatch "^5.0.1"
     p-map "^4.0.0"
-    pacote "^13.0.3"
+    pacote "^13.0.5"
     parse-github-url "^1.0.2"
     progress "^2.0.3"
     prompts "^2.4.2"
-    rc-config-loader "^4.0.0"
+    rc-config-loader "^4.1.0"
     remote-git-tags "^3.0.0"
     rimraf "^3.0.2"
     semver "^7.3.5"
@@ -4912,7 +4912,7 @@ package-json@^6.3.0:
     registry-url "^5.0.0"
     semver "^6.2.0"
 
-pacote@^13.0.3:
+pacote@^13.0.5:
   version "13.0.5"
   resolved "https://registry.yarnpkg.com/pacote/-/pacote-13.0.5.tgz#d6f370b11112492d8257ae1178a003b36d4bb261"
   integrity sha512-6CYfot3/rUAn3qqzF2d/jrrXm5HlBtvaSgfmg0VtOUAdJ8fbSq21BJwftMGArkL71yXHIbUJ7Bt5B04547HELA==
@@ -5165,10 +5165,10 @@ quick-lru@^4.0.1:
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-4.0.1.tgz#5b8878f113a58217848c6482026c73e1ba57727f"
   integrity sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==
 
-rc-config-loader@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/rc-config-loader/-/rc-config-loader-4.0.0.tgz#144cf31961c9f8ebcf252bd9c263fd40d62bd387"
-  integrity sha512-//LRTblJEcqbmmro1GCmZ39qZXD+JqzuD8Y5/IZU3Dhp3A1Yr0Xn68ks8MQ6qKfKvYCWDveUmRDKDA40c+sCXw==
+rc-config-loader@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/rc-config-loader/-/rc-config-loader-4.1.0.tgz#208e797d773a2203473df10496cd75b5fd93740e"
+  integrity sha512-aW+kX4qy0CiM9L4fG4Us3oEOpIrOrXzWykAn+xldD07Y9PXWjTH744oHbv0Kc9ZwWaylw3jMjxaf14RgStrNrA==
   dependencies:
     debug "^4.1.1"
     js-yaml "^4.0.0"
