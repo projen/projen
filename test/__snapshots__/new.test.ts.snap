@@ -256,11 +256,12 @@ project.synth();",
 }
 `;
 
-exports[`projen new node --outdir path/to/mydir 1`] = `
+exports[`projen new node --outdir path/to/mydir --package-manager="npm" 1`] = `
 "const { javascript } = require(\\"projen\\");
 const project = new javascript.NodeProject({
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
+  packageManager: javascript.NodePackageManager.NPM,
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
