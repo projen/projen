@@ -260,14 +260,14 @@ test("projenrc-ts creates typescript projenrc", () => {
   });
 });
 
-test("projen new node --outdir path/to/mydir --package-manager=\"npm\"", () => {
+test("projen new node --outdir path/to/mydir", () => {
   withProjectDir((projectdir) => {
     // GIVEN
     const shell = (command: string) => execSync(command, { cwd: projectdir });
     shell(`mkdir -p ${join("path", "to", "mydir")}`);
 
     // WHEN
-    execProjenCLI(projectdir, ["new", "node", "--outdir", "path/to/mydir", "--package-manager=\"npm\""]);
+    execProjenCLI(projectdir, ["new", "node", "--outdir", "path/to/mydir"]);
 
     // THEN
     const targetDirSnapshot = directorySnapshot(
