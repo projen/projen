@@ -1,6 +1,5 @@
 // tests for `projen new`: we run `projen new` for each supported project type
 // and compare against a golden snapshot.
-import { execSync } from "child_process";
 import { join } from "path";
 import { pathExistsSync } from "fs-extra";
 import * as inventory from "../src/inventory";
