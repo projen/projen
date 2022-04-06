@@ -304,9 +304,10 @@ export class BuildWorkflow extends Component {
       needs: [BUILD_JOBID],
       if: `always() && ${SELF_MUTATION_CONDITION} && ${NOT_FORK}`,
       steps: [
+        ...this.workflow.projenCredentials.setupSteps,
         ...WorkflowActions.checkoutWithPatch({
           // we need to use a PAT so that our push will trigger the build workflow
-          token: `\${{ secrets.${this.workflow.projenTokenSecret} }}`,
+          token: this.workflow.projenCredentials.tokenRef,
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
         }),

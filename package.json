@@ -59,12 +59,12 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "all-contributors-cli": "^6.20.0",
-    "esbuild": "^0.14.27",
+    "esbuild": "^0.14.31",
     "eslint": "^8",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-node": "^0.3.6",
-    "eslint-import-resolver-typescript": "^2.7.0",
-    "eslint-plugin-import": "^2.25.4",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^27.5.1",
     "jest-junit": "^13",
@@ -75,7 +75,7 @@
     "json-schema": "^0.4.0",
     "markmac": "^0.1.146",
     "npm-check-updates": "^12",
-    "prettier": "^2.6.1",
+    "prettier": "^2.6.2",
     "standard-version": "^9",
     "ts-jest": "^27.1.4",
     "typescript": "^3.9.10"
@@ -91,7 +91,7 @@
     "semver": "^7.3.5",
     "shx": "^0.3.4",
     "xmlbuilder2": "^2.4.1",
-    "yaml": "next",
+    "yaml": "2.0.0-11",
     "yargs": "^16.2.0"
   },
   "bundledDependencies": [
