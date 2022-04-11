@@ -287,6 +287,14 @@ community Slack workspace.
 
 [cdk.dev]: https://cdk.dev/
 
+### Virtual Meetup
+
+- Thursday June 30, 2022 
+- 1-2pm America/New_York (EDT)
+- [CFP](https://bit.ly/3NEc0UQ) a Google Form
+- CFP Closes Saturday April 30, 2022
+- Hosted on [Zoom](https://zoom.us/j/92399854777?pwd=OUZybHlobHNoZUs1VVordWhaRTVGdz09#success)
+
 ## Contributions
 
 Contributions of all kinds are welcome! Check out our [contributor's
