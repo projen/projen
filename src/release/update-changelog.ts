@@ -66,7 +66,10 @@ export async function updateChangelog(
     );
   }
 
-  const outputChangelogContent = await readFile(outputChangelog, "utf-8");
+  const outputChangelogContent = await readFile(outputChangelog, {
+    encoding: "utf-8",
+    flag: "a+",
+  });
 
   if (outputChangelogContent.indexOf(changelogVersionSearchPattern) > -1) {
     logging.info(
