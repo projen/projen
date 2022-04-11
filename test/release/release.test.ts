@@ -1,6 +1,6 @@
 import * as YAML from "yaml";
 import { JobPermission } from "../../src/github/workflows-model";
-import { Release, ReleaseTrigger } from "../../src/release";
+import { Publisher, Release, ReleaseTrigger } from "../../src/release";
 import { synthSnapshot, TestProject } from "../util";
 
 test("minimal", () => {
@@ -220,6 +220,58 @@ test("releaseSchedule schedules releases", () => {
       schedule: expect.arrayContaining([{ cron: schedule }]),
     },
   });
+});
+
+test("manual release publish happens after anti-tamper check", () => {
+  // GIVEN
+  const project = new TestProject();
+
+  // WHEN
+  new Release(project, {
+    task: project.buildTask,
+    versionFile: "version.json",
+    branch: "main",
+    releaseTrigger: ReleaseTrigger.manual(),
+    artifactsDirectory: "dist",
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  const steps: Object[] = outdir[".projen/tasks.json"].tasks.release.steps;
+  const antiTamperStepIndex = steps.findIndex(
+    (obj: any) => obj.exec === Release.ANTI_TAMPER_CMD
+  );
+  const publishGitStepIndex = steps.findIndex(
+    (obj: any) => obj.spawn === Publisher.PUBLISH_GIT_TASK_NAME
+  );
+  expect(publishGitStepIndex).toBeGreaterThan(antiTamperStepIndex);
+});
+
+test("manual release with custom git-push", () => {
+  // GIVEN
+  const project = new TestProject();
+  new Release(project, {
+    task: project.buildTask,
+    versionFile: "version.json",
+    branch: "main",
+    releaseTrigger: ReleaseTrigger.manual({
+      gitPushCommand: "git push --follow-tags -o ci.skip origin main",
+    }),
+    publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  const steps =
+    outdir[".projen/tasks.json"].tasks[Publisher.PUBLISH_GIT_TASK_NAME].steps;
+  expect(steps).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        exec: "git push --follow-tags -o ci.skip origin main",
+      }),
+    ])
+  );
 });
 
 test("addJobs() can be used to add arbitrary jobs to the release workflows", () => {
@@ -505,32 +557,6 @@ test("can be modified with escape hatches", () => {
   expect(outdir[".github/workflows/release.yml"]).toContain("FOO: VALUE1");
   expect(outdir[".github/workflows/release.yml"]).toContain("BAR: VALUE2");
   expect(outdir).toMatchSnapshot();
-});
-
-test("manual release with custom git-push", () => {
-  // GIVEN
-  const project = new TestProject();
-  new Release(project, {
-    task: project.buildTask,
-    versionFile: "version.json",
-    branch: "main",
-    releaseTrigger: ReleaseTrigger.manual({
-      gitPushCommand: "git push --follow-tags -o ci.skip origin main",
-    }),
-    publishTasks: true, // to increase coverage
-    artifactsDirectory: "dist",
-  });
-
-  // THEN
-  const outdir = synthSnapshot(project);
-  const steps = outdir[".projen/tasks.json"].tasks["publish:git"].steps;
-  expect(steps).toEqual(
-    expect.arrayContaining([
-      expect.objectContaining({
-        exec: "git push --follow-tags -o ci.skip origin main",
-      }),
-    ])
-  );
 });
 
 test("publisher can use custom github runner", () => {

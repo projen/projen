@@ -111,6 +111,8 @@ export interface PublisherOptions {
  * Under the hood, it uses https://github.com/aws/publib
  */
 export class Publisher extends Component {
+  public static readonly PUBLISH_GIT_TASK_NAME = "publish:git";
+
   public readonly buildJobId: string;
   public readonly artifactName: string;
   public readonly publibVersion: string;
@@ -197,8 +199,8 @@ export class Publisher extends Component {
 
     const taskName =
       gitBranch === "main" || gitBranch === "master"
-        ? "publish:git"
-        : `publish:git:${gitBranch}`;
+        ? Publisher.PUBLISH_GIT_TASK_NAME
+        : `${Publisher.PUBLISH_GIT_TASK_NAME}:${gitBranch}`;
 
     const publishTask = this.project.addTask(taskName, {
       description:
