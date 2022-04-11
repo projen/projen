@@ -58,7 +58,7 @@ export async function updateChangelog(
   }
 
   const inputChangelogContent = await readFile(inputChangelog, "utf-8");
-  const changelogVersionSearchPattern = `[${version}]`;
+  const changelogVersionSearchPattern = `${version}`;
 
   if (!inputChangelogContent.includes(changelogVersionSearchPattern)) {
     throw new Error(
