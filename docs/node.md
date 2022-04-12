@@ -78,9 +78,9 @@ Scoped private packages can be configured in this project and its ancestors.
 
 All npm packages have a name. Some package names also have a scope. A scope follows the usual rules for package names (URL-safe characters, no leading dots or underscores). When used in package names, scopes are preceded by an @ symbol and followed by a slash, e.g. `@somescope/somepackagename`
 
-This feature supports specifying options on how to access packages in each of the scopes, otherwise will try to install from default npm registry.
+This feature supports specifying options on how package managers should access packages in each of the scopes. If no options are specified, npm or yarn will try to install scoped packages from the public npm registry.
 
-Currently, it only supports fetching packages from AWS CodeArtifact, either by directly access via credentials or by assuming a role using the specified credentials.
+Currently, it only supports fetching packages from AWS CodeArtifact, either by directly access via credentials or by assuming a role using the specified credentials. Credentials must be provided in the CodeArtifactOptions property.
 
 Multiple scoped package options may be specified if required.
 

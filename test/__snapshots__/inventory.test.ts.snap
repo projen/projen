@@ -2665,7 +2665,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -4445,6 +4445,7 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "default": "- fetch all scoped packages from the public npm registry",
         "docs": "Options for privately hosted scoped packages.",
         "featured": false,
         "fullType": Object {
@@ -5332,7 +5333,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -7270,6 +7271,7 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "default": "- fetch all scoped packages from the public npm registry",
         "docs": "Options for privately hosted scoped packages.",
         "featured": false,
         "fullType": Object {
@@ -8056,7 +8058,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -9758,6 +9760,7 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "default": "- fetch all scoped packages from the public npm registry",
         "docs": "Options for privately hosted scoped packages.",
         "featured": false,
         "fullType": Object {
@@ -10522,7 +10525,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -12423,6 +12426,7 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "default": "- fetch all scoped packages from the public npm registry",
         "docs": "Options for privately hosted scoped packages.",
         "featured": false,
         "fullType": Object {
@@ -13153,7 +13157,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -15020,6 +15024,7 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "default": "- fetch all scoped packages from the public npm registry",
         "docs": "Options for privately hosted scoped packages.",
         "featured": false,
         "fullType": Object {
@@ -16442,7 +16447,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -18292,6 +18297,7 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "default": "- fetch all scoped packages from the public npm registry",
         "docs": "Options for privately hosted scoped packages.",
         "featured": false,
         "fullType": Object {
@@ -18972,7 +18978,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -20450,6 +20456,7 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "default": "- fetch all scoped packages from the public npm registry",
         "docs": "Options for privately hosted scoped packages.",
         "featured": false,
         "fullType": Object {
@@ -21058,7 +21065,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -22692,6 +22699,7 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "default": "- fetch all scoped packages from the public npm registry",
         "docs": "Options for privately hosted scoped packages.",
         "featured": false,
         "fullType": Object {
@@ -23372,7 +23380,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -24833,6 +24841,7 @@ Array [
         "switch": "repository-directory",
       },
       Object {
+        "default": "- fetch all scoped packages from the public npm registry",
         "docs": "Options for privately hosted scoped packages.",
         "featured": false,
         "fullType": Object {
@@ -26340,7 +26349,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -27840,6 +27849,7 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "default": "- fetch all scoped packages from the public npm registry",
         "docs": "Options for privately hosted scoped packages.",
         "featured": false,
         "fullType": Object {
@@ -28414,7 +28424,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -30070,6 +30080,7 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "default": "- fetch all scoped packages from the public npm registry",
         "docs": "Options for privately hosted scoped packages.",
         "featured": false,
         "fullType": Object {
@@ -30733,7 +30744,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -32367,6 +32378,7 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "default": "- fetch all scoped packages from the public npm registry",
         "docs": "Options for privately hosted scoped packages.",
         "featured": false,
         "fullType": Object {
@@ -33030,7 +33042,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -34664,6 +34676,7 @@ Array [
         "switch": "sample-code",
       },
       Object {
+        "default": "- fetch all scoped packages from the public npm registry",
         "docs": "Options for privately hosted scoped packages.",
         "featured": false,
         "fullType": Object {

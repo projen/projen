@@ -1096,7 +1096,7 @@ describe("scoped private packages", () => {
           exec: "which aws",
         },
         {
-          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-repository-endpoint --domain ${domain} --repository ${repository}); npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl}:always-auth=true`,
+          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --repository ${repository} --region ${region} --domain-owner ${accountId}); npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl}:always-auth=true`,
         },
       ],
     });
@@ -1132,10 +1132,10 @@ describe("scoped private packages", () => {
           exec: "which aws",
         },
         {
-          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-repository-endpoint --domain ${domain} --repository ${repository}); npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl}:always-auth=true`,
+          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --repository ${repository} --region ${region} --domain-owner ${accountId}); npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl}:always-auth=true`,
         },
         {
-          exec: `npm config set ${scope2}:registry ${registryUrl2}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-repository-endpoint --domain ${domain2} --repository ${repository2}); npm config set //${registryUrl2}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl2}:always-auth=true`,
+          exec: `npm config set ${scope2}:registry ${registryUrl2}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain2} --repository ${repository2} --region ${region2} --domain-owner ${accountId2}); npm config set //${registryUrl2}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl2}:always-auth=true`,
         },
       ],
     });

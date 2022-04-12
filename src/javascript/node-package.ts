@@ -282,7 +282,8 @@ export interface NodePackageOptions {
   readonly npmTokenSecret?: string;
 
   /**
-   * Options for publishing npm package to AWS CodeArtifact.
+   * Options for npm packages using AWS CodeArtifact.
+   * This is required if publishing packages to, or installing scoped packages from AWS CodeArtifact
    *
    * @default - undefined
    */
@@ -401,7 +402,8 @@ export class NodePackage extends Component {
   public readonly npmTokenSecret?: string;
 
   /**
-   * Options for publishing npm package to AWS CodeArtifact.
+   * Options for npm packages using AWS CodeArtifact.
+   * This is required if publishing packages to, or installing scoped packages from AWS CodeArtifact
    *
    * @default - undefined
    */
@@ -919,12 +921,12 @@ export class NodePackage extends Component {
         { exec: "which aws" }, // check that AWS CLI is installed
         ...this.scopedPackagesOptions.map((scopedPackagesOption) => {
           const { registryUrl, scope } = scopedPackagesOption;
-          const { domain, repository } =
+          const { domain, repository, region, accountId } =
             extractCodeArtifactDetails(registryUrl);
           // reference: https://docs.aws.amazon.com/codeartifact/latest/ug/npm-auth.html
           const commands = [
             `npm config set ${scope}:registry ${registryUrl}`,
-            `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-repository-endpoint --domain ${domain} --repository ${repository})`,
+            `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --repository ${repository} --region ${region} --domain-owner ${accountId})`,
             `npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
             `npm config set //${registryUrl}:always-auth=true`,
           ];
