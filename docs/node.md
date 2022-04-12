@@ -80,7 +80,7 @@ All npm packages have a name. Some package names also have a scope. A scope foll
 
 This feature supports specifying options on how to access packages in each of the scopes, otherwise will try to install from default npm registry.
 
-Currently, it only supports AWS CodeArtifact, either by directly access via credentials or by assuming a role using the specified credentials.
+Currently, it only supports fetching packages from AWS CodeArtifact, either by directly access via credentials or by assuming a role using the specified credentials.
 
 Multiple scoped package options may be specified if required.
 

@@ -759,7 +759,7 @@ export class NodeProject extends GitHubProject {
   }
 
   /**
-   * Get steps for scoped package
+   * Get steps for scoped package access
    *
    * @param codeArtifactOptions Details of logging in to AWS
    * @returns array of job steps required for each private scoped packages

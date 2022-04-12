@@ -291,7 +291,7 @@ export interface NodePackageOptions {
   /**
    * Options for privately hosted scoped packages
    *
-   * @default undefined
+   * @default - fetch all scoped packages from the public npm registry
    */
   readonly scopedPackagesOptions?: ScopedPackagesOptions[];
 }
@@ -327,14 +327,14 @@ export interface CodeArtifactOptions {
  */
 export interface ScopedPackagesOptions {
   /**
-   * scope of the packages
+   * Scope of the packages
    *
    * @example "@angular"
    */
   readonly scope: string;
 
   /**
-   * Url of the registry for scoped packages
+   * URL of the registry for scoped packages
    */
   readonly registryUrl: string;
 }
@@ -916,11 +916,12 @@ export class NodePackage extends Component {
     this.project.addTask("ca:login", {
       requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
-        { exec: "which aws" },
+        { exec: "which aws" }, // check that AWS CLI is installed
         ...this.scopedPackagesOptions.map((scopedPackagesOption) => {
           const { registryUrl, scope } = scopedPackagesOption;
           const { domain, repository } =
             extractCodeArtifactDetails(registryUrl);
+          // reference: https://docs.aws.amazon.com/codeartifact/latest/ug/npm-auth.html
           const commands = [
             `npm config set ${scope}:registry ${registryUrl}`,
             `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-repository-endpoint --domain ${domain} --repository ${repository})`,
