@@ -8831,6 +8831,7 @@ Name | Type | Description
 **jsiiReleaseVersion**⚠️ | <code>string</code> | <span></span>
 **publibVersion**🔹 | <code>string</code> | <span></span>
 **condition**?🔹 | <code>string</code> | __*Optional*__
+*static* **PUBLISH_GIT_TASK_NAME**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
@@ -9051,6 +9052,7 @@ Name | Type | Description
 **artifactsDirectory**🔹 | <code>string</code> | Location of build artifacts.
 **branches**🔹 | <code>Array<string></code> | Retrieve all release branch names.
 **publisher**🔹 | <code>[release.Publisher](#projen-release-publisher)</code> | Package publisher.
+*static* **ANTI_TAMPER_CMD**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 

@@ -226,6 +226,8 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
  * By default, no branches are released. To add branches, call `addBranch()`.
  */
 export class Release extends Component {
+  public static readonly ANTI_TAMPER_CMD =
+    "git diff --ignore-space-at-eol --exit-code";
   /**
    * Returns the `Release` component of a project or `undefined` if the project
    * does not have a Release component.
@@ -508,6 +510,10 @@ export class Release extends Component {
     releaseTask.spawn(this.buildTask);
     releaseTask.spawn(this.version.unbumpTask);
 
+    // anti-tamper check (fails if there were changes to committed files)
+    // this will identify any non-committed files generated during build (e.g. test snapshots)
+    releaseTask.exec(Release.ANTI_TAMPER_CMD);
+
     if (this.releaseTrigger.isManual) {
       const publishTask = this.publisher.publishToGit({
         changelogFile: path.posix.join(
@@ -529,10 +535,6 @@ export class Release extends Component {
 
       releaseTask.spawn(publishTask);
     }
-
-    // anti-tamper check (fails if there were changes to committed files)
-    // this will identify any non-committed files generated during build (e.g. test snapshots)
-    releaseTask.exec("git diff --ignore-space-at-eol --exit-code");
 
     const postBuildSteps = [...this.postBuildSteps];
 

@@ -175,7 +175,7 @@
     },
     {
       "name": "yaml",
-      "version": "next",
+      "version": "2.0.0-11",
       "type": "bundled"
     },
     {

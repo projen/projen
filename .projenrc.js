@@ -27,7 +27,7 @@ const project = new cdk.JsiiProject({
 
   bundledDeps: [
     "conventional-changelog-config-spec",
-    "yaml@next",
+    "yaml@2.0.0-11",
     "fs-extra",
     "yargs",
     "case",
