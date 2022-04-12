@@ -97,3 +97,33 @@ TODO
 ## Releases (CI/CD)
 
 TODO
+
+## Features
+
+### Scoped Private Packages
+
+Scoped private packages can be configured in this project and its ancestors.
+
+All npm packages have a name. Some package names also have a scope. A scope follows the usual rules for package names (URL-safe characters, no leading dots or underscores). When used in package names, scopes are preceded by an @ symbol and followed by a slash, e.g. `@somescope/somepackagename`
+
+This feature supports specifying options on how package managers should access packages in each of the scopes. If no options are specified, npm or yarn will try to install scoped packages from the public npm registry.
+
+Currently, it only supports fetching packages from AWS CodeArtifact, either by directly access via credentials or by assuming a role using the specified credentials. Credentials must be provided in the CodeArtifactOptions property.
+
+Multiple scoped package options may be specified if required.
+
+example
+```js
+const { javascript } = require('projen');
+const project = new javascript.NodeProject({
+  defaultReleaseBranch: 'main',
+  name: 'my-project',
+  scopedPackagesOptions: [
+      {
+          registryUrl: '<code-artifact-registry-url>',
+          scope: '@somescope',
+      }
+  ]
+});
+project.synth();
+```
