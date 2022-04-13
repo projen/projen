@@ -19,7 +19,7 @@ describe("auto-merge", () => {
 
     new AutoMerge(project.github!, {
       approvedReviews: 2,
-      blockingLabels: ['draft'],
+      blockingLabels: ["draft"],
     });
 
     const snapshot = synthSnapshot(project);
@@ -33,7 +33,7 @@ describe("auto-merge", () => {
 
     const autoMerge = new AutoMerge(project.github!, {
       approvedReviews: 2,
-      blockingLabels: ['draft'],
+      blockingLabels: ["draft"],
     });
     autoMerge.mergify.addRule({
       name: "automatic merge for main when CI passes and 2 reviews",
@@ -43,7 +43,7 @@ describe("auto-merge", () => {
         "base=main",
       ],
       actions: { merge: { method: "merge " } },
-    })
+    });
 
     const snapshot = synthSnapshot(project);
 
