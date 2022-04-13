@@ -2,26 +2,11 @@ import { Component } from "../component";
 import { Project } from "../project";
 import { Dependabot, DependabotOptions } from "./dependabot";
 import { GithubCredentials } from "./github-credentials";
-import { Mergify, MergifyOptions } from "./mergify";
 import { PullRequestTemplate } from "./pr-template";
 import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
 import { GithubWorkflow } from "./workflows";
 
 export interface GitHubOptions {
-  /**
-   * Whether mergify should be enabled on this repository or not.
-   *
-   * @default true
-   */
-  readonly mergify?: boolean;
-
-  /**
-   * Options for Mergify.
-   *
-   * @default - default options
-   */
-  readonly mergifyOptions?: MergifyOptions;
-
   /**
    * Enables GitHub workflows. If this is set to `false`, workflows will not be created.
    *
@@ -73,12 +58,6 @@ export class GitHub extends Component {
   }
 
   /**
-   * The `Mergify` configured on this repository. This is `undefined` if Mergify
-   * was not enabled when creating the repository.
-   */
-  public readonly mergify?: Mergify;
-
-  /**
    * Are workflows enabled?
    */
   public readonly workflowsEnabled: boolean;
@@ -109,10 +88,6 @@ export class GitHub extends Component {
       this.projenCredentials = GithubCredentials.fromPersonalAccessToken({
         secret: "PROJEN_GITHUB_TOKEN",
       });
-    }
-
-    if (options.mergify ?? true) {
-      this.mergify = new Mergify(this, options.mergifyOptions);
     }
 
     if (options.pullRequestLint ?? true) {

@@ -147,7 +147,7 @@ project.vscode.launchConfiguration.addConfiguration({
   outFiles: ["${workspaceFolder}/lib/**/*.js"],
 });
 
-project.github.mergify.addRule({
+project.autoMerge.mergify.addRule({
   name: "Label core contributions",
   actions: {
     label: {

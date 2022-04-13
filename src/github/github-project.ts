@@ -4,10 +4,9 @@ import { Project, ProjectOptions, ProjectType } from "../project";
 import { SampleReadme, SampleReadmeProps } from "../readme";
 import { DevContainer, VsCode } from "../vscode";
 import { AutoApprove, AutoApproveOptions } from "./auto-approve";
-import { AutoMergeOptions } from "./auto-merge";
+import { AutoMerge, AutoMergeOptions } from "./auto-merge";
 import { GitHub, GitHubOptions } from "./github";
 import { GithubCredentials } from "./github-credentials";
-import { MergifyOptions } from "./mergify";
 import { Stale, StaleOptions } from "./stale";
 
 /**
@@ -47,22 +46,6 @@ export interface GitHubProjectOptions extends ProjectOptions {
   readonly githubOptions?: GitHubOptions;
 
   /**
-   * Whether mergify should be enabled on this repository or not.
-   *
-   * @default true
-   * @deprecated use `githubOptions.mergify` instead
-   */
-  readonly mergify?: boolean;
-
-  /**
-   * Options for mergify
-   *
-   * @default - default options
-   * @deprecated use `githubOptions.mergifyOptions` instead
-   */
-  readonly mergifyOptions?: MergifyOptions;
-
-  /**
    * Add a VSCode development environment (used for GitHub Codespaces)
    *
    * @default false
@@ -97,8 +80,17 @@ export interface GitHubProjectOptions extends ProjectOptions {
   readonly autoApproveOptions?: AutoApproveOptions;
 
   /**
-   * Configure options for automatic merging on GitHub. Has no effect if
-   * `github.mergify` is set to false.
+   * Enable automatic merging pull requests on GitHub. Currently, this only
+   * supports using Mergify to merge pull requests. Has no effect if `github` is
+   * set to false.
+   *
+   * @default true
+   */
+  readonly autoMerge?: boolean;
+
+  /**
+   * Configure options for automatic merging pull requests on GitHub. Has no
+   * effect if `autoMerge` is set to false or `github` is set to false.
    *
    * @default - see defaults in `AutoMergeOptions`
    */
@@ -182,6 +174,11 @@ export class GitHubProject extends Project {
   public readonly projectType: ProjectType;
 
   /**
+   * Auto merging pull requests for this project.
+   */
+  public readonly autoMerge?: AutoMerge;
+
+  /**
    * Auto approve set up for this project.
    */
   public readonly autoApprove?: AutoApprove;
@@ -196,8 +193,6 @@ export class GitHubProject extends Project {
       ? new GitHub(this, {
           projenTokenSecret: options.projenTokenSecret,
           projenCredentials: options.projenCredentials,
-          mergify: options.mergify,
-          mergifyOptions: options.mergifyOptions,
           ...options.githubOptions,
         })
       : undefined;
@@ -221,6 +216,11 @@ export class GitHubProject extends Project {
         this.github,
         options.autoApproveOptions
       );
+    }
+
+    const autoMerge = options.autoMerge ?? true;
+    if (autoMerge && this.github) {
+      this.autoMerge = new AutoMerge(this.github, options.autoMergeOptions);
     }
 
     const stale = options.stale ?? false;

@@ -7,6 +7,7 @@ exports[`sources and compiled output can be collocated 1`] = `
 !/.projen/deps.json
 !/.projen/files.json
 !/.github/workflows/pull-request-lint.yml
+!/.mergify.yml
 !/package.json
 !/LICENSE
 !/.npmignore
@@ -41,7 +42,6 @@ junit.xml
 /dist/changelog.md
 /dist/version.txt
 !/.github/workflows/release.yml
-!/.mergify.yml
 !/.github/workflows/upgrade-test.yml
 !/.github/pull_request_template.md
 !/test/

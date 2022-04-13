@@ -216,6 +216,7 @@ jobs:
 !/.projen/deps.json
 !/.projen/files.json
 !/.github/workflows/pull-request-lint.yml
+!/.mergify.yml
 !/package.json
 !/LICENSE
 !/.npmignore
@@ -244,7 +245,6 @@ jspm_packages/
 .cache
 !/.projenrc.js
 !/.github/workflows/build.yml
-!/.mergify.yml
 !/.github/workflows/upgrade.yml
 !/.github/pull_request_template.md
 !/test/

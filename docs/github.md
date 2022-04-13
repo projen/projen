@@ -40,6 +40,19 @@ const project = new javascript.NodeProject({
 });
 ```
 
+## Automatic Merging
+
+Automatic merging can be configured through the `autoMerge` and
+`autoMergeOptions` fields on most default projects, or by directly creating an
+`AutoMerge` component in your project. Currently this uses
+[Mergify](https://mergify.com/), and expects it to be installed on your GitHub
+repository for it to work. (Stay tuned for more ways of supporting auto
+merging!)
+
+To access the underlying `Mergify` configuration, you can use
+`project.autoMerge.mergify`. See `AutoMerge` and `Mergify` in the API reference
+for a full list of available options and methods.
+
 ## Workflows
 
 TODO

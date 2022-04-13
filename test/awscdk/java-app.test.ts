@@ -17,6 +17,7 @@ test("happy flow", () => {
     ".gitattributes",
     ".github/workflows/pull-request-lint.yml",
     ".gitignore",
+    ".mergify.yml",
     ".projen/deps.json",
     ".projen/files.json",
     ".projen/tasks.json",

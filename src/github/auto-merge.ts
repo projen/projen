@@ -1,5 +1,6 @@
 import { Component } from "../component";
 import { GitHub } from "./github";
+import { Mergify } from "./mergify";
 
 export interface AutoMergeOptions {
   /**
@@ -18,22 +19,21 @@ export interface AutoMergeOptions {
 /**
  * Sets up mergify to merging approved pull requests.
  *
- * If `buildJob` is specified, the specified GitHub workflow job ID is required
- * to succeed in order for the PR to be merged.
- *
  * `approvedReviews` specified the number of code review approvals required for
  * the PR to be merged.
  */
 export class AutoMerge extends Component {
+  /**
+   * Mergify configuration for this project.
+   */
+  public readonly mergify: Mergify;
+
   private readonly lazyConditions = new Array<IAddConditionsLater>();
 
   constructor(github: GitHub, options: AutoMergeOptions = {}) {
     super(github.project);
 
-    const mergify = github.mergify;
-    if (!mergify) {
-      throw new Error("auto merging requires mergify to be enabled");
-    }
+    this.mergify = new Mergify(github);
 
     const blockingLabels = options.blockingLabels ?? ["do-not-merge"];
     const blockingCondition = blockingLabels?.length
@@ -63,18 +63,16 @@ export class AutoMerge extends Component {
     this.addConditions(`#approved-reviews-by>=${approvedReviews}`);
     this.addConditions(...blockingCondition);
 
-    mergify.addRule({
+    this.mergify.addRule({
       name: "Automatic merge on approval and successful build",
       actions: mergeAction,
       conditions: (() => this.renderConditions()) as any,
     });
 
-    mergify.addQueue({
+    this.mergify.addQueue({
       name: "default",
       conditions: (() => this.renderConditions()) as any,
     });
-
-    this.project.addPackageIgnore("/.mergify.yml");
   }
 
   /**
