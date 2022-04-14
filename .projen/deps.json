@@ -23,7 +23,7 @@
     },
     {
       "name": "@types/node",
-      "version": "^12",
+      "version": "^14",
       "type": "build"
     },
     {
@@ -175,7 +175,6 @@
     },
     {
       "name": "yaml",
-      "version": "2.0.0-11",
       "type": "bundled"
     },
     {

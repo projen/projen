@@ -345,7 +345,7 @@ export class TypeScriptProject extends NodeProject {
       // Additionally, we default to tracking the 12.x line, as the current earliest LTS release of
       // node is 12.x, so this is what corresponds to the broadest compatibility with supported node
       // runtimes.
-      `@types/node@^${semver.major(this.package.minNodeVersion ?? "12.0.0")}`
+      `@types/node@^${semver.major(this.package.minNodeVersion ?? "14.0.0")}`
     );
 
     // generate sample code in `src` and `lib` if these directories are empty or non-existent.
