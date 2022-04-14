@@ -132,7 +132,7 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
         compilerOptions: {
           // required by Next.js
           esModuleInterop: true,
-          module: "esnext",
+          module: "CommonJS",
           moduleResolution: TypeScriptModuleResolution.NODE,
           isolatedModules: true,
           resolveJsonModule: true,
