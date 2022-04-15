@@ -561,6 +561,41 @@ test("extend github release workflow", () => {
   );
 });
 
+describe("extend github build workflow", () => {
+  let project: TestNodeProject;
+  beforeEach(() => {
+    project = new TestNodeProject();
+  });
+
+  test("addPostBuildSteps", () => {
+    // WHEN
+    project.buildWorkflow!.addPostBuildSteps({
+      name: "hello-world",
+      run: "echo 'hello world'",
+    });
+
+    // THEN
+    const workflow = synthSnapshot(project)[".github/workflows/build.yml"];
+    expect(workflow).toContain(
+      "- name: build\n        run: npx projen build\n      - name: hello-world\n        run: echo 'hello world'"
+    );
+  });
+
+  test("addPreBuildSteps", () => {
+    // WHEN
+    project.buildWorkflow!.addPreBuildSteps({
+      name: "hello-world",
+      run: "echo 'hello world'",
+    });
+
+    // THEN
+    const workflow = synthSnapshot(project)[".github/workflows/build.yml"];
+    expect(workflow).toContain(
+      "- name: hello-world\n        run: echo 'hello world'\n      - name: build\n        run: npx projen build"
+    );
+  });
+});
+
 describe("scripts", () => {
   test("addTask and setScript", () => {
     const p = new TestNodeProject();

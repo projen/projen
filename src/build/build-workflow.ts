@@ -172,6 +172,14 @@ export class BuildWorkflow extends Component {
   }
 
   /**
+   * Adds steps that are executed before the build.
+   * @param steps The job steps
+   */
+  public addPreBuildSteps(...steps: JobStep[]): void {
+    this.preBuildSteps.push(...steps);
+  }
+
+  /**
    * Adds steps that are executed after the build.
    * @param steps The job steps
    */
