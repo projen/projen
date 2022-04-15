@@ -50,6 +50,7 @@ const project = new cdk.JsiiProject({
     "markmac",
     "esbuild",
     "all-contributors-cli",
+    "verdaccio",
   ],
 
   depsUpgradeOptions: {
@@ -231,5 +232,11 @@ setupBundleTaskRunner();
 // fixes feedback loop where projen contibutors run "build"
 // but not all files are updated
 project.postCompileTask.spawn(project.defaultTask);
+
+project.addTask("test:integ", {
+  exec: "jest --testMatch '**/*.integ.ts' --all --updateSnapshot",
+  description: "Run integration tests.",
+});
+project.addDevDeps("publib");
 
 project.synth();

@@ -35,6 +35,7 @@
     "readme-macros": "/bin/bash ./projen.bash readme-macros",
     "release": "/bin/bash ./projen.bash release",
     "test": "/bin/bash ./projen.bash test",
+    "test:integ": "/bin/bash ./projen.bash test:integ",
     "test:update": "/bin/bash ./projen.bash test:update",
     "test:watch": "/bin/bash ./projen.bash test:watch",
     "unbump": "/bin/bash ./projen.bash unbump",
@@ -76,9 +77,11 @@
     "markmac": "^0.1.146",
     "npm-check-updates": "^12",
     "prettier": "^2.6.2",
+    "publib": "^0.2.325",
     "standard-version": "^9",
     "ts-jest": "^27.1.4",
-    "typescript": "^3.9.10"
+    "typescript": "^3.9.10",
+    "verdaccio": "^5.9.0"
   },
   "dependencies": {
     "@iarna/toml": "^2.2.5",
