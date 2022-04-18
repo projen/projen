@@ -146,6 +146,7 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
           lib: ["dom", "dom.iterable", "esnext"],
           strict: false,
           target: "es5",
+          incremental: true,
         },
       },
     };
