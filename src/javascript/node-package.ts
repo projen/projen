@@ -1010,7 +1010,7 @@ export class NodePackage extends Component {
         }
 
         if (dep.version) {
-          const ver = semver.minVersion(dep.version)?.version;
+          const ver = minVersion(dep.version);
           if (!ver) {
             throw new Error(
               `unable to determine minimum semver for peer dependency ${dep.name}@${dep.version}`
@@ -1189,7 +1189,7 @@ export class NodePackage extends Component {
         }
 
         // Take version and pin as dev dependency
-        const ver = semver.minVersion(version)?.version;
+        const ver = minVersion(version);
         if (!ver) {
           throw new Error(
             `unable to determine minimum semver for peer dependency ${name}@${version}`
@@ -1405,4 +1405,12 @@ function determineLockfile(packageManager: NodePackageManager) {
   }
 
   throw new Error(`unsupported package manager ${packageManager}`);
+}
+
+function minVersion(version: string): string | undefined {
+  if (version.startsWith("file:")) {
+    return version;
+  } else {
+    return semver.minVersion(version)?.version;
+  }
 }
