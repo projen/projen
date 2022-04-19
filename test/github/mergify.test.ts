@@ -51,12 +51,12 @@ describe("mergify", () => {
       mergifyOptions: {
         rules: [
           {
-            actions: ['action'],
-            conditions: ['condition'],
-            name: 'rule-name',
-          }
-        ]
-      }
+            actions: ["action"],
+            conditions: ["condition"],
+            name: "rule-name",
+          },
+        ],
+      },
     });
 
     // THEN
