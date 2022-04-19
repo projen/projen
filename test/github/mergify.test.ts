@@ -13,9 +13,10 @@ describe("mergify", () => {
     expect(snapshot[".mergify.yml"]).toMatchSnapshot();
   });
 
-  test("with options", () => {
+  test("with automerge", () => {
     // GIVEN
     const project = createProject({
+      autoMerge: true,
       autoMergeOptions: {
         approvedReviews: 3,
         blockingLabels: ["do-not-merge", "missing-tests"],
@@ -29,6 +30,38 @@ describe("mergify", () => {
       "- -label~=(do-not-merge|missing-tests)"
     );
     expect(snapshot[".mergify.yml"]).toContain('- "#approved-reviews-by>=3"');
+    expect(snapshot[".mergify.yml"]).toMatchSnapshot();
+  });
+
+  test("without automerge", () => {
+    // GIVEN
+    const project = createProject({
+      autoMerge: false,
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[".mergify.yml"]).toBeUndefined();
+  });
+
+  test("without automerge, with custom rules", () => {
+    // GIVEN
+    const project = createProject({
+      autoMerge: false,
+      mergifyOptions: {
+        rules: [
+          {
+            actions: ['action'],
+            conditions: ['condition'],
+            name: 'rule-name',
+          }
+        ]
+      }
+    });
+
+    // THEN
+    const snapshot = synthSnapshot(project);
+    expect(snapshot[".mergify.yml"]).toBeDefined();
     expect(snapshot[".mergify.yml"]).toMatchSnapshot();
   });
 });

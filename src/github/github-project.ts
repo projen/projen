@@ -97,8 +97,14 @@ export interface GitHubProjectOptions extends ProjectOptions {
   readonly autoApproveOptions?: AutoApproveOptions;
 
   /**
+   * Enable automatic merging on GitHub. Has no effect if `github.mergify`
+   * is set to false.
+   */
+  readonly autoMerge?: boolean;
+
+  /**
    * Configure options for automatic merging on GitHub. Has no effect if
-   * `github.mergify` is set to false.
+   * `github.mergify` or `autoMerge` is set to false.
    *
    * @default - see defaults in `AutoMergeOptions`
    */

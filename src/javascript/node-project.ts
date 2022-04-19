@@ -339,6 +339,7 @@ export class NodeProject extends GitHubProject {
 
   /**
    * Automatic PR merges.
+   * @default true
    */
   public readonly autoMerge?: AutoMerge;
 
@@ -603,7 +604,8 @@ export class NodeProject extends GitHubProject {
       }
     }
 
-    if (this.github?.mergify && this.buildWorkflow?.buildJobIds) {
+    const autoMerge = options.autoMerge ?? true;
+    if (autoMerge && this.github?.mergify && this.buildWorkflow?.buildJobIds) {
       this.autoMerge = new AutoMerge(this.github, options.autoMergeOptions);
       this.autoMerge.addConditionsLater({
         render: () =>
