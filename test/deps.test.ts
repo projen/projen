@@ -291,7 +291,10 @@ test("it is possible to have local file dependencies", () => {
   // WHEN
   p.deps.addDependency("cowsay@file:./cowsay", DependencyType.RUNTIME);
   p.deps.addDependency("lolcat@file:../path/to/lolcat", DependencyType.BUILD);
-  p.deps.addDependency("fortune@file:../../path/to/fortune", DependencyType.PEER);
+  p.deps.addDependency(
+    "fortune@file:../../path/to/fortune",
+    DependencyType.PEER
+  );
 
   // THEN
   expect(p.deps.all).toStrictEqual([
