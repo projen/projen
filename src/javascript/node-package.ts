@@ -1408,9 +1408,9 @@ function determineLockfile(packageManager: NodePackageManager) {
 }
 
 function minVersion(version: string): string | undefined {
-  if (version.startsWith("file:")) {
-    return version;
-  } else {
+  if (semver.validRange(version)) {
     return semver.minVersion(version)?.version;
+  } else {
+    return version;
   }
 }

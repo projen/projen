@@ -46,7 +46,7 @@ function mockYarnInstall(
         depRanges[depName].push("*");
         depVersions[depName].push(latestPackages[depName]);
       } else {
-        const ver = semver.minVersion(`${depVer}`)?.version;
+        const ver = minVersion(`${depVer}`);
         if (!ver) {
           throw new Error(
             `unable to determine min version for ${depName}@${depVer}`
@@ -55,6 +55,7 @@ function mockYarnInstall(
         // If we're given a latest package, no dependency can require higher
         if (
           latestPackages[depName] &&
+          semver.validRange(`${ver}`) &&
           semver.gt(`${ver}`, latestPackages[depName])
         ) {
           throw new Error(
@@ -69,10 +70,16 @@ function mockYarnInstall(
   }
   // Resolve version to install that satisfies all ranges for dep
   for (const dep of Object.keys(depRanges)) {
-    const installVersion = semver.maxSatisfying(
-      depVersions[dep],
-      depRanges[dep].join(" || ")
-    );
+    let installVersion: string | null;
+    if (!semver.validRange(depVersions[dep][0])) {
+      // if a dependency is "file:..." or something else, just install that
+      installVersion = depVersions[dep][0];
+    } else {
+      installVersion = semver.maxSatisfying(
+        depVersions[dep],
+        depRanges[dep].join(" || ")
+      );
+    }
     if (!installVersion) {
       throw new Error(`No version given satisfies all constraints on ${dep}`);
     }
@@ -94,6 +101,14 @@ function mockYarnInstall(
     join(outdir, "yarn.lock"),
     YAML.stringify(yarnLock, { defaultKeyType: "QUOTE_DOUBLE" })
   );
+}
+
+function minVersion(version: string): string | undefined {
+  if (semver.validRange(version)) {
+    return semver.minVersion(version)?.version;
+  } else {
+    return version;
+  }
 }
 
 afterEach(() => {
@@ -335,5 +350,31 @@ test("devDependencies are not pinned by peerDependencies if pinnedDevDependency 
   const pkgFile = readJsonSync(join(project.outdir, "package.json"));
 
   expect(pkgFile.peerDependencies).toStrictEqual({ ms: "^1.4.0" });
+  expect(pkgFile.devDependencies).toBeUndefined();
+});
+
+test("file path dependencies are respected", () => {
+  // Post-synth dependency version resolution uses installed package from node_modules folder
+  // Mock install command to add this folder with a fixed dependency version,
+  // mimicking yarn installing the latest package for "*"
+  jest.spyOn(util, "exec").mockImplementation((command, options) => {
+    expect(command.startsWith("yarn install")).toBeTruthy();
+    mockYarnInstall(options.cwd, { ms: "file:../ms" });
+  });
+
+  const project = new Project({ name: "test" });
+  const pkg = new NodePackage(project, {
+    peerDependencyOptions: {
+      pinnedDevDependency: false,
+    },
+  });
+
+  pkg.addPeerDeps("ms@file:../ms");
+
+  project.synth();
+
+  const pkgFile = readJsonSync(join(project.outdir, "package.json"));
+
+  expect(pkgFile.peerDependencies).toStrictEqual({ ms: "file:../ms" });
   expect(pkgFile.devDependencies).toBeUndefined();
 });
