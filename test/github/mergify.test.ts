@@ -13,7 +13,7 @@ describe("mergify", () => {
     expect(snapshot[".mergify.yml"]).toMatchSnapshot();
   });
 
-  test("with automerge", () => {
+  test("with automerge options", () => {
     // GIVEN
     const project = createProject({
       autoMerge: true,
