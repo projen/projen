@@ -7,6 +7,7 @@ import { Project } from "../../src";
 import { NodePackage } from "../../src/javascript/node-package";
 import * as util from "../../src/util";
 import { mkdtemp, synthSnapshot, TestProject } from "../util";
+import { minVersion } from "../../src/javascript/util";
 
 /**
  * Mocks a yarn install, writing to yarn.lock
@@ -101,14 +102,6 @@ function mockYarnInstall(
     join(outdir, "yarn.lock"),
     YAML.stringify(yarnLock, { defaultKeyType: "QUOTE_DOUBLE" })
   );
-}
-
-function minVersion(version: string): string | undefined {
-  if (semver.validRange(version)) {
-    return semver.minVersion(version)?.version;
-  } else {
-    return version;
-  }
 }
 
 afterEach(() => {

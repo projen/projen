@@ -8,7 +8,6 @@ import {
   readdirSync,
   readJsonSync,
 } from "fs-extra";
-import * as semver from "semver";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -17,7 +16,7 @@ import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
 import { exec, isTruthy, sorted, writeFile } from "../util";
-import { extractCodeArtifactDetails } from "./util";
+import { extractCodeArtifactDetails, minVersion } from "./util";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -1405,12 +1404,4 @@ function determineLockfile(packageManager: NodePackageManager) {
   }
 
   throw new Error(`unsupported package manager ${packageManager}`);
-}
-
-function minVersion(version: string): string | undefined {
-  if (semver.validRange(version)) {
-    return semver.minVersion(version)?.version;
-  } else {
-    return version;
-  }
 }
