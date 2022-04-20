@@ -1,4 +1,5 @@
 import { basename, dirname, extname, join, sep } from "path";
+import * as semver from "semver";
 
 export function renderBundleName(entrypoint: string) {
   const parts = join(entrypoint).split(sep);
@@ -31,4 +32,12 @@ export function extractCodeArtifactDetails(registryUrl: string) {
     return { domain, accountId, region, repository };
   }
   throw new Error("Could not get CodeArtifact details from npm Registry");
+}
+
+export function minVersion(version: string): string | undefined {
+  if (semver.validRange(version)) {
+    return semver.minVersion(version)?.version;
+  } else {
+    return version;
+  }
 }
