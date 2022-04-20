@@ -47,7 +47,7 @@ export class CdkTasks extends Component {
     this.synthSilent = project.addTask("synth:silent", {
       description:
         'Synthesizes your cdk app into cdk.out and suppresses the template in stdout (part of "yarn build")',
-      exec: "cdk synth > /dev/null", // redirect to /dev/null to hide template
+      exec: "cdk synth -q",
     });
 
     this.deploy = project.addTask("deploy", {
