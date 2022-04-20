@@ -1,5 +1,5 @@
-import * as semver from "semver";
 import { basename, dirname, extname, join, sep } from "path";
+import * as semver from "semver";
 
 export function renderBundleName(entrypoint: string) {
   const parts = join(entrypoint).split(sep);

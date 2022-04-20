@@ -5,9 +5,9 @@ import semver from "semver";
 import * as YAML from "yaml";
 import { Project } from "../../src";
 import { NodePackage } from "../../src/javascript/node-package";
+import { minVersion } from "../../src/javascript/util";
 import * as util from "../../src/util";
 import { mkdtemp, synthSnapshot, TestProject } from "../util";
-import { minVersion } from "../../src/javascript/util";
 
 /**
  * Mocks a yarn install, writing to yarn.lock
