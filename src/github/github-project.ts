@@ -99,6 +99,7 @@ export interface GitHubProjectOptions extends ProjectOptions {
   /**
    * Enable automatic merging on GitHub. Has no effect if `github.mergify`
    * is set to false.
+   * @default true
    */
   readonly autoMerge?: boolean;
 
