@@ -258,9 +258,9 @@ export interface RunSettings {
 }
 
 /**
- * A job step.
+ * A generic step
  */
-export interface JobStep {
+export interface Step {
   /**
    * A unique identifier for the step. You can use the id to reference the
    * step in contexts.
@@ -306,7 +306,12 @@ export interface JobStep {
    * You can also set environment variables for the entire workflow or a job.
    */
   readonly env?: Record<string, string>;
+}
 
+/**
+ * A job step
+ */
+export interface JobStep extends Step {
   /**
    * Prevents a job from failing when a step fails. Set to true to allow a job
    * to pass when this step fails.
