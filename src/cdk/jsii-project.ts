@@ -174,7 +174,6 @@ export class JsiiProject extends TypeScriptProject {
     // this is an unhelpful warning
     const jsiiFlags = [
       "--silence-warnings=reserved-word",
-      "--no-fix-peer-dependencies",
     ].join(" ");
 
     const compatIgnore = options.compatIgnore ?? ".compatignore";
