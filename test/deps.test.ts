@@ -284,6 +284,26 @@ test("it is possible to overwrite dependency specs", () => {
   ]);
 });
 
+test("it is possible to have local file dependencies", () => {
+  // GIVEN
+  const p = new TestProject();
+
+  // WHEN
+  p.deps.addDependency("cowsay@file:./cowsay", DependencyType.RUNTIME);
+  p.deps.addDependency("lolcat@file:../path/to/lolcat", DependencyType.BUILD);
+  p.deps.addDependency(
+    "fortune@file:../../path/to/fortune",
+    DependencyType.PEER
+  );
+
+  // THEN
+  expect(p.deps.all).toStrictEqual([
+    { name: "lolcat", type: "build", version: "file:../path/to/lolcat" },
+    { name: "fortune", type: "peer", version: "file:../../path/to/fortune" },
+    { name: "cowsay", type: "runtime", version: "file:./cowsay" },
+  ]);
+});
+
 function depsManifest(p: Project) {
   p.synth();
   const filepath = join(p.outdir, Dependencies.MANIFEST_FILE);

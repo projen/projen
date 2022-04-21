@@ -8,7 +8,6 @@ import {
   readdirSync,
   readJsonSync,
 } from "fs-extra";
-import * as semver from "semver";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -17,7 +16,7 @@ import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
 import { exec, isTruthy, sorted, writeFile } from "../util";
-import { extractCodeArtifactDetails } from "./util";
+import { extractCodeArtifactDetails, minVersion } from "./util";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -1010,7 +1009,7 @@ export class NodePackage extends Component {
         }
 
         if (dep.version) {
-          const ver = semver.minVersion(dep.version)?.version;
+          const ver = minVersion(dep.version);
           if (!ver) {
             throw new Error(
               `unable to determine minimum semver for peer dependency ${dep.name}@${dep.version}`
@@ -1189,7 +1188,7 @@ export class NodePackage extends Component {
         }
 
         // Take version and pin as dev dependency
-        const ver = semver.minVersion(version)?.version;
+        const ver = minVersion(version);
         if (!ver) {
           throw new Error(
             `unable to determine minimum semver for peer dependency ${name}@${version}`
