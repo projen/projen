@@ -1180,7 +1180,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "compile",
         "steps": Array [
           Object {
-            "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies",
+            "exec": "jsii --silence-warnings=reserved-word",
           },
         ],
       },
@@ -1405,7 +1405,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "watch",
         "steps": Array [
           Object {
-            "exec": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies",
+            "exec": "jsii -w --silence-warnings=reserved-word",
           },
         ],
       },
@@ -2563,7 +2563,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "compile",
         "steps": Array [
           Object {
-            "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies",
+            "exec": "jsii --silence-warnings=reserved-word",
           },
           Object {
             "exec": "cp src/_loadurl.js lib/",
@@ -2766,7 +2766,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "watch",
         "steps": Array [
           Object {
-            "exec": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies",
+            "exec": "jsii -w --silence-warnings=reserved-word",
           },
         ],
       },

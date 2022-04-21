@@ -172,10 +172,7 @@ export class JsiiProject extends TypeScriptProject {
     this.addFields({ types: `${libdir}/index.d.ts` });
 
     // this is an unhelpful warning
-    const jsiiFlags = [
-      "--silence-warnings=reserved-word",
-      "--no-fix-peer-dependencies",
-    ].join(" ");
+    const jsiiFlags = ["--silence-warnings=reserved-word"].join(" ");
 
     const compatIgnore = options.compatIgnore ?? ".compatignore";
 
