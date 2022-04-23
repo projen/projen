@@ -38,6 +38,7 @@ const project = new cdk.JsiiProject({
     "xmlbuilder2",
     "ini",
     "shx",
+    "js-beautify",
   ],
 
   devDeps: [
@@ -47,6 +48,7 @@ const project = new cdk.JsiiProject({
     "@types/glob",
     "@types/semver",
     "@types/ini",
+    "@types/js-beautify",
     "markmac",
     "esbuild",
     "all-contributors-cli",
