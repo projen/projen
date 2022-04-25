@@ -4814,7 +4814,7 @@ jobs:
         with:
           version: 6.14.7
       - name: Install dependencies
-        run: pnpm i
+        run: pnpm i --no-frozen-lockfile
       - name: build
         run: npx projen build
       - id: self_mutation
@@ -5405,7 +5405,7 @@ junit.xml
             "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
-            "exec": "pnpm i",
+            "exec": "pnpm i --no-frozen-lockfile",
           },
           Object {
             "exec": "pnpm update",
