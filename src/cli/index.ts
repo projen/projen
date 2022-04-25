@@ -1,7 +1,7 @@
 import { resolve } from "path";
-import * as logging from "../logging";
 import * as yargs from "yargs";
 import { PROJEN_RC, PROJEN_VERSION } from "../common";
+import * as logging from "../logging";
 import { TaskRuntime } from "../task-runtime";
 import { getNodeMajorVersion } from "../util";
 import { synth } from "./synth";

@@ -384,7 +384,7 @@ function decamelize(s: string, sep: string = "_") {
 export function getNodeMajorVersion(): number | undefined {
   const match = process.version.match(/(\d+)\.(\d+)\.(\d+)/);
   if (match) {
-    const [major,] = match.slice(1).map(x => parseInt(x));
+    const [major] = match.slice(1).map((x) => parseInt(x));
     return major;
   }
   return undefined;
