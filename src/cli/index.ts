@@ -1,7 +1,9 @@
 import { resolve } from "path";
 import * as yargs from "yargs";
 import { PROJEN_RC, PROJEN_VERSION } from "../common";
+import * as logging from "../logging";
 import { TaskRuntime } from "../task-runtime";
+import { getNodeMajorVersion } from "../util";
 import { synth } from "./synth";
 import { discoverTaskCommands } from "./tasks";
 
@@ -51,6 +53,13 @@ async function main() {
 
   if (args.debug) {
     process.env.DEBUG = "true";
+  }
+
+  const nodeVersion = getNodeMajorVersion();
+  if (nodeVersion && nodeVersion < 14) {
+    logging.warn(
+      `WARNING: You are using Node v${nodeVersion}, which reaches end of life on April 30, 2022. Support for EOL Node releases may be dropped by projen in the future. Please consider upgrading to Node >= 14 as soon as possible.`
+    );
   }
 
   // no command means synthesize
