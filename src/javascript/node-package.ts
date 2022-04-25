@@ -973,7 +973,9 @@ export class NodePackage extends Component {
         return frozen ? "npm ci" : "npm install";
 
       case NodePackageManager.PNPM:
-        return ["pnpm i", ...(frozen ? ["--frozen-lockfile"] : ["--no-frozen-lockfile"])].join(" ");
+        return frozen
+          ? "pnpm i --frozen-lockfile"
+          : "pnpm i --no-frozen-lockfile";
 
       default:
         throw new Error(`unexpected package manager ${this.packageManager}`);
