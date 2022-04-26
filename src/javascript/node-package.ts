@@ -920,9 +920,8 @@ export class NodePackage extends Component {
         { exec: "which aws" }, // check that AWS CLI is installed
         ...this.scopedPackagesOptions.map((scopedPackagesOption) => {
           const { registryUrl, scope } = scopedPackagesOption;
-          const { domain, region, accountId } =
+          const { domain, region, accountId, registry } =
             extractCodeArtifactDetails(registryUrl);
-          const registry = registryUrl.replace(/^https:\/\//, "");
           // reference: https://docs.aws.amazon.com/codeartifact/latest/ug/npm-auth.html
           const commands = [
             `npm config set ${scope}:registry ${registryUrl}`,
