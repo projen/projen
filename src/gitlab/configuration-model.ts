@@ -10,8 +10,8 @@ export interface Cache {
   /** Defines which files or directories to cache. */
   readonly paths?: string[];
 
-  /** Used the to give each cache a unique identifying key. All jobs that use the same cache key use the same cache, including in different pipelines. */
-  readonly key?: string;
+  /** Used the to give each cache a unique identifying key. All jobs that use the same cache key use the same cache. */
+  readonly key?: string | CacheKeyFiles;
 
   /** If set to true all files that are untracked in your Git repository will be cached. */
   readonly untracked?: boolean;
@@ -21,6 +21,17 @@ export interface Cache {
 
   /** Defines when to save the cache, based on the status of the job (Default: Job Success). */
   readonly when?: CacheWhen;
+}
+
+/**
+ * Use this construct to generate a new key when one or two specific files change.
+ * @see https://docs.gitlab.com/ee/ci/yaml/#cachekeyfiles
+ */
+export interface CacheKeyFiles {
+  /** The files that are checked against. If the SHA checksum changes, the cache becomes invalid. */
+  readonly files: string[];
+  /** Adds a custom prefix to the checksums computed. */
+  readonly prefix?: string;
 }
 
 /**
