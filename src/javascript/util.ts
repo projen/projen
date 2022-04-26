@@ -17,7 +17,7 @@ export function renderBundleName(entrypoint: string) {
  * Regex for AWS CodeArtifact registry
  */
 export const codeArtifactRegex =
-  /^https:\/\/(?<domain>[^\.]+)-(?<accountId>\d{12})\.d\.codeartifact\.(?<region>[^\.]+).*\.amazonaws\.com\/.*\/(?<repository>\w+)/;
+  /^https:\/\/(?<domain>[^\.]+)-(?<accountId>\d{12})\.d\.codeartifact\.(?<region>[^\.]+).*\.amazonaws\.com\/.*\/(?<repository>\w+)\//;
 
 /**
  * gets AWS details from the Code Artifact registry URL
