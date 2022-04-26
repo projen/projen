@@ -127,3 +127,41 @@ test("respect the original format when adding global variables", () => {
     "AWS_REGION: eu-central-1"
   );
 });
+
+test("adds correct entries for path-based caching", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    default: {
+      cache: {
+        paths: ["node_modules"],
+        key: "${CI_COMMIT_REF_SLUG}",
+      },
+    },
+  });
+  const snapshot = synthSnapshot(p);
+  // THEN
+  expect(snapshot).toMatchSnapshot();
+});
+
+test("adds correct entries for file-based caching", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    default: {
+      cache: {
+        key: {
+          files: ["Gemfile.lock", "package.json"],
+          prefix: "${CI_COMMIT_REF_SLUG}",
+        },
+      },
+    },
+  });
+  const snapshot = synthSnapshot(p);
+  // THEN
+  expect(snapshot).toMatchSnapshot();
+});
