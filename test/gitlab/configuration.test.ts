@@ -143,7 +143,7 @@ test("adds correct entries for path-based caching", () => {
   });
   const snapshot = synthSnapshot(p);
   // THEN
-  expect(snapshot).toMatchSnapshot();
+  expect(snapshot[".gitlab-ci.yml"]).toMatchSnapshot();
 });
 
 test("adds correct entries for file-based caching", () => {
@@ -163,5 +163,5 @@ test("adds correct entries for file-based caching", () => {
   });
   const snapshot = synthSnapshot(p);
   // THEN
-  expect(snapshot).toMatchSnapshot();
+  expect(snapshot[".gitlab-ci.yml"]).toMatchSnapshot();
 });
