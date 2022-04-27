@@ -248,6 +248,7 @@ Name|Description
 [gitlab.Artifacts](#projen-gitlab-artifacts)|Used to specify a list of files and directories that should be attached to the job if it succeeds.
 [gitlab.Assets](#projen-gitlab-assets)|Asset configuration for a release.
 [gitlab.Cache](#projen-gitlab-cache)|Cache Definition.
+[gitlab.CacheKeyFiles](#projen-gitlab-cachekeyfiles)|Use this construct to generate a new key when one or two specific files change.
 [gitlab.CiConfigurationOptions](#projen-gitlab-ciconfigurationoptions)|Options for `CiConfiguration`.
 [gitlab.Default](#projen-gitlab-default)|Default settings for the CI Configuration.
 [gitlab.Engine](#projen-gitlab-engine)|The engine configuration for a secret.
@@ -395,6 +396,7 @@ Name|Description
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
 [gitlab.Action](#projen-gitlab-action)|Specifies what this job will do.
+[gitlab.CachePolicy](#projen-gitlab-cachepolicy)|Configure the upload and download behaviour of a cache.
 [gitlab.CacheWhen](#projen-gitlab-cachewhen)|Configure when artifacts are uploaded depended on job status.
 [gitlab.DefaultElement](#projen-gitlab-defaultelement)|*No description*
 [gitlab.DeploymentTier](#projen-gitlab-deploymenttier)|Explicitly specifies the tier of the deployment environment if non-standard environment name is used.
@@ -14000,7 +14002,25 @@ Cache Definition.
 
 Name | Type | Description 
 -----|------|-------------
+**key**?🔹 | <code>string &#124; [gitlab.CacheKeyFiles](#projen-gitlab-cachekeyfiles)</code> | Used the to give each cache a unique identifying key.<br/>__*Optional*__
+**paths**?🔹 | <code>Array<string></code> | Defines which files or directories to cache.<br/>__*Optional*__
+**policy**?🔹 | <code>[gitlab.CachePolicy](#projen-gitlab-cachepolicy)</code> | Defines the upload and download behaviour of the cache.<br/>__*Optional*__
+**untracked**?🔹 | <code>boolean</code> | If set to true all files that are untracked in your Git repository will be cached.<br/>__*Optional*__
 **when**?🔹 | <code>[gitlab.CacheWhen](#projen-gitlab-cachewhen)</code> | Defines when to save the cache, based on the status of the job (Default: Job Success).<br/>__*Optional*__
+
+
+
+## struct CacheKeyFiles 🔹 <a id="projen-gitlab-cachekeyfiles"></a>
+
+
+Use this construct to generate a new key when one or two specific files change.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**files**🔹 | <code>Array<string></code> | The files that are checked against.
+**prefix**?🔹 | <code>string</code> | Adds a custom prefix to the checksums computed.<br/>__*Optional*__
 
 
 
@@ -17241,6 +17261,17 @@ Name | Description
 **PREPARE** 🔹|
 **START** 🔹|
 **STOP** 🔹|
+
+
+## enum CachePolicy 🔹 <a id="projen-gitlab-cachepolicy"></a>
+
+Configure the upload and download behaviour of a cache.
+
+Name | Description
+-----|-----
+**PULL** 🔹|Only download the cache when the job starts, but never upload changes when the job finishes.
+**PUSH** 🔹|Only upload a cache when the job finishes, but never download the cache when the job starts.
+**PULL_PUSH** 🔹|The job downloads the cache when the job starts, and uploads changes to the cache when the job ends.
 
 
 ## enum CacheWhen 🔹 <a id="projen-gitlab-cachewhen"></a>
