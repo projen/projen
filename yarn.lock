@@ -3899,7 +3899,7 @@ jest-worker@^27.5.1:
     merge-stream "^2.0.0"
     supports-color "^8.0.0"
 
-jest@^27.5.1:
+jest@^27:
   version "27.5.1"
   resolved "https://registry.yarnpkg.com/jest/-/jest-27.5.1.tgz#dadf33ba70a779be7a6fc33015843b51494f63fc"
   integrity sha512-Yn0mADZB89zTtjkPJEXwrac3LHudkQMR+Paqa8uxJHCBr9agxztUifWCyiYrjhMPBoUVBjyny0I7XH6ozDr7QQ==
@@ -4362,9 +4362,9 @@ map-obj@^4.0.0:
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
 markmac@^0.1.146:
-  version "0.1.201"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.201.tgz#89d13f695a4b50f0626d905e026bbb6531c31402"
-  integrity sha512-SZZ1mJ19HT8eO6d+apXL5PkWoiFnrjW1390wLEpedxbdcxzVfbEVRr7bE+6Ro4iDiiqZ+lWTmZF0dPoiSL/rXA==
+  version "0.1.238"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.238.tgz#7b6606fbda75a22a37247ff50fedbde393164cd1"
+  integrity sha512-AuuHm8/1bwxS7Ytou8/B1l1xY/a9OPhd7x2t7GnSvHTr8EpRnhs8KvItaWJ63/PGAPR9lF81DtoA675qku+EpA==
 
 mdurl@~1.0.1:
   version "1.0.1"
