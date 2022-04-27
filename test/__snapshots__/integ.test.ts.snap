@@ -854,13 +854,14 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "jsii",
@@ -1719,7 +1720,7 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "jsii": "*",
       "jsii-diff": "*",
@@ -2399,13 +2400,14 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "jsii",
@@ -3210,7 +3212,7 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "jsii": "*",
       "jsii-diff": "*",
@@ -3868,13 +3870,14 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "json-schema",
@@ -4596,7 +4599,7 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "json-schema": "*",
       "npm-check-updates": "^12",
@@ -5138,13 +5141,14 @@ junit.xml
         "type": "build",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "npm-check-updates",
@@ -5646,7 +5650,7 @@ project.synth();
     },
     "devDependencies": Object {
       "aws-sdk": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "npm-check-updates": "^12",
       "projen": "*",

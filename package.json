@@ -66,7 +66,7 @@
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "jest": "^27.5.1",
+    "jest": "^27",
     "jest-junit": "^13",
     "jsii": "^1.57.0",
     "jsii-diff": "^1.57.0",
