@@ -920,14 +920,14 @@ export class NodePackage extends Component {
         { exec: "which aws" }, // check that AWS CLI is installed
         ...this.scopedPackagesOptions.map((scopedPackagesOption) => {
           const { registryUrl, scope } = scopedPackagesOption;
-          const { domain, repository, region, accountId } =
+          const { domain, region, accountId, registry } =
             extractCodeArtifactDetails(registryUrl);
           // reference: https://docs.aws.amazon.com/codeartifact/latest/ug/npm-auth.html
           const commands = [
             `npm config set ${scope}:registry ${registryUrl}`,
-            `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --repository ${repository} --region ${region} --domain-owner ${accountId})`,
-            `npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
-            `npm config set //${registryUrl}:always-auth=true`,
+            `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
+            `npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
+            `npm config set //${registry}:always-auth=true`,
           ];
           return {
             exec: commands.join("; "),
