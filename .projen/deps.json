@@ -134,6 +134,10 @@
       "type": "build"
     },
     {
+      "name": "wireit",
+      "type": "build"
+    },
+    {
       "name": "@iarna/toml",
       "type": "bundled"
     },
