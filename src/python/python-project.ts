@@ -1,8 +1,15 @@
 import { GitHubProject, GitHubProjectOptions } from "../github";
+import {
+  Projenrc as ProjenrcJs,
+  ProjenrcOptions as ProjenrcJsOptions,
+} from "../javascript/projenrc";
 import { ProjectType } from "../project";
 import { Pip } from "./pip";
 import { Poetry } from "./poetry";
-import { Projenrc as ProjenrcPython, ProjenrcOptions } from "./projenrc";
+import {
+  Projenrc as ProjenrcPython,
+  ProjenrcOptions as ProjenrcPythonOptions,
+} from "./projenrc";
 import { Pytest, PytestOptions } from "./pytest";
 import { PytestSample } from "./pytest-sample";
 import { IPythonDeps } from "./python-deps";
@@ -121,9 +128,9 @@ export interface PythonProjectOptions
   readonly sample?: boolean;
 
   /**
-   * Use projenrc in python.
+   * Use projenrc in Python.
    *
-   * This will install `projen` as a python dependency and will add a `synth`
+   * This will install `projen` as a Python dependency and add a `synth`
    * task which will run `.projenrc.py`.
    *
    * @default true
@@ -134,7 +141,23 @@ export interface PythonProjectOptions
    * Options related to projenrc in python.
    * @default - default options
    */
-  readonly projenrcPythonOptions?: ProjenrcOptions;
+  readonly projenrcPythonOptions?: ProjenrcPythonOptions;
+
+  /**
+   * Use projenrc in javascript.
+   *
+   * This will install `projen` as a JavaScript dependency and add a `synth`
+   * task which will run `.projenrc.js`.
+   *
+   * @default true
+   */
+  readonly projenrcJs?: boolean;
+
+  /**
+   * Options related to projenrc in JavaScript.
+   * @default - default options
+   */
+  readonly projenrcJsOptions?: ProjenrcJsOptions;
 }
 
 /**
@@ -188,6 +211,10 @@ export class PythonProject extends GitHubProject {
 
     if (options.projenrcPython ?? true) {
       new ProjenrcPython(this, options.projenrcPythonOptions);
+    }
+
+    if (options.projenrcJs ?? false) {
+      new ProjenrcJs(this, options.projenrcJsOptions);
     }
 
     if (options.venv ?? true) {
