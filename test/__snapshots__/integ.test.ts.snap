@@ -900,6 +900,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -1730,7 +1731,7 @@ project.synth();
       "npm-check-updates": "^12",
       "projen": "*",
       "standard-version": "^9",
-      "ts-jest": "*",
+      "ts-jest": "^27",
       "typescript": "*",
     },
     "engines": Object {
@@ -2445,6 +2446,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -3222,7 +3224,7 @@ project.synth();
       "json-schema-to-typescript": "*",
       "npm-check-updates": "^12",
       "projen": "*",
-      "ts-jest": "*",
+      "ts-jest": "^27",
       "typescript": "*",
     },
     "engines": Object {
@@ -3895,6 +3897,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -4604,7 +4607,7 @@ project.synth();
       "json-schema": "*",
       "npm-check-updates": "^12",
       "projen": "*",
-      "ts-jest": "*",
+      "ts-jest": "^27",
       "typescript": "*",
     },
     "engines": Object {
