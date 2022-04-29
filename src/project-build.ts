@@ -54,18 +54,22 @@ export class ProjectBuild extends Component {
     this.compileTask = project.tasks.addTask("compile", {
       description: "Only compile",
     });
+    this.compileTask.addDependency(this.preCompileTask);
 
     this.postCompileTask = project.tasks.addTask("post-compile", {
       description: "Runs after successful compilation",
     });
+    this.postCompileTask.addDependency(this.compileTask);
 
     this.testTask = project.tasks.addTask("test", {
       description: "Run tests",
     });
+    this.testTask.addDependency(this.compileTask);
 
     this.packageTask = project.tasks.addTask("package", {
       description: "Creates the distribution package",
     });
+    this.packageTask.addDependency(this.postCompileTask);
 
     this.buildTask = project.tasks.addTask("build", {
       description: "Full release build",
@@ -74,14 +78,15 @@ export class ProjectBuild extends Component {
     // if this is not subproject, execute the "default" task which will
     // synthesize project files.
     if (!this.project.parent && this.project.defaultTask) {
-      this.buildTask.spawn(this.project.defaultTask);
+      this.preCompileTask.addDependency(this.project.defaultTask);
+      this.buildTask.addDependency(this.project.defaultTask);
     }
 
-    this.buildTask.spawn(this.preCompileTask);
-    this.buildTask.spawn(this.compileTask);
-    this.buildTask.spawn(this.postCompileTask);
-    this.buildTask.spawn(this.testTask);
-    this.buildTask.spawn(this.packageTask);
+    this.buildTask.addDependency(this.preCompileTask);
+    this.buildTask.addDependency(this.compileTask);
+    this.buildTask.addDependency(this.postCompileTask);
+    this.buildTask.addDependency(this.testTask);
+    this.buildTask.addDependency(this.packageTask);
 
     // do not allow additional build phases
     this.buildTask.lock();

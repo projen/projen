@@ -296,7 +296,7 @@ export interface NodeProjectOptions
    * Use wireit for caching tasks.
    * @default false
    */
-  readonly wireit: boolean;
+  readonly wireit?: boolean;
 }
 
 /**

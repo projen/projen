@@ -99,6 +99,8 @@ const project = new cdk.JsiiProject({
   autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
 
   docgenFilePath: "docs/api/API.md",
+
+  wireit: true,
 });
 
 // this script is what we use as the projen command in this project
@@ -425,3 +427,5 @@ project.postCompileTask.spawn(project.defaultTask);
 // });
 
 project.synth();
+
+// TODO: add a way to run tasks without dependents

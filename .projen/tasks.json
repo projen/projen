@@ -3,25 +3,13 @@
     "build": {
       "name": "build",
       "description": "Full release build",
-      "steps": [
-        {
-          "spawn": "default"
-        },
-        {
-          "spawn": "pre-compile"
-        },
-        {
-          "spawn": "compile"
-        },
-        {
-          "spawn": "post-compile"
-        },
-        {
-          "spawn": "test"
-        },
-        {
-          "spawn": "package"
-        }
+      "dependencies": [
+        "default",
+        "pre-compile",
+        "compile",
+        "post-compile",
+        "test",
+        "package"
       ]
     },
     "bump": {
@@ -106,6 +94,16 @@
         {
           "exec": "jsii --silence-warnings=reserved-word"
         }
+      ],
+      "dependencies": [
+        "pre-compile"
+      ],
+      "inputs": [
+        "src/**/*.ts",
+        "tsconfig.json"
+      ],
+      "outputs": [
+        "lib/**"
       ]
     },
     "contributors:update": {
@@ -123,6 +121,10 @@
         {
           "exec": "node .projenrc.js"
         }
+      ],
+      "inputs": [
+        "package.json",
+        ".projenrc.js"
       ]
     },
     "devenv:setup": {
@@ -197,24 +199,19 @@
         {
           "exec": "if [ ! -z ${CI} ]; then mkdir -p dist && rsync -a . dist --exclude .git --exclude node_modules; else /bin/bash ./projen.bash package-all; fi"
         }
+      ],
+      "dependencies": [
+        "post-compile"
       ]
     },
     "package-all": {
       "name": "package-all",
       "description": "Packages artifacts for all target languages",
-      "steps": [
-        {
-          "spawn": "package:js"
-        },
-        {
-          "spawn": "package:java"
-        },
-        {
-          "spawn": "package:python"
-        },
-        {
-          "spawn": "package:go"
-        }
+      "dependencies": [
+        "package:js",
+        "package:java",
+        "package:python",
+        "package:go"
       ]
     },
     "package:go": {
@@ -224,6 +221,15 @@
         {
           "exec": "jsii-pacmak -v --target go"
         }
+      ],
+      "dependencies": [
+        "compile"
+      ],
+      "inputs": [
+        "lib/**"
+      ],
+      "outputs": [
+        "dist/go"
       ]
     },
     "package:java": {
@@ -233,6 +239,15 @@
         {
           "exec": "jsii-pacmak -v --target java"
         }
+      ],
+      "dependencies": [
+        "compile"
+      ],
+      "inputs": [
+        "lib/**"
+      ],
+      "outputs": [
+        "dist/java"
       ]
     },
     "package:js": {
@@ -242,6 +257,15 @@
         {
           "exec": "jsii-pacmak -v --target js"
         }
+      ],
+      "dependencies": [
+        "compile"
+      ],
+      "inputs": [
+        "lib/**"
+      ],
+      "outputs": [
+        "dist/js"
       ]
     },
     "package:python": {
@@ -251,6 +275,15 @@
         {
           "exec": "jsii-pacmak -v --target python"
         }
+      ],
+      "dependencies": [
+        "compile"
+      ],
+      "inputs": [
+        "lib/**"
+      ],
+      "outputs": [
+        "dist/python"
       ]
     },
     "post-compile": {
@@ -269,6 +302,9 @@
         {
           "spawn": "default"
         }
+      ],
+      "dependencies": [
+        "compile"
       ]
     },
     "post-upgrade": {
@@ -277,7 +313,10 @@
     },
     "pre-compile": {
       "name": "pre-compile",
-      "description": "Prepare the project for compilation"
+      "description": "Prepare the project for compilation",
+      "dependencies": [
+        "default"
+      ]
     },
     "readme-macros": {
       "name": "readme-macros",
@@ -327,6 +366,9 @@
         {
           "spawn": "eslint"
         }
+      ],
+      "dependencies": [
+        "compile"
       ]
     },
     "test:update": {

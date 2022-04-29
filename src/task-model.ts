@@ -43,22 +43,21 @@ export interface TaskCommonOptions {
   /**
    * A list of glob patterns representing input files for the task. Used to
    * determine the cache key if `wireit` is enabled in a node project. Specify an
-   * empty array if it does not depend on any files.
+   * empty array if it does not depend on any files. Specify undefined if the
+   * task should always be run.
+   *
+   * @default undefined
    */
   readonly inputs?: string[];
 
   // TODO
   readonly outputs?: string[];
 
+  // TODO
   /**
    * @default false
    */
   readonly clean?: boolean;
-
-  /**
-   * Names of tasks that this task depends on.
-   */
-  readonly dependencies?: string[];
 
   /**
    * The working directory for all steps in this task (unless overridden by the
@@ -82,6 +81,11 @@ export interface TaskSpec extends TaskCommonOptions {
    * Task steps.
    */
   readonly steps?: TaskStep[];
+
+  /**
+   * Tasks that this task depends on.
+   */
+  readonly dependencies?: string[];
 }
 
 /**

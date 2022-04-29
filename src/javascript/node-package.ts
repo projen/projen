@@ -539,6 +539,10 @@ export class NodePackage extends Component {
     if (options.licensed ?? true) {
       this.license = options.license ?? "Apache-2.0";
     }
+
+    // changing package.json should update the cache key and cause the task
+    // to be run fresh
+    project.defaultTask?.addInputs("package.json");
   }
 
   /**

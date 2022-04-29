@@ -9,37 +9,37 @@
     "projen": "bin/projen"
   },
   "scripts": {
-    "build": "/bin/bash ./projen.bash build",
-    "bump": "/bin/bash ./projen.bash bump",
-    "bundle:task-runner": "/bin/bash ./projen.bash bundle:task-runner",
-    "clobber": "/bin/bash ./projen.bash clobber",
-    "compat": "/bin/bash ./projen.bash compat",
-    "compile": "/bin/bash ./projen.bash compile",
-    "contributors:update": "/bin/bash ./projen.bash contributors:update",
-    "default": "/bin/bash ./projen.bash default",
-    "devenv:setup": "/bin/bash ./projen.bash devenv:setup",
-    "docgen": "/bin/bash ./projen.bash docgen",
-    "eject": "/bin/bash ./projen.bash eject",
-    "eslint": "/bin/bash ./projen.bash eslint",
-    "integ": "/bin/bash ./projen.bash integ",
-    "integ:python-compat": "/bin/bash ./projen.bash integ:python-compat",
-    "package": "/bin/bash ./projen.bash package",
-    "package-all": "/bin/bash ./projen.bash package-all",
-    "package:go": "/bin/bash ./projen.bash package:go",
-    "package:java": "/bin/bash ./projen.bash package:java",
-    "package:js": "/bin/bash ./projen.bash package:js",
-    "package:python": "/bin/bash ./projen.bash package:python",
-    "post-compile": "/bin/bash ./projen.bash post-compile",
-    "post-upgrade": "/bin/bash ./projen.bash post-upgrade",
-    "pre-compile": "/bin/bash ./projen.bash pre-compile",
-    "readme-macros": "/bin/bash ./projen.bash readme-macros",
-    "release": "/bin/bash ./projen.bash release",
-    "test": "/bin/bash ./projen.bash test",
-    "test:update": "/bin/bash ./projen.bash test:update",
-    "test:watch": "/bin/bash ./projen.bash test:watch",
-    "unbump": "/bin/bash ./projen.bash unbump",
-    "upgrade": "/bin/bash ./projen.bash upgrade",
-    "watch": "/bin/bash ./projen.bash watch",
+    "build": "wireit",
+    "bump": "wireit",
+    "bundle:task-runner": "wireit",
+    "clobber": "wireit",
+    "compat": "wireit",
+    "compile": "wireit",
+    "contributors:update": "wireit",
+    "default": "wireit",
+    "devenv:setup": "wireit",
+    "docgen": "wireit",
+    "eject": "wireit",
+    "eslint": "wireit",
+    "integ": "wireit",
+    "integ:python-compat": "wireit",
+    "package": "wireit",
+    "package-all": "wireit",
+    "package:go": "wireit",
+    "package:java": "wireit",
+    "package:js": "wireit",
+    "package:python": "wireit",
+    "post-compile": "wireit",
+    "post-upgrade": "wireit",
+    "pre-compile": "wireit",
+    "readme-macros": "wireit",
+    "release": "wireit",
+    "test": "wireit",
+    "test:update": "wireit",
+    "test:watch": "wireit",
+    "unbump": "wireit",
+    "upgrade": "wireit",
+    "watch": "wireit",
     "projen": "/bin/bash ./projen.bash"
   },
   "author": {
@@ -122,6 +122,287 @@
   },
   "main": "lib/index.js",
   "license": "Apache-2.0",
+  "wireit": {
+    "default": {
+      "command": "node .projenrc.js",
+      "files": [
+        "package.json",
+        ".projenrc.js"
+      ],
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "eject": {
+      "command": "/bin/bash ./projen.bash default",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "pre-compile": {
+      "dependencies": [
+        "default"
+      ],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "compile": {
+      "command": "jsii --silence-warnings=reserved-word",
+      "files": [
+        "src/**/*.ts",
+        "tsconfig.json"
+      ],
+      "output": [
+        "lib/**"
+      ],
+      "dependencies": [
+        "pre-compile"
+      ],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "post-compile": {
+      "command": "/bin/bash ./projen.bash docgen && /bin/bash ./projen.bash readme-macros && /bin/bash ./projen.bash bundle:task-runner && /bin/bash ./projen.bash default",
+      "dependencies": [
+        "compile"
+      ],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "test": {
+      "command": "jest --passWithNoTests --all --updateSnapshot && /bin/bash ./projen.bash eslint",
+      "dependencies": [
+        "compile"
+      ],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "package": {
+      "command": "if [ ! -z ${CI} ]; then mkdir -p dist && rsync -a . dist --exclude .git --exclude node_modules; else /bin/bash ./projen.bash package-all; fi",
+      "dependencies": [
+        "post-compile"
+      ],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "build": {
+      "dependencies": [
+        "default",
+        "pre-compile",
+        "compile",
+        "post-compile",
+        "test",
+        "package"
+      ],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "clobber": {
+      "command": "git checkout -b scratch && git checkout $BRANCH && git fetch origin && git reset --hard origin/$BRANCH && git clean -fdx && echo ready to rock! (unpushed commits are under the \"scratch\" branch)",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "test:watch": {
+      "command": "jest --watch",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "test:update": {
+      "command": "jest --updateSnapshot",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "bump": {
+      "command": "/usr/local/Cellar/node/17.8.0/bin/node /Volumes/workplace/projen/lib/release/bump-version.task.js",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "unbump": {
+      "command": "/usr/local/Cellar/node/17.8.0/bin/node /Volumes/workplace/projen/lib/release/reset-version.task.js",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "release": {
+      "command": "rm -fr dist && /bin/bash ./projen.bash bump && /bin/bash ./projen.bash build && /bin/bash ./projen.bash unbump && git diff --ignore-space-at-eol --exit-code",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "post-upgrade": {
+      "command": "echo No commands to run.",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "upgrade": {
+      "command": "echo No commands to run.",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "watch": {
+      "command": "jsii -w --silence-warnings=reserved-word",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "eslint": {
+      "command": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "compat": {
+      "command": "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "package-all": {
+      "dependencies": [
+        "package:js",
+        "package:java",
+        "package:python",
+        "package:go"
+      ],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "package:js": {
+      "command": "jsii-pacmak -v --target js",
+      "files": [
+        "lib/**"
+      ],
+      "output": [
+        "dist/js"
+      ],
+      "dependencies": [
+        "compile"
+      ],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "package:java": {
+      "command": "jsii-pacmak -v --target java",
+      "files": [
+        "lib/**"
+      ],
+      "output": [
+        "dist/java"
+      ],
+      "dependencies": [
+        "compile"
+      ],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "package:python": {
+      "command": "jsii-pacmak -v --target python",
+      "files": [
+        "lib/**"
+      ],
+      "output": [
+        "dist/python"
+      ],
+      "dependencies": [
+        "compile"
+      ],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "package:go": {
+      "command": "jsii-pacmak -v --target go",
+      "files": [
+        "lib/**"
+      ],
+      "output": [
+        "dist/go"
+      ],
+      "dependencies": [
+        "compile"
+      ],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "docgen": {
+      "command": "jsii-docgen -o docs/api/API.md",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "readme-macros": {
+      "command": "mv README.md README.md.bak && cat README.md.bak | markmac > README.md && rm README.md.bak",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "devenv:setup": {
+      "command": "yarn install && /bin/bash ./projen.bash build",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "contributors:update": {
+      "command": "all-contributors check | grep \"Missing contributors\" -A 1 | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"[bot]\" | xargs -n1 -I{} all-contributors add {} code",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "integ:python-compat": {
+      "command": "scripts/python-compat.sh",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "integ": {
+      "command": "/bin/bash ./projen.bash compile && /bin/bash ./projen.bash package:python && /bin/bash ./projen.bash integ:python-compat",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    },
+    "bundle:task-runner": {
+      "command": "esbuild src/task-runtime.ts --outfile=lib/run-task.js --bundle --platform=node --external:\"*/package.json\" && echo \"#!/usr/bin/env node\" | cat - lib/run-task.js | tee lib/run-task.js > /dev/null && echo \"const runtime = new TaskRuntime(\\\".\\\");\nruntime.runTask(process.argv[2]);\" >> lib/run-task.js",
+      "dependencies": [],
+      "packageLocks": [
+        "yarn.lock"
+      ]
+    }
+  },
   "version": "0.0.0",
   "jest": {
     "testMatch": [

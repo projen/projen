@@ -193,6 +193,9 @@ export class JsiiProject extends TypeScriptProject {
     }
 
     this.compileTask.reset(`jsii ${jsiiFlags}`);
+    this.compileTask.addInputs("src/**/*.ts", "tsconfig.json");
+    this.compileTask.addOutputs("lib/**");
+
     this.watchTask.reset(`jsii -w ${jsiiFlags}`);
     this.packageAllTask = this.addTask("package-all", {
       description: "Packages artifacts for all target languages",
@@ -366,9 +369,12 @@ export class JsiiProject extends TypeScriptProject {
   private addPackagingTask(language: JsiiPacmakTarget): Task {
     const packageTask = this.tasks.addTask(`package:${language}`, {
       description: `Create ${language} language bindings`,
+      exec: `jsii-pacmak -v --target ${language}`,
+      dependencies: [this.compileTask],
+      inputs: ["lib/**"],
+      outputs: [`${this.artifactsDirectory}/${language}`],
     });
-    packageTask.exec(`jsii-pacmak -v --target ${language}`);
-    this.packageAllTask.spawn(packageTask);
+    this.packageAllTask.addDependency(packageTask);
     return packageTask;
   }
 

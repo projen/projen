@@ -16,6 +16,11 @@ export interface TaskOptions extends TaskCommonOptions {
    * List of task steps to run.
    */
   readonly steps?: TaskStep[];
+
+  /**
+   * Tasks that this task depends on.
+   */
+  readonly dependencies?: Task[];
 }
 
 /**
@@ -35,9 +40,9 @@ export class Task {
   public readonly condition?: string;
 
   public readonly clean?: boolean;
-  private readonly _inputs?: string[];
-  private readonly _outputs?: string[];
-  private readonly _dependencies?: string[];
+  private _inputs?: string[];
+  private _outputs?: string[];
+  private readonly _dependencies: string[];
 
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
@@ -56,7 +61,11 @@ export class Task {
     this.clean = props.clean;
     this._inputs = props.inputs;
     this._outputs = props.outputs;
-    this._dependencies = props.dependencies;
+    this._dependencies = [];
+
+    for (const dep of props.dependencies ?? []) {
+      this.addDependency(dep);
+    }
 
     this._env = props.env ?? {};
     this._steps = props.steps ?? [];
@@ -93,7 +102,7 @@ export class Task {
   }
 
   /**
-   * Reset the task so it no longer has any commands.
+   * Reset the task so it no longer has any commands, inputs, or outputs.
    * @param command the first command to add to the task after it was cleared.
    */
   public reset(command?: string, options: TaskStepOptions = {}) {
@@ -103,8 +112,20 @@ export class Task {
       this._steps.shift();
     }
 
+    this._inputs = undefined;
+    this._outputs = undefined;
+
     if (command) {
       this.exec(command, options);
+    }
+  }
+
+  /**
+   * Reset all of the task's dependencies.
+   */
+  public resetDependencies() {
+    while (this._dependencies.length) {
+      this._dependencies.shift();
     }
   }
 
@@ -232,6 +253,16 @@ export class Task {
   }
 
   /**
+   * Add file patterns that this task depends on.
+   */
+  public addInputs(...patterns: string[]) {
+    if (!this._inputs) {
+      this._inputs = [];
+    }
+    this._inputs.push(...patterns);
+  }
+
+  /**
    * Returns an immutable copy of all the outputs of the task.
    */
   public get outputs(): string[] | undefined {
@@ -239,10 +270,27 @@ export class Task {
   }
 
   /**
+   * Add file patterns that this task outputs.
+   */
+  public addOutputs(...patterns: string[]) {
+    if (!this._outputs) {
+      this._outputs = [];
+    }
+    this._outputs.push(...patterns);
+  }
+
+  /**
    * Returns an immutable copy of all the dependencies of the task.
    */
-  public get dependencies(): string[] | undefined {
-    return this._dependencies ? [...this._dependencies] : undefined;
+  public get dependencies(): string[] {
+    return [...this._dependencies];
+  }
+
+  /**
+   * Add a task this depends on.
+   */
+  public addDependency(subtask: Task) {
+    this._dependencies.push(subtask.name);
   }
 
   /**
@@ -258,6 +306,9 @@ export class Task {
       requiredEnv: this.requiredEnv,
       steps: this._steps,
       condition: this.condition,
+      dependencies: this._dependencies,
+      inputs: this._inputs,
+      outputs: this._outputs,
       cwd: this.cwd,
     };
   }
