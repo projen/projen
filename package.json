@@ -125,9 +125,11 @@
   "wireit": {
     "default": {
       "command": "node .projenrc.js",
+      "clean": false,
       "files": [
         "package.json",
-        ".projenrc.js"
+        ".projenrc.js",
+        "lib/**"
       ],
       "dependencies": [],
       "packageLocks": [
@@ -136,12 +138,14 @@
     },
     "eject": {
       "command": "/bin/bash ./projen.bash default",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
       ]
     },
     "pre-compile": {
+      "clean": false,
       "dependencies": [
         "default"
       ],
@@ -151,6 +155,7 @@
     },
     "compile": {
       "command": "jsii --silence-warnings=reserved-word",
+      "clean": false,
       "files": [
         "src/**/*.ts",
         "tsconfig.json"
@@ -166,9 +171,12 @@
       ]
     },
     "post-compile": {
-      "command": "/bin/bash ./projen.bash docgen && /bin/bash ./projen.bash readme-macros && /bin/bash ./projen.bash bundle:task-runner && /bin/bash ./projen.bash default",
+      "command": "/bin/bash ./projen.bash docgen && /bin/bash ./projen.bash readme-macros",
+      "clean": false,
       "dependencies": [
-        "compile"
+        "compile",
+        "bundle:task-runner",
+        "default"
       ],
       "packageLocks": [
         "yarn.lock"
@@ -176,6 +184,7 @@
     },
     "test": {
       "command": "jest --passWithNoTests --all --updateSnapshot && /bin/bash ./projen.bash eslint",
+      "clean": false,
       "dependencies": [
         "compile"
       ],
@@ -185,6 +194,7 @@
     },
     "package": {
       "command": "if [ ! -z ${CI} ]; then mkdir -p dist && rsync -a . dist --exclude .git --exclude node_modules; else /bin/bash ./projen.bash package-all; fi",
+      "clean": false,
       "dependencies": [
         "post-compile"
       ],
@@ -193,6 +203,7 @@
       ]
     },
     "build": {
+      "clean": false,
       "dependencies": [
         "default",
         "pre-compile",
@@ -207,6 +218,7 @@
     },
     "clobber": {
       "command": "git checkout -b scratch && git checkout $BRANCH && git fetch origin && git reset --hard origin/$BRANCH && git clean -fdx && echo ready to rock! (unpushed commits are under the \"scratch\" branch)",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -214,6 +226,7 @@
     },
     "test:watch": {
       "command": "jest --watch",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -221,6 +234,7 @@
     },
     "test:update": {
       "command": "jest --updateSnapshot",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -228,6 +242,7 @@
     },
     "bump": {
       "command": "/usr/local/Cellar/node/17.8.0/bin/node /Volumes/workplace/projen/lib/release/bump-version.task.js",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -235,6 +250,7 @@
     },
     "unbump": {
       "command": "/usr/local/Cellar/node/17.8.0/bin/node /Volumes/workplace/projen/lib/release/reset-version.task.js",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -242,6 +258,7 @@
     },
     "release": {
       "command": "rm -fr dist && /bin/bash ./projen.bash bump && /bin/bash ./projen.bash build && /bin/bash ./projen.bash unbump && git diff --ignore-space-at-eol --exit-code",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -249,6 +266,7 @@
     },
     "post-upgrade": {
       "command": "echo No commands to run.",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -256,6 +274,7 @@
     },
     "upgrade": {
       "command": "echo No commands to run.",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -263,6 +282,7 @@
     },
     "watch": {
       "command": "jsii -w --silence-warnings=reserved-word",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -270,19 +290,36 @@
     },
     "eslint": {
       "command": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
-      "dependencies": [],
+      "clean": false,
+      "files": [
+        ".prettierrc.json",
+        ".prettierignore",
+        ".eslintrc.json",
+        "tsconfig.dev.json"
+      ],
+      "output": [
+        "src/**/*.ts",
+        "test/**/*.ts",
+        "build-tools/**/*.ts",
+        ".projenrc.js"
+      ],
+      "dependencies": [
+        "compile"
+      ],
       "packageLocks": [
         "yarn.lock"
       ]
     },
     "compat": {
       "command": "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
       ]
     },
     "package-all": {
+      "clean": false,
       "dependencies": [
         "package:js",
         "package:java",
@@ -295,6 +332,7 @@
     },
     "package:js": {
       "command": "jsii-pacmak -v --target js",
+      "clean": false,
       "files": [
         "lib/**"
       ],
@@ -310,6 +348,7 @@
     },
     "package:java": {
       "command": "jsii-pacmak -v --target java",
+      "clean": false,
       "files": [
         "lib/**"
       ],
@@ -325,6 +364,7 @@
     },
     "package:python": {
       "command": "jsii-pacmak -v --target python",
+      "clean": false,
       "files": [
         "lib/**"
       ],
@@ -340,6 +380,7 @@
     },
     "package:go": {
       "command": "jsii-pacmak -v --target go",
+      "clean": false,
       "files": [
         "lib/**"
       ],
@@ -355,6 +396,7 @@
     },
     "docgen": {
       "command": "jsii-docgen -o docs/api/API.md",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -362,6 +404,7 @@
     },
     "readme-macros": {
       "command": "mv README.md README.md.bak && cat README.md.bak | markmac > README.md && rm README.md.bak",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -369,6 +412,7 @@
     },
     "devenv:setup": {
       "command": "yarn install && /bin/bash ./projen.bash build",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -376,6 +420,7 @@
     },
     "contributors:update": {
       "command": "all-contributors check | grep \"Missing contributors\" -A 1 | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"[bot]\" | xargs -n1 -I{} all-contributors add {} code",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -383,6 +428,7 @@
     },
     "integ:python-compat": {
       "command": "scripts/python-compat.sh",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -390,6 +436,7 @@
     },
     "integ": {
       "command": "/bin/bash ./projen.bash compile && /bin/bash ./projen.bash package:python && /bin/bash ./projen.bash integ:python-compat",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"
@@ -397,6 +444,7 @@
     },
     "bundle:task-runner": {
       "command": "esbuild src/task-runtime.ts --outfile=lib/run-task.js --bundle --platform=node --external:\"*/package.json\" && echo \"#!/usr/bin/env node\" | cat - lib/run-task.js | tee lib/run-task.js > /dev/null && echo \"const runtime = new TaskRuntime(\\\".\\\");\nruntime.runTask(process.argv[2]);\" >> lib/run-task.js",
+      "clean": false,
       "dependencies": [],
       "packageLocks": [
         "yarn.lock"

@@ -224,7 +224,7 @@ function setupBundleTaskRunner() {
       name: "Add driver code to end of the file",
     }
   );
-  project.postCompileTask.spawn(task);
+  project.postCompileTask.addDependency(task);
 }
 
 setupIntegTest();
@@ -233,7 +233,11 @@ setupBundleTaskRunner();
 // we are projen, so re-synth after compiling.
 // fixes feedback loop where projen contibutors run "build"
 // but not all files are updated
-project.postCompileTask.spawn(project.defaultTask);
+project.postCompileTask.addDependency(project.defaultTask);
+
+// TODO: add a way to run tasks without dependents
+// TODO: update task runner to keep track of already run tasks?
+// TODO: fix bootstrapping issue -- if lib/ is empty, then `npm run default` fails
 
 // project.gitignore.addPatterns(".wireit");
 
@@ -426,6 +430,8 @@ project.postCompileTask.spawn(project.defaultTask);
 //   },
 // });
 
-project.synth();
+// since we are projen, recompiling the project should update the cache key
+// for the default task
+project.defaultTask.addInputs("lib/**");
 
-// TODO: add a way to run tasks without dependents
+project.synth();

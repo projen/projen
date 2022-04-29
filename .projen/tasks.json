@@ -3,6 +3,7 @@
     "build": {
       "name": "build",
       "description": "Full release build",
+      "clean": false,
       "dependencies": [
         "default",
         "pre-compile",
@@ -27,6 +28,7 @@
           "builtin": "release/bump-version"
         }
       ],
+      "clean": false,
       "condition": "! git log --oneline -1 | grep -q \"chore(release):\""
     },
     "bundle:task-runner": {
@@ -44,7 +46,8 @@
           "exec": "echo \"const runtime = new TaskRuntime(\\\".\\\");\nruntime.runTask(process.argv[2]);\" >> lib/run-task.js",
           "name": "Add driver code to end of the file"
         }
-      ]
+      ],
+      "clean": false
     },
     "clobber": {
       "name": "clobber",
@@ -76,6 +79,7 @@
           "say": "ready to rock! (unpushed commits are under the \"scratch\" branch)"
         }
       ],
+      "clean": false,
       "condition": "git diff --exit-code > /dev/null"
     },
     "compat": {
@@ -85,7 +89,8 @@
         {
           "exec": "jsii-diff npm:$(node -p \"require('./package.json').name\") -k --ignore-file .compatignore || (echo \"\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\n\" && exit 1)"
         }
-      ]
+      ],
+      "clean": false
     },
     "compile": {
       "name": "compile",
@@ -95,6 +100,7 @@
           "exec": "jsii --silence-warnings=reserved-word"
         }
       ],
+      "clean": false,
       "dependencies": [
         "pre-compile"
       ],
@@ -112,7 +118,8 @@
         {
           "exec": "all-contributors check | grep \"Missing contributors\" -A 1 | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"[bot]\" | xargs -n1 -I{} all-contributors add {} code"
         }
-      ]
+      ],
+      "clean": false
     },
     "default": {
       "name": "default",
@@ -122,9 +129,11 @@
           "exec": "node .projenrc.js"
         }
       ],
+      "clean": false,
       "inputs": [
         "package.json",
-        ".projenrc.js"
+        ".projenrc.js",
+        "lib/**"
       ]
     },
     "devenv:setup": {
@@ -136,7 +145,8 @@
         {
           "spawn": "build"
         }
-      ]
+      ],
+      "clean": false
     },
     "docgen": {
       "name": "docgen",
@@ -145,7 +155,8 @@
         {
           "exec": "jsii-docgen -o docs/api/API.md"
         }
-      ]
+      ],
+      "clean": false
     },
     "eject": {
       "name": "eject",
@@ -157,7 +168,8 @@
         {
           "spawn": "default"
         }
-      ]
+      ],
+      "clean": false
     },
     "eslint": {
       "name": "eslint",
@@ -166,6 +178,22 @@
         {
           "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js"
         }
+      ],
+      "clean": false,
+      "dependencies": [
+        "compile"
+      ],
+      "inputs": [
+        ".prettierrc.json",
+        ".prettierignore",
+        ".eslintrc.json",
+        "tsconfig.dev.json"
+      ],
+      "outputs": [
+        "src/**/*.ts",
+        "test/**/*.ts",
+        "build-tools/**/*.ts",
+        ".projenrc.js"
       ]
     },
     "integ": {
@@ -181,7 +209,8 @@
         {
           "spawn": "integ:python-compat"
         }
-      ]
+      ],
+      "clean": false
     },
     "integ:python-compat": {
       "name": "integ:python-compat",
@@ -190,7 +219,8 @@
         {
           "exec": "scripts/python-compat.sh"
         }
-      ]
+      ],
+      "clean": false
     },
     "package": {
       "name": "package",
@@ -200,6 +230,7 @@
           "exec": "if [ ! -z ${CI} ]; then mkdir -p dist && rsync -a . dist --exclude .git --exclude node_modules; else /bin/bash ./projen.bash package-all; fi"
         }
       ],
+      "clean": false,
       "dependencies": [
         "post-compile"
       ]
@@ -207,6 +238,7 @@
     "package-all": {
       "name": "package-all",
       "description": "Packages artifacts for all target languages",
+      "clean": false,
       "dependencies": [
         "package:js",
         "package:java",
@@ -222,6 +254,7 @@
           "exec": "jsii-pacmak -v --target go"
         }
       ],
+      "clean": false,
       "dependencies": [
         "compile"
       ],
@@ -240,6 +273,7 @@
           "exec": "jsii-pacmak -v --target java"
         }
       ],
+      "clean": false,
       "dependencies": [
         "compile"
       ],
@@ -258,6 +292,7 @@
           "exec": "jsii-pacmak -v --target js"
         }
       ],
+      "clean": false,
       "dependencies": [
         "compile"
       ],
@@ -276,6 +311,7 @@
           "exec": "jsii-pacmak -v --target python"
         }
       ],
+      "clean": false,
       "dependencies": [
         "compile"
       ],
@@ -295,25 +331,24 @@
         },
         {
           "spawn": "readme-macros"
-        },
-        {
-          "spawn": "bundle:task-runner"
-        },
-        {
-          "spawn": "default"
         }
       ],
+      "clean": false,
       "dependencies": [
-        "compile"
+        "compile",
+        "bundle:task-runner",
+        "default"
       ]
     },
     "post-upgrade": {
       "name": "post-upgrade",
-      "description": "Runs after upgrading dependencies"
+      "description": "Runs after upgrading dependencies",
+      "clean": false
     },
     "pre-compile": {
       "name": "pre-compile",
       "description": "Prepare the project for compilation",
+      "clean": false,
       "dependencies": [
         "default"
       ]
@@ -330,7 +365,8 @@
         {
           "exec": "rm README.md.bak"
         }
-      ]
+      ],
+      "clean": false
     },
     "release": {
       "name": "release",
@@ -354,7 +390,8 @@
         {
           "exec": "git diff --ignore-space-at-eol --exit-code"
         }
-      ]
+      ],
+      "clean": false
     },
     "test": {
       "name": "test",
@@ -367,6 +404,7 @@
           "spawn": "eslint"
         }
       ],
+      "clean": false,
       "dependencies": [
         "compile"
       ]
@@ -378,7 +416,8 @@
         {
           "exec": "jest --updateSnapshot"
         }
-      ]
+      ],
+      "clean": false
     },
     "test:watch": {
       "name": "test:watch",
@@ -387,7 +426,8 @@
         {
           "exec": "jest --watch"
         }
-      ]
+      ],
+      "clean": false
     },
     "unbump": {
       "name": "unbump",
@@ -403,7 +443,8 @@
         {
           "builtin": "release/reset-version"
         }
-      ]
+      ],
+      "clean": false
     },
     "upgrade": {
       "name": "upgrade",
@@ -442,7 +483,8 @@
         {
           "spawn": "post-upgrade"
         }
-      ]
+      ],
+      "clean": false
     },
     "watch": {
       "name": "watch",
@@ -451,7 +493,8 @@
         {
           "exec": "jsii -w --silence-warnings=reserved-word"
         }
-      ]
+      ],
+      "clean": false
     }
   },
   "env": {

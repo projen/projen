@@ -161,7 +161,18 @@ export class Eslint extends Component {
         ...dirs,
         ...(lintProjenRc ? [PROJEN_RC] : []),
       ].join(" "),
+      dependencies: [project.compileTask],
+      inputs: [
+        ".prettierrc.json",
+        ".prettierignore",
+        ".eslintrc.json",
+        "tsconfig.dev.json",
+      ],
+      outputs: dirs.map((dir) => `${dir}/**/*.ts`),
     });
+    if (lintProjenRc) {
+      eslint.addOutputs(PROJEN_RC);
+    }
 
     project.testTask.spawn(eslint);
 

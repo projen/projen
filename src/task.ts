@@ -58,7 +58,7 @@ export class Task {
     this.cwd = props.cwd;
     this._locked = false;
 
-    this.clean = props.clean;
+    this.clean = props.clean ?? false;
     this._inputs = props.inputs;
     this._outputs = props.outputs;
     this._dependencies = [];
@@ -305,6 +305,7 @@ export class Task {
       env: this._env,
       requiredEnv: this.requiredEnv,
       steps: this._steps,
+      clean: this.clean,
       condition: this.condition,
       dependencies: this._dependencies,
       inputs: this._inputs,
