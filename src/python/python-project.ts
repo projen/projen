@@ -149,7 +149,7 @@ export interface PythonProjectOptions
    * This will install `projen` as a JavaScript dependency and add a `synth`
    * task which will run `.projenrc.js`.
    *
-   * @default true
+   * @default false
    */
   readonly projenrcJs?: boolean;
 
@@ -209,7 +209,14 @@ export class PythonProject extends GitHubProject {
     this.moduleName = options.moduleName;
     this.version = options.version;
 
-    if (options.projenrcPython ?? true) {
+    const { anySelected, multipleSelected } = analyzeChoices(options.projenrcPython, options.projenrcJs, options.projenrcJson)
+
+    if (multipleSelected) {
+      throw new Error("Only one of projenrcPython, projenrcJs, and projenrcJson can be selected.");
+    }
+
+    // default to projenrc.py if no other projenrc type was elected
+    if (options.projenrcPython ?? !anySelected) {
       new ProjenrcPython(this, options.projenrcPythonOptions);
     }
 
@@ -485,4 +492,18 @@ export class PythonProject extends GitHubProject {
     this.envManager.setupEnvironment();
     this.depsManager.installDependencies();
   }
+}
+
+function analyzeChoices(...bools: (boolean | undefined)[]): { anySelected: any; multipleSelected: any; } {
+  let anySelected = false;
+  let multipleSelected = false;
+  for (const bool of bools) {
+    if (anySelected && bool) {
+      multipleSelected = true;
+    }
+    if (bool) {
+      anySelected = true;
+    }
+  }
+  return { anySelected, multipleSelected };
 }

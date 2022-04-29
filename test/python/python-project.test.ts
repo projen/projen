@@ -42,6 +42,13 @@ test("pytest maxfailures", () => {
   ).toContain("--maxfail=3");
 });
 
+test("cannot specify multiple projenrc types", () => {
+  expect(() => new TestPythonProject({
+    projenrcPython: true,
+    projenrcJs: true,
+  })).toThrow(/Only one of projenrcPython, projenrcJs, and projenrcJson can be selected./)
+});
+
 class TestPythonProject extends PythonProject {
   constructor(options: Partial<PythonProjectOptions> = {}) {
     super({

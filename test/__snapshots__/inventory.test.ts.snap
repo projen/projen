@@ -1808,7 +1808,7 @@ Array [
         "switch": "projen-credentials",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Use projenrc in javascript.",
         "featured": false,
         "fullType": Object {
@@ -25975,7 +25975,7 @@ Array [
         "switch": "projen-credentials",
       },
       Object {
-        "default": "true",
+        "default": "false",
         "docs": "Use projenrc in javascript.",
         "featured": false,
         "fullType": Object {
