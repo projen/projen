@@ -261,11 +261,7 @@ test("projenrc-ts creates typescript projenrc", () => {
 
 test("python project includes .projenrc.py by default", () => {
   withProjectDir((projectdir) => {
-    execProjenCLI(projectdir, [
-      "new",
-      "python",
-      "--no-synth",
-    ]);
+    execProjenCLI(projectdir, ["new", "python", "--no-synth"]);
 
     const output = directorySnapshot(projectdir);
     expect(output[".projenrc.py"]).toBeDefined();
@@ -274,12 +270,7 @@ test("python project includes .projenrc.py by default", () => {
 
 test("python project can include .projenrc.js", () => {
   withProjectDir((projectdir) => {
-    execProjenCLI(projectdir, [
-      "new",
-      "python",
-      "--projenrc-js",
-      "--no-synth",
-    ]);
+    execProjenCLI(projectdir, ["new", "python", "--projenrc-js", "--no-synth"]);
 
     const output = directorySnapshot(projectdir);
     expect(output[".projenrc.py"]).toBeUndefined();

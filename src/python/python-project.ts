@@ -209,10 +209,16 @@ export class PythonProject extends GitHubProject {
     this.moduleName = options.moduleName;
     this.version = options.version;
 
-    const { anySelected, multipleSelected } = analyzeChoices(options.projenrcPython, options.projenrcJs, options.projenrcJson)
+    const { anySelected, multipleSelected } = analyzeChoices(
+      options.projenrcPython,
+      options.projenrcJs,
+      options.projenrcJson
+    );
 
     if (multipleSelected) {
-      throw new Error("Only one of projenrcPython, projenrcJs, and projenrcJson can be selected.");
+      throw new Error(
+        "Only one of projenrcPython, projenrcJs, and projenrcJson can be selected."
+      );
     }
 
     // default to projenrc.py if no other projenrc type was elected
@@ -494,7 +500,10 @@ export class PythonProject extends GitHubProject {
   }
 }
 
-function analyzeChoices(...bools: (boolean | undefined)[]): { anySelected: any; multipleSelected: any; } {
+function analyzeChoices(...bools: (boolean | undefined)[]): {
+  anySelected: any;
+  multipleSelected: any;
+} {
   let anySelected = false;
   let multipleSelected = false;
   for (const bool of bools) {
