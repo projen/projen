@@ -60,4 +60,3 @@ tsconfig.json
 /.idea
 !/.markdownlint.json
 !/.vscode/launch.json
-.wireit

@@ -1,5 +1,6 @@
 import { basename, dirname, extname, join, sep } from "path";
 import * as semver from "semver";
+import { NodePackageManager } from "./node-package";
 
 export function renderBundleName(entrypoint: string) {
   const parts = join(entrypoint).split(sep);
@@ -40,4 +41,16 @@ export function minVersion(version: string): string | undefined {
   } else {
     return version;
   }
+}
+
+export function determineLockfile(packageManager: NodePackageManager) {
+  if (packageManager === NodePackageManager.YARN) {
+    return "yarn.lock";
+  } else if (packageManager === NodePackageManager.NPM) {
+    return "package-lock.json";
+  } else if (packageManager === NodePackageManager.PNPM) {
+    return "pnpm-lock.yaml";
+  }
+
+  throw new Error(`unsupported package manager ${packageManager}`);
 }

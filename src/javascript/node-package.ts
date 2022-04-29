@@ -16,7 +16,12 @@ import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
 import { exec, isTruthy, sorted, writeFile } from "../util";
-import { extractCodeArtifactDetails, minVersion } from "./util";
+import {
+  determineLockfile,
+  extractCodeArtifactDetails,
+  minVersion,
+} from "./util";
+import { Wireit } from "./wireit";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -492,6 +497,7 @@ export class NodePackage extends Component {
       license: () => this.license ?? UNLICENSED,
       homepage: options.homepage,
       publishConfig: () => this.renderPublishConfig(),
+      wireit: () => this.renderWireitConfig(),
 
       // in release CI builds we bump the version before we run "build" so we want
       // to preserve the version number. otherwise, we always set it to 0.0.0
@@ -1290,13 +1296,27 @@ export class NodePackage extends Component {
 
   private renderScripts() {
     const result: any = {};
+    const wireit = Wireit.of(this.project);
     for (const task of this.project.tasks.all.sort((x, y) =>
       x.name.localeCompare(y.name)
     )) {
-      result[task.name] = this.npmScriptForTask(task);
+      if (wireit) {
+        result[task.name] = "wireit";
+      } else {
+        result[task.name] = this.npmScriptForTask(task);
+      }
     }
 
     return result;
+  }
+
+  private renderWireitConfig() {
+    const wireit = Wireit.of(this.project);
+    if (wireit) {
+      return wireit.renderConfig();
+    } else {
+      return undefined;
+    }
   }
 
   private npmScriptForTask(task: Task) {
@@ -1394,16 +1414,4 @@ export function defaultNpmToken(
     npmToken ??
     (isGitHubPackages ? DEFAULT_GITHUB_TOKEN_SECRET : DEFAULT_NPM_TOKEN_SECRET)
   );
-}
-
-function determineLockfile(packageManager: NodePackageManager) {
-  if (packageManager === NodePackageManager.YARN) {
-    return "yarn.lock";
-  } else if (packageManager === NodePackageManager.NPM) {
-    return "package-lock.json";
-  } else if (packageManager === NodePackageManager.PNPM) {
-    return "pnpm-lock.yaml";
-  }
-
-  throw new Error(`unsupported package manager ${packageManager}`);
 }

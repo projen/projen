@@ -37,6 +37,7 @@ import {
   NodePackageOptions,
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
+import { Wireit } from "./wireit";
 
 const PROJEN_SCRIPT = "projen";
 
@@ -290,6 +291,12 @@ export interface NodeProjectOptions
    * @default "{ pullRequest: {}, workflowDispatch: {} }"
    */
   readonly buildWorkflowTriggers?: Triggers;
+
+  /**
+   * Use wireit for caching tasks.
+   * @default false
+   */
+  readonly wireit: boolean;
 }
 
 /**
@@ -424,9 +431,16 @@ export class NodeProject extends GitHubProject {
   private readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
   public readonly prettier?: Prettier;
+  public readonly wireit?: Wireit;
 
   constructor(options: NodeProjectOptions) {
     super(options);
+
+    if (options.wireit ?? false) {
+      this.wireit = new Wireit(this, {
+        packageManager: options.packageManager,
+      });
+    }
 
     this.package = new NodePackage(this, options);
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];

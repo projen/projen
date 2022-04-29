@@ -41,6 +41,26 @@ export interface TaskCommonOptions {
   readonly condition?: string;
 
   /**
+   * A list of glob patterns representing input files for the task. Used to
+   * determine the cache key if `wireit` is enabled in a node project. Specify an
+   * empty array if it does not depend on any files.
+   */
+  readonly inputs?: string[];
+
+  // TODO
+  readonly outputs?: string[];
+
+  /**
+   * @default false
+   */
+  readonly clean?: boolean;
+
+  /**
+   * Names of tasks that this task depends on.
+   */
+  readonly dependencies?: string[];
+
+  /**
    * The working directory for all steps in this task (unless overridden by the
    * step).
    *

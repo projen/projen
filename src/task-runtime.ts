@@ -131,6 +131,12 @@ class RunTask {
       );
     }
 
+    if (!this.isWireitEnabled()) {
+      for (const dep of task.dependencies ?? []) {
+        this.runtime.runTask(dep, [...this.parents, this.task.name]);
+      }
+    }
+
     for (const step of task.steps) {
       if (step.say) {
         logging.info(this.fmtLog(step.say));
@@ -326,6 +332,16 @@ class RunTask {
       join(moduleRoot, "lib", `${builtin}.task.js`)
     );
     return `${process.execPath} ${program}`;
+  }
+
+  private isWireitEnabled(): boolean {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const packageJson = require("../package.json");
+    if (packageJson.wireit) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 

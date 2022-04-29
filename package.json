@@ -9,38 +9,38 @@
     "projen": "bin/projen"
   },
   "scripts": {
-    "build": "wireit",
-    "bump": "wireit",
-    "bundle:task-runner": "wireit",
-    "clobber": "wireit",
-    "compat": "wireit",
-    "compile": "wireit",
-    "contributors:update": "wireit",
-    "default": "wireit",
-    "devenv:setup": "wireit",
-    "docgen": "wireit",
-    "eject": "wireit",
-    "eslint": "wireit",
-    "integ": "wireit",
-    "integ:python-compat": "wireit",
-    "package": "wireit",
-    "package-all": "wireit",
-    "package:go": "wireit",
-    "package:java": "wireit",
-    "package:js": "wireit",
-    "package:python": "wireit",
-    "post-compile": "wireit",
-    "post-upgrade": "wireit",
-    "pre-compile": "wireit",
-    "readme-macros": "wireit",
-    "release": "wireit",
-    "test": "wireit",
-    "test:update": "wireit",
-    "test:watch": "wireit",
-    "unbump": "wireit",
-    "upgrade": "wireit",
-    "watch": "wireit",
-    "projen": "wireit"
+    "build": "/bin/bash ./projen.bash build",
+    "bump": "/bin/bash ./projen.bash bump",
+    "bundle:task-runner": "/bin/bash ./projen.bash bundle:task-runner",
+    "clobber": "/bin/bash ./projen.bash clobber",
+    "compat": "/bin/bash ./projen.bash compat",
+    "compile": "/bin/bash ./projen.bash compile",
+    "contributors:update": "/bin/bash ./projen.bash contributors:update",
+    "default": "/bin/bash ./projen.bash default",
+    "devenv:setup": "/bin/bash ./projen.bash devenv:setup",
+    "docgen": "/bin/bash ./projen.bash docgen",
+    "eject": "/bin/bash ./projen.bash eject",
+    "eslint": "/bin/bash ./projen.bash eslint",
+    "integ": "/bin/bash ./projen.bash integ",
+    "integ:python-compat": "/bin/bash ./projen.bash integ:python-compat",
+    "package": "/bin/bash ./projen.bash package",
+    "package-all": "/bin/bash ./projen.bash package-all",
+    "package:go": "/bin/bash ./projen.bash package:go",
+    "package:java": "/bin/bash ./projen.bash package:java",
+    "package:js": "/bin/bash ./projen.bash package:js",
+    "package:python": "/bin/bash ./projen.bash package:python",
+    "post-compile": "/bin/bash ./projen.bash post-compile",
+    "post-upgrade": "/bin/bash ./projen.bash post-upgrade",
+    "pre-compile": "/bin/bash ./projen.bash pre-compile",
+    "readme-macros": "/bin/bash ./projen.bash readme-macros",
+    "release": "/bin/bash ./projen.bash release",
+    "test": "/bin/bash ./projen.bash test",
+    "test:update": "/bin/bash ./projen.bash test:update",
+    "test:watch": "/bin/bash ./projen.bash test:watch",
+    "unbump": "/bin/bash ./projen.bash unbump",
+    "upgrade": "/bin/bash ./projen.bash upgrade",
+    "watch": "/bin/bash ./projen.bash watch",
+    "projen": "/bin/bash ./projen.bash"
   },
   "author": {
     "name": "Amazon Web Services",
@@ -185,257 +185,6 @@
     "tsc": {
       "outDir": "lib",
       "rootDir": "src"
-    }
-  },
-  "wireit": {
-    "default": {
-      "command": "node .projenrc.js",
-      "files": [
-        ".projenrc.js",
-        "package.json"
-      ],
-      "output": [
-        ".devcontainer.json",
-        ".eslintrc.json",
-        ".gitattributes",
-        ".github/pull_request_template.md",
-        ".github/workflows/auto-approve.yml",
-        ".github/workflows/build.yml",
-        ".github/workflows/pull-request-lint.yml",
-        ".github/workflows/release.yml",
-        ".github/workflows/upgrade-main.yml",
-        ".gitignore",
-        ".gitpod.yml",
-        ".markdownlint.json",
-        ".mergify.yml",
-        ".prettierignore",
-        ".prettierrc.json",
-        ".projen/deps.json",
-        ".projen/tasks.json",
-        ".vscode/launch.json",
-        "LICENSE",
-        "projen.bash",
-        "tsconfig.dev.json"
-      ],
-      "clean": true,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "compile": {
-      "command": "jsii --silence-warnings=reserved-word",
-      "dependencies": [
-        "default"
-      ],
-      "files": [
-        "src/**/*.ts",
-        "tsconfig.json"
-      ],
-      "output": [
-        "lib/**"
-      ],
-      "clean": true,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "eslint": {
-      "command": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
-      "dependencies": [
-        "compile"
-      ],
-      "files": [
-        ".prettierrc.json",
-        ".prettierignore",
-        ".eslintrc.json",
-        "tsconfig.dev.json"
-      ],
-      "output": [
-        "src/**/*.ts",
-        ".projenrc.js"
-      ],
-      "clean": false,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "docgen": {
-      "command": "jsii-docgen -o docs/api/API.md",
-      "dependencies": [
-        "compile"
-      ],
-      "files": [
-        ".jsii"
-      ],
-      "output": [
-        "docs/api/API.md"
-      ],
-      "clean": true,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "readme-macros": {
-      "command": "mv README.md README.md.bak && cat README.md.bak | markmac > README.md && rm README.md.bak",
-      "dependencies": [
-        "compile"
-      ],
-      "files": [
-        "README.md",
-        "lib/inventory.js"
-      ],
-      "output": [
-        "README.md"
-      ],
-      "clean": false,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "bundle:task-runner": {
-      "command": "/bin/bash ./projen.bash bundle:task-runner",
-      "dependencies": [
-        "compile"
-      ],
-      "files": [
-        "src/task-runtime.ts"
-      ],
-      "output": [
-        "lib/run-task.js"
-      ],
-      "clean": true,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "post-compile": {
-      "dependencies": [
-        "docgen",
-        "readme-macros",
-        "bundle:task-runner",
-        "eslint"
-      ],
-      "files": [],
-      "output": [],
-      "clean": true,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "package:js": {
-      "command": "jsii-pacmak -v --target js",
-      "dependencies": [
-        "compile",
-        "post-compile"
-      ],
-      "files": [],
-      "output": [
-        "dist/js"
-      ],
-      "clean": true,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "package:python": {
-      "command": "jsii-pacmak -v --target python",
-      "dependencies": [
-        "compile",
-        "post-compile"
-      ],
-      "files": [],
-      "output": [
-        "dist/python"
-      ],
-      "clean": true,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "package:java": {
-      "command": "jsii-pacmak -v --target java",
-      "dependencies": [
-        "compile",
-        "post-compile"
-      ],
-      "files": [],
-      "output": [
-        "dist/java"
-      ],
-      "clean": true,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "package:go": {
-      "command": "jsii-pacmak -v --target go",
-      "dependencies": [
-        "compile",
-        "post-compile"
-      ],
-      "files": [],
-      "output": [
-        "dist/go"
-      ],
-      "clean": true,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "package-all": {
-      "dependencies": [
-        "package:js",
-        "package:python",
-        "package:java",
-        "package:go"
-      ],
-      "files": [],
-      "output": [],
-      "clean": true,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "package": {
-      "dependencies": [
-        "package-all"
-      ],
-      "files": [],
-      "output": [],
-      "clean": true,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "test": {
-      "command": "jest --passWithNoTests --all --updateSnapshot",
-      "dependencies": [
-        "compile",
-        "bundle:task-runner"
-      ],
-      "files": [
-        "test/**/*.ts"
-      ],
-      "output": [
-        "test/**/*.snap"
-      ],
-      "clean": false,
-      "packageLocks": [
-        "yarn.lock"
-      ]
-    },
-    "build": {
-      "dependencies": [
-        "compile",
-        "test",
-        "package"
-      ],
-      "files": [],
-      "output": [],
-      "clean": true,
-      "packageLocks": [
-        "yarn.lock"
-      ]
     }
   },
   "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \"npx projen\"."

@@ -34,6 +34,11 @@ export class Task {
    */
   public readonly condition?: string;
 
+  public readonly clean?: boolean;
+  private readonly _inputs?: string[];
+  private readonly _outputs?: string[];
+  private readonly _dependencies?: string[];
+
   private readonly _steps: TaskStep[];
   private readonly _env: { [name: string]: string };
   private readonly cwd?: string;
@@ -47,6 +52,11 @@ export class Task {
     this.condition = props.condition;
     this.cwd = props.cwd;
     this._locked = false;
+
+    this.clean = props.clean;
+    this._inputs = props.inputs;
+    this._outputs = props.outputs;
+    this._dependencies = props.dependencies;
 
     this._env = props.env ?? {};
     this._steps = props.steps ?? [];
@@ -212,6 +222,27 @@ export class Task {
       return [];
     }
     return [...this._steps];
+  }
+
+  /**
+   * Returns an immutable copy of all the inputs of the task.
+   */
+  public get inputs(): string[] | undefined {
+    return this._inputs ? [...this._inputs] : undefined;
+  }
+
+  /**
+   * Returns an immutable copy of all the outputs of the task.
+   */
+  public get outputs(): string[] | undefined {
+    return this._outputs ? [...this._outputs] : undefined;
+  }
+
+  /**
+   * Returns an immutable copy of all the dependencies of the task.
+   */
+  public get dependencies(): string[] | undefined {
+    return this._dependencies ? [...this._dependencies] : undefined;
   }
 
   /**
