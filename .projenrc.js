@@ -73,9 +73,17 @@ const project = new cdk.JsiiProject({
   // cli tests need projen to be compiled
   compileBeforeTest: true,
 
-  // makes it very hard to iterate with jest --watch
   jestOptions: {
+    // makes it very hard to iterate with jest --watch
     coverageText: false,
+    jestConfig: {
+      // By default jest will try to use all CPU cores on the running machine.
+      // But some of our integration tests spawn child processes - so by
+      // creating one jest worker per test, some of the child processes will get
+      // starved of CPU time and sometimes hang or timeout. This should
+      // help mitigate that.
+      maxWorkers: "50%",
+    },
   },
 
   publishToMaven: {
