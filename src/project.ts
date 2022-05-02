@@ -372,6 +372,38 @@ export class Project {
   }
 
   /**
+   * Finds a file at the specified relative path within this project and removes
+   * it.
+   *
+   * @param filePath The file path. If this path is relative, it will be
+   * resolved from the root of _this_ project.
+   * @returns a `FileBase` if the file was found and removed, or undefined if
+   * the file was not found.
+   */
+  public tryRemoveFile(filePath: string): FileBase | undefined {
+    const absolute = path.isAbsolute(filePath)
+      ? filePath
+      : path.resolve(this.outdir, filePath);
+    const isFile = (c: Component): c is FileBase => c instanceof FileBase;
+    const index = this._components.findIndex(
+      (c) => isFile(c) && c.absolutePath === absolute
+    );
+
+    if (index !== -1) {
+      return this._components.splice(index, 1)[0] as FileBase;
+    }
+
+    for (const child of this.subprojects) {
+      const file = child.tryRemoveFile(absolute);
+      if (file) {
+        return file;
+      }
+    }
+
+    return undefined;
+  }
+
+  /**
    * Prints a "tip" message during synthesis.
    * @param message The message
    * @deprecated - use `project.logger.info(message)` to show messages during synthesis
