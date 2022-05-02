@@ -871,7 +871,7 @@ addVolume(volume: IDockerComposeVolumeBinding): void
 
 __Extends__: [Component](#projen-component)
 __Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.ReactTypeDef](#projen-web-reacttypedef), [GitAttributesFile](#projen-gitattributesfile), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
-__Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
+__Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)(), [Project](#projen-project).[tryRemoveFile](#projen-project#projen-project-tryremovefile)()
 
 ### Initializer
 
@@ -1948,6 +1948,19 @@ tryFindObjectFile(filePath: string): ObjectFile
 
 __Returns__:
 * <code>[ObjectFile](#projen-objectfile)</code>
+
+#### tryRemoveFile(filePath)🔹 <a id="projen-project-tryremovefile"></a>
+
+
+
+```ts
+tryRemoveFile(filePath: string): FileBase
+```
+
+* **filePath** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[FileBase](#projen-filebase)</code>
 
 
 
