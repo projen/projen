@@ -8,7 +8,6 @@ import {
   readdirSync,
   readJsonSync,
 } from "fs-extra";
-import * as semver from "semver";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -17,7 +16,7 @@ import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
 import { exec, isTruthy, sorted, writeFile } from "../util";
-import { extractCodeArtifactDetails } from "./util";
+import { extractCodeArtifactDetails, minVersion } from "./util";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -921,14 +920,14 @@ export class NodePackage extends Component {
         { exec: "which aws" }, // check that AWS CLI is installed
         ...this.scopedPackagesOptions.map((scopedPackagesOption) => {
           const { registryUrl, scope } = scopedPackagesOption;
-          const { domain, repository, region, accountId } =
+          const { domain, region, accountId, registry } =
             extractCodeArtifactDetails(registryUrl);
           // reference: https://docs.aws.amazon.com/codeartifact/latest/ug/npm-auth.html
           const commands = [
             `npm config set ${scope}:registry ${registryUrl}`,
-            `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --repository ${repository} --region ${region} --domain-owner ${accountId})`,
-            `npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
-            `npm config set //${registryUrl}:always-auth=true`,
+            `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
+            `npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
+            `npm config set //${registry}:always-auth=true`,
           ];
           return {
             exec: commands.join("; "),
@@ -974,7 +973,9 @@ export class NodePackage extends Component {
         return frozen ? "npm ci" : "npm install";
 
       case NodePackageManager.PNPM:
-        return ["pnpm i", ...(frozen ? ["--frozen-lockfile"] : [])].join(" ");
+        return frozen
+          ? "pnpm i --frozen-lockfile"
+          : "pnpm i --no-frozen-lockfile";
 
       default:
         throw new Error(`unexpected package manager ${this.packageManager}`);
@@ -1010,7 +1011,7 @@ export class NodePackage extends Component {
         }
 
         if (dep.version) {
-          const ver = semver.minVersion(dep.version)?.version;
+          const ver = minVersion(dep.version);
           if (!ver) {
             throw new Error(
               `unable to determine minimum semver for peer dependency ${dep.name}@${dep.version}`
@@ -1189,7 +1190,7 @@ export class NodePackage extends Component {
         }
 
         // Take version and pin as dev dependency
-        const ver = semver.minVersion(version)?.version;
+        const ver = minVersion(version);
         if (!ver) {
           throw new Error(
             `unable to determine minimum semver for peer dependency ${name}@${version}`

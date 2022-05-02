@@ -1,4 +1,5 @@
 import { basename, dirname, extname, join, sep } from "path";
+import * as semver from "semver";
 
 export function renderBundleName(entrypoint: string) {
   const parts = join(entrypoint).split(sep);
@@ -16,7 +17,7 @@ export function renderBundleName(entrypoint: string) {
  * Regex for AWS CodeArtifact registry
  */
 export const codeArtifactRegex =
-  /^https:\/\/(?<domain>[^\.]+)-(?<accountId>\d{12})\.d\.codeartifact\.(?<region>[^\.]+).*\.amazonaws\.com\/.*\/(?<repository>\w+)/;
+  /^https:\/\/(?<registry>(?<domain>[^\.]+)-(?<accountId>\d{12})\.d\.codeartifact\.(?<region>[^\.]+).*\.amazonaws\.com\/.*\/(?<repository>\w+)\/)/;
 
 /**
  * gets AWS details from the Code Artifact registry URL
@@ -27,8 +28,16 @@ export const codeArtifactRegex =
 export function extractCodeArtifactDetails(registryUrl: string) {
   const match = registryUrl.match(codeArtifactRegex);
   if (match?.groups) {
-    const { domain, accountId, region, repository } = match.groups;
-    return { domain, accountId, region, repository };
+    const { domain, accountId, region, repository, registry } = match.groups;
+    return { domain, accountId, region, repository, registry };
   }
   throw new Error("Could not get CodeArtifact details from npm Registry");
+}
+
+export function minVersion(version: string): string | undefined {
+  if (semver.validRange(version)) {
+    return semver.minVersion(version)?.version;
+  } else {
+    return version;
+  }
 }

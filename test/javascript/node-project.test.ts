@@ -873,7 +873,8 @@ describe("scoped private packages", () => {
   const scope = "@stub-scope";
   const defaultAccessKeyIdSecret = "AWS_ACCESS_KEY_ID";
   const defaultSecretAccessKeySecret = "AWS_SECRET_ACCESS_KEY";
-  const registryUrl = `https://${domain}-${accountId}.d.codeartifact.${region}.amazonaws.com/npm/${repository}/`;
+  const registry = `${domain}-${accountId}.d.codeartifact.${region}.amazonaws.com/npm/${repository}/`;
+  const registryUrl = `https://${registry}`;
 
   test("adds AWS Code Artifact Login step prior to install to build workflow", () => {
     const project = new TestNodeProject({
@@ -1096,7 +1097,7 @@ describe("scoped private packages", () => {
           exec: "which aws",
         },
         {
-          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --repository ${repository} --region ${region} --domain-owner ${accountId}); npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl}:always-auth=true`,
+          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text); npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry}:always-auth=true`,
         },
       ],
     });
@@ -1108,7 +1109,8 @@ describe("scoped private packages", () => {
     const region2 = "my-region-2";
     const repository2 = "MyRepository2";
     const scope2 = "@stub-scope-2";
-    const registryUrl2 = `https://${domain2}-${accountId2}.d.codeartifact.${region2}.amazonaws.com/npm/${repository2}/`;
+    const registry2 = `${domain2}-${accountId2}.d.codeartifact.${region2}.amazonaws.com/npm/${repository2}/`;
+    const registryUrl2 = `https://${registry2}`;
     const project = new TestNodeProject({
       scopedPackagesOptions: [
         {
@@ -1132,10 +1134,10 @@ describe("scoped private packages", () => {
           exec: "which aws",
         },
         {
-          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --repository ${repository} --region ${region} --domain-owner ${accountId}); npm config set //${registryUrl}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl}:always-auth=true`,
+          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text); npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry}:always-auth=true`,
         },
         {
-          exec: `npm config set ${scope2}:registry ${registryUrl2}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain2} --repository ${repository2} --region ${region2} --domain-owner ${accountId2}); npm config set //${registryUrl2}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registryUrl2}:always-auth=true`,
+          exec: `npm config set ${scope2}:registry ${registryUrl2}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain2} --region ${region2} --domain-owner ${accountId2} --query authorizationToken --output text); npm config set //${registry2}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry2}:always-auth=true`,
         },
       ],
     });

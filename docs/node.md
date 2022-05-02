@@ -3,6 +3,18 @@
 This topic describes all the features of `NodeProject` projects and their
 derivatives.
 
+## Node versioning
+
+You can specify the minimum version of node that your project supports, and the version of node used in GitHub workflows:
+
+```js
+const project = new javascript.NodeProject({
+  // ...
+  minNodeVersion: '16.0.0',
+  workflowNodeVersion: '16.1.0', // defaults to minNodeVersion
+});
+```
+
 ## Development Workflow
 
 TODO

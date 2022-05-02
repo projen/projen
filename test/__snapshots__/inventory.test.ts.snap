@@ -44,6 +44,23 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
+      },
+      Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
         "docs": "Configure options for automatic merging on GitHub.",
         "featured": false,
@@ -1103,6 +1120,23 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
+      },
+      Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
         "docs": "Configure options for automatic merging on GitHub.",
         "featured": false,
@@ -1775,6 +1809,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Use projenrc in javascript.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projenrcJs",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcJs",
+        ],
+        "simpleType": "boolean",
+        "switch": "projenrc-js",
+      },
+      Object {
+        "default": "false",
         "docs": "Generate (once) .projenrc.json (in JSON). Set to \`false\` in order to disable .projenrc.json generation.",
         "featured": false,
         "fullType": Object {
@@ -1810,8 +1861,27 @@ Array [
         "switch": "projenrc-json-options",
       },
       Object {
+        "default": "- default options",
+        "docs": "Options related to projenrc in JavaScript.",
+        "featured": false,
+        "fqn": "projen.javascript.ProjenrcOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.ProjenrcOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "projenrcJsOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcJsOptions",
+        ],
+        "simpleType": "ProjenrcOptions",
+        "switch": "projenrc-js-options",
+      },
+      Object {
         "default": "true",
-        "docs": "Use projenrc in python.",
+        "docs": "Use projenrc in Python.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -2335,6 +2405,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -5018,6 +5105,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -7787,6 +7891,23 @@ Array [
         "switch": "auto-detect-bin",
       },
       Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
+      },
+      Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
         "docs": "Configure options for automatic merging on GitHub.",
         "featured": false,
@@ -10289,6 +10410,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -12957,6 +13095,23 @@ Array [
         "switch": "auto-detect-bin",
       },
       Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
+      },
+      Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
         "docs": "Configure options for automatic merging on GitHub.",
         "featured": false,
@@ -15407,6 +15562,23 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
+      },
+      Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
         "docs": "Configure options for automatic merging on GitHub.",
         "featured": false,
@@ -16280,6 +16452,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -18813,6 +19002,23 @@ Array [
         "switch": "auto-detect-bin",
       },
       Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
+      },
+      Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
         "docs": "Configure options for automatic merging on GitHub.",
         "featured": false,
@@ -20898,6 +21104,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -23215,6 +23438,23 @@ Array [
         "switch": "auto-detect-bin",
       },
       Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
+      },
+      Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
         "docs": "Configure options for automatic merging on GitHub.",
         "featured": false,
@@ -25267,6 +25507,23 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
+      },
+      Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
         "docs": "Configure options for automatic merging on GitHub.",
         "featured": false,
@@ -25719,6 +25976,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Use projenrc in javascript.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projenrcJs",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcJs",
+        ],
+        "simpleType": "boolean",
+        "switch": "projenrc-js",
+      },
+      Object {
+        "default": "false",
         "docs": "Generate (once) .projenrc.json (in JSON). Set to \`false\` in order to disable .projenrc.json generation.",
         "featured": false,
         "fullType": Object {
@@ -25754,8 +26028,27 @@ Array [
         "switch": "projenrc-json-options",
       },
       Object {
+        "default": "- default options",
+        "docs": "Options related to projenrc in JavaScript.",
+        "featured": false,
+        "fqn": "projen.javascript.ProjenrcOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.ProjenrcOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "projenrcJsOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcJsOptions",
+        ],
+        "simpleType": "ProjenrcOptions",
+        "switch": "projenrc-js-options",
+      },
+      Object {
         "default": "true",
-        "docs": "Use projenrc in python.",
+        "docs": "Use projenrc in Python.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -26182,6 +26475,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -28257,6 +28567,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -30579,6 +30906,23 @@ Array [
         "switch": "auto-detect-bin",
       },
       Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
+      },
+      Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
         "docs": "Configure options for automatic merging on GitHub.",
         "featured": false,
@@ -32875,6 +33219,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
