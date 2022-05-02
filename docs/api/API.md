@@ -1951,13 +1951,13 @@ __Returns__:
 
 #### tryRemoveFile(filePath)🔹 <a id="projen-project-tryremovefile"></a>
 
-
+Finds a file at the specified relative path within this project and removes it.
 
 ```ts
 tryRemoveFile(filePath: string): FileBase
 ```
 
-* **filePath** (<code>string</code>)  *No description*
+* **filePath** (<code>string</code>)  The file path.
 
 __Returns__:
 * <code>[FileBase](#projen-filebase)</code>

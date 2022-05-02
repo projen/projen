@@ -385,8 +385,9 @@ export class Project {
       ? filePath
       : path.resolve(this.outdir, filePath);
     const isFile = (c: Component): c is FileBase => c instanceof FileBase;
-    const index = this._components
-      .findIndex(c => isFile(c) && c.absolutePath === absolute);
+    const index = this._components.findIndex(
+      (c) => isFile(c) && c.absolutePath === absolute
+    );
 
     if (index !== -1) {
       return this._components.splice(index, 1)[0] as FileBase;
