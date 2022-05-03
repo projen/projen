@@ -507,16 +507,6 @@ dist/java
         "version": "3.2.1",
       },
       Object {
-        "name": "org.codehaus.mojo/exec-maven-plugin",
-        "type": "build",
-        "version": "3.0.0",
-      },
-      Object {
-        "name": "io.github.cdklabs/projen",
-        "type": "test",
-        "version": "99.99.99",
-      },
-      Object {
         "name": "org.junit.jupiter/junit-jupiter-api",
         "type": "test",
         "version": "5.7.0",
@@ -617,12 +607,6 @@ dist/java
         "steps": Array [
           Object {
             "builtin": "run-projenrc-json",
-          },
-          Object {
-            "exec": "mvn compiler:testCompile --quiet",
-          },
-          Object {
-            "exec": "mvn exec:java --quiet -Dexec.mainClass=projenrc -Dexec.classpathScope=\\"test\\"",
           },
         ],
       },
@@ -772,20 +756,9 @@ dist/java
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.0.0</version>
-            </plugin>
         </plugins>
     </build>
     <dependencies>
-        <dependency>
-            <groupId>io.github.cdklabs</groupId>
-            <artifactId>projen</artifactId>
-            <version>99.99.99</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -817,21 +790,6 @@ public class MyTest {
   public void testHello() {
     System.out.println(\\"Hello, world!\\");
   }
-}",
-  "src/test/java/projenrc.java": "import io.github.cdklabs.projen.java.JavaProject;
-import io.github.cdklabs.projen.java.JavaProjectOptions;
-
-public class projenrc {
-    public static void main(String[] args) {
-        JavaProject project = new JavaProject(JavaProjectOptions.builder()
-            .artifactId(\\"my-app\\")
-            .groupId(\\"org.acme\\")
-            .name(\\"my-project\\")
-            .version(\\"0.1.0\\")
-            .projenrcJson(true)
-            .build());
-        project.synth();
-    }
 }",
 }
 `;

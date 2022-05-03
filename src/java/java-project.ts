@@ -1,4 +1,5 @@
 import { GitHubProject, GitHubProjectOptions } from "../github";
+import { anySelected, multipleSelected } from "../python";
 import { Junit, JunitOptions } from "./junit";
 import { MavenCompile, MavenCompileOptions } from "./maven-compile";
 import { MavenPackaging, MavenPackagingOptions } from "./maven-packaging";
@@ -147,7 +148,16 @@ export class JavaProject extends GitHubProject {
     this.distdir = options.distdir ?? "dist/java";
     this.pom = new Pom(this, options);
 
-    if (options.projenrcJava ?? true) {
+    const rcFileTypeOptions = [options.projenrcJava, options.projenrcJson];
+
+    if (multipleSelected(rcFileTypeOptions)) {
+      throw new Error(
+        "Only one of projenrcJava and projenrcJson can be selected."
+      );
+    }
+
+    // default to projenrc.java if no other projenrc type was elected
+    if (options.projenrcJava ?? !anySelected(rcFileTypeOptions)) {
       this.projenrc = new ProjenrcJava(
         this,
         this.pom,
