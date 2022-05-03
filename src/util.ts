@@ -389,3 +389,11 @@ export function getNodeMajorVersion(): number | undefined {
   }
   return undefined;
 }
+
+export function anySelected(options: (boolean | undefined)[]): boolean {
+  return options.some((opt) => opt);
+}
+
+export function multipleSelected(options: (boolean | undefined)[]): boolean {
+  return options.filter((opt) => opt).length > 1;
+}
