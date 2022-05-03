@@ -4,6 +4,7 @@ import {
   ProjenrcOptions as ProjenrcJsOptions,
 } from "../javascript/projenrc";
 import { ProjectType } from "../project";
+import { anySelected, multipleSelected } from "../util";
 import { Pip } from "./pip";
 import { Poetry } from "./poetry";
 import {
@@ -498,12 +499,4 @@ export class PythonProject extends GitHubProject {
     this.envManager.setupEnvironment();
     this.depsManager.installDependencies();
   }
-}
-
-export function anySelected(options: (boolean | undefined)[]): boolean {
-  return options.some((opt) => opt);
-}
-
-export function multipleSelected(options: (boolean | undefined)[]): boolean {
-  return options.filter((opt) => opt).length > 1;
 }

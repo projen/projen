@@ -1,5 +1,5 @@
 import { GitHubProject, GitHubProjectOptions } from "../github";
-import { anySelected, multipleSelected } from "../python";
+import { anySelected, multipleSelected } from "../util";
 import { Junit, JunitOptions } from "./junit";
 import { MavenCompile, MavenCompileOptions } from "./maven-compile";
 import { MavenPackaging, MavenPackagingOptions } from "./maven-packaging";
