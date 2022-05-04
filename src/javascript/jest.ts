@@ -593,7 +593,7 @@ export class Jest {
 
     const jestDep = options.jestVersion
       ? `jest@${options.jestVersion}`
-      : "jest";
+      : "jest@^27"; // pinning at version 27 for now because of an issue: https://github.com/projen/projen/issues/1801
     project.addDevDeps(jestDep);
 
     this.jestConfig = options.jestConfig;

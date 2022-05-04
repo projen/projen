@@ -12,7 +12,7 @@ const MAX_BUFFER = 10 * 1024 * 1024;
 export function exec(command: string, options: { cwd: string }): void {
   logging.debug(command);
   child_process.execSync(command, {
-    stdio: ["inherit", process.stderr, "pipe"], // "pipe" for STDERR means it appears in exceptions
+    stdio: ["inherit", 2, "pipe"], // "pipe" for STDERR means it appears in exceptions
     maxBuffer: MAX_BUFFER,
     cwd: options.cwd,
   });
@@ -379,4 +379,21 @@ function decamelize(s: string, sep: string = "_") {
   } else {
     return s;
   }
+}
+
+export function getNodeMajorVersion(): number | undefined {
+  const match = process.version.match(/(\d+)\.(\d+)\.(\d+)/);
+  if (match) {
+    const [major] = match.slice(1).map((x) => parseInt(x));
+    return major;
+  }
+  return undefined;
+}
+
+export function anySelected(options: (boolean | undefined)[]): boolean {
+  return options.some((opt) => opt);
+}
+
+export function multipleSelected(options: (boolean | undefined)[]): boolean {
+  return options.filter((opt) => opt).length > 1;
 }

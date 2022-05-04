@@ -249,6 +249,7 @@ Name|Description
 [gitlab.Artifacts](#projen-gitlab-artifacts)|Used to specify a list of files and directories that should be attached to the job if it succeeds.
 [gitlab.Assets](#projen-gitlab-assets)|Asset configuration for a release.
 [gitlab.Cache](#projen-gitlab-cache)|Cache Definition.
+[gitlab.CacheKeyFiles](#projen-gitlab-cachekeyfiles)|Use this construct to generate a new key when one or two specific files change.
 [gitlab.CiConfigurationOptions](#projen-gitlab-ciconfigurationoptions)|Options for `CiConfiguration`.
 [gitlab.Default](#projen-gitlab-default)|Default settings for the CI Configuration.
 [gitlab.Engine](#projen-gitlab-engine)|The engine configuration for a secret.
@@ -398,6 +399,7 @@ Name|Description
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
 [gitlab.Action](#projen-gitlab-action)|Specifies what this job will do.
+[gitlab.CachePolicy](#projen-gitlab-cachepolicy)|Configure the upload and download behaviour of a cache.
 [gitlab.CacheWhen](#projen-gitlab-cachewhen)|Configure when artifacts are uploaded depended on job status.
 [gitlab.DefaultElement](#projen-gitlab-defaultelement)|*No description*
 [gitlab.DeploymentTier](#projen-gitlab-deploymenttier)|Explicitly specifies the tier of the deployment environment if non-standard environment name is used.
@@ -871,8 +873,13 @@ addVolume(volume: IDockerComposeVolumeBinding): void
 
 
 __Extends__: [Component](#projen-component)
+<<<<<<< HEAD
 __Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [javascript.JavascriptFile](#projen-javascript-javascriptfile), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.ReactTypeDef](#projen-web-reacttypedef), [GitAttributesFile](#projen-gitattributesfile), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
+=======
+__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.ReactTypeDef](#projen-web-reacttypedef), [GitAttributesFile](#projen-gitattributesfile), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
+__Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)(), [Project](#projen-project).[tryRemoveFile](#projen-project#projen-project-tryremovefile)()
+>>>>>>> main
 
 ### Initializer
 
@@ -1949,6 +1956,19 @@ tryFindObjectFile(filePath: string): ObjectFile
 
 __Returns__:
 * <code>[ObjectFile](#projen-objectfile)</code>
+
+#### tryRemoveFile(filePath)🔹 <a id="projen-project-tryremovefile"></a>
+
+Finds a file at the specified relative path within this project and removes it.
+
+```ts
+tryRemoveFile(filePath: string): FileBase
+```
+
+* **filePath** (<code>string</code>)  The file path.
+
+__Returns__:
+* <code>[FileBase](#projen-filebase)</code>
 
 
 
@@ -3577,7 +3597,9 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
   * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
   * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
   * **poetry** (<code>boolean</code>)  Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. __*Default*__: false
-  * **projenrcPython** (<code>boolean</code>)  Use projenrc in python. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Use projenrc in javascript. __*Default*__: false
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options related to projenrc in JavaScript. __*Default*__: default options
+  * **projenrcPython** (<code>boolean</code>)  Use projenrc in Python. __*Default*__: true
   * **projenrcPythonOptions** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  Options related to projenrc in python. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
@@ -8592,7 +8614,9 @@ new python.PythonProject(options: PythonProjectOptions)
   * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
   * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
   * **poetry** (<code>boolean</code>)  Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. __*Default*__: false
-  * **projenrcPython** (<code>boolean</code>)  Use projenrc in python. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Use projenrc in javascript. __*Default*__: false
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options related to projenrc in JavaScript. __*Default*__: default options
+  * **projenrcPython** (<code>boolean</code>)  Use projenrc in Python. __*Default*__: true
   * **projenrcPythonOptions** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  Options related to projenrc in python. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
@@ -12044,9 +12068,11 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenCredentials**?🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | Choose a method of providing GitHub API access for projen workflows.<br/>__*Default*__: use a personal access token named PROJEN_GITHUB_TOKEN
 **projenTokenSecret**?⚠️ | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
+**projenrcJs**?🔹 | <code>boolean</code> | Use projenrc in javascript.<br/>__*Default*__: false
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options related to projenrc in JavaScript.<br/>__*Default*__: default options
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
-**projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in python.<br/>__*Default*__: true
+**projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in Python.<br/>__*Default*__: true
 **projenrcPythonOptions**?🔹 | <code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code> | Options related to projenrc in python.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
@@ -14068,7 +14094,25 @@ Cache Definition.
 
 Name | Type | Description 
 -----|------|-------------
+**key**?🔹 | <code>string &#124; [gitlab.CacheKeyFiles](#projen-gitlab-cachekeyfiles)</code> | Used the to give each cache a unique identifying key.<br/>__*Optional*__
+**paths**?🔹 | <code>Array<string></code> | Defines which files or directories to cache.<br/>__*Optional*__
+**policy**?🔹 | <code>[gitlab.CachePolicy](#projen-gitlab-cachepolicy)</code> | Defines the upload and download behaviour of the cache.<br/>__*Optional*__
+**untracked**?🔹 | <code>boolean</code> | If set to true all files that are untracked in your Git repository will be cached.<br/>__*Optional*__
 **when**?🔹 | <code>[gitlab.CacheWhen](#projen-gitlab-cachewhen)</code> | Defines when to save the cache, based on the status of the job (Default: Job Success).<br/>__*Optional*__
+
+
+
+## struct CacheKeyFiles 🔹 <a id="projen-gitlab-cachekeyfiles"></a>
+
+
+Use this construct to generate a new key when one or two specific files change.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**files**🔹 | <code>Array<string></code> | The files that are checked against.
+**prefix**?🔹 | <code>string</code> | Adds a custom prefix to the checksums computed.<br/>__*Optional*__
 
 
 
@@ -15752,9 +15796,11 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenCredentials**?🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | Choose a method of providing GitHub API access for projen workflows.<br/>__*Default*__: use a personal access token named PROJEN_GITHUB_TOKEN
 **projenTokenSecret**?⚠️ | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
+**projenrcJs**?🔹 | <code>boolean</code> | Use projenrc in javascript.<br/>__*Default*__: false
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options related to projenrc in JavaScript.<br/>__*Default*__: default options
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
-**projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in python.<br/>__*Default*__: true
+**projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in Python.<br/>__*Default*__: true
 **projenrcPythonOptions**?🔹 | <code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code> | Options related to projenrc in python.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
@@ -17382,6 +17428,17 @@ Name | Description
 **PREPARE** 🔹|
 **START** 🔹|
 **STOP** 🔹|
+
+
+## enum CachePolicy 🔹 <a id="projen-gitlab-cachepolicy"></a>
+
+Configure the upload and download behaviour of a cache.
+
+Name | Description
+-----|-----
+**PULL** 🔹|Only download the cache when the job starts, but never upload changes when the job finishes.
+**PUSH** 🔹|Only upload a cache when the job finishes, but never download the cache when the job starts.
+**PULL_PUSH** 🔹|The job downloads the cache when the job starts, and uploads changes to the cache when the job ends.
 
 
 ## enum CacheWhen 🔹 <a id="projen-gitlab-cachewhen"></a>

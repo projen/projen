@@ -854,13 +854,14 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "jsii",
@@ -899,6 +900,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -1719,7 +1721,7 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "jsii": "*",
       "jsii-diff": "*",
@@ -1729,7 +1731,7 @@ project.synth();
       "npm-check-updates": "^12",
       "projen": "*",
       "standard-version": "^9",
-      "ts-jest": "*",
+      "ts-jest": "^27",
       "typescript": "*",
     },
     "engines": Object {
@@ -2399,13 +2401,14 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "jsii",
@@ -2443,6 +2446,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -3210,7 +3214,7 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "jsii": "*",
       "jsii-diff": "*",
@@ -3220,7 +3224,7 @@ project.synth();
       "json-schema-to-typescript": "*",
       "npm-check-updates": "^12",
       "projen": "*",
-      "ts-jest": "*",
+      "ts-jest": "^27",
       "typescript": "*",
     },
     "engines": Object {
@@ -3868,13 +3872,14 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "json-schema",
@@ -3892,6 +3897,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -4596,12 +4602,12 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "json-schema": "*",
       "npm-check-updates": "^12",
       "projen": "*",
-      "ts-jest": "*",
+      "ts-jest": "^27",
       "typescript": "*",
     },
     "engines": Object {
@@ -4814,7 +4820,7 @@ jobs:
         with:
           version: 6.14.7
       - name: Install dependencies
-        run: pnpm i
+        run: pnpm i --no-frozen-lockfile
       - name: build
         run: npx projen build
       - id: self_mutation
@@ -5138,13 +5144,14 @@ junit.xml
         "type": "build",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "npm-check-updates",
@@ -5405,7 +5412,7 @@ junit.xml
             "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
-            "exec": "pnpm i",
+            "exec": "pnpm i --no-frozen-lockfile",
           },
           Object {
             "exec": "pnpm update",
@@ -5646,7 +5653,7 @@ project.synth();
     },
     "devDependencies": Object {
       "aws-sdk": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "npm-check-updates": "^12",
       "projen": "*",

@@ -1809,6 +1809,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Use projenrc in javascript.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projenrcJs",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcJs",
+        ],
+        "simpleType": "boolean",
+        "switch": "projenrc-js",
+      },
+      Object {
+        "default": "false",
         "docs": "Generate (once) .projenrc.json (in JSON). Set to \`false\` in order to disable .projenrc.json generation.",
         "featured": false,
         "fullType": Object {
@@ -1844,8 +1861,27 @@ Array [
         "switch": "projenrc-json-options",
       },
       Object {
+        "default": "- default options",
+        "docs": "Options related to projenrc in JavaScript.",
+        "featured": false,
+        "fqn": "projen.javascript.ProjenrcOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.ProjenrcOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "projenrcJsOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcJsOptions",
+        ],
+        "simpleType": "ProjenrcOptions",
+        "switch": "projenrc-js-options",
+      },
+      Object {
         "default": "true",
-        "docs": "Use projenrc in python.",
+        "docs": "Use projenrc in Python.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -25940,6 +25976,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Use projenrc in javascript.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projenrcJs",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcJs",
+        ],
+        "simpleType": "boolean",
+        "switch": "projenrc-js",
+      },
+      Object {
+        "default": "false",
         "docs": "Generate (once) .projenrc.json (in JSON). Set to \`false\` in order to disable .projenrc.json generation.",
         "featured": false,
         "fullType": Object {
@@ -25975,8 +26028,27 @@ Array [
         "switch": "projenrc-json-options",
       },
       Object {
+        "default": "- default options",
+        "docs": "Options related to projenrc in JavaScript.",
+        "featured": false,
+        "fqn": "projen.javascript.ProjenrcOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.ProjenrcOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "projenrcJsOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcJsOptions",
+        ],
+        "simpleType": "ProjenrcOptions",
+        "switch": "projenrc-js-options",
+      },
+      Object {
         "default": "true",
-        "docs": "Use projenrc in python.",
+        "docs": "Use projenrc in Python.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",

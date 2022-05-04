@@ -25,3 +25,22 @@ packageJson.addDeletionOverride('author.organization');
 // Use array indices to override specific array elements
 packageJson.addOverride('bundledDependencies.3', 'react');
 ```
+
+## Removing files
+
+You can remove a file from the project through `tryRemoveFile` method on the
+`Project` class.
+
+```ts
+new TextFile(project, "hello.txt", { lines: "original" });
+
+project.tryRemoveFile("hello.txt");
+
+new TextFile(project, "hello.txt", { lines: "better" });
+```
+
+> Note: It's recommended that this used carefully since removing files may be
+unexpected for users depending on where it's used. For example, if you created a
+component named `MyFancyGitIgnore` and had it remove any existing `.gitignore`
+files in the project, then users may be surprised when customizations for their
+existing `.gitignore` file are nullified.

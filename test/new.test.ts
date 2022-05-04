@@ -230,6 +230,14 @@ test("projenrc-json creates node-project", () => {
   });
 });
 
+test("projenrc-json creates java project", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, ["new", "java", "--projenrc-json"]);
+
+    expect(directorySnapshot(projectdir)).toMatchSnapshot();
+  });
+});
+
 /**
  * commented out due to breaking changes in projen@0.37.0
 
@@ -256,6 +264,25 @@ test("projenrc-ts creates typescript projenrc", () => {
     ]);
     const projenrc = directorySnapshot(projectdir)[".projenrc.ts"];
     expect(projenrc).toMatchSnapshot();
+  });
+});
+
+test("python project includes .projenrc.py by default", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, ["new", "python", "--no-synth"]);
+
+    const output = directorySnapshot(projectdir);
+    expect(output[".projenrc.py"]).toBeDefined();
+  });
+});
+
+test("python project can include .projenrc.js", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, ["new", "python", "--projenrc-js", "--no-synth"]);
+
+    const output = directorySnapshot(projectdir);
+    expect(output[".projenrc.py"]).toBeUndefined();
+    expect(output[".projenrc.js"]).toBeDefined();
   });
 });
 

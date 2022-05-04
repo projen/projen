@@ -7,8 +7,44 @@
  * @see https://docs.gitlab.com/ee/ci/yaml/#cache
  */
 export interface Cache {
+  /** Defines which files or directories to cache. */
+  readonly paths?: string[];
+
+  /** Used the to give each cache a unique identifying key. All jobs that use the same cache key use the same cache. */
+  readonly key?: string | CacheKeyFiles;
+
+  /** If set to true all files that are untracked in your Git repository will be cached. */
+  readonly untracked?: boolean;
+
+  /** Defines the upload and download behaviour of the cache. */
+  readonly policy?: CachePolicy;
+
   /** Defines when to save the cache, based on the status of the job (Default: Job Success). */
   readonly when?: CacheWhen;
+}
+
+/**
+ * Use this construct to generate a new key when one or two specific files change.
+ * @see https://docs.gitlab.com/ee/ci/yaml/#cachekeyfiles
+ */
+export interface CacheKeyFiles {
+  /** The files that are checked against. If the SHA checksum changes, the cache becomes invalid. */
+  readonly files: string[];
+  /** Adds a custom prefix to the checksums computed. */
+  readonly prefix?: string;
+}
+
+/**
+ * Configure the upload and download behaviour of a cache.
+ * @see https://docs.gitlab.com/ee/ci/yaml/#cachepolicy
+ */
+export enum CachePolicy {
+  /** Only download the cache when the job starts, but never upload changes when the job finishes. */
+  PULL = "pull",
+  /** Only upload a cache when the job finishes, but never download the cache when the job starts. */
+  PUSH = "push",
+  /** The job downloads the cache when the job starts, and uploads changes to the cache when the job ends. */
+  PULL_PUSH = "pull-push",
 }
 
 /**
@@ -126,6 +162,7 @@ export interface Image {
   /** Full name of the image that should be used. It should contain the Registry part if needed.*/
   readonly name: string;
 }
+
 /**
  * How many times a job is retried if it fails. If not defined, defaults to 0 and jobs do not retry.
  * @see https://docs.gitlab.com/ee/ci/yaml/#retry
@@ -136,6 +173,7 @@ export interface Retry {
   /** Either a single or array of error types to trigger job retry.*/
   readonly when?: any;
 }
+
 /**
  * Used to specify an additional Docker image to run scripts in. The service image is linked to the image specified in the @Default image keyword.
  * @see https://docs.gitlab.com/ee/ci/yaml/#services
@@ -421,6 +459,7 @@ export interface Release {
   /** The tag_name must be specified. It can refer to an existing Git tag or can be specified by the user.*/
   readonly tagName: string;
 }
+
 /**
  * Asset configuration for a release.
  */
@@ -473,6 +512,7 @@ export interface VaultConfig {
   /** Path to the secret. */
   readonly path: string;
 }
+
 /**
  * The engine configuration for a secret.
  */
