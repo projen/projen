@@ -1,35 +1,60 @@
-import { js } from 'js-beautify';
-import { Project } from '../project';
-import { TextFile, TextFileOptions } from '../textfile';
+import { js } from "js-beautify";
+import { Project } from "../project";
+import { TextFile, TextFileOptions } from "../textfile";
 
-function getFunctionBody(fn: IJavascriptFunction) {
-  let fString = fn.fn.toString().trim();
-  if (!fn.keepDeclaration) {
-    if (fn.callWith) {
-      throw new Error('callWith and keepDeclaration must both be true');
+function renderStatement(jsStatement: IJavascriptStatement) {
+  if (jsStatement.raw !== undefined) {
+    return jsStatement.raw;
+  }
+
+  // Validate arguments
+  if (!jsStatement.code) {
+    throw new Error("`code` must be provided if `raw` is not set");
+  }
+  if (jsStatement.callWith) {
+    if (!jsStatement.asFunction) {
+      throw new Error("`asFunction` must be true if `callWith` is set");
     }
-    fString = fString.substring(fString.indexOf('{') + 1, fString.lastIndexOf('}'));
+  }
+  if (jsStatement.exportDefault && jsStatement.exportName !== undefined) {
+    throw new Error("Cannot specify `exportName` when `exportDefault` is true");
+  }
+
+  let fString = jsStatement.code.toString().trim();
+
+  if (!jsStatement.asFunction) {
+    fString = fString.substring(
+      fString.indexOf("{") + 1,
+      fString.lastIndexOf("}")
+    );
   } else {
-    if (fn.callWith) {
-      fString = `(${fString})(${fn.callWith.map(c => `\`${c.toString()}\``).join(', ') ?? ''})`;
+    if (jsStatement.callWith) {
+      fString = `(${fString})(${
+        jsStatement.callWith.map((c) => `\`${c.toString()}\``).join(", ") ?? ""
+      })`;
     }
   }
-  if (fn.setToValue) {
-    fString = `const ${fn.setToValue} = ${fString};`;
+  if (jsStatement.setToValue) {
+    fString = `const ${jsStatement.setToValue} = ${fString};`;
   }
-  if (fn.prefix) {
-    fString = fn.prefix + fString;
+  if (jsStatement.exportDefault) {
+    fString = `module.exports = ${fString};`;
+  } else if (jsStatement.exportName) {
+    fString = `exports.${jsStatement.exportName} = ${fString};`;
   }
-  if (fn.postfix) {
-    fString = fString + fn.postfix;
+  if (jsStatement.prefix) {
+    fString = jsStatement.prefix + fString;
+  }
+  if (jsStatement.postfix) {
+    fString = fString + jsStatement.postfix;
   }
   return fString;
-};
+}
 
-export interface IJavascriptFunction {
+export interface IJavascriptStatement {
   /**
    * Creates a const with the given name and sets it equal to the given function
-   * keepDeclaration must also be true.
+   * asFunction must also be true.
    */
   setToValue?: string;
 
@@ -38,7 +63,7 @@ export interface IJavascriptFunction {
    *
    * @default false Function declaration is stripped
    */
-  keepDeclaration?: boolean;
+  asFunction?: boolean;
 
   /**
    * Text added before the given function text
@@ -51,8 +76,23 @@ export interface IJavascriptFunction {
   postfix?: string;
 
   /**
+   * exports.{exportName} = {value}
+   */
+  exportName?: string;
+
+  /**
+   * module.exports = {value}
+   */
+  exportDefault?: boolean;
+
+  /**
+   * Overrides all other options
+   */
+  raw?: string;
+
+  /**
    * Represents the function as a call with the given string values. Values will be .toString()'d.
-   * keepDeclaration must also be true.
+   * asFunction must also be true.
    *
    * To call the function with no values, use an empty array.
    */
@@ -64,10 +104,15 @@ export interface IJavascriptFunction {
    *
    * Note: This Javascript is not executed in Projen, and it should only use values that would be available in the scope it is executed in.
    */
+  code?(..._: any): any;
+}
+
+export interface IIFEStatement {
+  callWith?: any[];
   fn(..._: any): any;
 }
 
-export interface IJavascriptFileOptions extends IJavascriptFunction {
+export interface IJavascriptFileOptions {
   /**
    * options passed to underlying TextFile
    */
@@ -75,33 +120,49 @@ export interface IJavascriptFileOptions extends IJavascriptFunction {
 }
 
 /**
-   * A Javascript file
-   */
+ * A Javascript file
+ */
 export class JavascriptFile extends TextFile {
-  private functions: IJavascriptFunction[];
+  private statements: IJavascriptStatement[];
 
-  constructor(project: Project, path: string, options?: IJavascriptFileOptions) {
+  constructor(
+    project: Project,
+    path: string,
+    options?: IJavascriptFileOptions
+  ) {
     super(project, path, options?.textFileOptions);
 
-    this.functions = [];
+    this.statements = [];
+  }
 
-    if (options?.fn) {
-      this.appendFunction(options);
-    }
+  addNewline() {
+    this.addStatement({
+      raw: "",
+    });
+  }
+
+  addIIFE(iifeStatement: IIFEStatement): IJavascriptStatement {
+    const jsStatement: IJavascriptStatement = {
+      ...iifeStatement,
+    };
+
+    this.addStatement(jsStatement);
+
+    return jsStatement;
   }
 
   /**
-   * Add new Javascript function to the end of the list
+   * Add new Javascript statement to the end of the list
    */
-  appendFunction(jsFunc: IJavascriptFunction): void {
-    this.functions.push(jsFunc);
+  addStatement(jsStatement: IJavascriptStatement): void {
+    this.statements.push(jsStatement);
   }
 
   /**
-   * Add new Javascript function to the beginning of the list
+   * Add new Javascript statement to the beginning of the list
    */
-  prependFunction(jsFunc: IJavascriptFunction): void {
-    this.functions.unshift(jsFunc);
+  prependStatement(jsStatement: IJavascriptStatement): void {
+    this.statements.unshift(jsStatement);
   }
 
   preSynthesize() {
@@ -109,15 +170,17 @@ export class JavascriptFile extends TextFile {
       this.addLine(`// ${this.marker}`);
     }
 
-    const code = this.functions.map(f => getFunctionBody(f)).join('\n');
+    const code = this.statements.map((f) => renderStatement(f)).join("\n");
 
-    this.addLine(js(code, {
-      indent_level: 0,
-      indent_empty_lines: false,
-      indent_size: 2,
-      end_with_newline: true,
-      preserve_newlines: true,
-      max_preserve_newlines: 2,
-    }));
+    this.addLine(
+      js(code, {
+        indent_level: 0,
+        indent_empty_lines: false,
+        indent_size: 2,
+        end_with_newline: true,
+        preserve_newlines: true,
+        max_preserve_newlines: 2,
+      })
+    );
   }
 }

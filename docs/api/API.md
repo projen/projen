@@ -873,13 +873,8 @@ addVolume(volume: IDockerComposeVolumeBinding): void
 
 
 __Extends__: [Component](#projen-component)
-<<<<<<< HEAD
 __Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [javascript.JavascriptFile](#projen-javascript-javascriptfile), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.ReactTypeDef](#projen-web-reacttypedef), [GitAttributesFile](#projen-gitattributesfile), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
-__Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
-=======
-__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.ReactTypeDef](#projen-web-reacttypedef), [GitAttributesFile](#projen-gitattributesfile), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)(), [Project](#projen-project).[tryRemoveFile](#projen-project#projen-project-tryremovefile)()
->>>>>>> main
 
 ### Initializer
 
