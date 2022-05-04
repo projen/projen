@@ -76,9 +76,9 @@ export function getFilePermissions(options: WriteFileOptions): string {
   const readonly = options.readonly ?? false;
   const executable = options.executable ?? false;
   if (readonly && executable) {
-    return "500";
+    return "544";
   } else if (readonly) {
-    return "400";
+    return "444";
   } else if (executable) {
     return "755";
   } else {
