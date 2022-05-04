@@ -1,5 +1,5 @@
 import { Component } from "../component";
-import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 import { Pom } from "./pom";
 
 /**
@@ -25,7 +25,11 @@ export interface MavenCompileOptions {
  * Adds the maven-compiler plugin to a POM file and the `compile` task.
  */
 export class MavenCompile extends Component {
-  constructor(project: Project, pom: Pom, options: MavenCompileOptions = {}) {
+  constructor(
+    project: StandardProject,
+    pom: Pom,
+    options: MavenCompileOptions = {}
+  ) {
     super(project);
 
     project.gitignore.exclude("target");

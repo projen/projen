@@ -5,6 +5,7 @@ import {
 } from "../cdk";
 import { Component } from "../component";
 import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 import { AwsCdkDeps } from "./awscdk-deps";
 import {
   IntegrationTest,
@@ -51,11 +52,14 @@ export interface IntegrationTestAutoDiscoverOptions
  * Creates integration tests from entry points discovered in the test tree.
  */
 export class IntegrationTestAutoDiscover extends IntegrationTestAutoDiscoverBase {
-  constructor(project: Project, options: IntegrationTestAutoDiscoverOptions) {
+  constructor(
+    project: StandardProject,
+    options: IntegrationTestAutoDiscoverOptions
+  ) {
     super(project, options);
 
     for (const entrypoint of this.entrypoints) {
-      new IntegrationTest(this.project, {
+      new IntegrationTest(project, {
         entrypoint,
         cdkDeps: options.cdkDeps,
         tsconfigPath: options.tsconfigPath,
@@ -171,7 +175,7 @@ export interface AutoDiscoverOptions
  * project's source and test trees.
  */
 export class AutoDiscover extends Component {
-  constructor(project: Project, options: AutoDiscoverOptions) {
+  constructor(project: StandardProject, options: AutoDiscoverOptions) {
     super(project);
 
     if (options.lambdaAutoDiscover ?? true) {
@@ -193,7 +197,7 @@ export class AutoDiscover extends Component {
     }
 
     if (options.integrationTestAutoDiscover ?? true) {
-      new IntegrationTestAutoDiscover(this.project, {
+      new IntegrationTestAutoDiscover(project, {
         cdkDeps: options.cdkDeps,
         testdir: options.testdir,
         tsconfigPath: options.tsconfigPath,

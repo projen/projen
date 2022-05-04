@@ -181,7 +181,7 @@ export class UpgradeDependencies extends Component {
     // Getting only unique values through set
     const ncuExcludes = [
       ...new Set(
-        this.project.deps.all
+        this._project.deps.all
           .filter((dep) => dep.version && dep.version[0] !== "^")
           .map((dep) => dep.name)
           .concat(exclude)

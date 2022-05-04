@@ -79,6 +79,13 @@ export interface TaskWorkflowOptions {
   readonly task: Task;
 
   /**
+   * The shell command to use in order to run the projen CLI.
+   *
+   * @default "npx projen"
+   */
+  readonly projenCommand?: string;
+
+  /**
    * Actions to run after the main build step.
    *
    * @default - not set
@@ -119,14 +126,12 @@ export interface TaskWorkflowOptions {
  * A GitHub workflow for common build tasks within a project.
  */
 export class TaskWorkflow extends GithubWorkflow {
-  private readonly github: GitHub;
   public readonly jobId: string;
   public readonly artifactsDirectory?: string;
 
   constructor(github: GitHub, options: TaskWorkflowOptions) {
     super(github, options.name);
     this.jobId = options.jobId ?? DEFAULT_JOB_ID;
-    this.github = github;
     this.artifactsDirectory = options.artifactsDirectory;
 
     if (options.triggers) {
@@ -191,7 +196,7 @@ export class TaskWorkflow extends GithubWorkflow {
         // run the main build task
         {
           name: options.task.name,
-          run: this.github.project.runTaskCommand(options.task),
+          run: `${options.projenCommand ?? "npx projen"} ${options.task.name}`,
         },
 
         ...postBuildSteps,

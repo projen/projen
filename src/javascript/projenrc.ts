@@ -1,7 +1,7 @@
 import { existsSync, writeFileSync } from "fs";
 import { resolve } from "path";
 import { Component } from "../component";
-import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 import { renderJavaScriptOptions } from "./render-options";
 export interface ProjenrcOptions {
   /**
@@ -17,7 +17,7 @@ export interface ProjenrcOptions {
 export class Projenrc extends Component {
   private readonly rcfile: string;
 
-  constructor(project: Project, options: ProjenrcOptions = {}) {
+  constructor(project: StandardProject, options: ProjenrcOptions = {}) {
     super(project);
 
     this.rcfile = options.filename ?? ".projenrc.js";

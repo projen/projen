@@ -1,6 +1,6 @@
 import { basename, dirname, join } from "path";
 import { Component } from "../component";
-import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 import { Task } from "../task";
 import { TYPESCRIPT_INTEG_EXT } from "./internal";
 
@@ -61,7 +61,7 @@ export abstract class IntegrationTestBase extends Component {
    */
   protected readonly name: string;
 
-  constructor(project: Project, options: IntegrationTestBaseOptions) {
+  constructor(project: StandardProject, options: IntegrationTestBaseOptions) {
     super(project);
 
     const entry = options.entrypoint;

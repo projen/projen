@@ -1,6 +1,6 @@
 import { posix } from "path";
 import { Component } from "./component";
-import { Project } from "./project";
+import { StandardProject } from "./standard-project";
 import { Task } from "./task";
 
 /**
@@ -52,7 +52,7 @@ export class Version extends Component {
    */
   public readonly releaseTagFileName: string;
 
-  constructor(project: Project, options: VersionOptions) {
+  constructor(project: StandardProject, options: VersionOptions) {
     super(project);
 
     this.changelogFileName = "changelog.md";

@@ -5,7 +5,7 @@ import {
   DependencyCoordinates,
   DependencyType,
 } from "../dependencies";
-import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 import { toMavenVersionRange } from "../util/semver";
 import { XmlFile } from "../xmlfile";
 
@@ -141,9 +141,12 @@ export class Pom extends Component {
 
   private readonly properties: Record<string, any> = {};
 
-  constructor(project: Project, options: PomOptions) {
+  private readonly _project: StandardProject;
+
+  constructor(project: StandardProject, options: PomOptions) {
     super(project);
 
+    this._project = project;
     this.fileName = "pom.xml";
     this.groupId = options.groupId;
     this.artifactId = options.artifactId;
@@ -171,7 +174,7 @@ export class Pom extends Component {
    * @param spec Format `<groupId>/<artifactId>@<semver>`
    */
   public addDependency(spec: string) {
-    this.project.deps.addDependency(spec, DependencyType.RUNTIME);
+    this._project.deps.addDependency(spec, DependencyType.RUNTIME);
   }
 
   /**
@@ -180,7 +183,7 @@ export class Pom extends Component {
    * @param spec Format `<groupId>/<artifactId>@<semver>`
    */
   public addTestDependency(spec: string) {
-    this.project.deps.addDependency(spec, DependencyType.TEST);
+    this._project.deps.addDependency(spec, DependencyType.TEST);
   }
 
   /**
@@ -193,9 +196,13 @@ export class Pom extends Component {
    */
   public addPlugin(spec: string, options: PluginOptions = {}) {
     for (const dep of options.dependencies ?? []) {
-      this.project.deps.addDependency(dep, DependencyType.BUILD);
+      this._project.deps.addDependency(dep, DependencyType.BUILD);
     }
-    return this.project.deps.addDependency(spec, DependencyType.BUILD, options);
+    return this._project.deps.addDependency(
+      spec,
+      DependencyType.BUILD,
+      options
+    );
   }
 
   private synthPom() {
@@ -220,7 +227,7 @@ export class Pom extends Component {
   }
 
   private synthDependencies() {
-    const deps = this.project.deps.all;
+    const deps = this._project.deps.all;
     if (deps.length === 0) {
       return;
     }

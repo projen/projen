@@ -1,7 +1,7 @@
 import { join } from "path";
 import { IntegrationTestBase, IntegrationTestBaseOptions } from "../cdk";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 import { Task } from "../task";
 import { AwsCdkDeps } from "./awscdk-deps";
 import { FEATURE_FLAGS } from "./internal";
@@ -54,7 +54,7 @@ export class IntegrationTest extends IntegrationTestBase {
    */
   public readonly watchTask: Task;
 
-  constructor(project: Project, options: IntegrationTestOptions) {
+  constructor(project: StandardProject, options: IntegrationTestOptions) {
     super(project, options);
 
     if (!project.deps.tryGetDependency("aws-cdk")) {

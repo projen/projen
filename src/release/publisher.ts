@@ -11,7 +11,7 @@ import {
   Tools,
 } from "../github/workflows-model";
 import { defaultNpmToken } from "../javascript/node-package";
-import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 import { BranchOptions } from "./release";
 
 const PUBLIB_VERSION = "latest";
@@ -133,8 +133,12 @@ export class Publisher extends Component {
 
   private readonly dryRun: boolean;
 
-  constructor(project: Project, options: PublisherOptions) {
+  private readonly _project: StandardProject;
+
+  constructor(project: StandardProject, options: PublisherOptions) {
     super(project);
+
+    this._project = project;
 
     this.buildJobId = options.buildJobId;
     this.artifactName = options.artifactName;
@@ -202,7 +206,7 @@ export class Publisher extends Component {
         ? Publisher.PUBLISH_GIT_TASK_NAME
         : `${Publisher.PUBLISH_GIT_TASK_NAME}:${gitBranch}`;
 
-    const publishTask = this.project.addTask(taskName, {
+    const publishTask = this._project.addTask(taskName, {
       description:
         "Prepends the release changelog onto the project changelog, creates a release commit, and tags the release",
       env: {
@@ -507,7 +511,7 @@ export class Publisher extends Component {
           branch === "main" || branch === "master" ? "" : `:${branch}`;
 
         // define a task which can be used through `projen publish:xxx`.
-        const task = this.project.addTask(
+        const task = this._project.addTask(
           `publish:${opts.name.toLocaleLowerCase()}${branchSuffix}`,
           {
             description: `Publish this package to ${opts.registryName}`,

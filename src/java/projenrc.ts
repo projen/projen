@@ -4,7 +4,7 @@ import { PROJEN_VERSION } from "../common";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { readJsiiManifest } from "../inventory";
-import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 import { Pom } from "./pom";
 
 /**
@@ -56,7 +56,11 @@ export class Projenrc extends Component {
    */
   private readonly testScope: boolean;
 
-  constructor(project: Project, pom: Pom, options: ProjenrcOptions = {}) {
+  constructor(
+    project: StandardProject,
+    pom: Pom,
+    options: ProjenrcOptions = {}
+  ) {
     super(project);
 
     const projenVersion = options.projenVersion ?? PROJEN_VERSION;

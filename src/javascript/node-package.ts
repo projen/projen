@@ -12,8 +12,8 @@ import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { JsonFile } from "../json";
-import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
+import { StandardProject } from "../standard-project";
 import { Task } from "../task";
 import { exec, isTruthy, sorted, writeFile } from "../util";
 import { extractCodeArtifactDetails, minVersion } from "./util";
@@ -430,11 +430,13 @@ export class NodePackage extends Component {
   private readonly engines: Record<string, string> = {};
   private readonly peerDependencyOptions: PeerDependencyOptions;
   private readonly file: JsonFile;
+  private readonly _project: StandardProject;
   private _renderedDeps?: NpmDependencies;
 
-  constructor(project: Project, options: NodePackageOptions = {}) {
+  constructor(project: StandardProject, options: NodePackageOptions = {}) {
     super(project);
 
+    this._project = project;
     this.packageName = options.packageName ?? project.name;
     this.peerDependencyOptions = {
       pinnedDevDependency: true,
@@ -546,7 +548,7 @@ export class NodePackage extends Component {
    */
   public addDeps(...deps: string[]) {
     for (const dep of deps) {
-      this.project.deps.addDependency(dep, DependencyType.RUNTIME);
+      this._project.deps.addDependency(dep, DependencyType.RUNTIME);
     }
   }
 
@@ -561,7 +563,7 @@ export class NodePackage extends Component {
    */
   public addDevDeps(...deps: string[]) {
     for (const dep of deps) {
-      this.project.deps.addDependency(dep, DependencyType.BUILD);
+      this._project.deps.addDependency(dep, DependencyType.BUILD);
     }
   }
 
@@ -588,7 +590,7 @@ export class NodePackage extends Component {
     }
 
     for (const dep of deps) {
-      this.project.deps.addDependency(dep, DependencyType.PEER);
+      this._project.deps.addDependency(dep, DependencyType.PEER);
     }
   }
 
@@ -612,7 +614,7 @@ export class NodePackage extends Component {
     }
 
     for (const dep of deps) {
-      this.project.deps.addDependency(dep, DependencyType.BUNDLED);
+      this._project.deps.addDependency(dep, DependencyType.BUNDLED);
     }
   }
 
@@ -665,7 +667,7 @@ export class NodePackage extends Component {
    * @deprecated Use `project.tasks.tryFind(name)`
    */
   public hasScript(name: string) {
-    return this.project.tasks.tryFind(name) !== undefined;
+    return this._project.tasks.tryFind(name) !== undefined;
   }
 
   /**
@@ -707,7 +709,7 @@ export class NodePackage extends Component {
     exclude: string[],
     include?: string[]
   ): string {
-    const project = this.project;
+    const project = this._project;
     function upgradePackages(command: string) {
       return () => {
         if (exclude.length === 0 && !include) {
@@ -775,7 +777,7 @@ export class NodePackage extends Component {
    * The command which executes "projen".
    */
   public get projenCommand() {
-    return this.project.projenCommand;
+    return this._project.projenCommand;
   }
 
   /**
@@ -914,7 +916,7 @@ export class NodePackage extends Component {
       return;
     }
 
-    this.project.addTask("ca:login", {
+    this._project.addTask("ca:login", {
       requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
       steps: [
         { exec: "which aws" }, // check that AWS CLI is installed
@@ -998,14 +1000,14 @@ export class NodePackage extends Component {
     // synthetic dependencies: add a pinned build dependency to ensure we are
     // testing against the minimum requirement of the peer.
     if (this.peerDependencyOptions.pinnedDevDependency) {
-      for (const dep of this.project.deps.all.filter(
+      for (const dep of this._project.deps.all.filter(
         (d) => d.type === DependencyType.PEER
       )) {
         let req = dep.name;
 
         // skip if we already have a runtime dependency on this peer
         if (
-          this.project.deps.tryGetDependency(dep.name, DependencyType.RUNTIME)
+          this._project.deps.tryGetDependency(dep.name, DependencyType.RUNTIME)
         ) {
           continue;
         }
@@ -1024,7 +1026,7 @@ export class NodePackage extends Component {
       }
     }
 
-    for (const dep of this.project.deps.all) {
+    for (const dep of this._project.deps.all) {
       const version = dep.version ?? "*";
 
       switch (dep.type) {
@@ -1032,7 +1034,7 @@ export class NodePackage extends Component {
           bundledDependencies.push(dep.name);
 
           if (
-            this.project.deps.all.find(
+            this._project.deps.all.find(
               (d) => d.name === dep.name && d.type === DependencyType.PEER
             )
           ) {
@@ -1290,7 +1292,7 @@ export class NodePackage extends Component {
 
   private renderScripts() {
     const result: any = {};
-    for (const task of this.project.tasks.all.sort((x, y) =>
+    for (const task of this._project.tasks.all.sort((x, y) =>
       x.name.localeCompare(y.name)
     )) {
       result[task.name] = this.npmScriptForTask(task);

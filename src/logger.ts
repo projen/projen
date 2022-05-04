@@ -1,8 +1,6 @@
 import * as chalk from "chalk";
 import { IS_TEST_RUN } from "./common";
-import { Component } from "./component";
 import { ICON } from "./logging";
-import { Project } from "./project";
 import { isTruthy } from "./util";
 
 /**
@@ -18,28 +16,26 @@ export interface LoggerOptions {
   readonly level?: LogLevel;
 
   /**
-   * Include a prefix for all logging messages with the project name.
+   * Prefix all logging messages with a string. If empty string, no prefix will be added.
    *
-   * @default false
+   * @default "[<project name>] "
    */
-  readonly usePrefix?: boolean;
+  readonly prefix?: string;
 }
 
 /**
  * Project-level logging utilities.
  */
-export class Logger extends Component {
+export class Logger {
   private readonly level: LogLevel;
-  private readonly usePrefix: boolean;
+  private readonly prefix: string;
 
-  constructor(project: Project, options: LoggerOptions = {}) {
-    super(project);
-
+  constructor(options: LoggerOptions = {}) {
     // if we are running inside a test, default to no logs
     const defaultLevel = IS_TEST_RUN ? LogLevel.OFF : LogLevel.INFO;
 
     this.level = options.level ?? defaultLevel;
-    this.usePrefix = options.usePrefix ?? false;
+    this.prefix = options.prefix ?? "";
   }
 
   /**
@@ -63,8 +59,7 @@ export class Logger extends Component {
 
     if (level <= maxLevel) {
       const color = this.colorForLogLevel(level);
-      const prefix = this.usePrefix ? `[${this.project.name}] ` : "";
-      console.error(`${ICON} ${prefix}${color(...text)}`);
+      console.error(`${ICON} ${this.prefix}${color(...text)}`);
     }
   }
 

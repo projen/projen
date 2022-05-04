@@ -1,5 +1,5 @@
 import { Component } from "../component";
-import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 import { Task } from "../task";
 
 /**
@@ -36,7 +36,7 @@ export class CdkTasks extends Component {
    */
   public readonly watch: Task;
 
-  constructor(project: Project) {
+  constructor(project: StandardProject) {
     super(project);
 
     this.synth = project.addTask("synth", {

@@ -256,6 +256,7 @@ export class Release extends Component {
   private readonly workflowRunsOn?: string[];
 
   private readonly _branchHooks: BranchHook[];
+  private readonly _project: GitHubProject;
 
   /**
    * Location of build artifacts.
@@ -264,6 +265,8 @@ export class Release extends Component {
 
   constructor(project: GitHubProject, options: ReleaseOptions) {
     super(project);
+
+    this._project = project;
 
     if (Array.isArray(options.releaseBranches)) {
       throw new Error(
@@ -500,7 +503,7 @@ export class Release extends Component {
       branchName === "main" || branchName === "master"
         ? "release"
         : `release:${branchName}`;
-    const releaseTask = this.project.addTask(releaseTaskName, {
+    const releaseTask = this._project.addTask(releaseTaskName, {
       description: `Prepare a release from "${branchName}" branch`,
       env,
     });
@@ -590,6 +593,7 @@ export class Release extends Component {
         },
         preBuildSteps,
         task: releaseTask,
+        projenCommand: this._project.projenCommand,
         postBuildSteps,
         runsOn: this.workflowRunsOn,
       });

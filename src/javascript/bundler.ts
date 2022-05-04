@@ -2,6 +2,7 @@ import { join } from "path";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 import { Task } from "../task";
 import { renderBundleName } from "./util";
 
@@ -58,13 +59,15 @@ export class Bundler extends Component {
 
   private _task: Task | undefined;
   private readonly addToPreCompile: boolean;
+  private readonly _project: StandardProject;
 
   /**
    * Creates a `Bundler`.
    */
-  constructor(project: Project, options: BundlerOptions = {}) {
+  constructor(project: StandardProject, options: BundlerOptions = {}) {
     super(project);
 
+    this._project = project;
     this.esbuildVersion = options.esbuildVersion;
     this.bundledir = options.assetsDir ?? "assets";
     this.addToPreCompile = options.addToPreCompile ?? true;
@@ -79,13 +82,13 @@ export class Bundler extends Component {
   public get bundleTask(): Task {
     if (!this._task) {
       this.addBundlingSupport();
-      this._task = this.project.tasks.addTask("bundle", {
+      this._task = this._project.tasks.addTask("bundle", {
         description: "Prepare assets",
       });
 
       // install the bundle task into the pre-compile phase.
       if (this.addToPreCompile) {
-        this.project.preCompileTask.spawn(this._task);
+        this._project.preCompileTask.spawn(this._task);
       }
     }
 
@@ -122,7 +125,7 @@ export class Bundler extends Component {
       args.push("--sourcemap");
     }
 
-    const bundleTask = this.project.addTask(`bundle:${name}`, {
+    const bundleTask = this._project.addTask(`bundle:${name}`, {
       description: `Create a JavaScript bundle from ${entrypoint}`,
       exec: args.join(" "),
     });
@@ -136,7 +139,7 @@ export class Bundler extends Component {
     let watchTask;
     const watch = options.watchTask ?? true;
     if (watch) {
-      watchTask = this.project.addTask(`bundle:${name}:watch`, {
+      watchTask = this._project.addTask(`bundle:${name}:watch`, {
         description: `Continuously update the JavaScript bundle from ${entrypoint}`,
         exec: `${args.join(" ")} --watch`,
       });
@@ -157,12 +160,12 @@ export class Bundler extends Component {
    */
   private addBundlingSupport() {
     const ignoreEntry = `/${this.bundledir}/`;
-    this.project.addGitIgnore(ignoreEntry);
-    this.project.addPackageIgnore(`!${ignoreEntry}`); // include in tarball
+    this._project.addGitIgnore(ignoreEntry);
+    this._project.addPackageIgnore(`!${ignoreEntry}`); // include in tarball
     const dep = this.esbuildVersion
       ? `esbuild@${this.esbuildVersion}`
       : "esbuild";
-    this.project.deps.addDependency(dep, DependencyType.BUILD);
+    this._project.deps.addDependency(dep, DependencyType.BUILD);
   }
 }
 

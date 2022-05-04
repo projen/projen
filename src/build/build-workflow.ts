@@ -94,6 +94,13 @@ export interface BuildWorkflowOptions {
    * @default "{ pullRequest: {}, workflowDispatch: {} }"
    */
   readonly workflowTriggers?: Triggers;
+
+  /**
+   * The shell command to use in order to run the projen CLI.
+   *
+   * @default "npx projen"
+   */
+  readonly projenCommand?: string;
 }
 
 export class BuildWorkflow extends Component {
@@ -101,10 +108,10 @@ export class BuildWorkflow extends Component {
   private readonly preBuildSteps: JobStep[];
   private readonly gitIdentity: GitIdentity;
   private readonly buildTask: Task;
-  private readonly github: GitHub;
   private readonly workflow: GithubWorkflow;
   private readonly artifactsDirectory: string;
   private readonly defaultRunners: string[] = ["ubuntu-latest"];
+  private readonly projenCommand: string;
 
   private readonly _postBuildJobs: string[] = [];
 
@@ -118,12 +125,12 @@ export class BuildWorkflow extends Component {
       );
     }
 
-    this.github = github;
     this.preBuildSteps = options.preBuildSteps ?? [];
     this.postBuildSteps = options.postBuildSteps ?? [];
     this.gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.buildTask = options.buildTask;
     this.artifactsDirectory = options.artifactsDirectory;
+    this.projenCommand = options.projenCommand ?? "npx projen";
     const mutableBuilds = options.mutableBuild ?? true;
 
     this.workflow = new GithubWorkflow(github, "build");
@@ -234,7 +241,7 @@ export class BuildWorkflow extends Component {
   public addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions) {
     this.addPostBuildJobCommands(
       `post-build-${task.name}`,
-      [`${this.project.projenCommand} ${task.name}`],
+      [`${this.projenCommand} ${task.name}`],
       {
         checkoutRepo: true,
         installDeps: true,
@@ -342,7 +349,7 @@ export class BuildWorkflow extends Component {
 
       {
         name: this.buildTask.name,
-        run: this.github.project.runTaskCommand(this.buildTask),
+        run: `${this.projenCommand} ${this.buildTask.name}`,
       },
 
       ...this.postBuildSteps,

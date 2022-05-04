@@ -524,6 +524,7 @@ export class NodeProject extends GitHubProject {
         postBuildSteps: options.postBuildSteps,
         runsOn: options.workflowRunsOn,
         workflowTriggers: options.buildWorkflowTriggers,
+        projenCommand: this.projenCommand,
       });
 
       // run codecov if enabled or a secret token name is passed in

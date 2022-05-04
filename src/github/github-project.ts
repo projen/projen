@@ -1,7 +1,8 @@
 import { Clobber } from "../clobber";
 import { Gitpod } from "../gitpod";
-import { Project, ProjectOptions, ProjectType } from "../project";
+import { ProjectType } from "../project";
 import { SampleReadme, SampleReadmeProps } from "../readme";
+import { StandardProject, StandardProjectOptions } from "../standard-project";
 import { DevContainer, VsCode } from "../vscode";
 import { AutoApprove, AutoApproveOptions } from "./auto-approve";
 import { AutoMergeOptions } from "./auto-merge";
@@ -13,7 +14,7 @@ import { Stale, StaleOptions } from "./stale";
 /**
  * Options for `GitHubProject`.
  */
-export interface GitHubProjectOptions extends ProjectOptions {
+export interface GitHubProjectOptions extends StandardProjectOptions {
   /**
    * Add a Gitpod development environment
    *
@@ -152,7 +153,7 @@ export interface GitHubProjectOptions extends ProjectOptions {
  * the next steps to address this is to abstract workflows so that different
  * "engines" can be used to implement our CI/CD solutions.
  */
-export class GitHubProject extends Project {
+export class GitHubProject extends StandardProject {
   /**
    * Access all github components.
    *
@@ -234,18 +235,5 @@ export class GitHubProject extends Project {
     if (stale && this.github) {
       new Stale(this.github, options.staleOptions);
     }
-  }
-
-  /**
-   * Marks the provided file(s) as being generated. This is achieved using the
-   * github-linguist attributes. Generated files do not count against the
-   * repository statistics and language breakdown.
-   *
-   * @param glob the glob pattern to match (could be a file path).
-   *
-   * @see https://github.com/github/linguist/blob/master/docs/overrides.md
-   */
-  public annotateGenerated(glob: string): void {
-    this.gitattributes.addAttributes(glob, "linguist-generated");
   }
 }

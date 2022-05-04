@@ -19,6 +19,7 @@ export class Poetry
 {
   public readonly installTask: Task;
   public readonly publishTask: Task;
+  private readonly _project: PythonProject;
 
   /**
    * A task that uploads the package to the Test PyPI repository.
@@ -28,13 +29,15 @@ export class Poetry
   constructor(project: PythonProject, options: PythonPackagingOptions) {
     super(project);
 
+    this._project = project;
+
     this.installTask = project.addTask("install", {
       description: "Install and upgrade dependencies",
       exec: "poetry update",
     });
 
-    this.project.tasks.addEnvironment("VIRTUAL_ENV", "$(poetry env info -p)");
-    this.project.tasks.addEnvironment(
+    this._project.tasks.addEnvironment("VIRTUAL_ENV", "$(poetry env info -p)");
+    this._project.tasks.addEnvironment(
       "PATH",
       "$(echo $(poetry env info -p)/bin:$PATH)"
     );
@@ -79,7 +82,7 @@ export class Poetry
   private synthDependencies() {
     const dependencies: { [key: string]: any } = {};
     let pythonDefined: boolean = false;
-    for (const pkg of this.project.deps.all) {
+    for (const pkg of this._project.deps.all) {
       if (pkg.name === "python") {
         pythonDefined = true;
       }
@@ -96,7 +99,7 @@ export class Poetry
 
   private synthDevDependencies() {
     const dependencies: { [key: string]: any } = {};
-    for (const pkg of this.project.deps.all) {
+    for (const pkg of this._project.deps.all) {
       if ([DependencyType.DEVENV].includes(pkg.type)) {
         dependencies[pkg.name] = pkg.version;
       }
@@ -110,7 +113,7 @@ export class Poetry
    * @param spec Format `<module>@<semver>`
    */
   public addDependency(spec: string) {
-    this.project.deps.addDependency(spec, DependencyType.RUNTIME);
+    this._project.deps.addDependency(spec, DependencyType.RUNTIME);
   }
 
   /**
@@ -119,7 +122,7 @@ export class Poetry
    * @param spec Format `<module>@<semver>`
    */
   public addDevDependency(spec: string) {
-    this.project.deps.addDependency(spec, DependencyType.DEVENV);
+    this._project.deps.addDependency(spec, DependencyType.DEVENV);
   }
 
   /**
