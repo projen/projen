@@ -1,5 +1,6 @@
 import { js } from 'js-beautify';
-import { TextFileOptions, TextFile, Project } from '..';
+import { Project } from '../project';
+import { TextFile, TextFileOptions } from '../textfile';
 
 function getFunctionBody(fn: IJavascriptFunction) {
   let fString = fn.fn.toString().trim();
