@@ -87,15 +87,24 @@ new javascript.UpgradeDependencies(project, {
 });
 ```
 
-You can also use dependabot:
+You can also use dependabot or renovatebot to get Pull requests on dependency updates
 
-```ts
-new javascript.NodeProject({
-  depsUpgrade: false,
-  dependabot: true,
-  // dependabotOptions: { ... }
-})
-```
+* Dependabot:
+  ```ts
+  new javascript.NodeProject({
+    depsUpgrade: false,
+    dependabot: true,
+    // dependabotOptions: { ... }
+  })
+  ```
+* Renovatebot: 
+  ```ts
+  new javascript.NodeProject({
+    depsUpgrade: false,
+    renovatebot: true,
+    // renovatebotOptions: { ... }
+  })
+  ```
 
 [task]: ./tasks.md
 [GitHub workflow]: ./github.md#workflows
