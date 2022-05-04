@@ -3,9 +3,7 @@ import * as os from "os";
 import * as path from "path";
 import * as fs from "fs-extra";
 import { Project } from "../src";
-import { GitHubProject, GitHubProjectOptions } from "../src/github";
 import * as logging from "../src/logging";
-import { Task } from "../src/task";
 import { exec } from "../src/util";
 import { directorySnapshot } from "../src/util/synth";
 
@@ -13,25 +11,31 @@ const PROJEN_CLI = require.resolve("../lib/cli/index.js");
 
 logging.disable(); // no logging during tests
 
-export class TestProject extends GitHubProject {
-  constructor(options: Omit<GitHubProjectOptions, "name"> = {}) {
-    super({
-      name: "my-project",
-      clobber: false,
-      ...options,
-    });
-  }
+// export class TestProject extends Project {
+//   constructor(options: Partial<ProjectOptions> = {}) {
+//     super({ name: "my-project", ...options });
+//   }
+// }
 
-  // override runTaskCommand in tests since the default includes the version
-  // number and that will break regresion tests.
-  public runTaskCommand(task: Task) {
-    return `projen ${task.name}`;
-  }
+// export class TestProject extends GitHubProject {
+//   constructor(options: Omit<GitHubProjectOptions, "name"> = {}) {
+//     super({
+//       name: "my-project",
+//       clobber: false,
+//       ...options,
+//     });
+//   }
 
-  postSynthesize() {
-    fs.writeFileSync(path.join(this.outdir, ".postsynth"), "# postsynth");
-  }
-}
+//   // override runTaskCommand in tests since the default includes the version
+//   // number and that will break regresion tests.
+//   public runTaskCommand(task: Task) {
+//     return `projen ${task.name}`;
+//   }
+
+//   postSynthesize() {
+//     fs.writeFileSync(path.join(this.outdir, ".postsynth"), "# postsynth");
+//   }
+// }
 
 export function execProjenCLI(workdir: string, args: string[] = []) {
   const command = [process.execPath, PROJEN_CLI, ...args];

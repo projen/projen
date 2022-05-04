@@ -1,4 +1,5 @@
 import * as yaml from "yaml";
+import { StandardProject, Testing } from "../../src";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
 import { GithubCredentials } from "../../src/github";
@@ -15,7 +16,6 @@ import * as logging from "../../src/logging";
 import { Project } from "../../src/project";
 import { SampleFile } from "../../src/sample-file";
 import { TaskRuntime } from "../../src/task-runtime";
-import { synthSnapshot, TestProject } from "../util";
 
 logging.disable();
 
@@ -24,7 +24,7 @@ test("license file is added by default", () => {
   const project = new TestNodeProject();
 
   // THEN
-  expect(synthSnapshot(project).LICENSE).toContain("Apache License");
+  expect(Testing.synth(project).LICENSE).toContain("Apache License");
 });
 
 test("license file is not added if licensed is false", () => {
@@ -34,7 +34,7 @@ test("license file is not added if licensed is false", () => {
   });
 
   // THEN
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot.LICENSE).toBeUndefined();
   expect(snapshot[".gitignore"]).not.toContain("LICENSE");
   expect(snapshot["package.json"].license).toEqual("UNLICENSED");
@@ -213,7 +213,7 @@ describe("deps upgrade", () => {
     });
 
     const snapshot = yaml.parse(
-      synthSnapshot(project)[".github/workflows/upgrade-main.yml"]
+      Testing.synth(project)[".github/workflows/upgrade-main.yml"]
     );
     expect(snapshot.jobs.pr.steps[4].with.labels).toStrictEqual(
       project.autoApprove?.label
@@ -228,7 +228,7 @@ describe("deps upgrade", () => {
     });
 
     const snapshot = yaml.parse(
-      synthSnapshot(project)[".github/workflows/upgrade-main.yml"]
+      Testing.synth(project)[".github/workflows/upgrade-main.yml"]
     );
     expect(snapshot.jobs.pr).toMatchSnapshot();
   });
@@ -244,7 +244,7 @@ describe("deps upgrade", () => {
     });
 
     const snapshot = yaml.parse(
-      synthSnapshot(project)[".github/dependabot.yml"]
+      Testing.synth(project)[".github/dependabot.yml"]
     );
     expect(snapshot.updates[0].labels).toStrictEqual(["auto-approve"]);
   });
@@ -270,7 +270,7 @@ describe("deps upgrade", () => {
         },
       },
     });
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
 
     // we expect the default auto-approve label to be applied
@@ -285,7 +285,7 @@ describe("deps upgrade", () => {
       },
     });
 
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
 
     // we expect the default auto-approve label to be applied
@@ -302,7 +302,9 @@ describe("deps upgrade", () => {
 describe("npm publishing options", () => {
   test("defaults", () => {
     // GIVEN
-    const project = new TestProject();
+    const project = new StandardProject({
+      name: "my-project",
+    });
 
     // WHEN
     const npm = new NodePackage(project, {
@@ -317,16 +319,16 @@ describe("npm publishing options", () => {
 
     // since these are all defaults, publishConfig is not defined.
     expect(
-      synthSnapshot(project)["package.json"].publishConfig
+      Testing.synth(project)["package.json"].publishConfig
     ).toBeUndefined();
   });
 
   test("scoped packages default to RESTRICTED access", () => {
     // GIVEN
-    const project = new TestProject();
+    const p = new StandardProject({ name: "my-project" });
 
     // WHEN
-    const npm = new NodePackage(project, {
+    const npm = new NodePackage(p, {
       packageName: "scoped@my-package",
     });
 
@@ -334,17 +336,17 @@ describe("npm publishing options", () => {
     expect(npm.npmAccess).toStrictEqual(NpmAccess.RESTRICTED);
 
     // since these are all defaults, publishConfig is not defined.
-    expect(packageJson(project).publishConfig).toBeUndefined();
+    expect(packageJson(p).publishConfig).toBeUndefined();
   });
 
   test("non-scoped package cannot be RESTRICTED", () => {
     // GIVEN
-    const project = new TestProject();
+    const p = new StandardProject({ name: "my-project" });
 
     // THEN
     expect(
       () =>
-        new NodePackage(project, {
+        new NodePackage(p, {
           packageName: "my-package",
           npmAccess: NpmAccess.RESTRICTED,
         })
@@ -353,10 +355,10 @@ describe("npm publishing options", () => {
 
   test("custom settings", () => {
     // GIVEN
-    const project = new TestProject();
+    const p = new StandardProject({ name: "my-project" });
 
     // WHEN
-    const npm = new NodePackage(project, {
+    const npm = new NodePackage(p, {
       packageName: "scoped@my-package",
       npmRegistryUrl: "https://foo.bar",
       npmAccess: NpmAccess.PUBLIC,
@@ -368,7 +370,7 @@ describe("npm publishing options", () => {
     expect(npm.npmRegistryUrl).toStrictEqual("https://foo.bar/");
     expect(npm.npmAccess).toStrictEqual(NpmAccess.PUBLIC);
     expect(npm.npmTokenSecret).toStrictEqual("GITHUB_TOKEN");
-    expect(packageJson(project).publishConfig).toStrictEqual({
+    expect(packageJson(p).publishConfig).toStrictEqual({
       access: "public",
       registry: "https://foo.bar/",
     });
@@ -376,27 +378,27 @@ describe("npm publishing options", () => {
 
   test("registry with path", () => {
     // GIVEN
-    const project = new TestProject();
+    const p = new StandardProject({ name: "my-project" });
 
     // WHEN
-    const npm = new NodePackage(project, {
+    const npm = new NodePackage(p, {
       npmRegistryUrl: "https://foo.bar/path/",
     });
 
     // THEN
     expect(npm.npmRegistry).toStrictEqual("foo.bar/path/");
     expect(npm.npmRegistryUrl).toStrictEqual("https://foo.bar/path/");
-    expect(packageJson(project).publishConfig).toStrictEqual({
+    expect(packageJson(p).publishConfig).toStrictEqual({
       registry: "https://foo.bar/path/",
     });
   });
 
   test("AWS CodeArtifact registry", () => {
     // GIVEN
-    const project = new TestProject();
+    const p = new StandardProject({ name: "my-project" });
 
     // WHEN
-    const npm = new NodePackage(project, {
+    const npm = new NodePackage(p, {
       npmRegistryUrl:
         "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
     });
@@ -408,7 +410,7 @@ describe("npm publishing options", () => {
     expect(npm.npmRegistryUrl).toStrictEqual(
       "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
     );
-    expect(packageJson(project).publishConfig).toStrictEqual({
+    expect(packageJson(p).publishConfig).toStrictEqual({
       registry:
         "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
     });
@@ -422,10 +424,10 @@ describe("npm publishing options", () => {
 
   test("AWS CodeArtifact registry custom values", () => {
     // GIVEN
-    const project = new TestProject();
+    const p = new StandardProject({ name: "my-project" });
 
     // WHEN
-    const npm = new NodePackage(project, {
+    const npm = new NodePackage(p, {
       npmRegistryUrl:
         "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
       codeArtifactOptions: {
@@ -445,11 +447,11 @@ describe("npm publishing options", () => {
 
   test("throw when 'npmTokenSecret' is used with AWS CodeArtifact", () => {
     // GIVEN
-    const project = new TestProject();
+    const p = new StandardProject({ name: "my-project" });
 
     // THEN
     expect(() => {
-      new NodePackage(project, {
+      new NodePackage(p, {
         npmRegistryUrl:
           "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
         npmTokenSecret: "INVALID_VALUE",
@@ -461,11 +463,11 @@ describe("npm publishing options", () => {
 
   test("throw when 'codeArtifactOptions.accessKeyIdSecret' or 'codeArtifactOptions.secretAccessKeySecret' is used without AWS CodeArtifact", () => {
     // GIVEN
-    const project = new TestProject();
+    const p = new StandardProject({ name: "my-project" });
 
     // THEN
     expect(() => {
-      new NodePackage(project, {
+      new NodePackage(p, {
         codeArtifactOptions: {
           accessKeyIdSecret: "INVALID_AWS_ACCESS_KEY_ID",
         },
@@ -474,7 +476,7 @@ describe("npm publishing options", () => {
       "codeArtifactOptions must only be specified when publishing AWS CodeArtifact or used in scoped packages."
     );
     expect(() => {
-      new NodePackage(project, {
+      new NodePackage(p, {
         codeArtifactOptions: {
           secretAccessKeySecret: "INVALID_AWS_SECRET_ACCESS_KEY",
         },
@@ -486,11 +488,11 @@ describe("npm publishing options", () => {
 
   test("AWS CodeArtifact registry role to assume", () => {
     // GIVEN
-    const project = new TestProject();
+    const p = new StandardProject({ name: "my-project" });
     const roleArn = "role-arn";
 
     // WHEN
-    const npm = new NodePackage(project, {
+    const npm = new NodePackage(p, {
       npmRegistryUrl:
         "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
       codeArtifactOptions: {
@@ -504,10 +506,10 @@ describe("npm publishing options", () => {
 
   test("deprecated npmRegistry can be used instead of npmRegistryUrl and then https:// is assumed", () => {
     // GIVEN
-    const project = new TestProject();
+    const p = new StandardProject({ name: "my-project" });
 
     // WHEN
-    const npm = new NodePackage(project, {
+    const npm = new NodePackage(p, {
       packageName: "scoped@my-package",
       npmRegistry: "foo.bar.com",
     });
@@ -515,7 +517,7 @@ describe("npm publishing options", () => {
     // THEN
     expect(npm.npmRegistry).toStrictEqual("foo.bar.com");
     expect(npm.npmRegistryUrl).toStrictEqual("https://foo.bar.com/");
-    expect(packageJson(project).publishConfig).toStrictEqual({
+    expect(packageJson(p).publishConfig).toStrictEqual({
       registry: "https://foo.bar.com/",
     });
   });
@@ -552,7 +554,7 @@ test("extend github release workflow", () => {
     },
   });
 
-  const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
+  const workflow = Testing.synth(project)[".github/workflows/release.yml"];
   expect(workflow).toContain(
     "publish_docker_hub:\n    runs-on: ubuntu-latest\n"
   );
@@ -591,7 +593,7 @@ test("mutableBuild will push changes to PR branches", () => {
   });
 
   // THEN
-  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
+  const workflowYaml = Testing.synth(project)[".github/workflows/build.yml"];
   const workflow = yaml.parse(workflowYaml);
   expect(workflow.jobs.build.steps).toMatchSnapshot();
   expect(Object.keys(workflow.jobs)).toContain("self-mutation");
@@ -605,7 +607,7 @@ test("disabling mutableBuild will skip pushing changes to PR branches", () => {
   });
 
   // THEN
-  const workflowYaml = synthSnapshot(project)[".github/workflows/build.yml"];
+  const workflowYaml = Testing.synth(project)[".github/workflows/build.yml"];
   const workflow = yaml.parse(workflowYaml);
   expect(workflow.jobs.build.steps).toMatchSnapshot();
   expect(Object.keys(workflow.jobs)).not.toContain("self-mutation");
@@ -619,7 +621,7 @@ test("projen synth is only executed for subprojects", () => {
   new TestNodeProject({ parent: root, outdir: "child" });
 
   // THEN
-  const snapshot = synthSnapshot(root);
+  const snapshot = Testing.synth(root);
   const rootBuildTask = snapshot[".projen/tasks.json"].tasks.build;
   const childBuildTask = snapshot["child/.projen/tasks.json"].tasks.build;
   expect(rootBuildTask).toStrictEqual({
@@ -655,7 +657,7 @@ test("enabling dependabot does not overturn mergify: false", () => {
   });
 
   // THEN
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   // Note: brackets important, they prevent "." in filenames to be interpreted
   //       as JSON object path delimiters.
   expect(snapshot).not.toHaveProperty([".mergify.yml"]);
@@ -671,7 +673,7 @@ test("github: false disables github integration", () => {
   });
 
   // THEN
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
   expect(
     Object.keys(output).filter((p) => p.startsWith(".github/"))
   ).toStrictEqual([]);
@@ -686,7 +688,7 @@ test("githubOptions.workflows:false disables github workflows but not github int
   });
 
   // THEN
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
   expect(
     Object.keys(output).filter((p) => p.startsWith(".github/"))
   ).toStrictEqual([".github/pull_request_template.md"]);
@@ -699,12 +701,12 @@ test("using GitHub npm registry will default npm secret to GITHUB_TOKEN", () => 
   });
 
   // THEN
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
   expect(output[".github/workflows/release.yml"]).not.toMatch("NPM_TOKEN");
 });
 
 function packageJson(project: Project) {
-  return synthSnapshot(project)["package.json"];
+  return Testing.synth(project)["package.json"];
 }
 
 test("buildWorkflow can use GitHub App for API access", () => {
@@ -721,7 +723,7 @@ test("buildWorkflow can use GitHub App for API access", () => {
   });
 
   // THEN
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
   const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
   expect(buildWorkflow.jobs["self-mutation"].steps[0]).toMatchObject({
     name: "Generate token",
@@ -748,7 +750,7 @@ test("workflowGitIdentity can be used to customize the git identity used in buil
   });
 
   // THEN
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
   const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
   expect(buildWorkflow.jobs["self-mutation"].steps[3]).toStrictEqual({
     name: "Set git identity",
@@ -765,7 +767,7 @@ describe("workflowRunsOn", () => {
     const project = new TestNodeProject();
 
     // THEN
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build["runs-on"]).toEqual("ubuntu-latest");
     expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
@@ -780,7 +782,7 @@ describe("workflowRunsOn", () => {
     });
 
     // THEN
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build["runs-on"]).toEqual("self-hosted");
     expect(buildWorkflow.jobs["self-mutation"]["runs-on"]).toEqual(
@@ -795,7 +797,7 @@ describe("buildWorkflowTriggers", () => {
     const project = new TestNodeProject();
 
     // THEN
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
     expect(buildWorkflow.on).toEqual({
       pull_request: {},
@@ -814,7 +816,7 @@ describe("buildWorkflowTriggers", () => {
     });
 
     // THEN
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
     expect(buildWorkflow.on).toEqual({
       push: {
@@ -829,7 +831,7 @@ test("post-upgrade workflow", () => {
   const project = new TestNodeProject();
 
   // THEN
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   const tasks = snapshot[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[tasks.upgrade.steps.length - 1]).toStrictEqual({
     spawn: "post-upgrade",
@@ -850,7 +852,7 @@ test("node project can be ejected", () => {
   });
 
   // THEN
-  const outdir = synthSnapshot(p);
+  const outdir = Testing.synth(p);
   expect(outdir["package.json"]).toMatchSnapshot();
   expect(outdir["package.json"]).not.toContain(PROJEN_MARKER);
   expect(outdir["package.json"]["//"]).toBeUndefined();
@@ -885,7 +887,7 @@ describe("scoped private packages", () => {
         },
       ],
     });
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
 
     const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build.steps).toEqual(
@@ -912,7 +914,7 @@ describe("scoped private packages", () => {
         },
       ],
     });
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
     expect(releaseWorkflow.jobs.release.steps).toEqual(
       expect.arrayContaining([
@@ -951,7 +953,7 @@ describe("scoped private packages", () => {
         },
       ],
     });
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
     expect(releaseWorkflow.jobs.release.steps).toEqual(
       expect.arrayContaining([
@@ -986,7 +988,7 @@ describe("scoped private packages", () => {
         secretAccessKeySecret,
       },
     });
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
     expect(releaseWorkflow.jobs.release.steps).toEqual(
       expect.arrayContaining([
@@ -1019,7 +1021,7 @@ describe("scoped private packages", () => {
         roleToAssume,
       },
     });
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
     expect(releaseWorkflow.jobs.release.steps).toEqual(
       expect.arrayContaining([
@@ -1086,7 +1088,7 @@ describe("scoped private packages", () => {
         },
       ],
     });
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
 
     const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({
@@ -1123,7 +1125,7 @@ describe("scoped private packages", () => {
         },
       ],
     });
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
 
     const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
     expect(tasks["ca:login"]).toEqual({

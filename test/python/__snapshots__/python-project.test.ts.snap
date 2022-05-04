@@ -46,8 +46,8 @@ jobs:
 node_modules/
 !/.gitattributes
 !/.projen/tasks.json
-!/.projen/deps.json
 !/.projen/files.json
+!/.projen/deps.json
 !/.github/workflows/pull-request-lint.yml
 /.env
 !/requirements.txt
@@ -341,8 +341,8 @@ jobs:
 node_modules/
 !/.gitattributes
 !/.projen/tasks.json
-!/.projen/deps.json
 !/.projen/files.json
+!/.projen/deps.json
 !/.github/workflows/pull-request-lint.yml
 /.env
 !/requirements.txt
@@ -654,8 +654,8 @@ jobs:
 node_modules/
 !/.gitattributes
 !/.projen/tasks.json
-!/.projen/deps.json
 !/.projen/files.json
+!/.projen/deps.json
 !/.github/workflows/pull-request-lint.yml
 /.env
 !/requirements.txt
@@ -966,8 +966,8 @@ jobs:
 node_modules/
 !/.gitattributes
 !/.projen/tasks.json
-!/.projen/deps.json
 !/.projen/files.json
+!/.projen/deps.json
 !/.github/workflows/pull-request-lint.yml
 /.env
 !/requirements.txt
