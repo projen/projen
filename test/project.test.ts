@@ -1,6 +1,6 @@
 import * as path from "path";
 import { JsonFile, Project, Testing, TextFile } from "../src";
-import { TestProject } from "./util";
+import { synthSnapshot, TestProject } from "./util";
 
 test("file paths are relative to the project outdir", () => {
   // GIVEN
@@ -153,4 +153,20 @@ test("github: false disables github integration", () => {
 
   // THEN
   expect(p.github).toBeUndefined();
+});
+
+test("renovatebot: true creates renovatebot configuration", () => {
+  // GIVEN
+  const p = new TestProject({
+    renovatebot: true,
+    renovatebotOptions: {
+      labels: ["renotate", "dependencies"],
+    },
+  });
+
+  // WHEN
+  const snapshot = synthSnapshot(p);
+
+  // THEN
+  expect(snapshot["renovate.json5"]).toMatchSnapshot();
 });
