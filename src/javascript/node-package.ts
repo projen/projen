@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { join } from "path";
+import { join, resolve } from "path";
 import { parse as urlparse } from "url";
 import {
   accessSync,
@@ -1025,38 +1025,52 @@ export class NodePackage extends Component {
     }
 
     for (const dep of this.project.deps.all) {
-      const version = dep.version ?? "*";
+      let version = dep.version ?? "*";
+      let name = dep.name;
+
+      if (name.startsWith("file:")) {
+        const localDepencyPath = name.substring(5);
+        const depPackageJson = resolve(
+          this.project.outdir,
+          localDepencyPath,
+          "package.json"
+        );
+        const pkgFile = readFileSync(depPackageJson, "utf8");
+        const pkg = JSON.parse(pkgFile);
+        version = name.substring(5);
+        name = pkg.name;
+      }
 
       switch (dep.type) {
         case DependencyType.BUNDLED:
-          bundledDependencies.push(dep.name);
+          bundledDependencies.push(name);
 
           if (
             this.project.deps.all.find(
-              (d) => d.name === dep.name && d.type === DependencyType.PEER
+              (d) => d.name === name && d.type === DependencyType.PEER
             )
           ) {
             throw new Error(
-              `unable to bundle "${dep.name}". it cannot appear as a peer dependency`
+              `unable to bundle "${name}". it cannot appear as a peer dependency`
             );
           }
 
           // also add as a runtime dependency
-          dependencies[dep.name] = version;
+          dependencies[name] = version;
           break;
 
         case DependencyType.PEER:
-          peerDependencies[dep.name] = version;
+          peerDependencies[name] = version;
           break;
 
         case DependencyType.RUNTIME:
-          dependencies[dep.name] = version;
+          dependencies[name] = version;
           break;
 
         case DependencyType.TEST:
         case DependencyType.DEVENV:
         case DependencyType.BUILD:
-          devDependencies[dep.name] = version;
+          devDependencies[name] = version;
           break;
       }
     }

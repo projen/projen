@@ -371,3 +371,30 @@ test("file path dependencies are respected", () => {
   expect(pkgFile.peerDependencies).toStrictEqual({ ms: "file:../ms" });
   expect(pkgFile.devDependencies).toBeUndefined();
 });
+
+test("local dependencies can be specified using 'file:' prefix", () => {
+  // Post-synth dependency version resolution uses installed package from node_modules folder
+  // Mock install command to add this folder with a fixed dependency version,
+  // mimicking yarn installing the latest package for "*"
+  jest.spyOn(util, "exec");
+  const localDepPath = mkdtemp({ cleanup: false });
+  const localPackage = {
+    name: "local-dep",
+    version: "0.0.0",
+  };
+
+  writeFileSync(
+    join(localDepPath, "package.json"),
+    JSON.stringify(localPackage, undefined, 2)
+  );
+
+  const project = new TestProject();
+  const pkg = new NodePackage(project);
+  pkg.addPeerDeps(`file:${localDepPath}`);
+
+  project.synth();
+
+  const pkgFile = readJsonSync(join(project.outdir, "package.json"));
+
+  expect(pkgFile.peerDependencies).toStrictEqual({ "local-dep": localDepPath });
+});
