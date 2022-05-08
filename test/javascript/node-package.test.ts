@@ -373,9 +373,6 @@ test("file path dependencies are respected", () => {
 });
 
 test("local dependencies can be specified using 'file:' prefix", () => {
-  // Post-synth dependency version resolution uses installed package from node_modules folder
-  // Mock install command to add this folder with a fixed dependency version,
-  // mimicking yarn installing the latest package for "*"
   jest.spyOn(util, "exec");
   const localDepPath = mkdtemp({ cleanup: false });
   const localPackage = {

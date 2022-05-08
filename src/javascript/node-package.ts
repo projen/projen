@@ -1029,15 +1029,15 @@ export class NodePackage extends Component {
       let name = dep.name;
 
       if (name.startsWith("file:")) {
-        const localDepencyPath = name.substring(5);
+        const localDependencyPath = name.substring(5);
         const depPackageJson = resolve(
           this.project.outdir,
-          localDepencyPath,
+          localDependencyPath,
           "package.json"
         );
         const pkgFile = readFileSync(depPackageJson, "utf8");
         const pkg = JSON.parse(pkgFile);
-        version = name.substring(5);
+        version = localDependencyPath;
         name = pkg.name;
       }
 
