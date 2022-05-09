@@ -343,7 +343,7 @@ export class Publisher extends Component {
    */
   public publishToNuget(options: NugetPublishOptions = {}) {
     const isGitHubPackages = options.nugetServer?.startsWith(
-      GITHUB_PACKAGES_MAVEN_REPOSITORY
+      GITHUB_PACKAGES_NUGET_REPOSITORY
     );
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
