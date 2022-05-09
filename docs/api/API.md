@@ -7017,6 +7017,7 @@ new javascript.Eslint(project: NodeProject, options: EslintOptions)
   * **fileExtensions** (<code>Array<string></code>)  File types that should be linted (e.g. [ ".js", ".ts" ]). __*Default*__: [".ts"]
   * **ignorePatterns** (<code>Array<string></code>)  List of file patterns that should not be linted, using the same syntax as .gitignore patterns. __*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
   * **lintProjenRc** (<code>boolean</code>)  Should we lint .projenrc.js. __*Default*__: true
+  * **lintProjenRcFile** (<code>string</code>)  Projenrc file to lint. __*Default*__: PROJEN_RC
   * **prettier** (<code>boolean</code>)  Enable prettier for code formatting. __*Default*__: false
   * **tsAlwaysTryTypes** (<code>boolean</code>)  Always try to resolve types under `<root>@types` directory even it doesn't contain any source code. __*Default*__: true
   * **tsconfigPath** (<code>string</code>)  Path to `tsconfig.json` which should be used by eslint. __*Default*__: "./tsconfig.json"
@@ -14974,7 +14975,8 @@ Name | Type | Description
 **devdirs**?🔹 | <code>Array<string></code> | Directories with source files that include tests and build tools.<br/>__*Default*__: []
 **fileExtensions**?🔹 | <code>Array<string></code> | File types that should be linted (e.g. [ ".js", ".ts" ]).<br/>__*Default*__: [".ts"]
 **ignorePatterns**?🔹 | <code>Array<string></code> | List of file patterns that should not be linted, using the same syntax as .gitignore patterns.<br/>__*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
-**lintProjenRc**?🔹 | <code>boolean</code> | Should we lint .projenrc.js.<br/>__*Default*__: true
+**lintProjenRc**?⚠️ | <code>boolean</code> | Should we lint .projenrc.js.<br/>__*Default*__: true
+**lintProjenRcFile**?🔹 | <code>string</code> | Projenrc file to lint.<br/>__*Default*__: PROJEN_RC
 **prettier**?🔹 | <code>boolean</code> | Enable prettier for code formatting.<br/>__*Default*__: false
 **tsAlwaysTryTypes**?🔹 | <code>boolean</code> | Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.<br/>__*Default*__: true
 **tsconfigPath**?🔹 | <code>string</code> | Path to `tsconfig.json` which should be used by eslint.<br/>__*Default*__: "./tsconfig.json"
