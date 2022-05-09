@@ -18,6 +18,7 @@ const PUBLIB_VERSION = "latest";
 const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
 const ARTIFACTS_DOWNLOAD_DIR = "dist";
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = "https://maven.pkg.github.com";
+const GITHUB_PACKAGES_NUGET_REPOSITORY = "https://nuget.pkg.github.com";
 const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
 const PUBLIB_TOOLCHAIN = {
   js: {},
@@ -341,6 +342,9 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToNuget(options: NugetPublishOptions = {}) {
+    const isGitHubPackages = options.nugetServer?.startsWith(
+      GITHUB_PACKAGES_NUGET_REPOSITORY
+    );
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
         name: "nuget",
@@ -348,8 +352,17 @@ export class Publisher extends Component {
         prePublishSteps: options.prePublishSteps ?? [],
         run: this.publibCommand("publib-nuget"),
         registryName: "NuGet Gallery",
+        permissions: {
+          contents: JobPermission.READ,
+          packages: isGitHubPackages ? JobPermission.WRITE : undefined,
+        },
         workflowEnv: {
-          NUGET_API_KEY: secret(options.nugetApiKeySecret ?? "NUGET_API_KEY"),
+          NUGET_API_KEY: secret(
+            isGitHubPackages
+              ? "GITHUB_TOKEN"
+              : options.nugetApiKeySecret ?? "NUGET_API_KEY"
+          ),
+          NUGET_SERVER: options.nugetServer ?? undefined,
         },
       })
     );
@@ -787,6 +800,11 @@ export interface NugetPublishOptions extends CommonPublishOptions {
    * @default "NUGET_API_KEY"
    */
   readonly nugetApiKeySecret?: string;
+
+  /**
+   *  NuGet Server URL (defaults to nuget.org)
+   */
+  readonly nugetServer?: string;
 }
 
 /**
