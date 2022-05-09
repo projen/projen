@@ -39,8 +39,15 @@ export interface EslintOptions {
   readonly ignorePatterns?: string[];
 
   /**
+   * Projenrc file to lint. Use empty string to disable.
+   * @default PROJEN_RC
+   */
+  readonly lintProjenRcFile?: string;
+
+  /**
    * Should we lint .projenrc.js
    * @default true
+   * @deprecated use lintProjenRcFile instead
    */
   readonly lintProjenRc?: boolean;
 
@@ -150,6 +157,7 @@ export class Eslint extends Component {
     this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
 
     const lintProjenRc = options.lintProjenRc ?? true;
+    const lintProjenRcFile = options.lintProjenRcFile ?? PROJEN_RC;
 
     const eslint = project.addTask("eslint", {
       description: "Runs eslint against the codebase",
@@ -159,7 +167,7 @@ export class Eslint extends Component {
         "--fix",
         "--no-error-on-unmatched-pattern",
         ...dirs,
-        ...(lintProjenRc ? [PROJEN_RC] : []),
+        ...(lintProjenRc && lintProjenRcFile ? [lintProjenRcFile] : []),
       ].join(" "),
     });
 
@@ -296,7 +304,7 @@ export class Eslint extends Component {
     // Overrides for .projenrc.js
     this.overrides = [
       {
-        files: [PROJEN_RC],
+        files: [lintProjenRcFile || PROJEN_RC],
         rules: {
           "@typescript-eslint/no-require-imports": "off",
           "import/no-extraneous-dependencies": "off",
@@ -306,7 +314,7 @@ export class Eslint extends Component {
 
     this.ignorePatterns = options.ignorePatterns ?? [
       "*.js",
-      `!${PROJEN_RC}`,
+      `!${lintProjenRcFile || PROJEN_RC}`,
       "*.d.ts",
       "node_modules/",
       "*.generated.ts",
