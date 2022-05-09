@@ -350,6 +350,7 @@ export class Publisher extends Component {
         registryName: "NuGet Gallery",
         workflowEnv: {
           NUGET_API_KEY: secret(options.nugetApiKeySecret ?? "NUGET_API_KEY"),
+          NUGET_SERVER: options.nugetServer ?? undefined,
         },
       })
     );
@@ -787,6 +788,11 @@ export interface NugetPublishOptions extends CommonPublishOptions {
    * @default "NUGET_API_KEY"
    */
   readonly nugetApiKeySecret?: string;
+
+  /**
+   *  NuGet Server URL (defaults to nuget.org)
+   */
+  readonly nugetServer?: string;
 }
 
 /**
