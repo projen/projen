@@ -3166,6 +3166,23 @@ Array [
         "switch": "docs-directory",
       },
       Object {
+        "default": "true",
+        "docs": "Automatically adds an \`cloudfront.experimental.EdgeFunction\` for each \`.edge-lambda.ts\` handler in your source tree. If this is disabled, you can manually add an \`awscdk.AutoDiscover\` component to your project.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "edgeLambdaAutoDiscover",
+        "optional": true,
+        "parent": "AwsCdkTypeScriptAppOptions",
+        "path": Array [
+          "edgeLambdaAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "edge-lambda-auto-discover",
+      },
+      Object {
         "default": "\\"lib/index.js\\"",
         "docs": "Module entrypoint (\`main\` in \`package.json\`).",
         "featured": false,
@@ -5932,6 +5949,23 @@ Array [
         ],
         "simpleType": "JsiiDotNetTarget",
         "switch": "dotnet",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically adds an \`cloudfront.experimental.EdgeFunction\` for each \`.edge-lambda.ts\` handler in your source tree. If this is disabled, you can manually add an \`awscdk.AutoDiscover\` component to your project.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "edgeLambdaAutoDiscover",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": Array [
+          "edgeLambdaAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "edge-lambda-auto-discover",
       },
       Object {
         "default": "\\"lib/index.js\\"",

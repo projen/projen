@@ -23,6 +23,15 @@ export interface AwsCdkConstructLibraryOptions
   readonly lambdaAutoDiscover?: boolean;
 
   /**
+   * Automatically adds an `cloudfront.experimental.EdgeFunction` for each
+   * `.edge-lambda.ts` handler in your source tree. If this is disabled, you can
+   * manually add an `awscdk.AutoDiscover` component to your project.
+   *
+   * @default true
+   */
+  readonly edgeLambdaAutoDiscover?: boolean;
+
+  /**
    * Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts`
    * entrypoint in your source tree. If this is disabled, you can manually add an
    * `awscdk.AutoDiscover` component to your project
@@ -89,6 +98,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
       tsconfigPath: this.tsconfigDev.fileName,
       cdkDeps: this.cdkDeps,
       lambdaAutoDiscover: options.lambdaAutoDiscover ?? true,
+      edgeLambdaAutoDiscover: options.edgeLambdaAutoDiscover ?? true,
       lambdaExtensionAutoDiscover: options.lambdaExtensionAutoDiscover ?? true,
       integrationTestAutoDiscover: options.integrationTestAutoDiscover ?? true,
     });
