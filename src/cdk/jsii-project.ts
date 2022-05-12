@@ -248,6 +248,7 @@ export class JsiiProject extends TypeScriptProject {
         ...this.pacmakForLanguage("js", task),
         registry: this.package.npmRegistry,
         npmTokenSecret: this.package.npmTokenSecret,
+        codeArtifactOptions: options.codeArtifactOptions,
       });
       this.addPackagingTarget("js", task);
     }
