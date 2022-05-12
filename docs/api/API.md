@@ -3058,6 +3058,7 @@ new awscdk.AutoDiscover(project: Project, options: AutoDiscoverOptions)
   * **lambdaExtensionOptions** (<code>[awscdk.LambdaExtensionCommonOptions](#projen-awscdk-lambdaextensioncommonoptions)</code>)  Options for lambda extensions. __*Optional*__
   * **testdir** (<code>string</code>)  Test source tree. 
   * **integrationTestOptions** (<code>[awscdk.IntegrationTestCommonOptions](#projen-awscdk-integrationtestcommonoptions)</code>)  Options for integration tests. __*Optional*__
+  * **edgeLambdaAutoDiscover** (<code>boolean</code>)  Auto-discover edge lambda functions. __*Default*__: true
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Auto-discover integration tests. __*Default*__: true
   * **lambdaAutoDiscover** (<code>boolean</code>)  Auto-discover lambda functions. __*Default*__: true
   * **lambdaExtensionAutoDiscover** (<code>boolean</code>)  Auto-discover lambda extensions. __*Default*__: true
@@ -3240,6 +3241,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
+  * **edgeLambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically discovers and creates integration tests for each `.integ.ts` file in under your test directory. __*Default*__: true
   * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. __*Default*__: true
   * **lambdaExtensionAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
@@ -3852,6 +3854,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
   * **appEntrypoint** (<code>string</code>)  The CDK app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
+  * **edgeLambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically discovers and creates integration tests for each `.integ.ts` file in under your test directory. __*Default*__: true
   * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **lambdaExtensionAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
@@ -4134,6 +4137,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
+  * **edgeLambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically discovers and creates integration tests for each `.integ.ts` file in under your test directory. __*Default*__: true
   * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. __*Default*__: true
   * **lambdaExtensionAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
@@ -11777,6 +11781,7 @@ Name | Type | Description
 **srcdir**🔹 | <code>string</code> | Project source tree (relative to project output directory).
 **testdir**🔹 | <code>string</code> | Test source tree.
 **tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
+**edgeLambdaAutoDiscover**?🔹 | <code>boolean</code> | Auto-discover edge lambda functions.<br/>__*Default*__: true
 **integrationTestAutoDiscover**?🔹 | <code>boolean</code> | Auto-discover integration tests.<br/>__*Default*__: true
 **integrationTestOptions**?🔹 | <code>[awscdk.IntegrationTestCommonOptions](#projen-awscdk-integrationtestcommonoptions)</code> | Options for integration tests.<br/>__*Optional*__
 **lambdaAutoDiscover**?🔹 | <code>boolean</code> | Auto-discover lambda functions.<br/>__*Default*__: true
@@ -11848,6 +11853,7 @@ Name | Type | Description
 **docgenFilePath**?🔹 | <code>string</code> | File path for generated docs.<br/>__*Default*__: "API.md"
 **docsDirectory**?🔹 | <code>string</code> | Docs directory.<br/>__*Default*__: "docs"
 **dotnet**?⚠️ | <code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code> | __*Optional*__
+**edgeLambdaAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
@@ -12222,6 +12228,7 @@ Name | Type | Description
 **disableTsconfig**?🔹 | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
 **docgen**?🔹 | <code>boolean</code> | Docgen by Typedoc.<br/>__*Default*__: false
 **docsDirectory**?🔹 | <code>string</code> | Docs directory.<br/>__*Default*__: "docs"
+**edgeLambdaAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
@@ -12427,6 +12434,7 @@ Name | Type | Description
 **docgenFilePath**?⚠️ | <code>string</code> | File path for generated docs.<br/>__*Default*__: "API.md"
 **docsDirectory**?⚠️ | <code>string</code> | Docs directory.<br/>__*Default*__: "docs"
 **dotnet**?⚠️ | <code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code> | __*Optional*__
+**edgeLambdaAutoDiscover**?⚠️ | <code>boolean</code> | Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
 **entrypoint**?⚠️ | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **entrypointTypes**?⚠️ | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?⚠️ | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true

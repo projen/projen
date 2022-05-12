@@ -190,6 +190,13 @@ export interface AutoDiscoverOptions
   readonly lambdaAutoDiscover?: boolean;
 
   /**
+   * Auto-discover edge lambda functions.
+   *
+   * @default true
+   */
+  readonly edgeLambdaAutoDiscover?: boolean;
+
+  /**
    * Auto-discover lambda extensions.
    *
    * @default true
@@ -214,6 +221,15 @@ export class AutoDiscover extends Component {
 
     if (options.lambdaAutoDiscover ?? true) {
       new LambdaAutoDiscover(this.project, {
+        cdkDeps: options.cdkDeps,
+        tsconfigPath: options.tsconfigPath,
+        srcdir: options.srcdir,
+        lambdaOptions: options.lambdaOptions,
+      });
+    }
+
+    if (options.edgeLambdaAutoDiscover ?? true) {
+      new EdgeLambdaAutoDiscover(this.project, {
         cdkDeps: options.cdkDeps,
         tsconfigPath: options.tsconfigPath,
         srcdir: options.srcdir,
