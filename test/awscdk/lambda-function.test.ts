@@ -79,7 +79,9 @@ test("fails if entrypoint does not have the .lambda suffix", () => {
         entrypoint: join("src", "hello-no-lambda.ts"),
         cdkDeps: cdkDepsForProject(project),
       })
-  ).toThrow("hello-no-lambda.ts must have a .lambda.ts extension");
+  ).toThrow(
+    "hello-no-lambda.ts must have a .lambda.ts or .edge-lambda.ts extension"
+  );
 });
 
 test("constructFile and constructName can be used to customize the generated construct", () => {
@@ -162,6 +164,23 @@ test("AWS SDK connection reuse can be disabled", () => {
   expect(generatedSource).not.toContain(
     "this.addEnvironment('AWS_NODEJS_CONNECTION_REUSE_ENABLED', '1', { removeInEdge: true });"
   );
+});
+
+test("Edge function", () => {
+  const project = new TypeScriptProject({
+    name: "hello",
+    defaultReleaseBranch: "main",
+  });
+
+  new awscdk.LambdaFunction(project, {
+    entrypoint: join("src", "hello.edge-lambda.ts"),
+    cdkDeps: cdkDepsForProject(project),
+    edgeLambda: true,
+  });
+
+  const snapshot = Testing.synth(project);
+  const generatedSource = snapshot["src/hello-function.ts"];
+  expect(generatedSource).toMatchSnapshot();
 });
 
 test("eslint allows handlers to import dev dependencies", () => {

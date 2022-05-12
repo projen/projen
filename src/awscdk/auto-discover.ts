@@ -11,6 +11,7 @@ import {
   IntegrationTestCommonOptions,
 } from "./integration-test";
 import {
+  TYPESCRIPT_EDGE_LAMBDA_EXT,
   TYPESCRIPT_LAMBDA_EXT,
   TYPESCRIPT_LAMBDA_EXTENSION_EXT,
 } from "./internal";
@@ -95,6 +96,43 @@ export class LambdaAutoDiscover extends AutoDiscoverBase {
         entrypoint,
         cdkDeps: options.cdkDeps,
         ...options.lambdaOptions,
+      });
+    }
+  }
+}
+
+/**
+ * Options for `EdgeLambdaAutoDiscover`
+ */
+export interface EdgeLambdaAutoDiscoverOptions
+  extends AutoDiscoverCommonOptions {
+  /**
+   * Project source tree (relative to project output directory).
+   */
+  readonly srcdir: string;
+
+  /**
+   * Options for AWS Lambda functions.
+   */
+  readonly lambdaOptions?: LambdaFunctionCommonOptions;
+}
+
+/**
+ * Creates edge lambdas from entry points discovered in the project's source tree.
+ */
+export class EdgeLambdaAutoDiscover extends AutoDiscoverBase {
+  constructor(project: Project, options: EdgeLambdaAutoDiscoverOptions) {
+    super(project, {
+      projectdir: options.srcdir,
+      extension: TYPESCRIPT_EDGE_LAMBDA_EXT,
+    });
+
+    for (const entrypoint of this.entrypoints) {
+      new LambdaFunction(this.project, {
+        entrypoint,
+        cdkDeps: options.cdkDeps,
+        ...options.lambdaOptions,
+        edgeLambda: true,
       });
     }
   }
