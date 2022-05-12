@@ -49,6 +49,7 @@ Name|Description
 [awscdk.CdkConfig](#projen-awscdk-cdkconfig)|Represents cdk.json file.
 [awscdk.CdkTasks](#projen-awscdk-cdktasks)|Adds standard AWS CDK tasks to your project.
 [awscdk.ConstructLibraryAws](#projen-awscdk-constructlibraryaws)|*No description*
+[awscdk.EdgeLambdaAutoDiscover](#projen-awscdk-edgelambdaautodiscover)|Creates edge lambdas from entry points discovered in the project's source tree.
 [awscdk.IntegrationTest](#projen-awscdk-integrationtest)|Cloud integration tests.
 [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover)|Creates integration tests from entry points discovered in the test tree.
 [awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover)|Creates lambdas from entry points discovered in the project's source tree.
@@ -196,6 +197,7 @@ Name|Description
 [awscdk.CdkConfigCommonOptions](#projen-awscdk-cdkconfigcommonoptions)|Common options for `cdk.json`.
 [awscdk.CdkConfigOptions](#projen-awscdk-cdkconfigoptions)|Options for `CdkJson`.
 [awscdk.ConstructLibraryAwsOptions](#projen-awscdk-constructlibraryawsoptions)|*No description*
+[awscdk.EdgeLambdaAutoDiscoverOptions](#projen-awscdk-edgelambdaautodiscoveroptions)|Options for `EdgeLambdaAutoDiscover`.
 [awscdk.IntegrationTestAutoDiscoverOptions](#projen-awscdk-integrationtestautodiscoveroptions)|Options for `IntegrationTestAutoDiscover`.
 [awscdk.IntegrationTestCommonOptions](#projen-awscdk-integrationtestcommonoptions)|*No description*
 [awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)|Options for `IntegrationTest`.
@@ -4140,6 +4142,33 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 
 
 
+## class EdgeLambdaAutoDiscover 🔹 <a id="projen-awscdk-edgelambdaautodiscover"></a>
+
+Creates edge lambdas from entry points discovered in the project's source tree.
+
+__Submodule__: awscdk
+
+__Extends__: [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.EdgeLambdaAutoDiscover(project: Project, options: EdgeLambdaAutoDiscoverOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.EdgeLambdaAutoDiscoverOptions](#projen-awscdk-edgelambdaautodiscoveroptions)</code>)  *No description*
+  * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
+  * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
+  * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
+  * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for AWS Lambda functions. __*Optional*__
+
+
+
+
 ## class IntegrationTest 🔹 <a id="projen-awscdk-integrationtest"></a>
 
 Cloud integration tests.
@@ -4321,6 +4350,7 @@ new awscdk.LambdaFunction(project: Project, options: LambdaFunctionOptions)
 * **options** (<code>[awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)</code>)  Options.
   * **awsSdkConnectionReuse** (<code>boolean</code>)  Whether to automatically reuse TCP connections when working with the AWS SDK for JavaScript. __*Default*__: true
   * **bundlingOptions** (<code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code>)  Bundling options for this AWS Lambda function. __*Default*__: defaults
+  * **edgeLambda** (<code>boolean</code>)  Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`. __*Default*__: false
   * **runtime** (<code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code>)  The node.js version to target. __*Default*__: Runtime.NODEJS_14_X
   * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function). 
@@ -4506,7 +4536,7 @@ Base class for auto-discovering and creating project subcomponents.
 __Submodule__: cdk
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover), [awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover), [awscdk.LambdaExtensionAutoDiscover](#projen-awscdk-lambdaextensionautodiscover), [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase), [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)
+__Implemented by__: [awscdk.EdgeLambdaAutoDiscover](#projen-awscdk-edgelambdaautodiscover), [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover), [awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover), [awscdk.LambdaExtensionAutoDiscover](#projen-awscdk-lambdaextensionautodiscover), [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase), [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)
 
 ### Initializer
 
@@ -12504,6 +12534,22 @@ Name | Type | Description
 
 
 
+## struct EdgeLambdaAutoDiscoverOptions 🔹 <a id="projen-awscdk-edgelambdaautodiscoveroptions"></a>
+
+
+Options for `EdgeLambdaAutoDiscover`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | AWS CDK dependency manager.
+**srcdir**🔹 | <code>string</code> | Project source tree (relative to project output directory).
+**tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
+**lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Options for AWS Lambda functions.<br/>__*Optional*__
+
+
+
 ## struct IntegrationTestAutoDiscoverOptions 🔹 <a id="projen-awscdk-integrationtestautodiscoveroptions"></a>
 
 
@@ -12632,6 +12678,7 @@ Name | Type | Description
 -----|------|-------------
 **awsSdkConnectionReuse**?🔹 | <code>boolean</code> | Whether to automatically reuse TCP connections when working with the AWS SDK for JavaScript.<br/>__*Default*__: true
 **bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda function.<br/>__*Default*__: defaults
+**edgeLambda**?🔹 | <code>boolean</code> | Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`.<br/>__*Default*__: false
 **runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
 
 
@@ -12651,6 +12698,7 @@ Name | Type | Description
 **bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda function.<br/>__*Default*__: defaults
 **constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
 **constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
+**edgeLambda**?🔹 | <code>boolean</code> | Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`.<br/>__*Default*__: false
 **runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
 
 
