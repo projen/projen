@@ -12,6 +12,7 @@ import {
   IntegrationTestCommonOptions,
 } from "./integration-test";
 import {
+  TYPESCRIPT_EDGE_LAMBDA_EXT,
   TYPESCRIPT_LAMBDA_EXT,
   TYPESCRIPT_LAMBDA_EXTENSION_EXT,
 } from "./internal";
@@ -105,6 +106,43 @@ export class LambdaAutoDiscover extends AutoDiscoverBase {
 }
 
 /**
+ * Options for `EdgeLambdaAutoDiscover`
+ */
+export interface EdgeLambdaAutoDiscoverOptions
+  extends AutoDiscoverCommonOptions {
+  /**
+   * Project source tree (relative to project output directory).
+   */
+  readonly srcdir: string;
+
+  /**
+   * Options for AWS Lambda functions.
+   */
+  readonly lambdaOptions?: LambdaFunctionCommonOptions;
+}
+
+/**
+ * Creates edge lambdas from entry points discovered in the project's source tree.
+ */
+export class EdgeLambdaAutoDiscover extends AutoDiscoverBase {
+  constructor(project: Project, options: EdgeLambdaAutoDiscoverOptions) {
+    super(project, {
+      projectdir: options.srcdir,
+      extension: TYPESCRIPT_EDGE_LAMBDA_EXT,
+    });
+
+    for (const entrypoint of this.entrypoints) {
+      new LambdaFunction(this.project, {
+        entrypoint,
+        cdkDeps: options.cdkDeps,
+        ...options.lambdaOptions,
+        edgeLambda: true,
+      });
+    }
+  }
+}
+
+/**
  * Options for `LambdaExtensionAutoDiscover`
  */
 export interface LambdaExtensionAutoDiscoverOptions
@@ -156,6 +194,13 @@ export interface AutoDiscoverOptions
   readonly lambdaAutoDiscover?: boolean;
 
   /**
+   * Auto-discover edge lambda functions.
+   *
+   * @default true
+   */
+  readonly edgeLambdaAutoDiscover?: boolean;
+
+  /**
    * Auto-discover lambda extensions.
    *
    * @default true
@@ -180,6 +225,15 @@ export class AutoDiscover extends Component {
 
     if (options.lambdaAutoDiscover ?? true) {
       new LambdaAutoDiscover(this.project, {
+        cdkDeps: options.cdkDeps,
+        tsconfigPath: options.tsconfigPath,
+        srcdir: options.srcdir,
+        lambdaOptions: options.lambdaOptions,
+      });
+    }
+
+    if (options.edgeLambdaAutoDiscover ?? true) {
+      new EdgeLambdaAutoDiscover(this.project, {
         cdkDeps: options.cdkDeps,
         tsconfigPath: options.tsconfigPath,
         srcdir: options.srcdir,

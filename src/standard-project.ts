@@ -7,6 +7,7 @@ import { JsonFile } from "./json";
 import { Project, ProjectOptions } from "./project";
 import { ProjectBuild } from "./project-build";
 import { Projenrc, ProjenrcOptions } from "./projenrc-json";
+import { Renovatebot, RenovatebotOptions } from "./renovatebot";
 import { Task, TaskOptions } from "./task";
 import { Tasks, TasksOptions } from "./tasks";
 
@@ -24,6 +25,20 @@ export interface StandardProjectOptions extends ProjectOptions, TasksOptions {
    * @default - default options
    */
   readonly projenrcJsonOptions?: ProjenrcOptions;
+
+  /**
+   * Use renovatebot to handle dependency upgrades.
+   *
+   * @default false
+   */
+  readonly renovatebot?: boolean;
+
+  /**
+   * Options for renovatebot.
+   *
+   * @default - default options
+   */
+  readonly renovatebotOptions?: RenovatebotOptions;
 }
 
 export class StandardProject extends Project {
@@ -127,6 +142,10 @@ export class StandardProject extends Project {
     const projenrcJson = options.projenrcJson ?? false;
     if (projenrcJson) {
       new Projenrc(this, options.projenrcJsonOptions);
+    }
+
+    if (options.renovatebot) {
+      new Renovatebot(this, options.renovatebotOptions);
     }
   }
 

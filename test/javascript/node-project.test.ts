@@ -1,3 +1,4 @@
+import * as json5 from "json5";
 import * as yaml from "yaml";
 import { StandardProject, Testing } from "../../src";
 import { PROJEN_MARKER } from "../../src/common";
@@ -662,6 +663,29 @@ test("enabling dependabot does not overturn mergify: false", () => {
   //       as JSON object path delimiters.
   expect(snapshot).not.toHaveProperty([".mergify.yml"]);
   expect(snapshot).toHaveProperty([".github/dependabot.yml"]);
+});
+
+test("enabling renovatebot does not overturn mergify: false", () => {
+  // WHEN
+  const project = new TestNodeProject({
+    renovatebot: true,
+    mergify: false,
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  // Note: brackets important, they prevent "." in filenames to be interpreted
+  //       as JSON object path delimiters.
+  expect(snapshot).not.toHaveProperty([".mergify.yml"]);
+  expect(snapshot).toHaveProperty(["renovate.json5"]);
+  expect(json5.parse(snapshot["renovate.json5"]).ignoreDeps).toEqual([
+    "jest-junit",
+    "jest",
+    "npm-check-updates",
+    "standard-version",
+    "projen",
+  ]);
+  expect(snapshot["renovate.json5"]).toMatchSnapshot();
 });
 
 test("github: false disables github integration", () => {
