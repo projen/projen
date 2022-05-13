@@ -98,7 +98,11 @@ export class Projenrc extends Component {
       bootstrap.args
     );
 
-    emit(toPythonImport(jsiiFqn));
+    const moduleName = jsiiManifest.targets.python.module;
+    // Module name prefix should take precedence in the event moduleName !== fqn prefix
+    const importName = [moduleName, ...jsiiFqn.split(".").slice(1)].join(".");
+    emit(toPythonImport(importName));
+
     for (const fqn of imports) {
       emit(toPythonImport(fqn));
     }
