@@ -150,10 +150,9 @@ export class Projenrc extends Component {
 
     const optionFqns: Record<string, string> = {};
     for (const option of bootstrap.type.options) {
-      if (option.fqn) {
-        optionFqns[option.name] = toJavaFullTypeName(
-          jsiiManifest.types[option.fqn]
-        );
+      const fqnType = jsiiManifest.types[option.fqn];
+      if (option.fqn && fqnType) {
+        optionFqns[option.name] = toJavaFullTypeName(fqnType);
       }
     }
 
