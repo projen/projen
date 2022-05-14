@@ -2,6 +2,8 @@ import { Pom } from "../../src/java";
 import { Projenrc } from "../../src/java/projenrc";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { synthSnapshot, TestProject } from "../util";
+import { generateJavaOptionNames } from "../../lib/java";
+import { ProjectOption } from "../../lib/inventory";
 
 test("projenrc.java support", () => {
   // GIVEN
@@ -77,4 +79,45 @@ test("generate projenrc in java", () => {
   expect(
     synthSnapshot(project)["src/test/java/projenrc.java"]
   ).toMatchSnapshot();
+});
+
+test("assert unknown manifest type doesn't throw", () => {
+  // GIVEN
+  const options: ProjectOption[] = [
+    {
+      fqn: "unknown.fqn",
+      path: [],
+      name: "unknownFqn",
+      simpleType: "",
+      switch: "",
+      fullType: {},
+      parent: "",
+    },
+    {
+      fqn: "known.fqn",
+      path: [],
+      name: "knownFqn",
+      simpleType: "",
+      switch: "",
+      fullType: {},
+      parent: "",
+    },
+  ];
+
+  const jsiiManifest: any = {
+    types: {
+      "known.fqn": {
+        namespace: "known_namespace",
+        name: "component",
+      },
+    },
+  };
+
+  // WHEN
+  const optionNames = generateJavaOptionNames(options, jsiiManifest);
+
+  // THEN
+  const optionNameKeys = Object.keys(optionNames);
+  expect(optionNameKeys.length).toEqual(1);
+  expect(optionNames[optionNameKeys[0]]).toEqual("known_namespace.component");
 });

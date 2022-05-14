@@ -3,7 +3,7 @@ import { existsSync, mkdirpSync, writeFileSync } from "fs-extra";
 import { PROJEN_VERSION } from "../common";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { readJsiiManifest } from "../inventory";
+import { ProjectOption, readJsiiManifest } from "../inventory";
 import { Project } from "../project";
 import { Pom } from "./pom";
 
@@ -148,13 +148,10 @@ export class Projenrc extends Component {
       emit("}");
     };
 
-    const optionFqns: Record<string, string> = {};
-    for (const option of bootstrap.type.options) {
-      const fqnType = jsiiManifest.types[option.fqn];
-      if (option.fqn && fqnType) {
-        optionFqns[option.name] = toJavaFullTypeName(fqnType);
-      }
-    }
+    const optionFqns: Record<string, string> = generateJavaOptionNames(
+      bootstrap.type.options,
+      jsiiManifest
+    );
 
     if (javaPackage.length > 0) {
       emit(`package ${javaPackage.join(".")};`);
@@ -192,6 +189,17 @@ export class Projenrc extends Component {
       `Project definition file was created at ${javaFile}`
     );
   }
+}
+
+export function generateJavaOptionNames(options: ProjectOption[], jsiiManifest: any) {
+  const optionFqns: Record<string, string> = {};
+  for (const option of options) {
+    if (option.fqn && jsiiManifest.types[option.fqn]) {
+      optionFqns[option.name] = toJavaFullTypeName(jsiiManifest.types[option.fqn]);
+    }
+  }
+
+  return optionFqns;
 }
 
 function renderJavaOptions(
