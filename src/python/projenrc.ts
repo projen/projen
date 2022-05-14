@@ -98,9 +98,7 @@ export class Projenrc extends Component {
       bootstrap.args
     );
 
-    const moduleName = jsiiManifest.targets.python.module;
-    // Module name prefix should take precedence in the event moduleName !== fqn prefix
-    const importName = [moduleName, ...jsiiFqn.split(".").slice(1)].join(".");
+    const importName = resolvePythonImportName(jsiiFqn, jsiiManifest);
     emit(toPythonImport(importName));
 
     for (const fqn of imports) {
@@ -118,6 +116,12 @@ export class Projenrc extends Component {
       `Project definition file was created at ${pythonFile}`
     );
   }
+}
+
+export function resolvePythonImportName(jsiiFqn: string, jsiiManifest: any) {
+  const moduleName = jsiiManifest.targets.python.module;
+  // Module name prefix should take precedence in the event moduleName !== fqn prefix
+  return [moduleName, ...jsiiFqn.split(".").slice(1)].join(".");
 }
 
 function renderPythonOptions(

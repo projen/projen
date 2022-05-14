@@ -1,6 +1,6 @@
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { ProjectType } from "../../src/project";
-import { Projenrc } from "../../src/python/projenrc";
+import { Projenrc, resolvePythonImportName } from "../../src/python/projenrc";
 import { synthSnapshot, TestProject } from "../util";
 
 test("projenrc.py support", () => {
@@ -49,4 +49,31 @@ test("javascript values are translated to python", () => {
 
   // THEN
   expect(synthSnapshot(project)[".projenrc.py"]).toMatchSnapshot();
+});
+
+test("ensure python import is correctly resolved", () => {
+  // GIVEN
+  const jsiiManifest: any = {
+    targets: {
+      python: {
+        module: "my_module",
+      },
+    },
+  };
+
+  const fqnInputToExpectedImportMap = {
+    "my-module.component": "my_module.component",
+    "my_module.component": "my_module.component",
+    "my_module.nested.component": "my_module.nested.component",
+  };
+
+  Object.entries(fqnInputToExpectedImportMap).forEach(
+    ([jsiiFqn, expectedImportName]) => {
+      // WHEN
+      const resolvedImportName = resolvePythonImportName(jsiiFqn, jsiiManifest);
+
+      // THEN
+      expect(resolvedImportName).toEqual(expectedImportName);
+    }
+  );
 });
