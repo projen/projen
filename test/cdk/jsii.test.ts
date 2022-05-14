@@ -1,6 +1,6 @@
 import * as yaml from "yaml";
+import { Testing } from "../../src";
 import { JsiiProject } from "../../src/cdk";
-import { synthSnapshot } from "../util";
 
 describe("author", () => {
   test("authorEmail and authorAddress can be the same value", () => {
@@ -13,7 +13,7 @@ describe("author", () => {
       defaultReleaseBranch: "master",
     });
 
-    const pkgjson = synthSnapshot(project)["package.json"];
+    const pkgjson = Testing.synth(project)["package.json"];
     expect(pkgjson.author).toStrictEqual({
       email: "hello@hello.com",
       name: "My Name",
@@ -31,7 +31,7 @@ describe("author", () => {
       defaultReleaseBranch: "master",
     });
 
-    const pkgjson = synthSnapshot(project)["package.json"];
+    const pkgjson = Testing.synth(project)["package.json"];
     expect(pkgjson.author).toStrictEqual({
       name: "My Name",
       organization: false,
@@ -57,7 +57,7 @@ describe("maven repository options", () => {
       publishTasks: true,
     });
 
-    const outdir = synthSnapshot(project);
+    const outdir = Testing.synth(project);
 
     expect(outdir[".projen/tasks.json"].tasks["publish:maven"]).toStrictEqual({
       name: "publish:maven",
@@ -100,7 +100,7 @@ describe("maven repository options", () => {
       publishTasks: true,
     });
 
-    const outdir = synthSnapshot(project);
+    const outdir = Testing.synth(project);
 
     expect(outdir[".projen/tasks.json"].tasks["publish:maven"]).toStrictEqual({
       name: "publish:maven",
@@ -147,7 +147,7 @@ describe("maven repository options", () => {
       publishTasks: true,
     });
 
-    const outdir = synthSnapshot(project);
+    const outdir = Testing.synth(project);
 
     expect(outdir[".projen/tasks.json"].tasks["publish:maven"]).toStrictEqual({
       name: "publish:maven",
@@ -213,7 +213,7 @@ describe("publish to go", () => {
       publishTasks: true,
     });
 
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     const targets = output["package.json"].jsii.targets;
     expect(targets).toStrictEqual({
       go: {
@@ -235,7 +235,7 @@ describe("publish to go", () => {
       publishTasks: true,
     });
 
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     expect(output[".github/workflows/release.yml"]).toContain("release_npm");
   });
 
@@ -251,7 +251,7 @@ describe("publish to go", () => {
       publishTasks: true,
     });
 
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     expect(output[".github/workflows/release.yml"]).toContain("release_npm");
   });
 
@@ -267,7 +267,7 @@ describe("publish to go", () => {
       publishTasks: true,
     });
 
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     expect(output[".github/workflows/release.yml"]).not.toContain(
       "release_npm"
     );
@@ -294,7 +294,7 @@ describe("publish to go", () => {
       excludeTypescript: ["src/**/test/*.ts", "src/**/__tests__/*.ts"],
     });
 
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     expect(output["package.json"].jsii.targets.go).toStrictEqual({
       moduleName: "github.com/foo/bar",
     });
@@ -318,7 +318,7 @@ describe("docgen", () => {
       publishTasks: true,
     });
 
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     expect(
       output[".projen/tasks.json"].tasks.docgen.steps[0].exec
     ).toStrictEqual("jsii-docgen -o API.md");
@@ -336,7 +336,7 @@ describe("docgen", () => {
       publishTasks: true,
     });
 
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     expect(
       output[".projen/tasks.json"].tasks.docgen.steps[0].exec
     ).toStrictEqual("jsii-docgen -o docs.md");
@@ -363,7 +363,7 @@ describe("language bindings", () => {
     publishToPypi: { distName: "dist-name", module: "module-name" },
   });
 
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
   const build = yaml.parse(output[".github/workflows/build.yml"]);
   const release = yaml.parse(output[".github/workflows/release.yml"]);
   const tasks = output[".projen/tasks.json"].tasks;

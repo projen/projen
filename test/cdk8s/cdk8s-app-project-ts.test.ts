@@ -1,7 +1,6 @@
 import * as yaml from "yaml";
-import { TaskRuntime } from "../../src";
+import { TaskRuntime, Testing } from "../../src";
 import { Cdk8sTypeScriptApp } from "../../src/cdk8s";
-import { synthSnapshot } from "../util";
 
 test("test if cdk8s synth is possible", () => {
   const project = new Cdk8sTypeScriptApp({
@@ -12,7 +11,7 @@ test("test if cdk8s synth is possible", () => {
     constructsVersion: "3.3.75",
   });
 
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
 
   // expect a synth script
   expect(output["package.json"].scripts.synth).toContain("npx projen synth");
@@ -61,7 +60,7 @@ test("adding cdk8sImports", () => {
   });
 
   // WHEN
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
 
   // THEN
   expect(output[".projen/tasks.json"].tasks.import.steps).toStrictEqual([
@@ -84,7 +83,7 @@ test("constructs version undefined", () => {
     releaseWorkflow: true,
   });
 
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
 
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.11",
@@ -102,7 +101,7 @@ test("constructs version pinning", () => {
     constructsVersionPinning: true,
   });
 
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
 
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.18",
@@ -119,7 +118,7 @@ test("cdk8sPlusVersion undefined", () => {
     constructsVersion: "3.3.75",
   });
 
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
 
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.11",
@@ -136,7 +135,7 @@ test("cdk8sPlusVersion defined", () => {
     constructsVersion: "3.3.75",
   });
 
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
 
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.11",
@@ -154,7 +153,7 @@ test("cdk8sPlusVersion pinning", () => {
     constructsVersion: "3.3.75",
   });
 
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
 
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.11",
@@ -172,7 +171,7 @@ test("upgrade task ignores pinned versions", () => {
     releaseWorkflow: true,
     constructsVersion: "3.3.75",
   });
-  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = Testing.synth(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[1].exec).toStrictEqual(
     "npm-check-updates --dep dev --upgrade --target=minor --reject='cdk8s-cli,cdk8s,constructs'"
   );

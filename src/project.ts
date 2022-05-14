@@ -2,7 +2,7 @@ import { mkdtempSync, realpathSync, renameSync } from "fs";
 import { tmpdir } from "os";
 import * as path from "path";
 import * as glob from "glob";
-import { cleanup } from "./cleanup";
+import { cleanup, FILE_MANIFEST } from "./cleanup";
 import { IS_TEST_RUN } from "./common";
 import { Component } from "./component";
 import { FileBase } from "./file";
@@ -52,7 +52,8 @@ export interface ProjectOptions {
 }
 
 /**
- * Base project
+ * Base project type. For a project with basic components (tasks, dependencies,
+ * gitignore, etc.) pre-included, use `StandardProject` instead.
  */
 export class Project {
   /**
@@ -112,6 +113,20 @@ export class Project {
       ...options.logging,
       prefix: `[${this.name} ]`,
     });
+
+    if (!this.ejected) {
+      new JsonFile(this, FILE_MANIFEST, {
+        omitEmpty: true,
+        editGitattributes: false,
+        editGitignore: false,
+        obj: () => ({
+          // replace `\` with `/` to ensure paths match across platforms
+          files: this.files
+            .filter((f) => f.readonly)
+            .map((f) => f.path.replace(/\\/g, "/")),
+        }),
+      });
+    }
   }
 
   /**

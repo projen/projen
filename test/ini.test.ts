@@ -1,9 +1,8 @@
 import * as INI from "ini";
-import { IniFile } from "../src";
-import { synthSnapshot, TestProject } from "./util";
+import { IniFile, Project, Testing } from "../src";
 
 test("ini object can be mutated before synthesis", () => {
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   const obj: any = {
     hello: "world",
@@ -16,7 +15,7 @@ test("ini object can be mutated before synthesis", () => {
     foo: 1234,
   };
 
-  const out = synthSnapshot(prj);
+  const out = Testing.synth(prj);
   expect(INI.parse(out["my/ini/file.ini"])).toMatchObject({
     hello: "world",
     anotherField: { foo: "1234" },
@@ -24,7 +23,7 @@ test("ini object can be mutated before synthesis", () => {
 });
 
 test("ini file can contain projen marker", () => {
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   const obj: any = {};
 
@@ -33,7 +32,7 @@ test("ini file can contain projen marker", () => {
     marker: true,
   });
 
-  const output = synthSnapshot(prj)["my/ini/file-marker.ini"];
+  const output = Testing.synth(prj)["my/ini/file-marker.ini"];
 
   const firstLine = output.split("\n")[0];
 

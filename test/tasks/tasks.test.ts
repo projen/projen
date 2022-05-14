@@ -1,17 +1,12 @@
-import { Project, TaskRuntime } from "../../src";
+import { Project, TaskRuntime, Tasks, Testing } from "../../src";
 import { TasksManifest, TaskStep } from "../../src/task-model";
-import { TestProject, synthSnapshot } from "../util";
-
-test("default tasks", () => {
-  const p = new TestProject();
-  expect(synthTasksManifest(p)).toMatchSnapshot();
-});
 
 test("empty task", () => {
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
 
   // WHEN
-  p.addTask("empty");
+  t.addTask("empty");
 
   // THEN
   expectManifest(p, {
@@ -24,12 +19,13 @@ test("empty task", () => {
 });
 
 test("remove task", () => {
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
 
   // WHEN
-  const task = p.addTask("task1");
-  p.addTask("task2");
-  const removeTask = p.removeTask("task1");
+  const task = t.addTask("task1");
+  t.addTask("task2");
+  const removeTask = t.removeTask("task1");
 
   // THEN
   expect(removeTask).toEqual(task);
@@ -43,13 +39,14 @@ test("remove task", () => {
 });
 
 test("re-add removed task", () => {
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
 
   // WHEN
-  p.addTask("task1");
-  p.addTask("task2");
-  const removeTask = p.removeTask("task2");
-  p.addTask("task2");
+  t.addTask("task1");
+  t.addTask("task2");
+  const removeTask = t.removeTask("task2");
+  t.addTask("task2");
 
   // THEN
   expect(removeTask).toBeTruthy();
@@ -66,30 +63,33 @@ test("re-add removed task", () => {
 });
 
 test("throw when removing a dependent task", () => {
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
 
   // WHEN
-  const primary = p.addTask("primary");
-  const dependent = p.addTask("dependent");
+  const primary = t.addTask("primary");
+  const dependent = t.addTask("dependent");
   primary.spawn(dependent);
 
   // THEN
-  expect(() => p.removeTask("dependent")).toThrowError(
+  expect(() => t.removeTask("dependent")).toThrowError(
     'Unable to remove task "dependent" because the following tasks depend on it: primary'
   );
 });
 
 test("remove already removed task", () => {
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
 
-  expect(p.removeTask("task1")).toBe(undefined);
+  expect(t.removeTask("task1")).toBe(undefined);
 });
 
 test('multiple "exec" commands', () => {
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
 
   // WHEN
-  const task = p.addTask("hello", {
+  const task = t.addTask("hello", {
     description: "hello, world",
     exec: "echo hello", // initial command
     env: {
@@ -123,9 +123,10 @@ test('multiple "exec" commands', () => {
 
 test("subtasks", () => {
   // GIVEN
-  const p = new TestProject();
-  const hello = p.addTask("hello", { exec: "echo hello" });
-  const world = p.addTask("world");
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  const hello = t.addTask("hello", { exec: "echo hello" });
+  const world = t.addTask("world");
 
   // WHEN
   world.exec('echo "running hello"');
@@ -148,16 +149,17 @@ test("subtasks", () => {
 
 test("reset() can be used to reset task steps", () => {
   // GIVEN
-  const p = new TestProject();
-  const t0 = p.addTask("your-task");
-  const t = p.addTask("my-task");
-  t.exec("line1");
-  t.spawn(t0);
-  t.exec("line2");
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  const t1 = t.addTask("your-task");
+  const t2 = t.addTask("my-task");
+  t2.exec("line1");
+  t2.spawn(t1);
+  t2.exec("line2");
 
   // WHEN
-  t.reset("line3");
-  t.exec("line4", { cwd: "foo" });
+  t2.reset("line3");
+  t2.exec("line4", { cwd: "foo" });
 
   // THEN
   expectManifest(p, {
@@ -175,16 +177,17 @@ test("reset() can be used to reset task steps", () => {
 
 test("prependXXX() can be used to add steps from the top", () => {
   // GIVEN
-  const p = new TestProject();
-  const sub = p.addTask("my-sub-task", { exec: "subexec" });
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  const sub = t.addTask("my-sub-task", { exec: "subexec" });
 
-  const t = p.addTask("my-task");
-  t.exec("line1");
+  const t1 = t.addTask("my-task");
+  t1.exec("line1");
 
   // WHEN
-  t.prependExec("line2");
-  t.prependSpawn(sub);
-  t.prependSay("message");
+  t1.prependExec("line2");
+  t1.prependSpawn(sub);
+  t1.prependSay("message");
 
   // THEN
   expectManifest(p, {
@@ -208,8 +211,9 @@ test("prependXXX() can be used to add steps from the top", () => {
 
 test("env() can be used to add environment variables", () => {
   // GIVEN
-  const p = new TestProject();
-  const t = p.addTask("my-task", {
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  const t1 = t.addTask("my-task", {
     env: {
       INITIAL: "123",
       ENV: "456",
@@ -217,8 +221,8 @@ test("env() can be used to add environment variables", () => {
   });
 
   // WHEN
-  t.env("FOO", "BAR");
-  t.env("HELLO", "world");
+  t1.env("FOO", "BAR");
+  t1.env("HELLO", "world");
 
   // THEN
   expectManifest(p, {
@@ -238,17 +242,18 @@ test("env() can be used to add environment variables", () => {
 
 test(".steps can be used to list all steps in the current task", () => {
   // GIVEN
-  const p = new TestProject();
-  const t0 = p.addTask("your");
-  const t = p.addTask("my");
-  t.exec("step1");
-  t.exec("step2");
-  t.exec("step3");
-  t.spawn(t0);
-  t.exec("step4");
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  const t0 = t.addTask("your");
+  const t1 = t.addTask("my");
+  t1.exec("step1");
+  t1.exec("step2");
+  t1.exec("step3");
+  t1.spawn(t0);
+  t1.exec("step4");
 
   // WHEN
-  const steps = t.steps;
+  const steps = t1.steps;
 
   // THEN
   expect(steps).toStrictEqual([
@@ -262,8 +267,9 @@ test(".steps can be used to list all steps in the current task", () => {
 
 test('"condition" can be used to define a command that will determine if a task should be skipped', () => {
   // GIVEN
-  const p = new TestProject();
-  p.addTask("foo", {
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  t.addTask("foo", {
     condition: "false",
     exec: "foo bar",
   });
@@ -281,8 +287,9 @@ test('"condition" can be used to define a command that will determine if a task 
 });
 
 test('"builtin" can be used to execute builtin commands', () => {
-  const p = new TestProject();
-  const task = p.addTask("foo", {
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  const task = t.addTask("foo", {
     condition: "false",
   });
 
@@ -302,8 +309,9 @@ test('"builtin" can be used to execute builtin commands', () => {
 });
 
 test('"requiredEnv" can be used to specify required environment variables', () => {
-  const p = new TestProject();
-  p.addTask("foo", {
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  t.addTask("foo", {
     requiredEnv: ["MISSING1", "MISSING2", "NOT_MISSING"],
   });
 
@@ -319,38 +327,40 @@ test('"requiredEnv" can be used to specify required environment variables', () =
 });
 
 test("lock() can be used to disallow modifications", () => {
-  const p = new TestProject();
-  const t = p.addTask("t1");
-  const t2 = p.addTask("t2");
-  t.exec("echo hello");
-  t.exec("echo world");
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  const t1 = t.addTask("t1");
+  const t2 = t.addTask("t2");
+  t1.exec("echo hello");
+  t1.exec("echo world");
 
-  t.lock();
+  t1.lock();
 
   const error = 'Task "t1" is locked for changes';
 
-  expect(() => t.reset()).toThrow(error);
-  expect(() => t.exec("boom")).toThrow(error);
-  expect(() => t.prependExec("pre")).toThrow(error);
-  expect(() => t.spawn(t2)).toThrow(error);
-  expect(() => t.prependSpawn(t2)).toThrow(error);
-  expect(() => t.builtin("damn")).toThrow(error);
-  expect(() => t.env("Foo", "bar")).toThrow(error);
-  expect(() => t.say("hoho")).toThrow(error);
-  expect(() => t.prependSay("hoho")).toThrow(error);
+  expect(() => t1.reset()).toThrow(error);
+  expect(() => t1.exec("boom")).toThrow(error);
+  expect(() => t1.prependExec("pre")).toThrow(error);
+  expect(() => t1.spawn(t2)).toThrow(error);
+  expect(() => t1.prependSpawn(t2)).toThrow(error);
+  expect(() => t1.builtin("damn")).toThrow(error);
+  expect(() => t1.env("Foo", "bar")).toThrow(error);
+  expect(() => t1.say("hoho")).toThrow(error);
+  expect(() => t1.prependSay("hoho")).toThrow(error);
 });
 
 test("it is possible to edit the description", () => {
-  const p = new TestProject();
-  const t1 = p.addTask("t1");
-  const t2 = p.addTask("t2", { description: "my description" });
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  const t1 = t.addTask("t1");
+  const t2 = t.addTask("t2", { description: "my description" });
 
   // WHEN
   t1.description = "hello";
   t2.description = "world";
 
   // THEN
-  const files = synthSnapshot(p);
+  const files = Testing.synth(p);
   expect(files[".projen/tasks.json"].tasks.t1.description).toBe("hello");
   expect(files[".projen/tasks.json"].tasks.t2.description).toBe("world");
 });
@@ -373,5 +383,5 @@ function expectManifest(p: Project, toStrictEqual: TasksManifest) {
 }
 
 function synthTasksManifest(p: Project) {
-  return synthSnapshot(p)[TaskRuntime.MANIFEST_FILE];
+  return Testing.synth(p)[TaskRuntime.MANIFEST_FILE];
 }

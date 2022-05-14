@@ -1,8 +1,9 @@
+import { Testing } from "../../src";
 import { PROJEN_RC } from "../../src/common";
 import { NodeProject, Jest } from "../../src/javascript";
 import * as logging from "../../src/logging";
 import { TypeScriptProject } from "../../src/typescript";
-import { mkdtemp, synthSnapshot } from "../util";
+import { mkdtemp } from "../util";
 
 logging.disable();
 
@@ -43,7 +44,7 @@ test("Node Project Jest Defaults Configured", () => {
   expect(project.jest?.config.clearMocks).toEqual(true);
   expect(project.jest?.config.collectCoverage).toEqual(true);
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot["package.json"].jest).toBeTruthy();
 
   const jest = snapshot["package.json"].jest;
@@ -69,7 +70,7 @@ test("Node Project Jest With Options Configured", () => {
     },
   });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot["package.json"].jest).toBeTruthy();
 
   const jest = snapshot["package.json"].jest;
@@ -96,7 +97,7 @@ test("Node Project Jest With Path Configured", () => {
     },
   });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot["package.json"].jest).toBeUndefined();
 
   const jest = snapshot["jest.config.json"];
@@ -115,7 +116,7 @@ test("Typescript Project Jest Defaults Configured", () => {
     jest: true,
   });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   const jestTypescriptConfig = snapshot["tsconfig.dev.json"];
 
   expect(jestTypescriptConfig.compilerOptions).toBeTruthy();
@@ -152,7 +153,7 @@ test("Typescript Project Jest With Compiler Options", () => {
     ...compilerOptions,
   };
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   const jestTypescriptConfig = snapshot["tsconfig.dev.json"];
 
   expect(jestTypescriptConfig.compilerOptions).toBeTruthy();
@@ -191,7 +192,7 @@ test("testdir is under src", () => {
   });
 
   // THEN
-  const files = synthSnapshot(project);
+  const files = Testing.synth(project);
   expect(files["package.json"].jest.testMatch).toStrictEqual([
     "**/lib/boom/bam/__tests/**/?(*.)+(spec|test).js?(x)",
   ]);
@@ -211,7 +212,7 @@ test("addTestMatch() can be used to add patterns", () => {
   jest.addTestMatch("bar/baz/**");
 
   // THEN
-  expect(synthSnapshot(project)["package.json"].jest.testMatch).toStrictEqual([
+  expect(Testing.synth(project)["package.json"].jest.testMatch).toStrictEqual([
     "foo/**",
     "bar/baz/**",
   ]);

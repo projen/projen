@@ -1,5 +1,5 @@
+import { Testing } from "../../src";
 import { PythonProject, PythonProjectOptions } from "../../src/python";
-import { synthSnapshot } from "../util";
 
 test("poetry enabled", () => {
   const p = new TestPythonProject({
@@ -13,7 +13,7 @@ test("poetry enabled", () => {
     classifiers: ["Development Status :: 4 - Beta"],
   });
 
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
   expect(snapshot["pyproject.toml"]).toContain("First Last");
   expect(snapshot["pyproject.toml"]).toContain("email@example.com");
   expect(snapshot["pyproject.toml"]).toContain("http://www.example.com");
@@ -38,7 +38,7 @@ test("poetry enabled with specified python version", () => {
   });
   p.addDependency("python@^3.7,<=3.9");
 
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
   expect(snapshot["pyproject.toml"]).toContain('python = "^3.7,<=3.9"');
 });
 
@@ -89,7 +89,7 @@ test("poetry enabled with poetry-specific options", () => {
     },
   });
 
-  expect(synthSnapshot(p)).toMatchSnapshot();
+  expect(Testing.synth(p)).toMatchSnapshot();
 });
 
 class TestPythonProject extends PythonProject {

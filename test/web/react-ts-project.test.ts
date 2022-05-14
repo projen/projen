@@ -1,12 +1,12 @@
+import { Testing } from "../../src";
 import {
   ReactTypeScriptProject,
   ReactTypeScriptProjectOptions,
 } from "../../src/web";
-import { synthSnapshot } from "../util";
 
 test("defaults", () => {
   const p = new TestReactTypeScriptProject();
-  expect(synthSnapshot(p)).toMatchSnapshot();
+  expect(Testing.synth(p)).toMatchSnapshot();
 });
 
 // see https://github.com/projen/projen/issues/1342
@@ -24,7 +24,7 @@ test("deps can be overridden", () => {
     "web-vitals@7.2"
   );
 
-  const pkg = synthSnapshot(p)["package.json"];
+  const pkg = Testing.synth(p)["package.json"];
 
   expect(pkg.dependencies).toBeUndefined();
   expect(pkg.devDependencies.react).toStrictEqual("^2");

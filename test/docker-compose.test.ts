@@ -1,22 +1,21 @@
 import * as child_process from "child_process";
 import * as path from "path";
 import * as fs from "fs-extra";
-import { DockerCompose, DockerComposeProtocol } from "../src";
+import { DockerCompose, DockerComposeProtocol, Project } from "../src";
 import * as logging from "../src/logging";
-import { TestProject } from "./util";
 
 logging.disable();
 
 describe("docker-compose", () => {
   test("errors when no services", () => {
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
     new DockerCompose(project);
 
     expect(() => project.synth()).toThrow(/at least one service/i);
   });
 
   test("errors when imageBuild and image not specified in service", () => {
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
     const dc = new DockerCompose(project);
 
     expect(() => dc.addService("service", {})).toThrow(
@@ -25,7 +24,7 @@ describe("docker-compose", () => {
   });
 
   test("errors when imageBuild and image are both specified in service", () => {
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
     const dc = new DockerCompose(project);
 
     expect(() =>
@@ -39,7 +38,7 @@ describe("docker-compose", () => {
   });
 
   test("errors when version tag is not a number", () => {
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
     expect(
       () =>
         new DockerCompose(project, {
@@ -54,7 +53,7 @@ describe("docker-compose", () => {
   });
 
   test("version tag explicit set and created as float", () => {
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
 
     const dc = new DockerCompose(project, {
       schemaVersion: "3.1",
@@ -79,7 +78,7 @@ describe("docker-compose", () => {
   });
 
   test("version tag explicit set and created as int", () => {
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
 
     const dc = new DockerCompose(project, {
       schemaVersion: "3",
@@ -104,7 +103,7 @@ describe("docker-compose", () => {
   });
 
   test("version tag defaults to 3.3 when not set", () => {
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
 
     const dc = new DockerCompose(project, {
       services: {
@@ -128,7 +127,7 @@ describe("docker-compose", () => {
   });
 
   test("can build an image", () => {
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
 
     const dc = new DockerCompose(project, {
       services: {
@@ -166,7 +165,7 @@ describe("docker-compose", () => {
   });
 
   test("can choose a name suffix for the docker-compose.yml", () => {
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
     new DockerCompose(project, {
       nameSuffix: "myname",
       services: {
@@ -183,7 +182,7 @@ describe("docker-compose", () => {
   });
 
   test("can add a container command", () => {
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
     const dc = new DockerCompose(project, {
       services: {
         alpine: {
@@ -209,7 +208,7 @@ describe("docker-compose", () => {
 
   describe("can add a volume", () => {
     test("bind volume", () => {
-      const project = new TestProject();
+      const project = new Project({ name: "my-project" });
       const dc = new DockerCompose(project, {
         services: {
           myservice: {
@@ -240,7 +239,7 @@ describe("docker-compose", () => {
     });
 
     test("named volume", () => {
-      const project = new TestProject();
+      const project = new Project({ name: "my-project" });
       const dc = new DockerCompose(project, {
         services: {
           myservice: {
@@ -274,7 +273,7 @@ describe("docker-compose", () => {
     });
 
     test("named volume with special driver", () => {
-      const project = new TestProject();
+      const project = new Project({ name: "my-project" });
       const dc = new DockerCompose(project, {
         services: {
           web: {
@@ -322,7 +321,7 @@ describe("docker-compose", () => {
     });
 
     test("imperatively", () => {
-      const project = new TestProject();
+      const project = new Project({ name: "my-project" });
       const dc = new DockerCompose(project);
 
       const service = dc.addService("myservice", {
@@ -379,7 +378,7 @@ describe("docker-compose", () => {
     };
 
     test("declaratively", () => {
-      const project = new TestProject();
+      const project = new Project({ name: "my-project" });
       const dc = new DockerCompose(project, {
         services: {
           port: {
@@ -401,7 +400,7 @@ describe("docker-compose", () => {
     });
 
     test("imperatively", () => {
-      const project = new TestProject();
+      const project = new Project({ name: "my-project" });
       const dc = new DockerCompose(project);
 
       const service = dc.addService("port", {
@@ -433,7 +432,7 @@ describe("docker-compose", () => {
     };
 
     test("declaratively", () => {
-      const project = new TestProject();
+      const project = new Project({ name: "my-project" });
       const dc = new DockerCompose(project, {
         services: {
           first: { image: "alpine" },
@@ -451,7 +450,7 @@ describe("docker-compose", () => {
     });
 
     test("imperatively", () => {
-      const project = new TestProject();
+      const project = new Project({ name: "my-project" });
       const dc = new DockerCompose(project);
 
       const first = dc.addService("first", { image: "alpine" });
@@ -480,7 +479,7 @@ describe("docker-compose", () => {
     };
 
     test("declaratively", () => {
-      const project = new TestProject();
+      const project = new Project({ name: "my-project" });
       const dc = new DockerCompose(project, {
         services: {
           www: {
@@ -500,7 +499,7 @@ describe("docker-compose", () => {
     });
 
     test("imperatively", () => {
-      const project = new TestProject();
+      const project = new Project({ name: "my-project" });
       const dc = new DockerCompose(project);
 
       const service = dc.addService("www", {
@@ -518,7 +517,7 @@ describe("docker-compose", () => {
   });
 
   test("errors when a service reference by name does not exist", () => {
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
 
     new DockerCompose(project, {
       services: {
@@ -533,7 +532,7 @@ describe("docker-compose", () => {
   });
 
   test("errors when a service depends on itself", () => {
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
 
     new DockerCompose(project, {
       services: {
@@ -629,7 +628,7 @@ describe("docker-compose", () => {
     };
 
     test("declaratively", () => {
-      const project = new TestProject();
+      const project = new Project({ name: "my-project" });
       const dc = new DockerCompose(project, {
         services: {
           setup: {
@@ -686,7 +685,7 @@ describe("docker-compose", () => {
     });
 
     test("imperatively", () => {
-      const project = new TestProject();
+      const project = new Project({ name: "my-project" });
       const dc = new DockerCompose(project);
 
       const setup = dc.addService("setup", {

@@ -1,11 +1,9 @@
+import { Project, Testing } from "../../src";
 import { CiConfiguration } from "../../src/gitlab";
-import { synthSnapshot, TestProject } from "../util";
 
 test("throws when adding an existing service with same name and alias", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new Project({ name: "my-project" });
   const c = new CiConfiguration(p, "foo");
   c.addServices({ name: "bar" });
   // THEN
@@ -19,9 +17,7 @@ test("throws when adding an existing service with same name and alias", () => {
 
 test("does not throw when adding an services with same name and different alias", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new Project({ name: "my-project" });
   const c = new CiConfiguration(p, "foo");
   c.addServices({ name: "foo", alias: "foobar" });
   // THEN
@@ -32,9 +28,7 @@ test("does not throw when adding an services with same name and different alias"
 
 test("does not throw when adding an valid include", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new Project({ name: "my-project" });
   const c = new CiConfiguration(p, "foo");
   // THEN
   expect(() => c.addIncludes({ local: "foo" })).not.toThrowError(
@@ -53,9 +47,7 @@ test("does not throw when adding an valid include", () => {
 
 test("throws when adding an invalid include", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new Project({ name: "my-project" });
   const c = new CiConfiguration(p, "foo");
   // THEN
   expect(() =>
@@ -68,9 +60,7 @@ test("throws when adding an invalid include", () => {
 
 test("throws when adding an existing includes", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new Project({ name: "my-project" });
   const c = new CiConfiguration(p, "foo");
   c.addIncludes(
     { local: "foo" },
@@ -95,9 +85,7 @@ test("throws when adding an existing includes", () => {
 
 test("respected the original format when variables are added to jobs", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new Project({ name: "my-project" });
   new CiConfiguration(p, "foo", {
     jobs: {
       build: {
@@ -105,7 +93,7 @@ test("respected the original format when variables are added to jobs", () => {
       },
     },
   });
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
   // THEN
   expect(snapshot[".gitlab/ci-templates/foo.yml"]).toContain(
     "AWS_REGION: eu-central-1"
@@ -114,14 +102,12 @@ test("respected the original format when variables are added to jobs", () => {
 
 test("respect the original format when adding global variables", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new Project({ name: "my-project" });
   const c = new CiConfiguration(p, "foo", {});
   c.addGlobalVariables({
     AWS_REGION: "eu-central-1",
   });
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
   // THEN
   expect(snapshot[".gitlab/ci-templates/foo.yml"]).toContain(
     "AWS_REGION: eu-central-1"
@@ -130,9 +116,7 @@ test("respect the original format when adding global variables", () => {
 
 test("adds correct entries for path-based caching", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new Project({ name: "my-project" });
   new CiConfiguration(p, "foo", {
     default: {
       cache: {
@@ -141,16 +125,14 @@ test("adds correct entries for path-based caching", () => {
       },
     },
   });
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
   // THEN
   expect(snapshot[".gitlab/ci-templates/foo.yml"]).toMatchSnapshot();
 });
 
 test("adds correct entries for file-based caching", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new Project({ name: "my-project" });
   new CiConfiguration(p, "foo", {
     default: {
       cache: {
@@ -161,7 +143,7 @@ test("adds correct entries for file-based caching", () => {
       },
     },
   });
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
   // THEN
   expect(snapshot[".gitlab/ci-templates/foo.yml"]).toMatchSnapshot();
 });

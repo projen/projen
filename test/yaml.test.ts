@@ -1,9 +1,8 @@
 import * as YAML from "yaml";
-import { YamlFile } from "../src";
-import { synthSnapshot, TestProject } from "./util";
+import { Project, Testing, YamlFile } from "../src";
 
 test("yaml object can be mutated before synthesis", () => {
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   const obj: any = {
     hello: "world",
@@ -16,14 +15,14 @@ test("yaml object can be mutated before synthesis", () => {
     foo: 1234,
   };
 
-  expect(YAML.parse(synthSnapshot(prj)["my/yaml/file.yaml"])).toStrictEqual({
+  expect(YAML.parse(Testing.synth(prj)["my/yaml/file.yaml"])).toStrictEqual({
     hello: "world",
     anotherField: { foo: 1234 },
   });
 });
 
 test("yaml file can contain projen marker", () => {
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   const obj: any = {};
 
@@ -32,7 +31,7 @@ test("yaml file can contain projen marker", () => {
     marker: true,
   });
 
-  const output = synthSnapshot(prj)["my/yaml/file-marker.yaml"];
+  const output = Testing.synth(prj)["my/yaml/file-marker.yaml"];
 
   const firstLine = output.split("\n")[0];
 

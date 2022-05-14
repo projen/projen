@@ -673,7 +673,7 @@ test("enabling renovatebot does not overturn mergify: false", () => {
   });
 
   // THEN
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   // Note: brackets important, they prevent "." in filenames to be interpreted
   //       as JSON object path delimiters.
   expect(snapshot).not.toHaveProperty([".mergify.yml"]);

@@ -1,4 +1,5 @@
 import * as yaml from "yaml";
+import { Testing } from "../../src";
 import { GithubCredentials } from "../../src/github";
 import {
   NodeProject,
@@ -6,14 +7,13 @@ import {
   UpgradeDependenciesSchedule,
 } from "../../src/javascript";
 import { TaskRuntime } from "../../src/task-runtime";
-import { synthSnapshot } from "../util";
 
 test("upgrades command includes all dependencies", () => {
   const project = createProject({
     deps: ["some-dep"],
   });
 
-  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = Testing.synth(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade`); // implicitly all dependencies
 });
 
@@ -22,7 +22,7 @@ test("upgrades command includes dependencies added post instantiation", () => {
 
   project.addDeps("some-dep");
 
-  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = Testing.synth(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade`); // implicitly all dependencies
 });
 
@@ -36,7 +36,7 @@ test("upgrades command doesn't include ignored packages", () => {
 
   const deps = "jest-junit jest npm-check-updates projen standard-version dep1";
 
-  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = Testing.synth(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`);
 });
 
@@ -50,7 +50,7 @@ test("upgrades command includes only included packages", () => {
 
   const deps = "dep1";
 
-  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = Testing.synth(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`); // implicitly all dependencies
 });
 
@@ -63,7 +63,7 @@ test("upgrade task can be overwritten", () => {
   const newTask = project.addTask("upgrade");
   newTask.exec("echo 'hello world'");
 
-  const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = Testing.synth(project)[TaskRuntime.MANIFEST_FILE].tasks;
 
   expect(tasks.upgrade.steps[0].exec).toStrictEqual(`echo 'hello world'`);
 });
@@ -78,7 +78,7 @@ test("upgrade workflow can be overwritten", () => {
     .tryFindObjectFile(".github/workflows/upgrade-main.yml")
     ?.addOverride("hello", "world");
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
   expect(upgrade.hello).toStrictEqual("world");
 });
@@ -86,7 +86,7 @@ test("upgrade workflow can be overwritten", () => {
 test("default options", () => {
   const project = createProject();
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
 });
@@ -100,7 +100,7 @@ test("custom options", () => {
     },
   });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
 });
@@ -117,7 +117,7 @@ test("with a GitHub app for authentication", () => {
     },
   });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
 });
@@ -131,7 +131,7 @@ test("branches default to release branches", () => {
     },
   });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
   expect(snapshot[".github/workflows/upgrade-branch1.yml"]).toBeDefined();
@@ -150,7 +150,7 @@ test("considers branches added post project instantiation", () => {
 
   project.release?.addBranch("branch2", { majorVersion: 3 });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
   expect(snapshot[".github/workflows/upgrade-branch1.yml"]).toBeDefined();
@@ -168,7 +168,7 @@ test("can upgrade multiple branches", () => {
     },
   });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot[".github/workflows/upgrade-branch1.yml"]).toBeDefined();
   expect(snapshot[".github/workflows/upgrade-branch1.yml"]).toMatchSnapshot();
   expect(snapshot[".github/workflows/upgrade-branch2.yml"]).toBeDefined();
@@ -187,7 +187,7 @@ test("git identity can be customized", () => {
     },
   });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
   expect(upgrade.jobs.pr.steps[3]).toEqual({
     name: "Set git identity",
@@ -207,7 +207,7 @@ test("github runner can be customized", () => {
     },
   });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
   expect(upgrade.jobs.upgrade["runs-on"]).toEqual("self-hosted");
   expect(upgrade.jobs.pr["runs-on"]).toEqual("self-hosted");
@@ -223,7 +223,7 @@ test("labels and assignees can be customized", () => {
     },
   });
 
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
   expect(upgrade.jobs.pr.steps[4].with.labels).toEqual("deps-upgrade-label");
   expect(upgrade.jobs.pr.steps[4].with.assignees).toEqual("repo-maintainer");
@@ -235,7 +235,7 @@ test("upgrade task created without projen defined versions at NodeProject", () =
     name: "test project",
     deps: ["npm@^8", "axios@~0.20.0", "markdownlint@0.24.0"],
   });
-  const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = Testing.synth(prj)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[1].exec).toStrictEqual(
     "npm-check-updates --dep dev --upgrade --target=minor --reject='axios,markdownlint'"
   );

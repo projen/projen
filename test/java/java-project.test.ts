@@ -1,10 +1,10 @@
+import { Testing } from "../../src";
 import { JavaProject, JavaProjectOptions } from "../../src/java/java-project";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
-import { synthSnapshot } from "../util";
 
 test("defaults", () => {
   const p = new TestJavaProject();
-  expect(synthSnapshot(p)).toMatchSnapshot();
+  expect(Testing.synth(p)).toMatchSnapshot();
 });
 
 test("pom options", () => {
@@ -45,12 +45,12 @@ test("no junit", () => {
     junit: false,
   });
 
-  expect(synthSnapshot(p)).toMatchSnapshot();
+  expect(Testing.synth(p)).toMatchSnapshot();
 });
 
 test("projenrc in java", () => {
   const p = new TestJavaProject();
-  expect(synthSnapshot(p)["src/test/java/projenrc.java"]).toMatchSnapshot();
+  expect(Testing.synth(p)["src/test/java/projenrc.java"]).toMatchSnapshot();
 });
 
 test("disable projenrc in java", () => {
@@ -58,11 +58,11 @@ test("disable projenrc in java", () => {
     projenrcJava: false,
   });
 
-  expect(synthSnapshot(p)["src/test/java/projenrc.java"]).toBeUndefined();
+  expect(Testing.synth(p)["src/test/java/projenrc.java"]).toBeUndefined();
 });
 
 function snapPom(p: JavaProject) {
-  expect(synthSnapshot(p)["pom.xml"]).toMatchSnapshot();
+  expect(Testing.synth(p)["pom.xml"]).toMatchSnapshot();
 }
 
 class TestJavaProject extends JavaProject {

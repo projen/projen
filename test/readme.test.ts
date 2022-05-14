@@ -1,15 +1,13 @@
-import * as logging from "../src/logging";
-import { synthSnapshot, TestProject } from "./util";
-
-logging.disable();
+import { Testing } from "../src";
+import { GitHubProject } from "../src/github";
 
 describe("SampleReadProps", () => {
   test("default SampleReadme", () => {
     // GIVEN
-    const project = new TestProject();
+    const project = new GitHubProject({ name: "my-project" });
 
     // WHEN
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
 
     // THEN
     const upper = output["README.md"];
@@ -20,14 +18,15 @@ describe("SampleReadProps", () => {
 
   test("customized w/ default SampleReadme", () => {
     // GIVEN
-    const project = new TestProject({
+    const project = new GitHubProject({
+      name: "my-project",
       readme: {
         filename: "README.md",
       },
     });
 
     // WHEN
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
 
     // THEN
     const upper = output["README.md"];
@@ -38,14 +37,15 @@ describe("SampleReadProps", () => {
 
   test("customized SampleReadme", () => {
     // GIVEN
-    const project = new TestProject({
+    const project = new GitHubProject({
+      name: "my-project",
       readme: {
         filename: "readme.md",
       },
     });
 
     // WHEN
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
 
     // THEN
     const upper = output["README.md"];
@@ -56,14 +56,15 @@ describe("SampleReadProps", () => {
 
   test("SampleReadme customized contents in constructor", () => {
     // GIVEN
-    const project = new TestProject({
+    const project = new GitHubProject({
+      name: "my-project",
       readme: {
         contents: "my stuff",
       },
     });
 
     // WHEN
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
 
     // THEN
     const readme = output["README.md"];

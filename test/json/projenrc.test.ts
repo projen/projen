@@ -1,21 +1,21 @@
+import { StandardProject, Testing } from "../../src";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { Projenrc } from "../../src/projenrc-json";
-import { synthSnapshot, TestProject } from "../util";
 
 test("projenrc.json default project", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new StandardProject({ name: "my-project" });
 
   // WHEN
   new Projenrc(project);
 
   // THEN
-  expect(synthSnapshot(project)).toMatchSnapshot();
+  expect(Testing.synth(project)).toMatchSnapshot();
 });
 
 test("projenrc.json with typed options", () => {
   // GIVEN
-  const project = new TestProject(
+  const project = new StandardProject(
     renderProjenInitOptions("projen.typescript.TypeScriptProject", {
       staleOptions: {
         issues: {
@@ -34,5 +34,5 @@ test("projenrc.json with typed options", () => {
   new Projenrc(project);
 
   // THEN
-  expect(synthSnapshot(project)).toMatchSnapshot();
+  expect(Testing.synth(project)).toMatchSnapshot();
 });

@@ -1,5 +1,5 @@
+import { Testing } from "../../src";
 import { ConstructLibraryCdk8s } from "../../src/cdk8s";
-import { synthSnapshot } from "../util";
 
 test("constructs version defined", () => {
   const project = new ConstructLibraryCdk8s({
@@ -13,7 +13,7 @@ test("constructs version defined", () => {
     authorAddress: "test@test.com",
   });
 
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
 
   expect(output["package.json"].peerDependencies).toStrictEqual({
     cdk8s: "^1.4.9",
@@ -32,7 +32,7 @@ test("constructs version undefined", () => {
     authorAddress: "test@test.com",
   });
 
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
 
   expect(output["package.json"].peerDependencies).toStrictEqual({
     cdk8s: "^1.4.9",
@@ -53,7 +53,7 @@ test("constructs version pinning", () => {
     authorAddress: "test@test.com",
   });
 
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
 
   expect(output["package.json"].peerDependencies).toStrictEqual({
     cdk8s: "^1.4.9",
@@ -73,7 +73,7 @@ test("cdk8sPlusVersion undefined", () => {
     constructsVersion: "3.3.75",
   });
 
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
 
   expect(output["package.json"].peerDependencies).toStrictEqual({
     cdk8s: "^1.4.9",
@@ -121,7 +121,7 @@ describe("cdk8s and consructs version", () => {
       author: "test",
       authorAddress: "test@test.com",
     });
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
 
     // Then
     expect(output["package.json"].peerDependencies).toStrictEqual({
@@ -144,7 +144,7 @@ describe("cdk8s and consructs version", () => {
       author: "test",
       authorAddress: "test@test.com",
     });
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
 
     // Then
     expect(output["package.json"].peerDependencies).toStrictEqual({

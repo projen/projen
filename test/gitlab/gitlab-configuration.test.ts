@@ -1,11 +1,9 @@
+import { Project } from "../../src";
 import { GitlabConfiguration } from "../../src/gitlab";
-import { TestProject } from "../util";
 
 test("throws when adding an adding a job to a non-existant nested template", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new Project({ name: "my-project" });
   const c = new GitlabConfiguration(p);
   c.createNestedTemplates({ foo: {} });
   // THEN
@@ -14,9 +12,7 @@ test("throws when adding an adding a job to a non-existant nested template", () 
 
 test("does not throw when adding an services with an existing nested template", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new Project({ name: "my-project" });
   const c = new GitlabConfiguration(p);
   c.createNestedTemplates({ foo: {} });
   // THEN
@@ -25,9 +21,7 @@ test("does not throw when adding an services with an existing nested template", 
 
 test("main configuration inherits child configuration stages", () => {
   // GIVEN
-  const p = new TestProject({
-    stale: true,
-  });
+  const p = new Project({ name: "my-project" });
   const c = new GitlabConfiguration(p);
   c.createNestedTemplates({ foo: { jobs: { bar: { stage: "baz" } } } });
   // THEN

@@ -1,9 +1,8 @@
-import { XmlFile } from "../src";
-import { synthSnapshot, TestProject } from "./util";
+import { Project, Testing, XmlFile } from "../src";
 
 test("simple use", () => {
   // WHEN
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
 
   const file = new XmlFile(project, "pom.xml", {
     obj: {
@@ -21,5 +20,5 @@ test("simple use", () => {
   });
 
   // THEN
-  expect(synthSnapshot(project)["pom.xml"]).toMatchSnapshot();
+  expect(Testing.synth(project)["pom.xml"]).toMatchSnapshot();
 });

@@ -4,14 +4,7 @@ import { join } from "path";
 import { pathExistsSync } from "fs-extra";
 import * as inventory from "../src/inventory";
 import { execCapture } from "../src/util";
-import {
-  directorySnapshot,
-  execProjenCLI,
-  synthSnapshot,
-  synthSnapshotWithPost,
-  TestProject,
-  withProjectDir,
-} from "./util";
+import { directorySnapshot, execProjenCLI, withProjectDir } from "./util";
 
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {
@@ -28,18 +21,6 @@ for (const type of inventory.discover()) {
     });
   });
 }
-
-test("post-synthesis option enabled", () => {
-  const project = new TestProject();
-
-  expect(synthSnapshotWithPost(project)[".postsynth"]).toContain("postsynth");
-});
-
-test("post-synthesis option disabled", () => {
-  const project = new TestProject();
-
-  expect(synthSnapshot(project)[".postsynth"]).toBeUndefined();
-});
 
 /**
  * commented out due to breaking changes in projen@0.37.0

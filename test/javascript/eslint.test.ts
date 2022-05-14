@@ -1,5 +1,5 @@
+import { Testing } from "../../src";
 import { Eslint, NodeProject } from "../../src/javascript";
-import { synthSnapshot } from "../util";
 
 test("devdirs", () => {
   // GIVEN
@@ -15,7 +15,7 @@ test("devdirs", () => {
   });
 
   // THEN
-  expect(synthSnapshot(project)[".eslintrc.json"]).toMatchSnapshot();
+  expect(Testing.synth(project)[".eslintrc.json"]).toMatchSnapshot();
 });
 
 describe("prettier", () => {
@@ -33,7 +33,7 @@ describe("prettier", () => {
     });
 
     // THEN
-    expect(synthSnapshot(project)[".eslintrc.json"]).toMatchSnapshot();
+    expect(Testing.synth(project)[".eslintrc.json"]).toMatchSnapshot();
   });
 
   test("error on formatting when enabled", () => {
@@ -50,7 +50,7 @@ describe("prettier", () => {
     });
 
     // THEN
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     expect(output[".eslintrc.json"].rules).toHaveProperty("prettier/prettier", [
       "error",
     ]);
@@ -124,7 +124,7 @@ test("if the prettier is configured, eslint is configured accordingly", () => {
   });
 
   // THEN
-  const output = synthSnapshot(project);
+  const output = Testing.synth(project);
   expect(output[".eslintrc.json"].rules).toMatchObject({
     "prettier/prettier": ["error"],
   });

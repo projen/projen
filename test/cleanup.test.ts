@@ -1,14 +1,13 @@
 import { join } from "path";
 import { readJsonSync } from "fs-extra";
-import { DependencyType, JsonFile, SampleFile, TextFile } from "../src";
+import { JsonFile, Project, SampleFile, TextFile } from "../src";
 import { cleanup, FILE_MANIFEST } from "../src/cleanup";
 import { PROJEN_MARKER } from "../src/common";
-import { directorySnapshot, TestProject } from "./util";
+import { directorySnapshot } from "./util";
 
 test("cleanup uses cache file", () => {
   // GIVEN
-  const p = new TestProject();
-  p.deps.addDependency("test", DependencyType.BUILD);
+  const p = new Project({ name: "my-project" });
   const textFile = new TextFile(p, "foo/bar.txt");
   new SampleFile(p, "sample.txt", {
     contents: PROJEN_MARKER,
@@ -38,8 +37,7 @@ test("cleanup uses cache file", () => {
 
 test("cleanup falls back to greedy method", () => {
   // GIVEN
-  const p = new TestProject();
-  p.deps.addDependency("test", DependencyType.BUILD);
+  const p = new Project({ name: "my-project" });
 
   // This file would not normally get cleaned up up by the file manifest
   new TextFile(p, "delete.txt", {
@@ -70,7 +68,7 @@ test("cleanup falls back to greedy method", () => {
 
 test("cleanup only orphaned files", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
   const keepFile = new TextFile(p, "keep-this");
   const deleteFile = new TextFile(p, "not-this");
 
@@ -98,7 +96,7 @@ test("cleanup only orphaned files", () => {
 
 test("cleanup empty files", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
   const emptyFile = new JsonFile(p, "will-be-empty", { obj: { test: "test" } });
 
   // WHEN

@@ -205,6 +205,13 @@ export class Pom extends Component {
     );
   }
 
+  /**
+   * Project dependencies.
+   */
+  public get deps(): Dependencies {
+    return this._project.deps;
+  }
+
   private synthPom() {
     return resolve(
       {

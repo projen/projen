@@ -426,7 +426,13 @@ export class NodeProject extends GitHubProject {
   public readonly prettier?: Prettier;
 
   constructor(options: NodeProjectOptions) {
-    super(options);
+    super({
+      // override the default of `npx projen@VERSION -- we don't need to need to
+      // specify the version since running "npx projen" in a node-based project
+      // will use the version installed in node_modules
+      projenCommand: "npx projen",
+      ...options,
+    });
 
     this.package = new NodePackage(this, options);
     this.workflowBootstrapSteps = options.workflowBootstrapSteps ?? [];

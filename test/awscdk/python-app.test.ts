@@ -1,5 +1,4 @@
-import { awscdk } from "../../src";
-import { synthSnapshot } from "../util";
+import { awscdk, Testing } from "../../src";
 
 test("create cdk python project", () => {
   const p = new awscdk.AwsCdkPythonApp({
@@ -11,7 +10,7 @@ test("create cdk python project", () => {
     cdkVersion: "2.8.0",
   });
 
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
   expect(Object.keys(snapshot)).toStrictEqual([
     ".gitattributes",
     ".github/workflows/pull-request-lint.yml",
@@ -42,7 +41,7 @@ test("CDK v2 deps", () => {
     cdkVersion: "2.8.0",
   });
 
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
 
   expect(
     snapshot["requirements-dev.txt"] ===
@@ -71,7 +70,7 @@ test("CDK v1 deps", () => {
     cdkVersion: "1.140.0",
   });
 
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
 
   expect(
     snapshot["requirements-dev.txt"] ===

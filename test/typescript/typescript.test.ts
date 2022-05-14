@@ -1,7 +1,6 @@
-import { TaskRuntime } from "../../src";
+import { TaskRuntime, Testing } from "../../src";
 import { PROJEN_RC } from "../../src/common";
 import { mergeTsconfigOptions, TypeScriptProject } from "../../src/typescript";
-import { synthSnapshot } from "../util";
 
 describe("mergeTsconfigOptions", () => {
   test("merging includes", () => {
@@ -78,7 +77,7 @@ test("tsconfig prop is propagated to eslint and jest tsconfigs", () => {
     },
   });
 
-  const out = synthSnapshot(prj);
+  const out = Testing.synth(prj);
 
   expect(out["tsconfig.json"]).toEqual(
     expect.objectContaining({
@@ -131,7 +130,7 @@ test("sources and compiled output can be collocated", () => {
 
   expect(prj.tsconfig?.exclude).not.toContain("/lib");
 
-  const snapshot = synthSnapshot(prj);
+  const snapshot = Testing.synth(prj);
   expect(snapshot[".gitignore"]).toMatchSnapshot();
   expect(snapshot[".npmignore"]).toMatchSnapshot();
 });
@@ -147,7 +146,7 @@ test("tsconfigDevFile can be used to control the name of the tsconfig dev file",
 
   expect(prj.tsconfigDev.fileName).toBe("tsconfig.foo.json");
 
-  const snapshot = synthSnapshot(prj);
+  const snapshot = Testing.synth(prj);
   expect(snapshot["tsconfig.foo.json"]).not.toBeUndefined();
 });
 
@@ -158,7 +157,7 @@ test("projenrc.ts", () => {
     projenrcTs: true,
   });
 
-  const snapshot = synthSnapshot(prj);
+  const snapshot = Testing.synth(prj);
   expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual({
     description: "Synthesize project files",
     name: "default",
@@ -173,7 +172,7 @@ test("projenrc.ts linted by eslint task", () => {
     projenrcTs: true,
   });
 
-  const snapshot = synthSnapshot(prj);
+  const snapshot = Testing.synth(prj);
   expect(snapshot[".projen/tasks.json"].tasks.eslint).toStrictEqual({
     description: "Runs eslint against the codebase",
     name: "eslint",
@@ -192,7 +191,7 @@ test("upgrade task ignores pinned versions", () => {
     deps: ["npm@^8"],
     typescriptVersion: "4.4.4",
   });
-  const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
+  const tasks = Testing.synth(prj)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[1].exec).toStrictEqual(
     "npm-check-updates --dep dev --upgrade --target=minor --reject='typescript'"
   );

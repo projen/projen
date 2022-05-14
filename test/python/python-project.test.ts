@@ -1,9 +1,9 @@
+import { Testing } from "../../src";
 import { PythonProject, PythonProjectOptions } from "../../src/python";
-import { synthSnapshot } from "../util";
 
 test("defaults", () => {
   const p = new TestPythonProject();
-  expect(synthSnapshot(p)).toMatchSnapshot();
+  expect(Testing.synth(p)).toMatchSnapshot();
 });
 
 test("dependencies", () => {
@@ -11,7 +11,7 @@ test("dependencies", () => {
   p.addDependency("Django@3.1.5");
   p.addDependency("aws-cdk.core@*");
   p.addDevDependency("hypothesis@^6.0.3");
-  expect(synthSnapshot(p)).toMatchSnapshot();
+  expect(Testing.synth(p)).toMatchSnapshot();
 });
 
 test("dependencies via ctor", () => {
@@ -19,7 +19,7 @@ test("dependencies via ctor", () => {
     deps: ["Django@3.1.5", "aws-cdk.core"],
     devDeps: ["hypothesis@^6.0.3"],
   });
-  expect(synthSnapshot(p)).toMatchSnapshot();
+  expect(Testing.synth(p)).toMatchSnapshot();
 });
 
 test("no pytest", () => {
@@ -27,7 +27,7 @@ test("no pytest", () => {
     pytest: false,
   });
 
-  expect(synthSnapshot(p)).toMatchSnapshot();
+  expect(Testing.synth(p)).toMatchSnapshot();
 });
 
 test("pytest maxfailures", () => {
@@ -38,7 +38,7 @@ test("pytest maxfailures", () => {
   });
 
   expect(
-    synthSnapshot(p)[".projen/tasks.json"].tasks.test.steps[0].exec
+    Testing.synth(p)[".projen/tasks.json"].tasks.test.steps[0].exec
   ).toContain("--maxfail=3");
 });
 

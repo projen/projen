@@ -23,6 +23,12 @@ export interface FileBaseOptions {
   readonly editGitignore?: boolean;
 
   /**
+   * Update the project's .gitattributes file
+   * @default true
+   */
+  readonly editGitattributes?: boolean;
+
+  /**
    * Whether the generated file should be readonly.
    *
    * @default true
@@ -93,7 +99,8 @@ export abstract class FileBase extends Component {
 
     const globPattern = `/${this.path}`;
     const committed = options.committed ?? true;
-    if (committed && filePath !== ".gitattributes") {
+    const editGitattributes = options.editGitattributes ?? true;
+    if (committed && editGitattributes && filePath !== ".gitattributes") {
       project.root.annotateGenerated(`/${filePath}`);
     }
 

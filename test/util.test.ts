@@ -1,3 +1,4 @@
+import { Project } from "../src";
 import { JsonFile } from "../src/json";
 import {
   decamelizeKeysRecursively,
@@ -8,7 +9,6 @@ import {
   formatAsPythonModule,
   getGitVersion,
 } from "../src/util";
-import { TestProject } from "./util";
 
 describe("decamelizeRecursively", () => {
   test("decamel recurses an object structure", () => {
@@ -132,8 +132,8 @@ describe("deepMerge (destructive: false)", () => {
 
   test("does not recurse on projects", () => {
     // GIVEN
-    const proj1 = new TestProject();
-    const proj2 = new TestProject();
+    const proj1 = new Project({ name: "my-project" });
+    const proj2 = new Project({ name: "my-project" });
     const objA = { a: proj1 };
     const objB = { a: proj2 };
 
@@ -146,7 +146,7 @@ describe("deepMerge (destructive: false)", () => {
 
   test("does not recurse on components", () => {
     // GIVEN
-    const proj = new TestProject();
+    const proj = new Project({ name: "my-project" });
     const comp1 = new JsonFile(proj, "foo", { obj: 3 });
     const comp2 = new JsonFile(proj, "bar", { obj: 5 });
     const objA = { a: comp1 };
@@ -196,8 +196,8 @@ describe("deepMerge (destructive: true)", () => {
 
   test("does not recurse on projects", () => {
     // GIVEN
-    const proj1 = new TestProject();
-    const proj2 = new TestProject();
+    const proj1 = new Project({ name: "my-project" });
+    const proj2 = new Project({ name: "my-project" });
     const objA = { a: proj1 };
     const objB = { a: proj2 };
 
@@ -210,7 +210,7 @@ describe("deepMerge (destructive: true)", () => {
 
   test("does not recurse on components", () => {
     // GIVEN
-    const proj = new TestProject();
+    const proj = new Project({ name: "my-project" });
     const comp1 = new JsonFile(proj, "foo", { obj: 3 });
     const comp2 = new JsonFile(proj, "bar", { obj: 5 });
     const objA = { a: comp1 };

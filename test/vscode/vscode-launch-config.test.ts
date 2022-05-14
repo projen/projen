@@ -1,17 +1,18 @@
-import { InternalConsoleOptions } from "../../src/vscode";
-import { synthSnapshot, TestProject } from "../util";
+import { Testing, Project } from "../../src";
+import { InternalConsoleOptions, VsCode } from "../../src/vscode";
 
 const VSCODE_DEBUGGER_FILE = ".vscode/launch.json";
 
 test("empty launch configuration", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
+  const vscode = new VsCode(project);
 
   // WHEN
-  project.vscode?.launchConfiguration;
+  vscode.launchConfiguration;
 
   // THEN
-  expect(synthSnapshot(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
+  expect(Testing.synth(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
     "//": expect.anything(),
     version: "0.2.0",
     configurations: [],
@@ -20,10 +21,11 @@ test("empty launch configuration", () => {
 
 test("adding a launch configuration entry", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
+  const vscode = new VsCode(project);
 
   // WHEN
-  const launchConfig = project.vscode?.launchConfiguration;
+  const launchConfig = vscode.launchConfiguration;
   launchConfig?.addConfiguration({
     type: "node",
     request: "launch",
@@ -34,7 +36,7 @@ test("adding a launch configuration entry", () => {
   });
 
   // THEN
-  expect(synthSnapshot(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
+  expect(Testing.synth(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
     "//": expect.anything(),
     version: "0.2.0",
     configurations: [
@@ -52,10 +54,11 @@ test("adding a launch configuration entry", () => {
 
 test("adding multiple launch configuration entries", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
+  const vscode = new VsCode(project);
 
   // WHEN
-  const launchConfig = project.vscode?.launchConfiguration;
+  const launchConfig = vscode.launchConfiguration;
   launchConfig?.addConfiguration({
     type: "node",
     request: "launch",
@@ -86,7 +89,7 @@ test("adding multiple launch configuration entries", () => {
   });
 
   // THEN
-  expect(synthSnapshot(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
+  expect(Testing.synth(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
     "//": expect.anything(),
     version: "0.2.0",
     configurations: [

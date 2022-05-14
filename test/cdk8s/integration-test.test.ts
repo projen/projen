@@ -1,5 +1,5 @@
+import { Testing } from "../../src";
 import { Cdk8sTypeScriptApp, IntegrationTest } from "../../src/cdk8s";
-import { synthSnapshot } from "../util";
 
 describe("IntegrationTest", () => {
   test("adding an integration test", () => {
@@ -17,7 +17,7 @@ describe("IntegrationTest", () => {
     });
 
     // THEN
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     const tasks = output[".projen/tasks.json"].tasks;
     expect(tasks["integ:my-test-name:snapshot"]).toMatchSnapshot();
     expect(tasks["integ:my-test-name:deploy"]).toMatchSnapshot();
@@ -42,7 +42,7 @@ describe("IntegrationTest", () => {
     });
 
     // THEN
-    const output = synthSnapshot(project);
+    const output = Testing.synth(project);
     const tasks = output[".projen/tasks.json"].tasks;
     expect(tasks["integ:foobar:snapshot"]).toBeDefined();
     expect(tasks["integ:foobar:deploy"]).toBeDefined();

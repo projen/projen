@@ -3,11 +3,11 @@ import { join } from "path";
 import { readJsonSync } from "fs-extra";
 import semver from "semver";
 import * as YAML from "yaml";
-import { Project } from "../../src";
+import { StandardProject, Testing } from "../../src";
 import { NodePackage } from "../../src/javascript/node-package";
 import { minVersion } from "../../src/javascript/util";
 import * as util from "../../src/util";
-import { mkdtemp, synthSnapshot, TestProject } from "../util";
+import { mkdtemp } from "../util";
 
 /**
  * Mocks a yarn install, writing to yarn.lock
@@ -110,22 +110,22 @@ afterEach(() => {
 });
 
 test("all bugs field present", () => {
-  const project = new TestProject();
+  const project = new StandardProject({ name: "my-project" });
 
   new NodePackage(project, {
     bugsEmail: "bugs@foobar.local",
     bugsUrl: "bugs.foobar.local",
   });
 
-  expect(synthSnapshot(project)["package.json"].bugs).toMatchSnapshot();
+  expect(Testing.synth(project)["package.json"].bugs).toMatchSnapshot();
 });
 
 test("no bugs field present", () => {
-  const project = new TestProject();
+  const project = new StandardProject({ name: "my-project" });
 
   new NodePackage(project, {});
 
-  const snps = synthSnapshot(project);
+  const snps = Testing.synth(project);
 
   expect(snps["package.json"].bugs).toMatchSnapshot();
 
@@ -133,7 +133,7 @@ test("no bugs field present", () => {
 });
 
 test("single bugs field present", () => {
-  const project = new TestProject();
+  const project = new StandardProject({ name: "my-project" });
 
   const _email = "bugs@foobar.local";
 
@@ -141,7 +141,7 @@ test("single bugs field present", () => {
     bugsEmail: _email,
   });
 
-  const snps = synthSnapshot(project);
+  const snps = Testing.synth(project);
 
   expect(snps["package.json"].bugs).toMatchSnapshot();
 
@@ -157,7 +157,7 @@ test('lockfile updated (install twice) after "*"s are resolved', () => {
       mockYarnInstall(options.cwd, { ms: "2.1.3" });
     });
 
-  const project = new Project({ name: "test" });
+  const project = new StandardProject({ name: "test" });
   const pkg = new NodePackage(project);
 
   pkg.addDeps("ms");
@@ -173,7 +173,7 @@ test('lockfile updated (install twice) after "*"s are resolved', () => {
 
 test("install only once if all versions are resolved", () => {
   const execMock = jest.spyOn(util, "exec").mockReturnValueOnce();
-  const project = new Project({ name: "test" });
+  const project = new StandardProject({ name: "test" });
   const pkg = new NodePackage(project);
 
   pkg.addDeps("ms@^2");
@@ -190,14 +190,14 @@ test("no install if package.json did not change at all", () => {
   const orig = {
     name: "test",
     scripts: {
-      build: "npx projen build",
-      compile: "npx projen compile",
-      default: "npx projen default",
-      eject: "npx projen eject",
-      package: "npx projen package",
-      "post-compile": "npx projen post-compile",
-      "pre-compile": "npx projen pre-compile",
-      test: "npx projen test",
+      build: "npx projen@99.99.99 build",
+      compile: "npx projen@99.99.99 compile",
+      default: "npx projen@99.99.99 default",
+      eject: "npx projen@99.99.99 eject",
+      package: "npx projen@99.99.99 package",
+      "post-compile": "npx projen@99.99.99 post-compile",
+      "pre-compile": "npx projen@99.99.99 pre-compile",
+      test: "npx projen@99.99.99 test",
     },
     dependencies: {
       ms: "^2",
@@ -214,7 +214,7 @@ test("no install if package.json did not change at all", () => {
   );
   mkdirSync(join(outdir, "node_modules")); // <-- also causes an "install"
 
-  const project = new Project({ name: "test", outdir });
+  const project = new StandardProject({ name: "test", outdir });
   project.addExcludeFromCleanup("package.json");
   const pkg = new NodePackage(project);
 
@@ -233,7 +233,7 @@ test('"*" peer dependencies are pinned in devDependencies', () => {
     mockYarnInstall(options.cwd, { ms: "1.2.3" });
   });
 
-  const project = new Project({ name: "test" });
+  const project = new StandardProject({ name: "test" });
   const pkg = new NodePackage(project, {
     peerDependencyOptions: {
       pinnedDevDependency: true,
@@ -259,7 +259,7 @@ test("manually set devDependencies are not changed when a peerDependency is adde
     mockYarnInstall(options.cwd, { ms: "1.3.4" });
   });
 
-  const project = new Project({ name: "test" });
+  const project = new StandardProject({ name: "test" });
   const pkg = new NodePackage(project, {
     peerDependencyOptions: {
       pinnedDevDependency: true,
@@ -301,7 +301,7 @@ test("devDependencies are not pinned by peerDependencies if a regular (runtime) 
     mockYarnInstall(options.cwd, { ms: "1.3.8" });
   });
 
-  const project = new Project({ name: "test" });
+  const project = new StandardProject({ name: "test" });
   const pkg = new NodePackage(project, {
     peerDependencyOptions: {
       pinnedDevDependency: true,
@@ -329,7 +329,7 @@ test("devDependencies are not pinned by peerDependencies if pinnedDevDependency 
     mockYarnInstall(options.cwd, { ms: "1.4.0" });
   });
 
-  const project = new Project({ name: "test" });
+  const project = new StandardProject({ name: "test" });
   const pkg = new NodePackage(project, {
     peerDependencyOptions: {
       pinnedDevDependency: false,
@@ -355,7 +355,7 @@ test("file path dependencies are respected", () => {
     mockYarnInstall(options.cwd, { ms: "file:../ms" });
   });
 
-  const project = new Project({ name: "test" });
+  const project = new StandardProject({ name: "test" });
   const pkg = new NodePackage(project, {
     peerDependencyOptions: {
       pinnedDevDependency: false,
@@ -385,7 +385,7 @@ test("local dependencies can be specified using 'file:' prefix", () => {
     JSON.stringify(localPackage, undefined, 2)
   );
 
-  const project = new TestProject();
+  const project = new StandardProject({ name: "test" });
   const pkg = new NodePackage(project);
   pkg.addPeerDeps(`file:${localDepPath}`);
 

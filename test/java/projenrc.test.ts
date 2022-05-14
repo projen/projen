@@ -1,11 +1,11 @@
+import { StandardProject, Testing } from "../../src";
 import { Pom } from "../../src/java";
 import { Projenrc } from "../../src/java/projenrc";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
-import { synthSnapshot, TestProject } from "../util";
 
 test("projenrc.java support", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new StandardProject({ name: "my-project" });
   const pom = new Pom(project, {
     groupId: "my.group.id",
     artifactId: "hello-world",
@@ -18,12 +18,12 @@ test("projenrc.java support", () => {
   });
 
   // THEN
-  expect(synthSnapshot(project)).toMatchSnapshot();
+  expect(Testing.synth(project)).toMatchSnapshot();
 });
 
 test("use a non-test scope", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new StandardProject({ name: "my-project" });
   const pom = new Pom(project, {
     groupId: "my.group.id",
     artifactId: "hello-world",
@@ -37,12 +37,12 @@ test("use a non-test scope", () => {
   });
 
   // THEN
-  expect(synthSnapshot(project)).toMatchSnapshot();
+  expect(Testing.synth(project)).toMatchSnapshot();
 });
 
 test("set the class name", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new StandardProject({ name: "my-project" });
   const pom = new Pom(project, {
     groupId: "my.group.id",
     artifactId: "hello-world",
@@ -56,12 +56,12 @@ test("set the class name", () => {
   });
 
   // THEN
-  expect(synthSnapshot(project)).toMatchSnapshot();
+  expect(Testing.synth(project)).toMatchSnapshot();
 });
 
 test("generate projenrc in java", () => {
   // GIVEN
-  const project = new TestProject(
+  const project = new StandardProject(
     renderProjenInitOptions("projen.java.JavaProject", {})
   );
   const pom = new Pom(project, {
@@ -75,6 +75,6 @@ test("generate projenrc in java", () => {
 
   // THEN
   expect(
-    synthSnapshot(project)["src/test/java/projenrc.java"]
+    Testing.synth(project)["src/test/java/projenrc.java"]
   ).toMatchSnapshot();
 });

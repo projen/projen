@@ -2,16 +2,16 @@ import { spawnSync } from "child_process";
 import { EOL } from "os";
 import { basename, join } from "path";
 import { mkdirpSync } from "fs-extra";
-import { Project } from "../../src";
+import { Project, Tasks } from "../../src";
 import { TaskRuntime } from "../../src/task-runtime";
-import { TestProject } from "../util";
 
 test("minimal case (just a shell command)", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
 
   // WHEN
-  p.addTask("test1", {
+  t.addTask("test1", {
     exec: "echo hello_tasks!",
   });
 
@@ -21,10 +21,11 @@ test("minimal case (just a shell command)", () => {
 
 test("fails if the step fails", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
 
   // WHEN
-  p.addTask("testme", {
+  t.addTask("testme", {
     exec: "false",
   });
 
@@ -36,13 +37,14 @@ test("fails if the step fails", () => {
 
 test("multiple steps", () => {
   // GIVEN
-  const p = new TestProject();
-  const t = p.addTask("testme");
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  const t1 = t.addTask("testme");
 
   // WHEN
-  t.exec("echo step1");
-  t.exec("echo step2");
-  t.exec("echo step3");
+  t1.exec("echo step1");
+  t1.exec("echo step2");
+  t1.exec("echo step3");
 
   // THEN
   expect(executeTask(p, "testme")).toEqual(["step1", "step2", "step3"]);
@@ -50,15 +52,16 @@ test("multiple steps", () => {
 
 test("execution stops if a step fails", () => {
   // GIVEN
-  const p = new TestProject();
-  const t = p.addTask("testme");
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  const t1 = t.addTask("testme");
 
   // WHEN
-  t.exec("echo step1");
-  t.exec("echo step2");
-  t.exec("echo step3");
-  t.exec("echo failing && false");
-  t.exec("echo step4");
+  t1.exec("echo step1");
+  t1.exec("echo step2");
+  t1.exec("echo step3");
+  t1.exec("echo failing && false");
+  t1.exec("echo step4");
 
   // THEN
   expect(() => executeTask(p, "testme")).toThrow(
@@ -69,15 +72,16 @@ test("execution stops if a step fails", () => {
 describe("condition", () => {
   test("zero exit code means that steps should be executed", () => {
     // GIVEN
-    const p = new TestProject();
+    const p = new Project({ name: "my-project" });
+    const t = new Tasks(p);
 
     // WHEN
-    const t = p.addTask("foo", {
+    const t1 = t.addTask("foo", {
       condition: "echo evaluating_condition",
     });
 
-    t.exec("echo step1");
-    t.exec("echo step2");
+    t1.exec("echo step1");
+    t1.exec("echo step2");
 
     // THEN
     expect(executeTask(p, "foo")).toEqual([
@@ -89,15 +93,16 @@ describe("condition", () => {
 
   test("non-zero exit code means steps should not be executed", () => {
     // GIVEN
-    const p = new TestProject();
+    const p = new Project({ name: "my-project" });
+    const t = new Tasks(p);
 
     // WHEN
-    const t = p.addTask("foo", {
+    const t1 = t.addTask("foo", {
       condition: "echo failing_condition && false",
     });
 
-    t.exec("echo step1");
-    t.exec("echo step2");
+    t1.exec("echo step1");
+    t1.exec("echo step2");
 
     // THEN
     expect(executeTask(p, "foo")).toEqual(["failing_condition"]);
@@ -106,16 +111,18 @@ describe("condition", () => {
 
 describe("cwd", () => {
   test("default cwd is project root", () => {
-    const p = new TestProject();
-    p.addTask("testme", { exec: "echo cwd is $PWD" });
+    const p = new Project({ name: "my-project" });
+    const t = new Tasks(p);
+    t.addTask("testme", { exec: "echo cwd is $PWD" });
     expect(
       executeTask(p, "testme")[0].includes(basename(p.outdir))
     ).toBeTruthy();
   });
 
   test("if a step changes cwd, it will not affect next steps", () => {
-    const p = new TestProject();
-    const task = p.addTask("testme");
+    const p = new Project({ name: "my-project" });
+    const t = new Tasks(p);
+    const task = t.addTask("testme");
     task.exec("cd /tmp");
     task.exec("echo $PWD");
     expect(
@@ -124,10 +131,11 @@ describe("cwd", () => {
   });
 
   test("cwd can be set at the task level", () => {
-    const p = new TestProject();
+    const p = new Project({ name: "my-project" });
+    const t = new Tasks(p);
     const cwd = join(p.outdir, "mypwd");
     mkdirpSync(cwd);
-    const task = p.addTask("testme", {
+    const task = t.addTask("testme", {
       cwd,
     });
     task.exec("echo step1=$PWD");
@@ -138,12 +146,13 @@ describe("cwd", () => {
   });
 
   test("cwd can be set at step level", () => {
-    const p = new TestProject();
+    const p = new Project({ name: "my-project" });
+    const t = new Tasks(p);
     const taskcwd = join(p.outdir, "mypwd");
     const stepcwd = join(p.outdir, "yourpwd");
     mkdirpSync(taskcwd);
     mkdirpSync(stepcwd);
-    const task = p.addTask("testme", { cwd: taskcwd });
+    const task = t.addTask("testme", { cwd: taskcwd });
     task.exec("echo step1=$PWD");
     task.exec("echo step2=$PWD", { cwd: stepcwd });
 
@@ -153,8 +162,9 @@ describe("cwd", () => {
   });
 
   test("fails gracefully if cwd does not exist (task level)", () => {
-    const p = new TestProject();
-    p.addTask("testme", {
+    const p = new Project({ name: "my-project" });
+    const t = new Tasks(p);
+    t.addTask("testme", {
       cwd: join(p.outdir, "not-found"),
       exec: "echo hi",
     });
@@ -162,8 +172,9 @@ describe("cwd", () => {
   });
 
   test("fails gracefully if cwd does not exist (step level)", () => {
-    const p = new TestProject();
-    const task = p.addTask("testme");
+    const p = new Project({ name: "my-project" });
+    const t = new Tasks(p);
+    const task = t.addTask("testme");
     task.exec("echo step", { cwd: join(p.outdir, "mystep") });
     expect(() => executeTask(p, "testme")).toThrow(
       /must be an existing directory/
@@ -173,14 +184,15 @@ describe("cwd", () => {
 
 describe("say", () => {
   test('"say" can be used to print an info log during execution', () => {
-    const p = new TestProject();
-    const task = p.addTask("say");
+    const p = new Project({ name: "my-project" });
+    const t = new Tasks(p);
+    const task = t.addTask("say");
     task.say("hello, world");
 
     p.synth();
 
     const rt = new TaskRuntime(p.outdir);
-    expect(rt.tasks.find((t) => t.name === "say")).toStrictEqual({
+    expect(rt.tasks.find((tsk) => tsk.name === "say")).toStrictEqual({
       name: "say",
       steps: [{ say: "hello, world" }],
     });
@@ -188,8 +200,9 @@ describe("say", () => {
 });
 
 test("builtin tasks are scripts embedded inside projen", () => {
-  const p = new TestProject();
-  const task = p.addTask("boom");
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  const task = t.addTask("boom");
   task.builtin("builtin-example");
   p.synth();
 
@@ -198,9 +211,10 @@ test("builtin tasks are scripts embedded inside projen", () => {
 });
 
 test("env is inherited from parent tasks", () => {
-  const p = new TestProject();
-  const parent = p.addTask("parent", { env: { E1: "parent1", E2: "parent2" } });
-  const child = p.addTask("child", {
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  const parent = t.addTask("parent", { env: { E1: "parent1", E2: "parent2" } });
+  const child = t.addTask("child", {
     env: { E2: "child1", E3: "child2" },
     exec: 'echo "child: [$E1,$E2,$E3]"',
   });
@@ -215,8 +229,9 @@ test("env is inherited from parent tasks", () => {
 });
 
 test("requiredEnv can be used to specify required environment variables", () => {
-  const p = new TestProject();
-  p.addTask("my-task", {
+  const p = new Project({ name: "my-project" });
+  const t = new Tasks(p);
+  t.addTask("my-task", {
     requiredEnv: ["ENV1", "ENV2", "ENV3"],
     exec: 'echo "$ENV1 $ENV2 $ENV3"',
   });

@@ -1,11 +1,10 @@
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
-import { JsonFile } from "../src";
+import { JsonFile, Project, Testing } from "../src";
 import { writeFile } from "../src/util";
-import { synthSnapshot, TestProject } from "./util";
 
 test("json object can be mutated before synthesis", () => {
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   const obj: any = {
     hello: "world",
@@ -18,7 +17,7 @@ test("json object can be mutated before synthesis", () => {
     foo: 1234,
   };
 
-  expect(synthSnapshot(prj)["my/json/file.json"]).toStrictEqual({
+  expect(Testing.synth(prj)["my/json/file.json"]).toStrictEqual({
     hello: "world",
     anotherField: { foo: 1234 },
   });
@@ -26,7 +25,7 @@ test("json object can be mutated before synthesis", () => {
 
 test("omitEmpty", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
 
   // WHEN
   new JsonFile(p, "file.json", {
@@ -59,7 +58,7 @@ test("omitEmpty", () => {
   });
 
   // THEN
-  expect(synthSnapshot(p)["file.json"]).toStrictEqual({
+  expect(Testing.synth(p)["file.json"]).toStrictEqual({
     hello: 1234,
     array_with_undefined: [123, 456], // undefined is skipped
     child: {
@@ -80,7 +79,7 @@ test("omitEmpty", () => {
 });
 
 test("json file can contain projen marker", () => {
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   const obj: any = {};
 
@@ -89,13 +88,13 @@ test("json file can contain projen marker", () => {
     marker: true,
   });
 
-  const output = synthSnapshot(prj)["my/json/file-marker.json"];
+  const output = Testing.synth(prj)["my/json/file-marker.json"];
 
   expect(output["//"]).toBe(file.marker);
 });
 
 test("json5 file can contain projen marker as comment", () => {
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   const obj: any = {};
 
@@ -104,7 +103,7 @@ test("json5 file can contain projen marker as comment", () => {
     marker: true,
   });
 
-  const output = synthSnapshot(prj)["my/json/file-marker.json5"];
+  const output = Testing.synth(prj)["my/json/file-marker.json5"];
 
   expect(output).toContain(`// ${file.marker}`);
 });
@@ -115,7 +114,7 @@ describe("newline", () => {
   };
 
   test("is enabled by default", () => {
-    const prj = new TestProject();
+    const prj = new Project({ name: "my-project" });
 
     new JsonFile(prj, "hello.json", { obj });
 
@@ -125,7 +124,7 @@ describe("newline", () => {
   });
 
   test("can be disabled", () => {
-    const prj = new TestProject();
+    const prj = new Project({ name: "my-project" });
 
     new JsonFile(prj, "hello.json", { obj, newline: false });
 
@@ -139,20 +138,20 @@ describe("changed", () => {
   const obj = { hello: "world" };
 
   it('is "undefined" before synthesis', () => {
-    const prj = new TestProject();
+    const prj = new Project({ name: "my-project" });
     const file = new JsonFile(prj, "hello.json", { obj });
     expect(file.changed).toBeUndefined();
   });
 
   it('is set to "true" for new files', () => {
-    const prj = new TestProject();
+    const prj = new Project({ name: "my-project" });
     const file = new JsonFile(prj, "hello.json", { obj });
     prj.synth();
     expect(file.changed).toBeTruthy();
   });
 
   it('is set to "true" if the file changed', () => {
-    const prj = new TestProject();
+    const prj = new Project({ name: "my-project" });
     const file = new JsonFile(prj, "hello.json", { obj });
     writeFileSync(
       join(prj.outdir, "hello.json"),
@@ -163,7 +162,7 @@ describe("changed", () => {
   });
 
   it('is set to "true" if the file permissions changed', () => {
-    const prj = new TestProject();
+    const prj = new Project({ name: "my-project" });
     const file = new JsonFile(prj, "hello.json", {
       obj,
       newline: false,
@@ -179,7 +178,7 @@ describe("changed", () => {
   });
 
   it('is set to "false" if the file did not change', () => {
-    const prj = new TestProject();
+    const prj = new Project({ name: "my-project" });
     const file = new JsonFile(prj, "hello.json", {
       obj,
       newline: false,

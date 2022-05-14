@@ -1,9 +1,7 @@
 import * as path from "path";
-import { JsonFile, Project, Testing, TextFile } from "../src";
-<<<<<<< HEAD
-=======
-import { synthSnapshot, TestProject } from "./util";
->>>>>>> main
+import * as fs from "fs-extra";
+import { JsonFile, Project, ProjectOptions, Testing, TextFile } from "../src";
+import { synthSnapshotWithPost } from "./util";
 
 test("file paths are relative to the project outdir", () => {
   // GIVEN
@@ -134,45 +132,26 @@ test("tryRemoveFile() can be used to override an existing file", () => {
   expect(outdir["your/file/me.txt"]).toContain("better");
   expect(result === newFile).toBeTruthy();
 });
-<<<<<<< HEAD
-=======
 
-test("autoApprove is configured", () => {
-  // WHEN
-  const p = new TestProject({
-    autoApproveOptions: {
-      secret: "MY_SECRET",
-    },
-  });
+test("post-synthesis option enabled", () => {
+  const project = new PostSynthProject({ name: "my-project" });
 
-  // THEN
-  expect(p.autoApprove).toBeDefined();
-  expect(p.autoApprove?.label).toEqual("auto-approve");
+  expect(synthSnapshotWithPost(project)[".postsynth"]).toContain("postsynth");
 });
 
-test("github: false disables github integration", () => {
-  // WHEN
-  const p = new TestProject({
-    github: false,
-  });
+test("post-synthesis option disabled", () => {
+  const project = new PostSynthProject({ name: "my-project" });
 
-  // THEN
-  expect(p.github).toBeUndefined();
+  expect(Testing.synth(project)[".postsynth"]).toBeUndefined();
 });
 
-test("renovatebot: true creates renovatebot configuration", () => {
-  // GIVEN
-  const p = new TestProject({
-    renovatebot: true,
-    renovatebotOptions: {
-      labels: ["renotate", "dependencies"],
-    },
-  });
+export class PostSynthProject extends Project {
+  constructor(options: ProjectOptions) {
+    super(options);
+  }
 
-  // WHEN
-  const snapshot = synthSnapshot(p);
-
-  // THEN
-  expect(snapshot["renovate.json5"]).toMatchSnapshot();
-});
->>>>>>> main
+  // include a file that is only generated if post-synthesis isn't disabled
+  postSynthesize() {
+    fs.writeFileSync(path.join(this.outdir, ".postsynth"), "# postsynth");
+  }
+}

@@ -702,7 +702,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -774,7 +774,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -793,7 +793,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -847,7 +847,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -866,7 +866,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -1817,7 +1817,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -1870,7 +1870,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -1889,7 +1889,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -2034,7 +2034,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -2053,7 +2053,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -4056,7 +4056,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -4126,7 +4126,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -4145,7 +4145,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -4562,7 +4562,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -4581,7 +4581,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -6845,7 +6845,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -6915,7 +6915,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -6934,7 +6934,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -7445,7 +7445,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -7464,7 +7464,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -9513,7 +9513,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -9583,7 +9583,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -9602,7 +9602,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -10019,7 +10019,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -10038,7 +10038,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -12106,7 +12106,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -12176,7 +12176,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -12195,7 +12195,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -12706,7 +12706,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -12725,7 +12725,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -14757,7 +14757,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -14827,7 +14827,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -14846,7 +14846,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -15357,7 +15357,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -15376,7 +15376,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -16270,7 +16270,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -16342,7 +16342,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -16361,7 +16361,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -16415,7 +16415,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -16434,7 +16434,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -18136,7 +18136,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -18206,7 +18206,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -18225,7 +18225,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -18736,7 +18736,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -18755,7 +18755,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -20509,7 +20509,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -20579,7 +20579,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -20598,7 +20598,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -20980,7 +20980,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -20999,7 +20999,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -22770,7 +22770,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -22840,7 +22840,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -22859,7 +22859,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -23276,7 +23276,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -23295,7 +23295,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -25017,7 +25017,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -25087,7 +25087,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -25106,7 +25106,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -25488,7 +25488,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -25507,7 +25507,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -25783,7 +25783,7 @@ Array [
     "typename": "javascript.NodeProject",
   },
   Object {
-    "docs": "Base project.",
+    "docs": "Base project type.",
     "docsurl": "https://projen.io/api/API.html#projen-project",
     "fqn": "projen.Project",
     "moduleName": "projen",
@@ -25857,95 +25857,6 @@ Array [
         ],
         "simpleType": "Project",
         "switch": "parent",
-      },
-      Object {
-        "default": "\\"npx projen\\"",
-        "docs": "The shell command to use in order to run the projen CLI.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenCommand",
-        "optional": true,
-        "parent": "ProjectOptions",
-        "path": Array [
-          "projenCommand",
-        ],
-        "simpleType": "string",
-        "switch": "projen-command",
-      },
-      Object {
-        "default": "false",
-        "docs": "Generate (once) .projenrc.json (in JSON). Set to \`false\` in order to disable .projenrc.json generation.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenrcJson",
-        "optional": true,
-        "parent": "ProjectOptions",
-        "path": Array [
-          "projenrcJson",
-        ],
-        "simpleType": "boolean",
-        "switch": "projenrc-json",
-      },
-      Object {
-        "default": "- default options",
-        "docs": "Options for .projenrc.json.",
-        "featured": false,
-        "fqn": "projen.ProjenrcOptions",
-        "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "projenrcJsonOptions",
-        "optional": true,
-        "parent": "ProjectOptions",
-        "path": Array [
-          "projenrcJsonOptions",
-        ],
-        "simpleType": "ProjenrcOptions",
-        "switch": "projenrc-json-options",
-      },
-      Object {
-        "default": "false",
-        "docs": "Use renovatebot to handle dependency upgrades.",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "renovatebot",
-        "optional": true,
-        "parent": "ProjectOptions",
-        "path": Array [
-          "renovatebot",
-        ],
-        "simpleType": "boolean",
-        "switch": "renovatebot",
-      },
-      Object {
-        "default": "- default options",
-        "docs": "Options for renovatebot.",
-        "featured": false,
-        "fqn": "projen.RenovatebotOptions",
-        "fullType": Object {
-          "fqn": "projen.RenovatebotOptions",
-        },
-        "jsonLike": true,
-        "kind": "interface",
-        "name": "renovatebotOptions",
-        "optional": true,
-        "parent": "ProjectOptions",
-        "path": Array [
-          "renovatebotOptions",
-        ],
-        "simpleType": "RenovatebotOptions",
-        "switch": "renovatebot-options",
       },
     ],
     "pjid": "project",
@@ -26450,7 +26361,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -26503,7 +26414,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -26522,7 +26433,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -26667,7 +26578,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -26686,7 +26597,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -28164,7 +28075,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -28234,7 +28145,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -28253,7 +28164,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -28635,7 +28546,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -28654,7 +28565,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -30413,7 +30324,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -30483,7 +30394,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -30502,7 +30413,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -30919,7 +30830,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -30938,7 +30849,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -31357,6 +31268,175 @@ Array [
     ],
     "pjid": "react-ts",
     "typename": "web.ReactTypeScriptProject",
+  },
+  Object {
+    "docs": undefined,
+    "docsurl": "https://projen.io/api/API.html#projen-standardproject",
+    "fqn": "projen.StandardProject",
+    "moduleName": "projen",
+    "options": Array [
+      Object {
+        "default": "{}",
+        "docs": "Configure logging options such as verbosity.",
+        "featured": false,
+        "fqn": "projen.LoggerOptions",
+        "fullType": Object {
+          "fqn": "projen.LoggerOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "logging",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "logging",
+        ],
+        "simpleType": "LoggerOptions",
+        "switch": "logging",
+      },
+      Object {
+        "default": "$BASEDIR",
+        "docs": "This is the name of your project.",
+        "featured": true,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "name",
+        "parent": "ProjectOptions",
+        "path": Array [
+          "name",
+        ],
+        "simpleType": "string",
+        "switch": "name",
+      },
+      Object {
+        "default": "\\".\\"",
+        "docs": "The root directory of the project.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "outdir",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "outdir",
+        ],
+        "simpleType": "string",
+        "switch": "outdir",
+      },
+      Object {
+        "docs": "The parent project, if this project is part of a bigger project.",
+        "featured": false,
+        "fqn": "projen.Project",
+        "fullType": Object {
+          "fqn": "projen.Project",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "parent",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "parent",
+        ],
+        "simpleType": "Project",
+        "switch": "parent",
+      },
+      Object {
+        "default": "\\"npx projen\\"",
+        "docs": "The shell command to use in order to run the projen CLI.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "projenCommand",
+        "optional": true,
+        "parent": "TasksOptions",
+        "path": Array [
+          "projenCommand",
+        ],
+        "simpleType": "string",
+        "switch": "projen-command",
+      },
+      Object {
+        "default": "false",
+        "docs": "Generate (once) .projenrc.json (in JSON). Set to \`false\` in order to disable .projenrc.json generation.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projenrcJson",
+        "optional": true,
+        "parent": "StandardProjectOptions",
+        "path": Array [
+          "projenrcJson",
+        ],
+        "simpleType": "boolean",
+        "switch": "projenrc-json",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for .projenrc.json.",
+        "featured": false,
+        "fqn": "projen.ProjenrcOptions",
+        "fullType": Object {
+          "fqn": "projen.ProjenrcOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "projenrcJsonOptions",
+        "optional": true,
+        "parent": "StandardProjectOptions",
+        "path": Array [
+          "projenrcJsonOptions",
+        ],
+        "simpleType": "ProjenrcOptions",
+        "switch": "projenrc-json-options",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "StandardProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "StandardProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+    ],
+    "pjid": "standard",
+    "typename": "StandardProject",
   },
   Object {
     "docs": "TypeScript project.",
@@ -32786,7 +32866,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -32856,7 +32936,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -32875,7 +32955,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -33292,7 +33372,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -33311,7 +33391,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],
@@ -35137,7 +35217,7 @@ Array [
         "jsonLike": true,
         "name": "projenCommand",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "TasksOptions",
         "path": Array [
           "projenCommand",
         ],
@@ -35207,7 +35287,7 @@ Array [
         "jsonLike": true,
         "name": "projenrcJson",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJson",
         ],
@@ -35226,7 +35306,7 @@ Array [
         "kind": "interface",
         "name": "projenrcJsonOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "projenrcJsonOptions",
         ],
@@ -35643,7 +35723,7 @@ Array [
         "jsonLike": true,
         "name": "renovatebot",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebot",
         ],
@@ -35662,7 +35742,7 @@ Array [
         "kind": "interface",
         "name": "renovatebotOptions",
         "optional": true,
-        "parent": "ProjectOptions",
+        "parent": "StandardProjectOptions",
         "path": Array [
           "renovatebotOptions",
         ],

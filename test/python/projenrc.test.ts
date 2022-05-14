@@ -1,11 +1,11 @@
+import { StandardProject, Testing } from "../../src";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { ProjectType } from "../../src/project";
 import { Projenrc } from "../../src/python/projenrc";
-import { synthSnapshot, TestProject } from "../util";
 
 test("projenrc.py support", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new StandardProject({ name: "my-project" });
 
   // WHEN
   new Projenrc(project, {
@@ -13,12 +13,12 @@ test("projenrc.py support", () => {
   });
 
   // THEN
-  expect(synthSnapshot(project)).toMatchSnapshot();
+  expect(Testing.synth(project)).toMatchSnapshot();
 });
 
 test("generate projenrc in python", () => {
   // GIVEN
-  const project = new TestProject(
+  const project = new StandardProject(
     renderProjenInitOptions("projen.python.PythonProject", {})
   );
 
@@ -26,12 +26,12 @@ test("generate projenrc in python", () => {
   new Projenrc(project);
 
   // THEN
-  expect(synthSnapshot(project)[".projenrc.py"]).toMatchSnapshot();
+  expect(Testing.synth(project)[".projenrc.py"]).toMatchSnapshot();
 });
 
 test("javascript values are translated to python", () => {
   // GIVEN
-  const project = new TestProject(
+  const project = new StandardProject(
     renderProjenInitOptions("projen.python.PythonProject", {
       stringArg: "hello",
       intArg: 123,
@@ -48,5 +48,5 @@ test("javascript values are translated to python", () => {
   new Projenrc(project);
 
   // THEN
-  expect(synthSnapshot(project)[".projenrc.py"]).toMatchSnapshot();
+  expect(Testing.synth(project)[".projenrc.py"]).toMatchSnapshot();
 });

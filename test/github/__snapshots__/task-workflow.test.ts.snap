@@ -18,7 +18,7 @@ jobs:
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: gh-workflow-test
-        run: projen gh-workflow-test
+        run: npx projen gh-workflow-test
 "
 `;
 
@@ -40,7 +40,7 @@ jobs:
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: gh-workflow-test
-        run: projen gh-workflow-test
+        run: npx projen gh-workflow-test
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
         if: always()
