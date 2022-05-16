@@ -191,11 +191,16 @@ export class Projenrc extends Component {
   }
 }
 
-export function generateJavaOptionNames(options: ProjectOption[], jsiiManifest: any) {
+export function generateJavaOptionNames(
+  options: ProjectOption[],
+  jsiiManifest: any
+) {
   const optionFqns: Record<string, string> = {};
   for (const option of options) {
     if (option.fqn && jsiiManifest.types[option.fqn]) {
-      optionFqns[option.name] = toJavaFullTypeName(jsiiManifest.types[option.fqn]);
+      optionFqns[option.name] = toJavaFullTypeName(
+        jsiiManifest.types[option.fqn]
+      );
     }
   }
 

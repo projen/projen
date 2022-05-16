@@ -1,9 +1,9 @@
+import { ProjectOption } from "../../lib/inventory";
+import { generateJavaOptionNames } from "../../lib/java";
 import { Pom } from "../../src/java";
 import { Projenrc } from "../../src/java/projenrc";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { synthSnapshot, TestProject } from "../util";
-import { generateJavaOptionNames } from "../../lib/java";
-import { ProjectOption } from "../../lib/inventory";
 
 test("projenrc.java support", () => {
   // GIVEN
