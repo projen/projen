@@ -51,7 +51,7 @@ test("javascript values are translated to python", () => {
   expect(synthSnapshot(project)[".projenrc.py"]).toMatchSnapshot();
 });
 
-test("ensure python import is correctly resolved", () => {
+test("ensure python import is correctly resolved when python module exists", () => {
   // GIVEN
   const jsiiManifest: any = {
     targets: {
@@ -76,4 +76,16 @@ test("ensure python import is correctly resolved", () => {
       expect(resolvedImportName).toEqual(expectedImportName);
     }
   );
+});
+
+test("ensure python import is correctly resolved to jsiiFqn when python module is undefined", () => {
+  // GIVEN
+  const jsiiManifest: any = {};
+  const jsiiFqn = "my-module.component";
+
+  // WHEN
+  const resolvedImportName = resolvePythonImportName(jsiiFqn, jsiiManifest);
+
+  // THEN
+  expect(resolvedImportName).toEqual(jsiiFqn);
 });
