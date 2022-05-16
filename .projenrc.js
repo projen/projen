@@ -233,8 +233,4 @@ setupBundleTaskRunner();
 // but not all files are updated
 project.postCompileTask.spawn(project.defaultTask);
 
-project.package.addField("resolutions", {
-  "@types/prettier": "2.6.0",
-});
-
 project.synth();
