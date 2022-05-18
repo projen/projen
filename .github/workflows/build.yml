@@ -27,6 +27,11 @@ jobs:
         run: yarn install --check-files
       - name: build
         run: /bin/bash ./projen.bash build
+      - name: Test Summary
+        uses: test-summary/action@v1
+        with:
+          paths: /test-reports
+        if: always()
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
         with:

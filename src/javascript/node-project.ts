@@ -505,10 +505,23 @@ export class NodeProject extends GitHubProject {
 
     const buildEnabled = options.buildWorkflow ?? (this.parent ? false : true);
 
+    const postBuildSteps = options.postBuildSteps ?? [];
+
     // configure jest if enabled
     // must be before the build/release workflows
     if (options.jest ?? true) {
       this.jest = new Jest(this, options.jestOptions);
+
+      if (this.jest.junitReporting) {
+        postBuildSteps.push({
+          name: "Test Summary",
+          uses: "test-summary/action@v1",
+          with: {
+            paths: "/test-reports",
+          },
+          if: "always()",
+        });
+      }
     }
 
     if (buildEnabled && this.github) {
@@ -521,7 +534,7 @@ export class NodeProject extends GitHubProject {
         preBuildSteps: this.renderWorkflowSetup({
           mutable: options.mutableBuild ?? true,
         }),
-        postBuildSteps: options.postBuildSteps,
+        postBuildSteps,
         runsOn: options.workflowRunsOn,
         workflowTriggers: options.buildWorkflowTriggers,
       });

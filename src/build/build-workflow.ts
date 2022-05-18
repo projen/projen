@@ -94,6 +94,12 @@ export interface BuildWorkflowOptions {
    * @default "{ pullRequest: {}, workflowDispatch: {} }"
    */
   readonly workflowTriggers?: Triggers;
+
+  /**
+   * Generate a test summary on GitHub.
+   * @default false
+   */
+  readonly testSummary?: boolean;
 }
 
 export class BuildWorkflow extends Component {

@@ -577,6 +577,7 @@ export class Jest {
   private readonly reporters: JestReporter[];
   private readonly jestConfig?: JestConfigOptions;
   private _snapshotResolver: string | undefined;
+  public readonly junitReporting: boolean;
 
   constructor(project: NodeProject, options: JestOptions = {}) {
     this.project = project;
@@ -638,7 +639,8 @@ export class Jest {
       snapshotResolver: (() => this._snapshotResolver) as any,
     } as JestConfigOptions;
 
-    if (options.junitReporting ?? true) {
+    this.junitReporting = options.junitReporting ?? true;
+    if (this.junitReporting) {
       const reportsDir = DEFAULT_TEST_REPORTS_DIR;
 
       this.addReporter(["jest-junit", { outputDirectory: reportsDir }]);
