@@ -3,6 +3,7 @@ import { PROJEN_RC } from "../common";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
+import { YamlFile } from "../yaml";
 import { Prettier } from "./prettier";
 
 export interface EslintOptions {
@@ -75,6 +76,12 @@ export interface EslintOptions {
    * @default true
    */
   readonly tsAlwaysTryTypes?: boolean;
+
+  /**
+   * Write eslint configuration as YAML instead of JSON
+   * @default false
+   */
+  readonly yamlConfiguration?: boolean;
 }
 
 /**
@@ -364,10 +371,17 @@ export class Eslint extends Component {
       overrides: this.overrides,
     };
 
-    new JsonFile(project, ".eslintrc.json", {
-      obj: this.config,
-      marker: false,
-    });
+    if (options.yamlConfiguration) {
+      new YamlFile(project, ".eslintrc.yml", {
+        obj: this.config,
+        marker: false,
+      });
+    } else {
+      new JsonFile(project, ".eslintrc.json", {
+        obj: this.config,
+        marker: false,
+      });
+    }
 
     // if the user enabled prettier explicitly _or_ if the project has a
     // `Prettier` component, we shall tweak our configuration accordingly.

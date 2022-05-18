@@ -7055,6 +7055,7 @@ new javascript.Eslint(project: NodeProject, options: EslintOptions)
   * **prettier** (<code>boolean</code>)  Enable prettier for code formatting. __*Default*__: false
   * **tsAlwaysTryTypes** (<code>boolean</code>)  Always try to resolve types under `<root>@types` directory even it doesn't contain any source code. __*Default*__: true
   * **tsconfigPath** (<code>string</code>)  Path to `tsconfig.json` which should be used by eslint. __*Default*__: "./tsconfig.json"
+  * **yamlConfiguration** (<code>boolean</code>)  Write eslint configuration as YAML instead of JSON. __*Default*__: false
 
 
 
@@ -15036,6 +15037,7 @@ Name | Type | Description
 **prettier**?🔹 | <code>boolean</code> | Enable prettier for code formatting.<br/>__*Default*__: false
 **tsAlwaysTryTypes**?🔹 | <code>boolean</code> | Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.<br/>__*Default*__: true
 **tsconfigPath**?🔹 | <code>string</code> | Path to `tsconfig.json` which should be used by eslint.<br/>__*Default*__: "./tsconfig.json"
+**yamlConfiguration**?🔹 | <code>boolean</code> | Write eslint configuration as YAML instead of JSON.<br/>__*Default*__: false
 
 
 
