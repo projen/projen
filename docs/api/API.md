@@ -4486,7 +4486,7 @@ addPostBuildJobCommands(id: string, commands: Array<string>, options?: AddPostBu
 
 
 
-#### addPostBuildJobTask(task, options)🔹 <a id="projen-build-buildworkflow-addpostbuildjobtask"></a>
+#### addPostBuildJobTask(task, options?)🔹 <a id="projen-build-buildworkflow-addpostbuildjobtask"></a>
 
 Run a task as a job within the build workflow which is executed after the build job succeeded.
 
@@ -4498,7 +4498,7 @@ self-mutate, the branch will either be updated or the build will fail (in
 forks), so there is no point in executing the post-build job.
 
 ```ts
-addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions): void
+addPostBuildJobTask(task: Task, options?: AddPostBuildJobTaskOptions): void
 ```
 
 * **task** (<code>[Task](#projen-task)</code>)  *No description*
