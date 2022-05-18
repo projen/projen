@@ -141,7 +141,7 @@ test("can output yml instead of json", () => {
   // WHEN
   new Eslint(project, {
     dirs: ["src"],
-    yamlConfiguration: true,
+    yaml: true,
   });
 
   // THEN

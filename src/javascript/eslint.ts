@@ -81,7 +81,7 @@ export interface EslintOptions {
    * Write eslint configuration as YAML instead of JSON
    * @default false
    */
-  readonly yamlConfiguration?: boolean;
+  readonly yaml?: boolean;
 }
 
 /**
@@ -371,7 +371,7 @@ export class Eslint extends Component {
       overrides: this.overrides,
     };
 
-    if (options.yamlConfiguration) {
+    if (options.yaml) {
       new YamlFile(project, ".eslintrc.yml", {
         obj: this.config,
         marker: false,
