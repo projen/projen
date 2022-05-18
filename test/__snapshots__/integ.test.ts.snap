@@ -284,6 +284,11 @@ jobs:
         run: yarn install --check-files
       - name: build
         run: npx projen build
+      - name: Test Summary
+        uses: test-summary/action@v1
+        with:
+          paths: /test-reports
+        if: always()
       - id: self_mutation
         name: Find mutations
         run: |-
@@ -4829,6 +4834,11 @@ jobs:
         run: pnpm i --no-frozen-lockfile
       - name: build
         run: npx projen build
+      - name: Test Summary
+        uses: test-summary/action@v1
+        with:
+          paths: /test-reports
+        if: always()
       - id: self_mutation
         name: Find mutations
         run: |-

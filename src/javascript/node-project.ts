@@ -517,7 +517,7 @@ export class NodeProject extends GitHubProject {
           name: "Test Summary",
           uses: "test-summary/action@v1",
           with: {
-            paths: "/test-reports",
+            paths: "./test-reports",
           },
           if: "always()",
         });

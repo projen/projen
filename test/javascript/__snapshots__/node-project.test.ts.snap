@@ -88,6 +88,14 @@ Array [
     "run": "npx projen build",
   },
   Object {
+    "if": "always()",
+    "name": "Test Summary",
+    "uses": "test-summary/action@v1",
+    "with": Object {
+      "paths": "/test-reports",
+    },
+  },
+  Object {
     "id": "self_mutation",
     "name": "Find mutations",
     "run": "git add .
@@ -165,6 +173,14 @@ Array [
   Object {
     "name": "build",
     "run": "npx projen build",
+  },
+  Object {
+    "if": "always()",
+    "name": "Test Summary",
+    "uses": "test-summary/action@v1",
+    "with": Object {
+      "paths": "/test-reports",
+    },
   },
   Object {
     "id": "self_mutation",
