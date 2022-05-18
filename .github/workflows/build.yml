@@ -30,7 +30,7 @@ jobs:
       - name: Test Summary
         uses: test-summary/action@v1
         with:
-          paths: ./test-reports
+          paths: ./test-reports/**/*.xml
         if: always()
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
