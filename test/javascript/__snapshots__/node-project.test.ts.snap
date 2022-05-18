@@ -92,7 +92,7 @@ Array [
     "name": "Test Summary",
     "uses": "test-summary/action@v1",
     "with": Object {
-      "paths": "/test-reports",
+      "paths": "./test-reports/**/*.xml",
     },
   },
   Object {
@@ -179,7 +179,7 @@ Array [
     "name": "Test Summary",
     "uses": "test-summary/action@v1",
     "with": Object {
-      "paths": "/test-reports",
+      "paths": "./test-reports/**/*.xml",
     },
   },
   Object {

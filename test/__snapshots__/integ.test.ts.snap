@@ -287,7 +287,7 @@ jobs:
       - name: Test Summary
         uses: test-summary/action@v1
         with:
-          paths: /test-reports
+          paths: ./test-reports/**/*.xml
         if: always()
       - id: self_mutation
         name: Find mutations
@@ -4837,7 +4837,7 @@ jobs:
       - name: Test Summary
         uses: test-summary/action@v1
         with:
-          paths: /test-reports
+          paths: ./test-reports/**/*.xml
         if: always()
       - id: self_mutation
         name: Find mutations

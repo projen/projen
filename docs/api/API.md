@@ -4414,6 +4414,7 @@ new build.BuildWorkflow(project: Project, options: BuildWorkflowOptions)
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build. __*Default*__: []
   * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before the build. __*Default*__: []
   * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **testSummary** (<code>boolean</code>)  Generate a test summary on GitHub. __*Default*__: false
   * **workflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
 
 
@@ -7205,6 +7206,7 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
 Name | Type | Description 
 -----|------|-------------
 **config**🔹 | <code>any</code> | Escape hatch.
+**junitReporting**🔹 | <code>boolean</code> | <span></span>
 
 ### Methods
 
@@ -12759,6 +12761,7 @@ Name | Type | Description
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build.<br/>__*Default*__: []
 **preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before the build.<br/>__*Default*__: []
 **runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**testSummary**?🔹 | <code>boolean</code> | Generate a test summary on GitHub.<br/>__*Default*__: false
 **workflowTriggers**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | Build workflow triggers.<br/>__*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
 
 
