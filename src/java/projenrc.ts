@@ -165,10 +165,8 @@ export class Projenrc extends Component {
       bootstrap.args
     );
 
-    emit(`import ${javaTarget.package}.${toJavaFullTypeName(jsiiType)};`);
-    emit(
-      `import ${javaTarget.package}.${toJavaFullTypeName(jsiiOptionsType)};`
-    );
+    emit(`import ${getJavaImport(jsiiType, jsiiManifest)};`);
+    emit(`import ${getJavaImport(jsiiOptionsType, jsiiManifest)};`);
     for (const optionTypeName of imports) {
       emit(`import ${javaTarget.package}.${optionTypeName};`);
     }
@@ -249,6 +247,14 @@ function toJavaValue(
   } else {
     return { javaValue: JSON.stringify(value) };
   }
+}
+
+export function getJavaImport(jsiiType: any, jsiiManifest: any) {
+  const packageName =
+    jsiiManifest?.submodules?.[`${jsiiType.assembly}.${jsiiType?.namespace}`]
+      ?.targets?.java?.package ||
+    [jsiiManifest.targets.java, jsiiType.namespace].filter((x) => x).join(".");
+  return `${packageName}.${jsiiType.name}`;
 }
 
 function toJavaFullTypeName(jsiiType: any) {

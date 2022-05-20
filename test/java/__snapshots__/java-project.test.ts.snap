@@ -450,8 +450,8 @@ public class MyTest {
     System.out.println(\\"Hello, world!\\");
   }
 }",
-  "src/test/java/projenrc.java": "import io.github.cdklabs.projen.java.JavaProject;
-import io.github.cdklabs.projen.java.JavaProjectOptions;
+  "src/test/java/projenrc.java": "import [object Object].java.JavaProject;
+import [object Object].java.JavaProjectOptions;
 
 public class projenrc {
     public static void main(String[] args) {
@@ -1154,8 +1154,8 @@ public class Main {
     System.out.println(\\"Hello, world!\\");
   }
 }",
-  "src/test/java/projenrc.java": "import io.github.cdklabs.projen.java.JavaProject;
-import io.github.cdklabs.projen.java.JavaProjectOptions;
+  "src/test/java/projenrc.java": "import [object Object].java.JavaProject;
+import [object Object].java.JavaProjectOptions;
 
 public class projenrc {
     public static void main(String[] args) {
@@ -1297,8 +1297,8 @@ exports[`pom options 1`] = `
 `;
 
 exports[`projenrc in java 1`] = `
-"import io.github.cdklabs.projen.java.JavaProject;
-import io.github.cdklabs.projen.java.JavaProjectOptions;
+"import [object Object].java.JavaProject;
+import [object Object].java.JavaProjectOptions;
 
 public class projenrc {
     public static void main(String[] args) {
