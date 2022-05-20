@@ -27,7 +27,7 @@ const project = new cdk.JsiiProject({
 
   bundledDeps: [
     "conventional-changelog-config-spec",
-    "yaml@2.0.0-11",
+    "yaml@2.0.0",
     "fs-extra",
     "yargs",
     "case",
@@ -50,6 +50,7 @@ const project = new cdk.JsiiProject({
     "markmac",
     "esbuild",
     "all-contributors-cli",
+    "json5",
   ],
 
   depsUpgradeOptions: {
@@ -59,8 +60,8 @@ const project = new cdk.JsiiProject({
 
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
-  minNodeVersion: "12.7.0",
-  workflowNodeVersion: "12.22.0", // required by @typescript-eslint/eslint-plugin@5.5.0
+  minNodeVersion: "14.0.0",
+  workflowNodeVersion: "14.17.0", // required by @typescript-eslint/eslint-plugin@5.19.0
 
   codeCov: true,
   prettier: true,

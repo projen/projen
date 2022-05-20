@@ -23,6 +23,7 @@ Name|Description
 [ProjectBuild](#projen-projectbuild)|Manages a standard build process for all projects.
 [Projects](#projen-projects)|Programmatic API for projen.
 [Projenrc](#projen-projenrc)|Sets up a project to use JSON for projenrc.
+[Renovatebot](#projen-renovatebot)|Defines renovatebot configuration for projen project.
 [SampleDir](#projen-sampledir)|Renders the given files into the directory if the directory does not exist.
 [SampleFile](#projen-samplefile)|Produces a file with the given contents but only once, if the file doesn't already exist.
 [SampleReadme](#projen-samplereadme)|Represents a README.md sample file. You are expected to manage this file after creation.
@@ -48,6 +49,7 @@ Name|Description
 [awscdk.CdkConfig](#projen-awscdk-cdkconfig)|Represents cdk.json file.
 [awscdk.CdkTasks](#projen-awscdk-cdktasks)|Adds standard AWS CDK tasks to your project.
 [awscdk.ConstructLibraryAws](#projen-awscdk-constructlibraryaws)|*No description*
+[awscdk.EdgeLambdaAutoDiscover](#projen-awscdk-edgelambdaautodiscover)|Creates edge lambdas from entry points discovered in the project's source tree.
 [awscdk.IntegrationTest](#projen-awscdk-integrationtest)|Cloud integration tests.
 [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover)|Creates integration tests from entry points discovered in the test tree.
 [awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover)|Creates lambdas from entry points discovered in the project's source tree.
@@ -165,6 +167,7 @@ Name|Description
 [ObjectFileOptions](#projen-objectfileoptions)|Options for `ObjectFile`.
 [ProjectOptions](#projen-projectoptions)|Options for `Project`.
 [ProjenrcOptions](#projen-projenrcoptions)|*No description*
+[RenovatebotOptions](#projen-renovatebotoptions)|Options for Renovatebot.
 [ResolveOptions](#projen-resolveoptions)|Resolve options.
 [Rule](#projen-rule)|A Make rule.
 [SampleDirOptions](#projen-samplediroptions)|SampleDir options.
@@ -194,6 +197,7 @@ Name|Description
 [awscdk.CdkConfigCommonOptions](#projen-awscdk-cdkconfigcommonoptions)|Common options for `cdk.json`.
 [awscdk.CdkConfigOptions](#projen-awscdk-cdkconfigoptions)|Options for `CdkJson`.
 [awscdk.ConstructLibraryAwsOptions](#projen-awscdk-constructlibraryawsoptions)|*No description*
+[awscdk.EdgeLambdaAutoDiscoverOptions](#projen-awscdk-edgelambdaautodiscoveroptions)|Options for `EdgeLambdaAutoDiscover`.
 [awscdk.IntegrationTestAutoDiscoverOptions](#projen-awscdk-integrationtestautodiscoveroptions)|Options for `IntegrationTestAutoDiscover`.
 [awscdk.IntegrationTestCommonOptions](#projen-awscdk-integrationtestcommonoptions)|*No description*
 [awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)|Options for `IntegrationTest`.
@@ -390,6 +394,7 @@ Name|Description
 [InitProjectOptionHints](#projen-initprojectoptionhints)|Choices for how to display commented out options in projenrc files.
 [LogLevel](#projen-loglevel)|Logging verbosity.
 [ProjectType](#projen-projecttype)|Which type of project this is.
+[RenovatebotScheduleInterval](#projen-renovatebotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [awscdk.ApprovalLevel](#projen-awscdk-approvallevel)|Which approval is required when deploying CDK apps.
 [cdk.Stability](#projen-cdk-stability)|*No description*
 [github.DependabotRegistryType](#projen-github-dependabotregistrytype)|Each configuration type requires you to provide particular settings.
@@ -871,7 +876,7 @@ addVolume(volume: IDockerComposeVolumeBinding): void
 
 __Extends__: [Component](#projen-component)
 __Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.ReactTypeDef](#projen-web-reacttypedef), [GitAttributesFile](#projen-gitattributesfile), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
-__Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)()
+__Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)(), [Project](#projen-project).[tryRemoveFile](#projen-project#projen-project-tryremovefile)()
 
 ### Initializer
 
@@ -1703,6 +1708,8 @@ new Project(options: ProjectOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
 
 
 
@@ -1949,6 +1956,19 @@ tryFindObjectFile(filePath: string): ObjectFile
 __Returns__:
 * <code>[ObjectFile](#projen-objectfile)</code>
 
+#### tryRemoveFile(filePath)🔹 <a id="projen-project-tryremovefile"></a>
+
+Finds a file at the specified relative path within this project and removes it.
+
+```ts
+tryRemoveFile(filePath: string): FileBase
+```
+
+* **filePath** (<code>string</code>)  The file path.
+
+__Returns__:
+* <code>[FileBase](#projen-filebase)</code>
+
 
 
 ## class ProjectBuild 🔹 <a id="projen-projectbuild"></a>
@@ -2046,6 +2066,48 @@ new Projenrc(project: Project, options?: ProjenrcOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.json"
+
+
+
+
+## class Renovatebot 🔹 <a id="projen-renovatebot"></a>
+
+Defines renovatebot configuration for projen project.
+
+Ignores the versions controlled by Projen.
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new Renovatebot(project: Project, options?: RenovatebotOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  *No description*
+  * **ignore** (<code>Array<string></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
+  * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
+  * **labels** (<code>Array<string></code>)  List of labels to apply to the created PR's. __*Optional*__
+  * **scheduleInterval** (<code>Array<string></code>)  How often to check for new versions and raise pull requests. __*Default*__: ["at any time"]
+
+
+### Methods
+
+
+#### preSynthesize()🔹 <a id="projen-renovatebot-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
+
+
 
 
 
@@ -2996,6 +3058,7 @@ new awscdk.AutoDiscover(project: Project, options: AutoDiscoverOptions)
   * **lambdaExtensionOptions** (<code>[awscdk.LambdaExtensionCommonOptions](#projen-awscdk-lambdaextensioncommonoptions)</code>)  Options for lambda extensions. __*Optional*__
   * **testdir** (<code>string</code>)  Test source tree. 
   * **integrationTestOptions** (<code>[awscdk.IntegrationTestCommonOptions](#projen-awscdk-integrationtestcommonoptions)</code>)  Options for integration tests. __*Optional*__
+  * **edgeLambdaAutoDiscover** (<code>boolean</code>)  Auto-discover edge lambda functions. __*Default*__: true
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Auto-discover integration tests. __*Default*__: true
   * **lambdaAutoDiscover** (<code>boolean</code>)  Auto-discover lambda functions. __*Default*__: true
   * **lambdaExtensionAutoDiscover** (<code>boolean</code>)  Auto-discover lambda extensions. __*Default*__: true
@@ -3032,6 +3095,8 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -3176,6 +3241,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
+  * **edgeLambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically discovers and creates integration tests for each `.integ.ts` file in under your test directory. __*Default*__: true
   * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. __*Default*__: true
   * **lambdaExtensionAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
@@ -3437,6 +3503,8 @@ new awscdk.AwsCdkJavaApp(options: AwsCdkJavaAppOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -3545,6 +3613,8 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -3645,6 +3715,8 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -3782,6 +3854,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
   * **appEntrypoint** (<code>string</code>)  The CDK app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
+  * **edgeLambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically discovers and creates integration tests for each `.integ.ts` file in under your test directory. __*Default*__: true
   * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaFunction` for each `.lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **lambdaExtensionAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
@@ -3918,6 +3991,8 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -4062,10 +4137,38 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
   * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
+  * **edgeLambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically discovers and creates integration tests for each `.integ.ts` file in under your test directory. __*Default*__: true
   * **lambdaAutoDiscover** (<code>boolean</code>)  Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler. __*Default*__: true
   * **lambdaExtensionAutoDiscover** (<code>boolean</code>)  Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project. __*Default*__: true
   * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Common options for all AWS Lambda functions. __*Default*__: default options
+
+
+
+
+## class EdgeLambdaAutoDiscover 🔹 <a id="projen-awscdk-edgelambdaautodiscover"></a>
+
+Creates edge lambdas from entry points discovered in the project's source tree.
+
+__Submodule__: awscdk
+
+__Extends__: [cdk.AutoDiscoverBase](#projen-cdk-autodiscoverbase)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.EdgeLambdaAutoDiscover(project: Project, options: EdgeLambdaAutoDiscoverOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.EdgeLambdaAutoDiscoverOptions](#projen-awscdk-edgelambdaautodiscoveroptions)</code>)  *No description*
+  * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
+  * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
+  * **srcdir** (<code>string</code>)  Project source tree (relative to project output directory). 
+  * **lambdaOptions** (<code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code>)  Options for AWS Lambda functions. __*Optional*__
 
 
 
@@ -4251,6 +4354,7 @@ new awscdk.LambdaFunction(project: Project, options: LambdaFunctionOptions)
 * **options** (<code>[awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)</code>)  Options.
   * **awsSdkConnectionReuse** (<code>boolean</code>)  Whether to automatically reuse TCP connections when working with the AWS SDK for JavaScript. __*Default*__: true
   * **bundlingOptions** (<code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code>)  Bundling options for this AWS Lambda function. __*Default*__: defaults
+  * **edgeLambda** (<code>boolean</code>)  Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`. __*Default*__: false
   * **runtime** (<code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code>)  The node.js version to target. __*Default*__: Runtime.NODEJS_14_X
   * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the AWS Lambda handler entrypoint (exports a `handler` function). 
@@ -4382,7 +4486,7 @@ addPostBuildJobCommands(id: string, commands: Array<string>, options?: AddPostBu
 
 
 
-#### addPostBuildJobTask(task, options)🔹 <a id="projen-build-buildworkflow-addpostbuildjobtask"></a>
+#### addPostBuildJobTask(task, options?)🔹 <a id="projen-build-buildworkflow-addpostbuildjobtask"></a>
 
 Run a task as a job within the build workflow which is executed after the build job succeeded.
 
@@ -4394,7 +4498,7 @@ self-mutate, the branch will either be updated or the build will fail (in
 forks), so there is no point in executing the post-build job.
 
 ```ts
-addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions): void
+addPostBuildJobTask(task: Task, options?: AddPostBuildJobTaskOptions): void
 ```
 
 * **task** (<code>[Task](#projen-task)</code>)  *No description*
@@ -4436,7 +4540,7 @@ Base class for auto-discovering and creating project subcomponents.
 __Submodule__: cdk
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover), [awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover), [awscdk.LambdaExtensionAutoDiscover](#projen-awscdk-lambdaextensionautodiscover), [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase), [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)
+__Implemented by__: [awscdk.EdgeLambdaAutoDiscover](#projen-awscdk-edgelambdaautodiscover), [awscdk.IntegrationTestAutoDiscover](#projen-awscdk-integrationtestautodiscover), [awscdk.LambdaAutoDiscover](#projen-awscdk-lambdaautodiscover), [awscdk.LambdaExtensionAutoDiscover](#projen-awscdk-lambdaextensionautodiscover), [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestautodiscoverbase), [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)
 
 ### Initializer
 
@@ -4489,6 +4593,8 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -4741,6 +4847,8 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -4939,6 +5047,8 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -5115,6 +5225,8 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -5350,6 +5462,8 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -5788,6 +5902,8 @@ new github.GitHubProject(options: GitHubProjectOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -6480,6 +6596,8 @@ new java.JavaProject(options: JavaProjectOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -6933,9 +7051,11 @@ new javascript.Eslint(project: NodeProject, options: EslintOptions)
   * **fileExtensions** (<code>Array<string></code>)  File types that should be linted (e.g. [ ".js", ".ts" ]). __*Default*__: [".ts"]
   * **ignorePatterns** (<code>Array<string></code>)  List of file patterns that should not be linted, using the same syntax as .gitignore patterns. __*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
   * **lintProjenRc** (<code>boolean</code>)  Should we lint .projenrc.js. __*Default*__: true
+  * **lintProjenRcFile** (<code>string</code>)  Projenrc file to lint. __*Default*__: PROJEN_RC
   * **prettier** (<code>boolean</code>)  Enable prettier for code formatting. __*Default*__: false
   * **tsAlwaysTryTypes** (<code>boolean</code>)  Always try to resolve types under `<root>@types` directory even it doesn't contain any source code. __*Default*__: true
   * **tsconfigPath** (<code>string</code>)  Path to `tsconfig.json` which should be used by eslint. __*Default*__: "./tsconfig.json"
+  * **yaml** (<code>boolean</code>)  Write eslint configuration as YAML instead of JSON. __*Default*__: false
 
 
 
@@ -7473,6 +7593,8 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -8497,6 +8619,8 @@ new python.PythonProject(options: PythonProjectOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -8992,6 +9116,7 @@ publishToNuget(options?: NugetPublishOptions): void
   * **prePublishSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede. __*Optional*__
   * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **nugetApiKeySecret** (<code>string</code>)  GitHub secret which contains the API key for NuGet. __*Default*__: "NUGET_API_KEY"
+  * **nugetServer** (<code>string</code>)  NuGet Server URL (defaults to nuget.org). __*Optional*__
 
 
 
@@ -9275,6 +9400,8 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -9425,6 +9552,8 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -9575,6 +9704,8 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -9970,6 +10101,8 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -10118,6 +10251,8 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -10338,6 +10473,8 @@ new web.ReactProject(options: ReactProjectOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -10528,6 +10665,8 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
   * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
@@ -11299,6 +11438,8 @@ Name | Type | Description
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 
 
 
@@ -11312,6 +11453,22 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.json"
+
+
+
+## struct RenovatebotOptions 🔹 <a id="projen-renovatebotoptions"></a>
+
+
+Options for Renovatebot.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**ignore**?🔹 | <code>Array<string></code> | You can use the `ignore` option to customize which dependencies are updated.<br/>__*Default*__: []
+**ignoreProjen**?🔹 | <code>boolean</code> | Ignores updates to `projen`.<br/>__*Default*__: true
+**labels**?🔹 | <code>Array<string></code> | List of labels to apply to the created PR's.<br/>__*Optional*__
+**scheduleInterval**?🔹 | <code>Array<string></code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ["at any time"]
 
 
 
@@ -11625,6 +11782,7 @@ Name | Type | Description
 **srcdir**🔹 | <code>string</code> | Project source tree (relative to project output directory).
 **testdir**🔹 | <code>string</code> | Test source tree.
 **tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
+**edgeLambdaAutoDiscover**?🔹 | <code>boolean</code> | Auto-discover edge lambda functions.<br/>__*Default*__: true
 **integrationTestAutoDiscover**?🔹 | <code>boolean</code> | Auto-discover integration tests.<br/>__*Default*__: true
 **integrationTestOptions**?🔹 | <code>[awscdk.IntegrationTestCommonOptions](#projen-awscdk-integrationtestcommonoptions)</code> | Options for integration tests.<br/>__*Optional*__
 **lambdaAutoDiscover**?🔹 | <code>boolean</code> | Auto-discover lambda functions.<br/>__*Default*__: true
@@ -11696,6 +11854,7 @@ Name | Type | Description
 **docgenFilePath**?🔹 | <code>string</code> | File path for generated docs.<br/>__*Default*__: "API.md"
 **docsDirectory**?🔹 | <code>string</code> | Docs directory.<br/>__*Default*__: "docs"
 **dotnet**?⚠️ | <code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code> | __*Optional*__
+**edgeLambdaAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
@@ -11776,6 +11935,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
@@ -11898,6 +12059,8 @@ Name | Type | Description
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **requireApproval**?🔹 | <code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: ApprovalLevel.BROADENING
 **sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
 **sampleJavaPackage**?🔹 | <code>string</code> | The java package to use for the code sample.<br/>__*Default*__: "org.acme"
@@ -11991,6 +12154,8 @@ Name | Type | Description
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **requireApproval**?🔹 | <code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: ApprovalLevel.BROADENING
 **sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
 **setupConfig**?🔹 | <code>Map<string, any></code> | Additional fields to pass in the setup() function if using setuptools.<br/>__*Optional*__
@@ -12064,6 +12229,7 @@ Name | Type | Description
 **disableTsconfig**?🔹 | <code>boolean</code> | Do not generate a `tsconfig.json` file (used by jsii projects since tsconfig.json is generated by the jsii compiler).<br/>__*Default*__: false
 **docgen**?🔹 | <code>boolean</code> | Docgen by Typedoc.<br/>__*Default*__: false
 **docsDirectory**?🔹 | <code>string</code> | Docs directory.<br/>__*Default*__: "docs"
+**edgeLambdaAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
@@ -12139,6 +12305,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **requireApproval**?🔹 | <code>[awscdk.ApprovalLevel](#projen-awscdk-approvallevel)</code> | To protect you against unintended changes that affect your security posture, the AWS CDK Toolkit prompts you to approve security-related changes before deploying them.<br/>__*Default*__: ApprovalLevel.BROADENING
@@ -12267,6 +12435,7 @@ Name | Type | Description
 **docgenFilePath**?⚠️ | <code>string</code> | File path for generated docs.<br/>__*Default*__: "API.md"
 **docsDirectory**?⚠️ | <code>string</code> | Docs directory.<br/>__*Default*__: "docs"
 **dotnet**?⚠️ | <code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code> | __*Optional*__
+**edgeLambdaAutoDiscover**?⚠️ | <code>boolean</code> | Automatically adds an `cloudfront.experimental.EdgeFunction` for each `.edge-lambda.ts` handler in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
 **entrypoint**?⚠️ | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
 **entrypointTypes**?⚠️ | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?⚠️ | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
@@ -12347,6 +12516,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?⚠️ | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?⚠️ | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?⚠️ | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?⚠️ | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?⚠️ | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?⚠️ | <code>string</code> | __*Default*__: "."
@@ -12369,6 +12540,22 @@ Name | Type | Description
 **workflowGitIdentity**?⚠️ | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in workflows.<br/>__*Default*__: GitHub Actions
 **workflowNodeVersion**?⚠️ | <code>string</code> | The node version to use in GitHub workflows.<br/>__*Default*__: same as `minNodeVersion`
 **workflowRunsOn**?⚠️ | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+
+
+
+## struct EdgeLambdaAutoDiscoverOptions 🔹 <a id="projen-awscdk-edgelambdaautodiscoveroptions"></a>
+
+
+Options for `EdgeLambdaAutoDiscover`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdkDeps**🔹 | <code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code> | AWS CDK dependency manager.
+**srcdir**🔹 | <code>string</code> | Project source tree (relative to project output directory).
+**tsconfigPath**🔹 | <code>string</code> | Path to the tsconfig file to use for integration tests.
+**lambdaOptions**?🔹 | <code>[awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)</code> | Options for AWS Lambda functions.<br/>__*Optional*__
 
 
 
@@ -12500,6 +12687,7 @@ Name | Type | Description
 -----|------|-------------
 **awsSdkConnectionReuse**?🔹 | <code>boolean</code> | Whether to automatically reuse TCP connections when working with the AWS SDK for JavaScript.<br/>__*Default*__: true
 **bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda function.<br/>__*Default*__: defaults
+**edgeLambda**?🔹 | <code>boolean</code> | Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`.<br/>__*Default*__: false
 **runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
 
 
@@ -12519,6 +12707,7 @@ Name | Type | Description
 **bundlingOptions**?🔹 | <code>[javascript.BundlingOptions](#projen-javascript-bundlingoptions)</code> | Bundling options for this AWS Lambda function.<br/>__*Default*__: defaults
 **constructFile**?🔹 | <code>string</code> | The name of the generated TypeScript source file.<br/>__*Default*__: The name of the entrypoint file, with the `-function.ts` suffix instead of `.lambda.ts`.
 **constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
+**edgeLambda**?🔹 | <code>boolean</code> | Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`.<br/>__*Default*__: false
 **runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
 
 
@@ -12733,6 +12922,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
@@ -12811,6 +13002,7 @@ Name | Type | Description
 **dotNetNamespace**🔹 | <code>string</code> | <span></span>
 **packageId**🔹 | <code>string</code> | <span></span>
 **nugetApiKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
+**nugetServer**?🔹 | <code>string</code> | NuGet Server URL (defaults to nuget.org).<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -12991,6 +13183,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
@@ -13177,6 +13371,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
@@ -13337,6 +13533,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
@@ -13523,6 +13721,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rootdir**?🔹 | <code>string</code> | __*Default*__: "."
@@ -13681,6 +13881,8 @@ Name | Type | Description
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
@@ -14533,6 +14735,8 @@ Name | Type | Description
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
 **staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
 **testDeps**?🔹 | <code>Array<string></code> | List of test dependencies for this project.<br/>__*Default*__: []
@@ -14584,6 +14788,8 @@ Name | Type | Description
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
 **sampleJavaPackage**?🔹 | <code>string</code> | The java package to use for the code sample.<br/>__*Default*__: "org.acme"
 **stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
@@ -14826,10 +15032,12 @@ Name | Type | Description
 **devdirs**?🔹 | <code>Array<string></code> | Directories with source files that include tests and build tools.<br/>__*Default*__: []
 **fileExtensions**?🔹 | <code>Array<string></code> | File types that should be linted (e.g. [ ".js", ".ts" ]).<br/>__*Default*__: [".ts"]
 **ignorePatterns**?🔹 | <code>Array<string></code> | List of file patterns that should not be linted, using the same syntax as .gitignore patterns.<br/>__*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
-**lintProjenRc**?🔹 | <code>boolean</code> | Should we lint .projenrc.js.<br/>__*Default*__: true
+**lintProjenRc**?⚠️ | <code>boolean</code> | Should we lint .projenrc.js.<br/>__*Default*__: true
+**lintProjenRcFile**?🔹 | <code>string</code> | Projenrc file to lint.<br/>__*Default*__: PROJEN_RC
 **prettier**?🔹 | <code>boolean</code> | Enable prettier for code formatting.<br/>__*Default*__: false
 **tsAlwaysTryTypes**?🔹 | <code>boolean</code> | Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.<br/>__*Default*__: true
 **tsconfigPath**?🔹 | <code>string</code> | Path to `tsconfig.json` which should be used by eslint.<br/>__*Default*__: "./tsconfig.json"
+**yaml**?🔹 | <code>boolean</code> | Write eslint configuration as YAML instead of JSON.<br/>__*Default*__: false
 
 
 
@@ -15114,6 +15322,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
@@ -15646,6 +15856,8 @@ Name | Type | Description
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
 **setupConfig**?🔹 | <code>Map<string, any></code> | Additional fields to pass in the setup() function if using setuptools.<br/>__*Optional*__
 **setuptools**?🔹 | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing.<br/>__*Default*__: true if the project type is library
@@ -15861,6 +16073,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **nugetApiKeySecret**?⚠️ | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
+**nugetServer**?⚠️ | <code>string</code> | NuGet Server URL (defaults to nuget.org).<br/>__*Optional*__
 **prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?⚠️ | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -15948,6 +16161,7 @@ Options for NuGet releases.
 Name | Type | Description 
 -----|------|-------------
 **nugetApiKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
+**nugetServer**?🔹 | <code>string</code> | NuGet Server URL (defaults to nuget.org).<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -16202,6 +16416,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?⚠️ | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?⚠️ | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?⚠️ | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?⚠️ | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?⚠️ | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?⚠️ | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
@@ -16342,6 +16558,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
@@ -16578,6 +16796,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `pages/` and `public/` if there are no files there.<br/>__*Default*__: true
@@ -16715,6 +16935,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **sampleCode**?🔹 | <code>boolean</code> | Generate one-time sample in `src/` and `test/` if there are no files there.<br/>__*Default*__: true
@@ -16876,6 +17098,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rewire**?🔹 | <code>Map<string, any></code> | Rewire webpack configuration.<br/>__*Default*__: No rewired config.
@@ -17042,6 +17266,8 @@ Name | Type | Description
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **rewire**?🔹 | <code>Map<string, any></code> | Rewire webpack configuration.<br/>__*Default*__: No rewired config.
@@ -17188,6 +17414,21 @@ Name | Description
 **UNKNOWN** ⚠️|This module may be a either a library or an app.
 **LIB** ⚠️|This is a library, intended to be published to a package manager and consumed by other projects.
 **APP** ⚠️|This is an app (service, tool, website, etc).
+
+
+## enum RenovatebotScheduleInterval 🔹 <a id="projen-renovatebotscheduleinterval"></a>
+
+How often to check for new versions and raise pull requests for version updates.
+
+Name | Description
+-----|-----
+**ANY_TIME** 🔹|Run at any time.
+**EARLY_MONDAYS** 🔹|Weekly schedule on early monday mornings.
+**DAILY** 🔹|Schedule daily.
+**MONTHLY** 🔹|Schedule monthly.
+**QUARTERLY** 🔹|Schedule quarterly.
+**WEEKENDS** 🔹|Schedule for weekends.
+**WEEKDAYS** 🔹|Schedule for weekdays.
 
 
 ## enum ApprovalLevel 🔹 <a id="projen-awscdk-approvallevel"></a>

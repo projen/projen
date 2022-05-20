@@ -318,12 +318,22 @@ export class TypeScriptProject extends NodeProject {
       }
     }
 
+    const projenrcTypeScript = options.projenrcTs ?? false;
+    if (projenrcTypeScript) {
+      new ProjenrcTs(this, options.projenrcTsOptions);
+    }
+
+    const projenRcFilename = projenrcTypeScript
+      ? options.projenrcTsOptions?.filename ?? ".projenrc.ts"
+      : undefined;
+
     if (options.eslint ?? true) {
       this.eslint = new Eslint(this, {
         tsconfigPath: `./${this.tsconfigDev.fileName}`,
         dirs: [this.srcdir],
         devdirs: [this.testdir, "build-tools"],
         fileExtensions: [".ts", ".tsx"],
+        lintProjenRcFile: projenRcFilename,
         ...options.eslintOptions,
       });
 
@@ -345,7 +355,7 @@ export class TypeScriptProject extends NodeProject {
       // Additionally, we default to tracking the 12.x line, as the current earliest LTS release of
       // node is 12.x, so this is what corresponds to the broadest compatibility with supported node
       // runtimes.
-      `@types/node@^${semver.major(this.package.minNodeVersion ?? "12.0.0")}`
+      `@types/node@^${semver.major(this.package.minNodeVersion ?? "14.0.0")}`
     );
 
     // generate sample code in `src` and `lib` if these directories are empty or non-existent.
@@ -355,11 +365,6 @@ export class TypeScriptProject extends NodeProject {
 
     if (this.docgen) {
       new TypedocDocgen(this);
-    }
-
-    const projenrcTypeScript = options.projenrcTs ?? false;
-    if (projenrcTypeScript) {
-      new ProjenrcTs(this, options.projenrcTsOptions);
     }
   }
 

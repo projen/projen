@@ -166,6 +166,25 @@ test("projenrc.ts", () => {
   });
 });
 
+test("projenrc.ts linted by eslint task", () => {
+  const prj = new TypeScriptProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    projenrcTs: true,
+  });
+
+  const snapshot = synthSnapshot(prj);
+  expect(snapshot[".projen/tasks.json"].tasks.eslint).toStrictEqual({
+    description: "Runs eslint against the codebase",
+    name: "eslint",
+    steps: [
+      {
+        exec: "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.ts",
+      },
+    ],
+  });
+});
+
 test("upgrade task ignores pinned versions", () => {
   const prj = new TypeScriptProject({
     defaultReleaseBranch: "main",

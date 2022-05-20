@@ -18,11 +18,13 @@ export interface JsonFileOptions extends ObjectFileOptions {
  */
 export class JsonFile extends ObjectFile {
   private readonly newline: boolean;
+  private readonly isJson5: boolean;
 
   constructor(project: Project, filePath: string, options: JsonFileOptions) {
     super(project, filePath, options);
 
     this.newline = options.newline ?? true;
+    this.isJson5 = filePath.toLowerCase().endsWith("json5");
 
     if (!options.obj) {
       throw new Error('"obj" cannot be undefined');
@@ -37,11 +39,15 @@ export class JsonFile extends ObjectFile {
 
     const sanitized = JSON.parse(json);
 
-    if (this.marker) {
+    if (this.marker && !this.isJson5) {
       sanitized["//"] = this.marker;
     }
 
     let content = JSON.stringify(sanitized, undefined, 2);
+    if (this.marker && this.isJson5) {
+      content = content.slice(0, -1) + `// ${this.marker}\n}`;
+    }
+
     if (this.newline) {
       content += "\n";
     }

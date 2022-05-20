@@ -76,9 +76,9 @@ export function getFilePermissions(options: WriteFileOptions): string {
   const readonly = options.readonly ?? false;
   const executable = options.executable ?? false;
   if (readonly && executable) {
-    return "500";
+    return "544";
   } else if (readonly) {
-    return "400";
+    return "444";
   } else if (executable) {
     return "755";
   } else {
@@ -388,4 +388,12 @@ export function getNodeMajorVersion(): number | undefined {
     return major;
   }
   return undefined;
+}
+
+export function anySelected(options: (boolean | undefined)[]): boolean {
+  return options.some((opt) => opt);
+}
+
+export function multipleSelected(options: (boolean | undefined)[]): boolean {
+  return options.filter((opt) => opt).length > 1;
 }

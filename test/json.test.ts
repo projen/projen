@@ -94,6 +94,21 @@ test("json file can contain projen marker", () => {
   expect(output["//"]).toBe(file.marker);
 });
 
+test("json5 file can contain projen marker as comment", () => {
+  const prj = new TestProject();
+
+  const obj: any = {};
+
+  const file = new JsonFile(prj, "my/json/file-marker.json5", {
+    obj,
+    marker: true,
+  });
+
+  const output = synthSnapshot(prj)["my/json/file-marker.json5"];
+
+  expect(output).toContain(`// ${file.marker}`);
+});
+
 describe("newline", () => {
   const obj = {
     hello: "world",

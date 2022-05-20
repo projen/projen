@@ -248,6 +248,7 @@ export class JsiiProject extends TypeScriptProject {
         ...this.pacmakForLanguage("js", task),
         registry: this.package.npmRegistry,
         npmTokenSecret: this.package.npmTokenSecret,
+        codeArtifactOptions: options.codeArtifactOptions,
       });
       this.addPackagingTarget("js", task);
     }
@@ -338,6 +339,15 @@ export class JsiiProject extends TypeScriptProject {
     if (this.npmignore) {
       this.npmignore.readonly = false;
     }
+
+    // jsii relies on typescript < 4.0, which causes build errors
+    // since @types/prettier@2.6.1 only supports typescript >= 4.2.
+    // add a yarn resolution to fix this. this should have no effect if
+    // @types/prettier is not a transitive dependency or if a package manager
+    // besides yarn is being used
+    this.package.addField("resolutions", {
+      "@types/prettier": "2.6.0",
+    });
   }
 
   /**

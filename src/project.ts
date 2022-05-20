@@ -17,6 +17,7 @@ import { ObjectFile } from "./object-file";
 import { InitProjectOptionHints } from "./option-hints";
 import { ProjectBuild as ProjectBuild } from "./project-build";
 import { Projenrc, ProjenrcOptions } from "./projenrc-json";
+import { Renovatebot, RenovatebotOptions } from "./renovatebot";
 import { Task, TaskOptions } from "./task";
 import { Tasks } from "./tasks";
 import { isTruthy } from "./util";
@@ -79,6 +80,20 @@ export interface ProjectOptions {
    * @default "npx projen"
    */
   readonly projenCommand?: string;
+
+  /**
+   * Use renovatebot to handle dependency upgrades.
+   *
+   * @default false
+   */
+  readonly renovatebot?: boolean;
+
+  /**
+   * Options for renovatebot.
+   *
+   * @default - default options
+   */
+  readonly renovatebotOptions?: RenovatebotOptions;
 }
 
 /**
@@ -233,6 +248,10 @@ export class Project {
       new Projenrc(this, options.projenrcJsonOptions);
     }
 
+    if (options.renovatebot) {
+      new Renovatebot(this, options.renovatebotOptions);
+    }
+
     if (!this.ejected) {
       new JsonFile(this, FILE_MANIFEST, {
         omitEmpty: true,
@@ -369,6 +388,38 @@ export class Project {
     }
 
     return file;
+  }
+
+  /**
+   * Finds a file at the specified relative path within this project and removes
+   * it.
+   *
+   * @param filePath The file path. If this path is relative, it will be
+   * resolved from the root of _this_ project.
+   * @returns a `FileBase` if the file was found and removed, or undefined if
+   * the file was not found.
+   */
+  public tryRemoveFile(filePath: string): FileBase | undefined {
+    const absolute = path.isAbsolute(filePath)
+      ? filePath
+      : path.resolve(this.outdir, filePath);
+    const isFile = (c: Component): c is FileBase => c instanceof FileBase;
+    const index = this._components.findIndex(
+      (c) => isFile(c) && c.absolutePath === absolute
+    );
+
+    if (index !== -1) {
+      return this._components.splice(index, 1)[0] as FileBase;
+    }
+
+    for (const child of this.subprojects) {
+      const file = child.tryRemoveFile(absolute);
+      if (file) {
+        return file;
+      }
+    }
+
+    return undefined;
   }
 
   /**

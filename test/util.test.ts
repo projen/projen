@@ -232,10 +232,10 @@ test("dedupArray", () => {
 test("getFilePermissions", () => {
   expect(getFilePermissions({})).toEqual("644");
   expect(getFilePermissions({ readonly: true, executable: true })).toEqual(
-    "500"
+    "544"
   );
   expect(getFilePermissions({ readonly: true, executable: false })).toEqual(
-    "400"
+    "444"
   );
   expect(getFilePermissions({ readonly: false, executable: true })).toEqual(
     "755"

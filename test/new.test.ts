@@ -230,6 +230,14 @@ test("projenrc-json creates node-project", () => {
   });
 });
 
+test("projenrc-json creates java project", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, ["new", "java", "--projenrc-json"]);
+
+    expect(directorySnapshot(projectdir)).toMatchSnapshot();
+  });
+});
+
 /**
  * commented out due to breaking changes in projen@0.37.0
 

@@ -231,7 +231,10 @@ export class BuildWorkflow extends Component {
    *
    * @param options Specify tools and other options
    */
-  public addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions) {
+  public addPostBuildJobTask(
+    task: Task,
+    options: AddPostBuildJobTaskOptions = {}
+  ) {
     this.addPostBuildJobCommands(
       `post-build-${task.name}`,
       [`${this.project.projenCommand} ${task.name}`],

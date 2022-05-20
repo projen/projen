@@ -412,7 +412,7 @@ test("releaseBranches as an array throws an error since type was changed", () =>
   ).toThrow(/\"releaseBranches\" is no longer an array. See type annotations/);
 });
 
-test("github packages are supported by npm", () => {
+test("github packages are supported by npm, maven, and nuget", () => {
   // GIVEN
   const project = new TestProject();
 
@@ -427,6 +427,12 @@ test("github packages are supported by npm", () => {
   // WHEN
   release.publisher.publishToNpm({
     registry: "npm.pkg.github.com",
+  });
+  release.publisher.publishToMaven({
+    mavenRepositoryUrl: "maven.pkg.github.com",
+  });
+  release.publisher.publishToNuget({
+    nugetServer: "nuget.pkg.github.com",
   });
 
   // THEN

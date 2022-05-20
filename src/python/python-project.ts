@@ -4,6 +4,7 @@ import {
   ProjenrcOptions as ProjenrcJsOptions,
 } from "../javascript/projenrc";
 import { ProjectType } from "../project";
+import { anySelected, multipleSelected } from "../util";
 import { Pip } from "./pip";
 import { Poetry } from "./poetry";
 import {
@@ -209,20 +210,20 @@ export class PythonProject extends GitHubProject {
     this.moduleName = options.moduleName;
     this.version = options.version;
 
-    const { anySelected, multipleSelected } = analyzeChoices(
+    const rcFileTypeOptions = [
       options.projenrcPython,
       options.projenrcJs,
-      options.projenrcJson
-    );
+      options.projenrcJson,
+    ];
 
-    if (multipleSelected) {
+    if (multipleSelected(rcFileTypeOptions)) {
       throw new Error(
         "Only one of projenrcPython, projenrcJs, and projenrcJson can be selected."
       );
     }
 
     // default to projenrc.py if no other projenrc type was elected
-    if (options.projenrcPython ?? !anySelected) {
+    if (options.projenrcPython ?? !anySelected(rcFileTypeOptions)) {
       new ProjenrcPython(this, options.projenrcPythonOptions);
     }
 
@@ -498,21 +499,4 @@ export class PythonProject extends GitHubProject {
     this.envManager.setupEnvironment();
     this.depsManager.installDependencies();
   }
-}
-
-function analyzeChoices(...bools: (boolean | undefined)[]): {
-  anySelected: any;
-  multipleSelected: any;
-} {
-  let anySelected = false;
-  let multipleSelected = false;
-  for (const bool of bools) {
-    if (anySelected && bool) {
-      multipleSelected = true;
-    }
-    if (bool) {
-      anySelected = true;
-    }
-  }
-  return { anySelected, multipleSelected };
 }
