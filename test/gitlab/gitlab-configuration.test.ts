@@ -1,7 +1,7 @@
 import { GitlabConfiguration } from "../../src/gitlab";
 import { TestProject } from "../util";
 
-test("throws when adding an adding a job to a non-existant nested template", () => {
+test("throws when adding an adding a job to a non-existent nested template", () => {
   // GIVEN
   const p = new TestProject({
     stale: true,
