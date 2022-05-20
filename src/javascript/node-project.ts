@@ -589,7 +589,9 @@ export class NodeProject extends GitHubProject {
     } else {
       // validate that no release options are selected if the release workflow is disabled.
       if (options.releaseToNpm) {
-        throw new Error('"releaseToNpm" is not supported if "release" is not set');
+        throw new Error(
+          '"releaseToNpm" is not supported if "release" is not set'
+        );
       }
 
       if (options.releaseEveryCommit) {
@@ -599,7 +601,9 @@ export class NodeProject extends GitHubProject {
       }
 
       if (options.releaseSchedule) {
-        throw new Error('"releaseSchedule" is not supported if "release" is not set');
+        throw new Error(
+          '"releaseSchedule" is not supported if "release" is not set'
+        );
       }
     }
 
