@@ -203,7 +203,11 @@ async function testBump(
   const workdir = mkdtempSync(join(tmpdir(), "bump-test-"));
 
   const git = (cmd: string) =>
-    execSync(`git ${cmd}`, { cwd: workdir, stdio: "inherit" });
+    execSync(`git ${cmd}`, {
+      cwd: workdir,
+      stdio: "inherit",
+      timeout: 10_000, // let's try to catch hanging processes sooner than later
+    });
 
   // init a git repository
   git("init -b main");
