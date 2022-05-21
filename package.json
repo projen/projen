@@ -124,6 +124,7 @@
   "license": "Apache-2.0",
   "version": "0.0.0",
   "jest": {
+    "maxWorkers": "50%",
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.ts?(x)",
       "<rootDir>/(test|src)/**/?(*.)+(spec|test).ts?(x)"
