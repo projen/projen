@@ -1,7 +1,7 @@
 import { ProjectOption } from "../../lib/inventory";
 import { generateJavaOptionNames } from "../../lib/java";
 import { Pom } from "../../src/java";
-import { Projenrc } from "../../src/java/projenrc";
+import { Projenrc, getJavaImport } from "../../src/java/projenrc";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { synthSnapshot, TestProject } from "../util";
 
@@ -120,4 +120,63 @@ test("assert unknown manifest type doesn't throw", () => {
   const optionNameKeys = Object.keys(optionNames);
   expect(optionNameKeys.length).toEqual(1);
   expect(optionNames[optionNameKeys[0]]).toEqual("known_namespace.component");
+});
+
+test("assert getJavaImport returns the correct import for submodules.", () => {
+  // GIVEN
+
+  const jsiiTypeWithSubmodule = {
+    assembly: "@aws/lib",
+    namespace: "sub_module",
+    name: "Component",
+  };
+
+  const jsiiManifest: any = {
+    submodules: {
+      "@aws/lib.sub_module": {
+        targets: {
+          java: {
+            package: "software.aws.sdk.submodule",
+          },
+        },
+      },
+    },
+    types: {
+      "@aws/lib.sub_module.Component": jsiiTypeWithSubmodule,
+    },
+  };
+
+  // WHEN
+  const fullNameWithSubmodule = getJavaImport(
+    jsiiTypeWithSubmodule,
+    jsiiManifest
+  );
+
+  // THEN
+  expect(fullNameWithSubmodule).toEqual("software.aws.sdk.submodule.Component");
+});
+
+test("assert getJavaImport returns the correct import with no submodules", () => {
+  // GIVEN
+  const jsiiType = {
+    assembly: "@aws/lib",
+    name: "Component",
+  };
+
+  const jsiiManifest: any = {
+    types: {
+      "@aws/lib.Component": jsiiType,
+    },
+    targets: {
+      java: {
+        package: "software.aws.sdk",
+      },
+    },
+  };
+
+  // WHEN
+  const fullName = getJavaImport(jsiiType, jsiiManifest);
+
+  // THEN
+  expect(fullName).toEqual("software.aws.sdk.Component");
 });
