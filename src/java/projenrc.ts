@@ -166,7 +166,7 @@ export class Projenrc extends Component {
     );
 
     emit(`import ${getJavaImport(jsiiType, jsiiManifest)};`);
-    emit(`import ${getJavaImport(jsiiType, jsiiManifest)};`);
+    emit(`import ${getJavaImport(jsiiOptionsType, jsiiManifest)};`);
     for (const optionTypeName of imports) {
       emit(`import ${javaTarget.package}.${optionTypeName};`);
     }
@@ -257,6 +257,9 @@ export function getJavaImport(jsiiType: any, jsiiManifest: any) {
   const packageName =
     jsiiManifest?.submodules?.[`${jsiiType.assembly}.${jsiiType?.namespace}`]
       ?.targets?.java?.package ||
-    [jsiiManifest.targets.java, jsiiType.namespace].filter((x) => x).join(".");
+    [jsiiManifest.targets.java.package, jsiiType.namespace]
+      .filter((x) => x)
+      .join(".");
+
   return `${packageName}.${jsiiType.name}`;
 }

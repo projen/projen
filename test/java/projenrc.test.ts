@@ -168,7 +168,9 @@ test("assert getJavaImport returns the correct import with no submodules", () =>
       "@aws/lib.Component": jsiiType,
     },
     targets: {
-      java: "software.aws.sdk",
+      java: {
+        package: "software.aws.sdk",
+      },
     },
   };
 

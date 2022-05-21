@@ -1827,9 +1827,6 @@ project.synth();
       "type": "git",
       "url": "https://github.com/eladb/cdk-watchful.git",
     },
-    "resolutions": Object {
-      "@types/prettier": "2.6.0",
-    },
     "scripts": Object {
       "build": "npx projen build",
       "bump": "npx projen bump",
@@ -3312,9 +3309,6 @@ project.synth();
     "repository": Object {
       "type": "git",
       "url": "https://github.com/awslabs/cdk8s.git",
-    },
-    "resolutions": Object {
-      "@types/prettier": "2.6.0",
     },
     "scripts": Object {
       "build": "yarn compile",
