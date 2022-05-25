@@ -29,7 +29,7 @@ Name|Description
 [SampleReadme](#projen-samplereadme)|Represents a README.md sample file. You are expected to manage this file after creation.
 [Semver](#projen-semver)|*No description*
 [SourceCode](#projen-sourcecode)|Represents a source file.
-[StandardProject](#projen-standardproject)|*No description*
+[StandardProject](#projen-standardproject)|Project type that includes basic, language-independent components (tasks, dependencies, gitignore, etc.).
 [Task](#projen-task)|A task that can be performed on the project.
 [TaskRuntime](#projen-taskruntime)|The runtime component of the tasks engine.
 [Tasks](#projen-tasks)|Defines project tasks.
@@ -2322,7 +2322,7 @@ open(code?: string): void
 
 ## class StandardProject 🔹 <a id="projen-standardproject"></a>
 
-
+Project type that includes basic, language-independent components (tasks, dependencies, gitignore, etc.).
 
 __Extends__: [Project](#projen-project)
 

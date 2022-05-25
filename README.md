@@ -79,7 +79,7 @@ full list):
 * [python](https://projen.io/api/API.html#projen-python-pythonproject) - Python project.
 * [react](https://projen.io/api/API.html#projen-web-reactproject) - React project without TypeScript.
 * [react-ts](https://projen.io/api/API.html#projen-web-reacttypescriptproject) - React project with TypeScript.
-* [standard](https://projen.io/api/API.html#projen-standardproject) - undefined
+* [standard](https://projen.io/api/API.html#projen-standardproject) - Project type that includes basic, language-independent components (tasks, dependencies, gitignore, etc.).
 * [typescript](https://projen.io/api/API.html#projen-typescript-typescriptproject) - TypeScript project.
 * [typescript-app](https://projen.io/api/API.html#projen-typescript-typescriptappproject) - TypeScript app.
 <!-- </macro> -->

@@ -31270,7 +31270,7 @@ Array [
     "typename": "web.ReactTypeScriptProject",
   },
   Object {
-    "docs": undefined,
+    "docs": "Project type that includes basic, language-independent components (tasks, dependencies, gitignore, etc.).",
     "docsurl": "https://projen.io/api/API.html#projen-standardproject",
     "fqn": "projen.StandardProject",
     "moduleName": "projen",
