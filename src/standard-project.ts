@@ -40,6 +40,11 @@ export interface StandardProjectOptions extends ProjectOptions, TasksOptions {
   readonly renovatebotOptions?: RenovatebotOptions;
 }
 
+/**
+ * Project type that includes basic, language-independent components (tasks,
+ * dependencies, gitignore, etc.)
+ * @pjid standard
+ */
 export class StandardProject extends Project {
   /**
    * The name of the default task (the task executed when `projen` is run without arguments). Normally
