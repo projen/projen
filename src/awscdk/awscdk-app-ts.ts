@@ -160,7 +160,7 @@ export class AwsCdkTypeScriptApp extends TypeScriptAppProject {
       this.tsconfig.exclude.push(this.cdkConfig.cdkout);
     }
 
-    this.addDevDeps("ts-node@^9");
+    this.addDevDeps("ts-node");
     if (options.sampleCode ?? true) {
       new SampleCode(this, this.cdkDeps.cdkMajorVersion);
     }

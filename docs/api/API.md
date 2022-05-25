@@ -19,7 +19,7 @@ Name|Description
 [Logger](#projen-logger)|Project-level logging utilities.
 [Makefile](#projen-makefile)|Minimal Makefile.
 [ObjectFile](#projen-objectfile)|Represents an Object file.
-[Project](#projen-project)|Base project.
+[Project](#projen-project)|Base project type.
 [ProjectBuild](#projen-projectbuild)|Manages a standard build process for all projects.
 [Projects](#projen-projects)|Programmatic API for projen.
 [Projenrc](#projen-projenrc)|Sets up a project to use JSON for projenrc.
@@ -29,6 +29,7 @@ Name|Description
 [SampleReadme](#projen-samplereadme)|Represents a README.md sample file. You are expected to manage this file after creation.
 [Semver](#projen-semver)|*No description*
 [SourceCode](#projen-sourcecode)|Represents a source file.
+[StandardProject](#projen-standardproject)|*No description*
 [Task](#projen-task)|A task that can be performed on the project.
 [TaskRuntime](#projen-taskruntime)|The runtime component of the tasks engine.
 [Tasks](#projen-tasks)|Defines project tasks.
@@ -174,12 +175,14 @@ Name|Description
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
 [SampleReadmeProps](#projen-samplereadmeprops)|SampleReadme Properties.
 [SourceCodeOptions](#projen-sourcecodeoptions)|Options for `SourceCodeFile`.
+[StandardProjectOptions](#projen-standardprojectoptions)|*No description*
 [TaskCommonOptions](#projen-taskcommonoptions)|*No description*
 [TaskOptions](#projen-taskoptions)|*No description*
 [TaskSpec](#projen-taskspec)|Specification of a single task.
 [TaskStep](#projen-taskstep)|A single step within a task.
 [TaskStepOptions](#projen-taskstepoptions)|Options for task steps.
 [TasksManifest](#projen-tasksmanifest)|Schema for `tasks.json`.
+[TasksOptions](#projen-tasksoptions)|*No description*
 [TextFileOptions](#projen-textfileoptions)|Options for `TextFile`.
 [TomlFileOptions](#projen-tomlfileoptions)|Options for `TomlFile`.
 [VersionOptions](#projen-versionoptions)|Options for `Version`.
@@ -891,6 +894,7 @@ new FileBase(project: Project, filePath: string, options?: FileBaseOptions)
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[FileBaseOptions](#projen-filebaseoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitattributes** (<code>boolean</code>)  Update the project's .gitattributes file. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: marker will be included as long as the project is not ejected
@@ -1245,6 +1249,7 @@ new IniFile(project: Project, filePath: string, options: IniFileOptions)
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[IniFileOptions](#projen-inifileoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitattributes** (<code>boolean</code>)  Update the project's .gitattributes file. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: marker will be included as long as the project is not ejected
@@ -1290,6 +1295,7 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[JsonFileOptions](#projen-jsonfileoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitattributes** (<code>boolean</code>)  Update the project's .gitattributes file. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: marker will be included as long as the project is not ejected
@@ -1361,7 +1367,6 @@ __Returns__:
 
 Project-level logging utilities.
 
-__Extends__: [Component](#projen-component)
 
 ### Initializer
 
@@ -1369,13 +1374,12 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new Logger(project: Project, options?: LoggerOptions)
+new Logger(options?: LoggerOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  *No description*
   * **level** (<code>[LogLevel](#projen-loglevel)</code>)  The logging verbosity. __*Default*__: LogLevel.INFO
-  * **usePrefix** (<code>boolean</code>)  Include a prefix for all logging messages with the project name. __*Default*__: false
+  * **prefix** (<code>string</code>)  Prefix all logging messages with a string. __*Default*__: "[<project name>] "
 
 
 ### Methods
@@ -1484,6 +1488,7 @@ new Makefile(project: Project, filePath: string, options?: MakefileOptions)
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[MakefileOptions](#projen-makefileoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitattributes** (<code>boolean</code>)  Update the project's .gitattributes file. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: marker will be included as long as the project is not ejected
@@ -1599,6 +1604,7 @@ new ObjectFile(project: Project, filePath: string, options: ObjectFileOptions)
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[ObjectFileOptions](#projen-objectfileoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitattributes** (<code>boolean</code>)  Update the project's .gitattributes file. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: marker will be included as long as the project is not ejected
@@ -1688,7 +1694,10 @@ __Returns__:
 
 ## class Project 🔹 <a id="projen-project"></a>
 
-Base project.
+Base project type.
+
+For a project with basic components (tasks, dependencies,
+gitignore, etc.) pre-included, use `StandardProject` instead.
 
 
 ### Initializer
@@ -1705,11 +1714,6 @@ new Project(options: ProjectOptions)
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
-  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
-  * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
-  * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
-  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
-  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
 
 
 
@@ -1718,29 +1722,15 @@ new Project(options: ProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**buildTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
-**compileTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
 **components**🔹 | <code>Array<[Component](#projen-component)></code> | Returns all the components within this project.
-**deps**🔹 | <code>[Dependencies](#projen-dependencies)</code> | Project dependencies.
 **ejected**🔹 | <code>boolean</code> | Whether or not the project is being ejected.
 **files**🔹 | <code>Array<[FileBase](#projen-filebase)></code> | All files in this project.
-**gitattributes**🔹 | <code>[GitAttributesFile](#projen-gitattributesfile)</code> | The .gitattributes file for this repository.
-**gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | .gitignore.
 **logger**🔹 | <code>[Logger](#projen-logger)</code> | Logging utilities.
 **name**🔹 | <code>string</code> | Project name.
 **outdir**🔹 | <code>string</code> | Absolute output directory of this project.
-**packageTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
-**postCompileTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
-**preCompileTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
-**projectBuild**🔹 | <code>[ProjectBuild](#projen-projectbuild)</code> | Manages the build process of the project.
-**projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
 **root**🔹 | <code>[Project](#projen-project)</code> | The root project.
-**tasks**🔹 | <code>[Tasks](#projen-tasks)</code> | Project tasks.
-**testTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
-**defaultTask**?🔹 | <code>[Task](#projen-task)</code> | This is the "default" task, the one that executes "projen".<br/>__*Optional*__
 **initProject**?🔹 | <code>[InitProject](#projen-initproject)</code> | The options used when this project is bootstrapped via `projen new`.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | A parent project.<br/>__*Optional*__
-*static* **DEFAULT_TASK**🔹 | <code>string</code> | The name of the default task (the task executed when `projen` is run without arguments).
 
 ### Methods
 
@@ -1761,15 +1751,15 @@ addExcludeFromCleanup(...globs: string[]): void
 
 
 
-#### addGitIgnore(pattern)🔹 <a id="projen-project-addgitignore"></a>
+#### addGitIgnore(_pattern)🔹 <a id="projen-project-addgitignore"></a>
 
 Adds a .gitignore pattern.
 
 ```ts
-addGitIgnore(pattern: string): void
+addGitIgnore(_pattern: string): void
 ```
 
-* **pattern** (<code>string</code>)  The glob pattern to ignore.
+* **_pattern** (<code>string</code>)  The glob pattern to ignore.
 
 
 
@@ -1789,30 +1779,6 @@ addPackageIgnore(_pattern: string): void
 
 
 
-
-#### addTask(name, props?)🔹 <a id="projen-project-addtask"></a>
-
-Adds a new task to this project.
-
-This will fail if the project already has
-a task with this name.
-
-```ts
-addTask(name: string, props?: TaskOptions): Task
-```
-
-* **name** (<code>string</code>)  The task name to add.
-* **props** (<code>[TaskOptions](#projen-taskoptions)</code>)  Task properties.
-  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
-  * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
-  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
-  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
-  * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
-  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
-  * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
-
-__Returns__:
-* <code>[Task](#projen-task)</code>
 
 #### addTip(message)⚠️ <a id="projen-project-addtip"></a>
 
@@ -1869,34 +1835,6 @@ preSynthesize(): void
 
 
 
-
-#### removeTask(name)🔹 <a id="projen-project-removetask"></a>
-
-Removes a task from a project.
-
-```ts
-removeTask(name: string): Task
-```
-
-* **name** (<code>string</code>)  The name of the task to remove.
-
-__Returns__:
-* <code>[Task](#projen-task)</code>
-
-#### runTaskCommand(task)🔹 <a id="projen-project-runtaskcommand"></a>
-
-Returns the shell command to execute in order to run a task.
-
-By default, this is `npx projen@<version> <task>`
-
-```ts
-runTaskCommand(task: Task): string
-```
-
-* **task** (<code>[Task](#projen-task)</code>)  The task for which the command is required.
-
-__Returns__:
-* <code>string</code>
 
 #### synth()🔹 <a id="projen-project-synth"></a>
 
@@ -1991,10 +1929,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new ProjectBuild(project: Project)
+new ProjectBuild(project: StandardProject)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 
 
 
@@ -2060,10 +1998,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new Projenrc(project: Project, options?: ProjenrcOptions)
+new Projenrc(project: StandardProject, options?: ProjenrcOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.json"
 
@@ -2084,10 +2022,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new Renovatebot(project: Project, options?: RenovatebotOptions)
+new Renovatebot(project: StandardProject, options?: RenovatebotOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  *No description*
   * **ignore** (<code>Array<string></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
   * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
@@ -2382,6 +2320,157 @@ open(code?: string): void
 
 
 
+## class StandardProject 🔹 <a id="projen-standardproject"></a>
+
+
+
+__Extends__: [Project](#projen-project)
+
+### Initializer
+
+
+
+
+```ts
+new StandardProject(options: StandardProjectOptions)
+```
+
+* **options** (<code>[StandardProjectOptions](#projen-standardprojectoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
+  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
+  * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
+  * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**buildTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
+**compileTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
+**deps**🔹 | <code>[Dependencies](#projen-dependencies)</code> | Project dependencies.
+**gitattributes**🔹 | <code>[GitAttributesFile](#projen-gitattributesfile)</code> | The .gitattributes file for this repository.
+**gitignore**🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | .gitignore.
+**packageTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
+**postCompileTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
+**preCompileTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
+**projectBuild**🔹 | <code>[ProjectBuild](#projen-projectbuild)</code> | Manages the build process of the project.
+**projenCommand**🔹 | <code>string</code> | The command to use in order to run the projen CLI.
+**tasks**🔹 | <code>[Tasks](#projen-tasks)</code> | Project tasks.
+**testTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
+**defaultTask**?🔹 | <code>[Task](#projen-task)</code> | This is the "default" task, the one that executes "projen".<br/>__*Optional*__
+*static* **DEFAULT_TASK**🔹 | <code>string</code> | The name of the default task (the task executed when `projen` is run without arguments).
+
+### Methods
+
+
+#### addGitIgnore(pattern)🔹 <a id="projen-standardproject-addgitignore"></a>
+
+Adds a .gitignore pattern.
+
+```ts
+addGitIgnore(pattern: string): void
+```
+
+* **pattern** (<code>string</code>)  The glob pattern to ignore.
+
+
+
+
+#### addPackageIgnore(_pattern)🔹 <a id="projen-standardproject-addpackageignore"></a>
+
+Exclude these files from the bundled package.
+
+Implemented by project types based on the
+packaging mechanism. For example, `NodeProject` delegates this to `.npmignore`.
+
+```ts
+addPackageIgnore(_pattern: string): void
+```
+
+* **_pattern** (<code>string</code>)  The glob pattern to exclude.
+
+
+
+
+#### addTask(name, props?)🔹 <a id="projen-standardproject-addtask"></a>
+
+Adds a new task to this project.
+
+This will fail if the project already has
+a task with this name.
+
+```ts
+addTask(name: string, props?: TaskOptions): Task
+```
+
+* **name** (<code>string</code>)  The task name to add.
+* **props** (<code>[TaskOptions](#projen-taskoptions)</code>)  Task properties.
+  * **condition** (<code>string</code>)  A shell command which determines if the this task should be executed. __*Optional*__
+  * **cwd** (<code>string</code>)  The working directory for all steps in this task (unless overridden by the step). __*Default*__: process.cwd()
+  * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
+  * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
+  * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
+  * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+  * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
+
+__Returns__:
+* <code>[Task](#projen-task)</code>
+
+#### annotateGenerated(glob)🔹 <a id="projen-standardproject-annotategenerated"></a>
+
+Marks the provided file(s) as being generated.
+
+This is achieved using the
+github-linguist attributes. Generated files do not count against the
+repository statistics and language breakdown.
+
+```ts
+annotateGenerated(glob: string): void
+```
+
+* **glob** (<code>string</code>)  the glob pattern to match (could be a file path).
+
+
+
+
+#### removeTask(name)🔹 <a id="projen-standardproject-removetask"></a>
+
+Removes a task from a project.
+
+```ts
+removeTask(name: string): Task
+```
+
+* **name** (<code>string</code>)  The name of the task to remove.
+
+__Returns__:
+* <code>[Task](#projen-task)</code>
+
+#### runTaskCommand(task)🔹 <a id="projen-standardproject-runtaskcommand"></a>
+
+Returns the shell command to execute in order to run a task.
+
+By default, this is `npx projen@<version> <task>`
+
+```ts
+runTaskCommand(task: Task): string
+```
+
+* **task** (<code>[Task](#projen-task)</code>)  The task for which the command is required.
+
+__Returns__:
+* <code>string</code>
+
+
+
 ## class Task 🔹 <a id="projen-task"></a>
 
 A task that can be performed on the project.
@@ -2673,10 +2762,12 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new Tasks(project: Project)
+new Tasks(project: Project, options?: TasksOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[TasksOptions](#projen-tasksoptions)</code>)  *No description*
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
 
 
 
@@ -2687,6 +2778,7 @@ Name | Type | Description
 -----|------|-------------
 **all**🔹 | <code>Array<[Task](#projen-task)></code> | All tasks.
 **env**🔹 | <code>Map<string, string></code> | Returns a copy of the currently global environment for this project.
+**projenCommand**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
@@ -2766,6 +2858,19 @@ tryFind(name: string): Task
 __Returns__:
 * <code>[Task](#projen-task)</code>
 
+#### *static* of(project)🔹 <a id="projen-tasks-of"></a>
+
+Returns the `Tasks` component of a project or `undefined` if the project does not have a Tasks component.
+
+```ts
+static of(project: Project): Tasks
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+__Returns__:
+* <code>[Tasks](#projen-tasks)</code>
+
 
 
 ## class Testing 🔹 <a id="projen-testing"></a>
@@ -2810,6 +2915,7 @@ new TextFile(project: Project, filePath: string, options?: TextFileOptions)
 * **filePath** (<code>string</code>)  File path.
 * **options** (<code>[TextFileOptions](#projen-textfileoptions)</code>)  Options.
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitattributes** (<code>boolean</code>)  Update the project's .gitattributes file. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: marker will be included as long as the project is not ejected
@@ -2867,6 +2973,7 @@ new TomlFile(project: Project, filePath: string, options: TomlFileOptions)
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[TomlFileOptions](#projen-tomlfileoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitattributes** (<code>boolean</code>)  Update the project's .gitattributes file. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: marker will be included as long as the project is not ejected
@@ -2905,10 +3012,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new Version(project: Project, options: VersionOptions)
+new Version(project: StandardProject, options: VersionOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[VersionOptions](#projen-versionoptions)</code>)  *No description*
   * **artifactsDirectory** (<code>string</code>)  The name of the directory into which `changelog.md` and `version.txt` files are emitted. 
   * **versionInputFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
@@ -2952,6 +3059,7 @@ new XmlFile(project: Project, filePath: string, options?: XmlFileOptions)
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[XmlFileOptions](#projen-xmlfileoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitattributes** (<code>boolean</code>)  Update the project's .gitattributes file. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: marker will be included as long as the project is not ejected
@@ -2997,6 +3105,7 @@ new YamlFile(project: Project, filePath: string, options: YamlFileOptions)
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[YamlFileOptions](#projen-yamlfileoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitattributes** (<code>boolean</code>)  Update the project's .gitattributes file. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: marker will be included as long as the project is not ejected
@@ -3046,10 +3155,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new awscdk.AutoDiscover(project: Project, options: AutoDiscoverOptions)
+new awscdk.AutoDiscover(project: StandardProject, options: AutoDiscoverOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[awscdk.AutoDiscoverOptions](#projen-awscdk-autodiscoveroptions)</code>)  *No description*
   * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
   * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
@@ -3306,10 +3415,10 @@ __Implemented by__: [awscdk.AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava), [aws
 
 
 ```ts
-new awscdk.AwsCdkDeps(project: Project, options: AwsCdkDepsOptions)
+new awscdk.AwsCdkDeps(project: StandardProject, options: AwsCdkDepsOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)</code>)  *No description*
   * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
   * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
@@ -3398,10 +3507,10 @@ __Extends__: [awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)
 
 
 ```ts
-new awscdk.AwsCdkDepsJava(project: Project, options: AwsCdkDepsOptions)
+new awscdk.AwsCdkDepsJava(project: StandardProject, options: AwsCdkDepsOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)</code>)  *No description*
   * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
   * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
@@ -3445,10 +3554,10 @@ __Extends__: [awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)
 
 
 ```ts
-new awscdk.AwsCdkDepsJs(project: Project, options: AwsCdkDepsOptions)
+new awscdk.AwsCdkDepsJs(project: StandardProject, options: AwsCdkDepsOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)</code>)  *No description*
   * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
   * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
@@ -3945,10 +4054,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new awscdk.CdkTasks(project: Project)
+new awscdk.CdkTasks(project: StandardProject)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 
 
 
@@ -4187,10 +4296,10 @@ __Extends__: [cdk.IntegrationTestBase](#projen-cdk-integrationtestbase)
 
 
 ```ts
-new awscdk.IntegrationTest(project: Project, options: IntegrationTestOptions)
+new awscdk.IntegrationTest(project: StandardProject, options: IntegrationTestOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[awscdk.IntegrationTestOptions](#projen-awscdk-integrationtestoptions)</code>)  *No description*
   * **destroyAfterDeploy** (<code>boolean</code>)  Destroy the test app after a successful deployment. __*Default*__: true
   * **pathMetadata** (<code>boolean</code>)  Enables path metadata, adding `aws:cdk:path`, with the defining construct's path, to the CloudFormation metadata for each synthesized resource. __*Default*__: false
@@ -4226,10 +4335,10 @@ __Extends__: [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestau
 
 
 ```ts
-new awscdk.IntegrationTestAutoDiscover(project: Project, options: IntegrationTestAutoDiscoverOptions)
+new awscdk.IntegrationTestAutoDiscover(project: StandardProject, options: IntegrationTestAutoDiscoverOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[awscdk.IntegrationTestAutoDiscoverOptions](#projen-awscdk-integrationtestautodiscoveroptions)</code>)  *No description*
   * **cdkDeps** (<code>[awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)</code>)  AWS CDK dependency manager. 
   * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
@@ -4413,6 +4522,7 @@ new build.BuildWorkflow(project: Project, options: BuildWorkflowOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build. __*Default*__: []
   * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute before the build. __*Default*__: []
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **workflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
 
@@ -4486,7 +4596,7 @@ addPostBuildJobCommands(id: string, commands: Array<string>, options?: AddPostBu
 
 
 
-#### addPostBuildJobTask(task, options)🔹 <a id="projen-build-buildworkflow-addpostbuildjobtask"></a>
+#### addPostBuildJobTask(task, options?)🔹 <a id="projen-build-buildworkflow-addpostbuildjobtask"></a>
 
 Run a task as a job within the build workflow which is executed after the build job succeeded.
 
@@ -4498,7 +4608,7 @@ self-mutate, the branch will either be updated or the build will fail (in
 forks), so there is no point in executing the post-build job.
 
 ```ts
-addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions): void
+addPostBuildJobTask(task: Task, options?: AddPostBuildJobTaskOptions): void
 ```
 
 * **task** (<code>[Task](#projen-task)</code>)  *No description*
@@ -4774,10 +4884,10 @@ __Implemented by__: [awscdk.IntegrationTest](#projen-awscdk-integrationtest), [c
 
 
 ```ts
-new cdk.IntegrationTestBase(project: Project, options: IntegrationTestBaseOptions)
+new cdk.IntegrationTestBase(project: StandardProject, options: IntegrationTestBaseOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[cdk.IntegrationTestBaseOptions](#projen-cdk-integrationtestbaseoptions)</code>)  *No description*
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the integration test app. 
   * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use when running integration test cdk apps. 
@@ -5010,10 +5120,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new cdk8s.AutoDiscover(project: Project, options: AutoDiscoverOptions)
+new cdk8s.AutoDiscover(project: StandardProject, options: AutoDiscoverOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[cdk8s.AutoDiscoverOptions](#projen-cdk8s-autodiscoveroptions)</code>)  *No description*
   * **testdir** (<code>string</code>)  Test source tree. 
   * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
@@ -5396,10 +5506,10 @@ __Extends__: [cdk.IntegrationTestBase](#projen-cdk-integrationtestbase)
 
 
 ```ts
-new cdk8s.IntegrationTest(project: Project, options: IntegrationTestOptions)
+new cdk8s.IntegrationTest(project: StandardProject, options: IntegrationTestOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[cdk8s.IntegrationTestOptions](#projen-cdk8s-integrationtestoptions)</code>)  *No description*
   * **entrypoint** (<code>string</code>)  A path from the project root directory to a TypeScript file which contains the integration test app. 
   * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use when running integration test cdk apps. 
@@ -5422,10 +5532,10 @@ __Extends__: [cdk.IntegrationTestAutoDiscoverBase](#projen-cdk-integrationtestau
 
 
 ```ts
-new cdk8s.IntegrationTestAutoDiscover(project: Project, options: IntegrationTestAutoDiscoverOptions)
+new cdk8s.IntegrationTestAutoDiscover(project: StandardProject, options: IntegrationTestAutoDiscoverOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[cdk8s.IntegrationTestAutoDiscoverOptions](#projen-cdk8s-integrationtestautodiscoveroptions)</code>)  *No description*
   * **testdir** (<code>string</code>)  Test source tree. 
   * **tsconfigPath** (<code>string</code>)  Path to the tsconfig file to use for integration tests. 
@@ -5883,7 +5993,7 @@ GitHub-based project.
 
 __Submodule__: github
 
-__Extends__: [Project](#projen-project)
+__Extends__: [StandardProject](#projen-standardproject)
 
 ### Initializer
 
@@ -5935,26 +6045,6 @@ Name | Type | Description
 **github**?⚠️ | <code>[github.GitHub](#projen-github-github)</code> | Access all github components.<br/>__*Optional*__
 **gitpod**?⚠️ | <code>[Gitpod](#projen-gitpod)</code> | Access for Gitpod.<br/>__*Optional*__
 **vscode**?⚠️ | <code>[vscode.VsCode](#projen-vscode-vscode)</code> | Access all VSCode components.<br/>__*Optional*__
-
-### Methods
-
-
-#### annotateGenerated(glob)⚠️ <a id="projen-github-githubproject-annotategenerated"></a>
-
-Marks the provided file(s) as being generated.
-
-This is achieved using the
-github-linguist attributes. Generated files do not count against the
-repository statistics and language breakdown.
-
-```ts
-annotateGenerated(glob: string): void
-```
-
-* **glob** (<code>string</code>)  the glob pattern to match (could be a file path).
-
-
-
 
 
 
@@ -6324,6 +6414,7 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Actions to run after the main build step. __*Default*__: not set
   * **preBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to run before the main build step. __*Default*__: not set
   * **preCheckoutSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Initial steps to run before the source code checkout. __*Default*__: not set
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
   * **triggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  The triggers for the workflow. __*Default*__: by default workflows can only be triggered by manually.
 
@@ -6711,10 +6802,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new java.Junit(project: Project, options: JunitOptions)
+new java.Junit(project: StandardProject, options: JunitOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[java.JunitOptions](#projen-java-junitoptions)</code>)  *No description*
   * **pom** (<code>[java.Pom](#projen-java-pom)</code>)  Java pom. 
   * **sampleJavaPackage** (<code>string</code>)  Java package for test sample. __*Default*__: "org.acme"
@@ -6737,10 +6828,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new java.MavenCompile(project: Project, pom: Pom, options?: MavenCompileOptions)
+new java.MavenCompile(project: StandardProject, pom: Pom, options?: MavenCompileOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **pom** (<code>[java.Pom](#projen-java-pom)</code>)  *No description*
 * **options** (<code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code>)  *No description*
   * **source** (<code>string</code>)  Source language version. __*Default*__: "1.8"
@@ -6763,10 +6854,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new java.MavenPackaging(project: Project, pom: Pom, options?: MavenPackagingOptions)
+new java.MavenPackaging(project: StandardProject, pom: Pom, options?: MavenPackagingOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **pom** (<code>[java.Pom](#projen-java-pom)</code>)  *No description*
 * **options** (<code>[java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)</code>)  *No description*
   * **distdir** (<code>string</code>)  Where to place the package output? __*Default*__: "dist/java"
@@ -6819,10 +6910,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new java.Pom(project: Project, options: PomOptions)
+new java.Pom(project: StandardProject, options: PomOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[java.PomOptions](#projen-java-pomoptions)</code>)  *No description*
   * **artifactId** (<code>string</code>)  The artifactId is generally the name that the project is known by. 
   * **groupId** (<code>string</code>)  This is generally unique amongst an organization or a project. 
@@ -6839,6 +6930,7 @@ new java.Pom(project: Project, options: PomOptions)
 Name | Type | Description 
 -----|------|-------------
 **artifactId**🔹 | <code>string</code> | Maven artifact ID.
+**deps**🔹 | <code>[Dependencies](#projen-dependencies)</code> | Project dependencies.
 **fileName**🔹 | <code>string</code> | The name of the pom file.
 **groupId**🔹 | <code>string</code> | Maven group ID.
 **packaging**🔹 | <code>string</code> | Maven packaging format.
@@ -6929,10 +7021,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new java.Projenrc(project: Project, pom: Pom, options?: ProjenrcOptions)
+new java.Projenrc(project: StandardProject, pom: Pom, options?: ProjenrcOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **pom** (<code>[java.Pom](#projen-java-pom)</code>)  *No description*
 * **options** (<code>[java.ProjenrcOptions](#projen-java-projenrcoptions)</code>)  *No description*
   * **className** (<code>string</code>)  The name of the Java class which contains the `main()` method for projen. __*Default*__: "projenrc"
@@ -6966,10 +7058,10 @@ __Extends__: [Component](#projen-component)
 Creates a `Bundler`.
 
 ```ts
-new javascript.Bundler(project: Project, options?: BundlerOptions)
+new javascript.Bundler(project: StandardProject, options?: BundlerOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  *No description*
   * **addToPreCompile** (<code>boolean</code>)  Install the `bundle` command as a pre-compile phase. __*Default*__: true
   * **assetsDir** (<code>string</code>)  Output directory for all bundles. __*Default*__: "assets"
@@ -7055,6 +7147,7 @@ new javascript.Eslint(project: NodeProject, options: EslintOptions)
   * **prettier** (<code>boolean</code>)  Enable prettier for code formatting. __*Default*__: false
   * **tsAlwaysTryTypes** (<code>boolean</code>)  Always try to resolve types under `<root>@types` directory even it doesn't contain any source code. __*Default*__: true
   * **tsconfigPath** (<code>string</code>)  Path to `tsconfig.json` which should be used by eslint. __*Default*__: "./tsconfig.json"
+  * **yaml** (<code>boolean</code>)  Write eslint configuration as YAML instead of JSON. __*Default*__: false
 
 
 
@@ -7290,10 +7383,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new javascript.NodePackage(project: Project, options?: NodePackageOptions)
+new javascript.NodePackage(project: StandardProject, options?: NodePackageOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[javascript.NodePackageOptions](#projen-javascript-nodepackageoptions)</code>)  *No description*
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
@@ -8105,10 +8198,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new javascript.Projenrc(project: Project, options?: ProjenrcOptions)
+new javascript.Projenrc(project: StandardProject, options?: ProjenrcOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.js"
 
@@ -8525,10 +8618,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Projenrc(project: Project, options?: ProjenrcOptions)
+new python.Projenrc(project: StandardProject, options?: ProjenrcOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.py"
   * **projenVersion** (<code>string</code>)  The projen version to use. __*Default*__: current version
@@ -8946,10 +9039,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new release.Publisher(project: Project, options: PublisherOptions)
+new release.Publisher(project: StandardProject, options: PublisherOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[StandardProject](#projen-standardproject)</code>)  *No description*
 * **options** (<code>[release.PublisherOptions](#projen-release-publisheroptions)</code>)  *No description*
   * **artifactName** (<code>string</code>)  The name of the artifact to download (e.g. `dist`). 
   * **buildJobId** (<code>string</code>)  The job ID that produces the build artifacts. 
@@ -10615,6 +10708,7 @@ new web.ReactTypeDef(project: ReactTypeScriptProject, filePath: string, options?
 * **filePath** (<code>string</code>)  *No description*
 * **options** (<code>[web.ReactTypeDefOptions](#projen-web-reacttypedefoptions)</code>)  *No description*
   * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
+  * **editGitattributes** (<code>boolean</code>)  Update the project's .gitattributes file. __*Default*__: true
   * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
   * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
   * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: marker will be included as long as the project is not ejected
@@ -11035,6 +11129,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitattributes**?🔹 | <code>boolean</code> | Update the project's .gitattributes file.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected
@@ -11307,6 +11402,7 @@ Options for `IniFile`.
 Name | Type | Description 
 -----|------|-------------
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitattributes**?🔹 | <code>boolean</code> | Update the project's .gitattributes file.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected
@@ -11344,6 +11440,7 @@ Options for `JsonFile`.
 Name | Type | Description 
 -----|------|-------------
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitattributes**?🔹 | <code>boolean</code> | Update the project's .gitattributes file.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected
@@ -11379,7 +11476,7 @@ Options for logging utilities.
 Name | Type | Description 
 -----|------|-------------
 **level**?🔹 | <code>[LogLevel](#projen-loglevel)</code> | The logging verbosity.<br/>__*Default*__: LogLevel.INFO
-**usePrefix**?🔹 | <code>boolean</code> | Include a prefix for all logging messages with the project name.<br/>__*Default*__: false
+**prefix**?🔹 | <code>string</code> | Prefix all logging messages with a string.<br/>__*Default*__: "[<project name>] "
 
 
 
@@ -11394,6 +11491,7 @@ Name | Type | Description
 -----|------|-------------
 **all**?🔹 | <code>Array<string></code> | List of targets to build when Make is invoked without specifying any targets.<br/>__*Default*__: []
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitattributes**?🔹 | <code>boolean</code> | Update the project's .gitattributes file.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected
@@ -11412,6 +11510,7 @@ Options for `ObjectFile`.
 Name | Type | Description 
 -----|------|-------------
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitattributes**?🔹 | <code>boolean</code> | Update the project's .gitattributes file.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected
@@ -11434,11 +11533,6 @@ Name | Type | Description
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
-**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
-**projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
-**projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
-**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
-**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 
 
 
@@ -11557,6 +11651,27 @@ Name | Type | Description
 
 
 
+## struct StandardProjectOptions 🔹 <a id="projen-standardprojectoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | This is the name of your project.
+**logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+**projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
+**projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
+
+
+
 ## struct TaskCommonOptions 🔹 <a id="projen-taskcommonoptions"></a>
 
 
@@ -11662,6 +11777,19 @@ Name | Type | Description
 
 
 
+## struct TasksOptions 🔹 <a id="projen-tasksoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+
+
+
 ## struct TextFileOptions 🔹 <a id="projen-textfileoptions"></a>
 
 
@@ -11672,6 +11800,7 @@ Options for `TextFile`.
 Name | Type | Description 
 -----|------|-------------
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitattributes**?🔹 | <code>boolean</code> | Update the project's .gitattributes file.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **lines**?🔹 | <code>Array<string></code> | The contents of the text file.<br/>__*Default*__: [] empty file
@@ -11690,6 +11819,7 @@ Options for `TomlFile`.
 Name | Type | Description 
 -----|------|-------------
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitattributes**?🔹 | <code>boolean</code> | Update the project's .gitattributes file.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected
@@ -11725,6 +11855,7 @@ Options for `XmlFile`.
 Name | Type | Description 
 -----|------|-------------
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitattributes**?🔹 | <code>boolean</code> | Update the project's .gitattributes file.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected
@@ -11744,6 +11875,7 @@ Options for `JsonFile`.
 Name | Type | Description 
 -----|------|-------------
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitattributes**?🔹 | <code>boolean</code> | Update the project's .gitattributes file.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **lineWidth**?🔹 | <code>number</code> | Maximum line width (set to 0 to disable folding).<br/>__*Default*__: 0
@@ -12758,6 +12890,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build.<br/>__*Default*__: []
 **preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before the build.<br/>__*Default*__: []
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **workflowTriggers**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | Build workflow triggers.<br/>__*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
 
@@ -14143,6 +14276,7 @@ Name | Type | Description
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Actions to run after the main build step.<br/>__*Default*__: not set
 **preBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to run before the main build step.<br/>__*Default*__: not set
 **preCheckoutSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Initial steps to run before the source code checkout.<br/>__*Default*__: not set
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
 **runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **triggers**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | The triggers for the workflow.<br/>__*Default*__: by default workflows can only be triggered by manually.
 
@@ -15036,6 +15170,7 @@ Name | Type | Description
 **prettier**?🔹 | <code>boolean</code> | Enable prettier for code formatting.<br/>__*Default*__: false
 **tsAlwaysTryTypes**?🔹 | <code>boolean</code> | Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.<br/>__*Default*__: true
 **tsconfigPath**?🔹 | <code>string</code> | Path to `tsconfig.json` which should be used by eslint.<br/>__*Default*__: "./tsconfig.json"
+**yaml**?🔹 | <code>boolean</code> | Write eslint configuration as YAML instead of JSON.<br/>__*Default*__: false
 
 
 
@@ -17141,6 +17276,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitattributes**?🔹 | <code>boolean</code> | Update the project's .gitattributes file.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected

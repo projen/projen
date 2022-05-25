@@ -75,10 +75,11 @@ full list):
 * [nextjs](https://projen.io/api/API.html#projen-web-nextjsproject) - Next.js project without TypeScript.
 * [nextjs-ts](https://projen.io/api/API.html#projen-web-nextjstypescriptproject) - Next.js project with TypeScript.
 * [node](https://projen.io/api/API.html#projen-javascript-nodeproject) - Node.js project.
-* [project](https://projen.io/api/API.html#projen-project) - Base project.
+* [project](https://projen.io/api/API.html#projen-project) - Base project type.
 * [python](https://projen.io/api/API.html#projen-python-pythonproject) - Python project.
 * [react](https://projen.io/api/API.html#projen-web-reactproject) - React project without TypeScript.
 * [react-ts](https://projen.io/api/API.html#projen-web-reacttypescriptproject) - React project with TypeScript.
+* [standard](https://projen.io/api/API.html#projen-standardproject) - undefined
 * [typescript](https://projen.io/api/API.html#projen-typescript-typescriptproject) - TypeScript project.
 * [typescript-app](https://projen.io/api/API.html#projen-typescript-typescriptappproject) - TypeScript app.
 <!-- </macro> -->

@@ -129,3 +129,23 @@ test("if the prettier is configured, eslint is configured accordingly", () => {
     "prettier/prettier": ["error"],
   });
 });
+
+test("can output yml instead of json", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    prettier: true,
+  });
+
+  // WHEN
+  new Eslint(project, {
+    dirs: ["src"],
+    yaml: true,
+  });
+
+  // THEN
+  const output = Testing.synth(project);
+  expect(output[".eslintrc.yml"]).toBeDefined();
+  expect(output[".eslintrc.json"]).toBeUndefined();
+});
