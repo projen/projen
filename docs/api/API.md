@@ -1367,6 +1367,7 @@ __Returns__:
 
 Project-level logging utilities.
 
+__Extends__: [Component](#projen-component)
 
 ### Initializer
 
@@ -1374,9 +1375,10 @@ Project-level logging utilities.
 
 
 ```ts
-new Logger(options?: LoggerOptions)
+new Logger(project: Project, options?: LoggerOptions)
 ```
 
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  *No description*
   * **level** (<code>[LogLevel](#projen-loglevel)</code>)  The logging verbosity. __*Default*__: LogLevel.INFO
   * **prefix** (<code>string</code>)  Prefix all logging messages with a string. __*Default*__: "[<project name>] "
@@ -2857,19 +2859,6 @@ tryFind(name: string): Task
 
 __Returns__:
 * <code>[Task](#projen-task)</code>
-
-#### *static* of(project)🔹 <a id="projen-tasks-of"></a>
-
-Returns the `Tasks` component of a project or `undefined` if the project does not have a Tasks component.
-
-```ts
-static of(project: Project): Tasks
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-
-__Returns__:
-* <code>[Tasks](#projen-tasks)</code>
 
 
 
