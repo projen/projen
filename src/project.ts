@@ -109,7 +109,7 @@ export class Project {
     // must happen after this.outdir, this.parent and this.root are initialized
     this.parent?._addSubProject(this);
 
-    this.logger = new Logger({
+    this.logger = new Logger(this, {
       ...options.logging,
       prefix: `[${this.name} ]`,
     });
