@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import * as YAML from "yaml";
-import { awscdk } from "../../src";
+import { awscdk, LogLevel, Testing } from "../../src";
 import {
   AwsCdkConstructLibrary,
   AwsCdkConstructLibraryOptions,
@@ -246,6 +246,33 @@ describe("workflow container image", () => {
       "my-custom-image"
     );
   });
+});
+
+it("warns the user if they add CDK v1 dependencies to a CDK v2 project", () => {
+  // GIVEN
+  console.error = jest.fn();
+  const project = new TestProject({
+    cdkVersion: "2.12.0",
+    deps: [
+      "@aws-cdk/core",
+      "@aws-cdk/aws-s3",
+      "@aws-cdk/cfnspec",
+      "@aws-cdk/aws-apigatewayv2-alpha@2.25.0-alpha.0",
+    ],
+    logging: {
+      level: LogLevel.VERBOSE,
+    },
+  });
+
+  // WHEN
+  Testing.synth(project);
+
+  // THEN
+  expect(console.error).toHaveBeenCalledWith(
+    expect.stringContaining(
+      `WARNING: Found CDK v1 deps in your project, even though your "cdkVersion" is 2.x: [@aws-cdk/aws-s3, @aws-cdk/core].`
+    )
+  );
 });
 
 const defaultOptions = {

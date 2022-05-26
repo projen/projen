@@ -173,6 +173,20 @@ export abstract class AwsCdkDeps extends Component {
     this.addV1DevDependencies(...(options.cdkTestDependencies ?? []));
   }
 
+  public preSynthesize(): void {
+    const v1Deps = this.project.deps.all
+      .map((dep) => dep.name)
+      .filter((dep) => isV1OnlyPackage(dep))
+      .sort();
+    if (this.cdkMajorVersion === 2 && v1Deps.length > 0) {
+      this.project.logger.warn(
+        `WARNING: Found CDK v1 deps in your project, even though your "cdkVersion" is 2.x: [${v1Deps.join(
+          ", "
+        )}]. Check out https://docs.aws.amazon.com/cdk/v2/guide/migrating-v2.html for more information about using CDK v2 dependencies.`
+      );
+    }
+  }
+
   /**
    * Adds dependencies to AWS CDK modules.
    *
@@ -342,6 +356,28 @@ export abstract class AwsCdkDeps extends Component {
    */
   protected abstract packageNames(): AwsCdkPackageNames;
 }
+
+function isV1OnlyPackage(packageName: string): boolean {
+  return (
+    packageName.startsWith("@aws-cdk/") &&
+    !packageName.endsWith("-alpha") &&
+    !AWS_CDK_V2_SCOPED_PACKAGES.includes(packageName)
+  );
+}
+
+/**
+ * A list of all known packages in the "@aws-cdk/" scope that are published
+ * for v2, excluding those ending with "-alpha" since we can automatically
+ * infer those are only in v2.
+ */
+const AWS_CDK_V2_SCOPED_PACKAGES = [
+  "@aws-cdk/cfnspec",
+  "@aws-cdk/cx-api",
+  "@aws-cdk/region-info",
+  "@aws-cdk/cloud-assembly-schema",
+  "@aws-cdk/assert",
+  "@aws-cdk/cloudformation-diff",
+];
 
 function determineFrameworkVersion(options: AwsCdkDepsOptions) {
   const ver = semver.parse(options.cdkVersion);
