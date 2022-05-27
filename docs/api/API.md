@@ -3370,6 +3370,18 @@ addV1DevDependencies(...deps: string[]): void
 
 
 
+#### preSynthesize()🔹 <a id="projen-awscdk-awscdkdeps-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
+
+
+
+
 #### protected packageNames()🔹 <a id="projen-awscdk-awscdkdeps-packagenames"></a>
 
 Return a configuration object with information about package naming in various languages.

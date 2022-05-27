@@ -173,6 +173,25 @@ export abstract class AwsCdkDeps extends Component {
     this.addV1DevDependencies(...(options.cdkTestDependencies ?? []));
   }
 
+  public preSynthesize(): void {
+    // Log a warning if any AWS CDK v1-only deps are found in the dependencies.
+    const depNames = Array.from(
+      new Set(this.project.deps.all.map((dep) => dep.name))
+    );
+    const v1Deps = depNames
+      .filter((dep) =>
+        [PACKAGE_AWS_CDK_VERSION.V1].includes(cdkVersionOfPackage(dep))
+      )
+      .sort();
+    if (this.cdkMajorVersion === 2 && v1Deps.length > 0) {
+      this.project.logger.warn(
+        `WARNING: Found CDK v1 deps in your project, even though your "cdkVersion" is 2.x: [${v1Deps.join(
+          ", "
+        )}]. Check out https://docs.aws.amazon.com/cdk/v2/guide/migrating-v2.html for more information about using CDK v2 dependencies.`
+      );
+    }
+  }
+
   /**
    * Adds dependencies to AWS CDK modules.
    *
@@ -342,6 +361,45 @@ export abstract class AwsCdkDeps extends Component {
    */
   protected abstract packageNames(): AwsCdkPackageNames;
 }
+
+/**
+ * Which AWS CDK version a construct library package belongs to.
+ */
+enum PACKAGE_AWS_CDK_VERSION {
+  V1 = "v1",
+  V2 = "v2",
+  EITHER = "either", // This package has been published both for v1 and v2.
+  UNKNOWN = "unknown",
+}
+
+function cdkVersionOfPackage(packageName: string) {
+  if (packageName === "aws-cdk-lib") {
+    return PACKAGE_AWS_CDK_VERSION.V2;
+  } else if (packageName.startsWith("@aws-cdk/")) {
+    if (packageName.endsWith("-alpha")) {
+      return PACKAGE_AWS_CDK_VERSION.V2;
+    } else if (AWS_CDK_V1_V2_SCOPED_PACKAGES.includes(packageName)) {
+      return PACKAGE_AWS_CDK_VERSION.EITHER;
+    } else {
+      return PACKAGE_AWS_CDK_VERSION.V1;
+    }
+  } else {
+    return PACKAGE_AWS_CDK_VERSION.UNKNOWN;
+  }
+}
+
+/**
+ * A list of all known packages in the "@aws-cdk/" scope that are published
+ * both for v1 and v2.
+ */
+const AWS_CDK_V1_V2_SCOPED_PACKAGES = [
+  "@aws-cdk/cfnspec",
+  "@aws-cdk/cx-api",
+  "@aws-cdk/region-info",
+  "@aws-cdk/cloud-assembly-schema",
+  "@aws-cdk/assert",
+  "@aws-cdk/cloudformation-diff",
+];
 
 function determineFrameworkVersion(options: AwsCdkDepsOptions) {
   const ver = semver.parse(options.cdkVersion);
