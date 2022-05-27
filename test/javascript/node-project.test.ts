@@ -537,7 +537,7 @@ test("extend github release workflow", () => {
       steps: [
         {
           name: "Check out the repo",
-          uses: "actions/checkout@v2",
+          uses: "actions/checkout@v3",
         },
         {
           name: "Push to Docker Hub",
