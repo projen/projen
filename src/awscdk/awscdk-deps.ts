@@ -174,9 +174,14 @@ export abstract class AwsCdkDeps extends Component {
   }
 
   public preSynthesize(): void {
-    const v1Deps = this.project.deps.all
-      .map((dep) => dep.name)
-      .filter((dep) => isV1OnlyPackage(dep))
+    // Log a warning if any AWS CDK v1-only deps are found in the dependencies.
+    const depNames = Array.from(
+      new Set(this.project.deps.all.map((dep) => dep.name))
+    );
+    const v1Deps = depNames
+      .filter((dep) =>
+        [PACKAGE_AWS_CDK_VERSION.V1].includes(cdkVersionOfPackage(dep))
+      )
       .sort();
     if (this.cdkMajorVersion === 2 && v1Deps.length > 0) {
       this.project.logger.warn(
@@ -357,20 +362,37 @@ export abstract class AwsCdkDeps extends Component {
   protected abstract packageNames(): AwsCdkPackageNames;
 }
 
-function isV1OnlyPackage(packageName: string): boolean {
-  return (
-    packageName.startsWith("@aws-cdk/") &&
-    !packageName.endsWith("-alpha") &&
-    !AWS_CDK_V2_SCOPED_PACKAGES.includes(packageName)
-  );
+/**
+ * Which AWS CDK version a construct library package belongs to.
+ */
+enum PACKAGE_AWS_CDK_VERSION {
+  V1 = "v1",
+  V2 = "v2",
+  EITHER = "either", // This package has been published both for v1 and v2.
+  UNKNOWN = "unknown",
+}
+
+function cdkVersionOfPackage(packageName: string) {
+  if (packageName === "aws-cdk-lib") {
+    return PACKAGE_AWS_CDK_VERSION.V2;
+  } else if (packageName.startsWith("@aws-cdk/")) {
+    if (packageName.endsWith("-alpha")) {
+      return PACKAGE_AWS_CDK_VERSION.V2;
+    } else if (AWS_CDK_V1_V2_SCOPED_PACKAGES.includes(packageName)) {
+      return PACKAGE_AWS_CDK_VERSION.EITHER;
+    } else {
+      return PACKAGE_AWS_CDK_VERSION.V1;
+    }
+  } else {
+    return PACKAGE_AWS_CDK_VERSION.UNKNOWN;
+  }
 }
 
 /**
  * A list of all known packages in the "@aws-cdk/" scope that are published
- * for v2, excluding those ending with "-alpha" since we can automatically
- * infer those are only in v2.
+ * both for v1 and v2.
  */
-const AWS_CDK_V2_SCOPED_PACKAGES = [
+const AWS_CDK_V1_V2_SCOPED_PACKAGES = [
   "@aws-cdk/cfnspec",
   "@aws-cdk/cx-api",
   "@aws-cdk/region-info",
