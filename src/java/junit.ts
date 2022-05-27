@@ -1,7 +1,7 @@
 import { join } from "path";
 import { Component } from "../component";
-import { Project } from "../project";
 import { SampleDir } from "../sample-file";
+import { StandardProject } from "../standard-project";
 import { Pom } from "./pom";
 
 const TESTDIR = join("src", "test", "java");
@@ -33,7 +33,7 @@ export interface JunitOptions {
  * Implements JUnit-based testing.
  */
 export class Junit extends Component {
-  constructor(project: Project, options: JunitOptions) {
+  constructor(project: StandardProject, options: JunitOptions) {
     super(project);
 
     const pom = options.pom;

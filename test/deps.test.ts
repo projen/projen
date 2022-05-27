@@ -2,11 +2,11 @@ import { join } from "path";
 import { existsSync, readFileSync } from "fs-extra";
 import { Project } from "../src";
 import { Dependencies, DependencyType } from "../src/dependencies";
-import { TestProject } from "./util";
 
 test("no dependencies, no manifest", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  new Dependencies(p);
 
   // THEN
   expect(depsManifest(p)).toBeUndefined();
@@ -14,10 +14,11 @@ test("no dependencies, no manifest", () => {
 
 test("minimal case", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const deps = new Dependencies(p);
 
   // WHEN
-  const dep = p.deps.addDependency("my-first-dep", DependencyType.RUNTIME);
+  const dep = deps.addDependency("my-first-dep", DependencyType.RUNTIME);
 
   // THEN
   expect(dep.name).toBe("my-first-dep");
@@ -28,10 +29,11 @@ test("minimal case", () => {
 
 test("with version requirement", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const deps = new Dependencies(p);
 
   // WHEN
-  const dep = p.deps.addDependency("depy@^7", DependencyType.PEER);
+  const dep = deps.addDependency("depy@^7", DependencyType.PEER);
 
   // THEN
   expect(dep.name).toBe("depy");
@@ -43,10 +45,11 @@ test("with version requirement", () => {
 
 test("with package alias", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const deps = new Dependencies(p);
 
   // WHEN
-  const dep = p.deps.addDependency("bar@npm:@bar/legacy", DependencyType.PEER);
+  const dep = deps.addDependency("bar@npm:@bar/legacy", DependencyType.PEER);
 
   // THEN
   expect(dep.name).toBe("bar");
@@ -58,68 +61,73 @@ test("with package alias", () => {
 
 test("deps.all returns all the dependencies", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const deps = new Dependencies(p);
 
   // WHEN
-  p.deps.addDependency("dep1", DependencyType.DEVENV);
-  p.deps.addDependency("dep2", DependencyType.RUNTIME);
-  p.deps.addDependency("dep3", DependencyType.PEER);
+  deps.addDependency("dep1", DependencyType.DEVENV);
+  deps.addDependency("dep2", DependencyType.RUNTIME);
+  deps.addDependency("dep3", DependencyType.PEER);
 
   // THEN
-  expect(p.deps.all).toMatchSnapshot();
+  expect(deps.all).toMatchSnapshot();
 });
 
 test("duplicates are ignored", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const deps = new Dependencies(p);
 
   // WHEN
-  p.deps.addDependency("depy", DependencyType.PEER);
-  p.deps.addDependency("depy", DependencyType.PEER);
+  deps.addDependency("depy", DependencyType.PEER);
+  deps.addDependency("depy", DependencyType.PEER);
 
   // THEN
-  expect(p.deps.getDependency("depy")).toBeDefined();
-  expect(p.deps.all.length).toEqual(1);
+  expect(deps.getDependency("depy")).toBeDefined();
+  expect(deps.all.length).toEqual(1);
   expect(depsManifest(p)).toMatchSnapshot();
 });
 
 test("can be overridden with more specific version", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const deps = new Dependencies(p);
 
   // WHEN
-  p.deps.addDependency("depy", DependencyType.PEER);
-  p.deps.addDependency("depy@^9", DependencyType.PEER);
+  deps.addDependency("depy", DependencyType.PEER);
+  deps.addDependency("depy@^9", DependencyType.PEER);
 
   // THEN
-  expect(p.deps.getDependency("depy").version).toEqual("^9");
+  expect(deps.getDependency("depy").version).toEqual("^9");
   expect(depsManifest(p)).toMatchSnapshot();
 });
 
 describe("removeDependency()", () => {
   test("can be used to remove a dependency", () => {
     // GIVEN
-    const p = new TestProject();
-    p.deps.addDependency("mydep", DependencyType.RUNTIME);
+    const p = new Project({ name: "my-project" });
+    const deps = new Dependencies(p);
+    deps.addDependency("mydep", DependencyType.RUNTIME);
 
     // WHEN
-    p.deps.removeDependency("mydep");
+    deps.removeDependency("mydep");
 
     // THEN
-    expect(p.deps.all).toStrictEqual([]);
+    expect(deps.all).toStrictEqual([]);
   });
 
   test("dep is defined for multiple types (e.g. dev + runtime)", () => {
     // GIVEN
-    const p = new TestProject();
-    p.deps.addDependency("mydep", DependencyType.RUNTIME);
-    p.deps.addDependency("mydep", DependencyType.BUILD);
+    const p = new Project({ name: "my-project" });
+    const deps = new Dependencies(p);
+    deps.addDependency("mydep", DependencyType.RUNTIME);
+    deps.addDependency("mydep", DependencyType.BUILD);
 
     // WHEN
-    p.deps.removeDependency("mydep", DependencyType.BUILD);
+    deps.removeDependency("mydep", DependencyType.BUILD);
 
     // THEN
-    expect(p.deps.all).toStrictEqual([
+    expect(deps.all).toStrictEqual([
       {
         name: "mydep",
         type: "runtime",
@@ -129,28 +137,30 @@ describe("removeDependency()", () => {
 
   test("fails if type is not provided and there are more then one", () => {
     // GIVEN
-    const p = new TestProject();
+    const p = new Project({ name: "my-project" });
+    const deps = new Dependencies(p);
 
     // WHEN
-    p.deps.addDependency("foo", DependencyType.BUILD);
-    p.deps.addDependency("foo", DependencyType.RUNTIME);
+    deps.addDependency("foo", DependencyType.BUILD);
+    deps.addDependency("foo", DependencyType.RUNTIME);
 
     // THEN
-    expect(() => p.deps.removeDependency("foo")).toThrow(
+    expect(() => deps.removeDependency("foo")).toThrow(
       /"foo" is defined for multiple dependency types\: build\,runtime/
     );
   });
 
   test("no-op if the dependency is not defined", () => {
     // GIVEN
-    const p = new TestProject();
-    p.deps.addDependency("hey", DependencyType.RUNTIME);
+    const p = new Project({ name: "my-project" });
+    const deps = new Dependencies(p);
+    deps.addDependency("hey", DependencyType.RUNTIME);
 
     // WHEN
-    p.deps.removeDependency("bam");
+    deps.removeDependency("bam");
 
     // THEN
-    expect(p.deps.all).toStrictEqual([
+    expect(deps.all).toStrictEqual([
       {
         name: "hey",
         type: "runtime",
@@ -162,13 +172,14 @@ describe("removeDependency()", () => {
 describe("getDependency()", () => {
   test("returns a single dependency", () => {
     // GIVEN
-    const p = new TestProject();
+    const p = new Project({ name: "my-project" });
+    const deps = new Dependencies(p);
 
     // WHEN
-    p.deps.addDependency("bar@^1.1.1", DependencyType.RUNTIME);
+    deps.addDependency("bar@^1.1.1", DependencyType.RUNTIME);
 
     // THEN
-    expect(p.deps.getDependency("bar")).toStrictEqual({
+    expect(deps.getDependency("bar")).toStrictEqual({
       name: "bar",
       version: "^1.1.1",
       type: DependencyType.RUNTIME,
@@ -177,16 +188,17 @@ describe("getDependency()", () => {
 
   test("matches type", () => {
     // GIVEN
-    const p = new TestProject();
-    p.deps.addDependency("boo", DependencyType.BUILD);
-    p.deps.addDependency("zar", DependencyType.RUNTIME);
-    p.deps.addDependency("hey@^1.0.0", DependencyType.RUNTIME);
+    const p = new Project({ name: "my-project" });
+    const deps = new Dependencies(p);
+    deps.addDependency("boo", DependencyType.BUILD);
+    deps.addDependency("zar", DependencyType.RUNTIME);
+    deps.addDependency("hey@^1.0.0", DependencyType.RUNTIME);
 
     // WHEN
-    p.deps.addDependency("bar@^1.1.1", DependencyType.RUNTIME);
+    deps.addDependency("bar@^1.1.1", DependencyType.RUNTIME);
 
     // THEN
-    expect(p.deps.getDependency("bar", DependencyType.RUNTIME)).toStrictEqual({
+    expect(deps.getDependency("bar", DependencyType.RUNTIME)).toStrictEqual({
       name: "bar",
       version: "^1.1.1",
       type: DependencyType.RUNTIME,
@@ -195,14 +207,15 @@ describe("getDependency()", () => {
 
   test("matches type (multiple)", () => {
     // GIVEN
-    const p = new TestProject();
+    const p = new Project({ name: "my-project" });
+    const deps = new Dependencies(p);
 
     // WHEN
-    p.deps.addDependency("bar@^1.2.1", DependencyType.RUNTIME);
-    p.deps.addDependency("bar@^1.1.1", DependencyType.BUILD);
+    deps.addDependency("bar@^1.2.1", DependencyType.RUNTIME);
+    deps.addDependency("bar@^1.1.1", DependencyType.BUILD);
 
     // THEN
-    expect(p.deps.getDependency("bar", DependencyType.RUNTIME)).toStrictEqual({
+    expect(deps.getDependency("bar", DependencyType.RUNTIME)).toStrictEqual({
       name: "bar",
       version: "^1.2.1",
       type: DependencyType.RUNTIME,
@@ -211,38 +224,41 @@ describe("getDependency()", () => {
 
   test("fails if there is no dependency by that name", () => {
     // GIVEN
-    const p = new TestProject();
-    p.deps.addDependency("bar@1.1.1", DependencyType.RUNTIME);
+    const p = new Project({ name: "my-project" });
+    const deps = new Dependencies(p);
+    deps.addDependency("bar@1.1.1", DependencyType.RUNTIME);
 
     // THEN
-    expect(() => p.deps.getDependency("test")).toThrow(
+    expect(() => deps.getDependency("test")).toThrow(
       /there is no dependency defined on \"test\"/
     );
   });
 
   test("fails if there is more then one type and type is not provided", () => {
     // GIVEN
-    const p = new TestProject();
+    const p = new Project({ name: "my-project" });
+    const deps = new Dependencies(p);
 
     // WHEN
-    p.deps.addDependency("zoo", DependencyType.RUNTIME);
-    p.deps.addDependency("zoo", DependencyType.DEVENV);
+    deps.addDependency("zoo", DependencyType.RUNTIME);
+    deps.addDependency("zoo", DependencyType.DEVENV);
 
     // THEN
-    expect(() => p.deps.getDependency("zoo")).toThrow(
+    expect(() => deps.getDependency("zoo")).toThrow(
       /\"zoo\" is defined for multiple dependency types: runtime,devenv. Please specify dependency type/
     );
   });
 
   test("fails if type does not match", () => {
     // GIVEN
-    const p = new TestProject();
+    const p = new Project({ name: "my-project" });
+    const deps = new Dependencies(p);
 
     // WHEN
-    p.deps.addDependency("zoo", DependencyType.RUNTIME);
+    deps.addDependency("zoo", DependencyType.RUNTIME);
 
     // THEN
-    expect(() => p.deps.getDependency("zoo", DependencyType.BUILD)).toThrow(
+    expect(() => deps.getDependency("zoo", DependencyType.BUILD)).toThrow(
       /there is no build dependency defined on \"zoo\"/
     );
   });
@@ -250,35 +266,37 @@ describe("getDependency()", () => {
 
 test("tryGetDependency() returns undefined if there is no dep", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const deps = new Dependencies(p);
 
   // WHEN
-  p.deps.addDependency("zoo", DependencyType.RUNTIME);
+  deps.addDependency("zoo", DependencyType.RUNTIME);
 
   // THEN
-  expect(p.deps.tryGetDependency("zoo")).toStrictEqual({
+  expect(deps.tryGetDependency("zoo")).toStrictEqual({
     name: "zoo",
     type: "runtime",
   });
-  expect(p.deps.tryGetDependency("zoo", DependencyType.RUNTIME)).toStrictEqual({
+  expect(deps.tryGetDependency("zoo", DependencyType.RUNTIME)).toStrictEqual({
     name: "zoo",
     type: "runtime",
   });
-  expect(p.deps.tryGetDependency("zoo", DependencyType.BUILD)).toBeUndefined();
-  expect(p.deps.tryGetDependency("boo")).toBeUndefined();
+  expect(deps.tryGetDependency("zoo", DependencyType.BUILD)).toBeUndefined();
+  expect(deps.tryGetDependency("boo")).toBeUndefined();
 });
 
 test("it is possible to overwrite dependency specs", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const deps = new Dependencies(p);
 
   // WHEN
-  p.deps.addDependency("zoo@^0.3.4", DependencyType.RUNTIME);
-  p.deps.addDependency("zoo@1.2.3", DependencyType.RUNTIME);
-  p.deps.addDependency("zoo@^2.3.4", DependencyType.BUILD);
+  deps.addDependency("zoo@^0.3.4", DependencyType.RUNTIME);
+  deps.addDependency("zoo@1.2.3", DependencyType.RUNTIME);
+  deps.addDependency("zoo@^2.3.4", DependencyType.BUILD);
 
   // THEN
-  expect(p.deps.all).toStrictEqual([
+  expect(deps.all).toStrictEqual([
     { name: "zoo", type: "build", version: "^2.3.4" },
     { name: "zoo", type: "runtime", version: "1.2.3" },
   ]);
@@ -286,18 +304,16 @@ test("it is possible to overwrite dependency specs", () => {
 
 test("it is possible to have local file dependencies", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
+  const deps = new Dependencies(p);
 
   // WHEN
-  p.deps.addDependency("cowsay@file:./cowsay", DependencyType.RUNTIME);
-  p.deps.addDependency("lolcat@file:../path/to/lolcat", DependencyType.BUILD);
-  p.deps.addDependency(
-    "fortune@file:../../path/to/fortune",
-    DependencyType.PEER
-  );
+  deps.addDependency("cowsay@file:./cowsay", DependencyType.RUNTIME);
+  deps.addDependency("lolcat@file:../path/to/lolcat", DependencyType.BUILD);
+  deps.addDependency("fortune@file:../../path/to/fortune", DependencyType.PEER);
 
   // THEN
-  expect(p.deps.all).toStrictEqual([
+  expect(deps.all).toStrictEqual([
     { name: "lolcat", type: "build", version: "file:../path/to/lolcat" },
     { name: "fortune", type: "peer", version: "file:../../path/to/fortune" },
     { name: "cowsay", type: "runtime", version: "file:./cowsay" },

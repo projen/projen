@@ -1,7 +1,7 @@
 import * as semver from "semver";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 
 /**
  * Options for `AwsCdkDeps`
@@ -143,12 +143,13 @@ export abstract class AwsCdkDeps extends Component {
   public readonly cdkMajorVersion: number;
 
   private readonly dependencyType: DependencyType;
-
   private readonly _packageNames: AwsCdkPackageNames;
+  private readonly _project: StandardProject;
 
-  constructor(project: Project, options: AwsCdkDepsOptions) {
+  constructor(project: StandardProject, options: AwsCdkDepsOptions) {
     super(project);
 
+    this._project = project;
     this.cdkDependenciesAsDeps = options.cdkDependenciesAsDeps ?? true;
 
     this.dependencyType = options.dependencyType;
@@ -249,7 +250,7 @@ export abstract class AwsCdkDeps extends Component {
         break;
     }
 
-    this.project.deps.addDependency(
+    this._project.deps.addDependency(
       `${this._packageNames.constructs}@${versionRequirement}`,
       this.dependencyType
     );
@@ -281,7 +282,7 @@ export abstract class AwsCdkDeps extends Component {
           );
         }
 
-        this.project.deps.addDependency(
+        this._project.deps.addDependency(
           `${this._packageNames.coreV2}@${this.cdkVersion}`,
           this.dependencyType
         );
@@ -333,7 +334,7 @@ export abstract class AwsCdkDeps extends Component {
    */
   private addV1DependenciesByType(type: DependencyType, ...modules: string[]) {
     for (const module of modules) {
-      this.project.deps.addDependency(`${module}@${this.cdkVersion}`, type);
+      this._project.deps.addDependency(`${module}@${this.cdkVersion}`, type);
     }
   }
 

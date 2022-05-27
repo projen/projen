@@ -1,6 +1,6 @@
 import { Component } from "./component";
 import { JsonFile } from "./json";
-import { Project } from "./project";
+import { StandardProject } from "./standard-project";
 
 /**
  * Options for Renovatebot
@@ -99,7 +99,7 @@ export enum RenovatebotScheduleInterval {
  * Ignores the versions controlled by Projen.
  */
 export class Renovatebot extends Component {
-  private readonly _project: Project;
+  private readonly _project: StandardProject;
 
   private readonly explicitIgnores: string[];
 
@@ -107,7 +107,7 @@ export class Renovatebot extends Component {
 
   private readonly labels?: string[];
 
-  constructor(project: Project, options: RenovatebotOptions = {}) {
+  constructor(project: StandardProject, options: RenovatebotOptions = {}) {
     super(project);
 
     this._project = project;

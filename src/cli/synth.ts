@@ -4,7 +4,7 @@ import * as path from "path";
 import * as fs from "fs-extra";
 import { PROJEN_RC } from "../common";
 import * as logging from "../logging";
-import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 import { TaskRuntime } from "../task-runtime";
 
 const projenModule = path.dirname(require.resolve("../../package.json"));
@@ -63,7 +63,7 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
     process.env.PROJEN_DISABLE_POST = (!options.post).toString();
     try {
       const defaultTask = runtime.tasks.find(
-        (t) => t.name === Project.DEFAULT_TASK
+        (t) => t.name === StandardProject.DEFAULT_TASK
       );
 
       // if "--rc" is specified, ignore the default task

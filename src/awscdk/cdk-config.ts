@@ -113,8 +113,8 @@ export class CdkConfig extends Component {
       },
     });
 
-    project.gitignore.exclude(`/${this.cdkout}/`);
-    project.gitignore.exclude(".cdk.staging/");
+    project.addGitIgnore(`/${this.cdkout}/`);
+    project.addGitIgnore(".cdk.staging/");
   }
 }
 

@@ -1,20 +1,19 @@
-import { IgnoreFile } from "../src";
-import { synthSnapshot, TestProject } from "./util";
+import { IgnoreFile, Project, Testing } from "../src";
 
 test("ignorefile synthesizes correctly", () => {
   // GIVEN
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   // WHEN
   new IgnoreFile(prj, ".dockerignore");
 
   // THEN
-  expect(splitAndIgnoreMarker(synthSnapshot(prj)[".dockerignore"])).toEqual([]);
+  expect(splitAndIgnoreMarker(Testing.synth(prj)[".dockerignore"])).toEqual([]);
 });
 
 test("ignorefile includes file after exclusion and inclusion", () => {
   // GIVEN
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   // WHEN
   const file = new IgnoreFile(prj, ".dockerignore");
@@ -22,14 +21,14 @@ test("ignorefile includes file after exclusion and inclusion", () => {
   file.include("a.txt");
 
   // THEN
-  expect(splitAndIgnoreMarker(synthSnapshot(prj)[".dockerignore"])).toEqual([
+  expect(splitAndIgnoreMarker(Testing.synth(prj)[".dockerignore"])).toEqual([
     "!a.txt",
   ]);
 });
 
 test("ignorefile excludes file after inclusion and exclusion", () => {
   // GIVEN
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   // WHEN
   const file = new IgnoreFile(prj, ".dockerignore");
@@ -37,14 +36,14 @@ test("ignorefile excludes file after inclusion and exclusion", () => {
   file.exclude("a.txt");
 
   // THEN
-  expect(splitAndIgnoreMarker(synthSnapshot(prj)[".dockerignore"])).toEqual([
+  expect(splitAndIgnoreMarker(Testing.synth(prj)[".dockerignore"])).toEqual([
     "a.txt",
   ]);
 });
 
 test("ignorefile omits duplicated includes and excludes", () => {
   // GIVEN
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   // WHEN
   const file = new IgnoreFile(prj, ".dockerignore");
@@ -54,7 +53,7 @@ test("ignorefile omits duplicated includes and excludes", () => {
   file.include("c.txt", "d.txt");
 
   // THEN
-  expect(splitAndIgnoreMarker(synthSnapshot(prj)[".dockerignore"])).toEqual([
+  expect(splitAndIgnoreMarker(Testing.synth(prj)[".dockerignore"])).toEqual([
     "a.txt",
     "b.txt",
     "!c.txt",
@@ -64,7 +63,7 @@ test("ignorefile omits duplicated includes and excludes", () => {
 
 test('if include() is called with "!", then strip it', () => {
   // GIVEN
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
   const ignore = new IgnoreFile(prj, ".myignorefile");
 
   // WHEN
@@ -72,13 +71,13 @@ test('if include() is called with "!", then strip it', () => {
 
   // THEN
   expect(
-    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+    splitAndIgnoreMarker(Testing.synth(prj)[".myignorefile"])
   ).toStrictEqual(["!*.js"]);
 });
 
 test("removePatters() can be used to remove previously added patters", () => {
   // GIVEN
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
   const ignore = new IgnoreFile(prj, ".myignorefile");
 
   // WHEN
@@ -91,13 +90,13 @@ test("removePatters() can be used to remove previously added patters", () => {
 
   // THEN
   expect(
-    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+    splitAndIgnoreMarker(Testing.synth(prj)[".myignorefile"])
   ).toStrictEqual(["my_file", "*.zz", "boom/bam"]);
 });
 
 test("comments are filtered out", () => {
   // GIVEN
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
   const ignore = new IgnoreFile(prj, ".myignorefile");
 
   // WHEN
@@ -108,13 +107,13 @@ test("comments are filtered out", () => {
 
   // THEN
   expect(
-    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+    splitAndIgnoreMarker(Testing.synth(prj)[".myignorefile"])
   ).toStrictEqual(["*.js", "!foo", "bar"]);
 });
 
 test("included directories are removed when a parent directory is excluded", () => {
   // GIVEN
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
   const ignore = new IgnoreFile(prj, ".myignorefile");
 
   // WHEN
@@ -125,13 +124,13 @@ test("included directories are removed when a parent directory is excluded", () 
 
   // THEN
   expect(
-    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+    splitAndIgnoreMarker(Testing.synth(prj)[".myignorefile"])
   ).toStrictEqual(["bloop/", "!floop/", "!src/"]);
 });
 
 test("excluded directories are removed when a parent directory is included", () => {
   // GIVEN
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
   const ignore = new IgnoreFile(prj, ".myignorefile");
 
   // WHEN
@@ -142,7 +141,7 @@ test("excluded directories are removed when a parent directory is included", () 
 
   // THEN
   expect(
-    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+    splitAndIgnoreMarker(Testing.synth(prj)[".myignorefile"])
   ).toStrictEqual(["bloop/", "!floop/", "src/"]);
 });
 

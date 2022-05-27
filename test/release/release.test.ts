@@ -1,11 +1,12 @@
 import * as YAML from "yaml";
+import { Testing } from "../../src";
+import { GitHubProject } from "../../src/github";
 import { JobPermission } from "../../src/github/workflows-model";
 import { Publisher, Release, ReleaseTrigger } from "../../src/release";
-import { synthSnapshot, TestProject } from "../util";
 
 test("minimal", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   // WHEN
   new Release(project, {
@@ -16,13 +17,13 @@ test("minimal", () => {
     artifactsDirectory: "dist",
   });
 
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir).toMatchSnapshot();
 });
 
 test("with major version filter", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   // WHEN
   new Release(project, {
@@ -36,14 +37,14 @@ test("with major version filter", () => {
   });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir[".github/workflows/release.yml"]).toBeDefined();
   expect(outdir).toMatchSnapshot();
 });
 
 test("with release tag prefix", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   // WHEN
   new Release(project, {
@@ -58,14 +59,14 @@ test("with release tag prefix", () => {
   });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir[".github/workflows/release.yml"]).toBeDefined();
   expect(outdir).toMatchSnapshot();
 });
 
 test("addBranch() can be used for additional release branches", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -81,7 +82,7 @@ test("addBranch() can be used for additional release branches", () => {
   release.addBranch("10.x", { majorVersion: 10 });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir[".github/workflows/release.yml"]).toBeDefined();
   expect(outdir[".github/workflows/release-2.x.yml"]).toBeDefined();
   expect(outdir[".github/workflows/release-10.x.yml"]).toBeDefined();
@@ -90,7 +91,7 @@ test("addBranch() can be used for additional release branches", () => {
 
 test('if multiple branches are defined, the default branch requires a "majorVersion"', () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -111,7 +112,7 @@ test('if multiple branches are defined, the default branch requires a "majorVers
 
 test("publisher (defaults)", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -129,14 +130,14 @@ test("publisher (defaults)", () => {
   release.publisher.publishToPyPi();
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir[".github/workflows/release.yml"]).toMatchSnapshot();
   expect(outdir[".projen/tasks.json"]).toMatchSnapshot();
 });
 
 test("publishers are added as jobs to all release workflows", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -152,7 +153,7 @@ test("publishers are added as jobs to all release workflows", () => {
   release.publisher.publishToNpm();
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   const wf1 = YAML.parse(outdir[".github/workflows/release.yml"]);
   expect(wf1).toMatchObject({
     on: { push: { branches: ["main"] } },
@@ -179,7 +180,7 @@ test("publishers are added as jobs to all release workflows", () => {
 
 test("manual releases do not generate a release workflow", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   // WHEN
   new Release(project, {
@@ -192,14 +193,14 @@ test("manual releases do not generate a release workflow", () => {
   });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir[".github/workflows/release.yml"]).toBeUndefined();
 });
 
 test("releaseSchedule schedules releases", () => {
   // GIVEN
   const schedule = "0 17 * * *";
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   // WHEN
   new Release(project, {
@@ -213,7 +214,7 @@ test("releaseSchedule schedules releases", () => {
   });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   const wf1 = YAML.parse(outdir[".github/workflows/release.yml"]);
   expect(wf1).toMatchObject({
     on: {
@@ -224,7 +225,7 @@ test("releaseSchedule schedules releases", () => {
 
 test("manual release publish happens after anti-tamper check", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   // WHEN
   new Release(project, {
@@ -236,7 +237,7 @@ test("manual release publish happens after anti-tamper check", () => {
   });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   const steps: Object[] = outdir[".projen/tasks.json"].tasks.release.steps;
   const antiTamperStepIndex = steps.findIndex(
     (obj: any) => obj.exec === Release.ANTI_TAMPER_CMD
@@ -249,7 +250,7 @@ test("manual release publish happens after anti-tamper check", () => {
 
 test("manual release with custom git-push", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
   new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
@@ -262,7 +263,7 @@ test("manual release with custom git-push", () => {
   });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   const steps =
     outdir[".projen/tasks.json"].tasks[Publisher.PUBLISH_GIT_TASK_NAME].steps;
   expect(steps).toEqual(
@@ -276,7 +277,7 @@ test("manual release with custom git-push", () => {
 
 test("addJobs() can be used to add arbitrary jobs to the release workflows", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -302,13 +303,13 @@ test("addJobs() can be used to add arbitrary jobs to the release workflows", () 
   });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir).toMatchSnapshot();
 });
 
 test("majorVersion can be 0", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   // WHEN
   new Release(project, {
@@ -321,14 +322,14 @@ test("majorVersion can be 0", () => {
   });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir[".github/workflows/release.yml"]).toMatchSnapshot();
   expect(outdir[".projen/tasks.json"]).toMatchSnapshot();
 });
 
 test("prerelease can be specified per branch", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   // WHEN
   const release = new Release(project, {
@@ -343,7 +344,7 @@ test("prerelease can be specified per branch", () => {
   release.addBranch("10.x", { majorVersion: 10, prerelease: "pre" });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir[".github/workflows/release.yml"]).toMatchSnapshot();
   expect(outdir[".github/workflows/release.10.x.yml"]).toMatchSnapshot();
   expect(outdir[".projen/tasks.json"]).toMatchSnapshot();
@@ -351,7 +352,7 @@ test("prerelease can be specified per branch", () => {
 
 test("releaseBranches can be use to define additional branches", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   // WHEN
   new Release(project, {
@@ -367,13 +368,13 @@ test("releaseBranches can be use to define additional branches", () => {
     artifactsDirectory: "dist",
   });
 
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir).toMatchSnapshot();
 });
 
 test("releaseBranches can be defined with different tag prefixes to the same major version", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   // WHEN
   new Release(project, {
@@ -390,13 +391,13 @@ test("releaseBranches can be defined with different tag prefixes to the same maj
     artifactsDirectory: "dist",
   });
 
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir).toMatchSnapshot();
 });
 
 test("releaseBranches as an array throws an error since type was changed", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   // WHEN
   expect(
@@ -414,7 +415,7 @@ test("releaseBranches as an array throws an error since type was changed", () =>
 
 test("github packages are supported by npm, maven, and nuget", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -436,12 +437,12 @@ test("github packages are supported by npm, maven, and nuget", () => {
   });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir).toMatchSnapshot();
 });
 
 test("can enable issue creation on failed releases with a custom label", () => {
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -458,13 +459,13 @@ test("can enable issue creation on failed releases with a custom label", () => {
     registry: "npm.pkg.github.com",
   });
 
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir[".github/workflows/release.yml"]).toMatchSnapshot();
 });
 
 test("AWS CodeArtifact is supported by npm", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -481,13 +482,13 @@ test("AWS CodeArtifact is supported by npm", () => {
   });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir).toMatchSnapshot();
 });
 
 test("AWS CodeArtifact is supported by npm with AWS access keys", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -508,13 +509,13 @@ test("AWS CodeArtifact is supported by npm with AWS access keys", () => {
   });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir).toMatchSnapshot();
 });
 
 test("AWS CodeArtifact is supported with role to assume", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
   const roleArn = "role-arn";
 
   const release = new Release(project, {
@@ -535,13 +536,13 @@ test("AWS CodeArtifact is supported with role to assume", () => {
   });
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir).toMatchSnapshot();
 });
 
 test("can be modified with escape hatches", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
   new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
@@ -559,7 +560,7 @@ test("can be modified with escape hatches", () => {
     .file!.addOverride("jobs.release_github.env.BAR", "VALUE2");
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   expect(outdir[".github/workflows/release.yml"]).toContain("FOO: VALUE1");
   expect(outdir[".github/workflows/release.yml"]).toContain("BAR: VALUE2");
   expect(outdir).toMatchSnapshot();
@@ -567,7 +568,7 @@ test("can be modified with escape hatches", () => {
 
 test("publisher can use custom github runner", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -586,7 +587,7 @@ test("publisher can use custom github runner", () => {
   release.publisher.publishToPyPi();
 
   // THEN
-  const outdir = synthSnapshot(project);
+  const outdir = Testing.synth(project);
   const workflow = YAML.parse(outdir[".github/workflows/release.yml"]);
   for (let job of Object.keys(workflow.jobs)) {
     expect(workflow.jobs[job]["runs-on"]).toEqual("self-hosted");
@@ -596,7 +597,7 @@ test("publisher can use custom github runner", () => {
 describe("npmDistTag", () => {
   test("determines npm dist-tag used in the workflow", () => {
     // GIVEN
-    const project = new TestProject();
+    const project = new GitHubProject({ name: "my-project" });
 
     // WHEN
     const release = new Release(project, {
@@ -614,7 +615,7 @@ describe("npmDistTag", () => {
     release.publisher.publishToNpm();
 
     // THEN
-    const files = synthSnapshot(project);
+    const files = Testing.synth(project);
     const main = YAML.parse(files[".github/workflows/release.yml"]);
     const main3 = YAML.parse(files[".github/workflows/release-main-3.yml"]);
     expect(main.jobs.release_npm.steps[2].env).toStrictEqual({
@@ -629,7 +630,7 @@ describe("npmDistTag", () => {
 
   test("the dist-tag for the default branch is set at the root", () => {
     // GIVEN
-    const project = new TestProject();
+    const project = new GitHubProject({ name: "my-project" });
 
     // WHEN
     const release = new Release(project, {
@@ -648,7 +649,7 @@ describe("npmDistTag", () => {
     release.publisher.publishToNpm();
 
     // THEN
-    const files = synthSnapshot(project);
+    const files = Testing.synth(project);
     const main = YAML.parse(files[".github/workflows/release.yml"]);
     const main3 = YAML.parse(files[".github/workflows/release-main-3.yml"]);
     expect(main.jobs.release_npm.steps[2].env).toStrictEqual({
@@ -663,7 +664,7 @@ describe("npmDistTag", () => {
 
   test("if branch-level dist-tag is set, then publishToNpm cannot specify dist-tag", () => {
     // GIVEN
-    const project = new TestProject();
+    const project = new GitHubProject({ name: "my-project" });
 
     // WHEN
     const release = new Release(project, {
@@ -688,7 +689,7 @@ describe("npmDistTag", () => {
 
 test("if publishTasks is disabled, no publish tasks are created", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -706,7 +707,7 @@ test("if publishTasks is disabled, no publish tasks are created", () => {
   release.publisher.publishToPyPi();
 
   // THEN
-  const files = synthSnapshot(project);
+  const files = Testing.synth(project);
   const tasks = files[".projen/tasks.json"].tasks;
   expect(
     Object.keys(tasks).filter((t) => t.startsWith("publish:")).length
@@ -715,7 +716,7 @@ test("if publishTasks is disabled, no publish tasks are created", () => {
 
 test("dryRun", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new GitHubProject({ name: "my-project" });
 
   const release = new Release(project, {
     task: project.buildTask,
@@ -733,7 +734,7 @@ test("dryRun", () => {
   release.publisher.publishToPyPi();
 
   // THEN
-  const files = synthSnapshot(project);
+  const files = Testing.synth(project);
   const releaseWorkflow = YAML.parse(files[".github/workflows/release.yml"]);
   const releaseJobs = Object.keys(releaseWorkflow.jobs).filter((name) =>
     name.startsWith("release_")

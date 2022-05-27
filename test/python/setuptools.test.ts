@@ -1,5 +1,5 @@
+import { Testing } from "../../src";
 import { PythonProject, PythonProjectOptions } from "../../src/python";
-import { synthSnapshot } from "../util";
 
 test("setuptools enabled", () => {
   const p = new TestPythonProject({
@@ -10,7 +10,7 @@ test("setuptools enabled", () => {
     classifiers: ["Development Status :: 4 - Beta"],
   });
 
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
   expect(snapshot["setup.py"]).toContain("First Last");
   expect(snapshot["setup.py"]).toContain("email@example.com");
   expect(snapshot["setup.py"]).toContain("http://www.example.com");

@@ -1,5 +1,5 @@
 import { Component } from "./component";
-import { Project } from "./project";
+import { StandardProject } from "./standard-project";
 import { Task } from "./task";
 
 /**
@@ -44,7 +44,7 @@ export class ProjectBuild extends Component {
    */
   public readonly packageTask: Task;
 
-  constructor(project: Project) {
+  constructor(project: StandardProject) {
     super(project);
 
     this.preCompileTask = project.tasks.addTask("pre-compile", {
@@ -73,8 +73,8 @@ export class ProjectBuild extends Component {
 
     // if this is not subproject, execute the "default" task which will
     // synthesize project files.
-    if (!this.project.parent && this.project.defaultTask) {
-      this.buildTask.spawn(this.project.defaultTask);
+    if (!this.project.parent && project.defaultTask) {
+      this.buildTask.spawn(project.defaultTask);
     }
 
     this.buildTask.spawn(this.preCompileTask);

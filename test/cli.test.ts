@@ -1,6 +1,6 @@
 import { join } from "path";
 import { writeFileSync } from "fs-extra";
-import { Project } from "../src/project";
+import { StandardProject } from "../src";
 import { directorySnapshot, execProjenCLI, mkdtemp } from "./util";
 
 const MOCK_PROJENRC =
@@ -27,7 +27,7 @@ test('running "projen" with no arguments will execute .projenrc.js', () => {
 });
 
 test('running "projen" for projects with a "default" task will execute it', () => {
-  const project = new Project({ name: "my-project" });
+  const project = new StandardProject({ name: "my-project" });
   project.defaultTask?.exec('echo "foo" > bar.txt');
   project.synth();
 

@@ -1,18 +1,18 @@
+import { Project, Testing } from "../src";
 import { License } from "../src/license";
-import { synthSnapshot, TestProject } from "./util";
 
 test("apache with defaults", () => {
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
 
   new License(project, {
     spdx: "Apache-2.0",
   });
 
-  expect(synthSnapshot(project).LICENSE).toMatchSnapshot();
+  expect(Testing.synth(project).LICENSE).toMatchSnapshot();
 });
 
 test("fails for MIT with no owner because substitution is required", () => {
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
 
   expect(
     () =>
@@ -23,18 +23,18 @@ test("fails for MIT with no owner because substitution is required", () => {
 });
 
 test("MIT with owner", () => {
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
 
   new License(project, {
     spdx: "MIT",
     copyrightOwner: "John Doe",
   });
 
-  expect(synthSnapshot(project).LICENSE).toMatchSnapshot();
+  expect(Testing.synth(project).LICENSE).toMatchSnapshot();
 });
 
 test("MIT with owner and period", () => {
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
 
   new License(project, {
     spdx: "MIT",
@@ -42,11 +42,11 @@ test("MIT with owner and period", () => {
     copyrightPeriod: "1900-1920",
   });
 
-  expect(synthSnapshot(project).LICENSE).toMatchSnapshot();
+  expect(Testing.synth(project).LICENSE).toMatchSnapshot();
 });
 
 test("fails for MIT-0 with no owner because substitution is required", () => {
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
 
   expect(
     () =>
@@ -57,18 +57,18 @@ test("fails for MIT-0 with no owner because substitution is required", () => {
 });
 
 test("MIT-0 with owner", () => {
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
 
   new License(project, {
     spdx: "MIT-0",
     copyrightOwner: "John Doe",
   });
 
-  expect(synthSnapshot(project).LICENSE).toMatchSnapshot();
+  expect(Testing.synth(project).LICENSE).toMatchSnapshot();
 });
 
 test("MIT-0 with owner and period", () => {
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
 
   new License(project, {
     spdx: "MIT-0",
@@ -76,5 +76,5 @@ test("MIT-0 with owner and period", () => {
     copyrightPeriod: "1900-1920",
   });
 
-  expect(synthSnapshot(project).LICENSE).toMatchSnapshot();
+  expect(Testing.synth(project).LICENSE).toMatchSnapshot();
 });

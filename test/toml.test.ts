@@ -1,9 +1,8 @@
 import * as TOML from "@iarna/toml";
-import { TomlFile } from "../src";
-import { synthSnapshot, TestProject } from "./util";
+import { Project, Testing, TomlFile } from "../src";
 
 test("toml object can be mutated before synthesis", () => {
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   const obj: any = {
     hello: "world",
@@ -16,7 +15,7 @@ test("toml object can be mutated before synthesis", () => {
     foo: 1234,
   };
 
-  const out = synthSnapshot(prj);
+  const out = Testing.synth(prj);
   expect(TOML.parse(out["my/toml/file.toml"])).toStrictEqual({
     hello: "world",
     anotherField: { foo: 1234 },
@@ -24,7 +23,7 @@ test("toml object can be mutated before synthesis", () => {
 });
 
 test("toml file can contain projen marker", () => {
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   const obj: any = {};
 
@@ -33,7 +32,7 @@ test("toml file can contain projen marker", () => {
     marker: true,
   });
 
-  const output = synthSnapshot(prj)["my/toml/file-marker.toml"];
+  const output = Testing.synth(prj)["my/toml/file-marker.toml"];
 
   const firstLine = output.split("\n")[0];
 

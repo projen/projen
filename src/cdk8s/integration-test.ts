@@ -1,7 +1,7 @@
 import { join } from "path";
 import { IntegrationTestBaseOptions, IntegrationTestBase } from "../cdk";
 import { DependencyType } from "../dependencies";
-import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 
 /**
  * Options for IntegrationTest
@@ -12,7 +12,7 @@ export interface IntegrationTestOptions extends IntegrationTestBaseOptions {}
  * CDK8S integration test.
  */
 export class IntegrationTest extends IntegrationTestBase {
-  constructor(project: Project, options: IntegrationTestOptions) {
+  constructor(project: StandardProject, options: IntegrationTestOptions) {
     super(project, options);
 
     if (!project.deps.tryGetDependency("cdk8s-cli")) {

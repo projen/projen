@@ -1,6 +1,5 @@
-import { SourceCode } from "../../src";
+import { SourceCode, Testing } from "../../src";
 import { ArrowParens, NodeProject, TrailingComma } from "../../src/javascript";
-import { synthSnapshot } from "../util";
 
 describe("prettier", () => {
   test("snapshot", () => {
@@ -13,7 +12,7 @@ describe("prettier", () => {
     });
 
     // THEN
-    expect(synthSnapshot(project)[".prettierrc.json"]).toMatchSnapshot();
+    expect(Testing.synth(project)[".prettierrc.json"]).toMatchSnapshot();
   });
 
   test("snapshot with ignore", () => {
@@ -28,7 +27,7 @@ describe("prettier", () => {
     project.prettier?.ignoreFile?.addPatterns("build");
 
     // THEN
-    expect(synthSnapshot(project)[".prettierignore"]).toMatchSnapshot();
+    expect(Testing.synth(project)[".prettierignore"]).toMatchSnapshot();
   });
 
   test("sample config is created", () => {
@@ -76,6 +75,6 @@ describe("prettier", () => {
     new SourceCode(project, "src/example.ts");
 
     // THEN
-    expect(synthSnapshot(project)[".prettierignore"]).toMatchSnapshot();
+    expect(Testing.synth(project)[".prettierignore"]).toMatchSnapshot();
   });
 });

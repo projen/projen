@@ -1,9 +1,11 @@
+import { Testing } from "../../src";
+import { GitHubProject } from "../../src/github";
 import { Project } from "../../src/project";
-import { synthSnapshot, TestProject } from "../util";
 
 test("no workflow", () => {
   // GIVEN
-  const p = new TestProject({
+  const p = new GitHubProject({
+    name: "my-project",
     githubOptions: {
       workflows: false,
     },
@@ -16,7 +18,7 @@ test("no workflow", () => {
 
 test("adding empty workflow", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new GitHubProject({ name: "my-project" });
 
   // WHEN
   p.github?.addWorkflow("my-workflow");
@@ -28,7 +30,8 @@ test("adding empty workflow", () => {
 
 test("throws when adding workflow with existing name", () => {
   // GIVEN
-  const p = new TestProject({
+  const p = new GitHubProject({
+    name: "my-project",
     stale: true,
   });
 
@@ -40,7 +43,8 @@ test("throws when adding workflow with existing name", () => {
 
 test("throws when adding workflow with adding a job with no runners specified", () => {
   // GIVEN
-  const p = new TestProject({
+  const p = new GitHubProject({
+    name: "my-project",
     stale: true,
   });
   // WHEN
@@ -60,7 +64,7 @@ test("throws when adding workflow with adding a job with no runners specified", 
 
 test("tryFind valid workflow", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new GitHubProject({ name: "my-project" });
 
   // WHEN
   p.github?.addWorkflow("workflow1");
@@ -77,7 +81,7 @@ test("tryFind valid workflow", () => {
 
 test("tryFind unknown workflow", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new GitHubProject({ name: "my-project" });
 
   // WHEN
   p.github?.addWorkflow("workflow1");
@@ -92,7 +96,7 @@ test("tryFind unknown workflow", () => {
 });
 
 function synthWorkflows(p: Project): any {
-  const snapshot = synthSnapshot(p);
+  const snapshot = Testing.synth(p);
   const filtered = Object.keys(snapshot)
     .filter((path) => path.startsWith(".github/workflows/"))
     .reduce((obj, key) => {

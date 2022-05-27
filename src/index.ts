@@ -22,6 +22,7 @@ export * from "./renovatebot";
 export * from "./sample-file";
 export * from "./semver";
 export * from "./source-code";
+export * from "./standard-project";
 export * from "./task";
 export * from "./tasks";
 export * from "./task-model";

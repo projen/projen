@@ -5,7 +5,7 @@ import { PROJEN_VERSION } from "../common";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { readJsiiManifest } from "../inventory";
-import { Project } from "../project";
+import { StandardProject } from "../standard-project";
 
 /**
  * Options for `Projenrc`.
@@ -36,7 +36,7 @@ export class Projenrc extends Component {
    */
   private readonly rcfile: string;
 
-  constructor(project: Project, options: ProjenrcOptions = {}) {
+  constructor(project: StandardProject, options: ProjenrcOptions = {}) {
     super(project);
 
     const projenVersion = options.projenVersion ?? PROJEN_VERSION;

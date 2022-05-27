@@ -1,9 +1,9 @@
+import { Testing } from "../../src";
 import { ReactProject, ReactProjectOptions } from "../../src/web";
-import { synthSnapshot } from "../util";
 
 test("defaults", () => {
   const p = new TestReactProject();
-  expect(synthSnapshot(p)).toMatchSnapshot();
+  expect(Testing.synth(p)).toMatchSnapshot();
 });
 
 test("rewire creates config-overrides.js", () => {
@@ -16,7 +16,7 @@ test("rewire creates config-overrides.js", () => {
       "module.prop5": "one",
     },
   });
-  const snapshot = synthSnapshot(p)[".projen/react-config-overrides.js"];
+  const snapshot = Testing.synth(p)[".projen/react-config-overrides.js"];
   expect(snapshot).toMatchSnapshot();
 });
 

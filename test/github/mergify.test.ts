@@ -1,5 +1,5 @@
+import { Testing } from "../../src";
 import { NodeProject, NodeProjectOptions } from "../../src/javascript";
-import { synthSnapshot } from "../util";
 
 describe("mergify", () => {
   test("default", () => {
@@ -8,7 +8,7 @@ describe("mergify", () => {
 
     // WHEN
     // THEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     expect(snapshot[".mergify.yml"]).toBeDefined();
     expect(snapshot[".mergify.yml"]).toMatchSnapshot();
   });
@@ -24,7 +24,7 @@ describe("mergify", () => {
     });
 
     // THEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     expect(snapshot[".mergify.yml"]).toBeDefined();
     expect(snapshot[".mergify.yml"]).toContain(
       "- -label~=(do-not-merge|missing-tests)"
@@ -40,7 +40,7 @@ describe("mergify", () => {
     });
 
     // THEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     expect(snapshot[".mergify.yml"]).toBeUndefined();
   });
 
@@ -60,7 +60,7 @@ describe("mergify", () => {
     });
 
     // THEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     expect(snapshot[".mergify.yml"]).toBeDefined();
     expect(snapshot[".mergify.yml"]).toMatchSnapshot();
   });

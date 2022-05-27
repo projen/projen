@@ -1,55 +1,54 @@
 import * as path from "path";
 import * as fs from "fs-extra";
-import { Project, TextFile, ProjectOptions } from "../src";
+import { Project, TextFile, ProjectOptions, Testing } from "../src";
 import { PROJEN_MARKER } from "../src/common";
-import { TestProject } from "./util";
 
 test("composing projects declaratively", () => {
-  const comp = new TestProject();
-  new Project({
-    name: "foo",
-    parent: comp,
-    outdir: path.join("packages", "foo"),
-  });
-  comp.synth();
-
-  // THEN
-  expect(
-    fs.existsSync(path.join(comp.outdir, "packages", "foo", ".gitignore"))
-  ).toBeTruthy();
-});
-
-test("composing projects synthesizes to subdirs", () => {
   // GIVEN
-  const comp = new TestProject();
+  const comp = new Project({ name: "my-project" });
 
   // WHEN
-  new Project({
+  const child = new Project({
     name: "foo",
     parent: comp,
     outdir: path.join("packages", "foo"),
   });
-  new Project({
+  new TextFile(child, ".gitignore", { lines: ["/node_modules"] });
+
+  // THEN
+  const snapshot = Testing.synth(comp);
+  expect(snapshot[path.join("packages", "foo", ".gitignore")]).toBeDefined();
+});
+
+test("composing multiple projects synthesizes to subdirs", () => {
+  // GIVEN
+  const comp = new Project({ name: "my-project" });
+
+  // WHEN
+  const child1 = new Project({
+    name: "foo",
+    parent: comp,
+    outdir: path.join("packages", "foo"),
+  });
+  new TextFile(child1, ".gitignore", { lines: ["/node_modules"] });
+  const child2 = new Project({
     name: "bar",
     parent: comp,
     outdir: path.join("packages", "bar"),
   });
+  new TextFile(child2, ".gitignore", { lines: ["/node_modules"] });
 
   comp.synth();
 
   // THEN
-  expect(fs.pathExistsSync(path.join(comp.outdir, "README.md")));
-  expect(
-    fs.pathExistsSync(path.join(comp.outdir, "packages", "foo", ".gitignore"))
-  );
-  expect(
-    fs.pathExistsSync(path.join(comp.outdir, "packages", "bar", ".gitignore"))
-  );
+  const snapshot = Testing.synth(comp);
+  expect(snapshot[path.join("packages", "foo", ".gitignore")]).toBeDefined();
+  expect(snapshot[path.join("packages", "bar", ".gitignore")]).toBeDefined();
 });
 
 test("errors when paths overlap", () => {
   // GIVEN
-  const comp = new TestProject();
+  const comp = new Project({ name: "my-project" });
   new Project({
     name: "foo",
     parent: comp,
@@ -68,7 +67,7 @@ test("errors when paths overlap", () => {
 });
 
 test("multiple levels", () => {
-  const root = new TestProject();
+  const root = new Project({ name: "my-project" });
   const child1 = new Project({
     name: "child1",
     parent: root,
@@ -85,7 +84,7 @@ test("multiple levels", () => {
 });
 
 test("subprojects cannot introduce files that override each other", () => {
-  const root = new TestProject();
+  const root = new Project({ name: "my-project" });
   const child = new Project({
     name: "sub-project",
     parent: root,
@@ -99,14 +98,14 @@ test("subprojects cannot introduce files that override each other", () => {
 });
 
 test('"outdir" for subprojects must be relative', () => {
-  const root = new TestProject();
+  const root = new Project({ name: "my-project" });
   expect(
     () => new Project({ name: "foobar", parent: root, outdir: "/foo/bar" })
   ).toThrow(/"outdir" must be a relative path/);
 });
 
 test("subproject generated files do not get cleaned up by parent project", () => {
-  const root = new TestProject();
+  const root = new Project({ name: "my-project" });
   const child = new PreSynthProject({ parent: root, outdir: "sub-project" });
 
   // no files have been generated yet

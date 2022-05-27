@@ -1,6 +1,6 @@
+import { Testing } from "../../src";
 import { Dependabot, DependabotRegistryType } from "../../src/github";
 import { NodeProject, NodeProjectOptions } from "../../src/javascript";
-import { synthSnapshot } from "../util";
 
 describe("dependabot", () => {
   test("default", () => {
@@ -8,7 +8,7 @@ describe("dependabot", () => {
 
     new Dependabot(project.github!);
 
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     expect(snapshot[".github/dependabot.yml"]).toBeDefined();
     expect(snapshot[".github/dependabot.yml"]).toMatchSnapshot();
   });
@@ -32,7 +32,7 @@ describe("dependabot", () => {
       },
     });
 
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     const dependabot = snapshot[".github/dependabot.yml"];
     expect(dependabot).toBeDefined();
     expect(dependabot).toMatchSnapshot();
@@ -44,7 +44,7 @@ describe("dependabot", () => {
     test("ignores projen by default", () => {
       const project = createProject();
       new Dependabot(project.github!, {});
-      const snapshot = synthSnapshot(project);
+      const snapshot = Testing.synth(project);
       const dependabot = snapshot[".github/dependabot.yml"];
       expect(dependabot).toMatchSnapshot();
       expect(dependabot).toContain("ignore:");
@@ -54,7 +54,7 @@ describe("dependabot", () => {
     test("ignore with ignoreProjen set to false", () => {
       const project = createProject();
       new Dependabot(project.github!, { ignoreProjen: false });
-      const snapshot = synthSnapshot(project);
+      const snapshot = Testing.synth(project);
       const dependabot = snapshot[".github/dependabot.yml"];
       expect(dependabot).toMatchSnapshot();
       expect(dependabot).not.toContain("ignore:");
@@ -67,7 +67,7 @@ describe("dependabot", () => {
         ignore: [{ dependencyName: "testlib" }],
       });
 
-      const snapshot = synthSnapshot(project);
+      const snapshot = Testing.synth(project);
       const dependabot = snapshot[".github/dependabot.yml"];
       expect(dependabot).toMatchSnapshot();
       expect(dependabot).toContain("ignore");
@@ -81,7 +81,7 @@ describe("dependabot", () => {
         ignore: [{ dependencyName: "testlib", versions: [">10.x"] }],
       });
 
-      const snapshot = synthSnapshot(project);
+      const snapshot = Testing.synth(project);
       const dependabot = snapshot[".github/dependabot.yml"];
       expect(dependabot).toMatchSnapshot();
       expect(dependabot).toContain("ignore");
@@ -96,7 +96,7 @@ describe("dependabot", () => {
         ignore: [{ dependencyName: "testlib", versions: ["10.x", "20.x"] }],
       });
 
-      const snapshot = synthSnapshot(project);
+      const snapshot = Testing.synth(project);
       const dependabot = snapshot[".github/dependabot.yml"];
       expect(dependabot).toMatchSnapshot();
       expect(dependabot).toContain("ignore");

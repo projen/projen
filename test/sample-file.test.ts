@@ -1,22 +1,21 @@
 import * as path from "path";
-import { Project, ProjectOptions } from "../src";
+import { Project, Testing } from "../src";
 import { SampleDir, SampleFile } from "../src/sample-file";
-import { synthSnapshot } from "./util";
 
 test("sample file from text contents", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
 
   // WHEN
   new SampleFile(project, "welcome.txt", { contents: "hello\nworld" });
 
   // THEN
-  expect(synthSnapshot(project)["welcome.txt"]).toMatch("hello\nworld");
+  expect(Testing.synth(project)["welcome.txt"]).toMatch("hello\nworld");
 });
 
 test("sample file from source", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
 
   // WHEN
   new SampleFile(project, "logo.svg", {
@@ -24,14 +23,14 @@ test("sample file from source", () => {
   });
 
   // THEN
-  expect(synthSnapshot(project)["logo.svg"]).toMatch(
+  expect(Testing.synth(project)["logo.svg"]).toMatch(
     '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'
   );
 });
 
 test("sample directory from files", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
 
   // WHEN
   new SampleDir(project, "public", {
@@ -42,14 +41,14 @@ test("sample directory from files", () => {
   });
 
   // THEN
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot["public/foo.txt"]).toMatch("Hello world!");
   expect(snapshot["public/bar.txt"]).toMatch("Test test test");
 });
 
 test("sample directory from source", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
 
   // WHEN
   new SampleDir(project, "public", {
@@ -57,7 +56,7 @@ test("sample directory from source", () => {
   });
 
   // THEN
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot["public/robots.txt"].length).toBeGreaterThan(0);
   expect(snapshot["public/index.html"].length).toBeGreaterThan(0);
   expect(Object.keys(snapshot["public/manifest.json"]).length).toBeGreaterThan(
@@ -67,7 +66,7 @@ test("sample directory from source", () => {
 
 test("sample directory from source with overwritten files", () => {
   // GIVEN
-  const project = new TestProject();
+  const project = new Project({ name: "my-project" });
 
   // WHEN
   new SampleDir(project, "public", {
@@ -78,7 +77,7 @@ test("sample directory from source with overwritten files", () => {
   });
 
   // THEN
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot["public/index.html"]).toMatch(
     "<!doctype html><body>Hello world!</body>"
   );
@@ -87,12 +86,3 @@ test("sample directory from source with overwritten files", () => {
     0
   );
 });
-
-export class TestProject extends Project {
-  constructor(options: Omit<ProjectOptions, "name"> = {}) {
-    super({
-      name: "my-project",
-      ...options,
-    });
-  }
-}

@@ -1,24 +1,24 @@
+import { Testing } from "../../src";
 import {
   NextJsTypeScriptProject,
   NextJsTypeScriptProjectOptions,
 } from "../../src/web";
-import { synthSnapshot } from "../util";
 
 test("defaults", () => {
   const p = new TestNextJsTypeScriptProject();
-  expect(synthSnapshot(p)).toMatchSnapshot();
+  expect(Testing.synth(p)).toMatchSnapshot();
 });
 
 test("tailwind enabled", () => {
   const p = new TestNextJsTypeScriptProject();
-  const out = synthSnapshot(p);
+  const out = Testing.synth(p);
   expect(out["tailwind.config.json"]).toBeDefined();
   expect(out["postcss.config.json"]).toBeDefined();
 });
 
 test("CommonJS not ESnext", () => {
   const p = new TestNextJsTypeScriptProject();
-  const out = synthSnapshot(p);
+  const out = Testing.synth(p);
   expect(out["tsconfig.json"]).toBeDefined();
   expect(out["tsconfig.json"].compilerOptions).toBeDefined();
   expect(out["tsconfig.json"].compilerOptions.module).toEqual("CommonJS");

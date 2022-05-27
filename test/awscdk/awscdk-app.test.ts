@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
-import { awscdk } from "../../src";
-import { mkdtemp, synthSnapshot } from "../util";
+import { awscdk, Testing } from "../../src";
+import { mkdtemp } from "../util";
 
 describe("cdkVersion is >= 2.0.0", () => {
   test('use "aws-cdk-lib" the constructs at ^10.0.5', () => {
@@ -10,7 +10,7 @@ describe("cdkVersion is >= 2.0.0", () => {
       defaultReleaseBranch: "main",
       name: "test",
     });
-    const snap = synthSnapshot(project);
+    const snap = Testing.synth(project);
     expect(snap["package.json"].dependencies).toStrictEqual({
       "aws-cdk-lib": "^2.0.0-rc.1",
       constructs: "^10.0.5",
@@ -28,7 +28,7 @@ describe("cdkVersion is >= 2.0.0", () => {
       defaultReleaseBranch: "main",
       name: "test",
     });
-    const snap = synthSnapshot(project);
+    const snap = Testing.synth(project);
     expect(snap["cdk.json"].context).toBeUndefined();
   });
 });
@@ -55,7 +55,7 @@ describe("lambda functions", () => {
     });
 
     // THEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     expect(snapshot["src/my-function.ts"]).not.toBeUndefined();
     expect(
       snapshot[".projen/tasks.json"].tasks["bundle:my.lambda"].steps
@@ -83,7 +83,7 @@ describe("lambda functions", () => {
     );
 
     // THEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     expect(snapshot["src/my-function.ts"]).toBeUndefined();
     expect(
       snapshot[".projen/tasks.json"].tasks["bundle:src/my"]
@@ -102,7 +102,7 @@ describe("synth", () => {
       cdkVersion: "1.100.0",
     });
 
-    files = synthSnapshot(project);
+    files = Testing.synth(project);
   });
 
   it('adds a "synth" task', () => {
@@ -140,7 +140,7 @@ describe("watch", () => {
       cdkVersion: "1.100.0",
     });
 
-    files = synthSnapshot(project);
+    files = Testing.synth(project);
   });
 
   it('adds a "watch" task', () => {
@@ -170,7 +170,7 @@ test("CDK v1 usage", () => {
     name: "test",
   });
 
-  const snap = synthSnapshot(project);
+  const snap = Testing.synth(project);
   expect(snap["package.json"].dependencies).toStrictEqual({
     "@aws-cdk/core": "^1.126.0",
     constructs: "^3.2.27",

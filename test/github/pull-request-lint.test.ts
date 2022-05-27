@@ -1,6 +1,6 @@
+import { Testing } from "../../src";
 import { PullRequestLint } from "../../src/github/pull-request-lint";
 import { NodeProject, NodeProjectOptions } from "../../src/javascript";
-import { synthSnapshot } from "../util";
 
 test("default", () => {
   // GIVEN
@@ -10,7 +10,7 @@ test("default", () => {
   new PullRequestLint(project.github!);
 
   // THEN
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot[".github/workflows/pull-request-lint.yml"]).toBeDefined();
   expect(snapshot[".github/workflows/pull-request-lint.yml"]).toMatchSnapshot();
 });
@@ -29,7 +29,7 @@ describe("semantic titles", () => {
     });
 
     // THEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     expect(
       snapshot[".github/workflows/pull-request-lint.yml"]
     ).toMatchSnapshot();
@@ -48,7 +48,7 @@ describe("semantic titles", () => {
     });
 
     // THEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     expect(
       snapshot[".github/workflows/pull-request-lint.yml"]
     ).toMatchSnapshot();
@@ -65,7 +65,7 @@ test("with custom runner", () => {
   });
 
   // THEN
-  const snapshot = synthSnapshot(project);
+  const snapshot = Testing.synth(project);
   expect(snapshot[".github/workflows/pull-request-lint.yml"]).toContain(
     "runs-on: self-hosted"
   );

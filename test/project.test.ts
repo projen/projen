@@ -1,10 +1,11 @@
 import * as path from "path";
-import { JsonFile, Project, Testing, TextFile } from "../src";
-import { synthSnapshot, TestProject } from "./util";
+import * as fs from "fs-extra";
+import { JsonFile, Project, ProjectOptions, Testing, TextFile } from "../src";
+import { synthSnapshotWithPost } from "./util";
 
 test("file paths are relative to the project outdir", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
 
   // WHEN
   const f = new TextFile(p, "foo/bar.txt");
@@ -16,7 +17,7 @@ test("file paths are relative to the project outdir", () => {
 
 test("all files added to the project can be enumerated", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
   new TextFile(p, "my.txt");
   new JsonFile(p, "your/file/me.json", { obj: {} });
 
@@ -32,7 +33,7 @@ test("all files added to the project can be enumerated", () => {
 
 test("tryFindFile() can be used to find a file either absolute or relative path", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
   const file = new JsonFile(p, "your/file/me.json", { obj: {} });
 
   // WHEN
@@ -46,7 +47,7 @@ test("tryFindFile() can be used to find a file either absolute or relative path"
 
 test("tryFindFile() will also look up files in subprojects", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
   const child = new Project({
     name: "foobar",
     parent: p,
@@ -65,7 +66,7 @@ test("tryFindFile() will also look up files in subprojects", () => {
 
 test("tryRemoveFile() can be used to remove a file with a relative path", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
   const file = new JsonFile(p, "your/file/me.json", { obj: {} });
 
   // WHEN
@@ -81,7 +82,7 @@ test("tryRemoveFile() can be used to remove a file with a relative path", () => 
 
 test("tryRemoveFile() can be used to remove a file with an absolute path", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
   const file = new JsonFile(p, "your/file/me.json", { obj: {} });
 
   // WHEN
@@ -97,7 +98,7 @@ test("tryRemoveFile() can be used to remove a file with an absolute path", () =>
 
 test("tryRemoveFile() will also remove a file in a subproject", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
   const child = new Project({
     name: "foobar",
     parent: p,
@@ -118,7 +119,7 @@ test("tryRemoveFile() will also remove a file in a subproject", () => {
 
 test("tryRemoveFile() can be used to override an existing file", () => {
   // GIVEN
-  const p = new TestProject();
+  const p = new Project({ name: "my-project" });
   new TextFile(p, "your/file/me.txt", { lines: ["original"] });
 
   // WHEN
@@ -132,41 +133,25 @@ test("tryRemoveFile() can be used to override an existing file", () => {
   expect(result === newFile).toBeTruthy();
 });
 
-test("autoApprove is configured", () => {
-  // WHEN
-  const p = new TestProject({
-    autoApproveOptions: {
-      secret: "MY_SECRET",
-    },
-  });
+test("post-synthesis option enabled", () => {
+  const project = new PostSynthProject({ name: "my-project" });
 
-  // THEN
-  expect(p.autoApprove).toBeDefined();
-  expect(p.autoApprove?.label).toEqual("auto-approve");
+  expect(synthSnapshotWithPost(project)[".postsynth"]).toContain("postsynth");
 });
 
-test("github: false disables github integration", () => {
-  // WHEN
-  const p = new TestProject({
-    github: false,
-  });
+test("post-synthesis option disabled", () => {
+  const project = new PostSynthProject({ name: "my-project" });
 
-  // THEN
-  expect(p.github).toBeUndefined();
+  expect(Testing.synth(project)[".postsynth"]).toBeUndefined();
 });
 
-test("renovatebot: true creates renovatebot configuration", () => {
-  // GIVEN
-  const p = new TestProject({
-    renovatebot: true,
-    renovatebotOptions: {
-      labels: ["renotate", "dependencies"],
-    },
-  });
+export class PostSynthProject extends Project {
+  constructor(options: ProjectOptions) {
+    super(options);
+  }
 
-  // WHEN
-  const snapshot = synthSnapshot(p);
-
-  // THEN
-  expect(snapshot["renovate.json5"]).toMatchSnapshot();
-});
+  // include a file that is only generated if post-synthesis isn't disabled
+  postSynthesize() {
+    fs.writeFileSync(path.join(this.outdir, ".postsynth"), "# postsynth");
+  }
+}

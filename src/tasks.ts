@@ -7,6 +7,17 @@ import { Task, TaskOptions } from "./task";
 import { TasksManifest, TaskSpec } from "./task-model";
 import { TaskRuntime } from "./task-runtime";
 
+export interface TasksOptions {
+  /**
+   * The shell command to use in order to run the projen CLI.
+   *
+   * Can be used to customize in special environments.
+   *
+   * @default "npx projen"
+   */
+  readonly projenCommand?: string;
+}
+
 /**
  * Defines project tasks.
  *
@@ -14,12 +25,15 @@ import { TaskRuntime } from "./task-runtime";
  * synthesized into `.projen/tasks.json`.
  */
 export class Tasks extends Component {
+  public readonly projenCommand: string;
+
   private readonly _tasks: { [name: string]: Task };
   private readonly _env: { [name: string]: string };
 
-  constructor(project: Project) {
+  constructor(project: Project, options: TasksOptions = {}) {
     super(project);
 
+    this.projenCommand = options.projenCommand ?? "npm projen";
     this._tasks = {};
     this._env = {};
 

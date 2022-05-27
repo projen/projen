@@ -16,9 +16,12 @@ export interface PipOptions {}
  */
 export class Pip extends Component implements IPythonDeps {
   public readonly installTask: Task;
+  private readonly _project: PythonProject;
 
   constructor(project: PythonProject, _options: PipOptions = {}) {
     super(project);
+
+    this._project = project;
 
     new RequirementsFile(project, "requirements.txt", {
       packageProvider: new RuntimeDependencyProvider(project),
@@ -41,7 +44,7 @@ export class Pip extends Component implements IPythonDeps {
    * @param spec Format `<module>@<semver>`
    */
   public addDependency(spec: string) {
-    this.project.deps.addDependency(spec, DependencyType.RUNTIME);
+    this._project.deps.addDependency(spec, DependencyType.RUNTIME);
   }
 
   /**
@@ -50,7 +53,7 @@ export class Pip extends Component implements IPythonDeps {
    * @param spec Format `<module>@<semver>`
    */
   public addDevDependency(spec: string) {
-    this.project.deps.addDependency(spec, DependencyType.DEVENV);
+    this._project.deps.addDependency(spec, DependencyType.DEVENV);
   }
 
   /**

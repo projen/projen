@@ -1,6 +1,6 @@
+import { StandardProject, Testing } from "../../src";
 import { DependencyType } from "../../src/dependencies";
 import { Pom, PomOptions } from "../../src/java";
-import { synthSnapshot, TestProject } from "../util";
 
 test("group/artifact/version", () => {
   const pom = new TestPom({
@@ -39,7 +39,7 @@ test("addDependency()", () => {
   pom.addDependency("software.amazon.awscdk/core");
 
   // dependencies are managed at the project level
-  pom.project.deps.addDependency(
+  pom.deps.addDependency(
     "org.assertj/assertj-core@^3.18.1",
     DependencyType.TEST
   );
@@ -47,9 +47,7 @@ test("addDependency()", () => {
   expect(actualPom(pom)).toMatchSnapshot();
 
   // check that pom.addDependency() updates the project
-  expect(
-    pom.project.deps.getDependency("software.amazon.awscdk/core")
-  ).toStrictEqual({
+  expect(pom.deps.getDependency("software.amazon.awscdk/core")).toStrictEqual({
     name: "software.amazon.awscdk/core",
     type: "runtime",
   });
@@ -67,7 +65,7 @@ test("addPlugin()", () => {
   });
 
   // alteratively
-  pom.project.deps.addDependency(
+  pom.deps.addDependency(
     "org.codehaus.mojo/exec-maven-plugin@3.0.0",
     DependencyType.BUILD,
     {
@@ -81,14 +79,14 @@ test("addPlugin()", () => {
 });
 
 function actualPom(p: Pom) {
-  const snap = synthSnapshot(p.project);
+  const snap = Testing.synth(p.project);
   return snap[p.fileName];
 }
 
 class TestPom extends Pom {
   constructor(options?: PomOptions) {
     super(
-      new TestProject(),
+      new StandardProject({ name: "my-project" }),
       options ?? {
         groupId: "org.acme",
         artifactId: "my-artifact",

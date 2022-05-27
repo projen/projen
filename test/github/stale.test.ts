@@ -1,27 +1,29 @@
 import * as YAML from "yaml";
-import { StaleBehavior } from "../../src/github";
+import { Testing } from "../../src";
+import { GitHubProject, StaleBehavior } from "../../src/github";
 import { renderBehavior } from "../../src/github/stale-util";
-import { synthSnapshot, TestProject } from "../util";
 
 const defaults = { stale: 10, close: 11, type: "issue" };
 
 test("default project behavior", () => {
-  const project = new TestProject();
-  expect(synthSnapshot(project)[".github/workflows/stale.yml"]).toBeUndefined();
+  const project = new GitHubProject({ name: "my-project" });
+  expect(Testing.synth(project)[".github/workflows/stale.yml"]).toBeUndefined();
 });
 
 test("stale enabled", () => {
-  const project = new TestProject({
+  const project = new GitHubProject({
+    name: "my-project",
     stale: true,
   });
 
   expect(
-    synthSnapshot(project)[".github/workflows/stale.yml"]
+    Testing.synth(project)[".github/workflows/stale.yml"]
   ).toMatchSnapshot();
 });
 
 test("customizations", () => {
-  const project = new TestProject({
+  const project = new GitHubProject({
+    name: "my-project",
     stale: true,
     staleOptions: {
       issues: { enabled: false },
@@ -34,19 +36,20 @@ test("customizations", () => {
   });
 
   expect(
-    synthSnapshot(project)[".github/workflows/stale.yml"]
+    Testing.synth(project)[".github/workflows/stale.yml"]
   ).toMatchSnapshot();
 });
 
 test("with custom runner", () => {
-  const project = new TestProject({
+  const project = new GitHubProject({
+    name: "my-project",
     stale: true,
     staleOptions: {
       runsOn: ["self-hosted"],
     },
   });
 
-  expect(synthSnapshot(project)[".github/workflows/stale.yml"]).toContain(
+  expect(Testing.synth(project)[".github/workflows/stale.yml"]).toContain(
     "runs-on: self-hosted"
   );
 });
@@ -122,7 +125,8 @@ describe("renderBehavior()", () => {
 });
 
 describe("exempt labels in workflow output", () => {
-  const project = new TestProject({
+  const project = new GitHubProject({
+    name: "my-project",
     stale: true,
     staleOptions: {
       issues: { exemptLabels: [] },
@@ -131,7 +135,7 @@ describe("exempt labels in workflow output", () => {
   });
 
   const workflow = YAML.parse(
-    synthSnapshot(project)[".github/workflows/stale.yml"]
+    Testing.synth(project)[".github/workflows/stale.yml"]
   );
 
   expect(workflow.jobs.stale.steps[0]).toStrictEqual({

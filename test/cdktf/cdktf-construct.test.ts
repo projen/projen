@@ -1,9 +1,9 @@
+import { Testing } from "../../src";
 import {
   ConstructLibraryCdktf,
   ConstructLibraryCdktfOptions,
 } from "../../src/cdktf";
 import { NpmAccess } from "../../src/javascript";
-import { synthSnapshot } from "../util";
 
 describe("constructs dependency selection", () => {
   test("user-selected", () => {
@@ -11,7 +11,7 @@ describe("constructs dependency selection", () => {
     const project = new TestProject({ cdktfVersion: "0.99" });
 
     // WHEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
 
     // THEN
     expect(snapshot["package.json"]?.peerDependencies?.cdktf).toBe("0.99");
@@ -27,7 +27,7 @@ describe("constructs dependency selection", () => {
     });
 
     // WHEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
 
     // THEN
     expect(snapshot["package.json"]?.peerDependencies?.constructs).toBe(

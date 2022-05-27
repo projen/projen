@@ -1,8 +1,7 @@
-import { Makefile } from "../src";
-import { synthSnapshot, TestProject } from "./util";
+import { Makefile, Project, Testing } from "../src";
 
 test("makefile synthesizes correctly", () => {
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   new Makefile(prj, "Makefile", {
     all: ["one", "two", "three"],
@@ -25,7 +24,7 @@ test("makefile synthesizes correctly", () => {
     ],
   });
 
-  expect(synthSnapshot(prj).Makefile).toStrictEqual(
+  expect(Testing.synth(prj).Makefile).toStrictEqual(
     [
       ".PHONY: all",
       "all: one two three",
@@ -45,7 +44,7 @@ test("makefile synthesizes correctly", () => {
 });
 
 test("makefile synthesizes correctly using imperative API", () => {
-  const prj = new TestProject();
+  const prj = new Project({ name: "my-project" });
 
   new Makefile(prj, "Makefile")
     .addRule({
@@ -68,7 +67,7 @@ test("makefile synthesizes correctly using imperative API", () => {
     .addAll("one")
     .addAlls("two", "three");
 
-  expect(synthSnapshot(prj).Makefile).toStrictEqual(
+  expect(Testing.synth(prj).Makefile).toStrictEqual(
     [
       ".PHONY: all",
       "all: one two three",

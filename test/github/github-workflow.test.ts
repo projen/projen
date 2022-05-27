@@ -1,15 +1,18 @@
+import { Testing } from "../../src";
+import { GitHub } from "../../src/github";
 import { GithubWorkflow } from "../../src/github/workflows";
-import { synthSnapshot, TestProject } from "../util";
+import { Project } from "../../src/project";
 
 describe("github-workflow", () => {
   const workflowName = "test-workflow";
 
   test("Default concurrency allowed", () => {
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
+    const github = new GitHub(project);
 
-    new GithubWorkflow(project.github!, workflowName);
+    new GithubWorkflow(github, workflowName);
 
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
 
     expect(snapshot[`.github/workflows/${workflowName}.yml`]).not.toContain(
       "concurrency"
@@ -17,14 +20,15 @@ describe("github-workflow", () => {
   });
 
   test("concurrency set", () => {
-    const concurrencyName = "my-concurrency";
-    const project = new TestProject();
+    const project = new Project({ name: "my-project" });
+    const github = new GitHub(project);
 
-    new GithubWorkflow(project.github!, workflowName, {
+    const concurrencyName = "my-concurrency";
+    new GithubWorkflow(github, workflowName, {
       concurrency: concurrencyName,
     });
 
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
 
     expect(snapshot[`.github/workflows/${workflowName}.yml`]).toContain(
       `concurrency: ${concurrencyName}`

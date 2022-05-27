@@ -1,13 +1,13 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 import * as YAML from "yaml";
-import { awscdk } from "../../src";
+import { awscdk, Testing } from "../../src";
 import {
   AwsCdkConstructLibrary,
   AwsCdkConstructLibraryOptions,
 } from "../../src/awscdk";
 import { NpmAccess } from "../../src/javascript";
-import { mkdtemp, synthSnapshot } from "../util";
+import { mkdtemp } from "../util";
 
 describe("constructs dependency selection", () => {
   test("user-selected", () => {
@@ -18,7 +18,7 @@ describe("constructs dependency selection", () => {
     });
 
     // WHEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
 
     // THEN
     expect(snapshot["package.json"]?.peerDependencies?.constructs).toBe(
@@ -35,7 +35,7 @@ describe("constructs dependency selection", () => {
     const project = new TestProject({ cdkVersion: "1.112.0" });
 
     // WHEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
 
     // THEN
     expect(snapshot["package.json"]?.peerDependencies?.constructs).toMatch(
@@ -59,7 +59,7 @@ describe("constructs dependency selection", () => {
     const project = new TestProject({ cdkVersion: "1.110.0" });
 
     // WHEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
 
     // THEN
     expect(
@@ -75,7 +75,7 @@ describe("constructs dependency selection", () => {
     const project = new TestProject({ cdkVersion: "2.0.0-alpha.5" });
 
     // WHEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
 
     // THEN
     expect(snapshot["package.json"]?.peerDependencies?.constructs).toMatch(
@@ -184,7 +184,7 @@ describe("lambda functions", () => {
     });
 
     // THEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     expect(snapshot["src/my-function.ts"]).not.toBeUndefined();
     expect(
       snapshot[".projen/tasks.json"].tasks["bundle:my.lambda"].steps
@@ -210,7 +210,7 @@ describe("lambda functions", () => {
     );
 
     // THEN
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     expect(snapshot["src/my-function.ts"]).toBeUndefined();
     expect(snapshot[".projen/tasks.json"].tasks["bundle:my"]).toBeUndefined();
   });
@@ -219,7 +219,7 @@ describe("lambda functions", () => {
 describe("workflow container image", () => {
   it("uses jsii/superchain:1-buster-slim for cdk v1", () => {
     const project = new TestProject({ cdkVersion: "1.100.0" });
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     const buildWorkflow = YAML.parse(snapshot[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build.container.image).toStrictEqual(
       "jsii/superchain:1-buster-slim"
@@ -228,7 +228,7 @@ describe("workflow container image", () => {
 
   it("uses jsii/superchain:1-buster-slim-node14 for cdk v2", () => {
     const project = new TestProject({ cdkVersion: "2.12.0" });
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     const buildWorkflow = YAML.parse(snapshot[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build.container.image).toStrictEqual(
       "jsii/superchain:1-buster-slim-node14"
@@ -240,7 +240,7 @@ describe("workflow container image", () => {
       cdkVersion: "2.12.0",
       workflowContainerImage: "my-custom-image",
     });
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
     const buildWorkflow = YAML.parse(snapshot[".github/workflows/build.yml"]);
     expect(buildWorkflow.jobs.build.container.image).toStrictEqual(
       "my-custom-image"

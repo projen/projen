@@ -1,6 +1,6 @@
+import { Testing } from "../../src";
 import { AutoApprove } from "../../src/github/auto-approve";
 import { NodeProject, NodeProjectOptions } from "../../src/javascript";
-import { synthSnapshot } from "../util";
 
 describe("auto-approve", () => {
   test("default", () => {
@@ -8,7 +8,7 @@ describe("auto-approve", () => {
 
     new AutoApprove(project.github!);
 
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
 
     expect(snapshot[".github/workflows/auto-approve.yml"]).toBeDefined();
     expect(snapshot[".github/workflows/auto-approve.yml"]).toMatchSnapshot();
@@ -23,7 +23,7 @@ describe("auto-approve", () => {
       allowedUsernames: ["bot-1", "bot-2"],
     });
 
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
 
     expect(snapshot[".github/workflows/auto-approve.yml"]).toMatchSnapshot();
   });
@@ -36,7 +36,7 @@ describe("auto-approve", () => {
       allowedUsernames: [],
     });
 
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
 
     expect(snapshot[".github/workflows/auto-approve.yml"]).toMatchSnapshot();
   });
@@ -49,7 +49,7 @@ describe("auto-approve", () => {
       runsOn: ["self-hosted"],
     });
 
-    const snapshot = synthSnapshot(project);
+    const snapshot = Testing.synth(project);
 
     expect(snapshot[".github/workflows/auto-approve.yml"]).toContain(
       "runs-on: self-hosted"
