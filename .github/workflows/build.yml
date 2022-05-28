@@ -15,7 +15,7 @@ jobs:
       CI: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v10
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}
@@ -199,7 +199,7 @@ jobs:
           name: build-artifact
           path: dist
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v10
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           repository: ${{ github.event.pull_request.head.repo.full_name }}

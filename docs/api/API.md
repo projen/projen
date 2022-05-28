@@ -70,6 +70,7 @@ Name|Description
 [cdk8s.IntegrationTest](#projen-cdk8s-integrationtest)|CDK8S integration test.
 [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)|Discovers and creates integration tests from files in the test root.
 [cdktf.ConstructLibraryCdktf](#projen-cdktf-constructlibrarycdktf)|CDKTF construct library project.
+[github.Actions](#projen-github-actions)|Manages GitHub actions used in GitHub workflows.
 [github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
@@ -227,6 +228,7 @@ Name|Description
 [cdk8s.IntegrationTestAutoDiscoverOptions](#projen-cdk8s-integrationtestautodiscoveroptions)|*No description*
 [cdk8s.IntegrationTestOptions](#projen-cdk8s-integrationtestoptions)|Options for IntegrationTest.
 [cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)|*No description*
+[github.ActionMetadata](#projen-github-actionmetadata)|*No description*
 [github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
@@ -5618,6 +5620,91 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
 
 
 
+## class Actions 🔹 <a id="projen-github-actions"></a>
+
+Manages GitHub actions used in GitHub workflows.
+
+__Submodule__: github
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new github.Actions(project: Project)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+
+### Methods
+
+
+#### addAction(actionVersion)🔹 <a id="projen-github-actions-addaction"></a>
+
+Add an action.
+
+Expects a fully qualified action, like "actions/checkout@v2". If
+an action with the same version has already been specified, it will be
+overridden.
+
+```ts
+addAction(actionVersion: string): ActionMetadata
+```
+
+* **actionVersion** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[github.ActionMetadata](#projen-github-actionmetadata)</code>
+
+#### getAction(actionName)🔹 <a id="projen-github-actions-getaction"></a>
+
+Retrieve a registered GitHub Action, throwing if no action with that name is registered.
+
+```ts
+getAction(actionName: string): ActionMetadata
+```
+
+* **actionName** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[github.ActionMetadata](#projen-github-actionmetadata)</code>
+
+#### tryGetAction(actionName)🔹 <a id="projen-github-actions-trygetaction"></a>
+
+Retrieve a registered GitHub action, returning `undefined` if no action with that name is registered.
+
+```ts
+tryGetAction(actionName: string): ActionMetadata
+```
+
+* **actionName** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[github.ActionMetadata](#projen-github-actionmetadata)</code>
+
+#### use(actionName, fallbackVersion?)🔹 <a id="projen-github-actions-use"></a>
+
+Returns a lazy value that will resolve to "actionName@version" based on the version registered in Actions.
+
+If no version is registered for the given action name, either `fallback`
+will be used if provided, or the function will throw.
+
+```ts
+use(actionName: string, fallbackVersion?: string): string
+```
+
+* **actionName** (<code>string</code>)  *No description*
+* **fallbackVersion** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+
+
 ## class AutoApprove 🔹 <a id="projen-github-autoapprove"></a>
 
 Auto approve pull requests that meet a criteria.
@@ -5806,6 +5893,7 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**actions**🔹 | <code>[github.Actions](#projen-github-actions)</code> | Manage GitHub Actions versions.
 **projenCredentials**🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | GitHub API authentication method used by projen workflows.
 **workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | All workflows.
 **workflowsEnabled**🔹 | <code>boolean</code> | Are workflows enabled?
@@ -6059,6 +6147,7 @@ new github.GithubWorkflow(github: GitHub, name: string, options?: GithubWorkflow
 
 Name | Type | Description 
 -----|------|-------------
+**github**🔹 | <code>[github.GitHub](#projen-github-github)</code> | <span></span>
 **name**🔹 | <code>string</code> | The name of the workflow.
 **projenCredentials**🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | GitHub API authentication method used by projen workflows.
 **concurrency**?🔹 | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.<br/>__*Default*__: disabled
@@ -8966,6 +9055,7 @@ new release.Publisher(project: Project, options: PublisherOptions)
 * **options** (<code>[release.PublisherOptions](#projen-release-publisheroptions)</code>)  *No description*
   * **artifactName** (<code>string</code>)  The name of the artifact to download (e.g. `dist`). 
   * **buildJobId** (<code>string</code>)  The job ID that produces the build artifacts. 
+  * **actions** (<code>[github.Actions](#projen-github-actions)</code>)  GitHub actions versions. __*Optional*__
   * **condition** (<code>string</code>)  A GitHub workflow expression used as a condition for publishers. __*Default*__: no condition
   * **dryRun** (<code>boolean</code>)  Do not actually publish, only print the commands that would be executed instead. __*Optional*__
   * **failureIssue** (<code>boolean</code>)  Create an issue when a publish task fails. __*Default*__: false
@@ -13760,6 +13850,21 @@ Name | Type | Description
 
 
 
+## struct ActionMetadata 🔹 <a id="projen-github-actionmetadata"></a>
+
+__Obtainable from__: [Actions](#projen-github-actions).[addAction](#projen-github-actions#projen-github-actions-addaction)(), [Actions](#projen-github-actions).[getAction](#projen-github-actions#projen-github-actions-getaction)(), [Actions](#projen-github-actions).[tryGetAction](#projen-github-actions#projen-github-actions-trygetaction)()
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | <span></span>
+**version**🔹 | <code>string</code> | <span></span>
+
+
+
 ## struct AutoApproveOptions 🔹 <a id="projen-github-autoapproveoptions"></a>
 
 
@@ -16190,6 +16295,7 @@ Name | Type | Description
 -----|------|-------------
 **artifactName**🔹 | <code>string</code> | The name of the artifact to download (e.g. `dist`).
 **buildJobId**🔹 | <code>string</code> | The job ID that produces the build artifacts.
+**actions**?🔹 | <code>[github.Actions](#projen-github-actions)</code> | GitHub actions versions.<br/>__*Optional*__
 **condition**?🔹 | <code>string</code> | A GitHub workflow expression used as a condition for publishers.<br/>__*Default*__: no condition
 **dryRun**?🔹 | <code>boolean</code> | Do not actually publish, only print the commands that would be executed instead.<br/>__*Optional*__
 **failureIssue**?🔹 | <code>boolean</code> | Create an issue when a publish task fails.<br/>__*Default*__: false

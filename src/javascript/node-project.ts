@@ -534,7 +534,7 @@ export class NodeProject extends GitHubProject {
       ) {
         this.buildWorkflow.addPostBuildSteps({
           name: "Upload coverage to Codecov",
-          uses: "codecov/codecov-action@v1",
+          uses: this.github.actions.use("codecov/codecov-action", "v1"),
           with: options.codeCovTokenSecret
             ? {
                 token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
@@ -787,7 +787,10 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v1",
+          uses: this.github!.actions.use(
+            "aws-actions/configure-aws-credentials",
+            "v1"
+          ),
           with: {
             "aws-access-key-id": secretToString(
               parsedCodeArtifactOptions.accessKeyIdSecret
@@ -841,7 +844,7 @@ export class NodeProject extends GitHubProject {
     if (this.nodeVersion) {
       install.push({
         name: "Setup Node.js",
-        uses: "actions/setup-node@v2.2.0",
+        uses: this.github!.actions.use("actions/setup-node", "v2.2.0"),
         with: { "node-version": this.nodeVersion },
       });
     }
@@ -849,7 +852,7 @@ export class NodeProject extends GitHubProject {
     if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v2.0.1",
+        uses: this.github!.actions.use("pnpm/action-setup", "v2.0.1"),
         with: { version: "6.14.7" }, // current latest. Should probably become tunable.
       });
     }

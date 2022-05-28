@@ -38,7 +38,7 @@ jobs:
       CI: \\"true\\"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/download-artifact@v3
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -141,7 +141,7 @@ jobs:
       CI: \\"true\\"
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/actions@v3
         with:
           fetch-depth: 0
       - name: Set git identity

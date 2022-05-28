@@ -3,6 +3,7 @@ import { resolve } from "../_resolve";
 import { Component } from "../component";
 import { kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
+import { Actions } from "./actions";
 import { GitHub } from "./github";
 import { GithubCredentials } from "./github-credentials";
 
@@ -60,6 +61,7 @@ export class GithubWorkflow extends Component {
 
   private events: workflows.Triggers = {};
   private jobs: Record<string, workflows.Job> = {};
+  protected readonly github: GitHub;
 
   constructor(
     github: GitHub,
@@ -68,6 +70,7 @@ export class GithubWorkflow extends Component {
   ) {
     super(github.project);
 
+    this.github = github;
     this.name = name;
     this.concurrency = options.concurrency;
     this.projenCredentials = github.projenCredentials;
@@ -142,7 +145,7 @@ export class GithubWorkflow extends Component {
       name: this.name,
       on: snakeCaseKeys(this.events),
       concurrency: this.concurrency,
-      jobs: renderJobs(this.jobs),
+      jobs: renderJobs(this.jobs, this.github.actions),
     };
   }
 }
@@ -166,7 +169,7 @@ function snakeCaseKeys<T = unknown>(obj: T): T {
   return result as any;
 }
 
-function renderJobs(jobs: Record<string, workflows.Job>) {
+function renderJobs(jobs: Record<string, workflows.Job>, actions: Actions) {
   const result: Record<string, unknown> = {};
   for (const [name, job] of Object.entries(jobs)) {
     result[name] = renderJob(job);
@@ -178,7 +181,7 @@ function renderJobs(jobs: Record<string, workflows.Job>) {
     const steps = new Array<workflows.JobStep>();
 
     if (job.tools) {
-      steps.push(...setupTools(job.tools));
+      steps.push(...setupTools(job.tools, actions));
     }
 
     const userDefinedSteps = kebabCaseKeys(resolve(job.steps), false);
@@ -264,40 +267,40 @@ export interface IJobProvider {
   renderJobs(): Record<string, workflows.Job>;
 }
 
-function setupTools(tools: workflows.Tools) {
+function setupTools(tools: workflows.Tools, actions: Actions) {
   const steps: workflows.JobStep[] = [];
 
   if (tools.java) {
     steps.push({
-      uses: "actions/setup-java@v3",
+      uses: actions.use("actions/setup-java", "v3"),
       with: { distribution: "temurin", "java-version": tools.java.version },
     });
   }
 
   if (tools.node) {
     steps.push({
-      uses: "actions/setup-node@v3",
+      uses: actions.use("actions/setup-node", "v3"),
       with: { "node-version": tools.node.version },
     });
   }
 
   if (tools.python) {
     steps.push({
-      uses: "actions/setup-python@v3",
+      uses: actions.use("actions/setup-python", "v3"),
       with: { "python-version": tools.python.version },
     });
   }
 
   if (tools.go) {
     steps.push({
-      uses: "actions/setup-go@v3",
+      uses: actions.use("actions/setup-go", "v3"),
       with: { "go-version": tools.go.version },
     });
   }
 
   if (tools.dotnet) {
     steps.push({
-      uses: "actions/setup-dotnet@v2",
+      uses: actions.use("actions/setup-dotnet", "v2"),
       with: { "dotnet-version": tools.dotnet.version },
     });
   }

@@ -72,7 +72,7 @@ export class AutoApprove extends Component {
       if: condition,
       steps: [
         {
-          uses: "hmarr/auto-approve-action@v2.2.1",
+          uses: github.actions.use("hmarr/auto-approve-action", "v2.2.1"),
           with: {
             "github-token": `\${{ secrets.${secret} }}`,
           },

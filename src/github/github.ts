@@ -1,5 +1,6 @@
 import { Component } from "../component";
 import { Project } from "../project";
+import { Actions } from "./actions";
 import { Dependabot, DependabotOptions } from "./dependabot";
 import { GithubCredentials } from "./github-credentials";
 import { Mergify, MergifyOptions } from "./mergify";
@@ -88,10 +89,17 @@ export class GitHub extends Component {
    */
   public readonly projenCredentials: GithubCredentials;
 
+  /**
+   * Manage GitHub Actions versions.
+   */
+  public readonly actions: Actions;
+
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
 
     this.workflowsEnabled = options.workflows ?? true;
+
+    this.actions = new Actions(project);
 
     if (options.projenCredentials && options.projenTokenSecret) {
       throw new Error(

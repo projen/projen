@@ -1,4 +1,5 @@
 import { GitIdentity } from ".";
+import { Actions } from "./actions";
 import { JobStep } from "./workflows-model";
 
 const GIT_PATCH_FILE = ".repo.patch";
@@ -22,6 +23,8 @@ export class WorkflowActions {
   ): JobStep[] {
     const MUTATIONS_FOUND = `steps.${options.stepId}.outputs.${options.outputName}`;
 
+    const actions = options.actions;
+
     const steps: JobStep[] = [
       {
         id: options.stepId,
@@ -34,7 +37,9 @@ export class WorkflowActions {
       {
         if: MUTATIONS_FOUND,
         name: "Upload patch",
-        uses: "actions/upload-artifact@v2",
+        uses: actions
+          ? actions.use("actions/upload-artifact", "v2")
+          : "actions/upload-artifact@v2",
         with: { name: GIT_PATCH_FILE, path: GIT_PATCH_FILE },
       },
     ];
@@ -64,10 +69,14 @@ export class WorkflowActions {
   public static checkoutWithPatch(
     options: CheckoutWithPatchOptions = {}
   ): JobStep[] {
+    const actions = options.actions;
+
     return [
       {
         name: "Checkout",
-        uses: "actions/checkout@v3",
+        uses: actions
+          ? actions.use("actions/checkout", "v3")
+          : "actions/checkout@v3",
         with: {
           token: options.token,
           ref: options.ref,
@@ -76,7 +85,9 @@ export class WorkflowActions {
       },
       {
         name: "Download patch",
-        uses: "actions/download-artifact@v3",
+        uses: actions
+          ? actions.use("actions/download-artifact", "v3")
+          : "actions/download-artifact@v3",
         with: { name: GIT_PATCH_FILE, path: RUNNER_TEMP },
       },
       {
@@ -128,6 +139,11 @@ export interface CheckoutWithPatchOptions {
    * @default - the default repository is implicitly used
    */
   readonly repository?: string;
+
+  /**
+   * Action versions to use in the workflow.
+   */
+  readonly actions?: Actions;
 }
 
 /**
@@ -149,4 +165,9 @@ export interface CreateUploadGitPatchOptions {
    * @default - do not fail upon mutation
    */
   readonly mutationError?: string;
+
+  /**
+   * Action versions to use in the workflow.
+   */
+  readonly actions?: Actions;
 }

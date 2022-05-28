@@ -14,5 +14,6 @@ export * from "./github-credentials";
 export * from "./task-workflow";
 
 export * from "./github-project";
+export * from "./actions";
 
 export * as workflows from "./workflows-model";

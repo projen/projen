@@ -536,27 +536,27 @@ export class Release extends Component {
       releaseTask.spawn(publishTask);
     }
 
-    const postBuildSteps = [...this.postBuildSteps];
-
-    // check if new commits were pushed to the repo while we were building.
-    // if new commits have been pushed, we will cancel this release
-    postBuildSteps.push({
-      name: "Check for new commits",
-      id: GIT_REMOTE_STEPID,
-      run: `echo ::set-output name=${LATEST_COMMIT_OUTPUT}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
-    });
-
-    postBuildSteps.push({
-      name: "Upload artifact",
-      if: noNewCommits,
-      uses: "actions/upload-artifact@v2.1.1",
-      with: {
-        name: BUILD_ARTIFACT_NAME,
-        path: this.artifactsDirectory,
-      },
-    });
-
     if (this.github && !this.releaseTrigger.isManual) {
+      const postBuildSteps = [...this.postBuildSteps];
+
+      // check if new commits were pushed to the repo while we were building.
+      // if new commits have been pushed, we will cancel this release
+      postBuildSteps.push({
+        name: "Check for new commits",
+        id: GIT_REMOTE_STEPID,
+        run: `echo ::set-output name=${LATEST_COMMIT_OUTPUT}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
+      });
+
+      postBuildSteps.push({
+        name: "Upload artifact",
+        if: noNewCommits,
+        uses: this.github!.actions.use("actions/upload-artifact", "v2.1.1"),
+        with: {
+          name: BUILD_ARTIFACT_NAME,
+          path: this.artifactsDirectory,
+        },
+      });
+
       return new TaskWorkflow(this.github, {
         name: workflowName,
         jobId: BUILD_JOBID,

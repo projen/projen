@@ -241,4 +241,6 @@ setupBundleTaskRunner();
 // but not all files are updated
 project.postCompileTask.spawn(project.defaultTask);
 
+project.github.actions.addAction("actions/checkout@v10");
+
 project.synth();

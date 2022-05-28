@@ -119,14 +119,12 @@ export interface TaskWorkflowOptions {
  * A GitHub workflow for common build tasks within a project.
  */
 export class TaskWorkflow extends GithubWorkflow {
-  private readonly github: GitHub;
   public readonly jobId: string;
   public readonly artifactsDirectory?: string;
 
   constructor(github: GitHub, options: TaskWorkflowOptions) {
     super(github, options.name);
     this.jobId = options.jobId ?? DEFAULT_JOB_ID;
-    this.github = github;
     this.artifactsDirectory = options.artifactsDirectory;
 
     if (options.triggers) {
@@ -155,7 +153,7 @@ export class TaskWorkflow extends GithubWorkflow {
     if (this.artifactsDirectory) {
       postBuildSteps.push({
         name: "Upload artifact",
-        uses: "actions/upload-artifact@v2.1.1",
+        uses: github.actions.use("actions/upload-artifact", "2.1.1"),
         // Setting to always will ensure that this step will run even if
         // the previous ones have failed (e.g. coverage report, internal logs, etc)
         if: "always()",
@@ -179,7 +177,7 @@ export class TaskWorkflow extends GithubWorkflow {
         // check out sources.
         {
           name: "Checkout",
-          uses: "actions/checkout@v3",
+          uses: github.actions.use("actions/checkout", "v3"),
           ...checkoutWith,
         },
 

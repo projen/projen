@@ -73,7 +73,7 @@ exports[`disabling mutableBuild will skip pushing changes to PR branches 1`] = `
 Array [
   Object {
     "name": "Checkout",
-    "uses": "actions/checkout@v3",
+    "uses": "actions/download-artifact@v3",
     "with": Object {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -152,7 +152,7 @@ exports[`mutableBuild will push changes to PR branches 1`] = `
 Array [
   Object {
     "name": "Checkout",
-    "uses": "actions/checkout@v3",
+    "uses": "actions/download-artifact@v3",
     "with": Object {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",

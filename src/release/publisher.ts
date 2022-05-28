@@ -1,4 +1,5 @@
 import { Component } from "../component";
+import { Actions } from "../github/actions";
 import {
   BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
@@ -104,6 +105,11 @@ export interface PublisherOptions {
    * Useful if you wish to block all publishing from a single option.
    */
   readonly dryRun?: boolean;
+
+  /**
+   * GitHub actions versions.
+   */
+  readonly actions?: Actions;
 }
 
 /**
@@ -134,6 +140,8 @@ export class Publisher extends Component {
 
   private readonly dryRun: boolean;
 
+  private readonly actions?: Actions;
+
   constructor(project: Project, options: PublisherOptions) {
     super(project);
 
@@ -144,6 +152,7 @@ export class Publisher extends Component {
     this.jsiiReleaseVersion = this.publibVersion;
     this.condition = options.condition;
     this.dryRun = options.dryRun ?? false;
+    this.actions = options.actions;
 
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? "failed-release";
@@ -539,7 +548,9 @@ export class Publisher extends Component {
       const steps: JobStep[] = [
         {
           name: "Download build artifacts",
-          uses: "actions/download-artifact@v3",
+          uses: this.actions
+            ? this.actions.use("actions/download-artifact", "v3")
+            : "actions/download-artifact@v3",
           with: {
             name: BUILD_ARTIFACT_NAME,
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for publib
@@ -568,7 +579,9 @@ export class Publisher extends Component {
             {
               name: "Create Issue",
               if: "${{ failure() }}",
-              uses: "imjohnbo/issue-bot@v3",
+              uses: this.actions
+                ? this.actions.use("imjohnbo/issue-bot", "v3")
+                : "imjohnbo/issue-bot@v3",
               with: {
                 labels: this.failureIssueLabel,
                 title: `Publishing v\${{ steps.extract-version.outputs.VERSION }} to ${opts.registryName} failed`,

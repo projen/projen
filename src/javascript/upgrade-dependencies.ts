@@ -295,7 +295,7 @@ export class UpgradeDependencies extends Component {
     const steps: workflows.JobStep[] = [
       {
         name: "Checkout",
-        uses: "actions/checkout@v3",
+        uses: this._project.github!.actions.use("actions/checkout", "v3"),
         with: branch ? { ref: branch } : undefined,
       },
       ...this._project.renderWorkflowSetup({ mutable: false }),

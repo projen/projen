@@ -67,7 +67,10 @@ export class PullRequestLint extends Component {
         },
         steps: [
           {
-            uses: "amannn/action-semantic-pull-request@v4.5.0",
+            uses: github.actions.use(
+              "amannn/action-semantic-pull-request",
+              "v4.5.0"
+            ),
             env: {
               GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
             },
