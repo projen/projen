@@ -2,7 +2,7 @@ import * as yaml from "yaml";
 import { cdk8s } from "../../src";
 import { synthSnapshot } from "../util";
 
-test("", () => {
+test("basic options", () => {
   // GIVEN
   const project = new cdk8s.Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
