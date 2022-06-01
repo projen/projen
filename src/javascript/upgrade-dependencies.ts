@@ -265,9 +265,10 @@ export class UpgradeDependencies extends Component {
     const workflow = github.addWorkflow(workflowName);
     const triggers: workflows.Triggers = {
       workflowDispatch: {},
-      schedule: schedule.cron
-        ? schedule.cron.map((e) => ({ cron: e }))
-        : undefined,
+      schedule:
+        schedule.cron.length > 0
+          ? schedule.cron.map((e) => ({ cron: e }))
+          : undefined,
     };
     workflow.on(triggers);
 
