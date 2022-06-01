@@ -4,6 +4,9 @@ import { PythonProject, PythonProjectOptions } from "../python";
 import { SourceCode } from "../source-code";
 import { YamlFile } from "../yaml";
 
+/**
+ * Options for `Cdk8sPythonApp`
+ */
 export interface Cdk8sPythonOptions extends PythonProjectOptions {
   /**
    * Minimum target version this library is tested against.
