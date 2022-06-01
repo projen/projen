@@ -196,7 +196,7 @@ export class BuildWorkflow extends Component {
     if (this.artifactsDirectory) {
       steps.push({
         name: "Download build artifacts",
-        uses: "actions/download-artifact@v2",
+        uses: "actions/download-artifact@v3",
         with: {
           name: BUILD_ARTIFACT_NAME,
           path: this.artifactsDirectory,
@@ -267,7 +267,7 @@ export class BuildWorkflow extends Component {
     if (options?.checkoutRepo) {
       steps.push({
         name: "Checkout",
-        uses: "actions/checkout@v2",
+        uses: "actions/checkout@v3",
         with: {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
@@ -334,7 +334,7 @@ export class BuildWorkflow extends Component {
     return [
       {
         name: "Checkout",
-        uses: "actions/checkout@v2",
+        uses: "actions/checkout@v3",
         with: {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,

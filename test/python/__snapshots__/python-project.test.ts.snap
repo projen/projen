@@ -32,7 +32,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v3.4.6
+      - uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -327,7 +327,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v3.4.6
+      - uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -640,7 +640,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v3.4.6
+      - uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -952,7 +952,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v3.4.6
+      - uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:

@@ -67,7 +67,7 @@ export class WorkflowActions {
     return [
       {
         name: "Checkout",
-        uses: "actions/checkout@v2",
+        uses: "actions/checkout@v3",
         with: {
           token: options.token,
           ref: options.ref,
@@ -76,7 +76,7 @@ export class WorkflowActions {
       },
       {
         name: "Download patch",
-        uses: "actions/download-artifact@v2",
+        uses: "actions/download-artifact@v3",
         with: { name: GIT_PATCH_FILE, path: RUNNER_TEMP },
       },
       {
