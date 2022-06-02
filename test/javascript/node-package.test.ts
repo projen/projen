@@ -4,7 +4,10 @@ import { readJsonSync } from "fs-extra";
 import semver from "semver";
 import * as YAML from "yaml";
 import { Project } from "../../src";
-import { NodePackage } from "../../src/javascript/node-package";
+import {
+  NodePackage,
+  NodePackageManager,
+} from "../../src/javascript/node-package";
 import { minVersion } from "../../src/javascript/util";
 import * as util from "../../src/util";
 import { mkdtemp, synthSnapshot, TestProject } from "../util";
@@ -394,4 +397,49 @@ test("local dependencies can be specified using 'file:' prefix", () => {
   const pkgFile = readJsonSync(join(project.outdir, "package.json"));
 
   expect(pkgFile.peerDependencies).toStrictEqual({ "local-dep": localDepPath });
+});
+
+test("yarn resolutions", () => {
+  const project = new TestProject();
+
+  const pkg = new NodePackage(project, {
+    packageManager: NodePackageManager.YARN,
+  });
+
+  pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"].resolutions).toBeDefined();
+  expect(snps["package.json"]).toMatchSnapshot();
+});
+
+test("npm overrides", () => {
+  const project = new TestProject();
+
+  const pkg = new NodePackage(project, {
+    packageManager: NodePackageManager.NPM,
+  });
+
+  pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"].overrides).toBeDefined();
+  expect(snps["package.json"]).toMatchSnapshot();
+});
+
+test("pnpm overrides", () => {
+  const project = new TestProject();
+
+  const pkg = new NodePackage(project, {
+    packageManager: NodePackageManager.PNPM,
+  });
+
+  pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"].pnpm.overrides).toBeDefined();
+  expect(snps["package.json"]).toMatchSnapshot();
 });
