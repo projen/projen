@@ -1,5 +1,5 @@
 import { Task } from "..";
-import { Eslint, NodePackageManager } from "../javascript";
+import { Eslint } from "../javascript";
 import {
   CommonPublishOptions,
   GoPublishOptions,
@@ -344,22 +344,7 @@ export class JsiiProject extends TypeScriptProject {
     // since @types/prettier@2.6.1 only supports typescript >= 4.2.
     // add a package resolution override to fix this.
     // this should have no effect if @types/prettier is not a transitive dependency
-    const packageManager = options.packageManager || NodePackageManager.YARN;
-    if (packageManager == NodePackageManager.YARN) {
-      this.package.addField("resolutions", {
-        "@types/prettier": "2.6.0",
-      });
-    }
-    if (packageManager == NodePackageManager.NPM) {
-      this.package.addField("overrides", {
-        "@types/prettier": "2.6.0",
-      });
-    }
-    if (packageManager == NodePackageManager.PNPM) {
-      this.package.addField("pnpm", {
-        overrides: { "@types/prettier": "2.6.0" },
-      });
-    }
+    this.package.addPackageResolutions("@types/prettier@2.6.0");
   }
 
   /**

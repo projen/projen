@@ -10,13 +10,17 @@ import {
 } from "fs-extra";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
-import { DependencyType } from "../dependencies";
+import { Dependencies, DependencyType } from "../dependencies";
 import { JsonFile } from "../json";
 import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
 import { exec, isTruthy, sorted, writeFile } from "../util";
-import { extractCodeArtifactDetails, minVersion } from "./util";
+import {
+  extractCodeArtifactDetails,
+  minVersion,
+  packageResolutionFieldName,
+} from "./util";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -684,6 +688,23 @@ export class NodePackage extends Component {
    */
   public addVersion(version: string) {
     this.manifest.version = version;
+  }
+
+  /**
+   * Defines resolutions for dependencies to change the normally resolved
+   * version of a dependency to something else.
+   *
+   * @param resolutions Names resolutions to be added. Specify a version or
+   * range with this syntax:
+   * `module@^7`.
+   */
+  public addPackageResolutions(...resolutions: string[]) {
+    const fieldName = packageResolutionFieldName(this.packageManager);
+
+    for (const resolution of resolutions) {
+      const { name, version = "*" } = Dependencies.parseDependency(resolution);
+      this.file.addOverride(`${fieldName}.${name}`, version);
+    }
   }
 
   /**

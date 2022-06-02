@@ -1,5 +1,6 @@
 import { basename, dirname, extname, join, sep } from "path";
 import * as semver from "semver";
+import { NodePackageManager } from "./node-package";
 
 export function renderBundleName(entrypoint: string) {
   const parts = join(entrypoint).split(sep);
@@ -40,4 +41,18 @@ export function minVersion(version: string): string | undefined {
   } else {
     return version;
   }
+}
+
+export function packageResolutionFieldName(
+  packageManager: NodePackageManager = NodePackageManager.YARN
+) {
+  if (packageManager == NodePackageManager.NPM) {
+    return "overrides";
+  }
+
+  if (packageManager == NodePackageManager.PNPM) {
+    return "pnpm.overrides";
+  }
+
+  return "resolutions";
 }
