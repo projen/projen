@@ -896,6 +896,7 @@ export interface MavenPublishOptions extends CommonPublishOptions {
 
 /**
  * @deprecated Use `GoPublishOptions` instead.
+ */
 export interface JsiiReleaseGo extends GoPublishOptions { }
 
 /**
