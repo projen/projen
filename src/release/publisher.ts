@@ -471,7 +471,7 @@ export class Publisher extends Component {
       workflowEnv.SSH_AUTH_SOCK = "/tmp/ssh_agent.sock";
       prePublishSteps.push({
         name: "Setup GitHub deploy key",
-        run: "ssh-agent -a \${SSH_AUTH_SOCK} && ssh-add - <<< \"${GITHUB_DEPLOY_KEY}\"",
+        run: 'ssh-agent -a ${SSH_AUTH_SOCK} && ssh-add - <<< "${GITHUB_DEPLOY_KEY}"',
         env: {
           GITHUB_DEPLOY_KEY: secret(
             options.githubDeployKeySecret ?? "GO_GITHUB_DEPLOY_KEY"
