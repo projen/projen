@@ -539,7 +539,7 @@ export class Publisher extends Component {
       const steps: JobStep[] = [
         {
           name: "Download build artifacts",
-          uses: "actions/download-artifact@v2",
+          uses: "actions/download-artifact@v3",
           with: {
             name: BUILD_ARTIFACT_NAME,
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for publib

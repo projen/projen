@@ -269,35 +269,35 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.java) {
     steps.push({
-      uses: "actions/setup-java@v2",
+      uses: "actions/setup-java@v3",
       with: { distribution: "temurin", "java-version": tools.java.version },
     });
   }
 
   if (tools.node) {
     steps.push({
-      uses: "actions/setup-node@v2",
+      uses: "actions/setup-node@v3",
       with: { "node-version": tools.node.version },
     });
   }
 
   if (tools.python) {
     steps.push({
-      uses: "actions/setup-python@v2",
+      uses: "actions/setup-python@v3",
       with: { "python-version": tools.python.version },
     });
   }
 
   if (tools.go) {
     steps.push({
-      uses: "actions/setup-go@v2",
+      uses: "actions/setup-go@v3",
       with: { "go-version": tools.go.version },
     });
   }
 
   if (tools.dotnet) {
     steps.push({
-      uses: "actions/setup-dotnet@v1",
+      uses: "actions/setup-dotnet@v2",
       with: { "dotnet-version": tools.dotnet.version },
     });
   }

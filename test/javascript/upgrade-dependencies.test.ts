@@ -105,6 +105,20 @@ test("custom options", () => {
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
 });
 
+test("disables automatic upgrades", () => {
+  const project = createProject({
+    depsUpgradeOptions: {
+      workflowOptions: {
+        schedule: UpgradeDependenciesSchedule.NEVER,
+      },
+    },
+  });
+
+  const snapshot = synthSnapshot(project);
+  expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
+  expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
+});
+
 test("with a GitHub app for authentication", () => {
   const project = createProject({
     githubOptions: {
