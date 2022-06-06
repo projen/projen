@@ -7469,6 +7469,19 @@ addKeywords(...keywords: string[]): void
 
 
 
+#### addPackageResolutions(...resolutions)🔹 <a id="projen-javascript-nodepackage-addpackageresolutions"></a>
+
+Defines resolutions for dependencies to change the normally resolved version of a dependency to something else.
+
+```ts
+addPackageResolutions(...resolutions: string[]): void
+```
+
+* **resolutions** (<code>string</code>)  Names resolutions to be added.
+
+
+
+
 #### addPeerDeps(...deps)🔹 <a id="projen-javascript-nodepackage-addpeerdeps"></a>
 
 Defines peer dependencies.
