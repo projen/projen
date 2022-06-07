@@ -149,3 +149,28 @@ test("can output yml instead of json", () => {
   expect(output[".eslintrc.yml"]).toBeDefined();
   expect(output[".eslintrc.json"]).toBeUndefined();
 });
+
+test("can override the parser", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+    prettier: true,
+  });
+
+  // WHEN
+  const eslint = new Eslint(project, {
+    dirs: ["src"],
+  });
+  const output = synthSnapshot(project);
+  eslint.addOverride({
+    files: ["*.json", "*.json5", "*.jsonc"],
+    parser: "jsonc-eslint-parser",
+  });
+
+  // THEN
+  expect(output[".eslintrc.json"].overrides).toContain({
+    files: ["*.json", "*.json5", "*.jsonc"],
+    parser: "jsonc-eslint-parser",
+  });
+});
