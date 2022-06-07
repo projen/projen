@@ -169,7 +169,7 @@ test("can override the parser", () => {
   const output = synthSnapshot(project);
 
   // THEN
-  expect(output[".eslintrc.json"].overrides).toContain({
+  expect(output[".eslintrc.json"].overrides).toContainEqual({
     files: ["*.json", "*.json5", "*.jsonc"],
     parser: "jsonc-eslint-parser",
   });
