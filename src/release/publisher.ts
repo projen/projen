@@ -464,11 +464,32 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToGo(options: GoPublishOptions = {}) {
+    const prePublishSteps = options.prePublishSteps ?? [];
+    const workflowEnv: { [name: string]: string | undefined } = {};
+    if (options.githubUseSsh) {
+      workflowEnv.GITHUB_USE_SSH = "true";
+      workflowEnv.SSH_AUTH_SOCK = "/tmp/ssh_agent.sock";
+      prePublishSteps.push({
+        name: "Setup GitHub deploy key",
+        run: 'ssh-agent -a ${SSH_AUTH_SOCK} && ssh-add - <<< "${GITHUB_DEPLOY_KEY}"',
+        env: {
+          GITHUB_DEPLOY_KEY: secret(
+            options.githubDeployKeySecret ?? "GO_GITHUB_DEPLOY_KEY"
+          ),
+          SSH_AUTH_SOCK: workflowEnv.SSH_AUTH_SOCK,
+        },
+      });
+    } else {
+      workflowEnv.GITHUB_TOKEN = secret(
+        options.githubTokenSecret ?? "GO_GITHUB_TOKEN"
+      );
+    }
+
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
         name: "golang",
         publishTools: PUBLIB_TOOLCHAIN.go,
-        prePublishSteps: options.prePublishSteps ?? [],
+        prePublishSteps: prePublishSteps,
         run: this.publibCommand("publib-golang"),
         registryName: "GitHub Go Module Repository",
         env: {
@@ -480,9 +501,7 @@ export class Publisher extends Component {
             options.gitUserEmail ?? DEFAULT_GITHUB_ACTIONS_USER.email,
           GIT_COMMIT_MESSAGE: options.gitCommitMessage,
         },
-        workflowEnv: {
-          GITHUB_TOKEN: secret(options.githubTokenSecret ?? "GO_GITHUB_TOKEN"),
-        },
+        workflowEnv: workflowEnv,
       })
     );
   }
@@ -906,9 +925,28 @@ export interface GoPublishOptions extends CommonPublishOptions {
    * The name of the secret that includes a personal GitHub access token used to
    * push to the GitHub repository.
    *
+   * Ignored if `githubUseSsh` is `true`.
+   *
    * @default "GO_GITHUB_TOKEN"
    */
   readonly githubTokenSecret?: string;
+
+  /**
+   * The name of the secret that includes a GitHub deploy key used to push to the
+   * GitHub repository.
+   *
+   * Ignored if `githubUseSsh` is `false`.
+   *
+   * @default "GO_GITHUB_DEPLOY_KEY"
+   */
+  readonly githubDeployKeySecret?: string;
+
+  /**
+   * Use SSH to push to GitHub instead of a personal accses token.
+   *
+   * @default false
+   */
+  readonly githubUseSsh?: boolean;
 
   /**
    * GitHub repository to push to.
