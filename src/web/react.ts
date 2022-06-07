@@ -162,7 +162,10 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
 
     new ReactComponent(this, { typescript: true, rewire: options.rewire });
 
-    this.reactTypeDef = new ReactTypeDef(this, "react-app-env.d.ts");
+    this.reactTypeDef = new ReactTypeDef(
+      this,
+      `${this.srcdir}/react-app-env.d.ts`
+    );
 
     // generate sample code in `src` and `public` if these directories are empty or non-existent.
     if (options.sampleCode ?? true) {
@@ -374,7 +377,6 @@ class ReactSampleCode extends Component {
     ];
 
     const appTestJsx = [
-      "import React from 'react';",
       "import { render, screen } from '@testing-library/react';",
       "import App from './App';",
       "",
