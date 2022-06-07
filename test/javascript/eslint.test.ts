@@ -162,11 +162,11 @@ test("can override the parser", () => {
   const eslint = new Eslint(project, {
     dirs: ["src"],
   });
-  const output = synthSnapshot(project);
   eslint.addOverride({
     files: ["*.json", "*.json5", "*.jsonc"],
     parser: "jsonc-eslint-parser",
   });
+  const output = synthSnapshot(project);
 
   // THEN
   expect(output[".eslintrc.json"].overrides).toContain({
