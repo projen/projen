@@ -1010,8 +1010,7 @@ function App() {
 
 export default App;
 ",
-  "src/App.test.jsx": "import React from 'react';
-import { render, screen } from '@testing-library/react';
+  "src/App.test.jsx": "import { render, screen } from '@testing-library/react';
 import App from './App';
 
 test('renders learn react link', () => {
