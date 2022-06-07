@@ -9080,8 +9080,10 @@ publishToGo(options?: GoPublishOptions): void
   * **publishTools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Additional tools to install in the publishing job. __*Default*__: no additional tools are installed
   * **gitBranch** (<code>string</code>)  Branch to push to. __*Default*__: "main"
   * **gitCommitMessage** (<code>string</code>)  The commit message. __*Default*__: "chore(release): $VERSION"
+  * **githubDeployKeySecret** (<code>string</code>)  The name of the secret that includes a GitHub deploy key used to push to the GitHub repository. __*Default*__: "GO_GITHUB_DEPLOY_KEY"
   * **githubRepo** (<code>string</code>)  GitHub repository to push to. __*Default*__: derived from `moduleName`
   * **githubTokenSecret** (<code>string</code>)  The name of the secret that includes a personal GitHub access token used to push to the GitHub repository. __*Default*__: "GO_GITHUB_TOKEN"
+  * **githubUseSsh** (<code>boolean</code>)  Use SSH to push to GitHub instead of a personal accses token. __*Default*__: false
   * **gitUserEmail** (<code>string</code>)  The email to use in the release git commit. __*Default*__: "github-actions
   * **gitUserName** (<code>string</code>)  The user name to use for the release git commit. __*Default*__: "github-actions"
 
@@ -13050,6 +13052,7 @@ Name | Type | Description
 **gitUserName**?🔹 | <code>string</code> | The user name to use for the release git commit.<br/>__*Default*__: "github-actions"
 **githubRepo**?🔹 | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
 **githubTokenSecret**?🔹 | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
+**githubUseSsh**?🔹 | <code>boolean</code> | Use SSH to push to GitHub instead of a personal accses token.<br/>__*Default*__: false
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -16062,8 +16065,10 @@ Name | Type | Description
 **gitCommitMessage**?⚠️ | <code>string</code> | The commit message.<br/>__*Default*__: "chore(release): $VERSION"
 **gitUserEmail**?⚠️ | <code>string</code> | The email to use in the release git commit.<br/>__*Default*__: "github-actions
 **gitUserName**?⚠️ | <code>string</code> | The user name to use for the release git commit.<br/>__*Default*__: "github-actions"
+**githubDeployKeySecret**?⚠️ | <code>string</code> | The name of the secret that includes a GitHub deploy key used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_DEPLOY_KEY"
 **githubRepo**?⚠️ | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
 **githubTokenSecret**?⚠️ | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
+**githubUseSsh**?⚠️ | <code>boolean</code> | Use SSH to push to GitHub instead of a personal accses token.<br/>__*Default*__: false
 **prePublishSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?⚠️ | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
