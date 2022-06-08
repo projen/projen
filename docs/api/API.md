@@ -1712,7 +1712,7 @@ addToArray(path: string, ...values: any[]): void
 ```
 
 * **path** (<code>string</code>)  - The path of the property, you can use dot notation to att to arrays in complex types.
-* **values** (<code>any</code>)  *No description*
+* **values** (<code>any</code>)  - The values to add.
 
 
 
