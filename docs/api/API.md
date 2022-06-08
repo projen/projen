@@ -1672,6 +1672,51 @@ addOverride(path: string, value: any): void
 
 
 
+#### addToArray(path, ...values)🔹 <a id="projen-objectfile-addtoarray"></a>
+
+Adds to an array in the synthesized object file.
+
+If the array is nested, separate each nested level using a dot (.) in the path parameter.
+If there is an array as part of the nesting, specify the index in the path.
+
+To include a literal `.` in the property name, prefix with a `\`. In most
+programming languages you will need to write this as `"\\."` because the
+`\` itself will need to be escaped.
+
+For example, with the following object file
+```json
+"compilerOptions": {
+   "exclude": ["node_modules"],
+   "lib": ["es2019"]
+   ...
+}
+...
+```
+
+```typescript
+project.tsconfig.file.addToArray('compilerOptions.exclude', 'coverage');
+project.tsconfig.file.addToArray('compilerOptions.lib', 'dom', 'dom.iterable', 'esnext');
+```
+would result in the following object file
+```json
+"compilerOptions": {
+   "exclude": ["node_modules", "coverage"],
+   "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+   ...
+}
+...
+```
+
+```ts
+addToArray(path: string, ...values: any[]): void
+```
+
+* **path** (<code>string</code>)  - The path of the property, you can use dot notation to att to arrays in complex types.
+* **values** (<code>any</code>)  *No description*
+
+
+
+
 #### protected synthesizeContent(resolver)🔹 <a id="projen-objectfile-synthesizecontent"></a>
 
 Implemented by derived classes and returns the contents of the file to emit.
