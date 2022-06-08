@@ -1059,6 +1059,7 @@ reportWebVitals();
     </g>
 </svg>
 ",
+  "src/react-app-env.d.ts": "/// <reference types=\\"react-scripts\\" />",
   "src/reportWebVitals.js": "import { ReportHandler } from 'web-vitals';
 
 const reportWebVitals = (onPerfEntry?: ReportHandler) => {

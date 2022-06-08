@@ -10623,7 +10623,7 @@ Name | Type | Description
 
 
 
-## class ReactTypeDef 🔹 <a id="projen-web-reacttypedef"></a>
+## class ReactTypeDef ⚠️ <a id="projen-web-reacttypedef"></a>
 
 
 
@@ -10653,7 +10653,7 @@ new web.ReactTypeDef(project: ReactTypeScriptProject, filePath: string, options?
 ### Methods
 
 
-#### protected synthesizeContent(_)🔹 <a id="projen-web-reacttypedef-synthesizecontent"></a>
+#### protected synthesizeContent(_)⚠️ <a id="projen-web-reacttypedef-synthesizecontent"></a>
 
 Implemented by derived classes and returns the contents of the file to emit.
 
@@ -10825,7 +10825,6 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**reactTypeDef**🔹 | <code>[web.ReactTypeDef](#projen-web-reacttypedef)</code> | TypeScript definition file included that ensures React types are picked up by the TypeScript compiler.
 **srcdir**🔹 | <code>string</code> | The directory in which source files reside.
 
 
@@ -17187,7 +17186,7 @@ Name | Type | Description
 
 
 
-## struct ReactTypeDefOptions 🔹 <a id="projen-web-reacttypedefoptions"></a>
+## struct ReactTypeDefOptions ⚠️ <a id="projen-web-reacttypedefoptions"></a>
 
 
 
@@ -17196,11 +17195,11 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
-**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
-**executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
-**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected
-**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+**committed**?⚠️ | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
+**editGitignore**?⚠️ | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
+**executable**?⚠️ | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
+**marker**?⚠️ | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected
+**readonly**?⚠️ | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 

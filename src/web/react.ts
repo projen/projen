@@ -114,13 +114,6 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
    */
   public readonly srcdir: string;
 
-  /**
-   * TypeScript definition file included that ensures React types are picked
-   * up by the TypeScript compiler.
-   *
-   */
-  public readonly reactTypeDef: ReactTypeDef;
-
   constructor(options: ReactTypeScriptProjectOptions) {
     const defaultOptions = {
       srcdir: "src",
@@ -161,11 +154,6 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
     this.srcdir = options.srcdir ?? "src";
 
     new ReactComponent(this, { typescript: true, rewire: options.rewire });
-
-    this.reactTypeDef = new ReactTypeDef(
-      this,
-      `${this.srcdir}/react-app-env.d.ts`
-    );
 
     // generate sample code in `src` and `public` if these directories are empty or non-existent.
     if (options.sampleCode ?? true) {
@@ -456,11 +444,14 @@ class ReactSampleCode extends Component {
       "",
     ];
 
+    const reactTypeDef = ['/// <reference types="react-scripts" />'];
+
     // js/ts not jsx/tsx
     const fileExtWithoutX = this.fileExt.replace("x", "");
 
     new SampleDir(project, this.srcdir, {
       files: {
+        "react-app-env.d.ts": reactTypeDef.join("\n"),
         "logo.svg": logoSvg.join("\n"),
         ["App." + this.fileExt]: appJsx.join("\n"),
         ["App.test." + this.fileExt]: appTestJsx.join("\n"),
@@ -474,8 +465,14 @@ class ReactSampleCode extends Component {
   }
 }
 
+/**
+ * @deprecated No longer used.
+ */
 export interface ReactTypeDefOptions extends FileBaseOptions {}
 
+/**
+ * @deprecated No longer used.
+ */
 export class ReactTypeDef extends FileBase {
   constructor(
     project: ReactTypeScriptProject,
