@@ -96,7 +96,12 @@ export interface EslintOverride {
   /**
    * The overriden rules
    */
-  readonly rules: { [rule: string]: any };
+  readonly rules?: { [rule: string]: any };
+
+  /**
+   * The overridden parser
+   */
+  readonly parser?: string;
 }
 
 /**
