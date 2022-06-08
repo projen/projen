@@ -132,7 +132,6 @@ Name|Description
 [web.PostCss](#projen-web-postcss)|Declares a PostCSS dependency with a default config file.
 [web.ReactComponent](#projen-web-reactcomponent)|*No description*
 [web.ReactProject](#projen-web-reactproject)|React project without TypeScript.
-[web.ReactTypeDef](#projen-web-reacttypedef)|*No description*
 [web.ReactTypeScriptProject](#projen-web-reacttypescriptproject)|React project with TypeScript.
 [web.TailwindConfig](#projen-web-tailwindconfig)|Declares a Tailwind CSS configuration file.
 
@@ -359,7 +358,6 @@ Name|Description
 [web.ReactComponentOptions](#projen-web-reactcomponentoptions)|*No description*
 [web.ReactProjectOptions](#projen-web-reactprojectoptions)|*No description*
 [web.ReactRewireOptions](#projen-web-reactrewireoptions)|*No description*
-[web.ReactTypeDefOptions](#projen-web-reacttypedefoptions)|*No description*
 [web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)|*No description*
 [web.TailwindConfigOptions](#projen-web-tailwindconfigoptions)|*No description*
 
@@ -876,7 +874,7 @@ addVolume(volume: IDockerComposeVolumeBinding): void
 
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [web.ReactTypeDef](#projen-web-reacttypedef), [GitAttributesFile](#projen-gitattributesfile), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
+__Implemented by__: [github.PullRequestTemplate](#projen-github-pullrequesttemplate), [python.RequirementsFile](#projen-python-requirementsfile), [python.SetupPy](#projen-python-setuppy), [GitAttributesFile](#projen-gitattributesfile), [IgnoreFile](#projen-ignorefile), [IniFile](#projen-inifile), [JsonFile](#projen-jsonfile), [License](#projen-license), [Makefile](#projen-makefile), [TextFile](#projen-textfile), [TomlFile](#projen-tomlfile), [XmlFile](#projen-xmlfile), [YamlFile](#projen-yamlfile)
 __Obtainable from__: [Project](#projen-project).[tryFindFile](#projen-project#projen-project-tryfindfile)(), [Project](#projen-project).[tryRemoveFile](#projen-project#projen-project-tryremovefile)()
 
 ### Initializer
@@ -10623,51 +10621,6 @@ Name | Type | Description
 
 
 
-## class ReactTypeDef 🔹 <a id="projen-web-reacttypedef"></a>
-
-
-
-__Submodule__: web
-
-__Extends__: [FileBase](#projen-filebase)
-
-### Initializer
-
-
-
-
-```ts
-new web.ReactTypeDef(project: ReactTypeScriptProject, filePath: string, options?: ReactTypeDefOptions)
-```
-
-* **project** (<code>[web.ReactTypeScriptProject](#projen-web-reacttypescriptproject)</code>)  *No description*
-* **filePath** (<code>string</code>)  *No description*
-* **options** (<code>[web.ReactTypeDefOptions](#projen-web-reacttypedefoptions)</code>)  *No description*
-  * **committed** (<code>boolean</code>)  Indicates whether this file should be committed to git or ignored. __*Default*__: true
-  * **editGitignore** (<code>boolean</code>)  Update the project's .gitignore file. __*Default*__: true
-  * **executable** (<code>boolean</code>)  Whether the generated file should be marked as executable. __*Default*__: false
-  * **marker** (<code>boolean</code>)  Adds the projen marker to the file. __*Default*__: marker will be included as long as the project is not ejected
-  * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
-
-
-### Methods
-
-
-#### protected synthesizeContent(_)🔹 <a id="projen-web-reacttypedef-synthesizecontent"></a>
-
-Implemented by derived classes and returns the contents of the file to emit.
-
-```ts
-protected synthesizeContent(_: IResolver): string
-```
-
-* **_** (<code>[IResolver](#projen-iresolver)</code>)  *No description*
-
-__Returns__:
-* <code>string</code>
-
-
-
 ## class ReactTypeScriptProject 🔹 <a id="projen-web-reacttypescriptproject"></a>
 
 React project with TypeScript.
@@ -10825,7 +10778,6 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**reactTypeDef**🔹 | <code>[web.ReactTypeDef](#projen-web-reacttypedef)</code> | TypeScript definition file included that ensures React types are picked up by the TypeScript compiler.
 **srcdir**🔹 | <code>string</code> | The directory in which source files reside.
 
 
@@ -17184,23 +17136,6 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **rewire**?🔹 | <code>Map<string, any></code> | Rewire webpack configuration.<br/>__*Default*__: No rewired config.
-
-
-
-## struct ReactTypeDefOptions 🔹 <a id="projen-web-reacttypedefoptions"></a>
-
-
-
-
-
-
-Name | Type | Description 
------|------|-------------
-**committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
-**editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
-**executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
-**marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected
-**readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
 
 
 
