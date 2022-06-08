@@ -272,4 +272,37 @@ describe("addToArray", () => {
       },
     });
   });
+
+  test("addToArray(p, v) works with lazy values", () => {
+    // GIVEN
+    const prj = new TestProject();
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: {
+        first: {
+          second: {
+            array: () => {
+              return ["initial value"];
+            },
+          },
+        },
+      },
+      marker: false,
+    });
+
+    // WHEN
+    file.addToArray(
+      "first.second.array",
+      "first extra value",
+      "second extra value"
+    );
+
+    // THEN
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      first: {
+        second: {
+          array: ["initial value", "first extra value", "second extra value"],
+        },
+      },
+    });
+  });
 });

@@ -230,6 +230,15 @@ export function deepMerge(
         if (typeof target[key] !== "object") {
           target[key] = value;
         }
+
+        if ("__$APPEND" in value && Array.isArray(value.__$APPEND)) {
+          if (Array.isArray(target[key])) {
+            target[key].push(...value.__$APPEND);
+          } else {
+            target[key] = value.__$APPEND;
+          }
+        }
+
         mergeOne(target[key], value);
 
         // if the result of the merge is an empty object, it's because the

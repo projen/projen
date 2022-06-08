@@ -148,7 +148,7 @@ export abstract class ObjectFile extends FileBase {
    */
   public addToArray(path: string, ...values: any) {
     const parts = splitOnPeriods(path);
-    let curr: any = this.obj;
+    let curr: any = this.rawOverrides;
 
     while (parts.length > 1) {
       const key = parts.shift()!;
@@ -170,7 +170,7 @@ export abstract class ObjectFile extends FileBase {
     if (Array.isArray(curr[lastKey])) {
       curr[lastKey].push(...values);
     } else {
-      curr[lastKey] = values;
+      curr[lastKey] = { __$APPEND: values };
     }
   }
 
