@@ -88,12 +88,12 @@ export class CdkConfig extends Component {
   /**
    * List of glob patterns to be included by CDK.
    */
-  public readonly include: string[];
+  private readonly include: string[];
 
   /**
    * List of glob patterns to be excluded by CDK.
    */
-  public readonly exclude: string[];
+  private readonly exclude: string[];
 
   constructor(project: Project, options: CdkConfigOptions) {
     super(project);
@@ -133,10 +133,7 @@ export class CdkConfig extends Component {
    * Add includes to `cdk.json`.
    * @param patterns The includes to add.
    */
-  public addIncludes(patterns: string | string[]) {
-    if (!Array.isArray(patterns)) {
-      patterns = [patterns];
-    }
+  public addIncludes(...patterns: string[]) {
     this.include.push(...patterns);
   }
 
@@ -144,10 +141,7 @@ export class CdkConfig extends Component {
    * Add excludes to `cdk.json`.
    * @param patterns The excludes to add.
    */
-  public addExcludes(patterns: string | string[]) {
-    if (!Array.isArray(patterns)) {
-      patterns = [patterns];
-    }
+  public addExcludes(...patterns: string[]) {
     this.exclude.push(...patterns);
   }
 }
