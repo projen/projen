@@ -27,7 +27,6 @@ describe("includes", () => {
       watchIncludes: defaultIncludes,
     });
 
-    // @ts-ignore test values are being set properly
     expect(config.include).toEqual(defaultIncludes);
   });
 
@@ -41,9 +40,7 @@ describe("includes", () => {
 
     config.addIncludes(newInclude);
 
-    // @ts-ignore test values are being set properly
     expect(config.include).toContain(newInclude);
-    // @ts-ignore test values are being set properly
     expect(config.include).toContain(defaultIncludes[0]);
   });
 
@@ -55,7 +52,6 @@ describe("includes", () => {
 
     config.addIncludes(...newIncludes);
 
-    // @ts-ignore test values being set correctly
     expect(config.include).toEqual(newIncludes);
   });
 });
@@ -68,7 +64,6 @@ describe("excludes", () => {
       watchExcludes: defaultExcludes,
     });
 
-    // @ts-ignore test values are being set properly
     expect(config.exclude).toEqual(defaultExcludes);
   });
 
@@ -82,9 +77,7 @@ describe("excludes", () => {
 
     config.addExcludes(newExclude);
 
-    // @ts-ignore test values are being set properly
     expect(config.exclude).toContain(newExclude);
-    // @ts-ignore test values are being set properly
     expect(config.exclude).toContain(defaultExcludes[0]);
   });
 
@@ -96,7 +89,6 @@ describe("excludes", () => {
 
     config.addExcludes(...newExcludes);
 
-    // @ts-ignore test values are being set properly
     expect(config.exclude).toEqual(newExcludes);
   });
 });
