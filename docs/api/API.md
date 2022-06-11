@@ -3985,7 +3985,38 @@ new awscdk.CdkConfig(project: Project, options: CdkConfigOptions)
 Name | Type | Description 
 -----|------|-------------
 **cdkout**🔹 | <code>string</code> | Name of the cdk.out directory.
+**exclude**🔹 | <code>Array<string></code> | List of glob patterns to be excluded by CDK.
+**include**🔹 | <code>Array<string></code> | List of glob patterns to be included by CDK.
 **json**🔹 | <code>[JsonFile](#projen-jsonfile)</code> | Represents the JSON file.
+
+### Methods
+
+
+#### addExcludes(...patterns)🔹 <a id="projen-awscdk-cdkconfig-addexcludes"></a>
+
+Add excludes to `cdk.json`.
+
+```ts
+addExcludes(...patterns: string[]): void
+```
+
+* **patterns** (<code>string</code>)  The excludes to add.
+
+
+
+
+#### addIncludes(...patterns)🔹 <a id="projen-awscdk-cdkconfig-addincludes"></a>
+
+Add includes to `cdk.json`.
+
+```ts
+addIncludes(...patterns: string[]): void
+```
+
+* **patterns** (<code>string</code>)  The includes to add.
+
+
+
 
 
 
