@@ -307,6 +307,14 @@ export class LambdaRuntime {
     "node14"
   );
 
+  /**
+   * Node.js 16.x
+   */
+  public static readonly NODEJS_16_X = new LambdaRuntime(
+    "NODEJS_16_X",
+    "node16"
+  );
+
   public readonly esbuildPlatform = "node";
 
   private constructor(
