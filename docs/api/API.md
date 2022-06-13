@@ -70,6 +70,7 @@ Name|Description
 [cdk8s.IntegrationTest](#projen-cdk8s-integrationtest)|CDK8S integration test.
 [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)|Discovers and creates integration tests from files in the test root.
 [cdktf.ConstructLibraryCdktf](#projen-cdktf-constructlibrarycdktf)|CDKTF construct library project.
+[circleci.Circleci](#projen-circleci-circleci)|Circleci Class to manage `.circleci/config.yml`. Check projen's docs for more information.
 [github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
@@ -227,6 +228,20 @@ Name|Description
 [cdk8s.IntegrationTestAutoDiscoverOptions](#projen-cdk8s-integrationtestautodiscoveroptions)|*No description*
 [cdk8s.IntegrationTestOptions](#projen-cdk8s-integrationtestoptions)|Options for IntegrationTest.
 [cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)|*No description*
+[circleci.CircleCiProps](#projen-circleci-circleciprops)|Options for class {@link Circleci}.
+[circleci.Docker](#projen-circleci-docker)|Options for docker executor.
+[circleci.Filter](#projen-circleci-filter)|The branches key controls whether the current branch should have a schedule trigger created for it, where current branch is the branch containing the config.yml file with the trigger stanza. That is, a push on the main branch will only schedule a workflow for the main branch.
+[circleci.FilterConfig](#projen-circleci-filterconfig)|set an inclusive or exclusive filter.
+[circleci.Job](#projen-circleci-job)|A Workflow is comprised of one or more uniquely named jobs.
+[circleci.Machine](#projen-circleci-machine)|*No description*
+[circleci.Macos](#projen-circleci-macos)|CircleCI supports running jobs on macOS, to allow you to build, test, and deploy apps for macOS, iOS, tvOS and watchOS.
+[circleci.Matrix](#projen-circleci-matrix)|The matrix stanza allows you to run a parameterized job multiple times with different arguments.
+[circleci.Run](#projen-circleci-run)|Used for invoking all command-line programs, taking either a map of configuration values, or, when called in its short-form, a string that will be used as both the command and name.
+[circleci.Schedule](#projen-circleci-schedule)|A workflow may have a schedule indicating it runs at a certain time.
+[circleci.StepRun](#projen-circleci-steprun)|Execution steps for Job.
+[circleci.Triggers](#projen-circleci-triggers)|Specifies which triggers will cause this workflow to be executed.
+[circleci.Workflow](#projen-circleci-workflow)|Used for orchestrating all jobs.
+[circleci.WorkflowJob](#projen-circleci-workflowjob)|A Job is part of Workflow.
 [github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
@@ -398,6 +413,9 @@ Name|Description
 [RenovatebotScheduleInterval](#projen-renovatebotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [awscdk.ApprovalLevel](#projen-awscdk-approvallevel)|Which approval is required when deploying CDK apps.
 [cdk.Stability](#projen-cdk-stability)|*No description*
+[circleci.JobType](#projen-circleci-jobtype)|A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed.
+[circleci.JobWhen](#projen-circleci-jobwhen)|Specify when to enable or disable the step.
+[circleci.ResourceClass](#projen-circleci-resourceclass)|The resource_class feature allows configuring CPU and RAM resources for each job.
 [github.DependabotRegistryType](#projen-github-dependabotregistrytype)|Each configuration type requires you to provide particular settings.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
@@ -5692,6 +5710,78 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **catalog** (<code>[cdk.Catalog](#projen-cdk-catalog)</code>)  Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:. __*Default*__: new version will be announced
   * **cdktfVersion** (<code>string</code>)  Minimum target version this library is tested against. 
   * **constructsVersion** (<code>string</code>)  Construct version to use. __*Default*__: "^10.0.12"
+
+
+
+
+## class Circleci 🔹 <a id="projen-circleci-circleci"></a>
+
+Circleci Class to manage `.circleci/config.yml`. Check projen's docs for more information.
+
+__Submodule__: circleci
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new circleci.Circleci(project: Project, options?: CircleCiProps)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[circleci.CircleCiProps](#projen-circleci-circleciprops)</code>)  *No description*
+  * **jobs** (<code>Array<[circleci.Job](#projen-circleci-job)></code>)  List of Jobs to create unique steps per pipeline, e.g. ```json jobs: [{   identifier: "compile",   docker: { image: "golang:alpine" }   steps: ["checkout", run: {command: "go build ."}] }] ```. __*Optional*__
+  * **orbs** (<code>Map<string, string></code>)  Contains a map of CirclCi Orbs ```json orbs: {   node: "circleci/node@5.0.1"   slack: "circleci/slack@4.8.3" } ```. __*Optional*__
+  * **setup** (<code>boolean</code>)  The setup field enables you to conditionally trigger configurations from outside the primary .circleci parent directory, update pipeline parameters, or generate customized configurations. __*Optional*__
+  * **version** (<code>number</code>)  pipeline version. __*Default*__: 2.1
+  * **workflows** (<code>Array<[circleci.Workflow](#projen-circleci-workflow)></code>)  List of Workflows of pipeline, e.g. ```json workflows: {    {      identifier: "build",        jobs: [{           identifier: "node/install",           context: ["npm"],        }]    } } ```. __*Optional*__
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | The yaml file for the Circleci pipeline.
+
+### Methods
+
+
+#### addOrb(name, orb)🔹 <a id="projen-circleci-circleci-addorb"></a>
+
+Add a Circleci Orb to pipeline.
+
+Will throw error if the orb already exists
+
+```ts
+addOrb(name: string, orb: string): void
+```
+
+* **name** (<code>string</code>)  *No description*
+* **orb** (<code>string</code>)  *No description*
+
+
+
+
+#### addWorkflow(workflow)🔹 <a id="projen-circleci-circleci-addworkflow"></a>
+
+add new workflow to existing pipeline.
+
+```ts
+addWorkflow(workflow: Workflow): void
+```
+
+* **workflow** (<code>[circleci.Workflow](#projen-circleci-workflow)</code>)  *No description*
+  * **identifier** (<code>string</code>)  name of dynamic key *. 
+  * **jobs** (<code>Array<[circleci.WorkflowJob](#projen-circleci-workflowjob)></code>)  *No description* __*Optional*__
+  * **triggers** (<code>Array<[circleci.Triggers](#projen-circleci-triggers)></code>)  *No description* __*Optional*__
+  * **when** (<code>any</code>)  when is too dynamic to be casted to interfaces. __*Optional*__
+
+
 
 
 
@@ -13855,6 +13945,263 @@ Name | Type | Description
 
 
 
+## struct CircleCiProps 🔹 <a id="projen-circleci-circleciprops"></a>
+
+
+Options for class {@link Circleci}.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**jobs**?🔹 | <code>Array<[circleci.Job](#projen-circleci-job)></code> | List of Jobs to create unique steps per pipeline, e.g. ```json jobs: [{   identifier: "compile",   docker: { image: "golang:alpine" }   steps: ["checkout", run: {command: "go build ."}] }] ```.<br/>__*Optional*__
+**orbs**?🔹 | <code>Map<string, string></code> | Contains a map of CirclCi Orbs ```json orbs: {   node: "circleci/node@5.0.1"   slack: "circleci/slack@4.8.3" } ```.<br/>__*Optional*__
+**setup**?🔹 | <code>boolean</code> | The setup field enables you to conditionally trigger configurations from outside the primary .circleci parent directory, update pipeline parameters, or generate customized configurations.<br/>__*Optional*__
+**version**?🔹 | <code>number</code> | pipeline version.<br/>__*Default*__: 2.1
+**workflows**?🔹 | <code>Array<[circleci.Workflow](#projen-circleci-workflow)></code> | List of Workflows of pipeline, e.g. ```json workflows: {    {      identifier: "build",        jobs: [{           identifier: "node/install",           context: ["npm"],        }]    } } ```.<br/>__*Optional*__
+
+
+
+## struct Docker 🔹 <a id="projen-circleci-docker"></a>
+
+
+Options for docker executor.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**image**🔹 | <code>string</code> | The name of a custom docker image to use.
+**auth**?🔹 | <code>Map<string, string></code> | Authentication for registries using standard docker login credentials.<br/>__*Optional*__
+**awsAuth**?🔹 | <code>Map<string, string></code> | Authentication for AWS Elastic Container Registry (ECR).<br/>__*Optional*__
+**command**?🔹 | <code>Array<string></code> | The command used as pid 1 (or args for entrypoint) when launching the container.<br/>__*Optional*__
+**entrypoint**?🔹 | <code>Array<string></code> | The command used as executable when launching the container.<br/>__*Optional*__
+**environment**?🔹 | <code>Map<string, string &#124; number &#124; boolean></code> | A map of environment variable names and values.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | The name the container is reachable by.<br/>__*Optional*__
+**user**?🔹 | <code>string</code> | Which user to run commands as within the Docker container.<br/>__*Optional*__
+
+
+
+## struct Filter 🔹 <a id="projen-circleci-filter"></a>
+
+
+The branches key controls whether the current branch should have a schedule trigger created for it, where current branch is the branch containing the config.yml file with the trigger stanza. That is, a push on the main branch will only schedule a workflow for the main branch.
+
+Branches can have the keys only and ignore which either map to a single string naming a branch.
+You may also use regular expressions to match against branches by enclosing them with /’s, or map to a list of such strings.
+Regular expressions must match the entire string.
+
+Any branches that match only will run the job.
+Any branches that match ignore will not run the job.
+If neither only nor ignore are specified then all branches will run the job.
+If both only and ignore are specified the only is considered before ignore.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**branches**?🔹 | <code>[circleci.FilterConfig](#projen-circleci-filterconfig)</code> | __*Optional*__
+**tags**?🔹 | <code>[circleci.FilterConfig](#projen-circleci-filterconfig)</code> | __*Optional*__
+
+
+
+## struct FilterConfig 🔹 <a id="projen-circleci-filterconfig"></a>
+
+
+set an inclusive or exclusive filter.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**ignore**?🔹 | <code>Array<string></code> | Either a single branch specifier, or a list of branch specifiers.<br/>__*Optional*__
+**only**?🔹 | <code>Array<string></code> | Either a single branch specifier, or a list of branch specifiers.<br/>__*Optional*__
+
+
+
+## struct Job 🔹 <a id="projen-circleci-job"></a>
+
+
+A Workflow is comprised of one or more uniquely named jobs.
+
+Jobs are specified in the jobs map,
+see Sample 2.0 config.yml for two examples of a job map.
+The name of the job is the key in the map, and the value is a map describing the job.
+Each job consists of the job’s name as a key and a map as a value. A name should be case insensitive unique within a current jobs list.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**identifier**🔹 | <code>string</code> | name of dynamic key *.
+**docker**?🔹 | <code>Array<[circleci.Docker](#projen-circleci-docker)></code> | __*Optional*__
+**environment**?🔹 | <code>Map<string, string &#124; number &#124; boolean></code> | A map of environment variable names and values.<br/>__*Optional*__
+**machine**?🔹 | <code>[circleci.Machine](#projen-circleci-machine)</code> | __*Optional*__
+**macos**?🔹 | <code>[circleci.Macos](#projen-circleci-macos)</code> | __*Optional*__
+**parallelism**?🔹 | <code>number</code> | Number of parallel instances of this job to run (default: 1).<br/>__*Optional*__
+**parameters**?🔹 | <code>Map<string, string></code> | Parameters for making a job explicitly configurable in a workflow.<br/>__*Optional*__
+**resourceClass**?🔹 | <code>string</code> | {@link ResourceClass}.<br/>__*Optional*__
+**shell**?🔹 | <code>string</code> | Shell to use for execution command in all steps.<br/>__*Optional*__
+**steps**?🔹 | <code>Array<any></code> | no type support here, for syntax {@see https://circleci.com/docs/2.0/configuration-reference/#steps}.<br/>__*Optional*__
+**workingDirectory**?🔹 | <code>string</code> | In which directory to run the steps.<br/>__*Optional*__
+
+
+
+## struct Machine 🔹 <a id="projen-circleci-machine"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**image**🔹 | <code>string</code> | The VM image to use.
+**dockerLayerCaching**?🔹 | <code>string</code> | enable docker layer caching.<br/>__*Optional*__
+
+
+
+## struct Macos 🔹 <a id="projen-circleci-macos"></a>
+
+
+CircleCI supports running jobs on macOS, to allow you to build, test, and deploy apps for macOS, iOS, tvOS and watchOS.
+
+To run a job in a macOS virtual machine,
+you must add the macos key to the top-level configuration for the job and specify
+the version of Xcode you would like to use.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**xcode**🔹 | <code>string</code> | The version of Xcode that is installed on the virtual machine.
+
+
+
+## struct Matrix 🔹 <a id="projen-circleci-matrix"></a>
+
+
+The matrix stanza allows you to run a parameterized job multiple times with different arguments.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**alias**?🔹 | <code>string</code> | An alias for the matrix, usable from another job’s requires stanza.<br/>__*Optional*__
+**parameters**?🔹 | <code>Map<string, Array<string> &#124; Array<number>></code> | A map of parameter names to every value the job should be called with.<br/>__*Optional*__
+
+
+
+## struct Run 🔹 <a id="projen-circleci-run"></a>
+
+
+Used for invoking all command-line programs, taking either a map of configuration values, or, when called in its short-form, a string that will be used as both the command and name.
+
+Run commands are executed using non-login shells by default,
+so you must explicitly source any dotfiles as part of the command.
+
+Not used because type incompatible types in steps array
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**command**🔹 | <code>string</code> | Command to run via the shell.
+**background**?🔹 | <code>string</code> | Whether this step should run in the background (default: false).<br/>__*Optional*__
+**environment**?🔹 | <code>string</code> | Additional environmental variables, locally scoped to command.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | Title of the step to be shown in the CircleCI UI (default: full command).<br/>__*Optional*__
+**noOutputTimeout**?🔹 | <code>string</code> | Elapsed time the command can run without output such as “20m”, “1.25h”, “5s”. The default is 10 minutes.<br/>__*Optional*__
+**shell**?🔹 | <code>string</code> | Shell to use for execution command.<br/>__*Optional*__
+**when**?🔹 | <code>string</code> | Specify when to enable or disable the step.<br/>__*Optional*__
+**workingDirectory**?🔹 | <code>string</code> | In which directory to run this step.<br/>__*Optional*__
+
+
+
+## struct Schedule 🔹 <a id="projen-circleci-schedule"></a>
+
+
+A workflow may have a schedule indicating it runs at a certain time.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**filters**🔹 | <code>[circleci.Filter](#projen-circleci-filter)</code> | <span></span>
+**cron**?🔹 | <code>string</code> | The cron key is defined using POSIX crontab syntax.<br/>__*Optional*__
+
+
+
+## struct StepRun 🔹 <a id="projen-circleci-steprun"></a>
+
+
+Execution steps for Job.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**run**?🔹 | <code>[circleci.Run](#projen-circleci-run)</code> | __*Optional*__
+
+
+
+## struct Triggers 🔹 <a id="projen-circleci-triggers"></a>
+
+
+Specifies which triggers will cause this workflow to be executed.
+
+Default behavior is to trigger the workflow when pushing to a branch.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**schedule**?🔹 | <code>[circleci.Schedule](#projen-circleci-schedule)</code> | __*Optional*__
+
+
+
+## struct Workflow 🔹 <a id="projen-circleci-workflow"></a>
+
+
+Used for orchestrating all jobs.
+
+Each workflow consists of the workflow name as a key and a map as a value.
+A name should be unique within the current config.yml.
+The top-level keys for the Workflows configuration are version and jobs.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**identifier**🔹 | <code>string</code> | name of dynamic key *.
+**jobs**?🔹 | <code>Array<[circleci.WorkflowJob](#projen-circleci-workflowjob)></code> | __*Optional*__
+**triggers**?🔹 | <code>Array<[circleci.Triggers](#projen-circleci-triggers)></code> | __*Optional*__
+**when**?🔹 | <code>any</code> | when is too dynamic to be casted to interfaces.<br/>__*Optional*__
+
+
+
+## struct WorkflowJob 🔹 <a id="projen-circleci-workflowjob"></a>
+
+
+A Job is part of Workflow.
+
+A Job can be created with {@link Job} or it can be provided by the orb
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**identifier**🔹 | <code>string</code> | name of dynamic key *.
+**context**?🔹 | <code>Array<string></code> | The name of the context(s).<br/>__*Optional*__
+**filter**?🔹 | <code>[circleci.Filter](#projen-circleci-filter)</code> | Job Filters can have the key branches or tags.<br/>__*Optional*__
+**matrix**?🔹 | <code>[circleci.Matrix](#projen-circleci-matrix)</code> | __*Optional*__
+**name**?🔹 | <code>string</code> | A replacement for the job name.<br/>__*Optional*__
+**orbParameters**?🔹 | <code>Map<string, string &#124; number &#124; boolean></code> | Parameters passed to job when referencing a job from orb.<br/>__*Optional*__
+**parameters**?🔹 | <code>Map<string, string &#124; number &#124; boolean></code> | Parameters for making a job explicitly configurable in a workflow.<br/>__*Optional*__
+**requires**?🔹 | <code>Array<string></code> | A list of jobs that must succeed for the job to start.<br/>__*Optional*__
+**type**?🔹 | <code>[circleci.JobType](#projen-circleci-jobtype)</code> | A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed.<br/>__*Optional*__
+
+
+
 ## struct AutoApproveOptions 🔹 <a id="projen-github-autoapproveoptions"></a>
 
 
@@ -17583,6 +17930,42 @@ Name | Description
 **EXPERIMENTAL** 🔹|
 **STABLE** 🔹|
 **DEPRECATED** 🔹|
+
+
+## enum JobType 🔹 <a id="projen-circleci-jobtype"></a>
+
+A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed.
+
+Name | Description
+-----|-----
+**APPROVAL** 🔹|
+
+
+## enum JobWhen 🔹 <a id="projen-circleci-jobwhen"></a>
+
+Specify when to enable or disable the step.
+
+Name | Description
+-----|-----
+**ALWAYS** 🔹|
+**ON_SUCCESS** 🔹|
+**ON_FAIL** 🔹|
+
+
+## enum ResourceClass 🔹 <a id="projen-circleci-resourceclass"></a>
+
+The resource_class feature allows configuring CPU and RAM resources for each job.
+
+Different resource classes are available for different executors, as described in the tables below.
+
+Name | Description
+-----|-----
+**SMALL** 🔹|
+**MEDIUM** 🔹|
+**MEDIUM_PLUS** 🔹|
+**LARGE_X** 🔹|
+**LARGE_2X** 🔹|
+**LARGE_2X_PLUS** 🔹|
 
 
 ## enum DependabotRegistryType 🔹 <a id="projen-github-dependabotregistrytype"></a>
