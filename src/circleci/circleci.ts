@@ -73,7 +73,7 @@ export interface CircleCiProps {
 
 /**
  * Circleci Class to manage `.circleci/config.yml`.
- * Check test `circleci.test.ts` for more usage examples
+ * Check projen's docs for more information.
  *
  * @see https://circleci.com/docs/2.0/configuration-reference/
  */
