@@ -160,7 +160,7 @@ export class Circleci extends Component {
     let result: any = [];
     for (const job of jobs ?? []) {
       const { identifier, orbParameters, ...reduced } = job;
-      if (isObjectContaingFieldExactly(job, "identifier")) {
+      if (isObjectContainingFieldExactly(job, "identifier")) {
         result = [...result, identifier];
       } else {
         result = [
