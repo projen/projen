@@ -9,8 +9,8 @@ are ways you can bypass projen's regular APIs to add special configuration code.
 ## Overrides
 
 For any "object"-based files, such as JSON, YAML, TOML, or XML, you can
-override properties through the `addOverride` and `addDeletionOverride` methods
-accessible on file objects:
+override properties through the `addOverride`, `addDeletionOverride` and
+`addToArray` methods accessible on file objects:
 
 ```ts
 // Get the ObjectFile
@@ -21,6 +21,7 @@ packageJson.addOverride('description', 'the next generation of logging!');
 packageJson.addOverride('keywords', ['experimental', 'web', 'productivity', 'exciting']);
 packageJson.addOverride('author.name', 'A. Mused');
 packageJson.addDeletionOverride('author.organization');
+packageJson.addToArray('keywords', 'logging', 'next-gen');
 
 // Use array indices to override specific array elements
 packageJson.addOverride('bundledDependencies.3', 'react');
