@@ -166,7 +166,7 @@ test("projenrc.ts", () => {
   });
 });
 
-test("projenrc.ts linted by eslint task", () => {
+test("eslint configured to support .projenrc.ts and projenrc src dir", () => {
   const prj = new TypeScriptProject({
     name: "test",
     defaultReleaseBranch: "main",
@@ -179,9 +179,26 @@ test("projenrc.ts linted by eslint task", () => {
     name: "eslint",
     steps: [
       {
-        exec: "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.ts",
+        exec: "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools projenrc .projenrc.ts",
       },
     ],
+  });
+  expect(snapshot[".eslintrc.json"]).toMatchObject({
+    ignorePatterns: expect.arrayContaining([
+      "!.projenrc.ts",
+      "!projenrc/**/*.ts",
+    ]),
+    rules: expect.objectContaining({
+      "import/no-extraneous-dependencies": [
+        "error",
+        expect.objectContaining({
+          devDependencies: expect.arrayContaining([
+            ".projenrc.ts",
+            "projenrc/**/*.ts",
+          ]),
+        }),
+      ],
+    }),
   });
 });
 
