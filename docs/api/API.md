@@ -70,7 +70,7 @@ Name|Description
 [cdk8s.IntegrationTest](#projen-cdk8s-integrationtest)|CDK8S integration test.
 [cdk8s.IntegrationTestAutoDiscover](#projen-cdk8s-integrationtestautodiscover)|Discovers and creates integration tests from files in the test root.
 [cdktf.ConstructLibraryCdktf](#projen-cdktf-constructlibrarycdktf)|CDKTF construct library project.
-[circleci.Circleci](#projen-circleci-circleci)|Circleci Class to manage `.circleci/config.yml`. Check test `circleci.test.ts` for more usage examples.
+[circleci.Circleci](#projen-circleci-circleci)|Circleci Class to manage `.circleci/config.yml`. Check projen's docs for more information.
 [github.AutoApprove](#projen-github-autoapprove)|Auto approve pull requests that meet a criteria.
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
@@ -5716,7 +5716,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
 
 ## class Circleci 🔹 <a id="projen-circleci-circleci"></a>
 
-Circleci Class to manage `.circleci/config.yml`. Check test `circleci.test.ts` for more usage examples.
+Circleci Class to manage `.circleci/config.yml`. Check projen's docs for more information.
 
 __Submodule__: circleci
 
@@ -5725,7 +5725,7 @@ __Extends__: [Component](#projen-component)
 ### Initializer
 
 
-create a Circleci Component within project.
+
 
 ```ts
 new circleci.Circleci(project: Project, options?: CircleCiProps)
@@ -5733,7 +5733,6 @@ new circleci.Circleci(project: Project, options?: CircleCiProps)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[circleci.CircleCiProps](#projen-circleci-circleciprops)</code>)  *No description*
-  * **enabled** (<code>boolean</code>)  enable the generation of Circleci config file. __*Default*__: enabled
   * **jobs** (<code>Array<[circleci.Job](#projen-circleci-job)></code>)  List of Jobs to create unique steps per pipeline, e.g. ```json jobs: [{   identifier: "compile",   docker: { image: "golang:alpine" }   steps: ["checkout", run: {command: "go build ."}] }] ```. __*Optional*__
   * **orbs** (<code>Map<string, string></code>)  Contains a map of CirclCi Orbs ```json orbs: {   node: "circleci/node@5.0.1"   slack: "circleci/slack@4.8.3" } ```. __*Optional*__
   * **setup** (<code>boolean</code>)  The setup field enables you to conditionally trigger configurations from outside the primary .circleci parent directory, update pipeline parameters, or generate customized configurations. __*Optional*__
@@ -5747,7 +5746,7 @@ new circleci.Circleci(project: Project, options?: CircleCiProps)
 
 Name | Type | Description 
 -----|------|-------------
-**file**?🔹 | <code>[YamlFile](#projen-yamlfile)</code> | The yaml file for the Circleci pipeline.<br/>__*Optional*__
+**file**🔹 | <code>[YamlFile](#projen-yamlfile)</code> | The yaml file for the Circleci pipeline.
 
 ### Methods
 
@@ -13955,7 +13954,6 @@ Options for class {@link Circleci}.
 
 Name | Type | Description 
 -----|------|-------------
-**enabled**?🔹 | <code>boolean</code> | enable the generation of Circleci config file.<br/>__*Default*__: enabled
 **jobs**?🔹 | <code>Array<[circleci.Job](#projen-circleci-job)></code> | List of Jobs to create unique steps per pipeline, e.g. ```json jobs: [{   identifier: "compile",   docker: { image: "golang:alpine" }   steps: ["checkout", run: {command: "go build ."}] }] ```.<br/>__*Optional*__
 **orbs**?🔹 | <code>Map<string, string></code> | Contains a map of CirclCi Orbs ```json orbs: {   node: "circleci/node@5.0.1"   slack: "circleci/slack@4.8.3" } ```.<br/>__*Optional*__
 **setup**?🔹 | <code>boolean</code> | The setup field enables you to conditionally trigger configurations from outside the primary .circleci parent directory, update pipeline parameters, or generate customized configurations.<br/>__*Optional*__
