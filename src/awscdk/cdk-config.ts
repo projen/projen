@@ -85,10 +85,22 @@ export class CdkConfig extends Component {
    */
   public readonly cdkout: string;
 
+  /**
+   * List of glob patterns to be included by CDK.
+   */
+  private readonly _include: string[];
+
+  /**
+   * List of glob patterns to be excluded by CDK.
+   */
+  private readonly _exclude: string[];
+
   constructor(project: Project, options: CdkConfigOptions) {
     super(project);
 
     this.cdkout = options.cdkout ?? "cdk.out";
+    this._include = options.watchIncludes ?? [];
+    this._exclude = options.watchExcludes ?? [];
 
     const context: Record<string, any> = { ...options.context };
     const fflags = options.featureFlags ?? true;
@@ -107,14 +119,44 @@ export class CdkConfig extends Component {
         output: this.cdkout,
         build: options.buildCommand,
         watch: {
-          include: options.watchIncludes ?? [],
-          exclude: options.watchExcludes ?? [],
+          include: () => this._include,
+          exclude: () => this._exclude,
         },
       },
     });
 
     project.gitignore.exclude(`/${this.cdkout}/`);
     project.gitignore.exclude(".cdk.staging/");
+  }
+
+  /**
+   * Add includes to `cdk.json`.
+   * @param patterns The includes to add.
+   */
+  public addIncludes(...patterns: string[]) {
+    this._include.push(...patterns);
+  }
+
+  /**
+   * Add excludes to `cdk.json`.
+   * @param patterns The excludes to add.
+   */
+  public addExcludes(...patterns: string[]) {
+    this._exclude.push(...patterns);
+  }
+
+  /**
+   * List of glob patterns to be included by CDK.
+   */
+  public get include(): string[] {
+    return [...this._include];
+  }
+
+  /**
+   * List of glob patterns to be excluded by CDK.
+   */
+  public get exclude(): string[] {
+    return [...this._exclude];
   }
 }
 

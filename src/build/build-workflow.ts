@@ -196,7 +196,7 @@ export class BuildWorkflow extends Component {
     if (this.artifactsDirectory) {
       steps.push({
         name: "Download build artifacts",
-        uses: "actions/download-artifact@v2",
+        uses: "actions/download-artifact@v3",
         with: {
           name: BUILD_ARTIFACT_NAME,
           path: this.artifactsDirectory,
@@ -231,7 +231,10 @@ export class BuildWorkflow extends Component {
    *
    * @param options Specify tools and other options
    */
-  public addPostBuildJobTask(task: Task, options: AddPostBuildJobTaskOptions) {
+  public addPostBuildJobTask(
+    task: Task,
+    options: AddPostBuildJobTaskOptions = {}
+  ) {
     this.addPostBuildJobCommands(
       `post-build-${task.name}`,
       [`${this.project.projenCommand} ${task.name}`],
@@ -264,7 +267,7 @@ export class BuildWorkflow extends Component {
     if (options?.checkoutRepo) {
       steps.push({
         name: "Checkout",
-        uses: "actions/checkout@v2",
+        uses: "actions/checkout@v3",
         with: {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
@@ -304,9 +307,10 @@ export class BuildWorkflow extends Component {
       needs: [BUILD_JOBID],
       if: `always() && ${SELF_MUTATION_CONDITION} && ${NOT_FORK}`,
       steps: [
+        ...this.workflow.projenCredentials.setupSteps,
         ...WorkflowActions.checkoutWithPatch({
           // we need to use a PAT so that our push will trigger the build workflow
-          token: `\${{ secrets.${this.workflow.projenTokenSecret} }}`,
+          token: this.workflow.projenCredentials.tokenRef,
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
         }),
@@ -330,7 +334,7 @@ export class BuildWorkflow extends Component {
     return [
       {
         name: "Checkout",
-        uses: "actions/checkout@v2",
+        uses: "actions/checkout@v3",
         with: {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,

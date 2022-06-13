@@ -1,6 +1,5 @@
 // tests for `projen new`: we run `projen new` for each supported project type
 // and compare against a golden snapshot.
-import { execSync } from "child_process";
 import { join } from "path";
 import { pathExistsSync } from "fs-extra";
 import * as inventory from "../src/inventory";
@@ -231,6 +230,14 @@ test("projenrc-json creates node-project", () => {
   });
 });
 
+test("projenrc-json creates java project", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, ["new", "java", "--projenrc-json"]);
+
+    expect(directorySnapshot(projectdir)).toMatchSnapshot();
+  });
+});
+
 /**
  * commented out due to breaking changes in projen@0.37.0
 
@@ -260,24 +267,43 @@ test("projenrc-ts creates typescript projenrc", () => {
   });
 });
 
-test("projen new node --outdir path/to/mydir", () => {
+test("python project includes .projenrc.py by default", () => {
   withProjectDir((projectdir) => {
-    // GIVEN
-    const shell = (command: string) => execSync(command, { cwd: projectdir });
-    shell(`mkdir -p ${join("path", "to", "mydir")}`);
+    execProjenCLI(projectdir, ["new", "python", "--no-synth"]);
 
-    // WHEN
-    execProjenCLI(projectdir, ["new", "node", "--outdir", "path/to/mydir"]);
-
-    // THEN
-    const targetDirSnapshot = directorySnapshot(
-      join(projectdir, "path", "to", "mydir"),
-      { excludeGlobs: ["node_modules/**"] }
-    );
-    expect(targetDirSnapshot[".projenrc.js"]).toMatchSnapshot();
-    expect(targetDirSnapshot["package.json"]).toBeDefined();
+    const output = directorySnapshot(projectdir);
+    expect(output[".projenrc.py"]).toBeDefined();
   });
 });
+
+test("python project can include .projenrc.js", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, ["new", "python", "--projenrc-js", "--no-synth"]);
+
+    const output = directorySnapshot(projectdir);
+    expect(output[".projenrc.py"]).toBeUndefined();
+    expect(output[".projenrc.js"]).toBeDefined();
+  });
+});
+
+// test("projen new node --outdir path/to/mydir", () => {
+//   withProjectDir((projectdir) => {
+//     // GIVEN
+//     const shell = (command: string) => execSync(command, { cwd: projectdir });
+//     shell(`mkdir -p ${join("path", "to", "mydir")}`);
+
+//     // WHEN
+//     execProjenCLI(projectdir, ["new", "node", "--outdir", "path/to/mydir"]);
+
+//     // THEN
+//     const targetDirSnapshot = directorySnapshot(
+//       join(projectdir, "path", "to", "mydir"),
+//       { excludeGlobs: ["node_modules/**"] }
+//     );
+//     expect(targetDirSnapshot[".projenrc.js"]).toMatchSnapshot();
+//     expect(targetDirSnapshot["package.json"]).toBeDefined();
+//   });
+// });
 
 describe("git", () => {
   test("--git (default) will initialize a git repo and create a commit", () => {

@@ -16,6 +16,14 @@ test("tailwind enabled", () => {
   expect(out["postcss.config.json"]).toBeDefined();
 });
 
+test("CommonJS not ESnext", () => {
+  const p = new TestNextJsTypeScriptProject();
+  const out = synthSnapshot(p);
+  expect(out["tsconfig.json"]).toBeDefined();
+  expect(out["tsconfig.json"].compilerOptions).toBeDefined();
+  expect(out["tsconfig.json"].compilerOptions.module).toEqual("CommonJS");
+});
+
 class TestNextJsTypeScriptProject extends NextJsTypeScriptProject {
   constructor(options: Partial<NextJsTypeScriptProjectOptions> = {}) {
     super({

@@ -34,6 +34,27 @@ test("commits new changelog", async () => {
   expect(result.lastCommitContent).toMatch(/.*CHANGELOG\.md.*/g);
 });
 
+test("adds a new changelog if missing", async () => {
+  const result = await testUpdateChangelog({
+    testOptions: {
+      skipOutputChangelog: true,
+    },
+  });
+
+  expect(result.projectChangelogContent.length).toBeGreaterThan(0);
+});
+
+test("matches first changelog entry missing brackets around the version", async () => {
+  const result = await testUpdateChangelog({
+    testOptions: {
+      inputChangelogContent: `## ${DEFAULT_VERSION} (2021-09-04)`,
+    },
+  });
+
+  expect(result.commits[0]).toMatch(`chore(release): ${DEFAULT_VERSION}`);
+  expect(result.lastCommitContent).toMatch(/.*CHANGELOG\.md.*/g);
+});
+
 test("duplicate release tag update is idempotent", async () => {
   const result1 = await testUpdateChangelog();
   const result2 = await testUpdateChangelog({
@@ -81,6 +102,7 @@ interface TestUpdateChangelogOpts {
     cwd?: string;
     version?: string;
     inputChangelogContent?: string;
+    skipOutputChangelog?: boolean;
     versionPath?: string;
     updateCount?: number;
   };
@@ -99,6 +121,7 @@ async function testUpdateChangelog(opts: TestUpdateChangelogOpts = {}) {
   const outputChangelogContent = DEFAULT_OUTPUT_CHANGELOG_CONTENT;
   const outputChangelog =
     opts.updateChangelogOptions?.outputChangelog ?? DEFAULT_OUTPUT_CHANGELOG;
+  const skipOutputChangelog = opts.testOptions?.skipOutputChangelog ?? false;
 
   const inputChangelogFullPath = join(workdir, inputChangelog);
   const outputChangelogFullPath = join(workdir, outputChangelog);
@@ -114,9 +137,11 @@ async function testUpdateChangelog(opts: TestUpdateChangelogOpts = {}) {
     await mkdir(join(workdir, "dist"));
     await writeFile(join(workdir, versionFile), version);
     await writeFile(inputChangelogFullPath, inputChangelogContent);
-    await writeFile(outputChangelogFullPath, outputChangelogContent);
-    git(`add ${outputChangelogFullPath}`);
-    git('commit -m "chore: setup"');
+    if (!skipOutputChangelog) {
+      await writeFile(outputChangelogFullPath, outputChangelogContent);
+      git(`add ${outputChangelogFullPath}`);
+      git('commit -m "chore: setup"');
+    }
   }
 
   await updateChangelog(workdir, {

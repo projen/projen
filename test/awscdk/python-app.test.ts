@@ -15,7 +15,6 @@ test("create cdk python project", () => {
   expect(Object.keys(snapshot)).toStrictEqual([
     ".gitattributes",
     ".github/workflows/pull-request-lint.yml",
-    ".github/workflows/stale.yml",
     ".gitignore",
     ".projen/deps.json",
     ".projen/files.json",
@@ -26,7 +25,7 @@ test("create cdk python project", () => {
     "requirements-dev.txt",
     "requirements.txt",
     "test_cdk_python_app_project/__init__.py",
-    "test_cdk_python_app_project/my_stack.py",
+    "test_cdk_python_app_project/main.py",
     "tests/__init__.py",
     "tests/test_example.py",
   ]);

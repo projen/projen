@@ -14,6 +14,9 @@ To add a dependency you can use a project-type specific API such as
 project.deps.addDependency(dep, type);
 ```
 
+By default, `npx projen` will automatically install dependencies in your
+project if they are not already installed.
+
 ## Semantic Requirements
 
 The first argument (`dep`) is a string in the form `MODULE[@VERSION]` where

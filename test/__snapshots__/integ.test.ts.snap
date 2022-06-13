@@ -242,7 +242,6 @@ Object {
 /.github/workflows/build.yml linguist-generated
 /.github/workflows/pull-request-lint.yml linguist-generated
 /.github/workflows/release.yml linguist-generated
-/.github/workflows/stale.yml linguist-generated
 /.github/workflows/upgrade-master.yml linguist-generated
 /.gitignore linguist-generated
 /.mergify.yml linguist-generated
@@ -273,7 +272,7 @@ jobs:
       CI: \\"true\\"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -315,13 +314,13 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -342,11 +341,11 @@ jobs:
     permissions: {}
     if: \\"! needs.build.outputs.self_mutation_happened\\"
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -364,15 +363,15 @@ jobs:
     permissions: {}
     if: \\"! needs.build.outputs.self_mutation_happened\\"
     steps:
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 11.x
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -390,14 +389,14 @@ jobs:
     permissions: {}
     if: \\"! needs.build.outputs.self_mutation_happened\\"
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3
         with:
           python-version: 3.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -429,7 +428,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v3.4.6
+      - uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -458,7 +457,7 @@ jobs:
       CI: \\"true\\"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -490,11 +489,11 @@ jobs:
       contents: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -516,11 +515,11 @@ jobs:
       contents: read
     if: needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -546,15 +545,15 @@ jobs:
       contents: read
     if: needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 11.x
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -582,14 +581,14 @@ jobs:
       contents: read
     if: needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3
         with:
           python-version: 3.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -606,37 +605,6 @@ jobs:
         env:
           TWINE_USERNAME: \${{ secrets.TWINE_USERNAME }}
           TWINE_PASSWORD: \${{ secrets.TWINE_PASSWORD }}
-",
-  ".github/workflows/stale.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
-
-name: stale
-on:
-  schedule:
-    - cron: 0 1 * * *
-  workflow_dispatch: {}
-jobs:
-  stale:
-    runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
-    steps:
-      - uses: actions/stale@v4
-        with:
-          days-before-stale: -1
-          days-before-close: -1
-          days-before-pr-stale: 14
-          days-before-pr-close: 2
-          stale-pr-message: This pull request is now marked as stale because it hasn't seen activity for a while. Add a comment or it will be closed soon. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          close-pr-message: Closing this pull request as it hasn't seen activity for a while. Please add a comment @mentioning a maintainer to reopen. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          stale-pr-label: stale
-          exempt-pr-labels: backlog
-          days-before-issue-stale: 60
-          days-before-issue-close: 7
-          stale-issue-message: This issue is now marked as stale because it hasn't seen activity for a while. Add a comment or it will be closed soon. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          close-issue-message: Closing this issue as it hasn't seen activity for a while. Please add a comment @mentioning a maintainer to reopen. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          stale-issue-label: stale
-          exempt-issue-labels: backlog
 ",
   ".github/workflows/upgrade-master.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
@@ -655,7 +623,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: master
       - name: Setup Node.js
@@ -687,12 +655,12 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: master
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -737,7 +705,6 @@ jobs:
 !/.projen/deps.json
 !/.projen/files.json
 !/.github/workflows/pull-request-lint.yml
-!/.github/workflows/stale.yml
 !/package.json
 !/LICENSE
 !/.npmignore
@@ -773,6 +740,7 @@ junit.xml
 /dist/version.txt
 !/.github/workflows/release.yml
 !/.mergify.yml
+!/.github/workflows/upgrade-master.yml
 !/.github/pull_request_template.md
 !/test/
 !/tsconfig.dev.json
@@ -787,7 +755,6 @@ tsconfig.json
 .idea
 example/*.js
 example/*.d.ts
-!/.github/workflows/upgrade-master.yml
 ",
   ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
@@ -887,13 +854,14 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "jsii",
@@ -905,6 +873,10 @@ tsconfig.tsbuildinfo
       },
       Object {
         "name": "jsii-docgen",
+        "type": "build",
+      },
+      Object {
+        "name": "jsii-pacmak",
         "type": "build",
       },
       Object {
@@ -928,6 +900,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -1104,7 +1077,6 @@ tsconfig.tsbuildinfo
       ".github/workflows/build.yml",
       ".github/workflows/pull-request-lint.yml",
       ".github/workflows/release.yml",
-      ".github/workflows/stale.yml",
       ".github/workflows/upgrade-master.yml",
       ".gitignore",
       ".mergify.yml",
@@ -1153,6 +1125,7 @@ tsconfig.tsbuildinfo
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -1209,7 +1182,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "compile",
         "steps": Array [
           Object {
-            "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies",
+            "exec": "jsii --silence-warnings=reserved-word",
           },
         ],
       },
@@ -1257,7 +1230,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "if [ ! -z \${CI} ]; then mkdir -p dist && rsync -a . dist --exclude .git --exclude node_modules; else npx projen package-all; fi",
+            "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
           },
         ],
       },
@@ -1281,10 +1254,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:java",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target java",
+            "exec": "jsii-pacmak -v --target java",
           },
         ],
       },
@@ -1293,10 +1263,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:js",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target js",
+            "exec": "jsii-pacmak -v --target js",
           },
         ],
       },
@@ -1305,10 +1272,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:python",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target python",
+            "exec": "jsii-pacmak -v --target python",
           },
         ],
       },
@@ -1390,6 +1354,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [
@@ -1405,6 +1370,9 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         },
         "name": "upgrade",
         "steps": Array [
+          Object {
+            "exec": "yarn upgrade npm-check-updates",
+          },
           Object {
             "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
@@ -1439,7 +1407,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "watch",
         "steps": Array [
           Object {
-            "exec": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies",
+            "exec": "jsii -w --silence-warnings=reserved-word",
           },
         ],
       },
@@ -1753,16 +1721,17 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "jsii": "*",
       "jsii-diff": "*",
       "jsii-docgen": "*",
+      "jsii-pacmak": "*",
       "json-schema": "*",
       "npm-check-updates": "^12",
       "projen": "*",
       "standard-version": "^9",
-      "ts-jest": "*",
+      "ts-jest": "^27",
       "typescript": "*",
     },
     "engines": Object {
@@ -1857,6 +1826,9 @@ project.synth();
     "repository": Object {
       "type": "git",
       "url": "https://github.com/eladb/cdk-watchful.git",
+    },
+    "resolutions": Object {
+      "@types/prettier": "2.6.0",
     },
     "scripts": Object {
       "build": "npx projen build",
@@ -2177,7 +2149,6 @@ Object {
 /.eslintrc.json linguist-generated
 /.gitattributes linguist-generated
 /.github/workflows/pull-request-lint.yml linguist-generated
-/.github/workflows/stale.yml linguist-generated
 /.github/workflows/upgrade.yml linguist-generated
 /.gitignore linguist-generated
 /.npmignore linguist-generated
@@ -2208,7 +2179,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v3.4.6
+      - uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -2217,37 +2188,6 @@ jobs:
             fix
             chore
           requireScope: false
-",
-  ".github/workflows/stale.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
-
-name: stale
-on:
-  schedule:
-    - cron: 0 1 * * *
-  workflow_dispatch: {}
-jobs:
-  stale:
-    runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
-    steps:
-      - uses: actions/stale@v4
-        with:
-          days-before-stale: -1
-          days-before-close: -1
-          days-before-pr-stale: 14
-          days-before-pr-close: 2
-          stale-pr-message: This pull request is now marked as stale because it hasn't seen activity for a while. Add a comment or it will be closed soon. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          close-pr-message: Closing this pull request as it hasn't seen activity for a while. Please add a comment @mentioning a maintainer to reopen. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          stale-pr-label: stale
-          exempt-pr-labels: backlog
-          days-before-issue-stale: 60
-          days-before-issue-close: 7
-          stale-issue-message: This issue is now marked as stale because it hasn't seen activity for a while. Add a comment or it will be closed soon. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          close-issue-message: Closing this issue as it hasn't seen activity for a while. Please add a comment @mentioning a maintainer to reopen. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          stale-issue-label: stale
-          exempt-issue-labels: backlog
 ",
   ".github/workflows/upgrade.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
@@ -2266,7 +2206,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -2296,11 +2236,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -2345,7 +2285,6 @@ jobs:
 !/.projen/deps.json
 !/.projen/files.json
 !/.github/workflows/pull-request-lint.yml
-!/.github/workflows/stale.yml
 !/package.json
 !/LICENSE
 !/.npmignore
@@ -2376,6 +2315,7 @@ jspm_packages/
 /test-reports/
 junit.xml
 /coverage/
+!/.github/workflows/upgrade.yml
 !/test/
 !/tsconfig.dev.json
 !/src/
@@ -2386,7 +2326,6 @@ junit.xml
 tsconfig.json
 !/API.md
 !/src/_loadurl.js
-!/.github/workflows/upgrade.yml
 ",
   ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 /.projen/
@@ -2465,13 +2404,14 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "jsii",
@@ -2483,6 +2423,10 @@ tsconfig.tsbuildinfo
       },
       Object {
         "name": "jsii-docgen",
+        "type": "build",
+      },
+      Object {
+        "name": "jsii-pacmak",
         "type": "build",
       },
       Object {
@@ -2505,6 +2449,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -2538,7 +2483,6 @@ tsconfig.tsbuildinfo
       ".eslintrc.json",
       ".gitattributes",
       ".github/workflows/pull-request-lint.yml",
-      ".github/workflows/stale.yml",
       ".github/workflows/upgrade.yml",
       ".gitignore",
       ".projen/deps.json",
@@ -2626,7 +2570,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "compile",
         "steps": Array [
           Object {
-            "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies",
+            "exec": "jsii --silence-warnings=reserved-word",
           },
           Object {
             "exec": "cp src/_loadurl.js lib/",
@@ -2677,7 +2621,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "if [ ! -z \${CI} ]; then mkdir -p dist && rsync -a . dist --exclude .git --exclude node_modules; else npx projen package-all; fi",
+            "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
           },
         ],
       },
@@ -2704,10 +2648,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:dotnet",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target dotnet",
+            "exec": "jsii-pacmak -v --target dotnet",
           },
         ],
       },
@@ -2716,10 +2657,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:java",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target java",
+            "exec": "jsii-pacmak -v --target java",
           },
         ],
       },
@@ -2728,10 +2666,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:js",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target js",
+            "exec": "jsii-pacmak -v --target js",
           },
         ],
       },
@@ -2740,10 +2675,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package:python",
         "steps": Array [
           Object {
-            "exec": "jsii_version=$(node -p \\"JSON.parse(fs.readFileSync('.jsii')).jsiiVersion.split(' ')[0]\\")",
-          },
-          Object {
-            "exec": "npx jsii-pacmak@$jsii_version -v --target python",
+            "exec": "jsii-pacmak -v --target python",
           },
         ],
       },
@@ -2805,61 +2737,28 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "upgrade",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "yarn upgrade npm-check-updates",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
           Object {
-            "exec": "yarn install --check-files",
-          },
-          Object {
-            "exec": "yarn upgrade @types/follow-redirects @types/jest @types/json-stable-stringify @types/node @types/yaml @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii jsii-diff jsii-docgen json-schema json-schema-to-typescript npm-check-updates ts-jest typescript fast-json-patch follow-redirects json-stable-stringify yaml constructs",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "upgrade-projen": Object {
-        "description": "upgrade projen",
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade-projen",
-        "steps": Array [
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade projen",
+            "exec": "yarn upgrade",
           },
           Object {
             "exec": "npx projen",
@@ -2874,7 +2773,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "watch",
         "steps": Array [
           Object {
-            "exec": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies",
+            "exec": "jsii -w --silence-warnings=reserved-word",
           },
         ],
       },
@@ -3318,16 +3217,17 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "jsii": "*",
       "jsii-diff": "*",
       "jsii-docgen": "*",
+      "jsii-pacmak": "*",
       "json-schema": "*",
       "json-schema-to-typescript": "*",
       "npm-check-updates": "^12",
       "projen": "*",
-      "ts-jest": "*",
+      "ts-jest": "^27",
       "typescript": "*",
     },
     "engines": Object {
@@ -3413,6 +3313,9 @@ project.synth();
       "type": "git",
       "url": "https://github.com/awslabs/cdk8s.git",
     },
+    "resolutions": Object {
+      "@types/prettier": "2.6.0",
+    },
     "scripts": Object {
       "build": "yarn compile",
       "clobber": "npx projen clobber",
@@ -3436,7 +3339,6 @@ project.synth();
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "upgrade": "npx projen upgrade",
-      "upgrade-projen": "npx projen upgrade-projen",
       "watch": "npx projen watch",
     },
     "stability": "experimental",
@@ -3732,7 +3634,6 @@ Object {
 /.eslintrc.json linguist-generated
 /.gitattributes linguist-generated
 /.github/workflows/pull-request-lint.yml linguist-generated
-/.github/workflows/stale.yml linguist-generated
 /.github/workflows/upgrade.yml linguist-generated
 /.gitignore linguist-generated
 /.npmignore linguist-generated
@@ -3764,7 +3665,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v3.4.6
+      - uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -3773,37 +3674,6 @@ jobs:
             fix
             chore
           requireScope: false
-",
-  ".github/workflows/stale.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
-
-name: stale
-on:
-  schedule:
-    - cron: 0 1 * * *
-  workflow_dispatch: {}
-jobs:
-  stale:
-    runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
-    steps:
-      - uses: actions/stale@v4
-        with:
-          days-before-stale: -1
-          days-before-close: -1
-          days-before-pr-stale: 14
-          days-before-pr-close: 2
-          stale-pr-message: This pull request is now marked as stale because it hasn't seen activity for a while. Add a comment or it will be closed soon. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          close-pr-message: Closing this pull request as it hasn't seen activity for a while. Please add a comment @mentioning a maintainer to reopen. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          stale-pr-label: stale
-          exempt-pr-labels: backlog
-          days-before-issue-stale: 60
-          days-before-issue-close: 7
-          stale-issue-message: This issue is now marked as stale because it hasn't seen activity for a while. Add a comment or it will be closed soon. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          close-issue-message: Closing this issue as it hasn't seen activity for a while. Please add a comment @mentioning a maintainer to reopen. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          stale-issue-label: stale
-          exempt-issue-labels: backlog
 ",
   ".github/workflows/upgrade.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
@@ -3822,7 +3692,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -3852,11 +3722,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -3901,7 +3771,6 @@ jobs:
 !/.projen/deps.json
 !/.projen/files.json
 !/.github/workflows/pull-request-lint.yml
-!/.github/workflows/stale.yml
 !/package.json
 !/LICENSE
 !/.npmignore
@@ -3932,6 +3801,7 @@ jspm_packages/
 /test-reports/
 junit.xml
 /coverage/
+!/.github/workflows/upgrade.yml
 !/test/
 !/tsconfig.json
 !/tsconfig.dev.json
@@ -3939,7 +3809,6 @@ junit.xml
 /lib
 /dist/
 !/.eslintrc.json
-!/.github/workflows/upgrade.yml
 ",
   ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 /.projen/
@@ -4009,13 +3878,14 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "json-schema",
@@ -4033,6 +3903,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -4095,7 +3966,6 @@ tsconfig.tsbuildinfo
       ".eslintrc.json",
       ".gitattributes",
       ".github/workflows/pull-request-lint.yml",
-      ".github/workflows/stale.yml",
       ".github/workflows/upgrade.yml",
       ".gitignore",
       ".npmignore",
@@ -4273,61 +4143,28 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "yarn upgrade npm-check-updates",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
           Object {
-            "exec": "yarn install --check-files",
-          },
-          Object {
-            "exec": "yarn upgrade @types/fs-extra @types/jest @types/json-schema @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit json-schema npm-check-updates ts-jest typescript @types/node cdk8s codemaker colors constructs fs-extra jsii-pacmak jsii-srcmak json2jsii sscaff yaml yargs",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "upgrade-projen": Object {
-        "description": "upgrade projen",
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade-projen",
-        "steps": Array [
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade projen",
+            "exec": "yarn upgrade",
           },
           Object {
             "exec": "npx projen",
@@ -4771,12 +4608,12 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "json-schema": "*",
       "npm-check-updates": "^12",
       "projen": "*",
-      "ts-jest": "*",
+      "ts-jest": "^27",
       "typescript": "*",
     },
     "engines": Object {
@@ -4853,7 +4690,6 @@ project.synth();
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "upgrade": "npx projen upgrade",
-      "upgrade-projen": "npx projen upgrade-projen",
       "watch": "npx projen watch",
     },
     "types": "lib/index.d.ts",
@@ -4952,7 +4788,6 @@ Object {
 /.github/workflows/build.yml linguist-generated
 /.github/workflows/pull-request-lint.yml linguist-generated
 /.github/workflows/release.yml linguist-generated
-/.github/workflows/stale.yml linguist-generated
 /.github/workflows/upgrade-master.yml linguist-generated
 /.gitignore linguist-generated
 /.mergify.yml linguist-generated
@@ -4982,7 +4817,7 @@ jobs:
       CI: \\"true\\"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -4991,7 +4826,7 @@ jobs:
         with:
           version: 6.14.7
       - name: Install dependencies
-        run: pnpm i
+        run: pnpm i --no-frozen-lockfile
       - name: build
         run: npx projen build
       - id: self_mutation
@@ -5019,13 +4854,13 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -5060,7 +4895,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v3.4.6
+      - uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -5089,7 +4924,7 @@ jobs:
       CI: \\"true\\"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -5121,11 +4956,11 @@ jobs:
       contents: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -5135,37 +4970,6 @@ jobs:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: \${{ github.repository }}
           GITHUB_REF: \${{ github.ref }}
-",
-  ".github/workflows/stale.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
-
-name: stale
-on:
-  schedule:
-    - cron: 0 1 * * *
-  workflow_dispatch: {}
-jobs:
-  stale:
-    runs-on: ubuntu-latest
-    permissions:
-      issues: write
-      pull-requests: write
-    steps:
-      - uses: actions/stale@v4
-        with:
-          days-before-stale: -1
-          days-before-close: -1
-          days-before-pr-stale: 14
-          days-before-pr-close: 2
-          stale-pr-message: This pull request is now marked as stale because it hasn't seen activity for a while. Add a comment or it will be closed soon. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          close-pr-message: Closing this pull request as it hasn't seen activity for a while. Please add a comment @mentioning a maintainer to reopen. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          stale-pr-label: stale
-          exempt-pr-labels: backlog
-          days-before-issue-stale: 60
-          days-before-issue-close: 7
-          stale-issue-message: This issue is now marked as stale because it hasn't seen activity for a while. Add a comment or it will be closed soon. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          close-issue-message: Closing this issue as it hasn't seen activity for a while. Please add a comment @mentioning a maintainer to reopen. If you wish to exclude this issue from being marked as stale, add the \\"backlog\\" label.
-          stale-issue-label: stale
-          exempt-issue-labels: backlog
 ",
   ".github/workflows/upgrade-master.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
@@ -5184,7 +4988,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: master
       - name: Setup pnpm
@@ -5216,12 +5020,12 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: master
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -5266,7 +5070,6 @@ jobs:
 !/.projen/deps.json
 !/.projen/files.json
 !/.github/workflows/pull-request-lint.yml
-!/.github/workflows/stale.yml
 !/package.json
 !/LICENSE
 !/.npmignore
@@ -5302,8 +5105,8 @@ junit.xml
 /dist/version.txt
 !/.github/workflows/release.yml
 !/.mergify.yml
-!/.github/pull_request_template.md
 !/.github/workflows/upgrade-master.yml
+!/.github/pull_request_template.md
 ",
   ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
@@ -5347,13 +5150,14 @@ junit.xml
         "type": "build",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "npm-check-updates",
@@ -5383,7 +5187,6 @@ junit.xml
       ".github/workflows/build.yml",
       ".github/workflows/pull-request-lint.yml",
       ".github/workflows/release.yml",
-      ".github/workflows/stale.yml",
       ".github/workflows/upgrade-master.yml",
       ".gitignore",
       ".mergify.yml",
@@ -5432,6 +5235,7 @@ junit.xml
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "bump",
         "steps": Array [
@@ -5579,6 +5383,7 @@ junit.xml
           "CHANGELOG": "dist/changelog.md",
           "OUTFILE": "package.json",
           "RELEASETAG": "dist/releasetag.txt",
+          "RELEASE_TAG_PREFIX": "",
         },
         "name": "unbump",
         "steps": Array [
@@ -5595,61 +5400,28 @@ junit.xml
         "name": "upgrade",
         "steps": Array [
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "pnpm update npm-check-updates",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
           Object {
-            "exec": "pnpm i",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
-            "exec": "pnpm update aws-sdk jest jest-junit npm-check-updates standard-version esbuild",
+            "exec": "pnpm i --no-frozen-lockfile",
           },
           Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "upgrade-projen": Object {
-        "description": "upgrade projen",
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade-projen",
-        "steps": Array [
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "pnpm i",
-          },
-          Object {
-            "exec": "pnpm update projen",
+            "exec": "pnpm update",
           },
           Object {
             "exec": "npx projen",
@@ -5887,7 +5659,7 @@ project.synth();
     },
     "devDependencies": Object {
       "aws-sdk": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "npm-check-updates": "^12",
       "projen": "*",
@@ -5948,7 +5720,6 @@ project.synth();
       "test:watch": "npx projen test:watch",
       "unbump": "npx projen unbump",
       "upgrade": "npx projen upgrade",
-      "upgrade-projen": "npx projen upgrade-projen",
     },
     "version": "0.0.0",
   },

@@ -1,5 +1,5 @@
 import { readFileSync } from "fs";
-import { join } from "path";
+import { join, resolve } from "path";
 import { parse as urlparse } from "url";
 import {
   accessSync,
@@ -8,15 +8,19 @@ import {
   readdirSync,
   readJsonSync,
 } from "fs-extra";
-import * as semver from "semver";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
-import { DependencyType } from "../dependencies";
+import { Dependencies, DependencyType } from "../dependencies";
 import { JsonFile } from "../json";
 import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
 import { exec, isTruthy, sorted, writeFile } from "../util";
+import {
+  extractCodeArtifactDetails,
+  minVersion,
+  packageResolutionsFieldName,
+} from "./util";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -281,11 +285,19 @@ export interface NodePackageOptions {
   readonly npmTokenSecret?: string;
 
   /**
-   * Options for publishing npm package to AWS CodeArtifact.
+   * Options for npm packages using AWS CodeArtifact.
+   * This is required if publishing packages to, or installing scoped packages from AWS CodeArtifact
    *
    * @default - undefined
    */
   readonly codeArtifactOptions?: CodeArtifactOptions;
+
+  /**
+   * Options for privately hosted scoped packages
+   *
+   * @default - fetch all scoped packages from the public npm registry
+   */
+  readonly scopedPackagesOptions?: ScopedPackagesOptions[];
 }
 
 export interface CodeArtifactOptions {
@@ -312,6 +324,23 @@ export interface CodeArtifactOptions {
    * @default undefined
    */
   readonly roleToAssume?: string;
+}
+
+/**
+ * Options for scoped packages
+ */
+export interface ScopedPackagesOptions {
+  /**
+   * Scope of the packages
+   *
+   * @example "@angular"
+   */
+  readonly scope: string;
+
+  /**
+   * URL of the registry for scoped packages
+   */
+  readonly registryUrl: string;
 }
 
 /**
@@ -376,11 +405,19 @@ export class NodePackage extends Component {
   public readonly npmTokenSecret?: string;
 
   /**
-   * Options for publishing npm package to AWS CodeArtifact.
+   * Options for npm packages using AWS CodeArtifact.
+   * This is required if publishing packages to, or installing scoped packages from AWS CodeArtifact
    *
    * @default - undefined
    */
   readonly codeArtifactOptions?: CodeArtifactOptions;
+
+  /**
+   * Options for privately hosted scoped packages
+   *
+   * @default undefined
+   */
+  readonly scopedPackagesOptions?: ScopedPackagesOptions[];
 
   /**
    * npm package access level.
@@ -420,14 +457,18 @@ export class NodePackage extends Component {
       npmRegistryUrl,
       npmTokenSecret,
       codeArtifactOptions,
+      scopedPackagesOptions,
     } = this.parseNpmOptions(options);
     this.npmAccess = npmAccess;
     this.npmRegistry = npmRegistry;
     this.npmRegistryUrl = npmRegistryUrl;
     this.npmTokenSecret = npmTokenSecret;
     this.codeArtifactOptions = codeArtifactOptions;
+    this.scopedPackagesOptions = scopedPackagesOptions;
 
     this.processDeps(options);
+
+    this.addCodeArtifactLoginScript();
 
     const prev = this.readPackageJson() ?? {};
 
@@ -650,6 +691,23 @@ export class NodePackage extends Component {
   }
 
   /**
+   * Defines resolutions for dependencies to change the normally resolved
+   * version of a dependency to something else.
+   *
+   * @param resolutions Names resolutions to be added. Specify a version or
+   * range with this syntax:
+   * `module@^7`.
+   */
+  public addPackageResolutions(...resolutions: string[]) {
+    const fieldName = packageResolutionsFieldName(this.packageManager);
+
+    for (const resolution of resolutions) {
+      const { name, version = "*" } = Dependencies.parseDependency(resolution);
+      this.file.addOverride(`${fieldName}.${name}`, version);
+    }
+  }
+
+  /**
    * Returns the command to execute in order to install all dependencies (always frozen).
    */
   public get installCommand() {
@@ -792,6 +850,10 @@ export class NodePackage extends Component {
     }
 
     const isAwsCodeArtifact = isAwsCodeArtifactRegistry(npmRegistryUrl);
+    const hasScopedPackage =
+      options.scopedPackagesOptions &&
+      options.scopedPackagesOptions.length !== 0;
+
     if (isAwsCodeArtifact) {
       if (options.npmTokenSecret) {
         throw new Error(
@@ -800,19 +862,20 @@ export class NodePackage extends Component {
       }
     } else {
       if (
-        options.codeArtifactOptions?.accessKeyIdSecret ||
-        options.codeArtifactOptions?.secretAccessKeySecret ||
-        options.codeArtifactOptions?.roleToAssume
+        (options.codeArtifactOptions?.accessKeyIdSecret ||
+          options.codeArtifactOptions?.secretAccessKeySecret ||
+          options.codeArtifactOptions?.roleToAssume) &&
+        !hasScopedPackage
       ) {
         throw new Error(
-          "codeArtifactOptions must only be specified when publishing AWS CodeArtifact."
+          "codeArtifactOptions must only be specified when publishing AWS CodeArtifact or used in scoped packages."
         );
       }
     }
 
     // apply defaults for AWS CodeArtifact
     let codeArtifactOptions: CodeArtifactOptions | undefined;
-    if (isAwsCodeArtifact) {
+    if (isAwsCodeArtifact || hasScopedPackage) {
       codeArtifactOptions = {
         accessKeyIdSecret:
           options.codeArtifactOptions?.accessKeyIdSecret ?? "AWS_ACCESS_KEY_ID",
@@ -829,7 +892,70 @@ export class NodePackage extends Component {
       npmRegistryUrl: npmr.href,
       npmTokenSecret: defaultNpmToken(options.npmTokenSecret, npmr.hostname),
       codeArtifactOptions,
+      scopedPackagesOptions: this.parseScopedPackagesOptions(
+        options.scopedPackagesOptions
+      ),
     };
+  }
+
+  private parseScopedPackagesOptions(
+    scopedPackagesOptions?: ScopedPackagesOptions[]
+  ): ScopedPackagesOptions[] | undefined {
+    if (!scopedPackagesOptions) {
+      return undefined;
+    }
+
+    return scopedPackagesOptions.map((option): ScopedPackagesOptions => {
+      if (!isScoped(option.scope)) {
+        throw new Error(
+          `Scope must start with "@" in options, found ${option.scope}`
+        );
+      }
+
+      if (!isAwsCodeArtifactRegistry(option.registryUrl)) {
+        throw new Error(
+          `Only AWS Code artifact scoped registry is supported for now, found ${option.registryUrl}`
+        );
+      }
+
+      const result: ScopedPackagesOptions = {
+        registryUrl: option.registryUrl,
+        scope: option.scope,
+      };
+
+      return result;
+    });
+  }
+
+  private addCodeArtifactLoginScript() {
+    if (
+      !this.scopedPackagesOptions ||
+      this.scopedPackagesOptions.length === 0
+    ) {
+      return;
+    }
+
+    this.project.addTask("ca:login", {
+      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
+      steps: [
+        { exec: "which aws" }, // check that AWS CLI is installed
+        ...this.scopedPackagesOptions.map((scopedPackagesOption) => {
+          const { registryUrl, scope } = scopedPackagesOption;
+          const { domain, region, accountId, registry } =
+            extractCodeArtifactDetails(registryUrl);
+          // reference: https://docs.aws.amazon.com/codeartifact/latest/ug/npm-auth.html
+          const commands = [
+            `npm config set ${scope}:registry ${registryUrl}`,
+            `CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text)`,
+            `npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN`,
+            `npm config set //${registry}:always-auth=true`,
+          ];
+          return {
+            exec: commands.join("; "),
+          };
+        }),
+      ],
+    });
   }
 
   private addNodeEngine() {
@@ -868,7 +994,9 @@ export class NodePackage extends Component {
         return frozen ? "npm ci" : "npm install";
 
       case NodePackageManager.PNPM:
-        return ["pnpm i", ...(frozen ? ["--frozen-lockfile"] : [])].join(" ");
+        return frozen
+          ? "pnpm i --frozen-lockfile"
+          : "pnpm i --no-frozen-lockfile";
 
       default:
         throw new Error(`unexpected package manager ${this.packageManager}`);
@@ -904,7 +1032,7 @@ export class NodePackage extends Component {
         }
 
         if (dep.version) {
-          const ver = semver.minVersion(dep.version)?.version;
+          const ver = minVersion(dep.version);
           if (!ver) {
             throw new Error(
               `unable to determine minimum semver for peer dependency ${dep.name}@${dep.version}`
@@ -918,38 +1046,52 @@ export class NodePackage extends Component {
     }
 
     for (const dep of this.project.deps.all) {
-      const version = dep.version ?? "*";
+      let version = dep.version ?? "*";
+      let name = dep.name;
+
+      if (name.startsWith("file:")) {
+        const localDependencyPath = name.substring(5);
+        const depPackageJson = resolve(
+          this.project.outdir,
+          localDependencyPath,
+          "package.json"
+        );
+        const pkgFile = readFileSync(depPackageJson, "utf8");
+        const pkg = JSON.parse(pkgFile);
+        version = localDependencyPath;
+        name = pkg.name;
+      }
 
       switch (dep.type) {
         case DependencyType.BUNDLED:
-          bundledDependencies.push(dep.name);
+          bundledDependencies.push(name);
 
           if (
             this.project.deps.all.find(
-              (d) => d.name === dep.name && d.type === DependencyType.PEER
+              (d) => d.name === name && d.type === DependencyType.PEER
             )
           ) {
             throw new Error(
-              `unable to bundle "${dep.name}". it cannot appear as a peer dependency`
+              `unable to bundle "${name}". it cannot appear as a peer dependency`
             );
           }
 
           // also add as a runtime dependency
-          dependencies[dep.name] = version;
+          dependencies[name] = version;
           break;
 
         case DependencyType.PEER:
-          peerDependencies[dep.name] = version;
+          peerDependencies[name] = version;
           break;
 
         case DependencyType.RUNTIME:
-          dependencies[dep.name] = version;
+          dependencies[name] = version;
           break;
 
         case DependencyType.TEST:
         case DependencyType.DEVENV:
         case DependencyType.BUILD:
-          devDependencies[dep.name] = version;
+          devDependencies[name] = version;
           break;
       }
     }
@@ -1083,7 +1225,7 @@ export class NodePackage extends Component {
         }
 
         // Take version and pin as dev dependency
-        const ver = semver.minVersion(version)?.version;
+        const ver = minVersion(version);
         if (!ver) {
           throw new Error(
             `unable to determine minimum semver for peer dependency ${name}@${version}`

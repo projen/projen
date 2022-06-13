@@ -131,6 +131,9 @@ export async function bump(cwd: string, options: BumpOptions) {
   if (isFirstRelease) {
     cmd.push("--first-release");
   }
+  if (prefix) {
+    cmd.push(`--tag-prefix ${prefix}v`);
+  }
 
   exec(cmd.join(" "), { cwd });
 

@@ -1,8 +1,8 @@
-import { PROJEN_RC } from "../src/common";
-import { NodeProject, Jest } from "../src/javascript";
-import * as logging from "../src/logging";
-import { TypeScriptProject } from "../src/typescript";
-import { mkdtemp, synthSnapshot } from "./util";
+import { PROJEN_RC } from "../../src/common";
+import { NodeProject, Jest } from "../../src/javascript";
+import * as logging from "../../src/logging";
+import { TypeScriptProject } from "../../src/typescript";
+import { mkdtemp, synthSnapshot } from "../util";
 
 logging.disable();
 
@@ -64,6 +64,7 @@ test("Node Project Jest With Options Configured", () => {
         automock: true,
         bail: 5,
         notify: false,
+        maxWorkers: 1,
       },
     },
   });
@@ -75,6 +76,7 @@ test("Node Project Jest With Options Configured", () => {
   expect(jest.automock).toEqual(true);
   expect(jest.bail).toEqual(5);
   expect(jest.notify).toEqual(false);
+  expect(jest.maxWorkers).toEqual(1);
 });
 
 test("Node Project Jest With Path Configured", () => {

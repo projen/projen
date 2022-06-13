@@ -179,7 +179,7 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
       `constructs@${this.constructsVersion}`
     );
     this.addDevDeps(
-      "ts-node@^9",
+      "ts-node",
       `cdk8s-cli@${this.cdk8sCliVersion}`,
       `cdk8s@${this.cdk8sVersion}`,
       `constructs@${this.constructsVersion}`

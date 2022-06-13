@@ -4,7 +4,11 @@ import { readJsonSync } from "fs-extra";
 import semver from "semver";
 import * as YAML from "yaml";
 import { Project } from "../../src";
-import { NodePackage } from "../../src/javascript/node-package";
+import {
+  NodePackage,
+  NodePackageManager,
+} from "../../src/javascript/node-package";
+import { minVersion } from "../../src/javascript/util";
 import * as util from "../../src/util";
 import { mkdtemp, synthSnapshot, TestProject } from "../util";
 
@@ -46,7 +50,7 @@ function mockYarnInstall(
         depRanges[depName].push("*");
         depVersions[depName].push(latestPackages[depName]);
       } else {
-        const ver = semver.minVersion(`${depVer}`)?.version;
+        const ver = minVersion(`${depVer}`);
         if (!ver) {
           throw new Error(
             `unable to determine min version for ${depName}@${depVer}`
@@ -55,6 +59,7 @@ function mockYarnInstall(
         // If we're given a latest package, no dependency can require higher
         if (
           latestPackages[depName] &&
+          semver.validRange(`${ver}`) &&
           semver.gt(`${ver}`, latestPackages[depName])
         ) {
           throw new Error(
@@ -69,10 +74,16 @@ function mockYarnInstall(
   }
   // Resolve version to install that satisfies all ranges for dep
   for (const dep of Object.keys(depRanges)) {
-    const installVersion = semver.maxSatisfying(
-      depVersions[dep],
-      depRanges[dep].join(" || ")
-    );
+    let installVersion: string | null;
+    if (!semver.validRange(depVersions[dep][0])) {
+      // if a dependency is "file:..." or something else, just install that
+      installVersion = depVersions[dep][0];
+    } else {
+      installVersion = semver.maxSatisfying(
+        depVersions[dep],
+        depRanges[dep].join(" || ")
+      );
+    }
     if (!installVersion) {
       throw new Error(`No version given satisfies all constraints on ${dep}`);
     }
@@ -336,4 +347,99 @@ test("devDependencies are not pinned by peerDependencies if pinnedDevDependency 
 
   expect(pkgFile.peerDependencies).toStrictEqual({ ms: "^1.4.0" });
   expect(pkgFile.devDependencies).toBeUndefined();
+});
+
+test("file path dependencies are respected", () => {
+  // Post-synth dependency version resolution uses installed package from node_modules folder
+  // Mock install command to add this folder with a fixed dependency version,
+  // mimicking yarn installing the latest package for "*"
+  jest.spyOn(util, "exec").mockImplementation((command, options) => {
+    expect(command.startsWith("yarn install")).toBeTruthy();
+    mockYarnInstall(options.cwd, { ms: "file:../ms" });
+  });
+
+  const project = new Project({ name: "test" });
+  const pkg = new NodePackage(project, {
+    peerDependencyOptions: {
+      pinnedDevDependency: false,
+    },
+  });
+
+  pkg.addPeerDeps("ms@file:../ms");
+
+  project.synth();
+
+  const pkgFile = readJsonSync(join(project.outdir, "package.json"));
+
+  expect(pkgFile.peerDependencies).toStrictEqual({ ms: "file:../ms" });
+  expect(pkgFile.devDependencies).toBeUndefined();
+});
+
+test("local dependencies can be specified using 'file:' prefix", () => {
+  jest.spyOn(util, "exec");
+  const localDepPath = mkdtemp({ cleanup: false });
+  const localPackage = {
+    name: "local-dep",
+    version: "0.0.0",
+  };
+
+  writeFileSync(
+    join(localDepPath, "package.json"),
+    JSON.stringify(localPackage, undefined, 2)
+  );
+
+  const project = new TestProject();
+  const pkg = new NodePackage(project);
+  pkg.addPeerDeps(`file:${localDepPath}`);
+
+  project.synth();
+
+  const pkgFile = readJsonSync(join(project.outdir, "package.json"));
+
+  expect(pkgFile.peerDependencies).toStrictEqual({ "local-dep": localDepPath });
+});
+
+test("yarn resolutions", () => {
+  const project = new TestProject();
+
+  const pkg = new NodePackage(project, {
+    packageManager: NodePackageManager.YARN,
+  });
+
+  pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"].resolutions).toBeDefined();
+  expect(snps["package.json"]).toMatchSnapshot();
+});
+
+test("npm overrides", () => {
+  const project = new TestProject();
+
+  const pkg = new NodePackage(project, {
+    packageManager: NodePackageManager.NPM,
+  });
+
+  pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"].overrides).toBeDefined();
+  expect(snps["package.json"]).toMatchSnapshot();
+});
+
+test("pnpm overrides", () => {
+  const project = new TestProject();
+
+  const pkg = new NodePackage(project, {
+    packageManager: NodePackageManager.PNPM,
+  });
+
+  pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
+
+  const snps = synthSnapshot(project);
+
+  expect(snps["package.json"].pnpm.overrides).toBeDefined();
+  expect(snps["package.json"]).toMatchSnapshot();
 });

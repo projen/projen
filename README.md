@@ -1,33 +1,46 @@
-# projen
+<p align="center">
+  <a href="https://projen.io">
+    <img src="https://raw.githubusercontent.com/projen/projen/main/logo/projen.svg">
+    <h3 align="center">projen</h3>
+  </a>
+</p>
 
-![projen logo](./logo/projen.svg)
+<p align="center">
+  Define and maintain complex project configuration through code.
+</p>
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/projen/projen)
-![Build](https://github.com/projen/projen/workflows/Build/badge.svg)
-![Release](https://github.com/projen/projen/workflows/Release/badge.svg)
-![Commit activity](https://img.shields.io/github/commit-activity/w/projen/projen)
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-63-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+<p align="center">
+  <a href="https://projen.io/"><strong>Documentation</strong></a> ·
+  <a href="https://github.com/projen/projen/releases"><strong>Changelog</strong></a> ·
+  <a href="#project-types"><strong>Project types</strong></a> ·
+  <a href="#community"><strong>Join the community</strong></a>
+</p>
 
-Define and maintain complex project configuration through code.
+<p align="center">
+  <a href="https://opensource.org/licenses/Apache-2.0"><img src="https://img.shields.io/badge/License-Apache%202.0-yellowgreen.svg" alt="Apache 2.0 License"></a>
+  <a href="https://gitpod.io/#https://github.com/projen/projen"><img src="https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod" alt="Gitpod ready-to-code"></a>
+  <a href="https://github.com/projen/projen/actions/workflows/build.yml"><img src="https://github.com/projen/projen/workflows/Build/badge.svg" alt="Build badge"></a>
+  <a href="https://github.com/projen/projen/actions/workflows/release.yml"><img src="https://github.com/projen/projen/workflows/Release/badge.svg" alt="Release badge"></a>
+  <a href="https://github.com/projen/projen/commits/main"><img src="https://img.shields.io/github/commit-activity/w/projen/projen" alt="Commit activity"></a>
+</p>
 
-> JOIN THE [#TemplatesAreEvil] MOVEMENT!
-
-[#TemplatesAreEvil]: https://twitter.com/search?q=%23TemplatesAreEvil
+<br/>
 
 *projen* synthesizes project configuration files such as `package.json`,
 `tsconfig.json`, `.gitignore`, GitHub Workflows, eslint, jest, etc from a
 well-typed definition written in JavaScript.
-
-Check out [this talk](https://youtu.be/SOWMPzXtTCw) about projen.
 
 As opposed to existing templating/scaffolding tools, *projen* is not a one-off
 generator. Synthesized files should never be manually edited (in fact, projen
 enforces that). To modify your project setup, users interact with rich
 strongly-typed class and execute `projen` to update their project configuration
 files.
+
+By defining a custom project type and using projen in multiple repositories, it's
+possible to update configuration files and CI/CD workflows across dozens (or
+hundreds!?) of projects.
+
+Check out [this talk](https://youtu.be/SOWMPzXtTCw) about projen from its creator.
 
 ## Getting Started
 
@@ -42,8 +55,12 @@ $ npx projen new PROJECT-TYPE
 ...
 ```
 
+### Project types
+
 Currently supported project types (use `npx projen new` without a type for a
-list):
+full list):
+
+**Built-in:** (run `npx projen <type>`)
 
 <!-- <macro exec="node ./scripts/readme-projects.js"> -->
 * [awscdk-app-java](https://projen.io/api/API.html#projen-awscdk-awscdkjavaapp) - AWS CDK app in Java.
@@ -65,6 +82,10 @@ list):
 * [typescript](https://projen.io/api/API.html#projen-typescript-typescriptproject) - TypeScript project.
 * [typescript-app](https://projen.io/api/API.html#projen-typescript-typescriptappproject) - TypeScript app.
 <!-- </macro> -->
+
+**External:** (run `npx projen --from <type>`)
+
+* [projen-github-action-typescript](https://github.com/projen/projen-github-action-typescript/blob/main/API.md) - GitHub Action in TypeScript project.
 
 > Use `npx projen new PROJECT-TYPE --help` to view a list of command line
 > switches that allows you to specify most project options during bootstrapping.
@@ -170,20 +191,19 @@ Some examples for features built-in to project types:
 * eslint
 * Jest
 * jsii: compile, package, api compatibility checks, API.md
-* Bump & release scripts with CHANGELOG generation based on conventional commits (manual releases are currently broken! [#726](https://github.com/projen/projen/issues/726))
+* Bump & release scripts with CHANGELOG generation based on conventional commits
 * Automated PR builds
 * Automated releases to npm, maven, NuGet and PyPI
+* Automated dependency upgrades
 * Mergify configuration
 * LICENSE file generation
 * gitignore + npmignore management
 * Node "engines" support with coupling to CI build environment and @types/node
 * Anti-tamper: CI builds will fail if a synthesized file is modified manually
 
-## API Reference
+## Documentation
 
-See [API Reference](https://projen.io/api/API.html) for API details.
-
-In addition, several projen components and project types are explained with examples at <https://projen.io/> (currently a work in progress!).
+For documentation including examples and a full API reference, visit <https://projen.io/>.
 
 ## Ecosystem
 
@@ -260,6 +280,27 @@ Note: using a `.projenrc.json` file to specify configuration only allows
 accessing a subset of the entire API - the options which are passed to the
 constructor of each project type.
 
+### How does projen work with my IDE?
+
+projen has an unofficial [VS Code extension]. Check it out!
+
+[VS Code extension]: https://marketplace.visualstudio.com/items?itemName=MarkMcCulloh.vscode-projen
+
+## Community
+
+The projen community can be found within the #projen channel in the [cdk.dev]
+community Slack workspace.
+
+[cdk.dev]: https://cdk.dev/
+
+### Virtual Meetup
+
+- Thursday June 30, 2022 
+- 1-2pm America/New_York (EDT)
+- [CFP](https://bit.ly/3NEc0UQ) a Google Form
+- CFP Closes Saturday April 30, 2022
+- Hosted on [Zoom](https://zoom.us/j/92399854777?pwd=OUZybHlobHNoZUs1VVordWhaRTVGdz09#success)
+
 ## Contributions
 
 Contributions of all kinds are welcome! Check out our [contributor's
@@ -275,6 +316,10 @@ $ yarn watch # compile in the background
 ```
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-67-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -360,6 +405,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/msessa"><img src="https://avatars.githubusercontent.com/u/1912143?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Matteo Sessa</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=msessa" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Hi-Fi"><img src="https://avatars.githubusercontent.com/u/1499780?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Juho Saarinen</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=Hi-Fi" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/njlynch"><img src="https://avatars.githubusercontent.com/u/1376292?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nick Lynch</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=njlynch" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://amani.kilumanga.com/"><img src="https://avatars.githubusercontent.com/u/8690282?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Amani Kilumanga</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=dkaksl" title="Code">💻</a></td>
+    <td align="center"><a href="http://blog.herlein.com/"><img src="https://avatars.githubusercontent.com/u/173428?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Greg Herlein</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=gherlein" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/kaizen3031593"><img src="https://avatars.githubusercontent.com/u/36202692?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kaizen Conroy</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=kaizen3031593" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/saudkhanzada"><img src="https://avatars.githubusercontent.com/u/30137907?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Saud Khanzada</b></sub></a><br /><a href="https://github.com/projen/projen/commits?author=saudkhanzada" title="Code">💻</a></td>
   </tr>
 </table>
 

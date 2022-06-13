@@ -179,7 +179,7 @@ export class TaskWorkflow extends GithubWorkflow {
         // check out sources.
         {
           name: "Checkout",
-          uses: "actions/checkout@v2",
+          uses: "actions/checkout@v3",
           ...checkoutWith,
         },
 

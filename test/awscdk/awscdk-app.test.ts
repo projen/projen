@@ -118,7 +118,7 @@ describe("synth", () => {
       name: "synth:silent",
       description:
         'Synthesizes your cdk app into cdk.out and suppresses the template in stdout (part of "yarn build")',
-      steps: [{ exec: "cdk synth > /dev/null" }],
+      steps: [{ exec: "cdk synth -q" }],
     });
   });
 

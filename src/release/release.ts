@@ -12,6 +12,8 @@ const BUILD_JOBID = "release";
 const GIT_REMOTE_STEPID = "git_remote";
 const LATEST_COMMIT_OUTPUT = "latest_commit";
 
+type BranchHook = (branch: string) => void;
+
 /**
  * Project options for release.
  */
@@ -224,6 +226,17 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
  * By default, no branches are released. To add branches, call `addBranch()`.
  */
 export class Release extends Component {
+  public static readonly ANTI_TAMPER_CMD =
+    "git diff --ignore-space-at-eol --exit-code";
+  /**
+   * Returns the `Release` component of a project or `undefined` if the project
+   * does not have a Release component.
+   */
+  public static of(project: GitHubProject): Release | undefined {
+    const isRelease = (c: Component): c is Release => c instanceof Release;
+    return project.components.find(isRelease);
+  }
+
   /**
    * Package publisher.
    */
@@ -241,6 +254,8 @@ export class Release extends Component {
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
   private readonly workflowRunsOn?: string[];
+
+  private readonly _branchHooks: BranchHook[];
 
   /**
    * Location of build artifacts.
@@ -265,6 +280,7 @@ export class Release extends Component {
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
     this.workflowRunsOn = options.workflowRunsOn;
+    this._branchHooks = [];
 
     /**
      * Use manual releases with no changelog if releaseEveryCommit is explicitly
@@ -292,6 +308,7 @@ export class Release extends Component {
       versionInputFile: this.versionFile,
       artifactsDirectory: this.artifactsDirectory,
       versionrcOptions: options.versionrcOptions,
+      tagPrefix: options.releaseTagPrefix,
     });
 
     this.publisher = new Publisher(project, {
@@ -339,6 +356,18 @@ export class Release extends Component {
   }
 
   /**
+   * Add a hook that should be run for every branch (including those that will
+   * be added by future `addBranch` calls).
+   * @internal
+   */
+  public _forEachBranch(hook: BranchHook) {
+    for (const branch of this._branches) {
+      hook(branch.name);
+    }
+    this._branchHooks.push(hook);
+  }
+
+  /**
    * Adds a release branch.
    *
    * It is a git branch from which releases are published. If a project has more than one release
@@ -350,6 +379,11 @@ export class Release extends Component {
    */
   public addBranch(branch: string, options: BranchOptions) {
     this._addBranch(branch, options);
+
+    // run all branch hooks
+    for (const hook of this._branchHooks) {
+      hook(branch);
+    }
   }
 
   /**
@@ -476,6 +510,10 @@ export class Release extends Component {
     releaseTask.spawn(this.buildTask);
     releaseTask.spawn(this.version.unbumpTask);
 
+    // anti-tamper check (fails if there were changes to committed files)
+    // this will identify any non-committed files generated during build (e.g. test snapshots)
+    releaseTask.exec(Release.ANTI_TAMPER_CMD);
+
     if (this.releaseTrigger.isManual) {
       const publishTask = this.publisher.publishToGit({
         changelogFile: path.posix.join(
@@ -497,10 +535,6 @@ export class Release extends Component {
 
       releaseTask.spawn(publishTask);
     }
-
-    // anti-tamper check (fails if there were changes to committed files)
-    // this will identify any non-committed files generated during build (e.g. test snapshots)
-    releaseTask.exec("git diff --ignore-space-at-eol --exit-code");
 
     const postBuildSteps = [...this.postBuildSteps];
 

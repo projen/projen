@@ -16,7 +16,6 @@ test("happy flow", () => {
   expect(Object.keys(snapshot)).toStrictEqual([
     ".gitattributes",
     ".github/workflows/pull-request-lint.yml",
-    ".github/workflows/stale.yml",
     ".gitignore",
     ".projen/deps.json",
     ".projen/files.json",

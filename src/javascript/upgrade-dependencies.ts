@@ -1,11 +1,18 @@
 import { Component } from "../component";
-import { GitHub, GithubWorkflow, GitIdentity, workflows } from "../github";
+import {
+  GithubCredentials,
+  GitHub,
+  GithubWorkflow,
+  GitIdentity,
+  workflows,
+} from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
 import { ContainerOptions, JobStep } from "../github/workflows-model";
 import { NodeProject } from "../javascript";
-import { warn } from "../logging";
+import { Release } from "../release";
 import { Task } from "../task";
+import { TaskStep } from "../task-model";
 
 function context(value: string) {
   return `\${{ ${value} }}`;
@@ -69,13 +76,6 @@ export interface UpgradeDependenciesOptions {
   readonly pullRequestTitle?: string;
 
   /**
-   * Whether or not to ignore projen upgrades.
-   *
-   * @default true
-   */
-  readonly ignoreProjen?: boolean;
-
-  /**
    * Add Signed-off-by line by the committer at the end of the commit log message.
    *
    * @default true
@@ -94,18 +94,17 @@ export class UpgradeDependencies extends Component {
 
   private readonly options: UpgradeDependenciesOptions;
   private readonly _project: NodeProject;
-  private readonly _task: Task;
   private readonly pullRequestTitle: string;
-
-  /**
-   * Whether or not projen is also upgraded in this workflow,
-   */
-  public readonly ignoresProjen: boolean;
 
   /**
    * Container definitions for the upgrade workflow.
    */
   public containerOptions?: ContainerOptions;
+
+  /**
+   * The upgrade task.
+   */
+  public readonly upgradeTask: Task;
 
   /**
    * A task run after the upgrade task.
@@ -121,12 +120,10 @@ export class UpgradeDependencies extends Component {
     this._project = project;
     this.options = options;
     this.pullRequestTitle = options.pullRequestTitle ?? "upgrade dependencies";
-    this.ignoresProjen = this.options.ignoreProjen ?? true;
     this.gitIdentity =
       options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.postBuildSteps = [];
     this.containerOptions = options.workflowOptions?.container;
-
     project.addDevDeps("npm-check-updates@^12");
 
     this.postUpgradeTask =
@@ -135,8 +132,38 @@ export class UpgradeDependencies extends Component {
         description: "Runs after upgrading dependencies",
       });
 
-    // create the upgrade task
-    this._task = this.createTask();
+    this.upgradeTask = project.addTask(options.taskName ?? "upgrade", {
+      // this task should not run in CI mode because its designed to
+      // update package.json and lock files.
+      env: { CI: "0" },
+      description: this.pullRequestTitle,
+      steps: { toJSON: () => this.renderTaskSteps() } as any,
+    });
+    this.upgradeTask.lock(); // this task is a lazy value, so make it readonly
+
+    if (this.upgradeTask && project.github && (options.workflow ?? true)) {
+      if (options.workflowOptions?.branches) {
+        for (const branch of options.workflowOptions.branches) {
+          this.workflows.push(
+            this.createWorkflow(this.upgradeTask, project.github, branch)
+          );
+        }
+      } else if (Release.of(project)) {
+        const release = Release.of(project)!;
+        release._forEachBranch((branch: string) => {
+          this.workflows.push(
+            this.createWorkflow(this.upgradeTask, project.github!, branch)
+          );
+        });
+      } else {
+        // represents the default repository branch.
+        // just like not specifying anything.
+        const defaultBranch = undefined;
+        this.workflows.push(
+          this.createWorkflow(this.upgradeTask, project.github, defaultBranch)
+        );
+      }
+    }
   }
 
   /**
@@ -147,36 +174,44 @@ export class UpgradeDependencies extends Component {
     this.postBuildSteps.push(...steps);
   }
 
-  // create a corresponding github workflow for each requested branch.
-  public preSynthesize() {
-    if (this._project.github && (this.options.workflow ?? true)) {
-      // represents the default repository branch.
-      // just like not specifying anything.
-      const defaultBranch = undefined;
-
-      const branches = this.options.workflowOptions?.branches ??
-        this._project.release?.branches ?? [defaultBranch];
-      for (const branch of branches) {
-        this.workflows.push(
-          this.createWorkflow(this._task, this._project.github, branch)
-        );
-      }
-    }
-  }
-
-  private createTask(): Task {
-    const taskName = this.options.taskName ?? "upgrade";
-    const task = this._project.addTask(taskName, {
-      // this task should not run in CI mode because its designed to
-      // update package.json and lock files.
-      env: { CI: "0" },
-      description: this.pullRequestTitle,
-    });
-
+  private renderTaskSteps(): TaskStep[] {
     const exclude = this.options.exclude ?? [];
-    if (this.ignoresProjen) {
-      exclude.push("projen");
+
+    // exclude depedencies that has already version pinned (fully or with patch version) by Projen with ncu (but not package manager upgrade)
+    // Getting only unique values through set
+    const ncuExcludes = [
+      ...new Set(
+        this.project.deps.all
+          .filter((dep) => dep.version && dep.version[0] !== "^")
+          .map((dep) => dep.name)
+          .concat(exclude)
+      ),
+    ];
+
+    const ncuIncludes = this.options.include?.filter(
+      (item) => !ncuExcludes.includes(item)
+    );
+
+    const includeLength = this.options.include?.length ?? 0;
+    const ncuIncludesLength = ncuIncludes?.length ?? 0;
+
+    // If all explicit includes already have version pinned, don't add task.
+    // Note that without explicit includes task gets added
+    if (includeLength > 0 && ncuIncludesLength === 0) {
+      return [{ exec: "echo No dependencies to upgrade." }];
     }
+
+    const steps = new Array<TaskStep>();
+
+    // update npm-check-updates before everything else, in case there is a bug
+    // in it or one of its dependencies. This will make upgrade workflows
+    // slightly more stable and resilient to upstream changes.
+    steps.push({
+      exec: this._project.package.renderUpgradePackagesCommand(
+        [],
+        ["npm-check-updates"]
+      ),
+    });
 
     for (const dep of ["dev", "optional", "peer", "prod", "bundle"]) {
       const ncuCommand = [
@@ -186,33 +221,33 @@ export class UpgradeDependencies extends Component {
         "--upgrade",
         "--target=minor",
       ];
-      if (exclude.length > 0) {
-        ncuCommand.push(`--reject='${exclude.join(",")}'`);
-      }
-      if (this.options.include) {
-        ncuCommand.push(`--filter='${this.options.include.join(",")}'`);
+      // Don't add includes and excludes same time
+      if (ncuIncludes) {
+        ncuCommand.push(`--filter='${ncuIncludes.join(",")}'`);
+      } else if (ncuExcludes.length > 0) {
+        ncuCommand.push(`--reject='${ncuExcludes.join(",")}'`);
       }
 
-      task.exec(ncuCommand.join(" "));
+      steps.push({ exec: ncuCommand.join(" ") });
     }
 
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
-    task.exec(this._project.package.installAndUpdateLockfileCommand);
+    steps.push({ exec: this._project.package.installAndUpdateLockfileCommand });
 
     // run upgrade command to upgrade transitive deps as well
-    task.exec(
-      this._project.package.renderUpgradePackagesCommand(
+    steps.push({
+      exec: this._project.package.renderUpgradePackagesCommand(
         exclude,
         this.options.include
-      )
-    );
+      ),
+    });
 
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
-    task.exec(this._project.projenCommand);
+    steps.push({ exec: this._project.projenCommand });
 
-    task.spawn(this.postUpgradeTask);
+    steps.push({ spawn: this.postUpgradeTask.name });
 
-    return task;
+    return steps;
   }
 
   private createWorkflow(
@@ -230,9 +265,10 @@ export class UpgradeDependencies extends Component {
     const workflow = github.addWorkflow(workflowName);
     const triggers: workflows.Triggers = {
       workflowDispatch: {},
-      schedule: schedule.cron
-        ? schedule.cron.map((e) => ({ cron: e }))
-        : undefined,
+      schedule:
+        schedule.cron.length > 0
+          ? schedule.cron.map((e) => ({ cron: e }))
+          : undefined,
     };
     workflow.on(triggers);
 
@@ -260,7 +296,7 @@ export class UpgradeDependencies extends Component {
     const steps: workflows.JobStep[] = [
       {
         name: "Checkout",
-        uses: "actions/checkout@v2",
+        uses: "actions/checkout@v3",
         with: branch ? { ref: branch } : undefined,
       },
       ...this._project.renderWorkflowSetup({ mutable: false }),
@@ -298,14 +334,12 @@ export class UpgradeDependencies extends Component {
   }
 
   private createPr(workflow: GithubWorkflow, upgrade: Upgrade): PR {
-    const secretName =
-      this.options.workflowOptions?.secret ?? workflow.projenTokenSecret;
-    if (this.options.workflowOptions?.secret === workflow.projenTokenSecret) {
-      warn(
-        `No need to specify "workflowOptions.secret" when it is the same as the default workflow projen token secret ("${workflow.projenTokenSecret}").`
-      );
-    }
-    const token = context(`secrets.${secretName}`);
+    // default to API access method used by all GitHub workflows, unless a
+    // custom one is specified
+    const apiAccess =
+      this.options.workflowOptions?.projenCredentials ??
+      workflow.projenCredentials;
+    const token = apiAccess.tokenRef;
     const runsOn = this.options.workflowOptions?.runsOn ?? ["ubuntu-latest"];
     const workflowName = workflow.name;
     const branchName = `github-actions/${workflowName}`;
@@ -325,8 +359,9 @@ export class UpgradeDependencies extends Component {
     const committer = `${this.gitIdentity.name} <${this.gitIdentity.email}>`;
 
     const steps: workflows.JobStep[] = [
+      ...apiAccess.setupSteps,
       ...WorkflowActions.checkoutWithPatch({
-        token: `\${{ secrets.${workflow.projenTokenSecret} }}`,
+        token: apiAccess.tokenRef,
         ref: upgrade.ref,
       }),
       ...WorkflowActions.setGitIdentity(this.gitIdentity),
@@ -342,6 +377,8 @@ export class UpgradeDependencies extends Component {
           branch: branchName,
           title: title,
           labels: this.options.workflowOptions?.labels?.join(",") || undefined,
+          assignees:
+            this.options.workflowOptions?.assignees?.join(",") || undefined,
           body: description,
           author: committer,
           committer: committer,
@@ -390,20 +427,17 @@ export interface UpgradeDependenciesWorkflowOptions {
   readonly schedule?: UpgradeDependenciesSchedule;
 
   /**
-   * Which secret to use when creating the PR.
+   * Choose a method for authenticating with GitHub for creating the PR.
    *
    * When using the default github token, PR's created by this workflow
-   * will not trigger any subsequent workflows (i.e the build workflow).
-   * This is why this workflow also runs 'build' by default, and manually updates
-   * the status check of the PR.
-   *
-   * If you pass a token that has the `workflow` permissions, you can skip running
-   * build in this workflow by specifying `rebuild: false`.
+   * will not trigger any subsequent workflows (i.e the build workflow), so
+   * projen requires API access to be provided through e.g. a personal
+   * access token or other method.
    *
    * @see https://github.com/peter-evans/create-pull-request/issues/48
-   * @default - default github token.
+   * @default - personal access token named PROJEN_GITHUB_TOKEN
    */
-  readonly secret?: string;
+  readonly projenCredentials?: GithubCredentials;
 
   /**
    * Labels to apply on the PR.
@@ -411,6 +445,13 @@ export interface UpgradeDependenciesWorkflowOptions {
    * @default - no labels.
    */
   readonly labels?: string[];
+
+  /**
+   * Assignees to add on the PR.
+   *
+   * @default - no assignees
+   */
+  readonly assignees?: string[];
 
   /**
    * Job container options.

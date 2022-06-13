@@ -247,6 +247,7 @@ function executeTask(
     cwd: p.outdir,
     shell: true,
     env: { ...process.env, ...env },
+    timeout: 10_000, // let's try to catch hanging processes sooner than later
   });
   if (result.status !== 0) {
     throw new Error(`non-zero exit code: ${result.stderr.toString("utf-8")}`);

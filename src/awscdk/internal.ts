@@ -1,3 +1,5 @@
+import { sep, posix } from "path";
+
 /**
  * Feature flags as of v1.130.0
  */
@@ -21,3 +23,20 @@ export const FEATURE_FLAGS = [
  * Suffix for AWS Lambda handlers.
  */
 export const TYPESCRIPT_LAMBDA_EXT = ".lambda.ts";
+
+/**
+ * Suffix for AWS Edge Lambda handlers.
+ */
+export const TYPESCRIPT_EDGE_LAMBDA_EXT = ".edge-lambda.ts";
+
+/**
+ * Suffix for AWS Lambda Extensions.
+ */
+export const TYPESCRIPT_LAMBDA_EXTENSION_EXT = ".lambda-extension.ts";
+
+/**
+ * Converts the given path string to posix if it wasn't already.
+ */
+export function convertToPosixPath(p: string) {
+  return p.split(sep).join(posix.sep);
+}
