@@ -21,11 +21,6 @@ export interface CircleCiProps {
    */
   readonly orbs?: Record<string, string>;
   /**
-   * enable the generation of Circleci config file
-   * @default enabled
-   */
-  readonly enabled?: boolean;
-  /**
    * pipeline version
    *
    * @default 2.1
@@ -109,12 +104,9 @@ export class Circleci extends Component {
     this.orbs = options.orbs ?? {};
     this.workflows = options.workflows ?? [];
     this.jobs = options.jobs ?? [];
-    const circleCiEnabled = options.enabled || true;
-    if (circleCiEnabled) {
-      this.file = new YamlFile(project, ".circleci/config.yml", {
-        obj: () => this.renderCircleCi(),
-      });
-    }
+    this.file = new YamlFile(project, ".circleci/config.yml", {
+      obj: () => this.renderCircleCi(),
+    });
   }
 
   /**
