@@ -3,7 +3,7 @@ import { WorkflowJob } from "../../lib/circleci";
 import {
   Circleci,
   CircleCiProps,
-  isObjectContaingFieldExactly,
+  isObjectContainingFieldExactly,
 } from "../../src/circleci";
 // @ts-ignore
 import { synthSnapshot, TestProject } from "../util";
@@ -140,8 +140,8 @@ test("test type conversion for workflow jobs with identifier only", () => {
     identifier: "checkout",
     name: "hello-world",
   };
-  expect(isObjectContaingFieldExactly(job1, "identifier")).toEqual(true);
-  expect(isObjectContaingFieldExactly(job2, "identifier")).toEqual(false);
+  expect(isObjectContainingFieldExactly(job1, "identifier")).toEqual(true);
+  expect(isObjectContainingFieldExactly(job2, "identifier")).toEqual(false);
 });
 
 test("additional workflow can be added", () => {
