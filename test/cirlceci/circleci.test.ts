@@ -97,7 +97,6 @@ test("full spec of api should be provided", () => {
   const snapshot = synthSnapshot(p);
   const circleci = snapshot[".circleci/config.yml"];
   const yaml = YAML.parse(circleci);
-  console.log(circleci);
 
   expect(circleci).toMatchSnapshot();
   expect(circleci).toContain("renamedJob2");
@@ -178,7 +177,6 @@ test("additional workflow can be added", () => {
   expect(circleci).toMatchSnapshot();
   expect(circleci).toContain("customName2");
   expect(circleci).toContain("context3");
-  console.log(circleci);
 });
 
 test("orb with the same id can not be added", () => {
@@ -211,5 +209,4 @@ test("orb with the same id can not be added", () => {
   expect(circleci).toContain("workflow1");
   expect(circleci).toContain("world:2.0");
   expect(circleci).not.toContain("world:3.0");
-  console.log(circleci);
 });

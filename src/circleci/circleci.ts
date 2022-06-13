@@ -81,7 +81,7 @@ export class Circleci extends Component {
   /**
    * The yaml file for the Circleci pipeline
    * */
-  public readonly file: YamlFile | undefined;
+  public readonly file: YamlFile;
   /**
    * internal copy of options to share options between functions
    * @private
@@ -103,11 +103,6 @@ export class Circleci extends Component {
    */
   private readonly jobs: Job[];
 
-  /**
-   * create a Circleci Component within project
-   * @param project
-   * @param options
-   */
   constructor(project: Project, options: CircleCiProps = {}) {
     super(project);
     this.options = options;
@@ -214,7 +209,7 @@ export class Circleci extends Component {
   };
 }
 
-export const isObjectContaingFieldExactly = (
+export const isObjectContainingFieldExactly = (
   obj: any,
   field: string
 ): boolean => {
