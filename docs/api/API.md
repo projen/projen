@@ -14192,7 +14192,7 @@ Name | Type | Description
 -----|------|-------------
 **identifier**🔹 | <code>string</code> | name of dynamic key *.
 **context**?🔹 | <code>Array<string></code> | The name of the context(s).<br/>__*Optional*__
-**filter**?🔹 | <code>[circleci.Filter](#projen-circleci-filter)</code> | Job Filters can have the key branches or tags.<br/>__*Optional*__
+**filters**?🔹 | <code>[circleci.Filter](#projen-circleci-filter)</code> | Job Filters can have the key branches or tags.<br/>__*Optional*__
 **matrix**?🔹 | <code>[circleci.Matrix](#projen-circleci-matrix)</code> | __*Optional*__
 **name**?🔹 | <code>string</code> | A replacement for the job name.<br/>__*Optional*__
 **orbParameters**?🔹 | <code>Map<string, string &#124; number &#124; boolean></code> | Parameters passed to job when referencing a job from orb.<br/>__*Optional*__
