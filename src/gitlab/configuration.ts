@@ -1,5 +1,5 @@
-import * as path from "path";
 import { snake } from "case";
+import * as path from "path";
 import { Component } from "../component";
 import { Project } from "../project";
 import { YamlFile } from "../yaml";
@@ -13,8 +13,9 @@ import {
   Retry,
   Service,
   VariableConfig,
-  Workflow,
+  Workflow
 } from "./configuration-model";
+import { Sequence } from "./sequence";
 
 /**
  * Options for `CiConfiguration`.
@@ -126,7 +127,7 @@ export class CiConfiguration extends Component {
    * Groups jobs into stages. All jobs in one stage must complete before next stage is
    * executed. Defaults to ['build', 'test', 'deploy'].
    */
-  public readonly stages: string[] = [];
+  private readonly _stages: string[] = [];
   /**
    * Global variables that are passed to jobs.
    * If the job already has that variable defined, the job-level variable takes precedence.
@@ -140,7 +141,7 @@ export class CiConfiguration extends Component {
   /**
    * The jobs in the CI configuration.
    */
-  public readonly jobs: Record<string, Job> = {};
+  public readonly jobs: Sequence = new Sequence();
 
   constructor(
     project: Project,
@@ -288,33 +289,61 @@ export class CiConfiguration extends Component {
 
   /**
    * Add stages to the CI configuration if not already present.
+   * 
    * @param stages stages to add.
    */
   public addStages(...stages: string[]) {
     for (const stage of stages) {
-      if (!this.stages.includes(stage)) {
-        this.stages.push(stage);
+      if (!this._stages.includes(stage)) {
+        this._stages.push(stage);
       }
     }
   }
 
   /**
-   * Add jobs and their stages to the CI configuration.
+   * Groups jobs into stages. All jobs in one stage must complete before next stage is
+   * executed. Defaults to ['build', 'test', 'deploy'].
+   * 
+   * @return All stages from the jobs and sequences of this CI configuration.
+   *   Calling this property will also update and add all stages from sequences,
+   *   that were modified after adding the sequence to the CI configuration.
+   *   This requires rendering all sequences. Thus this property should not be
+   *   queried more often than necessary.
+   */
+  public get stages(): string[] {
+    const allJobs = this.jobs.render();
+    for (const job of Object.values(allJobs)) if (job.stage) this.addStages(job.stage);
+    return this._stages;
+  }
+
+  /**
+   * Add jobs and sequences as well as their current stages to the CI configuration.
+   * 
+   * Stages that were added to Sequences after adding them to the CI configuration
+   * were added (or updated) whenever the `this.stages` property is requested.
+   * 
    * @param jobs Jobs to add.
    */
-  public addJobs(jobs: Record<string, Job>) {
-    for (const [key, value] of Object.entries(jobs)) {
-      if (this.jobs[key] !== undefined) {
-        throw new Error(`${this.name}: GitLab CI already contains job ${key}.`);
+  public addJobs(jobs: Record<string, Job | Sequence>) {
+    try {
+      this.jobs.addChildren(jobs)
+    } catch (error) {
+      if (error instanceof Error) throw new Error(`${this.name}: ${error.message}.`);
+      else throw error;
+    }
+
+    // add all stages currently available in Sequences (and Jobs)
+    for (const child of Object.values(jobs)) {
+      if (Sequence.isSequence(child)) {
+        for (const job of Object.values(child.render())) if (job.stage) this.addStages(job.stage);
       }
-      this.jobs[key] = value;
-      if (value.stage) {
-        this.addStages(value.stage);
-      }
+      else if (child.stage) this.addStages(child.stage)
     }
   }
 
-  private renderCI() {
+  protected renderCI() {
+    // calling 'this.stages' requires a little bit load, thus we case here
+    const stages = this.stages;
     return {
       default: this.renderDefault(),
       include:
@@ -327,8 +356,8 @@ export class CiConfiguration extends Component {
       variables:
         Object.entries(this.variables).length > 0 ? this.variables : undefined,
       workflow: snakeCaseKeys(this.workflow),
-      stages: this.stages.length > 0 ? this.stages : undefined,
-      ...snakeCaseKeys(this.jobs),
+      stages: stages.length > 0 ? stages : undefined,
+      ...snakeCaseKeys(this.jobs.render()),
     };
   }
 

@@ -13,6 +13,18 @@ export class GitlabConfiguration extends CiConfiguration {
   }
 
   /**
+   * Before doing the rendering of the super class, we update all stages
+   * from nested tamplates, that were added after the nested template
+   * has been added to this CI configuration.
+   */
+  protected renderCI() {
+    Object.values(this.nestedTemplates).forEach(template => {
+      this.addStages(...template.stages);
+    })
+    return super.renderCI()
+  }
+
+  /**
    * Creates and adds nested templates to the includes of the main CI.
    * Additionally adds their stages to the main CI if they are not already present.
    * You can futher customize nested templates through the `nestedTemplates` property.
