@@ -79,7 +79,7 @@ export interface WorkflowJob extends INamed {
   /** A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed. */
   readonly type?: JobType;
   /** Job Filters can have the key branches or tags */
-  readonly filter?: Filter;
+  readonly filters?: Filter;
   readonly matrix?: Matrix;
   /** Parameters for making a job explicitly configurable in a workflow. */
   readonly parameters?: Record<string, string | number | boolean>;
