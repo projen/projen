@@ -80,6 +80,24 @@ test("addPlugin()", () => {
   expect(actualPom(pom)).toMatchSnapshot();
 });
 
+test("addRepository()", () => {
+  const pom = new TestPom();
+
+  pom.addRepository({
+    id: "my-local-repository",
+    url: "file://my/local/repository",
+  });
+
+  pom.addRepository({
+    id: "my-remote-repository",
+    name: "Remote Repo",
+    url: "https://myserver/repo",
+    layout: "default",
+  });
+
+  expect(actualPom(pom)).toMatchSnapshot();
+});
+
 function actualPom(p: Pom) {
   const snap = synthSnapshot(p.project);
   return snap[p.fileName];
