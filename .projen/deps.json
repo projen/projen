@@ -117,7 +117,7 @@
     },
     {
       "name": "npm-check-updates",
-      "version": "^12",
+      "version": "^14",
       "type": "build"
     },
     {

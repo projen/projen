@@ -329,7 +329,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "npm-check-updates",
         "type": "build",
-        "version": "^12",
+        "version": "^14",
       },
       Object {
         "name": "projen",
@@ -778,7 +778,7 @@ tsconfig.tsbuildinfo
       "@types/node": "^12",
       "@types/react": "*",
       "@types/react-dom": "*",
-      "npm-check-updates": "^12",
+      "npm-check-updates": "^14",
       "projen": "*",
       "typescript": "*",
     },
