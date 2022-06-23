@@ -7748,6 +7748,40 @@ Array [
         "switch": "auto-merge-options",
       },
       Object {
+        "default": "\\"2.0.28\\"",
+        "docs": "Minumum version of the cdk8s-cli to depend on.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "cdk8sCliVersion",
+        "optional": true,
+        "parent": "Cdk8sDepsCommonOptions",
+        "path": Array [
+          "cdk8sCliVersion",
+        ],
+        "simpleType": "string",
+        "switch": "cdk8s-cli-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use pinned version instead of caret version for cdk8s-cli.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "cdk8sCliVersionPinning",
+        "optional": true,
+        "parent": "Cdk8sDepsCommonOptions",
+        "path": Array [
+          "cdk8sCliVersionPinning",
+        ],
+        "simpleType": "boolean",
+        "switch": "cdk8s-cli-version-pinning",
+      },
+      Object {
         "default": "- no additional specs imported",
         "docs": "Import additional specs.",
         "featured": false,
@@ -7770,15 +7804,66 @@ Array [
         "switch": "cdk8s-imports",
       },
       Object {
-        "default": "\\"1.5.53\\"",
-        "docs": "Minimum target version this library is tested against.",
-        "featured": true,
+        "default": "true",
+        "docs": "Include cdk8s-plus.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "cdk8sPlus",
+        "optional": true,
+        "parent": "Cdk8sDepsCommonOptions",
+        "path": Array [
+          "cdk8sPlus",
+        ],
+        "simpleType": "boolean",
+        "switch": "cdk8s-plus",
+      },
+      Object {
+        "default": "\\"2.0.0-rc.26\\"",
+        "docs": "Minumum version of the cdk8s-plus-XX to depend on.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "cdk8sPlusVersion",
+        "optional": true,
+        "parent": "Cdk8sDepsCommonOptions",
+        "path": Array [
+          "cdk8sPlusVersion",
+        ],
+        "simpleType": "string",
+        "switch": "cdk8s-plus-version",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use pinned version instead of caret version for cdk8s-plus-17.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "cdk8sPlusVersionPinning",
+        "optional": true,
+        "parent": "Cdk8sDepsCommonOptions",
+        "path": Array [
+          "cdk8sPlusVersionPinning",
+        ],
+        "simpleType": "boolean",
+        "switch": "cdk8s-plus-version-pinning",
+      },
+      Object {
+        "default": "\\"2.3.33\\"",
+        "docs": "Minumum version of the cdk8s to depend on.",
+        "featured": false,
         "fullType": Object {
           "primitive": "string",
         },
         "jsonLike": true,
         "name": "cdk8sVersion",
-        "parent": "Cdk8sPythonOptions",
+        "parent": "Cdk8sDepsCommonOptions",
         "path": Array [
           "cdk8sVersion",
         ],
@@ -7787,7 +7872,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Use pinned version instead of caret version for CDK8s.",
+        "docs": "Use pinned version instead of caret version for cdk8s.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -7795,7 +7880,7 @@ Array [
         "jsonLike": true,
         "name": "cdk8sVersionPinning",
         "optional": true,
-        "parent": "Cdk8sPythonOptions",
+        "parent": "Cdk8sDepsCommonOptions",
         "path": Array [
           "cdk8sVersionPinning",
         ],
@@ -7841,8 +7926,8 @@ Array [
         "switch": "clobber",
       },
       Object {
-        "default": "\\"3.3.251\\"",
-        "docs": "constructs verion.",
+        "default": "\\"10.1.42\\"",
+        "docs": "Minimum version of the \`constructs\` library to depend on.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -7850,7 +7935,7 @@ Array [
         "jsonLike": true,
         "name": "constructsVersion",
         "optional": true,
-        "parent": "Cdk8sPythonOptions",
+        "parent": "Cdk8sDepsCommonOptions",
         "path": Array [
           "constructsVersion",
         ],
@@ -7867,7 +7952,7 @@ Array [
         "jsonLike": true,
         "name": "constructsVersionPinning",
         "optional": true,
-        "parent": "Cdk8sPythonOptions",
+        "parent": "Cdk8sDepsCommonOptions",
         "path": Array [
           "constructsVersionPinning",
         ],
@@ -8019,6 +8104,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "homepage",
+      },
+      Object {
+        "default": "22",
+        "docs": "The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "k8sMinorVersion",
+        "optional": true,
+        "parent": "Cdk8sDepsCommonOptions",
+        "path": Array [
+          "k8sMinorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "k8s-minor-version",
       },
       Object {
         "default": "- Use the cdk8s default",
@@ -8929,8 +9031,8 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "\\"cdk8sVersion\\"",
-        "docs": "cdk8s-cli version.",
+        "default": "\\"2.0.28\\"",
+        "docs": "Minumum version of the cdk8s-cli to depend on.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -8938,7 +9040,7 @@ Array [
         "jsonLike": true,
         "name": "cdk8sCliVersion",
         "optional": true,
-        "parent": "Cdk8sTypeScriptAppOptions",
+        "parent": "Cdk8sDepsCommonOptions",
         "path": Array [
           "cdk8sCliVersion",
         ],
@@ -8947,7 +9049,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Use pinned version instead of caret version for CDK8s-cli.",
+        "docs": "Use pinned version instead of caret version for cdk8s-cli.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -8955,7 +9057,7 @@ Array [
         "jsonLike": true,
         "name": "cdk8sCliVersionPinning",
         "optional": true,
-        "parent": "Cdk8sTypeScriptAppOptions",
+        "parent": "Cdk8sDepsCommonOptions",
         "path": Array [
           "cdk8sCliVersionPinning",
         ],
@@ -8985,6 +9087,40 @@ Array [
         "switch": "cdk8s-imports",
       },
       Object {
+        "default": "true",
+        "docs": "Include cdk8s-plus.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "cdk8sPlus",
+        "optional": true,
+        "parent": "Cdk8sDepsCommonOptions",
+        "path": Array [
+          "cdk8sPlus",
+        ],
+        "simpleType": "boolean",
+        "switch": "cdk8s-plus",
+      },
+      Object {
+        "default": "\\"2.0.0-rc.26\\"",
+        "docs": "Minumum version of the cdk8s-plus-XX to depend on.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "cdk8sPlusVersion",
+        "optional": true,
+        "parent": "Cdk8sDepsCommonOptions",
+        "path": Array [
+          "cdk8sPlusVersion",
+        ],
+        "simpleType": "string",
+        "switch": "cdk8s-plus-version",
+      },
+      Object {
         "default": "false",
         "docs": "Use pinned version instead of caret version for cdk8s-plus-17.",
         "featured": false,
@@ -8994,7 +9130,7 @@ Array [
         "jsonLike": true,
         "name": "cdk8sPlusVersionPinning",
         "optional": true,
-        "parent": "Cdk8sTypeScriptAppOptions",
+        "parent": "Cdk8sDepsCommonOptions",
         "path": Array [
           "cdk8sPlusVersionPinning",
         ],
@@ -9002,15 +9138,15 @@ Array [
         "switch": "cdk8s-plus-version-pinning",
       },
       Object {
-        "default": "\\"1.0.0-beta.10\\"",
-        "docs": "Minimum target version this library is tested against.",
-        "featured": true,
+        "default": "\\"2.3.33\\"",
+        "docs": "Minumum version of the cdk8s to depend on.",
+        "featured": false,
         "fullType": Object {
           "primitive": "string",
         },
         "jsonLike": true,
         "name": "cdk8sVersion",
-        "parent": "Cdk8sTypeScriptAppOptions",
+        "parent": "Cdk8sDepsCommonOptions",
         "path": Array [
           "cdk8sVersion",
         ],
@@ -9019,7 +9155,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Use pinned version instead of caret version for CDK8s.",
+        "docs": "Use pinned version instead of caret version for cdk8s.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -9027,7 +9163,7 @@ Array [
         "jsonLike": true,
         "name": "cdk8sVersionPinning",
         "optional": true,
-        "parent": "Cdk8sTypeScriptAppOptions",
+        "parent": "Cdk8sDepsCommonOptions",
         "path": Array [
           "cdk8sVersionPinning",
         ],
@@ -9105,8 +9241,8 @@ Array [
         "switch": "code-cov-token-secret",
       },
       Object {
-        "default": "\\"3.2.34\\"",
-        "docs": "constructs verion.",
+        "default": "\\"10.1.42\\"",
+        "docs": "Minimum version of the \`constructs\` library to depend on.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
@@ -9114,7 +9250,7 @@ Array [
         "jsonLike": true,
         "name": "constructsVersion",
         "optional": true,
-        "parent": "Cdk8sTypeScriptAppOptions",
+        "parent": "Cdk8sDepsCommonOptions",
         "path": Array [
           "constructsVersion",
         ],
@@ -9131,7 +9267,7 @@ Array [
         "jsonLike": true,
         "name": "constructsVersionPinning",
         "optional": true,
-        "parent": "Cdk8sTypeScriptAppOptions",
+        "parent": "Cdk8sDepsCommonOptions",
         "path": Array [
           "constructsVersionPinning",
         ],
@@ -9617,6 +9753,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "jsii-release-version",
+      },
+      Object {
+        "default": "22",
+        "docs": "The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "k8sMinorVersion",
+        "optional": true,
+        "parent": "Cdk8sDepsCommonOptions",
+        "path": Array [
+          "k8sMinorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "k8s-minor-version",
       },
       Object {
         "default": "- Use the cdk8s default",

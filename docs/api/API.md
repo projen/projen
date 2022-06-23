@@ -63,6 +63,8 @@ Name|Description
 [cdk.JsiiDocgen](#projen-cdk-jsiidocgen)|Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
 [cdk.JsiiProject](#projen-cdk-jsiiproject)|Multi-language jsii library project.
 [cdk8s.AutoDiscover](#projen-cdk8s-autodiscover)|Automatically discovers and creates `IntegrationTest`s from entry points found in the test tree.
+[cdk8s.Cdk8sDeps](#projen-cdk8s-cdk8sdeps)|Manages dependencies on the CDK8s.
+[cdk8s.Cdk8sDepsPy](#projen-cdk8s-cdk8sdepspy)|*No description*
 [cdk8s.Cdk8sPythonApp](#projen-cdk8s-cdk8spythonapp)|CDK8s app in Python.
 [cdk8s.Cdk8sTypeScriptApp](#projen-cdk8s-cdk8stypescriptapp)|CDK8s app in TypeScript.
 [cdk8s.ConstructLibraryCdk8s](#projen-cdk8s-constructlibrarycdk8s)|CDK8s construct library project.
@@ -218,7 +220,10 @@ Name|Description
 [cdk.JsiiProjectOptions](#projen-cdk-jsiiprojectoptions)|*No description*
 [cdk.JsiiPythonTarget](#projen-cdk-jsiipythontarget)|*No description*
 [cdk8s.AutoDiscoverOptions](#projen-cdk8s-autodiscoveroptions)|Options for `AutoDiscover`.
-[cdk8s.Cdk8sPythonOptions](#projen-cdk8s-cdk8spythonoptions)|*No description*
+[cdk8s.Cdk8sDepsCommonOptions](#projen-cdk8s-cdk8sdepscommonoptions)|Options for `Cdk8sDeps`.
+[cdk8s.Cdk8sDepsOptions](#projen-cdk8s-cdk8sdepsoptions)|*No description*
+[cdk8s.Cdk8sPackageNames](#projen-cdk8s-cdk8spackagenames)|*No description*
+[cdk8s.Cdk8sPythonOptions](#projen-cdk8s-cdk8spythonoptions)|Options for `Cdk8sPythonApp`.
 [cdk8s.Cdk8sTypeScriptAppOptions](#projen-cdk8s-cdk8stypescriptappoptions)|*No description*
 [cdk8s.ConstructLibraryCdk8sOptions](#projen-cdk8s-constructlibrarycdk8soptions)|*No description*
 [cdk8s.IntegrationTestAutoDiscoverOptions](#projen-cdk8s-integrationtestautodiscoveroptions)|*No description*
@@ -4911,6 +4916,109 @@ new cdk8s.AutoDiscover(project: Project, options: AutoDiscoverOptions)
 
 
 
+## class Cdk8sDeps 🔹 <a id="projen-cdk8s-cdk8sdeps"></a>
+
+Manages dependencies on the CDK8s.
+
+__Submodule__: cdk8s
+
+__Extends__: [Component](#projen-component)
+__Implemented by__: [cdk8s.Cdk8sDepsPy](#projen-cdk8s-cdk8sdepspy)
+
+### Initializer
+
+
+
+
+```ts
+new cdk8s.Cdk8sDeps(project: Project, options: Cdk8sDepsOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[cdk8s.Cdk8sDepsOptions](#projen-cdk8s-cdk8sdepsoptions)</code>)  *No description*
+  * **cdk8sVersion** (<code>string</code>)  Minumum version of the cdk8s to depend on. 
+  * **cdk8sCliVersion** (<code>string</code>)  Minumum version of the cdk8s-cli to depend on. __*Default*__: "2.0.28"
+  * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-cli. __*Default*__: false
+  * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s. __*Default*__: false
+  * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: "10.1.42"
+  * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
+  * **clientDependencies** (<code>boolean</code>)  Add cdk8s-cli only to Node projects. 
+  * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime AWS CDK and `constructs` modules. 
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdk8sMajorVersion**🔹 | <code>number</code> | The major version of the CDK8s (e.g. 1, 2, ...).
+**cdk8sMinimumVersion**🔹 | <code>string</code> | The minimum version of the CDK8s (e.g. `2.0.0`).
+**cdk8sVersion**🔹 | <code>string</code> | The dependency requirement for CDK8s.
+
+### Methods
+
+
+#### protected packageNames()🔹 <a id="projen-cdk8s-cdk8sdeps-packagenames"></a>
+
+Return a configuration object with information about package naming in various languages.
+
+```ts
+protected packageNames(): Cdk8sPackageNames
+```
+
+
+__Returns__:
+* <code>[cdk8s.Cdk8sPackageNames](#projen-cdk8s-cdk8spackagenames)</code>
+
+
+
+## class Cdk8sDepsPy 🔹 <a id="projen-cdk8s-cdk8sdepspy"></a>
+
+
+
+__Submodule__: cdk8s
+
+__Extends__: [cdk8s.Cdk8sDeps](#projen-cdk8s-cdk8sdeps)
+
+### Initializer
+
+
+
+
+```ts
+new cdk8s.Cdk8sDepsPy(project: Project, options: Cdk8sDepsOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[cdk8s.Cdk8sDepsOptions](#projen-cdk8s-cdk8sdepsoptions)</code>)  *No description*
+  * **cdk8sVersion** (<code>string</code>)  Minumum version of the cdk8s to depend on. 
+  * **cdk8sCliVersion** (<code>string</code>)  Minumum version of the cdk8s-cli to depend on. __*Default*__: "2.0.28"
+  * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-cli. __*Default*__: false
+  * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s. __*Default*__: false
+  * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: "10.1.42"
+  * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
+  * **clientDependencies** (<code>boolean</code>)  Add cdk8s-cli only to Node projects. 
+  * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime AWS CDK and `constructs` modules. 
+
+
+### Methods
+
+
+#### protected packageNames()🔹 <a id="projen-cdk8s-cdk8sdepspy-packagenames"></a>
+
+Return a configuration object with information about package naming in various languages.
+
+```ts
+protected packageNames(): Cdk8sPackageNames
+```
+
+
+__Returns__:
+* <code>[cdk8s.Cdk8sPackageNames](#projen-cdk8s-cdk8spackagenames)</code>
+
+
+
 ## class Cdk8sPythonApp 🔹 <a id="projen-cdk8s-cdk8spythonapp"></a>
 
 CDK8s app in Python.
@@ -4974,12 +5082,14 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
   * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true if the project type is library
   * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true
   * **venvOptions** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  Venv options. __*Default*__: defaults
-  * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
+  * **cdk8sVersion** (<code>string</code>)  Minumum version of the cdk8s to depend on. 
+  * **cdk8sCliVersion** (<code>string</code>)  Minumum version of the cdk8s-cli to depend on. __*Default*__: "2.0.28"
+  * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-cli. __*Default*__: false
+  * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s. __*Default*__: false
+  * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: "10.1.42"
+  * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
   * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint. __*Default*__: "app.py"
   * **cdk8sImports** (<code>Array<string></code>)  Import additional specs. __*Default*__: no additional specs imported
-  * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
-  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.3.251"
-  * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
   * **k8sSpecVersion** (<code>string</code>)  Import a specific Kubernetes spec version. __*Default*__: Use the cdk8s default
 
 
@@ -4990,8 +5100,7 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
 Name | Type | Description 
 -----|------|-------------
 **appEntrypoint**🔹 | <code>string</code> | The CDK8s app entrypoint.
-**cdk8sVersion**🔹 | <code>string</code> | The CDK8s version this app is using.
-**constructsVersion**🔹 | <code>string</code> | The constructs version this app is using.
+**cdk8sDeps**🔹 | <code>[cdk8s.Cdk8sDeps](#projen-cdk8s-cdk8sdeps)</code> | <span></span>
 
 
 
@@ -5142,15 +5251,15 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **tsconfigDev** (<code>[javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)</code>)  Custom tsconfig options for the development tsconfig.json file (used for testing). __*Default*__: use the production tsconfig options
   * **tsconfigDevFile** (<code>string</code>)  The name of the development tsconfig.json file. __*Default*__: "tsconfig.dev.json"
   * **typescriptVersion** (<code>string</code>)  TypeScript version to use. __*Default*__: "latest"
-  * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
+  * **cdk8sVersion** (<code>string</code>)  Minumum version of the cdk8s to depend on. 
+  * **cdk8sCliVersion** (<code>string</code>)  Minumum version of the cdk8s-cli to depend on. __*Default*__: "2.0.28"
+  * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-cli. __*Default*__: false
+  * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s. __*Default*__: false
+  * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: "10.1.42"
+  * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
   * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
-  * **cdk8sCliVersion** (<code>string</code>)  cdk8s-cli version. __*Default*__: "cdk8sVersion"
-  * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s-cli. __*Default*__: false
   * **cdk8sImports** (<code>Array<string></code>)  Import additional specs. __*Default*__: no additional specs imported
   * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
-  * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
-  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
-  * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically adds an `cdk8s.IntegrationTest` for each `.integ.ts` app in your test directory. If this is disabled, you can manually add an `cdk8s.AutoDiscover` component to your project. __*Default*__: true
   * **k8sSpecVersion** (<code>string</code>)  Import a specific Kubernetes spec version. __*Default*__: Use the cdk8s default
 
@@ -5162,9 +5271,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 Name | Type | Description 
 -----|------|-------------
 **appEntrypoint**🔹 | <code>string</code> | The CDK8s app entrypoint.
-**cdk8sCliVersion**🔹 | <code>string</code> | The cdk8s-cli version this app is using.
-**cdk8sVersion**🔹 | <code>string</code> | The CDK8s version this app is using.
-**constructsVersion**🔹 | <code>string</code> | The constructs version this app is using.
+**cdk8sDeps**🔹 | <code>[cdk8s.Cdk8sDeps](#projen-cdk8s-cdk8sdeps)</code> | <span></span>
 
 
 
@@ -13080,7 +13187,25 @@ Name | Type | Description
 
 
 
-## struct Cdk8sPythonOptions 🔹 <a id="projen-cdk8s-cdk8spythonoptions"></a>
+## struct Cdk8sDepsCommonOptions 🔹 <a id="projen-cdk8s-cdk8sdepscommonoptions"></a>
+
+
+Options for `Cdk8sDeps`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdk8sVersion**🔹 | <code>string</code> | Minumum version of the cdk8s to depend on.
+**cdk8sCliVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-cli to depend on.<br/>__*Default*__: "2.0.28"
+**cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-cli.<br/>__*Default*__: false
+**cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s.<br/>__*Default*__: false
+**constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: "10.1.42"
+**constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
+
+
+
+## struct Cdk8sDepsOptions 🔹 <a id="projen-cdk8s-cdk8sdepsoptions"></a>
 
 
 
@@ -13089,20 +13214,58 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**cdk8sVersion**🔹 | <code>string</code> | Minumum version of the cdk8s to depend on.
+**clientDependencies**🔹 | <code>boolean</code> | Add cdk8s-cli only to Node projects.
+**dependencyType**🔹 | <code>[DependencyType](#projen-dependencytype)</code> | The type of dependency to use for runtime AWS CDK and `constructs` modules.
+**cdk8sCliVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-cli to depend on.<br/>__*Default*__: "2.0.28"
+**cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-cli.<br/>__*Default*__: false
+**cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s.<br/>__*Default*__: false
+**constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: "10.1.42"
+**constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
+
+
+
+## struct Cdk8sPackageNames 🔹 <a id="projen-cdk8s-cdk8spackagenames"></a>
+
+__Obtainable from__: [Cdk8sDeps](#projen-cdk8s-cdk8sdeps).[packageNames](#projen-cdk8s-cdk8sdeps#projen-cdk8s-cdk8sdeps-packagenames)(), [Cdk8sDepsPy](#projen-cdk8s-cdk8sdepspy).[packageNames](#projen-cdk8s-cdk8sdepspy#projen-cdk8s-cdk8sdepspy-packagenames)()
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdk8s**🔹 | <code>string</code> | Fully qualified name of the core framework package.
+**constructs**🔹 | <code>string</code> | Fully qualified name of the constructs library package.
+**cdk8sClient**?🔹 | <code>string</code> | Fully qualified name of the client package.<br/>__*Optional*__
+
+
+
+## struct Cdk8sPythonOptions 🔹 <a id="projen-cdk8s-cdk8spythonoptions"></a>
+
+
+Options for `Cdk8sPythonApp`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
 **authorEmail**🔹 | <code>string</code> | Author's e-mail.
 **authorName**🔹 | <code>string</code> | Author's name.
-**cdk8sVersion**🔹 | <code>string</code> | Minimum target version this library is tested against.
+**cdk8sVersion**🔹 | <code>string</code> | Minumum version of the cdk8s to depend on.
 **moduleName**🔹 | <code>string</code> | Name of the python package as used in imports and filenames.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **version**🔹 | <code>string</code> | Version of the package.
 **appEntrypoint**?🔹 | <code>string</code> | The CDK8s app's entrypoint.<br/>__*Default*__: "app.py"
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**cdk8sCliVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-cli to depend on.<br/>__*Default*__: "2.0.28"
+**cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-cli.<br/>__*Default*__: false
 **cdk8sImports**?🔹 | <code>Array<string></code> | Import additional specs.<br/>__*Default*__: no additional specs imported
-**cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
+**cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s.<br/>__*Default*__: false
 **classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
-**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.3.251"
+**constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: "10.1.42"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
@@ -13153,7 +13316,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**cdk8sVersion**🔹 | <code>string</code> | Minimum target version this library is tested against.
+**cdk8sVersion**🔹 | <code>string</code> | Minumum version of the cdk8s to depend on.
 **defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
@@ -13175,16 +13338,16 @@ Name | Type | Description
 **buildWorkflowTriggers**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | Build workflow triggers.<br/>__*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
-**cdk8sCliVersion**?🔹 | <code>string</code> | cdk8s-cli version.<br/>__*Default*__: "cdk8sVersion"
-**cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s-cli.<br/>__*Default*__: false
+**cdk8sCliVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-cli to depend on.<br/>__*Default*__: "2.0.28"
+**cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-cli.<br/>__*Default*__: false
 **cdk8sImports**?🔹 | <code>Array<string></code> | Import additional specs.<br/>__*Default*__: no additional specs imported
 **cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
-**cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
+**cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for publishing npm package to AWS CodeArtifact.<br/>__*Default*__: undefined
 **codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.2.34"
+**constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: "10.1.42"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year

@@ -1,21 +1,17 @@
-import * as fs from "fs-extra";
 import { Component } from "../component";
+import { DependencyType } from "../dependencies";
 import { PythonProject, PythonProjectOptions } from "../python";
-import { SourceCode } from "../source-code";
+import { SampleFile } from "../sample-file";
 import { YamlFile } from "../yaml";
+import { Cdk8sDeps, Cdk8sDepsCommonOptions } from "./cdk8s-deps";
+import { Cdk8sDepsPy } from "./cdk8s-deps-py";
 
 /**
  * Options for `Cdk8sPythonApp`
  */
-export interface Cdk8sPythonOptions extends PythonProjectOptions {
-  /**
-   * Minimum target version this library is tested against.
-   *
-   * @default "1.5.53"
-   * @featured
-   */
-  readonly cdk8sVersion: string;
-
+export interface Cdk8sPythonOptions
+  extends PythonProjectOptions,
+    Cdk8sDepsCommonOptions {
   /**
    * Import a specific Kubernetes spec version.
    *
@@ -29,33 +25,6 @@ export interface Cdk8sPythonOptions extends PythonProjectOptions {
    * @default - no additional specs imported
    */
   readonly cdk8sImports?: string[];
-
-  /**
-   * constructs verion
-   *
-   * @default "3.3.251"
-   */
-  readonly constructsVersion?: string;
-
-  /**
-   * Use pinned version instead of caret version for CDK8s.
-   *
-   * You can use this to prevent yarn to mix versions for your CDK8s package and to prevent auto-updates.
-   * If you use experimental features this will let you define the moment you include breaking changes.
-   *
-   * @default false
-   */
-  readonly cdk8sVersionPinning?: boolean;
-
-  /**
-   * Use pinned version instead of caret version for constructs.
-   *
-   * You can use this to prevent yarn to mix versions for your consructs package and to prevent auto-updates.
-   * If you use experimental features this will let you define the moment you include breaking changes.
-   *
-   * @default false
-   */
-  readonly constructsVersionPinning?: boolean;
 
   /**
    * The CDK8s app's entrypoint
@@ -73,46 +42,26 @@ export interface Cdk8sPythonOptions extends PythonProjectOptions {
  */
 export class Cdk8sPythonApp extends PythonProject {
   /**
-   * The CDK8s version this app is using.
-   */
-  public readonly cdk8sVersion: string;
-
-  /**
-   * The constructs version this app is using.
-   */
-  public readonly constructsVersion: string;
-
-  /**
    * The CDK8s app entrypoint
    */
   public readonly appEntrypoint: string;
 
+  public readonly cdk8sDeps: Cdk8sDeps;
+
   constructor(options: Cdk8sPythonOptions) {
     super({ ...options, pytest: false, sample: false });
+
+    this.cdk8sDeps = new Cdk8sDepsPy(this, {
+      dependencyType: DependencyType.RUNTIME,
+      cdk8sCliDependency: false,
+      ...options,
+    });
 
     if (!options.cdk8sVersion) {
       throw new Error("Required field cdk8sVersion is not specified.");
     }
 
     this.appEntrypoint = options.appEntrypoint ?? "app.py";
-
-    this.cdk8sVersion = options.cdk8sVersionPinning
-      ? options.cdk8sVersion
-      : `^${options.cdk8sVersion}`;
-
-    if (options.constructsVersion) {
-      this.constructsVersion = options.constructsVersionPinning
-        ? options.constructsVersion
-        : `^${options.constructsVersion}`;
-    } else {
-      this.constructsVersion = "^3.3.251";
-    }
-
-    this.addDependency(`cdk8s@${this.cdk8sVersion}`);
-    this.addDependency(`constructs@${this.constructsVersion}`);
-
-    this.addDevDependency(`cdk8s@${this.cdk8sVersion}`);
-    this.addDevDependency(`constructs@${this.constructsVersion}`);
 
     const synth = this.addTask("synth", {
       description: "Synthesizes your cdk8s app into dist",
@@ -147,32 +96,22 @@ class AppCode extends Component {
   constructor(project: Cdk8sPythonApp, filename: string) {
     super(project);
 
-    // prevents the default task overwriting the app.py
-    if (fs.readdirSync("./").filter((x) => x.includes("app.py")).length > 0) {
-      return;
-    }
-
-    const src = new SourceCode(project, filename, {
-      readonly: false,
+    new SampleFile(project, filename, {
+      contents: [
+        "from constructs import Construct",
+        "from cdk8s import App, Chart",
+        "",
+        "",
+        "class MyChart(Chart):",
+        "  def __init__(self, scope: Construct, id:str):",
+        "    super().__init__(scope, id)",
+        "",
+        "",
+        "app = App()",
+        'MyChart(app, "${project.name}")',
+        "",
+        "app.synth()",
+      ].join("\n"),
     });
-
-    src.line("from constructs import Construct");
-    src.line("from cdk8s import App, Chart");
-    src.line("");
-    src.line("");
-    src.open("class MyChart(Chart):");
-    src.open("def __init__(self, scope: Construct, id:str):");
-    src.line("super().__init__(scope, id)");
-    src.line("");
-    src.line("# define resources here");
-    src.close("");
-    src.close("");
-    src.line("");
-    src.line("");
-    src.line("app = App()");
-    src.line(`MyChart(app, "${project.name}")`);
-    src.line("");
-    src.line("app.synth()");
-    src.line("");
   }
 }

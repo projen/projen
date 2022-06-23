@@ -134,7 +134,7 @@ Object {
 project = Cdk8sPythonApp(
     author_email=\\"my@user.email.com\\",
     author_name=\\"My User Name\\",
-    cdk8s_version=\\"1.5.53\\",
+    cdk8s_version=\\"2.3.33\\",
     module_name=\\"my_project\\",
     name=\\"my-project\\",
     version=\\"0.1.0\\",
@@ -148,7 +148,7 @@ exports[`projen new cdk8s-app-ts 1`] = `
 Object {
   ".projenrc.js": "const { cdk8s } = require(\\"projen\\");
 const project = new cdk8s.Cdk8sTypeScriptApp({
-  cdk8sVersion: \\"1.0.0-beta.10\\",
+  cdk8sVersion: \\"2.3.33\\",
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
 

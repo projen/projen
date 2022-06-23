@@ -39,7 +39,7 @@ test("basic options", () => {
   expect(output["requirements.txt"]).toContain("cdk8s>=1.5.53, <2.0.0");
 });
 
-test("cdk8s version pinning", () => {
+test("CDK8s version pinning", () => {
   // GIVEN
   const project = new cdk8s.Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
@@ -47,7 +47,7 @@ test("cdk8s version pinning", () => {
     moduleName: "test_cdk8s_python_app_project",
     name: "test-cdk8s-python-app-project",
     version: "0.1.0",
-    cdk8sVersion: "1.0.0",
+    cdk8sVersion: "1.1.0",
     cdk8sVersionPinning: true,
   });
 
@@ -55,10 +55,10 @@ test("cdk8s version pinning", () => {
   const output = synthSnapshot(project);
 
   // THEN
-  expect(output["requirements.txt"]).toContain("cdk8s==1.0.0");
+  expect(output["requirements.txt"]).toContain("cdk8s==1.1.0");
 });
 
-test("constructs version undefined", () => {
+test("CDK8s V1 and constructs version undefined", () => {
   // GIVEN
   const project = new cdk8s.Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
@@ -73,10 +73,11 @@ test("constructs version undefined", () => {
   const output = synthSnapshot(project);
 
   // THEN
-  expect(output["requirements.txt"]).toContain("constructs>=3.3.251, <4.0.0");
+  expect(output["requirements.txt"]).toContain("cdk8s>=1.5.53, <2.0.0");
+  expect(output["requirements.txt"]).toContain("constructs>=3.4.39, <4.0.0");
 });
 
-test("constructs version pinning", () => {
+test("CDK8s V1 and constructs version defined", () => {
   // GIVEN
   const project = new cdk8s.Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
@@ -84,8 +85,67 @@ test("constructs version pinning", () => {
     moduleName: "test_cdk8s_python_app_project",
     name: "test-cdk8s-python-app-project",
     version: "0.1.0",
-    cdk8sVersion: "1.0.0",
+    cdk8sVersion: "1.1.0",
     constructsVersion: "3.2.34",
+  });
+
+  // WHEN
+  const output = synthSnapshot(project);
+
+  // THEN
+  expect(output["requirements.txt"]).toContain("cdk8s>=1.1.0, <2.0.0");
+  expect(output["requirements.txt"]).toContain("constructs>=3.2.34, <4.0.0");
+});
+
+test("CDK8s V2 and constructs version undefined", () => {
+  // GIVEN
+  const project = new cdk8s.Cdk8sPythonApp({
+    authorEmail: "test@cdk8spythonapp.com",
+    authorName: "First Last",
+    moduleName: "test_cdk8s_python_app_project",
+    name: "test-cdk8s-python-app-project",
+    version: "0.1.0",
+    cdk8sVersion: "2.3.33",
+  });
+
+  // WHEN
+  const output = synthSnapshot(project);
+
+  // THEN
+  expect(output["requirements.txt"]).toContain("cdk8s>=2.3.33, <3.0.0");
+  expect(output["requirements.txt"]).toContain("constructs>=10.1.42, <11.0.0");
+});
+
+test("CDK8s V2 and constructs version defined", () => {
+  // GIVEN
+  const project = new cdk8s.Cdk8sPythonApp({
+    authorEmail: "test@cdk8spythonapp.com",
+    authorName: "First Last",
+    moduleName: "test_cdk8s_python_app_project",
+    name: "test-cdk8s-python-app-project",
+    version: "0.1.0",
+    cdk8sVersion: "2.3.33",
+    constructsVersion: "10.0.0",
+  });
+
+  // WHEN
+  const output = synthSnapshot(project);
+
+  // THEN
+  expect(output["requirements.txt"]).toContain("cdk8s>=2.3.33, <3.0.0");
+  expect(output["requirements.txt"]).toContain("constructs>=10.0.0, <11.0.0");
+});
+
+test("CDK8s V2 and constructs version pinning", () => {
+  // GIVEN
+  const project = new cdk8s.Cdk8sPythonApp({
+    authorEmail: "test@cdk8spythonapp.com",
+    authorName: "First Last",
+    moduleName: "test_cdk8s_python_app_project",
+    name: "test-cdk8s-python-app-project",
+    version: "0.1.0",
+    cdk8sVersion: "2.3.33",
+    constructsVersion: "10.0.0",
     constructsVersionPinning: true,
   });
 
@@ -93,5 +153,67 @@ test("constructs version pinning", () => {
   const output = synthSnapshot(project);
 
   // THEN
-  expect(output["requirements.txt"]).toContain("constructs==3.2.34");
+  expect(output["requirements.txt"]).toContain("cdk8s>=2.3.33, <3.0.0");
+  expect(output["requirements.txt"]).toContain("constructs==10.0.0");
+});
+
+test("cdk8s-plus-22 undefined", () => {
+  // GIVEN
+  const project = new cdk8s.Cdk8sPythonApp({
+    authorEmail: "test@cdk8spythonapp.com",
+    authorName: "First Last",
+    moduleName: "test_cdk8s_python_app_project",
+    name: "test-cdk8s-python-app-project",
+    version: "0.1.0",
+    cdk8sVersion: "2.3.33",
+  });
+
+  // WHEN
+  const output = synthSnapshot(project);
+
+  // THEN
+  expect(output["requirements.txt"]).toContain(
+    "cdk8s-plus-22>=2.0.0rc26, <2.1.0"
+  );
+});
+
+test("cdk8s-plus-22 defined", () => {
+  // GIVEN
+  const project = new cdk8s.Cdk8sPythonApp({
+    authorEmail: "test@cdk8spythonapp.com",
+    authorName: "First Last",
+    moduleName: "test_cdk8s_python_app_project",
+    name: "test-cdk8s-python-app-project",
+    version: "0.1.0",
+    cdk8sVersion: "2.3.33",
+    cdk8sPlusVersion: "2.0.0-rc.27",
+  });
+
+  // WHEN
+  const output = synthSnapshot(project);
+
+  // THEN
+  expect(output["requirements.txt"]).toContain(
+    "cdk8s-plus-22>=2.0.0rc27, <2.1.0"
+  );
+});
+
+test("cdk8s-plus-22 pinning", () => {
+  // GIVEN
+  const project = new cdk8s.Cdk8sPythonApp({
+    authorEmail: "test@cdk8spythonapp.com",
+    authorName: "First Last",
+    moduleName: "test_cdk8s_python_app_project",
+    name: "test-cdk8s-python-app-project",
+    version: "0.1.0",
+    cdk8sVersion: "2.3.33",
+    cdk8sPlusVersion: "2.0.0-rc.26",
+    cdk8sPlusVersionPinning: true,
+  });
+
+  // WHEN
+  const output = synthSnapshot(project);
+
+  // THEN
+  expect(output["requirements.txt"]).toContain("cdk8s-plus-22==2.0.0rc26");
 });
