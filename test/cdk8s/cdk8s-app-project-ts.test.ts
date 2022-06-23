@@ -45,7 +45,7 @@ test("test if cdk8s synth is possible", () => {
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.18",
     constructs: "^3.3.75",
-    "cdk8s-plus-22": "~1.0.0-beta.222",
+    "cdk8s-plus-22": "^1.0.0-beta.222",
   });
 });
 
@@ -89,7 +89,7 @@ test("constructs version undefined", () => {
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.11",
     constructs: "^3.4.39",
-    "cdk8s-plus-22": "~1.0.0-beta.222",
+    "cdk8s-plus-22": "^1.0.0-beta.222",
   });
 });
 
@@ -108,7 +108,7 @@ test("constructs version pinning", () => {
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.18",
     constructs: "3.3.75",
-    "cdk8s-plus-22": "~1.0.0-beta.222",
+    "cdk8s-plus-22": "^1.0.0-beta.222",
   });
 });
 
@@ -126,7 +126,7 @@ test("cdk8sPlusVersion undefined", () => {
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.11",
     constructs: "^3.3.75",
-    "cdk8s-plus-22": "~1.0.0-beta.222",
+    "cdk8s-plus-22": "^1.0.0-beta.222",
   });
 });
 
@@ -145,7 +145,7 @@ test("cdk8sPlusVersion defined", () => {
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.11",
     constructs: "^3.3.75",
-    "cdk8s-plus-22": "~1.0.0-beta.200",
+    "cdk8s-plus-22": "^1.0.0-beta.200",
   });
 });
 

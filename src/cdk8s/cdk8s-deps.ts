@@ -197,15 +197,29 @@ export abstract class Cdk8sDeps extends Component {
    */
   protected abstract packageNames(): Cdk8sPackageNames;
 
+  private getVersionRequirement(
+    requestedVersion: string | undefined,
+    v1Version: string,
+    v2Version: string,
+    pinning?: boolean
+  ) {
+    const defaultVersion = this.cdk8sMajorVersion === 1 ? v1Version : v2Version;
+    const version = `${requestedVersion ?? defaultVersion}`;
+    const versionRequirement = pinning ? `${version}` : `^${version}`;
+    return versionRequirement;
+  }
+
   private addCdk8sPlusDependency(
     k8MinorVersion: number,
     requestedVersion: string | undefined,
     pinning?: boolean
   ) {
-    const defaultVersion =
-      this.cdk8sMajorVersion === 1 ? "1.0.0-beta.222" : "2.0.0-rc.26";
-    const version = `${requestedVersion ?? defaultVersion}`;
-    const versionRequirement = pinning ? `${version}` : `~${version}`;
+    const versionRequirement = this.getVersionRequirement(
+      requestedVersion,
+      "1.0.0-beta.222",
+      "2.0.0-rc.26",
+      pinning
+    );
 
     const cdk8sPlusMajorVersion = semver.minVersion(versionRequirement)?.major;
     if (!cdk8sPlusMajorVersion) {
@@ -230,9 +244,12 @@ export abstract class Cdk8sDeps extends Component {
     requestedVersion: string | undefined,
     pinning?: boolean
   ) {
-    const defaultVersion = this.cdk8sMajorVersion === 1 ? "1.1.34" : "2.0.28";
-    const version = `${requestedVersion ?? defaultVersion}`;
-    const versionRequirement = pinning ? `${version}` : `^${version}`;
+    const versionRequirement = this.getVersionRequirement(
+      requestedVersion,
+      "1.1.34",
+      "2.0.28",
+      pinning
+    );
 
     const cdk8sCliMajorVersion = semver.minVersion(versionRequirement)?.major;
     if (!cdk8sCliMajorVersion) {
@@ -253,9 +270,12 @@ export abstract class Cdk8sDeps extends Component {
     requestedVersion: string | undefined,
     pinning?: boolean
   ) {
-    const defaultVersion = this.cdk8sMajorVersion === 1 ? "1.6.33" : "2.3.33";
-    const version = `${requestedVersion ?? defaultVersion}`;
-    const versionRequirement = pinning ? `${version}` : `^${version}`;
+    const versionRequirement = this.getVersionRequirement(
+      requestedVersion,
+      "1.6.33",
+      "2.3.33",
+      pinning
+    );
 
     const cdk8sMajorVersion = semver.minVersion(versionRequirement)?.major;
     if (!cdk8sMajorVersion) {
@@ -282,9 +302,12 @@ export abstract class Cdk8sDeps extends Component {
       );
     }
 
-    const defaultVersion = this.cdk8sMajorVersion === 1 ? "3.4.39" : "10.1.42";
-    const version = `${requestedVersion ?? defaultVersion}`;
-    const versionRequirement = pinning ? `${version}` : `^${version}`;
+    const versionRequirement = this.getVersionRequirement(
+      requestedVersion,
+      "3.4.39",
+      "10.1.42",
+      pinning
+    );
 
     const constructsMajorVersion = semver.minVersion(versionRequirement)?.major;
     if (!constructsMajorVersion) {
