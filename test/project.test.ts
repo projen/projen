@@ -1,6 +1,6 @@
 import * as path from "path";
-import { JsonFile, Project, TextFile } from "../src";
-import { TestProject } from "./util";
+import { JsonFile, Project, Testing, TextFile } from "../src";
+import { synthSnapshot, TestProject } from "./util";
 
 test("file paths are relative to the project outdir", () => {
   // GIVEN
@@ -30,7 +30,7 @@ test("all files added to the project can be enumerated", () => {
   exp("your/file/me.json");
 });
 
-test("findFile() can be used to find a file either absolute or relative path", () => {
+test("tryFindFile() can be used to find a file either absolute or relative path", () => {
   // GIVEN
   const p = new TestProject();
   const file = new JsonFile(p, "your/file/me.json", { obj: {} });
@@ -44,7 +44,7 @@ test("findFile() can be used to find a file either absolute or relative path", (
   expect(result2 === file).toBeTruthy();
 });
 
-test("findFile() will also look up files in subprojects", () => {
+test("tryFindFile() will also look up files in subprojects", () => {
   // GIVEN
   const p = new TestProject();
   const child = new Project({
@@ -61,6 +61,75 @@ test("findFile() will also look up files in subprojects", () => {
   // THEN
   expect(result1 === fchild).toBeTruthy();
   expect(result2 === fchild).toBeTruthy();
+});
+
+test("tryRemoveFile() can be used to remove a file with a relative path", () => {
+  // GIVEN
+  const p = new TestProject();
+  const file = new JsonFile(p, "your/file/me.json", { obj: {} });
+
+  // WHEN
+  const result1 = p.tryRemoveFile("your/file/me.json");
+  const result2 = p.tryRemoveFile("your/file/me.json");
+
+  // THEN
+  const outdir = Testing.synth(p);
+  expect(outdir["your/file/me.json"]).toBeUndefined();
+  expect(result1 === file).toBeTruthy();
+  expect(result2).toBeUndefined();
+});
+
+test("tryRemoveFile() can be used to remove a file with an absolute path", () => {
+  // GIVEN
+  const p = new TestProject();
+  const file = new JsonFile(p, "your/file/me.json", { obj: {} });
+
+  // WHEN
+  const result1 = p.tryRemoveFile(path.resolve(p.outdir, "your/file/me.json"));
+  const result2 = p.tryRemoveFile(path.resolve(p.outdir, "your/file/me.json"));
+
+  // THEN
+  const outdir = Testing.synth(p);
+  expect(outdir["your/file/me.json"]).toBeUndefined();
+  expect(result1 === file).toBeTruthy();
+  expect(result2).toBeUndefined();
+});
+
+test("tryRemoveFile() will also remove a file in a subproject", () => {
+  // GIVEN
+  const p = new TestProject();
+  const child = new Project({
+    name: "foobar",
+    parent: p,
+    outdir: "subproject/foo/bar",
+  });
+  const fchild = new TextFile(child, "fchild.txt");
+
+  // WHEN
+  const result1 = p.tryRemoveFile("subproject/foo/bar/fchild.txt");
+  const result2 = p.tryRemoveFile("subproject/foo/bar/fchild.txt");
+
+  // THEN
+  const outdir = Testing.synth(p);
+  expect(outdir["subproject/foo/bar/fchild.txt"]).toBeUndefined();
+  expect(result1 === fchild).toBeTruthy();
+  expect(result2).toBeUndefined();
+});
+
+test("tryRemoveFile() can be used to override an existing file", () => {
+  // GIVEN
+  const p = new TestProject();
+  new TextFile(p, "your/file/me.txt", { lines: ["original"] });
+
+  // WHEN
+  p.tryRemoveFile("your/file/me.txt");
+  const newFile = new TextFile(p, "your/file/me.txt", { lines: ["better"] });
+  const result = p.tryFindFile("your/file/me.txt");
+
+  // THEN
+  const outdir = Testing.synth(p);
+  expect(outdir["your/file/me.txt"]).toContain("better");
+  expect(result === newFile).toBeTruthy();
 });
 
 test("autoApprove is configured", () => {
@@ -84,4 +153,20 @@ test("github: false disables github integration", () => {
 
   // THEN
   expect(p.github).toBeUndefined();
+});
+
+test("renovatebot: true creates renovatebot configuration", () => {
+  // GIVEN
+  const p = new TestProject({
+    renovatebot: true,
+    renovatebotOptions: {
+      labels: ["renotate", "dependencies"],
+    },
+  });
+
+  // WHEN
+  const snapshot = synthSnapshot(p);
+
+  // THEN
+  expect(snapshot["renovate.json5"]).toMatchSnapshot();
 });

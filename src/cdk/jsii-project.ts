@@ -172,10 +172,7 @@ export class JsiiProject extends TypeScriptProject {
     this.addFields({ types: `${libdir}/index.d.ts` });
 
     // this is an unhelpful warning
-    const jsiiFlags = [
-      "--silence-warnings=reserved-word",
-      "--no-fix-peer-dependencies",
-    ].join(" ");
+    const jsiiFlags = ["--silence-warnings=reserved-word"].join(" ");
 
     const compatIgnore = options.compatIgnore ?? ".compatignore";
 
@@ -204,8 +201,9 @@ export class JsiiProject extends TypeScriptProject {
     // in jsii we consider the entire repo (post build) as the build artifact
     // which is then used to create the language bindings in separate jobs.
     const prepareRepoForCI = [
-      `mkdir -p ${this.artifactsDirectory}`,
-      `rsync -a . ${this.artifactsDirectory} --exclude .git --exclude node_modules`,
+      `rsync -a . .repo --exclude .git --exclude node_modules`,
+      `rm -rf ${this.artifactsDirectory}`,
+      `mv .repo ${this.artifactsDirectory}`,
     ].join(" && ");
 
     // when running inside CI we just prepare the repo for packaging, which
@@ -251,6 +249,7 @@ export class JsiiProject extends TypeScriptProject {
         ...this.pacmakForLanguage("js", task),
         registry: this.package.npmRegistry,
         npmTokenSecret: this.package.npmTokenSecret,
+        codeArtifactOptions: options.codeArtifactOptions,
       });
       this.addPackagingTarget("js", task);
     }
@@ -341,6 +340,12 @@ export class JsiiProject extends TypeScriptProject {
     if (this.npmignore) {
       this.npmignore.readonly = false;
     }
+
+    // jsii relies on typescript < 4.0, which causes build errors
+    // since @types/prettier@2.6.1 only supports typescript >= 4.2.
+    // add a package resolution override to fix this.
+    // this should have no effect if @types/prettier is not a transitive dependency
+    this.package.addPackageResolutions("@types/prettier@2.6.0");
   }
 
   /**

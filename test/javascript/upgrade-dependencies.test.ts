@@ -1,4 +1,5 @@
 import * as yaml from "yaml";
+import { GithubCredentials } from "../../src/github";
 import {
   NodeProject,
   NodeProjectOptions,
@@ -12,10 +13,8 @@ test("upgrades command includes all dependencies", () => {
     deps: ["some-dep"],
   });
 
-  const deps = "jest jest-junit npm-check-updates standard-version some-dep";
-
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`);
+  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade`); // implicitly all dependencies
 });
 
 test("upgrades command includes dependencies added post instantiation", () => {
@@ -23,22 +22,19 @@ test("upgrades command includes dependencies added post instantiation", () => {
 
   project.addDeps("some-dep");
 
-  const deps = "jest jest-junit npm-check-updates standard-version some-dep";
-
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`);
+  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade`); // implicitly all dependencies
 });
 
-test("upgrades command doesnt include ignored packages", () => {
+test("upgrades command doesn't include ignored packages", () => {
   const project = createProject({
-    projenUpgradeSecret: "PROJEN_SECRET",
     deps: ["dep1", "dep2"],
     depsUpgradeOptions: {
       exclude: ["dep2"],
     },
   });
 
-  const deps = "jest jest-junit npm-check-updates projen standard-version dep1";
+  const deps = "jest-junit jest npm-check-updates projen standard-version dep1";
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`);
@@ -46,7 +42,6 @@ test("upgrades command doesnt include ignored packages", () => {
 
 test("upgrades command includes only included packages", () => {
   const project = createProject({
-    projenUpgradeSecret: "PROJEN_SECRET",
     deps: ["dep1", "dep2"],
     depsUpgradeOptions: {
       include: ["dep1"],
@@ -56,7 +51,7 @@ test("upgrades command includes only included packages", () => {
   const deps = "dep1";
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`);
+  expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`); // implicitly all dependencies
 });
 
 test("upgrade task can be overwritten", () => {
@@ -89,9 +84,7 @@ test("upgrade workflow can be overwritten", () => {
 });
 
 test("default options", () => {
-  const project = createProject({
-    projenUpgradeSecret: "PROJEN_SECRET",
-  });
+  const project = createProject();
 
   const snapshot = synthSnapshot(project);
   expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
@@ -100,7 +93,37 @@ test("default options", () => {
 
 test("custom options", () => {
   const project = createProject({
-    projenUpgradeSecret: "PROJEN_SECRET",
+    depsUpgradeOptions: {
+      workflowOptions: {
+        schedule: UpgradeDependenciesSchedule.MONTHLY,
+      },
+    },
+  });
+
+  const snapshot = synthSnapshot(project);
+  expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
+  expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
+});
+
+test("disables automatic upgrades", () => {
+  const project = createProject({
+    depsUpgradeOptions: {
+      workflowOptions: {
+        schedule: UpgradeDependenciesSchedule.NEVER,
+      },
+    },
+  });
+
+  const snapshot = synthSnapshot(project);
+  expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
+  expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
+});
+
+test("with a GitHub app for authentication", () => {
+  const project = createProject({
+    githubOptions: {
+      projenCredentials: GithubCredentials.fromApp(),
+    },
     depsUpgradeOptions: {
       workflowOptions: {
         schedule: UpgradeDependenciesSchedule.MONTHLY,
@@ -115,7 +138,6 @@ test("custom options", () => {
 
 test("branches default to release branches", () => {
   const project = createProject({
-    projenUpgradeSecret: "PROJEN_SECRET",
     majorVersion: 1,
     releaseBranches: {
       branch1: { majorVersion: 2 },
@@ -134,7 +156,6 @@ test("branches default to release branches", () => {
 
 test("considers branches added post project instantiation", () => {
   const project = createProject({
-    projenUpgradeSecret: "PROJEN_SECRET",
     majorVersion: 1,
     releaseBranches: {
       branch1: { majorVersion: 2 },
@@ -154,7 +175,6 @@ test("considers branches added post project instantiation", () => {
 
 test("can upgrade multiple branches", () => {
   const project = createProject({
-    projenUpgradeSecret: "PROJEN_SECRET",
     depsUpgradeOptions: {
       workflowOptions: {
         branches: ["branch1", "branch2"],
@@ -231,35 +251,8 @@ test("upgrade task created without projen defined versions at NodeProject", () =
   });
   const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[1].exec).toStrictEqual(
-    "npm-check-updates --dep dev --upgrade --target=minor --reject='axios,markdownlint,projen'"
+    "npm-check-updates --dep dev --upgrade --target=minor --reject='axios,markdownlint'"
   );
-});
-
-describe("projen-upgrade task is", () => {
-  test("empty if version is set", () => {
-    const prj = new NodeProject({
-      defaultReleaseBranch: "main",
-      name: "test project",
-      packageName: "test-project",
-      projenVersion: "0.50.0",
-    });
-    const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
-    expect(tasks["upgrade-projen"].steps[0].exec).toEqual(
-      "echo No dependencies to upgrade."
-    );
-  });
-
-  test("defined for Projen if version is not set", () => {
-    const prj = new NodeProject({
-      defaultReleaseBranch: "main",
-      name: "test project",
-    });
-    const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
-    expect(tasks["upgrade-projen"]).toBeDefined();
-    expect(tasks["upgrade-projen"].steps[1].exec).toStrictEqual(
-      "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'"
-    );
-  });
 });
 
 function createProject(

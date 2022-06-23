@@ -1,5 +1,5 @@
 import { CiConfiguration } from "../../src/gitlab";
-import { TestProject } from "../util";
+import { synthSnapshot, TestProject } from "../util";
 
 test("throws when adding an existing service with same name and alias", () => {
   // GIVEN
@@ -91,4 +91,77 @@ test("throws when adding an existing includes", () => {
   expect(() => c.addIncludes({ template: "foo" })).toThrowError(
     /already contains one or more templates specified in/
   );
+});
+
+test("respected the original format when variables are added to jobs", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    jobs: {
+      build: {
+        variables: { AWS_REGION: "eu-central-1" },
+      },
+    },
+  });
+  const snapshot = synthSnapshot(p);
+  // THEN
+  expect(snapshot[".gitlab/ci-templates/foo.yml"]).toContain(
+    "AWS_REGION: eu-central-1"
+  );
+});
+
+test("respect the original format when adding global variables", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  const c = new CiConfiguration(p, "foo", {});
+  c.addGlobalVariables({
+    AWS_REGION: "eu-central-1",
+  });
+  const snapshot = synthSnapshot(p);
+  // THEN
+  expect(snapshot[".gitlab/ci-templates/foo.yml"]).toContain(
+    "AWS_REGION: eu-central-1"
+  );
+});
+
+test("adds correct entries for path-based caching", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    default: {
+      cache: {
+        paths: ["node_modules"],
+        key: "${CI_COMMIT_REF_SLUG}",
+      },
+    },
+  });
+  const snapshot = synthSnapshot(p);
+  // THEN
+  expect(snapshot[".gitlab/ci-templates/foo.yml"]).toMatchSnapshot();
+});
+
+test("adds correct entries for file-based caching", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "foo", {
+    default: {
+      cache: {
+        key: {
+          files: ["Gemfile.lock", "package.json"],
+          prefix: "${CI_COMMIT_REF_SLUG}",
+        },
+      },
+    },
+  });
+  const snapshot = synthSnapshot(p);
+  // THEN
+  expect(snapshot[".gitlab/ci-templates/foo.yml"]).toMatchSnapshot();
 });

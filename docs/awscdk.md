@@ -105,7 +105,7 @@ new awscdk.LambdaFunction(p, {
 
 An AWS [Lambda Extension][lambda-extensions-blog] is a way to integrate your
 preferred development, monitoring, observability, and governance tools with
-AWS Lambda. 
+AWS Lambda.
 
 Functionally, AWS [Lambda Extensions][lambda-extensions-blog] are long-running
 executable files that reside in the `extensions` subdirectory of your code
@@ -268,16 +268,15 @@ For each integration test, the following set of tasks are created:
 
 ### Writing test assertions
 
-You can write your test assertions as AWS Lambda handlers and use [CDK
-Triggers](https://github.com/awslabs/cdk-triggers) to execute them as part of
-the deployment.
+You can write your test assertions as AWS Lambda handlers and use the AWS CDK
+[triggers][cdk-trigger-docs] module to execute them as part of the deployment.
 
 Here is an example of a test:
 
 ```ts
 import { App,Stack } from '@aws-cdk/core';
+import { Trigger } from '@aws-cdk/triggers';
 import { ConstructUnderTest } from '../src';
-import { AfterCreate } from 'cdk-triggers';
 import { AssertSomeStuffFunction } from './assert-some-stuff-function.ts'; // <-- generated
 
 const app = new App();
@@ -286,10 +285,10 @@ const stack = new Stack(app, 'Test');
 // this is the construct we want to test
 const testee = new ConstructUnderTest(stack, 'ConstructUnderTest');
 
-// execute a lambda handler with some assertions after all testee 
+// execute a lambda handler with some assertions after all testee
 // resources are created
-new AfterCreate(stack, 'RunAssertions', {
-  resources: [testee],
+new Trigger(stack, 'RunAssertions', {
+  executeAfter: [testee],
   handler: new AssertSomeStuffFunction(stack, 'AssertSomeStuffFunction', {
     env: {
       URL: testee.url // <-- some reference to the created construct
@@ -297,6 +296,8 @@ new AfterCreate(stack, 'RunAssertions', {
   }),
 });
 ```
+
+[cdk-trigger-docs]:https://docs.aws.amazon.com/cdk/api/v1/docs/triggers-readme.html
 
 ## Watch
 

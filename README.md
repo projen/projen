@@ -58,7 +58,9 @@ $ npx projen new PROJECT-TYPE
 ### Project types
 
 Currently supported project types (use `npx projen new` without a type for a
-list):
+full list):
+
+**Built-in:** (run `npx projen <type>`)
 
 <!-- <macro exec="node ./scripts/readme-projects.js"> -->
 * [awscdk-app-java](https://projen.io/api/API.html#projen-awscdk-awscdkjavaapp) - AWS CDK app in Java.
@@ -81,6 +83,10 @@ list):
 * [typescript](https://projen.io/api/API.html#projen-typescript-typescriptproject) - TypeScript project.
 * [typescript-app](https://projen.io/api/API.html#projen-typescript-typescriptappproject) - TypeScript app.
 <!-- </macro> -->
+
+**External:** (run `npx projen --from <type>`)
+
+* [projen-github-action-typescript](https://github.com/projen/projen-github-action-typescript/blob/main/API.md) - GitHub Action in TypeScript project.
 
 > Use `npx projen new PROJECT-TYPE --help` to view a list of command line
 > switches that allows you to specify most project options during bootstrapping.
@@ -287,6 +293,14 @@ The projen community can be found within the #projen channel in the [cdk.dev]
 community Slack workspace.
 
 [cdk.dev]: https://cdk.dev/
+
+### Virtual Meetup
+
+- Thursday June 30, 2022 
+- 1-2pm America/New_York (EDT)
+- [CFP](https://bit.ly/3NEc0UQ) a Google Form
+- CFP Closes Saturday April 30, 2022
+- Hosted on [Zoom](https://zoom.us/j/92399854777?pwd=OUZybHlobHNoZUs1VVordWhaRTVGdz09#success)
 
 ## Contributions
 

@@ -41,7 +41,7 @@ jobs:
       CI: \\"true\\"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -78,13 +78,13 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -119,7 +119,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v3.4.6
+      - uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -146,7 +146,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -176,11 +176,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -515,64 +515,25 @@ tsconfig.tsbuildinfo
             "exec": "yarn upgrade npm-check-updates",
           },
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
-          },
-          Object {
-            "exec": "yarn install --check-files",
-          },
-          Object {
-            "exec": "yarn upgrade @types/node @types/react @types/react-dom npm-check-updates typescript autoprefixer next postcss react react-dom tailwindcss",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "upgrade-projen": Object {
-        "description": "upgrade projen",
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade-projen",
-        "steps": Array [
-          Object {
-            "exec": "yarn upgrade npm-check-updates",
-          },
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade projen",
+            "exec": "yarn upgrade",
           },
           Object {
             "exec": "npx projen",
@@ -842,7 +803,6 @@ tsconfig.tsbuildinfo
       "telemetry": "npx projen telemetry",
       "test": "npx projen test",
       "upgrade": "npx projen upgrade",
-      "upgrade-projen": "npx projen upgrade-projen",
       "watch": "npx projen watch",
     },
     "version": "0.0.0",
@@ -1088,6 +1048,7 @@ export default function Home() {
       "esModuleInterop": true,
       "experimentalDecorators": true,
       "forceConsistentCasingInFileNames": true,
+      "incremental": true,
       "inlineSourceMap": true,
       "inlineSources": true,
       "isolatedModules": true,
@@ -1097,7 +1058,7 @@ export default function Home() {
         "dom.iterable",
         "esnext",
       ],
-      "module": "esnext",
+      "module": "CommonJS",
       "moduleResolution": "node",
       "noEmit": true,
       "noEmitOnError": false,
@@ -1135,6 +1096,7 @@ export default function Home() {
       "esModuleInterop": true,
       "experimentalDecorators": true,
       "forceConsistentCasingInFileNames": true,
+      "incremental": true,
       "inlineSourceMap": true,
       "inlineSources": true,
       "isolatedModules": true,
@@ -1144,7 +1106,7 @@ export default function Home() {
         "dom.iterable",
         "esnext",
       ],
-      "module": "esnext",
+      "module": "CommonJS",
       "moduleResolution": "node",
       "noEmit": true,
       "noEmitOnError": false,

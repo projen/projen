@@ -12,7 +12,7 @@ const MAX_BUFFER = 10 * 1024 * 1024;
 export function exec(command: string, options: { cwd: string }): void {
   logging.debug(command);
   child_process.execSync(command, {
-    stdio: ["inherit", process.stderr, "pipe"], // "pipe" for STDERR means it appears in exceptions
+    stdio: ["inherit", 2, "pipe"], // "pipe" for STDERR means it appears in exceptions
     maxBuffer: MAX_BUFFER,
     cwd: options.cwd,
   });
@@ -76,9 +76,9 @@ export function getFilePermissions(options: WriteFileOptions): string {
   const readonly = options.readonly ?? false;
   const executable = options.executable ?? false;
   if (readonly && executable) {
-    return "500";
+    return "544";
   } else if (readonly) {
-    return "400";
+    return "444";
   } else if (executable) {
     return "755";
   } else {
@@ -230,6 +230,15 @@ export function deepMerge(
         if (typeof target[key] !== "object") {
           target[key] = value;
         }
+
+        if ("__$APPEND" in value && Array.isArray(value.__$APPEND)) {
+          if (Array.isArray(target[key])) {
+            target[key].push(...value.__$APPEND);
+          } else {
+            target[key] = value.__$APPEND;
+          }
+        }
+
         mergeOne(target[key], value);
 
         // if the result of the merge is an empty object, it's because the
@@ -339,6 +348,38 @@ export function kebabCaseKeys<T = unknown>(obj: T, recursive = true): T {
   return result as any;
 }
 
+export function snakeCaseKeys<T = unknown>(
+  obj: T,
+  recursive = true,
+  exclusiveForRecordKeys: string[] = []
+): T {
+  if (typeof obj !== "object" || obj == null) {
+    return obj;
+  }
+
+  if (Array.isArray(obj)) {
+    if (recursive) {
+      obj = obj.map((v) =>
+        snakeCaseKeys(v, recursive, exclusiveForRecordKeys)
+      ) as any;
+    }
+    return obj;
+  }
+
+  const result: Record<string, unknown> = {};
+  for (let [k, v] of Object.entries(obj)) {
+    if (recursive) {
+      v = snakeCaseKeys(v, recursive, exclusiveForRecordKeys);
+    }
+    const modifiedKey =
+      exclusiveForRecordKeys.length == 0 || exclusiveForRecordKeys.includes(k)
+        ? Case.snake(k)
+        : k;
+    result[modifiedKey] = v;
+  }
+  return result as any;
+}
+
 export async function tryReadFile(file: string) {
   if (!(await fs.pathExists(file))) {
     return "";
@@ -379,4 +420,21 @@ function decamelize(s: string, sep: string = "_") {
   } else {
     return s;
   }
+}
+
+export function getNodeMajorVersion(): number | undefined {
+  const match = process.version.match(/(\d+)\.(\d+)\.(\d+)/);
+  if (match) {
+    const [major] = match.slice(1).map((x) => parseInt(x));
+    return major;
+  }
+  return undefined;
+}
+
+export function anySelected(options: (boolean | undefined)[]): boolean {
+  return options.some((opt) => opt);
+}
+
+export function multipleSelected(options: (boolean | undefined)[]): boolean {
+  return options.filter((opt) => opt).length > 1;
 }

@@ -25,6 +25,11 @@ export const FEATURE_FLAGS = [
 export const TYPESCRIPT_LAMBDA_EXT = ".lambda.ts";
 
 /**
+ * Suffix for AWS Edge Lambda handlers.
+ */
+export const TYPESCRIPT_EDGE_LAMBDA_EXT = ".edge-lambda.ts";
+
+/**
  * Suffix for AWS Lambda Extensions.
  */
 export const TYPESCRIPT_LAMBDA_EXTENSION_EXT = ".lambda-extension.ts";

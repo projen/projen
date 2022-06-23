@@ -1,6 +1,9 @@
+import * as json5 from "json5";
 import * as yaml from "yaml";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
+import { GithubCredentials } from "../../src/github";
+import { secretToString } from "../../src/github/util";
 import { JobPermission } from "../../src/github/workflows-model";
 import {
   NodeProject,
@@ -192,29 +195,7 @@ describe("deps", () => {
   });
 });
 
-test("throw when 'autoApproveProjenUpgrades' is used with 'projenUpgradeAutoMerge'", () => {
-  expect(() => {
-    new TestNodeProject({
-      autoApproveProjenUpgrades: true,
-      projenUpgradeAutoMerge: true,
-    });
-  }).toThrow(
-    "'projenUpgradeAutoMerge' cannot be configured together with 'autoApproveProjenUpgrades'"
-  );
-});
-
 describe("deps upgrade", () => {
-  test("throws when trying to auto approve projen but auto approve is not defined", () => {
-    const message =
-      "Automatic approval of projen upgrades requires configuring `autoApproveOptions`";
-    expect(() => {
-      new TestNodeProject({ autoApproveProjenUpgrades: true });
-    }).toThrow(message);
-    expect(() => {
-      new TestNodeProject({ projenUpgradeAutoMerge: true });
-    }).toThrow(message);
-  });
-
   test("throws when trying to auto approve deps but auto approve is not defined", () => {
     expect(() => {
       new TestNodeProject({ autoApproveUpgrades: true });
@@ -269,42 +250,6 @@ describe("deps upgrade", () => {
     expect(snapshot.updates[0].labels).toStrictEqual(["auto-approve"]);
   });
 
-  test("default - with projen secret", () => {
-    const project = new TestNodeProject({
-      projenUpgradeSecret: "PROJEN_GITHUB_TOKEN",
-    });
-    const snapshot = synthSnapshot(project);
-    expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
-    expect(
-      snapshot[".github/workflows/upgrade-projen-main.yml"]
-    ).toBeUndefined();
-
-    // make sure yarn upgrade all deps, including projen.
-    const tasks = snapshot[TaskRuntime.MANIFEST_FILE].tasks;
-    expect(tasks.upgrade.steps[7].exec).toStrictEqual("yarn upgrade");
-  });
-
-  test("dependabot - with projen secret", () => {
-    const project = new TestNodeProject({
-      dependabot: true,
-      projenUpgradeSecret: "PROJEN_GITHUB_TOKEN",
-    });
-    const snapshot = synthSnapshot(project);
-    expect(snapshot[".github/dependabot.yml"]).toBeDefined();
-    expect(snapshot[".github/workflows/upgrade-projen-main.yml"]).toBeDefined();
-  });
-
-  test("github actions - with projen secret", () => {
-    const project = new TestNodeProject({
-      projenUpgradeSecret: "PROJEN_GITHUB_TOKEN",
-    });
-    const snapshot = synthSnapshot(project);
-    expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
-    expect(
-      snapshot[".github/workflows/upgrade-projen-main.yml"]
-    ).toBeUndefined();
-  });
-
   test("throws when dependabot is configued with depsUpgrade", () => {
     expect(() => {
       new TestNodeProject({ dependabot: true, depsUpgrade: true });
@@ -320,7 +265,9 @@ describe("deps upgrade", () => {
       },
       depsUpgradeOptions: {
         workflowOptions: {
-          secret: "PROJEN_SECRET",
+          projenCredentials: GithubCredentials.fromPersonalAccessToken({
+            secret: "PROJEN_SECRET",
+          }),
         },
       },
     });
@@ -525,7 +472,7 @@ describe("npm publishing options", () => {
         },
       });
     }).toThrow(
-      "codeArtifactOptions must only be specified when publishing AWS CodeArtifact."
+      "codeArtifactOptions must only be specified when publishing AWS CodeArtifact or used in scoped packages."
     );
     expect(() => {
       new NodePackage(project, {
@@ -534,7 +481,7 @@ describe("npm publishing options", () => {
         },
       });
     }).toThrow(
-      "codeArtifactOptions must only be specified when publishing AWS CodeArtifact."
+      "codeArtifactOptions must only be specified when publishing AWS CodeArtifact or used in scoped packages."
     );
   });
 
@@ -590,7 +537,7 @@ test("extend github release workflow", () => {
       steps: [
         {
           name: "Check out the repo",
-          uses: "actions/checkout@v2",
+          uses: "actions/checkout@v3",
         },
         {
           name: "Push to Docker Hub",
@@ -716,6 +663,29 @@ test("enabling dependabot does not overturn mergify: false", () => {
   expect(snapshot).toHaveProperty([".github/dependabot.yml"]);
 });
 
+test("enabling renovatebot does not overturn mergify: false", () => {
+  // WHEN
+  const project = new TestNodeProject({
+    renovatebot: true,
+    mergify: false,
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  // Note: brackets important, they prevent "." in filenames to be interpreted
+  //       as JSON object path delimiters.
+  expect(snapshot).not.toHaveProperty([".mergify.yml"]);
+  expect(snapshot).toHaveProperty(["renovate.json5"]);
+  expect(json5.parse(snapshot["renovate.json5"]).ignoreDeps).toEqual([
+    "jest-junit",
+    "jest",
+    "npm-check-updates",
+    "standard-version",
+    "projen",
+  ]);
+  expect(snapshot["renovate.json5"]).toMatchSnapshot();
+});
+
 test("github: false disables github integration", () => {
   // WHEN
   const project = new TestNodeProject({
@@ -760,6 +730,37 @@ test("using GitHub npm registry will default npm secret to GITHUB_TOKEN", () => 
 function packageJson(project: Project) {
   return synthSnapshot(project)["package.json"];
 }
+
+test("buildWorkflow can use GitHub App for API access", () => {
+  // GIVEN
+  const appId = "APP_ID";
+  const privateKey = "PRIVATE_KEY";
+  const project = new TestNodeProject({
+    githubOptions: {
+      projenCredentials: GithubCredentials.fromApp({
+        appIdSecret: appId,
+        privateKeySecret: privateKey,
+      }),
+    },
+  });
+
+  // THEN
+  const output = synthSnapshot(project);
+  const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+  expect(buildWorkflow.jobs["self-mutation"].steps[0]).toMatchObject({
+    name: "Generate token",
+    with: {
+      app_id: `\${{ secrets.${appId} }}`,
+      private_key: `\${{ secrets.${privateKey} }}`,
+    },
+  });
+  expect(buildWorkflow.jobs["self-mutation"].steps[1]).toMatchObject({
+    name: "Checkout",
+    with: {
+      token: "${{ steps.generate_token.outputs.token }}",
+    },
+  });
+});
 
 test("workflowGitIdentity can be used to customize the git identity used in build workflows", () => {
   // GIVEN
@@ -886,6 +887,285 @@ test("node project can be ejected", () => {
   expect(outdir[".projenrc.js"]).toBeUndefined();
   expect(outdir[".projen/deps.json"]).toBeUndefined();
   expect(outdir[".projen/files.json"]).toBeUndefined();
+});
+
+describe("scoped private packages", () => {
+  const accountId = "123456789012";
+  const domain = "my-domain";
+  const region = "my-region-1";
+  const repository = "MyRepository";
+  const scope = "@stub-scope";
+  const defaultAccessKeyIdSecret = "AWS_ACCESS_KEY_ID";
+  const defaultSecretAccessKeySecret = "AWS_SECRET_ACCESS_KEY";
+  const registry = `${domain}-${accountId}.d.codeartifact.${region}.amazonaws.com/npm/${repository}/`;
+  const registryUrl = `https://${registry}`;
+
+  test("adds AWS Code Artifact Login step prior to install to build workflow", () => {
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl,
+          scope,
+        },
+      ],
+    });
+    const output = synthSnapshot(project);
+
+    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build.steps).toEqual(
+      expect.arrayContaining([
+        {
+          name: "AWS CodeArtifact Login",
+          run: "yarn run ca:login",
+          env: {
+            AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
+            AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
+          },
+        },
+        { name: "Install dependencies", run: "yarn install --check-files" },
+      ])
+    );
+  });
+
+  test("adds AWS Code Artifact Login step prior to install to release workflow", () => {
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl,
+          scope,
+        },
+      ],
+    });
+    const output = synthSnapshot(project);
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    expect(releaseWorkflow.jobs.release.steps).toEqual(
+      expect.arrayContaining([
+        {
+          name: "AWS CodeArtifact Login",
+          run: "yarn run ca:login",
+          env: {
+            AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
+            AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
+          },
+        },
+        {
+          name: "Install dependencies",
+          run: "yarn install --check-files --frozen-lockfile",
+        },
+      ])
+    );
+  });
+
+  test("adds AWS Code Artifact Login step prior to install to workflow when multiple scoped packages defined", () => {
+    const accountId2 = "123456789013";
+    const domain2 = "my-domain-2";
+    const region2 = "my-region-2";
+    const repository2 = "MyRepository2";
+    const scope2 = "@stub-scope-2";
+    const registryUrl2 = `https://${domain2}-${accountId2}.d.codeartifact.${region2}.amazonaws.com/npm/${repository2}/`;
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl,
+          scope,
+        },
+        {
+          registryUrl: registryUrl2,
+          scope: scope2,
+        },
+      ],
+    });
+    const output = synthSnapshot(project);
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    expect(releaseWorkflow.jobs.release.steps).toEqual(
+      expect.arrayContaining([
+        {
+          name: "AWS CodeArtifact Login",
+          run: "yarn run ca:login",
+          env: {
+            AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
+            AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
+          },
+        },
+        {
+          name: "Install dependencies",
+          run: "yarn install --check-files --frozen-lockfile",
+        },
+      ])
+    );
+  });
+
+  test("adds specified AWS secrets and Code Artifact Login step prior to install to workflow", () => {
+    const accessKeyIdSecret = "stub-access-key-id";
+    const secretAccessKeySecret = "stub-secret-access-key";
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl,
+          scope,
+        },
+      ],
+      codeArtifactOptions: {
+        accessKeyIdSecret,
+        secretAccessKeySecret,
+      },
+    });
+    const output = synthSnapshot(project);
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    expect(releaseWorkflow.jobs.release.steps).toEqual(
+      expect.arrayContaining([
+        {
+          name: "AWS CodeArtifact Login",
+          run: "yarn run ca:login",
+          env: {
+            AWS_ACCESS_KEY_ID: secretToString(accessKeyIdSecret),
+            AWS_SECRET_ACCESS_KEY: secretToString(secretAccessKeySecret),
+          },
+        },
+        {
+          name: "Install dependencies",
+          run: "yarn install --check-files --frozen-lockfile",
+        },
+      ])
+    );
+  });
+
+  test("adds AWS assume role and Code Artifact Login step prior to install to workflow", () => {
+    const roleToAssume = `stub-role-to-assume`;
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl,
+          scope,
+        },
+      ],
+      codeArtifactOptions: {
+        roleToAssume,
+      },
+    });
+    const output = synthSnapshot(project);
+    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
+    expect(releaseWorkflow.jobs.release.steps).toEqual(
+      expect.arrayContaining([
+        {
+          name: "Configure AWS Credentials",
+          uses: "aws-actions/configure-aws-credentials@v1",
+          with: {
+            "aws-access-key-id": secretToString(defaultAccessKeyIdSecret),
+            "aws-secret-access-key": secretToString(
+              defaultSecretAccessKeySecret
+            ),
+            "aws-region": "us-east-2",
+            "role-to-assume": roleToAssume,
+            "role-duration-seconds": 900,
+          },
+        },
+        {
+          name: "AWS CodeArtifact Login",
+          run: "yarn run ca:login",
+        },
+        {
+          name: "Install dependencies",
+          run: "yarn install --check-files --frozen-lockfile",
+        },
+      ])
+    );
+  });
+
+  test("throws error if scope is invalid", () => {
+    const anotherScope = "another-scope";
+    expect(
+      () =>
+        new TestNodeProject({
+          scopedPackagesOptions: [
+            {
+              registryUrl,
+              scope: anotherScope,
+            },
+          ],
+        })
+    ).toThrow(`Scope must start with "@" in options, found ${anotherScope}`);
+  });
+
+  test("throws error if registryUrl is invalid", () => {
+    expect(
+      () =>
+        new TestNodeProject({
+          scopedPackagesOptions: [
+            {
+              registryUrl: `https://${accountId}.d.codeartifact.${region}.amazonaws.com/npm/${repository}/`,
+              scope,
+            },
+          ],
+        })
+    ).toThrow("Could not get CodeArtifact details from npm Registry");
+  });
+
+  test("adds ca:login script when single scoped package defined", () => {
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl,
+          scope,
+        },
+      ],
+    });
+    const output = synthSnapshot(project);
+
+    const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
+    expect(tasks["ca:login"]).toEqual({
+      name: "ca:login",
+      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
+      steps: [
+        {
+          exec: "which aws",
+        },
+        {
+          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text); npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry}:always-auth=true`,
+        },
+      ],
+    });
+  });
+
+  test("adds ca:login script when multiple scoped packages defined", () => {
+    const accountId2 = "123456789013";
+    const domain2 = "my-domain-2";
+    const region2 = "my-region-2";
+    const repository2 = "MyRepository2";
+    const scope2 = "@stub-scope-2";
+    const registry2 = `${domain2}-${accountId2}.d.codeartifact.${region2}.amazonaws.com/npm/${repository2}/`;
+    const registryUrl2 = `https://${registry2}`;
+    const project = new TestNodeProject({
+      scopedPackagesOptions: [
+        {
+          registryUrl,
+          scope,
+        },
+        {
+          registryUrl: registryUrl2,
+          scope: scope2,
+        },
+      ],
+    });
+    const output = synthSnapshot(project);
+
+    const tasks = output[TaskRuntime.MANIFEST_FILE].tasks;
+    expect(tasks["ca:login"]).toEqual({
+      name: "ca:login",
+      requiredEnv: ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"],
+      steps: [
+        {
+          exec: "which aws",
+        },
+        {
+          exec: `npm config set ${scope}:registry ${registryUrl}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain} --region ${region} --domain-owner ${accountId} --query authorizationToken --output text); npm config set //${registry}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry}:always-auth=true`,
+        },
+        {
+          exec: `npm config set ${scope2}:registry ${registryUrl2}; CODEARTIFACT_AUTH_TOKEN=$(aws codeartifact get-authorization-token --domain ${domain2} --region ${region2} --domain-owner ${accountId2} --query authorizationToken --output text); npm config set //${registry2}:_authToken=$CODEARTIFACT_AUTH_TOKEN; npm config set //${registry2}:always-auth=true`,
+        },
+      ],
+    });
+  });
 });
 
 class TestNodeProject extends NodeProject {

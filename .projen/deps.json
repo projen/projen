@@ -23,7 +23,7 @@
     },
     {
       "name": "@types/node",
-      "version": "^12",
+      "version": "^14",
       "type": "build"
     },
     {
@@ -78,12 +78,13 @@
       "type": "build"
     },
     {
-      "name": "jest",
+      "name": "jest-junit",
+      "version": "^13",
       "type": "build"
     },
     {
-      "name": "jest-junit",
-      "version": "^13",
+      "name": "jest",
+      "version": "^27",
       "type": "build"
     },
     {
@@ -107,6 +108,10 @@
       "type": "build"
     },
     {
+      "name": "json5",
+      "type": "build"
+    },
+    {
       "name": "markmac",
       "type": "build"
     },
@@ -126,6 +131,7 @@
     },
     {
       "name": "ts-jest",
+      "version": "^27",
       "type": "build"
     },
     {
@@ -175,7 +181,7 @@
     },
     {
       "name": "yaml",
-      "version": "next",
+      "version": "2.0.0",
       "type": "bundled"
     },
     {

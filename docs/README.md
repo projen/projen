@@ -7,6 +7,7 @@
 * [Bundling](bundling.md)
 * [Components](components.md)
 * [CDK8s](cdk8s.md)
+* [CircleCI](circleci.md)
 * [Dependencies](deps.md)
 * [Escape hatches](escape-hatches.md)
 * [Ejecting](eject.md)

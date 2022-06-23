@@ -9,6 +9,7 @@ import {
   GitIdentity,
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
+import { secretToString } from "../github/util";
 import { JobStep, Triggers } from "../github/workflows-model";
 import { IgnoreFile } from "../ignore-file";
 import {
@@ -18,19 +19,24 @@ import {
   UpgradeDependenciesOptions,
 } from "../javascript";
 import { License } from "../license";
-import { Publisher, Release, ReleaseProjectOptions } from "../release";
+import {
+  isAwsCodeArtifactRegistry,
+  Publisher,
+  Release,
+  ReleaseProjectOptions,
+} from "../release";
 import { Task } from "../task";
 import { deepMerge } from "../util";
 import { Version } from "../version";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import {
+  CodeArtifactOptions,
   NodePackage,
   NodePackageManager,
   NodePackageOptions,
 } from "./node-package";
 import { Projenrc, ProjenrcOptions } from "./projenrc";
-import { UpgradeDependenciesSchedule } from "./upgrade-dependencies";
 
 const PROJEN_SCRIPT = "projen";
 
@@ -171,50 +177,11 @@ export interface NodeProjectOptions
   readonly depsUpgrade?: boolean;
 
   /**
-   * Options for depsUpgrade.
+   * Options for `UpgradeDependencies`.
    *
    * @default - default options
    */
   readonly depsUpgradeOptions?: UpgradeDependenciesOptions;
-
-  /**
-   * Periodically submits a pull request for projen upgrades (executes `yarn
-   * projen:upgrade`).
-   *
-   * This setting is a GitHub secret name which contains a GitHub Access Token
-   * with `repo` and `workflow` permissions.
-   *
-   * This token is used to submit the upgrade pull request, which will likely
-   * include workflow updates.
-   *
-   * To create a personal access token see https://github.com/settings/tokens
-   *
-   * @default - no automatic projen upgrade pull requests
-   *
-   * @deprecated use `githubTokenSecret` instead.
-   */
-  readonly projenUpgradeSecret?: string;
-
-  /**
-   * Automatically approve projen upgrade PRs, allowing them to be
-   * merged by mergify (if configued).
-   *
-   * Throw if set to true but `autoApproveOptions` are not defined.
-   *
-   * @default false
-   * @deprecated use `autoApproveProjenUpgrades`.
-   */
-  readonly projenUpgradeAutoMerge?: boolean;
-
-  /**
-   * Automatically approve projen upgrade PRs, allowing them to be
-   * merged by mergify (if configued).
-   *
-   * Throw if set to true but `autoApproveOptions` are not defined.
-   *
-   * @default false
-   */
-  readonly autoApproveProjenUpgrades?: boolean;
 
   /**
    * Automatically approve deps upgrade PRs, allowing them to be
@@ -225,13 +192,6 @@ export interface NodeProjectOptions
    * @default - true
    */
   readonly autoApproveUpgrades?: boolean;
-
-  /**
-   * Customize the projenUpgrade schedule in cron expression.
-   *
-   @default [ "0 6 * * *" ]
-   */
-  readonly projenUpgradeSchedule?: string[];
 
   /**
    * Defines an .npmignore file. Normally this is only needed for libraries that
@@ -378,7 +338,7 @@ export class NodeProject extends GitHubProject {
   }
 
   /**
-   * Automatic PR merges.
+   * Component that sets up mergify for merging approved pull requests.
    */
   public readonly autoMerge?: AutoMerge;
 
@@ -610,35 +570,48 @@ export class NodeProject extends GitHubProject {
       this.publisher = this.release.publisher;
 
       if (options.releaseToNpm ?? false) {
+        const codeArtifactOptions = isAwsCodeArtifactRegistry(
+          this.package.npmRegistry
+        )
+          ? {
+              accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret,
+              secretAccessKeySecret:
+                options.codeArtifactOptions?.secretAccessKeySecret,
+              roleToAssume: options.codeArtifactOptions?.roleToAssume,
+            }
+          : {};
         this.release.publisher.publishToNpm({
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,
-          codeArtifactOptions: {
-            accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret,
-            secretAccessKeySecret:
-              options.codeArtifactOptions?.secretAccessKeySecret,
-            roleToAssume: options.codeArtifactOptions?.roleToAssume,
-          },
+          codeArtifactOptions,
         });
       }
     } else {
       // validate that no release options are selected if the release workflow is disabled.
       if (options.releaseToNpm) {
-        throw new Error('"releaseToNpm" is not supported for APP projects');
+        throw new Error(
+          '"releaseToNpm" is not supported if "release" is not set'
+        );
       }
 
       if (options.releaseEveryCommit) {
         throw new Error(
-          '"releaseEveryCommit" is not supported for APP projects'
+          '"releaseEveryCommit" is not supported if "release" is not set'
         );
       }
 
       if (options.releaseSchedule) {
-        throw new Error('"releaseSchedule" is not supported for APP projects');
+        throw new Error(
+          '"releaseSchedule" is not supported if "release" is not set'
+        );
       }
     }
 
-    if (this.github?.mergify && this.buildWorkflow?.buildJobIds) {
+    if (
+      (options.autoMerge ?? true) &&
+      this.github?.mergify &&
+      this.buildWorkflow?.buildJobIds
+    ) {
       this.autoMerge = new AutoMerge(this.github, options.autoMergeOptions);
       this.autoMerge.addConditionsLater({
         render: () =>
@@ -656,26 +629,7 @@ export class NodeProject extends GitHubProject {
       );
     }
 
-    if (
-      options.projenUpgradeAutoMerge !== undefined &&
-      options.autoApproveProjenUpgrades !== undefined
-    ) {
-      throw new Error(
-        "'projenUpgradeAutoMerge' cannot be configured together with 'autoApproveProjenUpgrades'"
-      );
-    }
-
-    const projenAutoApprove =
-      options.autoApproveProjenUpgrades ??
-      options.projenUpgradeAutoMerge ??
-      false;
     const depsAutoApprove = options.autoApproveUpgrades ?? false;
-
-    if (projenAutoApprove && !this.autoApprove && this.github) {
-      throw new Error(
-        "Automatic approval of projen upgrades requires configuring `autoApproveOptions`"
-      );
-    }
 
     if (depsAutoApprove && !this.autoApprove && this.github) {
       throw new Error(
@@ -688,23 +642,18 @@ export class NodeProject extends GitHubProject {
         ? [this.autoApprove.label]
         : undefined;
 
-    let ignoresProjen;
     if (dependabot) {
       const defaultOptions = {
         labels: autoApproveLabel(depsAutoApprove),
       };
-      const dependabotConf = this.github?.addDependabot(
+      this.github?.addDependabot(
         deepMerge([defaultOptions, options.dependabotOptions ?? {}])
       );
-      ignoresProjen = dependabotConf?.ignoresProjen;
     }
+
     if (depsUpgrade) {
       const defaultOptions: UpgradeDependenciesOptions = {
-        // if projen secret is defined we can also upgrade projen here.
-        ignoreProjen: !options.projenUpgradeSecret,
         workflowOptions: {
-          // if projen secret is defined, use it (otherwise default to GITHUB_TOKEN).
-          secret: options.projenUpgradeSecret,
           container: options.workflowContainerImage
             ? {
                 image: options.workflowContainerImage,
@@ -718,29 +667,6 @@ export class NodeProject extends GitHubProject {
         this,
         deepMerge([defaultOptions, options.depsUpgradeOptions ?? {}])
       );
-      ignoresProjen = this.upgradeWorkflow.ignoresProjen;
-    }
-
-    // create a dedicated workflow to upgrade projen itself if needed
-    if (ignoresProjen && this.package.packageName !== "projen") {
-      new UpgradeDependencies(this, {
-        include: ["projen"],
-        taskName: "upgrade-projen",
-        pullRequestTitle: "upgrade projen",
-        ignoreProjen: false,
-        workflow: !!options.projenUpgradeSecret,
-        workflowOptions: {
-          schedule: UpgradeDependenciesSchedule.expressions(
-            options.projenUpgradeSchedule ?? ["0 6 * * *"]
-          ),
-          container: options.workflowContainerImage
-            ? { image: options.workflowContainerImage }
-            : undefined,
-          secret: options.projenUpgradeSecret,
-          labels: autoApproveLabel(projenAutoApprove),
-          gitIdentity: this.workflowGitIdentity,
-        },
-      });
     }
 
     if (options.pullRequestTemplate ?? true) {
@@ -841,6 +767,63 @@ export class NodeProject extends GitHubProject {
   }
 
   /**
+   * Get steps for scoped package access
+   *
+   * @param codeArtifactOptions Details of logging in to AWS
+   * @returns array of job steps required for each private scoped packages
+   */
+  private getScopedPackageSteps(
+    codeArtifactOptions: CodeArtifactOptions | undefined
+  ): JobStep[] {
+    const parsedCodeArtifactOptions = {
+      accessKeyIdSecret:
+        codeArtifactOptions?.accessKeyIdSecret ?? "AWS_ACCESS_KEY_ID",
+      secretAccessKeySecret:
+        codeArtifactOptions?.secretAccessKeySecret ?? "AWS_SECRET_ACCESS_KEY",
+      roleToAssume: codeArtifactOptions?.roleToAssume,
+    };
+
+    if (parsedCodeArtifactOptions.roleToAssume) {
+      return [
+        {
+          name: "Configure AWS Credentials",
+          uses: "aws-actions/configure-aws-credentials@v1",
+          with: {
+            "aws-access-key-id": secretToString(
+              parsedCodeArtifactOptions.accessKeyIdSecret
+            ),
+            "aws-secret-access-key": secretToString(
+              parsedCodeArtifactOptions.secretAccessKeySecret
+            ),
+            "aws-region": "us-east-2",
+            "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
+            "role-duration-seconds": 900,
+          },
+        },
+        {
+          name: "AWS CodeArtifact Login",
+          run: `${this.runScriptCommand} ca:login`,
+        },
+      ];
+    }
+
+    return [
+      {
+        name: "AWS CodeArtifact Login",
+        run: `${this.runScriptCommand} ca:login`,
+        env: {
+          AWS_ACCESS_KEY_ID: secretToString(
+            parsedCodeArtifactOptions.accessKeyIdSecret
+          ),
+          AWS_SECRET_ACCESS_KEY: secretToString(
+            parsedCodeArtifactOptions.secretAccessKeySecret
+          ),
+        },
+      },
+    ];
+  }
+
+  /**
    * Returns the set of workflow steps which should be executed to bootstrap a
    * workflow.
    *
@@ -872,6 +855,12 @@ export class NodeProject extends GitHubProject {
     }
 
     const mutable = options.mutable ?? false;
+
+    if (this.package.scopedPackagesOptions) {
+      install.push(
+        ...this.getScopedPackageSteps(this.package.codeArtifactOptions)
+      );
+    }
 
     install.push({
       name: "Install dependencies",

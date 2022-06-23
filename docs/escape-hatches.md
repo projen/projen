@@ -9,8 +9,8 @@ are ways you can bypass projen's regular APIs to add special configuration code.
 ## Overrides
 
 For any "object"-based files, such as JSON, YAML, TOML, or XML, you can
-override properties through the `addOverride` and `addDeletionOverride` methods
-accessible on file objects:
+override properties through the `addOverride`, `addDeletionOverride` and
+`addToArray` methods accessible on file objects:
 
 ```ts
 // Get the ObjectFile
@@ -21,7 +21,27 @@ packageJson.addOverride('description', 'the next generation of logging!');
 packageJson.addOverride('keywords', ['experimental', 'web', 'productivity', 'exciting']);
 packageJson.addOverride('author.name', 'A. Mused');
 packageJson.addDeletionOverride('author.organization');
+packageJson.addToArray('keywords', 'logging', 'next-gen');
 
 // Use array indices to override specific array elements
 packageJson.addOverride('bundledDependencies.3', 'react');
 ```
+
+## Removing files
+
+You can remove a file from the project through `tryRemoveFile` method on the
+`Project` class.
+
+```ts
+new TextFile(project, "hello.txt", { lines: "original" });
+
+project.tryRemoveFile("hello.txt");
+
+new TextFile(project, "hello.txt", { lines: "better" });
+```
+
+> Note: It's recommended that this used carefully since removing files may be
+unexpected for users depending on where it's used. For example, if you created a
+component named `MyFancyGitIgnore` and had it remove any existing `.gitignore`
+files in the project, then users may be surprised when customizations for their
+existing `.gitignore` file are nullified.

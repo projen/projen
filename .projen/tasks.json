@@ -104,7 +104,7 @@
       "description": "Only compile",
       "steps": [
         {
-          "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies"
+          "exec": "jsii --silence-warnings=reserved-word"
         }
       ]
     },
@@ -195,7 +195,7 @@
       "description": "Creates the distribution package",
       "steps": [
         {
-          "exec": "if [ ! -z ${CI} ]; then mkdir -p dist && rsync -a . dist --exclude .git --exclude node_modules; else /bin/bash ./projen.bash package-all; fi"
+          "exec": "if [ ! -z ${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else /bin/bash ./projen.bash package-all; fi"
         }
       ]
     },
@@ -322,7 +322,7 @@
       "description": "Run tests",
       "steps": [
         {
-          "exec": "jest --passWithNoTests --all --updateSnapshot"
+          "exec": "jest --passWithNoTests --all --updateSnapshot --coverageProvider=v8"
         },
         {
           "spawn": "eslint"
@@ -374,25 +374,25 @@
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='yaml,markmac,projen'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='yaml,markmac'"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='yaml,markmac,projen'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='yaml,markmac'"
         },
         {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='yaml,markmac,projen'"
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='yaml,markmac'"
         },
         {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='yaml,markmac,projen'"
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='yaml,markmac'"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='yaml,markmac,projen'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='yaml,markmac'"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/conventional-changelog-config-spec @types/fs-extra @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema npm-check-updates prettier standard-version ts-jest typescript @iarna/toml case chalk conventional-changelog-config-spec fs-extra glob ini semver shx xmlbuilder2 yaml yargs"
+          "exec": "yarn upgrade @types/conventional-changelog-config-spec @types/fs-extra @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest-junit jest jsii jsii-diff jsii-docgen jsii-pacmak json-schema json5 npm-check-updates prettier standard-version ts-jest typescript @iarna/toml case chalk conventional-changelog-config-spec fs-extra glob ini semver shx xmlbuilder2 yaml yargs"
         },
         {
           "exec": "/bin/bash ./projen.bash"
@@ -407,7 +407,7 @@
       "description": "Watch & compile in the background",
       "steps": [
         {
-          "exec": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies"
+          "exec": "jsii -w --silence-warnings=reserved-word"
         }
       ]
     }

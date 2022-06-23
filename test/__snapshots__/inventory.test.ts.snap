@@ -44,6 +44,23 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
+      },
+      Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
         "docs": "Configure options for automatic merging on GitHub.",
         "featured": false,
@@ -693,6 +710,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Use projenrc in java.",
         "featured": false,
@@ -766,6 +802,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -799,6 +836,42 @@ Array [
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
       },
       Object {
         "default": "ApprovalLevel.BROADENING",
@@ -1081,6 +1154,23 @@ Array [
         ],
         "simpleType": "AutoApproveOptions",
         "switch": "auto-approve-options",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -1751,6 +1841,42 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use projenrc in javascript.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projenrcJs",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcJs",
+        ],
+        "simpleType": "boolean",
+        "switch": "projenrc-js",
+      },
+      Object {
         "default": "false",
         "docs": "Generate (once) .projenrc.json (in JSON). Set to \`false\` in order to disable .projenrc.json generation.",
         "featured": false,
@@ -1787,8 +1913,27 @@ Array [
         "switch": "projenrc-json-options",
       },
       Object {
+        "default": "- default options",
+        "docs": "Options related to projenrc in JavaScript.",
+        "featured": false,
+        "fqn": "projen.javascript.ProjenrcOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.ProjenrcOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "projenrcJsOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcJsOptions",
+        ],
+        "simpleType": "ProjenrcOptions",
+        "switch": "projenrc-js-options",
+      },
+      Object {
         "default": "true",
-        "docs": "Use projenrc in python.",
+        "docs": "Use projenrc in Python.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -1824,6 +1969,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -1893,6 +2039,42 @@ Array [
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
       },
       Object {
         "default": "ApprovalLevel.BROADENING",
@@ -2279,23 +2461,6 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
-        "default": "false",
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "autoApproveProjenUpgrades",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "autoApproveProjenUpgrades",
-        ],
-        "simpleType": "boolean",
-        "switch": "auto-approve-projen-upgrades",
-      },
-      Object {
         "default": "- true",
         "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
         "featured": false,
@@ -2328,6 +2493,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -2658,7 +2840,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -2876,7 +3058,7 @@ Array [
       },
       Object {
         "default": "- default options",
-        "docs": "Options for depsUpgrade.",
+        "docs": "Options for \`UpgradeDependencies\`.",
         "featured": false,
         "fqn": "projen.javascript.UpgradeDependenciesOptions",
         "fullType": Object {
@@ -2998,6 +3180,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "docs-directory",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically adds an \`cloudfront.experimental.EdgeFunction\` for each \`.edge-lambda.ts\` handler in your source tree. If this is disabled, you can manually add an \`awscdk.AutoDiscover\` component to your project.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "edgeLambdaAutoDiscover",
+        "optional": true,
+        "parent": "AwsCdkTypeScriptAppOptions",
+        "path": Array [
+          "edgeLambdaAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "edge-lambda-auto-discover",
       },
       Object {
         "default": "\\"lib/index.js\\"",
@@ -3881,6 +4080,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -4006,6 +4224,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -4020,64 +4239,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-token-secret",
-      },
-      Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeAutoMerge",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeAutoMerge",
-        ],
-        "simpleType": "boolean",
-        "switch": "projen-upgrade-auto-merge",
-      },
-      Object {
-        "default": "[ \\"0 6 * * *\\" ]",
-        "docs": "Customize the projenUpgrade schedule in cron expression.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSchedule",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSchedule",
-        ],
-        "simpleType": "unknown",
-        "switch": "projen-upgrade-schedule",
-      },
-      Object {
-        "default": "- no automatic projen upgrade pull requests",
-        "deprecated": true,
-        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSecret",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-upgrade-secret",
       },
       Object {
         "default": "- Defaults to the latest version.",
@@ -4408,6 +4569,42 @@ Array [
         "switch": "release-workflow-setup-steps",
       },
       Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": Object {
@@ -4474,6 +4671,28 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "default": "- fetch all scoped packages from the public npm registry",
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -4995,23 +5214,6 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
-        "default": "false",
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "autoApproveProjenUpgrades",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "autoApproveProjenUpgrades",
-        ],
-        "simpleType": "boolean",
-        "switch": "auto-approve-projen-upgrades",
-      },
-      Object {
         "default": "- true",
         "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
         "featured": false,
@@ -5044,6 +5246,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -5359,7 +5578,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -5589,7 +5808,7 @@ Array [
       },
       Object {
         "default": "- default options",
-        "docs": "Options for depsUpgrade.",
+        "docs": "Options for \`UpgradeDependencies\`.",
         "featured": false,
         "fqn": "projen.javascript.UpgradeDependenciesOptions",
         "fullType": Object {
@@ -5746,6 +5965,23 @@ Array [
         ],
         "simpleType": "JsiiDotNetTarget",
         "switch": "dotnet",
+      },
+      Object {
+        "default": "true",
+        "docs": "Automatically adds an \`cloudfront.experimental.EdgeFunction\` for each \`.edge-lambda.ts\` handler in your source tree. If this is disabled, you can manually add an \`awscdk.AutoDiscover\` component to your project.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "edgeLambdaAutoDiscover",
+        "optional": true,
+        "parent": "AwsCdkConstructLibraryOptions",
+        "path": Array [
+          "edgeLambdaAutoDiscover",
+        ],
+        "simpleType": "boolean",
+        "switch": "edge-lambda-auto-discover",
       },
       Object {
         "default": "\\"lib/index.js\\"",
@@ -6633,6 +6869,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -6758,6 +7013,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -6772,64 +7028,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-token-secret",
-      },
-      Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeAutoMerge",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeAutoMerge",
-        ],
-        "simpleType": "boolean",
-        "switch": "projen-upgrade-auto-merge",
-      },
-      Object {
-        "default": "[ \\"0 6 * * *\\" ]",
-        "docs": "Customize the projenUpgrade schedule in cron expression.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSchedule",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSchedule",
-        ],
-        "simpleType": "unknown",
-        "switch": "projen-upgrade-schedule",
-      },
-      Object {
-        "default": "- no automatic projen upgrade pull requests",
-        "deprecated": true,
-        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSecret",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-upgrade-secret",
       },
       Object {
         "default": "- Defaults to the latest version.",
@@ -7254,6 +7452,42 @@ Array [
         "switch": "release-workflow-setup-steps",
       },
       Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": Object {
@@ -7333,6 +7567,28 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "default": "- fetch all scoped packages from the public npm registry",
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -8833,23 +9089,6 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
-        "default": "false",
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "autoApproveProjenUpgrades",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "autoApproveProjenUpgrades",
-        ],
-        "simpleType": "boolean",
-        "switch": "auto-approve-projen-upgrades",
-      },
-      Object {
         "default": "- true",
         "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
         "featured": false,
@@ -8882,6 +9121,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -9189,7 +9445,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -9401,7 +9657,7 @@ Array [
       },
       Object {
         "default": "- default options",
-        "docs": "Options for depsUpgrade.",
+        "docs": "Options for \`UpgradeDependencies\`.",
         "featured": false,
         "fqn": "projen.javascript.UpgradeDependenciesOptions",
         "fullType": Object {
@@ -10370,6 +10626,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -10495,6 +10770,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -10509,64 +10785,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-token-secret",
-      },
-      Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeAutoMerge",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeAutoMerge",
-        ],
-        "simpleType": "boolean",
-        "switch": "projen-upgrade-auto-merge",
-      },
-      Object {
-        "default": "[ \\"0 6 * * *\\" ]",
-        "docs": "Customize the projenUpgrade schedule in cron expression.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSchedule",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSchedule",
-        ],
-        "simpleType": "unknown",
-        "switch": "projen-upgrade-schedule",
-      },
-      Object {
-        "default": "- no automatic projen upgrade pull requests",
-        "deprecated": true,
-        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSecret",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-upgrade-secret",
       },
       Object {
         "default": "- Defaults to the latest version.",
@@ -10897,6 +11115,42 @@ Array [
         "switch": "release-workflow-setup-steps",
       },
       Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": Object {
@@ -10944,6 +11198,28 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "default": "- fetch all scoped packages from the public npm registry",
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -11421,23 +11697,6 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
-        "default": "false",
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "autoApproveProjenUpgrades",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "autoApproveProjenUpgrades",
-        ],
-        "simpleType": "boolean",
-        "switch": "auto-approve-projen-upgrades",
-      },
-      Object {
         "default": "- true",
         "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
         "featured": false,
@@ -11470,6 +11729,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -11706,7 +11982,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -11952,7 +12228,7 @@ Array [
       },
       Object {
         "default": "- default options",
-        "docs": "Options for depsUpgrade.",
+        "docs": "Options for \`UpgradeDependencies\`.",
         "featured": false,
         "fqn": "projen.javascript.UpgradeDependenciesOptions",
         "fullType": Object {
@@ -12943,6 +13219,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -13068,6 +13363,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -13082,64 +13378,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-token-secret",
-      },
-      Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeAutoMerge",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeAutoMerge",
-        ],
-        "simpleType": "boolean",
-        "switch": "projen-upgrade-auto-merge",
-      },
-      Object {
-        "default": "[ \\"0 6 * * *\\" ]",
-        "docs": "Customize the projenUpgrade schedule in cron expression.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSchedule",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSchedule",
-        ],
-        "simpleType": "unknown",
-        "switch": "projen-upgrade-schedule",
-      },
-      Object {
-        "default": "- no automatic projen upgrade pull requests",
-        "deprecated": true,
-        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSecret",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-upgrade-secret",
       },
       Object {
         "default": "- Defaults to the latest version.",
@@ -13564,6 +13802,42 @@ Array [
         "switch": "release-workflow-setup-steps",
       },
       Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": Object {
@@ -13643,6 +13917,28 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "default": "- fetch all scoped packages from the public npm registry",
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -14120,23 +14416,6 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
-        "default": "false",
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "autoApproveProjenUpgrades",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "autoApproveProjenUpgrades",
-        ],
-        "simpleType": "boolean",
-        "switch": "auto-approve-projen-upgrades",
-      },
-      Object {
         "default": "- true",
         "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
         "featured": false,
@@ -14169,6 +14448,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -14371,7 +14667,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -14600,7 +14896,7 @@ Array [
       },
       Object {
         "default": "- default options",
-        "docs": "Options for depsUpgrade.",
+        "docs": "Options for \`UpgradeDependencies\`.",
         "featured": false,
         "fqn": "projen.javascript.UpgradeDependenciesOptions",
         "fullType": Object {
@@ -15574,6 +15870,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -15699,6 +16014,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -15713,64 +16029,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-token-secret",
-      },
-      Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeAutoMerge",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeAutoMerge",
-        ],
-        "simpleType": "boolean",
-        "switch": "projen-upgrade-auto-merge",
-      },
-      Object {
-        "default": "[ \\"0 6 * * *\\" ]",
-        "docs": "Customize the projenUpgrade schedule in cron expression.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSchedule",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSchedule",
-        ],
-        "simpleType": "unknown",
-        "switch": "projen-upgrade-schedule",
-      },
-      Object {
-        "default": "- no automatic projen upgrade pull requests",
-        "deprecated": true,
-        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSecret",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-upgrade-secret",
       },
       Object {
         "default": "- Defaults to the latest version.",
@@ -16195,6 +16453,42 @@ Array [
         "switch": "release-workflow-setup-steps",
       },
       Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": Object {
@@ -16274,6 +16568,28 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "default": "- fetch all scoped packages from the public npm registry",
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -16635,6 +16951,23 @@ Array [
         ],
         "simpleType": "AutoApproveOptions",
         "switch": "auto-approve-options",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -17050,6 +17383,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Use projenrc in java.",
         "featured": false,
@@ -17123,6 +17475,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -17156,6 +17509,42 @@ Array [
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
       },
       Object {
         "default": "true",
@@ -17458,23 +17847,6 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
-        "default": "false",
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "autoApproveProjenUpgrades",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "autoApproveProjenUpgrades",
-        ],
-        "simpleType": "boolean",
-        "switch": "auto-approve-projen-upgrades",
-      },
-      Object {
         "default": "- true",
         "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
         "featured": false,
@@ -17507,6 +17879,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -17674,7 +18063,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -17886,7 +18275,7 @@ Array [
       },
       Object {
         "default": "- default options",
-        "docs": "Options for depsUpgrade.",
+        "docs": "Options for \`UpgradeDependencies\`.",
         "featured": false,
         "fqn": "projen.javascript.UpgradeDependenciesOptions",
         "fullType": Object {
@@ -18860,6 +19249,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -18985,6 +19393,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -18999,64 +19408,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-token-secret",
-      },
-      Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeAutoMerge",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeAutoMerge",
-        ],
-        "simpleType": "boolean",
-        "switch": "projen-upgrade-auto-merge",
-      },
-      Object {
-        "default": "[ \\"0 6 * * *\\" ]",
-        "docs": "Customize the projenUpgrade schedule in cron expression.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSchedule",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSchedule",
-        ],
-        "simpleType": "unknown",
-        "switch": "projen-upgrade-schedule",
-      },
-      Object {
-        "default": "- no automatic projen upgrade pull requests",
-        "deprecated": true,
-        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSecret",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-upgrade-secret",
       },
       Object {
         "default": "- Defaults to the latest version.",
@@ -19481,6 +19832,42 @@ Array [
         "switch": "release-workflow-setup-steps",
       },
       Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": Object {
@@ -19560,6 +19947,28 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "default": "- fetch all scoped packages from the public npm registry",
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -20022,23 +20431,6 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
-        "default": "false",
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "autoApproveProjenUpgrades",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "autoApproveProjenUpgrades",
-        ],
-        "simpleType": "boolean",
-        "switch": "auto-approve-projen-upgrades",
-      },
-      Object {
         "default": "- true",
         "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
         "featured": false,
@@ -20071,6 +20463,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -20238,7 +20647,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -20416,7 +20825,7 @@ Array [
       },
       Object {
         "default": "- default options",
-        "docs": "Options for depsUpgrade.",
+        "docs": "Options for \`UpgradeDependencies\`.",
         "featured": false,
         "fqn": "projen.javascript.UpgradeDependenciesOptions",
         "fullType": Object {
@@ -21213,6 +21622,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -21303,6 +21731,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -21317,64 +21746,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-token-secret",
-      },
-      Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeAutoMerge",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeAutoMerge",
-        ],
-        "simpleType": "boolean",
-        "switch": "projen-upgrade-auto-merge",
-      },
-      Object {
-        "default": "[ \\"0 6 * * *\\" ]",
-        "docs": "Customize the projenUpgrade schedule in cron expression.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSchedule",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSchedule",
-        ],
-        "simpleType": "unknown",
-        "switch": "projen-upgrade-schedule",
-      },
-      Object {
-        "default": "- no automatic projen upgrade pull requests",
-        "deprecated": true,
-        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSecret",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-upgrade-secret",
       },
       Object {
         "default": "- Defaults to the latest version.",
@@ -21705,6 +22076,42 @@ Array [
         "switch": "release-workflow-setup-steps",
       },
       Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": Object {
@@ -21752,6 +22159,28 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "default": "- fetch all scoped packages from the public npm registry",
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -22142,23 +22571,6 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
-        "default": "false",
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "autoApproveProjenUpgrades",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "autoApproveProjenUpgrades",
-        ],
-        "simpleType": "boolean",
-        "switch": "auto-approve-projen-upgrades",
-      },
-      Object {
         "default": "- true",
         "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
         "featured": false,
@@ -22191,6 +22603,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -22358,7 +22787,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -22536,7 +22965,7 @@ Array [
       },
       Object {
         "default": "- default options",
-        "docs": "Options for depsUpgrade.",
+        "docs": "Options for \`UpgradeDependencies\`.",
         "featured": false,
         "fqn": "projen.javascript.UpgradeDependenciesOptions",
         "fullType": Object {
@@ -23454,6 +23883,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -23579,6 +24027,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -23593,64 +24042,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-token-secret",
-      },
-      Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeAutoMerge",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeAutoMerge",
-        ],
-        "simpleType": "boolean",
-        "switch": "projen-upgrade-auto-merge",
-      },
-      Object {
-        "default": "[ \\"0 6 * * *\\" ]",
-        "docs": "Customize the projenUpgrade schedule in cron expression.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSchedule",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSchedule",
-        ],
-        "simpleType": "unknown",
-        "switch": "projen-upgrade-schedule",
-      },
-      Object {
-        "default": "- no automatic projen upgrade pull requests",
-        "deprecated": true,
-        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSecret",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-upgrade-secret",
       },
       Object {
         "default": "- Defaults to the latest version.",
@@ -23981,6 +24372,42 @@ Array [
         "switch": "release-workflow-setup-steps",
       },
       Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": Object {
@@ -24028,6 +24455,28 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "default": "- fetch all scoped packages from the public npm registry",
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -24490,23 +24939,6 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
-        "default": "false",
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "autoApproveProjenUpgrades",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "autoApproveProjenUpgrades",
-        ],
-        "simpleType": "boolean",
-        "switch": "auto-approve-projen-upgrades",
-      },
-      Object {
         "default": "- true",
         "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
         "featured": false,
@@ -24539,6 +24971,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -24706,7 +25155,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -24884,7 +25333,7 @@ Array [
       },
       Object {
         "default": "- default options",
-        "docs": "Options for depsUpgrade.",
+        "docs": "Options for \`UpgradeDependencies\`.",
         "featured": false,
         "fqn": "projen.javascript.UpgradeDependenciesOptions",
         "fullType": Object {
@@ -25681,6 +26130,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -25771,6 +26239,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -25785,64 +26254,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-token-secret",
-      },
-      Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeAutoMerge",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeAutoMerge",
-        ],
-        "simpleType": "boolean",
-        "switch": "projen-upgrade-auto-merge",
-      },
-      Object {
-        "default": "[ \\"0 6 * * *\\" ]",
-        "docs": "Customize the projenUpgrade schedule in cron expression.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSchedule",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSchedule",
-        ],
-        "simpleType": "unknown",
-        "switch": "projen-upgrade-schedule",
-      },
-      Object {
-        "default": "- no automatic projen upgrade pull requests",
-        "deprecated": true,
-        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSecret",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-upgrade-secret",
       },
       Object {
         "default": "- Defaults to the latest version.",
@@ -26173,6 +26584,42 @@ Array [
         "switch": "release-workflow-setup-steps",
       },
       Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": Object {
@@ -26203,6 +26650,28 @@ Array [
         ],
         "simpleType": "string",
         "switch": "repository-directory",
+      },
+      Object {
+        "default": "- fetch all scoped packages from the public npm registry",
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -26547,6 +27016,42 @@ Array [
         "simpleType": "ProjenrcOptions",
         "switch": "projenrc-json-options",
       },
+      Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
     ],
     "pjid": "project",
     "typename": "Project",
@@ -26607,6 +27112,23 @@ Array [
         ],
         "simpleType": "AutoApproveOptions",
         "switch": "auto-approve-options",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -27057,6 +27579,42 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use projenrc in javascript.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projenrcJs",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcJs",
+        ],
+        "simpleType": "boolean",
+        "switch": "projenrc-js",
+      },
+      Object {
         "default": "false",
         "docs": "Generate (once) .projenrc.json (in JSON). Set to \`false\` in order to disable .projenrc.json generation.",
         "featured": false,
@@ -27093,8 +27651,27 @@ Array [
         "switch": "projenrc-json-options",
       },
       Object {
+        "default": "- default options",
+        "docs": "Options related to projenrc in JavaScript.",
+        "featured": false,
+        "fqn": "projen.javascript.ProjenrcOptions",
+        "fullType": Object {
+          "fqn": "projen.javascript.ProjenrcOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "projenrcJsOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcJsOptions",
+        ],
+        "simpleType": "ProjenrcOptions",
+        "switch": "projenrc-js-options",
+      },
+      Object {
         "default": "true",
-        "docs": "Use projenrc in python.",
+        "docs": "Use projenrc in Python.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -27130,6 +27707,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -27199,6 +27777,42 @@ Array [
         ],
         "simpleType": "SampleReadmeProps",
         "switch": "readme",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
       },
       Object {
         "default": "true",
@@ -27488,23 +28102,6 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
-        "default": "false",
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "autoApproveProjenUpgrades",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "autoApproveProjenUpgrades",
-        ],
-        "simpleType": "boolean",
-        "switch": "auto-approve-projen-upgrades",
-      },
-      Object {
         "default": "- true",
         "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
         "featured": false,
@@ -27537,6 +28134,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -27704,7 +28318,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -27882,7 +28496,7 @@ Array [
       },
       Object {
         "default": "- default options",
-        "docs": "Options for depsUpgrade.",
+        "docs": "Options for \`UpgradeDependencies\`.",
         "featured": false,
         "fqn": "projen.javascript.UpgradeDependenciesOptions",
         "fullType": Object {
@@ -28679,6 +29293,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -28769,6 +29402,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -28783,64 +29417,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-token-secret",
-      },
-      Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeAutoMerge",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeAutoMerge",
-        ],
-        "simpleType": "boolean",
-        "switch": "projen-upgrade-auto-merge",
-      },
-      Object {
-        "default": "[ \\"0 6 * * *\\" ]",
-        "docs": "Customize the projenUpgrade schedule in cron expression.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSchedule",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSchedule",
-        ],
-        "simpleType": "unknown",
-        "switch": "projen-upgrade-schedule",
-      },
-      Object {
-        "default": "- no automatic projen upgrade pull requests",
-        "deprecated": true,
-        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSecret",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-upgrade-secret",
       },
       Object {
         "default": "- Defaults to the latest version.",
@@ -29171,6 +29747,42 @@ Array [
         "switch": "release-workflow-setup-steps",
       },
       Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": Object {
@@ -29240,6 +29852,28 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "default": "- fetch all scoped packages from the public npm registry",
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -29596,23 +30230,6 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
-        "default": "false",
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "autoApproveProjenUpgrades",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "autoApproveProjenUpgrades",
-        ],
-        "simpleType": "boolean",
-        "switch": "auto-approve-projen-upgrades",
-      },
-      Object {
         "default": "- true",
         "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
         "featured": false,
@@ -29645,6 +30262,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -29812,7 +30446,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -29990,7 +30624,7 @@ Array [
       },
       Object {
         "default": "- default options",
-        "docs": "Options for depsUpgrade.",
+        "docs": "Options for \`UpgradeDependencies\`.",
         "featured": false,
         "fqn": "projen.javascript.UpgradeDependenciesOptions",
         "fullType": Object {
@@ -30908,6 +31542,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -31033,6 +31686,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -31047,64 +31701,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-token-secret",
-      },
-      Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeAutoMerge",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeAutoMerge",
-        ],
-        "simpleType": "boolean",
-        "switch": "projen-upgrade-auto-merge",
-      },
-      Object {
-        "default": "[ \\"0 6 * * *\\" ]",
-        "docs": "Customize the projenUpgrade schedule in cron expression.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSchedule",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSchedule",
-        ],
-        "simpleType": "unknown",
-        "switch": "projen-upgrade-schedule",
-      },
-      Object {
-        "default": "- no automatic projen upgrade pull requests",
-        "deprecated": true,
-        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSecret",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-upgrade-secret",
       },
       Object {
         "default": "- Defaults to the latest version.",
@@ -31435,6 +32031,42 @@ Array [
         "switch": "release-workflow-setup-steps",
       },
       Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": Object {
@@ -31504,6 +32136,28 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "default": "- fetch all scoped packages from the public npm registry",
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -31949,23 +32603,6 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
-        "default": "false",
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "autoApproveProjenUpgrades",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "autoApproveProjenUpgrades",
-        ],
-        "simpleType": "boolean",
-        "switch": "auto-approve-projen-upgrades",
-      },
-      Object {
         "default": "- true",
         "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
         "featured": false,
@@ -31998,6 +32635,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -32165,7 +32819,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -32343,7 +32997,7 @@ Array [
       },
       Object {
         "default": "- default options",
-        "docs": "Options for depsUpgrade.",
+        "docs": "Options for \`UpgradeDependencies\`.",
         "featured": false,
         "fqn": "projen.javascript.UpgradeDependenciesOptions",
         "fullType": Object {
@@ -33261,6 +33915,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -33386,6 +34059,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -33400,64 +34074,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-token-secret",
-      },
-      Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeAutoMerge",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeAutoMerge",
-        ],
-        "simpleType": "boolean",
-        "switch": "projen-upgrade-auto-merge",
-      },
-      Object {
-        "default": "[ \\"0 6 * * *\\" ]",
-        "docs": "Customize the projenUpgrade schedule in cron expression.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSchedule",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSchedule",
-        ],
-        "simpleType": "unknown",
-        "switch": "projen-upgrade-schedule",
-      },
-      Object {
-        "default": "- no automatic projen upgrade pull requests",
-        "deprecated": true,
-        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSecret",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-upgrade-secret",
       },
       Object {
         "default": "- Defaults to the latest version.",
@@ -33788,6 +34404,42 @@ Array [
         "switch": "release-workflow-setup-steps",
       },
       Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": Object {
@@ -33835,6 +34487,28 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "default": "- fetch all scoped packages from the public npm registry",
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",
@@ -34280,23 +34954,6 @@ Array [
         "switch": "auto-approve-options",
       },
       Object {
-        "default": "false",
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "autoApproveProjenUpgrades",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "autoApproveProjenUpgrades",
-        ],
-        "simpleType": "boolean",
-        "switch": "auto-approve-projen-upgrades",
-      },
-      Object {
         "default": "- true",
         "docs": "Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).",
         "featured": false,
@@ -34329,6 +34986,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "auto-detect-bin",
+      },
+      Object {
+        "default": "true",
+        "docs": "Enable automatic merging on GitHub.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "autoMerge",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "autoMerge",
+        ],
+        "simpleType": "boolean",
+        "switch": "auto-merge",
       },
       Object {
         "default": "- see defaults in \`AutoMergeOptions\`",
@@ -34496,7 +35170,7 @@ Array [
       },
       Object {
         "default": "- undefined",
-        "docs": "Options for publishing npm package to AWS CodeArtifact.",
+        "docs": "Options for npm packages using AWS CodeArtifact.",
         "featured": false,
         "fqn": "projen.javascript.CodeArtifactOptions",
         "fullType": Object {
@@ -34674,7 +35348,7 @@ Array [
       },
       Object {
         "default": "- default options",
-        "docs": "Options for depsUpgrade.",
+        "docs": "Options for \`UpgradeDependencies\`.",
         "featured": false,
         "fqn": "projen.javascript.UpgradeDependenciesOptions",
         "fullType": Object {
@@ -35592,6 +36266,25 @@ Array [
         "switch": "projen-command",
       },
       Object {
+        "default": "- use a personal access token named PROJEN_GITHUB_TOKEN",
+        "docs": "Choose a method of providing GitHub API access for projen workflows.",
+        "featured": false,
+        "fqn": "projen.github.GithubCredentials",
+        "fullType": Object {
+          "fqn": "projen.github.GithubCredentials",
+        },
+        "jsonLike": false,
+        "kind": "class",
+        "name": "projenCredentials",
+        "optional": true,
+        "parent": "GitHubProjectOptions",
+        "path": Array [
+          "projenCredentials",
+        ],
+        "simpleType": "GithubCredentials",
+        "switch": "projen-credentials",
+      },
+      Object {
         "default": "true",
         "docs": "Indicates of \\"projen\\" should be installed as a devDependency.",
         "featured": false,
@@ -35717,6 +36410,7 @@ Array [
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
+        "deprecated": true,
         "docs": "The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.",
         "featured": false,
         "fullType": Object {
@@ -35731,64 +36425,6 @@ Array [
         ],
         "simpleType": "string",
         "switch": "projen-token-secret",
-      },
-      Object {
-        "default": "false",
-        "deprecated": true,
-        "docs": "Automatically approve projen upgrade PRs, allowing them to be merged by mergify (if configued).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "boolean",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeAutoMerge",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeAutoMerge",
-        ],
-        "simpleType": "boolean",
-        "switch": "projen-upgrade-auto-merge",
-      },
-      Object {
-        "default": "[ \\"0 6 * * *\\" ]",
-        "docs": "Customize the projenUpgrade schedule in cron expression.",
-        "featured": false,
-        "fullType": Object {
-          "collection": Object {
-            "elementtype": Object {
-              "primitive": "string",
-            },
-            "kind": "array",
-          },
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSchedule",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSchedule",
-        ],
-        "simpleType": "unknown",
-        "switch": "projen-upgrade-schedule",
-      },
-      Object {
-        "default": "- no automatic projen upgrade pull requests",
-        "deprecated": true,
-        "docs": "Periodically submits a pull request for projen upgrades (executes \`yarn projen:upgrade\`).",
-        "featured": false,
-        "fullType": Object {
-          "primitive": "string",
-        },
-        "jsonLike": true,
-        "name": "projenUpgradeSecret",
-        "optional": true,
-        "parent": "NodeProjectOptions",
-        "path": Array [
-          "projenUpgradeSecret",
-        ],
-        "simpleType": "string",
-        "switch": "projen-upgrade-secret",
       },
       Object {
         "default": "- Defaults to the latest version.",
@@ -36119,6 +36755,42 @@ Array [
         "switch": "release-workflow-setup-steps",
       },
       Object {
+        "default": "false",
+        "docs": "Use renovatebot to handle dependency upgrades.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "renovatebot",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebot",
+        ],
+        "simpleType": "boolean",
+        "switch": "renovatebot",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options for renovatebot.",
+        "featured": false,
+        "fqn": "projen.RenovatebotOptions",
+        "fullType": Object {
+          "fqn": "projen.RenovatebotOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "renovatebotOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "renovatebotOptions",
+        ],
+        "simpleType": "RenovatebotOptions",
+        "switch": "renovatebot-options",
+      },
+      Object {
         "docs": "The repository is the location where the actual code for your package lives.",
         "featured": false,
         "fullType": Object {
@@ -36166,6 +36838,28 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "sample-code",
+      },
+      Object {
+        "default": "- fetch all scoped packages from the public npm registry",
+        "docs": "Options for privately hosted scoped packages.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.javascript.ScopedPackagesOptions",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "scopedPackagesOptions",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "scopedPackagesOptions",
+        ],
+        "simpleType": "unknown",
+        "switch": "scoped-packages-options",
       },
       Object {
         "default": "{}",

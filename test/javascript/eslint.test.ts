@@ -129,3 +129,48 @@ test("if the prettier is configured, eslint is configured accordingly", () => {
     "prettier/prettier": ["error"],
   });
 });
+
+test("can output yml instead of json", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    prettier: true,
+  });
+
+  // WHEN
+  new Eslint(project, {
+    dirs: ["src"],
+    yaml: true,
+  });
+
+  // THEN
+  const output = synthSnapshot(project);
+  expect(output[".eslintrc.yml"]).toBeDefined();
+  expect(output[".eslintrc.json"]).toBeUndefined();
+});
+
+test("can override the parser", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+    prettier: true,
+  });
+
+  // WHEN
+  const eslint = new Eslint(project, {
+    dirs: ["src"],
+  });
+  eslint.addOverride({
+    files: ["*.json", "*.json5", "*.jsonc"],
+    parser: "jsonc-eslint-parser",
+  });
+  const output = synthSnapshot(project);
+
+  // THEN
+  expect(output[".eslintrc.json"].overrides).toContainEqual({
+    files: ["*.json", "*.json5", "*.jsonc"],
+    parser: "jsonc-eslint-parser",
+  });
+});

@@ -18,6 +18,7 @@ const PUBLIB_VERSION = "latest";
 const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";
 const ARTIFACTS_DOWNLOAD_DIR = "dist";
 const GITHUB_PACKAGES_MAVEN_REPOSITORY = "https://maven.pkg.github.com";
+const GITHUB_PACKAGES_NUGET_REPOSITORY = "https://nuget.pkg.github.com";
 const AWS_CODEARTIFACT_REGISTRY_REGEX = /.codeartifact.*.amazonaws.com/;
 const PUBLIB_TOOLCHAIN = {
   js: {},
@@ -111,6 +112,8 @@ export interface PublisherOptions {
  * Under the hood, it uses https://github.com/aws/publib
  */
 export class Publisher extends Component {
+  public static readonly PUBLISH_GIT_TASK_NAME = "publish:git";
+
   public readonly buildJobId: string;
   public readonly artifactName: string;
   public readonly publibVersion: string;
@@ -197,8 +200,8 @@ export class Publisher extends Component {
 
     const taskName =
       gitBranch === "main" || gitBranch === "master"
-        ? "publish:git"
-        : `publish:git:${gitBranch}`;
+        ? Publisher.PUBLISH_GIT_TASK_NAME
+        : `${Publisher.PUBLISH_GIT_TASK_NAME}:${gitBranch}`;
 
     const publishTask = this.project.addTask(taskName, {
       description:
@@ -339,6 +342,9 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToNuget(options: NugetPublishOptions = {}) {
+    const isGitHubPackages = options.nugetServer?.startsWith(
+      GITHUB_PACKAGES_NUGET_REPOSITORY
+    );
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
         name: "nuget",
@@ -346,8 +352,17 @@ export class Publisher extends Component {
         prePublishSteps: options.prePublishSteps ?? [],
         run: this.publibCommand("publib-nuget"),
         registryName: "NuGet Gallery",
+        permissions: {
+          contents: JobPermission.READ,
+          packages: isGitHubPackages ? JobPermission.WRITE : undefined,
+        },
         workflowEnv: {
-          NUGET_API_KEY: secret(options.nugetApiKeySecret ?? "NUGET_API_KEY"),
+          NUGET_API_KEY: secret(
+            isGitHubPackages
+              ? "GITHUB_TOKEN"
+              : options.nugetApiKeySecret ?? "NUGET_API_KEY"
+          ),
+          NUGET_SERVER: options.nugetServer ?? undefined,
         },
       })
     );
@@ -449,11 +464,32 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToGo(options: GoPublishOptions = {}) {
+    const prePublishSteps = options.prePublishSteps ?? [];
+    const workflowEnv: { [name: string]: string | undefined } = {};
+    if (options.githubUseSsh) {
+      workflowEnv.GITHUB_USE_SSH = "true";
+      workflowEnv.SSH_AUTH_SOCK = "/tmp/ssh_agent.sock";
+      prePublishSteps.push({
+        name: "Setup GitHub deploy key",
+        run: 'ssh-agent -a ${SSH_AUTH_SOCK} && ssh-add - <<< "${GITHUB_DEPLOY_KEY}"',
+        env: {
+          GITHUB_DEPLOY_KEY: secret(
+            options.githubDeployKeySecret ?? "GO_GITHUB_DEPLOY_KEY"
+          ),
+          SSH_AUTH_SOCK: workflowEnv.SSH_AUTH_SOCK,
+        },
+      });
+    } else {
+      workflowEnv.GITHUB_TOKEN = secret(
+        options.githubTokenSecret ?? "GO_GITHUB_TOKEN"
+      );
+    }
+
     this.addPublishJob(
       (_branch, _branchOptions): PublishJobOptions => ({
         name: "golang",
         publishTools: PUBLIB_TOOLCHAIN.go,
-        prePublishSteps: options.prePublishSteps ?? [],
+        prePublishSteps: prePublishSteps,
         run: this.publibCommand("publib-golang"),
         registryName: "GitHub Go Module Repository",
         env: {
@@ -465,9 +501,7 @@ export class Publisher extends Component {
             options.gitUserEmail ?? DEFAULT_GITHUB_ACTIONS_USER.email,
           GIT_COMMIT_MESSAGE: options.gitCommitMessage,
         },
-        workflowEnv: {
-          GITHUB_TOKEN: secret(options.githubTokenSecret ?? "GO_GITHUB_TOKEN"),
-        },
+        workflowEnv: workflowEnv,
       })
     );
   }
@@ -524,7 +558,7 @@ export class Publisher extends Component {
       const steps: JobStep[] = [
         {
           name: "Download build artifacts",
-          uses: "actions/download-artifact@v2",
+          uses: "actions/download-artifact@v3",
           with: {
             name: BUILD_ARTIFACT_NAME,
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for publib
@@ -785,6 +819,11 @@ export interface NugetPublishOptions extends CommonPublishOptions {
    * @default "NUGET_API_KEY"
    */
   readonly nugetApiKeySecret?: string;
+
+  /**
+   *  NuGet Server URL (defaults to nuget.org)
+   */
+  readonly nugetServer?: string;
 }
 
 /**
@@ -876,7 +915,8 @@ export interface MavenPublishOptions extends CommonPublishOptions {
 
 /**
  * @deprecated Use `GoPublishOptions` instead.
-export interface JsiiReleaseGo extends GoPublishOptions { }
+ */
+export interface JsiiReleaseGo extends GoPublishOptions {}
 
 /**
  * Options for Go releases.
@@ -886,9 +926,28 @@ export interface GoPublishOptions extends CommonPublishOptions {
    * The name of the secret that includes a personal GitHub access token used to
    * push to the GitHub repository.
    *
+   * Ignored if `githubUseSsh` is `true`.
+   *
    * @default "GO_GITHUB_TOKEN"
    */
   readonly githubTokenSecret?: string;
+
+  /**
+   * The name of the secret that includes a GitHub deploy key used to push to the
+   * GitHub repository.
+   *
+   * Ignored if `githubUseSsh` is `false`.
+   *
+   * @default "GO_GITHUB_DEPLOY_KEY"
+   */
+  readonly githubDeployKeySecret?: string;
+
+  /**
+   * Use SSH to push to GitHub instead of a personal accses token.
+   *
+   * @default false
+   */
+  readonly githubUseSsh?: boolean;
 
   /**
    * GitHub repository to push to.

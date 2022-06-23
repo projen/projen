@@ -4,6 +4,7 @@ import { Component } from "../component";
 import { kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
 import { GitHub } from "./github";
+import { GithubCredentials } from "./github-credentials";
 
 import * as workflows from "./workflows-model";
 
@@ -53,9 +54,9 @@ export class GithubWorkflow extends Component {
   public readonly file: YamlFile | undefined;
 
   /**
-   * The name of a secret that includes a PAT that can be used by workflows.
+   * GitHub API authentication method used by projen workflows.
    */
-  public readonly projenTokenSecret: string;
+  public readonly projenCredentials: GithubCredentials;
 
   private events: workflows.Triggers = {};
   private jobs: Record<string, workflows.Job> = {};
@@ -69,7 +70,7 @@ export class GithubWorkflow extends Component {
 
     this.name = name;
     this.concurrency = options.concurrency;
-    this.projenTokenSecret = github.projenTokenSecret;
+    this.projenCredentials = github.projenCredentials;
 
     const workflowsEnabled = github.workflowsEnabled || options.force;
 
@@ -268,35 +269,35 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.java) {
     steps.push({
-      uses: "actions/setup-java@v2",
+      uses: "actions/setup-java@v3",
       with: { distribution: "temurin", "java-version": tools.java.version },
     });
   }
 
   if (tools.node) {
     steps.push({
-      uses: "actions/setup-node@v2",
+      uses: "actions/setup-node@v3",
       with: { "node-version": tools.node.version },
     });
   }
 
   if (tools.python) {
     steps.push({
-      uses: "actions/setup-python@v2",
+      uses: "actions/setup-python@v3",
       with: { "python-version": tools.python.version },
     });
   }
 
   if (tools.go) {
     steps.push({
-      uses: "actions/setup-go@v2",
+      uses: "actions/setup-go@v3",
       with: { "go-version": tools.go.version },
     });
   }
 
   if (tools.dotnet) {
     steps.push({
-      uses: "actions/setup-dotnet@v1",
+      uses: "actions/setup-dotnet@v2",
       with: { "dotnet-version": tools.dotnet.version },
     });
   }

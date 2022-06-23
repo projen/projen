@@ -1,6 +1,7 @@
 import { Component } from "../component";
 import { Project } from "../project";
 import { Dependabot, DependabotOptions } from "./dependabot";
+import { GithubCredentials } from "./github-credentials";
 import { Mergify, MergifyOptions } from "./mergify";
 import { PullRequestTemplate } from "./pr-template";
 import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
@@ -44,11 +45,19 @@ export interface GitHubOptions {
   readonly pullRequestLintOptions?: PullRequestLintOptions;
 
   /**
+   * Choose a method of providing GitHub API access for projen workflows.
+   *
+   * @default - use a personal access token named PROJEN_GITHUB_TOKEN
+   */
+  readonly projenCredentials?: GithubCredentials;
+
+  /**
    * The name of a secret which includes a GitHub Personal Access Token to be
    * used by projen workflows. This token needs to have the `repo`, `workflows`
    * and `packages` scope.
    *
    * @default "PROJEN_GITHUB_TOKEN"
+   * @deprecated - use `projenCredentials`
    */
   readonly projenTokenSecret?: string;
 }
@@ -75,16 +84,32 @@ export class GitHub extends Component {
   public readonly workflowsEnabled: boolean;
 
   /**
-   * The name of a secret with a GitHub Personal Access Token to be used by
-   * projen workflows.
+   * GitHub API authentication method used by projen workflows.
    */
-  public readonly projenTokenSecret: string;
+  public readonly projenCredentials: GithubCredentials;
 
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
 
     this.workflowsEnabled = options.workflows ?? true;
-    this.projenTokenSecret = options.projenTokenSecret ?? "PROJEN_GITHUB_TOKEN";
+
+    if (options.projenCredentials && options.projenTokenSecret) {
+      throw new Error(
+        "projenTokenSecret is deprecated, please use projenCredentials instead"
+      );
+    }
+
+    if (options.projenTokenSecret) {
+      this.projenCredentials = GithubCredentials.fromPersonalAccessToken({
+        secret: options.projenTokenSecret,
+      });
+    } else if (options.projenCredentials) {
+      this.projenCredentials = options.projenCredentials;
+    } else {
+      this.projenCredentials = GithubCredentials.fromPersonalAccessToken({
+        secret: "PROJEN_GITHUB_TOKEN",
+      });
+    }
 
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this, options.mergifyOptions);

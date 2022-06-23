@@ -272,7 +272,7 @@ jobs:
       CI: \\"true\\"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -314,13 +314,13 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -341,11 +341,11 @@ jobs:
     permissions: {}
     if: \\"! needs.build.outputs.self_mutation_happened\\"
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -363,15 +363,15 @@ jobs:
     permissions: {}
     if: \\"! needs.build.outputs.self_mutation_happened\\"
     steps:
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 11.x
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -389,14 +389,14 @@ jobs:
     permissions: {}
     if: \\"! needs.build.outputs.self_mutation_happened\\"
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3
         with:
           python-version: 3.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -428,7 +428,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v3.4.6
+      - uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -457,7 +457,7 @@ jobs:
       CI: \\"true\\"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -489,11 +489,11 @@ jobs:
       contents: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -515,11 +515,11 @@ jobs:
       contents: read
     if: needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -545,15 +545,15 @@ jobs:
       contents: read
     if: needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-java@v2
+      - uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 11.x
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -581,14 +581,14 @@ jobs:
       contents: read
     if: needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v3
         with:
           python-version: 3.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -623,7 +623,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: master
       - name: Setup Node.js
@@ -655,12 +655,12 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: master
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -854,13 +854,14 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "jsii",
@@ -899,6 +900,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -1180,7 +1182,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "compile",
         "steps": Array [
           Object {
-            "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies",
+            "exec": "jsii --silence-warnings=reserved-word",
           },
         ],
       },
@@ -1228,7 +1230,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "if [ ! -z \${CI} ]; then mkdir -p dist && rsync -a . dist --exclude .git --exclude node_modules; else npx projen package-all; fi",
+            "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
           },
         ],
       },
@@ -1405,7 +1407,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "watch",
         "steps": Array [
           Object {
-            "exec": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies",
+            "exec": "jsii -w --silence-warnings=reserved-word",
           },
         ],
       },
@@ -1719,7 +1721,7 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "jsii": "*",
       "jsii-diff": "*",
@@ -1729,7 +1731,7 @@ project.synth();
       "npm-check-updates": "^12",
       "projen": "*",
       "standard-version": "^9",
-      "ts-jest": "*",
+      "ts-jest": "^27",
       "typescript": "*",
     },
     "engines": Object {
@@ -1824,6 +1826,9 @@ project.synth();
     "repository": Object {
       "type": "git",
       "url": "https://github.com/eladb/cdk-watchful.git",
+    },
+    "resolutions": Object {
+      "@types/prettier": "2.6.0",
     },
     "scripts": Object {
       "build": "npx projen build",
@@ -2174,7 +2179,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v3.4.6
+      - uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -2201,7 +2206,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -2231,11 +2236,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -2399,13 +2404,14 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "jsii",
@@ -2443,6 +2449,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -2563,7 +2570,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "compile",
         "steps": Array [
           Object {
-            "exec": "jsii --silence-warnings=reserved-word --no-fix-peer-dependencies",
+            "exec": "jsii --silence-warnings=reserved-word",
           },
           Object {
             "exec": "cp src/_loadurl.js lib/",
@@ -2614,7 +2621,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "package",
         "steps": Array [
           Object {
-            "exec": "if [ ! -z \${CI} ]; then mkdir -p dist && rsync -a . dist --exclude .git --exclude node_modules; else npx projen package-all; fi",
+            "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
           },
         ],
       },
@@ -2733,64 +2740,25 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "yarn upgrade npm-check-updates",
           },
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
-          },
-          Object {
-            "exec": "yarn install --check-files",
-          },
-          Object {
-            "exec": "yarn upgrade @types/follow-redirects @types/jest @types/json-stable-stringify @types/node @types/yaml @typescript-eslint/eslint-plugin @typescript-eslint/parser constructs eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit jsii jsii-diff jsii-docgen jsii-pacmak json-schema json-schema-to-typescript npm-check-updates ts-jest typescript fast-json-patch follow-redirects json-stable-stringify yaml constructs",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "upgrade-projen": Object {
-        "description": "upgrade projen",
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade-projen",
-        "steps": Array [
-          Object {
-            "exec": "yarn upgrade npm-check-updates",
-          },
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade projen",
+            "exec": "yarn upgrade",
           },
           Object {
             "exec": "npx projen",
@@ -2805,7 +2773,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "watch",
         "steps": Array [
           Object {
-            "exec": "jsii -w --silence-warnings=reserved-word --no-fix-peer-dependencies",
+            "exec": "jsii -w --silence-warnings=reserved-word",
           },
         ],
       },
@@ -3249,7 +3217,7 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "jsii": "*",
       "jsii-diff": "*",
@@ -3259,7 +3227,7 @@ project.synth();
       "json-schema-to-typescript": "*",
       "npm-check-updates": "^12",
       "projen": "*",
-      "ts-jest": "*",
+      "ts-jest": "^27",
       "typescript": "*",
     },
     "engines": Object {
@@ -3345,6 +3313,9 @@ project.synth();
       "type": "git",
       "url": "https://github.com/awslabs/cdk8s.git",
     },
+    "resolutions": Object {
+      "@types/prettier": "2.6.0",
+    },
     "scripts": Object {
       "build": "yarn compile",
       "clobber": "npx projen clobber",
@@ -3368,7 +3339,6 @@ project.synth();
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "upgrade": "npx projen upgrade",
-      "upgrade-projen": "npx projen upgrade-projen",
       "watch": "npx projen watch",
     },
     "stability": "experimental",
@@ -3695,7 +3665,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v3.4.6
+      - uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -3722,7 +3692,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Setup Node.js
         uses: actions/setup-node@v2.2.0
         with:
@@ -3752,11 +3722,11 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -3908,13 +3878,14 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "json-schema",
@@ -3932,6 +3903,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -4174,64 +4146,25 @@ tsconfig.tsbuildinfo
             "exec": "yarn upgrade npm-check-updates",
           },
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
-          },
-          Object {
-            "exec": "yarn install --check-files",
-          },
-          Object {
-            "exec": "yarn upgrade @types/fs-extra @types/jest @types/json-schema @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint jest jest-junit json-schema npm-check-updates ts-jest typescript @types/node cdk8s codemaker colors constructs fs-extra jsii-pacmak jsii-srcmak json2jsii sscaff yaml yargs",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "upgrade-projen": Object {
-        "description": "upgrade projen",
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade-projen",
-        "steps": Array [
-          Object {
-            "exec": "yarn upgrade npm-check-updates",
-          },
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
             "exec": "yarn install --check-files",
           },
           Object {
-            "exec": "yarn upgrade projen",
+            "exec": "yarn upgrade",
           },
           Object {
             "exec": "npx projen",
@@ -4675,12 +4608,12 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "json-schema": "*",
       "npm-check-updates": "^12",
       "projen": "*",
-      "ts-jest": "*",
+      "ts-jest": "^27",
       "typescript": "*",
     },
     "engines": Object {
@@ -4757,7 +4690,6 @@ project.synth();
       "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "upgrade": "npx projen upgrade",
-      "upgrade-projen": "npx projen upgrade-projen",
       "watch": "npx projen watch",
     },
     "types": "lib/index.d.ts",
@@ -4885,7 +4817,7 @@ jobs:
       CI: \\"true\\"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
@@ -4894,7 +4826,7 @@ jobs:
         with:
           version: 6.14.7
       - name: Install dependencies
-        run: pnpm i
+        run: pnpm i --no-frozen-lockfile
       - name: build
         run: npx projen build
       - id: self_mutation
@@ -4922,13 +4854,13 @@ jobs:
     if: always() && needs.build.outputs.self_mutation_happened && !(github.event.pull_request.head.repo.full_name != github.repository)
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -4963,7 +4895,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v3.4.6
+      - uses: amannn/action-semantic-pull-request@v4.5.0
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -4992,7 +4924,7 @@ jobs:
       CI: \\"true\\"
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Set git identity
@@ -5024,11 +4956,11 @@ jobs:
       contents: write
     if: needs.release.outputs.latest_commit == github.sha
     steps:
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 14.x
       - name: Download build artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: build-artifact
           path: dist
@@ -5056,7 +4988,7 @@ jobs:
       patch_created: \${{ steps.create_patch.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: master
       - name: Setup pnpm
@@ -5088,12 +5020,12 @@ jobs:
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: master
       - name: Download patch
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: .repo.patch
           path: \${{ runner.temp }}
@@ -5218,13 +5150,14 @@ junit.xml
         "type": "build",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
+      },
+      Object {
+        "name": "jest",
+        "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "npm-check-updates",
@@ -5470,64 +5403,25 @@ junit.xml
             "exec": "pnpm update npm-check-updates",
           },
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='projen'",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
-            "exec": "pnpm i",
+            "exec": "pnpm i --no-frozen-lockfile",
           },
           Object {
-            "exec": "pnpm update aws-sdk jest jest-junit npm-check-updates standard-version esbuild",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "upgrade-projen": Object {
-        "description": "upgrade projen",
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade-projen",
-        "steps": Array [
-          Object {
-            "exec": "pnpm update npm-check-updates",
-          },
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --filter='projen'",
-          },
-          Object {
-            "exec": "pnpm i",
-          },
-          Object {
-            "exec": "pnpm update projen",
+            "exec": "pnpm update",
           },
           Object {
             "exec": "npx projen",
@@ -5765,7 +5659,7 @@ project.synth();
     },
     "devDependencies": Object {
       "aws-sdk": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^13",
       "npm-check-updates": "^12",
       "projen": "*",
@@ -5826,7 +5720,6 @@ project.synth();
       "test:watch": "npx projen test:watch",
       "unbump": "npx projen unbump",
       "upgrade": "npx projen upgrade",
-      "upgrade-projen": "npx projen upgrade-projen",
     },
     "version": "0.0.0",
   },

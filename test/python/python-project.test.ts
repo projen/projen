@@ -1,4 +1,4 @@
-import { python } from "../../src";
+import { PythonProject, PythonProjectOptions } from "../../src/python";
 import { synthSnapshot } from "../util";
 
 test("defaults", () => {
@@ -42,8 +42,20 @@ test("pytest maxfailures", () => {
   ).toContain("--maxfail=3");
 });
 
-class TestPythonProject extends python.PythonProject {
-  constructor(options: Partial<python.PythonProjectOptions> = {}) {
+test("cannot specify multiple projenrc types", () => {
+  expect(
+    () =>
+      new TestPythonProject({
+        projenrcPython: true,
+        projenrcJs: true,
+      })
+  ).toThrow(
+    /Only one of projenrcPython, projenrcJs, and projenrcJson can be selected./
+  );
+});
+
+class TestPythonProject extends PythonProject {
+  constructor(options: Partial<PythonProjectOptions> = {}) {
     super({
       ...options,
       clobber: false,

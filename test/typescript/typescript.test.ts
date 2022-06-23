@@ -166,6 +166,42 @@ test("projenrc.ts", () => {
   });
 });
 
+test("eslint configured to support .projenrc.ts and projenrc src dir", () => {
+  const prj = new TypeScriptProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    projenrcTs: true,
+  });
+
+  const snapshot = synthSnapshot(prj);
+  expect(snapshot[".projen/tasks.json"].tasks.eslint).toStrictEqual({
+    description: "Runs eslint against the codebase",
+    name: "eslint",
+    steps: [
+      {
+        exec: "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools projenrc .projenrc.ts",
+      },
+    ],
+  });
+  expect(snapshot[".eslintrc.json"]).toMatchObject({
+    ignorePatterns: expect.arrayContaining([
+      "!.projenrc.ts",
+      "!projenrc/**/*.ts",
+    ]),
+    rules: expect.objectContaining({
+      "import/no-extraneous-dependencies": [
+        "error",
+        expect.objectContaining({
+          devDependencies: expect.arrayContaining([
+            ".projenrc.ts",
+            "projenrc/**/*.ts",
+          ]),
+        }),
+      ],
+    }),
+  });
+});
+
 test("upgrade task ignores pinned versions", () => {
   const prj = new TypeScriptProject({
     defaultReleaseBranch: "main",
@@ -175,6 +211,6 @@ test("upgrade task ignores pinned versions", () => {
   });
   const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[1].exec).toStrictEqual(
-    "npm-check-updates --dep dev --upgrade --target=minor --reject='typescript,projen'"
+    "npm-check-updates --dep dev --upgrade --target=minor --reject='typescript'"
   );
 });
