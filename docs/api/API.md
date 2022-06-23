@@ -5162,11 +5162,15 @@ new cdk8s.Cdk8sDeps(project: Project, options: Cdk8sDepsOptions)
   * **cdk8sVersion** (<code>string</code>)  Minumum version of the cdk8s to depend on. 
   * **cdk8sCliVersion** (<code>string</code>)  Minumum version of the cdk8s-cli to depend on. __*Default*__: "2.0.28"
   * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-cli. __*Default*__: false
+  * **cdk8sPlus** (<code>boolean</code>)  Include cdk8s-plus. __*Default*__: true
+  * **cdk8sPlusVersion** (<code>string</code>)  Minumum version of the cdk8s-plus-XX to depend on. __*Default*__: "2.0.0-rc.26"
+  * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: "10.1.42"
   * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
-  * **clientDependencies** (<code>boolean</code>)  Add cdk8s-cli only to Node projects. 
-  * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime AWS CDK and `constructs` modules. 
+  * **k8sMinorVersion** (<code>number</code>)  The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0. __*Default*__: 22
+  * **cdk8sCliDependency** (<code>boolean</code>)  Add cdk8s-cli only to Node projects. 
+  * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime CDK8s and `constructs` modules. 
 
 
 
@@ -5218,11 +5222,15 @@ new cdk8s.Cdk8sDepsPy(project: Project, options: Cdk8sDepsOptions)
   * **cdk8sVersion** (<code>string</code>)  Minumum version of the cdk8s to depend on. 
   * **cdk8sCliVersion** (<code>string</code>)  Minumum version of the cdk8s-cli to depend on. __*Default*__: "2.0.28"
   * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-cli. __*Default*__: false
+  * **cdk8sPlus** (<code>boolean</code>)  Include cdk8s-plus. __*Default*__: true
+  * **cdk8sPlusVersion** (<code>string</code>)  Minumum version of the cdk8s-plus-XX to depend on. __*Default*__: "2.0.0-rc.26"
+  * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: "10.1.42"
   * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
-  * **clientDependencies** (<code>boolean</code>)  Add cdk8s-cli only to Node projects. 
-  * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime AWS CDK and `constructs` modules. 
+  * **k8sMinorVersion** (<code>number</code>)  The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0. __*Default*__: 22
+  * **cdk8sCliDependency** (<code>boolean</code>)  Add cdk8s-cli only to Node projects. 
+  * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime CDK8s and `constructs` modules. 
 
 
 ### Methods
@@ -5267,7 +5275,10 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
   * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
   * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
   * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
   * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
+  * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
   * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
   * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
   * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
@@ -5277,6 +5288,7 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
   * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
+  * **projenCredentials** (<code>[github.GithubCredentials](#projen-github-githubcredentials)</code>)  Choose a method of providing GitHub API access for projen workflows. __*Default*__: use a personal access token named PROJEN_GITHUB_TOKEN
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
   * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
@@ -5297,7 +5309,9 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
   * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
   * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
   * **poetry** (<code>boolean</code>)  Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. __*Default*__: false
-  * **projenrcPython** (<code>boolean</code>)  Use projenrc in python. __*Default*__: true
+  * **projenrcJs** (<code>boolean</code>)  Use projenrc in javascript. __*Default*__: false
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options related to projenrc in JavaScript. __*Default*__: default options
+  * **projenrcPython** (<code>boolean</code>)  Use projenrc in Python. __*Default*__: true
   * **projenrcPythonOptions** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  Options related to projenrc in python. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
@@ -5308,9 +5322,13 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
   * **cdk8sVersion** (<code>string</code>)  Minumum version of the cdk8s to depend on. 
   * **cdk8sCliVersion** (<code>string</code>)  Minumum version of the cdk8s-cli to depend on. __*Default*__: "2.0.28"
   * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-cli. __*Default*__: false
+  * **cdk8sPlus** (<code>boolean</code>)  Include cdk8s-plus. __*Default*__: true
+  * **cdk8sPlusVersion** (<code>string</code>)  Minumum version of the cdk8s-plus-XX to depend on. __*Default*__: "2.0.0-rc.26"
+  * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: "10.1.42"
   * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
+  * **k8sMinorVersion** (<code>number</code>)  The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0. __*Default*__: 22
   * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint. __*Default*__: "app.py"
   * **cdk8sImports** (<code>Array<string></code>)  Import additional specs. __*Default*__: no additional specs imported
   * **k8sSpecVersion** (<code>string</code>)  Import a specific Kubernetes spec version. __*Default*__: Use the cdk8s default
@@ -5478,12 +5496,15 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **cdk8sVersion** (<code>string</code>)  Minumum version of the cdk8s to depend on. 
   * **cdk8sCliVersion** (<code>string</code>)  Minumum version of the cdk8s-cli to depend on. __*Default*__: "2.0.28"
   * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-cli. __*Default*__: false
+  * **cdk8sPlus** (<code>boolean</code>)  Include cdk8s-plus. __*Default*__: true
+  * **cdk8sPlusVersion** (<code>string</code>)  Minumum version of the cdk8s-plus-XX to depend on. __*Default*__: "2.0.0-rc.26"
+  * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s. __*Default*__: false
   * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: "10.1.42"
   * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
+  * **k8sMinorVersion** (<code>number</code>)  The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0. __*Default*__: 22
   * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
   * **cdk8sImports** (<code>Array<string></code>)  Import additional specs. __*Default*__: no additional specs imported
-  * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically adds an `cdk8s.IntegrationTest` for each `.integ.ts` app in your test directory. If this is disabled, you can manually add an `cdk8s.AutoDiscover` component to your project. __*Default*__: true
   * **k8sSpecVersion** (<code>string</code>)  Import a specific Kubernetes spec version. __*Default*__: Use the cdk8s default
 
@@ -13655,9 +13676,13 @@ Name | Type | Description
 **cdk8sVersion**🔹 | <code>string</code> | Minumum version of the cdk8s to depend on.
 **cdk8sCliVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-cli to depend on.<br/>__*Default*__: "2.0.28"
 **cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-cli.<br/>__*Default*__: false
+**cdk8sPlus**?🔹 | <code>boolean</code> | Include cdk8s-plus.<br/>__*Default*__: true
+**cdk8sPlusVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-plus-XX to depend on.<br/>__*Default*__: "2.0.0-rc.26"
+**cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s.<br/>__*Default*__: false
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: "10.1.42"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
+**k8sMinorVersion**?🔹 | <code>number</code> | The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0.<br/>__*Default*__: 22
 
 
 
@@ -13670,14 +13695,18 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**cdk8sCliDependency**🔹 | <code>boolean</code> | Add cdk8s-cli only to Node projects.
 **cdk8sVersion**🔹 | <code>string</code> | Minumum version of the cdk8s to depend on.
-**clientDependencies**🔹 | <code>boolean</code> | Add cdk8s-cli only to Node projects.
-**dependencyType**🔹 | <code>[DependencyType](#projen-dependencytype)</code> | The type of dependency to use for runtime AWS CDK and `constructs` modules.
+**dependencyType**🔹 | <code>[DependencyType](#projen-dependencytype)</code> | The type of dependency to use for runtime CDK8s and `constructs` modules.
 **cdk8sCliVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-cli to depend on.<br/>__*Default*__: "2.0.28"
 **cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-cli.<br/>__*Default*__: false
+**cdk8sPlus**?🔹 | <code>boolean</code> | Include cdk8s-plus.<br/>__*Default*__: true
+**cdk8sPlusVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-plus-XX to depend on.<br/>__*Default*__: "2.0.0-rc.26"
+**cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s.<br/>__*Default*__: false
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: "10.1.42"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
+**k8sMinorVersion**?🔹 | <code>number</code> | The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0.<br/>__*Default*__: 22
 
 
 
@@ -13692,6 +13721,7 @@ __Obtainable from__: [Cdk8sDeps](#projen-cdk8s-cdk8sdeps).[packageNames](#projen
 Name | Type | Description 
 -----|------|-------------
 **cdk8s**🔹 | <code>string</code> | Fully qualified name of the core framework package.
+**cdk8sPlus**🔹 | <code>string</code> | Fully qualified name of the cdk9s-plus-XX library package.
 **constructs**🔹 | <code>string</code> | Fully qualified name of the constructs library package.
 **cdk8sClient**?🔹 | <code>string</code> | Fully qualified name of the client package.<br/>__*Optional*__
 
@@ -13714,10 +13744,14 @@ Name | Type | Description
 **version**🔹 | <code>string</code> | Version of the package.
 **appEntrypoint**?🔹 | <code>string</code> | The CDK8s app's entrypoint.<br/>__*Default*__: "app.py"
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
+**autoMerge**?🔹 | <code>boolean</code> | Enable automatic merging on GitHub.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
 **cdk8sCliVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-cli to depend on.<br/>__*Default*__: "2.0.28"
 **cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-cli.<br/>__*Default*__: false
 **cdk8sImports**?🔹 | <code>Array<string></code> | Import additional specs.<br/>__*Default*__: no additional specs imported
+**cdk8sPlus**?🔹 | <code>boolean</code> | Include cdk8s-plus.<br/>__*Default*__: true
+**cdk8sPlusVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-plus-XX to depend on.<br/>__*Default*__: "2.0.0-rc.26"
+**cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s.<br/>__*Default*__: false
 **classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
@@ -13731,6 +13765,7 @@ Name | Type | Description
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
 **homepage**?🔹 | <code>string</code> | A URL to the website of the project.<br/>__*Optional*__
+**k8sMinorVersion**?🔹 | <code>number</code> | The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0.<br/>__*Default*__: 22
 **k8sSpecVersion**?🔹 | <code>string</code> | Import a specific Kubernetes spec version.<br/>__*Default*__: Use the cdk8s default
 **license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
@@ -13744,14 +13779,19 @@ Name | Type | Description
 **poetryOptions**?🔹 | <code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code> | Additional options to set for poetry if using poetry.<br/>__*Optional*__
 **projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
 **projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
-**projenTokenSecret**?🔹 | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
+**projenCredentials**?🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | Choose a method of providing GitHub API access for projen workflows.<br/>__*Default*__: use a personal access token named PROJEN_GITHUB_TOKEN
+**projenTokenSecret**?⚠️ | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
+**projenrcJs**?🔹 | <code>boolean</code> | Use projenrc in javascript.<br/>__*Default*__: false
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options related to projenrc in JavaScript.<br/>__*Default*__: default options
 **projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
 **projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
-**projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in python.<br/>__*Default*__: true
+**projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in Python.<br/>__*Default*__: true
 **projenrcPythonOptions**?🔹 | <code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code> | Options related to projenrc in python.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
 **sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
 **setupConfig**?🔹 | <code>Map<string, any></code> | Additional fields to pass in the setup() function if using setuptools.<br/>__*Optional*__
 **setuptools**?🔹 | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing.<br/>__*Default*__: true if the project type is library
@@ -13797,6 +13837,8 @@ Name | Type | Description
 **cdk8sCliVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-cli to depend on.<br/>__*Default*__: "2.0.28"
 **cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-cli.<br/>__*Default*__: false
 **cdk8sImports**?🔹 | <code>Array<string></code> | Import additional specs.<br/>__*Default*__: no additional specs imported
+**cdk8sPlus**?🔹 | <code>boolean</code> | Include cdk8s-plus.<br/>__*Default*__: true
+**cdk8sPlusVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-plus-XX to depend on.<br/>__*Default*__: "2.0.0-rc.26"
 **cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
@@ -13831,6 +13873,7 @@ Name | Type | Description
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm.<br/>__*Default*__: "latest"
+**k8sMinorVersion**?🔹 | <code>number</code> | The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0.<br/>__*Default*__: 22
 **k8sSpecVersion**?🔹 | <code>string</code> | Import a specific Kubernetes spec version.<br/>__*Default*__: Use the cdk8s default
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
