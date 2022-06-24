@@ -212,6 +212,7 @@ export class Publisher extends Component {
         PROJECT_CHANGELOG_FILE: projectChangelogFile ?? "",
         VERSION_FILE: versionFile,
       },
+      condition: '! git log --oneline -1 | grep -q "chore(release):"',
     });
     if (projectChangelogFile) {
       publishTask.builtin("release/update-changelog");
