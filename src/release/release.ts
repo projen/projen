@@ -508,6 +508,16 @@ export class Release extends Component {
     releaseTask.exec(`rm -fr ${this.artifactsDirectory}`);
     releaseTask.spawn(this.version.bumpTask);
     releaseTask.spawn(this.buildTask);
+
+    if (this.releaseTrigger.isManual) {
+      const copyRepoToArtifactsDirectory = [
+        `rsync -a . .repo --exclude .git --exclude node_modules`,
+        `rm -rf ${this.artifactsDirectory}`,
+        `mv .repo ${this.artifactsDirectory}`,
+      ].join(" && ");
+      releaseTask.exec(copyRepoToArtifactsDirectory);
+    }
+
     releaseTask.spawn(this.version.unbumpTask);
 
     // anti-tamper check (fails if there were changes to committed files)
@@ -518,13 +528,16 @@ export class Release extends Component {
       const publishTask = this.publisher.publishToGit({
         changelogFile: path.posix.join(
           this.artifactsDirectory,
+          this.artifactsDirectory,
           this.version.changelogFileName
         ),
         versionFile: path.posix.join(
           this.artifactsDirectory,
+          this.artifactsDirectory,
           this.version.versionFileName
         ),
         releaseTagFile: path.posix.join(
+          this.artifactsDirectory,
           this.artifactsDirectory,
           this.version.releaseTagFileName
         ),

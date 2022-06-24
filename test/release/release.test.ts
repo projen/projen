@@ -274,6 +274,37 @@ test("manual release with custom git-push", () => {
   );
 });
 
+test("manual release rsync's repo into artifacts directory before unbump", () => {
+  // GIVEN
+  const project = new TestProject();
+  new Release(project, {
+    task: project.buildTask,
+    versionFile: "version.json",
+    branch: "main",
+    releaseTrigger: ReleaseTrigger.manual(),
+    artifactsDirectory: "dist",
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  const releaseSteps: [] = outdir[".projen/tasks.json"].tasks.release.steps;
+  expect(releaseSteps).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        exec: expect.stringContaining("rsync -a . .repo"),
+      }),
+    ])
+  );
+
+  const repoCopyStepIndex = releaseSteps.findIndex(
+    (obj: { [key: string]: string }) => obj.exec?.includes("rsync -a . .repo")
+  );
+  const unbumpStepIndex = releaseSteps.findIndex(
+    (obj: any) => obj.spawn === "unbump"
+  );
+  expect(unbumpStepIndex).toBeGreaterThan(repoCopyStepIndex);
+});
+
 test("addJobs() can be used to add arbitrary jobs to the release workflows", () => {
   // GIVEN
   const project = new TestProject();
