@@ -117,7 +117,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
   constructor(options: ReactTypeScriptProjectOptions) {
     const defaultOptions = {
       srcdir: "src",
-      eslint: false,
+      eslint: true,
       jest: false,
       tsconfig: {
         include: ["src"],
@@ -152,6 +152,17 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
     );
 
     this.srcdir = options.srcdir ?? "src";
+
+    this.eslint?.addRules({
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          devDependencies: ["**/src/**/*.test.tsx", "**/src/setupTests.ts"],
+          optionalDependencies: false,
+          peerDependencies: true,
+        },
+      ],
+    });
 
     new ReactComponent(this, { typescript: true, rewire: options.rewire });
 

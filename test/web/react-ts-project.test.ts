@@ -33,6 +33,23 @@ test("deps can be overridden", () => {
   expect(pkg.devDependencies["web-vitals"]).toStrictEqual("7.2");
 });
 
+test("eslint configured to support test cases", () => {
+  const p = new TestReactTypeScriptProject();
+
+  const rules = synthSnapshot(p)[".eslintrc.json"].rules;
+  expect(rules).toMatchObject({
+    "import/no-extraneous-dependencies": [
+      "error",
+      expect.objectContaining({
+        devDependencies: expect.arrayContaining([
+          "**/src/**/*.test.tsx",
+          "**/src/setupTests.ts",
+        ]),
+      }),
+    ],
+  });
+});
+
 class TestReactTypeScriptProject extends ReactTypeScriptProject {
   constructor(options: Partial<ReactTypeScriptProjectOptions> = {}) {
     super({
