@@ -123,13 +123,13 @@ export class GithubWorkflow extends Component {
     }
 
     // verify that job has a "runsOn" statement to ensure a worker can be selected appropriately
-    for (const [id, job] of Object.entries(jobs)) {
-      if (job.runsOn.length === 0) {
-        throw new Error(
-          `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
-        );
-      }
-    }
+    // for (const [id, job] of Object.entries(jobs)) {
+    //   if (job.runsOn.length === 0) {
+    //     throw new Error(
+    //       `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
+    //     );
+    //   }
+    // }
 
     this.jobs = {
       ...this.jobs,
@@ -179,6 +179,20 @@ function renderJobs(jobs: Record<string, workflows.Job>) {
 
     if (job.tools) {
       steps.push(...setupTools(job.tools));
+    }
+
+    // https://docs.github.com/en/actions/using-workflows/reusing-workflows#supported-keywords-for-jobs-that-call-a-reusable-workflow
+    if (job.uses) {
+      return {
+        name: job.name,
+        needs: arrayOrScalar(job.needs),
+        if: job.if,
+        permissions: kebabCaseKeys(job.permissions),
+        concurrency: job.concurrency,
+        uses: job.uses,
+        with: job.with,
+        secrets: job.secrets,
+      };
     }
 
     const userDefinedSteps = kebabCaseKeys(resolve(job.steps), false);

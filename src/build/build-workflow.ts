@@ -204,7 +204,7 @@ export class BuildWorkflow extends Component {
       });
     }
 
-    steps.push(...job.steps);
+    steps.push(...(job.steps ?? []));
 
     this.workflow.addJob(id, {
       needs: [BUILD_JOBID],

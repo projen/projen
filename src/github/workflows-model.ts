@@ -10,7 +10,7 @@ export interface Job {
    *
    * @example ["ubuntu-latest"]
    */
-  readonly runsOn: string[];
+  readonly runsOn?: string[];
 
   /**
    * A job contains a sequence of tasks called steps. Steps can run commands,
@@ -22,7 +22,7 @@ export interface Job {
    * are not preserved between steps. GitHub provides built-in steps to set up
    * and complete a job.
    */
-  readonly steps: JobStep[];
+  readonly steps?: JobStep[];
 
   /**
    * The name of the job displayed on GitHub.
@@ -133,7 +133,28 @@ export interface Job {
   readonly services?: Record<string, ContainerOptions>;
 
   /**
-   * Tools required for this job. Traslates into `actions/setup-xxx` steps at
+   * The location and version of a reusable workflow file to run as a job.
+   */
+  readonly uses?: string;
+
+  /**
+   * When a job is used to call a reusable workflow, you can use with to
+   * provide a map of inputs that are passed to the called workflow.
+   *
+   * Allowed expression contexts: `github`, and `needs`.
+   */
+  readonly with?: Record<string, string | boolean>;
+
+  /**
+   * When a job is used to call a reusable workflow, you can use secrets to
+   * provide a map of secrets that are passed to the called workflow.
+   *
+   * Use the 'inherit' keyword to pass all the calling workflow's secrets to the called workflow
+   */
+  readonly secrets?: string | Record<string, string>;
+
+  /**
+   * Tools required for this job. Translates into `actions/setup-xxx` steps at
    * the beginning of the job.
    */
   readonly tools?: Tools;
@@ -390,7 +411,7 @@ export interface JobMatrix {
 }
 
 /**
- * Options petaining to container environments.
+ * Options pertaining to container environments.
  */
 export interface ContainerOptions {
   /**
