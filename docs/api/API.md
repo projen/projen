@@ -4551,8 +4551,6 @@ addPostBuildJob(id: string, job: Job): void
 * **id** (<code>string</code>)  The id of the new job.
 * **job** (<code>[github.workflows.Job](#projen-github-workflows-job)</code>)  The job specification.
   * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  You can modify the default permissions granted to the GITHUB_TOKEN, adding or removing access as required, so that you only allow the minimum required access. 
-  * **runsOn** (<code>Array<string></code>)  The type of machine to run the job on. 
-  * **steps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A job contains a sequence of tasks called steps. 
   * **concurrency** (<code>any</code>)  Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. __*Optional*__
   * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  A container to run any steps in a job that don't already specify a container. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a workflow run from failing when a job fails. __*Optional*__
@@ -4563,10 +4561,15 @@ addPostBuildJob(id: string, job: Job): void
   * **name** (<code>string</code>)  The name of the job displayed on GitHub. __*Optional*__
   * **needs** (<code>Array<string></code>)  Identifies any jobs that must complete successfully before this job will run. __*Optional*__
   * **outputs** (<code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code>)  A map of outputs for a job. __*Optional*__
+  * **runsOn** (<code>Array<string></code>)  The type of machine to run the job on. __*Optional*__
+  * **secrets** (<code>string &#124; Map<string, string></code>)  When a job is used to call a reusable workflow, you can use secrets to provide a map of secrets that are passed to the called workflow. __*Optional*__
   * **services** (<code>Map<string, [github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)></code>)  Used to host service containers for a job in a workflow. __*Optional*__
+  * **steps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A job contains a sequence of tasks called steps. __*Optional*__
   * **strategy** (<code>[github.workflows.JobStrategy](#projen-github-workflows-jobstrategy)</code>)  A strategy creates a build matrix for your jobs. __*Optional*__
   * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to let a job run before GitHub automatically cancels it. __*Default*__: 360
   * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools required for this job. __*Optional*__
+  * **uses** (<code>string</code>)  The location and version of a reusable workflow file to run as a job. __*Optional*__
+  * **with** (<code>Map<string, string &#124; boolean></code>)  When a job is used to call a reusable workflow, you can use with to provide a map of inputs that are passed to the called workflow. __*Optional*__
 
 
 
@@ -6246,8 +6249,6 @@ addJob(id: string, job: Job): void
 * **id** (<code>string</code>)  The job name (unique within the workflow).
 * **job** (<code>[github.workflows.Job](#projen-github-workflows-job)</code>)  The job specification.
   * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  You can modify the default permissions granted to the GITHUB_TOKEN, adding or removing access as required, so that you only allow the minimum required access. 
-  * **runsOn** (<code>Array<string></code>)  The type of machine to run the job on. 
-  * **steps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A job contains a sequence of tasks called steps. 
   * **concurrency** (<code>any</code>)  Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. __*Optional*__
   * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  A container to run any steps in a job that don't already specify a container. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a workflow run from failing when a job fails. __*Optional*__
@@ -6258,10 +6259,15 @@ addJob(id: string, job: Job): void
   * **name** (<code>string</code>)  The name of the job displayed on GitHub. __*Optional*__
   * **needs** (<code>Array<string></code>)  Identifies any jobs that must complete successfully before this job will run. __*Optional*__
   * **outputs** (<code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code>)  A map of outputs for a job. __*Optional*__
+  * **runsOn** (<code>Array<string></code>)  The type of machine to run the job on. __*Optional*__
+  * **secrets** (<code>string &#124; Map<string, string></code>)  When a job is used to call a reusable workflow, you can use secrets to provide a map of secrets that are passed to the called workflow. __*Optional*__
   * **services** (<code>Map<string, [github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)></code>)  Used to host service containers for a job in a workflow. __*Optional*__
+  * **steps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A job contains a sequence of tasks called steps. __*Optional*__
   * **strategy** (<code>[github.workflows.JobStrategy](#projen-github-workflows-jobstrategy)</code>)  A strategy creates a build matrix for your jobs. __*Optional*__
   * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to let a job run before GitHub automatically cancels it. __*Default*__: 360
   * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools required for this job. __*Optional*__
+  * **uses** (<code>string</code>)  The location and version of a reusable workflow file to run as a job. __*Optional*__
+  * **with** (<code>Map<string, string &#124; boolean></code>)  When a job is used to call a reusable workflow, you can use with to provide a map of inputs that are passed to the called workflow. __*Optional*__
 
 
 
