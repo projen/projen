@@ -298,6 +298,7 @@ Name|Description
 [java.JunitOptions](#projen-java-junitoptions)|Options for `Junit`.
 [java.MavenCompileOptions](#projen-java-mavencompileoptions)|Options for `MavenCompile`.
 [java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)|Options for `MavenPackage`.
+[java.MavenRepository](#projen-java-mavenrepository)|Represents a Maven repository.
 [java.MavenSampleOptions](#projen-java-mavensampleoptions)|*No description*
 [java.PluginExecution](#projen-java-pluginexecution)|Plugin execution definition.
 [java.PluginOptions](#projen-java-pluginoptions)|Options for Maven plugins.
@@ -7072,6 +7073,23 @@ addProperty(key: string, value: string): void
 
 * **key** (<code>string</code>)  the key.
 * **value** (<code>string</code>)  the value.
+
+
+
+
+#### addRepository(repository)🔹 <a id="projen-java-pom-addrepository"></a>
+
+Adds a repository to the pom.
+
+```ts
+addRepository(repository: MavenRepository): void
+```
+
+* **repository** (<code>[java.MavenRepository](#projen-java-mavenrepository)</code>)  the repository to add.
+  * **id** (<code>string</code>)  The identifier for the repository. 
+  * **url** (<code>string</code>)  The url of the repository. 
+  * **layout** (<code>string</code>)  The layout of the repository. __*Optional*__
+  * **name** (<code>string</code>)  The name of the repository. __*Optional*__
 
 
 
@@ -15297,6 +15315,22 @@ Name | Type | Description
 **javadocs**?🔹 | <code>boolean</code> | Include javadocs jar in package.<br/>__*Default*__: true
 **javadocsExclude**?🔹 | <code>Array<string></code> | Exclude source files from docs.<br/>__*Default*__: []
 **sources**?🔹 | <code>boolean</code> | Include sources jar in package.<br/>__*Default*__: true
+
+
+
+## struct MavenRepository 🔹 <a id="projen-java-mavenrepository"></a>
+
+
+Represents a Maven repository.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**id**🔹 | <code>string</code> | The identifier for the repository.
+**url**🔹 | <code>string</code> | The url of the repository.
+**layout**?🔹 | <code>string</code> | The layout of the repository.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | The name of the repository.<br/>__*Optional*__
 
 
 
