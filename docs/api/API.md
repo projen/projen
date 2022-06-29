@@ -7405,6 +7405,7 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
 Name | Type | Description 
 -----|------|-------------
 **config**🔹 | <code>any</code> | Escape hatch.
+**jestVersion**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
