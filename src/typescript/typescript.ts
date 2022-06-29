@@ -470,11 +470,13 @@ class SampleCode extends Component {
       },
     });
 
-    new SampleDir(project, project.testdir, {
-      files: {
-        "hello.test.ts": testCode,
-      },
-    });
+    if (project.jest) {
+      new SampleDir(project, project.testdir, {
+        files: {
+          "hello.test.ts": testCode,
+        },
+      });
+    }
   }
 }
 
