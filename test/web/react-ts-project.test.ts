@@ -33,6 +33,14 @@ test("deps can be overridden", () => {
   expect(pkg.devDependencies["web-vitals"]).toStrictEqual("7.2");
 });
 
+test("CommonJS not ESnext", () => {
+  const p = new TestReactTypeScriptProject();
+  const out = synthSnapshot(p);
+  expect(out["tsconfig.json"]).toBeDefined();
+  expect(out["tsconfig.json"].compilerOptions).toBeDefined();
+  expect(out["tsconfig.json"].compilerOptions.module).toEqual("commonjs");
+});
+
 class TestReactTypeScriptProject extends ReactTypeScriptProject {
   constructor(options: Partial<ReactTypeScriptProjectOptions> = {}) {
     super({
