@@ -216,3 +216,22 @@ test("addTestMatch() can be used to add patterns", () => {
     "bar/baz/**",
   ]);
 });
+
+test("can set extra CLI options", () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+  });
+
+  // WHEN
+  new Jest(project, {
+    extraCliOptions: ["--json", "--outputFile=jest-report.json"],
+  });
+
+  // THEN
+  const clFragments = project.testTask.steps.pop()?.exec?.split(" ");
+  expect(clFragments).toContain("--json");
+  expect(clFragments).toContain("--outputFile=jest-report.json");
+});

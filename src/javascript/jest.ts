@@ -537,6 +537,11 @@ export interface JestOptions {
    * @default - default jest configuration
    */
   readonly jestConfig?: JestConfigOptions;
+
+  /**
+   * Additional options to pass to the Jest CLI invocation
+   */
+  readonly extraCliOptions?: string[];
 }
 
 export interface CoverageThreshold {
@@ -579,6 +584,7 @@ export class Jest {
   private readonly file?: JsonFile;
   private readonly reporters: JestReporter[];
   private readonly jestConfig?: JestConfigOptions;
+  private readonly extraCliOptions: string[];
   private _snapshotResolver: string | undefined;
 
   constructor(project: NodeProject, options: JestOptions = {}) {
@@ -597,6 +603,7 @@ export class Jest {
     project.addDevDeps(`jest${this.jestVersion}`);
 
     this.jestConfig = options.jestConfig;
+    this.extraCliOptions = options.extraCliOptions ?? [];
 
     this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ??
       options.ignorePatterns ?? ["/node_modules/"];
@@ -717,7 +724,7 @@ export class Jest {
   }
 
   private configureTestCommand() {
-    const jestOpts = ["--passWithNoTests", "--all"];
+    const jestOpts = ["--passWithNoTests", "--all", ...this.extraCliOptions];
     const jestConfigOpts =
       this.file && this.file.path != "jest.config.json"
         ? ` -c ${this.file.path}`
