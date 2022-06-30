@@ -50,6 +50,14 @@ test("eslint configured to support test cases", () => {
   });
 });
 
+test("CommonJS not ESnext", () => {
+  const p = new TestReactTypeScriptProject();
+  const out = synthSnapshot(p);
+  expect(out["tsconfig.json"]).toBeDefined();
+  expect(out["tsconfig.json"].compilerOptions).toBeDefined();
+  expect(out["tsconfig.json"].compilerOptions.module).toEqual("commonjs");
+});
+
 class TestReactTypeScriptProject extends ReactTypeScriptProject {
   constructor(options: Partial<ReactTypeScriptProjectOptions> = {}) {
     super({

@@ -138,7 +138,6 @@ exports[`enabling renovatebot does not overturn mergify: false 1`] = `
   ],
   \\"ignoreDeps\\": [
     \\"jest-junit\\",
-    \\"jest\\",
     \\"npm-check-updates\\",
     \\"standard-version\\",
     \\"projen\\"
@@ -231,7 +230,7 @@ git config user.email \\"github-actions@github.com\\"",
 exports[`node project can be ejected 1`] = `
 Object {
   "devDependencies": Object {
-    "jest": "^27",
+    "jest": "*",
     "jest-junit": "^13",
     "npm-check-updates": "^12",
     "standard-version": "^9",

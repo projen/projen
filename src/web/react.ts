@@ -131,7 +131,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
           strict: true,
           forceConsistentCasingInFileNames: true,
           noFallthroughCasesInSwitch: true,
-          module: "esnext",
+          module: "commonjs",
           moduleResolution: TypeScriptModuleResolution.NODE,
           resolveJsonModule: true,
           isolatedModules: true,
