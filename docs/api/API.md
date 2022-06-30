@@ -7391,7 +7391,7 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
   * **configFilePath** (<code>string</code>)  Path to JSON config file for Jest. __*Default*__: No separate config file, jest settings are stored in package.json
   * **coverage** (<code>boolean</code>)  Collect coverage. __*Default*__: true
   * **coverageText** (<code>boolean</code>)  Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution. __*Default*__: true
-  * **extraCliOptions** (<code>Array<string></code>)  Additional options to pass to the Jest CLI invocation. __*Optional*__
+  * **extraCliOptions** (<code>Array<string></code>)  Additional options to pass to the Jest CLI invocation. __*Default*__: no extra options
   * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. __*Default*__: ["/node_modules/"]
   * **jestConfig** (<code>[javascript.JestConfigOptions](#projen-javascript-jestconfigoptions)</code>)  Jest configuration. __*Default*__: default jest configuration
   * **jestVersion** (<code>string</code>)  The version of jest to use. __*Default*__: installs the latest jest version
@@ -15652,7 +15652,7 @@ Name | Type | Description
 **configFilePath**?🔹 | <code>string</code> | Path to JSON config file for Jest.<br/>__*Default*__: No separate config file, jest settings are stored in package.json
 **coverage**?⚠️ | <code>boolean</code> | Collect coverage.<br/>__*Default*__: true
 **coverageText**?🔹 | <code>boolean</code> | Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution.<br/>__*Default*__: true
-**extraCliOptions**?🔹 | <code>Array<string></code> | Additional options to pass to the Jest CLI invocation.<br/>__*Optional*__
+**extraCliOptions**?🔹 | <code>Array<string></code> | Additional options to pass to the Jest CLI invocation.<br/>__*Default*__: no extra options
 **ignorePatterns**?⚠️ | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/>__*Default*__: ["/node_modules/"]
 **jestConfig**?🔹 | <code>[javascript.JestConfigOptions](#projen-javascript-jestconfigoptions)</code> | Jest configuration.<br/>__*Default*__: default jest configuration
 **jestVersion**?🔹 | <code>string</code> | The version of jest to use.<br/>__*Default*__: installs the latest jest version

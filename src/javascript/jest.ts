@@ -540,6 +540,7 @@ export interface JestOptions {
 
   /**
    * Additional options to pass to the Jest CLI invocation
+   * @default - no extra options
    */
   readonly extraCliOptions?: string[];
 }
