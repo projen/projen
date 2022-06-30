@@ -44,6 +44,12 @@ Check out [this talk](https://youtu.be/SOWMPzXtTCw) about projen from its creato
 
 ## Getting Started
 
+Install the [Projen](https://projen.io/) from npm.
+
+```console
+$ npm i -g projen
+```
+
 To create a new project, run the following command and follow the instructions:
 
 ```console
