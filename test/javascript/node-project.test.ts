@@ -696,7 +696,6 @@ test("enabling renovatebot does not overturn mergify: false", () => {
   expect(snapshot).toHaveProperty(["renovate.json5"]);
   expect(json5.parse(snapshot["renovate.json5"]).ignoreDeps).toEqual([
     "jest-junit",
-    "jest",
     "npm-check-updates",
     "standard-version",
     "projen",

@@ -94,6 +94,29 @@ export interface PomOptions {
 }
 
 /**
+ * Represents a Maven repository
+ * @see https://maven.apache.org/guides/introduction/introduction-to-repositories.html
+ */
+export interface MavenRepository {
+  /**
+   * The identifier for the repository
+   */
+  readonly id: string;
+  /**
+   * The url of the repository
+   */
+  readonly url: string;
+  /**
+   * The name of the repository
+   */
+  readonly name?: string;
+  /**
+   * The layout of the repository
+   */
+  readonly layout?: string;
+}
+
+/**
  * A Project Object Model or POM is the fundamental unit of work in Maven. It is
  * an XML file that contains information about the project and configuration
  * details used by Maven to build the project.
@@ -140,6 +163,8 @@ export class Pom extends Component {
   public readonly url?: string;
 
   private readonly properties: Record<string, any> = {};
+
+  private readonly repositories: MavenRepository[] = [];
 
   constructor(project: Project, options: PomOptions) {
     super(project);
@@ -198,6 +223,14 @@ export class Pom extends Component {
     return this.project.deps.addDependency(spec, DependencyType.BUILD, options);
   }
 
+  /**
+   * Adds a repository to the pom
+   * @param repository the repository to add
+   */
+  public addRepository(repository: MavenRepository) {
+    this.repositories.push(repository);
+  }
+
   private synthPom() {
     return resolve(
       {
@@ -212,6 +245,7 @@ export class Pom extends Component {
           description: this.description,
           url: this.url,
           properties: this.properties,
+          ...this.synthRepositories(),
           ...this.synthDependencies(),
         },
       },
@@ -258,6 +292,16 @@ export class Pom extends Component {
     return {
       build: { plugins: { plugin: plugins } },
       dependencies: { dependency: dependencies },
+    };
+  }
+
+  private synthRepositories() {
+    if (this.repositories.length === 0) {
+      return;
+    }
+
+    return {
+      repositories: { repository: this.repositories },
     };
   }
 }
