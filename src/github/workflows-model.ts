@@ -1,29 +1,6 @@
 // @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 
-/**
- * A GitHub Workflow job definition.
- */
-export interface Job {
-  /**
-   * The type of machine to run the job on. The machine can be either a
-   * GitHub-hosted runner or a self-hosted runner.
-   *
-   * @example ["ubuntu-latest"]
-   */
-  readonly runsOn?: string[];
-
-  /**
-   * A job contains a sequence of tasks called steps. Steps can run commands,
-   * run setup tasks, or run an action in your repository, a public repository,
-   * or an action published in a Docker registry. Not all steps run actions,
-   * but all actions run as a step. Each step runs in its own process in the
-   * runner environment and has access to the workspace and filesystem.
-   * Because steps run in their own process, changes to environment variables
-   * are not preserved between steps. GitHub provides built-in steps to set up
-   * and complete a job.
-   */
-  readonly steps?: JobStep[];
-
+export interface CommonJobDefinition {
   /**
    * The name of the job displayed on GitHub.
    */
@@ -53,14 +30,6 @@ export interface Job {
   readonly permissions: JobPermissions;
 
   /**
-   * The environment that the job references. All environment protection rules
-   * must pass before a job referencing the environment is sent to a runner.
-   *
-   * @see https://docs.github.com/en/actions/reference/environments
-   */
-  readonly environment?: unknown;
-
-  /**
    * Concurrency ensures that only a single job or workflow using the same
    * concurrency group will run at a time. A concurrency group can be any
    * string or expression. The expression can use any context except for the
@@ -69,6 +38,73 @@ export interface Job {
    * @experimental
    */
   readonly concurrency?: unknown;
+
+  /**
+   * You can use the if conditional to prevent a job from running unless a
+   * condition is met. You can use any supported context and expression to
+   * create a conditional.
+   */
+  readonly if?: string;
+}
+
+/**
+ * A GitHub Workflow Job calling a reusable workflow
+ *
+ */
+export interface JobCallingReusableWorkflow extends CommonJobDefinition {
+  /**
+   * The location and version of a reusable workflow file to run as a job.
+   */
+  readonly uses: string;
+
+  /**
+   * When a job is used to call a reusable workflow, you can use with to
+   * provide a map of inputs that are passed to the called workflow.
+   *
+   * Allowed expression contexts: `github`, and `needs`.
+   */
+  readonly with?: Record<string, string | boolean>;
+
+  /**
+   * When a job is used to call a reusable workflow, you can use secrets to
+   * provide a map of secrets that are passed to the called workflow.
+   *
+   * Use the 'inherit' keyword to pass all the calling workflow's secrets to the called workflow
+   */
+  readonly secrets?: string | Record<string, string>;
+}
+
+/**
+ * A GitHub Workflow job definition.
+ */
+export interface Job extends CommonJobDefinition {
+  /**
+   * The type of machine to run the job on. The machine can be either a
+   * GitHub-hosted runner or a self-hosted runner.
+   *
+   * @example ["ubuntu-latest"]
+   */
+  readonly runsOn: string[];
+
+  /**
+   * A job contains a sequence of tasks called steps. Steps can run commands,
+   * run setup tasks, or run an action in your repository, a public repository,
+   * or an action published in a Docker registry. Not all steps run actions,
+   * but all actions run as a step. Each step runs in its own process in the
+   * runner environment and has access to the workspace and filesystem.
+   * Because steps run in their own process, changes to environment variables
+   * are not preserved between steps. GitHub provides built-in steps to set up
+   * and complete a job.
+   */
+  readonly steps: JobStep[];
+
+  /**
+   * The environment that the job references. All environment protection rules
+   * must pass before a job referencing the environment is sent to a runner.
+   *
+   * @see https://docs.github.com/en/actions/reference/environments
+   */
+  readonly environment?: unknown;
 
   /**
    * A map of outputs for a job. Job outputs are available to all downstream
@@ -88,13 +124,6 @@ export interface Job {
    * can also set default settings for the entire workflow.
    */
   readonly defaults?: JobDefaults;
-
-  /**
-   * You can use the if conditional to prevent a job from running unless a
-   * condition is met. You can use any supported context and expression to
-   * create a conditional.
-   */
-  readonly if?: string;
 
   /**
    * The maximum number of minutes to let a job run before GitHub
@@ -131,27 +160,6 @@ export interface Job {
    * cycle of the service containers.
    */
   readonly services?: Record<string, ContainerOptions>;
-
-  /**
-   * The location and version of a reusable workflow file to run as a job.
-   */
-  readonly uses?: string;
-
-  /**
-   * When a job is used to call a reusable workflow, you can use with to
-   * provide a map of inputs that are passed to the called workflow.
-   *
-   * Allowed expression contexts: `github`, and `needs`.
-   */
-  readonly with?: Record<string, string | boolean>;
-
-  /**
-   * When a job is used to call a reusable workflow, you can use secrets to
-   * provide a map of secrets that are passed to the called workflow.
-   *
-   * Use the 'inherit' keyword to pass all the calling workflow's secrets to the called workflow
-   */
-  readonly secrets?: string | Record<string, string>;
 
   /**
    * Tools required for this job. Translates into `actions/setup-xxx` steps at
