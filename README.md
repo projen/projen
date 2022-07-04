@@ -46,6 +46,14 @@ Check out [this talk](https://youtu.be/SOWMPzXtTCw) about projen from its creato
 
 Install the [Projen](https://projen.io/) from npm.
 
+### Local install
+```console
+$ npx projen
+Need to install the following packages:
+   projen
+Ok to proceed? (y)
+```
+### Global install
 ```console
 $ npm i -g projen
 ```
@@ -55,7 +63,6 @@ To create a new project, run the following command and follow the instructions:
 ```console
 $ mkdir my-project
 $ cd my-project
-$ git init
 $ npx projen new PROJECT-TYPE
 🤖 Synthesizing project...
 ...
