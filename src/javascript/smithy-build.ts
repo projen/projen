@@ -2,12 +2,10 @@ import { Component } from "../component";
 import { JsonFile } from "../json";
 import { Project } from "../project";
 
-
 export type ProjectionsType = Record<string, Record<string, any>>;
 export type PluginsType = Record<string, Record<string, any>>;
 
 export interface SmithyBuildOptions {
-
   readonly version?: string;
 
   readonly outputDirectory?: string;
@@ -21,8 +19,7 @@ export interface SmithyBuildOptions {
   readonly ignoreMissingPlugins?: boolean;
 }
 
-export class NodePackage extends Component {
-
+export class SmithyBuild extends Component {
   public readonly version: string;
 
   public readonly outputDirectory?: string;
@@ -60,7 +57,7 @@ export class NodePackage extends Component {
       imports: this.imports,
       projections: this.projections,
       plugins: this.plugins,
-      ignoreMissingPlugins: this.ignoreMissingPlugins
+      ignoreMissingPlugins: this.ignoreMissingPlugins,
     };
 
     this.file = new JsonFile(this.project, "smithy-build.json", {
