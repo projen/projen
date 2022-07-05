@@ -4,6 +4,7 @@ import {
   Circleci,
   CircleCiProps,
   isObjectContainingFieldExactly,
+  PipelineParameterType,
 } from "../../src/circleci";
 // @ts-ignore
 import { synthSnapshot, TestProject } from "../util";
@@ -41,7 +42,11 @@ test("full spec of api should be provided", () => {
           },
         ],
         parameters: {
-          job1Param: "fluffy",
+          job1Param: {
+            description: "job1Param description",
+            type: PipelineParameterType.STRING,
+            default: "job1Param default",
+          },
         },
       },
     ],
@@ -70,11 +75,6 @@ test("full spec of api should be provided", () => {
           {
             identifier: "job1",
             name: "renamedJob2",
-            parameters: {
-              "hello-world-1": 12,
-              hello_world_2: true,
-              helloWorld3: "pansen",
-            },
             orbParameters: {
               "install-yarn": true,
               node_version: 16.13,
@@ -103,16 +103,6 @@ test("full spec of api should be provided", () => {
   expect(circleci).toContain("0 0 * * *");
   expect(circleci).toContain("windows");
   const wJob = yaml.workflows.workflow1.jobs[0].job1;
-  // parameters should not be modified by snake case
-  expect(wJob).toEqual(
-    expect.objectContaining({
-      parameters: {
-        "hello-world-1": 12,
-        hello_world_2: true,
-        helloWorld3: "pansen",
-      },
-    })
-  );
   // testing orb parameters and snake case should be ignored here
   expect(wJob).toEqual(
     expect.objectContaining({
@@ -129,6 +119,18 @@ test("full spec of api should be provided", () => {
   expect(customJob).toEqual(
     // test snake case
     expect.objectContaining({ working_directory: "." })
+  );
+  expect(customJob).toEqual(
+    // test parameters
+    expect.objectContaining({
+      parameters: {
+        job1Param: {
+          description: "job1Param description",
+          type: "string",
+          default: "job1Param default",
+        },
+      },
+    })
   );
 });
 

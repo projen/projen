@@ -236,6 +236,7 @@ Name|Description
 [circleci.Machine](#projen-circleci-machine)|*No description*
 [circleci.Macos](#projen-circleci-macos)|CircleCI supports running jobs on macOS, to allow you to build, test, and deploy apps for macOS, iOS, tvOS and watchOS.
 [circleci.Matrix](#projen-circleci-matrix)|The matrix stanza allows you to run a parameterized job multiple times with different arguments.
+[circleci.PipelineParameter](#projen-circleci-pipelineparameter)|Parameters are declared by name under a job, command, or executor.
 [circleci.Run](#projen-circleci-run)|Used for invoking all command-line programs, taking either a map of configuration values, or, when called in its short-form, a string that will be used as both the command and name.
 [circleci.Schedule](#projen-circleci-schedule)|A workflow may have a schedule indicating it runs at a certain time.
 [circleci.StepRun](#projen-circleci-steprun)|Execution steps for Job.
@@ -416,6 +417,7 @@ Name|Description
 [cdk.Stability](#projen-cdk-stability)|*No description*
 [circleci.JobType](#projen-circleci-jobtype)|A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed.
 [circleci.JobWhen](#projen-circleci-jobwhen)|Specify when to enable or disable the step.
+[circleci.PipelineParameterType](#projen-circleci-pipelineparametertype)|Pipeline parameter types.
 [circleci.ResourceClass](#projen-circleci-resourceclass)|The resource_class feature allows configuring CPU and RAM resources for each job.
 [github.DependabotRegistryType](#projen-github-dependabotregistrytype)|Each configuration type requires you to provide particular settings.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
@@ -14058,7 +14060,7 @@ Name | Type | Description
 **machine**?🔹 | <code>[circleci.Machine](#projen-circleci-machine)</code> | __*Optional*__
 **macos**?🔹 | <code>[circleci.Macos](#projen-circleci-macos)</code> | __*Optional*__
 **parallelism**?🔹 | <code>number</code> | Number of parallel instances of this job to run (default: 1).<br/>__*Optional*__
-**parameters**?🔹 | <code>Map<string, string></code> | Parameters for making a job explicitly configurable in a workflow.<br/>__*Optional*__
+**parameters**?🔹 | <code>Map<string, [circleci.PipelineParameter](#projen-circleci-pipelineparameter)></code> | Parameters for making a job explicitly configurable in a workflow.<br/>__*Optional*__
 **resourceClass**?🔹 | <code>string</code> | {@link ResourceClass}.<br/>__*Optional*__
 **shell**?🔹 | <code>string</code> | Shell to use for execution command in all steps.<br/>__*Optional*__
 **steps**?🔹 | <code>Array<any></code> | no type support here, for syntax {@see https://circleci.com/docs/2.0/configuration-reference/#steps}.<br/>__*Optional*__
@@ -14108,6 +14110,21 @@ Name | Type | Description
 -----|------|-------------
 **alias**?🔹 | <code>string</code> | An alias for the matrix, usable from another job’s requires stanza.<br/>__*Optional*__
 **parameters**?🔹 | <code>Map<string, Array<string> &#124; Array<number>></code> | A map of parameter names to every value the job should be called with.<br/>__*Optional*__
+
+
+
+## struct PipelineParameter 🔹 <a id="projen-circleci-pipelineparameter"></a>
+
+
+Parameters are declared by name under a job, command, or executor.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**type**🔹 | <code>[circleci.PipelineParameterType](#projen-circleci-pipelineparametertype)</code> | The parameter type, required.
+**default**?🔹 | <code>string &#124; number &#124; boolean</code> | The default value for the parameter.<br/>__*Optional*__
+**description**?🔹 | <code>string</code> | Used to generate documentation for your orb.<br/>__*Optional*__
 
 
 
@@ -14215,7 +14232,6 @@ Name | Type | Description
 **matrix**?🔹 | <code>[circleci.Matrix](#projen-circleci-matrix)</code> | __*Optional*__
 **name**?🔹 | <code>string</code> | A replacement for the job name.<br/>__*Optional*__
 **orbParameters**?🔹 | <code>Map<string, string &#124; number &#124; boolean></code> | Parameters passed to job when referencing a job from orb.<br/>__*Optional*__
-**parameters**?🔹 | <code>Map<string, string &#124; number &#124; boolean></code> | Parameters for making a job explicitly configurable in a workflow.<br/>__*Optional*__
 **requires**?🔹 | <code>Array<string></code> | A list of jobs that must succeed for the job to start.<br/>__*Optional*__
 **type**?🔹 | <code>[circleci.JobType](#projen-circleci-jobtype)</code> | A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed.<br/>__*Optional*__
 
@@ -17985,6 +18001,18 @@ Name | Description
 **ALWAYS** 🔹|
 **ON_SUCCESS** 🔹|
 **ON_FAIL** 🔹|
+
+
+## enum PipelineParameterType 🔹 <a id="projen-circleci-pipelineparametertype"></a>
+
+Pipeline parameter types.
+
+Name | Description
+-----|-----
+**STRING** 🔹|
+**BOOLEAN** 🔹|
+**INTEGER** 🔹|
+**ENUM** 🔹|
 
 
 ## enum ResourceClass 🔹 <a id="projen-circleci-resourceclass"></a>
