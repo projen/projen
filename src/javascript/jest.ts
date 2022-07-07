@@ -519,6 +519,8 @@ export interface JestOptions {
   /**
    * The version of jest to use.
    *
+   * Note that same version is used as version of `@types/jest` and `ts-jest` (if Typescript in use), so given version should work also for those.
+   *
    * @default - installs the latest jest version
    */
   readonly jestVersion?: string;
@@ -567,6 +569,7 @@ export class Jest {
    * Escape hatch.
    */
   public readonly config: any;
+  public readonly jestVersion: string;
 
   private readonly testMatch: string[];
   private readonly ignorePatterns: string[];
@@ -590,11 +593,8 @@ export class Jest {
 
     // Jest snapshot files are generated files!
     project.root.annotateGenerated("*.snap");
-
-    const jestDep = options.jestVersion
-      ? `jest@${options.jestVersion}`
-      : "jest@^27"; // pinning at version 27 for now because of an issue: https://github.com/projen/projen/issues/1801
-    project.addDevDeps(jestDep);
+    this.jestVersion = options.jestVersion ? `@${options.jestVersion}` : "";
+    project.addDevDeps(`jest${this.jestVersion}`);
 
     this.jestConfig = options.jestConfig;
 
