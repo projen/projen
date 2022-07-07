@@ -430,7 +430,7 @@ export class TypeScriptProject extends NodeProject {
   private addJestNoCompile(jest: Jest) {
     this.addDevDeps("@types/jest", "ts-jest@^27"); // pinning for now because of an issue: https://github.com/projen/projen/issues/1813
 
-    jest.addTestMatch(`**/${this.srcdir}/**/__tests__/**/*.ts?(x)`);
+    jest.addTestMatch(`${this.srcdir}/**/__tests__/**/*.ts?(x)`);
     jest.addTestMatch(
       `**/(${this.testdir}|${this.srcdir})/**/?(*.)+(spec|test).ts?(x)`
     );
