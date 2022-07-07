@@ -1765,7 +1765,7 @@ project.synth();
         ],
       ],
       "testMatch": Array [
-        "**/src/**/__tests__/**/*.ts?(x)",
+        "src/**/__tests__/**/*.ts?(x)",
         "**/(test|src)/**/?(*.)+(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": Array [
@@ -3259,7 +3259,7 @@ project.synth();
         ],
       ],
       "testMatch": Array [
-        "**/src/**/__tests__/**/*.ts?(x)",
+        "src/**/__tests__/**/*.ts?(x)",
         "**/(test|src)/**/?(*.)+(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": Array [
@@ -4644,7 +4644,7 @@ project.synth();
         ],
       ],
       "testMatch": Array [
-        "**/src/**/__tests__/**/*.ts?(x)",
+        "src/**/__tests__/**/*.ts?(x)",
         "**/(test|src)/**/?(*.)+(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": Array [

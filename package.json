@@ -126,7 +126,7 @@
   "jest": {
     "maxWorkers": "50%",
     "testMatch": [
-      "**/src/**/__tests__/**/*.ts?(x)",
+      "src/**/__tests__/**/*.ts?(x)",
       "**/(test|src)/**/?(*.)+(spec|test).ts?(x)"
     ],
     "clearMocks": true,
