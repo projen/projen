@@ -433,9 +433,9 @@ export class TypeScriptProject extends NodeProject {
       `ts-jest${jest.jestVersion}`
     );
 
-    jest.addTestMatch(`${this.srcdir}/**/__tests__/**/*.ts?(x)`);
+    jest.addTestMatch(`<rootDir>/${this.srcdir}/**/__tests__/**/*.ts?(x)`);
     jest.addTestMatch(
-      `**/(${this.testdir}|${this.srcdir})/**/?(*.)+(spec|test).ts?(x)`
+      `<rootDir>/(${this.testdir}|${this.srcdir})/**/*(*.)@(spec|test).ts?(x)`
     );
 
     // add relevant deps
