@@ -34,7 +34,7 @@ test("upgrades command doesn't include ignored packages", () => {
     },
   });
 
-  const deps = "jest-junit jest npm-check-updates projen standard-version dep1";
+  const deps = "jest jest-junit npm-check-updates projen standard-version dep1";
 
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[7].exec).toStrictEqual(`yarn upgrade ${deps}`);
