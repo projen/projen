@@ -94,6 +94,13 @@ export interface ProjectOptions {
    * @default - default options
    */
   readonly renovatebotOptions?: RenovatebotOptions;
+
+  /**
+   * Whether to commit the managed files by default.
+   *
+   * @default true
+   */
+  readonly defaultCommitManagedFiles?: boolean;
 }
 
 /**
@@ -182,6 +189,11 @@ export class Project {
    */
   public readonly projectBuild: ProjectBuild;
 
+  /**
+   * Whether to commit the managed files by default.
+   */
+  public readonly defaultCommitManagedFiles: boolean;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -251,6 +263,8 @@ export class Project {
     if (options.renovatebot) {
       new Renovatebot(this, options.renovatebotOptions);
     }
+
+    this.defaultCommitManagedFiles = options.defaultCommitManagedFiles ?? true;
 
     if (!this.ejected) {
       new JsonFile(this, FILE_MANIFEST, {

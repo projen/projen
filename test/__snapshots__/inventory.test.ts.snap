@@ -319,6 +319,23 @@ Array [
         "switch": "context",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
+      },
+      Object {
         "default": "[]",
         "docs": "List of runtime dependencies for this project.",
         "featured": true,
@@ -1431,6 +1448,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "context",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
       },
       Object {
         "default": "[]",
@@ -2964,6 +2998,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "copyright-period",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
       },
       Object {
         "default": "\\"main\\"",
@@ -5731,6 +5782,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "copyright-period",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
       },
       Object {
         "default": "\\"main\\"",
@@ -9708,6 +9776,23 @@ Array [
         "switch": "copyright-period",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
+      },
+      Object {
         "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "featured": false,
@@ -12294,6 +12379,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "copyright-period",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
       },
       Object {
         "default": "\\"main\\"",
@@ -14981,6 +15083,23 @@ Array [
         "switch": "copyright-period",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
+      },
+      Object {
         "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "featured": false,
@@ -17219,6 +17338,23 @@ Array [
         "switch": "compile-options",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
+      },
+      Object {
         "default": "[]",
         "docs": "List of runtime dependencies for this project.",
         "featured": true,
@@ -18375,6 +18511,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "copyright-period",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
       },
       Object {
         "default": "\\"main\\"",
@@ -20944,6 +21097,23 @@ Array [
         "switch": "copyright-period",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
+      },
+      Object {
         "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "featured": false,
@@ -23099,6 +23269,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "copyright-period",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
       },
       Object {
         "default": "\\"main\\"",
@@ -25486,6 +25673,23 @@ Array [
         "switch": "copyright-period",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
+      },
+      Object {
         "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "featured": false,
@@ -27156,6 +27360,23 @@ Array [
     "moduleName": "projen",
     "options": Array [
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
+      },
+      Object {
         "default": "{}",
         "docs": "Configure logging options such as verbosity.",
         "featured": false,
@@ -27448,6 +27669,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "clobber",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
       },
       Object {
         "default": "[]",
@@ -28664,6 +28902,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "copyright-period",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
       },
       Object {
         "default": "\\"main\\"",
@@ -30809,6 +31064,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "copyright-period",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
       },
       Object {
         "default": "\\"main\\"",
@@ -33201,6 +33473,23 @@ Array [
         "switch": "copyright-period",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
+      },
+      Object {
         "default": "\\"main\\"",
         "docs": "The name of the main release branch.",
         "featured": false,
@@ -35567,6 +35856,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "copyright-period",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "defaultCommitManagedFiles",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "defaultCommitManagedFiles",
+        ],
+        "simpleType": "boolean",
+        "switch": "default-commit-managed-files",
       },
       Object {
         "default": "\\"main\\"",

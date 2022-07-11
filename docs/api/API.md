@@ -1777,6 +1777,7 @@ new Project(options: ProjectOptions)
 
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -1796,6 +1797,7 @@ Name | Type | Description
 **buildTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
 **compileTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
 **components**🔹 | <code>Array<[Component](#projen-component)></code> | Returns all the components within this project.
+**defaultCommitManagedFiles**🔹 | <code>boolean</code> | Whether to commit the managed files by default.
 **deps**🔹 | <code>[Dependencies](#projen-dependencies)</code> | Project dependencies.
 **ejected**🔹 | <code>boolean</code> | Whether or not the project is being ejected.
 **files**🔹 | <code>Array<[FileBase](#projen-filebase)></code> | All files in this project.
@@ -3164,6 +3166,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 
 * **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -3585,6 +3588,7 @@ new awscdk.AwsCdkJavaApp(options: AwsCdkJavaAppOptions)
 
 * **options** (<code>[awscdk.AwsCdkJavaAppOptions](#projen-awscdk-awscdkjavaappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -3695,6 +3699,7 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
 
 * **options** (<code>[awscdk.AwsCdkPythonAppOptions](#projen-awscdk-awscdkpythonappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -3798,6 +3803,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 
 * **options** (<code>[awscdk.AwsCdkTypeScriptAppOptions](#projen-awscdk-awscdktypescriptappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -4106,6 +4112,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 
 * **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -4723,6 +4730,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
 
 * **options** (<code>[cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -4978,6 +4986,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
 
 * **options** (<code>[cdk.JsiiProjectOptions](#projen-cdk-jsiiprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -5385,6 +5394,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 
 * **options** (<code>[cdk8s.Cdk8sTypeScriptAppOptions](#projen-cdk8s-cdk8stypescriptappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -5565,6 +5575,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 
 * **options** (<code>[cdk8s.ConstructLibraryCdk8sOptions](#projen-cdk8s-constructlibrarycdk8soptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -5803,6 +5814,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
 
 * **options** (<code>[cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -6316,6 +6328,7 @@ new github.GitHubProject(options: GitHubProjectOptions)
 
 * **options** (<code>[github.GitHubProjectOptions](#projen-github-githubprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -6993,6 +7006,7 @@ new java.JavaProject(options: JavaProjectOptions)
 
 * **options** (<code>[java.JavaProjectOptions](#projen-java-javaprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -8023,6 +8037,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
 
 * **options** (<code>[javascript.NodeProjectOptions](#projen-javascript-nodeprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -9053,6 +9068,7 @@ new python.PythonProject(options: PythonProjectOptions)
 
 * **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -9841,6 +9857,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
 
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -9994,6 +10011,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -10147,6 +10165,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
 
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -10545,6 +10564,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -10696,6 +10716,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -10919,6 +10940,7 @@ new web.ReactProject(options: ReactProjectOptions)
 
 * **options** (<code>[web.ReactProjectOptions](#projen-web-reactprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -11112,6 +11134,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 
 * **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **defaultCommitManagedFiles** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -11885,6 +11908,7 @@ Options for `Project`.
 Name | Type | Description 
 -----|------|-------------
 **name**🔹 | <code>string</code> | This is the name of your project.
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -12294,6 +12318,7 @@ Name | Type | Description
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -12487,6 +12512,7 @@ Name | Type | Description
 **compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
 **context**?🔹 | <code>Map<string, any></code> | Additional context to include in `cdk.json`.<br/>__*Default*__: no additional context
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -12577,6 +12603,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
 **context**?🔹 | <code>Map<string, any></code> | Additional context to include in `cdk.json`.<br/>__*Default*__: no additional context
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -12673,6 +12700,7 @@ Name | Type | Description
 **context**?🔹 | <code>Map<string, any></code> | Additional context to include in `cdk.json`.<br/>__*Default*__: no additional context
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -12878,6 +12906,7 @@ Name | Type | Description
 **constructsVersion**?⚠️ | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?⚠️ | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?⚠️ | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -13290,6 +13319,7 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -13555,6 +13585,7 @@ Name | Type | Description
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -13891,6 +13922,7 @@ Name | Type | Description
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -14048,6 +14080,7 @@ Name | Type | Description
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -14238,6 +14271,7 @@ Name | Type | Description
 **constructsVersion**?🔹 | <code>string</code> | Construct version to use.<br/>__*Default*__: "^10.0.12"
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -14743,6 +14777,7 @@ Name | Type | Description
 **autoMerge**?🔹 | <code>boolean</code> | Enable automatic merging on GitHub.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -15588,6 +15623,7 @@ Name | Type | Description
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -15641,6 +15677,7 @@ Name | Type | Description
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -16146,6 +16183,7 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -16738,6 +16776,7 @@ Name | Type | Description
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
 **classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -17282,6 +17321,7 @@ Name | Type | Description
 **codeCovTokenSecret**?⚠️ | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?⚠️ | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?⚠️ | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?⚠️ | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?⚠️ | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -17425,6 +17465,7 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -17673,6 +17714,7 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -17804,6 +17846,7 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -17977,6 +18020,7 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []
@@ -18137,6 +18181,7 @@ Name | Type | Description
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
+**defaultCommitManagedFiles**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
 **dependabotOptions**?🔹 | <code>[github.DependabotOptions](#projen-github-dependabotoptions)</code> | Options for dependabot.<br/>__*Default*__: default options
 **deps**?🔹 | <code>Array<string></code> | Runtime dependencies of this module.<br/>__*Default*__: []

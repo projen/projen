@@ -92,7 +92,8 @@ export abstract class FileBase extends Component {
         : `${PROJEN_MARKER}. To modify, edit ${PROJEN_RC} and run "npx projen".`;
 
     const globPattern = `/${this.path}`;
-    const committed = options.committed ?? true;
+    const committed =
+      options.committed ?? project.defaultCommitManagedFiles ?? true;
     if (committed && filePath !== ".gitattributes") {
       project.root.annotateGenerated(`/${filePath}`);
     }
