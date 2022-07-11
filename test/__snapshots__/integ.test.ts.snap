@@ -816,7 +816,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/jest",
         "type": "build",
-        "version": "^27",
       },
       Object {
         "name": "@types/node",
@@ -855,14 +854,13 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
+        "name": "jest",
+        "type": "build",
+      },
+      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
-      },
-      Object {
-        "name": "jest",
-        "type": "build",
-        "version": "^27",
       },
       Object {
         "name": "jsii",
@@ -901,7 +899,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
-        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -1713,7 +1710,7 @@ project.synth();
     "description": "Watching your CDK apps since 2019",
     "devDependencies": Object {
       "@aws-cdk/assert": "^1.75.0",
-      "@types/jest": "^27",
+      "@types/jest": "*",
       "@types/node": "^14",
       "@typescript-eslint/eslint-plugin": "^5",
       "@typescript-eslint/parser": "^5",
@@ -1722,7 +1719,7 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "^27",
+      "jest": "*",
       "jest-junit": "^13",
       "jsii": "*",
       "jsii-diff": "*",
@@ -1732,7 +1729,7 @@ project.synth();
       "npm-check-updates": "^12",
       "projen": "*",
       "standard-version": "^9",
-      "ts-jest": "^27",
+      "ts-jest": "*",
       "typescript": "*",
     },
     "engines": Object {
@@ -1769,7 +1766,7 @@ project.synth();
       ],
       "testMatch": Array [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
+        "<rootDir>/(test|src)/**/?(*.)+(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": Array [
         "/node_modules/",
@@ -2359,7 +2356,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/jest",
         "type": "build",
-        "version": "^27",
       },
       Object {
         "name": "@types/json-stable-stringify",
@@ -2406,14 +2402,13 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
+        "name": "jest",
+        "type": "build",
+      },
+      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^13",
-      },
-      Object {
-        "name": "jest",
-        "type": "build",
-        "version": "^27",
       },
       Object {
         "name": "jsii",
@@ -2451,7 +2446,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
-        "version": "^27",
       },
       Object {
         "name": "typescript",
@@ -3208,7 +3202,7 @@ project.synth();
     "description": "Cloud Development Kit for Kubernetes",
     "devDependencies": Object {
       "@types/follow-redirects": "*",
-      "@types/jest": "^27",
+      "@types/jest": "*",
       "@types/json-stable-stringify": "*",
       "@types/node": "^12",
       "@types/yaml": "*",
@@ -3219,7 +3213,7 @@ project.synth();
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "^27",
+      "jest": "*",
       "jest-junit": "^13",
       "jsii": "*",
       "jsii-diff": "*",
@@ -3229,7 +3223,7 @@ project.synth();
       "json-schema-to-typescript": "*",
       "npm-check-updates": "^12",
       "projen": "*",
-      "ts-jest": "^27",
+      "ts-jest": "*",
       "typescript": "*",
     },
     "engines": Object {
@@ -3266,7 +3260,7 @@ project.synth();
       ],
       "testMatch": Array [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
+        "<rootDir>/(test|src)/**/?(*.)+(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": Array [
         "/node_modules/",
@@ -4651,7 +4645,7 @@ project.synth();
       ],
       "testMatch": Array [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
+        "<rootDir>/(test|src)/**/?(*.)+(spec|test).ts?(x)",
       ],
       "testPathIgnorePatterns": Array [
         "/node_modules/",
