@@ -526,25 +526,9 @@ export class NodeProject extends GitHubProject {
         workflowTriggers: options.buildWorkflowTriggers,
       });
 
-      // run codecov if enabled or a secret token name is passed in
-      // AND jest must be configured
-      if (
-        (options.codeCov || options.codeCovTokenSecret) &&
-        this.jest?.config
-      ) {
-        this.buildWorkflow.addPostBuildSteps({
-          name: "Upload coverage to Codecov",
-          uses: "codecov/codecov-action@v1",
-          with: options.codeCovTokenSecret
-            ? {
-                token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
-                directory: this.jest.config.coverageDirectory,
-              }
-            : {
-                directory: this.jest.config.coverageDirectory,
-              },
-        });
-      }
+      this.buildWorkflow.addPostBuildSteps(
+        ...this.renderUploadCoverageJobStep(options)
+      );
     }
 
     const release =
@@ -564,6 +548,10 @@ export class NodeProject extends GitHubProject {
         releaseWorkflowSetupSteps: [
           ...this.renderWorkflowSetup({ mutable: false }),
           ...(options.releaseWorkflowSetupSteps ?? []),
+        ],
+        postBuildSteps: [
+          ...(options.postBuildSteps ?? []),
+          ...this.renderUploadCoverageJobStep(options),
         ],
       });
 
@@ -695,6 +683,29 @@ export class NodeProject extends GitHubProject {
 
     if (options.prettier ?? false) {
       this.prettier = new Prettier(this, { ...options.prettierOptions });
+    }
+  }
+
+  private renderUploadCoverageJobStep(options: NodeProjectOptions): JobStep[] {
+    // run codecov if enabled or a secret token name is passed in
+    // AND jest must be configured
+    if ((options.codeCov || options.codeCovTokenSecret) && this.jest?.config) {
+      return [
+        {
+          name: "Upload coverage to Codecov",
+          uses: "codecov/codecov-action@v1",
+          with: options.codeCovTokenSecret
+            ? {
+                token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
+                directory: this.jest.config.coverageDirectory,
+              }
+            : {
+                directory: this.jest.config.coverageDirectory,
+              },
+        },
+      ];
+    } else {
+      return [];
     }
   }
 
