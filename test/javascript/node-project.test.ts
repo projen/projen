@@ -562,6 +562,24 @@ test("extend github release workflow", () => {
   );
 });
 
+test("codecov upload added to github release workflow", () => {
+  const project = new TestNodeProject({
+    codeCov: true,
+  });
+
+  const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
+  expect(workflow).toContain("uses: codecov/codecov-action@v1");
+});
+
+test("codecov upload not added to github release workflow", () => {
+  const project = new TestNodeProject({
+    codeCov: false,
+  });
+
+  const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
+  expect(workflow).not.toContain("uses: codecov/codecov-action@v1");
+});
+
 describe("scripts", () => {
   test("addTask and setScript", () => {
     const p = new TestNodeProject();
