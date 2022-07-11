@@ -30,4 +30,48 @@ describe("github-workflow", () => {
       `concurrency: ${concurrencyName}`
     );
   });
+
+  test("workflow job calling a reusable workflow", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const workflow = new GithubWorkflow(project.github!, workflowName);
+
+    workflow.addJob("call-another-workflow", {
+      name: "Some reusable workflow",
+      uses: "some-user/example-action.yaml@v1",
+      permissions: {},
+      with: {
+        foo: true,
+        bar: "example",
+      },
+      secrets: {
+        credentials: "super-secret",
+      },
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
+  });
+
+  test("workflow job calling a reusable workflow & inherited secrets", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const workflow = new GithubWorkflow(project.github!, workflowName);
+
+    workflow.addJob("call-another-workflow", {
+      name: "Some reusable workflow",
+      uses: "some-user/example-action.yaml@v1",
+      permissions: {},
+      secrets: "inherit",
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
+  });
 });
