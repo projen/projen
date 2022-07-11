@@ -8,6 +8,7 @@ import {
   PyPiPublishOptions,
 } from "../release";
 import { TypeScriptProject, TypeScriptProjectOptions } from "../typescript";
+import { deepMerge } from "../util";
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
 
@@ -155,16 +156,30 @@ export class JsiiProject extends TypeScriptProject {
 
   constructor(options: JsiiProjectOptions) {
     const { authorEmail, authorUrl } = parseAuthorAddress(options);
-    super({
+
+    const defaultOptions = {
       repository: options.repositoryUrl,
       authorName: options.author,
       authorEmail,
       authorUrl,
-      ...options,
+      jestOptions: {
+        jestVersion: "^27",
+      },
+    };
+
+    const forcedOptions = {
       releaseToNpm: false, // we have a jsii release workflow
       disableTsconfig: true, // jsii generates its own tsconfig.json
       docgen: false, // we use jsii-docgen here so disable typescript docgen
-    });
+    };
+
+    const mergedOptions = deepMerge([
+      defaultOptions,
+      options,
+      forcedOptions,
+    ]) as TypeScriptProjectOptions;
+
+    super(mergedOptions);
 
     const srcdir = this.srcdir;
     const libdir = this.libdir;
