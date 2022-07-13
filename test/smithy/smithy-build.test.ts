@@ -1,5 +1,5 @@
-import { SmithyBuild } from "../src/smithy-build";
-import { synthSnapshot, TestProject } from "./util";
+import { SmithyBuild } from "../../src/smithy/smithy-build";
+import { synthSnapshot, TestProject } from "../util";
 
 test("adds default smithy-build.json file", () => {
   // WHEN
