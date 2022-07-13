@@ -4552,17 +4552,17 @@ addPostBuildJob(id: string, job: Job): void
 * **id** (<code>string</code>)  The id of the new job.
 * **job** (<code>[github.workflows.Job](#projen-github-workflows-job)</code>)  The job specification.
   * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  You can modify the default permissions granted to the GITHUB_TOKEN, adding or removing access as required, so that you only allow the minimum required access. 
+  * **concurrency** (<code>any</code>)  Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. __*Optional*__
+  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
+  * **name** (<code>string</code>)  The name of the job displayed on GitHub. __*Optional*__
+  * **needs** (<code>Array<string></code>)  Identifies any jobs that must complete successfully before this job will run. __*Optional*__
   * **runsOn** (<code>Array<string></code>)  The type of machine to run the job on. 
   * **steps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A job contains a sequence of tasks called steps. 
-  * **concurrency** (<code>any</code>)  Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. __*Optional*__
   * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  A container to run any steps in a job that don't already specify a container. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a workflow run from failing when a job fails. __*Optional*__
   * **defaults** (<code>[github.workflows.JobDefaults](#projen-github-workflows-jobdefaults)</code>)  A map of default settings that will apply to all steps in the job. __*Optional*__
   * **env** (<code>Map<string, string></code>)  A map of environment variables that are available to all steps in the job. __*Optional*__
   * **environment** (<code>any</code>)  The environment that the job references. __*Optional*__
-  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
-  * **name** (<code>string</code>)  The name of the job displayed on GitHub. __*Optional*__
-  * **needs** (<code>Array<string></code>)  Identifies any jobs that must complete successfully before this job will run. __*Optional*__
   * **outputs** (<code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code>)  A map of outputs for a job. __*Optional*__
   * **services** (<code>Map<string, [github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)></code>)  Used to host service containers for a job in a workflow. __*Optional*__
   * **strategy** (<code>[github.workflows.JobStrategy](#projen-github-workflows-jobstrategy)</code>)  A strategy creates a build matrix for your jobs. __*Optional*__
@@ -6241,28 +6241,11 @@ Name | Type | Description
 Adds a single job to the workflow.
 
 ```ts
-addJob(id: string, job: Job): void
+addJob(id: string, job: JobCallingReusableWorkflow &#124; Job): void
 ```
 
 * **id** (<code>string</code>)  The job name (unique within the workflow).
-* **job** (<code>[github.workflows.Job](#projen-github-workflows-job)</code>)  The job specification.
-  * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  You can modify the default permissions granted to the GITHUB_TOKEN, adding or removing access as required, so that you only allow the minimum required access. 
-  * **runsOn** (<code>Array<string></code>)  The type of machine to run the job on. 
-  * **steps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A job contains a sequence of tasks called steps. 
-  * **concurrency** (<code>any</code>)  Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. __*Optional*__
-  * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  A container to run any steps in a job that don't already specify a container. __*Optional*__
-  * **continueOnError** (<code>boolean</code>)  Prevents a workflow run from failing when a job fails. __*Optional*__
-  * **defaults** (<code>[github.workflows.JobDefaults](#projen-github-workflows-jobdefaults)</code>)  A map of default settings that will apply to all steps in the job. __*Optional*__
-  * **env** (<code>Map<string, string></code>)  A map of environment variables that are available to all steps in the job. __*Optional*__
-  * **environment** (<code>any</code>)  The environment that the job references. __*Optional*__
-  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
-  * **name** (<code>string</code>)  The name of the job displayed on GitHub. __*Optional*__
-  * **needs** (<code>Array<string></code>)  Identifies any jobs that must complete successfully before this job will run. __*Optional*__
-  * **outputs** (<code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code>)  A map of outputs for a job. __*Optional*__
-  * **services** (<code>Map<string, [github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)></code>)  Used to host service containers for a job in a workflow. __*Optional*__
-  * **strategy** (<code>[github.workflows.JobStrategy](#projen-github-workflows-jobstrategy)</code>)  A strategy creates a build matrix for your jobs. __*Optional*__
-  * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to let a job run before GitHub automatically cancels it. __*Default*__: 360
-  * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools required for this job. __*Optional*__
+* **job** (<code>[github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow) &#124; [github.workflows.Job](#projen-github-workflows-job)</code>)  The job specification.
 
 
 
@@ -6272,10 +6255,10 @@ addJob(id: string, job: Job): void
 Add jobs to the workflow.
 
 ```ts
-addJobs(jobs: Map<string, Job>): void
+addJobs(jobs: Map<string, JobCallingReusableWorkflow &#124; Job>): void
 ```
 
-* **jobs** (<code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>)  Jobs to add.
+* **jobs** (<code>Map<string, [github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow) &#124; [github.workflows.Job](#projen-github-workflows-job)></code>)  Jobs to add.
 
 
 
@@ -7391,6 +7374,7 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
   * **configFilePath** (<code>string</code>)  Path to JSON config file for Jest. __*Default*__: No separate config file, jest settings are stored in package.json
   * **coverage** (<code>boolean</code>)  Collect coverage. __*Default*__: true
   * **coverageText** (<code>boolean</code>)  Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution. __*Default*__: true
+  * **extraCliOptions** (<code>Array<string></code>)  Additional options to pass to the Jest CLI invocation. __*Default*__: no extra options
   * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. __*Default*__: ["/node_modules/"]
   * **jestConfig** (<code>[javascript.JestConfigOptions](#projen-javascript-jestconfigoptions)</code>)  Jest configuration. __*Default*__: default jest configuration
   * **jestVersion** (<code>string</code>)  The version of jest to use. __*Default*__: installs the latest jest version
@@ -15651,6 +15635,7 @@ Name | Type | Description
 **configFilePath**?🔹 | <code>string</code> | Path to JSON config file for Jest.<br/>__*Default*__: No separate config file, jest settings are stored in package.json
 **coverage**?⚠️ | <code>boolean</code> | Collect coverage.<br/>__*Default*__: true
 **coverageText**?🔹 | <code>boolean</code> | Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution.<br/>__*Default*__: true
+**extraCliOptions**?🔹 | <code>Array<string></code> | Additional options to pass to the Jest CLI invocation.<br/>__*Default*__: no extra options
 **ignorePatterns**?⚠️ | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/>__*Default*__: ["/node_modules/"]
 **jestConfig**?🔹 | <code>[javascript.JestConfigOptions](#projen-javascript-jestconfigoptions)</code> | Jest configuration.<br/>__*Default*__: default jest configuration
 **jestVersion**?🔹 | <code>string</code> | The version of jest to use.<br/>__*Default*__: installs the latest jest version
