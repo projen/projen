@@ -23,6 +23,9 @@ export type ProjectionsType = Record<ProjectionKey, ProjectionValue>;
 export type PluginKey = string;
 export type PluginsType = Record<PluginKey, PluginValue>;
 
+/**
+ * Options for `SmithyBuild`
+ */
 export interface SmithyBuildOptions extends SmithyCommon {
   readonly version?: string;
 
