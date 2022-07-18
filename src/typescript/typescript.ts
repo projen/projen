@@ -293,6 +293,7 @@ export class TypeScriptProject extends NodeProject {
       // collocated, can only ignore the compiled output
       this.gitignore.exclude(`/${this.libdir}/**/*.js`);
       this.gitignore.exclude(`/${this.libdir}/**/*.d.ts`);
+      this.gitignore.exclude(`/${this.libdir}/**/*.d.ts.map`);
     }
 
     this.npmignore?.include(`/${this.libdir}/`);
