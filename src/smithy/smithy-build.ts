@@ -27,12 +27,32 @@ export type PluginsType = Record<PluginKey, PluginValue>;
  * Options for `SmithyBuild`
  */
 export interface SmithyBuildOptions extends SmithyCommon {
+  /**
+   * Defines the version of smithy-build.
+   * @default "1.0"
+   */
   readonly version?: string;
-
+  
+  /**
+   * Specifies a location where smithy projections are written.
+   * @default - no output directory
+   */
   readonly outputDirectory?: string;
-
+  
+  /**
+   * Map of projections name to projection configurations
+   * https://awslabs.github.io/smithy/1.0/guides/building-models/build-config.html#projections
+   * @default - no projections
+   */
   readonly projections?: ProjectionsType;
-
+  
+  /**
+   * If a plugin can't be found, Smithy will by default fail the build.
+   * This setting can be set to true to allow the build to progress
+   * even if a plugin can't be found on the classpath.
+   *
+   * @default - no ignoreMissingPlugins set in the smithy-build.json file
+   */
   readonly ignoreMissingPlugins?: boolean;
 }
 
