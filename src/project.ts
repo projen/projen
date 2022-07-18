@@ -100,7 +100,7 @@ export interface ProjectOptions {
    *
    * @default true
    */
-  readonly defaultCommitManagedFiles?: boolean;
+  readonly commitGenerated?: boolean;
 }
 
 /**
@@ -192,7 +192,7 @@ export class Project {
   /**
    * Whether to commit the managed files by default.
    */
-  public readonly defaultCommitManagedFiles: boolean;
+  public readonly commitGenerated: boolean;
 
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
@@ -264,7 +264,7 @@ export class Project {
       new Renovatebot(this, options.renovatebotOptions);
     }
 
-    this.defaultCommitManagedFiles = options.defaultCommitManagedFiles ?? true;
+    this.commitGenerated = options.commitGenerated ?? true;
 
     if (!this.ejected) {
       new JsonFile(this, FILE_MANIFEST, {
