@@ -50,6 +50,7 @@ junit.xml
 !/lib/
 /lib/**/*.js
 /lib/**/*.d.ts
+/lib/**/*.d.ts.map
 /dist/
 !/.eslintrc.json
 "
