@@ -38,7 +38,6 @@ export interface SmithyBuildOptions extends SmithyCommon {
    * @default - no output directory
    */
   readonly outputDirectory?: string;
-  
   /**
    * Map of projections name to projection configurations
    * https://awslabs.github.io/smithy/1.0/guides/building-models/build-config.html#projections
