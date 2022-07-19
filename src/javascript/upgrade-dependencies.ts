@@ -124,7 +124,7 @@ export class UpgradeDependencies extends Component {
       options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.postBuildSteps = [];
     this.containerOptions = options.workflowOptions?.container;
-    project.addDevDeps("npm-check-updates@^12");
+    project.addDevDeps("npm-check-updates@^15");
 
     this.postUpgradeTask =
       project.tasks.tryFind("post-upgrade") ??
