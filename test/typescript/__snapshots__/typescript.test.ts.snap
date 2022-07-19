@@ -9,7 +9,7 @@ exports[`sources and compiled output can be collocated 1`] = `
 !/.github/workflows/pull-request-lint.yml
 !/package.json
 !/LICENSE
-!/.npmignore
+/.npmignore
 logs
 *.log
 npm-debug.log*

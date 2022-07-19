@@ -5,7 +5,10 @@ export class IgnoreFile extends FileBase {
   private readonly _patterns = new Array<string>();
 
   constructor(project: Project, filePath: string) {
-    super(project, filePath, { editGitignore: filePath !== ".gitignore" });
+    super(project, filePath, {
+      editGitignore: filePath !== ".gitignore",
+      committed: filePath !== ".gitignore" ? false : undefined,
+    });
   }
 
   /**

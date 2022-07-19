@@ -24,6 +24,7 @@ export class PullRequestTemplate extends TextFile {
           ? options.lines
           : ["Fixes #"],
       marker: false,
+      committed: true,
     });
   }
 }

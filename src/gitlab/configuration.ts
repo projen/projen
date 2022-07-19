@@ -156,6 +156,7 @@ export class CiConfiguration extends Component {
         : `.gitlab/ci-templates/${name.toLocaleLowerCase()}.yml`;
     this.file = new YamlFile(this.project, this.path, {
       obj: () => this.renderCI(),
+      committed: true,
     });
     const defaults = options?.default;
     if (defaults) {

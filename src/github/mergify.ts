@@ -77,6 +77,7 @@ export class Mergify extends Component {
           queue_rules: this.queues,
           pull_request_rules: this.rules,
         },
+        committed: true,
       });
     }
   }

@@ -275,6 +275,7 @@ export class Project {
             .filter((f) => f.readonly)
             .map((f) => f.path.replace(/\\/g, "/")),
         }),
+        committed: true,
       });
     }
   }

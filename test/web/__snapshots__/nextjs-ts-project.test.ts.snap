@@ -11,7 +11,6 @@ Object {
 /.github/workflows/upgrade.yml linguist-generated
 /.gitignore linguist-generated
 /.mergify.yml linguist-generated
-/.npmignore linguist-generated
 /.projen/** linguist-generated
 /.projen/deps.json linguist-generated
 /.projen/files.json linguist-generated
@@ -227,7 +226,7 @@ jobs:
 !/.github/workflows/pull-request-lint.yml
 !/package.json
 !/LICENSE
-!/.npmignore
+/.npmignore
 logs
 *.log
 npm-debug.log*

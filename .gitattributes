@@ -14,8 +14,6 @@
 /.gitpod.yml linguist-generated
 /.markdownlint.json linguist-generated
 /.mergify.yml linguist-generated
-/.npmignore linguist-generated
-/.prettierignore linguist-generated
 /.prettierrc.json linguist-generated
 /.projen/** linguist-generated
 /.projen/deps.json linguist-generated

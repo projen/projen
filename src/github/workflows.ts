@@ -83,6 +83,7 @@ export class GithubWorkflow extends Component {
         `.github/workflows/${name.toLocaleLowerCase()}.yml`,
         {
           obj: () => this.renderWorkflow(),
+          committed: true,
         }
       );
     }
