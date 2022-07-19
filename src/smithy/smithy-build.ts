@@ -32,7 +32,6 @@ export interface SmithyBuildOptions extends SmithyCommon {
    * @default "1.0"
    */
   readonly version?: string;
-  
   /**
    * Specifies a location where smithy projections are written.
    * @default - no output directory
