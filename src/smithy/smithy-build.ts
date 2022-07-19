@@ -44,7 +44,6 @@ export interface SmithyBuildOptions extends SmithyCommon {
    * @default - no projections
    */
   readonly projections?: ProjectionsType;
-  
   /**
    * If a plugin can't be found, Smithy will by default fail the build.
    * This setting can be set to true to allow the build to progress
