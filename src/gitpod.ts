@@ -320,6 +320,7 @@ export class Gitpod extends Component implements IDevEnvironment {
     new YamlFile(this.project, GITPOD_FILE, {
       obj: this.config,
       omitEmpty: true,
+      // GitPod needs to read the file from the repository in order to work.
       committed: true,
     });
   }

@@ -77,6 +77,7 @@ export class Mergify extends Component {
           queue_rules: this.queues,
           pull_request_rules: this.rules,
         },
+        // Mergify needs to read the file from the repository in order to work.
         committed: true,
       });
     }
