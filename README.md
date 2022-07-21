@@ -46,6 +46,7 @@ Check out [this talk](https://youtu.be/SOWMPzXtTCw) about projen from its creato
 
 _projen_ doesn't need to be installed. You will be using [npx](https://docs.npmjs.com/cli/v7/commands/npx) to run _projen_ which takes care of all required setup steps.
 ...
+
 To create a new project, run the following command and follow the instructions:
 
 ```console
