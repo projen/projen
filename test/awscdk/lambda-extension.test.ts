@@ -49,8 +49,12 @@ test("simplest LambdaExtension cdk v2", () => {
     "export interface ExampleLayerVersionProps"
   );
   expect(generatedSource).toContain("export class ExampleLayerVersion");
-  expect(generatedSource).toContain("Runtime.NODEJS_12_X");
-  expect(generatedSource).toContain("Runtime.NODEJS_14_X");
+  expect(generatedSource).toContain(
+    "new lambda.Runtime('nodejs12.x', lambda.RuntimeFamily.NODEJS)"
+  );
+  expect(generatedSource).toContain(
+    "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS)"
+  );
   expect(generatedSource).toMatchSnapshot();
 });
 
@@ -108,9 +112,15 @@ test("changing compatible runtimes", () => {
   );
 
   const generatedSource = snapshot["src/example-layer-version.ts"];
-  expect(generatedSource).toContain("Runtime.NODEJS_10_X");
-  expect(generatedSource).toContain("Runtime.NODEJS_12_X");
-  expect(generatedSource).toContain("Runtime.NODEJS_14_X");
+  expect(generatedSource).toContain(
+    "new lambda.Runtime('nodejs10.x', lambda.RuntimeFamily.NODEJS)"
+  );
+  expect(generatedSource).toContain(
+    "new lambda.Runtime('nodejs12.x', lambda.RuntimeFamily.NODEJS)"
+  );
+  expect(generatedSource).toContain(
+    "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS)"
+  );
 });
 
 test("bundler options", () => {
