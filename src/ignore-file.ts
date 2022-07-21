@@ -7,7 +7,6 @@ export class IgnoreFile extends FileBase {
   constructor(project: Project, filePath: string) {
     super(project, filePath, {
       editGitignore: filePath !== ".gitignore",
-      committed: filePath !== ".gitignore" ? false : undefined,
     });
   }
 
