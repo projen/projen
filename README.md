@@ -44,16 +44,8 @@ Check out [this talk](https://youtu.be/SOWMPzXtTCw) about projen from its creato
 
 ## Getting Started
 
-Install the [Projen](https://projen.io/) from npm.
-
-```console
-$ npx projen
-Need to install the following packages:
-   projen
-Ok to proceed? (y)
+_projen_ doesn't need to be installed. You will be using [npx](https://docs.npmjs.com/cli/v7/commands/npx) to run _projen_ which takes care of all required setup steps.
 ...
-```
-
 To create a new project, run the following command and follow the instructions:
 
 ```console
