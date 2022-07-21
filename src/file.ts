@@ -93,14 +93,6 @@ export abstract class FileBase extends Component {
 
     const globPattern = `/${this.path}`;
     const committed = options.committed ?? project.commitGenerated ?? true;
-    console.log({
-      filePath,
-      committed,
-      options: {
-        committed: options.committed,
-        commitGenerated: project.commitGenerated,
-      },
-    });
     if (committed && filePath !== ".gitattributes") {
       project.root.annotateGenerated(`/${filePath}`);
     }
