@@ -249,7 +249,9 @@ export class LambdaFunction extends Component {
     src.open("super(scope, id, {");
     src.line(`description: '${convertToPosixPath(entrypoint)}',`);
     src.line("...props,");
-    src.line(`runtime: lambda.Runtime.${runtime.functionRuntime},`);
+    src.line(
+      `runtime: new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`
+    );
     src.line("handler: 'index.handler',");
     src.line(
       `code: lambda.Code.fromAsset(path.join(__dirname, '${convertToPosixPath(
@@ -287,7 +289,7 @@ export class LambdaRuntime {
    * Node.js 10.x
    */
   public static readonly NODEJS_10_X = new LambdaRuntime(
-    "NODEJS_10_X",
+    "nodejs10.x",
     "node10"
   );
 
@@ -295,7 +297,7 @@ export class LambdaRuntime {
    * Node.js 12.x
    */
   public static readonly NODEJS_12_X = new LambdaRuntime(
-    "NODEJS_12_X",
+    "nodejs12.x",
     "node12"
   );
 
@@ -303,7 +305,7 @@ export class LambdaRuntime {
    * Node.js 14.x
    */
   public static readonly NODEJS_14_X = new LambdaRuntime(
-    "NODEJS_14_X",
+    "nodejs14.x",
     "node14"
   );
 
@@ -311,15 +313,15 @@ export class LambdaRuntime {
    * Node.js 16.x
    */
   public static readonly NODEJS_16_X = new LambdaRuntime(
-    "NODEJS_16_X",
+    "nodejs16.x",
     "node16"
   );
 
   public readonly esbuildPlatform = "node";
 
-  private constructor(
+  public constructor(
     /**
-     * The aws-lambda.Runtime member name to use.
+     * The Node.js runtime to use
      */
     public readonly functionRuntime: string,
 

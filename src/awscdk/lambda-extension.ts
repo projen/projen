@@ -206,7 +206,9 @@ class LambdaLayerConstruct extends SourceCode {
 
     src.open("compatibleRuntimes: [");
     for (const runtime of options.compatibleRuntimes) {
-      src.line(`lambda.Runtime.${runtime.functionRuntime},`);
+      src.line(
+        `new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`
+      );
     }
     src.close("],");
 
