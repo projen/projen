@@ -275,6 +275,7 @@ export class Project {
             .filter((f) => f.readonly)
             .map((f) => f.path.replace(/\\/g, "/")),
         }),
+        // This file is used by projen to track the generated files, so must be committed.
         committed: true,
       });
     }
