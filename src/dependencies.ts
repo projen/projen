@@ -59,7 +59,6 @@ export class Dependencies extends Component {
       new JsonFile(project, Dependencies.MANIFEST_FILE, {
         omitEmpty: true,
         obj: () => this.toJson(),
-        committed: true,
       });
     }
   }
