@@ -30,6 +30,42 @@ test("all files added to the project can be enumerated", () => {
   exp("your/file/me.json");
 });
 
+test("generated files are commited if commitGenerated is undefined", () => {
+  // GIVEN
+  const p = new TestProject();
+  new TextFile(p, "my.txt");
+
+  // WHEN
+  const gitIgnoreContents = synthSnapshot(p)[".gitignore"];
+
+  // THEN
+  expect(gitIgnoreContents).toMatchSnapshot();
+});
+
+test("generated files are commited if commitGenerated is true", () => {
+  // GIVEN
+  const p = new TestProject({ commitGenerated: true });
+  new TextFile(p, "my.txt");
+
+  // WHEN
+  const gitIgnoreContents = synthSnapshot(p)[".gitignore"];
+
+  // THEN
+  expect(gitIgnoreContents).toMatchSnapshot();
+});
+
+test.only("generated files are ignored from git if commitGenerated is false", () => {
+  // GIVEN
+  const p = new TestProject({ commitGenerated: false });
+  new TextFile(p, "my.txt");
+
+  // WHEN
+  const gitIgnoreContents = synthSnapshot(p)[".gitignore"];
+
+  // THEN
+  expect(gitIgnoreContents).toMatchSnapshot();
+});
+
 test("tryFindFile() can be used to find a file either absolute or relative path", () => {
   // GIVEN
   const p = new TestProject();
