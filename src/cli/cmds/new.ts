@@ -25,6 +25,11 @@ class Command implements yargs.CommandModule {
       default: true,
       desc: "Synthesize after creating .projenrc.js",
     });
+    args.option("projenrc-ts", {
+      type: "boolean",
+      default: false,
+      desc: "Create a .projenrc.ts file",
+    });
     args.option("comments", {
       type: "boolean",
       default: true,
