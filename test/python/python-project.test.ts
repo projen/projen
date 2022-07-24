@@ -1,4 +1,4 @@
-import { PythonProject, PythonProjectOptions } from "../../src/python";
+import { python } from "../../src";
 import { synthSnapshot } from "../util";
 
 test("defaults", () => {
@@ -54,8 +54,8 @@ test("cannot specify multiple projenrc types", () => {
   );
 });
 
-class TestPythonProject extends PythonProject {
-  constructor(options: Partial<PythonProjectOptions> = {}) {
+class TestPythonProject extends python.PythonProject {
+  constructor(options: Partial<python.PythonProjectOptions> = {}) {
     super({
       ...options,
       clobber: false,

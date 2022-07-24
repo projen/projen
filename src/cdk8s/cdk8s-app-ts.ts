@@ -1,19 +1,16 @@
 import * as path from "path";
 import * as fs from "fs-extra";
 import { Component } from "../component";
+import { DependencyType } from "../dependencies";
 import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 import { YamlFile } from "../yaml";
 import { AutoDiscover } from "./auto-discover";
+import { Cdk8sDeps, Cdk8sDepsCommonOptions } from "./cdk8s-deps";
+import { Cdk8sDepsJs } from "./cdk8s-deps-js";
 
-export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
-  /**
-   * Minimum target version this library is tested against.
-   *
-   * @default "1.0.0-beta.10"
-   * @featured
-   */
-  readonly cdk8sVersion: string;
-
+export interface Cdk8sTypeScriptAppOptions
+  extends TypeScriptProjectOptions,
+    Cdk8sDepsCommonOptions {
   /**
    * Import a specific Kubernetes spec version.
    *
@@ -27,62 +24,6 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
    * @default - no additional specs imported
    */
   readonly cdk8sImports?: string[];
-
-  /**
-   * constructs verion
-   *
-   * @default "3.2.34"
-   */
-
-  readonly constructsVersion?: string;
-
-  /**
-   * cdk8s-cli version
-   *
-   * @default "cdk8sVersion"
-   */
-
-  readonly cdk8sCliVersion?: string;
-
-  /**
-   * Use pinned version instead of caret version for CDK8s.
-   *
-   * You can use this to prevent yarn to mix versions for your CDK8s package and to prevent auto-updates.
-   * If you use experimental features this will let you define the moment you include breaking changes.
-   *
-   * @default false
-   */
-  readonly cdk8sVersionPinning?: boolean;
-
-  /**
-   * Use pinned version instead of caret version for CDK8s-cli.
-   *
-   * You can use this to prevent yarn to mix versions for your CDK8s package and to prevent auto-updates.
-   * If you use experimental features this will let you define the moment you include breaking changes.
-   *
-   * @default false
-   */
-  readonly cdk8sCliVersionPinning?: boolean;
-
-  /**
-   * Use pinned version instead of caret version for cdk8s-plus-17.
-   *
-   * You can use this to prevent yarn to mix versions for your CDK8s package and to prevent auto-updates.
-   * If you use experimental features this will let you define the moment you include breaking changes.
-   *
-   * @default false
-   */
-  readonly cdk8sPlusVersionPinning?: boolean;
-
-  /**
-   * Use pinned version instead of caret version for constructs.
-   *
-   * You can use this to prevent yarn to mix versions for your consructs package and to prevent auto-updates.
-   * If you use experimental features this will let you define the moment you include breaking changes.
-   *
-   * @default false
-   */
-  readonly constructsVersionPinning?: boolean;
 
   /**
    * The CDK8s app's entrypoint (relative to the source directory, which is
@@ -111,30 +52,22 @@ export interface Cdk8sTypeScriptAppOptions extends TypeScriptProjectOptions {
 
 export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
   /**
-   * The CDK8s version this app is using.
-   */
-  public readonly cdk8sVersion: string;
-
-  /**
-   * The constructs version this app is using.
-   */
-  public readonly constructsVersion: string;
-
-  /**
-   * The cdk8s-cli version this app is using.
-   */
-
-  public readonly cdk8sCliVersion: string;
-
-  /**
    * The CDK8s app entrypoint
    */
   public readonly appEntrypoint: string;
+
+  public readonly cdk8sDeps: Cdk8sDeps;
 
   constructor(options: Cdk8sTypeScriptAppOptions) {
     super({
       ...options,
       sampleCode: false,
+    });
+
+    this.cdk8sDeps = new Cdk8sDepsJs(this, {
+      dependencyType: DependencyType.RUNTIME,
+      cdk8sCliDependency: true,
+      ...options,
     });
 
     if (!options.cdk8sVersion) {
@@ -152,38 +85,6 @@ export class Cdk8sTypeScriptApp extends TypeScriptAppProject {
     }
 
     this.appEntrypoint = options.appEntrypoint ?? "main.ts";
-
-    this.cdk8sVersion = options.cdk8sVersionPinning
-      ? options.cdk8sVersion
-      : `^${options.cdk8sVersion}`;
-
-    if (options.constructsVersion) {
-      this.constructsVersion = options.constructsVersionPinning
-        ? options.constructsVersion
-        : `^${options.constructsVersion}`;
-    } else {
-      this.constructsVersion = "^3.2.34";
-    }
-
-    if (!!options.cdk8sCliVersion) {
-      this.cdk8sCliVersion = options.cdk8sCliVersionPinning
-        ? options.cdk8sCliVersion
-        : `^${options.cdk8sCliVersion}`;
-    } else {
-      this.cdk8sCliVersion = this.cdk8sVersion;
-    }
-
-    // CLI
-    this.addDeps(
-      `cdk8s@${this.cdk8sVersion}`,
-      `constructs@${this.constructsVersion}`
-    );
-    this.addDevDeps(
-      "ts-node",
-      `cdk8s-cli@${this.cdk8sCliVersion}`,
-      `cdk8s@${this.cdk8sVersion}`,
-      `constructs@${this.constructsVersion}`
-    );
 
     const synth = this.addTask("synth", {
       description:

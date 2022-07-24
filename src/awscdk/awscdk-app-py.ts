@@ -5,9 +5,9 @@ import {
   CdkConfigCommonOptions,
   CdkTasks,
 } from ".";
-import { Component, DependencyType, SampleDir, SourceCode } from "..";
-import { Pytest } from "../python/pytest";
-import { PythonProject, PythonProjectOptions } from "../python/python-project";
+import { Component, DependencyType, SampleDir } from "..";
+import { PythonProject, PythonProjectOptions, Pytest } from "../python";
+import { SampleFile } from "../sample-file";
 import { AwsCdkDepsPy } from "./awscdk-deps-py";
 import { AwsCdkPytestSample } from "./awscdk-pytest-sample";
 
@@ -113,29 +113,32 @@ class AppCode extends Component {
   constructor(project: AwsCdkPythonApp, fileName: string, cdkVersion: number) {
     super(project);
 
-    const src = new SourceCode(project, fileName, {
-      readonly: false,
-    });
-
-    src.line("import os");
+    let versionImport: string;
     if (cdkVersion < 2) {
-      src.line("from aws_cdk.core import App, Environment");
+      versionImport = "from aws_cdk.core import App, Environment";
     } else {
-      src.line("from aws_cdk import App, Environment");
+      versionImport = "from aws_cdk import App, Environment";
     }
-    src.line(`from ${project.moduleName}.main import MyStack`);
-    src.line("");
-    src.line("# for development, use account/region from cdk cli");
-    src.open("dev_env = Environment(");
-    src.line("account=os.getenv('CDK_DEFAULT_ACCOUNT'),");
-    src.line("region=os.getenv('CDK_DEFAULT_REGION'),");
-    src.close(")");
-    src.line("");
-    src.line("app = App()");
-    src.line(`MyStack(app, "${this.project.name}-dev", env=dev_env)`);
-    src.line(`# MyStack(app, "${this.project.name}-prod", env=prod_env)`);
-    src.line("");
-    src.line("app.synth()");
+
+    new SampleFile(project, fileName, {
+      contents: [
+        "import os",
+        versionImport,
+        `from ${project.moduleName}.main import MyStack`,
+        "",
+        "# for development, use account/region from cdk cli",
+        "dev_env = Environment(",
+        "  account=os.getenv('CDK_DEFAULT_ACCOUNT'),",
+        "  region=os.getenv('CDK_DEFAULT_REGION')",
+        ")",
+        "",
+        "app = App()",
+        `MyStack(app, "${this.project.name}-dev", env=dev_env)`,
+        `# MyStack(app, "${this.project.name}-prod", env=prod_env)`,
+        "",
+        "app.synth()",
+      ].join("\n"),
+    });
   }
 }
 
@@ -154,7 +157,6 @@ class MyStackCode extends Component {
     appFile.push("");
     appFile.push("");
     appFile.push("class MyStack(Stack):");
-    appFile.push("");
     appFile.push(
       "  def __init__(self, scope: Construct, construct_id: str, **kwargs) -> None:"
     );
