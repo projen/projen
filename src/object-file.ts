@@ -1,3 +1,4 @@
+import { applyOperation, Operation } from "fast-json-patch";
 import { FileBase, FileBaseOptions, IResolver } from "./file";
 import { Project } from "./project";
 import { deepMerge } from "./util";
@@ -41,12 +42,18 @@ export abstract class ObjectFile extends FileBase {
    */
   public readonly omitEmpty: boolean;
 
+  /**
+   * patches to be applied to `obj` after the resolver is called
+   */
+  private readonly patchOperations: Operation[];
+
   constructor(project: Project, filePath: string, options: ObjectFileOptions) {
     super(project, filePath, options);
 
     this.obj = options.obj ?? {};
     this.omitEmpty = options.omitEmpty ?? false;
     this.rawOverrides = {};
+    this.patchOperations = [];
   }
 
   /**
@@ -175,6 +182,49 @@ export abstract class ObjectFile extends FileBase {
   }
 
   /**
+   * Applies an RFC 6902 JSON-patch to the synthesized object file.
+   * See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
+   *
+   * For example, with the following object file
+   * ```json
+   * "compilerOptions": {
+   *   "exclude": ["node_modules"],
+   *   "lib": ["es2019"]
+   *   ...
+   * }
+   * ...
+   * ```
+   *
+   * ```typescript
+   * project.tsconfig.file.patch({
+   *   op: "add",
+   *   path: "/compilerOptions/exclude/-",
+   *   value: "coverage",
+   * });
+   * project.tsconfig.file.patch({
+   *   op: "replace",
+   *   path: "/compilerOptions/lib",
+   *   value: ["dom", "dom.iterable", "esnext"],
+   * });
+   * project.tsconfig.file.addToArray('compilerOptions.lib', 'dom', 'dom.iterable', 'esnext');
+   * ```
+   * would result in the following object file
+   * ```json
+   * "compilerOptions": {
+   *   "exclude": ["node_modules", "coverage"],
+   *   "lib": ["dom", "dom.iterable", "esnext"]
+   *   ...
+   * }
+   * ...
+   * ```
+   *
+   * @param ops - The operations to apply
+   */
+  public patch(...ops: Operation[]) {
+    this.patchOperations.push(...ops);
+  }
+
+  /**
    * Syntactic sugar for `addOverride(path, undefined)`.
    * @param path The path of the value to delete
    */
@@ -193,7 +243,9 @@ export abstract class ObjectFile extends FileBase {
     if (resolved) {
       deepMerge([resolved, this.rawOverrides], true);
     }
-
+    for (const operation of this.patchOperations) {
+      applyOperation(resolved, operation, true, true);
+    }
     return resolved ? JSON.stringify(resolved, undefined, 2) : undefined;
   }
 }

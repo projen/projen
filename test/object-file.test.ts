@@ -306,3 +306,115 @@ describe("addToArray", () => {
     });
   });
 });
+
+describe("addJsonPatch", () => {
+  test("addJsonPatch(p, v) adds to an existing array", () => {
+    // GIVEN
+    const prj = new TestProject();
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: { first: { second: { array: ["initial value"] } } },
+      marker: false,
+    });
+    // WHEN
+    file.patch({
+      op: "add",
+      path: "/first/second/array/-",
+      value: "first extra value",
+    });
+    file.patch({
+      op: "add",
+      path: "/first/second/array/-",
+      value: "second extra value",
+    });
+    file.patch({
+      op: "add",
+      path: "/first/second/array/1",
+      value: "third extra value",
+    });
+    // THEN
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      first: {
+        second: {
+          array: [
+            "initial value",
+            "third extra value",
+            "first extra value",
+            "second extra value",
+          ],
+        },
+      },
+    });
+  });
+  test("addToArray(p, v) creates an array", () => {
+    // GIVEN
+    const prj = new TestProject();
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: { first: { second: {} } },
+      marker: false,
+    });
+    // WHEN
+    file.patch(
+      {
+        op: "add",
+        path: "/first/second/array",
+        value: [],
+      },
+      {
+        op: "add",
+        path: "/first/second/array/-",
+        value: "first extra value",
+      },
+      {
+        op: "add",
+        path: "/first/second/array/-",
+        value: "second extra value",
+      }
+    );
+    // THEN
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      first: {
+        second: {
+          array: ["first extra value", "second extra value"],
+        },
+      },
+    });
+  });
+
+  test("addToArray(p, v) works with lazy values", () => {
+    // GIVEN
+    const prj = new TestProject();
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: {
+        first: {
+          second: {
+            array: () => {
+              return ["initial value"];
+            },
+          },
+        },
+      },
+      marker: false,
+    });
+    // WHEN
+    file.patch(
+      {
+        op: "add",
+        path: "/first/second/array/-",
+        value: "first extra value",
+      },
+      {
+        op: "add",
+        path: "/first/second/array/-",
+        value: "second extra value",
+      }
+    );
+    // THEN
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      first: {
+        second: {
+          array: ["initial value", "first extra value", "second extra value"],
+        },
+      },
+    });
+  });
+});
