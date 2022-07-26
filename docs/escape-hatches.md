@@ -21,7 +21,7 @@ packageJson.addOverride('description', 'the next generation of logging!');
 packageJson.addOverride('keywords', ['experimental', 'web', 'productivity', 'exciting']);
 packageJson.addDeletionOverride('author.organization');
 packageJson.addToArray('keywords', 'logging', 'next-gen');
-packageJson.patch({ op: 'add', path: '/author/name', value: 'A. Mused' });
+packageJson.patch(JsonPatch.add('/author/name','A. Mused'));
 
 // Use array indices to override specific array elements
 packageJson.addOverride('bundledDependencies.3', 'react');

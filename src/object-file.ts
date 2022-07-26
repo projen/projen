@@ -1,5 +1,5 @@
-import { applyOperation, Operation } from "fast-json-patch";
 import { FileBase, FileBaseOptions, IResolver } from "./file";
+import { JsonPatch } from "./json-patch";
 import { Project } from "./project";
 import { deepMerge } from "./util";
 
@@ -45,7 +45,7 @@ export abstract class ObjectFile extends FileBase {
   /**
    * patches to be applied to `obj` after the resolver is called
    */
-  private readonly patchOperations: Operation[];
+  private readonly patchOperations: JsonPatch[];
 
   constructor(project: Project, filePath: string, options: ObjectFileOptions) {
     super(project, filePath, options);
@@ -196,17 +196,8 @@ export abstract class ObjectFile extends FileBase {
    * ```
    *
    * ```typescript
-   * project.tsconfig.file.patch({
-   *   op: "add",
-   *   path: "/compilerOptions/exclude/-",
-   *   value: "coverage",
-   * });
-   * project.tsconfig.file.patch({
-   *   op: "replace",
-   *   path: "/compilerOptions/lib",
-   *   value: ["dom", "dom.iterable", "esnext"],
-   * });
-   * project.tsconfig.file.addToArray('compilerOptions.lib', 'dom', 'dom.iterable', 'esnext');
+   * project.tsconfig.file.patch(JsonPatch.add("/compilerOptions/exclude/-", "coverage"));
+   * project.tsconfig.file.patch(JsonPatch.replace("/compilerOptions/lib", ["dom", "dom.iterable", "esnext"]));
    * ```
    * would result in the following object file
    * ```json
@@ -218,10 +209,10 @@ export abstract class ObjectFile extends FileBase {
    * ...
    * ```
    *
-   * @param ops - The operations to apply
+   * @param patches - The patch operations to apply
    */
-  public patch(...ops: Operation[]) {
-    this.patchOperations.push(...ops);
+  public patch(...patches: JsonPatch[]) {
+    this.patchOperations.push(...patches);
   }
 
   /**
@@ -243,10 +234,8 @@ export abstract class ObjectFile extends FileBase {
     if (resolved) {
       deepMerge([resolved, this.rawOverrides], true);
     }
-    for (const operation of this.patchOperations) {
-      applyOperation(resolved, operation, true, true);
-    }
-    return resolved ? JSON.stringify(resolved, undefined, 2) : undefined;
+    const patched = JsonPatch.apply(resolved, ...this.patchOperations);
+    return patched ? JSON.stringify(patched, undefined, 2) : undefined;
   }
 }
 

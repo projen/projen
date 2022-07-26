@@ -1,5 +1,6 @@
 import { ObjectFile } from "../src";
 import { JsonFile } from "../src/json";
+import { JsonPatch } from "../src/json-patch";
 import { synthSnapshot, TestProject } from "./util";
 
 class ChildObjectFile extends ObjectFile {}
@@ -316,21 +317,9 @@ describe("addJsonPatch", () => {
       marker: false,
     });
     // WHEN
-    file.patch({
-      op: "add",
-      path: "/first/second/array/-",
-      value: "first extra value",
-    });
-    file.patch({
-      op: "add",
-      path: "/first/second/array/-",
-      value: "second extra value",
-    });
-    file.patch({
-      op: "add",
-      path: "/first/second/array/1",
-      value: "third extra value",
-    });
+    file.patch(JsonPatch.add("/first/second/array/-", "first extra value"));
+    file.patch(JsonPatch.add("/first/second/array/-", "second extra value"));
+    file.patch(JsonPatch.add("/first/second/array/1", "third extra value"));
     // THEN
     expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
       first: {
@@ -354,21 +343,9 @@ describe("addJsonPatch", () => {
     });
     // WHEN
     file.patch(
-      {
-        op: "add",
-        path: "/first/second/array",
-        value: [],
-      },
-      {
-        op: "add",
-        path: "/first/second/array/-",
-        value: "first extra value",
-      },
-      {
-        op: "add",
-        path: "/first/second/array/-",
-        value: "second extra value",
-      }
+      JsonPatch.add("/first/second/array", []),
+      JsonPatch.add("/first/second/array/-", "first extra value"),
+      JsonPatch.add("/first/second/array/-", "second extra value")
     );
     // THEN
     expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
@@ -397,16 +374,8 @@ describe("addJsonPatch", () => {
     });
     // WHEN
     file.patch(
-      {
-        op: "add",
-        path: "/first/second/array/-",
-        value: "first extra value",
-      },
-      {
-        op: "add",
-        path: "/first/second/array/-",
-        value: "second extra value",
-      }
+      JsonPatch.add("/first/second/array/-", "first extra value"),
+      JsonPatch.add("/first/second/array/-", "second extra value")
     );
     // THEN
     expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
