@@ -144,7 +144,7 @@ export interface JsiiGoTarget extends GoPublishOptions {
   readonly moduleName: string;
 
   /**
-   * The name of the package.
+   * The name of the go package.
    *
    * @default - derived from the module name
    */
