@@ -192,6 +192,37 @@ test("customization to versionrc reflects to changelog", async () => {
   await expect(result.changelog).toContain("testCompareUrl");
 });
 
+test("minMajorVersion increases major version if current release is lower", async () => {
+  const result = await testBump({
+    options: { minMajorVersion: 1 },
+    commits: [{ message: "v0", tag: "v0.1.2" }, { message: "commit2" }],
+  });
+  expect(result.version).toStrictEqual("1.0.0");
+  expect(result.changelog.includes("## [1.0.0]")).toBeTruthy();
+  expect(result.bumpfile).toStrictEqual("1.0.0");
+  expect(result.tag).toStrictEqual("v1.0.0");
+});
+
+test("minMajorVersion keeps release version if version is equal", async () => {
+  const result = await testBump({
+    options: { minMajorVersion: 1 },
+    commits: [{ message: "v1", tag: "v1.2.3" }, { message: "commit2" }],
+  });
+  expect(result.version).toStrictEqual("1.2.4");
+  expect(result.changelog.includes("## [1.2.4]")).toBeTruthy();
+  expect(result.bumpfile).toStrictEqual("1.2.4");
+  expect(result.tag).toStrictEqual("v1.2.4");
+});
+
+test("minMajorVersion throws if set together with majorVersion", async () => {
+  await expect(
+    testBump({
+      options: { minMajorVersion: 1, majorVersion: 1 },
+      commits: [{ message: "v0", tag: "v0.1.2" }, { message: "commit2" }],
+    })
+  ).rejects.toThrow(/minMajorVersion and majorVersion cannot be used together/);
+});
+
 //----------------------------------------------------------------------------------------------------------------------------------
 
 async function testBump(

@@ -79,6 +79,19 @@ export interface ReleaseProjectOptions {
   readonly majorVersion?: number;
 
   /**
+   * Minimal Major version to release
+   *
+   *
+   * This can be useful to set to 1, as breaking changes before the 1.x major
+   * release are not incrementing the major version number.
+   *
+   * Can not be set together with `majorVersion`.
+   *
+   * @default - start releasing with major version 0
+   */
+  readonly minMajorVersion?: number;
+
+  /**
    * Bump versions from the default branch as pre-releases (e.g. "beta",
    * "alpha", "pre").
    *
@@ -345,6 +358,7 @@ export class Release extends Component {
     this.defaultBranch = this._addBranch(options.branch, {
       prerelease: options.prerelease,
       majorVersion: options.majorVersion,
+      minMajorVersion: options.minMajorVersion,
       workflowName: options.releaseWorkflowName ?? "release",
       tagPrefix: options.releaseTagPrefix,
       npmDistTag: options.npmDistTag,
@@ -613,6 +627,11 @@ export interface BranchOptions {
    * The major versions released from this branch.
    */
   readonly majorVersion: number;
+
+  /**
+   * The minimum major version to release.
+   */
+  readonly minMajorVersion?: number;
 
   /**
    * Bump the version as a pre-release tag.
