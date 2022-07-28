@@ -142,6 +142,13 @@ export interface JsiiGoTarget extends GoPublishOptions {
    * @example github.com/owner/repo/subdir
    */
   readonly moduleName: string;
+
+  /**
+   * The name of the go package.
+   *
+   * @default - derived from the module name
+   */
+  readonly packageName?: string;
 }
 
 /**
@@ -331,6 +338,7 @@ export class JsiiProject extends TypeScriptProject {
     if (golang) {
       targets.go = {
         moduleName: golang.moduleName,
+        packageName: golang.packageName,
       };
 
       const task = this.addPackagingTask("go");
