@@ -150,7 +150,7 @@ class RunTask {
         let command = "";
         let hasError = false;
         const cmd = exec.split(" ")[0];
-        if (platform() == "win32" && ["mkdir", "mv", "rm"].includes(cmd)) {
+        if (platform() == "win32" && ["mkdir", "mv", "rm", "cp", "cd"].includes(cmd)) {
           command = `shx ${exec}`;
         } else {
           command = exec;
