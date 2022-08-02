@@ -152,7 +152,7 @@ class RunTask {
         const cmd = exec.split(" ")[0];
         if (
           platform() == "win32" &&
-          ["mkdir", "mv", "rm", "cp", "cd"].includes(cmd)
+          ["mkdir", "mv", "rm", "cp"].includes(cmd)
         ) {
           command = `shx ${exec}`;
         } else {
