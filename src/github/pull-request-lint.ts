@@ -16,7 +16,7 @@ export interface PullRequestLintOptions {
 
   /**
    * Options for validating the conventional commit title linter.
-   * @default - title must start with "feat", "fix", or "chore"
+   * @default - title must start with "feat", "fix", "chore", "build", "ci", "docs", "style", "refactor", "perf", "test", or "revert"
    */
   readonly semanticTitleOptions?: SemanticTitleOptions;
 
@@ -57,7 +57,19 @@ export class PullRequestLint extends Component {
     // should only create a workflow if one or more linters are enabled
     if (options.semanticTitle ?? true) {
       const opts = options.semanticTitleOptions ?? {};
-      const types = opts.types ?? ["feat", "fix", "chore"];
+      const types = opts.types ?? [
+        "feat",
+        "fix",
+        "chore",
+        "build",
+        "ci",
+        "docs",
+        "style",
+        "refactor",
+        "perf",
+        "test",
+        "revert",
+      ];
 
       const validateJob: Job = {
         name: "Validate PR title",

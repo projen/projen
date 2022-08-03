@@ -28,6 +28,14 @@ jobs:
             feat
             fix
             chore
+            build
+            ci
+            docs
+            style
+            refactor
+            perf
+            test
+            revert
           requireScope: false
 "
 `;
@@ -91,6 +99,14 @@ jobs:
             feat
             fix
             chore
+            build
+            ci
+            docs
+            style
+            refactor
+            perf
+            test
+            revert
           requireScope: true
 "
 `;
