@@ -39,7 +39,7 @@ export interface BumpOptions {
    *
    * Can not be set together with `majorVersion`.
    *
-   * @default - start releasing with major version 0
+   * @default - No minimum version is being enforced
    */
   readonly minMajorVersion?: number;
 

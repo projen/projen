@@ -214,6 +214,17 @@ test("minMajorVersion keeps release version if version is equal", async () => {
   expect(result.tag).toStrictEqual("v1.2.4");
 });
 
+test("minMajorVersion has no effect if version is higher", async () => {
+  const result = await testBump({
+    options: { minMajorVersion: 1 },
+    commits: [{ message: "v2", tag: "v2.3.3" }, { message: "commit2" }],
+  });
+  expect(result.version).toStrictEqual("2.3.4");
+  expect(result.changelog.includes("## [2.3.4]")).toBeTruthy();
+  expect(result.bumpfile).toStrictEqual("2.3.4");
+  expect(result.tag).toStrictEqual("v2.3.4");
+});
+
 test("minMajorVersion throws if set together with majorVersion", async () => {
   await expect(
     testBump({
