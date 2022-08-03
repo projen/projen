@@ -13,7 +13,7 @@ export class AwsCdkPytestSample extends Component {
           "from aws_cdk import App",
           "from aws_cdk.assertions import Template",
           "",
-          `from ${project.moduleName}.my_stack import MyStack`,
+          `from ${project.moduleName}.main import MyStack`,
           "",
           "@pytest.fixture(scope='module')",
           "def template():",
