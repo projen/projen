@@ -3662,7 +3662,7 @@ Array [
         "switch": "mergify-options",
       },
       Object {
-        "default": "- start releasing with major version 0",
+        "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
         "fullType": Object {
@@ -6468,7 +6468,7 @@ Array [
         "switch": "mergify-options",
       },
       Object {
-        "default": "- start releasing with major version 0",
+        "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
         "fullType": Object {
@@ -10351,7 +10351,7 @@ Array [
         "switch": "mergify-options",
       },
       Object {
-        "default": "- start releasing with major version 0",
+        "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
         "fullType": Object {
@@ -12961,7 +12961,7 @@ Array [
         "switch": "mergify-options",
       },
       Object {
-        "default": "- start releasing with major version 0",
+        "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
         "fullType": Object {
@@ -15629,7 +15629,7 @@ Array [
         "switch": "mergify-options",
       },
       Object {
-        "default": "- start releasing with major version 0",
+        "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
         "fullType": Object {
@@ -19025,7 +19025,7 @@ Array [
         "switch": "mergify-options",
       },
       Object {
-        "default": "- start releasing with major version 0",
+        "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
         "fullType": Object {
@@ -21415,7 +21415,7 @@ Array [
         "switch": "mergify-options",
       },
       Object {
-        "default": "- start releasing with major version 0",
+        "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
         "fullType": Object {
@@ -23693,7 +23693,7 @@ Array [
         "switch": "mergify-options",
       },
       Object {
-        "default": "- start releasing with major version 0",
+        "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
         "fullType": Object {
@@ -25957,7 +25957,7 @@ Array [
         "switch": "mergify-options",
       },
       Object {
-        "default": "- start releasing with major version 0",
+        "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
         "fullType": Object {
@@ -29137,7 +29137,7 @@ Array [
         "switch": "mergify-options",
       },
       Object {
-        "default": "- start releasing with major version 0",
+        "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
         "fullType": Object {
@@ -31403,7 +31403,7 @@ Array [
         "switch": "mergify-options",
       },
       Object {
-        "default": "- start releasing with major version 0",
+        "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
         "fullType": Object {
@@ -33793,7 +33793,7 @@ Array [
         "switch": "mergify-options",
       },
       Object {
-        "default": "- start releasing with major version 0",
+        "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
         "fullType": Object {
@@ -36161,7 +36161,7 @@ Array [
         "switch": "mergify-options",
       },
       Object {
-        "default": "- start releasing with major version 0",
+        "default": "- No minimum version is being enforced",
         "docs": "Minimal Major version to release.",
         "featured": false,
         "fullType": Object {
