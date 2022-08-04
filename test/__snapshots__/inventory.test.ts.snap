@@ -3662,6 +3662,23 @@ Array [
         "switch": "mergify-options",
       },
       Object {
+        "default": "- No minimum version is being enforced",
+        "docs": "Minimal Major version to release.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "minMajorVersion",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "minMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "min-major-version",
+      },
+      Object {
         "default": "- no \\"engines\\" specified",
         "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
         "featured": false,
@@ -6449,6 +6466,23 @@ Array [
         ],
         "simpleType": "MergifyOptions",
         "switch": "mergify-options",
+      },
+      Object {
+        "default": "- No minimum version is being enforced",
+        "docs": "Minimal Major version to release.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "minMajorVersion",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "minMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "min-major-version",
       },
       Object {
         "default": "- no \\"engines\\" specified",
@@ -10317,6 +10351,23 @@ Array [
         "switch": "mergify-options",
       },
       Object {
+        "default": "- No minimum version is being enforced",
+        "docs": "Minimal Major version to release.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "minMajorVersion",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "minMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "min-major-version",
+      },
+      Object {
         "default": "- no \\"engines\\" specified",
         "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
         "featured": false,
@@ -12908,6 +12959,23 @@ Array [
         ],
         "simpleType": "MergifyOptions",
         "switch": "mergify-options",
+      },
+      Object {
+        "default": "- No minimum version is being enforced",
+        "docs": "Minimal Major version to release.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "minMajorVersion",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "minMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "min-major-version",
       },
       Object {
         "default": "- no \\"engines\\" specified",
@@ -15559,6 +15627,23 @@ Array [
         ],
         "simpleType": "MergifyOptions",
         "switch": "mergify-options",
+      },
+      Object {
+        "default": "- No minimum version is being enforced",
+        "docs": "Minimal Major version to release.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "minMajorVersion",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "minMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "min-major-version",
       },
       Object {
         "default": "- no \\"engines\\" specified",
@@ -18940,6 +19025,23 @@ Array [
         "switch": "mergify-options",
       },
       Object {
+        "default": "- No minimum version is being enforced",
+        "docs": "Minimal Major version to release.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "minMajorVersion",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "minMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "min-major-version",
+      },
+      Object {
         "default": "- no \\"engines\\" specified",
         "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
         "featured": false,
@@ -21313,6 +21415,23 @@ Array [
         "switch": "mergify-options",
       },
       Object {
+        "default": "- No minimum version is being enforced",
+        "docs": "Minimal Major version to release.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "minMajorVersion",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "minMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "min-major-version",
+      },
+      Object {
         "default": "- no \\"engines\\" specified",
         "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
         "featured": false,
@@ -23574,6 +23693,23 @@ Array [
         "switch": "mergify-options",
       },
       Object {
+        "default": "- No minimum version is being enforced",
+        "docs": "Minimal Major version to release.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "minMajorVersion",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "minMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "min-major-version",
+      },
+      Object {
         "default": "- no \\"engines\\" specified",
         "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
         "featured": false,
@@ -25819,6 +25955,23 @@ Array [
         ],
         "simpleType": "MergifyOptions",
         "switch": "mergify-options",
+      },
+      Object {
+        "default": "- No minimum version is being enforced",
+        "docs": "Minimal Major version to release.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "minMajorVersion",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "minMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "min-major-version",
       },
       Object {
         "default": "- no \\"engines\\" specified",
@@ -28984,6 +29137,23 @@ Array [
         "switch": "mergify-options",
       },
       Object {
+        "default": "- No minimum version is being enforced",
+        "docs": "Minimal Major version to release.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "minMajorVersion",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "minMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "min-major-version",
+      },
+      Object {
         "default": "- no \\"engines\\" specified",
         "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
         "featured": false,
@@ -31231,6 +31401,23 @@ Array [
         ],
         "simpleType": "MergifyOptions",
         "switch": "mergify-options",
+      },
+      Object {
+        "default": "- No minimum version is being enforced",
+        "docs": "Minimal Major version to release.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "minMajorVersion",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "minMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "min-major-version",
       },
       Object {
         "default": "- no \\"engines\\" specified",
@@ -33606,6 +33793,23 @@ Array [
         "switch": "mergify-options",
       },
       Object {
+        "default": "- No minimum version is being enforced",
+        "docs": "Minimal Major version to release.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "minMajorVersion",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "minMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "min-major-version",
+      },
+      Object {
         "default": "- no \\"engines\\" specified",
         "docs": "Minimum Node.js version to require via package.json \`engines\` (inclusive).",
         "featured": false,
@@ -35955,6 +36159,23 @@ Array [
         ],
         "simpleType": "MergifyOptions",
         "switch": "mergify-options",
+      },
+      Object {
+        "default": "- No minimum version is being enforced",
+        "docs": "Minimal Major version to release.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "number",
+        },
+        "jsonLike": true,
+        "name": "minMajorVersion",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "minMajorVersion",
+        ],
+        "simpleType": "number",
+        "switch": "min-major-version",
       },
       Object {
         "default": "- no \\"engines\\" specified",
