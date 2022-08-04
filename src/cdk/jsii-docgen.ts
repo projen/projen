@@ -31,5 +31,6 @@ export class JsiiDocgen {
     // spawn docgen after compilation (requires the .jsii manifest).
     project.postCompileTask.spawn(docgen);
     project.gitignore.include(`/${filePath}`);
+    project.annotateGenerated(`/${filePath}`);
   }
 }
