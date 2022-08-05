@@ -8301,6 +8301,23 @@ Array [
         "switch": "clobber",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
+      },
+      Object {
         "default": "\\"10.1.42\\"",
         "docs": "Minimum version of the \`constructs\` library to depend on.",
         "featured": false,
@@ -9708,8 +9725,6 @@ Array [
         "switch": "code-cov-token-secret",
       },
       Object {
-        "default": "\\"10.1.42\\"",
-        "docs": "Minimum version of the \`constructs\` library to depend on.",
         "default": "true",
         "docs": "Whether to commit the managed files by default.",
         "featured": false,
@@ -9727,8 +9742,8 @@ Array [
         "switch": "commit-generated",
       },
       Object {
-        "default": "\\"3.2.34\\"",
-        "docs": "constructs verion.",
+        "default": "\\"10.1.42\\"",
+        "docs": "Minimum version of the \`constructs\` library to depend on.",
         "featured": false,
         "fullType": Object {
           "primitive": "string",
