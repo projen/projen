@@ -94,6 +94,13 @@ export interface ProjectOptions {
    * @default - default options
    */
   readonly renovatebotOptions?: RenovatebotOptions;
+
+  /**
+   * Whether to commit the managed files by default.
+   *
+   * @default true
+   */
+  readonly commitGenerated?: boolean;
 }
 
 /**
@@ -182,6 +189,11 @@ export class Project {
    */
   public readonly projectBuild: ProjectBuild;
 
+  /**
+   * Whether to commit the managed files by default.
+   */
+  public readonly commitGenerated: boolean;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -252,6 +264,8 @@ export class Project {
       new Renovatebot(this, options.renovatebotOptions);
     }
 
+    this.commitGenerated = options.commitGenerated ?? true;
+
     if (!this.ejected) {
       new JsonFile(this, FILE_MANIFEST, {
         omitEmpty: true,
@@ -261,6 +275,8 @@ export class Project {
             .filter((f) => f.readonly)
             .map((f) => f.path.replace(/\\/g, "/")),
         }),
+        // This file is used by projen to track the generated files, so must be committed.
+        committed: true,
       });
     }
   }

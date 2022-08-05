@@ -260,6 +260,23 @@ Array [
         "switch": "clobber",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
+      },
+      Object {
         "default": "- defaults",
         "docs": "Compile options.",
         "featured": false,
@@ -1391,6 +1408,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "clobber",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
       },
       Object {
         "default": "- for CDK 1.x the default is \\"3.2.27\\", for CDK 2.x the default is
@@ -2890,6 +2924,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "code-cov-token-secret",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
       },
       Object {
         "default": "- for CDK 1.x the default is \\"3.2.27\\", for CDK 2.x the default is
@@ -5647,6 +5698,23 @@ Array [
         "switch": "code-cov-token-secret",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
+      },
+      Object {
         "default": "false",
         "docs": "Automatically run API compatibility test against the latest version published to npm after compilation.",
         "featured": false,
@@ -8233,6 +8301,23 @@ Array [
         "switch": "clobber",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
+      },
+      Object {
         "default": "\\"10.1.42\\"",
         "docs": "Minimum version of the \`constructs\` library to depend on.",
         "featured": false,
@@ -9638,6 +9723,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "code-cov-token-secret",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
       },
       Object {
         "default": "\\"10.1.42\\"",
@@ -12192,6 +12294,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "code-cov-token-secret",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
       },
       Object {
         "default": "false",
@@ -14896,6 +15015,23 @@ Array [
         "switch": "code-cov-token-secret",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
+      },
+      Object {
         "default": "false",
         "docs": "Automatically run API compatibility test against the latest version published to npm after compilation.",
         "featured": false,
@@ -17200,6 +17336,23 @@ Array [
         "switch": "clobber",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
+      },
+      Object {
         "default": "- defaults",
         "docs": "Compile options.",
         "featured": false,
@@ -18307,6 +18460,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "code-cov-token-secret",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
       },
       Object {
         "default": "false",
@@ -20910,6 +21080,23 @@ Array [
         "switch": "code-cov-token-secret",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
+      },
+      Object {
         "default": "- defaults to the value of authorName or \\"\\" if \`authorName\` is undefined.",
         "docs": "License copyright owner.",
         "featured": false,
@@ -23065,6 +23252,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "code-cov-token-secret",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
       },
       Object {
         "default": "- defaults to the value of authorName or \\"\\" if \`authorName\` is undefined.",
@@ -25452,6 +25656,23 @@ Array [
         "switch": "code-cov-token-secret",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
+      },
+      Object {
         "default": "- defaults to the value of authorName or \\"\\" if \`authorName\` is undefined.",
         "docs": "License copyright owner.",
         "featured": false,
@@ -27156,6 +27377,23 @@ Array [
     "moduleName": "projen",
     "options": Array [
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
+      },
+      Object {
         "default": "{}",
         "docs": "Configure logging options such as verbosity.",
         "featured": false,
@@ -27448,6 +27686,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "clobber",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
       },
       Object {
         "default": "[]",
@@ -28630,6 +28885,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "code-cov-token-secret",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
       },
       Object {
         "default": "- defaults to the value of authorName or \\"\\" if \`authorName\` is undefined.",
@@ -30775,6 +31047,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "code-cov-token-secret",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
       },
       Object {
         "default": "- defaults to the value of authorName or \\"\\" if \`authorName\` is undefined.",
@@ -33167,6 +33456,23 @@ Array [
         "switch": "code-cov-token-secret",
       },
       Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
+      },
+      Object {
         "default": "- defaults to the value of authorName or \\"\\" if \`authorName\` is undefined.",
         "docs": "License copyright owner.",
         "featured": false,
@@ -35533,6 +35839,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "code-cov-token-secret",
+      },
+      Object {
+        "default": "true",
+        "docs": "Whether to commit the managed files by default.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "commitGenerated",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "commitGenerated",
+        ],
+        "simpleType": "boolean",
+        "switch": "commit-generated",
       },
       Object {
         "default": "- defaults to the value of authorName or \\"\\" if \`authorName\` is undefined.",
