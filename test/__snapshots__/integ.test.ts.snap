@@ -277,7 +277,7 @@ jobs:
           ref: \${{ github.event.pull_request.head.ref }}
           repository: \${{ github.event.pull_request.head.repo.full_name }}
       - name: Setup Node.js
-        uses: actions/setup-node@v2.2.0
+        uses: actions/setup-node@v3
         with:
           node-version: 14.0.0
       - name: Install dependencies
@@ -465,7 +465,7 @@ jobs:
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
       - name: Setup Node.js
-        uses: actions/setup-node@v2.2.0
+        uses: actions/setup-node@v3
         with:
           node-version: 14.0.0
       - name: Install dependencies
@@ -627,7 +627,7 @@ jobs:
         with:
           ref: master
       - name: Setup Node.js
-        uses: actions/setup-node@v2.2.0
+        uses: actions/setup-node@v3
         with:
           node-version: 14.0.0
       - name: Install dependencies
@@ -2209,7 +2209,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Node.js
-        uses: actions/setup-node@v2.2.0
+        uses: actions/setup-node@v3
         with:
           node-version: 12.7.0
       - name: Install dependencies
@@ -3696,7 +3696,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Node.js
-        uses: actions/setup-node@v2.2.0
+        uses: actions/setup-node@v3
         with:
           node-version: 12.7.0
       - name: Install dependencies

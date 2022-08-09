@@ -852,7 +852,7 @@ export class NodeProject extends GitHubProject {
     if (this.nodeVersion) {
       install.push({
         name: "Setup Node.js",
-        uses: "actions/setup-node@v2.2.0",
+        uses: "actions/setup-node@v3",
         with: { "node-version": this.nodeVersion },
       });
     }
