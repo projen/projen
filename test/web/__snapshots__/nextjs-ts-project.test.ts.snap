@@ -327,11 +327,6 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
-        "name": "npm-check-updates",
-        "type": "build",
-        "version": "^15",
-      },
-      Object {
         "name": "projen",
         "type": "build",
       },
@@ -512,22 +507,19 @@ tsconfig.tsbuildinfo
         "name": "upgrade",
         "steps": Array [
           Object {
-            "exec": "yarn upgrade npm-check-updates",
+            "exec": "npx npm-check-updates --dep dev --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
+            "exec": "npx npm-check-updates --dep optional --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
+            "exec": "npx npm-check-updates --dep peer --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
+            "exec": "npx npm-check-updates --dep prod --upgrade --target=minor",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
+            "exec": "npx npm-check-updates --dep bundle --upgrade --target=minor",
           },
           Object {
             "exec": "yarn install --check-files",
@@ -778,7 +770,6 @@ tsconfig.tsbuildinfo
       "@types/node": "^12",
       "@types/react": "*",
       "@types/react-dom": "*",
-      "npm-check-updates": "^15",
       "projen": "*",
       "typescript": "*",
     },

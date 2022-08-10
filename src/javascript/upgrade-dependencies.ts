@@ -124,7 +124,6 @@ export class UpgradeDependencies extends Component {
       options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.postBuildSteps = [];
     this.containerOptions = options.workflowOptions?.container;
-    project.addDevDeps("npm-check-updates@^15");
 
     this.postUpgradeTask =
       project.tasks.tryFind("post-upgrade") ??
@@ -203,18 +202,9 @@ export class UpgradeDependencies extends Component {
 
     const steps = new Array<TaskStep>();
 
-    // update npm-check-updates before everything else, in case there is a bug
-    // in it or one of its dependencies. This will make upgrade workflows
-    // slightly more stable and resilient to upstream changes.
-    steps.push({
-      exec: this._project.package.renderUpgradePackagesCommand(
-        [],
-        ["npm-check-updates"]
-      ),
-    });
-
     for (const dep of ["dev", "optional", "peer", "prod", "bundle"]) {
       const ncuCommand = [
+        "npx",
         "npm-check-updates",
         "--dep",
         dep,
