@@ -93,7 +93,8 @@
     "shx": "^0.3.4",
     "xmlbuilder2": "^2.4.1",
     "yaml": "2.0.0",
-    "yargs": "^16.2.0"
+    "yargs": "^16.2.0",
+    "zlib": "^1.0.5"
   },
   "bundledDependencies": [
     "@iarna/toml",
@@ -107,7 +108,8 @@
     "shx",
     "xmlbuilder2",
     "yaml",
-    "yargs"
+    "yargs",
+    "zlib"
   ],
   "keywords": [
     "cdk",

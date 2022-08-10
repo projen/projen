@@ -38,6 +38,7 @@ const project = new cdk.JsiiProject({
     "xmlbuilder2",
     "ini",
     "shx",
+    "zlib",
   ],
 
   devDeps: [
@@ -128,6 +129,7 @@ project.npmignore.exclude("/projen.bash");
 project.addExcludeFromCleanup("test/**"); // because snapshots include the projen marker...
 project.gitignore.include("templates/**");
 project.gitignore.exclude("/.idea");
+project.gitignore.include("test/inventory/**");
 
 // expand markdown macros in readme
 const macros = project.addTask("readme-macros");
