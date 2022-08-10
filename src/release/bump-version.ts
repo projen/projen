@@ -25,9 +25,23 @@ export interface BumpOptions {
    * Defines the major version line. This is used to select the latest version
    * and also enforce that new major versions are not released accidentally.
    *
+   * Can not be set together with `minMajorVersion`.
+   *
    * @default - any version is supported
    */
   readonly majorVersion?: number;
+
+  /**
+   * Defines the minimal major version. This is used if you want to start with
+   * a specific major version, and increment from there on.
+   * This can be useful to set to 1, as breaking changes before the 1.x major
+   * release are not incrementing the major version number.
+   *
+   * Can not be set together with `majorVersion`.
+   *
+   * @default - No minimum version is being enforced
+   */
+  readonly minMajorVersion?: number;
 
   /**
    * The name of a file which will include the output version number (a text file).
@@ -73,10 +87,16 @@ export async function bump(cwd: string, options: BumpOptions) {
   const versionFile = join(cwd, options.versionFile);
   const prerelease = options.prerelease;
   const major = options.majorVersion;
+  const minMajorVersion = options.minMajorVersion;
   const prefix = options.tagPrefix ?? "";
   const bumpFile = join(cwd, options.bumpFile);
   const changelogFile = join(cwd, options.changelog);
   const releaseTagFile = join(cwd, options.releaseTagFile);
+  if (major && minMajorVersion) {
+    throw new Error(
+      `minMajorVersion and majorVersion cannot be used together.`
+    );
+  }
 
   await mkdirp(dirname(bumpFile));
   await mkdirp(dirname(changelogFile));
@@ -133,6 +153,13 @@ export async function bump(cwd: string, options: BumpOptions) {
   }
   if (prefix) {
     cmd.push(`--tag-prefix ${prefix}v`);
+  }
+  if (minMajorVersion) {
+    const [majorVersion] = latestVersion.split(".");
+    const majorVersionNumber = parseInt(majorVersion, 10);
+    if (majorVersionNumber < minMajorVersion) {
+      cmd.push(`--release-as ${minMajorVersion}.0.0`);
+    }
   }
 
   exec(cmd.join(" "), { cwd });

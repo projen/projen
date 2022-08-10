@@ -33,7 +33,11 @@ export class License extends FileBase {
   private readonly text: string;
 
   constructor(project: Project, options: LicenseOptions) {
-    super(project, "LICENSE", { marker: false });
+    super(project, "LICENSE", {
+      marker: false,
+      // Allow the license to be displayed in the repositories.
+      committed: true,
+    });
 
     const spdx = options.spdx;
 
