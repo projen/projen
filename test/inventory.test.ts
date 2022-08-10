@@ -3,6 +3,24 @@ import * as inventory from "../src/inventory";
 
 const result = inventory.discover();
 
+test("read manifest - no compression", () => {
+  const manifest = inventory.readManifest(
+    path.join(__dirname, "inventory/no_compression")
+  );
+
+  expect(manifest.schema).toEqual("jsii/0.10.0");
+  expect(manifest.compression).toEqual("none");
+});
+
+test("read manifest - gzip compression", () => {
+  const manifest = inventory.readManifest(
+    path.join(__dirname, "inventory/gzip_compression")
+  );
+
+  expect(manifest.schema).toEqual("jsii/0.10.0");
+  expect(manifest.compression).toEqual("gzip");
+});
+
 test("project id", () => {
   expect(result.map((x) => x.pjid).sort()).toContain("jsii");
   expect(result.map((x) => x.pjid).sort()).toContain("awscdk-construct");
