@@ -210,7 +210,7 @@ test("upgrade task ignores pinned versions", () => {
     typescriptVersion: "4.4.4",
   });
   const tasks = synthSnapshot(prj)[TaskRuntime.MANIFEST_FILE].tasks;
-  expect(tasks.upgrade.steps[1].exec).toStrictEqual(
-    "npm-check-updates --dep dev --upgrade --target=minor --reject='typescript'"
+  expect(tasks.upgrade.steps[0].exec).toStrictEqual(
+    "npx npm-check-updates --dep dev --upgrade --target=minor --reject='typescript'"
   );
 });

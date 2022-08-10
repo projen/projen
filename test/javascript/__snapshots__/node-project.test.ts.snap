@@ -138,7 +138,6 @@ exports[`enabling renovatebot does not overturn mergify: false 1`] = `
   ],
   \\"ignoreDeps\\": [
     \\"jest-junit\\",
-    \\"npm-check-updates\\",
     \\"standard-version\\",
     \\"projen\\"
   ]
