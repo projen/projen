@@ -1,4 +1,5 @@
 import * as path from "path";
+import { unzipSync } from "zlib";
 import { snake } from "case";
 import * as fs from "fs-extra";
 
@@ -102,6 +103,36 @@ export function discover(...moduleDirs: string[]) {
   return result.sort((r1, r2) => r1.pjid.localeCompare(r2.pjid));
 }
 
+export function readManifest(dir: string) {
+  const jsiiFile = path.join(dir, ".jsii");
+  if (!fs.existsSync(jsiiFile)) {
+    return undefined;
+  } // no jsii manifest
+  let manifest = fs.readJsonSync(jsiiFile);
+
+  if (manifest.schema === "jsii/file-redirect") {
+    const compressedFile = path.join(dir, manifest.filename);
+
+    if (!fs.existsSync(compressedFile)) {
+      throw new Error(`${compressedFile} does not exist.`);
+    }
+
+    switch (manifest.compression) {
+      case "gzip":
+        manifest = JSON.parse(
+          unzipSync(fs.readFileSync(compressedFile)).toString()
+        );
+        break;
+      default:
+        throw new Error(
+          `Unsupported compression format: ${manifest.compression}`
+        );
+    }
+  }
+
+  return manifest;
+}
+
 /**
  * Resolve all jsii types from @modulesDirs.
  * When a jsii module is found it will recusively list the types from the dependant module as well
@@ -114,12 +145,11 @@ function discoverJsiiTypes(...moduleDirs: string[]) {
   const discoveredManifests: Array<string> = [];
 
   const discoverJsii = (dir: string) => {
-    const jsiiFile = path.join(dir, ".jsii");
-    if (!fs.existsSync(jsiiFile)) {
-      return;
-    } // no jsii manifest
+    const manifest = readManifest(dir);
 
-    const manifest = fs.readJsonSync(jsiiFile);
+    if (!manifest) {
+      return;
+    }
 
     if (discoveredManifests.includes(manifest.fingerprint)) {
       return;
