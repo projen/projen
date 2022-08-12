@@ -90,7 +90,7 @@ export function toReleaseVersion(
   assemblyVersion: string,
   target: TargetName
 ): string {
-  const version = parse(assemblyVersion, { includePrerelease: true });
+  const version = parse(assemblyVersion);
   if (version == null) {
     throw new Error(
       `Unable to parse the provided assembly version: "${assemblyVersion}"`
