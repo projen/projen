@@ -129,6 +129,7 @@ export interface JsiiPythonTarget extends PyPiPublishOptions {
 export interface JsiiDotNetTarget extends NugetPublishOptions {
   readonly dotNetNamespace: string;
   readonly packageId: string;
+  readonly iconUrl?: string;
 }
 
 /**
@@ -323,6 +324,7 @@ export class JsiiProject extends TypeScriptProject {
       targets.dotnet = {
         namespace: nuget.dotNetNamespace,
         packageId: nuget.packageId,
+        iconUrl: nuget.iconUrl,
       };
 
       const task = this.addPackagingTask("dotnet");

@@ -359,6 +359,7 @@ describe("language bindings", () => {
     publishToNuget: {
       dotNetNamespace: "DotNet.Namespace",
       packageId: "PackageId",
+      iconUrl: "https://example.com/logo.png",
     },
     publishToPypi: { distName: "dist-name", module: "module-name" },
   });
