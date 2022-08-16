@@ -131,6 +131,7 @@ Name|Description
 [vscode.DevContainer](#projen-vscode-devcontainer)|A development environment running VSCode in a container;
 [vscode.VsCode](#projen-vscode-vscode)|*No description*
 [vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)|VSCode launch configuration file (launch.json), useful for enabling in-editor debugger.
+[vscode.VsCodeRecommendedExtensions](#projen-vscode-vscoderecommendedextensions)|VS Code Workspace recommended extensions Source: https://code.visualstudio.com/docs/editor/extension-marketplace#_workspace-recommended-extensions.
 [vscode.VsCodeSettings](#projen-vscode-vscodesettings)|VS Code Workspace settings Source: https://code.visualstudio.com/docs/getstarted/settings#_workspace-settings.
 [web.NextComponent](#projen-web-nextcomponent)|*No description*
 [web.NextJsProject](#projen-web-nextjsproject)|Next.js project without TypeScript.
@@ -10632,6 +10633,7 @@ new vscode.VsCode(project: Project)
 
 Name | Type | Description 
 -----|------|-------------
+**extensions**🔹 | <code>[vscode.VsCodeRecommendedExtensions](#projen-vscode-vscoderecommendedextensions)</code> | <span></span>
 **launchConfiguration**🔹 | <code>[vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)</code> | <span></span>
 **settings**🔹 | <code>[vscode.VsCodeSettings](#projen-vscode-vscodesettings)</code> | <span></span>
 
@@ -10692,6 +10694,59 @@ addConfiguration(cfg: VsCodeLaunchConfigurationEntry): void
   * **stopOnEntry** (<code>boolean</code>)  *No description* __*Optional*__
   * **url** (<code>string</code>)  *No description* __*Optional*__
   * **webRoot** (<code>string</code>)  *No description* __*Optional*__
+
+
+
+
+
+
+## class VsCodeRecommendedExtensions 🔹 <a id="projen-vscode-vscoderecommendedextensions"></a>
+
+VS Code Workspace recommended extensions Source: https://code.visualstudio.com/docs/editor/extension-marketplace#_workspace-recommended-extensions.
+
+__Submodule__: vscode
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new vscode.VsCodeRecommendedExtensions(vscode: VsCode)
+```
+
+* **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
+
+
+### Methods
+
+
+#### addRecommendations(...extensions)🔹 <a id="projen-vscode-vscoderecommendedextensions-addrecommendations"></a>
+
+Adds a list of VS Code extensions as recommendations for this workspace.
+
+```ts
+addRecommendations(...extensions: string[]): void
+```
+
+* **extensions** (<code>string</code>)  The extension IDs.
+
+
+
+
+#### addUnwantedRecommendations(...extensions)🔹 <a id="projen-vscode-vscoderecommendedextensions-addunwantedrecommendations"></a>
+
+Marks a list of VS Code extensions as unwanted recommendations for this workspace.
+
+VS Code should not be recommend these extensions for users of this workspace.
+
+```ts
+addUnwantedRecommendations(...extensions: string[]): void
+```
+
+* **extensions** (<code>string</code>)  The extension IDs.
 
 
 
