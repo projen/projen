@@ -58,5 +58,6 @@ tsconfig.json
 !/projen.bash
 !templates/**
 /.idea
+!test/inventory/**
 !/.markdownlint.json
 !/.vscode/launch.json

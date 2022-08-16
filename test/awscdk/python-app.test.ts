@@ -1,8 +1,8 @@
-import { awscdk } from "../../src";
+import { AwsCdkPythonApp } from "../../src/awscdk";
 import { synthSnapshot } from "../util";
 
 test("create cdk python project", () => {
-  const p = new awscdk.AwsCdkPythonApp({
+  const p = new AwsCdkPythonApp({
     authorEmail: "test@cdkpythonapp.com",
     authorName: "First Last",
     moduleName: "test_cdk_python_app_project",
@@ -33,7 +33,7 @@ test("create cdk python project", () => {
 });
 
 test("CDK v2 deps", () => {
-  const p = new awscdk.AwsCdkPythonApp({
+  const p = new AwsCdkPythonApp({
     authorEmail: "test@cdkpythonapp.com",
     authorName: "First Last",
     moduleName: "test_cdk_python_app_project",
@@ -57,7 +57,7 @@ test("CDK v2 deps", () => {
 });
 
 test("CDK v1 deps", () => {
-  const p = new awscdk.AwsCdkPythonApp({
+  const p = new AwsCdkPythonApp({
     authorEmail: "test@cdkpythonapp.com",
     authorName: "First Last",
     moduleName: "test_cdk_python_app_project",

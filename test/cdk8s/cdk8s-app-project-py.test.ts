@@ -1,10 +1,10 @@
 import * as yaml from "yaml";
-import { cdk8s } from "../../src";
+import { Cdk8sPythonApp } from "../../src/cdk8s";
 import { synthSnapshot } from "../util";
 
 test("basic options", () => {
   // GIVEN
-  const project = new cdk8s.Cdk8sPythonApp({
+  const project = new Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
     authorName: "First Last",
     moduleName: "test_cdk8s_python_app_project",
@@ -41,7 +41,7 @@ test("basic options", () => {
 
 test("CDK8s version pinning", () => {
   // GIVEN
-  const project = new cdk8s.Cdk8sPythonApp({
+  const project = new Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
     authorName: "First Last",
     moduleName: "test_cdk8s_python_app_project",
@@ -60,7 +60,7 @@ test("CDK8s version pinning", () => {
 
 test("CDK8s V1 and constructs version undefined", () => {
   // GIVEN
-  const project = new cdk8s.Cdk8sPythonApp({
+  const project = new Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
     authorName: "First Last",
     moduleName: "test_cdk8s_python_app_project",
@@ -79,7 +79,7 @@ test("CDK8s V1 and constructs version undefined", () => {
 
 test("CDK8s V1 and constructs version defined", () => {
   // GIVEN
-  const project = new cdk8s.Cdk8sPythonApp({
+  const project = new Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
     authorName: "First Last",
     moduleName: "test_cdk8s_python_app_project",
@@ -99,7 +99,7 @@ test("CDK8s V1 and constructs version defined", () => {
 
 test("CDK8s V2 and constructs version undefined", () => {
   // GIVEN
-  const project = new cdk8s.Cdk8sPythonApp({
+  const project = new Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
     authorName: "First Last",
     moduleName: "test_cdk8s_python_app_project",
@@ -118,7 +118,7 @@ test("CDK8s V2 and constructs version undefined", () => {
 
 test("CDK8s V2 and constructs version defined", () => {
   // GIVEN
-  const project = new cdk8s.Cdk8sPythonApp({
+  const project = new Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
     authorName: "First Last",
     moduleName: "test_cdk8s_python_app_project",
@@ -138,7 +138,7 @@ test("CDK8s V2 and constructs version defined", () => {
 
 test("CDK8s V2 and constructs version pinning", () => {
   // GIVEN
-  const project = new cdk8s.Cdk8sPythonApp({
+  const project = new Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
     authorName: "First Last",
     moduleName: "test_cdk8s_python_app_project",
@@ -159,7 +159,7 @@ test("CDK8s V2 and constructs version pinning", () => {
 
 test("cdk8s-plus-22 undefined", () => {
   // GIVEN
-  const project = new cdk8s.Cdk8sPythonApp({
+  const project = new Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
     authorName: "First Last",
     moduleName: "test_cdk8s_python_app_project",
@@ -179,7 +179,7 @@ test("cdk8s-plus-22 undefined", () => {
 
 test("cdk8s-plus-22 defined", () => {
   // GIVEN
-  const project = new cdk8s.Cdk8sPythonApp({
+  const project = new Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
     authorName: "First Last",
     moduleName: "test_cdk8s_python_app_project",
@@ -200,7 +200,7 @@ test("cdk8s-plus-22 defined", () => {
 
 test("cdk8s-plus-22 pinning", () => {
   // GIVEN
-  const project = new cdk8s.Cdk8sPythonApp({
+  const project = new Cdk8sPythonApp({
     authorEmail: "test@cdk8spythonapp.com",
     authorName: "First Last",
     moduleName: "test_cdk8s_python_app_project",

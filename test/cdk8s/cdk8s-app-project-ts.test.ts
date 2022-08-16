@@ -1,9 +1,10 @@
 import * as yaml from "yaml";
-import { TaskRuntime, cdk8s } from "../../src";
+import { TaskRuntime } from "../../src";
+import { Cdk8sTypeScriptApp } from "../../src/cdk8s";
 import { synthSnapshot } from "../util";
 
 test("test if cdk8s synth is possible", () => {
-  const project = new cdk8s.Cdk8sTypeScriptApp({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: "1.0.0-beta.18",
     name: "project",
     defaultReleaseBranch: "main",
@@ -50,7 +51,7 @@ test("test if cdk8s synth is possible", () => {
 });
 
 test("adding cdk8sImports", () => {
-  const project = new cdk8s.Cdk8sTypeScriptApp({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: "1.0.0-beta.18",
     name: "project",
     defaultReleaseBranch: "main",
@@ -77,7 +78,7 @@ test("adding cdk8sImports", () => {
 });
 
 test("constructs version undefined", () => {
-  const project = new cdk8s.Cdk8sTypeScriptApp({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: "1.0.0-beta.11",
     name: "project",
     defaultReleaseBranch: "main",
@@ -94,7 +95,7 @@ test("constructs version undefined", () => {
 });
 
 test("constructs version pinning", () => {
-  const project = new cdk8s.Cdk8sTypeScriptApp({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: "1.0.0-beta.18",
     name: "project",
     defaultReleaseBranch: "main",
@@ -113,7 +114,7 @@ test("constructs version pinning", () => {
 });
 
 test("cdk8sPlusVersion undefined", () => {
-  const project = new cdk8s.Cdk8sTypeScriptApp({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: "1.0.0-beta.11",
     name: "project",
     defaultReleaseBranch: "main",
@@ -131,7 +132,7 @@ test("cdk8sPlusVersion undefined", () => {
 });
 
 test("cdk8sPlusVersion defined", () => {
-  const project = new cdk8s.Cdk8sTypeScriptApp({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: "1.0.0-beta.11",
     name: "project",
     defaultReleaseBranch: "main",
@@ -150,7 +151,7 @@ test("cdk8sPlusVersion defined", () => {
 });
 
 test("cdk8sPlusVersion pinning", () => {
-  const project = new cdk8s.Cdk8sTypeScriptApp({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: "1.0.0-beta.11",
     name: "project",
     defaultReleaseBranch: "main",
@@ -169,7 +170,7 @@ test("cdk8sPlusVersion pinning", () => {
 });
 
 test("upgrade task ignores pinned versions", () => {
-  const project = new cdk8s.Cdk8sTypeScriptApp({
+  const project = new Cdk8sTypeScriptApp({
     cdk8sVersion: "1.0.0-beta.11",
     name: "project",
     defaultReleaseBranch: "main",

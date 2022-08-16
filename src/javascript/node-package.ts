@@ -518,6 +518,7 @@ export class NodePackage extends Component {
       obj: this.manifest,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
       newline: false, // when file is edited by npm/yarn it doesn't include a newline
+      committed: true, // needs to be committed so users can install the dependencies
     });
 
     this.addKeywords(...(options.keywords ?? []));
