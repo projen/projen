@@ -308,8 +308,8 @@ describe("addToArray", () => {
   });
 });
 
-describe("addJsonPatch", () => {
-  test("addJsonPatch(p, v) adds to an existing array", () => {
+describe("patch", () => {
+  test("patch(p, v) can add to an existing array", () => {
     // GIVEN
     const prj = new TestProject();
     const file = new JsonFile(prj, "my/object/file.json", {
@@ -334,7 +334,7 @@ describe("addJsonPatch", () => {
       },
     });
   });
-  test("addToArray(p, v) creates an array", () => {
+  test("patch(p, v) can create an array", () => {
     // GIVEN
     const prj = new TestProject();
     const file = new JsonFile(prj, "my/object/file.json", {
@@ -357,7 +357,7 @@ describe("addJsonPatch", () => {
     });
   });
 
-  test("addToArray(p, v) works with lazy values", () => {
+  test("patch(p, v) can work with lazy values", () => {
     // GIVEN
     const prj = new TestProject();
     const file = new JsonFile(prj, "my/object/file.json", {
