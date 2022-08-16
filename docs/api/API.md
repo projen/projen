@@ -130,6 +130,7 @@ Name|Description
 [vscode.DevContainer](#projen-vscode-devcontainer)|A development environment running VSCode in a container;
 [vscode.VsCode](#projen-vscode-vscode)|*No description*
 [vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)|VSCode launch configuration file (launch.json), useful for enabling in-editor debugger.
+[vscode.WorkspaceRecommendedExtensions](#projen-vscode-workspacerecommendedextensions)|VS Code Workspace recommended extensions Source: https://code.visualstudio.com/docs/editor/extension-marketplace#_workspace-recommended-extensions.
 [web.NextComponent](#projen-web-nextcomponent)|*No description*
 [web.NextJsProject](#projen-web-nextjsproject)|Next.js project without TypeScript.
 [web.NextJsTypeScriptProject](#projen-web-nextjstypescriptproject)|Next.js project with TypeScript.
@@ -452,6 +453,7 @@ Name|Description
 [javascript.TrailingComma](#projen-javascript-trailingcomma)|*No description*
 [javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)|Determines how modules get resolved.
+[vscode.Console](#projen-vscode-console)|Controls where to launch the debug target Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 
 
@@ -1326,6 +1328,7 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
+  * **allowComments** (<code>boolean</code>)  Allow the use of comments in this file. __*Default*__: false for .json files, true for .json5 and .jsonc files
   * **newline** (<code>boolean</code>)  Adds a newline at the end of the file. __*Default*__: true
 
 
@@ -10461,6 +10464,7 @@ new vscode.VsCode(project: Project)
 
 Name | Type | Description 
 -----|------|-------------
+**extensions**🔹 | <code>[vscode.WorkspaceRecommendedExtensions](#projen-vscode-workspacerecommendedextensions)</code> | <span></span>
 **launchConfiguration**🔹 | <code>[vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)</code> | <span></span>
 
 
@@ -10501,9 +10505,15 @@ addConfiguration(cfg: VsCodeLaunchConfigurationEntry): void
   * **request** (<code>string</code>)  *No description* 
   * **type** (<code>string</code>)  *No description* 
   * **args** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **console** (<code>[vscode.Console](#projen-vscode-console)</code>)  *No description* __*Optional*__
+  * **cwd** (<code>string</code>)  *No description* __*Optional*__
   * **debugServer** (<code>number</code>)  *No description* __*Optional*__
+  * **disableOptimisticBPs** (<code>boolean</code>)  *No description* __*Optional*__
+  * **env** (<code>Map<string, string &#124; boolean></code>)  Set value to `false` to unset an existing environment variable. __*Optional*__
+  * **envFile** (<code>string</code>)  *No description* __*Optional*__
   * **internalConsoleOptions** (<code>[vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)</code>)  *No description* __*Optional*__
   * **outFiles** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **port** (<code>number</code>)  *No description* __*Optional*__
   * **postDebugTask** (<code>string</code>)  *No description* __*Optional*__
   * **preLaunchTask** (<code>string</code>)  *No description* __*Optional*__
   * **presentation** (<code>[vscode.Presentation](#projen-vscode-presentation)</code>)  *No description* __*Optional*__
@@ -10511,8 +10521,62 @@ addConfiguration(cfg: VsCodeLaunchConfigurationEntry): void
   * **runtimeArgs** (<code>Array<string></code>)  *No description* __*Optional*__
   * **serverReadyAction** (<code>[vscode.ServerReadyAction](#projen-vscode-serverreadyaction)</code>)  *No description* __*Optional*__
   * **skipFiles** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **stopOnEntry** (<code>boolean</code>)  *No description* __*Optional*__
   * **url** (<code>string</code>)  *No description* __*Optional*__
   * **webRoot** (<code>string</code>)  *No description* __*Optional*__
+
+
+
+
+
+
+## class WorkspaceRecommendedExtensions 🔹 <a id="projen-vscode-workspacerecommendedextensions"></a>
+
+VS Code Workspace recommended extensions Source: https://code.visualstudio.com/docs/editor/extension-marketplace#_workspace-recommended-extensions.
+
+__Submodule__: vscode
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new vscode.WorkspaceRecommendedExtensions(vscode: VsCode)
+```
+
+* **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
+
+
+### Methods
+
+
+#### addRecommendations(...extensions)🔹 <a id="projen-vscode-workspacerecommendedextensions-addrecommendations"></a>
+
+Adds a list of VS Code extensions as recommendations for this workspace.
+
+```ts
+addRecommendations(...extensions: string[]): void
+```
+
+* **extensions** (<code>string</code>)  The extension IDs.
+
+
+
+
+#### addUnwantedRecommendations(...extensions)🔹 <a id="projen-vscode-workspacerecommendedextensions-addunwantedrecommendations"></a>
+
+Marks a list of VS Code extensions as unwanted recommendations for this workspace.
+
+VS Code should not be recommend these extensions for users of this workspace.
+
+```ts
+addUnwantedRecommendations(...extensions: string[]): void
+```
+
+* **extensions** (<code>string</code>)  The extension IDs.
 
 
 
@@ -11821,6 +11885,7 @@ Options for `JsonFile`.
 
 Name | Type | Description 
 -----|------|-------------
+**allowComments**?🔹 | <code>boolean</code> | Allow the use of comments in this file.<br/>__*Default*__: false for .json files, true for .json5 and .jsonc files
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
@@ -17637,9 +17702,15 @@ Name | Type | Description
 **request**🔹 | <code>string</code> | <span></span>
 **type**🔹 | <code>string</code> | <span></span>
 **args**?🔹 | <code>Array<string></code> | __*Optional*__
+**console**?🔹 | <code>[vscode.Console](#projen-vscode-console)</code> | __*Optional*__
+**cwd**?🔹 | <code>string</code> | __*Optional*__
 **debugServer**?🔹 | <code>number</code> | __*Optional*__
+**disableOptimisticBPs**?🔹 | <code>boolean</code> | __*Optional*__
+**env**?🔹 | <code>Map<string, string &#124; boolean></code> | Set value to `false` to unset an existing environment variable.<br/>__*Optional*__
+**envFile**?🔹 | <code>string</code> | __*Optional*__
 **internalConsoleOptions**?🔹 | <code>[vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)</code> | __*Optional*__
 **outFiles**?🔹 | <code>Array<string></code> | __*Optional*__
+**port**?🔹 | <code>number</code> | __*Optional*__
 **postDebugTask**?🔹 | <code>string</code> | __*Optional*__
 **preLaunchTask**?🔹 | <code>string</code> | __*Optional*__
 **presentation**?🔹 | <code>[vscode.Presentation](#projen-vscode-presentation)</code> | __*Optional*__
@@ -17647,6 +17718,7 @@ Name | Type | Description
 **runtimeArgs**?🔹 | <code>Array<string></code> | __*Optional*__
 **serverReadyAction**?🔹 | <code>[vscode.ServerReadyAction](#projen-vscode-serverreadyaction)</code> | __*Optional*__
 **skipFiles**?🔹 | <code>Array<string></code> | __*Optional*__
+**stopOnEntry**?🔹 | <code>boolean</code> | __*Optional*__
 **url**?🔹 | <code>string</code> | __*Optional*__
 **webRoot**?🔹 | <code>string</code> | __*Optional*__
 
@@ -18800,6 +18872,17 @@ Name | Description
 -----|-----
 **CLASSIC** 🔹|TypeScript's former default resolution strategy.
 **NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
+
+
+## enum Console 🔹 <a id="projen-vscode-console"></a>
+
+Controls where to launch the debug target Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
+
+Name | Description
+-----|-----
+**INTERNAL_CONSOLE** 🔹|
+**INTEGRATED_TERMINAL** 🔹|
+**EXTERNAL_TERMINAL** 🔹|
 
 
 ## enum InternalConsoleOptions 🔹 <a id="projen-vscode-internalconsoleoptions"></a>
