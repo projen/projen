@@ -109,6 +109,39 @@ test("json5 file can contain projen marker as comment", () => {
   expect(output).toContain(`// ${file.marker}`);
 });
 
+test("jsonc file can contain projen marker as comment", () => {
+  const prj = new TestProject();
+
+  const obj: any = {};
+
+  const file = new JsonFile(prj, "my/json/file-marker.jsonc", {
+    obj,
+    marker: true,
+  });
+
+  const output = synthSnapshot(prj)["my/json/file-marker.jsonc"];
+
+  expect(output).toContain(`// ${file.marker}`);
+});
+
+test("json file with allowComments can contain projen marker as comment", () => {
+  const prj = new TestProject();
+
+  const obj: any = {};
+
+  const file = new JsonFile(prj, "my/json/file-marker.json", {
+    obj,
+    marker: true,
+    allowComments: true,
+  });
+
+  const output = synthSnapshot(prj, {
+    parseJson: false,
+  })["my/json/file-marker.json"];
+
+  expect(output).toContain(`// ${file.marker}`);
+});
+
 describe("newline", () => {
   const obj = {
     hello: "world",

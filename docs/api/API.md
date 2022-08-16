@@ -178,6 +178,7 @@ Name|Description
 [SampleDirOptions](#projen-samplediroptions)|SampleDir options.
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
 [SampleReadmeProps](#projen-samplereadmeprops)|SampleReadme Properties.
+[SnapshotOptions](#projen-snapshotoptions)|Options for the Snapshot synthesis.
 [SourceCodeOptions](#projen-sourcecodeoptions)|Options for `SourceCodeFile`.
 [TaskCommonOptions](#projen-taskcommonoptions)|*No description*
 [TaskOptions](#projen-taskoptions)|*No description*
@@ -1327,6 +1328,7 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
+  * **allowComments** (<code>boolean</code>)  Allow the use of comments in this file. __*Default*__: false for .json files, true for .json5 and .jsonc files
   * **newline** (<code>boolean</code>)  Adds a newline at the end of the file. __*Default*__: true
 
 
@@ -3018,15 +3020,17 @@ A Testing static class with a .synth helper for getting a snapshots of construct
 ### Methods
 
 
-#### *static* synth(project)🔹 <a id="projen-testing-synth"></a>
+#### *static* synth(project, options?)🔹 <a id="projen-testing-synth"></a>
 
 Produces a simple JS object that represents the contents of the projects with field names being file paths.
 
 ```ts
-static synth(project: Project): Map<string, any>
+static synth(project: Project, options?: SnapshotOptions): Map<string, any>
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  the project to produce a snapshot for.
+* **options** (<code>[SnapshotOptions](#projen-snapshotoptions)</code>)  *No description*
+  * **parseJson** (<code>boolean</code>)  Parse .json files as a JS object for improved inspection. This will fail if the contents are invalid JSON. __*Default*__: true parse .json files into an object
 
 __Returns__:
 * <code>Map<string, any></code>
@@ -11986,6 +11990,7 @@ Options for `JsonFile`.
 
 Name | Type | Description 
 -----|------|-------------
+**allowComments**?🔹 | <code>boolean</code> | Allow the use of comments in this file.<br/>__*Default*__: false for .json files, true for .json5 and .jsonc files
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
@@ -12184,6 +12189,19 @@ Name | Type | Description
 -----|------|-------------
 **contents**?🔹 | <code>string</code> | The contents.<br/>__*Default*__: "# replace this"
 **filename**?🔹 | <code>string</code> | The name of the README.md file.<br/>__*Default*__: "README.md"
+
+
+
+## struct SnapshotOptions 🔹 <a id="projen-snapshotoptions"></a>
+
+
+Options for the Snapshot synthesis.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**parseJson**?🔹 | <code>boolean</code> | Parse .json files as a JS object for improved inspection. This will fail if the contents are invalid JSON.<br/>__*Default*__: true parse .json files into an object
 
 
 
