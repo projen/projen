@@ -256,6 +256,7 @@ async function testBump(
   git('config user.email "you@example.com"');
   git('config user.name "Your Name"');
   git("config commit.gpgsign false");
+  git("config tag.gpgsign false");
 
   const commit = async (message: string) => {
     await writeFile(join(workdir, "dummy.txt"), message);

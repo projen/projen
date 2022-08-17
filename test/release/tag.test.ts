@@ -65,6 +65,7 @@ async function testTag(opts: TestTagOpts = {}) {
   git('config user.email "you@example.com"');
   git('config user.name "Your Name"');
   git("config commit.gpgsign false");
+  git("config tag.gpgsign false");
   await writeFile(
     join(workdir, opts.testOptions?.releaseTagPath || "", releaseTagFile),
     releaseTag
