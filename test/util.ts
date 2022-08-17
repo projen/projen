@@ -93,6 +93,8 @@ export function withProjectDir(
       shell("git remote add origin git@boom.com:foo/bar.git");
       shell('git config user.name "My User Name"');
       shell('git config user.email "my@user.email.com"');
+      shell("git config commit.gpgsign false");
+      shell("git config tag.gpgsign false");
     } else if (process.env.CI) {
       // if "git" is set to "false", we still want to make sure global user is defined
       // (relevant in CI context)
