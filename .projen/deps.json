@@ -156,6 +156,10 @@
       "type": "bundled"
     },
     {
+      "name": "fast-json-patch",
+      "type": "bundled"
+    },
+    {
       "name": "fs-extra",
       "type": "bundled"
     },

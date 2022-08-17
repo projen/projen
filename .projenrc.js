@@ -38,6 +38,7 @@ const project = new cdk.JsiiProject({
     "xmlbuilder2",
     "ini",
     "shx",
+    "fast-json-patch",
     "zlib",
   ],
 

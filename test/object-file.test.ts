@@ -1,5 +1,6 @@
 import { ObjectFile } from "../src";
 import { JsonFile } from "../src/json";
+import { JsonPatch } from "../src/json-patch";
 import { synthSnapshot, TestProject } from "./util";
 
 class ChildObjectFile extends ObjectFile {}
@@ -296,6 +297,86 @@ describe("addToArray", () => {
       "second extra value"
     );
 
+    // THEN
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      first: {
+        second: {
+          array: ["initial value", "first extra value", "second extra value"],
+        },
+      },
+    });
+  });
+});
+
+describe("patch", () => {
+  test("patch(p, v) can add to an existing array", () => {
+    // GIVEN
+    const prj = new TestProject();
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: { first: { second: { array: ["initial value"] } } },
+      marker: false,
+    });
+    // WHEN
+    file.patch(JsonPatch.add("/first/second/array/-", "first extra value"));
+    file.patch(JsonPatch.add("/first/second/array/-", "second extra value"));
+    file.patch(JsonPatch.add("/first/second/array/1", "third extra value"));
+    // THEN
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      first: {
+        second: {
+          array: [
+            "initial value",
+            "third extra value",
+            "first extra value",
+            "second extra value",
+          ],
+        },
+      },
+    });
+  });
+  test("patch(p, v) can create an array", () => {
+    // GIVEN
+    const prj = new TestProject();
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: { first: { second: {} } },
+      marker: false,
+    });
+    // WHEN
+    file.patch(
+      JsonPatch.add("/first/second/array", []),
+      JsonPatch.add("/first/second/array/-", "first extra value"),
+      JsonPatch.add("/first/second/array/-", "second extra value")
+    );
+    // THEN
+    expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
+      first: {
+        second: {
+          array: ["first extra value", "second extra value"],
+        },
+      },
+    });
+  });
+
+  test("patch(p, v) can work with lazy values", () => {
+    // GIVEN
+    const prj = new TestProject();
+    const file = new JsonFile(prj, "my/object/file.json", {
+      obj: {
+        first: {
+          second: {
+            array: () => {
+              return ["initial value"];
+            },
+          },
+        },
+      },
+      marker: false,
+    });
+    // WHEN
+    file.patch(
+      JsonPatch.add("/first/second/array/-", "first extra value"),
+      JsonPatch.add("/first/second/array/-", "second extra value")
+    );
     // THEN
     expect(synthSnapshot(prj)["my/object/file.json"]).toStrictEqual({
       first: {
