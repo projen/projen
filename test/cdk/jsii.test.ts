@@ -306,6 +306,63 @@ describe("publish to go", () => {
   });
 });
 
+describe("publish to nuget", () => {
+  test("minimal options", () => {
+    const project = new JsiiProject({
+      authorAddress: "https://foo.bar",
+      authorUrl: "https://foo.bar",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "testproject",
+      publishToNuget: {
+        dotNetNamespace: "DotNet.Namespace",
+        packageId: "PackageId",
+      },
+      defaultReleaseBranch: "master",
+      publishTasks: true,
+    });
+
+    const output = synthSnapshot(project);
+    const targets = output["package.json"].jsii.targets;
+    expect(targets).toStrictEqual({
+      dotnet: {
+        namespace: "DotNet.Namespace",
+        packageId: "PackageId",
+      },
+    });
+
+    expect(output[".github/workflows/release.yml"]).toMatchSnapshot();
+  });
+  test("all options", () => {
+    const project = new JsiiProject({
+      authorAddress: "https://foo.bar",
+      authorUrl: "https://foo.bar",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "testproject",
+      publishToNuget: {
+        dotNetNamespace: "DotNet.Namespace",
+        packageId: "PackageId",
+        iconUrl: "https://example.com/logo.png",
+      },
+      defaultReleaseBranch: "master",
+      publishTasks: true,
+    });
+
+    const output = synthSnapshot(project);
+    const targets = output["package.json"].jsii.targets;
+    expect(targets).toStrictEqual({
+      dotnet: {
+        namespace: "DotNet.Namespace",
+        packageId: "PackageId",
+        iconUrl: "https://example.com/logo.png",
+      },
+    });
+
+    expect(output[".github/workflows/release.yml"]).toMatchSnapshot();
+  });
+});
+
 describe("docgen", () => {
   test("true should just work", () => {
     const project = new JsiiProject({
@@ -359,7 +416,6 @@ describe("language bindings", () => {
     publishToNuget: {
       dotNetNamespace: "DotNet.Namespace",
       packageId: "PackageId",
-      iconUrl: "https://example.com/logo.png",
     },
     publishToPypi: { distName: "dist-name", module: "module-name" },
   });
