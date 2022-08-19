@@ -8,6 +8,7 @@ export * from "./gitpod";
 export * from "./ignore-file";
 export * from "./ini";
 export * from "./json";
+export * from "./json-patch";
 export * from "./logger";
 export * from "./license";
 export * from "./makefile";

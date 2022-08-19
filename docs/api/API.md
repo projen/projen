@@ -15,6 +15,7 @@ Name|Description
 [IgnoreFile](#projen-ignorefile)|*No description*
 [IniFile](#projen-inifile)|Represents an INI file.
 [JsonFile](#projen-jsonfile)|Represents a JSON file.
+[JsonPatch](#projen-jsonpatch)|Utility for applying RFC-6902 JSON-Patch to a document.
 [License](#projen-license)|*No description*
 [Logger](#projen-logger)|Project-level logging utilities.
 [Makefile](#projen-makefile)|Minimal Makefile.
@@ -1348,6 +1349,133 @@ __Returns__:
 
 
 
+## class JsonPatch 🔹 <a id="projen-jsonpatch"></a>
+
+Utility for applying RFC-6902 JSON-Patch to a document.
+
+Use the the `JsonPatch.apply(doc, ...ops)` function to apply a set of
+operations to a JSON document and return the result.
+
+Operations can be created using the factory methods `JsonPatch.add()`,
+`JsonPatch.remove()`, etc.
+
+
+### Methods
+
+
+#### *static* add(path, value)🔹 <a id="projen-jsonpatch-add"></a>
+
+Adds a value to an object or inserts it into an array.
+
+In the case of an
+array, the value is inserted before the given index. The - character can be
+used instead of an index to insert at the end of an array.
+
+```ts
+static add(path: string, value: any): JsonPatch
+```
+
+* **path** (<code>string</code>)  *No description*
+* **value** (<code>any</code>)  *No description*
+
+__Returns__:
+* <code>[JsonPatch](#projen-jsonpatch)</code>
+
+#### *static* apply(document, ...ops)🔹 <a id="projen-jsonpatch-apply"></a>
+
+Applies a set of JSON-Patch (RFC-6902) operations to `document` and returns the result.
+
+```ts
+static apply(document: any, ...ops: JsonPatch[]): any
+```
+
+* **document** (<code>any</code>)  The document to patch.
+* **ops** (<code>[JsonPatch](#projen-jsonpatch)</code>)  The operations to apply.
+
+__Returns__:
+* <code>any</code>
+
+#### *static* copy(from, path)🔹 <a id="projen-jsonpatch-copy"></a>
+
+Copies a value from one location to another within the JSON document.
+
+Both
+from and path are JSON Pointers.
+
+```ts
+static copy(from: string, path: string): JsonPatch
+```
+
+* **from** (<code>string</code>)  *No description*
+* **path** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[JsonPatch](#projen-jsonpatch)</code>
+
+#### *static* move(from, path)🔹 <a id="projen-jsonpatch-move"></a>
+
+Moves a value from one location to the other.
+
+Both from and path are JSON Pointers.
+
+```ts
+static move(from: string, path: string): JsonPatch
+```
+
+* **from** (<code>string</code>)  *No description*
+* **path** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[JsonPatch](#projen-jsonpatch)</code>
+
+#### *static* remove(path)🔹 <a id="projen-jsonpatch-remove"></a>
+
+Removes a value from an object or array.
+
+```ts
+static remove(path: string): JsonPatch
+```
+
+* **path** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[JsonPatch](#projen-jsonpatch)</code>
+
+#### *static* replace(path, value)🔹 <a id="projen-jsonpatch-replace"></a>
+
+Replaces a value.
+
+Equivalent to a “remove” followed by an “add”.
+
+```ts
+static replace(path: string, value: any): JsonPatch
+```
+
+* **path** (<code>string</code>)  *No description*
+* **value** (<code>any</code>)  *No description*
+
+__Returns__:
+* <code>[JsonPatch](#projen-jsonpatch)</code>
+
+#### *static* test(path, value)🔹 <a id="projen-jsonpatch-test"></a>
+
+Tests that the specified value is set in the document.
+
+If the test fails,
+then the patch as a whole should not apply.
+
+```ts
+static test(path: string, value: any): JsonPatch
+```
+
+* **path** (<code>string</code>)  *No description*
+* **value** (<code>any</code>)  *No description*
+
+__Returns__:
+* <code>[JsonPatch](#projen-jsonpatch)</code>
+
+
+
 ## class License 🔹 <a id="projen-license"></a>
 
 
@@ -1743,6 +1871,43 @@ addToArray(path: string, ...values: any[]): void
 
 * **path** (<code>string</code>)  - The path of the property, you can use dot notation to att to arrays in complex types.
 * **values** (<code>any</code>)  - The values to add.
+
+
+
+
+#### patch(...patches)🔹 <a id="projen-objectfile-patch"></a>
+
+Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
+
+For example, with the following object file
+```json
+"compilerOptions": {
+   "exclude": ["node_modules"],
+   "lib": ["es2019"]
+   ...
+}
+...
+```
+
+```typescript
+project.tsconfig.file.patch(JsonPatch.add("/compilerOptions/exclude/-", "coverage"));
+project.tsconfig.file.patch(JsonPatch.replace("/compilerOptions/lib", ["dom", "dom.iterable", "esnext"]));
+```
+would result in the following object file
+```json
+"compilerOptions": {
+   "exclude": ["node_modules", "coverage"],
+   "lib": ["dom", "dom.iterable", "esnext"]
+   ...
+}
+...
+```
+
+```ts
+patch(...patches: JsonPatch[]): void
+```
+
+* **patches** (<code>[JsonPatch](#projen-jsonpatch)</code>)  - The patch operations to apply.
 
 
 
@@ -13498,6 +13663,7 @@ Name | Type | Description
 -----|------|-------------
 **dotNetNamespace**🔹 | <code>string</code> | <span></span>
 **packageId**🔹 | <code>string</code> | <span></span>
+**iconUrl**?🔹 | <code>string</code> | __*Optional*__
 **nugetApiKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
 **nugetServer**?🔹 | <code>string</code> | NuGet Server URL (defaults to nuget.org).<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
