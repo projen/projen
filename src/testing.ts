@@ -1,5 +1,5 @@
 import { Project } from "./project";
-import { synthSnapshot } from "./util/synth";
+import { SnapshotOptions, synthSnapshot } from "./util/synth";
 
 /**
  * A Testing static class with a .synth helper for getting a snapshots of construct outputs.
@@ -13,9 +13,14 @@ export class Testing {
    * @param project the project to produce a snapshot for
    * @return { [filename:string]: any }
    */
-  public static synth(project: Project): Record<string, any> {
-    return synthSnapshot(project);
+  public static synth(
+    project: Project,
+    options: SnapshotOptions = {}
+  ): Record<string, any> {
+    return synthSnapshot(project, options);
   }
 
   private constructor() {} // utility
 }
+
+export { SnapshotOptions } from "./util/synth";
