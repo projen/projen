@@ -131,6 +131,7 @@ Name|Description
 [vscode.DevContainer](#projen-vscode-devcontainer)|A development environment running VSCode in a container;
 [vscode.VsCode](#projen-vscode-vscode)|*No description*
 [vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)|VSCode launch configuration file (launch.json), useful for enabling in-editor debugger.
+[vscode.VsCodeSettings](#projen-vscode-vscodesettings)|VS Code Workspace settings Source: https://code.visualstudio.com/docs/getstarted/settings#_workspace-settings.
 [web.NextComponent](#projen-web-nextcomponent)|*No description*
 [web.NextJsProject](#projen-web-nextjsproject)|Next.js project without TypeScript.
 [web.NextJsTypeScriptProject](#projen-web-nextjstypescriptproject)|Next.js project with TypeScript.
@@ -10632,6 +10633,7 @@ new vscode.VsCode(project: Project)
 Name | Type | Description 
 -----|------|-------------
 **launchConfiguration**🔹 | <code>[vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)</code> | <span></span>
+**settings**🔹 | <code>[vscode.VsCodeSettings](#projen-vscode-vscodesettings)</code> | <span></span>
 
 
 
@@ -10690,6 +10692,60 @@ addConfiguration(cfg: VsCodeLaunchConfigurationEntry): void
   * **stopOnEntry** (<code>boolean</code>)  *No description* __*Optional*__
   * **url** (<code>string</code>)  *No description* __*Optional*__
   * **webRoot** (<code>string</code>)  *No description* __*Optional*__
+
+
+
+
+
+
+## class VsCodeSettings 🔹 <a id="projen-vscode-vscodesettings"></a>
+
+VS Code Workspace settings Source: https://code.visualstudio.com/docs/getstarted/settings#_workspace-settings.
+
+__Submodule__: vscode
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new vscode.VsCodeSettings(vscode: VsCode)
+```
+
+* **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
+
+
+### Methods
+
+
+#### addSetting(setting, value, language?)🔹 <a id="projen-vscode-vscodesettings-addsetting"></a>
+
+Adds a workspace setting.
+
+```ts
+addSetting(setting: string, value: any, language?: string): void
+```
+
+* **setting** (<code>string</code>)  The setting ID.
+* **value** (<code>any</code>)  The value of the setting.
+* **language** (<code>string</code>)  Scope the setting to a specific language.
+
+
+
+
+#### addSettings(settings, languages?)🔹 <a id="projen-vscode-vscodesettings-addsettings"></a>
+
+Adds a workspace setting.
+
+```ts
+addSettings(settings: Map<string, any>, languages?: string &#124; Array<string>): void
+```
+
+* **settings** (<code>Map<string, any></code>)  Array structure: [setting: string, value: any, languages?: string[]].
+* **languages** (<code>string &#124; Array<string></code>)  *No description*
 
 
 
