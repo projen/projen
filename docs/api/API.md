@@ -3474,6 +3474,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **repositoryUrl** (<code>string</code>)  Git repository URL. 
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: ".compatignore"
+  * **compressAssembly** (<code>boolean</code>)  Emit a compressed version of the assembly. __*Default*__: false
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
@@ -4420,6 +4421,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **repositoryUrl** (<code>string</code>)  Git repository URL. 
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: ".compatignore"
+  * **compressAssembly** (<code>boolean</code>)  Emit a compressed version of the assembly. __*Default*__: false
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
@@ -5038,6 +5040,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **repositoryUrl** (<code>string</code>)  Git repository URL. 
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: ".compatignore"
+  * **compressAssembly** (<code>boolean</code>)  Emit a compressed version of the assembly. __*Default*__: false
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
@@ -5294,6 +5297,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **repositoryUrl** (<code>string</code>)  Git repository URL. 
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: ".compatignore"
+  * **compressAssembly** (<code>boolean</code>)  Emit a compressed version of the assembly. __*Default*__: false
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
@@ -5884,6 +5888,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **repositoryUrl** (<code>string</code>)  Git repository URL. 
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: ".compatignore"
+  * **compressAssembly** (<code>boolean</code>)  Emit a compressed version of the assembly. __*Default*__: false
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
@@ -6123,6 +6128,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **repositoryUrl** (<code>string</code>)  Git repository URL. 
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: ".compatignore"
+  * **compressAssembly** (<code>boolean</code>)  Emit a compressed version of the assembly. __*Default*__: false
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
@@ -12619,6 +12625,7 @@ Name | Type | Description
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
+**compressAssembly**?🔹 | <code>boolean</code> | Emit a compressed version of the assembly.<br/>__*Default*__: false
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -13207,6 +13214,7 @@ Name | Type | Description
 **commitGenerated**?⚠️ | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?⚠️ | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?⚠️ | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
+**compressAssembly**?⚠️ | <code>boolean</code> | Emit a compressed version of the assembly.<br/>__*Default*__: false
 **constructsVersion**?⚠️ | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -13621,6 +13629,7 @@ Name | Type | Description
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
+**compressAssembly**?🔹 | <code>boolean</code> | Emit a compressed version of the assembly.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -13888,6 +13897,7 @@ Name | Type | Description
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
+**compressAssembly**?🔹 | <code>boolean</code> | Emit a compressed version of the assembly.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -14382,6 +14392,7 @@ Name | Type | Description
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
+**compressAssembly**?🔹 | <code>boolean</code> | Emit a compressed version of the assembly.<br/>__*Default*__: false
 **constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.3.196"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -14574,6 +14585,7 @@ Name | Type | Description
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
+**compressAssembly**?🔹 | <code>boolean</code> | Emit a compressed version of the assembly.<br/>__*Default*__: false
 **constructsVersion**?🔹 | <code>string</code> | Construct version to use.<br/>__*Default*__: "^10.0.12"
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
