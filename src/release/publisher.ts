@@ -61,6 +61,15 @@ export interface PublisherOptions {
   readonly jsiiReleaseVersion?: string;
 
   /**
+   * Node version to setup in GitHub workflows if any node-based CLI utilities
+   * are needed. For example `publib`, the CLI projen uses to publish releases,
+   * is an npm library.
+   *
+   * @default 14.x
+   */
+  readonly workflowNodeVersion?: string;
+
+  /**
    * Version requirement for `publib`.
    *
    * @default "latest"
@@ -134,6 +143,8 @@ export class Publisher extends Component {
 
   private readonly dryRun: boolean;
 
+  private readonly workflowNodeVersion: string;
+
   constructor(project: Project, options: PublisherOptions) {
     super(project);
 
@@ -144,6 +155,7 @@ export class Publisher extends Component {
     this.jsiiReleaseVersion = this.publibVersion;
     this.condition = options.condition;
     this.dryRun = options.dryRun ?? false;
+    this.workflowNodeVersion = options.workflowNodeVersion ?? "14.x";
 
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? "failed-release";
@@ -606,7 +618,7 @@ export class Publisher extends Component {
       return {
         [jobname]: {
           tools: {
-            node: { version: "14.x" },
+            node: { version: this.workflowNodeVersion },
             ...opts.publishTools,
           },
           name: `Publish to ${opts.registryName}`,
