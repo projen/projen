@@ -374,7 +374,7 @@ export class NodeProject extends GitHubProject {
     return this.package.maxNodeVersion;
   }
 
-  private readonly nodeVersion?: string;
+  protected readonly nodeVersion?: string;
 
   /**
    * The package manager to use.

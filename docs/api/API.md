@@ -8348,6 +8348,7 @@ Name | Type | Description
 **jest**?🔹 | <code>[javascript.Jest](#projen-javascript-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Optional*__
+**nodeVersion**?🔹 | <code>string</code> | __*Optional*__
 **npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
 **prettier**?🔹 | <code>[javascript.Prettier](#projen-javascript-prettier)</code> | __*Optional*__
 **publisher**?⚠️ | <code>[release.Publisher](#projen-release-publisher)</code> | Package publisher.<br/>__*Optional*__
