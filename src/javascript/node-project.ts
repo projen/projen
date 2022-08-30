@@ -553,6 +553,8 @@ export class NodeProject extends GitHubProject {
           ...(options.postBuildSteps ?? []),
           ...this.renderUploadCoverageJobStep(options),
         ],
+
+        workflowNodeVersion: this.nodeVersion,
       });
 
       this.publisher = this.release.publisher;

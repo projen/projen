@@ -492,7 +492,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 14.0.0
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -518,7 +518,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 14.0.0
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -552,7 +552,7 @@ jobs:
           java-version: 11.x
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 14.0.0
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -584,7 +584,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 14.0.0
       - uses: actions/setup-python@v3
         with:
           python-version: 3.x
