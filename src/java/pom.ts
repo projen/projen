@@ -345,6 +345,11 @@ export interface PluginExecution {
    * Which Maven goals this plugin should be associated with.
    */
   readonly goals: string[];
+
+  /**
+   * The phase in which the plugin should execute.
+   */
+  readonly phase?: string;
 }
 
 /**
@@ -384,6 +389,7 @@ function pluginConfig(options: PluginOptions = {}) {
       execution: {
         id: e.id,
         goals: e.goals.map((goal) => ({ goal })),
+        phase: e.phase,
       },
     })),
   };
