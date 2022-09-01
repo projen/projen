@@ -48,7 +48,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 12.13.0
+          node-version: 14.x
       - name: Install dependencies
         run: yarn install --check-files
       - name: build
@@ -150,7 +150,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 12.13.0
+          node-version: 14.x
       - name: Install dependencies
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
@@ -783,7 +783,7 @@ tsconfig.tsbuildinfo
       "typescript": "*",
     },
     "engines": Object {
-      "node": ">= 12.13.0",
+      "node": ">= 12.22.0",
     },
     "license": "Apache-2.0",
     "name": "test-nextjs-project",
