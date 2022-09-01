@@ -181,7 +181,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 12.13.0
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -1116,7 +1116,9 @@ export default function Home() {
   "postcss.config.json": Object {
     "plugins": Object {
       "autoprefixer": Object {},
-      "tailwindcss": Object {},
+      "tailwindcss": Object {
+        "config": "tailwind.config.json",
+      },
     },
   },
   "public/vercel.svg": "<svg width=\\"283\\" height=\\"64\\" viewBox=\\"0 0 283 64\\" fill=\\"none\\" 

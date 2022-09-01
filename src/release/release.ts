@@ -231,6 +231,15 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    * @default "dist"
    */
   readonly artifactsDirectory: string;
+
+  /**
+   * Node version to setup in GitHub workflows if any node-based CLI utilities
+   * are needed. For example `publib`, the CLI projen uses to publish releases,
+   * is an npm library.
+   *
+   * @default 14.x
+   */
+  readonly workflowNodeVersion?: string;
 }
 
 /**
@@ -334,6 +343,7 @@ export class Release extends Component {
       workflowRunsOn: options.workflowRunsOn,
       publishTasks: options.publishTasks,
       dryRun: options.publishDryRun,
+      workflowNodeVersion: options.workflowNodeVersion,
     });
 
     const githubRelease = options.githubRelease ?? true;
