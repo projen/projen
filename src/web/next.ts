@@ -76,7 +76,8 @@ export class NextJsProject extends NodeProject {
   constructor(options: NextJsProjectOptions) {
     super({
       jest: false,
-      minNodeVersion: "12.13.0", // https://tailwindcss.com/docs/installation
+      minNodeVersion: "12.22.0", // https://nextjs.org/docs#system-requirements
+      workflowNodeVersion: "14.x",
       ...options,
     });
 
@@ -125,8 +126,9 @@ export class NextJsTypeScriptProject extends TypeScriptAppProject {
     const defaultOptions = {
       srcdir: "pages",
       eslint: false,
-      minNodeVersion: "12.13.0", // https://tailwindcss.com/docs/installation
+      minNodeVersion: "12.22.0", // https://nextjs.org/docs#system-requirements
       jest: false,
+      workflowNodeVersion: "14.x",
       tsconfig: {
         include: ["**/*.ts", "**/*.tsx"],
         compilerOptions: {
