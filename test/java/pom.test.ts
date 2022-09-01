@@ -66,6 +66,19 @@ test("addPlugin()", () => {
     },
   });
 
+  pom.addPlugin("org.apache.maven.plugins/maven-shade-plugin@3.2.2", {
+    configuration: {
+      createDependencyReducedPom: false,
+    },
+    executions: [
+      {
+        id: "shade-task",
+        phase: "package",
+        goals: ["shade"],
+      },
+    ],
+  });
+
   // alteratively
   pom.project.deps.addDependency(
     "org.codehaus.mojo/exec-maven-plugin@3.0.0",

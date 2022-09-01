@@ -16108,6 +16108,7 @@ Name | Type | Description
 -----|------|-------------
 **goals**🔹 | <code>Array<string></code> | Which Maven goals this plugin should be associated with.
 **id**🔹 | <code>string</code> | The ID.
+**phase**?🔹 | <code>string</code> | The phase in which the plugin should execute.<br/>__*Optional*__
 
 
 

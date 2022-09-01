@@ -1020,7 +1020,9 @@ export default function Home() {
   "postcss.config.json": Object {
     "plugins": Object {
       "autoprefixer": Object {},
-      "tailwindcss": Object {},
+      "tailwindcss": Object {
+        "config": "tailwind.config.json",
+      },
     },
   },
   "public/vercel.svg": "<svg width=\\"283\\" height=\\"64\\" viewBox=\\"0 0 283 64\\" fill=\\"none\\" 
