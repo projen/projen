@@ -400,6 +400,41 @@ describe("docgen", () => {
   });
 });
 
+describe("compile options", () => {
+  test("be default, assembly is not compressed", () => {
+    const project = new JsiiProject({
+      author: "My name",
+      name: "testproject",
+      authorAddress: "https://foo.bar",
+      defaultReleaseBranch: "main",
+      repositoryUrl: "https://github.com/foo/bar.git",
+    });
+
+    const output = synthSnapshot(project);
+    expect(
+      output[".projen/tasks.json"].tasks.compile.steps[0].exec
+    ).toStrictEqual("jsii --silence-warnings=reserved-word");
+  });
+
+  test("assembly can be compressed", () => {
+    const project = new JsiiProject({
+      author: "My name",
+      name: "testproject",
+      authorAddress: "https://foo.bar",
+      defaultReleaseBranch: "main",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      compressAssembly: true,
+    });
+
+    const output = synthSnapshot(project);
+    expect(
+      output[".projen/tasks.json"].tasks.compile.steps[0].exec
+    ).toStrictEqual(
+      "jsii --silence-warnings=reserved-word --compress-assembly"
+    );
+  });
+});
+
 describe("language bindings", () => {
   const project = new JsiiProject({
     author: "My name",

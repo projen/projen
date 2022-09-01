@@ -5749,6 +5749,23 @@ Array [
         "switch": "compat-ignore",
       },
       Object {
+        "default": "false",
+        "docs": "Emit a compressed version of the assembly.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "compressAssembly",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "compressAssembly",
+        ],
+        "simpleType": "boolean",
+        "switch": "compress-assembly",
+      },
+      Object {
         "default": "- for CDK 1.x the default is \\"3.2.27\\", for CDK 2.x the default is
 \\"10.0.5\\".",
         "docs": "Minimum version of the \`constructs\` library to depend on.",
@@ -12347,6 +12364,23 @@ Array [
         "switch": "compat-ignore",
       },
       Object {
+        "default": "false",
+        "docs": "Emit a compressed version of the assembly.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "compressAssembly",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "compressAssembly",
+        ],
+        "simpleType": "boolean",
+        "switch": "compress-assembly",
+      },
+      Object {
         "default": "\\"3.3.196\\"",
         "docs": "constructs verion.",
         "featured": false,
@@ -15064,6 +15098,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "compat-ignore",
+      },
+      Object {
+        "default": "false",
+        "docs": "Emit a compressed version of the assembly.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "compressAssembly",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "compressAssembly",
+        ],
+        "simpleType": "boolean",
+        "switch": "compress-assembly",
       },
       Object {
         "default": "\\"^10.0.12\\"",
@@ -18511,6 +18562,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "compat-ignore",
+      },
+      Object {
+        "default": "false",
+        "docs": "Emit a compressed version of the assembly.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "compressAssembly",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "compressAssembly",
+        ],
+        "simpleType": "boolean",
+        "switch": "compress-assembly",
       },
       Object {
         "default": "- defaults to the value of authorName or \\"\\" if \`authorName\` is undefined.",

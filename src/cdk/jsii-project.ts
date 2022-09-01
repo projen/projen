@@ -108,6 +108,12 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
    * @default "API.md"
    */
   readonly docgenFilePath?: string;
+
+  /**
+   * Emit a compressed version of the assembly
+   * @default false
+   */
+  readonly compressAssembly?: boolean;
 }
 
 export enum Stability {
@@ -195,8 +201,13 @@ export class JsiiProject extends TypeScriptProject {
 
     this.addFields({ types: `${libdir}/index.d.ts` });
 
+    const compressAssembly = options.compressAssembly ?? false;
+
     // this is an unhelpful warning
-    const jsiiFlags = ["--silence-warnings=reserved-word"].join(" ");
+    const jsiiFlags = ["--silence-warnings=reserved-word"];
+    if (compressAssembly) {
+      jsiiFlags.push("--compress-assembly");
+    }
 
     const compatIgnore = options.compatIgnore ?? ".compatignore";
 
@@ -216,8 +227,8 @@ export class JsiiProject extends TypeScriptProject {
       this.compileTask.spawn(compatTask);
     }
 
-    this.compileTask.reset(`jsii ${jsiiFlags}`);
-    this.watchTask.reset(`jsii -w ${jsiiFlags}`);
+    this.compileTask.reset(["jsii", ...jsiiFlags].join(" "));
+    this.watchTask.reset(["jsii", "-w", ...jsiiFlags].join(" "));
     this.packageAllTask = this.addTask("package-all", {
       description: "Packages artifacts for all target languages",
     });
