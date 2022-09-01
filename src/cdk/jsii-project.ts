@@ -397,7 +397,7 @@ export class JsiiProject extends TypeScriptProject {
       runsOn: ["ubuntu-latest"],
       permissions: {},
       tools: {
-        node: { version: "14.x" },
+        node: { version: this.nodeVersion ?? "14.x" },
         ...pacmak.publishTools,
       },
       steps: pacmak.prePublishSteps ?? [],
