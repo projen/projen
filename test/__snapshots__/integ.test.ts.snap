@@ -4680,6 +4680,10 @@ project.synth();
       "type": "git",
       "url": "https://github.com/awslabs/cdk8s.git",
     },
+    "resolutions": Object {
+      "@types/responselike": "1.0.0",
+      "got": "12.3.1",
+    },
     "scripts": Object {
       "build": "yarn compile",
       "clobber": "npx projen clobber",
