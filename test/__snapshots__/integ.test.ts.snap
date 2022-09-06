@@ -1831,6 +1831,8 @@ project.synth();
     },
     "resolutions": Object {
       "@types/prettier": "2.6.0",
+      "@types/responselike": "1.0.0",
+      "got": "12.3.1",
     },
     "scripts": Object {
       "build": "npx projen build",
@@ -3319,6 +3321,8 @@ project.synth();
     },
     "resolutions": Object {
       "@types/prettier": "2.6.0",
+      "@types/responselike": "1.0.0",
+      "got": "12.3.1",
     },
     "scripts": Object {
       "build": "yarn compile",
