@@ -1,7 +1,7 @@
 import { TaskRuntime } from "../../src";
 import { PROJEN_RC } from "../../src/common";
 import { mergeTsconfigOptions, TypeScriptProject } from "../../src/typescript";
-import { synthSnapshot } from "../util";
+import { execProjenCLI, synthSnapshot } from "../util";
 
 describe("TypeScriptProject with default settings", () => {
   it("synthesizes", () => {
@@ -12,6 +12,17 @@ describe("TypeScriptProject with default settings", () => {
 
     const output = synthSnapshot(project);
     expect(output).toMatchSnapshot();
+  });
+
+  it("compiles", () => {
+    const project = new TypeScriptProject({
+      defaultReleaseBranch: "main",
+      name: "test",
+    });
+
+    project.synth();
+
+    execProjenCLI(project.outdir, ["compile"]);
   });
 });
 

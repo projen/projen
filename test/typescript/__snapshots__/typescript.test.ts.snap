@@ -1232,6 +1232,10 @@ tsconfig.tsbuildinfo
     "license": "Apache-2.0",
     "main": "lib/index.js",
     "name": "test",
+    "resolutions": Object {
+      "@types/responselike": "1.0.0",
+      "got": "12.3.1",
+    },
     "scripts": Object {
       "build": "npx projen build",
       "bump": "npx projen bump",

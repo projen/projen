@@ -386,12 +386,7 @@ export class JsiiProject extends TypeScriptProject {
     // since @types/prettier@2.6.1 only supports typescript >= 4.2.
     // add a package resolution override to fix this.
     // this should have no effect if @types/prettier is not a transitive dependency
-    this.package.addPackageResolutions(
-      "@types/prettier@2.6.0",
-      // Pin version of got and @types/responselike, see: https://github.com/sindresorhus/got/issues/2129
-      "@types/responselike@1.0.0",
-      "got@12.3.1"
-    );
+    this.package.addPackageResolutions("@types/prettier@2.6.0");
   }
 
   /**
