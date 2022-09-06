@@ -63,7 +63,7 @@ const project = new cdk.JsiiProject({
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: "14.0.0",
-  workflowNodeVersion: "14.17.0", // required by @typescript-eslint/eslint-plugin@5.19.0
+  workflowNodeVersion: "14.18.0", // required by eslint-import-resolver-typescript@3.5.0
 
   codeCov: true,
   prettier: true,

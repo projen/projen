@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 14.17.0
+          node-version: 14.18.0
       - name: Install dependencies
         run: yarn install --check-files
       - name: build
@@ -90,7 +90,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.17.0
+          node-version: 14.18.0
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -116,7 +116,7 @@ jobs:
           java-version: 11.x
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.17.0
+          node-version: 14.18.0
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -138,7 +138,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.17.0
+          node-version: 14.18.0
       - uses: actions/setup-python@v3
         with:
           python-version: 3.x
@@ -163,7 +163,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.17.0
+          node-version: 14.18.0
       - uses: actions/setup-go@v3
         with:
           go-version: ^1.16.0
