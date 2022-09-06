@@ -3,6 +3,18 @@ import { PROJEN_RC } from "../../src/common";
 import { mergeTsconfigOptions, TypeScriptProject } from "../../src/typescript";
 import { synthSnapshot } from "../util";
 
+describe("TypeScriptProject with default settings", () => {
+  it("synthesizes", () => {
+    const project = new TypeScriptProject({
+      defaultReleaseBranch: "main",
+      name: "test",
+    });
+
+    const output = synthSnapshot(project);
+    expect(output).toMatchSnapshot();
+  });
+});
+
 describe("mergeTsconfigOptions", () => {
   test("merging includes", () => {
     const mergedTsconfigOptions = mergeTsconfigOptions(

@@ -2,6 +2,21 @@ import * as yaml from "yaml";
 import { JsiiProject } from "../../src/cdk";
 import { synthSnapshot } from "../util";
 
+describe("JsiiProject with default settings", () => {
+  it("synthesizes", () => {
+    const project = new JsiiProject({
+      authorAddress: "hello@hello.com",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "project",
+      defaultReleaseBranch: "main",
+    });
+
+    const output = synthSnapshot(project);
+    expect(output).toMatchSnapshot();
+  });
+});
+
 describe("author", () => {
   test("authorEmail and authorAddress can be the same value", () => {
     const project = new JsiiProject({
