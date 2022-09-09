@@ -1132,10 +1132,10 @@ ajv@^8.11.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-all-contributors-cli@^6.20.3:
-  version "6.20.3"
-  resolved "https://registry.yarnpkg.com/all-contributors-cli/-/all-contributors-cli-6.20.3.tgz#ba85e44614536299496756401dae871f871c6d7b"
-  integrity sha512-mn2+IvHq15yNkLiw8A6OBtCUiKDJF0ILVeegTUZQ6rlvXIRjI1mBbxiI1SOQ9Xl4cPjoWguj4F4OjKh4K1oDZw==
+all-contributors-cli@^6.20.4:
+  version "6.20.4"
+  resolved "https://registry.yarnpkg.com/all-contributors-cli/-/all-contributors-cli-6.20.4.tgz#de69d243206cb821f8c33ef0b57e9f511ceb7e25"
+  integrity sha512-oLOrCGh1LjR/EkaESbLe7faTX1tq8TP4pcR6CvkKED5O9E7Yahk5DiexR8roghluljwI20m2JX2I6UTYV7/tLg==
   dependencies:
     "@babel/runtime" "^7.7.6"
     async "^3.1.0"
@@ -1503,9 +1503,9 @@ camelcase@^7.0.0:
   integrity sha512-JToIvOmz6nhGsUhAYScbo2d6Py5wojjNfoxoc2mEVLUdJ70gJK2gnd+ABY1Tc3sVMyK7QDPtN0T/XdlCQWITyQ==
 
 caniuse-lite@^1.0.30001370:
-  version "1.0.30001390"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001390.tgz#158a43011e7068ef7fc73590e9fd91a7cece5e7f"
-  integrity sha512-sS4CaUM+/+vqQUlCvCJ2WtDlV81aWtHhqeEVkLokVJJa3ViN4zDxAGfq9R8i1m90uGHxo99cy10Od+lvn3hf0g==
+  version "1.0.30001393"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001393.tgz#1aa161e24fe6af2e2ccda000fc2b94be0b0db356"
+  integrity sha512-N/od11RX+Gsk+1qY/jbPa0R6zJupEa0lxeBG598EbrtblxVCTJsQwbRBm6+V+rxpc5lHKdsXb9RY83cZIPLseA==
 
 case@^1.6.3:
   version "1.6.3"
@@ -2157,9 +2157,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.202:
-  version "1.4.243"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.243.tgz#9d5f1b10eafd6e434b687a88f1e7b0441dee168a"
-  integrity sha512-BgLD2gBX43OSXwlT01oYRRD5NIB4n3okTRxkzEAC6G0SZG4TTlyrWMjbOo0fajCwqwpRtMHXQNMjtRN6qpNtfw==
+  version "1.4.245"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.245.tgz#a065d4af1ab0ab5803d7531759556ab366b46000"
+  integrity sha512-kUN8QXmqHAN8phxjF3QpHeX7CbXGXadSngx9r1O/S9jt+uC0O/vjPi/9+8/Mk3sKewLLMrjpBJZMfVpPCdkG3g==
 
 emittery@^0.8.1:
   version "0.8.1"
