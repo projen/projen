@@ -124,6 +124,24 @@ test("select latest with major", async () => {
   expect(result10.tag).toStrictEqual("v10.21.1");
 });
 
+test("select latest, with prerelease", async () => {
+  const result = await testBump({
+    options: {
+      prerelease: "beta",
+    },
+    commits: [
+      { message: "first version", tag: "v1.1.0" },
+      { message: "feat: new feature" },
+    ],
+  });
+
+  expect(result.version).toEqual("1.2.0-beta.0");
+  expect(result.changelog.includes("Features")).toBeTruthy();
+  expect(result.changelog.includes("new feature")).toBeTruthy();
+  expect(result.bumpfile).toStrictEqual("1.2.0-beta.0");
+  expect(result.tag).toStrictEqual("v1.2.0-beta.0");
+});
+
 test("bump with major equal to 0", async () => {
   const commits = [
     { message: "first version", tag: "v0.1.0" },
