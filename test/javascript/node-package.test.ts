@@ -213,7 +213,7 @@ test("no install if package.json did not change at all", () => {
 
   writeFileSync(
     join(outdir, "package.json"),
-    JSON.stringify(orig, undefined, 2)
+    JSON.stringify(orig, undefined, 2) + `\n`
   );
   mkdirSync(join(outdir, "node_modules")); // <-- also causes an "install"
 
