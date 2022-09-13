@@ -517,7 +517,7 @@ export class NodePackage extends Component {
     this.file = new JsonFile(this.project, "package.json", {
       obj: this.manifest,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
-      newline: false, // when file is edited by npm/yarn it doesn't include a newline
+      newline: true, // all package managers prefer a newline, see https://github.com/projen/projen/issues/2076
       committed: true, // needs to be committed so users can install the dependencies
     });
 
@@ -1241,12 +1241,7 @@ export class NodePackage extends Component {
     pkg.devDependencies = sorted(devDeps);
     pkg.peerDependencies = sorted(peerDeps);
 
-    const jsonContent = JSON.stringify(pkg, undefined, 2);
-
-    const updated =
-      this.packageManager === NodePackageManager.NPM
-        ? `${jsonContent}\n`
-        : jsonContent;
+    const updated = JSON.stringify(pkg, undefined, 2) + "\n";
 
     if (original === updated) {
       return false;
