@@ -6,6 +6,7 @@ export * from "./awscdk-construct";
 export * from "./awscdk-deps";
 export * from "./awscdk-deps-java";
 export * from "./awscdk-deps-js";
+export * from "./awscdk-deps-py";
 export * from "./cdk-config";
 export * from "./cdk-tasks";
 export * from "./integration-test";

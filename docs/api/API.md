@@ -44,6 +44,7 @@ Name|Description
 [awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)|Manages dependencies on the AWS CDK.
 [awscdk.AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava)|Manages dependencies on the AWS CDK for Java projects.
 [awscdk.AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs)|Manages dependencies on the AWS CDK for Node.js projects.
+[awscdk.AwsCdkDepsPy](#projen-awscdk-awscdkdepspy)|Manages dependencies on the AWS CDK for Python projects.
 [awscdk.AwsCdkJavaApp](#projen-awscdk-awscdkjavaapp)|AWS CDK app in Java.
 [awscdk.AwsCdkPythonApp](#projen-awscdk-awscdkpythonapp)|AWS CDK app in Python.
 [awscdk.AwsCdkTypeScriptApp](#projen-awscdk-awscdktypescriptapp)|AWS CDK app in TypeScript.
@@ -3550,7 +3551,7 @@ Manages dependencies on the AWS CDK.
 __Submodule__: awscdk
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [awscdk.AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava), [awscdk.AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs)
+__Implemented by__: [awscdk.AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava), [awscdk.AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs), [awscdk.AwsCdkDepsPy](#projen-awscdk-awscdkdepspy)
 
 ### Initializer
 
@@ -3729,6 +3730,53 @@ new awscdk.AwsCdkDepsJs(project: Project, options: AwsCdkDepsOptions)
 
 
 #### protected packageNames()🔹 <a id="projen-awscdk-awscdkdepsjs-packagenames"></a>
+
+Return a configuration object with information about package naming in various languages.
+
+```ts
+protected packageNames(): AwsCdkPackageNames
+```
+
+
+__Returns__:
+* <code>[awscdk.AwsCdkPackageNames](#projen-awscdk-awscdkpackagenames)</code>
+
+
+
+## class AwsCdkDepsPy 🔹 <a id="projen-awscdk-awscdkdepspy"></a>
+
+Manages dependencies on the AWS CDK for Python projects.
+
+__Submodule__: awscdk
+
+__Extends__: [awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.AwsCdkDepsPy(project: Project, options: AwsCdkDepsOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)</code>)  *No description*
+  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
+  * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
+  * **cdkAssertions** (<code>boolean</code>)  Install the assertions library? __*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
+  * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDKv1 modules this project requires. __*Optional*__
+  * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
+  * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+  * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
+  * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
+  * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime AWS CDK and `constructs` modules. 
+
+
+### Methods
+
+
+#### protected packageNames()🔹 <a id="projen-awscdk-awscdkdepspy-packagenames"></a>
 
 Return a configuration object with information about package naming in various languages.
 
@@ -12869,7 +12917,7 @@ Name | Type | Description
 
 ## struct AwsCdkPackageNames 🔹 <a id="projen-awscdk-awscdkpackagenames"></a>
 
-__Obtainable from__: [AwsCdkDeps](#projen-awscdk-awscdkdeps).[packageNames](#projen-awscdk-awscdkdeps#projen-awscdk-awscdkdeps-packagenames)(), [AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava).[packageNames](#projen-awscdk-awscdkdepsjava#projen-awscdk-awscdkdepsjava-packagenames)(), [AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs).[packageNames](#projen-awscdk-awscdkdepsjs#projen-awscdk-awscdkdepsjs-packagenames)()
+__Obtainable from__: [AwsCdkDeps](#projen-awscdk-awscdkdeps).[packageNames](#projen-awscdk-awscdkdeps#projen-awscdk-awscdkdeps-packagenames)(), [AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava).[packageNames](#projen-awscdk-awscdkdepsjava#projen-awscdk-awscdkdepsjava-packagenames)(), [AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs).[packageNames](#projen-awscdk-awscdkdepsjs#projen-awscdk-awscdkdepsjs-packagenames)(), [AwsCdkDepsPy](#projen-awscdk-awscdkdepspy).[packageNames](#projen-awscdk-awscdkdepspy#projen-awscdk-awscdkdepspy-packagenames)()
 
 Language-specific AWS CDK package names.
 
