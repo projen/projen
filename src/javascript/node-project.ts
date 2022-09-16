@@ -24,6 +24,8 @@ import {
   Publisher,
   Release,
   ReleaseProjectOptions,
+  NpmPublishOptions,
+  CodeArtifactAuthProvider as ReleaseCodeArtifactAuthProvider,
 } from "../release";
 import { Task } from "../task";
 import { deepMerge } from "../util";
@@ -31,6 +33,7 @@ import { Version } from "../version";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import {
+  CodeArtifactAuthProvider as NodePackageCodeArtifactAuthProvider,
   CodeArtifactOptions,
   NodePackage,
   NodePackageManager,
@@ -559,17 +562,32 @@ export class NodeProject extends GitHubProject {
 
       this.publisher = this.release.publisher;
 
+      const nodePackageToReleaseCodeArtifactAuthProviderMapping: Record<
+        NodePackageCodeArtifactAuthProvider,
+        ReleaseCodeArtifactAuthProvider
+      > = {
+        [NodePackageCodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR]:
+          ReleaseCodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR,
+        [NodePackageCodeArtifactAuthProvider.GITHUB_OIDC]:
+          ReleaseCodeArtifactAuthProvider.GITHUB_OIDC,
+      };
+
       if (options.releaseToNpm ?? false) {
-        const codeArtifactOptions = isAwsCodeArtifactRegistry(
-          this.package.npmRegistry
-        )
-          ? {
-              accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret,
-              secretAccessKeySecret:
-                options.codeArtifactOptions?.secretAccessKeySecret,
-              roleToAssume: options.codeArtifactOptions?.roleToAssume,
-            }
-          : {};
+        const codeArtifactOptions: NpmPublishOptions["codeArtifactOptions"] =
+          isAwsCodeArtifactRegistry(this.package.npmRegistry)
+            ? {
+                accessKeyIdSecret:
+                  options.codeArtifactOptions?.accessKeyIdSecret,
+                secretAccessKeySecret:
+                  options.codeArtifactOptions?.secretAccessKeySecret,
+                roleToAssume: options.codeArtifactOptions?.roleToAssume,
+                authProvider: options.codeArtifactOptions?.authProvider
+                  ? nodePackageToReleaseCodeArtifactAuthProviderMapping[
+                      options.codeArtifactOptions.authProvider
+                    ]
+                  : ReleaseCodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR,
+              }
+            : {};
         this.release.publisher.publishToNpm({
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,

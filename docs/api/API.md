@@ -321,7 +321,7 @@ Name|Description
 [javascript.Bundle](#projen-javascript-bundle)|*No description*
 [javascript.BundlerOptions](#projen-javascript-bundleroptions)|Options for `Bundler`.
 [javascript.BundlingOptions](#projen-javascript-bundlingoptions)|Options for bundling.
-[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)|*No description*
+[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)|Options for publishing npm packages to AWS CodeArtifact.
 [javascript.CoverageThreshold](#projen-javascript-coveragethreshold)|*No description*
 [javascript.EslintOptions](#projen-javascript-eslintoptions)|*No description*
 [javascript.EslintOverride](#projen-javascript-eslintoverride)|eslint rules override.
@@ -355,7 +355,7 @@ Name|Description
 [python.SetupPyOptions](#projen-python-setuppyoptions)|Fields to pass in the setup() function of setup.py.
 [python.VenvOptions](#projen-python-venvoptions)|Options for venv.
 [release.BranchOptions](#projen-release-branchoptions)|Options for a release branch.
-[release.CodeArtifactOptions](#projen-release-codeartifactoptions)|*No description*
+[release.CodeArtifactOptions](#projen-release-codeartifactoptions)|Options for publishing packages to AWS CodeArtifact.
 [release.CommonPublishOptions](#projen-release-commonpublishoptions)|Common publishing options.
 [release.GitHubReleasesPublishOptions](#projen-release-githubreleasespublishoptions)|Publishing options for GitHub releases.
 [release.GitPublishOptions](#projen-release-gitpublishoptions)|Publishing options for Git releases.
@@ -447,6 +447,7 @@ Name|Description
 [gitlab.WorkflowWhen](#projen-gitlab-workflowwhen)|Describes the conditions for when to run the job.
 [javascript.ArrowParens](#projen-javascript-arrowparens)|*No description*
 [javascript.AutoRelease](#projen-javascript-autorelease)|Automatic bump modes.
+[javascript.CodeArtifactAuthProvider](#projen-javascript-codeartifactauthprovider)|Options for authorizing requests to a AWS CodeArtifact npm repository.
 [javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)|*No description*
 [javascript.EndOfLine](#projen-javascript-endofline)|*No description*
 [javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)|*No description*
@@ -457,6 +458,7 @@ Name|Description
 [javascript.TrailingComma](#projen-javascript-trailingcomma)|*No description*
 [javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)|Determines how modules get resolved.
+[release.CodeArtifactAuthProvider](#projen-release-codeartifactauthprovider)|Options for authorizing requests to a AWS CodeArtifact npm repository.
 [vscode.Console](#projen-vscode-console)|Controls where to launch the debug target Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 
@@ -16289,15 +16291,16 @@ Name | Type | Description
 ## struct CodeArtifactOptions 🔹 <a id="projen-javascript-codeartifactoptions"></a>
 
 
-
+Options for publishing npm packages to AWS CodeArtifact.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**accessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**accessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_ACCESS_KEY_ID". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
+**authProvider**?🔹 | <code>[javascript.CodeArtifactAuthProvider](#projen-javascript-codeartifactauthprovider)</code> | Provider to use for authorizing requests to AWS CodeArtifact.<br/>__*Default*__: CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
 **roleToAssume**?🔹 | <code>string</code> | ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).<br/>__*Default*__: undefined
-**secretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
+**secretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_SECRET_ACCESS_KEY". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
 
 
 
@@ -17271,15 +17274,16 @@ Name | Type | Description
 ## struct CodeArtifactOptions 🔹 <a id="projen-release-codeartifactoptions"></a>
 
 
-
+Options for publishing packages to AWS CodeArtifact.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**accessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**accessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_ACCESS_KEY_ID". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
+**authProvider**?🔹 | <code>[release.CodeArtifactAuthProvider](#projen-release-codeartifactauthprovider)</code> | Provider to use for authorizing requests to AWS CodeArtifact.<br/>__*Default*__: CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
 **roleToAssume**?🔹 | <code>string</code> | ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).<br/>__*Default*__: undefined
-**secretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
+**secretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_SECRET_ACCESS_KEY". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
 
 
 
@@ -19068,6 +19072,16 @@ Name | Description
 **DAILY** 🔹|Automatically bump & release a new version on a daily basis.
 
 
+## enum CodeArtifactAuthProvider 🔹 <a id="projen-javascript-codeartifactauthprovider"></a>
+
+Options for authorizing requests to a AWS CodeArtifact npm repository.
+
+Name | Description
+-----|-----
+**ACCESS_AND_SECRET_KEY_PAIR** 🔹|Fixed credentials provided via Github secrets.
+**GITHUB_OIDC** 🔹|Ephemeral credentials provided via Github's OIDC integration with an IAM role.
+
+
 ## enum EmbeddedLanguageFormatting 🔹 <a id="projen-javascript-embeddedlanguageformatting"></a>
 
 
@@ -19176,6 +19190,16 @@ Name | Description
 -----|-----
 **CLASSIC** 🔹|TypeScript's former default resolution strategy.
 **NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
+
+
+## enum CodeArtifactAuthProvider 🔹 <a id="projen-release-codeartifactauthprovider"></a>
+
+Options for authorizing requests to a AWS CodeArtifact npm repository.
+
+Name | Description
+-----|-----
+**ACCESS_AND_SECRET_KEY_PAIR** 🔹|Fixed credentials provided via Github secrets.
+**GITHUB_OIDC** 🔹|Ephemeral credentials provided via Github's OIDC integration with an IAM role.
 
 
 ## enum Console 🔹 <a id="projen-vscode-console"></a>
