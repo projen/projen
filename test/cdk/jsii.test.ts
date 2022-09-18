@@ -1,4 +1,5 @@
 import * as yaml from "yaml";
+import { javascript } from "../../src";
 import { JsiiProject } from "../../src/cdk";
 import { synthSnapshot } from "../util";
 
@@ -562,6 +563,47 @@ describe("workflows use global workflowRunsOn option", () => {
       expect(release).toHaveProperty(
         `jobs.release_${language}.runs-on`,
         EXPECTED_RUNS_ON
+      );
+    }
+  );
+});
+
+describe("release workflow use packageManager option", () => {
+  const project = new JsiiProject({
+    author: "My name",
+    name: "testproject",
+    authorAddress: "https://foo.bar",
+    defaultReleaseBranch: "main",
+    repositoryUrl: "https://github.com/foo/bar.git",
+    publishToGo: { moduleName: "github.com/foo/bar" },
+    publishToMaven: {
+      javaPackage: "io.github.cdklabs.watchful",
+      mavenGroupId: "io.github.cdklabs",
+      mavenArtifactId: "cdk-watchful",
+    },
+    publishToNuget: {
+      dotNetNamespace: "DotNet.Namespace",
+      packageId: "PackageId",
+    },
+    publishToPypi: { distName: "dist-name", module: "module-name" },
+    packageManager: javascript.NodePackageManager.PNPM,
+  });
+
+  const output = synthSnapshot(project);
+  const release = yaml.parse(output[".github/workflows/release.yml"]);
+
+  const EXPECTED_STEP = "pnpm/action-setup";
+
+  test.each(["pypi", "nuget", "npm", "maven", "golang"])(
+    "release workflow includes release_%s job have pnpm action setup step",
+    (language) => {
+      expect(release).toHaveProperty(
+        `jobs.release_${language}.steps`,
+        expect.arrayContaining([
+          expect.objectContaining({
+            uses: expect.stringContaining(EXPECTED_STEP),
+          }),
+        ])
       );
     }
   );

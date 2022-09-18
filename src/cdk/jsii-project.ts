@@ -1,6 +1,6 @@
 import { Task } from "..";
-import { Job } from "../github/workflows-model";
-import { Eslint } from "../javascript";
+import { Job, Step } from "../github/workflows-model";
+import { Eslint, NodePackageManager } from "../javascript";
 import {
   CommonPublishOptions,
   GoPublishOptions,
@@ -432,27 +432,37 @@ export class JsiiProject extends TypeScriptProject {
     // at this stage, `artifactsDirectory` contains the prebuilt repository.
     // for the publishing to work seamlessely, that directory needs to contain the actual artifact.
     // so we move the repo, create the artifact, and put it in the expected place.
+    const prePublishSteps: Array<Step> = [];
 
+    if (this.package.packageManager === NodePackageManager.PNPM) {
+      prePublishSteps.push({
+        name: "Setup pnpm",
+        uses: "pnpm/action-setup@v2.2.2",
+        with: { version: "7" },
+      });
+    }
+
+    prePublishSteps.push(
+      {
+        name: "Prepare Repository",
+        run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
+      },
+      {
+        name: "Install Dependencies",
+        run: `cd ${REPO_TEMP_DIRECTORY} && ${this.package.installCommand}`,
+      },
+      {
+        name: `Create ${target} artifact`,
+        run: `cd ${REPO_TEMP_DIRECTORY} && npx projen ${packTask.name}`,
+      },
+      {
+        name: `Collect ${target} Artifact`,
+        run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
+      }
+    );
     return {
       publishTools: JSII_TOOLCHAIN[target],
-      prePublishSteps: [
-        {
-          name: "Prepare Repository",
-          run: `mv ${this.artifactsDirectory} ${REPO_TEMP_DIRECTORY}`,
-        },
-        {
-          name: "Install Dependencies",
-          run: `cd ${REPO_TEMP_DIRECTORY} && ${this.package.installCommand}`,
-        },
-        {
-          name: `Create ${target} artifact`,
-          run: `cd ${REPO_TEMP_DIRECTORY} && npx projen ${packTask.name}`,
-        },
-        {
-          name: `Collect ${target} Artifact`,
-          run: `mv ${REPO_TEMP_DIRECTORY}/${this.artifactsDirectory} ${this.artifactsDirectory}`,
-        },
-      ],
+      prePublishSteps,
     };
   }
 }
