@@ -74,6 +74,7 @@ export class IntegrationTest extends IntegrationTestBase {
 
     const opts = [
       `--app "${app}"`,
+      "--no-notices",
       "--no-version-reporting",
       // don't inject cloudformation metadata into template
       "--no-asset-metadata",

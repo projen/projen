@@ -9,7 +9,7 @@ Object {
       "exec": "[ -d \\"test/foo.integ.snapshot\\" ] || (echo \\"No snapshot available for integration test 'foo'. Run 'projen integ:foo:deploy' to capture.\\" && exit 1)",
     },
     Object {
-      "exec": "cdk synth --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true -o test/.tmp/foo.integ/assert.cdk.out > /dev/null",
+      "exec": "cdk synth --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true -o test/.tmp/foo.integ/assert.cdk.out > /dev/null",
     },
     Object {
       "exec": "diff -r -x asset.* -x cdk.out -x manifest.json -x tree.json test/foo.integ.snapshot/ test/.tmp/foo.integ/assert.cdk.out/",
@@ -27,7 +27,7 @@ Object {
       "exec": "rm -fr test/.tmp/foo.integ/deploy.cdk.out",
     },
     Object {
-      "exec": "cdk deploy --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true '**' --require-approval=never -o test/.tmp/foo.integ/deploy.cdk.out",
+      "exec": "cdk deploy --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true '**' --require-approval=never -o test/.tmp/foo.integ/deploy.cdk.out",
     },
     Object {
       "exec": "rm -fr test/foo.integ.snapshot",
@@ -60,7 +60,7 @@ Object {
   "name": "integ:foo:snapshot",
   "steps": Array [
     Object {
-      "exec": "cdk synth --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true -o test/foo.integ.snapshot > /dev/null",
+      "exec": "cdk synth --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true -o test/foo.integ.snapshot > /dev/null",
     },
   ],
 }
@@ -72,7 +72,7 @@ Object {
   "name": "integ:foo:watch",
   "steps": Array [
     Object {
-      "exec": "cdk watch --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true '**' -o test/.tmp/foo.integ/deploy.cdk.out",
+      "exec": "cdk watch --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata --context aws-cdk:enableDiffNoFail=true --context @aws-cdk/aws-apigateway:usagePlanKeyOrderInsensitiveId=true --context @aws-cdk/core:enableStackNameDuplicates=true --context @aws-cdk/core:stackRelativeExports=true --context @aws-cdk/aws-ecr-assets:dockerIgnoreSupport=true --context @aws-cdk/aws-secretsmanager:parseOwnedSecretName=true --context @aws-cdk/aws-kms:defaultKeyPolicies=true --context @aws-cdk/aws-s3:grantWriteWithoutAcl=true --context @aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount=true --context @aws-cdk/aws-rds:lowercaseDbIdentifier=true --context @aws-cdk/aws-efs:defaultEncryptionAtRest=true --context @aws-cdk/aws-lambda:recognizeVersionProps=true --context @aws-cdk/aws-cloudfront:defaultSecurityPolicyTLSv1.2_2021=true --context @aws-cdk/core:newStyleStackSynthesis=true '**' -o test/.tmp/foo.integ/deploy.cdk.out",
     },
   ],
 }
@@ -102,7 +102,7 @@ Object {
       "exec": "rm -fr test/.tmp/my-stage.integ/deploy.cdk.out",
     },
     Object {
-      "exec": "cdk deploy --app \\"ts-node -P tsconfig.dev.json test/my-stage.myinteg.ts\\" --no-version-reporting --no-asset-metadata --no-path-metadata 'my-stage/*' --require-approval=never -o test/.tmp/my-stage.integ/deploy.cdk.out",
+      "exec": "cdk deploy --app \\"ts-node -P tsconfig.dev.json test/my-stage.myinteg.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata 'my-stage/*' --require-approval=never -o test/.tmp/my-stage.integ/deploy.cdk.out",
     },
     Object {
       "exec": "rm -fr test/my-stage.integ.snapshot",
@@ -123,7 +123,7 @@ Object {
   "name": "integ:my-stage:snapshot",
   "steps": Array [
     Object {
-      "exec": "cdk synth --app \\"ts-node -P tsconfig.dev.json test/my-stage.myinteg.ts\\" --no-version-reporting --no-asset-metadata --no-path-metadata -o test/my-stage.integ.snapshot > /dev/null",
+      "exec": "cdk synth --app \\"ts-node -P tsconfig.dev.json test/my-stage.myinteg.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata -o test/my-stage.integ.snapshot > /dev/null",
     },
   ],
 }
@@ -135,7 +135,7 @@ Object {
   "name": "integ:my-stage:watch",
   "steps": Array [
     Object {
-      "exec": "cdk watch --app \\"ts-node -P tsconfig.dev.json test/my-stage.myinteg.ts\\" --no-version-reporting --no-asset-metadata --no-path-metadata 'my-stage/*' -o test/.tmp/my-stage.integ/deploy.cdk.out",
+      "exec": "cdk watch --app \\"ts-node -P tsconfig.dev.json test/my-stage.myinteg.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata 'my-stage/*' -o test/.tmp/my-stage.integ/deploy.cdk.out",
     },
   ],
 }
@@ -150,7 +150,7 @@ Object {
       "exec": "rm -fr test/.tmp/foo.integ/deploy.cdk.out",
     },
     Object {
-      "exec": "cdk deploy --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-version-reporting --no-asset-metadata --no-path-metadata '**' --require-approval=never -o test/.tmp/foo.integ/deploy.cdk.out",
+      "exec": "cdk deploy --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata '**' --require-approval=never -o test/.tmp/foo.integ/deploy.cdk.out",
     },
     Object {
       "exec": "rm -fr test/foo.integ.snapshot",
@@ -171,7 +171,7 @@ Object {
   "name": "integ:foo:snapshot",
   "steps": Array [
     Object {
-      "exec": "cdk synth --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-version-reporting --no-asset-metadata --no-path-metadata -o test/foo.integ.snapshot > /dev/null",
+      "exec": "cdk synth --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata -o test/foo.integ.snapshot > /dev/null",
     },
   ],
 }
@@ -183,7 +183,7 @@ Object {
   "name": "integ:foo:watch",
   "steps": Array [
     Object {
-      "exec": "cdk watch --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-version-reporting --no-asset-metadata --no-path-metadata '**' -o test/.tmp/foo.integ/deploy.cdk.out",
+      "exec": "cdk watch --app \\"ts-node -P tsconfig.dev.json test/foo.integ.ts\\" --no-notices --no-version-reporting --no-asset-metadata --no-path-metadata '**' -o test/.tmp/foo.integ/deploy.cdk.out",
     },
   ],
 }
