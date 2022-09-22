@@ -61,7 +61,7 @@ describe("lambda functions", () => {
       snapshot[".projen/tasks.json"].tasks["bundle:my.lambda"].steps
     ).toStrictEqual([
       {
-        exec: 'esbuild --bundle src/my.lambda.ts --target="node10" --platform="node" --outfile="assets/my.lambda/index.js" --external:foo --external:bar',
+        exec: 'esbuild --bundle src/my.lambda.ts --target="node10" --platform="node" --outfile="assets/my.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:foo --external:bar',
       },
     ]);
   });

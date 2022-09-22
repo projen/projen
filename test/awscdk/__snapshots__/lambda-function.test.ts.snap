@@ -140,7 +140,7 @@ Object {
   "name": "bundle:hello.lambda",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/hello.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/hello.lambda/index.js\\" --external:aws-sdk",
+      "exec": "esbuild --bundle src/hello.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/hello.lambda/index.js\\" --tsconfig=\\"tsconfig.dev.json\\" --external:aws-sdk",
     },
   ],
 }
@@ -152,7 +152,7 @@ Object {
   "name": "bundle:hello.lambda:watch",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/hello.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/hello.lambda/index.js\\" --external:aws-sdk --watch",
+      "exec": "esbuild --bundle src/hello.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/hello.lambda/index.js\\" --tsconfig=\\"tsconfig.dev.json\\" --external:aws-sdk --watch",
     },
   ],
 }
@@ -164,7 +164,7 @@ Object {
   "name": "bundle:subdir/jangy.lambda",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/jangy.lambda/index.js\\" --external:aws-sdk",
+      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/jangy.lambda/index.js\\" --tsconfig=\\"tsconfig.dev.json\\" --external:aws-sdk",
     },
   ],
 }
@@ -176,7 +176,7 @@ Object {
   "name": "bundle:subdir/jangy.lambda:watch",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/jangy.lambda/index.js\\" --external:aws-sdk --watch",
+      "exec": "esbuild --bundle src/subdir/jangy.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/jangy.lambda/index.js\\" --tsconfig=\\"tsconfig.dev.json\\" --external:aws-sdk --watch",
     },
   ],
 }
@@ -188,7 +188,7 @@ Object {
   "name": "bundle:subdir/world.lambda",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/world.lambda/index.js\\" --external:aws-sdk",
+      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/world.lambda/index.js\\" --tsconfig=\\"tsconfig.dev.json\\" --external:aws-sdk",
     },
   ],
 }
@@ -200,7 +200,7 @@ Object {
   "name": "bundle:subdir/world.lambda:watch",
   "steps": Array [
     Object {
-      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/world.lambda/index.js\\" --external:aws-sdk --watch",
+      "exec": "esbuild --bundle src/subdir/world.lambda.ts --target=\\"node12\\" --platform=\\"node\\" --outfile=\\"assets/subdir/world.lambda/index.js\\" --tsconfig=\\"tsconfig.dev.json\\" --external:aws-sdk --watch",
     },
   ],
 }
