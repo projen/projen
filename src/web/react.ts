@@ -176,13 +176,12 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
         sourceDir: path.join(__dirname, "..", "..", "assets", "web", "react"),
       });
     }
-    
+
     this.package.addPackageResolutions(
       // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/62300
-      '@types/express@4.17.13',
-      '@types/express-serve-static-core@4.17.30',      
+      "@types/express@4.17.13",
+      "@types/express-serve-static-core@4.17.30"
     );
-    
   }
 }
 

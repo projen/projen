@@ -1054,6 +1054,8 @@ tsconfig.tsbuildinfo
     "license": "Apache-2.0",
     "name": "test-nextjs-project",
     "resolutions": Object {
+      "@types/express": "4.17.13",
+      "@types/express-serve-static-core": "4.17.30",
       "@types/responselike": "1.0.0",
       "got": "12.3.1",
     },
