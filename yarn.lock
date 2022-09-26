@@ -901,9 +901,9 @@
   integrity sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==
 
 "@types/node@*":
-  version "18.7.19"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.19.tgz#ad83aa9b7af470fab7e0f562be87e97dc8ffe08e"
-  integrity sha512-Sq1itGUKUX1ap7GgZlrzdBydjbsJL/NSQt/4wkAxUJ7/OS5c2WkoN6WSpWc2Yc5wtKMZOUA0VCs/j2XJadN3HA==
+  version "18.7.21"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.7.21.tgz#63ee6688070e456325b6748dc492a7b948593871"
+  integrity sha512-rLFzK5bhM0YPyCoTC8bolBjMk7bwnZ8qeZUBslBfjZQou2ssJdWslx9CZ8DGM+Dx7QXQiiTVZ/6QO6kwtHkZCA==
 
 "@types/node@^14":
   version "14.18.30"
@@ -1507,9 +1507,9 @@ camelcase@^7.0.0:
   integrity sha512-JToIvOmz6nhGsUhAYScbo2d6Py5wojjNfoxoc2mEVLUdJ70gJK2gnd+ABY1Tc3sVMyK7QDPtN0T/XdlCQWITyQ==
 
 caniuse-lite@^1.0.30001400:
-  version "1.0.30001410"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001410.tgz#b5a86366fbbf439d75dd3db1d21137a73e829f44"
-  integrity sha512-QoblBnuE+rG0lc3Ur9ltP5q47lbguipa/ncNMyyGuqPk44FxbScWAeEO+k5fSQ8WekdAK4mWqNs1rADDAiN5xQ==
+  version "1.0.30001412"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001412.tgz#30f67d55a865da43e0aeec003f073ea8764d5d7c"
+  integrity sha512-+TeEIee1gS5bYOiuf+PS/kp2mrXic37Hl66VY6EAfxasIk5fELTktK2oOezYed12H8w7jt3s512PpulQidPjwA==
 
 case@^1.6.3:
   version "1.6.3"
@@ -2161,9 +2161,9 @@ eastasianwidth@^0.2.0:
   integrity sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==
 
 electron-to-chromium@^1.4.251:
-  version "1.4.259"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.259.tgz#dc72260121e7cb0863adf27a4951ffab5e7310f8"
-  integrity sha512-dzbPZG0PKsqiSxfZovjBZn5InX4OoSITSsJ5S/U0QRrFaKsQtHx352zbyqtiDpNpX5lnPCAeBS6D+QpWipqDRw==
+  version "1.4.261"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.261.tgz#31f14ad60c6f95bec404a77a2fd5e1962248e112"
+  integrity sha512-fVXliNUGJ7XUVJSAasPseBbVgJIeyw5M1xIkgXdTSRjlmCqBbiSTsEdLOCJS31Fc8B7CaloQ/BFAg8By3ODLdg==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -6194,9 +6194,9 @@ typescript@^3.9.10, typescript@~3.9.10:
   integrity sha512-w6fIxVE/H1PkLKcCPsFqKE7Kv7QUwhU8qQY2MueZXWx5cPZdwFupLgKK3vntcK98BtNHZtAF4LA/yl2a7k8R6Q==
 
 uglify-js@^3.1.4:
-  version "3.17.1"
-  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.17.1.tgz#1258a2a488147a8266b3034499ce6959978ba7f4"
-  integrity sha512-+juFBsLLw7AqMaqJ0GFvlsGZwdQfI2ooKQB39PSBgMnMakcFosi9O8jCwE+2/2nMNcc0z63r9mwjoDG8zr+q0Q==
+  version "3.17.2"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-3.17.2.tgz#f55f668b9a64b213977ae688703b6bbb7ca861c6"
+  integrity sha512-bbxglRjsGQMchfvXZNusUcYgiB9Hx2K4AHYXQy2DITZ9Rd+JzhX7+hoocE5Winr7z2oHvPsekkBwXtigvxevXg==
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
