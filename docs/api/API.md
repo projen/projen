@@ -18696,6 +18696,7 @@ Name | Description
 **BUILD** 🔹|The dependency is required to run the `build` task.
 **TEST** 🔹|The dependency is required to run the `test` task.
 **DEVENV** 🔹|The dependency is required for development (e.g. IDE plugins).
+**OVERRIDE** 🔹|Transient dependency that needs to be overwritten.
 
 
 ## enum DockerComposeProtocol 🔹 <a id="projen-dockercomposeprotocol"></a>

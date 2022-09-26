@@ -909,6 +909,21 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
+        "name": "@types/prettier",
+        "type": "override",
+        "version": "2.6.0",
+      },
+      Object {
+        "name": "@types/responselike",
+        "type": "override",
+        "version": "1.0.0",
+      },
+      Object {
+        "name": "got",
+        "type": "override",
+        "version": "12.3.1",
+      },
+      Object {
         "name": "@aws-cdk/aws-apigateway",
         "type": "peer",
         "version": "^1.75.0",
@@ -2478,6 +2493,21 @@ tsconfig.tsbuildinfo
         "type": "bundled",
       },
       Object {
+        "name": "@types/prettier",
+        "type": "override",
+        "version": "2.6.0",
+      },
+      Object {
+        "name": "@types/responselike",
+        "type": "override",
+        "version": "1.0.0",
+      },
+      Object {
+        "name": "got",
+        "type": "override",
+        "version": "12.3.1",
+      },
+      Object {
         "name": "constructs",
         "type": "peer",
       },
@@ -3914,6 +3944,16 @@ tsconfig.tsbuildinfo
       Object {
         "name": "typescript",
         "type": "build",
+      },
+      Object {
+        "name": "@types/responselike",
+        "type": "override",
+        "version": "1.0.0",
+      },
+      Object {
+        "name": "got",
+        "type": "override",
+        "version": "12.3.1",
       },
       Object {
         "name": "@types/node",

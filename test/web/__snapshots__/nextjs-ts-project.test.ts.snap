@@ -340,6 +340,16 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
+        "name": "@types/responselike",
+        "type": "override",
+        "version": "1.0.0",
+      },
+      Object {
+        "name": "got",
+        "type": "override",
+        "version": "12.3.1",
+      },
+      Object {
         "name": "autoprefixer",
         "type": "runtime",
       },
