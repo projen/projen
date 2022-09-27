@@ -1,4 +1,5 @@
 import { Component } from "../component";
+import { DependencyType } from "../dependencies";
 import {
   GithubCredentials,
   GitHub,
@@ -182,7 +183,12 @@ export class UpgradeDependencies extends Component {
     const ncuExcludes = [
       ...new Set(
         this.project.deps.all
-          .filter((dep) => dep.version && dep.version[0] !== "^")
+          .filter(
+            (dep) =>
+              dep.version &&
+              dep.version[0] !== "^" &&
+              dep.type !== DependencyType.OVERRIDE
+          )
           .map((dep) => dep.name)
           .concat(exclude)
       ),

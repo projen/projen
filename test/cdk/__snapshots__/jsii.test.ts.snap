@@ -765,6 +765,21 @@ tsconfig.tsbuildinfo
         "name": "typescript",
         "type": "build",
       },
+      Object {
+        "name": "@types/prettier",
+        "type": "override",
+        "version": "2.6.0",
+      },
+      Object {
+        "name": "@types/responselike",
+        "type": "override",
+        "version": "1.0.0",
+      },
+      Object {
+        "name": "got",
+        "type": "override",
+        "version": "12.3.1",
+      },
     ],
   },
   ".projen/files.json": Object {

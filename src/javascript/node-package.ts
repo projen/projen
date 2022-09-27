@@ -703,6 +703,7 @@ export class NodePackage extends Component {
     const fieldName = packageResolutionsFieldName(this.packageManager);
 
     for (const resolution of resolutions) {
+      this.project.deps.addDependency(resolution, DependencyType.OVERRIDE);
       const { name, version = "*" } = Dependencies.parseDependency(resolution);
       this.file.addOverride(`${fieldName}.${name}`, version);
     }
@@ -740,6 +741,7 @@ export class NodePackage extends Component {
 
         // filter by exclude and include.
         return `${command} ${project.deps.all
+          .filter((d) => d.type !== DependencyType.OVERRIDE)
           .map((d) => d.name)
           .filter((d) => (include ? include.includes(d) : true))
           .filter((d) => !exclude.includes(d))
