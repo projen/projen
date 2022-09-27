@@ -26,7 +26,7 @@ It is possible to release the same major version to different branches by specif
 For example:
 
 ```js
-tagPrefix: 'stable/'
+releaseTagPrefix: 'stable/'
 ```
 
 It is also possible to release multiple major versions from the same branch. By adding a `!` to your commit message you can indicate a breaking change, thus triggering a major version change. If you start out with the `0` major version a breaking change in this pre-stable version will lead to the minor version increasing. You can set the `minMajorVersion` to `1` so that breaking changes increase the major version.
