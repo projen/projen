@@ -731,12 +731,6 @@ export class Jest {
         ? ` -c ${this.file.path}`
         : "";
 
-    // since our build & release workflows have anti-tamper protection, it is
-    // safe to always run tests with --updateSnapshot. if a snapshot changes,
-    // the `build` workflow will either fail (on forks) or push the update and
-    // `release` workflows will fail.
-    jestOpts.push("--updateSnapshot");
-
     // as recommended in the jest docs, node > 14 may use native v8 coverage collection
     // https://jestjs.io/docs/en/cli#--coverageproviderprovider
     if (
@@ -760,7 +754,7 @@ export class Jest {
     if (!testUpdate) {
       this.project.addTask("test:update", {
         description: "Update jest snapshots",
-        exec: `jest --updateSnapshot${jestConfigOpts}`,
+        exec: `jest --updateSnapshot ${jestOpts.join(" ")}${jestConfigOpts}`,
       });
     }
   }

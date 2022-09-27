@@ -1324,7 +1324,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot --coverageProvider=v8",
+            "exec": "jest --passWithNoTests --all --coverageProvider=v8",
           },
           Object {
             "spawn": "eslint",
@@ -1336,7 +1336,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "test:update",
         "steps": Array [
           Object {
-            "exec": "jest --updateSnapshot",
+            "exec": "jest --updateSnapshot --passWithNoTests --all --coverageProvider=v8",
           },
         ],
       },
@@ -2707,7 +2707,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot",
+            "exec": "jest --passWithNoTests --all",
           },
           Object {
             "spawn": "eslint",
@@ -2722,7 +2722,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "test:update",
         "steps": Array [
           Object {
-            "exec": "jest --updateSnapshot",
+            "exec": "jest --updateSnapshot --passWithNoTests --all",
           },
         ],
       },
@@ -4113,7 +4113,7 @@ tsconfig.tsbuildinfo
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot",
+            "exec": "jest --passWithNoTests --all",
           },
           Object {
             "spawn": "eslint",
@@ -4128,7 +4128,7 @@ tsconfig.tsbuildinfo
         "name": "test:update",
         "steps": Array [
           Object {
-            "exec": "jest --updateSnapshot",
+            "exec": "jest --updateSnapshot --passWithNoTests --all",
           },
         ],
       },
@@ -5363,7 +5363,7 @@ junit.xml
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot",
+            "exec": "jest --passWithNoTests --all",
           },
         ],
       },
@@ -5372,7 +5372,7 @@ junit.xml
         "name": "test:update",
         "steps": Array [
           Object {
-            "exec": "jest --updateSnapshot",
+            "exec": "jest --updateSnapshot --passWithNoTests --all",
           },
         ],
       },

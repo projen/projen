@@ -997,7 +997,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot",
+            "exec": "jest --passWithNoTests --all",
           },
           Object {
             "spawn": "eslint",
@@ -1009,7 +1009,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "test:update",
         "steps": Array [
           Object {
-            "exec": "jest --updateSnapshot",
+            "exec": "jest --updateSnapshot --passWithNoTests --all",
           },
         ],
       },

@@ -874,7 +874,7 @@ tsconfig.tsbuildinfo
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot",
+            "exec": "jest --passWithNoTests --all",
           },
           Object {
             "spawn": "eslint",
@@ -886,7 +886,7 @@ tsconfig.tsbuildinfo
         "name": "test:update",
         "steps": Array [
           Object {
-            "exec": "jest --updateSnapshot",
+            "exec": "jest --updateSnapshot --passWithNoTests --all",
           },
         ],
       },
