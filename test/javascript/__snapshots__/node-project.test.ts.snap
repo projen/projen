@@ -284,7 +284,6 @@ Object {
     "pre-compile": "scripts/run-task pre-compile",
     "release": "scripts/run-task release",
     "test": "scripts/run-task test",
-    "test:update": "scripts/run-task test:update",
     "test:watch": "scripts/run-task test:watch",
     "unbump": "scripts/run-task unbump",
     "upgrade": "scripts/run-task upgrade",

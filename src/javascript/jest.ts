@@ -517,6 +517,14 @@ export interface JestOptions {
   readonly preserveDefaultReporters?: boolean;
 
   /**
+   * Whether to always update snapshots in task "test" (which is executed in task "build" and build workflows),
+   * or create a separate task "test:update" for updating snapshots.
+   *
+   * @default - true
+   */
+  readonly alwaysUpdateSnapshots?: boolean;
+
+  /**
    * The version of jest to use.
    *
    * Note that same version is used as version of `@types/jest` and `ts-jest` (if Typescript in use), so given version should work also for those.
@@ -677,7 +685,7 @@ export class Jest {
       };
     }
 
-    this.configureTestCommand();
+    this.configureTestCommand(options.alwaysUpdateSnapshots ?? true);
 
     if (options.configFilePath) {
       this.file = new JsonFile(project, options.configFilePath, {
@@ -724,7 +732,7 @@ export class Jest {
     this._snapshotResolver = file;
   }
 
-  private configureTestCommand() {
+  private configureTestCommand(alwaysUpdateSnapshots: boolean) {
     const jestOpts = ["--passWithNoTests", "--all", ...this.extraCliOptions];
     const jestConfigOpts =
       this.file && this.file.path != "jest.config.json"
@@ -740,6 +748,17 @@ export class Jest {
       jestOpts.push("--coverageProvider=v8");
     }
 
+    if (alwaysUpdateSnapshots) {
+      jestOpts.push("--updateSnapshot");
+    } else {
+      const testUpdate = this.project.tasks.tryFind("test:update");
+      if (!testUpdate) {
+        this.project.addTask("test:update", {
+          description: "Update jest snapshots",
+          exec: `jest --updateSnapshot ${jestOpts.join(" ")}${jestConfigOpts}`,
+        });
+      }
+    }
     this.project.testTask.exec(`jest ${jestOpts.join(" ")}${jestConfigOpts}`);
 
     const testWatch = this.project.tasks.tryFind("test:watch");
@@ -747,14 +766,6 @@ export class Jest {
       this.project.addTask("test:watch", {
         description: "Run jest in watch mode",
         exec: `jest --watch${jestConfigOpts}`,
-      });
-    }
-
-    const testUpdate = this.project.tasks.tryFind("test:update");
-    if (!testUpdate) {
-      this.project.addTask("test:update", {
-        description: "Update jest snapshots",
-        exec: `jest --updateSnapshot ${jestOpts.join(" ")}${jestConfigOpts}`,
       });
     }
   }
