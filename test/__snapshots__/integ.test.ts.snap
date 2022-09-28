@@ -1324,7 +1324,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot --coverageProvider=v8",
+            "exec": "jest --passWithNoTests --all --coverageProvider=v8 --updateSnapshot",
           },
           Object {
             "spawn": "eslint",
