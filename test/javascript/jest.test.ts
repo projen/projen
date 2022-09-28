@@ -235,3 +235,41 @@ test("can set extra CLI options", () => {
   expect(clFragments).toContain("--json");
   expect(clFragments).toContain("--outputFile=jest-report.json");
 });
+
+test("alwaysUpdateSnapshots: true adds --updateSnapshot to testTask and 'test:update' task is undefined", () => {
+  // WHEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+    jestOptions: {
+      alwaysUpdateSnapshots: true,
+    },
+  });
+
+  // THEN
+  const testTask = project.testTask;
+  expect(testTask.steps[0].exec).toContain("--updateSnapshot");
+
+  const testUpdateTask = project.tasks.tryFind("test:update");
+  expect(testUpdateTask).toBeUndefined();
+});
+
+test("alwaysUpdateSnapshots: false doesn't add --updateSnapshot and creates a separate 'test:update' task", () => {
+  // WHEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+    jestOptions: {
+      alwaysUpdateSnapshots: false,
+    },
+  });
+
+  // THEN
+  const testTask = project.testTask;
+  expect(testTask.steps[0].exec).not.toContain("--updateSnapshot");
+
+  const testUpdateTask = project.tasks.tryFind("test:update");
+  expect(testUpdateTask?.steps[0]?.exec).toContain("--updateSnapshot");
+});
