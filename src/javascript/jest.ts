@@ -746,7 +746,7 @@ export class Jest {
       if (!testUpdate) {
         this.project.addTask("test:update", {
           description: "Update jest snapshots",
-          exec: `jest --updateSnapshot ${jestOpts.join(" ")}${jestConfigOpts}`,
+          exec: `jest --updateSnapshot${jestConfigOpts}`,
         });
       }
     }
