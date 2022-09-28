@@ -739,15 +739,6 @@ export class Jest {
         ? ` -c ${this.file.path}`
         : "";
 
-    // as recommended in the jest docs, node > 14 may use native v8 coverage collection
-    // https://jestjs.io/docs/en/cli#--coverageproviderprovider
-    if (
-      this.project.package.minNodeVersion &&
-      semver.gte(this.project.package.minNodeVersion, "14.0.0")
-    ) {
-      jestOpts.push("--coverageProvider=v8");
-    }
-
     if (alwaysUpdateSnapshots) {
       jestOpts.push("--updateSnapshot");
     } else {
@@ -759,6 +750,16 @@ export class Jest {
         });
       }
     }
+
+    // as recommended in the jest docs, node > 14 may use native v8 coverage collection
+    // https://jestjs.io/docs/en/cli#--coverageproviderprovider
+    if (
+      this.project.package.minNodeVersion &&
+      semver.gte(this.project.package.minNodeVersion, "14.0.0")
+    ) {
+      jestOpts.push("--coverageProvider=v8");
+    }
+
     this.project.testTask.exec(`jest ${jestOpts.join(" ")}${jestConfigOpts}`);
 
     const testWatch = this.project.tasks.tryFind("test:watch");
