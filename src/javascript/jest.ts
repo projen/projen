@@ -739,18 +739,6 @@ export class Jest {
         ? ` -c ${this.file.path}`
         : "";
 
-    if (alwaysUpdateSnapshots) {
-      jestOpts.push("--updateSnapshot");
-    } else {
-      const testUpdate = this.project.tasks.tryFind("test:update");
-      if (!testUpdate) {
-        this.project.addTask("test:update", {
-          description: "Update jest snapshots",
-          exec: `jest --updateSnapshot${jestConfigOpts}`,
-        });
-      }
-    }
-
     // as recommended in the jest docs, node > 14 may use native v8 coverage collection
     // https://jestjs.io/docs/en/cli#--coverageproviderprovider
     if (
@@ -758,6 +746,18 @@ export class Jest {
       semver.gte(this.project.package.minNodeVersion, "14.0.0")
     ) {
       jestOpts.push("--coverageProvider=v8");
+    }
+
+    if (alwaysUpdateSnapshots) {
+      jestOpts.push("--updateSnapshot");
+    } else {
+      const testUpdate = this.project.tasks.tryFind("test:update");
+      if (!testUpdate) {
+        this.project.addTask("test:update", {
+          description: "Update jest snapshots",
+          exec: `jest --updateSnapshot ${jestOpts.join(" ")}${jestConfigOpts}`,
+        });
+      }
     }
 
     this.project.testTask.exec(`jest ${jestOpts.join(" ")}${jestConfigOpts}`);
