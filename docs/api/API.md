@@ -7852,6 +7852,7 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
 
 * **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
 * **options** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  *No description*
+  * **alwaysUpdateSnapshots** (<code>boolean</code>)  Whether to always update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. __*Default*__: true
   * **configFilePath** (<code>string</code>)  Path to JSON config file for Jest. __*Default*__: No separate config file, jest settings are stored in package.json
   * **coverage** (<code>boolean</code>)  Collect coverage. __*Default*__: true
   * **coverageText** (<code>boolean</code>)  Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution. __*Default*__: true
@@ -16461,6 +16462,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**alwaysUpdateSnapshots**?🔹 | <code>boolean</code> | Whether to always update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.<br/>__*Default*__: true
 **configFilePath**?🔹 | <code>string</code> | Path to JSON config file for Jest.<br/>__*Default*__: No separate config file, jest settings are stored in package.json
 **coverage**?⚠️ | <code>boolean</code> | Collect coverage.<br/>__*Default*__: true
 **coverageText**?🔹 | <code>boolean</code> | Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution.<br/>__*Default*__: true

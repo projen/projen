@@ -322,19 +322,10 @@
       "description": "Run tests",
       "steps": [
         {
-          "exec": "jest --passWithNoTests --all --coverageProvider=v8"
+          "exec": "jest --passWithNoTests --all --coverageProvider=v8 --updateSnapshot"
         },
         {
           "spawn": "eslint"
-        }
-      ]
-    },
-    "test:update": {
-      "name": "test:update",
-      "description": "Update jest snapshots",
-      "steps": [
-        {
-          "exec": "jest --updateSnapshot --passWithNoTests --all --coverageProvider=v8"
         }
       ]
     },
