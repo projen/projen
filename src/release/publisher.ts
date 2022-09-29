@@ -2,6 +2,7 @@ import { Component } from "../component";
 import {
   BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
+  PERMISSION_BACKUP_FILE,
 } from "../github/constants";
 import {
   Job,
@@ -576,6 +577,12 @@ export class Publisher extends Component {
             name: BUILD_ARTIFACT_NAME,
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for publib
           },
+        },
+        {
+          name: "Restore build artifact permissions",
+          run: [
+            `cd ${ARTIFACTS_DOWNLOAD_DIR} && setfacl --restore=${PERMISSION_BACKUP_FILE}`,
+          ].join("\n"),
         },
         ...opts.prePublishSteps,
         {

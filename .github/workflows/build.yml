@@ -48,6 +48,8 @@ jobs:
           echo "::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch."
           cat .repo.patch
           exit 1
+      - name: Backup artifact permissions
+        run: cd dist && getfacl -R . > permissions-backup.acl
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
         with:
@@ -96,6 +98,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies
@@ -122,6 +126,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies
@@ -147,6 +153,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies
@@ -172,6 +180,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies
@@ -198,6 +208,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Checkout
         uses: actions/checkout@v3
         with:

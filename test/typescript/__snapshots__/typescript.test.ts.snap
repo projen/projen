@@ -390,6 +390,9 @@ jobs:
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+      - name: Backup artifact permissions
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
+        run: cd dist && getfacl -R . > permissions-backup.acl
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
@@ -412,6 +415,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Release
         run: errout=$(mktemp); gh release create $(cat dist/releasetag.txt) -R $GITHUB_REPOSITORY -F dist/changelog.md -t $(cat dist/releasetag.txt) --target $GITHUB_REF 2> $errout && true; exitcode=$?; if [ $exitcode -ne 0 ] && ! grep -q \\"Release.tag_name already exists\\" $errout; then cat $errout; exit $exitcode; fi
         env:
@@ -588,6 +593,7 @@ pull_request_rules:
 /test-reports/
 junit.xml
 /coverage/
+permissions-backup.acl
 /dist/changelog.md
 /dist/version.txt
 /.mergify.yml
@@ -1415,6 +1421,7 @@ exports[`sources and compiled output can be collocated 2`] = `
 /test-reports/
 junit.xml
 /coverage/
+permissions-backup.acl
 /dist/changelog.md
 /dist/version.txt
 /.mergify.yml

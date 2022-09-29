@@ -1,7 +1,10 @@
 import * as path from "path";
 import { Component } from "../component";
 import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from "../github";
-import { BUILD_ARTIFACT_NAME } from "../github/constants";
+import {
+  BUILD_ARTIFACT_NAME,
+  PERMISSION_BACKUP_FILE,
+} from "../github/constants";
 import { Job, JobPermission, JobStep } from "../github/workflows-model";
 import { Task } from "../task";
 import { Version } from "../version";
@@ -570,15 +573,22 @@ export class Release extends Component {
       run: `echo ::set-output name=${LATEST_COMMIT_OUTPUT}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
     });
 
-    postBuildSteps.push({
-      name: "Upload artifact",
-      if: noNewCommits,
-      uses: "actions/upload-artifact@v2.1.1",
-      with: {
-        name: BUILD_ARTIFACT_NAME,
-        path: this.artifactsDirectory,
+    postBuildSteps.push(
+      {
+        name: "Backup artifact permissions",
+        if: noNewCommits,
+        run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
       },
-    });
+      {
+        name: "Upload artifact",
+        if: noNewCommits,
+        uses: "actions/upload-artifact@v2.1.1",
+        with: {
+          name: BUILD_ARTIFACT_NAME,
+          path: this.artifactsDirectory,
+        },
+      }
+    );
 
     if (this.github && !this.releaseTrigger.isManual) {
       return new TaskWorkflow(this.github, {
