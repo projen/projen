@@ -1,6 +1,11 @@
 import * as YAML from "yaml";
 import { JobPermission } from "../../src/github/workflows-model";
-import { Publisher, Release, ReleaseTrigger } from "../../src/release";
+import {
+  Publisher,
+  Release,
+  ReleaseTrigger,
+  CodeArtifactAuthProvider,
+} from "../../src/release";
 import { synthSnapshot, TestProject } from "../util";
 
 test("minimal", () => {
@@ -531,6 +536,34 @@ test("AWS CodeArtifact is supported with role to assume", () => {
       "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
     codeArtifactOptions: {
       roleToAssume: roleArn,
+    },
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  expect(outdir).toMatchSnapshot();
+});
+
+test("AWS CodeArtifact is supported with Github OIDC auth", () => {
+  // GIVEN
+  const project = new TestProject();
+  const roleArn = "role-arn";
+
+  const release = new Release(project, {
+    task: project.buildTask,
+    versionFile: "version.json",
+    branch: "main",
+    publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
+  });
+
+  // WHEN
+  release.publisher.publishToNpm({
+    registry:
+      "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+    codeArtifactOptions: {
+      roleToAssume: roleArn,
+      authProvider: CodeArtifactAuthProvider.GITHUB_OIDC,
     },
   });
 

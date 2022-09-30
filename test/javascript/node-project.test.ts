@@ -10,6 +10,7 @@ import {
   NodeProjectOptions,
   NodePackage,
   NpmAccess,
+  CodeArtifactAuthProvider,
 } from "../../src/javascript";
 import { JsonFile } from "../../src/json";
 import * as logging from "../../src/logging";
@@ -392,7 +393,7 @@ describe("npm publishing options", () => {
     });
   });
 
-  test("AWS CodeArtifact registry", () => {
+  test("AWS CodeArtifact registry with default authProvider", () => {
     // GIVEN
     const project = new TestProject();
 
@@ -421,7 +422,36 @@ describe("npm publishing options", () => {
     );
   });
 
-  test("AWS CodeArtifact registry custom values", () => {
+  test("AWS CodeArtifact registry with explicit access/secret key pair authProvider", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      npmRegistryUrl:
+        "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+    });
+
+    // THEN
+    expect(npm.npmRegistry).toStrictEqual(
+      "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
+    );
+    expect(npm.npmRegistryUrl).toStrictEqual(
+      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
+    );
+    expect(packageJson(project).publishConfig).toStrictEqual({
+      registry:
+        "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+    });
+    expect(npm.codeArtifactOptions?.accessKeyIdSecret).toStrictEqual(
+      "AWS_ACCESS_KEY_ID"
+    );
+    expect(npm.codeArtifactOptions?.secretAccessKeySecret).toStrictEqual(
+      "AWS_SECRET_ACCESS_KEY"
+    );
+  });
+
+  test("AWS CodeArtifact registry custom access/secret key values with default authProvider", () => {
     // GIVEN
     const project = new TestProject();
 
@@ -436,6 +466,36 @@ describe("npm publishing options", () => {
     });
 
     // THEN
+    expect(npm.codeArtifactOptions?.authProvider).toStrictEqual(
+      CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
+    );
+    expect(npm.codeArtifactOptions?.accessKeyIdSecret).toStrictEqual(
+      "OTHER_AWS_ACCESS_KEY_ID"
+    );
+    expect(npm.codeArtifactOptions?.secretAccessKeySecret).toStrictEqual(
+      "OTHER_AWS_SECRET_ACCESS_KEY"
+    );
+  });
+
+  test("AWS CodeArtifact registry custom access/secret key values with explicit access/secret key authProvider", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      npmRegistryUrl:
+        "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+      codeArtifactOptions: {
+        authProvider: CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR,
+        accessKeyIdSecret: "OTHER_AWS_ACCESS_KEY_ID",
+        secretAccessKeySecret: "OTHER_AWS_SECRET_ACCESS_KEY",
+      },
+    });
+
+    // THEN
+    expect(npm.codeArtifactOptions?.authProvider).toStrictEqual(
+      CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
+    );
     expect(npm.codeArtifactOptions?.accessKeyIdSecret).toStrictEqual(
       "OTHER_AWS_ACCESS_KEY_ID"
     );
@@ -500,7 +560,72 @@ describe("npm publishing options", () => {
     });
 
     // THEN
+    expect(npm.codeArtifactOptions?.authProvider).toStrictEqual(
+      CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
+    );
     expect(npm.codeArtifactOptions?.roleToAssume).toStrictEqual(roleArn);
+  });
+
+  test("AWS CodeArtifact registry with Github OIDC auth", () => {
+    // GIVEN
+    const project = new TestProject();
+    const roleArn = "role-arn";
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      npmRegistryUrl:
+        "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+      codeArtifactOptions: {
+        authProvider: CodeArtifactAuthProvider.GITHUB_OIDC,
+        roleToAssume: roleArn,
+      },
+    });
+
+    // THEN
+    expect(npm.codeArtifactOptions?.authProvider).toStrictEqual(
+      CodeArtifactAuthProvider.GITHUB_OIDC
+    );
+    expect(npm.codeArtifactOptions?.roleToAssume).toStrictEqual(roleArn);
+    expect(npm.codeArtifactOptions?.accessKeyIdSecret).toBeUndefined();
+    expect(npm.codeArtifactOptions?.secretAccessKeySecret).toBeUndefined();
+  });
+
+  test("throw when 'codeArtifactOptions.accessKeyIdSecret' or 'codeArtifactOptions.secretAccessKeySecret' is used with Github OIDC auth provider for AWS CodeArtifact", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // THEN
+    expect(() => {
+      new NodePackage(project, {
+        npmRegistryUrl:
+          "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+        codeArtifactOptions: {
+          authProvider: CodeArtifactAuthProvider.GITHUB_OIDC,
+          accessKeyIdSecret: "INVALID_AWS_ACCESS_KEY_ID",
+          secretAccessKeySecret: "INVALID_AWS_SECRET_ACCESS_KEY",
+        },
+      });
+    }).toThrow(
+      "access and secret key pair should not be provided when using GITHUB_OIDC auth provider for AWS CodeArtifact"
+    );
+  });
+
+  test("throw when 'codeArtifactOptions.roleToAssume' not defined when using Github OIDC auth provider for AWS CodeArtifact", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // THEN
+    expect(() => {
+      new NodePackage(project, {
+        npmRegistryUrl:
+          "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+        codeArtifactOptions: {
+          authProvider: CodeArtifactAuthProvider.GITHUB_OIDC,
+        },
+      });
+    }).toThrow(
+      '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options'
+    );
   });
 
   test("deprecated npmRegistry can be used instead of npmRegistryUrl and then https:// is assumed", () => {
