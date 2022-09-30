@@ -522,7 +522,7 @@ export interface JestOptions {
    *
    * @default - ALWAYS
    */
-  readonly updateSnapshot?: UpdateSnapshotOptions;
+  readonly updateSnapshot?: UpdateSnapshot;
 
   /**
    * The version of jest to use.
@@ -560,7 +560,7 @@ export interface CoverageThreshold {
   readonly statements?: number;
 }
 
-export enum UpdateSnapshotOptions {
+export enum UpdateSnapshot {
   /**
    * Always update snapshots in "test" task.
    */
@@ -698,7 +698,7 @@ export class Jest {
     }
 
     this.configureTestCommand(
-      options.updateSnapshot ?? UpdateSnapshotOptions.ALWAYS
+      options.updateSnapshot ?? UpdateSnapshot.ALWAYS
     );
 
     if (options.configFilePath) {
@@ -746,7 +746,7 @@ export class Jest {
     this._snapshotResolver = file;
   }
 
-  private configureTestCommand(updateSnapshot: UpdateSnapshotOptions) {
+  private configureTestCommand(updateSnapshot: UpdateSnapshot) {
     const jestOpts = ["--passWithNoTests", "--all", ...this.extraCliOptions];
     const jestConfigOpts =
       this.file && this.file.path != "jest.config.json"
@@ -762,7 +762,7 @@ export class Jest {
       jestOpts.push("--coverageProvider=v8");
     }
 
-    if (updateSnapshot === UpdateSnapshotOptions.ALWAYS) {
+    if (updateSnapshot === UpdateSnapshot.ALWAYS) {
       jestOpts.push("--updateSnapshot");
     } else {
       const testUpdate = this.project.tasks.tryFind("test:update");

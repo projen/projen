@@ -1,5 +1,5 @@
 import { PROJEN_RC } from "../../src/common";
-import { Jest, NodeProject, UpdateSnapshotOptions } from "../../src/javascript";
+import { Jest, NodeProject, UpdateSnapshot } from "../../src/javascript";
 import * as logging from "../../src/logging";
 import { TypeScriptProject } from "../../src/typescript";
 import { mkdtemp, synthSnapshot } from "../util";
@@ -243,7 +243,7 @@ test("UpdateSnapshotOptions.ALWAYS adds --updateSnapshot to testTask and 'test:u
     defaultReleaseBranch: "master",
     name: "test",
     jestOptions: {
-      updateSnapshot: UpdateSnapshotOptions.ALWAYS,
+      updateSnapshot: UpdateSnapshot.ALWAYS,
     },
   });
 
@@ -262,7 +262,7 @@ test("UpdateSnapshotOptions.NEVER doesn't add --updateSnapshot and creates a sep
     defaultReleaseBranch: "master",
     name: "test",
     jestOptions: {
-      updateSnapshot: UpdateSnapshotOptions.NEVER,
+      updateSnapshot: UpdateSnapshot.NEVER,
     },
   });
 
