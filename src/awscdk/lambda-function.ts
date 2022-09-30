@@ -4,6 +4,7 @@ import { Component } from "../component";
 import { Bundler, BundlingOptions, Eslint } from "../javascript";
 import { Project } from "../project";
 import { SourceCode } from "../source-code";
+import { TypeScriptProject } from "../typescript";
 import { AwsCdkDeps } from "./awscdk-deps";
 import {
   convertToPosixPath,
@@ -176,6 +177,7 @@ export class LambdaFunction extends Component {
       platform: runtime.esbuildPlatform,
       externals: ["aws-sdk"],
       ...options.bundlingOptions,
+      tsconfigPath: (project as TypeScriptProject)?.tsconfigDev?.fileName,
     });
 
     // calculate the relative path between the directory containing the

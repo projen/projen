@@ -828,6 +828,34 @@ test("enabling renovatebot does not overturn mergify: false", () => {
   expect(snapshot["renovate.json5"]).toMatchSnapshot();
 });
 
+test("renovatebot ignored dependency overrides", () => {
+  // WHEN
+  const project = new TestNodeProject({
+    renovatebot: true,
+    mergify: false,
+  });
+
+  project.package.addPackageResolutions(
+    "axios",
+    "some-overriden-package@1.0.0"
+  );
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  // Note: brackets important, they prevent "." in filenames to be interpreted
+  //       as JSON object path delimiters.
+  expect(snapshot).toHaveProperty(["renovate.json5"]);
+  expect(json5.parse(snapshot["renovate.json5"]).ignoreDeps).toEqual([
+    "jest-junit",
+    "npm-check-updates",
+    "standard-version",
+    "axios",
+    "some-overriden-package",
+    "projen",
+  ]);
+  expect(snapshot["renovate.json5"]).toMatchSnapshot();
+});
+
 test("github: false disables github integration", () => {
   // WHEN
   const project = new TestNodeProject({

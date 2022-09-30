@@ -3,7 +3,7 @@ import { join } from "path";
 import { readJsonSync } from "fs-extra";
 import semver from "semver";
 import * as YAML from "yaml";
-import { Project } from "../../src";
+import { Project, DependencyType } from "../../src";
 import {
   NodePackage,
   NodePackageManager,
@@ -408,6 +408,12 @@ test("yarn resolutions", () => {
 
   pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
 
+  expect(
+    project.deps.all.filter((dep) => dep.type === DependencyType.OVERRIDE)
+  ).toEqual([
+    { name: "other-dep", type: "override" },
+    { name: "some-dep", type: "override", version: "1.0.0" },
+  ]);
   const snps = synthSnapshot(project);
 
   expect(snps["package.json"].resolutions).toBeDefined();
@@ -423,6 +429,12 @@ test("npm overrides", () => {
 
   pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
 
+  expect(
+    project.deps.all.filter((dep) => dep.type === DependencyType.OVERRIDE)
+  ).toEqual([
+    { name: "other-dep", type: "override" },
+    { name: "some-dep", type: "override", version: "1.0.0" },
+  ]);
   const snps = synthSnapshot(project);
 
   expect(snps["package.json"].overrides).toBeDefined();
@@ -438,6 +450,12 @@ test("pnpm overrides", () => {
 
   pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
 
+  expect(
+    project.deps.all.filter((dep) => dep.type === DependencyType.OVERRIDE)
+  ).toEqual([
+    { name: "other-dep", type: "override" },
+    { name: "some-dep", type: "override", version: "1.0.0" },
+  ]);
   const snps = synthSnapshot(project);
 
   expect(snps["package.json"].pnpm.overrides).toBeDefined();

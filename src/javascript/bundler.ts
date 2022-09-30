@@ -113,6 +113,11 @@ export class Bundler extends Component {
       `--outfile="${outfile}"`,
     ];
 
+    const tsconfig = options.tsconfigPath ?? false;
+    if (tsconfig) {
+      args.push(`--tsconfig="${tsconfig}"`);
+    }
+
     for (const x of options.externals ?? []) {
       args.push(`--external:${x}`);
     }
@@ -256,4 +261,10 @@ export interface AddBundleOptions extends BundlingOptions {
    * @default false
    */
   readonly executable?: boolean;
+
+  /**
+   * The path of the tsconfig.json file to use for bundling
+   * @default "tsconfig.json"
+   */
+  readonly tsconfigPath?: string;
 }
