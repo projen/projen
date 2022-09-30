@@ -15,3 +15,12 @@ export const DEFAULT_GITHUB_ACTIONS_USER: GitIdentity = {
   name: "github-actions",
   email: "github-actions@github.com",
 };
+
+/**
+ * Name of the permission back up file to include in the build artifact
+ * to work around a GitHub Action bug that does not preserve file mode
+ * permissions across upload and download actions.
+ *
+ * See {@link https://github.com/actions/upload-artifact/issues/38}
+ */
+export const PERMISSION_BACKUP_FILE = "permissions-backup.acl";

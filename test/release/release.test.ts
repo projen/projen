@@ -168,7 +168,7 @@ test("publishers are added as jobs to all release workflows", () => {
       release_npm: {},
     },
   });
-  expect(wf1.jobs.release.steps.length).toBe(5);
+  expect(wf1.jobs.release.steps.length).toBe(6);
   const wf2 = YAML.parse(outdir[".github/workflows/release-2.x.yml"]);
   expect(wf2).toMatchObject({
     on: { push: { branches: ["2.x"] } },
@@ -179,7 +179,7 @@ test("publishers are added as jobs to all release workflows", () => {
       release_npm: {},
     },
   });
-  expect(wf2.jobs.release.steps.length).toBe(5);
+  expect(wf2.jobs.release.steps.length).toBe(6);
 });
 
 test("manual releases do not generate a release workflow", () => {
@@ -650,11 +650,11 @@ describe("npmDistTag", () => {
     const files = synthSnapshot(project);
     const main = YAML.parse(files[".github/workflows/release.yml"]);
     const main3 = YAML.parse(files[".github/workflows/release-main-3.yml"]);
-    expect(main.jobs.release_npm.steps[2].env).toStrictEqual({
+    expect(main.jobs.release_npm.steps[3].env).toStrictEqual({
       NPM_DIST_TAG: "latest",
       NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
     });
-    expect(main3.jobs.release_npm.steps[2].env).toStrictEqual({
+    expect(main3.jobs.release_npm.steps[3].env).toStrictEqual({
       NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
       NPM_DIST_TAG: "latest-3",
     });
@@ -684,11 +684,11 @@ describe("npmDistTag", () => {
     const files = synthSnapshot(project);
     const main = YAML.parse(files[".github/workflows/release.yml"]);
     const main3 = YAML.parse(files[".github/workflows/release-main-3.yml"]);
-    expect(main.jobs.release_npm.steps[2].env).toStrictEqual({
+    expect(main.jobs.release_npm.steps[3].env).toStrictEqual({
       NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
       NPM_DIST_TAG: "main-tag",
     });
-    expect(main3.jobs.release_npm.steps[2].env).toStrictEqual({
+    expect(main3.jobs.release_npm.steps[3].env).toStrictEqual({
       NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
       NPM_DIST_TAG: "latest-3",
     });
