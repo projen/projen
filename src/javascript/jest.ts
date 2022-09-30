@@ -697,9 +697,7 @@ export class Jest {
       };
     }
 
-    this.configureTestCommand(
-      options.updateSnapshot ?? UpdateSnapshot.ALWAYS
-    );
+    this.configureTestCommand(options.updateSnapshot ?? UpdateSnapshot.ALWAYS);
 
     if (options.configFilePath) {
       this.file = new JsonFile(project, options.configFilePath, {
