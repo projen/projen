@@ -298,6 +298,8 @@ jobs:
           echo \\"::error::Files were changed during build (see build log). If this was triggered from a fork, you will need to update your branch.\\"
           cat .repo.patch
           exit 1
+      - name: Backup artifact permissions
+        run: cd dist && getfacl -R . > permissions-backup.acl
       - name: Upload artifact
         uses: actions/upload-artifact@v2.1.1
         with:
@@ -346,6 +348,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies
@@ -417,6 +421,9 @@ jobs:
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+      - name: Backup artifact permissions
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
+        run: cd dist && getfacl -R . > permissions-backup.acl
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
@@ -439,6 +446,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Collect GitHub Metadata
@@ -465,6 +474,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies
@@ -653,6 +664,7 @@ pull_request_rules:
 /test-reports/
 junit.xml
 /coverage/
+permissions-backup.acl
 /dist/changelog.md
 /dist/version.txt
 /.mergify.yml
@@ -764,6 +776,21 @@ tsconfig.tsbuildinfo
       Object {
         "name": "typescript",
         "type": "build",
+      },
+      Object {
+        "name": "@types/prettier",
+        "type": "override",
+        "version": "2.6.0",
+      },
+      Object {
+        "name": "@types/responselike",
+        "type": "override",
+        "version": "1.0.0",
+      },
+      Object {
+        "name": "got",
+        "type": "override",
+        "version": "12.3.1",
       },
     ],
   },
@@ -1564,6 +1591,10 @@ Object {
       },
     },
     Object {
+      "name": "Restore build artifact permissions",
+      "run": "cd dist && setfacl --restore=permissions-backup.acl",
+    },
+    Object {
       "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
@@ -1624,6 +1655,10 @@ Object {
       },
     },
     Object {
+      "name": "Restore build artifact permissions",
+      "run": "cd dist && setfacl --restore=permissions-backup.acl",
+    },
+    Object {
       "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
@@ -1677,6 +1712,10 @@ Object {
         "name": "build-artifact",
         "path": "dist",
       },
+    },
+    Object {
+      "name": "Restore build artifact permissions",
+      "run": "cd dist && setfacl --restore=permissions-backup.acl",
     },
     Object {
       "name": "Prepare Repository",
@@ -1738,6 +1777,10 @@ Object {
       },
     },
     Object {
+      "name": "Restore build artifact permissions",
+      "run": "cd dist && setfacl --restore=permissions-backup.acl",
+    },
+    Object {
       "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
@@ -1795,6 +1838,10 @@ Object {
       },
     },
     Object {
+      "name": "Restore build artifact permissions",
+      "run": "cd dist && setfacl --restore=permissions-backup.acl",
+    },
+    Object {
       "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
@@ -1850,6 +1897,10 @@ Object {
       },
     },
     Object {
+      "name": "Restore build artifact permissions",
+      "run": "cd dist && setfacl --restore=permissions-backup.acl",
+    },
+    Object {
       "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
@@ -1895,6 +1946,10 @@ Object {
         "name": "build-artifact",
         "path": "dist",
       },
+    },
+    Object {
+      "name": "Restore build artifact permissions",
+      "run": "cd dist && setfacl --restore=permissions-backup.acl",
     },
     Object {
       "name": "Prepare Repository",
@@ -1945,6 +2000,10 @@ Object {
       },
     },
     Object {
+      "name": "Restore build artifact permissions",
+      "run": "cd dist && setfacl --restore=permissions-backup.acl",
+    },
+    Object {
       "name": "Prepare Repository",
       "run": "mv dist .repo",
     },
@@ -1984,6 +2043,10 @@ Object {
         "name": "build-artifact",
         "path": "dist",
       },
+    },
+    Object {
+      "name": "Restore build artifact permissions",
+      "run": "cd dist && setfacl --restore=permissions-backup.acl",
     },
     Object {
       "name": "Prepare Repository",
@@ -2031,6 +2094,10 @@ Object {
         "name": "build-artifact",
         "path": "dist",
       },
+    },
+    Object {
+      "name": "Restore build artifact permissions",
+      "run": "cd dist && setfacl --restore=permissions-backup.acl",
     },
     Object {
       "name": "Prepare Repository",
@@ -2086,6 +2153,9 @@ jobs:
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+      - name: Backup artifact permissions
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
+        run: cd dist && getfacl -R . > permissions-backup.acl
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
@@ -2108,6 +2178,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Collect GitHub Metadata
@@ -2134,6 +2206,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies
@@ -2167,6 +2241,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies
@@ -2221,6 +2297,9 @@ jobs:
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+      - name: Backup artifact permissions
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
+        run: cd dist && getfacl -R . > permissions-backup.acl
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
@@ -2243,6 +2322,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Collect GitHub Metadata
@@ -2269,6 +2350,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies
@@ -2302,6 +2385,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies
@@ -2353,6 +2438,9 @@ jobs:
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+      - name: Backup artifact permissions
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
+        run: cd dist && getfacl -R . > permissions-backup.acl
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
@@ -2375,6 +2463,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Collect GitHub Metadata
@@ -2401,6 +2491,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies
@@ -2434,6 +2526,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies
@@ -2483,6 +2577,9 @@ jobs:
       - name: Check for new commits
         id: git_remote
         run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+      - name: Backup artifact permissions
+        if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
+        run: cd dist && getfacl -R . > permissions-backup.acl
       - name: Upload artifact
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         uses: actions/upload-artifact@v2.1.1
@@ -2505,6 +2602,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Collect GitHub Metadata
@@ -2531,6 +2630,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies
@@ -2564,6 +2665,8 @@ jobs:
         with:
           name: build-artifact
           path: dist
+      - name: Restore build artifact permissions
+        run: cd dist && setfacl --restore=permissions-backup.acl
       - name: Prepare Repository
         run: mv dist .repo
       - name: Install Dependencies

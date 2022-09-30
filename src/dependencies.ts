@@ -315,4 +315,11 @@ export enum DependencyType {
    * The dependency is required for development (e.g. IDE plugins).
    */
   DEVENV = "devenv",
+
+  /**
+   * Transient dependency that needs to be overwritten.
+   *
+   * Available for Node packages
+   */
+  OVERRIDE = "override",
 }

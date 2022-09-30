@@ -2,6 +2,7 @@ import { Component } from "../component";
 import {
   BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
+  PERMISSION_BACKUP_FILE,
 } from "../github/constants";
 import {
   Job,
@@ -298,12 +299,43 @@ export class Publisher extends Component {
       GITHUB_PACKAGES_REGISTRY
     );
     const isAwsCodeArtifact = isAwsCodeArtifactRegistry(options.registry);
+    const isAwsCodeArtifactWithOidc =
+      isAwsCodeArtifact &&
+      options.codeArtifactOptions?.authProvider ===
+        CodeArtifactAuthProvider.GITHUB_OIDC;
     const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
 
     if (options.distTag) {
       this.project.logger.warn(
         "The `distTag` option is deprecated. Use the npmDistTag option instead."
       );
+    }
+
+    const prePublishSteps: JobStep[] = options.prePublishSteps ?? [];
+
+    if (isAwsCodeArtifactWithOidc) {
+      if (
+        options.codeArtifactOptions?.accessKeyIdSecret ||
+        options.codeArtifactOptions?.secretAccessKeySecret
+      ) {
+        throw new Error(
+          "access and secret key pair should not be provided when using GITHUB_OIDC auth provider for AWS CodeArtifact"
+        );
+      } else if (!options.codeArtifactOptions?.roleToAssume) {
+        throw new Error(
+          '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options'
+        );
+      }
+      const regionCaptureRegex = /codeartifact\.(.+)\.amazonaws\.com/;
+      const region = options.registry?.match(regionCaptureRegex)?.[1];
+      prePublishSteps.push({
+        name: "Configure AWS Credentials via GitHub OIDC Provider",
+        uses: "aws-actions/configure-aws-credentials@v1",
+        with: {
+          "role-to-assume": options.codeArtifactOptions.roleToAssume,
+          "aws-region": region,
+        },
+      });
     }
 
     this.addPublishJob((_branch, branchOptions): PublishJobOptions => {
@@ -316,7 +348,7 @@ export class Publisher extends Component {
       return {
         name: "npm",
         publishTools: PUBLIB_TOOLCHAIN.js,
-        prePublishSteps: options.prePublishSteps ?? [],
+        prePublishSteps,
         run: this.publibCommand("publib-npm"),
         registryName: "npm",
         env: {
@@ -324,27 +356,31 @@ export class Publisher extends Component {
           NPM_REGISTRY: options.registry,
         },
         permissions: {
+          idToken: isAwsCodeArtifactWithOidc ? JobPermission.WRITE : undefined,
           contents: JobPermission.READ,
           packages: isGitHubPackages ? JobPermission.WRITE : undefined,
         },
         workflowEnv: {
           NPM_TOKEN: npmToken ? secret(npmToken) : undefined,
           // if we are publishing to AWS CodeArtifact, pass AWS access keys that will be used to generate NPM_TOKEN using AWS CLI.
-          AWS_ACCESS_KEY_ID: isAwsCodeArtifact
-            ? secret(
-                options.codeArtifactOptions?.accessKeyIdSecret ??
-                  "AWS_ACCESS_KEY_ID"
-              )
-            : undefined,
-          AWS_SECRET_ACCESS_KEY: isAwsCodeArtifact
-            ? secret(
-                options.codeArtifactOptions?.secretAccessKeySecret ??
-                  "AWS_SECRET_ACCESS_KEY"
-              )
-            : undefined,
-          AWS_ROLE_TO_ASSUME: isAwsCodeArtifact
-            ? options.codeArtifactOptions?.roleToAssume
-            : undefined,
+          AWS_ACCESS_KEY_ID:
+            isAwsCodeArtifact && !isAwsCodeArtifactWithOidc
+              ? secret(
+                  options.codeArtifactOptions?.accessKeyIdSecret ??
+                    "AWS_ACCESS_KEY_ID"
+                )
+              : undefined,
+          AWS_SECRET_ACCESS_KEY:
+            isAwsCodeArtifact && !isAwsCodeArtifactWithOidc
+              ? secret(
+                  options.codeArtifactOptions?.secretAccessKeySecret ??
+                    "AWS_SECRET_ACCESS_KEY"
+                )
+              : undefined,
+          AWS_ROLE_TO_ASSUME:
+            isAwsCodeArtifact && !isAwsCodeArtifactWithOidc
+              ? options.codeArtifactOptions?.roleToAssume
+              : undefined,
         },
       };
     });
@@ -577,6 +613,12 @@ export class Publisher extends Component {
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for publib
           },
         },
+        {
+          name: "Restore build artifact permissions",
+          run: [
+            `cd ${ARTIFACTS_DOWNLOAD_DIR} && setfacl --restore=${PERMISSION_BACKUP_FILE}`,
+          ].join("\n"),
+        },
         ...opts.prePublishSteps,
         {
           name: "Release",
@@ -762,26 +804,60 @@ export interface NpmPublishOptions extends CommonPublishOptions {
   readonly codeArtifactOptions?: CodeArtifactOptions;
 }
 
+/**
+ * Options for authorizing requests to a AWS CodeArtifact npm repository.
+ */
+export enum CodeArtifactAuthProvider {
+  /**
+   * Fixed credentials provided via Github secrets.
+   */
+  ACCESS_AND_SECRET_KEY_PAIR = "ACCESS_AND_SECRET_KEY_PAIR",
+
+  /**
+   * Ephemeral credentials provided via Github's OIDC integration with an IAM role.
+   * See:
+   * https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html
+   * https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
+   */
+  GITHUB_OIDC = "GITHUB_OIDC",
+}
+
+/**
+ * Options for publishing packages to AWS CodeArtifact.
+ */
 export interface CodeArtifactOptions {
   /**
-   * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
-   * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+   * Provider to use for authorizing requests to AWS CodeArtifact.
    *
-   * @default "AWS_ACCESS_KEY_ID"
+   * @default CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
+   */
+  readonly authProvider?: CodeArtifactAuthProvider;
+  /**
+   * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
+   * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
+   *
+   * @default - When the `authProvider` value is set to
+   * `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is
+   * "AWS_ACCESS_KEY_ID". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this
+   * value must be left undefined.
    */
   readonly accessKeyIdSecret?: string;
 
   /**
    * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
-   * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+   * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
    *
-   * @default "AWS_SECRET_ACCESS_KEY"
+   * @default - When the `authProvider` value is set to
+   * `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is
+   * "AWS_SECRET_ACCESS_KEY". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this
+   * value must be left undefined.
    */
   readonly secretAccessKeySecret?: string;
 
   /**
    * ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact
    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+   * When using the `CodeArtifactAuthProvider.GITHUB_OIDC` auth provider, this value must be defined.
    *
    * @default undefined
    */
