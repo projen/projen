@@ -1359,19 +1359,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot --coverageProvider=v8",
+            "exec": "jest --passWithNoTests --all --coverageProvider=v8 --updateSnapshot",
           },
           Object {
             "spawn": "eslint",
-          },
-        ],
-      },
-      "test:update": Object {
-        "description": "Update jest snapshots",
-        "name": "test:update",
-        "steps": Array [
-          Object {
-            "exec": "jest --updateSnapshot",
           },
         ],
       },
@@ -1890,7 +1881,6 @@ project.synth();
       "projen": "npx projen",
       "release": "npx projen release",
       "test": "npx projen test",
-      "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "unbump": "npx projen unbump",
       "upgrade": "npx projen upgrade",
@@ -2767,15 +2757,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
-      "test:update": Object {
-        "description": "Update jest snapshots",
-        "name": "test:update",
-        "steps": Array [
-          Object {
-            "exec": "jest --updateSnapshot",
-          },
-        ],
-      },
       "test:watch": Object {
         "description": "Run jest in watch mode",
         "name": "test:watch",
@@ -3394,7 +3375,6 @@ project.synth();
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "test": "npx projen test",
-      "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "upgrade": "npx projen upgrade",
       "watch": "npx projen watch",
@@ -4183,15 +4163,6 @@ tsconfig.tsbuildinfo
           },
         ],
       },
-      "test:update": Object {
-        "description": "Update jest snapshots",
-        "name": "test:update",
-        "steps": Array [
-          Object {
-            "exec": "jest --updateSnapshot",
-          },
-        ],
-      },
       "test:watch": Object {
         "description": "Run jest in watch mode",
         "name": "test:watch",
@@ -4757,7 +4728,6 @@ project.synth();
       "pre-compile": "npx projen pre-compile",
       "projen": "npx projen",
       "test": "npx projen test",
-      "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "upgrade": "npx projen upgrade",
       "watch": "npx projen watch",
@@ -5433,15 +5403,6 @@ permissions-backup.acl
           },
         ],
       },
-      "test:update": Object {
-        "description": "Update jest snapshots",
-        "name": "test:update",
-        "steps": Array [
-          Object {
-            "exec": "jest --updateSnapshot",
-          },
-        ],
-      },
       "test:watch": Object {
         "description": "Run jest in watch mode",
         "name": "test:watch",
@@ -5791,7 +5752,6 @@ project.synth();
       "projen": "npx projen",
       "release": "npx projen release",
       "test": "npx projen test",
-      "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "unbump": "npx projen unbump",
       "upgrade": "npx projen upgrade",

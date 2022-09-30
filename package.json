@@ -35,7 +35,6 @@
     "readme-macros": "/bin/bash ./projen.bash readme-macros",
     "release": "/bin/bash ./projen.bash release",
     "test": "/bin/bash ./projen.bash test",
-    "test:update": "/bin/bash ./projen.bash test:update",
     "test:watch": "/bin/bash ./projen.bash test:watch",
     "unbump": "/bin/bash ./projen.bash unbump",
     "upgrade": "/bin/bash ./projen.bash upgrade",

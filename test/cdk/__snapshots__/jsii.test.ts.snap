@@ -1031,15 +1031,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       },
-      "test:update": Object {
-        "description": "Update jest snapshots",
-        "name": "test:update",
-        "steps": Array [
-          Object {
-            "exec": "jest --updateSnapshot",
-          },
-        ],
-      },
       "test:watch": Object {
         "description": "Run jest in watch mode",
         "name": "test:watch",
@@ -1427,7 +1418,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "projen": "npx projen",
       "release": "npx projen release",
       "test": "npx projen test",
-      "test:update": "npx projen test:update",
       "test:watch": "npx projen test:watch",
       "unbump": "npx projen unbump",
       "upgrade": "npx projen upgrade",

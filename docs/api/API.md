@@ -458,6 +458,7 @@ Name|Description
 [javascript.TrailingComma](#projen-javascript-trailingcomma)|*No description*
 [javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)|Determines how modules get resolved.
+[javascript.UpdateSnapshot](#projen-javascript-updatesnapshot)|*No description*
 [release.CodeArtifactAuthProvider](#projen-release-codeartifactauthprovider)|Options for authorizing requests to a AWS CodeArtifact npm repository.
 [vscode.Console](#projen-vscode-console)|Controls where to launch the debug target Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
@@ -7863,6 +7864,7 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
   * **jestVersion** (<code>string</code>)  The version of jest to use. __*Default*__: installs the latest jest version
   * **junitReporting** (<code>boolean</code>)  Result processing with jest-junit. __*Default*__: true
   * **preserveDefaultReporters** (<code>boolean</code>)  Preserve the default Jest reporter when additional reporters are added. __*Default*__: true
+  * **updateSnapshot** (<code>[javascript.UpdateSnapshot](#projen-javascript-updatesnapshot)</code>)  Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. __*Default*__: ALWAYS
 
 
 
@@ -16473,6 +16475,7 @@ Name | Type | Description
 **jestVersion**?🔹 | <code>string</code> | The version of jest to use.<br/>__*Default*__: installs the latest jest version
 **junitReporting**?🔹 | <code>boolean</code> | Result processing with jest-junit.<br/>__*Default*__: true
 **preserveDefaultReporters**?🔹 | <code>boolean</code> | Preserve the default Jest reporter when additional reporters are added.<br/>__*Default*__: true
+**updateSnapshot**?🔹 | <code>[javascript.UpdateSnapshot](#projen-javascript-updatesnapshot)</code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.<br/>__*Default*__: ALWAYS
 
 
 
@@ -19193,6 +19196,16 @@ Name | Description
 -----|-----
 **CLASSIC** 🔹|TypeScript's former default resolution strategy.
 **NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
+
+
+## enum UpdateSnapshot 🔹 <a id="projen-javascript-updatesnapshot"></a>
+
+
+
+Name | Description
+-----|-----
+**ALWAYS** 🔹|Always update snapshots in "test" task.
+**NEVER** 🔹|Never update snapshots in "test" task and create a separate "test:update" task.
 
 
 ## enum CodeArtifactAuthProvider 🔹 <a id="projen-release-codeartifactauthprovider"></a>

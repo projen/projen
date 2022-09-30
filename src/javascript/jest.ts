@@ -517,6 +517,14 @@ export interface JestOptions {
   readonly preserveDefaultReporters?: boolean;
 
   /**
+   * Whether to update snapshots in task "test" (which is executed in task "build" and build workflows),
+   * or create a separate task "test:update" for updating snapshots.
+   *
+   * @default - ALWAYS
+   */
+  readonly updateSnapshot?: UpdateSnapshot;
+
+  /**
    * The version of jest to use.
    *
    * Note that same version is used as version of `@types/jest` and `ts-jest` (if Typescript in use), so given version should work also for those.
@@ -550,6 +558,18 @@ export interface CoverageThreshold {
   readonly functions?: number;
   readonly lines?: number;
   readonly statements?: number;
+}
+
+export enum UpdateSnapshot {
+  /**
+   * Always update snapshots in "test" task.
+   */
+  ALWAYS = "always",
+
+  /**
+   * Never update snapshots in "test" task and create a separate "test:update" task.
+   */
+  NEVER = "never",
 }
 
 export interface HasteConfig {
@@ -677,7 +697,7 @@ export class Jest {
       };
     }
 
-    this.configureTestCommand();
+    this.configureTestCommand(options.updateSnapshot ?? UpdateSnapshot.ALWAYS);
 
     if (options.configFilePath) {
       this.file = new JsonFile(project, options.configFilePath, {
@@ -724,18 +744,12 @@ export class Jest {
     this._snapshotResolver = file;
   }
 
-  private configureTestCommand() {
+  private configureTestCommand(updateSnapshot: UpdateSnapshot) {
     const jestOpts = ["--passWithNoTests", "--all", ...this.extraCliOptions];
     const jestConfigOpts =
       this.file && this.file.path != "jest.config.json"
         ? ` -c ${this.file.path}`
         : "";
-
-    // since our build & release workflows have anti-tamper protection, it is
-    // safe to always run tests with --updateSnapshot. if a snapshot changes,
-    // the `build` workflow will either fail (on forks) or push the update and
-    // `release` workflows will fail.
-    jestOpts.push("--updateSnapshot");
 
     // as recommended in the jest docs, node > 14 may use native v8 coverage collection
     // https://jestjs.io/docs/en/cli#--coverageproviderprovider
@@ -746,6 +760,18 @@ export class Jest {
       jestOpts.push("--coverageProvider=v8");
     }
 
+    if (updateSnapshot === UpdateSnapshot.ALWAYS) {
+      jestOpts.push("--updateSnapshot");
+    } else {
+      const testUpdate = this.project.tasks.tryFind("test:update");
+      if (!testUpdate) {
+        this.project.addTask("test:update", {
+          description: "Update jest snapshots",
+          exec: `jest --updateSnapshot ${jestOpts.join(" ")}${jestConfigOpts}`,
+        });
+      }
+    }
+
     this.project.testTask.exec(`jest ${jestOpts.join(" ")}${jestConfigOpts}`);
 
     const testWatch = this.project.tasks.tryFind("test:watch");
@@ -753,14 +779,6 @@ export class Jest {
       this.project.addTask("test:watch", {
         description: "Run jest in watch mode",
         exec: `jest --watch${jestConfigOpts}`,
-      });
-    }
-
-    const testUpdate = this.project.tasks.tryFind("test:update");
-    if (!testUpdate) {
-      this.project.addTask("test:update", {
-        description: "Update jest snapshots",
-        exec: `jest --updateSnapshot${jestConfigOpts}`,
       });
     }
   }
