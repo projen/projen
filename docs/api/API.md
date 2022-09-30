@@ -457,6 +457,7 @@ Name|Description
 [javascript.TrailingComma](#projen-javascript-trailingcomma)|*No description*
 [javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)|Determines how modules get resolved.
+[javascript.UpdateSnapshotOptions](#projen-javascript-updatesnapshotoptions)|*No description*
 [vscode.Console](#projen-vscode-console)|Controls where to launch the debug target Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 
@@ -7852,7 +7853,6 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
 
 * **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
 * **options** (<code>[javascript.JestOptions](#projen-javascript-jestoptions)</code>)  *No description*
-  * **alwaysUpdateSnapshots** (<code>boolean</code>)  Whether to always update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. __*Default*__: true
   * **configFilePath** (<code>string</code>)  Path to JSON config file for Jest. __*Default*__: No separate config file, jest settings are stored in package.json
   * **coverage** (<code>boolean</code>)  Collect coverage. __*Default*__: true
   * **coverageText** (<code>boolean</code>)  Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution. __*Default*__: true
@@ -7862,6 +7862,7 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
   * **jestVersion** (<code>string</code>)  The version of jest to use. __*Default*__: installs the latest jest version
   * **junitReporting** (<code>boolean</code>)  Result processing with jest-junit. __*Default*__: true
   * **preserveDefaultReporters** (<code>boolean</code>)  Preserve the default Jest reporter when additional reporters are added. __*Default*__: true
+  * **updateSnapshot** (<code>[javascript.UpdateSnapshotOptions](#projen-javascript-updatesnapshotoptions)</code>)  Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. __*Default*__: ALWAYS
 
 
 
@@ -16462,7 +16463,6 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**alwaysUpdateSnapshots**?🔹 | <code>boolean</code> | Whether to always update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.<br/>__*Default*__: true
 **configFilePath**?🔹 | <code>string</code> | Path to JSON config file for Jest.<br/>__*Default*__: No separate config file, jest settings are stored in package.json
 **coverage**?⚠️ | <code>boolean</code> | Collect coverage.<br/>__*Default*__: true
 **coverageText**?🔹 | <code>boolean</code> | Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution.<br/>__*Default*__: true
@@ -16472,6 +16472,7 @@ Name | Type | Description
 **jestVersion**?🔹 | <code>string</code> | The version of jest to use.<br/>__*Default*__: installs the latest jest version
 **junitReporting**?🔹 | <code>boolean</code> | Result processing with jest-junit.<br/>__*Default*__: true
 **preserveDefaultReporters**?🔹 | <code>boolean</code> | Preserve the default Jest reporter when additional reporters are added.<br/>__*Default*__: true
+**updateSnapshot**?🔹 | <code>[javascript.UpdateSnapshotOptions](#projen-javascript-updatesnapshotoptions)</code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.<br/>__*Default*__: ALWAYS
 
 
 
@@ -19180,6 +19181,16 @@ Name | Description
 -----|-----
 **CLASSIC** 🔹|TypeScript's former default resolution strategy.
 **NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
+
+
+## enum UpdateSnapshotOptions 🔹 <a id="projen-javascript-updatesnapshotoptions"></a>
+
+
+
+Name | Description
+-----|-----
+**ALWAYS** 🔹|Always update snapshots in "test" task.
+**NEVER** 🔹|Never update snapshots in "test" task and create a separate "test:update" task.
 
 
 ## enum Console 🔹 <a id="projen-vscode-console"></a>
