@@ -517,12 +517,12 @@ export interface JestOptions {
   readonly preserveDefaultReporters?: boolean;
 
   /**
-   * Whether to always update snapshots in task "test" (which is executed in task "build" and build workflows),
+   * Whether to update snapshots in task "test" (which is executed in task "build" and build workflows),
    * or create a separate task "test:update" for updating snapshots.
    *
-   * @default - true
+   * @default - ALWAYS
    */
-  readonly alwaysUpdateSnapshots?: boolean;
+  readonly updateSnapshot?: UpdateSnapshotOptions;
 
   /**
    * The version of jest to use.
@@ -558,6 +558,18 @@ export interface CoverageThreshold {
   readonly functions?: number;
   readonly lines?: number;
   readonly statements?: number;
+}
+
+export enum UpdateSnapshotOptions {
+  /**
+   * Always update snapshots in "test" task.
+   */
+  ALWAYS = "always",
+
+  /**
+   * Never update snapshots in "test" task and create a separate "test:update" task.
+   */
+  NEVER = "never",
 }
 
 export interface HasteConfig {
@@ -685,7 +697,9 @@ export class Jest {
       };
     }
 
-    this.configureTestCommand(options.alwaysUpdateSnapshots ?? true);
+    this.configureTestCommand(
+      options.updateSnapshot ?? UpdateSnapshotOptions.ALWAYS
+    );
 
     if (options.configFilePath) {
       this.file = new JsonFile(project, options.configFilePath, {
@@ -732,7 +746,7 @@ export class Jest {
     this._snapshotResolver = file;
   }
 
-  private configureTestCommand(alwaysUpdateSnapshots: boolean) {
+  private configureTestCommand(updateSnapshot: UpdateSnapshotOptions) {
     const jestOpts = ["--passWithNoTests", "--all", ...this.extraCliOptions];
     const jestConfigOpts =
       this.file && this.file.path != "jest.config.json"
@@ -748,7 +762,7 @@ export class Jest {
       jestOpts.push("--coverageProvider=v8");
     }
 
-    if (alwaysUpdateSnapshots) {
+    if (updateSnapshot === UpdateSnapshotOptions.ALWAYS) {
       jestOpts.push("--updateSnapshot");
     } else {
       const testUpdate = this.project.tasks.tryFind("test:update");

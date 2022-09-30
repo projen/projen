@@ -1,5 +1,5 @@
 import { PROJEN_RC } from "../../src/common";
-import { NodeProject, Jest } from "../../src/javascript";
+import { Jest, NodeProject, UpdateSnapshotOptions } from "../../src/javascript";
 import * as logging from "../../src/logging";
 import { TypeScriptProject } from "../../src/typescript";
 import { mkdtemp, synthSnapshot } from "../util";
@@ -236,14 +236,14 @@ test("can set extra CLI options", () => {
   expect(clFragments).toContain("--outputFile=jest-report.json");
 });
 
-test("alwaysUpdateSnapshots: true adds --updateSnapshot to testTask and 'test:update' task is undefined", () => {
+test("UpdateSnapshotOptions.ALWAYS adds --updateSnapshot to testTask and 'test:update' task is undefined", () => {
   // WHEN
   const project = new NodeProject({
     outdir: mkdtemp(),
     defaultReleaseBranch: "master",
     name: "test",
     jestOptions: {
-      alwaysUpdateSnapshots: true,
+      updateSnapshot: UpdateSnapshotOptions.ALWAYS,
     },
   });
 
@@ -255,14 +255,14 @@ test("alwaysUpdateSnapshots: true adds --updateSnapshot to testTask and 'test:up
   expect(testUpdateTask).toBeUndefined();
 });
 
-test("alwaysUpdateSnapshots: false doesn't add --updateSnapshot and creates a separate 'test:update' task", () => {
+test("UpdateSnapshotOptions.NEVER doesn't add --updateSnapshot and creates a separate 'test:update' task", () => {
   // WHEN
   const project = new NodeProject({
     outdir: mkdtemp(),
     defaultReleaseBranch: "master",
     name: "test",
     jestOptions: {
-      alwaysUpdateSnapshots: false,
+      updateSnapshot: UpdateSnapshotOptions.NEVER,
     },
   });
 
