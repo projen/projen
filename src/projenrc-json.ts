@@ -45,7 +45,9 @@ export class Projenrc extends Component {
       ...bootstrap.args,
     };
 
-    outputFile(rcfile, JSON.stringify(json, null, 2));
+    outputFile(rcfile, JSON.stringify(json, null, 2)).catch(reason => {
+      throw new Error(reason)
+    });
     this.project.logger.info(
       `Project definition file was created at ${rcfile}`
     );

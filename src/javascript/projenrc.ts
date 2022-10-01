@@ -61,7 +61,9 @@ export class Projenrc extends Component {
     lines.push();
     lines.push("project.synth();");
 
-    outputFile(rcfile, lines.join("\n"));
+    outputFile(rcfile, lines.join("\n")).catch(reason => {
+      throw new Error(reason)
+    });
     this.project.logger.info(
       `Project definition file was created at ${rcfile}`
     );

@@ -110,7 +110,9 @@ export class Projenrc extends Component {
     emit("project.synth()");
 
     mkdirpSync(dirname(pythonFile));
-    outputFile(pythonFile, lines.join("\n"));
+    outputFile(pythonFile, lines.join("\n")).catch(reason => {
+      throw new Error(reason)
+    });
 
     this.project.logger.info(
       `Project definition file was created at ${pythonFile}`
