@@ -210,6 +210,7 @@ export class BuildWorkflow extends Component {
         },
         {
           name: "Restore build artifact permissions",
+          continueOnError: true,
           run: [
             `cd ${this.artifactsDirectory} && setfacl --restore=${PERMISSION_BACKUP_FILE}`,
           ].join("\n"),
@@ -377,6 +378,7 @@ export class BuildWorkflow extends Component {
         : [
             {
               name: "Backup artifact permissions",
+              continueOnError: true,
               run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
             },
             {
