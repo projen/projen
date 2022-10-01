@@ -1,5 +1,5 @@
 import { dirname, join } from "path";
-import { existsSync, mkdirpSync, outputFile } from "fs-extra";
+import { existsSync, mkdirpSync, outputFileSync } from "fs-extra";
 import { PROJEN_VERSION } from "../common";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -181,9 +181,7 @@ export class Projenrc extends Component {
     closeBlock();
 
     mkdirpSync(dirname(javaFile));
-    outputFile(javaFile, lines.join("\n")).catch(reason => {
-      throw new Error(reason)
-    });
+    outputFileSync(javaFile, lines.join("\n"));
 
     this.project.logger.info(
       `Project definition file was created at ${javaFile}`
