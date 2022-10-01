@@ -1,16 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generate projenrc in java 1`] = `
-"import io.github.cdklabs.projen.java.JavaProject;
-import io.github.cdklabs.projen.java.JavaProjectOptions;
-
-public class projenrc {
-    public static void main(String[] args) {
-        JavaProject project = new JavaProject();
-        project.synth();
-    }
-}"
-`;
+exports[`generate projenrc in java 1`] = `undefined`;
 
 exports[`projenrc.java support 1`] = `
 Object {

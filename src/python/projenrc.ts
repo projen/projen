@@ -1,6 +1,6 @@
 import { dirname, join } from "path";
 import { snake } from "case";
-import { existsSync, mkdirpSync, writeFileSync } from "fs-extra";
+import { existsSync, mkdirpSync, outputFile } from "fs-extra";
 import { PROJEN_VERSION } from "../common";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
@@ -110,7 +110,7 @@ export class Projenrc extends Component {
     emit("project.synth()");
 
     mkdirpSync(dirname(pythonFile));
-    writeFileSync(pythonFile, lines.join("\n"));
+    outputFile(pythonFile, lines.join("\n"));
 
     this.project.logger.info(
       `Project definition file was created at ${pythonFile}`

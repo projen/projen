@@ -1,4 +1,4 @@
-import { existsSync, writeFileSync } from "fs";
+import { existsSync, outputFile } from "fs-extra";
 import { resolve } from "path";
 import { Component } from "../component";
 import { Project } from "../project";
@@ -61,7 +61,7 @@ export class Projenrc extends Component {
     lines.push();
     lines.push("project.synth();");
 
-    writeFileSync(rcfile, lines.join("\n"));
+    outputFile(rcfile, lines.join("\n"));
     this.project.logger.info(
       `Project definition file was created at ${rcfile}`
     );

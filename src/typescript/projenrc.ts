@@ -1,4 +1,4 @@
-import { existsSync, writeFileSync } from "fs";
+import { existsSync, outputFile } from "fs-extra";
 import { resolve } from "path";
 import { Component } from "../component";
 import { renderJavaScriptOptions } from "../javascript/render-options";
@@ -80,6 +80,8 @@ export class Projenrc extends Component {
 
     imports.add(importName);
 
+    console.log(this.project);
+
     const lines = new Array<string>();
     lines.push(
       `import { ${[...imports].sort().join(", ")} } from "${moduleName}";`
@@ -89,7 +91,7 @@ export class Projenrc extends Component {
     lines.push();
     lines.push("project.synth();");
 
-    writeFileSync(rcfile, lines.join("\n"));
+    outputFile(rcfile, lines.join("\n"));
     this.project.logger.info(
       `Project definition file was created at ${rcfile}`
     );

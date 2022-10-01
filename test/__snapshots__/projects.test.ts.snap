@@ -1,30 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`createProject creates a project and passes in JSON-like project options 1`] = `
-"const { typescript } = require(\\"projen\\");
-const project = new typescript.TypeScriptProject({
-  defaultReleaseBranch: \\"main\\",
-  eslintOptions: {\\"dirs\\":[\\"src\\",\\"test\\"],\\"prettier\\":true,\\"aliasMap\\":{\\"@src\\":\\"./src\\",\\"@foo\\":\\"./src/foo\\"}},
-  name: \\"test-project\\",
+exports[`createProject creates a project and passes in JSON-like project options 1`] = `undefined`;
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The \\"name\\" in package.json. */
-});
-project.synth();"
-`;
-
-exports[`createProject creates a project in a directory 1`] = `
-"const { typescript } = require(\\"projen\\");
-const project = new typescript.TypeScriptProject({
-  defaultReleaseBranch: \\"main\\",
-  name: \\"test-project\\",
-
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The \\"name\\" in package.json. */
-});
-project.synth();"
-`;
+exports[`createProject creates a project in a directory 1`] = `undefined`;

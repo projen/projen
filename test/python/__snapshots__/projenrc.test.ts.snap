@@ -1,30 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generate projenrc in python 1`] = `
-"from projen.python import PythonProject
+exports[`generate projenrc in python 1`] = `undefined`;
 
-project = PythonProject()
-
-project.synth()"
-`;
-
-exports[`javascript values are translated to python 1`] = `
-"from projen.python import PythonProject
-from projen import ProjectType
-
-project = PythonProject(
-    string_arg=\\"hello\\",
-    int_arg=123,
-    float_arg=123.45,
-    boolean_arg=False,
-    undefined_arg=None,
-    null_arg=None,
-    object_arg={\\"foo\\":\\"bar\\"},
-    project_type=ProjectType.LIB,
-)
-
-project.synth()"
-`;
+exports[`javascript values are translated to python 1`] = `undefined`;
 
 exports[`projenrc.py support 1`] = `
 Object {
