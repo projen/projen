@@ -80,8 +80,6 @@ export class Projenrc extends Component {
 
     imports.add(importName);
 
-    console.log(this.project);
-
     const lines = new Array<string>();
     lines.push(
       `import { ${[...imports].sort().join(", ")} } from "${moduleName}";`
