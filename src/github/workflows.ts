@@ -225,7 +225,7 @@ function renderJobs(
       env: job.env,
       defaults: kebabCaseKeys(job.defaults),
       if: job.if,
-      steps: steps,
+      steps: steps.map(renderStep),
       "timeout-minutes": job.timeoutMinutes,
       strategy: renderJobStrategy(job.strategy),
       "continue-on-error": job.continueOnError,
@@ -274,6 +274,20 @@ function renderJobs(
     }
 
     return rendered;
+  }
+
+  function renderStep(step: workflows.JobStep) {
+    return {
+      name: step.name,
+      id: step.id,
+      if: step.if,
+      uses: step.uses,
+      env: step.env,
+      run: step.run,
+      with: step.with,
+      "continue-on-error": step.continueOnError,
+      "timeout-minutes": step.timeoutMinutes,
+    };
   }
 }
 
