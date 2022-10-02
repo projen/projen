@@ -577,6 +577,7 @@ export class Release extends Component {
       {
         name: "Backup artifact permissions",
         if: noNewCommits,
+        continueOnError: true,
         run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
       },
       {

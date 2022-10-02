@@ -615,6 +615,7 @@ export class Publisher extends Component {
         },
         {
           name: "Restore build artifact permissions",
+          continueOnError: true,
           run: [
             `cd ${ARTIFACTS_DOWNLOAD_DIR} && setfacl --restore=${PERMISSION_BACKUP_FILE}`,
           ].join("\n"),
