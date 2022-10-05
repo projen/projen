@@ -45,7 +45,8 @@ export class GithubCredentials {
    * can be specified here.
    *
    * @see https://docs.github.com/en/developers/apps/building-github-apps/creating-a-github-app
-   * @default - app id stored in "PROJEN_GITHUB_TOKEN" and private key stored in "PROJEN_APP_PRIVATE_KEY"
+   * @see https://projen.io/github.html#github-app
+   * @default - app id stored in "PROJEN_APP_ID" and private key stored in "PROJEN_APP_PRIVATE_KEY"
    */
   public static fromApp(options: GithubCredentialsAppOptions = {}) {
     const appIdSecret = options.appIdSecret ?? "PROJEN_APP_ID";
