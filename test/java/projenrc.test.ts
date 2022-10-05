@@ -184,24 +184,19 @@ test("assert getJavaImport returns the correct import with no submodules", () =>
 });
 
 test("assert generateProjenrc returns the correct projenrc with correct outdir", () => {
-  const generateProjenrcSpy = jest.spyOn(
-    Projenrc.prototype as any,
-    "generateProjenrc"
-  );
-  const workDir = path.join(path.dirname(__filename), "..", ".."); // move out the test folder
-  const project = new TestProject(
-    renderProjenInitOptions("projen.java.JavaProject", { outdir: "foo" })
-  );
-  const pom = new Pom(project, {
-    groupId: "my.group.id",
-    artifactId: "hello-world",
-    version: "1.2.3",
+  withProjectDir((projectdir) => {
+    const newOutDir = path.join(projectdir, "foo");
+    const project = new TestProject(
+      renderProjenInitOptions("projen.java.JavaProject", {
+        outdir: newOutDir,
+      })
+    );
+    const pom = new Pom(project, {
+      groupId: "my.group.id",
+      artifactId: "hello-world",
+      version: "1.2.3",
+    });
+    const projen = new Projenrc(project, pom);
+    expect(projen.project.outdir).toEqual(newOutDir);
   });
-  const projen = new Projenrc(project, pom);
-  const newOutDir = path.join(workDir, "foo");
-
-  expect(generateProjenrcSpy).toBeCalled();
-  expect(projen.project.outdir).toEqual(newOutDir);
-
-  removeSync(newOutDir); // otherwise we would accidentally check in the foo- directory
 });
