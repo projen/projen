@@ -1,23 +1,17 @@
 import path from "path";
-import { removeSync } from "fs-extra";
 import { Projenrc, TypeScriptProject } from "../../src/typescript";
+import { withProjectDir } from "../util";
 
 test("assert new Typescript project in foo outdir", () => {
-  const generateProjenrcSpy = jest.spyOn(
-    Projenrc.prototype as any,
-    "generateProjenrc"
-  );
-  const workDir = path.join(path.dirname(__filename), "..", ".."); // move out the test folder
-  const project = new TypeScriptProject({
-    defaultReleaseBranch: "main",
-    name: "test",
-    outdir: "foo",
+  withProjectDir((projectdir) => {
+    const newOutDir = path.join(projectdir, "foo");
+    const project = new TypeScriptProject({
+      defaultReleaseBranch: "main",
+      name: "test",
+      outdir: newOutDir,
+    });
+    const projen = new Projenrc(project);
+
+    expect(projen.project.outdir).toEqual(newOutDir);
   });
-  const projen = new Projenrc(project);
-  const newOutDir = path.join(workDir, "foo");
-
-  expect(generateProjenrcSpy).toBeCalled();
-  expect(projen.project.outdir).toEqual(newOutDir);
-
-  removeSync(newOutDir);
 });

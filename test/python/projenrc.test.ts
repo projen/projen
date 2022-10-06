@@ -1,9 +1,8 @@
 import path from "path";
-import { removeSync } from "fs-extra";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { ProjectType } from "../../src/project";
 import { Projenrc, resolvePythonImportName } from "../../src/python/projenrc";
-import { synthSnapshot, TestProject } from "../util";
+import { synthSnapshot, TestProject, withProjectDir } from "../util";
 
 test("projenrc.py support", () => {
   // GIVEN
@@ -93,20 +92,16 @@ test("ensure python import is correctly resolved to jsiiFqn when python module i
 });
 
 test("generate projenrc in python with a given outdir", () => {
-  const generateProjenrcSpy = jest.spyOn(
-    Projenrc.prototype as any,
-    "generateProjenrc"
-  );
-  const workDir = path.join(path.dirname(__filename), "..", ".."); // move out the test folder
-  const project = new TestProject(
-    renderProjenInitOptions("projen.python.PythonProject", { outdir: "foo" })
-  );
-  new Projenrc(project);
-  const projen = new Projenrc(project);
+  withProjectDir((projectdir) => {
+    const newOutDir = path.join(projectdir, "foo");
+    const project = new TestProject(
+      renderProjenInitOptions("projen.python.PythonProject", {
+        outdir: newOutDir,
+      })
+    );
+    new Projenrc(project);
+    const projen = new Projenrc(project);
 
-  const newOutDir = path.join(workDir, "foo");
-  expect(generateProjenrcSpy).toBeCalled();
-  expect(projen.project.outdir).toEqual(newOutDir);
-
-  removeSync(newOutDir); // has created a foo folder
+    expect(projen.project.outdir).toEqual(newOutDir);
+  });
 });
