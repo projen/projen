@@ -111,3 +111,13 @@ Or for a multi language jsii project, the necessary steps could look something l
 - `npx -p publib@latest publib-nuget`
 
 It is also your responsibility to ensure credentials are setup and available for each package repository published to.
+
+## Why is the version in `package.json` set to `0.0.0`?
+
+Projen uses tags to keep track of the current version of the project.
+While Node.js natively tracks package versions in `package.json`, not all languages supported by Projen provide a mechanism for this and thus Projen uses a different mechanism.
+To convey this message, the version `package.json` is kept at `0.0.0`.
+
+Additionally, Node.js packages are often published directly from their repository.
+This is also not the case for Projen.
+Instead, Projen requires you to run `projen release` to create releasable artifacts and then publish these artifacts.
