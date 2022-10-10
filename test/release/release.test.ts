@@ -331,6 +331,25 @@ test("majorVersion can be 0", () => {
   expect(outdir[".projen/tasks.json"]).toMatchSnapshot();
 });
 
+test("minMajorVersion can be 1", () => {
+  // GIVEN
+  const project = new TestProject();
+
+  // WHEN
+  new Release(project, {
+    task: project.buildTask,
+    versionFile: "goo.json",
+    branch: "main",
+    minMajorVersion: 1,
+    publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  expect(outdir[".projen/tasks.json"]).toMatchSnapshot();
+});
+
 test("prerelease can be specified per branch", () => {
   // GIVEN
   const project = new TestProject();

@@ -509,6 +509,16 @@ export class Release extends Component {
       env.MAJOR = branch.majorVersion.toString();
     }
 
+    if (branch.minMajorVersion !== undefined) {
+      if (branch.majorVersion !== undefined) {
+        throw new Error(
+          `minMajorVersion and majorVersion cannot be used together.`
+        );
+      }
+
+      env.MIN_MAJOR = branch.minMajorVersion.toString();
+    }
+
     if (branch.prerelease) {
       env.PRERELEASE = branch.prerelease;
     }
