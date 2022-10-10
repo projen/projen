@@ -198,7 +198,7 @@ export interface NodePackageOptions {
   readonly authorUrl?: string;
 
   /**
-   * Author's Organization
+   * Is the author an organization
    */
   readonly authorOrganization?: boolean;
 

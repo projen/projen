@@ -3371,7 +3371,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -4056,7 +4056,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -4365,7 +4365,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -4984,7 +4984,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -5241,7 +5241,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -5651,7 +5651,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -5832,7 +5832,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -6072,7 +6072,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -7968,7 +7968,7 @@ new javascript.NodePackage(project: Project, options?: NodePackageOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -8298,7 +8298,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -10121,7 +10121,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -10275,7 +10275,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -10429,7 +10429,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -10944,7 +10944,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -11096,7 +11096,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -11320,7 +11320,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -11514,7 +11514,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -12653,7 +12653,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -13036,7 +13036,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -13242,7 +13242,7 @@ Name | Type | Description
 **artifactsDirectory**?⚠️ | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?⚠️ | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?⚠️ | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?⚠️ | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?⚠️ | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -13663,7 +13663,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -13932,7 +13932,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -14264,7 +14264,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -14424,7 +14424,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -14619,7 +14619,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -16491,7 +16491,7 @@ Name | Type | Description
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
@@ -16540,7 +16540,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -17681,7 +17681,7 @@ Name | Type | Description
 **artifactsDirectory**?⚠️ | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?⚠️ | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?⚠️ | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?⚠️ | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?⚠️ | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -17825,7 +17825,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -18081,7 +18081,7 @@ Name | Type | Description
 **assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: "public"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -18213,7 +18213,7 @@ Name | Type | Description
 **assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: "public"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -18387,7 +18387,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -18548,7 +18548,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true

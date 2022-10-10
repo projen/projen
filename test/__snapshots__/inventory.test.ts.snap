@@ -2444,7 +2444,7 @@ Array [
         "switch": "author-name",
       },
       Object {
-        "docs": "Author's Organization.",
+        "docs": "Is the author an organization.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -5231,7 +5231,7 @@ Array [
         "switch": "author-name",
       },
       Object {
-        "docs": "Author's Organization.",
+        "docs": "Is the author an organization.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -9283,7 +9283,7 @@ Array [
         "switch": "author-name",
       },
       Object {
-        "docs": "Author's Organization.",
+        "docs": "Is the author an organization.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -11925,7 +11925,7 @@ Array [
         "switch": "author-name",
       },
       Object {
-        "docs": "Author's Organization.",
+        "docs": "Is the author an organization.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -14695,7 +14695,7 @@ Array [
         "switch": "author-name",
       },
       Object {
-        "docs": "Author's Organization.",
+        "docs": "Is the author an organization.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -18194,7 +18194,7 @@ Array [
         "switch": "author-name",
       },
       Object {
-        "docs": "Author's Organization.",
+        "docs": "Is the author an organization.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -20829,7 +20829,7 @@ Array [
         "switch": "author-name",
       },
       Object {
-        "docs": "Author's Organization.",
+        "docs": "Is the author an organization.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -23003,7 +23003,7 @@ Array [
         "switch": "author-name",
       },
       Object {
-        "docs": "Author's Organization.",
+        "docs": "Is the author an organization.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -25405,7 +25405,7 @@ Array [
         "switch": "author-name",
       },
       Object {
-        "docs": "Author's Organization.",
+        "docs": "Is the author an organization.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -28636,7 +28636,7 @@ Array [
         "switch": "author-name",
       },
       Object {
-        "docs": "Author's Organization.",
+        "docs": "Is the author an organization.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -30798,7 +30798,7 @@ Array [
         "switch": "author-name",
       },
       Object {
-        "docs": "Author's Organization.",
+        "docs": "Is the author an organization.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -33205,7 +33205,7 @@ Array [
         "switch": "author-name",
       },
       Object {
-        "docs": "Author's Organization.",
+        "docs": "Is the author an organization.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -35590,7 +35590,7 @@ Array [
         "switch": "author-name",
       },
       Object {
-        "docs": "Author's Organization.",
+        "docs": "Is the author an organization.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
