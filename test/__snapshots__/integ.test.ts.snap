@@ -917,7 +917,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "npm-check-updates",
         "type": "build",
-        "version": "^15",
+        "version": "^16",
       },
       Object {
         "name": "projen",
@@ -1765,7 +1765,7 @@ project.synth();
       "jsii-docgen": "*",
       "jsii-pacmak": "*",
       "json-schema": "*",
-      "npm-check-updates": "^15",
+      "npm-check-updates": "^16",
       "projen": "*",
       "standard-version": "^9",
       "ts-jest": "^27",
@@ -2480,7 +2480,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "npm-check-updates",
         "type": "build",
-        "version": "^15",
+        "version": "^16",
       },
       Object {
         "name": "projen",
@@ -3271,7 +3271,7 @@ project.synth();
       "jsii-pacmak": "*",
       "json-schema": "*",
       "json-schema-to-typescript": "*",
-      "npm-check-updates": "^15",
+      "npm-check-updates": "^16",
       "projen": "*",
       "ts-jest": "^27",
       "typescript": "*",
@@ -3940,7 +3940,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "npm-check-updates",
         "type": "build",
-        "version": "^15",
+        "version": "^16",
       },
       Object {
         "name": "projen",
@@ -4657,7 +4657,7 @@ project.synth();
       "jest": "*",
       "jest-junit": "^13",
       "json-schema": "*",
-      "npm-check-updates": "^15",
+      "npm-check-updates": "^16",
       "projen": "*",
       "ts-jest": "*",
       "typescript": "*",
@@ -5218,7 +5218,7 @@ permissions-backup.acl
       Object {
         "name": "npm-check-updates",
         "type": "build",
-        "version": "^15",
+        "version": "^16",
       },
       Object {
         "name": "projen",
@@ -5708,7 +5708,7 @@ project.synth();
       "aws-sdk": "*",
       "jest": "*",
       "jest-junit": "^13",
-      "npm-check-updates": "^15",
+      "npm-check-updates": "^16",
       "projen": "*",
       "standard-version": "^9",
     },

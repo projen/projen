@@ -379,7 +379,7 @@ permissions-backup.acl
       Object {
         "name": "npm-check-updates",
         "type": "build",
-        "version": "^15",
+        "version": "^16",
       },
       Object {
         "name": "projen",
@@ -879,7 +879,7 @@ permissions-backup.acl
       "tailwindcss": "*",
     },
     "devDependencies": Object {
-      "npm-check-updates": "^15",
+      "npm-check-updates": "^16",
       "projen": "*",
       "standard-version": "^9",
     },

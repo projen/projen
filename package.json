@@ -74,7 +74,7 @@
     "json-schema": "^0.4.0",
     "json5": "^2.2.1",
     "markmac": "^0.1.146",
-    "npm-check-updates": "^15",
+    "npm-check-updates": "^16",
     "prettier": "^2.7.1",
     "standard-version": "^9",
     "ts-jest": "^27",
