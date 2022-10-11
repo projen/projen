@@ -4528,7 +4528,7 @@ Array [
         "switch": "release-schedule",
       },
       Object {
-        "default": "- no prefix",
+        "default": "\\"v\\"",
         "docs": "Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.",
         "featured": false,
         "fullType": Object {
@@ -7462,7 +7462,7 @@ Array [
         "switch": "release-schedule",
       },
       Object {
-        "default": "- no prefix",
+        "default": "\\"v\\"",
         "docs": "Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.",
         "featured": false,
         "fullType": Object {
@@ -11285,7 +11285,7 @@ Array [
         "switch": "release-schedule",
       },
       Object {
-        "default": "- no prefix",
+        "default": "\\"v\\"",
         "docs": "Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.",
         "featured": false,
         "fullType": Object {
@@ -14023,7 +14023,7 @@ Array [
         "switch": "release-schedule",
       },
       Object {
-        "default": "- no prefix",
+        "default": "\\"v\\"",
         "docs": "Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.",
         "featured": false,
         "fullType": Object {
@@ -16725,7 +16725,7 @@ Array [
         "switch": "release-schedule",
       },
       Object {
-        "default": "- no prefix",
+        "default": "\\"v\\"",
         "docs": "Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.",
         "featured": false,
         "fullType": Object {
@@ -20172,7 +20172,7 @@ Array [
         "switch": "release-schedule",
       },
       Object {
-        "default": "- no prefix",
+        "default": "\\"v\\"",
         "docs": "Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.",
         "featured": false,
         "fullType": Object {
@@ -22450,7 +22450,7 @@ Array [
         "switch": "release-schedule",
       },
       Object {
-        "default": "- no prefix",
+        "default": "\\"v\\"",
         "docs": "Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.",
         "featured": false,
         "fullType": Object {
@@ -24780,7 +24780,7 @@ Array [
         "switch": "release-schedule",
       },
       Object {
-        "default": "- no prefix",
+        "default": "\\"v\\"",
         "docs": "Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.",
         "featured": false,
         "fullType": Object {
@@ -27026,7 +27026,7 @@ Array [
         "switch": "release-schedule",
       },
       Object {
-        "default": "- no prefix",
+        "default": "\\"v\\"",
         "docs": "Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.",
         "featured": false,
         "fullType": Object {
@@ -30257,7 +30257,7 @@ Array [
         "switch": "release-schedule",
       },
       Object {
-        "default": "- no prefix",
+        "default": "\\"v\\"",
         "docs": "Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.",
         "featured": false,
         "fullType": Object {
@@ -32575,7 +32575,7 @@ Array [
         "switch": "release-schedule",
       },
       Object {
-        "default": "- no prefix",
+        "default": "\\"v\\"",
         "docs": "Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.",
         "featured": false,
         "fullType": Object {
@@ -34982,7 +34982,7 @@ Array [
         "switch": "release-schedule",
       },
       Object {
-        "default": "- no prefix",
+        "default": "\\"v\\"",
         "docs": "Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.",
         "featured": false,
         "fullType": Object {
@@ -37367,7 +37367,7 @@ Array [
         "switch": "release-schedule",
       },
       Object {
-        "default": "- no prefix",
+        "default": "\\"v\\"",
         "docs": "Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.",
         "featured": false,
         "fullType": Object {
