@@ -116,7 +116,7 @@ before bumping according to the rules previously mentioned.
 
 You can force the base version number by adding a tag to your repo. For example, if the latest version of your project is 1.2.3, then add a tag to your main branch of `v1.2.3`.
 The next time the release workflow runs, it will bump from version 1.2.3.
-As explained above, this is based on the conventional commits so  the next release will either be 1.2.4 or 1.3.0.
+As explained above, this is based on the conventional commits so the next release will either be 1.2.4, 1.3.0, or 2.0.0 on a breaking change.
 
 ### Can I change the format of the release tag?
 
