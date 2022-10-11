@@ -85,7 +85,7 @@ describe("deps", () => {
     expect(pkgjson.devDependencies.eee).toStrictEqual("^1");
     expect(pkgjson.devDependencies.fff).toStrictEqual("^2");
     expect(pkgjson.peerDependencies).toBeUndefined();
-    expect(pkgjson.dependencieds).toBeUndefined();
+    expect(pkgjson.dependencies).toBeUndefined();
   });
 
   test("peerDependencies", () => {
@@ -112,7 +112,7 @@ describe("deps", () => {
     expect(pkgjson.devDependencies.bbb).toStrictEqual("4.5.6");
     expect(pkgjson.devDependencies.ccc).toStrictEqual("*");
     expect(pkgjson.devDependencies.ddd).toStrictEqual("*");
-    expect(pkgjson.dependencieds).toBeUndefined();
+    expect(pkgjson.dependencies).toBeUndefined();
   });
 
   test("peerDependencies without pinnedDevDep", () => {
@@ -147,7 +147,7 @@ describe("deps", () => {
     ].forEach((d) => delete pkgjson.devDependencies[d]);
 
     expect(pkgjson.devDependencies).toStrictEqual({});
-    expect(pkgjson.dependencieds).toBeUndefined();
+    expect(pkgjson.dependencies).toBeUndefined();
   });
 
   test("devDeps are only added for peerDeps if a runtime dep does not already exist", () => {
