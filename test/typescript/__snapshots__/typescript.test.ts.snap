@@ -669,7 +669,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "npm-check-updates",
         "type": "build",
-        "version": "^15",
+        "version": "^16",
       },
       Object {
         "name": "projen",
@@ -1192,7 +1192,7 @@ tsconfig.tsbuildinfo
       "jest": "*",
       "jest-junit": "^13",
       "json-schema": "*",
-      "npm-check-updates": "^15",
+      "npm-check-updates": "^16",
       "projen": "*",
       "standard-version": "^9",
       "ts-jest": "*",
