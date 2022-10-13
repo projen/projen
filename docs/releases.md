@@ -79,7 +79,7 @@ If you don't want projen to automatically release your project, you can configur
 releaseTrigger: ReleaseTrigger.manual(),
 ```
 
-This will create a `release` task. Run it locally to cut a release. It will build the project and create releasable artifacts inside the `dist` directory.
+This will create a `release` task. Run it locally (`npx projen release`) to cut a release. It will build the project and create releasable artifacts inside the `dist` directory.
 
 It will also trigger a `publish:git` task. This task does
 manage a project-level changelog, commit any changes, tag the release, and push any commits and tags to the remote repository.
