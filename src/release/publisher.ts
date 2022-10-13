@@ -555,7 +555,7 @@ export class Publisher extends Component {
     );
   }
 
-  private addPublishJob(
+  public addPublishJob(
     factory: (
       branch: string,
       branchOptions: Partial<BranchOptions>
