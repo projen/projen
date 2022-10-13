@@ -232,7 +232,7 @@ Object {
   "devDependencies": Object {
     "jest": "*",
     "jest-junit": "^13",
-    "npm-check-updates": "^15",
+    "npm-check-updates": "^16",
     "standard-version": "^9",
     "test": "*",
   },

@@ -246,32 +246,7 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToGitHubReleases(options: GitHubReleasesPublishOptions) {
-    const changelogFile = options.changelogFile;
-    const releaseTagFile = options.releaseTagFile;
-
-    // create a github release
-    const releaseTag = `$(cat ${releaseTagFile})`;
-
-    const ghRelease = [
-      `gh release create ${releaseTag}`,
-      "-R $GITHUB_REPOSITORY",
-      `-F ${changelogFile}`,
-      `-t ${releaseTag}`,
-      "--target $GITHUB_REF",
-    ].join(" ");
-
-    // release script that does not error when re-releasing a given version
-    const idempotentRelease = [
-      "errout=$(mktemp);",
-      `${ghRelease} 2> $errout && true;`,
-      "exitcode=$?;",
-      'if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then',
-      "cat $errout;",
-      "exit $exitcode;",
-      "fi",
-    ].join(" ");
-
-    this.addPublishJob((): PublishJobOptions => {
+    this.addPublishJob((_branch, branchOptions): PublishJobOptions => {
       return {
         name: "github",
         registryName: "GitHub Releases",
@@ -285,7 +260,7 @@ export class Publisher extends Component {
           GITHUB_REPOSITORY: "${{ github.repository }}",
           GITHUB_REF: "${{ github.ref }}",
         },
-        run: idempotentRelease,
+        run: this.githubReleaseCommand(options, branchOptions),
       };
     });
   }
@@ -677,6 +652,42 @@ export class Publisher extends Component {
 
   private publibCommand(command: string) {
     return `npx -p publib@${this.publibVersion} ${command}`;
+  }
+
+  private githubReleaseCommand(
+    options: GitHubReleasesPublishOptions,
+    branchOptions: Partial<BranchOptions>
+  ): string {
+    const changelogFile = options.changelogFile;
+    const releaseTagFile = options.releaseTagFile;
+
+    // create a github release
+    const releaseTag = `$(cat ${releaseTagFile})`;
+    const ghReleaseCommand = [
+      `gh release create ${releaseTag}`,
+      "-R $GITHUB_REPOSITORY",
+      `-F ${changelogFile}`,
+      `-t ${releaseTag}`,
+      "--target $GITHUB_REF",
+    ];
+
+    if (branchOptions.prerelease) {
+      ghReleaseCommand.push("-p");
+    }
+
+    const ghRelease = ghReleaseCommand.join(" ");
+
+    // release script that does not error when re-releasing a given version
+    const idempotentRelease = [
+      "errout=$(mktemp);",
+      `${ghRelease} 2> $errout && true;`,
+      "exitcode=$?;",
+      'if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then',
+      "cat $errout;",
+      "exit $exitcode;",
+      "fi",
+    ].join(" ");
+    return idempotentRelease;
   }
 }
 
