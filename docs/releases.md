@@ -71,7 +71,7 @@ changelogs.
 releaseTrigger: ReleaseTrigger.scheduled({ schedule: '0 17 * * *' }),
 ```
 
-## Local Releases
+## Manual Releases
 
 If you don't want projen to automatically release your project, you can configure a manual release trigger:
 
@@ -87,15 +87,16 @@ manage a project-level changelog, commit any changes, tag the release, and push 
 The command used for pushing can be customized by specifying
 `gitPushCommand`. Set to an empty string to disable pushing entirely.
 
-### Publishing modules for local releases
+### Publishing modules for manual releases
 
-Publishing modules to their respective package repositories is modelled as a separate task in Projen. While automated release triggers take care of this for you, this is **NOT** the case when using `ReleaseTrigger.manual()`.
+With manual releases, projen will *not* automatically publish packages to their respective package repositories.
+You are expected to publish release artifacts from the `dist` directory manually.
 
-You are expected to publish the release artifacts from the `dist` directory manually. **Do not attempt to publish the repository directly, it will fail.**
+Please note that the repository itself will **not** be a releasable state. Publishing anything else but the release artifacts from `dist`, will fail.
 
 For example in a Node.js project, you might run:
 
-- `projen release`
+- `projen release` *(runs tests & builds a releasable artifact)*
 - `npm publish dist/js/my-package-1.2.3.tgz`
 
 Or for a multi language jsii project, the necessary steps could look something like:
@@ -111,8 +112,8 @@ It is also your responsibility to ensure credentials are setup and available for
 
 ### How can I force a different version?
 
-You may be adopting Projen in a project that has already been published to previous versions. Projen uses tags to determine the version to start with
-before bumping according to the rules previously mentioned.
+You may be adopting projen in a project that has already been published to previous versions.
+Projen uses tags to determine the version to start with before bumping according to the rules previously mentioned.
 
 You can force the base version number by adding a tag to your repo. For example, if the latest version of your project is 1.2.3, then add a tag to your main branch of `v1.2.3`.
 The next time the release workflow runs, it will bump from version 1.2.3.
@@ -132,9 +133,10 @@ If you are migrating to a new tag format, make sure to re-tag at least the curre
 ### Why is the version in `package.json` set to `0.0.0`?
 
 Projen uses tags to keep track of the current version of the project.
-While Node.js natively tracks package versions in `package.json`, not all languages supported by Projen provide a mechanism for this and thus Projen uses a different mechanism.
-To convey this message, the version `package.json` is kept at `0.0.0`.
+While Node.js packages natively track theirs versions in `package.json`, not all languages supported by projen provide a mechanism like this.
+Consequently projen uses git tags as a mechanism that is independent of any target language.
+To convey this message, the version in `package.json` is kept at `0.0.0`.
 
-Additionally, Node.js packages are often published directly from their repository.
-This is also not the case for Projen.
-Instead, Projen requires you to run `projen release` to create releasable artifacts and then publish these artifacts.
+Additionally, Node.js packages are often published directly by running `npm publish` in the root of the repository.
+This does not work in projen.
+Instead, projen requires you to run `projen release` to create releasable artifacts and manually publish these artifacts.
