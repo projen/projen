@@ -157,7 +157,7 @@ export interface ReleaseProjectOptions {
    * history, you may need to manually tag your latest release
    * with the new prefix.
    *
-   * @default - no prefix
+   * @default "v"
    */
   readonly releaseTagPrefix?: string;
 
