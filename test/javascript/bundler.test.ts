@@ -221,3 +221,89 @@ test("renderBundleName", () => {
   expect(renderBundleName("nosrc/foo.lambda.ts")).toBe("nosrc/foo.lambda");
   expect(renderBundleName("src/bar/foo.lambda.ts")).toBe("bar/foo.lambda");
 });
+
+test("loaders can be configured via bundlerOptions", () => {
+  const p = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    bundlerOptions: {
+      esbuildVersion: "^3",
+      loaders: {
+        txt: "text", // Adds a loader for txt files
+      },
+    },
+  });
+
+  p.bundler.addBundle("./src/hello.ts", {
+    platform: "node",
+    target: "node12",
+    sourcemap: false,
+  });
+
+  const snapshot = Testing.synth(p);
+  const tasks = snapshot[".projen/tasks.json"].tasks;
+
+  const bundleCommand = tasks["bundle:hello"].steps[0].exec;
+  const watchCommand = tasks["bundle:hello:watch"].steps[0].exec;
+  expect(bundleCommand).toContain("--loader:.txt=text");
+  expect(watchCommand).toContain("--loader:.txt=text");
+});
+
+test("loaders can be configured via addBundle", () => {
+  const p = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    bundlerOptions: {
+      esbuildVersion: "^3",
+    },
+  });
+
+  p.bundler.addBundle("./src/hello.ts", {
+    platform: "node",
+    target: "node12",
+    sourcemap: false,
+    loaders: {
+      txt: "text", // Adds a loader for txt files
+    },
+  });
+
+  const snapshot = Testing.synth(p);
+  const tasks = snapshot[".projen/tasks.json"].tasks;
+
+  const bundleCommand = tasks["bundle:hello"].steps[0].exec;
+  const watchCommand = tasks["bundle:hello:watch"].steps[0].exec;
+  expect(bundleCommand).toContain("--loader:.txt=text");
+  expect(watchCommand).toContain("--loader:.txt=text");
+});
+
+test("loaders configured via addBundle overwrite bundlerOptions", () => {
+  const p = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    bundlerOptions: {
+      esbuildVersion: "^3",
+      loaders: {
+        txt: "some-loader",
+      },
+    },
+  });
+
+  p.bundler.addBundle("./src/hello.ts", {
+    platform: "node",
+    target: "node12",
+    sourcemap: false,
+    loaders: {
+      txt: "text",
+    },
+  });
+
+  const snapshot = Testing.synth(p);
+  const tasks = snapshot[".projen/tasks.json"].tasks;
+
+  const bundleCommand = tasks["bundle:hello"].steps[0].exec;
+  const watchCommand = tasks["bundle:hello:watch"].steps[0].exec;
+  expect(bundleCommand).toContain("--loader:.txt=text");
+  expect(bundleCommand).toContain("--loader:.txt=text");
+  expect(watchCommand).not.toContain("--loader:.txt=some-loader");
+  expect(watchCommand).not.toContain("--loader:.txt=some-loader");
+});
