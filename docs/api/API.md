@@ -7638,6 +7638,7 @@ new javascript.Bundler(project: Project, options?: BundlerOptions)
   * **addToPreCompile** (<code>boolean</code>)  Install the `bundle` command as a pre-compile phase. __*Default*__: true
   * **assetsDir** (<code>string</code>)  Output directory for all bundles. __*Default*__: "assets"
   * **esbuildVersion** (<code>string</code>)  The semantic version requirement for `esbuild`. __*Default*__: no specific version (implies latest)
+  * **loaders** (<code>Map<string, string></code>)  Map of file extensions (without dot) and loaders to use for this file type. __*Optional*__
 
 
 
@@ -7669,6 +7670,7 @@ addBundle(entrypoint: string, options: AddBundleOptions): Bundle
   * **platform** (<code>string</code>)  esbuild platform. 
   * **target** (<code>string</code>)  esbuild target. 
   * **executable** (<code>boolean</code>)  Mark the output file as executable. __*Default*__: false
+  * **loaders** (<code>Map<string, string></code>)  Map of file extensions (without dot) and loaders to use for this file type. __*Optional*__
   * **outfile** (<code>string</code>)  Bundler output path relative to the asset's output directory. __*Default*__: "index.js"
   * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use for bundling. __*Default*__: "tsconfig.json"
 
@@ -16238,6 +16240,7 @@ Name | Type | Description
 **target**🔹 | <code>string</code> | esbuild target.
 **executable**?🔹 | <code>boolean</code> | Mark the output file as executable.<br/>__*Default*__: false
 **externals**?🔹 | <code>Array<string></code> | You can mark a file or a package as external to exclude it from your build.<br/>__*Default*__: []
+**loaders**?🔹 | <code>Map<string, string></code> | Map of file extensions (without dot) and loaders to use for this file type.<br/>__*Optional*__
 **outfile**?🔹 | <code>string</code> | Bundler output path relative to the asset's output directory.<br/>__*Default*__: "index.js"
 **sourcemap**?🔹 | <code>boolean</code> | Include a source map in the bundle.<br/>__*Default*__: false
 **tsconfigPath**?🔹 | <code>string</code> | The path of the tsconfig.json file to use for bundling.<br/>__*Default*__: "tsconfig.json"
@@ -16274,6 +16277,7 @@ Name | Type | Description
 **addToPreCompile**?🔹 | <code>boolean</code> | Install the `bundle` command as a pre-compile phase.<br/>__*Default*__: true
 **assetsDir**?🔹 | <code>string</code> | Output directory for all bundles.<br/>__*Default*__: "assets"
 **esbuildVersion**?🔹 | <code>string</code> | The semantic version requirement for `esbuild`.<br/>__*Default*__: no specific version (implies latest)
+**loaders**?🔹 | <code>Map<string, string></code> | Map of file extensions (without dot) and loaders to use for this file type.<br/>__*Optional*__
 
 
 

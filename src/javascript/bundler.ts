@@ -28,6 +28,12 @@ export interface BundlerOptions {
    * @default true
    */
   readonly addToPreCompile?: boolean;
+
+  /**
+   * Map of file extensions (without dot) and loaders to use for this file type.
+   * Loaders are appended to the esbuild command by `--loader:.extension=loader`
+   */
+  readonly loaders?: { [key: string]: string };
 }
 
 /**
@@ -58,6 +64,7 @@ export class Bundler extends Component {
 
   private _task: Task | undefined;
   private readonly addToPreCompile: boolean;
+  private readonly loaders?: { [key: string]: string };
 
   /**
    * Creates a `Bundler`.
@@ -68,6 +75,7 @@ export class Bundler extends Component {
     this.esbuildVersion = options.esbuildVersion;
     this.bundledir = options.assetsDir ?? "assets";
     this.addToPreCompile = options.addToPreCompile ?? true;
+    this.loaders = options.loaders;
   }
 
   /**
@@ -125,6 +133,14 @@ export class Bundler extends Component {
     const sourcemap = options.sourcemap ?? false;
     if (sourcemap) {
       args.push("--sourcemap");
+    }
+
+    const loaders =
+      options.loaders ?? false ? options.loaders : this.loaders ?? false;
+    if (loaders) {
+      for (let [extension, loader] of Object.entries(loaders)) {
+        args.push(`--loader:.${extension}=${loader}`);
+      }
     }
 
     const bundleTask = this.project.addTask(`bundle:${name}`, {
@@ -267,4 +283,10 @@ export interface AddBundleOptions extends BundlingOptions {
    * @default "tsconfig.json"
    */
   readonly tsconfigPath?: string;
+
+  /**
+   * Map of file extensions (without dot) and loaders to use for this file type.
+   * Loaders are appended to the esbuild command by `--loader:.extension=loader`
+   */
+  readonly loaders?: { [key: string]: string };
 }
