@@ -4,7 +4,7 @@ import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
 export interface ConstructLibraryCdktfOptions extends ConstructLibraryOptions {
   /**
    * Minimum target version this library is tested against.
-   * @default "^0.8.3"
+   * @default "^0.13.0"
    * @featured
    */
   readonly cdktfVersion: string;

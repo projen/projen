@@ -187,7 +187,7 @@ Object {
 const project = new cdktf.ConstructLibraryCdktf({
   author: \\"My User Name\\",
   authorAddress: \\"my@user.email.com\\",
-  cdktfVersion: \\"^0.8.3\\",
+  cdktfVersion: \\"^0.13.0\\",
   defaultReleaseBranch: \\"main\\",
   name: \\"my-project\\",
   repositoryUrl: \\"git@boom.com:foo/bar.git\\",
