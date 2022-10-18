@@ -14963,7 +14963,7 @@ Array [
         "switch": "catalog",
       },
       Object {
-        "default": "\\"^0.8.3\\"",
+        "default": "\\"^0.13.0\\"",
         "docs": "Minimum target version this library is tested against.",
         "featured": true,
         "fullType": Object {
