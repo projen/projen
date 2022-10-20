@@ -1,8 +1,8 @@
 import { dirname, join } from "path";
 import { Config } from "conventional-changelog-config-spec";
-import conventionalCommitsParser, { Commit } from "conventional-commits-parser";
+import * as conventionalCommitsParser from "conventional-commits-parser";
 import { mkdirp, pathExists, readFile, remove, writeFile } from "fs-extra";
-import gitRawCommits from "git-raw-commits";
+import * as gitRawCommits from "git-raw-commits";
 import * as logging from "../logging";
 import { exec, execCapture } from "../util";
 
@@ -363,12 +363,14 @@ interface ParseCommitOptions {
   latestTag: string;
 }
 
-async function parseCommits(options: ParseCommitOptions): Promise<Commit[]> {
-  return new Promise<Commit[]>((resolve, reject) => {
-    const commits: Commit[] = [];
+async function parseCommits(
+  options: ParseCommitOptions
+): Promise<conventionalCommitsParser.Commit[]> {
+  return new Promise<conventionalCommitsParser.Commit[]>((resolve, reject) => {
+    const commits: conventionalCommitsParser.Commit[] = [];
     gitRawCommits({ from: options.latestTag }, { cwd: options.cwd })
       .pipe(conventionalCommitsParser())
-      .on("data", (d: Commit) => {
+      .on("data", (d: conventionalCommitsParser.Commit) => {
         commits.push(d);
       })
       .on("error", reject)

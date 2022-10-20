@@ -1,4 +1,4 @@
-import path from "path";
+import * as path from "path";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { Projenrc } from "../../src/projenrc-json";
 import { synthSnapshot, TestProject, withProjectDir } from "../util";

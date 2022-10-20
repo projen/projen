@@ -80,6 +80,13 @@ const project = new cdk.JsiiProject({
   // cli tests need projen to be compiled
   compileBeforeTest: true,
 
+  // Disable interop since it's not available in jsii
+  tsconfigDev: {
+    compilerOptions: {
+      esModuleInterop: false,
+    },
+  },
+
   jestOptions: {
     // makes it very hard to iterate with jest --watch
     coverageText: false,

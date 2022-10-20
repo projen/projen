@@ -1,4 +1,4 @@
-import json5 from "json5";
+import * as json5 from "json5";
 import { PROJEN_MARKER } from "../../src/common";
 import { synthSnapshot, TestProject } from "../util";
 
