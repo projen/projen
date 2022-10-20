@@ -383,7 +383,7 @@
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/conventional-changelog-config-spec @types/fs-extra @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest-junit jest jsii jsii-diff jsii-docgen jsii-pacmak json-schema json5 npm-check-updates prettier standard-version ts-jest typescript @iarna/toml case chalk conventional-changelog-config-spec fast-json-patch fs-extra glob ini semver shx xmlbuilder2 yaml yargs zlib"
+          "exec": "yarn upgrade @types/conventional-changelog-config-spec @types/conventional-commits-parser @types/fs-extra @types/git-raw-commits @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest-junit jest jsii jsii-diff jsii-docgen jsii-pacmak json-schema json5 npm-check-updates prettier standard-version ts-jest typescript @iarna/toml case chalk conventional-changelog-config-spec conventional-commits-parser fast-json-patch fs-extra git-raw-commits glob ini semver shx xmlbuilder2 yaml yargs zlib"
         },
         {
           "exec": "/bin/bash ./projen.bash"

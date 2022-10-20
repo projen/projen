@@ -1,6 +1,8 @@
 import { dirname, join } from "path";
 import { Config } from "conventional-changelog-config-spec";
+import conventionalCommitsParser, { Commit } from "conventional-commits-parser";
 import { mkdirp, pathExists, readFile, remove, writeFile } from "fs-extra";
+import gitRawCommits from "git-raw-commits";
 import * as logging from "../logging";
 import { exec, execCapture } from "../util";
 
@@ -72,6 +74,9 @@ export interface BumpOptions {
    * coming to that from default one.
    */
   readonly versionrcOptions?: Config;
+
+  // TODO: docstring, extract type
+  readonly skipRelease?: { types?: string[]; scopes?: string[] };
 }
 
 /**
@@ -134,6 +139,26 @@ export async function bump(cwd: string, options: BumpOptions) {
     // delete the existing tag (locally)
     // if we don't do this, standard-version generates an empty changelog
     exec(`git tag --delete ${latestTag}`, { cwd });
+  }
+
+  // Optionally skip this release if all commit types / scopes should be ignored
+  if (
+    !prerelease && // don't skip pre-releases
+    !isFirstRelease && // don't skip the first ever release
+    options.skipRelease && // there is config to skip
+    (options.skipRelease.types?.length || options.skipRelease.scopes?.length) // the config contains something to skip
+  ) {
+    const commits = await parseCommits({ latestTag, cwd });
+    const allCommitsIgnored = commits.every(
+      (commit) =>
+        (commit.scope && options.skipRelease?.scopes?.includes(commit.scope)) ||
+        (commit.type && options.skipRelease?.types?.includes(commit.type))
+    );
+    if (allCommitsIgnored) {
+      throw new Error(
+        "No new commits have been added that warrant a release. All new commits were ignored"
+      );
+    }
   }
 
   // create a standard-version configuration file
@@ -325,4 +350,28 @@ function determineLatestTag(options: LatestTagOptions): {
   }
 
   return { latestVersion, latestTag, isFirstRelease };
+}
+
+interface ParseCommitOptions {
+  /**
+   * Working directory of the git repository.
+   */
+  cwd: string;
+  /**
+   * Tag of the previously released version.
+   */
+  latestTag: string;
+}
+
+async function parseCommits(options: ParseCommitOptions): Promise<Commit[]> {
+  return new Promise<Commit[]>((resolve, reject) => {
+    const commits: Commit[] = [];
+    gitRawCommits({ from: options.latestTag }, { cwd: options.cwd })
+      .pipe(conventionalCommitsParser())
+      .on("data", (d: Commit) => {
+        commits.push(d);
+      })
+      .on("error", reject)
+      .on("end", () => resolve(commits));
+  });
 }

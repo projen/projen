@@ -192,6 +192,7 @@ export class TaskWorkflow extends GithubWorkflow {
         {
           name: options.task.name,
           run: this.github.project.runTaskCommand(options.task),
+          // TODO: allow setting continue on error here, and maybe allow handling a task that was skipped (i.e. via a special exit code)
         },
 
         ...postBuildSteps,

@@ -27,6 +27,8 @@ const project = new cdk.JsiiProject({
 
   bundledDeps: [
     "conventional-changelog-config-spec",
+    "conventional-commits-parser",
+    "git-raw-commits",
     "yaml@2.0.0",
     "fs-extra",
     "yargs",
@@ -44,6 +46,8 @@ const project = new cdk.JsiiProject({
 
   devDeps: [
     "@types/conventional-changelog-config-spec",
+    "@types/conventional-commits-parser",
+    "@types/git-raw-commits",
     "@types/fs-extra@^8",
     "@types/yargs",
     "@types/glob",

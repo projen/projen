@@ -5,8 +5,16 @@
       "type": "build"
     },
     {
+      "name": "@types/conventional-commits-parser",
+      "type": "build"
+    },
+    {
       "name": "@types/fs-extra",
       "version": "^8",
+      "type": "build"
+    },
+    {
+      "name": "@types/git-raw-commits",
       "type": "build"
     },
     {
@@ -156,11 +164,19 @@
       "type": "bundled"
     },
     {
+      "name": "conventional-commits-parser",
+      "type": "bundled"
+    },
+    {
       "name": "fast-json-patch",
       "type": "bundled"
     },
     {
       "name": "fs-extra",
+      "type": "bundled"
+    },
+    {
+      "name": "git-raw-commits",
       "type": "bundled"
     },
     {

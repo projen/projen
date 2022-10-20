@@ -543,7 +543,7 @@ export class Release extends Component {
     });
 
     releaseTask.exec(`rm -fr ${this.artifactsDirectory}`);
-    releaseTask.spawn(this.version.bumpTask);
+    releaseTask.spawn(this.version.bumpTask); // TODO: this may fail, handle this in git workflow
     releaseTask.spawn(this.buildTask);
     releaseTask.spawn(this.version.unbumpTask);
 
