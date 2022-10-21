@@ -335,6 +335,12 @@ export interface Step {
    * You can also set environment variables for the entire workflow or a job.
    */
   readonly env?: Record<string, string>;
+
+  /**
+   * Specifies a working directory for a step.
+   * Overrides a job's working directory.
+   */
+  readonly workingDirectory?: string;
 }
 
 /**
