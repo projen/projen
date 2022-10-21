@@ -340,7 +340,7 @@ export interface Step {
    * Specifies a working directory for a step.
    * Overrides a job's working directory.
    */
-  readonly workingDirectory?: Record<string, string>;
+  readonly workingDirectory?: string;
 }
 
 /**

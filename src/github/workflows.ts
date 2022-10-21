@@ -287,6 +287,7 @@ function renderJobs(
       with: step.with,
       "continue-on-error": step.continueOnError,
       "timeout-minutes": step.timeoutMinutes,
+      "working-directory": step.workingDirectory,
     };
   }
 }
