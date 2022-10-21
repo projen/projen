@@ -4893,7 +4893,7 @@ addPostBuildSteps(...steps: JobStep[]): void
   * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
   * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
   * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
-  * **workingDirectory** (<code>Map<string, string></code>)  Specifies a working directory for a step. __*Optional*__
+  * **workingDirectory** (<code>string</code>)  Specifies a working directory for a step. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
   * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
 
@@ -8929,7 +8929,7 @@ addPostBuildSteps(...steps: JobStep[]): void
   * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
   * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
   * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
-  * **workingDirectory** (<code>Map<string, string></code>)  Specifies a working directory for a step. __*Optional*__
+  * **workingDirectory** (<code>string</code>)  Specifies a working directory for a step. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
   * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
 
@@ -9693,7 +9693,7 @@ addGitHubPrePublishingSteps(...steps: JobStep[]): void
   * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
   * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
   * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
-  * **workingDirectory** (<code>Map<string, string></code>)  Specifies a working directory for a step. __*Optional*__
+  * **workingDirectory** (<code>string</code>)  Specifies a working directory for a step. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
   * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
 
