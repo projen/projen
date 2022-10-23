@@ -15,4 +15,4 @@ if (!pathExistsSync(outfile)) {
 
 const content = JSON.parse(readFileSync(outfile, "utf8"));
 content.version = "0.0.0";
-writeFileSync(outfile, JSON.stringify(content, undefined, 2));
+writeFileSync(outfile, JSON.stringify(content, undefined, 2) + "\n");
