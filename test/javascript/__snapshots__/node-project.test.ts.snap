@@ -96,7 +96,7 @@ git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_hap
   Object {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
-    "uses": "actions/upload-artifact@v2",
+    "uses": "actions/upload-artifact@v3",
     "with": Object {
       "name": ".repo.patch",
       "path": ".repo.patch",
@@ -174,7 +174,7 @@ git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_hap
   Object {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
-    "uses": "actions/upload-artifact@v2",
+    "uses": "actions/upload-artifact@v3",
     "with": Object {
       "name": ".repo.patch",
       "path": ".repo.patch",
