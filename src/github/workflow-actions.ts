@@ -28,7 +28,7 @@ export class WorkflowActions {
         name: "Find mutations",
         run: [
           "git add .",
-          `git diff --staged --patch --exit-code > ${GIT_PATCH_FILE} || echo "::set-output name=${options.outputName}::true"`,
+          `git diff --staged --patch --exit-code > ${GIT_PATCH_FILE} || echo "${options.outputName}=true" >> $GITHUB_OUTPUT`,
         ].join("\n"),
       },
       {
