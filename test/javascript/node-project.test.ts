@@ -693,7 +693,7 @@ test("codecov upload added to github release workflow", () => {
   });
 
   const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
-  expect(workflow).toContain("uses: codecov/codecov-action@v1");
+  expect(workflow).toContain("uses: codecov/codecov-action@v3");
 });
 
 test("codecov upload not added to github release workflow", () => {
@@ -702,7 +702,7 @@ test("codecov upload not added to github release workflow", () => {
   });
 
   const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
-  expect(workflow).not.toContain("uses: codecov/codecov-action@v1");
+  expect(workflow).not.toContain("uses: codecov/codecov-action@v3");
 });
 
 describe("scripts", () => {

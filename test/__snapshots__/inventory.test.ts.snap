@@ -2893,7 +2893,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -5665,7 +5665,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -9709,7 +9709,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -12280,7 +12280,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -15016,7 +15016,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -18480,7 +18480,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -21115,7 +21115,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -23289,7 +23289,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -25691,7 +25691,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -28922,7 +28922,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -31084,7 +31084,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -33491,7 +33491,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",
@@ -35876,7 +35876,7 @@ Array [
       },
       Object {
         "default": "false",
-        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.",
+        "docs": "Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.",
         "featured": false,
         "fullType": Object {
           "primitive": "boolean",

@@ -91,12 +91,12 @@ Array [
     "id": "self_mutation",
     "name": "Find mutations",
     "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"",
+git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_happened=true\\" >> $GITHUB_OUTPUT",
   },
   Object {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
-    "uses": "actions/upload-artifact@v2",
+    "uses": "actions/upload-artifact@v3",
     "with": Object {
       "name": ".repo.patch",
       "path": ".repo.patch",
@@ -169,12 +169,12 @@ Array [
     "id": "self_mutation",
     "name": "Find mutations",
     "run": "git add .
-git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"",
+git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_happened=true\\" >> $GITHUB_OUTPUT",
   },
   Object {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
-    "uses": "actions/upload-artifact@v2",
+    "uses": "actions/upload-artifact@v3",
     "with": Object {
       "name": ".repo.patch",
       "path": ".repo.patch",

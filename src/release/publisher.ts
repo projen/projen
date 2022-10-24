@@ -613,7 +613,7 @@ export class Publisher extends Component {
               name: "Extract Version",
               if: "${{ failure() }}",
               id: "extract-version",
-              run: 'echo "::set-output name=VERSION::$(cat dist/version.txt)"',
+              run: 'echo "VERSION=$(cat dist/version.txt)" >> $GITHUB_OUTPUT',
             },
             {
               name: "Create Issue",

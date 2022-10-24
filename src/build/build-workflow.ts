@@ -383,7 +383,7 @@ export class BuildWorkflow extends Component {
             },
             {
               name: "Upload artifact",
-              uses: "actions/upload-artifact@v2.1.1",
+              uses: "actions/upload-artifact@v3",
               with: {
                 name: BUILD_ARTIFACT_NAME,
                 path: this.artifactsDirectory,
