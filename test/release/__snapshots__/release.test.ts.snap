@@ -71,7 +71,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -391,7 +391,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -711,7 +711,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -1031,7 +1031,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -1355,7 +1355,7 @@ jobs:
         run: projen release:10.x
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -1422,7 +1422,7 @@ jobs:
         run: projen release:2.x
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -1489,7 +1489,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -1824,7 +1824,7 @@ jobs:
         run: projen release:foo
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -1952,7 +1952,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -2336,7 +2336,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -2572,7 +2572,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -2612,7 +2612,7 @@ jobs:
       - name: Extract Version
         id: extract-version
         if: \${{ failure() }}
-        run: echo \\"::set-output name=VERSION::$(cat dist/version.txt)\\"
+        run: echo \\"VERSION=$(cat dist/version.txt)\\" >> $GITHUB_OUTPUT
       - name: Create Issue
         if: \${{ failure() }}
         uses: imjohnbo/issue-bot@v3
@@ -2652,7 +2652,7 @@ jobs:
       - name: Extract Version
         id: extract-version
         if: \${{ failure() }}
-        run: echo \\"::set-output name=VERSION::$(cat dist/version.txt)\\"
+        run: echo \\"VERSION=$(cat dist/version.txt)\\" >> $GITHUB_OUTPUT
       - name: Create Issue
         if: \${{ failure() }}
         uses: imjohnbo/issue-bot@v3
@@ -2736,7 +2736,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -3112,7 +3112,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -3508,7 +3508,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -3742,7 +3742,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -4000,7 +4000,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -4476,7 +4476,7 @@ jobs:
         run: projen release:firefox
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -4543,7 +4543,7 @@ jobs:
         run: projen release:safari
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -4866,7 +4866,7 @@ jobs:
         run: projen release:3.x
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -4933,7 +4933,7 @@ jobs:
         run: projen release:next
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -5000,7 +5000,7 @@ jobs:
         run: projen release
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -5364,7 +5364,7 @@ jobs:
         run: projen release:10.x
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
@@ -5639,7 +5639,7 @@ jobs:
         run: projen release:10.x
       - name: Check for new commits
         id: git_remote
-        run: echo ::set-output name=latest_commit::\\"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\"
+        run: echo \\"latest_commit=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)\\" >> $GITHUB_OUTPUT
       - name: Backup artifact permissions
         if: \${{ steps.git_remote.outputs.latest_commit == github.sha }}
         run: cd dist && getfacl -R . > permissions-backup.acl
