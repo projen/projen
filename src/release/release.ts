@@ -593,7 +593,7 @@ export class Release extends Component {
       {
         name: "Upload artifact",
         if: noNewCommits,
-        uses: "actions/upload-artifact@v2.1.1",
+        uses: "actions/upload-artifact@v3",
         with: {
           name: BUILD_ARTIFACT_NAME,
           path: this.artifactsDirectory,

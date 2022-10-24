@@ -34,7 +34,7 @@ export class WorkflowActions {
       {
         if: MUTATIONS_FOUND,
         name: "Upload patch",
-        uses: "actions/upload-artifact@v2",
+        uses: "actions/upload-artifact@v3",
         with: { name: GIT_PATCH_FILE, path: GIT_PATCH_FILE },
       },
     ];
