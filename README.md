@@ -164,11 +164,9 @@ Commands:
   projen new [PROJECT-TYPE-NAME] [OPTIONS]  Creates a new projen project
   projen clobber                            hard resets to HEAD of origin and cleans the local repo
   projen compile                            Only compile
-  projen test:compile                       compiles the test code
   projen test                               Run tests
   projen build                              Full release build (test+compile)
-  projen upgrade-dependencies               upgrade dependencies
-  projen upgrade-projen                     upgrade projen
+  projen upgrade                            upgrade dependencies (including projen)
 ...
 ```
 
