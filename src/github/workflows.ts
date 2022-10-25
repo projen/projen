@@ -328,7 +328,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.python) {
     steps.push({
-      uses: "actions/setup-python@v3",
+      uses: "actions/setup-python@v4",
       with: { "python-version": tools.python.version },
     });
   }
@@ -342,7 +342,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.dotnet) {
     steps.push({
-      uses: "actions/setup-dotnet@v2",
+      uses: "actions/setup-dotnet@v3",
       with: { "dotnet-version": tools.dotnet.version },
     });
   }
