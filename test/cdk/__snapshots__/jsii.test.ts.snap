@@ -1771,7 +1771,7 @@ Object {
       },
     },
     Object {
-      "uses": "actions/setup-dotnet@v2",
+      "uses": "actions/setup-dotnet@v3",
       "with": Object {
         "dotnet-version": "3.x",
       },
@@ -1833,7 +1833,7 @@ Object {
       },
     },
     Object {
-      "uses": "actions/setup-python@v3",
+      "uses": "actions/setup-python@v4",
       "with": Object {
         "python-version": "3.x",
       },
@@ -1893,7 +1893,7 @@ Object {
       },
     },
     Object {
-      "uses": "actions/setup-dotnet@v2",
+      "uses": "actions/setup-dotnet@v3",
       "with": Object {
         "dotnet-version": "3.x",
       },
@@ -2096,7 +2096,7 @@ Object {
       },
     },
     Object {
-      "uses": "actions/setup-python@v3",
+      "uses": "actions/setup-python@v4",
       "with": Object {
         "python-version": "3.x",
       },
@@ -2544,7 +2544,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 14.x
-      - uses: actions/setup-dotnet@v2
+      - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 3.x
       - name: Download build artifacts
@@ -2687,7 +2687,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 14.x
-      - uses: actions/setup-dotnet@v2
+      - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 3.x
       - name: Download build artifacts

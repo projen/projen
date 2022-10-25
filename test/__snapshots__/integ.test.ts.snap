@@ -402,7 +402,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 14.0.0
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.x
       - name: Download build artifacts
@@ -610,7 +610,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 14.0.0
-      - uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.x
       - name: Download build artifacts
