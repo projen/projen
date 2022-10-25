@@ -12,12 +12,12 @@ either a Personal Access Token (PAT) or a GitHub App to provide API access.
 
 [GITHUB_TOKEN]: https://docs.github.com/en/actions/security-guides/automatic-token-authentication
 
-### Personal Access Token
+### Personal Access Token (classic)
 
 Follow the [GitHub docs
-instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-for creating a personal access token. When creating the PAT, grant the token
-`repo`, `workflow` and `write:packages` and `admin:repo_hook` permissions.
+instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-personal-access-token-classic)
+for creating a personal access token (classic). When creating the classic PAT, grant the token
+`repo`, `workflow` and `write:packages` permissions.
 
 Add the token as a secret to your repo under the name `PROJEN_GITHUB_TOKEN`.
 
