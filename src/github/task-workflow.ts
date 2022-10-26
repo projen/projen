@@ -37,6 +37,11 @@ export interface TaskWorkflowOptions {
   readonly condition?: string;
 
   /**
+   * Adds an 'if' condition to the task step within the workflow.
+   */
+  readonly taskCondition?: string;
+
+  /**
    * A directory name which contains artifacts to be uploaded (e.g. `dist`).
    * If this is set, the contents of this directory will be uploaded as an
    * artifact at the end of the workflow run, even if other steps fail.
@@ -191,8 +196,8 @@ export class TaskWorkflow extends GithubWorkflow {
         // run the main build task
         {
           name: options.task.name,
+          if: options.taskCondition,
           run: this.github.project.runTaskCommand(options.task),
-          // TODO: allow setting continue on error here, and maybe allow handling a task that was skipped (i.e. via a special exit code)
         },
 
         ...postBuildSteps,

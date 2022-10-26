@@ -13,6 +13,7 @@ import { ReleaseTrigger } from "./release-trigger";
 
 const BUILD_JOBID = "release";
 const GIT_REMOTE_STEPID = "git_remote";
+const CHECK_RELEASE_STEPID = "check_release";
 const LATEST_COMMIT_OUTPUT = "latest_commit";
 
 type BranchHook = (branch: string) => void;
@@ -118,6 +119,22 @@ export interface ReleaseProjectOptions {
    * @default "Release"
    */
   readonly releaseWorkflowName?: string;
+
+  /**
+   * Skip releasing if only commits matching these types have been made
+   * to the default branch since the last release
+   *
+   * e.g. ["chore"] skips if e.g. the only commit was "chore: update Readme"
+   */
+  readonly skipConventionalCommitTypes?: string[];
+
+  /**
+   * Skip releasing if only commits matching these scopes have been made
+   * to the default branch since the last release
+   *
+   * e.g. ["docs"] skips if e.g. the only commit was "fix(docs): fix docs typo"
+   */
+  readonly skipConventionalCommitScopes?: string[];
 
   /**
    * Defines additional release branches. A workflow will be created for each
@@ -487,27 +504,76 @@ export class Release extends Component {
   /**
    * @returns a workflow or `undefined` if github integration is disabled.
    */
+  // TODO: did this method get too long now? What's the standard in this project?
   private createWorkflow(
     branchName: string,
     branch: Partial<BranchOptions>
   ): TaskWorkflow | undefined {
     const workflowName = branch.workflowName ?? `release-${branchName}`;
 
+    const sharedEnv: Record<string, string> = {};
+    if (branch.majorVersion !== undefined) {
+      sharedEnv.MAJOR = branch.majorVersion.toString();
+    }
+    if (branch.prerelease) {
+      sharedEnv.PRERELEASE = branch.prerelease;
+    }
+
+    if (branch.tagPrefix) {
+      sharedEnv.RELEASE_TAG_PREFIX = branch.tagPrefix;
+    }
+
+    const checkReleaseEnv: Record<string, string> = { ...sharedEnv };
+    if (
+      branch.skipConventionalCommitScopes &&
+      branch.skipConventionalCommitScopes.length > 0
+    ) {
+      checkReleaseEnv.SKIPPED_SCOPES =
+        branch.skipConventionalCommitScopes.join(",");
+    }
+    if (
+      branch.skipConventionalCommitTypes &&
+      branch.skipConventionalCommitTypes.length > 0
+    ) {
+      checkReleaseEnv.SKIPPED_TYPES =
+        branch.skipConventionalCommitTypes.join(",");
+    }
+
+    // if this is the release for "main" or "master", just call it "release:check".
+    // otherwise, "release:check:BRANCH"
+    // TODO: this will conflict if the user configures a branch called "check"
+    const checkReleaseTaskName =
+      branchName === "main" || branchName === "master"
+        ? "release:check"
+        : `release:check:${branchName}`;
+
+    const checkReleaseTask = this.project.addTask(checkReleaseTaskName, {
+      description: `Checks if a release should be skipped because only ignored commits have been made on "${branchName}" branch`,
+      env: checkReleaseEnv,
+      steps: [{ builtin: "release/check-release" }],
+    });
+
+    const releaseNotSkipped = `steps.${CHECK_RELEASE_STEPID}.conclusion == 'success'`;
     // to avoid race conditions between two commits trying to release the same
     // version, we check if the head sha is identical to the remote sha. if
     // not, we will skip the release and just finish the build.
-    const noNewCommits = `\${{ steps.${GIT_REMOTE_STEPID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha }}`;
+    const noNewCommitsOrNotSkipped = `\${{ steps.${GIT_REMOTE_STEPID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha || ${releaseNotSkipped} }}`;
 
     // The arrays are being cloned to avoid accumulating values from previous branches
     const preBuildSteps = [...this.preBuildSteps];
+    if (this.github) {
+      preBuildSteps.unshift({
+        name: "Check if the release should be cancelled",
+        id: CHECK_RELEASE_STEPID,
+        run: this.github.project.runTaskCommand(checkReleaseTask),
+        continueOnError: true,
+      });
+    }
 
     const env: Record<string, string> = {
       RELEASE: "true",
+      ...sharedEnv,
     };
-
-    if (branch.majorVersion !== undefined) {
-      env.MAJOR = branch.majorVersion.toString();
-    }
 
     if (branch.minMajorVersion !== undefined) {
       if (branch.majorVersion !== undefined) {
@@ -517,14 +583,6 @@ export class Release extends Component {
       }
 
       env.MIN_MAJOR = branch.minMajorVersion.toString();
-    }
-
-    if (branch.prerelease) {
-      env.PRERELEASE = branch.prerelease;
-    }
-
-    if (branch.tagPrefix) {
-      env.RELEASE_TAG_PREFIX = branch.tagPrefix;
     }
 
     // the "release" task prepares a release but does not publish anything. the
@@ -542,8 +600,9 @@ export class Release extends Component {
       env,
     });
 
+    releaseTask.spawn(checkReleaseTask); // TODO: add some env var (within that task) that allows to bypass this (i.e. when running release locally to try to build a package / or when using tools like yalc)?
     releaseTask.exec(`rm -fr ${this.artifactsDirectory}`);
-    releaseTask.spawn(this.version.bumpTask); // TODO: this may fail, handle this in git workflow
+    releaseTask.spawn(this.version.bumpTask);
     releaseTask.spawn(this.buildTask);
     releaseTask.spawn(this.version.unbumpTask);
 
@@ -573,7 +632,7 @@ export class Release extends Component {
       releaseTask.spawn(publishTask);
     }
 
-    const postBuildSteps = [...this.postBuildSteps];
+    const postBuildSteps = [...this.postBuildSteps]; // TODO: we'd need to add an "if" to these, too 😅
 
     // check if new commits were pushed to the repo while we were building.
     // if new commits have been pushed, we will cancel this release
@@ -586,13 +645,13 @@ export class Release extends Component {
     postBuildSteps.push(
       {
         name: "Backup artifact permissions",
-        if: noNewCommits,
+        if: noNewCommitsOrNotSkipped,
         continueOnError: true,
         run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
       },
       {
         name: "Upload artifact",
-        if: noNewCommits,
+        if: noNewCommitsOrNotSkipped,
         uses: "actions/upload-artifact@v3",
         with: {
           name: BUILD_ARTIFACT_NAME,
@@ -635,6 +694,7 @@ export class Release extends Component {
         },
         preBuildSteps,
         task: releaseTask,
+        taskCondition: releaseNotSkipped,
         postBuildSteps,
         runsOn: this.workflowRunsOn,
       });
@@ -691,6 +751,22 @@ export interface BranchOptions {
    * @default "latest"
    */
   readonly npmDistTag?: string;
+
+  /**
+   * Skip releasing if only commits matching these types have been made
+   * to this branch since the last release
+   *
+   * e.g. ["chore"] skips if e.g. the only commit was "chore: update Readme"
+   */
+  readonly skipConventionalCommitTypes?: string[];
+
+  /**
+   * Skip releasing if only commits matching these scopes have been made
+   * to this branch since the last release
+   *
+   * e.g. ["docs"] skips if e.g. the only commit was "fix(docs): fix docs typo"
+   */
+  readonly skipConventionalCommitScopes?: string[];
 }
 
 interface ReleaseBranch extends Partial<BranchOptions> {
