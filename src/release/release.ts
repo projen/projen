@@ -557,7 +557,7 @@ export class Release extends Component {
     // to avoid race conditions between two commits trying to release the same
     // version, we check if the head sha is identical to the remote sha. if
     // not, we will skip the release and just finish the build.
-    const noNewCommitsOrNotSkipped = `\${{ steps.${GIT_REMOTE_STEPID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha || ${releaseNotSkipped} }}`;
+    const noNewCommitsAndNotSkipped = `\${{ steps.${GIT_REMOTE_STEPID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha && ${releaseNotSkipped} }}`;
 
     // The arrays are being cloned to avoid accumulating values from previous branches
     const preBuildSteps = [...this.preBuildSteps];
@@ -645,13 +645,13 @@ export class Release extends Component {
     postBuildSteps.push(
       {
         name: "Backup artifact permissions",
-        if: noNewCommitsOrNotSkipped,
+        if: noNewCommitsAndNotSkipped,
         continueOnError: true,
         run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
       },
       {
         name: "Upload artifact",
-        if: noNewCommitsOrNotSkipped,
+        if: noNewCommitsAndNotSkipped,
         uses: "actions/upload-artifact@v3",
         with: {
           name: BUILD_ARTIFACT_NAME,
