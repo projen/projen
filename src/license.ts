@@ -1,3 +1,4 @@
+import { join } from "path";
 import * as fs from "fs-extra";
 import { FileBase, IResolver } from "./file";
 import { Project } from "./project";
@@ -50,7 +51,7 @@ export class License extends FileBase {
 
     const spdx = options.spdx;
     const licensePath = options.licensePath ?? `${__dirname}/../license-text/`;
-    const textFile = `${licensePath}/${spdx}.txt`;
+    const textFile = join(licensePath, `${spdx}.txt`);
     if (!fs.existsSync(textFile)) {
       const licenseError = !options.licensePath
         ? `unsupported license ${spdx}`
