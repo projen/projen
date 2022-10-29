@@ -1504,6 +1504,7 @@ new License(project: Project, options: LicenseOptions)
   * **spdx** (<code>string</code>)  License type (SPDX). 
   * **copyrightOwner** (<code>string</code>)  Copyright owner. __*Default*__: -
   * **copyrightPeriod** (<code>string</code>)  Period of license (e.g. "1998-2023"). __*Default*__: current year (e.g. "2020")
+  * **licensePath** (<code>string</code>)  The directory of your custom license text, in utf-8 or compatible format. __*Optional*__
 
 
 ### Methods
@@ -12200,6 +12201,7 @@ Name | Type | Description
 **spdx**🔹 | <code>string</code> | License type (SPDX).
 **copyrightOwner**?🔹 | <code>string</code> | Copyright owner.<br/>__*Default*__: -
 **copyrightPeriod**?🔹 | <code>string</code> | Period of license (e.g. "1998-2023").<br/>__*Default*__: current year (e.g. "2020")
+**licensePath**?🔹 | <code>string</code> | The directory of your custom license text, in utf-8 or compatible format.<br/>__*Optional*__
 
 
 

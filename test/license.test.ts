@@ -1,5 +1,17 @@
+import fs from "fs";
 import { License } from "../src/license";
 import { synthSnapshot, TestProject } from "./util";
+
+function createCustomLicense(customPath: string, licenseContent: string) {
+  if (!fs.existsSync(customPath)) {
+    fs.mkdirSync(customPath);
+  }
+  fs.writeFile("CustomLicense.txt", licenseContent, function (err) {
+    if (err) {
+      throw err;
+    }
+  });
+}
 
 test("apache with defaults", () => {
   const project = new TestProject();
@@ -77,4 +89,49 @@ test("MIT-0 with owner and period", () => {
   });
 
   expect(synthSnapshot(project).LICENSE).toMatchSnapshot();
+});
+
+test("custom path license", () => {
+  const project = new TestProject();
+  const customPath = `${__dirname}/..`;
+
+  createCustomLicense(customPath, "License Goes Here");
+
+  new License(project, {
+    spdx: "CustomLicense",
+    licensePath: customPath,
+  });
+
+  expect(synthSnapshot(project).LICENSE).toMatchSnapshot();
+});
+
+test("custom path license with copyright owner and period", () => {
+  const project = new TestProject();
+  const customPath = `${__dirname}/..`;
+
+  createCustomLicense(
+    customPath,
+    "License Goes Here\nCopyright $copyright_owner $copyright_period"
+  );
+
+  new License(project, {
+    spdx: "CustomLicense",
+    licensePath: customPath,
+    copyrightOwner: "John Doe",
+    copyrightPeriod: "1900-1920",
+  });
+
+  expect(synthSnapshot(project).LICENSE).toMatchSnapshot();
+});
+
+test("no spdx at custom path fails properly", () => {
+  const project = new TestProject();
+
+  expect(
+    () =>
+      new License(project, {
+        spdx: "NothingHere",
+        licensePath: `${__dirname}/..`,
+      })
+  ).toThrow(/license NothingHere.txt not found at .*/);
 });

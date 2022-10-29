@@ -7,6 +7,7 @@ export interface LicenseOptions {
    * License type (SPDX).
    *
    * @see https://github.com/projen/projen/tree/main/license-text for list of supported licenses
+   * If setting licensePath, any file prefix is accepted.
    */
   readonly spdx: string;
 
@@ -27,6 +28,14 @@ export interface LicenseOptions {
    * @default - current year (e.g. "2020")
    */
   readonly copyrightPeriod?: string;
+
+  /**
+   * The directory of your custom license text, in utf-8 or compatible format.
+   * Note that this is only the path - your file should be named `${spdx}.txt`.
+   *
+   * @example ~/Documents/CustomLicenses/
+   */
+  readonly licensePath?: string;
 }
 
 export class License extends FileBase {
@@ -40,10 +49,13 @@ export class License extends FileBase {
     });
 
     const spdx = options.spdx;
-
-    const textFile = `${__dirname}/../license-text/${spdx}.txt`;
+    const licensePath = options.licensePath ?? `${__dirname}/../license-text/`;
+    const textFile = `${licensePath}/${spdx}.txt`;
     if (!fs.existsSync(textFile)) {
-      throw new Error(`unsupported license ${spdx}`);
+      const licenseError = !options.licensePath
+        ? `unsupported license ${spdx}`
+        : `license ${spdx}.txt not found at ${options.licensePath}`;
+      throw new Error(licenseError);
     }
 
     const years =

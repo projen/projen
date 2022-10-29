@@ -289,3 +289,7 @@ exports[`apache with defaults 1`] = `
    limitations under the License.
 "
 `;
+
+exports[`custom path license 1`] = `""`;
+
+exports[`custom path license with copyright owner and period 1`] = `""`;
