@@ -78,8 +78,9 @@ const project = new java.JavaProject({
 });
 ```
 
-See the API reference for [PomOptions](../API.md#projen-java-pomoptions) for a
-detailed list of options.
+See the API reference for
+[PomOptions](https://projen.io/api/API.html#class-pom--)
+for a detailed list of options.
 
 ## Dependencies
 
