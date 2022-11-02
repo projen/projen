@@ -943,16 +943,6 @@ tsconfig.tsbuildinfo
         "version": "2.6.0",
       },
       Object {
-        "name": "@types/responselike",
-        "type": "override",
-        "version": "1.0.0",
-      },
-      Object {
-        "name": "got",
-        "type": "override",
-        "version": "12.3.1",
-      },
-      Object {
         "name": "@aws-cdk/aws-apigateway",
         "type": "peer",
         "version": "^1.75.0",
@@ -1866,8 +1856,6 @@ project.synth();
     },
     "resolutions": Object {
       "@types/prettier": "2.6.0",
-      "@types/responselike": "1.0.0",
-      "got": "12.3.1",
     },
     "scripts": Object {
       "build": "npx projen build",
@@ -2515,16 +2503,6 @@ tsconfig.tsbuildinfo
         "name": "@types/prettier",
         "type": "override",
         "version": "2.6.0",
-      },
-      Object {
-        "name": "@types/responselike",
-        "type": "override",
-        "version": "1.0.0",
-      },
-      Object {
-        "name": "got",
-        "type": "override",
-        "version": "12.3.1",
       },
       Object {
         "name": "constructs",
@@ -3361,8 +3339,6 @@ project.synth();
     },
     "resolutions": Object {
       "@types/prettier": "2.6.0",
-      "@types/responselike": "1.0.0",
-      "got": "12.3.1",
     },
     "scripts": Object {
       "build": "yarn compile",
@@ -3953,16 +3929,6 @@ tsconfig.tsbuildinfo
       Object {
         "name": "typescript",
         "type": "build",
-      },
-      Object {
-        "name": "@types/responselike",
-        "type": "override",
-        "version": "1.0.0",
-      },
-      Object {
-        "name": "got",
-        "type": "override",
-        "version": "12.3.1",
       },
       Object {
         "name": "@types/node",
@@ -4719,10 +4685,6 @@ project.synth();
     "repository": Object {
       "type": "git",
       "url": "https://github.com/awslabs/cdk8s.git",
-    },
-    "resolutions": Object {
-      "@types/responselike": "1.0.0",
-      "got": "12.3.1",
     },
     "scripts": Object {
       "build": "yarn compile",

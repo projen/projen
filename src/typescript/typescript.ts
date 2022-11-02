@@ -365,12 +365,6 @@ export class TypeScriptProject extends NodeProject {
       `@types/node@^${semver.major(this.package.minNodeVersion ?? "14.0.0")}`
     );
 
-    this.package.addPackageResolutions(
-      // Pin version of @types/responselike and got, see: https://github.com/sindresorhus/got/issues/2129
-      "@types/responselike@1.0.0",
-      "got@12.3.1"
-    );
-
     // generate sample code in `src` and `lib` if these directories are empty or non-existent.
     if (options.sampleCode ?? true) {
       new SampleCode(this);
