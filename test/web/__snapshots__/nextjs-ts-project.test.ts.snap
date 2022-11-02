@@ -341,16 +341,6 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
-        "name": "@types/responselike",
-        "type": "override",
-        "version": "1.0.0",
-      },
-      Object {
-        "name": "got",
-        "type": "override",
-        "version": "12.3.1",
-      },
-      Object {
         "name": "autoprefixer",
         "type": "runtime",
       },
@@ -798,10 +788,6 @@ tsconfig.tsbuildinfo
     },
     "license": "Apache-2.0",
     "name": "test-nextjs-project",
-    "resolutions": Object {
-      "@types/responselike": "1.0.0",
-      "got": "12.3.1",
-    },
     "scripts": Object {
       "build": "npx projen build",
       "compile": "npx projen compile",

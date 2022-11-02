@@ -619,16 +619,6 @@ tsconfig.tsbuildinfo
         "version": "4.17.13",
       },
       Object {
-        "name": "@types/responselike",
-        "type": "override",
-        "version": "1.0.0",
-      },
-      Object {
-        "name": "got",
-        "type": "override",
-        "version": "12.3.1",
-      },
-      Object {
         "name": "react",
         "type": "runtime",
       },
@@ -1077,8 +1067,6 @@ tsconfig.tsbuildinfo
     "resolutions": Object {
       "@types/express": "4.17.13",
       "@types/express-serve-static-core": "4.17.30",
-      "@types/responselike": "1.0.0",
-      "got": "12.3.1",
     },
     "scripts": Object {
       "build": "npx projen build",

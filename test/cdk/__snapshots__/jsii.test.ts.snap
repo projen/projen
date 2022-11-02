@@ -787,16 +787,6 @@ tsconfig.tsbuildinfo
         "type": "override",
         "version": "2.6.0",
       },
-      Object {
-        "name": "@types/responselike",
-        "type": "override",
-        "version": "1.0.0",
-      },
-      Object {
-        "name": "got",
-        "type": "override",
-        "version": "12.3.1",
-      },
     ],
   },
   ".projen/files.json": Object {
@@ -1401,8 +1391,6 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     },
     "resolutions": Object {
       "@types/prettier": "2.6.0",
-      "@types/responselike": "1.0.0",
-      "got": "12.3.1",
     },
     "scripts": Object {
       "build": "npx projen build",
