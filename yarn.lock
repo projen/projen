@@ -807,7 +807,17 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/conventional-changelog-config-spec@^2.1.1":
+"@types/cacheable-request@^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@types/cacheable-request/-/cacheable-request-6.0.2.tgz#c324da0197de0a98a2312156536ae262429ff6b9"
+  integrity sha512-B3xVo+dlKM6nnKTcmm5ZtY/OL8bOAOd2Olee9M1zft65ox50OzjEHW91sDiU9j6cvW8Ejg1/Qkf4xd2kugApUA==
+  dependencies:
+    "@types/http-cache-semantics" "*"
+    "@types/keyv" "*"
+    "@types/node" "*"
+    "@types/responselike" "*"
+
+"@types/conventional-changelog-config-spec@^2.1.2":
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/@types/conventional-changelog-config-spec/-/conventional-changelog-config-spec-2.1.2.tgz#73094def96f13c5e27ee8ffb21c2649f6db6a081"
   integrity sha512-Mahx5cJCf5XKmUsLFfCjDzNaa28aNjCkf4L7eyUZXF+d7Yux0vGbcYPPOUIYx/qrCacjB5s7gztMbAyaONVZEA==
