@@ -8,6 +8,7 @@ import {
 import { Job, JobPermission, JobStep } from "../github/workflows-model";
 import { Task } from "../task";
 import { Version } from "../version";
+import { ConventionalCommitMatcher } from "./check-release";
 import { Publisher } from "./publisher";
 import { ReleaseTrigger } from "./release-trigger";
 
@@ -121,20 +122,10 @@ export interface ReleaseProjectOptions {
   readonly releaseWorkflowName?: string;
 
   /**
-   * Skip releasing if only commits matching these types have been made
-   * to the default branch since the last release
-   *
-   * e.g. ["chore"] skips if e.g. the only commit was "chore: update Readme"
+   * Skip releasing if only matching commits have been made
+   * to the default branch since the last release.
    */
-  readonly skipConventionalCommitTypes?: string[];
-
-  /**
-   * Skip releasing if only commits matching these scopes have been made
-   * to the default branch since the last release
-   *
-   * e.g. ["docs"] skips if e.g. the only commit was "fix(docs): fix docs typo"
-   */
-  readonly skipConventionalCommitScopes?: string[];
+  readonly skipConventionalCommits?: ConventionalCommitMatcher[];
 
   /**
    * Defines additional release branches. A workflow will be created for each
@@ -368,19 +359,19 @@ export class Release extends Component {
     });
 
     const checkReleaseEnv: Record<string, string> = {};
-    if (
-      options.skipConventionalCommitScopes &&
-      options.skipConventionalCommitScopes.length > 0
-    ) {
-      checkReleaseEnv.SKIPPED_SCOPES =
-        options.skipConventionalCommitScopes.join(",");
+    if (options.majorVersion !== undefined) {
+      checkReleaseEnv.MAJOR = options.majorVersion.toString();
     }
-    if (
-      options.skipConventionalCommitTypes &&
-      options.skipConventionalCommitTypes.length > 0
-    ) {
-      checkReleaseEnv.SKIPPED_TYPES =
-        options.skipConventionalCommitTypes.join(",");
+    if (options.prerelease) {
+      checkReleaseEnv.PRERELEASE = options.prerelease;
+    }
+    if (options.releaseTagPrefix) {
+      checkReleaseEnv.RELEASE_TAG_PREFIX = options.releaseTagPrefix;
+    }
+    if (options.skipConventionalCommits) {
+      checkReleaseEnv.SKIPPED_COMMITS = JSON.stringify(
+        options.skipConventionalCommits
+      );
     }
 
     this.checkReleaseTask = this.project.addTask("check-release", {

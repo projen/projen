@@ -20,28 +20,24 @@ import { checkRelease, CheckReleaseOptions } from "./check-release";
 const prerelease = process.env.PRERELEASE;
 const major = process.env.MAJOR;
 const prefix = process.env.RELEASE_TAG_PREFIX;
-const skippedScopes = process.env.SKIPPED_SCOPES;
-const skippedTypes = process.env.SKIPPED_TYPES;
+const skippedCommits = process.env.SKIPPED_COMMITS;
 
-const skipConventionalCommitScopes = skippedScopes?.split(",");
+const skipConventionalCommits = skippedCommits && JSON.parse(skippedCommits);
 if (
-  skipConventionalCommitScopes?.some(
-    (scope) => typeof scope !== "string" || scope.length < 1
+  skipConventionalCommits?.some(
+    (matcher: any) =>
+      !matcher ||
+      !Array.isArray(matcher) ||
+      !matcher.every(
+        (item) =>
+          item &&
+          typeof item === "object" &&
+          (Array.isArray(item.types) || Array.isArray(item.scopes))
+      )
   )
 ) {
   throw new Error(
-    `SKIPPED_SCOPES must be a comma separated list of strings with a length >= 1. Got: ${skippedScopes}`
-  );
-}
-
-const skipConventionalCommitTypes = skippedTypes?.split(",");
-if (
-  skipConventionalCommitTypes?.some(
-    (scope) => typeof scope !== "string" || scope.length < 1
-  )
-) {
-  throw new Error(
-    `SKIPPED_TYPES must be a comma separated list of strings with a length >= 1. Got: ${skippedTypes}`
+    `If set, SKIPPED_COMMITS must be a JSON string containing an array of objects with at least one key of the following keys each: scopes, types`
   );
 }
 
@@ -55,8 +51,7 @@ const opts: CheckReleaseOptions = {
   majorVersion: majorVersion,
   prerelease: prerelease,
   tagPrefix: prefix,
-  skipConventionalCommitScopes,
-  skipConventionalCommitTypes,
+  skipConventionalCommits,
 };
 logging.debug(opts);
 
