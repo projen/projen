@@ -539,13 +539,13 @@ export class Release extends Component {
         branch.skipConventionalCommitTypes.join(",");
     }
 
-    // if this is the release for "main" or "master", just call it "release:check".
-    // otherwise, "release:check:BRANCH"
+    // if this is the release for "main" or "master", just call it "check-release".
+    // otherwise, "check-release:BRANCH"
     // TODO: this will conflict if the user configures a branch called "check"
     const checkReleaseTaskName =
       branchName === "main" || branchName === "master"
-        ? "release:check"
-        : `release:check:${branchName}`;
+        ? "check-release"
+        : `check-release:${branchName}`;
 
     const checkReleaseTask = this.project.addTask(checkReleaseTaskName, {
       description: `Checks if a release should be skipped because only ignored commits have been made on "${branchName}" branch`,
