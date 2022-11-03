@@ -285,6 +285,7 @@ export class Release extends Component {
   public readonly publisher: Publisher;
 
   private readonly buildTask: Task;
+  private readonly checkReleaseTask: Task;
   private readonly version: Version;
   private readonly postBuildSteps: JobStep[];
   private readonly versionFile: string;
@@ -364,6 +365,28 @@ export class Release extends Component {
       publishTasks: options.publishTasks,
       dryRun: options.publishDryRun,
       workflowNodeVersion: options.workflowNodeVersion,
+    });
+
+    const checkReleaseEnv: Record<string, string> = {};
+    if (
+      options.skipConventionalCommitScopes &&
+      options.skipConventionalCommitScopes.length > 0
+    ) {
+      checkReleaseEnv.SKIPPED_SCOPES =
+        options.skipConventionalCommitScopes.join(",");
+    }
+    if (
+      options.skipConventionalCommitTypes &&
+      options.skipConventionalCommitTypes.length > 0
+    ) {
+      checkReleaseEnv.SKIPPED_TYPES =
+        options.skipConventionalCommitTypes.join(",");
+    }
+
+    this.checkReleaseTask = this.project.addTask("check-release", {
+      description: `Checks if a release should be skipped because only ignored commits have been made since the last release`,
+      env: checkReleaseEnv,
+      steps: [{ builtin: "release/check-release" }],
     });
 
     const githubRelease = options.githubRelease ?? true;
@@ -511,48 +534,6 @@ export class Release extends Component {
   ): TaskWorkflow | undefined {
     const workflowName = branch.workflowName ?? `release-${branchName}`;
 
-    const sharedEnv: Record<string, string> = {};
-    if (branch.majorVersion !== undefined) {
-      sharedEnv.MAJOR = branch.majorVersion.toString();
-    }
-    if (branch.prerelease) {
-      sharedEnv.PRERELEASE = branch.prerelease;
-    }
-
-    if (branch.tagPrefix) {
-      sharedEnv.RELEASE_TAG_PREFIX = branch.tagPrefix;
-    }
-
-    const checkReleaseEnv: Record<string, string> = { ...sharedEnv };
-    if (
-      branch.skipConventionalCommitScopes &&
-      branch.skipConventionalCommitScopes.length > 0
-    ) {
-      checkReleaseEnv.SKIPPED_SCOPES =
-        branch.skipConventionalCommitScopes.join(",");
-    }
-    if (
-      branch.skipConventionalCommitTypes &&
-      branch.skipConventionalCommitTypes.length > 0
-    ) {
-      checkReleaseEnv.SKIPPED_TYPES =
-        branch.skipConventionalCommitTypes.join(",");
-    }
-
-    // if this is the release for "main" or "master", just call it "check-release".
-    // otherwise, "check-release:BRANCH"
-    // TODO: this will conflict if the user configures a branch called "check"
-    const checkReleaseTaskName =
-      branchName === "main" || branchName === "master"
-        ? "check-release"
-        : `check-release:${branchName}`;
-
-    const checkReleaseTask = this.project.addTask(checkReleaseTaskName, {
-      description: `Checks if a release should be skipped because only ignored commits have been made on "${branchName}" branch`,
-      env: checkReleaseEnv,
-      steps: [{ builtin: "release/check-release" }],
-    });
-
     const releaseNotSkipped = `steps.${CHECK_RELEASE_STEPID}.conclusion == 'success'`;
     // to avoid race conditions between two commits trying to release the same
     // version, we check if the head sha is identical to the remote sha. if
@@ -565,15 +546,24 @@ export class Release extends Component {
       preBuildSteps.unshift({
         name: "Check if the release should be cancelled",
         id: CHECK_RELEASE_STEPID,
-        run: this.github.project.runTaskCommand(checkReleaseTask),
+        run: this.github.project.runTaskCommand(this.checkReleaseTask),
         continueOnError: true,
-      });
+      }); // TODO: convert this into a separate job to run before the release job itself
     }
 
     const env: Record<string, string> = {
       RELEASE: "true",
-      ...sharedEnv,
     };
+
+    if (branch.majorVersion !== undefined) {
+      env.MAJOR = branch.majorVersion.toString();
+    }
+    if (branch.prerelease) {
+      env.PRERELEASE = branch.prerelease;
+    }
+    if (branch.tagPrefix) {
+      env.RELEASE_TAG_PREFIX = branch.tagPrefix;
+    }
 
     if (branch.minMajorVersion !== undefined) {
       if (branch.majorVersion !== undefined) {
@@ -600,7 +590,7 @@ export class Release extends Component {
       env,
     });
 
-    releaseTask.spawn(checkReleaseTask); // TODO: add some env var (within that task) that allows to bypass this (i.e. when running release locally to try to build a package / or when using tools like yalc)?
+    releaseTask.spawn(this.checkReleaseTask); // TODO: add some env var (within that task) that allows to bypass this (i.e. when running release locally to try to build a package / or when using tools like yalc)?
     releaseTask.exec(`rm -fr ${this.artifactsDirectory}`);
     releaseTask.spawn(this.version.bumpTask);
     releaseTask.spawn(this.buildTask);
@@ -632,7 +622,7 @@ export class Release extends Component {
       releaseTask.spawn(publishTask);
     }
 
-    const postBuildSteps = [...this.postBuildSteps]; // TODO: we'd need to add an "if" to these, too 😅
+    const postBuildSteps = [...this.postBuildSteps];
 
     // check if new commits were pushed to the repo while we were building.
     // if new commits have been pushed, we will cancel this release
