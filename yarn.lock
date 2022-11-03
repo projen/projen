@@ -744,9 +744,9 @@
   integrity sha512-CX6t4SYQ37lzxicAqsBtxA3OseeoVrh9cSJ5PFYam0GksYlupRfy1A+Q4aYD3zvcfECLc0zO2u+ZnR2UYKvCrw==
 
 "@sinonjs/commons@^1.7.0":
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.3.tgz#3802ddd21a50a949b6721ddd72da36e67e7f1b2d"
-  integrity sha512-xkNcLAn/wZaX14RPlwizcKicDk9G3F8m2nU3L7Ukm5zBgTwiT0wsoFAHx9Jq56fJA1z/7uKGtCRu16sOUCLIHQ==
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.4.tgz#d1f2d80f1bd0f2520873f161588bd9b7f8567120"
+  integrity sha512-RpmQdHVo8hCEHDVpO39zToS9jOhR6nw+/lQAzRNq9ErrGV9IeHM71XCn68svVl/euFeVW6BWX4p35gkhbOcSIQ==
   dependencies:
     type-detect "4.0.8"
 
@@ -4364,9 +4364,9 @@ lru-cache@^6.0.0:
     yallist "^4.0.0"
 
 lru-cache@^7.4.4, lru-cache@^7.5.1, lru-cache@^7.7.1:
-  version "7.14.0"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.14.0.tgz#21be64954a4680e303a09e9468f880b98a0b3c7f"
-  integrity sha512-EIRtP1GrSJny0dqb50QXRUNBxHJhcpxHC++M5tD7RYbvLLn5KVWKsbyswSSqDuU15UFi3bgTQIY8nhDMeF6aDQ==
+  version "7.14.1"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.14.1.tgz#8da8d2f5f59827edb388e63e459ac23d6d408fea"
+  integrity sha512-ysxwsnTKdAx96aTRdhDOCQfDgbHnt8SK0KY8SEjO0wHinhWOFTESbjVCMPbU1uGXg/ch4lifqx0wfjOawU2+WA==
 
 make-dir@^3.0.0:
   version "3.1.0"
