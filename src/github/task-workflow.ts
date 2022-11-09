@@ -37,6 +37,14 @@ export interface TaskWorkflowOptions {
   readonly condition?: string;
 
   /**
+   * Identifies any jobs (added e.g. via `.addJob()`) that must complete
+   * successfully before the task job will run. It can be a string or array of
+   * strings. If a job fails, all jobs that need it are skipped unless the
+   * jobs use a conditional expression that causes the job to continue.
+   */
+  readonly needs?: string[];
+
+  /**
    * Adds an 'if' condition to the task step within the workflow.
    */
   readonly taskCondition?: string;
@@ -177,6 +185,7 @@ export class TaskWorkflow extends GithubWorkflow {
       env: options.env,
       permissions: options.permissions,
       if: options.condition,
+      needs: options.needs,
       outputs: options.outputs,
       steps: [
         ...preCheckoutSteps,

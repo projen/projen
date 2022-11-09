@@ -14,8 +14,10 @@ import { ReleaseTrigger } from "./release-trigger";
 
 const BUILD_JOBID = "release";
 const GIT_REMOTE_STEPID = "git_remote";
-const CHECK_RELEASE_STEPID = "check_release";
 const LATEST_COMMIT_OUTPUT = "latest_commit";
+
+const CHECK_RELEASE_JOBID = "check-release";
+const SHOULD_RELEASE_OUTPUT = "should_release";
 
 type BranchHook = (branch: string) => void;
 
@@ -518,29 +520,19 @@ export class Release extends Component {
   /**
    * @returns a workflow or `undefined` if github integration is disabled.
    */
-  // TODO: did this method get too long now? What's the standard in this project?
   private createWorkflow(
     branchName: string,
     branch: Partial<BranchOptions>
   ): TaskWorkflow | undefined {
     const workflowName = branch.workflowName ?? `release-${branchName}`;
 
-    const releaseNotSkipped = `steps.${CHECK_RELEASE_STEPID}.conclusion == 'success'`;
     // to avoid race conditions between two commits trying to release the same
     // version, we check if the head sha is identical to the remote sha. if
     // not, we will skip the release and just finish the build.
-    const noNewCommitsAndNotSkipped = `\${{ steps.${GIT_REMOTE_STEPID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha && ${releaseNotSkipped} }}`;
+    const noNewCommits = `\${{ steps.${GIT_REMOTE_STEPID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha }}`;
 
     // The arrays are being cloned to avoid accumulating values from previous branches
     const preBuildSteps = [...this.preBuildSteps];
-    if (this.github) {
-      preBuildSteps.unshift({
-        name: "Check if the release should be cancelled",
-        id: CHECK_RELEASE_STEPID,
-        run: this.github.project.runTaskCommand(this.checkReleaseTask),
-        continueOnError: true,
-      }); // TODO: convert this into a separate job to run before the release job itself
-    }
 
     const env: Record<string, string> = {
       RELEASE: "true",
@@ -626,13 +618,13 @@ export class Release extends Component {
     postBuildSteps.push(
       {
         name: "Backup artifact permissions",
-        if: noNewCommitsAndNotSkipped,
+        if: noNewCommits,
         continueOnError: true,
         run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
       },
       {
         name: "Upload artifact",
-        if: noNewCommitsAndNotSkipped,
+        if: noNewCommits,
         uses: "actions/upload-artifact@v3",
         with: {
           name: BUILD_ARTIFACT_NAME,
@@ -642,9 +634,16 @@ export class Release extends Component {
     );
 
     if (this.github && !this.releaseTrigger.isManual) {
-      return new TaskWorkflow(this.github, {
+      const checkoutWith = {
+        // we must use 'fetch-depth=0' in order to fetch all tags
+        // otherwise tags are not checked out
+        "fetch-depth": 0,
+      };
+      const workflow = new TaskWorkflow(this.github, {
         name: workflowName,
         jobId: BUILD_JOBID,
+        condition: `needs.${CHECK_RELEASE_JOBID}.outputs.${SHOULD_RELEASE_OUTPUT} == 'true'`,
+        needs: [CHECK_RELEASE_JOBID],
         outputs: {
           latest_commit: {
             stepId: GIT_REMOTE_STEPID,
@@ -668,17 +667,38 @@ export class Release extends Component {
         permissions: {
           contents: JobPermission.WRITE,
         },
-        checkoutWith: {
-          // we must use 'fetch-depth=0' in order to fetch all tags
-          // otherwise tags are not checked out
-          "fetch-depth": 0,
-        },
+        checkoutWith,
         preBuildSteps,
         task: releaseTask,
-        taskCondition: releaseNotSkipped,
         postBuildSteps,
         runsOn: this.workflowRunsOn,
       });
+
+      workflow.addJob(CHECK_RELEASE_JOBID, {
+        permissions: {},
+        runsOn: this.workflowRunsOn ?? ["ubuntu-latest"],
+        steps: [
+          {
+            name: "Checkout",
+            uses: "actions/checkout@v3",
+            ...checkoutWith,
+          },
+          {
+            name: "check_release",
+            run: `${this.github.project.runTaskCommand(
+              this.checkReleaseTask
+            )} && echo "release=true" >> $GITHUB_OUTPUT || echo "release=false" >> $GITHUB_OUTPUT`,
+          },
+        ],
+        outputs: {
+          [SHOULD_RELEASE_OUTPUT]: {
+            stepId: "check_release",
+            outputName: "release",
+          },
+        },
+      });
+
+      return workflow;
     } else {
       return undefined;
     }
