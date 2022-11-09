@@ -276,6 +276,7 @@ Object {
   "scripts": Object {
     "build": "scripts/run-task build",
     "bump": "scripts/run-task bump",
+    "check-release": "scripts/run-task check-release",
     "clobber": "scripts/run-task clobber",
     "compile": "scripts/run-task compile",
     "package": "scripts/run-task package",

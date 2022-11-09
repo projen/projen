@@ -138,6 +138,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -145,6 +146,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -175,6 +177,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: npx projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -483,6 +495,15 @@ permissions-backup.acl
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -562,6 +583,9 @@ permissions-backup.acl
         },
         "name": "release",
         "steps": Array [
+          Object {
+            "spawn": "check-release",
+          },
           Object {
             "exec": "rm -fr dist",
           },
@@ -892,6 +916,7 @@ permissions-backup.acl
     "scripts": Object {
       "build": "npx projen build",
       "bump": "npx projen bump",
+      "check-release": "npx projen check-release",
       "compile": "npx projen compile",
       "default": "npx projen default",
       "dev": "npx projen dev",

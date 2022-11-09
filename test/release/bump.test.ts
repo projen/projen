@@ -252,22 +252,6 @@ test("minMajorVersion throws if set together with majorVersion", async () => {
   ).rejects.toThrow(/minMajorVersion and majorVersion cannot be used together/);
 });
 
-test("throws if only commits with ignored scopes and types have been added since last tag", async () => {
-  await expect(
-    testBump({
-      options: { skipRelease: { types: ["docs"], scopes: ["deps"] } },
-      commits: [
-        { message: "first version", tag: "v1.1.0" },
-        { message: "second version", tag: "v1.2.0" },
-        { message: "docs: updated Readme" },
-        { message: "chore(deps): updated dependencies" },
-      ],
-    })
-  ).rejects.toThrowError(
-    /No new commits have been added that warrant a release. All new commits were ignored/
-  );
-});
-
 //----------------------------------------------------------------------------------------------------------------------------------
 
 async function testBump(

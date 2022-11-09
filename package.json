@@ -12,6 +12,7 @@
     "build": "/bin/bash ./projen.bash build",
     "bump": "/bin/bash ./projen.bash bump",
     "bundle:task-runner": "/bin/bash ./projen.bash bundle:task-runner",
+    "check-release": "/bin/bash ./projen.bash check-release",
     "clobber": "/bin/bash ./projen.bash clobber",
     "compat": "/bin/bash ./projen.bash compat",
     "compile": "/bin/bash ./projen.bash compile",

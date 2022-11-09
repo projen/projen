@@ -58,6 +58,15 @@
         }
       ]
     },
+    "check-release": {
+      "name": "check-release",
+      "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+      "steps": [
+        {
+          "builtin": "release/check-release"
+        }
+      ]
+    },
     "clobber": {
       "name": "clobber",
       "description": "hard resets to HEAD of origin and cleans the local repo",
@@ -300,6 +309,9 @@
         "RELEASE": "true"
       },
       "steps": [
+        {
+          "spawn": "check-release"
+        },
         {
           "exec": "rm -fr dist"
         },

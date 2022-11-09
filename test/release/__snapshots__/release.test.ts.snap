@@ -51,6 +51,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -58,6 +59,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -82,6 +84,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -201,6 +213,15 @@ node_modules/
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -277,6 +298,9 @@ node_modules/
         },
         "name": "release",
         "steps": Array [
+          Object {
+            "spawn": "check-release",
+          },
           Object {
             "exec": "rm -fr dist",
           },
@@ -371,6 +395,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -378,6 +403,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -402,6 +428,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -521,6 +557,15 @@ node_modules/
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -597,6 +642,9 @@ node_modules/
         },
         "name": "release",
         "steps": Array [
+          Object {
+            "spawn": "check-release",
+          },
           Object {
             "exec": "rm -fr dist",
           },
@@ -691,6 +739,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -698,6 +747,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -722,6 +772,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -845,6 +905,15 @@ node_modules/
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -917,6 +986,9 @@ node_modules/
         },
         "name": "release",
         "steps": Array [
+          Object {
+            "spawn": "check-release",
+          },
           Object {
             "exec": "rm -fr dist",
           },
@@ -1011,6 +1083,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -1018,6 +1091,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -1042,6 +1116,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1162,6 +1246,15 @@ node_modules/
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -1239,6 +1332,9 @@ node_modules/
         },
         "name": "release",
         "steps": Array [
+          Object {
+            "spawn": "check-release",
+          },
           Object {
             "exec": "rm -fr dist",
           },
@@ -1335,6 +1431,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -1342,6 +1439,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -1366,6 +1464,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1402,6 +1510,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -1409,6 +1518,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -1433,6 +1543,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1469,6 +1589,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -1476,6 +1597,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -1500,6 +1622,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1597,6 +1729,18 @@ node_modules/
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "env": Object {
+          "MAJOR": "1",
+        },
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -1689,6 +1833,9 @@ node_modules/
         "name": "release",
         "steps": Array [
           Object {
+            "spawn": "check-release",
+          },
+          Object {
             "exec": "rm -fr dist",
           },
           Object {
@@ -1714,6 +1861,9 @@ node_modules/
         "name": "release:10.x",
         "steps": Array [
           Object {
+            "spawn": "check-release",
+          },
+          Object {
             "exec": "rm -fr dist",
           },
           Object {
@@ -1738,6 +1888,9 @@ node_modules/
         },
         "name": "release:2.x",
         "steps": Array [
+          Object {
+            "spawn": "check-release",
+          },
           Object {
             "exec": "rm -fr dist",
           },
@@ -1804,6 +1957,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -1811,6 +1965,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -1835,6 +1990,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -1932,6 +2097,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -1939,6 +2105,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -1963,6 +2130,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2090,6 +2267,18 @@ node_modules/
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "env": Object {
+          "MAJOR": "0",
+        },
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -2197,6 +2386,9 @@ node_modules/
         "name": "release",
         "steps": Array [
           Object {
+            "spawn": "check-release",
+          },
+          Object {
             "exec": "rm -fr dist",
           },
           Object {
@@ -2221,6 +2413,9 @@ node_modules/
         },
         "name": "release:foo",
         "steps": Array [
+          Object {
+            "spawn": "check-release",
+          },
           Object {
             "exec": "rm -fr dist",
           },
@@ -2315,6 +2510,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -2323,6 +2519,7 @@ jobs:
     env:
       CI: \\"true\\"
       FOO: VALUE1
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -2347,6 +2544,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2442,6 +2649,15 @@ node_modules/
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -2499,6 +2715,9 @@ node_modules/
         "name": "release",
         "steps": Array [
           Object {
+            "spawn": "check-release",
+          },
+          Object {
             "exec": "rm -fr dist",
           },
           Object {
@@ -2552,6 +2771,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -2559,6 +2779,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -2583,6 +2804,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2716,6 +2947,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -2723,6 +2955,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -2747,6 +2980,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -2925,6 +3168,15 @@ node_modules/
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -3039,6 +3291,9 @@ node_modules/
         "name": "release",
         "steps": Array [
           Object {
+            "spawn": "check-release",
+          },
+          Object {
             "exec": "rm -fr dist",
           },
           Object {
@@ -3092,6 +3347,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -3099,6 +3355,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -3123,6 +3380,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -3196,6 +3463,18 @@ Object {
         },
       ],
     },
+    "check-release": Object {
+      "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+      "env": Object {
+        "MAJOR": "0",
+      },
+      "name": "check-release",
+      "steps": Array [
+        Object {
+          "builtin": "release/check-release",
+        },
+      ],
+    },
     "compile": Object {
       "description": "Only compile",
       "name": "compile",
@@ -3253,6 +3532,9 @@ Object {
       },
       "name": "release",
       "steps": Array [
+        Object {
+          "spawn": "check-release",
+        },
         Object {
           "exec": "rm -fr dist",
         },
@@ -3339,6 +3621,15 @@ Object {
         },
       ],
     },
+    "check-release": Object {
+      "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+      "name": "check-release",
+      "steps": Array [
+        Object {
+          "builtin": "release/check-release",
+        },
+      ],
+    },
     "compile": Object {
       "description": "Only compile",
       "name": "compile",
@@ -3396,6 +3687,9 @@ Object {
       },
       "name": "release",
       "steps": Array [
+        Object {
+          "spawn": "check-release",
+        },
         Object {
           "exec": "rm -fr dist",
         },
@@ -3488,6 +3782,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -3495,6 +3790,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -3519,6 +3815,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -3612,6 +3918,15 @@ node_modules/
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -3669,6 +3984,9 @@ node_modules/
         "name": "release",
         "steps": Array [
           Object {
+            "spawn": "check-release",
+          },
+          Object {
             "exec": "rm -fr dist",
           },
           Object {
@@ -3722,6 +4040,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -3729,6 +4048,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -3753,6 +4073,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -3825,6 +4155,18 @@ Object {
       "steps": Array [
         Object {
           "builtin": "release/bump-version",
+        },
+      ],
+    },
+    "check-release": Object {
+      "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+      "env": Object {
+        "MAJOR": "0",
+      },
+      "name": "check-release",
+      "steps": Array [
+        Object {
+          "builtin": "release/check-release",
         },
       ],
     },
@@ -3903,6 +4245,9 @@ Object {
       "name": "release",
       "steps": Array [
         Object {
+          "spawn": "check-release",
+        },
+        Object {
           "exec": "rm -fr dist",
         },
         Object {
@@ -3928,6 +4273,9 @@ Object {
       },
       "name": "release:10.x",
       "steps": Array [
+        Object {
+          "spawn": "check-release",
+        },
         Object {
           "exec": "rm -fr dist",
         },
@@ -3980,6 +4328,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -3987,6 +4336,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -4011,6 +4361,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4220,6 +4580,15 @@ Object {
         },
       ],
     },
+    "check-release": Object {
+      "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+      "name": "check-release",
+      "steps": Array [
+        Object {
+          "builtin": "release/check-release",
+        },
+      ],
+    },
     "compile": Object {
       "description": "Only compile",
       "name": "compile",
@@ -4364,6 +4733,9 @@ Object {
       "name": "release",
       "steps": Array [
         Object {
+          "spawn": "check-release",
+        },
+        Object {
           "exec": "rm -fr dist",
         },
         Object {
@@ -4456,6 +4828,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -4463,6 +4836,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -4487,6 +4861,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4523,6 +4907,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -4530,6 +4915,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -4554,6 +4940,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4649,6 +5045,19 @@ node_modules/
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "env": Object {
+          "MAJOR": "1",
+          "RELEASE_TAG_PREFIX": "firefox/",
+        },
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -4725,6 +5134,9 @@ node_modules/
         "name": "release:firefox",
         "steps": Array [
           Object {
+            "spawn": "check-release",
+          },
+          Object {
             "exec": "rm -fr dist",
           },
           Object {
@@ -4750,6 +5162,9 @@ node_modules/
         },
         "name": "release:safari",
         "steps": Array [
+          Object {
+            "spawn": "check-release",
+          },
           Object {
             "exec": "rm -fr dist",
           },
@@ -4846,6 +5261,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -4853,6 +5269,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -4877,6 +5294,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4913,6 +5340,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -4920,6 +5348,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -4944,6 +5373,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -4980,6 +5419,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -4987,6 +5427,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -5011,6 +5452,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -5108,6 +5559,18 @@ node_modules/
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "env": Object {
+          "MAJOR": "1",
+        },
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -5200,6 +5663,9 @@ node_modules/
         "name": "release",
         "steps": Array [
           Object {
+            "spawn": "check-release",
+          },
+          Object {
             "exec": "rm -fr dist",
           },
           Object {
@@ -5224,6 +5690,9 @@ node_modules/
         },
         "name": "release:3.x",
         "steps": Array [
+          Object {
+            "spawn": "check-release",
+          },
           Object {
             "exec": "rm -fr dist",
           },
@@ -5250,6 +5719,9 @@ node_modules/
         },
         "name": "release:next",
         "steps": Array [
+          Object {
+            "spawn": "check-release",
+          },
           Object {
             "exec": "rm -fr dist",
           },
@@ -5344,6 +5816,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -5351,6 +5824,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -5375,6 +5849,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -5468,6 +5952,18 @@ node_modules/
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "env": Object {
+          "MAJOR": "10",
+        },
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -5525,6 +6021,9 @@ node_modules/
         },
         "name": "release:10.x",
         "steps": Array [
+          Object {
+            "spawn": "check-release",
+          },
           Object {
             "exec": "rm -fr dist",
           },
@@ -5619,6 +6118,7 @@ on:
   workflow_dispatch: {}
 jobs:
   release:
+    needs: check-release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -5626,6 +6126,7 @@ jobs:
       latest_commit: \${{ steps.git_remote.outputs.latest_commit }}
     env:
       CI: \\"true\\"
+    if: needs.check-release.outputs.should_release == 'true'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -5650,6 +6151,16 @@ jobs:
         with:
           name: build-artifact
           path: dist
+  check-release:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      should_release: \${{ steps.check_release.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: check_release
+        run: projen check-release && echo \\"release=true\\" >> $GITHUB_OUTPUT || echo \\"release=false\\" >> $GITHUB_OUTPUT
   release_github:
     name: Publish to GitHub Releases
     needs: release
@@ -5743,6 +6254,19 @@ node_modules/
           },
         ],
       },
+      "check-release": Object {
+        "description": "Checks if a release should be skipped because only ignored commits have been made since the last release",
+        "env": Object {
+          "MAJOR": "10",
+          "RELEASE_TAG_PREFIX": "prefix/",
+        },
+        "name": "check-release",
+        "steps": Array [
+          Object {
+            "builtin": "release/check-release",
+          },
+        ],
+      },
       "compile": Object {
         "description": "Only compile",
         "name": "compile",
@@ -5801,6 +6325,9 @@ node_modules/
         },
         "name": "release:10.x",
         "steps": Array [
+          Object {
+            "spawn": "check-release",
+          },
           Object {
             "exec": "rm -fr dist",
           },

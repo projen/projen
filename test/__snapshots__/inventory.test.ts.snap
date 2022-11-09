@@ -4785,6 +4785,27 @@ Array [
         "switch": "scripts",
       },
       Object {
+        "docs": "Skip releasing if only matching commits have been made to the default branch since the last release.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.release.ConventionalCommitMatcher",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "skipConventionalCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "skipConventionalCommits",
+        ],
+        "simpleType": "unknown",
+        "switch": "skip-conventional-commits",
+      },
+      Object {
         "default": "\\"src\\"",
         "docs": "Typescript sources directory.",
         "featured": false,
@@ -7730,6 +7751,27 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "scripts",
+      },
+      Object {
+        "docs": "Skip releasing if only matching commits have been made to the default branch since the last release.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.release.ConventionalCommitMatcher",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "skipConventionalCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "skipConventionalCommits",
+        ],
+        "simpleType": "unknown",
+        "switch": "skip-conventional-commits",
       },
       Object {
         "default": "\\"src\\"",
@@ -11523,6 +11565,27 @@ Array [
         "switch": "scripts",
       },
       Object {
+        "docs": "Skip releasing if only matching commits have been made to the default branch since the last release.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.release.ConventionalCommitMatcher",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "skipConventionalCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "skipConventionalCommits",
+        ],
+        "simpleType": "unknown",
+        "switch": "skip-conventional-commits",
+      },
+      Object {
         "default": "\\"src\\"",
         "docs": "Typescript sources directory.",
         "featured": false,
@@ -14293,6 +14356,27 @@ Array [
         "switch": "scripts",
       },
       Object {
+        "docs": "Skip releasing if only matching commits have been made to the default branch since the last release.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.release.ConventionalCommitMatcher",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "skipConventionalCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "skipConventionalCommits",
+        ],
+        "simpleType": "unknown",
+        "switch": "skip-conventional-commits",
+      },
+      Object {
         "default": "\\"src\\"",
         "docs": "Typescript sources directory.",
         "featured": false,
@@ -16993,6 +17077,27 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "scripts",
+      },
+      Object {
+        "docs": "Skip releasing if only matching commits have been made to the default branch since the last release.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.release.ConventionalCommitMatcher",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "skipConventionalCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "skipConventionalCommits",
+        ],
+        "simpleType": "unknown",
+        "switch": "skip-conventional-commits",
       },
       Object {
         "default": "\\"src\\"",
@@ -20442,6 +20547,27 @@ Array [
         "switch": "scripts",
       },
       Object {
+        "docs": "Skip releasing if only matching commits have been made to the default branch since the last release.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.release.ConventionalCommitMatcher",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "skipConventionalCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "skipConventionalCommits",
+        ],
+        "simpleType": "unknown",
+        "switch": "skip-conventional-commits",
+      },
+      Object {
         "default": "\\"src\\"",
         "docs": "Typescript sources directory.",
         "featured": false,
@@ -22686,6 +22812,27 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "scripts",
+      },
+      Object {
+        "docs": "Skip releasing if only matching commits have been made to the default branch since the last release.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.release.ConventionalCommitMatcher",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "skipConventionalCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "skipConventionalCommits",
+        ],
+        "simpleType": "unknown",
+        "switch": "skip-conventional-commits",
       },
       Object {
         "default": "\\"src\\"",
@@ -25018,6 +25165,27 @@ Array [
         "switch": "scripts",
       },
       Object {
+        "docs": "Skip releasing if only matching commits have been made to the default branch since the last release.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.release.ConventionalCommitMatcher",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "skipConventionalCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "skipConventionalCommits",
+        ],
+        "simpleType": "unknown",
+        "switch": "skip-conventional-commits",
+      },
+      Object {
         "default": "\\"src\\"",
         "docs": "Typescript sources directory.",
         "featured": false,
@@ -27245,6 +27413,27 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "scripts",
+      },
+      Object {
+        "docs": "Skip releasing if only matching commits have been made to the default branch since the last release.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.release.ConventionalCommitMatcher",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "skipConventionalCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "skipConventionalCommits",
+        ],
+        "simpleType": "unknown",
+        "switch": "skip-conventional-commits",
       },
       Object {
         "docs": "Package's Stability.",
@@ -30517,6 +30706,27 @@ Array [
         "switch": "scripts",
       },
       Object {
+        "docs": "Skip releasing if only matching commits have been made to the default branch since the last release.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.release.ConventionalCommitMatcher",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "skipConventionalCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "skipConventionalCommits",
+        ],
+        "simpleType": "unknown",
+        "switch": "skip-conventional-commits",
+      },
+      Object {
         "default": "\\"src\\"",
         "docs": "Source directory.",
         "featured": false,
@@ -32833,6 +33043,27 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "scripts",
+      },
+      Object {
+        "docs": "Skip releasing if only matching commits have been made to the default branch since the last release.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.release.ConventionalCommitMatcher",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "skipConventionalCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "skipConventionalCommits",
+        ],
+        "simpleType": "unknown",
+        "switch": "skip-conventional-commits",
       },
       Object {
         "default": "\\"src\\"",
@@ -35220,6 +35451,27 @@ Array [
         "switch": "scripts",
       },
       Object {
+        "docs": "Skip releasing if only matching commits have been made to the default branch since the last release.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.release.ConventionalCommitMatcher",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "skipConventionalCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "skipConventionalCommits",
+        ],
+        "simpleType": "unknown",
+        "switch": "skip-conventional-commits",
+      },
+      Object {
         "default": "\\"src\\"",
         "docs": "Typescript sources directory.",
         "featured": false,
@@ -37603,6 +37855,27 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "scripts",
+      },
+      Object {
+        "docs": "Skip releasing if only matching commits have been made to the default branch since the last release.",
+        "featured": false,
+        "fullType": Object {
+          "collection": Object {
+            "elementtype": Object {
+              "fqn": "projen.release.ConventionalCommitMatcher",
+            },
+            "kind": "array",
+          },
+        },
+        "jsonLike": true,
+        "name": "skipConventionalCommits",
+        "optional": true,
+        "parent": "ReleaseProjectOptions",
+        "path": Array [
+          "skipConventionalCommits",
+        ],
+        "simpleType": "unknown",
+        "switch": "skip-conventional-commits",
       },
       Object {
         "default": "\\"src\\"",
