@@ -2,12 +2,6 @@ import * as conventionalCommitsParser from "conventional-commits-parser";
 import * as gitRawCommits from "git-raw-commits";
 import { determineLatestTag } from "./bump-version";
 
-// from: https://learn.microsoft.com/en-us/javascript/api/@azure/keyvault-certificates/requireatleastone?view=azure-node-latest
-type RequireAtLeastOne<T> = {
-  [K in keyof T]-?: Required<Pick<T, K>> &
-    Partial<Pick<T, Exclude<keyof T, K>>>;
-}[keyof T];
-
 /**
  * Matches conventional commits. Absence of either types or scopes
  * matches all of them while only checking for the other.
@@ -17,10 +11,10 @@ type RequireAtLeastOne<T> = {
  * { types: ['chore', 'ci'] } matches "chore(lib)", "chore:", "ci:", etc.
  * { scopes: ['experimental'] } matches "feat(experimental)", "chore(experimental)", etc.
  */
-export type ConventionalCommitMatcher = RequireAtLeastOne<{
-  types: string[];
-  scopes: string[];
-}>;
+export interface ConventionalCommitMatcher {
+  readonly types?: string[];
+  readonly scopes?: string[];
+}
 
 export interface CheckReleaseOptions {
   /**
@@ -104,7 +98,11 @@ async function parseCommits(
   return new Promise<conventionalCommitsParser.Commit[]>((resolve, reject) => {
     const commits: conventionalCommitsParser.Commit[] = [];
     gitRawCommits({ from: options.latestTag }, { cwd: options.cwd })
-      .pipe(conventionalCommitsParser())
+      .pipe(
+        conventionalCommitsParser({
+          mergePattern: /^Merge pull request #(\d+) from (.*)$/,
+        })
+      )
       .on("data", (d: conventionalCommitsParser.Commit) => {
         commits.push(d);
       })
