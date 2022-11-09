@@ -44,9 +44,9 @@
     semver "^6.3.0"
 
 "@babel/generator@^7.20.1", "@babel/generator@^7.20.2", "@babel/generator@^7.7.2":
-  version "7.20.3"
-  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.20.3.tgz#e58c9ae2f7bf7fdf4899160cf1e04400a82cd641"
-  integrity sha512-Wl5ilw2UD1+ZYprHVprxHZJCFeBWlzZYOovE4SDYLZnqCOD11j+0QzNeEWKLLTWM7nixrZEh7vNIyb76MyJg3A==
+  version "7.20.4"
+  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.20.4.tgz#4d9f8f0c30be75fd90a0562099a26e5839602ab8"
+  integrity sha512-luCf7yk/cm7yab6CAW1aiFnmEfBJplb/JojV56MYEK7ziWfGmFlTfmL9Ehwfy4gFhbjBfWO1wj7/TuSbVNEEtA==
   dependencies:
     "@babel/types" "^7.20.2"
     "@jridgewell/gen-mapping" "^0.3.2"
@@ -1220,14 +1220,14 @@ array-ify@^1.0.0:
   integrity sha512-c5AMf34bKdvPhQ7tBGhqkgKNUzMr4WUs+WDtC2ZUGOUncbxKMTvqxYctiseW3+L4bA8ec+GcZ6/A/FW4m8ukng==
 
 array-includes@^3.1.4:
-  version "3.1.5"
-  resolved "https://registry.yarnpkg.com/array-includes/-/array-includes-3.1.5.tgz#2c320010db8d31031fd2a5f6b3bbd4b1aad31bdb"
-  integrity sha512-iSDYZMMyTPkiFasVqfuAQnWAYcvO/SeBSCGKePoEthjp4LEMTe4uLc7b025o4jAZpHhihh8xPo99TNWUWWkGDQ==
+  version "3.1.6"
+  resolved "https://registry.yarnpkg.com/array-includes/-/array-includes-3.1.6.tgz#9e9e720e194f198266ba9e18c29e6a9b0e4b225f"
+  integrity sha512-sgTbLvL6cNnw24FnbaDyjmvddQ2ML8arZsgaJhoABMoplz/4QRhtrYS+alr1BUM1Bwp6dhx8vVCBSLG+StwOFw==
   dependencies:
     call-bind "^1.0.2"
     define-properties "^1.1.4"
-    es-abstract "^1.19.5"
-    get-intrinsic "^1.1.1"
+    es-abstract "^1.20.4"
+    get-intrinsic "^1.1.3"
     is-string "^1.0.7"
 
 array-union@^2.1.0:
@@ -2200,7 +2200,7 @@ error-ex@^1.3.1:
   dependencies:
     is-arrayish "^0.2.1"
 
-es-abstract@^1.19.0, es-abstract@^1.19.5, es-abstract@^1.20.4:
+es-abstract@^1.19.0, es-abstract@^1.20.4:
   version "1.20.4"
   resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.20.4.tgz#1d103f9f8d78d4cf0713edcd6d0ed1a46eed5861"
   integrity sha512-0UtvRN79eMe2L+UNEF1BwRe364sj/DXhQ/k5FmivgoSdpM90b8Jc0mDzKMGo7QS0BVbOP/bTwBKNnDc9rNzaPA==
@@ -5770,9 +5770,9 @@ ssri@^9.0.0:
     minipass "^3.1.1"
 
 stack-utils@^2.0.3:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/stack-utils/-/stack-utils-2.0.5.tgz#d25265fca995154659dbbfba3b49254778d2fdd5"
-  integrity sha512-xrQcmYhOsn/1kX+Vraq+7j4oE2j/6BFscZ0etmYg81xuM8Gq0022Pxb8+IqgOFUIaxHs0KaSb7T1+OegiNrNFA==
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/stack-utils/-/stack-utils-2.0.6.tgz#aaf0748169c02fc33c8232abccf933f54a1cc34f"
+  integrity sha512-XlkWvfIm6RmsWtNJx+uqtKLS8eqFbxUg0ZzLXqY0caEy9l7hruX8IpiDnjsLavoBgqCCR71TqWO8MaXYheJ3RQ==
   dependencies:
     escape-string-regexp "^2.0.0"
 
