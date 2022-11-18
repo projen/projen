@@ -355,6 +355,37 @@ test("it is possible to edit the description", () => {
   expect(files[".projen/tasks.json"].tasks.t2.description).toBe("world");
 });
 
+test("steps can receive args", () => {
+  const p = new TestProject();
+
+  // WHEN
+  const hello = p.addTask("hello");
+  const world = p.addTask("world", {
+    exec: "echo $@ world",
+    receiveArgs: true,
+  });
+
+  hello.exec("echo hello", { receiveArgs: true });
+  hello.spawn(world, { receiveArgs: true });
+
+  // THEN
+  expectManifest(p, {
+    tasks: {
+      hello: {
+        name: "hello",
+        steps: [
+          { exec: "echo hello", receiveArgs: true },
+          { spawn: "world", receiveArgs: true },
+        ],
+      },
+      world: {
+        name: "world",
+        steps: [{ exec: "echo $@ world", receiveArgs: true }],
+      },
+    },
+  });
+});
+
 function expectManifest(p: Project, toStrictEqual: TasksManifest) {
   const manifest = synthTasksManifest(p);
   delete manifest["//"];
