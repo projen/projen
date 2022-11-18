@@ -232,10 +232,57 @@ test("requiredEnv can be used to specify required environment variables", () => 
   ).toStrictEqual(["env1 env2 env3"]);
 });
 
+test("exec can receive args", () => {
+  // GIVEN
+  const p = new TestProject();
+
+  // WHEN
+  p.addTask("test1", {
+    exec: "echo hello",
+    receiveArgs: true,
+  });
+
+  // THEN
+  expect(
+    executeTask(p, "test1", {}, ["world", "and", "other", "planets"])
+  ).toEqual(["hello world and other planets"]);
+});
+
+test("exec can receive args at marker", () => {
+  // GIVEN
+  const p = new TestProject();
+
+  // WHEN
+  p.addTask("test1", {
+    exec: "echo hello $@ world",
+    receiveArgs: true,
+  });
+
+  // THEN
+  expect(executeTask(p, "test1", {}, ["beautiful", "and", "round"])).toEqual([
+    "hello beautiful and round world",
+  ]);
+});
+
+test("spawn can receive args", () => {
+  const p = new TestProject();
+  const parent = p.addTask("parent");
+  const child = p.addTask("child", {
+    exec: 'echo "child: [$@]"',
+    receiveArgs: true,
+  });
+  parent.spawn(child, { receiveArgs: true });
+
+  expect(executeTask(p, "parent", {}, ["one", "--two", "-3"])).toStrictEqual([
+    "child: [one --two -3]",
+  ]);
+});
+
 function executeTask(
   p: Project,
   taskName: string,
-  env: Record<string, string> = {}
+  env: Record<string, string> = {},
+  additionalArgs: string[] = []
 ) {
   p.synth();
 
@@ -243,12 +290,16 @@ function executeTask(
     (x) => `"${x}"`
   );
 
-  const result = spawnSync(`"${process.execPath}"`, args, {
-    cwd: p.outdir,
-    shell: true,
-    env: { ...process.env, ...env },
-    timeout: 10_000, // let's try to catch hanging processes sooner than later
-  });
+  const result = spawnSync(
+    `"${process.execPath}"`,
+    [...args, ...additionalArgs],
+    {
+      cwd: p.outdir,
+      shell: true,
+      env: { ...process.env, ...env },
+      timeout: 10_000, // let's try to catch hanging processes sooner than later
+    }
+  );
   if (result.status !== 0) {
     throw new Error(`non-zero exit code: ${result.stderr.toString("utf-8")}`);
   }

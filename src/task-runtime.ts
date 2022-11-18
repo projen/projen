@@ -10,6 +10,7 @@ import * as logging from "./logging";
 import { TasksManifest, TaskSpec } from "./task-model";
 
 const ENV_TRIM_LEN = 20;
+const ARGS_MARKER = "$@";
 
 /**
  * The runtime component of the tasks engine.
@@ -62,13 +63,17 @@ export class TaskRuntime {
    * Runs the task.
    * @param name The task name.
    */
-  public runTask(name: string, parents: string[] = []) {
+  public runTask(
+    name: string,
+    parents: string[] = [],
+    args: Array<string | number> = []
+  ) {
     const task = this.tryFindTask(name);
     if (!task) {
       throw new Error(`cannot find command ${task}`);
     }
 
-    new RunTask(this, task, parents);
+    new RunTask(this, task, parents, args);
   }
 }
 
@@ -81,7 +86,8 @@ class RunTask {
   constructor(
     private readonly runtime: TaskRuntime,
     private readonly task: TaskSpec,
-    parents: string[] = []
+    parents: string[] = [],
+    args: Array<string | number> = []
   ) {
     this.workdir = task.cwd ?? this.runtime.workdir;
 
@@ -137,7 +143,11 @@ class RunTask {
       }
 
       if (step.spawn) {
-        this.runtime.runTask(step.spawn, [...this.parents, this.task.name]);
+        this.runtime.runTask(
+          step.spawn,
+          [...this.parents, this.task.name],
+          step.receiveArgs ? args : []
+        );
       }
 
       const execs = step.exec ? [step.exec] : [];
@@ -158,6 +168,15 @@ class RunTask {
         } else {
           command = exec;
         }
+
+        if (step.receiveArgs) {
+          if (command.includes(ARGS_MARKER)) {
+            command = command.replace(ARGS_MARKER, args.join(" "));
+          } else {
+            command = [command, ...args].join(" ");
+          }
+        }
+
         const cwd = step.cwd;
         try {
           const result = this.shell({

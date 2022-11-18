@@ -14,6 +14,7 @@ async function main() {
   ya.commandDir("cmds");
 
   const runtime = new TaskRuntime(".");
+  ya.parserConfiguration({ "unknown-options-as-args": true });
   discoverTaskCommands(runtime, ya);
 
   ya.recommendCommands();
