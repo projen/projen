@@ -883,6 +883,7 @@ tsconfig.tsbuildinfo
         "steps": Array [
           Object {
             "exec": "jest --passWithNoTests --updateSnapshot",
+            "receiveArgs": true,
           },
           Object {
             "spawn": "eslint",
