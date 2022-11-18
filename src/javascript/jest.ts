@@ -745,7 +745,7 @@ export class Jest {
   }
 
   private configureTestCommand(updateSnapshot: UpdateSnapshot) {
-    const jestOpts = ["--passWithNoTests", "--all", ...this.extraCliOptions];
+    const jestOpts = ["--passWithNoTests", ...this.extraCliOptions];
     const jestConfigOpts =
       this.file && this.file.path != "jest.config.json"
         ? ` -c ${this.file.path}`
