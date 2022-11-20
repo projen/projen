@@ -1,5 +1,6 @@
 import * as chalk from "chalk";
 import * as yargs from "yargs";
+import { hideBin } from "yargs/helpers";
 import * as logging from "../logging";
 import { TaskSpec } from "../task-model";
 import { TaskRuntime } from "../task-runtime";
@@ -24,7 +25,7 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
       if (taskReceivesArgs) {
         args.strict(false);
         args.strictCommands(false);
-        taskArgs = args.argv._.slice(1);
+        taskArgs = hideBin(process.argv).slice(1);
       }
 
       args.option("inspect", {
