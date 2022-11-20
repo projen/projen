@@ -53,11 +53,13 @@ export class CdkTasks extends Component {
     this.deploy = project.addTask("deploy", {
       description: "Deploys your CDK app to the AWS cloud",
       exec: "cdk deploy",
+      receiveArgs: true,
     });
 
     this.destroy = project.addTask("destroy", {
       description: "Destroys your cdk app in the AWS cloud",
       exec: "cdk destroy",
+      receiveArgs: true,
     });
 
     this.diff = project.addTask("diff", {
