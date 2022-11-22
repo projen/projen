@@ -173,6 +173,21 @@ test("projen new --no-comments", () => {
   });
 });
 
+test("projen new with unknown option works", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, [
+      "new",
+      "node",
+      "--DOES_NOT_EXIST",
+      "--no-synth",
+    ]);
+
+    const projenrc = directorySnapshot(projectdir)[".projenrc.js"];
+    expect(projenrc).toBeDefined();
+    expect(projenrc).toMatchSnapshot();
+  });
+});
+
 test("creating node project with enum-typed CLI arg", () => {
   withProjectDir((projectdir) => {
     execProjenCLI(projectdir, [
