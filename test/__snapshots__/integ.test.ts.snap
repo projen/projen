@@ -1359,6 +1359,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "steps": Array [
           Object {
             "exec": "jest --passWithNoTests --coverageProvider=v8 --updateSnapshot",
+            "receiveArgs": true,
           },
           Object {
             "spawn": "eslint",
@@ -2735,6 +2736,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "steps": Array [
           Object {
             "exec": "jest --passWithNoTests --updateSnapshot",
+            "receiveArgs": true,
           },
           Object {
             "spawn": "eslint",
@@ -4129,6 +4131,7 @@ tsconfig.tsbuildinfo
         "steps": Array [
           Object {
             "exec": "jest --passWithNoTests --updateSnapshot",
+            "receiveArgs": true,
           },
           Object {
             "spawn": "eslint",
@@ -5373,6 +5376,7 @@ permissions-backup.acl
         "steps": Array [
           Object {
             "exec": "jest --passWithNoTests --updateSnapshot",
+            "receiveArgs": true,
           },
         ],
       },

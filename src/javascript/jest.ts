@@ -768,11 +768,14 @@ export class Jest {
         this.project.addTask("test:update", {
           description: "Update jest snapshots",
           exec: `jest --updateSnapshot ${jestOpts.join(" ")}${jestConfigOpts}`,
+          receiveArgs: true,
         });
       }
     }
 
-    this.project.testTask.exec(`jest ${jestOpts.join(" ")}${jestConfigOpts}`);
+    this.project.testTask.exec(`jest ${jestOpts.join(" ")}${jestConfigOpts}`, {
+      receiveArgs: true,
+    });
 
     const testWatch = this.project.tasks.tryFind("test:watch");
     if (!testWatch) {
