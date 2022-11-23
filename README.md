@@ -6,7 +6,7 @@
 </p>
 
 <p align="center">
-  Define and maintain complex project configuration through code.
+
 </p>
 
 <p align="center">
