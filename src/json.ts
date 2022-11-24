@@ -54,7 +54,7 @@ export class JsonFile extends ObjectFile {
 
     let content = JSON.stringify(sanitized, undefined, 2);
     if (this.marker && this.supportsComments) {
-      content = content.slice(0, -1) + `// ${this.marker}\n}`;
+      content = `// ${this.marker}\n${content}`;
     }
 
     if (this.newline) {
