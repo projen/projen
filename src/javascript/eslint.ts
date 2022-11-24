@@ -379,12 +379,14 @@ export class Eslint extends Component {
     if (options.yaml) {
       new YamlFile(project, ".eslintrc.yml", {
         obj: this.config,
-        marker: false,
+        marker: true,
       });
     } else {
       new JsonFile(project, ".eslintrc.json", {
         obj: this.config,
-        marker: false,
+        // https://eslint.org/docs/latest/user-guide/configuring/configuration-files#comments-in-configuration-files
+        marker: true,
+        allowComments: true,
       });
     }
 
