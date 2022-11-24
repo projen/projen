@@ -136,10 +136,15 @@ test("json file with allowComments can contain projen marker as comment", () => 
   });
 
   const output = synthSnapshot(prj, {
-    parseJson: false,
+    parseJson: true,
   })["my/json/file-marker.json"];
 
-  expect(output).toContain(`// ${file.marker}`);
+  expect(output[Symbol.for("before-all")]).toMatchObject([
+    {
+      type: "LineComment",
+      value: ` ${file.marker}`,
+    },
+  ]);
 });
 
 describe("newline", () => {

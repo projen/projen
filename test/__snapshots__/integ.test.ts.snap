@@ -2,237 +2,239 @@
 
 exports[`cdk-watchful 1`] = `
 Object {
-  ".eslintrc.json": Object {
-    "env": Object {
-      "jest": true,
-      "node": true,
-    },
-    "extends": Array [
-      "plugin:import/typescript",
-    ],
-    "ignorePatterns": Array [
-      "*.js",
-      "!.projenrc.js",
-      "*.d.ts",
-      "node_modules/",
-      "*.generated.ts",
-      "coverage",
-    ],
-    "overrides": Array [
-      Object {
-        "files": Array [
-          ".projenrc.js",
-        ],
-        "rules": Object {
-          "@typescript-eslint/no-require-imports": "off",
-          "import/no-extraneous-dependencies": "off",
-        },
-      },
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": Object {
-      "ecmaVersion": 2018,
-      "project": "./tsconfig.dev.json",
-      "sourceType": "module",
-    },
-    "plugins": Array [
-      "@typescript-eslint",
-      "import",
-    ],
-    "root": true,
-    "rules": Object {
-      "@typescript-eslint/indent": Array [
-        "error",
-        2,
-      ],
-      "@typescript-eslint/member-delimiter-style": Array [
-        "error",
-      ],
-      "@typescript-eslint/member-ordering": Array [
-        "error",
-        Object {
-          "default": Array [
-            "public-static-field",
-            "public-static-method",
-            "protected-static-field",
-            "protected-static-method",
-            "private-static-field",
-            "private-static-method",
-            "field",
-            "constructor",
-            "method",
-          ],
-        },
-      ],
-      "@typescript-eslint/no-floating-promises": Array [
-        "error",
-      ],
-      "@typescript-eslint/no-require-imports": Array [
-        "error",
-      ],
-      "@typescript-eslint/no-shadow": Array [
-        "error",
-      ],
-      "@typescript-eslint/return-await": Array [
-        "error",
-      ],
-      "array-bracket-newline": Array [
-        "error",
-        "consistent",
-      ],
-      "array-bracket-spacing": Array [
-        "error",
-        "never",
-      ],
-      "brace-style": Array [
-        "error",
-        "1tbs",
-        Object {
-          "allowSingleLine": true,
-        },
-      ],
-      "comma-dangle": Array [
-        "error",
-        "always-multiline",
-      ],
-      "comma-spacing": Array [
-        "error",
-        Object {
-          "after": true,
-          "before": false,
-        },
-      ],
-      "curly": Array [
-        "error",
-        "multi-line",
-        "consistent",
-      ],
-      "dot-notation": Array [
-        "error",
-      ],
-      "import/no-extraneous-dependencies": Array [
-        "error",
-        Object {
-          "devDependencies": Array [
-            "**/test/**",
-            "**/build-tools/**",
-          ],
-          "optionalDependencies": false,
-          "peerDependencies": true,
-        },
-      ],
-      "import/no-unresolved": Array [
-        "error",
-      ],
-      "import/order": Array [
-        "warn",
-        Object {
-          "alphabetize": Object {
-            "caseInsensitive": true,
-            "order": "asc",
-          },
-          "groups": Array [
-            "builtin",
-            "external",
-          ],
-        },
-      ],
-      "indent": Array [
-        "off",
-      ],
-      "key-spacing": Array [
-        "error",
-      ],
-      "keyword-spacing": Array [
-        "error",
-      ],
-      "max-len": Array [
-        "error",
-        Object {
-          "code": 150,
-          "ignoreComments": true,
-          "ignoreRegExpLiterals": true,
-          "ignoreStrings": true,
-          "ignoreTemplateLiterals": true,
-          "ignoreUrls": true,
-        },
-      ],
-      "no-bitwise": Array [
-        "error",
-      ],
-      "no-duplicate-imports": Array [
-        "error",
-      ],
-      "no-multi-spaces": Array [
-        "error",
-        Object {
-          "ignoreEOLComments": false,
-        },
-      ],
-      "no-multiple-empty-lines": Array [
-        "error",
-      ],
-      "no-return-await": Array [
-        "off",
-      ],
-      "no-shadow": Array [
-        "off",
-      ],
-      "no-trailing-spaces": Array [
-        "error",
-      ],
-      "object-curly-newline": Array [
-        "error",
-        Object {
-          "consistent": true,
-          "multiline": true,
-        },
-      ],
-      "object-curly-spacing": Array [
-        "error",
-        "always",
-      ],
-      "object-property-newline": Array [
-        "error",
-        Object {
-          "allowAllPropertiesOnSameLine": true,
-        },
-      ],
-      "quote-props": Array [
-        "error",
-        "consistent-as-needed",
-      ],
-      "quotes": Array [
-        "error",
-        "single",
-        Object {
-          "avoidEscape": true,
-        },
-      ],
-      "semi": Array [
-        "error",
-        "always",
-      ],
-      "space-before-blocks": Array [
-        "error",
-      ],
-    },
-    "settings": Object {
-      "import/parsers": Object {
-        "@typescript-eslint/parser": Array [
-          ".ts",
-          ".tsx",
-        ],
-      },
-      "import/resolver": Object {
-        "node": Object {},
-        "typescript": Object {
-          "alwaysTryTypes": true,
-          "project": "./tsconfig.dev.json",
-        },
-      },
-    },
+  ".eslintrc.json": "// ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+{
+  \\"env\\": {
+    \\"jest\\": true,
+    \\"node\\": true
   },
+  \\"root\\": true,
+  \\"plugins\\": [
+    \\"@typescript-eslint\\",
+    \\"import\\"
+  ],
+  \\"parser\\": \\"@typescript-eslint/parser\\",
+  \\"parserOptions\\": {
+    \\"ecmaVersion\\": 2018,
+    \\"sourceType\\": \\"module\\",
+    \\"project\\": \\"./tsconfig.dev.json\\"
+  },
+  \\"extends\\": [
+    \\"plugin:import/typescript\\"
+  ],
+  \\"settings\\": {
+    \\"import/parsers\\": {
+      \\"@typescript-eslint/parser\\": [
+        \\".ts\\",
+        \\".tsx\\"
+      ]
+    },
+    \\"import/resolver\\": {
+      \\"node\\": {},
+      \\"typescript\\": {
+        \\"project\\": \\"./tsconfig.dev.json\\",
+        \\"alwaysTryTypes\\": true
+      }
+    }
+  },
+  \\"ignorePatterns\\": [
+    \\"*.js\\",
+    \\"!.projenrc.js\\",
+    \\"*.d.ts\\",
+    \\"node_modules/\\",
+    \\"*.generated.ts\\",
+    \\"coverage\\"
+  ],
+  \\"rules\\": {
+    \\"indent\\": [
+      \\"off\\"
+    ],
+    \\"@typescript-eslint/indent\\": [
+      \\"error\\",
+      2
+    ],
+    \\"quotes\\": [
+      \\"error\\",
+      \\"single\\",
+      {
+        \\"avoidEscape\\": true
+      }
+    ],
+    \\"comma-dangle\\": [
+      \\"error\\",
+      \\"always-multiline\\"
+    ],
+    \\"comma-spacing\\": [
+      \\"error\\",
+      {
+        \\"before\\": false,
+        \\"after\\": true
+      }
+    ],
+    \\"no-multi-spaces\\": [
+      \\"error\\",
+      {
+        \\"ignoreEOLComments\\": false
+      }
+    ],
+    \\"array-bracket-spacing\\": [
+      \\"error\\",
+      \\"never\\"
+    ],
+    \\"array-bracket-newline\\": [
+      \\"error\\",
+      \\"consistent\\"
+    ],
+    \\"object-curly-spacing\\": [
+      \\"error\\",
+      \\"always\\"
+    ],
+    \\"object-curly-newline\\": [
+      \\"error\\",
+      {
+        \\"multiline\\": true,
+        \\"consistent\\": true
+      }
+    ],
+    \\"object-property-newline\\": [
+      \\"error\\",
+      {
+        \\"allowAllPropertiesOnSameLine\\": true
+      }
+    ],
+    \\"keyword-spacing\\": [
+      \\"error\\"
+    ],
+    \\"brace-style\\": [
+      \\"error\\",
+      \\"1tbs\\",
+      {
+        \\"allowSingleLine\\": true
+      }
+    ],
+    \\"space-before-blocks\\": [
+      \\"error\\"
+    ],
+    \\"curly\\": [
+      \\"error\\",
+      \\"multi-line\\",
+      \\"consistent\\"
+    ],
+    \\"@typescript-eslint/member-delimiter-style\\": [
+      \\"error\\"
+    ],
+    \\"semi\\": [
+      \\"error\\",
+      \\"always\\"
+    ],
+    \\"max-len\\": [
+      \\"error\\",
+      {
+        \\"code\\": 150,
+        \\"ignoreUrls\\": true,
+        \\"ignoreStrings\\": true,
+        \\"ignoreTemplateLiterals\\": true,
+        \\"ignoreComments\\": true,
+        \\"ignoreRegExpLiterals\\": true
+      }
+    ],
+    \\"quote-props\\": [
+      \\"error\\",
+      \\"consistent-as-needed\\"
+    ],
+    \\"@typescript-eslint/no-require-imports\\": [
+      \\"error\\"
+    ],
+    \\"import/no-extraneous-dependencies\\": [
+      \\"error\\",
+      {
+        \\"devDependencies\\": [
+          \\"**/test/**\\",
+          \\"**/build-tools/**\\"
+        ],
+        \\"optionalDependencies\\": false,
+        \\"peerDependencies\\": true
+      }
+    ],
+    \\"import/no-unresolved\\": [
+      \\"error\\"
+    ],
+    \\"import/order\\": [
+      \\"warn\\",
+      {
+        \\"groups\\": [
+          \\"builtin\\",
+          \\"external\\"
+        ],
+        \\"alphabetize\\": {
+          \\"order\\": \\"asc\\",
+          \\"caseInsensitive\\": true
+        }
+      }
+    ],
+    \\"no-duplicate-imports\\": [
+      \\"error\\"
+    ],
+    \\"no-shadow\\": [
+      \\"off\\"
+    ],
+    \\"@typescript-eslint/no-shadow\\": [
+      \\"error\\"
+    ],
+    \\"key-spacing\\": [
+      \\"error\\"
+    ],
+    \\"no-multiple-empty-lines\\": [
+      \\"error\\"
+    ],
+    \\"@typescript-eslint/no-floating-promises\\": [
+      \\"error\\"
+    ],
+    \\"no-return-await\\": [
+      \\"off\\"
+    ],
+    \\"@typescript-eslint/return-await\\": [
+      \\"error\\"
+    ],
+    \\"no-trailing-spaces\\": [
+      \\"error\\"
+    ],
+    \\"dot-notation\\": [
+      \\"error\\"
+    ],
+    \\"no-bitwise\\": [
+      \\"error\\"
+    ],
+    \\"@typescript-eslint/member-ordering\\": [
+      \\"error\\",
+      {
+        \\"default\\": [
+          \\"public-static-field\\",
+          \\"public-static-method\\",
+          \\"protected-static-field\\",
+          \\"protected-static-method\\",
+          \\"private-static-field\\",
+          \\"private-static-method\\",
+          \\"field\\",
+          \\"constructor\\",
+          \\"method\\"
+        ]
+      }
+    ]
+  },
+  \\"overrides\\": [
+    {
+      \\"files\\": [
+        \\".projenrc.js\\"
+      ],
+      \\"rules\\": {
+        \\"@typescript-eslint/no-require-imports\\": \\"off\\",
+        \\"import/no-extraneous-dependencies\\": \\"off\\"
+      }
+    }
+  ]
+}
+",
   ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
 *.snap linguist-generated
@@ -840,607 +842,345 @@ tsconfig.tsbuildinfo
 /.eslintrc.json
 !.jsii
 ",
-  ".projen/deps.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "dependencies": Array [
-      Object {
-        "name": "@types/jest",
-        "type": "build",
-        "version": "^27",
-      },
-      Object {
-        "name": "@types/node",
-        "type": "build",
-        "version": "^14",
-      },
-      Object {
-        "name": "@typescript-eslint/eslint-plugin",
-        "type": "build",
-        "version": "^5",
-      },
-      Object {
-        "name": "@typescript-eslint/parser",
-        "type": "build",
-        "version": "^5",
-      },
-      Object {
-        "name": "aws-sdk",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint-import-resolver-node",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint-import-resolver-typescript",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint-plugin-import",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint",
-        "type": "build",
-        "version": "^8",
-      },
-      Object {
-        "name": "jest-junit",
-        "type": "build",
-        "version": "^13",
-      },
-      Object {
-        "name": "jest",
-        "type": "build",
-        "version": "^27",
-      },
-      Object {
-        "name": "jsii",
-        "type": "build",
-      },
-      Object {
-        "name": "jsii-diff",
-        "type": "build",
-      },
-      Object {
-        "name": "jsii-docgen",
-        "type": "build",
-      },
-      Object {
-        "name": "jsii-pacmak",
-        "type": "build",
-      },
-      Object {
-        "name": "json-schema",
-        "type": "build",
-      },
-      Object {
-        "name": "npm-check-updates",
-        "type": "build",
-        "version": "^16",
-      },
-      Object {
-        "name": "projen",
-        "type": "build",
-      },
-      Object {
-        "name": "standard-version",
-        "type": "build",
-        "version": "^9",
-      },
-      Object {
-        "name": "ts-jest",
-        "type": "build",
-        "version": "^27",
-      },
-      Object {
-        "name": "typescript",
-        "type": "build",
-      },
-      Object {
-        "name": "@types/prettier",
-        "type": "override",
-        "version": "2.6.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-apigateway",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-cloudwatch-actions",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-cloudwatch",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-dynamodb",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-ecs-patterns",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-ecs",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-elasticloadbalancingv2",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-events-targets",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-events",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-lambda",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-rds",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-sns-subscriptions",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-sns",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-sqs",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/core",
-        "type": "peer",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "constructs",
-        "type": "peer",
-        "version": "^3.2.27",
-      },
-      Object {
-        "name": "@aws-cdk/aws-apigateway",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-cloudwatch-actions",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-cloudwatch",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-dynamodb",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-ecs-patterns",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-ecs",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-elasticloadbalancingv2",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-events-targets",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-events",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-lambda",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-rds",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-sns-subscriptions",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-sns",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/aws-sqs",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/core",
-        "type": "runtime",
-        "version": "^1.75.0",
-      },
-      Object {
-        "name": "@aws-cdk/assert",
-        "type": "test",
-        "version": "^1.75.0",
-      },
-    ],
-  },
-  ".projen/files.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "files": Array [
-      ".eslintrc.json",
-      ".gitattributes",
-      ".github/pull_request_template.md",
-      ".github/workflows/build.yml",
-      ".github/workflows/pull-request-lint.yml",
-      ".github/workflows/release.yml",
-      ".github/workflows/upgrade-master.yml",
-      ".gitignore",
-      ".mergify.yml",
-      ".projen/deps.json",
-      ".projen/files.json",
-      ".projen/tasks.json",
-      "LICENSE",
-      "tsconfig.dev.json",
-    ],
-  },
-  ".projen/tasks.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "env": Object {
-      "PATH": "$(npx -c \\"node -e \\\\\\"console.log(process.env.PATH)\\\\\\"\\")",
+  ".projen/deps.json": "{\\"dependencies\\":[{\\"name\\":\\"@types/jest\\",\\"version\\":\\"^27\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@types/node\\",\\"version\\":\\"^14\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@typescript-eslint/eslint-plugin\\",\\"version\\":\\"^5\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@typescript-eslint/parser\\",\\"version\\":\\"^5\\",\\"type\\":\\"build\\"},{\\"name\\":\\"aws-sdk\\",\\"type\\":\\"build\\"},{\\"name\\":\\"eslint-import-resolver-node\\",\\"type\\":\\"build\\"},{\\"name\\":\\"eslint-import-resolver-typescript\\",\\"type\\":\\"build\\"},{\\"name\\":\\"eslint-plugin-import\\",\\"type\\":\\"build\\"},{\\"name\\":\\"eslint\\",\\"version\\":\\"^8\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jest-junit\\",\\"version\\":\\"^13\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jest\\",\\"version\\":\\"^27\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jsii\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jsii-diff\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jsii-docgen\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jsii-pacmak\\",\\"type\\":\\"build\\"},{\\"name\\":\\"json-schema\\",\\"type\\":\\"build\\"},{\\"name\\":\\"npm-check-updates\\",\\"version\\":\\"^16\\",\\"type\\":\\"build\\"},{\\"name\\":\\"projen\\",\\"type\\":\\"build\\"},{\\"name\\":\\"standard-version\\",\\"version\\":\\"^9\\",\\"type\\":\\"build\\"},{\\"name\\":\\"ts-jest\\",\\"version\\":\\"^27\\",\\"type\\":\\"build\\"},{\\"name\\":\\"typescript\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@types/prettier\\",\\"version\\":\\"2.6.0\\",\\"type\\":\\"override\\"},{\\"name\\":\\"@aws-cdk/aws-apigateway\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-cloudwatch-actions\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-cloudwatch\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-dynamodb\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-ecs-patterns\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-ecs\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-elasticloadbalancingv2\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-events-targets\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-events\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-lambda\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-rds\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-sns-subscriptions\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-sns\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-sqs\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/core\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"constructs\\",\\"version\\":\\"^3.2.27\\",\\"type\\":\\"peer\\"},{\\"name\\":\\"@aws-cdk/aws-apigateway\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/aws-cloudwatch-actions\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/aws-cloudwatch\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/aws-dynamodb\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/aws-ecs-patterns\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/aws-ecs\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/aws-elasticloadbalancingv2\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/aws-events-targets\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/aws-events\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/aws-lambda\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/aws-rds\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/aws-sns-subscriptions\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/aws-sns\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/aws-sqs\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/core\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"@aws-cdk/assert\\",\\"version\\":\\"^1.75.0\\",\\"type\\":\\"test\\"}],\\"//\\":\\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"}
+",
+  ".projen/files.json": "{
+  \\"files\\": [
+    \\".eslintrc.json\\",
+    \\".gitattributes\\",
+    \\".github/pull_request_template.md\\",
+    \\".github/workflows/build.yml\\",
+    \\".github/workflows/pull-request-lint.yml\\",
+    \\".github/workflows/release.yml\\",
+    \\".github/workflows/upgrade-master.yml\\",
+    \\".gitignore\\",
+    \\".mergify.yml\\",
+    \\".projen/deps.json\\",
+    \\".projen/files.json\\",
+    \\".projen/tasks.json\\",
+    \\"LICENSE\\",
+    \\"tsconfig.dev.json\\"
+  ],
+  \\"//\\": \\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"
+}
+",
+  ".projen/tasks.json": "{
+  \\"tasks\\": {
+    \\"build\\": {
+      \\"name\\": \\"build\\",
+      \\"description\\": \\"Full release build\\",
+      \\"steps\\": [
+        {
+          \\"spawn\\": \\"default\\"
+        },
+        {
+          \\"spawn\\": \\"pre-compile\\"
+        },
+        {
+          \\"spawn\\": \\"compile\\"
+        },
+        {
+          \\"spawn\\": \\"post-compile\\"
+        },
+        {
+          \\"spawn\\": \\"test\\"
+        },
+        {
+          \\"spawn\\": \\"package\\"
+        }
+      ]
     },
-    "tasks": Object {
-      "build": Object {
-        "description": "Full release build",
-        "name": "build",
-        "steps": Array [
-          Object {
-            "spawn": "default",
-          },
-          Object {
-            "spawn": "pre-compile",
-          },
-          Object {
-            "spawn": "compile",
-          },
-          Object {
-            "spawn": "post-compile",
-          },
-          Object {
-            "spawn": "test",
-          },
-          Object {
-            "spawn": "package",
-          },
-        ],
+    \\"bump\\": {
+      \\"name\\": \\"bump\\",
+      \\"description\\": \\"Bumps version based on latest git tag and generates a changelog entry\\",
+      \\"env\\": {
+        \\"OUTFILE\\": \\"package.json\\",
+        \\"CHANGELOG\\": \\"dist/changelog.md\\",
+        \\"BUMPFILE\\": \\"dist/version.txt\\",
+        \\"RELEASETAG\\": \\"dist/releasetag.txt\\",
+        \\"RELEASE_TAG_PREFIX\\": \\"\\"
       },
-      "bump": Object {
-        "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Bumps version based on latest git tag and generates a changelog entry",
-        "env": Object {
-          "BUMPFILE": "dist/version.txt",
-          "CHANGELOG": "dist/changelog.md",
-          "OUTFILE": "package.json",
-          "RELEASETAG": "dist/releasetag.txt",
-          "RELEASE_TAG_PREFIX": "",
-        },
-        "name": "bump",
-        "steps": Array [
-          Object {
-            "builtin": "release/bump-version",
-          },
-        ],
-      },
-      "clobber": Object {
-        "condition": "git diff --exit-code > /dev/null",
-        "description": "hard resets to HEAD of origin and cleans the local repo",
-        "env": Object {
-          "BRANCH": "$(git branch --show-current)",
-        },
-        "name": "clobber",
-        "steps": Array [
-          Object {
-            "exec": "git checkout -b scratch",
-            "name": "save current HEAD in \\"scratch\\" branch",
-          },
-          Object {
-            "exec": "git checkout $BRANCH",
-          },
-          Object {
-            "exec": "git fetch origin",
-            "name": "fetch latest changes from origin",
-          },
-          Object {
-            "exec": "git reset --hard origin/$BRANCH",
-            "name": "hard reset to origin commit",
-          },
-          Object {
-            "exec": "git clean -fdx",
-            "name": "clean all untracked files",
-          },
-          Object {
-            "say": "ready to rock! (unpushed commits are under the \\"scratch\\" branch)",
-          },
-        ],
-      },
-      "compat": Object {
-        "description": "Perform API compatibility check against latest version",
-        "name": "compat",
-        "steps": Array [
-          Object {
-            "exec": "jsii-diff npm:$(node -p \\"require('./package.json').name\\") -k --ignore-file .compatignore || (echo \\"
-UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.
-\\" && exit 1)",
-          },
-        ],
-      },
-      "compile": Object {
-        "description": "Only compile",
-        "name": "compile",
-        "steps": Array [
-          Object {
-            "exec": "jsii --silence-warnings=reserved-word",
-          },
-        ],
-      },
-      "default": Object {
-        "description": "Synthesize project files",
-        "name": "default",
-        "steps": Array [
-          Object {
-            "exec": "node .projenrc.js",
-          },
-        ],
-      },
-      "docgen": Object {
-        "description": "Generate API.md from .jsii manifest",
-        "name": "docgen",
-        "steps": Array [
-          Object {
-            "exec": "jsii-docgen -o API.md",
-          },
-        ],
-      },
-      "eject": Object {
-        "description": "Remove projen from the project",
-        "env": Object {
-          "PROJEN_EJECTING": "true",
-        },
-        "name": "eject",
-        "steps": Array [
-          Object {
-            "spawn": "default",
-          },
-        ],
-      },
-      "eslint": Object {
-        "description": "Runs eslint against the codebase",
-        "name": "eslint",
-        "steps": Array [
-          Object {
-            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
-          },
-        ],
-      },
-      "package": Object {
-        "description": "Creates the distribution package",
-        "name": "package",
-        "steps": Array [
-          Object {
-            "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
-          },
-        ],
-      },
-      "package-all": Object {
-        "description": "Packages artifacts for all target languages",
-        "name": "package-all",
-        "steps": Array [
-          Object {
-            "spawn": "package:js",
-          },
-          Object {
-            "spawn": "package:java",
-          },
-          Object {
-            "spawn": "package:python",
-          },
-        ],
-      },
-      "package:java": Object {
-        "description": "Create java language bindings",
-        "name": "package:java",
-        "steps": Array [
-          Object {
-            "exec": "jsii-pacmak -v --target java",
-          },
-        ],
-      },
-      "package:js": Object {
-        "description": "Create js language bindings",
-        "name": "package:js",
-        "steps": Array [
-          Object {
-            "exec": "jsii-pacmak -v --target js",
-          },
-        ],
-      },
-      "package:python": Object {
-        "description": "Create python language bindings",
-        "name": "package:python",
-        "steps": Array [
-          Object {
-            "exec": "jsii-pacmak -v --target python",
-          },
-        ],
-      },
-      "post-compile": Object {
-        "description": "Runs after successful compilation",
-        "name": "post-compile",
-        "steps": Array [
-          Object {
-            "spawn": "docgen",
-          },
-        ],
-      },
-      "post-upgrade": Object {
-        "description": "Runs after upgrading dependencies",
-        "name": "post-upgrade",
-      },
-      "pre-compile": Object {
-        "description": "Prepare the project for compilation",
-        "name": "pre-compile",
-      },
-      "release": Object {
-        "description": "Prepare a release from \\"master\\" branch",
-        "env": Object {
-          "RELEASE": "true",
-        },
-        "name": "release",
-        "steps": Array [
-          Object {
-            "exec": "rm -fr dist",
-          },
-          Object {
-            "spawn": "bump",
-          },
-          Object {
-            "spawn": "build",
-          },
-          Object {
-            "spawn": "unbump",
-          },
-          Object {
-            "exec": "git diff --ignore-space-at-eol --exit-code",
-          },
-        ],
-      },
-      "test": Object {
-        "description": "Run tests",
-        "name": "test",
-        "steps": Array [
-          Object {
-            "exec": "jest --passWithNoTests --coverageProvider=v8 --updateSnapshot",
-            "receiveArgs": true,
-          },
-          Object {
-            "spawn": "eslint",
-          },
-        ],
-      },
-      "test:watch": Object {
-        "description": "Run jest in watch mode",
-        "name": "test:watch",
-        "steps": Array [
-          Object {
-            "exec": "jest --watch",
-          },
-        ],
-      },
-      "unbump": Object {
-        "description": "Restores version to 0.0.0",
-        "env": Object {
-          "BUMPFILE": "dist/version.txt",
-          "CHANGELOG": "dist/changelog.md",
-          "OUTFILE": "package.json",
-          "RELEASETAG": "dist/releasetag.txt",
-          "RELEASE_TAG_PREFIX": "",
-        },
-        "name": "unbump",
-        "steps": Array [
-          Object {
-            "builtin": "release/reset-version",
-          },
-        ],
-      },
-      "upgrade": Object {
-        "description": "upgrade dependencies",
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade",
-        "steps": Array [
-          Object {
-            "exec": "yarn upgrade npm-check-updates",
-          },
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
-          },
-          Object {
-            "exec": "yarn install --check-files",
-          },
-          Object {
-            "exec": "yarn upgrade",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "watch": Object {
-        "description": "Watch & compile in the background",
-        "name": "watch",
-        "steps": Array [
-          Object {
-            "exec": "jsii -w --silence-warnings=reserved-word",
-          },
-        ],
-      },
+      \\"steps\\": [
+        {
+          \\"builtin\\": \\"release/bump-version\\"
+        }
+      ],
+      \\"condition\\": \\"! git log --oneline -1 | grep -q \\\\\\"chore(release):\\\\\\"\\"
     },
+    \\"clobber\\": {
+      \\"name\\": \\"clobber\\",
+      \\"description\\": \\"hard resets to HEAD of origin and cleans the local repo\\",
+      \\"env\\": {
+        \\"BRANCH\\": \\"$(git branch --show-current)\\"
+      },
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"git checkout -b scratch\\",
+          \\"name\\": \\"save current HEAD in \\\\\\"scratch\\\\\\" branch\\"
+        },
+        {
+          \\"exec\\": \\"git checkout $BRANCH\\"
+        },
+        {
+          \\"exec\\": \\"git fetch origin\\",
+          \\"name\\": \\"fetch latest changes from origin\\"
+        },
+        {
+          \\"exec\\": \\"git reset --hard origin/$BRANCH\\",
+          \\"name\\": \\"hard reset to origin commit\\"
+        },
+        {
+          \\"exec\\": \\"git clean -fdx\\",
+          \\"name\\": \\"clean all untracked files\\"
+        },
+        {
+          \\"say\\": \\"ready to rock! (unpushed commits are under the \\\\\\"scratch\\\\\\" branch)\\"
+        }
+      ],
+      \\"condition\\": \\"git diff --exit-code > /dev/null\\"
+    },
+    \\"compat\\": {
+      \\"name\\": \\"compat\\",
+      \\"description\\": \\"Perform API compatibility check against latest version\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii-diff npm:$(node -p \\\\\\"require('./package.json').name\\\\\\") -k --ignore-file .compatignore || (echo \\\\\\"\\\\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\\\\n\\\\\\" && exit 1)\\"
+        }
+      ]
+    },
+    \\"compile\\": {
+      \\"name\\": \\"compile\\",
+      \\"description\\": \\"Only compile\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii --silence-warnings=reserved-word\\"
+        }
+      ]
+    },
+    \\"default\\": {
+      \\"name\\": \\"default\\",
+      \\"description\\": \\"Synthesize project files\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"node .projenrc.js\\"
+        }
+      ]
+    },
+    \\"docgen\\": {
+      \\"name\\": \\"docgen\\",
+      \\"description\\": \\"Generate API.md from .jsii manifest\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii-docgen -o API.md\\"
+        }
+      ]
+    },
+    \\"eject\\": {
+      \\"name\\": \\"eject\\",
+      \\"description\\": \\"Remove projen from the project\\",
+      \\"env\\": {
+        \\"PROJEN_EJECTING\\": \\"true\\"
+      },
+      \\"steps\\": [
+        {
+          \\"spawn\\": \\"default\\"
+        }
+      ]
+    },
+    \\"eslint\\": {
+      \\"name\\": \\"eslint\\",
+      \\"description\\": \\"Runs eslint against the codebase\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js\\"
+        }
+      ]
+    },
+    \\"package\\": {
+      \\"name\\": \\"package\\",
+      \\"description\\": \\"Creates the distribution package\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi\\"
+        }
+      ]
+    },
+    \\"package-all\\": {
+      \\"name\\": \\"package-all\\",
+      \\"description\\": \\"Packages artifacts for all target languages\\",
+      \\"steps\\": [
+        {
+          \\"spawn\\": \\"package:js\\"
+        },
+        {
+          \\"spawn\\": \\"package:java\\"
+        },
+        {
+          \\"spawn\\": \\"package:python\\"
+        }
+      ]
+    },
+    \\"package:java\\": {
+      \\"name\\": \\"package:java\\",
+      \\"description\\": \\"Create java language bindings\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii-pacmak -v --target java\\"
+        }
+      ]
+    },
+    \\"package:js\\": {
+      \\"name\\": \\"package:js\\",
+      \\"description\\": \\"Create js language bindings\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii-pacmak -v --target js\\"
+        }
+      ]
+    },
+    \\"package:python\\": {
+      \\"name\\": \\"package:python\\",
+      \\"description\\": \\"Create python language bindings\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii-pacmak -v --target python\\"
+        }
+      ]
+    },
+    \\"post-compile\\": {
+      \\"name\\": \\"post-compile\\",
+      \\"description\\": \\"Runs after successful compilation\\",
+      \\"steps\\": [
+        {
+          \\"spawn\\": \\"docgen\\"
+        }
+      ]
+    },
+    \\"post-upgrade\\": {
+      \\"name\\": \\"post-upgrade\\",
+      \\"description\\": \\"Runs after upgrading dependencies\\"
+    },
+    \\"pre-compile\\": {
+      \\"name\\": \\"pre-compile\\",
+      \\"description\\": \\"Prepare the project for compilation\\"
+    },
+    \\"release\\": {
+      \\"name\\": \\"release\\",
+      \\"description\\": \\"Prepare a release from \\\\\\"master\\\\\\" branch\\",
+      \\"env\\": {
+        \\"RELEASE\\": \\"true\\"
+      },
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"rm -fr dist\\"
+        },
+        {
+          \\"spawn\\": \\"bump\\"
+        },
+        {
+          \\"spawn\\": \\"build\\"
+        },
+        {
+          \\"spawn\\": \\"unbump\\"
+        },
+        {
+          \\"exec\\": \\"git diff --ignore-space-at-eol --exit-code\\"
+        }
+      ]
+    },
+    \\"test\\": {
+      \\"name\\": \\"test\\",
+      \\"description\\": \\"Run tests\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jest --passWithNoTests --coverageProvider=v8 --updateSnapshot\\",
+          \\"receiveArgs\\": true
+        },
+        {
+          \\"spawn\\": \\"eslint\\"
+        }
+      ]
+    },
+    \\"test:watch\\": {
+      \\"name\\": \\"test:watch\\",
+      \\"description\\": \\"Run jest in watch mode\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jest --watch\\"
+        }
+      ]
+    },
+    \\"unbump\\": {
+      \\"name\\": \\"unbump\\",
+      \\"description\\": \\"Restores version to 0.0.0\\",
+      \\"env\\": {
+        \\"OUTFILE\\": \\"package.json\\",
+        \\"CHANGELOG\\": \\"dist/changelog.md\\",
+        \\"BUMPFILE\\": \\"dist/version.txt\\",
+        \\"RELEASETAG\\": \\"dist/releasetag.txt\\",
+        \\"RELEASE_TAG_PREFIX\\": \\"\\"
+      },
+      \\"steps\\": [
+        {
+          \\"builtin\\": \\"release/reset-version\\"
+        }
+      ]
+    },
+    \\"upgrade\\": {
+      \\"name\\": \\"upgrade\\",
+      \\"description\\": \\"upgrade dependencies\\",
+      \\"env\\": {
+        \\"CI\\": \\"0\\"
+      },
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"yarn upgrade npm-check-updates\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep dev --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep optional --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep peer --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep prod --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep bundle --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"yarn install --check-files\\"
+        },
+        {
+          \\"exec\\": \\"yarn upgrade\\"
+        },
+        {
+          \\"exec\\": \\"npx projen\\"
+        },
+        {
+          \\"spawn\\": \\"post-upgrade\\"
+        }
+      ]
+    },
+    \\"watch\\": {
+      \\"name\\": \\"watch\\",
+      \\"description\\": \\"Watch & compile in the background\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii -w --silence-warnings=reserved-word\\"
+        }
+      ]
+    }
   },
+  \\"env\\": {
+    \\"PATH\\": \\"$(npx -c \\\\\\"node -e \\\\\\\\\\\\\\"console.log(process.env.PATH)\\\\\\\\\\\\\\"\\\\\\")\\"
+  },
+  \\"//\\": \\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"
+}
+",
   ".projenrc.js": "const { awscdk, Semver } = require('projen');
 
 const project = new awscdk.ConstructLibraryAws({
@@ -1710,184 +1450,8 @@ project.synth();
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "package.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "author": Object {
-      "email": "elad.benisrael@gmail.com",
-      "name": "Elad Ben-Israel",
-      "organization": false,
-    },
-    "awscdkio": Object {
-      "twitter": "emeshbi",
-    },
-    "dependencies": Object {
-      "@aws-cdk/aws-apigateway": "^1.75.0",
-      "@aws-cdk/aws-cloudwatch": "^1.75.0",
-      "@aws-cdk/aws-cloudwatch-actions": "^1.75.0",
-      "@aws-cdk/aws-dynamodb": "^1.75.0",
-      "@aws-cdk/aws-ecs": "^1.75.0",
-      "@aws-cdk/aws-ecs-patterns": "^1.75.0",
-      "@aws-cdk/aws-elasticloadbalancingv2": "^1.75.0",
-      "@aws-cdk/aws-events": "^1.75.0",
-      "@aws-cdk/aws-events-targets": "^1.75.0",
-      "@aws-cdk/aws-lambda": "^1.75.0",
-      "@aws-cdk/aws-rds": "^1.75.0",
-      "@aws-cdk/aws-sns": "^1.75.0",
-      "@aws-cdk/aws-sns-subscriptions": "^1.75.0",
-      "@aws-cdk/aws-sqs": "^1.75.0",
-      "@aws-cdk/core": "^1.75.0",
-    },
-    "description": "Watching your CDK apps since 2019",
-    "devDependencies": Object {
-      "@aws-cdk/assert": "^1.75.0",
-      "@types/jest": "^27",
-      "@types/node": "^14",
-      "@typescript-eslint/eslint-plugin": "^5",
-      "@typescript-eslint/parser": "^5",
-      "aws-sdk": "*",
-      "eslint": "^8",
-      "eslint-import-resolver-node": "*",
-      "eslint-import-resolver-typescript": "*",
-      "eslint-plugin-import": "*",
-      "jest": "^27",
-      "jest-junit": "^13",
-      "jsii": "*",
-      "jsii-diff": "*",
-      "jsii-docgen": "*",
-      "jsii-pacmak": "*",
-      "json-schema": "*",
-      "npm-check-updates": "^16",
-      "projen": "*",
-      "standard-version": "^9",
-      "ts-jest": "^27",
-      "typescript": "*",
-    },
-    "engines": Object {
-      "node": ">= 14.0.0",
-    },
-    "jest": Object {
-      "clearMocks": true,
-      "collectCoverage": true,
-      "coverageDirectory": "coverage",
-      "coveragePathIgnorePatterns": Array [
-        "/node_modules/",
-      ],
-      "coverageReporters": Array [
-        "json",
-        "lcov",
-        "clover",
-        "cobertura",
-        "text",
-      ],
-      "globals": Object {
-        "ts-jest": Object {
-          "tsconfig": "tsconfig.dev.json",
-        },
-      },
-      "preset": "ts-jest",
-      "reporters": Array [
-        "default",
-        Array [
-          "jest-junit",
-          Object {
-            "outputDirectory": "test-reports",
-          },
-        ],
-      ],
-      "testMatch": Array [
-        "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
-      ],
-      "testPathIgnorePatterns": Array [
-        "/node_modules/",
-      ],
-      "watchPathIgnorePatterns": Array [
-        "/node_modules/",
-      ],
-    },
-    "jsii": Object {
-      "outdir": "dist",
-      "targets": Object {
-        "java": Object {
-          "maven": Object {
-            "artifactId": "cdk-watchful",
-            "groupId": "com.github.eladb",
-          },
-          "package": "com.github.eladb.watchful",
-        },
-        "python": Object {
-          "distName": "cdk-watchful",
-          "module": "cdk_watchful",
-        },
-      },
-      "tsc": Object {
-        "outDir": "lib",
-        "rootDir": "src",
-      },
-    },
-    "keywords": Array [
-      "cdk",
-      "cloudwatch",
-      "monitoring",
-    ],
-    "license": "Apache-2.0",
-    "main": "lib/index.js",
-    "name": "cdk-watchful",
-    "peerDependencies": Object {
-      "@aws-cdk/aws-apigateway": "^1.75.0",
-      "@aws-cdk/aws-cloudwatch": "^1.75.0",
-      "@aws-cdk/aws-cloudwatch-actions": "^1.75.0",
-      "@aws-cdk/aws-dynamodb": "^1.75.0",
-      "@aws-cdk/aws-ecs": "^1.75.0",
-      "@aws-cdk/aws-ecs-patterns": "^1.75.0",
-      "@aws-cdk/aws-elasticloadbalancingv2": "^1.75.0",
-      "@aws-cdk/aws-events": "^1.75.0",
-      "@aws-cdk/aws-events-targets": "^1.75.0",
-      "@aws-cdk/aws-lambda": "^1.75.0",
-      "@aws-cdk/aws-rds": "^1.75.0",
-      "@aws-cdk/aws-sns": "^1.75.0",
-      "@aws-cdk/aws-sns-subscriptions": "^1.75.0",
-      "@aws-cdk/aws-sqs": "^1.75.0",
-      "@aws-cdk/core": "^1.75.0",
-      "constructs": "^3.2.27",
-    },
-    "repository": Object {
-      "type": "git",
-      "url": "https://github.com/eladb/cdk-watchful.git",
-    },
-    "resolutions": Object {
-      "@types/prettier": "2.6.0",
-    },
-    "scripts": Object {
-      "build": "npx projen build",
-      "bump": "npx projen bump",
-      "clobber": "npx projen clobber",
-      "compat": "npx projen compat",
-      "compile": "npx projen compile",
-      "default": "npx projen default",
-      "docgen": "npx projen docgen",
-      "eject": "npx projen eject",
-      "eslint": "npx projen eslint",
-      "package": "npx projen package",
-      "package-all": "npx projen package-all",
-      "package:java": "npx projen package:java",
-      "package:js": "npx projen package:js",
-      "package:python": "npx projen package:python",
-      "post-compile": "npx projen post-compile",
-      "post-upgrade": "npx projen post-upgrade",
-      "pre-compile": "npx projen pre-compile",
-      "projen": "npx projen",
-      "release": "npx projen release",
-      "test": "npx projen test",
-      "test:watch": "npx projen test:watch",
-      "unbump": "npx projen unbump",
-      "upgrade": "npx projen upgrade",
-      "watch": "npx projen watch",
-    },
-    "stability": "stable",
-    "types": "lib/index.d.ts",
-    "version": "0.0.0",
-  },
+  "package.json": "{\\"name\\":\\"cdk-watchful\\",\\"description\\":\\"Watching your CDK apps since 2019\\",\\"repository\\":{\\"type\\":\\"git\\",\\"url\\":\\"https://github.com/eladb/cdk-watchful.git\\"},\\"scripts\\":{\\"build\\":\\"npx projen build\\",\\"bump\\":\\"npx projen bump\\",\\"clobber\\":\\"npx projen clobber\\",\\"compat\\":\\"npx projen compat\\",\\"compile\\":\\"npx projen compile\\",\\"default\\":\\"npx projen default\\",\\"docgen\\":\\"npx projen docgen\\",\\"eject\\":\\"npx projen eject\\",\\"eslint\\":\\"npx projen eslint\\",\\"package\\":\\"npx projen package\\",\\"package-all\\":\\"npx projen package-all\\",\\"package:java\\":\\"npx projen package:java\\",\\"package:js\\":\\"npx projen package:js\\",\\"package:python\\":\\"npx projen package:python\\",\\"post-compile\\":\\"npx projen post-compile\\",\\"post-upgrade\\":\\"npx projen post-upgrade\\",\\"pre-compile\\":\\"npx projen pre-compile\\",\\"release\\":\\"npx projen release\\",\\"test\\":\\"npx projen test\\",\\"test:watch\\":\\"npx projen test:watch\\",\\"unbump\\":\\"npx projen unbump\\",\\"upgrade\\":\\"npx projen upgrade\\",\\"watch\\":\\"npx projen watch\\",\\"projen\\":\\"npx projen\\"},\\"author\\":{\\"name\\":\\"Elad Ben-Israel\\",\\"email\\":\\"elad.benisrael@gmail.com\\",\\"organization\\":false},\\"devDependencies\\":{\\"@aws-cdk/assert\\":\\"^1.75.0\\",\\"@types/jest\\":\\"^27\\",\\"@types/node\\":\\"^14\\",\\"@typescript-eslint/eslint-plugin\\":\\"^5\\",\\"@typescript-eslint/parser\\":\\"^5\\",\\"aws-sdk\\":\\"*\\",\\"eslint\\":\\"^8\\",\\"eslint-import-resolver-node\\":\\"*\\",\\"eslint-import-resolver-typescript\\":\\"*\\",\\"eslint-plugin-import\\":\\"*\\",\\"jest\\":\\"^27\\",\\"jest-junit\\":\\"^13\\",\\"jsii\\":\\"*\\",\\"jsii-diff\\":\\"*\\",\\"jsii-docgen\\":\\"*\\",\\"jsii-pacmak\\":\\"*\\",\\"json-schema\\":\\"*\\",\\"npm-check-updates\\":\\"^16\\",\\"projen\\":\\"*\\",\\"standard-version\\":\\"^9\\",\\"ts-jest\\":\\"^27\\",\\"typescript\\":\\"*\\"},\\"peerDependencies\\":{\\"@aws-cdk/aws-apigateway\\":\\"^1.75.0\\",\\"@aws-cdk/aws-cloudwatch\\":\\"^1.75.0\\",\\"@aws-cdk/aws-cloudwatch-actions\\":\\"^1.75.0\\",\\"@aws-cdk/aws-dynamodb\\":\\"^1.75.0\\",\\"@aws-cdk/aws-ecs\\":\\"^1.75.0\\",\\"@aws-cdk/aws-ecs-patterns\\":\\"^1.75.0\\",\\"@aws-cdk/aws-elasticloadbalancingv2\\":\\"^1.75.0\\",\\"@aws-cdk/aws-events\\":\\"^1.75.0\\",\\"@aws-cdk/aws-events-targets\\":\\"^1.75.0\\",\\"@aws-cdk/aws-lambda\\":\\"^1.75.0\\",\\"@aws-cdk/aws-rds\\":\\"^1.75.0\\",\\"@aws-cdk/aws-sns\\":\\"^1.75.0\\",\\"@aws-cdk/aws-sns-subscriptions\\":\\"^1.75.0\\",\\"@aws-cdk/aws-sqs\\":\\"^1.75.0\\",\\"@aws-cdk/core\\":\\"^1.75.0\\",\\"constructs\\":\\"^3.2.27\\"},\\"dependencies\\":{\\"@aws-cdk/aws-apigateway\\":\\"^1.75.0\\",\\"@aws-cdk/aws-cloudwatch\\":\\"^1.75.0\\",\\"@aws-cdk/aws-cloudwatch-actions\\":\\"^1.75.0\\",\\"@aws-cdk/aws-dynamodb\\":\\"^1.75.0\\",\\"@aws-cdk/aws-ecs\\":\\"^1.75.0\\",\\"@aws-cdk/aws-ecs-patterns\\":\\"^1.75.0\\",\\"@aws-cdk/aws-elasticloadbalancingv2\\":\\"^1.75.0\\",\\"@aws-cdk/aws-events\\":\\"^1.75.0\\",\\"@aws-cdk/aws-events-targets\\":\\"^1.75.0\\",\\"@aws-cdk/aws-lambda\\":\\"^1.75.0\\",\\"@aws-cdk/aws-rds\\":\\"^1.75.0\\",\\"@aws-cdk/aws-sns\\":\\"^1.75.0\\",\\"@aws-cdk/aws-sns-subscriptions\\":\\"^1.75.0\\",\\"@aws-cdk/aws-sqs\\":\\"^1.75.0\\",\\"@aws-cdk/core\\":\\"^1.75.0\\"},\\"keywords\\":[\\"cdk\\",\\"cloudwatch\\",\\"monitoring\\"],\\"engines\\":{\\"node\\":\\">= 14.0.0\\"},\\"main\\":\\"lib/index.js\\",\\"license\\":\\"Apache-2.0\\",\\"version\\":\\"0.0.0\\",\\"jest\\":{\\"testMatch\\":[\\"<rootDir>/src/**/__tests__/**/*.ts?(x)\\",\\"<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)\\"],\\"clearMocks\\":true,\\"collectCoverage\\":true,\\"coverageReporters\\":[\\"json\\",\\"lcov\\",\\"clover\\",\\"cobertura\\",\\"text\\"],\\"coverageDirectory\\":\\"coverage\\",\\"coveragePathIgnorePatterns\\":[\\"/node_modules/\\"],\\"testPathIgnorePatterns\\":[\\"/node_modules/\\"],\\"watchPathIgnorePatterns\\":[\\"/node_modules/\\"],\\"reporters\\":[\\"default\\",[\\"jest-junit\\",{\\"outputDirectory\\":\\"test-reports\\"}]],\\"preset\\":\\"ts-jest\\",\\"globals\\":{\\"ts-jest\\":{\\"tsconfig\\":\\"tsconfig.dev.json\\"}}},\\"types\\":\\"lib/index.d.ts\\",\\"stability\\":\\"stable\\",\\"jsii\\":{\\"outdir\\":\\"dist\\",\\"targets\\":{\\"java\\":{\\"package\\":\\"com.github.eladb.watchful\\",\\"maven\\":{\\"groupId\\":\\"com.github.eladb\\",\\"artifactId\\":\\"cdk-watchful\\"}},\\"python\\":{\\"distName\\":\\"cdk-watchful\\",\\"module\\":\\"cdk_watchful\\"}},\\"tsc\\":{\\"outDir\\":\\"lib\\",\\"rootDir\\":\\"src\\"}},\\"awscdkio\\":{\\"twitter\\":\\"emeshbi\\"},\\"resolutions\\":{\\"@types/prettier\\":\\"2.6.0\\"},\\"//\\":\\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"}
+",
   "src/index.ts": "export class Hello {
   public sayHello() {
     return 'hello, world!';
@@ -1898,278 +1462,281 @@ project.synth();
 test('hello', () => {
   expect(new Hello().sayHello()).toBe('hello, world!');
 });",
-  "tsconfig.dev.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "compilerOptions": Object {
-      "alwaysStrict": true,
-      "declaration": true,
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "inlineSourceMap": true,
-      "inlineSources": true,
-      "lib": Array [
-        "es2019",
-      ],
-      "module": "CommonJS",
-      "noEmitOnError": false,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "resolveJsonModule": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "strictPropertyInitialization": true,
-      "stripInternal": true,
-      "target": "ES2019",
-    },
-    "exclude": Array [
-      "node_modules",
+  "tsconfig.dev.json": "{
+  \\"compilerOptions\\": {
+    \\"alwaysStrict\\": true,
+    \\"declaration\\": true,
+    \\"esModuleInterop\\": true,
+    \\"experimentalDecorators\\": true,
+    \\"inlineSourceMap\\": true,
+    \\"inlineSources\\": true,
+    \\"lib\\": [
+      \\"es2019\\"
     ],
-    "include": Array [
-      ".projenrc.js",
-      "src/**/*.ts",
-      "test/**/*.ts",
-    ],
+    \\"module\\": \\"CommonJS\\",
+    \\"noEmitOnError\\": false,
+    \\"noFallthroughCasesInSwitch\\": true,
+    \\"noImplicitAny\\": true,
+    \\"noImplicitReturns\\": true,
+    \\"noImplicitThis\\": true,
+    \\"noUnusedLocals\\": true,
+    \\"noUnusedParameters\\": true,
+    \\"resolveJsonModule\\": true,
+    \\"strict\\": true,
+    \\"strictNullChecks\\": true,
+    \\"strictPropertyInitialization\\": true,
+    \\"stripInternal\\": true,
+    \\"target\\": \\"ES2019\\"
   },
+  \\"include\\": [
+    \\".projenrc.js\\",
+    \\"src/**/*.ts\\",
+    \\"test/**/*.ts\\"
+  ],
+  \\"exclude\\": [
+    \\"node_modules\\"
+  ],
+  \\"//\\": \\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"
+}
+",
 }
 `;
 
 exports[`cdk8s 1`] = `
 Object {
-  ".eslintrc.json": Object {
-    "env": Object {
-      "jest": true,
-      "node": true,
-    },
-    "extends": Array [
-      "plugin:import/typescript",
-    ],
-    "ignorePatterns": Array [
-      "*.js",
-      "!.projenrc.js",
-      "*.d.ts",
-      "node_modules/",
-      "*.generated.ts",
-      "coverage",
-    ],
-    "overrides": Array [
-      Object {
-        "files": Array [
-          ".projenrc.js",
-        ],
-        "rules": Object {
-          "@typescript-eslint/no-require-imports": "off",
-          "import/no-extraneous-dependencies": "off",
-        },
-      },
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": Object {
-      "ecmaVersion": 2018,
-      "project": "./tsconfig.dev.json",
-      "sourceType": "module",
-    },
-    "plugins": Array [
-      "@typescript-eslint",
-      "import",
-    ],
-    "root": true,
-    "rules": Object {
-      "@typescript-eslint/indent": Array [
-        "error",
-        2,
-      ],
-      "@typescript-eslint/member-delimiter-style": Array [
-        "error",
-      ],
-      "@typescript-eslint/member-ordering": Array [
-        "error",
-        Object {
-          "default": Array [
-            "public-static-field",
-            "public-static-method",
-            "protected-static-field",
-            "protected-static-method",
-            "private-static-field",
-            "private-static-method",
-            "field",
-            "constructor",
-            "method",
-          ],
-        },
-      ],
-      "@typescript-eslint/no-floating-promises": Array [
-        "error",
-      ],
-      "@typescript-eslint/no-require-imports": Array [
-        "error",
-      ],
-      "@typescript-eslint/no-shadow": Array [
-        "error",
-      ],
-      "@typescript-eslint/return-await": Array [
-        "error",
-      ],
-      "array-bracket-newline": Array [
-        "error",
-        "consistent",
-      ],
-      "array-bracket-spacing": Array [
-        "error",
-        "never",
-      ],
-      "brace-style": Array [
-        "error",
-        "1tbs",
-        Object {
-          "allowSingleLine": true,
-        },
-      ],
-      "comma-dangle": Array [
-        "error",
-        "always-multiline",
-      ],
-      "comma-spacing": Array [
-        "error",
-        Object {
-          "after": true,
-          "before": false,
-        },
-      ],
-      "curly": Array [
-        "error",
-        "multi-line",
-        "consistent",
-      ],
-      "dot-notation": Array [
-        "error",
-      ],
-      "import/no-extraneous-dependencies": Array [
-        "error",
-        Object {
-          "devDependencies": Array [
-            "**/test/**",
-            "**/build-tools/**",
-          ],
-          "optionalDependencies": false,
-          "peerDependencies": true,
-        },
-      ],
-      "import/no-unresolved": Array [
-        "error",
-      ],
-      "import/order": Array [
-        "warn",
-        Object {
-          "alphabetize": Object {
-            "caseInsensitive": true,
-            "order": "asc",
-          },
-          "groups": Array [
-            "builtin",
-            "external",
-          ],
-        },
-      ],
-      "indent": Array [
-        "off",
-      ],
-      "key-spacing": Array [
-        "error",
-      ],
-      "keyword-spacing": Array [
-        "error",
-      ],
-      "max-len": Array [
-        "error",
-        Object {
-          "code": 150,
-          "ignoreComments": true,
-          "ignoreRegExpLiterals": true,
-          "ignoreStrings": true,
-          "ignoreTemplateLiterals": true,
-          "ignoreUrls": true,
-        },
-      ],
-      "no-bitwise": Array [
-        "error",
-      ],
-      "no-duplicate-imports": Array [
-        "error",
-      ],
-      "no-multi-spaces": Array [
-        "error",
-        Object {
-          "ignoreEOLComments": false,
-        },
-      ],
-      "no-multiple-empty-lines": Array [
-        "error",
-      ],
-      "no-return-await": Array [
-        "off",
-      ],
-      "no-shadow": Array [
-        "off",
-      ],
-      "no-trailing-spaces": Array [
-        "error",
-      ],
-      "object-curly-newline": Array [
-        "error",
-        Object {
-          "consistent": true,
-          "multiline": true,
-        },
-      ],
-      "object-curly-spacing": Array [
-        "error",
-        "always",
-      ],
-      "object-property-newline": Array [
-        "error",
-        Object {
-          "allowAllPropertiesOnSameLine": true,
-        },
-      ],
-      "quote-props": Array [
-        "error",
-        "consistent-as-needed",
-      ],
-      "quotes": Array [
-        "error",
-        "single",
-        Object {
-          "avoidEscape": true,
-        },
-      ],
-      "semi": Array [
-        "error",
-        "always",
-      ],
-      "space-before-blocks": Array [
-        "error",
-      ],
-    },
-    "settings": Object {
-      "import/parsers": Object {
-        "@typescript-eslint/parser": Array [
-          ".ts",
-          ".tsx",
-        ],
-      },
-      "import/resolver": Object {
-        "node": Object {},
-        "typescript": Object {
-          "alwaysTryTypes": true,
-          "project": "./tsconfig.dev.json",
-        },
-      },
-    },
+  ".eslintrc.json": "// ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+{
+  \\"env\\": {
+    \\"jest\\": true,
+    \\"node\\": true
   },
+  \\"root\\": true,
+  \\"plugins\\": [
+    \\"@typescript-eslint\\",
+    \\"import\\"
+  ],
+  \\"parser\\": \\"@typescript-eslint/parser\\",
+  \\"parserOptions\\": {
+    \\"ecmaVersion\\": 2018,
+    \\"sourceType\\": \\"module\\",
+    \\"project\\": \\"./tsconfig.dev.json\\"
+  },
+  \\"extends\\": [
+    \\"plugin:import/typescript\\"
+  ],
+  \\"settings\\": {
+    \\"import/parsers\\": {
+      \\"@typescript-eslint/parser\\": [
+        \\".ts\\",
+        \\".tsx\\"
+      ]
+    },
+    \\"import/resolver\\": {
+      \\"node\\": {},
+      \\"typescript\\": {
+        \\"project\\": \\"./tsconfig.dev.json\\",
+        \\"alwaysTryTypes\\": true
+      }
+    }
+  },
+  \\"ignorePatterns\\": [
+    \\"*.js\\",
+    \\"!.projenrc.js\\",
+    \\"*.d.ts\\",
+    \\"node_modules/\\",
+    \\"*.generated.ts\\",
+    \\"coverage\\"
+  ],
+  \\"rules\\": {
+    \\"indent\\": [
+      \\"off\\"
+    ],
+    \\"@typescript-eslint/indent\\": [
+      \\"error\\",
+      2
+    ],
+    \\"quotes\\": [
+      \\"error\\",
+      \\"single\\",
+      {
+        \\"avoidEscape\\": true
+      }
+    ],
+    \\"comma-dangle\\": [
+      \\"error\\",
+      \\"always-multiline\\"
+    ],
+    \\"comma-spacing\\": [
+      \\"error\\",
+      {
+        \\"before\\": false,
+        \\"after\\": true
+      }
+    ],
+    \\"no-multi-spaces\\": [
+      \\"error\\",
+      {
+        \\"ignoreEOLComments\\": false
+      }
+    ],
+    \\"array-bracket-spacing\\": [
+      \\"error\\",
+      \\"never\\"
+    ],
+    \\"array-bracket-newline\\": [
+      \\"error\\",
+      \\"consistent\\"
+    ],
+    \\"object-curly-spacing\\": [
+      \\"error\\",
+      \\"always\\"
+    ],
+    \\"object-curly-newline\\": [
+      \\"error\\",
+      {
+        \\"multiline\\": true,
+        \\"consistent\\": true
+      }
+    ],
+    \\"object-property-newline\\": [
+      \\"error\\",
+      {
+        \\"allowAllPropertiesOnSameLine\\": true
+      }
+    ],
+    \\"keyword-spacing\\": [
+      \\"error\\"
+    ],
+    \\"brace-style\\": [
+      \\"error\\",
+      \\"1tbs\\",
+      {
+        \\"allowSingleLine\\": true
+      }
+    ],
+    \\"space-before-blocks\\": [
+      \\"error\\"
+    ],
+    \\"curly\\": [
+      \\"error\\",
+      \\"multi-line\\",
+      \\"consistent\\"
+    ],
+    \\"@typescript-eslint/member-delimiter-style\\": [
+      \\"error\\"
+    ],
+    \\"semi\\": [
+      \\"error\\",
+      \\"always\\"
+    ],
+    \\"max-len\\": [
+      \\"error\\",
+      {
+        \\"code\\": 150,
+        \\"ignoreUrls\\": true,
+        \\"ignoreStrings\\": true,
+        \\"ignoreTemplateLiterals\\": true,
+        \\"ignoreComments\\": true,
+        \\"ignoreRegExpLiterals\\": true
+      }
+    ],
+    \\"quote-props\\": [
+      \\"error\\",
+      \\"consistent-as-needed\\"
+    ],
+    \\"@typescript-eslint/no-require-imports\\": [
+      \\"error\\"
+    ],
+    \\"import/no-extraneous-dependencies\\": [
+      \\"error\\",
+      {
+        \\"devDependencies\\": [
+          \\"**/test/**\\",
+          \\"**/build-tools/**\\"
+        ],
+        \\"optionalDependencies\\": false,
+        \\"peerDependencies\\": true
+      }
+    ],
+    \\"import/no-unresolved\\": [
+      \\"error\\"
+    ],
+    \\"import/order\\": [
+      \\"warn\\",
+      {
+        \\"groups\\": [
+          \\"builtin\\",
+          \\"external\\"
+        ],
+        \\"alphabetize\\": {
+          \\"order\\": \\"asc\\",
+          \\"caseInsensitive\\": true
+        }
+      }
+    ],
+    \\"no-duplicate-imports\\": [
+      \\"error\\"
+    ],
+    \\"no-shadow\\": [
+      \\"off\\"
+    ],
+    \\"@typescript-eslint/no-shadow\\": [
+      \\"error\\"
+    ],
+    \\"key-spacing\\": [
+      \\"error\\"
+    ],
+    \\"no-multiple-empty-lines\\": [
+      \\"error\\"
+    ],
+    \\"@typescript-eslint/no-floating-promises\\": [
+      \\"error\\"
+    ],
+    \\"no-return-await\\": [
+      \\"off\\"
+    ],
+    \\"@typescript-eslint/return-await\\": [
+      \\"error\\"
+    ],
+    \\"no-trailing-spaces\\": [
+      \\"error\\"
+    ],
+    \\"dot-notation\\": [
+      \\"error\\"
+    ],
+    \\"no-bitwise\\": [
+      \\"error\\"
+    ],
+    \\"@typescript-eslint/member-ordering\\": [
+      \\"error\\",
+      {
+        \\"default\\": [
+          \\"public-static-field\\",
+          \\"public-static-method\\",
+          \\"protected-static-field\\",
+          \\"protected-static-method\\",
+          \\"private-static-field\\",
+          \\"private-static-method\\",
+          \\"field\\",
+          \\"constructor\\",
+          \\"method\\"
+        ]
+      }
+    ]
+  },
+  \\"overrides\\": [
+    {
+      \\"files\\": [
+        \\".projenrc.js\\"
+      ],
+      \\"rules\\": {
+        \\"@typescript-eslint/no-require-imports\\": \\"off\\",
+        \\"import/no-extraneous-dependencies\\": \\"off\\"
+      }
+    }
+  ]
+}
+",
   ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
 *.snap linguist-generated
@@ -2376,435 +1943,302 @@ tsconfig.tsbuildinfo
 /.eslintrc.json
 !.jsii
 ",
-  ".projen/deps.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "dependencies": Array [
-      Object {
-        "name": "@types/follow-redirects",
-        "type": "build",
-      },
-      Object {
-        "name": "@types/jest",
-        "type": "build",
-        "version": "^27",
-      },
-      Object {
-        "name": "@types/json-stable-stringify",
-        "type": "build",
-      },
-      Object {
-        "name": "@types/node",
-        "type": "build",
-        "version": "^12",
-      },
-      Object {
-        "name": "@types/yaml",
-        "type": "build",
-      },
-      Object {
-        "name": "@typescript-eslint/eslint-plugin",
-        "type": "build",
-        "version": "^5",
-      },
-      Object {
-        "name": "@typescript-eslint/parser",
-        "type": "build",
-        "version": "^5",
-      },
-      Object {
-        "name": "constructs",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint-import-resolver-node",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint-import-resolver-typescript",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint-plugin-import",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint",
-        "type": "build",
-        "version": "^8",
-      },
-      Object {
-        "name": "jest-junit",
-        "type": "build",
-        "version": "^13",
-      },
-      Object {
-        "name": "jest",
-        "type": "build",
-        "version": "^27",
-      },
-      Object {
-        "name": "jsii",
-        "type": "build",
-      },
-      Object {
-        "name": "jsii-diff",
-        "type": "build",
-      },
-      Object {
-        "name": "jsii-docgen",
-        "type": "build",
-      },
-      Object {
-        "name": "jsii-pacmak",
-        "type": "build",
-      },
-      Object {
-        "name": "json-schema",
-        "type": "build",
-      },
-      Object {
-        "name": "json-schema-to-typescript",
-        "type": "build",
-      },
-      Object {
-        "name": "npm-check-updates",
-        "type": "build",
-        "version": "^16",
-      },
-      Object {
-        "name": "projen",
-        "type": "build",
-      },
-      Object {
-        "name": "ts-jest",
-        "type": "build",
-        "version": "^27",
-      },
-      Object {
-        "name": "typescript",
-        "type": "build",
-      },
-      Object {
-        "name": "fast-json-patch",
-        "type": "bundled",
-      },
-      Object {
-        "name": "follow-redirects",
-        "type": "bundled",
-      },
-      Object {
-        "name": "json-stable-stringify",
-        "type": "bundled",
-      },
-      Object {
-        "name": "yaml",
-        "type": "bundled",
-      },
-      Object {
-        "name": "@types/prettier",
-        "type": "override",
-        "version": "2.6.0",
-      },
-      Object {
-        "name": "constructs",
-        "type": "peer",
-      },
-    ],
-  },
-  ".projen/files.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "files": Array [
-      ".eslintrc.json",
-      ".gitattributes",
-      ".github/workflows/pull-request-lint.yml",
-      ".github/workflows/upgrade.yml",
-      ".gitignore",
-      ".projen/deps.json",
-      ".projen/files.json",
-      ".projen/tasks.json",
-      "LICENSE",
-      "tsconfig.dev.json",
-    ],
-  },
-  ".projen/tasks.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "env": Object {
-      "PATH": "$(npx -c \\"node -e \\\\\\"console.log(process.env.PATH)\\\\\\"\\")",
+  ".projen/deps.json": "{\\"dependencies\\":[{\\"name\\":\\"@types/follow-redirects\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@types/jest\\",\\"version\\":\\"^27\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@types/json-stable-stringify\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@types/node\\",\\"version\\":\\"^12\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@types/yaml\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@typescript-eslint/eslint-plugin\\",\\"version\\":\\"^5\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@typescript-eslint/parser\\",\\"version\\":\\"^5\\",\\"type\\":\\"build\\"},{\\"name\\":\\"constructs\\",\\"type\\":\\"build\\"},{\\"name\\":\\"eslint-import-resolver-node\\",\\"type\\":\\"build\\"},{\\"name\\":\\"eslint-import-resolver-typescript\\",\\"type\\":\\"build\\"},{\\"name\\":\\"eslint-plugin-import\\",\\"type\\":\\"build\\"},{\\"name\\":\\"eslint\\",\\"version\\":\\"^8\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jest-junit\\",\\"version\\":\\"^13\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jest\\",\\"version\\":\\"^27\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jsii\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jsii-diff\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jsii-docgen\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jsii-pacmak\\",\\"type\\":\\"build\\"},{\\"name\\":\\"json-schema\\",\\"type\\":\\"build\\"},{\\"name\\":\\"json-schema-to-typescript\\",\\"type\\":\\"build\\"},{\\"name\\":\\"npm-check-updates\\",\\"version\\":\\"^16\\",\\"type\\":\\"build\\"},{\\"name\\":\\"projen\\",\\"type\\":\\"build\\"},{\\"name\\":\\"ts-jest\\",\\"version\\":\\"^27\\",\\"type\\":\\"build\\"},{\\"name\\":\\"typescript\\",\\"type\\":\\"build\\"},{\\"name\\":\\"fast-json-patch\\",\\"type\\":\\"bundled\\"},{\\"name\\":\\"follow-redirects\\",\\"type\\":\\"bundled\\"},{\\"name\\":\\"json-stable-stringify\\",\\"type\\":\\"bundled\\"},{\\"name\\":\\"yaml\\",\\"type\\":\\"bundled\\"},{\\"name\\":\\"@types/prettier\\",\\"version\\":\\"2.6.0\\",\\"type\\":\\"override\\"},{\\"name\\":\\"constructs\\",\\"type\\":\\"peer\\"}],\\"//\\":\\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"}
+",
+  ".projen/files.json": "{
+  \\"files\\": [
+    \\".eslintrc.json\\",
+    \\".gitattributes\\",
+    \\".github/workflows/pull-request-lint.yml\\",
+    \\".github/workflows/upgrade.yml\\",
+    \\".gitignore\\",
+    \\".projen/deps.json\\",
+    \\".projen/files.json\\",
+    \\".projen/tasks.json\\",
+    \\"LICENSE\\",
+    \\"tsconfig.dev.json\\"
+  ],
+  \\"//\\": \\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"
+}
+",
+  ".projen/tasks.json": "{
+  \\"tasks\\": {
+    \\"build\\": {
+      \\"name\\": \\"build\\",
+      \\"description\\": \\"Full release build\\",
+      \\"steps\\": [
+        {
+          \\"spawn\\": \\"default\\"
+        },
+        {
+          \\"spawn\\": \\"pre-compile\\"
+        },
+        {
+          \\"spawn\\": \\"compile\\"
+        },
+        {
+          \\"spawn\\": \\"post-compile\\"
+        },
+        {
+          \\"spawn\\": \\"test\\"
+        },
+        {
+          \\"spawn\\": \\"package\\"
+        }
+      ]
     },
-    "tasks": Object {
-      "build": Object {
-        "description": "Full release build",
-        "name": "build",
-        "steps": Array [
-          Object {
-            "spawn": "default",
-          },
-          Object {
-            "spawn": "pre-compile",
-          },
-          Object {
-            "spawn": "compile",
-          },
-          Object {
-            "spawn": "post-compile",
-          },
-          Object {
-            "spawn": "test",
-          },
-          Object {
-            "spawn": "package",
-          },
-        ],
+    \\"clobber\\": {
+      \\"name\\": \\"clobber\\",
+      \\"description\\": \\"hard resets to HEAD of origin and cleans the local repo\\",
+      \\"env\\": {
+        \\"BRANCH\\": \\"$(git branch --show-current)\\"
       },
-      "clobber": Object {
-        "condition": "git diff --exit-code > /dev/null",
-        "description": "hard resets to HEAD of origin and cleans the local repo",
-        "env": Object {
-          "BRANCH": "$(git branch --show-current)",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"git checkout -b scratch\\",
+          \\"name\\": \\"save current HEAD in \\\\\\"scratch\\\\\\" branch\\"
         },
-        "name": "clobber",
-        "steps": Array [
-          Object {
-            "exec": "git checkout -b scratch",
-            "name": "save current HEAD in \\"scratch\\" branch",
-          },
-          Object {
-            "exec": "git checkout $BRANCH",
-          },
-          Object {
-            "exec": "git fetch origin",
-            "name": "fetch latest changes from origin",
-          },
-          Object {
-            "exec": "git reset --hard origin/$BRANCH",
-            "name": "hard reset to origin commit",
-          },
-          Object {
-            "exec": "git clean -fdx",
-            "name": "clean all untracked files",
-          },
-          Object {
-            "say": "ready to rock! (unpushed commits are under the \\"scratch\\" branch)",
-          },
-        ],
-      },
-      "compat": Object {
-        "description": "Perform API compatibility check against latest version",
-        "name": "compat",
-        "steps": Array [
-          Object {
-            "exec": "jsii-diff npm:$(node -p \\"require('./package.json').name\\") -k --ignore-file .compatignore || (echo \\"
-UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.
-\\" && exit 1)",
-          },
-        ],
-      },
-      "compile": Object {
-        "description": "Only compile",
-        "name": "compile",
-        "steps": Array [
-          Object {
-            "exec": "jsii --silence-warnings=reserved-word",
-          },
-          Object {
-            "exec": "cp src/_loadurl.js lib/",
-          },
-        ],
-      },
-      "default": Object {
-        "description": "Synthesize project files",
-        "name": "default",
-        "steps": Array [
-          Object {
-            "exec": "node .projenrc.js",
-          },
-        ],
-      },
-      "docgen": Object {
-        "description": "Generate API.md from .jsii manifest",
-        "name": "docgen",
-        "steps": Array [
-          Object {
-            "exec": "jsii-docgen -o API.md",
-          },
-        ],
-      },
-      "eject": Object {
-        "description": "Remove projen from the project",
-        "env": Object {
-          "PROJEN_EJECTING": "true",
+        {
+          \\"exec\\": \\"git checkout $BRANCH\\"
         },
-        "name": "eject",
-        "steps": Array [
-          Object {
-            "spawn": "default",
-          },
-        ],
-      },
-      "eslint": Object {
-        "description": "Runs eslint against the codebase",
-        "name": "eslint",
-        "steps": Array [
-          Object {
-            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
-          },
-        ],
-      },
-      "package": Object {
-        "description": "Creates the distribution package",
-        "name": "package",
-        "steps": Array [
-          Object {
-            "exec": "if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi",
-          },
-        ],
-      },
-      "package-all": Object {
-        "description": "Packages artifacts for all target languages",
-        "name": "package-all",
-        "steps": Array [
-          Object {
-            "spawn": "package:js",
-          },
-          Object {
-            "spawn": "package:java",
-          },
-          Object {
-            "spawn": "package:python",
-          },
-          Object {
-            "spawn": "package:dotnet",
-          },
-        ],
-      },
-      "package:dotnet": Object {
-        "description": "Create dotnet language bindings",
-        "name": "package:dotnet",
-        "steps": Array [
-          Object {
-            "exec": "jsii-pacmak -v --target dotnet",
-          },
-        ],
-      },
-      "package:java": Object {
-        "description": "Create java language bindings",
-        "name": "package:java",
-        "steps": Array [
-          Object {
-            "exec": "jsii-pacmak -v --target java",
-          },
-        ],
-      },
-      "package:js": Object {
-        "description": "Create js language bindings",
-        "name": "package:js",
-        "steps": Array [
-          Object {
-            "exec": "jsii-pacmak -v --target js",
-          },
-        ],
-      },
-      "package:python": Object {
-        "description": "Create python language bindings",
-        "name": "package:python",
-        "steps": Array [
-          Object {
-            "exec": "jsii-pacmak -v --target python",
-          },
-        ],
-      },
-      "post-compile": Object {
-        "description": "Runs after successful compilation",
-        "name": "post-compile",
-        "steps": Array [
-          Object {
-            "spawn": "docgen",
-          },
-        ],
-      },
-      "post-upgrade": Object {
-        "description": "Runs after upgrading dependencies",
-        "name": "post-upgrade",
-      },
-      "pre-compile": Object {
-        "description": "Prepare the project for compilation",
-        "name": "pre-compile",
-      },
-      "test": Object {
-        "description": "Run tests",
-        "name": "test",
-        "steps": Array [
-          Object {
-            "exec": "jest --passWithNoTests --updateSnapshot",
-            "receiveArgs": true,
-          },
-          Object {
-            "spawn": "eslint",
-          },
-          Object {
-            "exec": "yarn compile",
-          },
-        ],
-      },
-      "test:watch": Object {
-        "description": "Run jest in watch mode",
-        "name": "test:watch",
-        "steps": Array [
-          Object {
-            "exec": "jest --watch",
-          },
-        ],
-      },
-      "upgrade": Object {
-        "description": "upgrade dependencies",
-        "env": Object {
-          "CI": "0",
+        {
+          \\"exec\\": \\"git fetch origin\\",
+          \\"name\\": \\"fetch latest changes from origin\\"
         },
-        "name": "upgrade",
-        "steps": Array [
-          Object {
-            "exec": "yarn upgrade npm-check-updates",
-          },
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
-          },
-          Object {
-            "exec": "yarn install --check-files",
-          },
-          Object {
-            "exec": "yarn upgrade",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "watch": Object {
-        "description": "Watch & compile in the background",
-        "name": "watch",
-        "steps": Array [
-          Object {
-            "exec": "jsii -w --silence-warnings=reserved-word",
-          },
-        ],
-      },
+        {
+          \\"exec\\": \\"git reset --hard origin/$BRANCH\\",
+          \\"name\\": \\"hard reset to origin commit\\"
+        },
+        {
+          \\"exec\\": \\"git clean -fdx\\",
+          \\"name\\": \\"clean all untracked files\\"
+        },
+        {
+          \\"say\\": \\"ready to rock! (unpushed commits are under the \\\\\\"scratch\\\\\\" branch)\\"
+        }
+      ],
+      \\"condition\\": \\"git diff --exit-code > /dev/null\\"
     },
+    \\"compat\\": {
+      \\"name\\": \\"compat\\",
+      \\"description\\": \\"Perform API compatibility check against latest version\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii-diff npm:$(node -p \\\\\\"require('./package.json').name\\\\\\") -k --ignore-file .compatignore || (echo \\\\\\"\\\\nUNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .compatignore to skip.\\\\n\\\\\\" && exit 1)\\"
+        }
+      ]
+    },
+    \\"compile\\": {
+      \\"name\\": \\"compile\\",
+      \\"description\\": \\"Only compile\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii --silence-warnings=reserved-word\\"
+        },
+        {
+          \\"exec\\": \\"cp src/_loadurl.js lib/\\"
+        }
+      ]
+    },
+    \\"default\\": {
+      \\"name\\": \\"default\\",
+      \\"description\\": \\"Synthesize project files\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"node .projenrc.js\\"
+        }
+      ]
+    },
+    \\"docgen\\": {
+      \\"name\\": \\"docgen\\",
+      \\"description\\": \\"Generate API.md from .jsii manifest\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii-docgen -o API.md\\"
+        }
+      ]
+    },
+    \\"eject\\": {
+      \\"name\\": \\"eject\\",
+      \\"description\\": \\"Remove projen from the project\\",
+      \\"env\\": {
+        \\"PROJEN_EJECTING\\": \\"true\\"
+      },
+      \\"steps\\": [
+        {
+          \\"spawn\\": \\"default\\"
+        }
+      ]
+    },
+    \\"eslint\\": {
+      \\"name\\": \\"eslint\\",
+      \\"description\\": \\"Runs eslint against the codebase\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js\\"
+        }
+      ]
+    },
+    \\"package\\": {
+      \\"name\\": \\"package\\",
+      \\"description\\": \\"Creates the distribution package\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"if [ ! -z \${CI} ]; then rsync -a . .repo --exclude .git --exclude node_modules && rm -rf dist && mv .repo dist; else npx projen package-all; fi\\"
+        }
+      ]
+    },
+    \\"package-all\\": {
+      \\"name\\": \\"package-all\\",
+      \\"description\\": \\"Packages artifacts for all target languages\\",
+      \\"steps\\": [
+        {
+          \\"spawn\\": \\"package:js\\"
+        },
+        {
+          \\"spawn\\": \\"package:java\\"
+        },
+        {
+          \\"spawn\\": \\"package:python\\"
+        },
+        {
+          \\"spawn\\": \\"package:dotnet\\"
+        }
+      ]
+    },
+    \\"package:dotnet\\": {
+      \\"name\\": \\"package:dotnet\\",
+      \\"description\\": \\"Create dotnet language bindings\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii-pacmak -v --target dotnet\\"
+        }
+      ]
+    },
+    \\"package:java\\": {
+      \\"name\\": \\"package:java\\",
+      \\"description\\": \\"Create java language bindings\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii-pacmak -v --target java\\"
+        }
+      ]
+    },
+    \\"package:js\\": {
+      \\"name\\": \\"package:js\\",
+      \\"description\\": \\"Create js language bindings\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii-pacmak -v --target js\\"
+        }
+      ]
+    },
+    \\"package:python\\": {
+      \\"name\\": \\"package:python\\",
+      \\"description\\": \\"Create python language bindings\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii-pacmak -v --target python\\"
+        }
+      ]
+    },
+    \\"post-compile\\": {
+      \\"name\\": \\"post-compile\\",
+      \\"description\\": \\"Runs after successful compilation\\",
+      \\"steps\\": [
+        {
+          \\"spawn\\": \\"docgen\\"
+        }
+      ]
+    },
+    \\"post-upgrade\\": {
+      \\"name\\": \\"post-upgrade\\",
+      \\"description\\": \\"Runs after upgrading dependencies\\"
+    },
+    \\"pre-compile\\": {
+      \\"name\\": \\"pre-compile\\",
+      \\"description\\": \\"Prepare the project for compilation\\"
+    },
+    \\"test\\": {
+      \\"name\\": \\"test\\",
+      \\"description\\": \\"Run tests\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jest --passWithNoTests --updateSnapshot\\",
+          \\"receiveArgs\\": true
+        },
+        {
+          \\"spawn\\": \\"eslint\\"
+        },
+        {
+          \\"exec\\": \\"yarn compile\\"
+        }
+      ]
+    },
+    \\"test:watch\\": {
+      \\"name\\": \\"test:watch\\",
+      \\"description\\": \\"Run jest in watch mode\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jest --watch\\"
+        }
+      ]
+    },
+    \\"upgrade\\": {
+      \\"name\\": \\"upgrade\\",
+      \\"description\\": \\"upgrade dependencies\\",
+      \\"env\\": {
+        \\"CI\\": \\"0\\"
+      },
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"yarn upgrade npm-check-updates\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep dev --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep optional --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep peer --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep prod --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep bundle --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"yarn install --check-files\\"
+        },
+        {
+          \\"exec\\": \\"yarn upgrade\\"
+        },
+        {
+          \\"exec\\": \\"npx projen\\"
+        },
+        {
+          \\"spawn\\": \\"post-upgrade\\"
+        }
+      ]
+    },
+    \\"watch\\": {
+      \\"name\\": \\"watch\\",
+      \\"description\\": \\"Watch & compile in the background\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jsii -w --silence-warnings=reserved-word\\"
+        }
+      ]
+    }
   },
+  \\"env\\": {
+    \\"PATH\\": \\"$(npx -c \\\\\\"node -e \\\\\\\\\\\\\\"console.log(process.env.PATH)\\\\\\\\\\\\\\"\\\\\\")\\"
+  },
+  \\"//\\": \\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"
+}
+",
   ".projenrc.js": "const { cdk } = require('projen');
 
 const common = require('./cdk8s.common');
@@ -3210,166 +2644,8 @@ project.addCompileCommand('cp src/_loadurl.js lib/');
 
 project.synth();
 ",
-  "package.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "author": Object {
-      "name": "Amazon Web Services",
-      "organization": true,
-      "url": "https://aws.amazon.com",
-    },
-    "bundledDependencies": Array [
-      "fast-json-patch",
-      "follow-redirects",
-      "json-stable-stringify",
-      "yaml",
-    ],
-    "dependencies": Object {
-      "fast-json-patch": "*",
-      "follow-redirects": "*",
-      "json-stable-stringify": "*",
-      "yaml": "*",
-    },
-    "description": "Cloud Development Kit for Kubernetes",
-    "devDependencies": Object {
-      "@types/follow-redirects": "*",
-      "@types/jest": "^27",
-      "@types/json-stable-stringify": "*",
-      "@types/node": "^12",
-      "@types/yaml": "*",
-      "@typescript-eslint/eslint-plugin": "^5",
-      "@typescript-eslint/parser": "^5",
-      "constructs": "*",
-      "eslint": "^8",
-      "eslint-import-resolver-node": "*",
-      "eslint-import-resolver-typescript": "*",
-      "eslint-plugin-import": "*",
-      "jest": "^27",
-      "jest-junit": "^13",
-      "jsii": "*",
-      "jsii-diff": "*",
-      "jsii-docgen": "*",
-      "jsii-pacmak": "*",
-      "json-schema": "*",
-      "json-schema-to-typescript": "*",
-      "npm-check-updates": "^16",
-      "projen": "*",
-      "ts-jest": "^27",
-      "typescript": "*",
-    },
-    "engines": Object {
-      "node": ">= 12.7.0",
-    },
-    "jest": Object {
-      "clearMocks": true,
-      "collectCoverage": true,
-      "coverageDirectory": "coverage",
-      "coveragePathIgnorePatterns": Array [
-        "/node_modules/",
-      ],
-      "coverageReporters": Array [
-        "json",
-        "lcov",
-        "clover",
-        "cobertura",
-        "text",
-      ],
-      "globals": Object {
-        "ts-jest": Object {
-          "tsconfig": "tsconfig.dev.json",
-        },
-      },
-      "preset": "ts-jest",
-      "reporters": Array [
-        "default",
-        Array [
-          "jest-junit",
-          Object {
-            "outputDirectory": "test-reports",
-          },
-        ],
-      ],
-      "testMatch": Array [
-        "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
-      ],
-      "testPathIgnorePatterns": Array [
-        "/node_modules/",
-      ],
-      "watchPathIgnorePatterns": Array [
-        "/node_modules/",
-      ],
-    },
-    "jsii": Object {
-      "outdir": "dist",
-      "targets": Object {
-        "dotnet": Object {
-          "namespace": "Org.Cdk8s",
-          "packageId": "Org.Cdk8s",
-        },
-        "java": Object {
-          "maven": Object {
-            "artifactId": "cdk8s",
-            "groupId": "org.cdk8s",
-          },
-          "package": "org.cdk8s",
-        },
-        "python": Object {
-          "distName": "cdk8s",
-          "module": "cdk8s",
-        },
-      },
-      "tsc": Object {
-        "outDir": "lib",
-        "rootDir": "src",
-      },
-    },
-    "keywords": Array [
-      "cdk",
-      "constructs",
-      "k8s",
-      "kubernetes",
-    ],
-    "license": "Apache-2.0",
-    "main": "lib/index.js",
-    "name": "cdk8s",
-    "peerDependencies": Object {
-      "constructs": "*",
-    },
-    "repository": Object {
-      "type": "git",
-      "url": "https://github.com/awslabs/cdk8s.git",
-    },
-    "resolutions": Object {
-      "@types/prettier": "2.6.0",
-    },
-    "scripts": Object {
-      "build": "yarn compile",
-      "clobber": "npx projen clobber",
-      "compat": "npx projen compat",
-      "compile": "npx projen compile",
-      "default": "npx projen default",
-      "docgen": "npx projen docgen",
-      "eject": "npx projen eject",
-      "eslint": "npx projen eslint",
-      "package": "npx projen package",
-      "package-all": "npx projen package-all",
-      "package:dotnet": "npx projen package:dotnet",
-      "package:java": "npx projen package:java",
-      "package:js": "npx projen package:js",
-      "package:python": "npx projen package:python",
-      "post-compile": "npx projen post-compile",
-      "post-upgrade": "npx projen post-upgrade",
-      "pre-compile": "npx projen pre-compile",
-      "projen": "npx projen",
-      "test": "npx projen test",
-      "test:watch": "npx projen test:watch",
-      "upgrade": "npx projen upgrade",
-      "watch": "npx projen watch",
-    },
-    "stability": "experimental",
-    "types": "lib/index.d.ts",
-    "version": "0.0.0",
-  },
+  "package.json": "{\\"name\\":\\"cdk8s\\",\\"description\\":\\"Cloud Development Kit for Kubernetes\\",\\"repository\\":{\\"type\\":\\"git\\",\\"url\\":\\"https://github.com/awslabs/cdk8s.git\\"},\\"scripts\\":{\\"build\\":\\"yarn compile\\",\\"clobber\\":\\"npx projen clobber\\",\\"compat\\":\\"npx projen compat\\",\\"compile\\":\\"npx projen compile\\",\\"default\\":\\"npx projen default\\",\\"docgen\\":\\"npx projen docgen\\",\\"eject\\":\\"npx projen eject\\",\\"eslint\\":\\"npx projen eslint\\",\\"package\\":\\"npx projen package\\",\\"package-all\\":\\"npx projen package-all\\",\\"package:dotnet\\":\\"npx projen package:dotnet\\",\\"package:java\\":\\"npx projen package:java\\",\\"package:js\\":\\"npx projen package:js\\",\\"package:python\\":\\"npx projen package:python\\",\\"post-compile\\":\\"npx projen post-compile\\",\\"post-upgrade\\":\\"npx projen post-upgrade\\",\\"pre-compile\\":\\"npx projen pre-compile\\",\\"test\\":\\"npx projen test\\",\\"test:watch\\":\\"npx projen test:watch\\",\\"upgrade\\":\\"npx projen upgrade\\",\\"watch\\":\\"npx projen watch\\",\\"projen\\":\\"npx projen\\"},\\"author\\":{\\"name\\":\\"Amazon Web Services\\",\\"url\\":\\"https://aws.amazon.com\\",\\"organization\\":true},\\"devDependencies\\":{\\"@types/follow-redirects\\":\\"*\\",\\"@types/jest\\":\\"^27\\",\\"@types/json-stable-stringify\\":\\"*\\",\\"@types/node\\":\\"^12\\",\\"@types/yaml\\":\\"*\\",\\"@typescript-eslint/eslint-plugin\\":\\"^5\\",\\"@typescript-eslint/parser\\":\\"^5\\",\\"constructs\\":\\"*\\",\\"eslint\\":\\"^8\\",\\"eslint-import-resolver-node\\":\\"*\\",\\"eslint-import-resolver-typescript\\":\\"*\\",\\"eslint-plugin-import\\":\\"*\\",\\"jest\\":\\"^27\\",\\"jest-junit\\":\\"^13\\",\\"jsii\\":\\"*\\",\\"jsii-diff\\":\\"*\\",\\"jsii-docgen\\":\\"*\\",\\"jsii-pacmak\\":\\"*\\",\\"json-schema\\":\\"*\\",\\"json-schema-to-typescript\\":\\"*\\",\\"npm-check-updates\\":\\"^16\\",\\"projen\\":\\"*\\",\\"ts-jest\\":\\"^27\\",\\"typescript\\":\\"*\\"},\\"peerDependencies\\":{\\"constructs\\":\\"*\\"},\\"dependencies\\":{\\"fast-json-patch\\":\\"*\\",\\"follow-redirects\\":\\"*\\",\\"json-stable-stringify\\":\\"*\\",\\"yaml\\":\\"*\\"},\\"bundledDependencies\\":[\\"fast-json-patch\\",\\"follow-redirects\\",\\"json-stable-stringify\\",\\"yaml\\"],\\"keywords\\":[\\"cdk\\",\\"constructs\\",\\"k8s\\",\\"kubernetes\\"],\\"engines\\":{\\"node\\":\\">= 12.7.0\\"},\\"main\\":\\"lib/index.js\\",\\"license\\":\\"Apache-2.0\\",\\"version\\":\\"0.0.0\\",\\"jest\\":{\\"testMatch\\":[\\"<rootDir>/src/**/__tests__/**/*.ts?(x)\\",\\"<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)\\"],\\"clearMocks\\":true,\\"collectCoverage\\":true,\\"coverageReporters\\":[\\"json\\",\\"lcov\\",\\"clover\\",\\"cobertura\\",\\"text\\"],\\"coverageDirectory\\":\\"coverage\\",\\"coveragePathIgnorePatterns\\":[\\"/node_modules/\\"],\\"testPathIgnorePatterns\\":[\\"/node_modules/\\"],\\"watchPathIgnorePatterns\\":[\\"/node_modules/\\"],\\"reporters\\":[\\"default\\",[\\"jest-junit\\",{\\"outputDirectory\\":\\"test-reports\\"}]],\\"preset\\":\\"ts-jest\\",\\"globals\\":{\\"ts-jest\\":{\\"tsconfig\\":\\"tsconfig.dev.json\\"}}},\\"types\\":\\"lib/index.d.ts\\",\\"stability\\":\\"experimental\\",\\"jsii\\":{\\"outdir\\":\\"dist\\",\\"targets\\":{\\"java\\":{\\"package\\":\\"org.cdk8s\\",\\"maven\\":{\\"groupId\\":\\"org.cdk8s\\",\\"artifactId\\":\\"cdk8s\\"}},\\"python\\":{\\"distName\\":\\"cdk8s\\",\\"module\\":\\"cdk8s\\"},\\"dotnet\\":{\\"namespace\\":\\"Org.Cdk8s\\",\\"packageId\\":\\"Org.Cdk8s\\"}},\\"tsc\\":{\\"outDir\\":\\"lib\\",\\"rootDir\\":\\"src\\"}},\\"resolutions\\":{\\"@types/prettier\\":\\"2.6.0\\"},\\"//\\":\\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"}
+",
   "src/index.ts": "export class Hello {
   public sayHello() {
     return 'hello, world!';
@@ -3380,279 +2656,282 @@ project.synth();
 test('hello', () => {
   expect(new Hello().sayHello()).toBe('hello, world!');
 });",
-  "tsconfig.dev.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "compilerOptions": Object {
-      "alwaysStrict": true,
-      "declaration": true,
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "inlineSourceMap": true,
-      "inlineSources": true,
-      "lib": Array [
-        "es2019",
-      ],
-      "module": "CommonJS",
-      "noEmitOnError": false,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "resolveJsonModule": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "strictPropertyInitialization": true,
-      "stripInternal": true,
-      "target": "ES2019",
-    },
-    "exclude": Array [
-      "node_modules",
+  "tsconfig.dev.json": "{
+  \\"compilerOptions\\": {
+    \\"alwaysStrict\\": true,
+    \\"declaration\\": true,
+    \\"esModuleInterop\\": true,
+    \\"experimentalDecorators\\": true,
+    \\"inlineSourceMap\\": true,
+    \\"inlineSources\\": true,
+    \\"lib\\": [
+      \\"es2019\\"
     ],
-    "include": Array [
-      ".projenrc.js",
-      "src/**/*.ts",
-      "test/**/*.ts",
-    ],
+    \\"module\\": \\"CommonJS\\",
+    \\"noEmitOnError\\": false,
+    \\"noFallthroughCasesInSwitch\\": true,
+    \\"noImplicitAny\\": true,
+    \\"noImplicitReturns\\": true,
+    \\"noImplicitThis\\": true,
+    \\"noUnusedLocals\\": true,
+    \\"noUnusedParameters\\": true,
+    \\"resolveJsonModule\\": true,
+    \\"strict\\": true,
+    \\"strictNullChecks\\": true,
+    \\"strictPropertyInitialization\\": true,
+    \\"stripInternal\\": true,
+    \\"target\\": \\"ES2019\\"
   },
+  \\"include\\": [
+    \\".projenrc.js\\",
+    \\"src/**/*.ts\\",
+    \\"test/**/*.ts\\"
+  ],
+  \\"exclude\\": [
+    \\"node_modules\\"
+  ],
+  \\"//\\": \\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"
+}
+",
 }
 `;
 
 exports[`cdk8s-cli 1`] = `
 Object {
-  ".eslintrc.json": Object {
-    "env": Object {
-      "jest": true,
-      "node": true,
-    },
-    "extends": Array [
-      "plugin:import/typescript",
-    ],
-    "ignorePatterns": Array [
-      "*.js",
-      "!.projenrc.js",
-      "*.d.ts",
-      "node_modules/",
-      "*.generated.ts",
-      "coverage",
-      "/templates/",
-    ],
-    "overrides": Array [
-      Object {
-        "files": Array [
-          ".projenrc.js",
-        ],
-        "rules": Object {
-          "@typescript-eslint/no-require-imports": "off",
-          "import/no-extraneous-dependencies": "off",
-        },
-      },
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": Object {
-      "ecmaVersion": 2018,
-      "project": "./tsconfig.dev.json",
-      "sourceType": "module",
-    },
-    "plugins": Array [
-      "@typescript-eslint",
-      "import",
-    ],
-    "root": true,
-    "rules": Object {
-      "@typescript-eslint/indent": Array [
-        "error",
-        2,
-      ],
-      "@typescript-eslint/member-delimiter-style": Array [
-        "error",
-      ],
-      "@typescript-eslint/member-ordering": Array [
-        "error",
-        Object {
-          "default": Array [
-            "public-static-field",
-            "public-static-method",
-            "protected-static-field",
-            "protected-static-method",
-            "private-static-field",
-            "private-static-method",
-            "field",
-            "constructor",
-            "method",
-          ],
-        },
-      ],
-      "@typescript-eslint/no-floating-promises": Array [
-        "error",
-      ],
-      "@typescript-eslint/no-require-imports": Array [
-        "error",
-      ],
-      "@typescript-eslint/no-shadow": Array [
-        "error",
-      ],
-      "@typescript-eslint/return-await": Array [
-        "error",
-      ],
-      "array-bracket-newline": Array [
-        "error",
-        "consistent",
-      ],
-      "array-bracket-spacing": Array [
-        "error",
-        "never",
-      ],
-      "brace-style": Array [
-        "error",
-        "1tbs",
-        Object {
-          "allowSingleLine": true,
-        },
-      ],
-      "comma-dangle": Array [
-        "error",
-        "always-multiline",
-      ],
-      "comma-spacing": Array [
-        "error",
-        Object {
-          "after": true,
-          "before": false,
-        },
-      ],
-      "curly": Array [
-        "error",
-        "multi-line",
-        "consistent",
-      ],
-      "dot-notation": Array [
-        "error",
-      ],
-      "import/no-extraneous-dependencies": Array [
-        "error",
-        Object {
-          "devDependencies": Array [
-            "**/test/**",
-            "**/build-tools/**",
-          ],
-          "optionalDependencies": false,
-          "peerDependencies": true,
-        },
-      ],
-      "import/no-unresolved": Array [
-        "error",
-      ],
-      "import/order": Array [
-        "warn",
-        Object {
-          "alphabetize": Object {
-            "caseInsensitive": true,
-            "order": "asc",
-          },
-          "groups": Array [
-            "builtin",
-            "external",
-          ],
-        },
-      ],
-      "indent": Array [
-        "off",
-      ],
-      "key-spacing": Array [
-        "error",
-      ],
-      "keyword-spacing": Array [
-        "error",
-      ],
-      "max-len": Array [
-        "error",
-        Object {
-          "code": 150,
-          "ignoreComments": true,
-          "ignoreRegExpLiterals": true,
-          "ignoreStrings": true,
-          "ignoreTemplateLiterals": true,
-          "ignoreUrls": true,
-        },
-      ],
-      "no-bitwise": Array [
-        "error",
-      ],
-      "no-duplicate-imports": Array [
-        "error",
-      ],
-      "no-multi-spaces": Array [
-        "error",
-        Object {
-          "ignoreEOLComments": false,
-        },
-      ],
-      "no-multiple-empty-lines": Array [
-        "error",
-      ],
-      "no-return-await": Array [
-        "off",
-      ],
-      "no-shadow": Array [
-        "off",
-      ],
-      "no-trailing-spaces": Array [
-        "error",
-      ],
-      "object-curly-newline": Array [
-        "error",
-        Object {
-          "consistent": true,
-          "multiline": true,
-        },
-      ],
-      "object-curly-spacing": Array [
-        "error",
-        "always",
-      ],
-      "object-property-newline": Array [
-        "error",
-        Object {
-          "allowAllPropertiesOnSameLine": true,
-        },
-      ],
-      "quote-props": Array [
-        "error",
-        "consistent-as-needed",
-      ],
-      "quotes": Array [
-        "error",
-        "single",
-        Object {
-          "avoidEscape": true,
-        },
-      ],
-      "semi": Array [
-        "error",
-        "always",
-      ],
-      "space-before-blocks": Array [
-        "error",
-      ],
-    },
-    "settings": Object {
-      "import/parsers": Object {
-        "@typescript-eslint/parser": Array [
-          ".ts",
-          ".tsx",
-        ],
-      },
-      "import/resolver": Object {
-        "node": Object {},
-        "typescript": Object {
-          "alwaysTryTypes": true,
-          "project": "./tsconfig.dev.json",
-        },
-      },
-    },
+  ".eslintrc.json": "// ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
+{
+  \\"env\\": {
+    \\"jest\\": true,
+    \\"node\\": true
   },
+  \\"root\\": true,
+  \\"plugins\\": [
+    \\"@typescript-eslint\\",
+    \\"import\\"
+  ],
+  \\"parser\\": \\"@typescript-eslint/parser\\",
+  \\"parserOptions\\": {
+    \\"ecmaVersion\\": 2018,
+    \\"sourceType\\": \\"module\\",
+    \\"project\\": \\"./tsconfig.dev.json\\"
+  },
+  \\"extends\\": [
+    \\"plugin:import/typescript\\"
+  ],
+  \\"settings\\": {
+    \\"import/parsers\\": {
+      \\"@typescript-eslint/parser\\": [
+        \\".ts\\",
+        \\".tsx\\"
+      ]
+    },
+    \\"import/resolver\\": {
+      \\"node\\": {},
+      \\"typescript\\": {
+        \\"project\\": \\"./tsconfig.dev.json\\",
+        \\"alwaysTryTypes\\": true
+      }
+    }
+  },
+  \\"ignorePatterns\\": [
+    \\"*.js\\",
+    \\"!.projenrc.js\\",
+    \\"*.d.ts\\",
+    \\"node_modules/\\",
+    \\"*.generated.ts\\",
+    \\"coverage\\",
+    \\"/templates/\\"
+  ],
+  \\"rules\\": {
+    \\"indent\\": [
+      \\"off\\"
+    ],
+    \\"@typescript-eslint/indent\\": [
+      \\"error\\",
+      2
+    ],
+    \\"quotes\\": [
+      \\"error\\",
+      \\"single\\",
+      {
+        \\"avoidEscape\\": true
+      }
+    ],
+    \\"comma-dangle\\": [
+      \\"error\\",
+      \\"always-multiline\\"
+    ],
+    \\"comma-spacing\\": [
+      \\"error\\",
+      {
+        \\"before\\": false,
+        \\"after\\": true
+      }
+    ],
+    \\"no-multi-spaces\\": [
+      \\"error\\",
+      {
+        \\"ignoreEOLComments\\": false
+      }
+    ],
+    \\"array-bracket-spacing\\": [
+      \\"error\\",
+      \\"never\\"
+    ],
+    \\"array-bracket-newline\\": [
+      \\"error\\",
+      \\"consistent\\"
+    ],
+    \\"object-curly-spacing\\": [
+      \\"error\\",
+      \\"always\\"
+    ],
+    \\"object-curly-newline\\": [
+      \\"error\\",
+      {
+        \\"multiline\\": true,
+        \\"consistent\\": true
+      }
+    ],
+    \\"object-property-newline\\": [
+      \\"error\\",
+      {
+        \\"allowAllPropertiesOnSameLine\\": true
+      }
+    ],
+    \\"keyword-spacing\\": [
+      \\"error\\"
+    ],
+    \\"brace-style\\": [
+      \\"error\\",
+      \\"1tbs\\",
+      {
+        \\"allowSingleLine\\": true
+      }
+    ],
+    \\"space-before-blocks\\": [
+      \\"error\\"
+    ],
+    \\"curly\\": [
+      \\"error\\",
+      \\"multi-line\\",
+      \\"consistent\\"
+    ],
+    \\"@typescript-eslint/member-delimiter-style\\": [
+      \\"error\\"
+    ],
+    \\"semi\\": [
+      \\"error\\",
+      \\"always\\"
+    ],
+    \\"max-len\\": [
+      \\"error\\",
+      {
+        \\"code\\": 150,
+        \\"ignoreUrls\\": true,
+        \\"ignoreStrings\\": true,
+        \\"ignoreTemplateLiterals\\": true,
+        \\"ignoreComments\\": true,
+        \\"ignoreRegExpLiterals\\": true
+      }
+    ],
+    \\"quote-props\\": [
+      \\"error\\",
+      \\"consistent-as-needed\\"
+    ],
+    \\"@typescript-eslint/no-require-imports\\": [
+      \\"error\\"
+    ],
+    \\"import/no-extraneous-dependencies\\": [
+      \\"error\\",
+      {
+        \\"devDependencies\\": [
+          \\"**/test/**\\",
+          \\"**/build-tools/**\\"
+        ],
+        \\"optionalDependencies\\": false,
+        \\"peerDependencies\\": true
+      }
+    ],
+    \\"import/no-unresolved\\": [
+      \\"error\\"
+    ],
+    \\"import/order\\": [
+      \\"warn\\",
+      {
+        \\"groups\\": [
+          \\"builtin\\",
+          \\"external\\"
+        ],
+        \\"alphabetize\\": {
+          \\"order\\": \\"asc\\",
+          \\"caseInsensitive\\": true
+        }
+      }
+    ],
+    \\"no-duplicate-imports\\": [
+      \\"error\\"
+    ],
+    \\"no-shadow\\": [
+      \\"off\\"
+    ],
+    \\"@typescript-eslint/no-shadow\\": [
+      \\"error\\"
+    ],
+    \\"key-spacing\\": [
+      \\"error\\"
+    ],
+    \\"no-multiple-empty-lines\\": [
+      \\"error\\"
+    ],
+    \\"@typescript-eslint/no-floating-promises\\": [
+      \\"error\\"
+    ],
+    \\"no-return-await\\": [
+      \\"off\\"
+    ],
+    \\"@typescript-eslint/return-await\\": [
+      \\"error\\"
+    ],
+    \\"no-trailing-spaces\\": [
+      \\"error\\"
+    ],
+    \\"dot-notation\\": [
+      \\"error\\"
+    ],
+    \\"no-bitwise\\": [
+      \\"error\\"
+    ],
+    \\"@typescript-eslint/member-ordering\\": [
+      \\"error\\",
+      {
+        \\"default\\": [
+          \\"public-static-field\\",
+          \\"public-static-method\\",
+          \\"protected-static-field\\",
+          \\"protected-static-method\\",
+          \\"private-static-field\\",
+          \\"private-static-method\\",
+          \\"field\\",
+          \\"constructor\\",
+          \\"method\\"
+        ]
+      }
+    ]
+  },
+  \\"overrides\\": [
+    {
+      \\"files\\": [
+        \\".projenrc.js\\"
+      ],
+      \\"rules\\": {
+        \\"@typescript-eslint/no-require-imports\\": \\"off\\",
+        \\"import/no-extraneous-dependencies\\": \\"off\\"
+      }
+    }
+  ]
+}
+",
   ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
 *.snap linguist-generated
@@ -3855,351 +3134,227 @@ dist
 tsconfig.tsbuildinfo
 /.eslintrc.json
 ",
-  ".projen/deps.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "dependencies": Array [
-      Object {
-        "name": "@types/fs-extra",
-        "type": "build",
-      },
-      Object {
-        "name": "@types/jest",
-        "type": "build",
-      },
-      Object {
-        "name": "@types/json-schema",
-        "type": "build",
-      },
-      Object {
-        "name": "@types/node",
-        "type": "build",
-        "version": "^12",
-      },
-      Object {
-        "name": "@typescript-eslint/eslint-plugin",
-        "type": "build",
-        "version": "^5",
-      },
-      Object {
-        "name": "@typescript-eslint/parser",
-        "type": "build",
-        "version": "^5",
-      },
-      Object {
-        "name": "eslint-import-resolver-node",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint-import-resolver-typescript",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint-plugin-import",
-        "type": "build",
-      },
-      Object {
-        "name": "eslint",
-        "type": "build",
-        "version": "^8",
-      },
-      Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
-        "name": "jest-junit",
-        "type": "build",
-        "version": "^13",
-      },
-      Object {
-        "name": "json-schema",
-        "type": "build",
-      },
-      Object {
-        "name": "npm-check-updates",
-        "type": "build",
-        "version": "^16",
-      },
-      Object {
-        "name": "projen",
-        "type": "build",
-      },
-      Object {
-        "name": "ts-jest",
-        "type": "build",
-      },
-      Object {
-        "name": "typescript",
-        "type": "build",
-      },
-      Object {
-        "name": "@types/node",
-        "type": "runtime",
-      },
-      Object {
-        "name": "cdk8s",
-        "type": "runtime",
-        "version": "^0.0.0",
-      },
-      Object {
-        "name": "codemaker",
-        "type": "runtime",
-      },
-      Object {
-        "name": "colors",
-        "type": "runtime",
-      },
-      Object {
-        "name": "constructs",
-        "type": "runtime",
-      },
-      Object {
-        "name": "fs-extra",
-        "type": "runtime",
-      },
-      Object {
-        "name": "jsii-pacmak",
-        "type": "runtime",
-      },
-      Object {
-        "name": "jsii-srcmak",
-        "type": "runtime",
-      },
-      Object {
-        "name": "json2jsii",
-        "type": "runtime",
-      },
-      Object {
-        "name": "sscaff",
-        "type": "runtime",
-      },
-      Object {
-        "name": "yaml",
-        "type": "runtime",
-      },
-      Object {
-        "name": "yargs",
-        "type": "runtime",
-      },
-    ],
-  },
-  ".projen/files.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "files": Array [
-      ".eslintrc.json",
-      ".gitattributes",
-      ".github/workflows/pull-request-lint.yml",
-      ".github/workflows/upgrade.yml",
-      ".gitignore",
-      ".npmignore",
-      ".projen/deps.json",
-      ".projen/files.json",
-      ".projen/tasks.json",
-      "LICENSE",
-      "tsconfig.dev.json",
-      "tsconfig.json",
-    ],
-  },
-  ".projen/tasks.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "env": Object {
-      "PATH": "$(npx -c \\"node -e \\\\\\"console.log(process.env.PATH)\\\\\\"\\")",
+  ".projen/deps.json": "{\\"dependencies\\":[{\\"name\\":\\"@types/fs-extra\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@types/jest\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@types/json-schema\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@types/node\\",\\"version\\":\\"^12\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@typescript-eslint/eslint-plugin\\",\\"version\\":\\"^5\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@typescript-eslint/parser\\",\\"version\\":\\"^5\\",\\"type\\":\\"build\\"},{\\"name\\":\\"eslint-import-resolver-node\\",\\"type\\":\\"build\\"},{\\"name\\":\\"eslint-import-resolver-typescript\\",\\"type\\":\\"build\\"},{\\"name\\":\\"eslint-plugin-import\\",\\"type\\":\\"build\\"},{\\"name\\":\\"eslint\\",\\"version\\":\\"^8\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jest\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jest-junit\\",\\"version\\":\\"^13\\",\\"type\\":\\"build\\"},{\\"name\\":\\"json-schema\\",\\"type\\":\\"build\\"},{\\"name\\":\\"npm-check-updates\\",\\"version\\":\\"^16\\",\\"type\\":\\"build\\"},{\\"name\\":\\"projen\\",\\"type\\":\\"build\\"},{\\"name\\":\\"ts-jest\\",\\"type\\":\\"build\\"},{\\"name\\":\\"typescript\\",\\"type\\":\\"build\\"},{\\"name\\":\\"@types/node\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"cdk8s\\",\\"version\\":\\"^0.0.0\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"codemaker\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"colors\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"constructs\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"fs-extra\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"jsii-pacmak\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"jsii-srcmak\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"json2jsii\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"sscaff\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"yaml\\",\\"type\\":\\"runtime\\"},{\\"name\\":\\"yargs\\",\\"type\\":\\"runtime\\"}],\\"//\\":\\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"}
+",
+  ".projen/files.json": "{
+  \\"files\\": [
+    \\".eslintrc.json\\",
+    \\".gitattributes\\",
+    \\".github/workflows/pull-request-lint.yml\\",
+    \\".github/workflows/upgrade.yml\\",
+    \\".gitignore\\",
+    \\".npmignore\\",
+    \\".projen/deps.json\\",
+    \\".projen/files.json\\",
+    \\".projen/tasks.json\\",
+    \\"LICENSE\\",
+    \\"tsconfig.dev.json\\",
+    \\"tsconfig.json\\"
+  ],
+  \\"//\\": \\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"
+}
+",
+  ".projen/tasks.json": "{
+  \\"tasks\\": {
+    \\"build\\": {
+      \\"name\\": \\"build\\",
+      \\"description\\": \\"Full release build\\",
+      \\"steps\\": [
+        {
+          \\"spawn\\": \\"default\\"
+        },
+        {
+          \\"spawn\\": \\"pre-compile\\"
+        },
+        {
+          \\"spawn\\": \\"compile\\"
+        },
+        {
+          \\"spawn\\": \\"post-compile\\"
+        },
+        {
+          \\"spawn\\": \\"test\\"
+        },
+        {
+          \\"spawn\\": \\"package\\"
+        }
+      ]
     },
-    "tasks": Object {
-      "build": Object {
-        "description": "Full release build",
-        "name": "build",
-        "steps": Array [
-          Object {
-            "spawn": "default",
-          },
-          Object {
-            "spawn": "pre-compile",
-          },
-          Object {
-            "spawn": "compile",
-          },
-          Object {
-            "spawn": "post-compile",
-          },
-          Object {
-            "spawn": "test",
-          },
-          Object {
-            "spawn": "package",
-          },
-        ],
+    \\"clobber\\": {
+      \\"name\\": \\"clobber\\",
+      \\"description\\": \\"hard resets to HEAD of origin and cleans the local repo\\",
+      \\"env\\": {
+        \\"BRANCH\\": \\"$(git branch --show-current)\\"
       },
-      "clobber": Object {
-        "condition": "git diff --exit-code > /dev/null",
-        "description": "hard resets to HEAD of origin and cleans the local repo",
-        "env": Object {
-          "BRANCH": "$(git branch --show-current)",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"git checkout -b scratch\\",
+          \\"name\\": \\"save current HEAD in \\\\\\"scratch\\\\\\" branch\\"
         },
-        "name": "clobber",
-        "steps": Array [
-          Object {
-            "exec": "git checkout -b scratch",
-            "name": "save current HEAD in \\"scratch\\" branch",
-          },
-          Object {
-            "exec": "git checkout $BRANCH",
-          },
-          Object {
-            "exec": "git fetch origin",
-            "name": "fetch latest changes from origin",
-          },
-          Object {
-            "exec": "git reset --hard origin/$BRANCH",
-            "name": "hard reset to origin commit",
-          },
-          Object {
-            "exec": "git clean -fdx",
-            "name": "clean all untracked files",
-          },
-          Object {
-            "say": "ready to rock! (unpushed commits are under the \\"scratch\\" branch)",
-          },
-        ],
-      },
-      "compile": Object {
-        "description": "Only compile",
-        "name": "compile",
-        "steps": Array [
-          Object {
-            "exec": "tsc --build",
-          },
-        ],
-      },
-      "default": Object {
-        "description": "Synthesize project files",
-        "name": "default",
-        "steps": Array [
-          Object {
-            "exec": "node .projenrc.js",
-          },
-        ],
-      },
-      "eject": Object {
-        "description": "Remove projen from the project",
-        "env": Object {
-          "PROJEN_EJECTING": "true",
+        {
+          \\"exec\\": \\"git checkout $BRANCH\\"
         },
-        "name": "eject",
-        "steps": Array [
-          Object {
-            "spawn": "default",
-          },
-        ],
-      },
-      "eslint": Object {
-        "description": "Runs eslint against the codebase",
-        "name": "eslint",
-        "steps": Array [
-          Object {
-            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
-          },
-        ],
-      },
-      "package": Object {
-        "description": "Creates the distribution package",
-        "name": "package",
-        "steps": Array [
-          Object {
-            "exec": "mkdir -p dist/js",
-          },
-          Object {
-            "exec": "mv $(npm pack) dist/js/",
-          },
-        ],
-      },
-      "post-compile": Object {
-        "description": "Runs after successful compilation",
-        "name": "post-compile",
-      },
-      "post-upgrade": Object {
-        "description": "Runs after upgrading dependencies",
-        "name": "post-upgrade",
-      },
-      "pre-compile": Object {
-        "description": "Prepare the project for compilation",
-        "name": "pre-compile",
-      },
-      "test": Object {
-        "description": "Run tests",
-        "name": "test",
-        "steps": Array [
-          Object {
-            "exec": "jest --passWithNoTests --updateSnapshot",
-            "receiveArgs": true,
-          },
-          Object {
-            "spawn": "eslint",
-          },
-          Object {
-            "exec": "yarn compile",
-          },
-        ],
-      },
-      "test:watch": Object {
-        "description": "Run jest in watch mode",
-        "name": "test:watch",
-        "steps": Array [
-          Object {
-            "exec": "jest --watch",
-          },
-        ],
-      },
-      "upgrade": Object {
-        "description": "upgrade dependencies",
-        "env": Object {
-          "CI": "0",
+        {
+          \\"exec\\": \\"git fetch origin\\",
+          \\"name\\": \\"fetch latest changes from origin\\"
         },
-        "name": "upgrade",
-        "steps": Array [
-          Object {
-            "exec": "yarn upgrade npm-check-updates",
-          },
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
-          },
-          Object {
-            "exec": "yarn install --check-files",
-          },
-          Object {
-            "exec": "yarn upgrade",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
-      "watch": Object {
-        "description": "Watch & compile in the background",
-        "name": "watch",
-        "steps": Array [
-          Object {
-            "exec": "tsc --build -w",
-          },
-        ],
-      },
+        {
+          \\"exec\\": \\"git reset --hard origin/$BRANCH\\",
+          \\"name\\": \\"hard reset to origin commit\\"
+        },
+        {
+          \\"exec\\": \\"git clean -fdx\\",
+          \\"name\\": \\"clean all untracked files\\"
+        },
+        {
+          \\"say\\": \\"ready to rock! (unpushed commits are under the \\\\\\"scratch\\\\\\" branch)\\"
+        }
+      ],
+      \\"condition\\": \\"git diff --exit-code > /dev/null\\"
     },
+    \\"compile\\": {
+      \\"name\\": \\"compile\\",
+      \\"description\\": \\"Only compile\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"tsc --build\\"
+        }
+      ]
+    },
+    \\"default\\": {
+      \\"name\\": \\"default\\",
+      \\"description\\": \\"Synthesize project files\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"node .projenrc.js\\"
+        }
+      ]
+    },
+    \\"eject\\": {
+      \\"name\\": \\"eject\\",
+      \\"description\\": \\"Remove projen from the project\\",
+      \\"env\\": {
+        \\"PROJEN_EJECTING\\": \\"true\\"
+      },
+      \\"steps\\": [
+        {
+          \\"spawn\\": \\"default\\"
+        }
+      ]
+    },
+    \\"eslint\\": {
+      \\"name\\": \\"eslint\\",
+      \\"description\\": \\"Runs eslint against the codebase\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js\\"
+        }
+      ]
+    },
+    \\"package\\": {
+      \\"name\\": \\"package\\",
+      \\"description\\": \\"Creates the distribution package\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"mkdir -p dist/js\\"
+        },
+        {
+          \\"exec\\": \\"mv $(npm pack) dist/js/\\"
+        }
+      ]
+    },
+    \\"post-compile\\": {
+      \\"name\\": \\"post-compile\\",
+      \\"description\\": \\"Runs after successful compilation\\"
+    },
+    \\"post-upgrade\\": {
+      \\"name\\": \\"post-upgrade\\",
+      \\"description\\": \\"Runs after upgrading dependencies\\"
+    },
+    \\"pre-compile\\": {
+      \\"name\\": \\"pre-compile\\",
+      \\"description\\": \\"Prepare the project for compilation\\"
+    },
+    \\"test\\": {
+      \\"name\\": \\"test\\",
+      \\"description\\": \\"Run tests\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jest --passWithNoTests --updateSnapshot\\",
+          \\"receiveArgs\\": true
+        },
+        {
+          \\"spawn\\": \\"eslint\\"
+        },
+        {
+          \\"exec\\": \\"yarn compile\\"
+        }
+      ]
+    },
+    \\"test:watch\\": {
+      \\"name\\": \\"test:watch\\",
+      \\"description\\": \\"Run jest in watch mode\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jest --watch\\"
+        }
+      ]
+    },
+    \\"upgrade\\": {
+      \\"name\\": \\"upgrade\\",
+      \\"description\\": \\"upgrade dependencies\\",
+      \\"env\\": {
+        \\"CI\\": \\"0\\"
+      },
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"yarn upgrade npm-check-updates\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep dev --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep optional --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep peer --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep prod --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep bundle --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"yarn install --check-files\\"
+        },
+        {
+          \\"exec\\": \\"yarn upgrade\\"
+        },
+        {
+          \\"exec\\": \\"npx projen\\"
+        },
+        {
+          \\"spawn\\": \\"post-upgrade\\"
+        }
+      ]
+    },
+    \\"watch\\": {
+      \\"name\\": \\"watch\\",
+      \\"description\\": \\"Watch & compile in the background\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"tsc --build -w\\"
+        }
+      ]
+    }
   },
+  \\"env\\": {
+    \\"PATH\\": \\"$(npx -c \\\\\\"node -e \\\\\\\\\\\\\\"console.log(process.env.PATH)\\\\\\\\\\\\\\"\\\\\\")\\"
+  },
+  \\"//\\": \\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"
+}
+",
   ".projenrc.js": "const { typescript } = require('projen');
 
 const common = require('./cdk8s.common');
@@ -4587,128 +3742,8 @@ project.addCompileCommand('cp src/_loadurl.js lib/');
 
 project.synth();
 ",
-  "package.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "author": Object {
-      "name": "Amazon Web Services",
-      "organization": true,
-      "url": "https://aws.amazon.com",
-    },
-    "bin": Object {
-      "cdk8s": "bin/cdk8s",
-    },
-    "dependencies": Object {
-      "@types/node": "*",
-      "cdk8s": "^0.0.0",
-      "codemaker": "*",
-      "colors": "*",
-      "constructs": "*",
-      "fs-extra": "*",
-      "jsii-pacmak": "*",
-      "jsii-srcmak": "*",
-      "json2jsii": "*",
-      "sscaff": "*",
-      "yaml": "*",
-      "yargs": "*",
-    },
-    "description": "CDK for Kubernetes CLI",
-    "devDependencies": Object {
-      "@types/fs-extra": "*",
-      "@types/jest": "*",
-      "@types/json-schema": "*",
-      "@types/node": "^12",
-      "@typescript-eslint/eslint-plugin": "^5",
-      "@typescript-eslint/parser": "^5",
-      "eslint": "^8",
-      "eslint-import-resolver-node": "*",
-      "eslint-import-resolver-typescript": "*",
-      "eslint-plugin-import": "*",
-      "jest": "*",
-      "jest-junit": "^13",
-      "json-schema": "*",
-      "npm-check-updates": "^16",
-      "projen": "*",
-      "ts-jest": "*",
-      "typescript": "*",
-    },
-    "engines": Object {
-      "node": ">= 12.7.0",
-    },
-    "jest": Object {
-      "clearMocks": true,
-      "collectCoverage": true,
-      "coverageDirectory": "coverage",
-      "coveragePathIgnorePatterns": Array [
-        "/node_modules/",
-        "/templates/",
-      ],
-      "coverageReporters": Array [
-        "json",
-        "lcov",
-        "clover",
-        "cobertura",
-        "text",
-      ],
-      "globals": Object {
-        "ts-jest": Object {
-          "tsconfig": "tsconfig.dev.json",
-        },
-      },
-      "preset": "ts-jest",
-      "reporters": Array [
-        "default",
-        Array [
-          "jest-junit",
-          Object {
-            "outputDirectory": "test-reports",
-          },
-        ],
-      ],
-      "testMatch": Array [
-        "<rootDir>/src/**/__tests__/**/*.ts?(x)",
-        "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",
-      ],
-      "testPathIgnorePatterns": Array [
-        "/node_modules/",
-        "/templates/",
-      ],
-      "watchPathIgnorePatterns": Array [
-        "/node_modules/",
-      ],
-    },
-    "keywords": Array [
-      "cdk",
-      "constructs",
-      "k8s",
-      "kubernetes",
-    ],
-    "license": "Apache-2.0",
-    "main": "lib/index.js",
-    "name": "cdk8s-cli",
-    "repository": Object {
-      "type": "git",
-      "url": "https://github.com/awslabs/cdk8s.git",
-    },
-    "scripts": Object {
-      "build": "yarn compile",
-      "clobber": "npx projen clobber",
-      "compile": "npx projen compile",
-      "default": "npx projen default",
-      "eject": "npx projen eject",
-      "eslint": "npx projen eslint",
-      "package": "npx projen package",
-      "post-compile": "npx projen post-compile",
-      "post-upgrade": "npx projen post-upgrade",
-      "pre-compile": "npx projen pre-compile",
-      "projen": "npx projen",
-      "test": "npx projen test",
-      "test:watch": "npx projen test:watch",
-      "upgrade": "npx projen upgrade",
-      "watch": "npx projen watch",
-    },
-    "types": "lib/index.d.ts",
-    "version": "0.0.0",
-  },
+  "package.json": "{\\"name\\":\\"cdk8s-cli\\",\\"description\\":\\"CDK for Kubernetes CLI\\",\\"repository\\":{\\"type\\":\\"git\\",\\"url\\":\\"https://github.com/awslabs/cdk8s.git\\"},\\"bin\\":{\\"cdk8s\\":\\"bin/cdk8s\\"},\\"scripts\\":{\\"build\\":\\"yarn compile\\",\\"clobber\\":\\"npx projen clobber\\",\\"compile\\":\\"npx projen compile\\",\\"default\\":\\"npx projen default\\",\\"eject\\":\\"npx projen eject\\",\\"eslint\\":\\"npx projen eslint\\",\\"package\\":\\"npx projen package\\",\\"post-compile\\":\\"npx projen post-compile\\",\\"post-upgrade\\":\\"npx projen post-upgrade\\",\\"pre-compile\\":\\"npx projen pre-compile\\",\\"test\\":\\"npx projen test\\",\\"test:watch\\":\\"npx projen test:watch\\",\\"upgrade\\":\\"npx projen upgrade\\",\\"watch\\":\\"npx projen watch\\",\\"projen\\":\\"npx projen\\"},\\"author\\":{\\"name\\":\\"Amazon Web Services\\",\\"url\\":\\"https://aws.amazon.com\\",\\"organization\\":true},\\"devDependencies\\":{\\"@types/fs-extra\\":\\"*\\",\\"@types/jest\\":\\"*\\",\\"@types/json-schema\\":\\"*\\",\\"@types/node\\":\\"^12\\",\\"@typescript-eslint/eslint-plugin\\":\\"^5\\",\\"@typescript-eslint/parser\\":\\"^5\\",\\"eslint\\":\\"^8\\",\\"eslint-import-resolver-node\\":\\"*\\",\\"eslint-import-resolver-typescript\\":\\"*\\",\\"eslint-plugin-import\\":\\"*\\",\\"jest\\":\\"*\\",\\"jest-junit\\":\\"^13\\",\\"json-schema\\":\\"*\\",\\"npm-check-updates\\":\\"^16\\",\\"projen\\":\\"*\\",\\"ts-jest\\":\\"*\\",\\"typescript\\":\\"*\\"},\\"dependencies\\":{\\"@types/node\\":\\"*\\",\\"cdk8s\\":\\"^0.0.0\\",\\"codemaker\\":\\"*\\",\\"colors\\":\\"*\\",\\"constructs\\":\\"*\\",\\"fs-extra\\":\\"*\\",\\"jsii-pacmak\\":\\"*\\",\\"jsii-srcmak\\":\\"*\\",\\"json2jsii\\":\\"*\\",\\"sscaff\\":\\"*\\",\\"yaml\\":\\"*\\",\\"yargs\\":\\"*\\"},\\"keywords\\":[\\"cdk\\",\\"constructs\\",\\"k8s\\",\\"kubernetes\\"],\\"engines\\":{\\"node\\":\\">= 12.7.0\\"},\\"main\\":\\"lib/index.js\\",\\"license\\":\\"Apache-2.0\\",\\"version\\":\\"0.0.0\\",\\"jest\\":{\\"testMatch\\":[\\"<rootDir>/src/**/__tests__/**/*.ts?(x)\\",\\"<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)\\"],\\"clearMocks\\":true,\\"collectCoverage\\":true,\\"coverageReporters\\":[\\"json\\",\\"lcov\\",\\"clover\\",\\"cobertura\\",\\"text\\"],\\"coverageDirectory\\":\\"coverage\\",\\"coveragePathIgnorePatterns\\":[\\"/node_modules/\\",\\"/templates/\\"],\\"testPathIgnorePatterns\\":[\\"/node_modules/\\",\\"/templates/\\"],\\"watchPathIgnorePatterns\\":[\\"/node_modules/\\"],\\"reporters\\":[\\"default\\",[\\"jest-junit\\",{\\"outputDirectory\\":\\"test-reports\\"}]],\\"preset\\":\\"ts-jest\\",\\"globals\\":{\\"ts-jest\\":{\\"tsconfig\\":\\"tsconfig.dev.json\\"}}},\\"types\\":\\"lib/index.d.ts\\",\\"//\\":\\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"}
+",
   "src/index.ts": "export class Hello {
   public sayHello() {
     return 'hello, world!';
@@ -4719,76 +3754,78 @@ project.synth();
 test('hello', () => {
   expect(new Hello().sayHello()).toBe('hello, world!');
 });",
-  "tsconfig.dev.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "compilerOptions": Object {
-      "alwaysStrict": true,
-      "declaration": true,
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "inlineSourceMap": true,
-      "inlineSources": true,
-      "lib": Array [
-        "es2019",
-      ],
-      "module": "CommonJS",
-      "noEmitOnError": false,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "resolveJsonModule": true,
-      "strict": true,
-      "strictNullChecks": true,
-      "strictPropertyInitialization": true,
-      "stripInternal": true,
-      "target": "ES2019",
-    },
-    "exclude": Array [
-      "node_modules",
+  "tsconfig.dev.json": "{
+  \\"compilerOptions\\": {
+    \\"alwaysStrict\\": true,
+    \\"declaration\\": true,
+    \\"esModuleInterop\\": true,
+    \\"experimentalDecorators\\": true,
+    \\"inlineSourceMap\\": true,
+    \\"inlineSources\\": true,
+    \\"lib\\": [
+      \\"es2019\\"
     ],
-    "include": Array [
-      ".projenrc.js",
-      "src/**/*.ts",
-      "test/**/*.ts",
-    ],
+    \\"module\\": \\"CommonJS\\",
+    \\"noEmitOnError\\": false,
+    \\"noFallthroughCasesInSwitch\\": true,
+    \\"noImplicitAny\\": true,
+    \\"noImplicitReturns\\": true,
+    \\"noImplicitThis\\": true,
+    \\"noUnusedLocals\\": true,
+    \\"noUnusedParameters\\": true,
+    \\"resolveJsonModule\\": true,
+    \\"strict\\": true,
+    \\"strictNullChecks\\": true,
+    \\"strictPropertyInitialization\\": true,
+    \\"stripInternal\\": true,
+    \\"target\\": \\"ES2019\\"
   },
-  "tsconfig.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "compilerOptions": Object {
-      "alwaysStrict": true,
-      "declaration": true,
-      "esModuleInterop": true,
-      "experimentalDecorators": true,
-      "inlineSourceMap": true,
-      "inlineSources": true,
-      "lib": Array [
-        "es2019",
-      ],
-      "module": "CommonJS",
-      "noEmitOnError": false,
-      "noFallthroughCasesInSwitch": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": true,
-      "noImplicitThis": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "outDir": "lib",
-      "resolveJsonModule": true,
-      "rootDir": "src",
-      "strict": true,
-      "strictNullChecks": true,
-      "strictPropertyInitialization": true,
-      "stripInternal": true,
-      "target": "ES2019",
-    },
-    "exclude": Array [],
-    "include": Array [
-      "src/**/*.ts",
+  \\"include\\": [
+    \\".projenrc.js\\",
+    \\"src/**/*.ts\\",
+    \\"test/**/*.ts\\"
+  ],
+  \\"exclude\\": [
+    \\"node_modules\\"
+  ],
+  \\"//\\": \\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"
+}
+",
+  "tsconfig.json": "{
+  \\"compilerOptions\\": {
+    \\"rootDir\\": \\"src\\",
+    \\"outDir\\": \\"lib\\",
+    \\"alwaysStrict\\": true,
+    \\"declaration\\": true,
+    \\"esModuleInterop\\": true,
+    \\"experimentalDecorators\\": true,
+    \\"inlineSourceMap\\": true,
+    \\"inlineSources\\": true,
+    \\"lib\\": [
+      \\"es2019\\"
     ],
+    \\"module\\": \\"CommonJS\\",
+    \\"noEmitOnError\\": false,
+    \\"noFallthroughCasesInSwitch\\": true,
+    \\"noImplicitAny\\": true,
+    \\"noImplicitReturns\\": true,
+    \\"noImplicitThis\\": true,
+    \\"noUnusedLocals\\": true,
+    \\"noUnusedParameters\\": true,
+    \\"resolveJsonModule\\": true,
+    \\"strict\\": true,
+    \\"strictNullChecks\\": true,
+    \\"strictPropertyInitialization\\": true,
+    \\"stripInternal\\": true,
+    \\"target\\": \\"ES2019\\"
   },
+  \\"include\\": [
+    \\"src/**/*.ts\\"
+  ],
+  \\"exclude\\": [],
+  \\"//\\": \\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"
+}
+",
 }
 `;
 
@@ -5164,288 +4201,256 @@ permissions-backup.acl
 /dist/version.txt
 /.mergify.yml
 ",
-  ".projen/deps.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "dependencies": Array [
-      Object {
-        "name": "aws-sdk",
-        "type": "build",
-      },
-      Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
-        "name": "jest-junit",
-        "type": "build",
-        "version": "^13",
-      },
-      Object {
-        "name": "npm-check-updates",
-        "type": "build",
-        "version": "^16",
-      },
-      Object {
-        "name": "projen",
-        "type": "build",
-      },
-      Object {
-        "name": "standard-version",
-        "type": "build",
-        "version": "^9",
-      },
-      Object {
-        "name": "esbuild",
-        "type": "runtime",
-      },
-    ],
-  },
-  ".projen/files.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "files": Array [
-      ".gitattributes",
-      ".github/pull_request_template.md",
-      ".github/workflows/build.yml",
-      ".github/workflows/pull-request-lint.yml",
-      ".github/workflows/release.yml",
-      ".github/workflows/upgrade-master.yml",
-      ".gitignore",
-      ".mergify.yml",
-      ".npmignore",
-      ".projen/deps.json",
-      ".projen/files.json",
-      ".projen/tasks.json",
-      "LICENSE",
-    ],
-  },
-  ".projen/tasks.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "env": Object {
-      "PATH": "$(npx -c \\"node -e \\\\\\"console.log(process.env.PATH)\\\\\\"\\")",
+  ".projen/deps.json": "{\\"dependencies\\":[{\\"name\\":\\"aws-sdk\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jest\\",\\"type\\":\\"build\\"},{\\"name\\":\\"jest-junit\\",\\"version\\":\\"^13\\",\\"type\\":\\"build\\"},{\\"name\\":\\"npm-check-updates\\",\\"version\\":\\"^16\\",\\"type\\":\\"build\\"},{\\"name\\":\\"projen\\",\\"type\\":\\"build\\"},{\\"name\\":\\"standard-version\\",\\"version\\":\\"^9\\",\\"type\\":\\"build\\"},{\\"name\\":\\"esbuild\\",\\"type\\":\\"runtime\\"}],\\"//\\":\\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"}
+",
+  ".projen/files.json": "{
+  \\"files\\": [
+    \\".gitattributes\\",
+    \\".github/pull_request_template.md\\",
+    \\".github/workflows/build.yml\\",
+    \\".github/workflows/pull-request-lint.yml\\",
+    \\".github/workflows/release.yml\\",
+    \\".github/workflows/upgrade-master.yml\\",
+    \\".gitignore\\",
+    \\".mergify.yml\\",
+    \\".npmignore\\",
+    \\".projen/deps.json\\",
+    \\".projen/files.json\\",
+    \\".projen/tasks.json\\",
+    \\"LICENSE\\"
+  ],
+  \\"//\\": \\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"
+}
+",
+  ".projen/tasks.json": "{
+  \\"tasks\\": {
+    \\"build\\": {
+      \\"name\\": \\"build\\",
+      \\"description\\": \\"Full release build\\",
+      \\"steps\\": [
+        {
+          \\"spawn\\": \\"default\\"
+        },
+        {
+          \\"spawn\\": \\"pre-compile\\"
+        },
+        {
+          \\"spawn\\": \\"compile\\"
+        },
+        {
+          \\"spawn\\": \\"post-compile\\"
+        },
+        {
+          \\"spawn\\": \\"test\\"
+        },
+        {
+          \\"spawn\\": \\"package\\"
+        }
+      ]
     },
-    "tasks": Object {
-      "build": Object {
-        "description": "Full release build",
-        "name": "build",
-        "steps": Array [
-          Object {
-            "spawn": "default",
-          },
-          Object {
-            "spawn": "pre-compile",
-          },
-          Object {
-            "spawn": "compile",
-          },
-          Object {
-            "spawn": "post-compile",
-          },
-          Object {
-            "spawn": "test",
-          },
-          Object {
-            "spawn": "package",
-          },
-        ],
+    \\"bump\\": {
+      \\"name\\": \\"bump\\",
+      \\"description\\": \\"Bumps version based on latest git tag and generates a changelog entry\\",
+      \\"env\\": {
+        \\"OUTFILE\\": \\"package.json\\",
+        \\"CHANGELOG\\": \\"dist/changelog.md\\",
+        \\"BUMPFILE\\": \\"dist/version.txt\\",
+        \\"RELEASETAG\\": \\"dist/releasetag.txt\\",
+        \\"RELEASE_TAG_PREFIX\\": \\"\\"
       },
-      "bump": Object {
-        "condition": "! git log --oneline -1 | grep -q \\"chore(release):\\"",
-        "description": "Bumps version based on latest git tag and generates a changelog entry",
-        "env": Object {
-          "BUMPFILE": "dist/version.txt",
-          "CHANGELOG": "dist/changelog.md",
-          "OUTFILE": "package.json",
-          "RELEASETAG": "dist/releasetag.txt",
-          "RELEASE_TAG_PREFIX": "",
-        },
-        "name": "bump",
-        "steps": Array [
-          Object {
-            "builtin": "release/bump-version",
-          },
-        ],
-      },
-      "clobber": Object {
-        "condition": "git diff --exit-code > /dev/null",
-        "description": "hard resets to HEAD of origin and cleans the local repo",
-        "env": Object {
-          "BRANCH": "$(git branch --show-current)",
-        },
-        "name": "clobber",
-        "steps": Array [
-          Object {
-            "exec": "git checkout -b scratch",
-            "name": "save current HEAD in \\"scratch\\" branch",
-          },
-          Object {
-            "exec": "git checkout $BRANCH",
-          },
-          Object {
-            "exec": "git fetch origin",
-            "name": "fetch latest changes from origin",
-          },
-          Object {
-            "exec": "git reset --hard origin/$BRANCH",
-            "name": "hard reset to origin commit",
-          },
-          Object {
-            "exec": "git clean -fdx",
-            "name": "clean all untracked files",
-          },
-          Object {
-            "say": "ready to rock! (unpushed commits are under the \\"scratch\\" branch)",
-          },
-        ],
-      },
-      "compile": Object {
-        "description": "Only compile",
-        "name": "compile",
-      },
-      "default": Object {
-        "description": "Synthesize project files",
-        "name": "default",
-        "steps": Array [
-          Object {
-            "exec": "node .projenrc.js",
-          },
-        ],
-      },
-      "eject": Object {
-        "description": "Remove projen from the project",
-        "env": Object {
-          "PROJEN_EJECTING": "true",
-        },
-        "name": "eject",
-        "steps": Array [
-          Object {
-            "spawn": "default",
-          },
-        ],
-      },
-      "package": Object {
-        "description": "Creates the distribution package",
-        "name": "package",
-        "steps": Array [
-          Object {
-            "exec": "mkdir -p dist/js",
-          },
-          Object {
-            "exec": "mv $(npm pack) dist/js/",
-          },
-        ],
-      },
-      "post-compile": Object {
-        "description": "Runs after successful compilation",
-        "name": "post-compile",
-      },
-      "post-upgrade": Object {
-        "description": "Runs after upgrading dependencies",
-        "name": "post-upgrade",
-      },
-      "pre-compile": Object {
-        "description": "Prepare the project for compilation",
-        "name": "pre-compile",
-      },
-      "release": Object {
-        "description": "Prepare a release from \\"master\\" branch",
-        "env": Object {
-          "RELEASE": "true",
-        },
-        "name": "release",
-        "steps": Array [
-          Object {
-            "exec": "rm -fr dist",
-          },
-          Object {
-            "spawn": "bump",
-          },
-          Object {
-            "spawn": "build",
-          },
-          Object {
-            "spawn": "unbump",
-          },
-          Object {
-            "exec": "git diff --ignore-space-at-eol --exit-code",
-          },
-        ],
-      },
-      "test": Object {
-        "description": "Run tests",
-        "name": "test",
-        "steps": Array [
-          Object {
-            "exec": "jest --passWithNoTests --updateSnapshot",
-            "receiveArgs": true,
-          },
-        ],
-      },
-      "test:watch": Object {
-        "description": "Run jest in watch mode",
-        "name": "test:watch",
-        "steps": Array [
-          Object {
-            "exec": "jest --watch",
-          },
-        ],
-      },
-      "unbump": Object {
-        "description": "Restores version to 0.0.0",
-        "env": Object {
-          "BUMPFILE": "dist/version.txt",
-          "CHANGELOG": "dist/changelog.md",
-          "OUTFILE": "package.json",
-          "RELEASETAG": "dist/releasetag.txt",
-          "RELEASE_TAG_PREFIX": "",
-        },
-        "name": "unbump",
-        "steps": Array [
-          Object {
-            "builtin": "release/reset-version",
-          },
-        ],
-      },
-      "upgrade": Object {
-        "description": "upgrade dependencies",
-        "env": Object {
-          "CI": "0",
-        },
-        "name": "upgrade",
-        "steps": Array [
-          Object {
-            "exec": "pnpm update npm-check-updates",
-          },
-          Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
-          },
-          Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
-          },
-          Object {
-            "exec": "pnpm i --no-frozen-lockfile",
-          },
-          Object {
-            "exec": "pnpm update",
-          },
-          Object {
-            "exec": "npx projen",
-          },
-          Object {
-            "spawn": "post-upgrade",
-          },
-        ],
-      },
+      \\"steps\\": [
+        {
+          \\"builtin\\": \\"release/bump-version\\"
+        }
+      ],
+      \\"condition\\": \\"! git log --oneline -1 | grep -q \\\\\\"chore(release):\\\\\\"\\"
     },
+    \\"clobber\\": {
+      \\"name\\": \\"clobber\\",
+      \\"description\\": \\"hard resets to HEAD of origin and cleans the local repo\\",
+      \\"env\\": {
+        \\"BRANCH\\": \\"$(git branch --show-current)\\"
+      },
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"git checkout -b scratch\\",
+          \\"name\\": \\"save current HEAD in \\\\\\"scratch\\\\\\" branch\\"
+        },
+        {
+          \\"exec\\": \\"git checkout $BRANCH\\"
+        },
+        {
+          \\"exec\\": \\"git fetch origin\\",
+          \\"name\\": \\"fetch latest changes from origin\\"
+        },
+        {
+          \\"exec\\": \\"git reset --hard origin/$BRANCH\\",
+          \\"name\\": \\"hard reset to origin commit\\"
+        },
+        {
+          \\"exec\\": \\"git clean -fdx\\",
+          \\"name\\": \\"clean all untracked files\\"
+        },
+        {
+          \\"say\\": \\"ready to rock! (unpushed commits are under the \\\\\\"scratch\\\\\\" branch)\\"
+        }
+      ],
+      \\"condition\\": \\"git diff --exit-code > /dev/null\\"
+    },
+    \\"compile\\": {
+      \\"name\\": \\"compile\\",
+      \\"description\\": \\"Only compile\\"
+    },
+    \\"default\\": {
+      \\"name\\": \\"default\\",
+      \\"description\\": \\"Synthesize project files\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"node .projenrc.js\\"
+        }
+      ]
+    },
+    \\"eject\\": {
+      \\"name\\": \\"eject\\",
+      \\"description\\": \\"Remove projen from the project\\",
+      \\"env\\": {
+        \\"PROJEN_EJECTING\\": \\"true\\"
+      },
+      \\"steps\\": [
+        {
+          \\"spawn\\": \\"default\\"
+        }
+      ]
+    },
+    \\"package\\": {
+      \\"name\\": \\"package\\",
+      \\"description\\": \\"Creates the distribution package\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"mkdir -p dist/js\\"
+        },
+        {
+          \\"exec\\": \\"mv $(npm pack) dist/js/\\"
+        }
+      ]
+    },
+    \\"post-compile\\": {
+      \\"name\\": \\"post-compile\\",
+      \\"description\\": \\"Runs after successful compilation\\"
+    },
+    \\"post-upgrade\\": {
+      \\"name\\": \\"post-upgrade\\",
+      \\"description\\": \\"Runs after upgrading dependencies\\"
+    },
+    \\"pre-compile\\": {
+      \\"name\\": \\"pre-compile\\",
+      \\"description\\": \\"Prepare the project for compilation\\"
+    },
+    \\"release\\": {
+      \\"name\\": \\"release\\",
+      \\"description\\": \\"Prepare a release from \\\\\\"master\\\\\\" branch\\",
+      \\"env\\": {
+        \\"RELEASE\\": \\"true\\"
+      },
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"rm -fr dist\\"
+        },
+        {
+          \\"spawn\\": \\"bump\\"
+        },
+        {
+          \\"spawn\\": \\"build\\"
+        },
+        {
+          \\"spawn\\": \\"unbump\\"
+        },
+        {
+          \\"exec\\": \\"git diff --ignore-space-at-eol --exit-code\\"
+        }
+      ]
+    },
+    \\"test\\": {
+      \\"name\\": \\"test\\",
+      \\"description\\": \\"Run tests\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jest --passWithNoTests --updateSnapshot\\",
+          \\"receiveArgs\\": true
+        }
+      ]
+    },
+    \\"test:watch\\": {
+      \\"name\\": \\"test:watch\\",
+      \\"description\\": \\"Run jest in watch mode\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"jest --watch\\"
+        }
+      ]
+    },
+    \\"unbump\\": {
+      \\"name\\": \\"unbump\\",
+      \\"description\\": \\"Restores version to 0.0.0\\",
+      \\"env\\": {
+        \\"OUTFILE\\": \\"package.json\\",
+        \\"CHANGELOG\\": \\"dist/changelog.md\\",
+        \\"BUMPFILE\\": \\"dist/version.txt\\",
+        \\"RELEASETAG\\": \\"dist/releasetag.txt\\",
+        \\"RELEASE_TAG_PREFIX\\": \\"\\"
+      },
+      \\"steps\\": [
+        {
+          \\"builtin\\": \\"release/reset-version\\"
+        }
+      ]
+    },
+    \\"upgrade\\": {
+      \\"name\\": \\"upgrade\\",
+      \\"description\\": \\"upgrade dependencies\\",
+      \\"env\\": {
+        \\"CI\\": \\"0\\"
+      },
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"pnpm update npm-check-updates\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep dev --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep optional --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep peer --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep prod --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"npm-check-updates --dep bundle --upgrade --target=minor\\"
+        },
+        {
+          \\"exec\\": \\"pnpm i --no-frozen-lockfile\\"
+        },
+        {
+          \\"exec\\": \\"pnpm update\\"
+        },
+        {
+          \\"exec\\": \\"npx projen\\"
+        },
+        {
+          \\"spawn\\": \\"post-upgrade\\"
+        }
+      ]
+    }
   },
+  \\"env\\": {
+    \\"PATH\\": \\"$(npx -c \\\\\\"node -e \\\\\\\\\\\\\\"console.log(process.env.PATH)\\\\\\\\\\\\\\"\\\\\\")\\"
+  },
+  \\"//\\": \\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"
+}
+",
   ".projenrc.js": "const { javascript } = require(\\"projen\\");
 
 const project = new javascript.NodeProject({
@@ -5665,75 +4670,7 @@ project.synth();
    limitations under the License.
 ",
   "README.md": "# replace this",
-  "package.json": Object {
-    "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
-    "dependencies": Object {
-      "esbuild": "*",
-    },
-    "devDependencies": Object {
-      "aws-sdk": "*",
-      "jest": "*",
-      "jest-junit": "^13",
-      "npm-check-updates": "^16",
-      "projen": "*",
-      "standard-version": "^9",
-    },
-    "jest": Object {
-      "clearMocks": true,
-      "collectCoverage": true,
-      "coverageDirectory": "coverage",
-      "coveragePathIgnorePatterns": Array [
-        "/node_modules/",
-      ],
-      "coverageReporters": Array [
-        "json",
-        "lcov",
-        "clover",
-        "cobertura",
-        "text",
-      ],
-      "reporters": Array [
-        "default",
-        Array [
-          "jest-junit",
-          Object {
-            "outputDirectory": "test-reports",
-          },
-        ],
-      ],
-      "testMatch": Array [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[tj]s?(x)",
-      ],
-      "testPathIgnorePatterns": Array [
-        "/node_modules/",
-      ],
-      "watchPathIgnorePatterns": Array [
-        "/node_modules/",
-      ],
-    },
-    "license": "Apache-2.0",
-    "main": "lib/index.js",
-    "name": "pnpm-project",
-    "scripts": Object {
-      "build": "npx projen build",
-      "bump": "npx projen bump",
-      "clobber": "npx projen clobber",
-      "compile": "npx projen compile",
-      "default": "npx projen default",
-      "eject": "npx projen eject",
-      "package": "npx projen package",
-      "post-compile": "npx projen post-compile",
-      "post-upgrade": "npx projen post-upgrade",
-      "pre-compile": "npx projen pre-compile",
-      "projen": "npx projen",
-      "release": "npx projen release",
-      "test": "npx projen test",
-      "test:watch": "npx projen test:watch",
-      "unbump": "npx projen unbump",
-      "upgrade": "npx projen upgrade",
-    },
-    "version": "0.0.0",
-  },
+  "package.json": "{\\"name\\":\\"pnpm-project\\",\\"scripts\\":{\\"build\\":\\"npx projen build\\",\\"bump\\":\\"npx projen bump\\",\\"clobber\\":\\"npx projen clobber\\",\\"compile\\":\\"npx projen compile\\",\\"default\\":\\"npx projen default\\",\\"eject\\":\\"npx projen eject\\",\\"package\\":\\"npx projen package\\",\\"post-compile\\":\\"npx projen post-compile\\",\\"post-upgrade\\":\\"npx projen post-upgrade\\",\\"pre-compile\\":\\"npx projen pre-compile\\",\\"release\\":\\"npx projen release\\",\\"test\\":\\"npx projen test\\",\\"test:watch\\":\\"npx projen test:watch\\",\\"unbump\\":\\"npx projen unbump\\",\\"upgrade\\":\\"npx projen upgrade\\",\\"projen\\":\\"npx projen\\"},\\"devDependencies\\":{\\"aws-sdk\\":\\"*\\",\\"jest\\":\\"*\\",\\"jest-junit\\":\\"^13\\",\\"npm-check-updates\\":\\"^16\\",\\"projen\\":\\"*\\",\\"standard-version\\":\\"^9\\"},\\"dependencies\\":{\\"esbuild\\":\\"*\\"},\\"main\\":\\"lib/index.js\\",\\"license\\":\\"Apache-2.0\\",\\"version\\":\\"0.0.0\\",\\"jest\\":{\\"clearMocks\\":true,\\"collectCoverage\\":true,\\"coverageReporters\\":[\\"json\\",\\"lcov\\",\\"clover\\",\\"cobertura\\",\\"text\\"],\\"coverageDirectory\\":\\"coverage\\",\\"coveragePathIgnorePatterns\\":[\\"/node_modules/\\"],\\"testPathIgnorePatterns\\":[\\"/node_modules/\\"],\\"watchPathIgnorePatterns\\":[\\"/node_modules/\\"],\\"testMatch\\":[\\"**/__tests__/**/*.[jt]s?(x)\\",\\"**/?(*.)+(spec|test).[tj]s?(x)\\"],\\"reporters\\":[\\"default\\",[\\"jest-junit\\",{\\"outputDirectory\\":\\"test-reports\\"}]]},\\"//\\":\\"~~ Generated by projen. To modify, edit .projenrc.js and run \\\\\\"npx projen\\\\\\".\\"}
+",
 }
 `;

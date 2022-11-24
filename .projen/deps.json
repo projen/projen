@@ -152,6 +152,10 @@
       "type": "bundled"
     },
     {
+      "name": "comment-json",
+      "type": "bundled"
+    },
+    {
       "name": "conventional-changelog-config-spec",
       "type": "bundled"
     },

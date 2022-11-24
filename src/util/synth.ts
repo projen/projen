@@ -1,7 +1,10 @@
 import * as os from "os";
 import * as path from "path";
+import * as JSONC from "comment-json";
+import { CommentArray } from "comment-json";
 import * as fs from "fs-extra";
 import { glob } from "glob";
+import { JsonFile } from "../json";
 import { Project } from "../project";
 
 /**
@@ -54,6 +57,10 @@ export function synthSnapshot(
     return directorySnapshot(project.outdir, {
       ...options,
       excludeGlobs: ignoreExts.map((ext) => `**/*.${ext}`),
+      supportJsonComments: project.files.some(
+        // At least one json file in project supports comments
+        (file) => file instanceof JsonFile && file.supportsComments
+      ),
     });
   } finally {
     fs.removeSync(project.outdir);
@@ -81,6 +88,13 @@ export interface DirectorySnapshotOptions extends SnapshotOptions {
    * @default false include file content
    */
   readonly onlyFileNames?: boolean;
+
+  /**
+   * Parses files with different parser, supporting comments
+   * inside .json files.
+   * @default false
+   */
+  readonly supportJsonComments?: boolean;
 }
 
 export function directorySnapshot(
@@ -103,10 +117,13 @@ export function directorySnapshot(
 
     let content;
     if (!options.onlyFileNames) {
+      content = fs.readFileSync(filePath, "utf-8");
       if (parseJson && path.extname(filePath) === ".json") {
-        content = fs.readJsonSync(filePath);
-      } else {
-        content = fs.readFileSync(filePath, "utf-8");
+        if (options.supportJsonComments) {
+          content = cleanCommentArrays(JSONC.parse(content));
+        } else {
+          content = JSON.parse(content);
+        }
       }
     } else {
       content = true;
@@ -116,4 +133,25 @@ export function directorySnapshot(
   }
 
   return output;
+}
+
+/**
+ * Converts type "CommentArray" back to regular JS "Array"
+ * if there are no comments stored in it.
+ * Prevents strict checks from failing.
+ */
+function cleanCommentArrays(obj: any): typeof obj {
+  if (obj instanceof Object) {
+    for (const p of Object.keys(obj)) {
+      if (
+        obj[p] instanceof CommentArray &&
+        Object.getOwnPropertySymbols(obj[p]).length === 0
+      ) {
+        obj[p] = Array.from(obj[p]).map(cleanCommentArrays);
+      } else if (obj[p] instanceof Object) {
+        obj[p] = cleanCommentArrays(obj[p]);
+      }
+    }
+  }
+  return obj;
 }

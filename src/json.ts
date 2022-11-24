@@ -24,7 +24,7 @@ export interface JsonFileOptions extends ObjectFileOptions {
  */
 export class JsonFile extends ObjectFile {
   private readonly newline: boolean;
-  private readonly supportsComments: boolean;
+  readonly supportsComments: boolean;
 
   constructor(project: Project, filePath: string, options: JsonFileOptions) {
     super(project, filePath, options);
