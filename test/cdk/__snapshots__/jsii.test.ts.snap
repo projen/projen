@@ -783,6 +783,11 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
+        "name": "@types/babel__traverse",
+        "type": "override",
+        "version": "7.18.2",
+      },
+      Object {
         "name": "@types/prettier",
         "type": "override",
         "version": "2.6.0",
@@ -1391,6 +1396,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "url": "https://github.com/foo/bar.git",
     },
     "resolutions": Object {
+      "@types/babel__traverse": "7.18.2",
       "@types/prettier": "2.6.0",
     },
     "scripts": Object {
