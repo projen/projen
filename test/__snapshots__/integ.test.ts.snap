@@ -938,6 +938,11 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
+        "name": "@types/babel__traverse",
+        "type": "override",
+        "version": "7.18.2",
+      },
+      Object {
         "name": "@types/prettier",
         "type": "override",
         "version": "2.6.0",
@@ -1856,6 +1861,7 @@ project.synth();
       "url": "https://github.com/eladb/cdk-watchful.git",
     },
     "resolutions": Object {
+      "@types/babel__traverse": "7.18.2",
       "@types/prettier": "2.6.0",
     },
     "scripts": Object {
@@ -2499,6 +2505,11 @@ tsconfig.tsbuildinfo
       Object {
         "name": "yaml",
         "type": "bundled",
+      },
+      Object {
+        "name": "@types/babel__traverse",
+        "type": "override",
+        "version": "7.18.2",
       },
       Object {
         "name": "@types/prettier",
@@ -3340,6 +3351,7 @@ project.synth();
       "url": "https://github.com/awslabs/cdk8s.git",
     },
     "resolutions": Object {
+      "@types/babel__traverse": "7.18.2",
       "@types/prettier": "2.6.0",
     },
     "scripts": Object {
