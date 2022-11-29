@@ -49,7 +49,7 @@ Add the App ID as a secret to your repo under the name `PROJEN_APP_ID` and the p
 Then, configure your projenrc file to use the GitHub app for API access:
 
 ```ts
-const { NodeProject } = require('projen/javascript');
+const { github, javascript } = require('projen');
 
 const project = new javascript.NodeProject({
   // ...other options
