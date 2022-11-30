@@ -7852,9 +7852,9 @@ __Returns__:
 
 Installs the following npm scripts:.
 
-- `test` will run `jest --passWithNoTests`
-- `test:watch` will run `jest --watch`
-- `test:update` will run `jest -u`
+- `test`, intended for testing locally and in CI. Will update snapshots unless `updateSnapshot: UpdateSnapshot: NEVER` is set.
+- `test:watch`, intended for automatically rerunning tests when files change.
+- `test:update`, intended for testing locally and updating snapshots to match the latest unit under test. Only available when `updateSnapshot: UpdateSnapshot: NEVER`.
 
 __Submodule__: javascript
 
