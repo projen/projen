@@ -75,7 +75,8 @@ Object {
   "name": "test",
   "steps": Array [
     Object {
-      "exec": "jest --passWithNoTests --all --updateSnapshot",
+      "exec": "jest --passWithNoTests --updateSnapshot",
+      "receiveArgs": true,
     },
     Object {
       "spawn": "eslint",
@@ -105,7 +106,8 @@ Object {
   "name": "test",
   "steps": Array [
     Object {
-      "exec": "jest --passWithNoTests --all --updateSnapshot",
+      "exec": "jest --passWithNoTests --updateSnapshot",
+      "receiveArgs": true,
     },
     Object {
       "spawn": "eslint",

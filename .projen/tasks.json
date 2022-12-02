@@ -112,7 +112,7 @@
       "name": "contributors:update",
       "steps": [
         {
-          "exec": "all-contributors check | grep \"Missing contributors\" -A 1 | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"[bot]\" | xargs -n1 -I{} all-contributors add {} code"
+          "exec": "all-contributors check | grep \"Missing contributors\" -A 1 | tail -n1 | sed -e \"s/,//g\" | xargs -n1 | grep -v \"\\[bot\\]\" | grep -v \"cdklabs-automation\" | xargs -n1 -I{} all-contributors add {} code"
         }
       ]
     },
@@ -322,7 +322,8 @@
       "description": "Run tests",
       "steps": [
         {
-          "exec": "jest --passWithNoTests --all --coverageProvider=v8 --updateSnapshot"
+          "exec": "jest --passWithNoTests --coverageProvider=v8 --updateSnapshot",
+          "receiveArgs": true
         },
         {
           "spawn": "eslint"

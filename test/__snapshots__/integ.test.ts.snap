@@ -441,7 +441,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v4.5.0
+      - uses: amannn/action-semantic-pull-request@v5.0.2
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -938,19 +938,14 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
+        "name": "@types/babel__traverse",
+        "type": "override",
+        "version": "7.18.2",
+      },
+      Object {
         "name": "@types/prettier",
         "type": "override",
         "version": "2.6.0",
-      },
-      Object {
-        "name": "@types/responselike",
-        "type": "override",
-        "version": "1.0.0",
-      },
-      Object {
-        "name": "got",
-        "type": "override",
-        "version": "12.3.1",
       },
       Object {
         "name": "@aws-cdk/aws-apigateway",
@@ -1368,7 +1363,8 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all --coverageProvider=v8 --updateSnapshot",
+            "exec": "jest --passWithNoTests --coverageProvider=v8 --updateSnapshot",
+            "receiveArgs": true,
           },
           Object {
             "spawn": "eslint",
@@ -1865,9 +1861,8 @@ project.synth();
       "url": "https://github.com/eladb/cdk-watchful.git",
     },
     "resolutions": Object {
+      "@types/babel__traverse": "7.18.2",
       "@types/prettier": "2.6.0",
-      "@types/responselike": "1.0.0",
-      "got": "12.3.1",
     },
     "scripts": Object {
       "build": "npx projen build",
@@ -2218,7 +2213,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v4.5.0
+      - uses: amannn/action-semantic-pull-request@v5.0.2
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -2512,19 +2507,14 @@ tsconfig.tsbuildinfo
         "type": "bundled",
       },
       Object {
+        "name": "@types/babel__traverse",
+        "type": "override",
+        "version": "7.18.2",
+      },
+      Object {
         "name": "@types/prettier",
         "type": "override",
         "version": "2.6.0",
-      },
-      Object {
-        "name": "@types/responselike",
-        "type": "override",
-        "version": "1.0.0",
-      },
-      Object {
-        "name": "got",
-        "type": "override",
-        "version": "12.3.1",
       },
       Object {
         "name": "constructs",
@@ -2756,7 +2746,8 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot",
+            "exec": "jest --passWithNoTests --updateSnapshot",
+            "receiveArgs": true,
           },
           Object {
             "spawn": "eslint",
@@ -3360,9 +3351,8 @@ project.synth();
       "url": "https://github.com/awslabs/cdk8s.git",
     },
     "resolutions": Object {
+      "@types/babel__traverse": "7.18.2",
       "@types/prettier": "2.6.0",
-      "@types/responselike": "1.0.0",
-      "got": "12.3.1",
     },
     "scripts": Object {
       "build": "yarn compile",
@@ -3712,7 +3702,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v4.5.0
+      - uses: amannn/action-semantic-pull-request@v5.0.2
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -3955,16 +3945,6 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
-        "name": "@types/responselike",
-        "type": "override",
-        "version": "1.0.0",
-      },
-      Object {
-        "name": "got",
-        "type": "override",
-        "version": "12.3.1",
-      },
-      Object {
         "name": "@types/node",
         "type": "runtime",
       },
@@ -4162,7 +4142,8 @@ tsconfig.tsbuildinfo
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot",
+            "exec": "jest --passWithNoTests --updateSnapshot",
+            "receiveArgs": true,
           },
           Object {
             "spawn": "eslint",
@@ -4720,10 +4701,6 @@ project.synth();
       "type": "git",
       "url": "https://github.com/awslabs/cdk8s.git",
     },
-    "resolutions": Object {
-      "@types/responselike": "1.0.0",
-      "got": "12.3.1",
-    },
     "scripts": Object {
       "build": "yarn compile",
       "clobber": "npx projen clobber",
@@ -4944,7 +4921,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v4.5.0
+      - uses: amannn/action-semantic-pull-request@v5.0.2
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -5410,7 +5387,8 @@ permissions-backup.acl
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot",
+            "exec": "jest --passWithNoTests --updateSnapshot",
+            "receiveArgs": true,
           },
         ],
       },

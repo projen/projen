@@ -345,7 +345,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v4.5.0
+      - uses: amannn/action-semantic-pull-request@v5.0.2
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -617,16 +617,6 @@ tsconfig.tsbuildinfo
         "name": "@types/express",
         "type": "override",
         "version": "4.17.13",
-      },
-      Object {
-        "name": "@types/responselike",
-        "type": "override",
-        "version": "1.0.0",
-      },
-      Object {
-        "name": "got",
-        "type": "override",
-        "version": "12.3.1",
       },
       Object {
         "name": "react",
@@ -1077,8 +1067,6 @@ tsconfig.tsbuildinfo
     "resolutions": Object {
       "@types/express": "4.17.13",
       "@types/express-serve-static-core": "4.17.30",
-      "@types/responselike": "1.0.0",
-      "got": "12.3.1",
     },
     "scripts": Object {
       "build": "npx projen build",

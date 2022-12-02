@@ -380,7 +380,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v4.5.0
+      - uses: amannn/action-semantic-pull-request@v5.0.2
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -783,19 +783,14 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
+        "name": "@types/babel__traverse",
+        "type": "override",
+        "version": "7.18.2",
+      },
+      Object {
         "name": "@types/prettier",
         "type": "override",
         "version": "2.6.0",
-      },
-      Object {
-        "name": "@types/responselike",
-        "type": "override",
-        "version": "1.0.0",
-      },
-      Object {
-        "name": "got",
-        "type": "override",
-        "version": "12.3.1",
       },
     ],
   },
@@ -1029,7 +1024,8 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
         "name": "test",
         "steps": Array [
           Object {
-            "exec": "jest --passWithNoTests --all --updateSnapshot",
+            "exec": "jest --passWithNoTests --updateSnapshot",
+            "receiveArgs": true,
           },
           Object {
             "spawn": "eslint",
@@ -1400,9 +1396,8 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "url": "https://github.com/foo/bar.git",
     },
     "resolutions": Object {
+      "@types/babel__traverse": "7.18.2",
       "@types/prettier": "2.6.0",
-      "@types/responselike": "1.0.0",
-      "got": "12.3.1",
     },
     "scripts": Object {
       "build": "npx projen build",

@@ -183,7 +183,7 @@ project.devContainer.addTasks(setup);
 project.npmignore.exclude("/.devcontainer.json");
 
 project.addTask("contributors:update", {
-  exec: 'all-contributors check | grep "Missing contributors" -A 1 | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "[bot]" | xargs -n1 -I{} all-contributors add {} code',
+  exec: 'all-contributors check | grep "Missing contributors" -A 1 | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "\\[bot\\]" | grep -v "cdklabs-automation" | xargs -n1 -I{} all-contributors add {} code',
 });
 project.npmignore.exclude("/.all-contributorsrc");
 

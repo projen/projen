@@ -255,8 +255,7 @@ test("UpdateSnapshotOptions.ALWAYS adds --updateSnapshot to testTask and 'test:u
   expect(testUpdateTask).toBeUndefined();
 });
 
-test("UpdateSnapshotOptions.NEVER doesn't add --updateSnapshot and creates a separate 'test:update' task", () => {
-  // WHEN
+describe("UpdateSnapshotOptions.NEVER", () => {
   const project = new NodeProject({
     outdir: mkdtemp(),
     defaultReleaseBranch: "master",
@@ -266,10 +265,18 @@ test("UpdateSnapshotOptions.NEVER doesn't add --updateSnapshot and creates a sep
     },
   });
 
-  // THEN
-  const testTask = project.testTask;
-  expect(testTask.steps[0].exec).not.toContain("--updateSnapshot");
+  it("does not add --updateSnapshot", () => {
+    const testTask = project.testTask;
+    expect(testTask.steps[0].exec).not.toContain("--updateSnapshot");
+  });
 
-  const testUpdateTask = project.tasks.tryFind("test:update");
-  expect(testUpdateTask?.steps[0]?.exec).toContain("--updateSnapshot");
+  it("adds --ci", () => {
+    const testTask = project.testTask;
+    expect(testTask.steps[0].exec).toContain("--ci");
+  });
+
+  it("creates a separate 'test:update' task", () => {
+    const testUpdateTask = project.tasks.tryFind("test:update");
+    expect(testUpdateTask?.steps[0]?.exec).toContain("--updateSnapshot");
+  });
 });

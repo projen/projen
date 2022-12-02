@@ -16,6 +16,14 @@ export interface TaskOptions extends TaskCommonOptions {
    * List of task steps to run.
    */
   readonly steps?: TaskStep[];
+
+  /**
+   * Should the provided `exec` shell command receive args passed to the task.
+   * @see {@link TaskStepOptions.receiveArgs}
+   *
+   * @default false
+   */
+  readonly receiveArgs?: boolean;
 }
 
 /**
@@ -57,7 +65,7 @@ export class Task {
     }
 
     if (props.exec) {
-      this.exec(props.exec);
+      this.exec(props.exec, { receiveArgs: props.receiveArgs });
     }
   }
 
