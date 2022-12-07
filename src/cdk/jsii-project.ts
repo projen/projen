@@ -382,11 +382,11 @@ export class JsiiProject extends TypeScriptProject {
       this.npmignore.readonly = false;
     }
 
-    // jsii relies on typescript < 4.0, which causes build errors
-    // since @types/prettier@2.6.1 only supports typescript >= 4.2.
-    // add a package resolution override to fix this.
-    // this should have no effect if @types/prettier is not a transitive dependency
+    // https://github.com/projen/projen/issues/2165
     this.package.addPackageResolutions("@types/prettier@2.6.0");
+
+    // https://github.com/projen/projen/issues/2264
+    this.package.addPackageResolutions("@types/babel__traverse@7.18.2");
   }
 
   /**
