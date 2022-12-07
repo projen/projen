@@ -1362,7 +1362,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "preset": "ts-jest",
       "reporters": Array [
         "default",
-        Array [
+        CommentArray [
           "jest-junit",
           Object {
             "outputDirectory": "test-reports",

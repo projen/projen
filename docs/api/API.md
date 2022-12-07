@@ -1339,6 +1339,14 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **newline** (<code>boolean</code>)  Adds a newline at the end of the file. __*Default*__: true
 
 
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**supportsComments**🔹 | <code>boolean</code> | <span></span>
+
 ### Methods
 
 

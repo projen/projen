@@ -1211,7 +1211,7 @@ tsconfig.tsbuildinfo
       "preset": "ts-jest",
       "reporters": Array [
         "default",
-        Array [
+        CommentArray [
           "jest-junit",
           Object {
             "outputDirectory": "test-reports",
