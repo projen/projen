@@ -1,8 +1,8 @@
 import * as path from "path";
 import * as fs from "fs-extra";
-import { Project, TextFile, ProjectOptions } from "../src";
+import { Project, TextFile, ProjectOptions, JsonFile } from "../src";
 import { PROJEN_MARKER } from "../src/common";
-import { TestProject } from "./util";
+import { synthSnapshot, TestProject } from "./util";
 
 test("composing projects declaratively", () => {
   const comp = new TestProject();
@@ -121,6 +121,25 @@ test("subproject generated files do not get cleaned up by parent project", () =>
   root.synth();
   expect(child.fileExistedDuringPresynth).toEqual(true);
   expect(fs.existsSync(child.file.absolutePath)).toEqual(true);
+});
+
+test("subproject generated json files can be synthed", () => {
+  const root = new TestProject();
+  const child = new PreSynthProject({ parent: root, outdir: "sub-project" });
+  new JsonFile(child, "test.jsonc", {
+    marker: true,
+    allowComments: true,
+    obj: {
+      test: "data",
+    },
+  });
+
+  const out = synthSnapshot(root);
+  expect(out["sub-project/test.jsonc"]).toMatchInlineSnapshot(`
+    Object {
+      "test": "data",
+    }
+  `);
 });
 
 // a project that depends on generated files during preSynthesize()

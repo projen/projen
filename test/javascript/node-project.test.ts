@@ -1,4 +1,3 @@
-import * as json5 from "json5";
 import * as yaml from "yaml";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
@@ -819,7 +818,7 @@ test("enabling renovatebot does not overturn mergify: false", () => {
   //       as JSON object path delimiters.
   expect(snapshot).not.toHaveProperty([".mergify.yml"]);
   expect(snapshot).toHaveProperty(["renovate.json5"]);
-  expect(json5.parse(snapshot["renovate.json5"]).ignoreDeps).toEqual([
+  expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
     "jest-junit",
     "npm-check-updates",
     "standard-version",
@@ -845,7 +844,7 @@ test("renovatebot ignored dependency overrides", () => {
   // Note: brackets important, they prevent "." in filenames to be interpreted
   //       as JSON object path delimiters.
   expect(snapshot).toHaveProperty(["renovate.json5"]);
-  expect(json5.parse(snapshot["renovate.json5"]).ignoreDeps).toEqual([
+  expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
     "jest-junit",
     "npm-check-updates",
     "standard-version",

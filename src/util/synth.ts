@@ -97,6 +97,13 @@ export interface DirectorySnapshotOptions extends SnapshotOptions {
   readonly supportJsonComments?: boolean;
 }
 
+function isJsonLikeFile(filePath: string): boolean {
+  const file = filePath.toLowerCase();
+  return (
+    file.endsWith(".json") || file.endsWith(".json5") || file.endsWith(".jsonc")
+  );
+}
+
 export function directorySnapshot(
   root: string,
   options: DirectorySnapshotOptions = {}
@@ -118,12 +125,10 @@ export function directorySnapshot(
     let content;
     if (!options.onlyFileNames) {
       content = fs.readFileSync(filePath, "utf-8");
-      if (parseJson && path.extname(filePath) === ".json") {
-        if (options.supportJsonComments) {
-          content = cleanCommentArrays(JSONC.parse(content));
-        } else {
-          content = JSON.parse(content);
-        }
+      if (parseJson && isJsonLikeFile(filePath)) {
+        content = cleanCommentArrays(
+          JSONC.parse(content, undefined, !options.supportJsonComments)
+        );
       }
     } else {
       content = true;
@@ -141,17 +146,29 @@ export function directorySnapshot(
  * Prevents strict checks from failing.
  */
 function cleanCommentArrays(obj: any): typeof obj {
+  if (Array.isArray(obj) || isCommentArrayWithoutComments(obj)) {
+    return Array.from(obj).map(cleanCommentArrays);
+  }
+
   if (obj instanceof Object) {
     for (const p of Object.keys(obj)) {
-      if (
-        obj[p] instanceof CommentArray &&
-        Object.getOwnPropertySymbols(obj[p]).length === 0
-      ) {
+      if (isCommentArrayWithoutComments(obj[p])) {
         obj[p] = Array.from(obj[p]).map(cleanCommentArrays);
       } else if (obj[p] instanceof Object) {
         obj[p] = cleanCommentArrays(obj[p]);
       }
     }
   }
+
   return obj;
+}
+
+/**
+ * Checks if a "CommentArray" has no comments stored in it.
+ */
+function isCommentArrayWithoutComments(obj: any): boolean {
+  return (
+    obj instanceof CommentArray &&
+    Object.getOwnPropertySymbols(obj).length === 0
+  );
 }
