@@ -72,7 +72,6 @@
     "jsii-docgen": "^1.8.110",
     "jsii-pacmak": "^1.72.0",
     "json-schema": "^0.4.0",
-    "json5": "^2.2.1",
     "markmac": "^0.1.146",
     "npm-check-updates": "^16",
     "prettier": "^2.8.0",
