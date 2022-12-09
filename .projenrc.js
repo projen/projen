@@ -40,7 +40,7 @@ const project = new cdk.JsiiProject({
     "shx",
     "fast-json-patch",
     "zlib",
-    "comment-json",
+    "comment-json@4.2.2",
   ],
 
   devDeps: [

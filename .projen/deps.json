@@ -153,6 +153,7 @@
     },
     {
       "name": "comment-json",
+      "version": "4.2.2",
       "type": "bundled"
     },
     {
