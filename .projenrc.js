@@ -53,7 +53,6 @@ const project = new cdk.JsiiProject({
     "markmac",
     "esbuild",
     "all-contributors-cli",
-    "json5",
   ],
 
   depsUpgradeOptions: {

@@ -109,10 +109,6 @@
       "type": "build"
     },
     {
-      "name": "json5",
-      "type": "build"
-    },
-    {
       "name": "markmac",
       "type": "build"
     },
