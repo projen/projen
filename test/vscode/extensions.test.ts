@@ -1,8 +1,16 @@
-import json5 from "json5";
 import { PROJEN_MARKER } from "../../src/common";
 import { synthSnapshot, TestProject } from "../util";
 
 const VSCODE_EXTENSIONS_FILE = ".vscode/extensions.json";
+
+const MARKER_COMMENT_OBJECT = {
+  [Symbol.for("before-all")]: [
+    {
+      type: "LineComment",
+      value: expect.stringContaining(PROJEN_MARKER),
+    },
+  ],
+};
 
 test("no extensions configured", () => {
   // GIVEN
@@ -26,12 +34,8 @@ test("recommend extensions", () => {
   );
 
   // THEN
-  const extensionsFile = synthSnapshot(project, {
-    parseJson: false,
-  })[VSCODE_EXTENSIONS_FILE];
-  const extensionsObject = json5.parse(extensionsFile);
-
-  expect(extensionsFile).toContain(`// ${PROJEN_MARKER}`);
+  const extensionsObject = synthSnapshot(project)[VSCODE_EXTENSIONS_FILE];
+  expect(extensionsObject).toMatchObject(MARKER_COMMENT_OBJECT);
   expect(extensionsObject).toStrictEqual({
     recommendations: ["vscode.csharp", "dbaeumer.vscode-eslint"],
   });
@@ -48,12 +52,8 @@ test("unwanted recommendations", () => {
   );
 
   // THEN
-  const extensionsFile = synthSnapshot(project, {
-    parseJson: false,
-  })[VSCODE_EXTENSIONS_FILE];
-  const extensionsObject = json5.parse(extensionsFile);
-
-  expect(extensionsFile).toContain(`// ${PROJEN_MARKER}`);
+  const extensionsObject = synthSnapshot(project)[VSCODE_EXTENSIONS_FILE];
+  expect(extensionsObject).toMatchObject(MARKER_COMMENT_OBJECT);
   expect(extensionsObject).toStrictEqual({
     unwantedRecommendations: [
       "amazonwebservices.aws-toolkit-vscode",
@@ -77,12 +77,8 @@ test("recommended extensions and unwanted recommendations", () => {
   );
 
   // THEN
-  const extensionsFile = synthSnapshot(project, {
-    parseJson: false,
-  })[VSCODE_EXTENSIONS_FILE];
-  const extensionsObject = json5.parse(extensionsFile);
-
-  expect(extensionsFile).toContain(`// ${PROJEN_MARKER}`);
+  const extensionsObject = synthSnapshot(project)[VSCODE_EXTENSIONS_FILE];
+  expect(extensionsObject).toMatchObject(MARKER_COMMENT_OBJECT);
   expect(extensionsObject).toStrictEqual({
     recommendations: ["vscode.csharp", "dbaeumer.vscode-eslint"],
     unwantedRecommendations: [
