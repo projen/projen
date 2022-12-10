@@ -93,9 +93,10 @@ test("changing compatible runtimes", () => {
     cdkDeps: cdkDepsForProject(project),
     entrypoint: "src/example.lambda-extension.ts",
     compatibleRuntimes: [
+      LambdaRuntime.NODEJS_18_X,
+      LambdaRuntime.NODEJS_16_X,
       LambdaRuntime.NODEJS_14_X,
       LambdaRuntime.NODEJS_12_X,
-      LambdaRuntime.NODEJS_10_X,
     ],
   });
 
@@ -108,18 +109,21 @@ test("changing compatible runtimes", () => {
 
   expect(bundleTaskExec).toContain(
     // It picked the lowest compatible runtime
-    '--target="node10"'
+    '--target="node12"'
   );
 
   const generatedSource = snapshot["src/example-layer-version.ts"];
-  expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs10.x', lambda.RuntimeFamily.NODEJS)"
-  );
   expect(generatedSource).toContain(
     "new lambda.Runtime('nodejs12.x', lambda.RuntimeFamily.NODEJS)"
   );
   expect(generatedSource).toContain(
     "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS)"
+  );
+  expect(generatedSource).toContain(
+    "new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS)"
+  );
+  expect(generatedSource).toContain(
+    "new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS)"
   );
 });
 
