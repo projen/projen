@@ -34,8 +34,8 @@ test("simplest LambdaExtension cdk v2", () => {
     "--external:aws-sdk"
   );
   expect(bundleTaskExec).toContain(
-    // Supports node12
-    '--target="node12"'
+    // Supports node10
+    '--target="node10"'
   );
 
   const generatedSource = snapshot["src/example-layer-version.ts"];
@@ -50,10 +50,19 @@ test("simplest LambdaExtension cdk v2", () => {
   );
   expect(generatedSource).toContain("export class ExampleLayerVersion");
   expect(generatedSource).toContain(
+    "new lambda.Runtime('nodejs10.x', lambda.RuntimeFamily.NODEJS)"
+  );
+  expect(generatedSource).toContain(
     "new lambda.Runtime('nodejs12.x', lambda.RuntimeFamily.NODEJS)"
   );
   expect(generatedSource).toContain(
     "new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS)"
+  );
+  expect(generatedSource).toContain(
+    "new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS)"
+  );
+  expect(generatedSource).toContain(
+    "new lambda.Runtime('nodejs18.x', lambda.RuntimeFamily.NODEJS)"
   );
   expect(generatedSource).toMatchSnapshot();
 });
@@ -97,6 +106,7 @@ test("changing compatible runtimes", () => {
       LambdaRuntime.NODEJS_16_X,
       LambdaRuntime.NODEJS_14_X,
       LambdaRuntime.NODEJS_12_X,
+      LambdaRuntime.NODEJS_10_X,
     ],
   });
 
@@ -109,10 +119,13 @@ test("changing compatible runtimes", () => {
 
   expect(bundleTaskExec).toContain(
     // It picked the lowest compatible runtime
-    '--target="node12"'
+    '--target="node10"'
   );
 
   const generatedSource = snapshot["src/example-layer-version.ts"];
+  expect(generatedSource).toContain(
+    "new lambda.Runtime('nodejs10.x', lambda.RuntimeFamily.NODEJS)"
+  );
   expect(generatedSource).toContain(
     "new lambda.Runtime('nodejs12.x', lambda.RuntimeFamily.NODEJS)"
   );
