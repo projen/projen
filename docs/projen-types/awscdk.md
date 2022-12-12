@@ -8,8 +8,8 @@ package managers (npm, PyPI, Maven, NuGet, etc) while apps are deployed into AWS
 environments.
 
 This section describes features that are available in both cloud libraries and
-applications. See [AWS CDK Construct Library](./awscdk-construct.md) and [AWS
-CDK Applications](./awscdk-apps.md) for specific details about libraries and
+applications. See [AWS CDK Construct Library](awscdk-construct.md) and [AWS
+CDK Applications](awscdk-apps.md) for specific details about libraries and
 applications.
 
 ## AWS Lambda Functions

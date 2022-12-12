@@ -1,0 +1,38 @@
+site_name: Projen - Docs
+site_url: https://projen.io/
+repo_url: https://github.com/projen/projen
+site_description: 'Projen is Project Structure as a code. Define and maintain complex project configuration through code.'
+theme:
+  name: material
+  logo: https://raw.githubusercontent.com/projen/projen/main/logo/projen.svg
+
+nav:
+  - 'Get Started':
+      - Overview: 'index.md'
+  - 'Projen Types':
+      - 'AWS CDK Applications': 'projen-types/awscdk-apps.md'
+      - 'AWS CDK Construct Library': 'projen-types/awscdk-construct.md'
+      - 'AWS Cloud Projects': 'projen-types/awscdk.md'
+      - 'Build': 'projen-types/build.md'
+      - 'Bundling': 'projen-types/bundling.md'
+      - 'Components': 'projen-types/components.md'
+      - 'CDK8s': 'projen-types/cdk8s.md'
+      - 'CircleCI': 'projen-types/circleci.md'
+      - 'Dependencies': 'projen-types/deps.md'
+      - 'Escape hatches': 'projen-types/escape-hatches.md'
+      - 'Ejecting': 'projen-types/eject.md'
+      - 'GitHub': 'projen-types/github.md'
+      - 'GitLab': 'projen-types/gitlab.md'
+      - 'Java Projects': 'projen-types/java.md'
+      - 'Node.js Projects': 'projen-types/node.md'
+      - 'Programmatic API': 'projen-types/programmatic-api.md'
+      - 'Publishing Modules': 'projen-types/publisher.md'
+      - 'Python Projects': 'projen-types/python.md'
+      - 'Releases and Versioning': 'projen-types/releases.md'
+      - 'Subprojects': 'projen-types/subproject.md'
+      - 'Tasks': 'projen-types/tasks.md'
+      - 'TypeScript Projects': 'projen-types/typescript.md'
+
+plugins:
+    - search
+    - mkdocs-video
