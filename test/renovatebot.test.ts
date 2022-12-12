@@ -1,6 +1,21 @@
 import { synthSnapshot, TestProject } from "./util";
 
 describe("renovatebot", () => {
+  test("renovatebot: true creates renovatebot configuration", () => {
+    // GIVEN
+    const p = new TestProject({
+      renovatebot: true,
+      renovatebotOptions: {
+        labels: ["renotate", "dependencies"],
+      },
+    });
+
+    // WHEN
+    const snapshot = synthSnapshot(p);
+
+    // THEN
+    expect(snapshot["renovate.json5"]).toMatchSnapshot();
+  });
   test("renovatebot: override renovatebot configuration", () => {
     // GIVEN
     const overrideConfig = {
