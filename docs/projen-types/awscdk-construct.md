@@ -133,23 +133,23 @@ will be built and checked for anti-tamper (ensure no manual changes to generated
 There are a number of package scripts that are created for you. Any of them can be overwritten using the `addScript*`
 methods.
 
-script|description
----|---
-start|starts an interactive command menu
-projen|regenerates the projen config. Run this if you edit .projenrc.js
-no-changes|a helper script to prevent unnecessary releases.
-bump|bumps the package version number
-release|bumps the library's version and pushes to origin
-projen:upgrade|upgrades the projen cli tool
-compile|builds the library and generates docs
-watch|compiles and then re-compiles of further changes
-package|runs jsii-pacmak to package your library for publishing
-test|compiles and runs automated tests
-test:watch|watches for file changes, re-compiles and re-tests
-test:update|update any test snapshots
-eslint|runs eslint against all `src` and `test` .ts files
-compat|checks for jsii compatibility. See [here](https://github.com/aws/jsii/tree/master/packages/jsii-diff) for more info.
-docgen|generate documentation
+| script         | description                                                                                                          |
+|----------------|----------------------------------------------------------------------------------------------------------------------|
+| start          | starts an interactive command menu                                                                                   |
+| projen         | regenerates the projen config. Run this if you edit .projenrc.js                                                     |
+| no-changes     | a helper script to prevent unnecessary releases.                                                                     |
+| bump           | bumps the package version number                                                                                     |
+| release        | bumps the library's version and pushes to origin                                                                     |
+| projen:upgrade | upgrades the projen cli tool                                                                                         |
+| compile        | builds the library and generates docs                                                                                |
+| watch          | compiles and then re-compiles of further changes                                                                     |
+| package        | runs jsii-pacmak to package your library for publishing                                                              |
+| test           | compiles and runs automated tests                                                                                    |
+| test:watch     | watches for file changes, re-compiles and re-tests                                                                   |
+| test:update    | update any test snapshots                                                                                            |
+| eslint         | runs eslint against all `src` and `test` .ts files                                                                   |
+| compat         | checks for jsii compatibility. See [here](https://github.com/aws/jsii/tree/master/packages/jsii-diff) for more info. |
+| docgen         | generate documentation                                                                                               |
 
 As you develop your library you'll likely be using the `test:watch` command the most.
 
