@@ -422,7 +422,7 @@ export class PythonProject extends GitHubProject {
       ".scrapy",
       "",
       "# Sphinx documentation",
-      "docs/_build/",
+      "old-docs/_build/",
       "",
       "# PyBuilder",
       ".pybuilder/",

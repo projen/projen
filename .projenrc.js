@@ -108,7 +108,7 @@ const project = new cdk.JsiiProject({
   autoApproveUpgrades: true,
   autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
 
-  docgenFilePath: "docs/api/API.md",
+  docgenFilePath: "old-docs/api/API.md",
 });
 
 // this script is what we use as the projen command in this project

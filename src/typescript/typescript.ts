@@ -81,7 +81,7 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
    * Docs directory
    *
-   * @default "docs"
+   * @default "old-docs"
    */
   readonly docsDirectory?: string;
 
@@ -193,7 +193,7 @@ export class TypeScriptProject extends NodeProject {
     this.libdir = options.libdir ?? "lib";
 
     this.docgen = options.docgen;
-    this.docsDirectory = options.docsDirectory ?? "docs/";
+    this.docsDirectory = options.docsDirectory ?? "old-docs/";
 
     this.compileTask.exec("tsc --build");
 

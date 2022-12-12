@@ -25,7 +25,7 @@ export interface MavenPackagingOptions {
   readonly javadocs?: boolean;
 
   /**
-   * Exclude source files from docs.
+   * Exclude source files from old-docs.
    * @default []
    */
   readonly javadocsExclude?: string[];

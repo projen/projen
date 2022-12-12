@@ -5,7 +5,7 @@ import { JsiiProject } from "./jsii-project";
  */
 export interface JsiiDocgenOptions {
   /**
-   * File path for generated docs.
+   * File path for generated old-docs.
    * @default "API.md"
    */
   readonly filePath?: string;

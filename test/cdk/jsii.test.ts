@@ -405,14 +405,14 @@ describe("docgen", () => {
       defaultReleaseBranch: "main",
       repositoryUrl: "https://github.com/foo/bar.git",
       docgen: true,
-      docgenFilePath: "docs.md",
+      docgenFilePath: "old-docs.md",
       publishTasks: true,
     });
 
     const output = synthSnapshot(project);
     expect(
       output[".projen/tasks.json"].tasks.docgen.steps[0].exec
-    ).toStrictEqual("jsii-docgen -o docs.md");
+    ).toStrictEqual("jsii-docgen -o old-docs.md");
   });
 });
 

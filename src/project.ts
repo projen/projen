@@ -180,7 +180,7 @@ export class Project {
    * This task ejects the project from projen. This is undefined if the project
    * it self is being ejected.
    *
-   * See docs for more information.
+   * See old-docs for more information.
    */
   private readonly ejectTask?: Task;
 
