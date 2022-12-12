@@ -1,9 +1,9 @@
 import { Component } from "../component";
 import { Dependency, DependencyType } from "../dependencies";
+import { Project } from "../project";
 import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { IPackageProvider, IPythonDeps } from "./python-deps";
-import { PythonProject } from "./python-project";
 import { RequirementsFile } from "./requirements-file";
 
 /**
@@ -17,7 +17,7 @@ export interface PipOptions {}
 export class Pip extends Component implements IPythonDeps {
   public readonly installTask: Task;
 
-  constructor(project: PythonProject, _options: PipOptions = {}) {
+  constructor(project: Project, _options: PipOptions = {}) {
     super(project);
 
     new RequirementsFile(project, "requirements.txt", {
@@ -65,18 +65,18 @@ export class Pip extends Component implements IPythonDeps {
 }
 
 class RuntimeDependencyProvider implements IPackageProvider {
-  constructor(private readonly pythonProject: PythonProject) {}
+  constructor(private readonly project: Project) {}
   public get packages(): Dependency[] {
-    return this.pythonProject.deps.all.filter(
+    return this.project.deps.all.filter(
       (dep) => dep.type === DependencyType.RUNTIME
     );
   }
 }
 
 class DevDependencyProvider implements IPackageProvider {
-  constructor(private readonly pythonProject: PythonProject) {}
+  constructor(private readonly project: Project) {}
   public get packages(): Dependency[] {
-    return this.pythonProject.deps.all.filter(
+    return this.project.deps.all.filter(
       (dep) => dep.type === DependencyType.DEVENV
     );
   }

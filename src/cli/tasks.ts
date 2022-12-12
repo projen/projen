@@ -1,6 +1,8 @@
 import * as chalk from "chalk";
 import * as yargs from "yargs";
+import { hideBin } from "yargs/helpers";
 import * as logging from "../logging";
+import { TaskSpec } from "../task-model";
 import { TaskRuntime } from "../task-runtime";
 
 /**
@@ -10,15 +12,22 @@ import { TaskRuntime } from "../task-runtime";
 export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
   const tasks = runtime.manifest.tasks ?? {};
   for (const task of Object.values(tasks)) {
-    ya.command(
-      task.name,
-      task.description ?? "",
-      taskCommandHandler(task.name)
-    );
+    ya.command(task.name, task.description ?? "", taskCommandHandler(task));
   }
 
-  function taskCommandHandler(taskName: string) {
+  function taskCommandHandler(task: TaskSpec) {
     return (args: yargs.Argv) => {
+      const taskReceivesArgs = task.steps?.reduce(
+        (receiveArgs, step) => receiveArgs || (step.receiveArgs ?? false),
+        false
+      );
+      let taskArgs: Array<string | number> = [];
+      if (taskReceivesArgs) {
+        args.strict(false);
+        args.strictCommands(false);
+        taskArgs = hideBin(process.argv).slice(1);
+      }
+
       args.option("inspect", {
         alias: "i",
         desc: "show all steps in this task",
@@ -27,10 +36,10 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
       const argv = args.argv;
 
       if (argv.inspect) {
-        return inspectTask(taskName);
+        return inspectTask(task.name);
       } else {
         try {
-          runtime.runTask(taskName);
+          runtime.runTask(task.name, [], taskArgs);
         } catch (e) {
           logging.error(e.message);
           process.exit(1);

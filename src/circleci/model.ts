@@ -58,6 +58,17 @@ export enum JobWhen {
 }
 
 /**
+ * Pipeline parameter types
+ * @see https://circleci.com/docs/2.0/reusing-config#parameter-syntax
+ */
+export enum PipelineParameterType {
+  STRING = "string",
+  BOOLEAN = "boolean",
+  INTEGER = "integer",
+  ENUM = "enum",
+}
+
+/**
  * A Workflow is comprised of one or more uniquely named jobs. Jobs are specified in the jobs map,
  * see Sample 2.0 config.yml for two examples of a job map.
  * The name of the job is the key in the map, and the value is a map describing the job.
@@ -79,12 +90,23 @@ export interface WorkflowJob extends INamed {
   /** A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed. */
   readonly type?: JobType;
   /** Job Filters can have the key branches or tags */
-  readonly filter?: Filter;
+  readonly filters?: Filter;
   readonly matrix?: Matrix;
-  /** Parameters for making a job explicitly configurable in a workflow. */
-  readonly parameters?: Record<string, string | number | boolean>;
   /** Parameters passed to job when referencing a job from orb */
   readonly orbParameters?: Record<string, string | number | boolean>;
+}
+
+/**
+ * Parameters are declared by name under a job, command, or executor.
+ * @see https://circleci.com/docs/2.0/reusing-config#using-the-parameters-declaration
+ */
+export interface PipelineParameter {
+  /** Used to generate documentation for your orb. */
+  readonly description?: string;
+  /** The parameter type, required. */
+  readonly type: PipelineParameterType;
+  /** The default value for the parameter. If not present, the parameter is implied to be required. */
+  readonly default?: string | number | boolean;
 }
 
 /**
@@ -159,7 +181,7 @@ export interface Job {
   /** Shell to use for execution command in all steps. Can be overridden by shell in each step */
   readonly shell?: string;
   /** Parameters for making a job explicitly configurable in a workflow. */
-  readonly parameters?: Record<string, string>;
+  readonly parameters?: Record<string, PipelineParameter>;
   /** no type support here, for syntax {@see https://circleci.com/docs/2.0/configuration-reference/#steps} */
   readonly steps?: any[];
   /** In which directory to run the steps. Will be interpreted as an absolute path. Default: `~/project` */

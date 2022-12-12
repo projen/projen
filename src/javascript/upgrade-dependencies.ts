@@ -1,4 +1,5 @@
 import { Component } from "../component";
+import { DependencyType } from "../dependencies";
 import {
   GithubCredentials,
   GitHub,
@@ -124,7 +125,7 @@ export class UpgradeDependencies extends Component {
       options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
     this.postBuildSteps = [];
     this.containerOptions = options.workflowOptions?.container;
-    project.addDevDeps("npm-check-updates@^12");
+    project.addDevDeps("npm-check-updates@^16");
 
     this.postUpgradeTask =
       project.tasks.tryFind("post-upgrade") ??
@@ -182,7 +183,12 @@ export class UpgradeDependencies extends Component {
     const ncuExcludes = [
       ...new Set(
         this.project.deps.all
-          .filter((dep) => dep.version && dep.version[0] !== "^")
+          .filter(
+            (dep) =>
+              dep.version &&
+              dep.version[0] !== "^" &&
+              dep.type !== DependencyType.OVERRIDE
+          )
           .map((dep) => dep.name)
           .concat(exclude)
       ),

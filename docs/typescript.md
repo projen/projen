@@ -67,6 +67,17 @@ you rely on in your existing TypeScript Project. This section attempts to docume
 some of the common themes to look out for when migrating an existing TypeScript
 project to Projen.
 
+## Migrating .projenrc.js to .projenrc.ts
+
+If you'd like to upgrade an existing project that was creating using a JS-based 
+projen RC file (.projenrc.js) to a TS-based projen RC file (.projenrc.ts):
+
+1. Add `projenrcTs: true` to your project.
+2. Run `npx projen`.
+3. Rename `.projenrc.js` to `.projenrc.ts`.
+4. Update `require`s to `import`s.
+5. Run `npx projen`.
+
 ### Default Directory Structure
 
 The most important is the default project structure. Projen expects all source code

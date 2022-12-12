@@ -1,5 +1,5 @@
 import { FileBase, IResolver } from "../file";
-import { PythonProject } from "./python-project";
+import { Project } from "../project";
 
 /**
  * Fields to pass in the setup() function of setup.py
@@ -66,12 +66,12 @@ export interface SetupPyOptions {
 export class SetupPy extends FileBase {
   private readonly setupConfig: any;
 
-  constructor(project: PythonProject, options: SetupPyOptions) {
+  constructor(project: Project, options: SetupPyOptions) {
     super(project, "setup.py");
 
     this.setupConfig = {
       name: project.name,
-      packages: [project.moduleName],
+      packages: options.packages,
       python_requires: ">=3.6",
       classifiers: [
         "Intended Audience :: Developers",

@@ -117,7 +117,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
   constructor(options: ReactTypeScriptProjectOptions) {
     const defaultOptions = {
       srcdir: "src",
-      eslint: false,
+      eslint: true,
       jest: false,
       tsconfig: {
         include: ["src"],
@@ -131,7 +131,7 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
           strict: true,
           forceConsistentCasingInFileNames: true,
           noFallthroughCasesInSwitch: true,
-          module: "esnext",
+          module: "commonjs",
           moduleResolution: TypeScriptModuleResolution.NODE,
           resolveJsonModule: true,
           isolatedModules: true,
@@ -153,6 +153,17 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
 
     this.srcdir = options.srcdir ?? "src";
 
+    this.eslint?.addRules({
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          devDependencies: ["**/src/**/*.test.tsx", "**/src/setupTests.ts"],
+          optionalDependencies: false,
+          peerDependencies: true,
+        },
+      ],
+    });
+
     new ReactComponent(this, { typescript: true, rewire: options.rewire });
 
     // generate sample code in `src` and `public` if these directories are empty or non-existent.
@@ -165,6 +176,12 @@ export class ReactTypeScriptProject extends TypeScriptAppProject {
         sourceDir: path.join(__dirname, "..", "..", "assets", "web", "react"),
       });
     }
+
+    this.package.addPackageResolutions(
+      // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/62300
+      "@types/express@4.17.13",
+      "@types/express-serve-static-core@4.17.30"
+    );
   }
 }
 

@@ -38,6 +38,9 @@ const project = new cdk.JsiiProject({
     "xmlbuilder2",
     "ini",
     "shx",
+    "fast-json-patch",
+    "zlib",
+    "comment-json@4.2.2",
   ],
 
   devDeps: [
@@ -50,7 +53,6 @@ const project = new cdk.JsiiProject({
     "markmac",
     "esbuild",
     "all-contributors-cli",
-    "json5",
   ],
 
   depsUpgradeOptions: {
@@ -61,7 +63,7 @@ const project = new cdk.JsiiProject({
   projenDevDependency: false, // because I am projen
   releaseToNpm: true,
   minNodeVersion: "14.0.0",
-  workflowNodeVersion: "14.17.0", // required by @typescript-eslint/eslint-plugin@5.19.0
+  workflowNodeVersion: "14.18.0", // required by eslint-import-resolver-typescript@3.5.0
 
   codeCov: true,
   prettier: true,
@@ -128,6 +130,7 @@ project.npmignore.exclude("/projen.bash");
 project.addExcludeFromCleanup("test/**"); // because snapshots include the projen marker...
 project.gitignore.include("templates/**");
 project.gitignore.exclude("/.idea");
+project.gitignore.include("test/inventory/**");
 
 // expand markdown macros in readme
 const macros = project.addTask("readme-macros");
@@ -180,7 +183,7 @@ project.devContainer.addTasks(setup);
 project.npmignore.exclude("/.devcontainer.json");
 
 project.addTask("contributors:update", {
-  exec: 'all-contributors check | grep "Missing contributors" -A 1 | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "[bot]" | xargs -n1 -I{} all-contributors add {} code',
+  exec: 'all-contributors check | grep "Missing contributors" -A 1 | tail -n1 | sed -e "s/,//g" | xargs -n1 | grep -v "\\[bot\\]" | grep -v "cdklabs-automation" | xargs -n1 -I{} all-contributors add {} code',
 });
 project.npmignore.exclude("/.all-contributorsrc");
 

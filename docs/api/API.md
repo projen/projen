@@ -15,6 +15,7 @@ Name|Description
 [IgnoreFile](#projen-ignorefile)|*No description*
 [IniFile](#projen-inifile)|Represents an INI file.
 [JsonFile](#projen-jsonfile)|Represents a JSON file.
+[JsonPatch](#projen-jsonpatch)|Utility for applying RFC-6902 JSON-Patch to a document.
 [License](#projen-license)|*No description*
 [Logger](#projen-logger)|Project-level logging utilities.
 [Makefile](#projen-makefile)|Minimal Makefile.
@@ -43,6 +44,7 @@ Name|Description
 [awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)|Manages dependencies on the AWS CDK.
 [awscdk.AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava)|Manages dependencies on the AWS CDK for Java projects.
 [awscdk.AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs)|Manages dependencies on the AWS CDK for Node.js projects.
+[awscdk.AwsCdkDepsPy](#projen-awscdk-awscdkdepspy)|Manages dependencies on the AWS CDK for Python projects.
 [awscdk.AwsCdkJavaApp](#projen-awscdk-awscdkjavaapp)|AWS CDK app in Java.
 [awscdk.AwsCdkPythonApp](#projen-awscdk-awscdkpythonapp)|AWS CDK app in Python.
 [awscdk.AwsCdkTypeScriptApp](#projen-awscdk-awscdktypescriptapp)|AWS CDK app in TypeScript.
@@ -65,6 +67,9 @@ Name|Description
 [cdk.JsiiDocgen](#projen-cdk-jsiidocgen)|Creates a markdown file based on the jsii manifest: - Adds a `docgen` script to package.json - Runs `jsii-docgen` after compilation - Enforces that markdown file is checked in.
 [cdk.JsiiProject](#projen-cdk-jsiiproject)|Multi-language jsii library project.
 [cdk8s.AutoDiscover](#projen-cdk8s-autodiscover)|Automatically discovers and creates `IntegrationTest`s from entry points found in the test tree.
+[cdk8s.Cdk8sDeps](#projen-cdk8s-cdk8sdeps)|Manages dependencies on the CDK8s.
+[cdk8s.Cdk8sDepsPy](#projen-cdk8s-cdk8sdepspy)|*No description*
+[cdk8s.Cdk8sPythonApp](#projen-cdk8s-cdk8spythonapp)|CDK8s app in Python.
 [cdk8s.Cdk8sTypeScriptApp](#projen-cdk8s-cdk8stypescriptapp)|CDK8s app in TypeScript.
 [cdk8s.ConstructLibraryCdk8s](#projen-cdk8s-constructlibrarycdk8s)|CDK8s construct library project.
 [cdk8s.IntegrationTest](#projen-cdk8s-integrationtest)|CDK8S integration test.
@@ -109,7 +114,7 @@ Name|Description
 [python.PoetryPyproject](#projen-python-poetrypyproject)|Represents configuration of a pyproject.toml file for a Poetry project.
 [python.Projenrc](#projen-python-projenrc)|Allows writing projenrc files in python.
 [python.Pytest](#projen-python-pytest)|*No description*
-[python.PytestSample](#projen-python-pytestsample)|*No description*
+[python.PytestSample](#projen-python-pytestsample)|Python test code sample.
 [python.PythonProject](#projen-python-pythonproject)|Python project.
 [python.PythonSample](#projen-python-pythonsample)|Python code sample.
 [python.RequirementsFile](#projen-python-requirementsfile)|Specifies a list of packages to be installed using pip.
@@ -127,6 +132,8 @@ Name|Description
 [vscode.DevContainer](#projen-vscode-devcontainer)|A development environment running VSCode in a container;
 [vscode.VsCode](#projen-vscode-vscode)|*No description*
 [vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)|VSCode launch configuration file (launch.json), useful for enabling in-editor debugger.
+[vscode.VsCodeRecommendedExtensions](#projen-vscode-vscoderecommendedextensions)|VS Code Workspace recommended extensions Source: https://code.visualstudio.com/docs/editor/extension-marketplace#_workspace-recommended-extensions.
+[vscode.VsCodeSettings](#projen-vscode-vscodesettings)|VS Code Workspace settings Source: https://code.visualstudio.com/docs/getstarted/settings#_workspace-settings.
 [web.NextComponent](#projen-web-nextcomponent)|*No description*
 [web.NextJsProject](#projen-web-nextjsproject)|Next.js project without TypeScript.
 [web.NextJsTypeScriptProject](#projen-web-nextjstypescriptproject)|Next.js project with TypeScript.
@@ -174,6 +181,7 @@ Name|Description
 [SampleDirOptions](#projen-samplediroptions)|SampleDir options.
 [SampleFileOptions](#projen-samplefileoptions)|Options for the SampleFile object.
 [SampleReadmeProps](#projen-samplereadmeprops)|SampleReadme Properties.
+[SnapshotOptions](#projen-snapshotoptions)|Options for the Snapshot synthesis.
 [SourceCodeOptions](#projen-sourcecodeoptions)|Options for `SourceCodeFile`.
 [TaskCommonOptions](#projen-taskcommonoptions)|*No description*
 [TaskOptions](#projen-taskoptions)|*No description*
@@ -223,6 +231,10 @@ Name|Description
 [cdk.JsiiProjectOptions](#projen-cdk-jsiiprojectoptions)|*No description*
 [cdk.JsiiPythonTarget](#projen-cdk-jsiipythontarget)|*No description*
 [cdk8s.AutoDiscoverOptions](#projen-cdk8s-autodiscoveroptions)|Options for `AutoDiscover`.
+[cdk8s.Cdk8sDepsCommonOptions](#projen-cdk8s-cdk8sdepscommonoptions)|Options for `Cdk8sDeps`.
+[cdk8s.Cdk8sDepsOptions](#projen-cdk8s-cdk8sdepsoptions)|*No description*
+[cdk8s.Cdk8sPackageNames](#projen-cdk8s-cdk8spackagenames)|*No description*
+[cdk8s.Cdk8sPythonOptions](#projen-cdk8s-cdk8spythonoptions)|Options for `Cdk8sPythonApp`.
 [cdk8s.Cdk8sTypeScriptAppOptions](#projen-cdk8s-cdk8stypescriptappoptions)|*No description*
 [cdk8s.ConstructLibraryCdk8sOptions](#projen-cdk8s-constructlibrarycdk8soptions)|*No description*
 [cdk8s.IntegrationTestAutoDiscoverOptions](#projen-cdk8s-integrationtestautodiscoveroptions)|*No description*
@@ -236,6 +248,7 @@ Name|Description
 [circleci.Machine](#projen-circleci-machine)|*No description*
 [circleci.Macos](#projen-circleci-macos)|CircleCI supports running jobs on macOS, to allow you to build, test, and deploy apps for macOS, iOS, tvOS and watchOS.
 [circleci.Matrix](#projen-circleci-matrix)|The matrix stanza allows you to run a parameterized job multiple times with different arguments.
+[circleci.PipelineParameter](#projen-circleci-pipelineparameter)|Parameters are declared by name under a job, command, or executor.
 [circleci.Run](#projen-circleci-run)|Used for invoking all command-line programs, taking either a map of configuration values, or, when called in its short-form, a string that will be used as both the command and name.
 [circleci.Schedule](#projen-circleci-schedule)|A workflow may have a schedule indicating it runs at a certain time.
 [circleci.StepRun](#projen-circleci-steprun)|Execution steps for Job.
@@ -298,6 +311,7 @@ Name|Description
 [java.JunitOptions](#projen-java-junitoptions)|Options for `Junit`.
 [java.MavenCompileOptions](#projen-java-mavencompileoptions)|Options for `MavenCompile`.
 [java.MavenPackagingOptions](#projen-java-mavenpackagingoptions)|Options for `MavenPackage`.
+[java.MavenRepository](#projen-java-mavenrepository)|Represents a Maven repository.
 [java.MavenSampleOptions](#projen-java-mavensampleoptions)|*No description*
 [java.PluginExecution](#projen-java-pluginexecution)|Plugin execution definition.
 [java.PluginOptions](#projen-java-pluginoptions)|Options for Maven plugins.
@@ -307,7 +321,7 @@ Name|Description
 [javascript.Bundle](#projen-javascript-bundle)|*No description*
 [javascript.BundlerOptions](#projen-javascript-bundleroptions)|Options for `Bundler`.
 [javascript.BundlingOptions](#projen-javascript-bundlingoptions)|Options for bundling.
-[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)|*No description*
+[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)|Options for publishing npm packages to AWS CodeArtifact.
 [javascript.CoverageThreshold](#projen-javascript-coveragethreshold)|*No description*
 [javascript.EslintOptions](#projen-javascript-eslintoptions)|*No description*
 [javascript.EslintOverride](#projen-javascript-eslintoverride)|eslint rules override.
@@ -333,6 +347,7 @@ Name|Description
 [python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)|Poetry-specific options.
 [python.ProjenrcOptions](#projen-python-projenrcoptions)|Options for `Projenrc`.
 [python.PytestOptions](#projen-python-pytestoptions)|*No description*
+[python.PytestSampleOptions](#projen-python-pytestsampleoptions)|Options for python test code sample.
 [python.PythonPackagingOptions](#projen-python-pythonpackagingoptions)|*No description*
 [python.PythonProjectOptions](#projen-python-pythonprojectoptions)|Options for `PythonProject`.
 [python.PythonSampleOptions](#projen-python-pythonsampleoptions)|Options for python sample code.
@@ -340,7 +355,7 @@ Name|Description
 [python.SetupPyOptions](#projen-python-setuppyoptions)|Fields to pass in the setup() function of setup.py.
 [python.VenvOptions](#projen-python-venvoptions)|Options for venv.
 [release.BranchOptions](#projen-release-branchoptions)|Options for a release branch.
-[release.CodeArtifactOptions](#projen-release-codeartifactoptions)|*No description*
+[release.CodeArtifactOptions](#projen-release-codeartifactoptions)|Options for publishing packages to AWS CodeArtifact.
 [release.CommonPublishOptions](#projen-release-commonpublishoptions)|Common publishing options.
 [release.GitHubReleasesPublishOptions](#projen-release-githubreleasespublishoptions)|Publishing options for GitHub releases.
 [release.GitPublishOptions](#projen-release-gitpublishoptions)|Publishing options for Git releases.
@@ -415,6 +430,7 @@ Name|Description
 [cdk.Stability](#projen-cdk-stability)|*No description*
 [circleci.JobType](#projen-circleci-jobtype)|A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed.
 [circleci.JobWhen](#projen-circleci-jobwhen)|Specify when to enable or disable the step.
+[circleci.PipelineParameterType](#projen-circleci-pipelineparametertype)|Pipeline parameter types.
 [circleci.ResourceClass](#projen-circleci-resourceclass)|The resource_class feature allows configuring CPU and RAM resources for each job.
 [github.DependabotRegistryType](#projen-github-dependabotregistrytype)|Each configuration type requires you to provide particular settings.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
@@ -431,6 +447,7 @@ Name|Description
 [gitlab.WorkflowWhen](#projen-gitlab-workflowwhen)|Describes the conditions for when to run the job.
 [javascript.ArrowParens](#projen-javascript-arrowparens)|*No description*
 [javascript.AutoRelease](#projen-javascript-autorelease)|Automatic bump modes.
+[javascript.CodeArtifactAuthProvider](#projen-javascript-codeartifactauthprovider)|Options for authorizing requests to a AWS CodeArtifact npm repository.
 [javascript.EmbeddedLanguageFormatting](#projen-javascript-embeddedlanguageformatting)|*No description*
 [javascript.EndOfLine](#projen-javascript-endofline)|*No description*
 [javascript.HTMLWhitespaceSensitivity](#projen-javascript-htmlwhitespacesensitivity)|*No description*
@@ -441,6 +458,9 @@ Name|Description
 [javascript.TrailingComma](#projen-javascript-trailingcomma)|*No description*
 [javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)|Determines how modules get resolved.
+[javascript.UpdateSnapshot](#projen-javascript-updatesnapshot)|*No description*
+[release.CodeArtifactAuthProvider](#projen-release-codeartifactauthprovider)|Options for authorizing requests to a AWS CodeArtifact npm repository.
+[vscode.Console](#projen-vscode-console)|Controls where to launch the debug target Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 [vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)|Controls the visibility of the VSCode Debug Console panel during a debugging session Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 
 
@@ -1315,8 +1335,17 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **readonly** (<code>boolean</code>)  Whether the generated file should be readonly. __*Default*__: true
   * **obj** (<code>any</code>)  The object that will be serialized. __*Default*__: {} an empty object (use `file.obj` to mutate).
   * **omitEmpty** (<code>boolean</code>)  Omits empty objects and arrays. __*Default*__: false
+  * **allowComments** (<code>boolean</code>)  Allow the use of comments in this file. __*Default*__: false for .json files, true for .json5 and .jsonc files
   * **newline** (<code>boolean</code>)  Adds a newline at the end of the file. __*Default*__: true
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**supportsComments**🔹 | <code>boolean</code> | <span></span>
 
 ### Methods
 
@@ -1333,6 +1362,133 @@ protected synthesizeContent(resolver: IResolver): string
 
 __Returns__:
 * <code>string</code>
+
+
+
+## class JsonPatch 🔹 <a id="projen-jsonpatch"></a>
+
+Utility for applying RFC-6902 JSON-Patch to a document.
+
+Use the the `JsonPatch.apply(doc, ...ops)` function to apply a set of
+operations to a JSON document and return the result.
+
+Operations can be created using the factory methods `JsonPatch.add()`,
+`JsonPatch.remove()`, etc.
+
+
+### Methods
+
+
+#### *static* add(path, value)🔹 <a id="projen-jsonpatch-add"></a>
+
+Adds a value to an object or inserts it into an array.
+
+In the case of an
+array, the value is inserted before the given index. The - character can be
+used instead of an index to insert at the end of an array.
+
+```ts
+static add(path: string, value: any): JsonPatch
+```
+
+* **path** (<code>string</code>)  *No description*
+* **value** (<code>any</code>)  *No description*
+
+__Returns__:
+* <code>[JsonPatch](#projen-jsonpatch)</code>
+
+#### *static* apply(document, ...ops)🔹 <a id="projen-jsonpatch-apply"></a>
+
+Applies a set of JSON-Patch (RFC-6902) operations to `document` and returns the result.
+
+```ts
+static apply(document: any, ...ops: JsonPatch[]): any
+```
+
+* **document** (<code>any</code>)  The document to patch.
+* **ops** (<code>[JsonPatch](#projen-jsonpatch)</code>)  The operations to apply.
+
+__Returns__:
+* <code>any</code>
+
+#### *static* copy(from, path)🔹 <a id="projen-jsonpatch-copy"></a>
+
+Copies a value from one location to another within the JSON document.
+
+Both
+from and path are JSON Pointers.
+
+```ts
+static copy(from: string, path: string): JsonPatch
+```
+
+* **from** (<code>string</code>)  *No description*
+* **path** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[JsonPatch](#projen-jsonpatch)</code>
+
+#### *static* move(from, path)🔹 <a id="projen-jsonpatch-move"></a>
+
+Moves a value from one location to the other.
+
+Both from and path are JSON Pointers.
+
+```ts
+static move(from: string, path: string): JsonPatch
+```
+
+* **from** (<code>string</code>)  *No description*
+* **path** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[JsonPatch](#projen-jsonpatch)</code>
+
+#### *static* remove(path)🔹 <a id="projen-jsonpatch-remove"></a>
+
+Removes a value from an object or array.
+
+```ts
+static remove(path: string): JsonPatch
+```
+
+* **path** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>[JsonPatch](#projen-jsonpatch)</code>
+
+#### *static* replace(path, value)🔹 <a id="projen-jsonpatch-replace"></a>
+
+Replaces a value.
+
+Equivalent to a “remove” followed by an “add”.
+
+```ts
+static replace(path: string, value: any): JsonPatch
+```
+
+* **path** (<code>string</code>)  *No description*
+* **value** (<code>any</code>)  *No description*
+
+__Returns__:
+* <code>[JsonPatch](#projen-jsonpatch)</code>
+
+#### *static* test(path, value)🔹 <a id="projen-jsonpatch-test"></a>
+
+Tests that the specified value is set in the document.
+
+If the test fails,
+then the patch as a whole should not apply.
+
+```ts
+static test(path: string, value: any): JsonPatch
+```
+
+* **path** (<code>string</code>)  *No description*
+* **value** (<code>any</code>)  *No description*
+
+__Returns__:
+* <code>[JsonPatch](#projen-jsonpatch)</code>
 
 
 
@@ -1735,6 +1891,43 @@ addToArray(path: string, ...values: any[]): void
 
 
 
+#### patch(...patches)🔹 <a id="projen-objectfile-patch"></a>
+
+Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datatracker.ietf.org/doc/html/rfc6902 for more information.
+
+For example, with the following object file
+```json
+"compilerOptions": {
+   "exclude": ["node_modules"],
+   "lib": ["es2019"]
+   ...
+}
+...
+```
+
+```typescript
+project.tsconfig.file.patch(JsonPatch.add("/compilerOptions/exclude/-", "coverage"));
+project.tsconfig.file.patch(JsonPatch.replace("/compilerOptions/lib", ["dom", "dom.iterable", "esnext"]));
+```
+would result in the following object file
+```json
+"compilerOptions": {
+   "exclude": ["node_modules", "coverage"],
+   "lib": ["dom", "dom.iterable", "esnext"]
+   ...
+}
+...
+```
+
+```ts
+patch(...patches: JsonPatch[]): void
+```
+
+* **patches** (<code>[JsonPatch](#projen-jsonpatch)</code>)  - The patch operations to apply.
+
+
+
+
 #### protected synthesizeContent(resolver)🔹 <a id="projen-objectfile-synthesizecontent"></a>
 
 Implemented by derived classes and returns the contents of the file to emit.
@@ -1766,6 +1959,7 @@ new Project(options: ProjectOptions)
 
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -1783,6 +1977,7 @@ new Project(options: ProjectOptions)
 Name | Type | Description 
 -----|------|-------------
 **buildTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
+**commitGenerated**🔹 | <code>boolean</code> | Whether to commit the managed files by default.
 **compileTask**🔹 | <code>[Task](#projen-task)</code> | <span></span>
 **components**🔹 | <code>Array<[Component](#projen-component)></code> | Returns all the components within this project.
 **deps**🔹 | <code>[Dependencies](#projen-dependencies)</code> | Project dependencies.
@@ -1873,6 +2068,7 @@ addTask(name: string, props?: TaskOptions): Task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+  * **receiveArgs** (<code>boolean</code>)  Should the provided `exec` shell command receive args passed to the task. __*Default*__: false
   * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
 
 __Returns__:
@@ -2471,6 +2667,7 @@ new Task(name: string, props?: TaskOptions)
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+  * **receiveArgs** (<code>boolean</code>)  Should the provided `exec` shell command receive args passed to the task. __*Default*__: false
   * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
 
 
@@ -2532,6 +2729,7 @@ exec(command: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2560,6 +2758,7 @@ prepend(shell: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2576,6 +2775,7 @@ prependExec(shell: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2592,6 +2792,7 @@ prependSay(message: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2608,6 +2809,7 @@ prependSpawn(subtask: Task, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2624,6 +2826,7 @@ reset(command?: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2640,6 +2843,7 @@ say(message: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2656,6 +2860,7 @@ spawn(subtask: Task, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2693,16 +2898,17 @@ Name | Type | Description
 ### Methods
 
 
-#### runTask(name, parents?)🔹 <a id="projen-taskruntime-runtask"></a>
+#### runTask(name, parents?, args?)🔹 <a id="projen-taskruntime-runtask"></a>
 
 Runs the task.
 
 ```ts
-runTask(name: string, parents?: Array<string>): void
+runTask(name: string, parents?: Array<string>, args?: Array<string &#124; number>): void
 ```
 
 * **name** (<code>string</code>)  The task name.
 * **parents** (<code>Array<string></code>)  *No description*
+* **args** (<code>Array<string &#124; number></code>)  *No description*
 
 
 
@@ -2785,6 +2991,7 @@ addTask(name: string, options?: TaskOptions): Task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+  * **receiveArgs** (<code>boolean</code>)  Should the provided `exec` shell command receive args passed to the task. __*Default*__: false
   * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
 
 __Returns__:
@@ -2840,15 +3047,17 @@ A Testing static class with a .synth helper for getting a snapshots of construct
 ### Methods
 
 
-#### *static* synth(project)🔹 <a id="projen-testing-synth"></a>
+#### *static* synth(project, options?)🔹 <a id="projen-testing-synth"></a>
 
 Produces a simple JS object that represents the contents of the projects with field names being file paths.
 
 ```ts
-static synth(project: Project): Map<string, any>
+static synth(project: Project, options?: SnapshotOptions): Map<string, any>
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  the project to produce a snapshot for.
+* **options** (<code>[SnapshotOptions](#projen-snapshotoptions)</code>)  *No description*
+  * **parseJson** (<code>boolean</code>)  Parse .json files as a JS object for improved inspection. This will fail if the contents are invalid JSON. __*Default*__: true parse .json files into an object
 
 __Returns__:
 * <code>Map<string, any></code>
@@ -3153,6 +3362,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 
 * **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -3181,7 +3391,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -3214,6 +3424,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -3224,7 +3435,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -3237,7 +3448,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -3287,6 +3498,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **repositoryUrl** (<code>string</code>)  Git repository URL. 
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: ".compatignore"
+  * **compressAssembly** (<code>boolean</code>)  Emit a compressed version of the assembly. __*Default*__: false
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
@@ -3362,7 +3574,7 @@ Manages dependencies on the AWS CDK.
 __Submodule__: awscdk
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [awscdk.AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava), [awscdk.AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs)
+__Implemented by__: [awscdk.AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava), [awscdk.AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs), [awscdk.AwsCdkDepsPy](#projen-awscdk-awscdkdepspy)
 
 ### Initializer
 
@@ -3554,6 +3766,53 @@ __Returns__:
 
 
 
+## class AwsCdkDepsPy 🔹 <a id="projen-awscdk-awscdkdepspy"></a>
+
+Manages dependencies on the AWS CDK for Python projects.
+
+__Submodule__: awscdk
+
+__Extends__: [awscdk.AwsCdkDeps](#projen-awscdk-awscdkdeps)
+
+### Initializer
+
+
+
+
+```ts
+new awscdk.AwsCdkDepsPy(project: Project, options: AwsCdkDepsOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[awscdk.AwsCdkDepsOptions](#projen-awscdk-awscdkdepsoptions)</code>)  *No description*
+  * **cdkVersion** (<code>string</code>)  Minimum version of the AWS CDK to depend on. 
+  * **cdkAssert** (<code>boolean</code>)  Warning: NodeJS only. __*Default*__: will be included by default for AWS CDK >= 1.0.0 < 2.0.0
+  * **cdkAssertions** (<code>boolean</code>)  Install the assertions library? __*Default*__: will be included by default for AWS CDK >= 1.111.0 < 2.0.0
+  * **cdkDependencies** (<code>Array<string></code>)  Which AWS CDKv1 modules this project requires. __*Optional*__
+  * **cdkDependenciesAsDeps** (<code>boolean</code>)  If this is enabled (default), all modules declared in `cdkDependencies` will be also added as normal `dependencies` (as well as `peerDependencies`). __*Default*__: true
+  * **cdkTestDependencies** (<code>Array<string></code>)  AWS CDK modules required for testing. __*Optional*__
+  * **cdkVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK. __*Optional*__
+  * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
+  * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime AWS CDK and `constructs` modules. 
+
+
+### Methods
+
+
+#### protected packageNames()🔹 <a id="projen-awscdk-awscdkdepspy-packagenames"></a>
+
+Return a configuration object with information about package naming in various languages.
+
+```ts
+protected packageNames(): AwsCdkPackageNames
+```
+
+
+__Returns__:
+* <code>[awscdk.AwsCdkPackageNames](#projen-awscdk-awscdkpackagenames)</code>
+
+
+
 ## class AwsCdkJavaApp 🔹 <a id="projen-awscdk-awscdkjavaapp"></a>
 
 AWS CDK app in Java.
@@ -3573,6 +3832,7 @@ new awscdk.AwsCdkJavaApp(options: AwsCdkJavaAppOptions)
 
 * **options** (<code>[awscdk.AwsCdkJavaAppOptions](#projen-awscdk-awscdkjavaappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -3683,6 +3943,7 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
 
 * **options** (<code>[awscdk.AwsCdkPythonAppOptions](#projen-awscdk-awscdkpythonappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -3715,6 +3976,7 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
   * **description** (<code>string</code>)  A short description of the package. __*Optional*__
   * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
   * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **packageName** (<code>string</code>)  Package name. __*Optional*__
   * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
   * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
   * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
@@ -3785,6 +4047,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 
 * **options** (<code>[awscdk.AwsCdkTypeScriptAppOptions](#projen-awscdk-awscdktypescriptappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -3813,7 +4076,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -3846,6 +4109,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -3856,7 +4120,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -3869,7 +4133,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -4092,6 +4356,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 
 * **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -4120,7 +4385,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -4153,6 +4418,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -4163,7 +4429,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -4176,7 +4442,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -4226,6 +4492,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **repositoryUrl** (<code>string</code>)  Git repository URL. 
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: ".compatignore"
+  * **compressAssembly** (<code>boolean</code>)  Emit a compressed version of the assembly. __*Default*__: false
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
@@ -4478,6 +4745,19 @@ The runtime for the AWS Lambda function.
 __Submodule__: awscdk
 
 
+### Initializer
+
+
+
+
+```ts
+new awscdk.LambdaRuntime(functionRuntime: string, esbuildTarget: string)
+```
+
+* **functionRuntime** (<code>string</code>)  The Node.js runtime to use.
+* **esbuildTarget** (<code>string</code>)  The esbuild setting to use.
+
+
 
 ### Properties
 
@@ -4486,11 +4766,12 @@ Name | Type | Description
 -----|------|-------------
 **esbuildPlatform**🔹 | <code>string</code> | <span></span>
 **esbuildTarget**🔹 | <code>string</code> | The esbuild setting to use.
-**functionRuntime**🔹 | <code>string</code> | The aws-lambda.Runtime member name to use.
-*static* **NODEJS_10_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 10.x.
+**functionRuntime**🔹 | <code>string</code> | The Node.js runtime to use.
+*static* **NODEJS_10_X**⚠️ | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 10.x.
 *static* **NODEJS_12_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 12.x.
 *static* **NODEJS_14_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 14.x.
 *static* **NODEJS_16_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 16.x.
+*static* **NODEJS_18_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 18.x.
 
 
 
@@ -4551,17 +4832,17 @@ addPostBuildJob(id: string, job: Job): void
 * **id** (<code>string</code>)  The id of the new job.
 * **job** (<code>[github.workflows.Job](#projen-github-workflows-job)</code>)  The job specification.
   * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  You can modify the default permissions granted to the GITHUB_TOKEN, adding or removing access as required, so that you only allow the minimum required access. 
+  * **concurrency** (<code>any</code>)  Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. __*Optional*__
+  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
+  * **name** (<code>string</code>)  The name of the job displayed on GitHub. __*Optional*__
+  * **needs** (<code>Array<string></code>)  Identifies any jobs that must complete successfully before this job will run. __*Optional*__
   * **runsOn** (<code>Array<string></code>)  The type of machine to run the job on. 
   * **steps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A job contains a sequence of tasks called steps. 
-  * **concurrency** (<code>any</code>)  Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. __*Optional*__
   * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  A container to run any steps in a job that don't already specify a container. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a workflow run from failing when a job fails. __*Optional*__
   * **defaults** (<code>[github.workflows.JobDefaults](#projen-github-workflows-jobdefaults)</code>)  A map of default settings that will apply to all steps in the job. __*Optional*__
   * **env** (<code>Map<string, string></code>)  A map of environment variables that are available to all steps in the job. __*Optional*__
   * **environment** (<code>any</code>)  The environment that the job references. __*Optional*__
-  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
-  * **name** (<code>string</code>)  The name of the job displayed on GitHub. __*Optional*__
-  * **needs** (<code>Array<string></code>)  Identifies any jobs that must complete successfully before this job will run. __*Optional*__
   * **outputs** (<code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code>)  A map of outputs for a job. __*Optional*__
   * **services** (<code>Map<string, [github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)></code>)  Used to host service containers for a job in a workflow. __*Optional*__
   * **strategy** (<code>[github.workflows.JobStrategy](#projen-github-workflows-jobstrategy)</code>)  A strategy creates a build matrix for your jobs. __*Optional*__
@@ -4633,6 +4914,7 @@ addPostBuildSteps(...steps: JobStep[]): void
   * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
   * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
   * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
+  * **workingDirectory** (<code>string</code>)  Specifies a working directory for a step. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
   * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
 
@@ -4695,6 +4977,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
 
 * **options** (<code>[cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -4723,7 +5006,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -4756,6 +5039,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -4766,7 +5050,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -4779,7 +5063,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -4829,6 +5113,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **repositoryUrl** (<code>string</code>)  Git repository URL. 
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: ".compatignore"
+  * **compressAssembly** (<code>boolean</code>)  Emit a compressed version of the assembly. __*Default*__: false
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
@@ -4949,6 +5234,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
 
 * **options** (<code>[cdk.JsiiProjectOptions](#projen-cdk-jsiiprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -4977,7 +5263,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -5010,6 +5296,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -5020,7 +5307,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -5033,7 +5320,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -5083,6 +5370,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **repositoryUrl** (<code>string</code>)  Git repository URL. 
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: ".compatignore"
+  * **compressAssembly** (<code>boolean</code>)  Emit a compressed version of the assembly. __*Default*__: false
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
@@ -5130,6 +5418,213 @@ new cdk8s.AutoDiscover(project: Project, options: AutoDiscoverOptions)
 
 
 
+## class Cdk8sDeps 🔹 <a id="projen-cdk8s-cdk8sdeps"></a>
+
+Manages dependencies on the CDK8s.
+
+__Submodule__: cdk8s
+
+__Extends__: [Component](#projen-component)
+__Implemented by__: [cdk8s.Cdk8sDepsPy](#projen-cdk8s-cdk8sdepspy)
+
+### Initializer
+
+
+
+
+```ts
+new cdk8s.Cdk8sDeps(project: Project, options: Cdk8sDepsOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[cdk8s.Cdk8sDepsOptions](#projen-cdk8s-cdk8sdepsoptions)</code>)  *No description*
+  * **cdk8sVersion** (<code>string</code>)  Minumum version of the cdk8s to depend on. 
+  * **cdk8sCliVersion** (<code>string</code>)  Minumum version of the cdk8s-cli to depend on. __*Default*__: "2.0.28"
+  * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-cli. __*Default*__: false
+  * **cdk8sPlus** (<code>boolean</code>)  Include cdk8s-plus. __*Default*__: true
+  * **cdk8sPlusVersion** (<code>string</code>)  Minumum version of the cdk8s-plus-XX to depend on. __*Default*__: "2.0.0-rc.26"
+  * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
+  * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s. __*Default*__: false
+  * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: "10.1.42"
+  * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
+  * **k8sMinorVersion** (<code>number</code>)  The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0. __*Default*__: 22
+  * **cdk8sCliDependency** (<code>boolean</code>)  Add cdk8s-cli only to Node projects. 
+  * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime CDK8s and `constructs` modules. 
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdk8sMajorVersion**🔹 | <code>number</code> | The major version of the CDK8s (e.g. 1, 2, ...).
+**cdk8sMinimumVersion**🔹 | <code>string</code> | The minimum version of the CDK8s (e.g. `2.0.0`).
+**cdk8sVersion**🔹 | <code>string</code> | The dependency requirement for CDK8s.
+
+### Methods
+
+
+#### protected packageNames()🔹 <a id="projen-cdk8s-cdk8sdeps-packagenames"></a>
+
+Return a configuration object with information about package naming in various languages.
+
+```ts
+protected packageNames(): Cdk8sPackageNames
+```
+
+
+__Returns__:
+* <code>[cdk8s.Cdk8sPackageNames](#projen-cdk8s-cdk8spackagenames)</code>
+
+
+
+## class Cdk8sDepsPy 🔹 <a id="projen-cdk8s-cdk8sdepspy"></a>
+
+
+
+__Submodule__: cdk8s
+
+__Extends__: [cdk8s.Cdk8sDeps](#projen-cdk8s-cdk8sdeps)
+
+### Initializer
+
+
+
+
+```ts
+new cdk8s.Cdk8sDepsPy(project: Project, options: Cdk8sDepsOptions)
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[cdk8s.Cdk8sDepsOptions](#projen-cdk8s-cdk8sdepsoptions)</code>)  *No description*
+  * **cdk8sVersion** (<code>string</code>)  Minumum version of the cdk8s to depend on. 
+  * **cdk8sCliVersion** (<code>string</code>)  Minumum version of the cdk8s-cli to depend on. __*Default*__: "2.0.28"
+  * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-cli. __*Default*__: false
+  * **cdk8sPlus** (<code>boolean</code>)  Include cdk8s-plus. __*Default*__: true
+  * **cdk8sPlusVersion** (<code>string</code>)  Minumum version of the cdk8s-plus-XX to depend on. __*Default*__: "2.0.0-rc.26"
+  * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
+  * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s. __*Default*__: false
+  * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: "10.1.42"
+  * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
+  * **k8sMinorVersion** (<code>number</code>)  The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0. __*Default*__: 22
+  * **cdk8sCliDependency** (<code>boolean</code>)  Add cdk8s-cli only to Node projects. 
+  * **dependencyType** (<code>[DependencyType](#projen-dependencytype)</code>)  The type of dependency to use for runtime CDK8s and `constructs` modules. 
+
+
+### Methods
+
+
+#### protected packageNames()🔹 <a id="projen-cdk8s-cdk8sdepspy-packagenames"></a>
+
+Return a configuration object with information about package naming in various languages.
+
+```ts
+protected packageNames(): Cdk8sPackageNames
+```
+
+
+__Returns__:
+* <code>[cdk8s.Cdk8sPackageNames](#projen-cdk8s-cdk8spackagenames)</code>
+
+
+
+## class Cdk8sPythonApp 🔹 <a id="projen-cdk8s-cdk8spythonapp"></a>
+
+CDK8s app in Python.
+
+__Submodule__: cdk8s
+
+__Extends__: [python.PythonProject](#projen-python-pythonproject)
+
+### Initializer
+
+
+
+
+```ts
+new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
+```
+
+* **options** (<code>[cdk8s.Cdk8sPythonOptions](#projen-cdk8s-cdk8spythonoptions)</code>)  *No description*
+  * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
+  * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
+  * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
+  * **projenCommand** (<code>string</code>)  The shell command to use in order to run the projen CLI. __*Default*__: "npx projen"
+  * **projenrcJson** (<code>boolean</code>)  Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation. __*Default*__: false
+  * **projenrcJsonOptions** (<code>[ProjenrcOptions](#projen-projenrcoptions)</code>)  Options for .projenrc.json. __*Default*__: default options
+  * **renovatebot** (<code>boolean</code>)  Use renovatebot to handle dependency upgrades. __*Default*__: false
+  * **renovatebotOptions** (<code>[RenovatebotOptions](#projen-renovatebotoptions)</code>)  Options for renovatebot. __*Default*__: default options
+  * **autoApproveOptions** (<code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code>)  Enable and configure the 'auto approve' workflow. __*Default*__: auto approve is disabled
+  * **autoMerge** (<code>boolean</code>)  Enable automatic merging on GitHub. __*Default*__: true
+  * **autoMergeOptions** (<code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code>)  Configure options for automatic merging on GitHub. __*Default*__: see defaults in `AutoMergeOptions`
+  * **clobber** (<code>boolean</code>)  Add a `clobber` task which resets the repo to origin. __*Default*__: true
+  * **devContainer** (<code>boolean</code>)  Add a VSCode development environment (used for GitHub Codespaces). __*Default*__: false
+  * **github** (<code>boolean</code>)  Enable GitHub integration. __*Default*__: true
+  * **githubOptions** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  Options for GitHub integration. __*Default*__: see GitHubOptions
+  * **gitpod** (<code>boolean</code>)  Add a Gitpod development environment. __*Default*__: false
+  * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
+  * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for mergify. __*Default*__: default options
+  * **projectType** (<code>[ProjectType](#projen-projecttype)</code>)  Which type of project this is (library/app). __*Default*__: ProjectType.UNKNOWN
+  * **projenCredentials** (<code>[github.GithubCredentials](#projen-github-githubcredentials)</code>)  Choose a method of providing GitHub API access for projen workflows. __*Default*__: use a personal access token named PROJEN_GITHUB_TOKEN
+  * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
+  * **readme** (<code>[SampleReadmeProps](#projen-samplereadmeprops)</code>)  The README setup. __*Default*__: { filename: 'README.md', contents: '# replace this' }
+  * **stale** (<code>boolean</code>)  Auto-close of stale issues and pull request. __*Default*__: false
+  * **staleOptions** (<code>[github.StaleOptions](#projen-github-staleoptions)</code>)  Auto-close stale issues and pull requests. __*Default*__: see defaults in `StaleOptions`
+  * **vscode** (<code>boolean</code>)  Enable VSCode integration. __*Default*__: true
+  * **authorEmail** (<code>string</code>)  Author's e-mail. 
+  * **authorName** (<code>string</code>)  Author's name. 
+  * **version** (<code>string</code>)  Version of the package. 
+  * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
+  * **description** (<code>string</code>)  A short description of the package. __*Optional*__
+  * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
+  * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **packageName** (<code>string</code>)  Package name. __*Optional*__
+  * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
+  * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
+  * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
+  * **deps** (<code>Array<string></code>)  List of runtime dependencies for this project. __*Default*__: []
+  * **devDeps** (<code>Array<string></code>)  List of dev dependencies for this project. __*Default*__: []
+  * **pip** (<code>boolean</code>)  Use pip with a requirements.txt file to track project dependencies. __*Default*__: true
+  * **poetry** (<code>boolean</code>)  Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing. __*Default*__: false
+  * **projenrcJs** (<code>boolean</code>)  Use projenrc in javascript. __*Default*__: false
+  * **projenrcJsOptions** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  Options related to projenrc in JavaScript. __*Default*__: default options
+  * **projenrcPython** (<code>boolean</code>)  Use projenrc in Python. __*Default*__: true
+  * **projenrcPythonOptions** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  Options related to projenrc in python. __*Default*__: default options
+  * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
+  * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
+  * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
+  * **setuptools** (<code>boolean</code>)  Use setuptools with a setup.py script for packaging and publishing. __*Default*__: true if the project type is library
+  * **venv** (<code>boolean</code>)  Use venv to manage a virtual environment for installing dependencies inside. __*Default*__: true
+  * **venvOptions** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  Venv options. __*Default*__: defaults
+  * **cdk8sVersion** (<code>string</code>)  Minumum version of the cdk8s to depend on. 
+  * **cdk8sCliVersion** (<code>string</code>)  Minumum version of the cdk8s-cli to depend on. __*Default*__: "2.0.28"
+  * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-cli. __*Default*__: false
+  * **cdk8sPlus** (<code>boolean</code>)  Include cdk8s-plus. __*Default*__: true
+  * **cdk8sPlusVersion** (<code>string</code>)  Minumum version of the cdk8s-plus-XX to depend on. __*Default*__: "2.0.0-rc.26"
+  * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
+  * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s. __*Default*__: false
+  * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: "10.1.42"
+  * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
+  * **k8sMinorVersion** (<code>number</code>)  The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0. __*Default*__: 22
+  * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint. __*Default*__: "app.py"
+  * **cdk8sImports** (<code>Array<string></code>)  Import additional specs. __*Default*__: no additional specs imported
+  * **k8sSpecVersion** (<code>string</code>)  Import a specific Kubernetes spec version. __*Default*__: Use the cdk8s default
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**appEntrypoint**🔹 | <code>string</code> | The CDK8s app entrypoint.
+**cdk8sDeps**🔹 | <code>[cdk8s.Cdk8sDeps](#projen-cdk8s-cdk8sdeps)</code> | <span></span>
+
+
+
 ## class Cdk8sTypeScriptApp 🔹 <a id="projen-cdk8s-cdk8stypescriptapp"></a>
 
 CDK8s app in TypeScript.
@@ -5149,6 +5644,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 
 * **options** (<code>[cdk8s.Cdk8sTypeScriptAppOptions](#projen-cdk8s-cdk8stypescriptappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -5177,7 +5673,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -5210,6 +5706,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -5220,7 +5717,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -5233,7 +5730,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -5278,15 +5775,18 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **tsconfigDev** (<code>[javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)</code>)  Custom tsconfig options for the development tsconfig.json file (used for testing). __*Default*__: use the production tsconfig options
   * **tsconfigDevFile** (<code>string</code>)  The name of the development tsconfig.json file. __*Default*__: "tsconfig.dev.json"
   * **typescriptVersion** (<code>string</code>)  TypeScript version to use. __*Default*__: "latest"
-  * **cdk8sVersion** (<code>string</code>)  Minimum target version this library is tested against. 
-  * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
-  * **cdk8sCliVersion** (<code>string</code>)  cdk8s-cli version. __*Default*__: "cdk8sVersion"
-  * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s-cli. __*Default*__: false
-  * **cdk8sImports** (<code>Array<string></code>)  Import additional specs. __*Default*__: no additional specs imported
+  * **cdk8sVersion** (<code>string</code>)  Minumum version of the cdk8s to depend on. 
+  * **cdk8sCliVersion** (<code>string</code>)  Minumum version of the cdk8s-cli to depend on. __*Default*__: "2.0.28"
+  * **cdk8sCliVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-cli. __*Default*__: false
+  * **cdk8sPlus** (<code>boolean</code>)  Include cdk8s-plus. __*Default*__: true
+  * **cdk8sPlusVersion** (<code>string</code>)  Minumum version of the cdk8s-plus-XX to depend on. __*Default*__: "2.0.0-rc.26"
   * **cdk8sPlusVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s-plus-17. __*Default*__: false
-  * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for CDK8s. __*Default*__: false
-  * **constructsVersion** (<code>string</code>)  constructs verion. __*Default*__: "3.2.34"
+  * **cdk8sVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for cdk8s. __*Default*__: false
+  * **constructsVersion** (<code>string</code>)  Minimum version of the `constructs` library to depend on. __*Default*__: "10.1.42"
   * **constructsVersionPinning** (<code>boolean</code>)  Use pinned version instead of caret version for constructs. __*Default*__: false
+  * **k8sMinorVersion** (<code>number</code>)  The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0. __*Default*__: 22
+  * **appEntrypoint** (<code>string</code>)  The CDK8s app's entrypoint (relative to the source directory, which is "src" by default). __*Default*__: "main.ts"
+  * **cdk8sImports** (<code>Array<string></code>)  Import additional specs. __*Default*__: no additional specs imported
   * **integrationTestAutoDiscover** (<code>boolean</code>)  Automatically adds an `cdk8s.IntegrationTest` for each `.integ.ts` app in your test directory. If this is disabled, you can manually add an `cdk8s.AutoDiscover` component to your project. __*Default*__: true
   * **k8sSpecVersion** (<code>string</code>)  Import a specific Kubernetes spec version. __*Default*__: Use the cdk8s default
 
@@ -5298,9 +5798,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 Name | Type | Description 
 -----|------|-------------
 **appEntrypoint**🔹 | <code>string</code> | The CDK8s app entrypoint.
-**cdk8sCliVersion**🔹 | <code>string</code> | The cdk8s-cli version this app is using.
-**cdk8sVersion**🔹 | <code>string</code> | The CDK8s version this app is using.
-**constructsVersion**🔹 | <code>string</code> | The constructs version this app is using.
+**cdk8sDeps**🔹 | <code>[cdk8s.Cdk8sDeps](#projen-cdk8s-cdk8sdeps)</code> | <span></span>
 
 
 
@@ -5327,6 +5825,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 
 * **options** (<code>[cdk8s.ConstructLibraryCdk8sOptions](#projen-cdk8s-constructlibrarycdk8soptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -5355,7 +5854,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -5388,6 +5887,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -5398,7 +5898,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -5411,7 +5911,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -5461,6 +5961,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **repositoryUrl** (<code>string</code>)  Git repository URL. 
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: ".compatignore"
+  * **compressAssembly** (<code>boolean</code>)  Emit a compressed version of the assembly. __*Default*__: false
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
@@ -5564,6 +6065,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
 
 * **options** (<code>[cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -5592,7 +6094,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -5625,6 +6127,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -5635,7 +6138,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -5648,7 +6151,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -5698,6 +6201,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **repositoryUrl** (<code>string</code>)  Git repository URL. 
   * **compat** (<code>boolean</code>)  Automatically run API compatibility test against the latest version published to npm after compilation. __*Default*__: false
   * **compatIgnore** (<code>string</code>)  Name of the ignore file for API compatibility tests. __*Default*__: ".compatignore"
+  * **compressAssembly** (<code>boolean</code>)  Emit a compressed version of the assembly. __*Default*__: false
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
@@ -6076,6 +6580,7 @@ new github.GitHubProject(options: GitHubProjectOptions)
 
 * **options** (<code>[github.GitHubProjectOptions](#projen-github-githubprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -6240,28 +6745,11 @@ Name | Type | Description
 Adds a single job to the workflow.
 
 ```ts
-addJob(id: string, job: Job): void
+addJob(id: string, job: JobCallingReusableWorkflow &#124; Job): void
 ```
 
 * **id** (<code>string</code>)  The job name (unique within the workflow).
-* **job** (<code>[github.workflows.Job](#projen-github-workflows-job)</code>)  The job specification.
-  * **permissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  You can modify the default permissions granted to the GITHUB_TOKEN, adding or removing access as required, so that you only allow the minimum required access. 
-  * **runsOn** (<code>Array<string></code>)  The type of machine to run the job on. 
-  * **steps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A job contains a sequence of tasks called steps. 
-  * **concurrency** (<code>any</code>)  Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time. __*Optional*__
-  * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  A container to run any steps in a job that don't already specify a container. __*Optional*__
-  * **continueOnError** (<code>boolean</code>)  Prevents a workflow run from failing when a job fails. __*Optional*__
-  * **defaults** (<code>[github.workflows.JobDefaults](#projen-github-workflows-jobdefaults)</code>)  A map of default settings that will apply to all steps in the job. __*Optional*__
-  * **env** (<code>Map<string, string></code>)  A map of environment variables that are available to all steps in the job. __*Optional*__
-  * **environment** (<code>any</code>)  The environment that the job references. __*Optional*__
-  * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
-  * **name** (<code>string</code>)  The name of the job displayed on GitHub. __*Optional*__
-  * **needs** (<code>Array<string></code>)  Identifies any jobs that must complete successfully before this job will run. __*Optional*__
-  * **outputs** (<code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code>)  A map of outputs for a job. __*Optional*__
-  * **services** (<code>Map<string, [github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)></code>)  Used to host service containers for a job in a workflow. __*Optional*__
-  * **strategy** (<code>[github.workflows.JobStrategy](#projen-github-workflows-jobstrategy)</code>)  A strategy creates a build matrix for your jobs. __*Optional*__
-  * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to let a job run before GitHub automatically cancels it. __*Default*__: 360
-  * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools required for this job. __*Optional*__
+* **job** (<code>[github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow) &#124; [github.workflows.Job](#projen-github-workflows-job)</code>)  The job specification.
 
 
 
@@ -6271,10 +6759,10 @@ addJob(id: string, job: Job): void
 Add jobs to the workflow.
 
 ```ts
-addJobs(jobs: Map<string, Job>): void
+addJobs(jobs: Map<string, JobCallingReusableWorkflow &#124; Job>): void
 ```
 
-* **jobs** (<code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>)  Jobs to add.
+* **jobs** (<code>Map<string, [github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow) &#124; [github.workflows.Job](#projen-github-workflows-job)></code>)  Jobs to add.
 
 
 
@@ -6770,6 +7258,7 @@ new java.JavaProject(options: JavaProjectOptions)
 
 * **options** (<code>[java.JavaProjectOptions](#projen-java-javaprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -7076,6 +7565,23 @@ addProperty(key: string, value: string): void
 
 
 
+#### addRepository(repository)🔹 <a id="projen-java-pom-addrepository"></a>
+
+Adds a repository to the pom.
+
+```ts
+addRepository(repository: MavenRepository): void
+```
+
+* **repository** (<code>[java.MavenRepository](#projen-java-mavenrepository)</code>)  the repository to add.
+  * **id** (<code>string</code>)  The identifier for the repository. 
+  * **url** (<code>string</code>)  The url of the repository. 
+  * **layout** (<code>string</code>)  The layout of the repository. __*Optional*__
+  * **name** (<code>string</code>)  The name of the repository. __*Optional*__
+
+
+
+
 #### addTestDependency(spec)🔹 <a id="projen-java-pom-addtestdependency"></a>
 
 Adds a test dependency.
@@ -7154,6 +7660,7 @@ new javascript.Bundler(project: Project, options?: BundlerOptions)
   * **addToPreCompile** (<code>boolean</code>)  Install the `bundle` command as a pre-compile phase. __*Default*__: true
   * **assetsDir** (<code>string</code>)  Output directory for all bundles. __*Default*__: "assets"
   * **esbuildVersion** (<code>string</code>)  The semantic version requirement for `esbuild`. __*Default*__: no specific version (implies latest)
+  * **loaders** (<code>Map<string, string></code>)  Map of file extensions (without dot) and loaders to use for this file type. __*Optional*__
 
 
 
@@ -7185,7 +7692,9 @@ addBundle(entrypoint: string, options: AddBundleOptions): Bundle
   * **platform** (<code>string</code>)  esbuild platform. 
   * **target** (<code>string</code>)  esbuild target. 
   * **executable** (<code>boolean</code>)  Mark the output file as executable. __*Default*__: false
+  * **loaders** (<code>Map<string, string></code>)  Map of file extensions (without dot) and loaders to use for this file type. __*Optional*__
   * **outfile** (<code>string</code>)  Bundler output path relative to the asset's output directory. __*Default*__: "index.js"
+  * **tsconfigPath** (<code>string</code>)  The path of the tsconfig.json file to use for bundling. __*Default*__: "tsconfig.json"
 
 __Returns__:
 * <code>[javascript.Bundle](#projen-javascript-bundle)</code>
@@ -7352,9 +7861,9 @@ __Returns__:
 
 Installs the following npm scripts:.
 
-- `test` will run `jest --passWithNoTests`
-- `test:watch` will run `jest --watch`
-- `test:update` will run `jest -u`
+- `test`, intended for testing locally and in CI. Will update snapshots unless `updateSnapshot: UpdateSnapshot: NEVER` is set.
+- `test:watch`, intended for automatically rerunning tests when files change.
+- `test:update`, intended for testing locally and updating snapshots to match the latest unit under test. Only available when `updateSnapshot: UpdateSnapshot: NEVER`.
 
 __Submodule__: javascript
 
@@ -7373,11 +7882,13 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
   * **configFilePath** (<code>string</code>)  Path to JSON config file for Jest. __*Default*__: No separate config file, jest settings are stored in package.json
   * **coverage** (<code>boolean</code>)  Collect coverage. __*Default*__: true
   * **coverageText** (<code>boolean</code>)  Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution. __*Default*__: true
+  * **extraCliOptions** (<code>Array<string></code>)  Additional options to pass to the Jest CLI invocation. __*Default*__: no extra options
   * **ignorePatterns** (<code>Array<string></code>)  Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`. __*Default*__: ["/node_modules/"]
   * **jestConfig** (<code>[javascript.JestConfigOptions](#projen-javascript-jestconfigoptions)</code>)  Jest configuration. __*Default*__: default jest configuration
   * **jestVersion** (<code>string</code>)  The version of jest to use. __*Default*__: installs the latest jest version
   * **junitReporting** (<code>boolean</code>)  Result processing with jest-junit. __*Default*__: true
   * **preserveDefaultReporters** (<code>boolean</code>)  Preserve the default Jest reporter when additional reporters are added. __*Default*__: true
+  * **updateSnapshot** (<code>[javascript.UpdateSnapshot](#projen-javascript-updatesnapshot)</code>)  Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots. __*Default*__: ALWAYS
 
 
 
@@ -7387,6 +7898,7 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
 Name | Type | Description 
 -----|------|-------------
 **config**🔹 | <code>any</code> | Escape hatch.
+**jestVersion**🔹 | <code>string</code> | <span></span>
 
 ### Methods
 
@@ -7480,7 +7992,7 @@ new javascript.NodePackage(project: Project, options?: NodePackageOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -7781,6 +8293,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
 
 * **options** (<code>[javascript.NodeProjectOptions](#projen-javascript-nodeprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -7809,7 +8322,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -7842,6 +8355,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -7852,7 +8366,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -7865,7 +8379,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -7917,6 +8431,7 @@ Name | Type | Description
 **jest**?🔹 | <code>[javascript.Jest](#projen-javascript-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
 **maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Optional*__
+**nodeVersion**?🔹 | <code>string</code> | __*Optional*__
 **npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
 **prettier**?🔹 | <code>[javascript.Prettier](#projen-javascript-prettier)</code> | __*Optional*__
 **publisher**?⚠️ | <code>[release.Publisher](#projen-release-publisher)</code> | Package publisher.<br/>__*Optional*__
@@ -8435,6 +8950,7 @@ addPostBuildSteps(...steps: JobStep[]): void
   * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
   * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
   * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
+  * **workingDirectory** (<code>string</code>)  Specifies a working directory for a step. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
   * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
 
@@ -8496,10 +9012,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Pip(project: PythonProject, _options?: PipOptions)
+new python.Pip(project: Project, _options?: PipOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **_options** (<code>[python.PipOptions](#projen-python-pipoptions)</code>)  *No description*
 
 
@@ -8569,10 +9085,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Poetry(project: PythonProject, options: PythonPackagingOptions)
+new python.Poetry(project: Project, options: PythonPackagingOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.PythonPackagingOptions](#projen-python-pythonpackagingoptions)</code>)  *No description*
   * **authorEmail** (<code>string</code>)  Author's e-mail. 
   * **authorName** (<code>string</code>)  Author's name. 
@@ -8581,6 +9097,7 @@ new python.Poetry(project: PythonProject, options: PythonPackagingOptions)
   * **description** (<code>string</code>)  A short description of the package. __*Optional*__
   * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
   * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **packageName** (<code>string</code>)  Package name. __*Optional*__
   * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
   * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
 
@@ -8664,10 +9181,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.PoetryPyproject(project: PythonProject, options: PoetryPyprojectOptions)
+new python.PoetryPyproject(project: Project, options: PoetryPyprojectOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.PoetryPyprojectOptions](#projen-python-poetrypyprojectoptions)</code>)  *No description*
   * **authors** (<code>Array<string></code>)  The authors of the package. __*Optional*__
   * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
@@ -8745,10 +9262,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Pytest(project: PythonProject, options?: PytestOptions)
+new python.Pytest(project: Project, options?: PytestOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  *No description*
   * **maxFailures** (<code>number</code>)  Stop the testing process after the first N failures. __*Optional*__
   * **testdir** (<code>string</code>)  Directory with tests. __*Default*__: 'tests'
@@ -8767,7 +9284,7 @@ Name | Type | Description
 
 ## class PytestSample 🔹 <a id="projen-python-pytestsample"></a>
 
-
+Python test code sample.
 
 __Submodule__: python
 
@@ -8779,11 +9296,13 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.PytestSample(project: PythonProject, testdir: string)
+new python.PytestSample(project: Project, options: PytestSampleOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
-* **testdir** (<code>string</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[python.PytestSampleOptions](#projen-python-pytestsampleoptions)</code>)  *No description*
+  * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
+  * **testdir** (<code>string</code>)  Test directory. 
 
 
 
@@ -8807,6 +9326,7 @@ new python.PythonProject(options: PythonProjectOptions)
 
 * **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -8839,6 +9359,7 @@ new python.PythonProject(options: PythonProjectOptions)
   * **description** (<code>string</code>)  A short description of the package. __*Optional*__
   * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
   * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **packageName** (<code>string</code>)  Package name. __*Optional*__
   * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
   * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
   * **moduleName** (<code>string</code>)  Name of the python package as used in imports and filenames. 
@@ -8930,11 +9451,12 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.PythonSample(project: PythonProject, _options: PythonSampleOptions)
+new python.PythonSample(project: Project, options: PythonSampleOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
-* **_options** (<code>[python.PythonSampleOptions](#projen-python-pythonsampleoptions)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **options** (<code>[python.PythonSampleOptions](#projen-python-pythonsampleoptions)</code>)  *No description*
+  * **dir** (<code>string</code>)  Sample code directory. 
 
 
 
@@ -9009,10 +9531,10 @@ __Extends__: [FileBase](#projen-filebase)
 
 
 ```ts
-new python.SetupPy(project: PythonProject, options: SetupPyOptions)
+new python.SetupPy(project: Project, options: SetupPyOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.SetupPyOptions](#projen-python-setuppyoptions)</code>)  *No description*
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
@@ -9058,10 +9580,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Setuptools(project: PythonProject, options: PythonPackagingOptions)
+new python.Setuptools(project: Project, options: PythonPackagingOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.PythonPackagingOptions](#projen-python-pythonpackagingoptions)</code>)  *No description*
   * **authorEmail** (<code>string</code>)  Author's e-mail. 
   * **authorName** (<code>string</code>)  Author's name. 
@@ -9070,6 +9592,7 @@ new python.Setuptools(project: PythonProject, options: PythonPackagingOptions)
   * **description** (<code>string</code>)  A short description of the package. __*Optional*__
   * **homepage** (<code>string</code>)  A URL to the website of the project. __*Optional*__
   * **license** (<code>string</code>)  License of this package as an SPDX identifier. __*Optional*__
+  * **packageName** (<code>string</code>)  Package name. __*Optional*__
   * **poetryOptions** (<code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code>)  Additional options to set for poetry if using poetry. __*Optional*__
   * **setupConfig** (<code>Map<string, any></code>)  Additional fields to pass in the setup() function if using setuptools. __*Optional*__
 
@@ -9100,10 +9623,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new python.Venv(project: PythonProject, options?: VenvOptions)
+new python.Venv(project: Project, options?: VenvOptions)
 ```
 
-* **project** (<code>[python.PythonProject](#projen-python-pythonproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.VenvOptions](#projen-python-venvoptions)</code>)  *No description*
   * **envdir** (<code>string</code>)  Name of directory to store the environment in. __*Default*__: ".env"
 
@@ -9155,6 +9678,7 @@ new release.Publisher(project: Project, options: PublisherOptions)
   * **jsiiReleaseVersion** (<code>string</code>)  *No description* __*Optional*__
   * **publibVersion** (<code>string</code>)  Version requirement for `publib`. __*Default*__: "latest"
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
+  * **workflowNodeVersion** (<code>string</code>)  Node version to setup in GitHub workflows if any node-based CLI utilities are needed. __*Default*__: 14.x
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
 
 
@@ -9190,6 +9714,7 @@ addGitHubPrePublishingSteps(...steps: JobStep[]): void
   * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
   * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
   * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
+  * **workingDirectory** (<code>string</code>)  Specifies a working directory for a step. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
   * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to run the step before killing the process. __*Optional*__
 
@@ -9360,6 +9885,7 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
 * **options** (<code>[release.ReleaseOptions](#projen-release-releaseoptions)</code>)  *No description*
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -9370,7 +9896,7 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -9382,6 +9908,7 @@ new release.Release(project: GitHubProject, options: ReleaseOptions)
   * **task** (<code>[Task](#projen-task)</code>)  The task to execute in order to create the release artifacts. 
   * **versionFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
   * **githubRelease** (<code>boolean</code>)  Create a GitHub release for each release. __*Default*__: true
+  * **workflowNodeVersion** (<code>string</code>)  Node version to setup in GitHub workflows if any node-based CLI utilities are needed. __*Default*__: 14.x
 
 
 
@@ -9413,6 +9940,7 @@ addBranch(branch: string, options: BranchOptions): void
 * **branch** (<code>string</code>)  The branch to monitor (e.g. `main`, `v2.x`).
 * **options** (<code>[release.BranchOptions](#projen-release-branchoptions)</code>)  Branch definition.
   * **majorVersion** (<code>number</code>)  The major versions released from this branch. 
+  * **minMajorVersion** (<code>number</code>)  The minimum major version to release. __*Optional*__
   * **npmDistTag** (<code>string</code>)  The npm distribution tag to use for this branch. __*Default*__: "latest"
   * **prerelease** (<code>string</code>)  Bump the version as a pre-release tag. __*Default*__: normal releases
   * **tagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
@@ -9590,6 +10118,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
 
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -9618,7 +10147,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -9651,6 +10180,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -9661,7 +10191,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -9674,7 +10204,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -9742,6 +10272,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -9770,7 +10301,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -9803,6 +10334,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -9813,7 +10345,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -9826,7 +10358,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -9894,6 +10426,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
 
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -9922,7 +10455,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -9955,6 +10488,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -9965,7 +10499,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -9978,7 +10512,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -10187,7 +10721,9 @@ new vscode.VsCode(project: Project)
 
 Name | Type | Description 
 -----|------|-------------
+**extensions**🔹 | <code>[vscode.VsCodeRecommendedExtensions](#projen-vscode-vscoderecommendedextensions)</code> | <span></span>
 **launchConfiguration**🔹 | <code>[vscode.VsCodeLaunchConfig](#projen-vscode-vscodelaunchconfig)</code> | <span></span>
+**settings**🔹 | <code>[vscode.VsCodeSettings](#projen-vscode-vscodesettings)</code> | <span></span>
 
 
 
@@ -10227,9 +10763,15 @@ addConfiguration(cfg: VsCodeLaunchConfigurationEntry): void
   * **request** (<code>string</code>)  *No description* 
   * **type** (<code>string</code>)  *No description* 
   * **args** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **console** (<code>[vscode.Console](#projen-vscode-console)</code>)  *No description* __*Optional*__
+  * **cwd** (<code>string</code>)  *No description* __*Optional*__
   * **debugServer** (<code>number</code>)  *No description* __*Optional*__
+  * **disableOptimisticBPs** (<code>boolean</code>)  *No description* __*Optional*__
+  * **env** (<code>Map<string, string &#124; boolean></code>)  Set value to `false` to unset an existing environment variable. __*Optional*__
+  * **envFile** (<code>string</code>)  *No description* __*Optional*__
   * **internalConsoleOptions** (<code>[vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)</code>)  *No description* __*Optional*__
   * **outFiles** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **port** (<code>number</code>)  *No description* __*Optional*__
   * **postDebugTask** (<code>string</code>)  *No description* __*Optional*__
   * **preLaunchTask** (<code>string</code>)  *No description* __*Optional*__
   * **presentation** (<code>[vscode.Presentation](#projen-vscode-presentation)</code>)  *No description* __*Optional*__
@@ -10237,8 +10779,116 @@ addConfiguration(cfg: VsCodeLaunchConfigurationEntry): void
   * **runtimeArgs** (<code>Array<string></code>)  *No description* __*Optional*__
   * **serverReadyAction** (<code>[vscode.ServerReadyAction](#projen-vscode-serverreadyaction)</code>)  *No description* __*Optional*__
   * **skipFiles** (<code>Array<string></code>)  *No description* __*Optional*__
+  * **stopOnEntry** (<code>boolean</code>)  *No description* __*Optional*__
   * **url** (<code>string</code>)  *No description* __*Optional*__
   * **webRoot** (<code>string</code>)  *No description* __*Optional*__
+
+
+
+
+
+
+## class VsCodeRecommendedExtensions 🔹 <a id="projen-vscode-vscoderecommendedextensions"></a>
+
+VS Code Workspace recommended extensions Source: https://code.visualstudio.com/docs/editor/extension-marketplace#_workspace-recommended-extensions.
+
+__Submodule__: vscode
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new vscode.VsCodeRecommendedExtensions(vscode: VsCode)
+```
+
+* **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
+
+
+### Methods
+
+
+#### addRecommendations(...extensions)🔹 <a id="projen-vscode-vscoderecommendedextensions-addrecommendations"></a>
+
+Adds a list of VS Code extensions as recommendations for this workspace.
+
+```ts
+addRecommendations(...extensions: string[]): void
+```
+
+* **extensions** (<code>string</code>)  The extension IDs.
+
+
+
+
+#### addUnwantedRecommendations(...extensions)🔹 <a id="projen-vscode-vscoderecommendedextensions-addunwantedrecommendations"></a>
+
+Marks a list of VS Code extensions as unwanted recommendations for this workspace.
+
+VS Code should not be recommend these extensions for users of this workspace.
+
+```ts
+addUnwantedRecommendations(...extensions: string[]): void
+```
+
+* **extensions** (<code>string</code>)  The extension IDs.
+
+
+
+
+
+
+## class VsCodeSettings 🔹 <a id="projen-vscode-vscodesettings"></a>
+
+VS Code Workspace settings Source: https://code.visualstudio.com/docs/getstarted/settings#_workspace-settings.
+
+__Submodule__: vscode
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new vscode.VsCodeSettings(vscode: VsCode)
+```
+
+* **vscode** (<code>[vscode.VsCode](#projen-vscode-vscode)</code>)  *No description*
+
+
+### Methods
+
+
+#### addSetting(setting, value, language?)🔹 <a id="projen-vscode-vscodesettings-addsetting"></a>
+
+Adds a workspace setting.
+
+```ts
+addSetting(setting: string, value: any, language?: string): void
+```
+
+* **setting** (<code>string</code>)  The setting ID.
+* **value** (<code>any</code>)  The value of the setting.
+* **language** (<code>string</code>)  Scope the setting to a specific language.
+
+
+
+
+#### addSettings(settings, languages?)🔹 <a id="projen-vscode-vscodesettings-addsettings"></a>
+
+Adds a workspace setting.
+
+```ts
+addSettings(settings: Map<string, any>, languages?: string &#124; Array<string>): void
+```
+
+* **settings** (<code>Map<string, any></code>)  Array structure: [setting: string, value: any, languages?: string[]].
+* **languages** (<code>string &#124; Array<string></code>)  *No description*
 
 
 
@@ -10291,6 +10941,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -10319,7 +10970,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -10352,6 +11003,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -10362,7 +11014,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -10375,7 +11027,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -10441,6 +11093,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **assetsdir** (<code>string</code>)  Assets directory. __*Default*__: "public"
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -10469,7 +11122,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -10502,6 +11155,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -10512,7 +11166,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -10525,7 +11179,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -10663,6 +11317,7 @@ new web.ReactProject(options: ReactProjectOptions)
 
 * **options** (<code>[web.ReactProjectOptions](#projen-web-reactprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -10691,7 +11346,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -10724,6 +11379,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -10734,7 +11390,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -10747,7 +11403,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -10855,6 +11511,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 
 * **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
+  * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -10883,7 +11540,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **allowLibraryDependencies** (<code>boolean</code>)  Allow the project to include `peerDependencies` and `bundledDependencies`. __*Default*__: true
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
-  * **authorOrganization** (<code>boolean</code>)  Author's Organization. __*Optional*__
+  * **authorOrganization** (<code>boolean</code>)  Is the author an organization. __*Optional*__
   * **authorUrl** (<code>string</code>)  Author's URL / Website. __*Optional*__
   * **autoDetectBin** (<code>boolean</code>)  Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section. __*Default*__: true
   * **bin** (<code>Map<string, string></code>)  Binary programs vended with your module. __*Optional*__
@@ -10916,6 +11573,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **stability** (<code>string</code>)  Package's Stability. __*Optional*__
   * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
   * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
   * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
   * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
   * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
@@ -10926,7 +11584,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
   * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
   * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
   * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
   * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
   * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
@@ -10939,7 +11597,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **buildWorkflow** (<code>boolean</code>)  Define a GitHub workflow for building PRs. __*Default*__: true if not a subproject
   * **buildWorkflowTriggers** (<code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code>)  Build workflow triggers. __*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
   * **bundlerOptions** (<code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code>)  Options for `Bundler`. __*Optional*__
-  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
+  * **codeCov** (<code>boolean</code>)  Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret. __*Default*__: false
   * **codeCovTokenSecret** (<code>string</code>)  Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories. __*Default*__: if this option is not specified, only public repositories are supported
   * **copyrightOwner** (<code>string</code>)  License copyright owner. __*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
   * **copyrightPeriod** (<code>string</code>)  The copyright years to put in the LICENSE file. __*Default*__: current year
@@ -11539,6 +12197,7 @@ Options for `JsonFile`.
 
 Name | Type | Description 
 -----|------|-------------
+**allowComments**?🔹 | <code>boolean</code> | Allow the use of comments in this file.<br/>__*Default*__: false for .json files, true for .json5 and .jsonc files
 **committed**?🔹 | <code>boolean</code> | Indicates whether this file should be committed to git or ignored.<br/>__*Default*__: true
 **editGitignore**?🔹 | <code>boolean</code> | Update the project's .gitignore file.<br/>__*Default*__: true
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
@@ -11627,6 +12286,7 @@ Options for `Project`.
 Name | Type | Description 
 -----|------|-------------
 **name**🔹 | <code>string</code> | This is the name of your project.
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -11739,6 +12399,19 @@ Name | Type | Description
 
 
 
+## struct SnapshotOptions 🔹 <a id="projen-snapshotoptions"></a>
+
+
+Options for the Snapshot synthesis.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**parseJson**?🔹 | <code>boolean</code> | Parse .json files as a JS object for improved inspection. This will fail if the contents are invalid JSON.<br/>__*Default*__: true parse .json files into an object
+
+
+
 ## struct SourceCodeOptions 🔹 <a id="projen-sourcecodeoptions"></a>
 
 
@@ -11784,6 +12457,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
 **env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this task.<br/>__*Default*__: {}
 **exec**?🔹 | <code>string</code> | Shell command to execute as the first command of the task.<br/>__*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+**receiveArgs**?🔹 | <code>boolean</code> | Should the provided `exec` shell command receive args passed to the task.<br/>__*Default*__: false
 **requiredEnv**?🔹 | <code>Array<string></code> | A set of environment variables that must be defined in order to execute this task.<br/>__*Optional*__
 **steps**?🔹 | <code>Array<[TaskStep](#projen-taskstep)></code> | List of task steps to run.<br/>__*Optional*__
 
@@ -11825,6 +12499,7 @@ Name | Type | Description
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
 **exec**?🔹 | <code>string</code> | Shell command to execute.<br/>__*Default*__: don't execute a shell command
 **name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
+**receiveArgs**?🔹 | <code>boolean</code> | Should this step receive args passed to the task.<br/>__*Default*__: false
 **say**?🔹 | <code>string</code> | Print a message.<br/>__*Default*__: don't say anything
 **spawn**?🔹 | <code>string</code> | Subtask to execute.<br/>__*Default*__: don't spawn a subtask
 
@@ -11841,6 +12516,7 @@ Name | Type | Description
 -----|------|-------------
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
 **name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
+**receiveArgs**?🔹 | <code>boolean</code> | Should this step receive args passed to the task.<br/>__*Default*__: false
 
 
 
@@ -12006,7 +12682,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -12029,10 +12705,12 @@ Name | Type | Description
 **cdkVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
+**compressAssembly**?🔹 | <code>boolean</code> | Emit a compressed version of the assembly.<br/>__*Default*__: false
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -12076,6 +12754,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -12124,7 +12803,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -12225,6 +12904,7 @@ Name | Type | Description
 **cdkVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Optional*__
 **cdkout**?🔹 | <code>string</code> | cdk.out directory.<br/>__*Default*__: "cdk.out"
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
 **context**?🔹 | <code>Map<string, any></code> | Additional context to include in `cdk.json`.<br/>__*Default*__: no additional context
@@ -12271,7 +12951,7 @@ Name | Type | Description
 
 ## struct AwsCdkPackageNames 🔹 <a id="projen-awscdk-awscdkpackagenames"></a>
 
-__Obtainable from__: [AwsCdkDeps](#projen-awscdk-awscdkdeps).[packageNames](#projen-awscdk-awscdkdeps#projen-awscdk-awscdkdeps-packagenames)(), [AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava).[packageNames](#projen-awscdk-awscdkdepsjava#projen-awscdk-awscdkdepsjava-packagenames)(), [AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs).[packageNames](#projen-awscdk-awscdkdepsjs#projen-awscdk-awscdkdepsjs-packagenames)()
+__Obtainable from__: [AwsCdkDeps](#projen-awscdk-awscdkdeps).[packageNames](#projen-awscdk-awscdkdeps#projen-awscdk-awscdkdeps-packagenames)(), [AwsCdkDepsJava](#projen-awscdk-awscdkdepsjava).[packageNames](#projen-awscdk-awscdkdepsjava#projen-awscdk-awscdkdepsjava-packagenames)(), [AwsCdkDepsJs](#projen-awscdk-awscdkdepsjs).[packageNames](#projen-awscdk-awscdkdepsjs#projen-awscdk-awscdkdepsjs-packagenames)(), [AwsCdkDepsPy](#projen-awscdk-awscdkdepspy).[packageNames](#projen-awscdk-awscdkdepspy#projen-awscdk-awscdkdepspy-packagenames)()
 
 Language-specific AWS CDK package names.
 
@@ -12316,6 +12996,7 @@ Name | Type | Description
 **cdkout**?🔹 | <code>string</code> | cdk.out directory.<br/>__*Default*__: "cdk.out"
 **classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
 **context**?🔹 | <code>Map<string, any></code> | Additional context to include in `cdk.json`.<br/>__*Default*__: no additional context
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
@@ -12332,6 +13013,7 @@ Name | Type | Description
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**packageName**?🔹 | <code>string</code> | Package name.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
 **poetry**?🔹 | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.<br/>__*Default*__: false
@@ -12383,7 +13065,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -12407,8 +13089,9 @@ Name | Type | Description
 **cdkout**?🔹 | <code>string</code> | cdk.out directory.<br/>__*Default*__: "cdk.out"
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
 **context**?🔹 | <code>Map<string, any></code> | Additional context to include in `cdk.json`.<br/>__*Default*__: no additional context
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -12451,6 +13134,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -12494,7 +13178,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -12587,7 +13271,7 @@ Name | Type | Description
 **artifactsDirectory**?⚠️ | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?⚠️ | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?⚠️ | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?⚠️ | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?⚠️ | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -12610,10 +13294,12 @@ Name | Type | Description
 **cdkVersionPinning**?⚠️ | <code>boolean</code> | Use pinned version instead of caret version for CDK.<br/>__*Optional*__
 **clobber**?⚠️ | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?⚠️ | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?⚠️ | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?⚠️ | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?⚠️ | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?⚠️ | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
+**compressAssembly**?⚠️ | <code>boolean</code> | Emit a compressed version of the assembly.<br/>__*Default*__: false
 **constructsVersion**?⚠️ | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: for CDK 1.x the default is "3.2.27", for CDK 2.x the default is "10.0.5".
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -12657,6 +13343,7 @@ Name | Type | Description
 **maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?⚠️ | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?⚠️ | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?⚠️ | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?⚠️ | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -12705,7 +13392,7 @@ Name | Type | Description
 **releaseFailureIssue**?⚠️ | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?⚠️ | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?⚠️ | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?⚠️ | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?⚠️ | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -13005,7 +13692,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -13022,10 +13709,12 @@ Name | Type | Description
 **catalog**?🔹 | <code>[cdk.Catalog](#projen-cdk-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
+**compressAssembly**?🔹 | <code>boolean</code> | Emit a compressed version of the assembly.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -13063,6 +13752,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -13111,7 +13801,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -13196,6 +13886,7 @@ Name | Type | Description
 -----|------|-------------
 **dotNetNamespace**🔹 | <code>string</code> | <span></span>
 **packageId**🔹 | <code>string</code> | <span></span>
+**iconUrl**?🔹 | <code>string</code> | __*Optional*__
 **nugetApiKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the API key for NuGet.<br/>__*Default*__: "NUGET_API_KEY"
 **nugetServer**?🔹 | <code>string</code> | NuGet Server URL (defaults to nuget.org).<br/>__*Optional*__
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
@@ -13221,6 +13912,7 @@ Name | Type | Description
 **githubRepo**?🔹 | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
 **githubTokenSecret**?🔹 | <code>string</code> | The name of the secret that includes a personal GitHub access token used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_TOKEN"
 **githubUseSsh**?🔹 | <code>boolean</code> | Use SSH to push to GitHub instead of a personal accses token.<br/>__*Default*__: false
+**packageName**?🔹 | <code>string</code> | The name of the go package.<br/>__*Default*__: derived from the module name
 **prePublishSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute before executing the publishing command. These can be used to prepare the artifact for publishing if neede.<br/>__*Optional*__
 **publishTools**?🔹 | <code>[github.workflows.Tools](#projen-github-workflows-tools)</code> | Additional tools to install in the publishing job.<br/>__*Default*__: no additional tools are installed
 
@@ -13269,7 +13961,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -13285,10 +13977,12 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
+**compressAssembly**?🔹 | <code>boolean</code> | Emit a compressed version of the assembly.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -13326,6 +14020,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -13374,7 +14069,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -13441,6 +14136,146 @@ Name | Type | Description
 
 
 
+## struct Cdk8sDepsCommonOptions 🔹 <a id="projen-cdk8s-cdk8sdepscommonoptions"></a>
+
+
+Options for `Cdk8sDeps`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdk8sVersion**🔹 | <code>string</code> | Minumum version of the cdk8s to depend on.
+**cdk8sCliVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-cli to depend on.<br/>__*Default*__: "2.0.28"
+**cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-cli.<br/>__*Default*__: false
+**cdk8sPlus**?🔹 | <code>boolean</code> | Include cdk8s-plus.<br/>__*Default*__: true
+**cdk8sPlusVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-plus-XX to depend on.<br/>__*Default*__: "2.0.0-rc.26"
+**cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
+**cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s.<br/>__*Default*__: false
+**constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: "10.1.42"
+**constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
+**k8sMinorVersion**?🔹 | <code>number</code> | The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0.<br/>__*Default*__: 22
+
+
+
+## struct Cdk8sDepsOptions 🔹 <a id="projen-cdk8s-cdk8sdepsoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdk8sCliDependency**🔹 | <code>boolean</code> | Add cdk8s-cli only to Node projects.
+**cdk8sVersion**🔹 | <code>string</code> | Minumum version of the cdk8s to depend on.
+**dependencyType**🔹 | <code>[DependencyType](#projen-dependencytype)</code> | The type of dependency to use for runtime CDK8s and `constructs` modules.
+**cdk8sCliVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-cli to depend on.<br/>__*Default*__: "2.0.28"
+**cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-cli.<br/>__*Default*__: false
+**cdk8sPlus**?🔹 | <code>boolean</code> | Include cdk8s-plus.<br/>__*Default*__: true
+**cdk8sPlusVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-plus-XX to depend on.<br/>__*Default*__: "2.0.0-rc.26"
+**cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
+**cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s.<br/>__*Default*__: false
+**constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: "10.1.42"
+**constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
+**k8sMinorVersion**?🔹 | <code>number</code> | The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0.<br/>__*Default*__: 22
+
+
+
+## struct Cdk8sPackageNames 🔹 <a id="projen-cdk8s-cdk8spackagenames"></a>
+
+__Obtainable from__: [Cdk8sDeps](#projen-cdk8s-cdk8sdeps).[packageNames](#projen-cdk8s-cdk8sdeps#projen-cdk8s-cdk8sdeps-packagenames)(), [Cdk8sDepsPy](#projen-cdk8s-cdk8sdepspy).[packageNames](#projen-cdk8s-cdk8sdepspy#projen-cdk8s-cdk8sdepspy-packagenames)()
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**cdk8s**🔹 | <code>string</code> | Fully qualified name of the core framework package.
+**cdk8sPlus**🔹 | <code>string</code> | Fully qualified name of the cdk9s-plus-XX library package.
+**constructs**🔹 | <code>string</code> | Fully qualified name of the constructs library package.
+**cdk8sClient**?🔹 | <code>string</code> | Fully qualified name of the client package.<br/>__*Optional*__
+
+
+
+## struct Cdk8sPythonOptions 🔹 <a id="projen-cdk8s-cdk8spythonoptions"></a>
+
+
+Options for `Cdk8sPythonApp`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**authorEmail**🔹 | <code>string</code> | Author's e-mail.
+**authorName**🔹 | <code>string</code> | Author's name.
+**cdk8sVersion**🔹 | <code>string</code> | Minumum version of the cdk8s to depend on.
+**moduleName**🔹 | <code>string</code> | Name of the python package as used in imports and filenames.
+**name**🔹 | <code>string</code> | This is the name of your project.
+**version**🔹 | <code>string</code> | Version of the package.
+**appEntrypoint**?🔹 | <code>string</code> | The CDK8s app's entrypoint.<br/>__*Default*__: "app.py"
+**autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
+**autoMerge**?🔹 | <code>boolean</code> | Enable automatic merging on GitHub.<br/>__*Default*__: true
+**autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
+**cdk8sCliVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-cli to depend on.<br/>__*Default*__: "2.0.28"
+**cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-cli.<br/>__*Default*__: false
+**cdk8sImports**?🔹 | <code>Array<string></code> | Import additional specs.<br/>__*Default*__: no additional specs imported
+**cdk8sPlus**?🔹 | <code>boolean</code> | Include cdk8s-plus.<br/>__*Default*__: true
+**cdk8sPlusVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-plus-XX to depend on.<br/>__*Default*__: "2.0.0-rc.26"
+**cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
+**cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s.<br/>__*Default*__: false
+**classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
+**clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
+**constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: "10.1.42"
+**constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
+**deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
+**description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
+**devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
+**github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
+**githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
+**gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
+**homepage**?🔹 | <code>string</code> | A URL to the website of the project.<br/>__*Optional*__
+**k8sMinorVersion**?🔹 | <code>number</code> | The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0.<br/>__*Default*__: 22
+**k8sSpecVersion**?🔹 | <code>string</code> | Import a specific Kubernetes spec version.<br/>__*Default*__: Use the cdk8s default
+**license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
+**logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
+**mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
+**mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**packageName**?🔹 | <code>string</code> | Package name.<br/>__*Optional*__
+**parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
+**pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
+**poetry**?🔹 | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.<br/>__*Default*__: false
+**poetryOptions**?🔹 | <code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code> | Additional options to set for poetry if using poetry.<br/>__*Optional*__
+**projectType**?⚠️ | <code>[ProjectType](#projen-projecttype)</code> | Which type of project this is (library/app).<br/>__*Default*__: ProjectType.UNKNOWN
+**projenCommand**?🔹 | <code>string</code> | The shell command to use in order to run the projen CLI.<br/>__*Default*__: "npx projen"
+**projenCredentials**?🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | Choose a method of providing GitHub API access for projen workflows.<br/>__*Default*__: use a personal access token named PROJEN_GITHUB_TOKEN
+**projenTokenSecret**?⚠️ | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
+**projenrcJs**?🔹 | <code>boolean</code> | Use projenrc in javascript.<br/>__*Default*__: false
+**projenrcJsOptions**?🔹 | <code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code> | Options related to projenrc in JavaScript.<br/>__*Default*__: default options
+**projenrcJson**?🔹 | <code>boolean</code> | Generate (once) .projenrc.json (in JSON). Set to `false` in order to disable .projenrc.json generation.<br/>__*Default*__: false
+**projenrcJsonOptions**?🔹 | <code>[ProjenrcOptions](#projen-projenrcoptions)</code> | Options for .projenrc.json.<br/>__*Default*__: default options
+**projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in Python.<br/>__*Default*__: true
+**projenrcPythonOptions**?🔹 | <code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code> | Options related to projenrc in python.<br/>__*Default*__: default options
+**pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
+**pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
+**readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
+**renovatebot**?🔹 | <code>boolean</code> | Use renovatebot to handle dependency upgrades.<br/>__*Default*__: false
+**renovatebotOptions**?🔹 | <code>[RenovatebotOptions](#projen-renovatebotoptions)</code> | Options for renovatebot.<br/>__*Default*__: default options
+**sample**?🔹 | <code>boolean</code> | Include sample code and test if the relevant directories don't exist.<br/>__*Default*__: true
+**setupConfig**?🔹 | <code>Map<string, any></code> | Additional fields to pass in the setup() function if using setuptools.<br/>__*Optional*__
+**setuptools**?🔹 | <code>boolean</code> | Use setuptools with a setup.py script for packaging and publishing.<br/>__*Default*__: true if the project type is library
+**stale**?🔹 | <code>boolean</code> | Auto-close of stale issues and pull request.<br/>__*Default*__: false
+**staleOptions**?🔹 | <code>[github.StaleOptions](#projen-github-staleoptions)</code> | Auto-close stale issues and pull requests.<br/>__*Default*__: see defaults in `StaleOptions`
+**venv**?🔹 | <code>boolean</code> | Use venv to manage a virtual environment for installing dependencies inside.<br/>__*Default*__: true
+**venvOptions**?🔹 | <code>[python.VenvOptions](#projen-python-venvoptions)</code> | Venv options.<br/>__*Default*__: defaults
+**vscode**?🔹 | <code>boolean</code> | Enable VSCode integration.<br/>__*Default*__: true
+
+
+
 ## struct Cdk8sTypeScriptAppOptions 🔹 <a id="projen-cdk8s-cdk8stypescriptappoptions"></a>
 
 
@@ -13450,7 +14285,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**cdk8sVersion**🔹 | <code>string</code> | Minimum target version this library is tested against.
+**cdk8sVersion**🔹 | <code>string</code> | Minumum version of the cdk8s to depend on.
 **defaultReleaseBranch**🔹 | <code>string</code> | The name of the main release branch.
 **name**🔹 | <code>string</code> | This is the name of your project.
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
@@ -13458,7 +14293,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -13472,16 +14307,19 @@ Name | Type | Description
 **buildWorkflowTriggers**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | Build workflow triggers.<br/>__*Default*__: "{ pullRequest: {}, workflowDispatch: {} }"
 **bundledDeps**?🔹 | <code>Array<string></code> | List of dependencies to bundle into this module.<br/>__*Optional*__
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
-**cdk8sCliVersion**?🔹 | <code>string</code> | cdk8s-cli version.<br/>__*Default*__: "cdk8sVersion"
-**cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s-cli.<br/>__*Default*__: false
+**cdk8sCliVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-cli to depend on.<br/>__*Default*__: "2.0.28"
+**cdk8sCliVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-cli.<br/>__*Default*__: false
 **cdk8sImports**?🔹 | <code>Array<string></code> | Import additional specs.<br/>__*Default*__: no additional specs imported
+**cdk8sPlus**?🔹 | <code>boolean</code> | Include cdk8s-plus.<br/>__*Default*__: true
+**cdk8sPlusVersion**?🔹 | <code>string</code> | Minumum version of the cdk8s-plus-XX to depend on.<br/>__*Default*__: "2.0.0-rc.26"
 **cdk8sPlusVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s-plus-17.<br/>__*Default*__: false
-**cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
+**cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for cdk8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
-**constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.2.34"
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
+**constructsVersion**?🔹 | <code>string</code> | Minimum version of the `constructs` library to depend on.<br/>__*Default*__: "10.1.42"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -13509,6 +14347,7 @@ Name | Type | Description
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm.<br/>__*Default*__: "latest"
+**k8sMinorVersion**?🔹 | <code>number</code> | The cdk8s-plus library depends of Kubernetes minor version For example, cdk8s-plus-22 targets kubernetes version 1.22.0 cdk8s-plus-21 targets kubernetes version 1.21.0.<br/>__*Default*__: 22
 **k8sSpecVersion**?🔹 | <code>string</code> | Import a specific Kubernetes spec version.<br/>__*Default*__: Use the cdk8s default
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
@@ -13519,6 +14358,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -13562,7 +14402,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -13613,7 +14453,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -13632,10 +14472,12 @@ Name | Type | Description
 **cdk8sVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for CDK8s.<br/>__*Default*__: false
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
+**compressAssembly**?🔹 | <code>boolean</code> | Emit a compressed version of the assembly.<br/>__*Default*__: false
 **constructsVersion**?🔹 | <code>string</code> | constructs verion.<br/>__*Default*__: "3.3.196"
 **constructsVersionPinning**?🔹 | <code>boolean</code> | Use pinned version instead of caret version for constructs.<br/>__*Default*__: false
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
@@ -13676,6 +14518,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -13724,7 +14567,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -13805,7 +14648,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -13822,10 +14665,12 @@ Name | Type | Description
 **catalog**?🔹 | <code>[cdk.Catalog](#projen-cdk-catalog)</code> | Libraries will be picked up by the construct catalog when they are published to npm as jsii modules and will be published under:.<br/>__*Default*__: new version will be announced
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compat**?🔹 | <code>boolean</code> | Automatically run API compatibility test against the latest version published to npm after compilation.<br/>__*Default*__: false
 **compatIgnore**?🔹 | <code>string</code> | Name of the ignore file for API compatibility tests.<br/>__*Default*__: ".compatignore"
+**compressAssembly**?🔹 | <code>boolean</code> | Emit a compressed version of the assembly.<br/>__*Default*__: false
 **constructsVersion**?🔹 | <code>string</code> | Construct version to use.<br/>__*Default*__: "^10.0.12"
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
@@ -13864,6 +14709,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -13912,7 +14758,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -14039,7 +14885,7 @@ Name | Type | Description
 **machine**?🔹 | <code>[circleci.Machine](#projen-circleci-machine)</code> | __*Optional*__
 **macos**?🔹 | <code>[circleci.Macos](#projen-circleci-macos)</code> | __*Optional*__
 **parallelism**?🔹 | <code>number</code> | Number of parallel instances of this job to run (default: 1).<br/>__*Optional*__
-**parameters**?🔹 | <code>Map<string, string></code> | Parameters for making a job explicitly configurable in a workflow.<br/>__*Optional*__
+**parameters**?🔹 | <code>Map<string, [circleci.PipelineParameter](#projen-circleci-pipelineparameter)></code> | Parameters for making a job explicitly configurable in a workflow.<br/>__*Optional*__
 **resourceClass**?🔹 | <code>string</code> | {@link ResourceClass}.<br/>__*Optional*__
 **shell**?🔹 | <code>string</code> | Shell to use for execution command in all steps.<br/>__*Optional*__
 **steps**?🔹 | <code>Array<any></code> | no type support here, for syntax {@see https://circleci.com/docs/2.0/configuration-reference/#steps}.<br/>__*Optional*__
@@ -14089,6 +14935,21 @@ Name | Type | Description
 -----|------|-------------
 **alias**?🔹 | <code>string</code> | An alias for the matrix, usable from another job’s requires stanza.<br/>__*Optional*__
 **parameters**?🔹 | <code>Map<string, Array<string> &#124; Array<number>></code> | A map of parameter names to every value the job should be called with.<br/>__*Optional*__
+
+
+
+## struct PipelineParameter 🔹 <a id="projen-circleci-pipelineparameter"></a>
+
+
+Parameters are declared by name under a job, command, or executor.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**type**🔹 | <code>[circleci.PipelineParameterType](#projen-circleci-pipelineparametertype)</code> | The parameter type, required.
+**default**?🔹 | <code>string &#124; number &#124; boolean</code> | The default value for the parameter.<br/>__*Optional*__
+**description**?🔹 | <code>string</code> | Used to generate documentation for your orb.<br/>__*Optional*__
 
 
 
@@ -14192,11 +15053,10 @@ Name | Type | Description
 -----|------|-------------
 **identifier**🔹 | <code>string</code> | name of dynamic key *.
 **context**?🔹 | <code>Array<string></code> | The name of the context(s).<br/>__*Optional*__
-**filter**?🔹 | <code>[circleci.Filter](#projen-circleci-filter)</code> | Job Filters can have the key branches or tags.<br/>__*Optional*__
+**filters**?🔹 | <code>[circleci.Filter](#projen-circleci-filter)</code> | Job Filters can have the key branches or tags.<br/>__*Optional*__
 **matrix**?🔹 | <code>[circleci.Matrix](#projen-circleci-matrix)</code> | __*Optional*__
 **name**?🔹 | <code>string</code> | A replacement for the job name.<br/>__*Optional*__
 **orbParameters**?🔹 | <code>Map<string, string &#124; number &#124; boolean></code> | Parameters passed to job when referencing a job from orb.<br/>__*Optional*__
-**parameters**?🔹 | <code>Map<string, string &#124; number &#124; boolean></code> | Parameters for making a job explicitly configurable in a workflow.<br/>__*Optional*__
 **requires**?🔹 | <code>Array<string></code> | A list of jobs that must succeed for the job to start.<br/>__*Optional*__
 **type**?🔹 | <code>[circleci.JobType](#projen-circleci-jobtype)</code> | A job may have a type of approval indicating it must be manually approved before downstream jobs may proceed.<br/>__*Optional*__
 
@@ -14319,6 +15179,7 @@ Name | Type | Description
 **autoMerge**?🔹 | <code>boolean</code> | Enable automatic merging on GitHub.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -15163,6 +16024,7 @@ Name | Type | Description
 **autoMerge**?🔹 | <code>boolean</code> | Enable automatic merging on GitHub.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
@@ -15216,6 +16078,7 @@ Name | Type | Description
 **autoMerge**?🔹 | <code>boolean</code> | Enable automatic merging on GitHub.<br/>__*Default*__: true
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **compileOptions**?🔹 | <code>[java.MavenCompileOptions](#projen-java-mavencompileoptions)</code> | Compile options.<br/>__*Default*__: defaults
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
@@ -15299,6 +16162,22 @@ Name | Type | Description
 
 
 
+## struct MavenRepository 🔹 <a id="projen-java-mavenrepository"></a>
+
+
+Represents a Maven repository.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**id**🔹 | <code>string</code> | The identifier for the repository.
+**url**🔹 | <code>string</code> | The url of the repository.
+**layout**?🔹 | <code>string</code> | The layout of the repository.<br/>__*Optional*__
+**name**?🔹 | <code>string</code> | The name of the repository.<br/>__*Optional*__
+
+
+
 ## struct MavenSampleOptions 🔹 <a id="projen-java-mavensampleoptions"></a>
 
 
@@ -15323,6 +16202,7 @@ Name | Type | Description
 -----|------|-------------
 **goals**🔹 | <code>Array<string></code> | Which Maven goals this plugin should be associated with.
 **id**🔹 | <code>string</code> | The ID.
+**phase**?🔹 | <code>string</code> | The phase in which the plugin should execute.<br/>__*Optional*__
 
 
 
@@ -15387,8 +16267,10 @@ Name | Type | Description
 **target**🔹 | <code>string</code> | esbuild target.
 **executable**?🔹 | <code>boolean</code> | Mark the output file as executable.<br/>__*Default*__: false
 **externals**?🔹 | <code>Array<string></code> | You can mark a file or a package as external to exclude it from your build.<br/>__*Default*__: []
+**loaders**?🔹 | <code>Map<string, string></code> | Map of file extensions (without dot) and loaders to use for this file type.<br/>__*Optional*__
 **outfile**?🔹 | <code>string</code> | Bundler output path relative to the asset's output directory.<br/>__*Default*__: "index.js"
 **sourcemap**?🔹 | <code>boolean</code> | Include a source map in the bundle.<br/>__*Default*__: false
+**tsconfigPath**?🔹 | <code>string</code> | The path of the tsconfig.json file to use for bundling.<br/>__*Default*__: "tsconfig.json"
 **watchTask**?🔹 | <code>boolean</code> | In addition to the `bundle:xyz` task, creates `bundle:xyz:watch` task which will invoke the same esbuild command with the `--watch` flag.<br/>__*Default*__: true
 
 
@@ -15422,6 +16304,7 @@ Name | Type | Description
 **addToPreCompile**?🔹 | <code>boolean</code> | Install the `bundle` command as a pre-compile phase.<br/>__*Default*__: true
 **assetsDir**?🔹 | <code>string</code> | Output directory for all bundles.<br/>__*Default*__: "assets"
 **esbuildVersion**?🔹 | <code>string</code> | The semantic version requirement for `esbuild`.<br/>__*Default*__: no specific version (implies latest)
+**loaders**?🔹 | <code>Map<string, string></code> | Map of file extensions (without dot) and loaders to use for this file type.<br/>__*Optional*__
 
 
 
@@ -15443,15 +16326,16 @@ Name | Type | Description
 ## struct CodeArtifactOptions 🔹 <a id="projen-javascript-codeartifactoptions"></a>
 
 
-
+Options for publishing npm packages to AWS CodeArtifact.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**accessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**accessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_ACCESS_KEY_ID". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
+**authProvider**?🔹 | <code>[javascript.CodeArtifactAuthProvider](#projen-javascript-codeartifactauthprovider)</code> | Provider to use for authorizing requests to AWS CodeArtifact.<br/>__*Default*__: CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
 **roleToAssume**?🔹 | <code>string</code> | ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).<br/>__*Default*__: undefined
-**secretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
+**secretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_SECRET_ACCESS_KEY". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
 
 
 
@@ -15616,11 +16500,13 @@ Name | Type | Description
 **configFilePath**?🔹 | <code>string</code> | Path to JSON config file for Jest.<br/>__*Default*__: No separate config file, jest settings are stored in package.json
 **coverage**?⚠️ | <code>boolean</code> | Collect coverage.<br/>__*Default*__: true
 **coverageText**?🔹 | <code>boolean</code> | Include the `text` coverage reporter, which means that coverage summary is printed at the end of the jest execution.<br/>__*Default*__: true
+**extraCliOptions**?🔹 | <code>Array<string></code> | Additional options to pass to the Jest CLI invocation.<br/>__*Default*__: no extra options
 **ignorePatterns**?⚠️ | <code>Array<string></code> | Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`.<br/>__*Default*__: ["/node_modules/"]
 **jestConfig**?🔹 | <code>[javascript.JestConfigOptions](#projen-javascript-jestconfigoptions)</code> | Jest configuration.<br/>__*Default*__: default jest configuration
 **jestVersion**?🔹 | <code>string</code> | The version of jest to use.<br/>__*Default*__: installs the latest jest version
 **junitReporting**?🔹 | <code>boolean</code> | Result processing with jest-junit.<br/>__*Default*__: true
 **preserveDefaultReporters**?🔹 | <code>boolean</code> | Preserve the default Jest reporter when additional reporters are added.<br/>__*Default*__: true
+**updateSnapshot**?🔹 | <code>[javascript.UpdateSnapshot](#projen-javascript-updatesnapshot)</code> | Whether to update snapshots in task "test" (which is executed in task "build" and build workflows), or create a separate task "test:update" for updating snapshots.<br/>__*Default*__: ALWAYS
 
 
 
@@ -15636,7 +16522,7 @@ Name | Type | Description
 **allowLibraryDependencies**?🔹 | <code>boolean</code> | Allow the project to include `peerDependencies` and `bundledDependencies`.<br/>__*Default*__: true
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoDetectBin**?🔹 | <code>boolean</code> | Automatically add all executables under the `bin` directory to your `package.json` file under the `bin` section.<br/>__*Default*__: true
 **bin**?🔹 | <code>Map<string, string></code> | Binary programs vended with your module.<br/>__*Optional*__
@@ -15685,7 +16571,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -15701,8 +16587,9 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -15730,6 +16617,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -15771,7 +16659,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -16241,6 +17129,20 @@ Name | Type | Description
 
 
 
+## struct PytestSampleOptions 🔹 <a id="projen-python-pytestsampleoptions"></a>
+
+
+Options for python test code sample.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**moduleName**🔹 | <code>string</code> | Name of the python package as used in imports and filenames.
+**testdir**🔹 | <code>string</code> | Test directory.
+
+
+
 ## struct PythonPackagingOptions 🔹 <a id="projen-python-pythonpackagingoptions"></a>
 
 
@@ -16257,6 +17159,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
 **homepage**?🔹 | <code>string</code> | A URL to the website of the project.<br/>__*Optional*__
 **license**?🔹 | <code>string</code> | License of this package as an SPDX identifier.<br/>__*Optional*__
+**packageName**?🔹 | <code>string</code> | Package name.<br/>__*Optional*__
 **poetryOptions**?🔹 | <code>[python.PoetryPyprojectOptionsWithoutDeps](#projen-python-poetrypyprojectoptionswithoutdeps)</code> | Additional options to set for poetry if using poetry.<br/>__*Optional*__
 **setupConfig**?🔹 | <code>Map<string, any></code> | Additional fields to pass in the setup() function if using setuptools.<br/>__*Optional*__
 
@@ -16281,6 +17184,7 @@ Name | Type | Description
 **autoMergeOptions**?🔹 | <code>[github.AutoMergeOptions](#projen-github-automergeoptions)</code> | Configure options for automatic merging on GitHub.<br/>__*Default*__: see defaults in `AutoMergeOptions`
 **classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **deps**?🔹 | <code>Array<string></code> | List of runtime dependencies for this project.<br/>__*Default*__: []
 **description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
@@ -16294,6 +17198,7 @@ Name | Type | Description
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
+**packageName**?🔹 | <code>string</code> | Package name.<br/>__*Optional*__
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **pip**?🔹 | <code>boolean</code> | Use pip with a requirements.txt file to track project dependencies.<br/>__*Default*__: true
 **poetry**?🔹 | <code>boolean</code> | Use poetry to manage your project dependencies, virtual environment, and (optional) packaging/publishing.<br/>__*Default*__: false
@@ -16328,6 +17233,13 @@ Name | Type | Description
 
 
 Options for python sample code.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**dir**🔹 | <code>string</code> | Sample code directory.
+
 
 
 ## struct RequirementsFileOptions 🔹 <a id="projen-python-requirementsfileoptions"></a>
@@ -16387,6 +17299,7 @@ Options for a release branch.
 Name | Type | Description 
 -----|------|-------------
 **majorVersion**🔹 | <code>number</code> | The major versions released from this branch.
+**minMajorVersion**?🔹 | <code>number</code> | The minimum major version to release.<br/>__*Optional*__
 **npmDistTag**?🔹 | <code>string</code> | The npm distribution tag to use for this branch.<br/>__*Default*__: "latest"
 **prerelease**?🔹 | <code>string</code> | Bump the version as a pre-release tag.<br/>__*Default*__: normal releases
 **tagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
@@ -16397,15 +17310,16 @@ Name | Type | Description
 ## struct CodeArtifactOptions 🔹 <a id="projen-release-codeartifactoptions"></a>
 
 
-
+Options for publishing packages to AWS CodeArtifact.
 
 
 
 Name | Type | Description 
 -----|------|-------------
-**accessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_ACCESS_KEY_ID"
+**accessKeyIdSecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_ACCESS_KEY_ID". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
+**authProvider**?🔹 | <code>[release.CodeArtifactAuthProvider](#projen-release-codeartifactauthprovider)</code> | Provider to use for authorizing requests to AWS CodeArtifact.<br/>__*Default*__: CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
 **roleToAssume**?🔹 | <code>string</code> | ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).<br/>__*Default*__: undefined
-**secretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: "AWS_SECRET_ACCESS_KEY"
+**secretAccessKeySecret**?🔹 | <code>string</code> | GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.<br/>__*Default*__: When the `authProvider` value is set to `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is "AWS_SECRET_ACCESS_KEY". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this value must be left undefined.
 
 
 
@@ -16664,6 +17578,7 @@ Name | Type | Description
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | __*Optional*__
 **publibVersion**?🔹 | <code>string</code> | Version requirement for `publib`.<br/>__*Default*__: "latest"
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
+**workflowNodeVersion**?🔹 | <code>string</code> | Node version to setup in GitHub workflows if any node-based CLI utilities are needed.<br/>__*Default*__: 14.x
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -16701,6 +17616,7 @@ Name | Type | Description
 **githubRelease**?🔹 | <code>boolean</code> | Create a GitHub release for each release.<br/>__*Default*__: true
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
@@ -16711,12 +17627,13 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
 **versionrcOptions**?🔹 | <code>Map<string, any></code> | Custom configuration used when creating changelog with standard-version package.<br/>__*Default*__: standard configuration applicable for GitHub repositories
 **workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
+**workflowNodeVersion**?🔹 | <code>string</code> | Node version to setup in GitHub workflows if any node-based CLI utilities are needed.<br/>__*Default*__: 14.x
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
 
@@ -16732,6 +17649,7 @@ Name | Type | Description
 -----|------|-------------
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm.<br/>__*Default*__: "latest"
 **majorVersion**?🔹 | <code>number</code> | Major version to release from the default branch.<br/>__*Default*__: Major version is not enforced.
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
@@ -16742,7 +17660,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflowName**?🔹 | <code>string</code> | The name of the default release workflow.<br/>__*Default*__: "Release"
 **releaseWorkflowSetupSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | A set of workflow steps to execute in order to setup the workflow container.<br/>__*Optional*__
@@ -16794,7 +17712,7 @@ Name | Type | Description
 **artifactsDirectory**?⚠️ | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?⚠️ | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?⚠️ | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?⚠️ | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?⚠️ | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?⚠️ | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?⚠️ | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?⚠️ | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -16810,8 +17728,9 @@ Name | Type | Description
 **bundlerOptions**?⚠️ | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?⚠️ | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?⚠️ | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?⚠️ | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?⚠️ | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?⚠️ | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?⚠️ | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?⚠️ | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?⚠️ | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -16846,6 +17765,7 @@ Name | Type | Description
 **maxNodeVersion**?⚠️ | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?⚠️ | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?⚠️ | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?⚠️ | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?⚠️ | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -16889,7 +17809,7 @@ Name | Type | Description
 **releaseFailureIssue**?⚠️ | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?⚠️ | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?⚠️ | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?⚠️ | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?⚠️ | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?⚠️ | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -16936,7 +17856,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -16952,8 +17872,9 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -16988,6 +17909,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -17031,7 +17953,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -17124,9 +18046,15 @@ Name | Type | Description
 **request**🔹 | <code>string</code> | <span></span>
 **type**🔹 | <code>string</code> | <span></span>
 **args**?🔹 | <code>Array<string></code> | __*Optional*__
+**console**?🔹 | <code>[vscode.Console](#projen-vscode-console)</code> | __*Optional*__
+**cwd**?🔹 | <code>string</code> | __*Optional*__
 **debugServer**?🔹 | <code>number</code> | __*Optional*__
+**disableOptimisticBPs**?🔹 | <code>boolean</code> | __*Optional*__
+**env**?🔹 | <code>Map<string, string &#124; boolean></code> | Set value to `false` to unset an existing environment variable.<br/>__*Optional*__
+**envFile**?🔹 | <code>string</code> | __*Optional*__
 **internalConsoleOptions**?🔹 | <code>[vscode.InternalConsoleOptions](#projen-vscode-internalconsoleoptions)</code> | __*Optional*__
 **outFiles**?🔹 | <code>Array<string></code> | __*Optional*__
+**port**?🔹 | <code>number</code> | __*Optional*__
 **postDebugTask**?🔹 | <code>string</code> | __*Optional*__
 **preLaunchTask**?🔹 | <code>string</code> | __*Optional*__
 **presentation**?🔹 | <code>[vscode.Presentation](#projen-vscode-presentation)</code> | __*Optional*__
@@ -17134,6 +18062,7 @@ Name | Type | Description
 **runtimeArgs**?🔹 | <code>Array<string></code> | __*Optional*__
 **serverReadyAction**?🔹 | <code>[vscode.ServerReadyAction](#projen-vscode-serverreadyaction)</code> | __*Optional*__
 **skipFiles**?🔹 | <code>Array<string></code> | __*Optional*__
+**stopOnEntry**?🔹 | <code>boolean</code> | __*Optional*__
 **url**?🔹 | <code>string</code> | __*Optional*__
 **webRoot**?🔹 | <code>string</code> | __*Optional*__
 
@@ -17183,7 +18112,7 @@ Name | Type | Description
 **assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: "public"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -17199,8 +18128,9 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -17228,6 +18158,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -17269,7 +18200,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -17313,7 +18244,7 @@ Name | Type | Description
 **assetsdir**?🔹 | <code>string</code> | Assets directory.<br/>__*Default*__: "public"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -17329,8 +18260,9 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -17365,6 +18297,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -17408,7 +18341,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -17485,7 +18418,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -17501,8 +18434,9 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -17530,6 +18464,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -17571,7 +18506,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -17644,7 +18579,7 @@ Name | Type | Description
 **artifactsDirectory**?🔹 | <code>string</code> | A directory which will contain build artifacts.<br/>__*Default*__: "dist"
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
-**authorOrganization**?🔹 | <code>boolean</code> | Author's Organization.<br/>__*Optional*__
+**authorOrganization**?🔹 | <code>boolean</code> | Is the author an organization.<br/>__*Optional*__
 **authorUrl**?🔹 | <code>string</code> | Author's URL / Website.<br/>__*Optional*__
 **autoApproveOptions**?🔹 | <code>[github.AutoApproveOptions](#projen-github-autoapproveoptions)</code> | Enable and configure the 'auto approve' workflow.<br/>__*Default*__: auto approve is disabled
 **autoApproveUpgrades**?🔹 | <code>boolean</code> | Automatically approve deps upgrade PRs, allowing them to be merged by mergify (if configued).<br/>__*Default*__: true
@@ -17660,8 +18595,9 @@ Name | Type | Description
 **bundlerOptions**?🔹 | <code>[javascript.BundlerOptions](#projen-javascript-bundleroptions)</code> | Options for `Bundler`.<br/>__*Optional*__
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
-**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v1 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
+**codeCov**?🔹 | <code>boolean</code> | Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/ Uses codecov/codecov-action@v3 A secret is required for private repos. Configured with @codeCovTokenSecret.<br/>__*Default*__: false
 **codeCovTokenSecret**?🔹 | <code>string</code> | Define the secret name for a specified https://codecov.io/ token A secret is required to send coverage for private repositories.<br/>__*Default*__: if this option is not specified, only public repositories are supported
+**commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **copyrightOwner**?🔹 | <code>string</code> | License copyright owner.<br/>__*Default*__: defaults to the value of authorName or "" if `authorName` is undefined.
 **copyrightPeriod**?🔹 | <code>string</code> | The copyright years to put in the LICENSE file.<br/>__*Default*__: current year
 **dependabot**?🔹 | <code>boolean</code> | Use dependabot to handle dependency upgrades.<br/>__*Default*__: false
@@ -17696,6 +18632,7 @@ Name | Type | Description
 **maxNodeVersion**?🔹 | <code>string</code> | Minimum node.js version to require via `engines` (inclusive).<br/>__*Default*__: no max
 **mergify**?⚠️ | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?⚠️ | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for mergify.<br/>__*Default*__: default options
+**minMajorVersion**?🔹 | <code>number</code> | Minimal Major version to release.<br/>__*Default*__: No minimum version is being enforced
 **minNodeVersion**?🔹 | <code>string</code> | Minimum Node.js version to require via package.json `engines` (inclusive).<br/>__*Default*__: no "engines" specified
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
@@ -17739,7 +18676,7 @@ Name | Type | Description
 **releaseFailureIssue**?🔹 | <code>boolean</code> | Create a github issue on every failed publishing task.<br/>__*Default*__: false
 **releaseFailureIssueLabel**?🔹 | <code>string</code> | The label to apply to issues indicating publish failures.<br/>__*Default*__: "failed-release"
 **releaseSchedule**?⚠️ | <code>string</code> | CRON schedule to trigger new releases.<br/>__*Default*__: no scheduled releases
-**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: no prefix
+**releaseTagPrefix**?🔹 | <code>string</code> | Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers.<br/>__*Default*__: "v"
 **releaseToNpm**?🔹 | <code>boolean</code> | Automatically release to npm when new versions are introduced.<br/>__*Default*__: false
 **releaseTrigger**?🔹 | <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code> | The release trigger to use.<br/>__*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
 **releaseWorkflow**?⚠️ | <code>boolean</code> | DEPRECATED: renamed to `release`.<br/>__*Default*__: true if not a subproject
@@ -17797,6 +18734,7 @@ Name | Description
 **BUILD** 🔹|The dependency is required to run the `build` task.
 **TEST** 🔹|The dependency is required to run the `test` task.
 **DEVENV** 🔹|The dependency is required for development (e.g. IDE plugins).
+**OVERRIDE** 🔹|Transient dependency that needs to be overwritten.
 
 
 ## enum DockerComposeProtocol 🔹 <a id="projen-dockercomposeprotocol"></a>
@@ -17950,6 +18888,18 @@ Name | Description
 **ALWAYS** 🔹|
 **ON_SUCCESS** 🔹|
 **ON_FAIL** 🔹|
+
+
+## enum PipelineParameterType 🔹 <a id="projen-circleci-pipelineparametertype"></a>
+
+Pipeline parameter types.
+
+Name | Description
+-----|-----
+**STRING** 🔹|
+**BOOLEAN** 🔹|
+**INTEGER** 🔹|
+**ENUM** 🔹|
 
 
 ## enum ResourceClass 🔹 <a id="projen-circleci-resourceclass"></a>
@@ -18159,6 +19109,16 @@ Name | Description
 **DAILY** 🔹|Automatically bump & release a new version on a daily basis.
 
 
+## enum CodeArtifactAuthProvider 🔹 <a id="projen-javascript-codeartifactauthprovider"></a>
+
+Options for authorizing requests to a AWS CodeArtifact npm repository.
+
+Name | Description
+-----|-----
+**ACCESS_AND_SECRET_KEY_PAIR** 🔹|Fixed credentials provided via Github secrets.
+**GITHUB_OIDC** 🔹|Ephemeral credentials provided via Github's OIDC integration with an IAM role.
+
+
 ## enum EmbeddedLanguageFormatting 🔹 <a id="projen-javascript-embeddedlanguageformatting"></a>
 
 
@@ -18267,6 +19227,37 @@ Name | Description
 -----|-----
 **CLASSIC** 🔹|TypeScript's former default resolution strategy.
 **NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
+
+
+## enum UpdateSnapshot 🔹 <a id="projen-javascript-updatesnapshot"></a>
+
+
+
+Name | Description
+-----|-----
+**ALWAYS** 🔹|Always update snapshots in "test" task.
+**NEVER** 🔹|Never update snapshots in "test" task and create a separate "test:update" task.
+
+
+## enum CodeArtifactAuthProvider 🔹 <a id="projen-release-codeartifactauthprovider"></a>
+
+Options for authorizing requests to a AWS CodeArtifact npm repository.
+
+Name | Description
+-----|-----
+**ACCESS_AND_SECRET_KEY_PAIR** 🔹|Fixed credentials provided via Github secrets.
+**GITHUB_OIDC** 🔹|Ephemeral credentials provided via Github's OIDC integration with an IAM role.
+
+
+## enum Console 🔹 <a id="projen-vscode-console"></a>
+
+Controls where to launch the debug target Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
+
+Name | Description
+-----|-----
+**INTERNAL_CONSOLE** 🔹|
+**INTEGRATED_TERMINAL** 🔹|
+**EXTERNAL_TERMINAL** 🔹|
 
 
 ## enum InternalConsoleOptions 🔹 <a id="projen-vscode-internalconsoleoptions"></a>

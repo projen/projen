@@ -1,7 +1,10 @@
 import * as path from "path";
 import { Component } from "../component";
 import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from "../github";
-import { BUILD_ARTIFACT_NAME } from "../github/constants";
+import {
+  BUILD_ARTIFACT_NAME,
+  PERMISSION_BACKUP_FILE,
+} from "../github/constants";
 import { Job, JobPermission, JobStep } from "../github/workflows-model";
 import { Task } from "../task";
 import { Version } from "../version";
@@ -79,6 +82,19 @@ export interface ReleaseProjectOptions {
   readonly majorVersion?: number;
 
   /**
+   * Minimal Major version to release
+   *
+   *
+   * This can be useful to set to 1, as breaking changes before the 1.x major
+   * release are not incrementing the major version number.
+   *
+   * Can not be set together with `majorVersion`.
+   *
+   * @default - No minimum version is being enforced
+   */
+  readonly minMajorVersion?: number;
+
+  /**
    * Bump versions from the default branch as pre-releases (e.g. "beta",
    * "alpha", "pre").
    *
@@ -141,7 +157,7 @@ export interface ReleaseProjectOptions {
    * history, you may need to manually tag your latest release
    * with the new prefix.
    *
-   * @default - no prefix
+   * @default "v"
    */
   readonly releaseTagPrefix?: string;
 
@@ -218,6 +234,15 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    * @default "dist"
    */
   readonly artifactsDirectory: string;
+
+  /**
+   * Node version to setup in GitHub workflows if any node-based CLI utilities
+   * are needed. For example `publib`, the CLI projen uses to publish releases,
+   * is an npm library.
+   *
+   * @default 14.x
+   */
+  readonly workflowNodeVersion?: string;
 }
 
 /**
@@ -321,6 +346,7 @@ export class Release extends Component {
       workflowRunsOn: options.workflowRunsOn,
       publishTasks: options.publishTasks,
       dryRun: options.publishDryRun,
+      workflowNodeVersion: options.workflowNodeVersion,
     });
 
     const githubRelease = options.githubRelease ?? true;
@@ -345,6 +371,7 @@ export class Release extends Component {
     this.defaultBranch = this._addBranch(options.branch, {
       prerelease: options.prerelease,
       majorVersion: options.majorVersion,
+      minMajorVersion: options.minMajorVersion,
       workflowName: options.releaseWorkflowName ?? "release",
       tagPrefix: options.releaseTagPrefix,
       npmDistTag: options.npmDistTag,
@@ -482,6 +509,16 @@ export class Release extends Component {
       env.MAJOR = branch.majorVersion.toString();
     }
 
+    if (branch.minMajorVersion !== undefined) {
+      if (branch.majorVersion !== undefined) {
+        throw new Error(
+          `minMajorVersion and majorVersion cannot be used together.`
+        );
+      }
+
+      env.MIN_MAJOR = branch.minMajorVersion.toString();
+    }
+
     if (branch.prerelease) {
       env.PRERELEASE = branch.prerelease;
     }
@@ -543,18 +580,26 @@ export class Release extends Component {
     postBuildSteps.push({
       name: "Check for new commits",
       id: GIT_REMOTE_STEPID,
-      run: `echo ::set-output name=${LATEST_COMMIT_OUTPUT}::"$(git ls-remote origin -h \${{ github.ref }} | cut -f1)"`,
+      run: `echo "${LATEST_COMMIT_OUTPUT}=$(git ls-remote origin -h \${{ github.ref }} | cut -f1)" >> $GITHUB_OUTPUT`,
     });
 
-    postBuildSteps.push({
-      name: "Upload artifact",
-      if: noNewCommits,
-      uses: "actions/upload-artifact@v2.1.1",
-      with: {
-        name: BUILD_ARTIFACT_NAME,
-        path: this.artifactsDirectory,
+    postBuildSteps.push(
+      {
+        name: "Backup artifact permissions",
+        if: noNewCommits,
+        continueOnError: true,
+        run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
       },
-    });
+      {
+        name: "Upload artifact",
+        if: noNewCommits,
+        uses: "actions/upload-artifact@v3",
+        with: {
+          name: BUILD_ARTIFACT_NAME,
+          path: this.artifactsDirectory,
+        },
+      }
+    );
 
     if (this.github && !this.releaseTrigger.isManual) {
       return new TaskWorkflow(this.github, {
@@ -613,6 +658,11 @@ export interface BranchOptions {
    * The major versions released from this branch.
    */
   readonly majorVersion: number;
+
+  /**
+   * The minimum major version to release.
+   */
+  readonly minMajorVersion?: number;
 
   /**
    * Bump the version as a pre-release tag.

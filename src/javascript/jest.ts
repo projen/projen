@@ -517,7 +517,17 @@ export interface JestOptions {
   readonly preserveDefaultReporters?: boolean;
 
   /**
+   * Whether to update snapshots in task "test" (which is executed in task "build" and build workflows),
+   * or create a separate task "test:update" for updating snapshots.
+   *
+   * @default - ALWAYS
+   */
+  readonly updateSnapshot?: UpdateSnapshot;
+
+  /**
    * The version of jest to use.
+   *
+   * Note that same version is used as version of `@types/jest` and `ts-jest` (if Typescript in use), so given version should work also for those.
    *
    * @default - installs the latest jest version
    */
@@ -535,6 +545,12 @@ export interface JestOptions {
    * @default - default jest configuration
    */
   readonly jestConfig?: JestConfigOptions;
+
+  /**
+   * Additional options to pass to the Jest CLI invocation
+   * @default - no extra options
+   */
+  readonly extraCliOptions?: string[];
 }
 
 export interface CoverageThreshold {
@@ -542,6 +558,18 @@ export interface CoverageThreshold {
   readonly functions?: number;
   readonly lines?: number;
   readonly statements?: number;
+}
+
+export enum UpdateSnapshot {
+  /**
+   * Always update snapshots in "test" task.
+   */
+  ALWAYS = "always",
+
+  /**
+   * Never update snapshots in "test" task and create a separate "test:update" task.
+   */
+  NEVER = "never",
 }
 
 export interface HasteConfig {
@@ -557,9 +585,9 @@ type JestReporter = [string, { [key: string]: any }] | string;
 /**
  * Installs the following npm scripts:
  *
- * - `test` will run `jest --passWithNoTests`
- * - `test:watch` will run `jest --watch`
- * - `test:update` will run `jest -u`
+ * - `test`, intended for testing locally and in CI. Will update snapshots unless `updateSnapshot: UpdateSnapshot: NEVER` is set.
+ * - `test:watch`, intended for automatically rerunning tests when files change.
+ * - `test:update`, intended for testing locally and updating snapshots to match the latest unit under test. Only available when `updateSnapshot: UpdateSnapshot: NEVER`.
  *
  */
 export class Jest {
@@ -567,6 +595,7 @@ export class Jest {
    * Escape hatch.
    */
   public readonly config: any;
+  public readonly jestVersion: string;
 
   private readonly testMatch: string[];
   private readonly ignorePatterns: string[];
@@ -576,6 +605,7 @@ export class Jest {
   private readonly file?: JsonFile;
   private readonly reporters: JestReporter[];
   private readonly jestConfig?: JestConfigOptions;
+  private readonly extraCliOptions: string[];
   private _snapshotResolver: string | undefined;
 
   constructor(project: NodeProject, options: JestOptions = {}) {
@@ -590,13 +620,11 @@ export class Jest {
 
     // Jest snapshot files are generated files!
     project.root.annotateGenerated("*.snap");
-
-    const jestDep = options.jestVersion
-      ? `jest@${options.jestVersion}`
-      : "jest@^27"; // pinning at version 27 for now because of an issue: https://github.com/projen/projen/issues/1801
-    project.addDevDeps(jestDep);
+    this.jestVersion = options.jestVersion ? `@${options.jestVersion}` : "";
+    project.addDevDeps(`jest${this.jestVersion}`);
 
     this.jestConfig = options.jestConfig;
+    this.extraCliOptions = options.extraCliOptions ?? [];
 
     this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ??
       options.ignorePatterns ?? ["/node_modules/"];
@@ -669,7 +697,7 @@ export class Jest {
       };
     }
 
-    this.configureTestCommand();
+    this.configureTestCommand(options.updateSnapshot ?? UpdateSnapshot.ALWAYS);
 
     if (options.configFilePath) {
       this.file = new JsonFile(project, options.configFilePath, {
@@ -716,18 +744,12 @@ export class Jest {
     this._snapshotResolver = file;
   }
 
-  private configureTestCommand() {
-    const jestOpts = ["--passWithNoTests", "--all"];
+  private configureTestCommand(updateSnapshot: UpdateSnapshot) {
+    const jestOpts = ["--passWithNoTests", ...this.extraCliOptions];
     const jestConfigOpts =
       this.file && this.file.path != "jest.config.json"
         ? ` -c ${this.file.path}`
         : "";
-
-    // since our build & release workflows have anti-tamper protection, it is
-    // safe to always run tests with --updateSnapshot. if a snapshot changes,
-    // the `build` workflow will either fail (on forks) or push the update and
-    // `release` workflows will fail.
-    jestOpts.push("--updateSnapshot");
 
     // as recommended in the jest docs, node > 14 may use native v8 coverage collection
     // https://jestjs.io/docs/en/cli#--coverageproviderprovider
@@ -738,21 +760,30 @@ export class Jest {
       jestOpts.push("--coverageProvider=v8");
     }
 
-    this.project.testTask.exec(`jest ${jestOpts.join(" ")}${jestConfigOpts}`);
+    if (updateSnapshot === UpdateSnapshot.ALWAYS) {
+      jestOpts.push("--updateSnapshot");
+    } else {
+      jestOpts.push("--ci"); // to prevent accepting new snapshots
+
+      const testUpdate = this.project.tasks.tryFind("test:update");
+      if (!testUpdate) {
+        this.project.addTask("test:update", {
+          description: "Update jest snapshots",
+          exec: `jest --updateSnapshot ${jestOpts.join(" ")}${jestConfigOpts}`,
+          receiveArgs: true,
+        });
+      }
+    }
+
+    this.project.testTask.exec(`jest ${jestOpts.join(" ")}${jestConfigOpts}`, {
+      receiveArgs: true,
+    });
 
     const testWatch = this.project.tasks.tryFind("test:watch");
     if (!testWatch) {
       this.project.addTask("test:watch", {
         description: "Run jest in watch mode",
         exec: `jest --watch${jestConfigOpts}`,
-      });
-    }
-
-    const testUpdate = this.project.tasks.tryFind("test:update");
-    if (!testUpdate) {
-      this.project.addTask("test:update", {
-        description: "Update jest snapshots",
-        exec: `jest --updateSnapshot${jestConfigOpts}`,
       });
     }
   }

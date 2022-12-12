@@ -24,6 +24,8 @@ export class PullRequestTemplate extends TextFile {
           ? options.lines
           : ["Fixes #"],
       marker: false,
+      // GitHub needs to read the file from the repository in order to work.
+      committed: true,
     });
   }
 }

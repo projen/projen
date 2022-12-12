@@ -1,9 +1,10 @@
+import path from "path";
 import { ProjectOption } from "../../lib/inventory";
 import { generateJavaOptionNames } from "../../lib/java";
 import { Pom } from "../../src/java";
 import { Projenrc, getJavaImport } from "../../src/java/projenrc";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
-import { synthSnapshot, TestProject } from "../util";
+import { synthSnapshot, TestProject, withProjectDir } from "../util";
 
 test("projenrc.java support", () => {
   // GIVEN
@@ -179,4 +180,22 @@ test("assert getJavaImport returns the correct import with no submodules", () =>
 
   // THEN
   expect(fullName).toEqual("software.aws.sdk.Component");
+});
+
+test("assert generateProjenrc returns the correct projenrc with correct outdir", () => {
+  withProjectDir((projectdir) => {
+    const newOutDir = path.join(projectdir, "foo");
+    const project = new TestProject(
+      renderProjenInitOptions("projen.java.JavaProject", {
+        outdir: newOutDir,
+      })
+    );
+    const pom = new Pom(project, {
+      groupId: "my.group.id",
+      artifactId: "hello-world",
+      version: "1.2.3",
+    });
+    const projen = new Projenrc(project, pom);
+    expect(projen.project.outdir).toEqual(newOutDir);
+  });
 });

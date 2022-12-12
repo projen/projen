@@ -90,7 +90,7 @@ export function toReleaseVersion(
   assemblyVersion: string,
   target: TargetName
 ): string {
-  const version = parse(assemblyVersion, { includePrerelease: true });
+  const version = parse(assemblyVersion);
   if (version == null) {
     throw new Error(
       `Unable to parse the provided assembly version: "${assemblyVersion}"`
@@ -123,13 +123,13 @@ export function toReleaseVersion(
       switch (label) {
         case "dev":
         case "pre":
-          return `${baseVersion}.dev${sequence}`;
+          return `${baseVersion}.dev${sequence}`; // PEP 404 see developmental release as X.Y.devN
         case "alpha":
-          return `${baseVersion}.a${sequence}`;
+          return `${baseVersion}a${sequence}`; // PEP 404 see alpha release as X.YaN
         case "beta":
-          return `${baseVersion}.b${sequence}`;
+          return `${baseVersion}b${sequence}`; // PEP 404 see beta release as X.YbN
         case "rc":
-          return `${baseVersion}.rc${sequence}`;
+          return `${baseVersion}rc${sequence}`; // PEP 404 see release candidate as X.YrcN
         default:
           throw new Error(
             `Unable to map prerelease identifier (in: ${assemblyVersion}) to python, as label ${inspect(

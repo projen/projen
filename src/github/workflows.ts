@@ -59,7 +59,10 @@ export class GithubWorkflow extends Component {
   public readonly projenCredentials: GithubCredentials;
 
   private events: workflows.Triggers = {};
-  private jobs: Record<string, workflows.Job> = {};
+  private jobs: Record<
+    string,
+    workflows.Job | workflows.JobCallingReusableWorkflow
+  > = {};
 
   constructor(
     github: GitHub,
@@ -80,6 +83,8 @@ export class GithubWorkflow extends Component {
         `.github/workflows/${name.toLocaleLowerCase()}.yml`,
         {
           obj: () => this.renderWorkflow(),
+          // GitHub needs to read the file from the repository in order to work.
+          committed: true,
         }
       );
     }
@@ -102,7 +107,10 @@ export class GithubWorkflow extends Component {
    * @param id The job name (unique within the workflow)
    * @param job The job specification
    */
-  public addJob(id: string, job: workflows.Job): void {
+  public addJob(
+    id: string,
+    job: workflows.Job | workflows.JobCallingReusableWorkflow
+  ): void {
     this.addJobs({ [id]: job });
   }
 
@@ -111,7 +119,9 @@ export class GithubWorkflow extends Component {
    *
    * @param jobs Jobs to add.
    */
-  public addJobs(jobs: Record<string, workflows.Job>) {
+  public addJobs(
+    jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>
+  ) {
     // verify that job has a "permissions" statement to ensure workflow can
     // operate in repos with default tokens set to readonly
     for (const [id, job] of Object.entries(jobs)) {
@@ -124,10 +134,12 @@ export class GithubWorkflow extends Component {
 
     // verify that job has a "runsOn" statement to ensure a worker can be selected appropriately
     for (const [id, job] of Object.entries(jobs)) {
-      if (job.runsOn.length === 0) {
-        throw new Error(
-          `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
-        );
+      if (!("uses" in job)) {
+        if ("runsOn" in job && job.runsOn.length === 0) {
+          throw new Error(
+            `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
+          );
+        }
       }
     }
 
@@ -166,7 +178,9 @@ function snakeCaseKeys<T = unknown>(obj: T): T {
   return result as any;
 }
 
-function renderJobs(jobs: Record<string, workflows.Job>) {
+function renderJobs(
+  jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>
+) {
   const result: Record<string, unknown> = {};
   for (const [name, job] of Object.entries(jobs)) {
     result[name] = renderJob(job);
@@ -174,8 +188,24 @@ function renderJobs(jobs: Record<string, workflows.Job>) {
   return result;
 
   /** @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions */
-  function renderJob(job: workflows.Job) {
+  function renderJob(
+    job: workflows.Job | workflows.JobCallingReusableWorkflow
+  ) {
     const steps = new Array<workflows.JobStep>();
+
+    // https://docs.github.com/en/actions/using-workflows/reusing-workflows#supported-keywords-for-jobs-that-call-a-reusable-workflow
+    if ("uses" in job) {
+      return {
+        name: job.name,
+        needs: arrayOrScalar(job.needs),
+        if: job.if,
+        permissions: kebabCaseKeys(job.permissions),
+        concurrency: job.concurrency,
+        uses: job.uses,
+        with: job.with,
+        secrets: job.secrets,
+      };
+    }
 
     if (job.tools) {
       steps.push(...setupTools(job.tools));
@@ -195,7 +225,7 @@ function renderJobs(jobs: Record<string, workflows.Job>) {
       env: job.env,
       defaults: kebabCaseKeys(job.defaults),
       if: job.if,
-      steps: steps,
+      steps: steps.map(renderStep),
       "timeout-minutes": job.timeoutMinutes,
       strategy: renderJobStrategy(job.strategy),
       "continue-on-error": job.continueOnError,
@@ -245,6 +275,21 @@ function renderJobs(jobs: Record<string, workflows.Job>) {
 
     return rendered;
   }
+
+  function renderStep(step: workflows.JobStep) {
+    return {
+      name: step.name,
+      id: step.id,
+      if: step.if,
+      uses: step.uses,
+      env: step.env,
+      run: step.run,
+      with: step.with,
+      "continue-on-error": step.continueOnError,
+      "timeout-minutes": step.timeoutMinutes,
+      "working-directory": step.workingDirectory,
+    };
+  }
 }
 
 function arrayOrScalar<T>(arr: T[] | undefined): T | T[] | undefined {
@@ -283,7 +328,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.python) {
     steps.push({
-      uses: "actions/setup-python@v3",
+      uses: "actions/setup-python@v4",
       with: { "python-version": tools.python.version },
     });
   }
@@ -297,7 +342,7 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.dotnet) {
     steps.push({
-      uses: "actions/setup-dotnet@v2",
+      uses: "actions/setup-dotnet@v3",
       with: { "dotnet-version": tools.dotnet.version },
     });
   }

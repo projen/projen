@@ -1,7 +1,8 @@
 import { Component } from "../component";
+import { DependencyType } from "../dependencies";
+import { Project } from "../project";
 import { Task } from "../task";
 import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
-import { PythonProject } from "./python-project";
 import { SetupPy } from "./setuppy";
 
 /**
@@ -15,11 +16,15 @@ export class Setuptools extends Component implements IPythonPackaging {
    */
   public readonly publishTestTask: Task;
 
-  constructor(project: PythonProject, options: PythonPackagingOptions) {
+  constructor(
+    project: Project,
+    //moduleName: string,
+    options: PythonPackagingOptions
+  ) {
     super(project);
 
-    project.addDevDependency("wheel@0.36.2");
-    project.addDevDependency("twine@3.3.0");
+    project.deps.addDependency("wheel@0.36.2", DependencyType.DEVENV);
+    project.deps.addDependency("twine@3.3.0", DependencyType.DEVENV);
 
     project.packageTask.exec("python setup.py sdist bdist_wheel");
 
@@ -33,9 +38,11 @@ export class Setuptools extends Component implements IPythonPackaging {
       exec: "twine upload dist/*",
     });
 
+    const packages = options.packageName ? [options.packageName] : undefined;
+
     new SetupPy(project, {
       name: project.name,
-      packages: [project.moduleName],
+      packages: packages,
       authorName: options.authorName,
       authorEmail: options.authorEmail,
       version: options.version,

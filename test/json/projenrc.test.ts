@@ -1,6 +1,7 @@
+import path from "path";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { Projenrc } from "../../src/projenrc-json";
-import { synthSnapshot, TestProject } from "../util";
+import { synthSnapshot, TestProject, withProjectDir } from "../util";
 
 test("projenrc.json default project", () => {
   // GIVEN
@@ -35,4 +36,18 @@ test("projenrc.json with typed options", () => {
 
   // THEN
   expect(synthSnapshot(project)).toMatchSnapshot();
+});
+
+test("projenrc.json new project in outdir", () => {
+  withProjectDir((projectdir) => {
+    const newOutDir = path.join(projectdir, "foo");
+    const project = new TestProject(
+      renderProjenInitOptions("projen.typescript.TypeScriptProject", {
+        outdir: newOutDir,
+      })
+    );
+    const projen = new Projenrc(project);
+
+    expect(projen.project.outdir).toEqual(newOutDir);
+  });
 });

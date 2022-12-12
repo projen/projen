@@ -1,4 +1,3 @@
-import * as json5 from "json5";
 import * as yaml from "yaml";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
@@ -10,6 +9,7 @@ import {
   NodeProjectOptions,
   NodePackage,
   NpmAccess,
+  CodeArtifactAuthProvider,
 } from "../../src/javascript";
 import { JsonFile } from "../../src/json";
 import * as logging from "../../src/logging";
@@ -84,7 +84,7 @@ describe("deps", () => {
     expect(pkgjson.devDependencies.eee).toStrictEqual("^1");
     expect(pkgjson.devDependencies.fff).toStrictEqual("^2");
     expect(pkgjson.peerDependencies).toBeUndefined();
-    expect(pkgjson.dependencieds).toBeUndefined();
+    expect(pkgjson.dependencies).toBeUndefined();
   });
 
   test("peerDependencies", () => {
@@ -111,7 +111,7 @@ describe("deps", () => {
     expect(pkgjson.devDependencies.bbb).toStrictEqual("4.5.6");
     expect(pkgjson.devDependencies.ccc).toStrictEqual("*");
     expect(pkgjson.devDependencies.ddd).toStrictEqual("*");
-    expect(pkgjson.dependencieds).toBeUndefined();
+    expect(pkgjson.dependencies).toBeUndefined();
   });
 
   test("peerDependencies without pinnedDevDep", () => {
@@ -146,7 +146,7 @@ describe("deps", () => {
     ].forEach((d) => delete pkgjson.devDependencies[d]);
 
     expect(pkgjson.devDependencies).toStrictEqual({});
-    expect(pkgjson.dependencieds).toBeUndefined();
+    expect(pkgjson.dependencies).toBeUndefined();
   });
 
   test("devDeps are only added for peerDeps if a runtime dep does not already exist", () => {
@@ -392,7 +392,7 @@ describe("npm publishing options", () => {
     });
   });
 
-  test("AWS CodeArtifact registry", () => {
+  test("AWS CodeArtifact registry with default authProvider", () => {
     // GIVEN
     const project = new TestProject();
 
@@ -421,7 +421,36 @@ describe("npm publishing options", () => {
     );
   });
 
-  test("AWS CodeArtifact registry custom values", () => {
+  test("AWS CodeArtifact registry with explicit access/secret key pair authProvider", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      npmRegistryUrl:
+        "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+    });
+
+    // THEN
+    expect(npm.npmRegistry).toStrictEqual(
+      "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
+    );
+    expect(npm.npmRegistryUrl).toStrictEqual(
+      "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/"
+    );
+    expect(packageJson(project).publishConfig).toStrictEqual({
+      registry:
+        "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+    });
+    expect(npm.codeArtifactOptions?.accessKeyIdSecret).toStrictEqual(
+      "AWS_ACCESS_KEY_ID"
+    );
+    expect(npm.codeArtifactOptions?.secretAccessKeySecret).toStrictEqual(
+      "AWS_SECRET_ACCESS_KEY"
+    );
+  });
+
+  test("AWS CodeArtifact registry custom access/secret key values with default authProvider", () => {
     // GIVEN
     const project = new TestProject();
 
@@ -436,6 +465,36 @@ describe("npm publishing options", () => {
     });
 
     // THEN
+    expect(npm.codeArtifactOptions?.authProvider).toStrictEqual(
+      CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
+    );
+    expect(npm.codeArtifactOptions?.accessKeyIdSecret).toStrictEqual(
+      "OTHER_AWS_ACCESS_KEY_ID"
+    );
+    expect(npm.codeArtifactOptions?.secretAccessKeySecret).toStrictEqual(
+      "OTHER_AWS_SECRET_ACCESS_KEY"
+    );
+  });
+
+  test("AWS CodeArtifact registry custom access/secret key values with explicit access/secret key authProvider", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      npmRegistryUrl:
+        "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+      codeArtifactOptions: {
+        authProvider: CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR,
+        accessKeyIdSecret: "OTHER_AWS_ACCESS_KEY_ID",
+        secretAccessKeySecret: "OTHER_AWS_SECRET_ACCESS_KEY",
+      },
+    });
+
+    // THEN
+    expect(npm.codeArtifactOptions?.authProvider).toStrictEqual(
+      CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
+    );
     expect(npm.codeArtifactOptions?.accessKeyIdSecret).toStrictEqual(
       "OTHER_AWS_ACCESS_KEY_ID"
     );
@@ -500,7 +559,72 @@ describe("npm publishing options", () => {
     });
 
     // THEN
+    expect(npm.codeArtifactOptions?.authProvider).toStrictEqual(
+      CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
+    );
     expect(npm.codeArtifactOptions?.roleToAssume).toStrictEqual(roleArn);
+  });
+
+  test("AWS CodeArtifact registry with Github OIDC auth", () => {
+    // GIVEN
+    const project = new TestProject();
+    const roleArn = "role-arn";
+
+    // WHEN
+    const npm = new NodePackage(project, {
+      npmRegistryUrl:
+        "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+      codeArtifactOptions: {
+        authProvider: CodeArtifactAuthProvider.GITHUB_OIDC,
+        roleToAssume: roleArn,
+      },
+    });
+
+    // THEN
+    expect(npm.codeArtifactOptions?.authProvider).toStrictEqual(
+      CodeArtifactAuthProvider.GITHUB_OIDC
+    );
+    expect(npm.codeArtifactOptions?.roleToAssume).toStrictEqual(roleArn);
+    expect(npm.codeArtifactOptions?.accessKeyIdSecret).toBeUndefined();
+    expect(npm.codeArtifactOptions?.secretAccessKeySecret).toBeUndefined();
+  });
+
+  test("throw when 'codeArtifactOptions.accessKeyIdSecret' or 'codeArtifactOptions.secretAccessKeySecret' is used with Github OIDC auth provider for AWS CodeArtifact", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // THEN
+    expect(() => {
+      new NodePackage(project, {
+        npmRegistryUrl:
+          "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+        codeArtifactOptions: {
+          authProvider: CodeArtifactAuthProvider.GITHUB_OIDC,
+          accessKeyIdSecret: "INVALID_AWS_ACCESS_KEY_ID",
+          secretAccessKeySecret: "INVALID_AWS_SECRET_ACCESS_KEY",
+        },
+      });
+    }).toThrow(
+      "access and secret key pair should not be provided when using GITHUB_OIDC auth provider for AWS CodeArtifact"
+    );
+  });
+
+  test("throw when 'codeArtifactOptions.roleToAssume' not defined when using Github OIDC auth provider for AWS CodeArtifact", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // THEN
+    expect(() => {
+      new NodePackage(project, {
+        npmRegistryUrl:
+          "https://my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+        codeArtifactOptions: {
+          authProvider: CodeArtifactAuthProvider.GITHUB_OIDC,
+        },
+      });
+    }).toThrow(
+      '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options'
+    );
   });
 
   test("deprecated npmRegistry can be used instead of npmRegistryUrl and then https:// is assumed", () => {
@@ -560,6 +684,24 @@ test("extend github release workflow", () => {
   expect(workflow).toContain(
     "username: ${{ secrets.DOCKER_USERNAME }}\n          password: ${{ secrets.DOCKER_PASSWORD }}"
   );
+});
+
+test("codecov upload added to github release workflow", () => {
+  const project = new TestNodeProject({
+    codeCov: true,
+  });
+
+  const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
+  expect(workflow).toContain("uses: codecov/codecov-action@v3");
+});
+
+test("codecov upload not added to github release workflow", () => {
+  const project = new TestNodeProject({
+    codeCov: false,
+  });
+
+  const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
+  expect(workflow).not.toContain("uses: codecov/codecov-action@v3");
 });
 
 describe("scripts", () => {
@@ -676,11 +818,38 @@ test("enabling renovatebot does not overturn mergify: false", () => {
   //       as JSON object path delimiters.
   expect(snapshot).not.toHaveProperty([".mergify.yml"]);
   expect(snapshot).toHaveProperty(["renovate.json5"]);
-  expect(json5.parse(snapshot["renovate.json5"]).ignoreDeps).toEqual([
+  expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
     "jest-junit",
-    "jest",
     "npm-check-updates",
     "standard-version",
+    "projen",
+  ]);
+  expect(snapshot["renovate.json5"]).toMatchSnapshot();
+});
+
+test("renovatebot ignored dependency overrides", () => {
+  // WHEN
+  const project = new TestNodeProject({
+    renovatebot: true,
+    mergify: false,
+  });
+
+  project.package.addPackageResolutions(
+    "axios",
+    "some-overriden-package@1.0.0"
+  );
+
+  // THEN
+  const snapshot = synthSnapshot(project);
+  // Note: brackets important, they prevent "." in filenames to be interpreted
+  //       as JSON object path delimiters.
+  expect(snapshot).toHaveProperty(["renovate.json5"]);
+  expect(snapshot["renovate.json5"].ignoreDeps).toMatchObject([
+    "jest-junit",
+    "npm-check-updates",
+    "standard-version",
+    "axios",
+    "some-overriden-package",
     "projen",
   ]);
   expect(snapshot["renovate.json5"]).toMatchSnapshot();

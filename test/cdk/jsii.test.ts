@@ -1,6 +1,22 @@
 import * as yaml from "yaml";
+import { javascript } from "../../src";
 import { JsiiProject } from "../../src/cdk";
 import { synthSnapshot } from "../util";
+
+describe("JsiiProject with default settings", () => {
+  it("synthesizes", () => {
+    const project = new JsiiProject({
+      authorAddress: "hello@hello.com",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "project",
+      defaultReleaseBranch: "main",
+    });
+
+    const output = synthSnapshot(project);
+    expect(output).toMatchSnapshot();
+  });
+});
 
 describe("author", () => {
   test("authorEmail and authorAddress can be the same value", () => {
@@ -306,6 +322,63 @@ describe("publish to go", () => {
   });
 });
 
+describe("publish to nuget", () => {
+  test("minimal options", () => {
+    const project = new JsiiProject({
+      authorAddress: "https://foo.bar",
+      authorUrl: "https://foo.bar",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "testproject",
+      publishToNuget: {
+        dotNetNamespace: "DotNet.Namespace",
+        packageId: "PackageId",
+      },
+      defaultReleaseBranch: "master",
+      publishTasks: true,
+    });
+
+    const output = synthSnapshot(project);
+    const targets = output["package.json"].jsii.targets;
+    expect(targets).toStrictEqual({
+      dotnet: {
+        namespace: "DotNet.Namespace",
+        packageId: "PackageId",
+      },
+    });
+
+    expect(output[".github/workflows/release.yml"]).toMatchSnapshot();
+  });
+  test("all options", () => {
+    const project = new JsiiProject({
+      authorAddress: "https://foo.bar",
+      authorUrl: "https://foo.bar",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "testproject",
+      publishToNuget: {
+        dotNetNamespace: "DotNet.Namespace",
+        packageId: "PackageId",
+        iconUrl: "https://example.com/logo.png",
+      },
+      defaultReleaseBranch: "master",
+      publishTasks: true,
+    });
+
+    const output = synthSnapshot(project);
+    const targets = output["package.json"].jsii.targets;
+    expect(targets).toStrictEqual({
+      dotnet: {
+        namespace: "DotNet.Namespace",
+        packageId: "PackageId",
+        iconUrl: "https://example.com/logo.png",
+      },
+    });
+
+    expect(output[".github/workflows/release.yml"]).toMatchSnapshot();
+  });
+});
+
 describe("docgen", () => {
   test("true should just work", () => {
     const project = new JsiiProject({
@@ -340,6 +413,41 @@ describe("docgen", () => {
     expect(
       output[".projen/tasks.json"].tasks.docgen.steps[0].exec
     ).toStrictEqual("jsii-docgen -o docs.md");
+  });
+});
+
+describe("compile options", () => {
+  test("be default, assembly is not compressed", () => {
+    const project = new JsiiProject({
+      author: "My name",
+      name: "testproject",
+      authorAddress: "https://foo.bar",
+      defaultReleaseBranch: "main",
+      repositoryUrl: "https://github.com/foo/bar.git",
+    });
+
+    const output = synthSnapshot(project);
+    expect(
+      output[".projen/tasks.json"].tasks.compile.steps[0].exec
+    ).toStrictEqual("jsii --silence-warnings=reserved-word");
+  });
+
+  test("assembly can be compressed", () => {
+    const project = new JsiiProject({
+      author: "My name",
+      name: "testproject",
+      authorAddress: "https://foo.bar",
+      defaultReleaseBranch: "main",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      compressAssembly: true,
+    });
+
+    const output = synthSnapshot(project);
+    expect(
+      output[".projen/tasks.json"].tasks.compile.steps[0].exec
+    ).toStrictEqual(
+      "jsii --silence-warnings=reserved-word --compress-assembly"
+    );
   });
 });
 
@@ -405,6 +513,98 @@ describe("language bindings", () => {
       const job = release.jobs[`release_${language}`];
       expect(job).toBeDefined();
       expect(job).toMatchSnapshot();
+    }
+  );
+});
+
+describe("workflows use global workflowRunsOn option", () => {
+  const project = new JsiiProject({
+    author: "My name",
+    name: "testproject",
+    authorAddress: "https://foo.bar",
+    defaultReleaseBranch: "main",
+    repositoryUrl: "https://github.com/foo/bar.git",
+    publishToGo: { moduleName: "github.com/foo/bar" },
+    publishToMaven: {
+      javaPackage: "io.github.cdklabs.watchful",
+      mavenGroupId: "io.github.cdklabs",
+      mavenArtifactId: "cdk-watchful",
+    },
+    publishToNuget: {
+      dotNetNamespace: "DotNet.Namespace",
+      packageId: "PackageId",
+    },
+    publishToPypi: { distName: "dist-name", module: "module-name" },
+    workflowRunsOn: ["self-hosted", "linux", "x64"],
+  });
+
+  const output = synthSnapshot(project);
+  const build = yaml.parse(output[".github/workflows/build.yml"]);
+  const release = yaml.parse(output[".github/workflows/release.yml"]);
+
+  const EXPECTED_RUNS_ON = ["self-hosted", "linux", "x64"];
+
+  expect(build).toHaveProperty("jobs.build.runs-on", EXPECTED_RUNS_ON);
+  expect(build).toHaveProperty("jobs.self-mutation.runs-on", EXPECTED_RUNS_ON);
+
+  test.each(["js", "java", "python", "dotnet", "go"])(
+    "snapshot %s",
+    (language) => {
+      expect(build).toHaveProperty(
+        `jobs.package-${language}.runs-on`,
+        EXPECTED_RUNS_ON
+      );
+    }
+  );
+
+  test.each(["pypi", "nuget", "npm", "maven", "golang"])(
+    "release workflow includes release_%s job",
+    (language) => {
+      expect(release).toHaveProperty(
+        `jobs.release_${language}.runs-on`,
+        EXPECTED_RUNS_ON
+      );
+    }
+  );
+});
+
+describe("release workflow use packageManager option", () => {
+  const project = new JsiiProject({
+    author: "My name",
+    name: "testproject",
+    authorAddress: "https://foo.bar",
+    defaultReleaseBranch: "main",
+    repositoryUrl: "https://github.com/foo/bar.git",
+    publishToGo: { moduleName: "github.com/foo/bar" },
+    publishToMaven: {
+      javaPackage: "io.github.cdklabs.watchful",
+      mavenGroupId: "io.github.cdklabs",
+      mavenArtifactId: "cdk-watchful",
+    },
+    publishToNuget: {
+      dotNetNamespace: "DotNet.Namespace",
+      packageId: "PackageId",
+    },
+    publishToPypi: { distName: "dist-name", module: "module-name" },
+    packageManager: javascript.NodePackageManager.PNPM,
+  });
+
+  const output = synthSnapshot(project);
+  const release = yaml.parse(output[".github/workflows/release.yml"]);
+
+  const EXPECTED_STEP = "pnpm/action-setup";
+
+  test.each(["pypi", "nuget", "npm", "maven", "golang"])(
+    "release workflow includes release_%s job have pnpm action setup step",
+    (language) => {
+      expect(release).toHaveProperty(
+        `jobs.release_${language}.steps`,
+        expect.arrayContaining([
+          expect.objectContaining({
+            uses: expect.stringContaining(EXPECTED_STEP),
+          }),
+        ])
+      );
     }
   );
 });

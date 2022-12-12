@@ -1,4 +1,4 @@
-import { PythonProject, PythonProjectOptions } from "../../src/python";
+import { python } from "../../src";
 import { synthSnapshot } from "../util";
 
 test("poetry enabled", () => {
@@ -92,8 +92,8 @@ test("poetry enabled with poetry-specific options", () => {
   expect(synthSnapshot(p)).toMatchSnapshot();
 });
 
-class TestPythonProject extends PythonProject {
-  constructor(options: Partial<PythonProjectOptions> = {}) {
+class TestPythonProject extends python.PythonProject {
+  constructor(options: Partial<python.PythonProjectOptions> = {}) {
     super({
       ...options,
       clobber: false,

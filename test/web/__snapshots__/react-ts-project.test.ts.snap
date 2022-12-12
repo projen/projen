@@ -2,8 +2,240 @@
 
 exports[`defaults 1`] = `
 Object {
+  ".eslintrc.json": Object {
+    "env": Object {
+      "jest": true,
+      "node": true,
+    },
+    "extends": Array [
+      "plugin:import/typescript",
+    ],
+    "ignorePatterns": Array [
+      "*.js",
+      "!.projenrc.js",
+      "*.d.ts",
+      "node_modules/",
+      "*.generated.ts",
+      "coverage",
+    ],
+    "overrides": Array [
+      Object {
+        "files": Array [
+          ".projenrc.js",
+        ],
+        "rules": Object {
+          "@typescript-eslint/no-require-imports": "off",
+          "import/no-extraneous-dependencies": "off",
+        },
+      },
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": Object {
+      "ecmaVersion": 2018,
+      "project": "./tsconfig.dev.json",
+      "sourceType": "module",
+    },
+    "plugins": Array [
+      "@typescript-eslint",
+      "import",
+    ],
+    "root": true,
+    "rules": Object {
+      "@typescript-eslint/indent": Array [
+        "error",
+        2,
+      ],
+      "@typescript-eslint/member-delimiter-style": Array [
+        "error",
+      ],
+      "@typescript-eslint/member-ordering": Array [
+        "error",
+        Object {
+          "default": Array [
+            "public-static-field",
+            "public-static-method",
+            "protected-static-field",
+            "protected-static-method",
+            "private-static-field",
+            "private-static-method",
+            "field",
+            "constructor",
+            "method",
+          ],
+        },
+      ],
+      "@typescript-eslint/no-floating-promises": Array [
+        "error",
+      ],
+      "@typescript-eslint/no-require-imports": Array [
+        "error",
+      ],
+      "@typescript-eslint/no-shadow": Array [
+        "error",
+      ],
+      "@typescript-eslint/return-await": Array [
+        "error",
+      ],
+      "array-bracket-newline": Array [
+        "error",
+        "consistent",
+      ],
+      "array-bracket-spacing": Array [
+        "error",
+        "never",
+      ],
+      "brace-style": Array [
+        "error",
+        "1tbs",
+        Object {
+          "allowSingleLine": true,
+        },
+      ],
+      "comma-dangle": Array [
+        "error",
+        "always-multiline",
+      ],
+      "comma-spacing": Array [
+        "error",
+        Object {
+          "after": true,
+          "before": false,
+        },
+      ],
+      "curly": Array [
+        "error",
+        "multi-line",
+        "consistent",
+      ],
+      "dot-notation": Array [
+        "error",
+      ],
+      "import/no-extraneous-dependencies": Array [
+        "error",
+        Object {
+          "devDependencies": Array [
+            "**/src/**/*.test.tsx",
+            "**/src/setupTests.ts",
+          ],
+          "optionalDependencies": false,
+          "peerDependencies": true,
+        },
+      ],
+      "import/no-unresolved": Array [
+        "error",
+      ],
+      "import/order": Array [
+        "warn",
+        Object {
+          "alphabetize": Object {
+            "caseInsensitive": true,
+            "order": "asc",
+          },
+          "groups": Array [
+            "builtin",
+            "external",
+          ],
+        },
+      ],
+      "indent": Array [
+        "off",
+      ],
+      "key-spacing": Array [
+        "error",
+      ],
+      "keyword-spacing": Array [
+        "error",
+      ],
+      "max-len": Array [
+        "error",
+        Object {
+          "code": 150,
+          "ignoreComments": true,
+          "ignoreRegExpLiterals": true,
+          "ignoreStrings": true,
+          "ignoreTemplateLiterals": true,
+          "ignoreUrls": true,
+        },
+      ],
+      "no-bitwise": Array [
+        "error",
+      ],
+      "no-duplicate-imports": Array [
+        "error",
+      ],
+      "no-multi-spaces": Array [
+        "error",
+        Object {
+          "ignoreEOLComments": false,
+        },
+      ],
+      "no-multiple-empty-lines": Array [
+        "error",
+      ],
+      "no-return-await": Array [
+        "off",
+      ],
+      "no-shadow": Array [
+        "off",
+      ],
+      "no-trailing-spaces": Array [
+        "error",
+      ],
+      "object-curly-newline": Array [
+        "error",
+        Object {
+          "consistent": true,
+          "multiline": true,
+        },
+      ],
+      "object-curly-spacing": Array [
+        "error",
+        "always",
+      ],
+      "object-property-newline": Array [
+        "error",
+        Object {
+          "allowAllPropertiesOnSameLine": true,
+        },
+      ],
+      "quote-props": Array [
+        "error",
+        "consistent-as-needed",
+      ],
+      "quotes": Array [
+        "error",
+        "single",
+        Object {
+          "avoidEscape": true,
+        },
+      ],
+      "semi": Array [
+        "error",
+        "always",
+      ],
+      "space-before-blocks": Array [
+        "error",
+      ],
+    },
+    "settings": Object {
+      "import/parsers": Object {
+        "@typescript-eslint/parser": Array [
+          ".ts",
+          ".tsx",
+        ],
+      },
+      "import/resolver": Object {
+        "node": Object {},
+        "typescript": Object {
+          "alwaysTryTypes": true,
+          "project": "./tsconfig.dev.json",
+        },
+      },
+    },
+  },
   ".gitattributes": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 
+/.eslintrc.json linguist-generated
 /.gitattributes linguist-generated
 /.github/pull_request_template.md linguist-generated
 /.github/workflows/build.yml linguist-generated
@@ -47,14 +279,14 @@ jobs:
         run: yarn install --check-files
       - name: build
         run: npx projen build
-      - id: self_mutation
-        name: Find mutations
+      - name: Find mutations
+        id: self_mutation
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=self_mutation_happened::true\\"
-      - if: steps.self_mutation.outputs.self_mutation_happened
-        name: Upload patch
-        uses: actions/upload-artifact@v2
+          git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_happened=true\\" >> $GITHUB_OUTPUT
+      - name: Upload patch
+        if: steps.self_mutation.outputs.self_mutation_happened
+        uses: actions/upload-artifact@v3
         with:
           name: .repo.patch
           path: .repo.patch
@@ -113,7 +345,7 @@ jobs:
     permissions:
       pull-requests: write
     steps:
-      - uses: amannn/action-semantic-pull-request@v4.5.0
+      - uses: amannn/action-semantic-pull-request@v5.0.2
         env:
           GITHUB_TOKEN: \${{ secrets.GITHUB_TOKEN }}
         with:
@@ -145,14 +377,14 @@ jobs:
         run: yarn install --check-files --frozen-lockfile
       - name: Upgrade dependencies
         run: npx projen upgrade
-      - id: create_patch
-        name: Find mutations
+      - name: Find mutations
+        id: create_patch
         run: |-
           git add .
-          git diff --staged --patch --exit-code > .repo.patch || echo \\"::set-output name=patch_created::true\\"
-      - if: steps.create_patch.outputs.patch_created
-        name: Upload patch
-        uses: actions/upload-artifact@v2
+          git diff --staged --patch --exit-code > .repo.patch || echo \\"patch_created=true\\" >> $GITHUB_OUTPUT
+      - name: Upload patch
+        if: steps.create_patch.outputs.patch_created
+        uses: actions/upload-artifact@v3
         with:
           name: .repo.patch
           path: .repo.patch
@@ -252,6 +484,7 @@ jspm_packages/
 !/src/
 /lib
 /dist/
+!/.eslintrc.json
 /build/
 ",
   ".mergify.yml": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
@@ -280,6 +513,7 @@ pull_request_rules:
 ",
   ".npmignore": "# ~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".
 /.projen/
+permissions-backup.acl
 /.mergify.yml
 /test/
 /tsconfig.dev.json
@@ -294,6 +528,7 @@ dist
 /.idea/
 /.projenrc.js
 tsconfig.tsbuildinfo
+/.eslintrc.json
 /build/
 ",
   ".projen/deps.json": Object {
@@ -329,9 +564,40 @@ tsconfig.tsbuildinfo
         "type": "build",
       },
       Object {
+        "name": "@typescript-eslint/eslint-plugin",
+        "type": "build",
+        "version": "^5",
+      },
+      Object {
+        "name": "@typescript-eslint/parser",
+        "type": "build",
+        "version": "^5",
+      },
+      Object {
+        "name": "eslint-import-resolver-node",
+        "type": "build",
+      },
+      Object {
+        "name": "eslint-import-resolver-typescript",
+        "type": "build",
+      },
+      Object {
+        "name": "eslint-plugin-import",
+        "type": "build",
+      },
+      Object {
+        "name": "eslint",
+        "type": "build",
+        "version": "^8",
+      },
+      Object {
+        "name": "json-schema",
+        "type": "build",
+      },
+      Object {
         "name": "npm-check-updates",
         "type": "build",
-        "version": "^12",
+        "version": "^16",
       },
       Object {
         "name": "projen",
@@ -341,6 +607,16 @@ tsconfig.tsbuildinfo
         "name": "typescript",
         "type": "build",
         "version": "^4.0.3",
+      },
+      Object {
+        "name": "@types/express-serve-static-core",
+        "type": "override",
+        "version": "4.17.30",
+      },
+      Object {
+        "name": "@types/express",
+        "type": "override",
+        "version": "4.17.13",
       },
       Object {
         "name": "react",
@@ -364,6 +640,7 @@ tsconfig.tsbuildinfo
   ".projen/files.json": Object {
     "//": "~~ Generated by projen. To modify, edit .projenrc.js and run \\"npx projen\\".",
     "files": Array [
+      ".eslintrc.json",
       ".gitattributes",
       ".github/pull_request_template.md",
       ".github/workflows/build.yml",
@@ -449,6 +726,15 @@ tsconfig.tsbuildinfo
           },
         ],
       },
+      "eslint": Object {
+        "description": "Runs eslint against the codebase",
+        "name": "eslint",
+        "steps": Array [
+          Object {
+            "exec": "eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js",
+          },
+        ],
+      },
       "package": Object {
         "description": "Creates the distribution package",
         "name": "package",
@@ -469,6 +755,9 @@ tsconfig.tsbuildinfo
         "description": "Run tests",
         "name": "test",
         "steps": Array [
+          Object {
+            "spawn": "eslint",
+          },
           Object {
             "exec": "react-scripts test --watchAll=false",
           },
@@ -756,7 +1045,14 @@ tsconfig.tsbuildinfo
       "@types/node": "^14",
       "@types/react": "*",
       "@types/react-dom": "*",
-      "npm-check-updates": "^12",
+      "@typescript-eslint/eslint-plugin": "^5",
+      "@typescript-eslint/parser": "^5",
+      "eslint": "^8",
+      "eslint-import-resolver-node": "*",
+      "eslint-import-resolver-typescript": "*",
+      "eslint-plugin-import": "*",
+      "json-schema": "*",
+      "npm-check-updates": "^16",
       "projen": "*",
       "typescript": "^4.0.3",
     },
@@ -768,12 +1064,17 @@ tsconfig.tsbuildinfo
     },
     "license": "Apache-2.0",
     "name": "test-nextjs-project",
+    "resolutions": Object {
+      "@types/express": "4.17.13",
+      "@types/express-serve-static-core": "4.17.30",
+    },
     "scripts": Object {
       "build": "npx projen build",
       "compile": "npx projen compile",
       "default": "npx projen default",
       "dev": "npx projen dev",
       "eject": "npx projen eject",
+      "eslint": "npx projen eslint",
       "package": "npx projen package",
       "post-compile": "npx projen post-compile",
       "post-upgrade": "npx projen post-upgrade",
@@ -1015,7 +1316,7 @@ import '@testing-library/jest-dom';
         "dom.iterable",
         "esnext",
       ],
-      "module": "esnext",
+      "module": "commonjs",
       "moduleResolution": "node",
       "noEmit": true,
       "noEmitOnError": false,
@@ -1062,7 +1363,7 @@ import '@testing-library/jest-dom';
         "dom.iterable",
         "esnext",
       ],
-      "module": "esnext",
+      "module": "commonjs",
       "moduleResolution": "node",
       "noEmit": true,
       "noEmitOnError": false,

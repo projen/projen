@@ -1,4 +1,5 @@
 import { Component } from "./component";
+import { DependencyType } from "./dependencies";
 import { JsonFile } from "./json";
 import { Project } from "./project";
 
@@ -138,7 +139,7 @@ export class Renovatebot extends Component {
     const renovateIgnore = [
       ...new Set(
         this._project.deps.all
-          .filter((dep) => dep.version)
+          .filter((dep) => dep.version || dep.type === DependencyType.OVERRIDE)
           .map((dep) => dep.name)
           .concat(this.explicitIgnores)
       ),

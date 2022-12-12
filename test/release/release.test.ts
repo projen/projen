@@ -1,6 +1,11 @@
 import * as YAML from "yaml";
 import { JobPermission } from "../../src/github/workflows-model";
-import { Publisher, Release, ReleaseTrigger } from "../../src/release";
+import {
+  Publisher,
+  Release,
+  ReleaseTrigger,
+  CodeArtifactAuthProvider,
+} from "../../src/release";
 import { synthSnapshot, TestProject } from "../util";
 
 test("minimal", () => {
@@ -163,7 +168,7 @@ test("publishers are added as jobs to all release workflows", () => {
       release_npm: {},
     },
   });
-  expect(wf1.jobs.release.steps.length).toBe(5);
+  expect(wf1.jobs.release.steps.length).toBe(6);
   const wf2 = YAML.parse(outdir[".github/workflows/release-2.x.yml"]);
   expect(wf2).toMatchObject({
     on: { push: { branches: ["2.x"] } },
@@ -174,7 +179,7 @@ test("publishers are added as jobs to all release workflows", () => {
       release_npm: {},
     },
   });
-  expect(wf2.jobs.release.steps.length).toBe(5);
+  expect(wf2.jobs.release.steps.length).toBe(6);
 });
 
 test("manual releases do not generate a release workflow", () => {
@@ -323,6 +328,25 @@ test("majorVersion can be 0", () => {
   // THEN
   const outdir = synthSnapshot(project);
   expect(outdir[".github/workflows/release.yml"]).toMatchSnapshot();
+  expect(outdir[".projen/tasks.json"]).toMatchSnapshot();
+});
+
+test("minMajorVersion can be 1", () => {
+  // GIVEN
+  const project = new TestProject();
+
+  // WHEN
+  new Release(project, {
+    task: project.buildTask,
+    versionFile: "goo.json",
+    branch: "main",
+    minMajorVersion: 1,
+    publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
   expect(outdir[".projen/tasks.json"]).toMatchSnapshot();
 });
 
@@ -539,6 +563,34 @@ test("AWS CodeArtifact is supported with role to assume", () => {
   expect(outdir).toMatchSnapshot();
 });
 
+test("AWS CodeArtifact is supported with Github OIDC auth", () => {
+  // GIVEN
+  const project = new TestProject();
+  const roleArn = "role-arn";
+
+  const release = new Release(project, {
+    task: project.buildTask,
+    versionFile: "version.json",
+    branch: "main",
+    publishTasks: true, // to increase coverage
+    artifactsDirectory: "dist",
+  });
+
+  // WHEN
+  release.publisher.publishToNpm({
+    registry:
+      "my-domain-111122223333.d.codeartifact.us-west-2.amazonaws.com/npm/my_repo/",
+    codeArtifactOptions: {
+      roleToAssume: roleArn,
+      authProvider: CodeArtifactAuthProvider.GITHUB_OIDC,
+    },
+  });
+
+  // THEN
+  const outdir = synthSnapshot(project);
+  expect(outdir).toMatchSnapshot();
+});
+
 test("can be modified with escape hatches", () => {
   // GIVEN
   const project = new TestProject();
@@ -617,11 +669,11 @@ describe("npmDistTag", () => {
     const files = synthSnapshot(project);
     const main = YAML.parse(files[".github/workflows/release.yml"]);
     const main3 = YAML.parse(files[".github/workflows/release-main-3.yml"]);
-    expect(main.jobs.release_npm.steps[2].env).toStrictEqual({
+    expect(main.jobs.release_npm.steps[3].env).toStrictEqual({
       NPM_DIST_TAG: "latest",
       NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
     });
-    expect(main3.jobs.release_npm.steps[2].env).toStrictEqual({
+    expect(main3.jobs.release_npm.steps[3].env).toStrictEqual({
       NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
       NPM_DIST_TAG: "latest-3",
     });
@@ -651,11 +703,11 @@ describe("npmDistTag", () => {
     const files = synthSnapshot(project);
     const main = YAML.parse(files[".github/workflows/release.yml"]);
     const main3 = YAML.parse(files[".github/workflows/release-main-3.yml"]);
-    expect(main.jobs.release_npm.steps[2].env).toStrictEqual({
+    expect(main.jobs.release_npm.steps[3].env).toStrictEqual({
       NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
       NPM_DIST_TAG: "main-tag",
     });
-    expect(main3.jobs.release_npm.steps[2].env).toStrictEqual({
+    expect(main3.jobs.release_npm.steps[3].env).toStrictEqual({
       NPM_TOKEN: "${{ secrets.NPM_TOKEN }}",
       NPM_DIST_TAG: "latest-3",
     });

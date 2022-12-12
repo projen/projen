@@ -17,6 +17,11 @@ export interface PythonPackagingOptions {
   readonly authorName: string;
 
   /**
+   * Package name.
+   */
+  readonly packageName?: string;
+
+  /**
    * Author's e-mail
    *
    * @default $GIT_USER_EMAIL

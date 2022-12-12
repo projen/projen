@@ -1,9 +1,9 @@
 import * as path from "path";
 import * as fs from "fs-extra";
 import { Component } from "../component";
+import { Project } from "../project";
 import { exec } from "../util";
 import { IPythonEnv } from "./python-env";
-import { PythonProject } from "./python-project";
 
 /**
  * Options for venv.
@@ -26,7 +26,7 @@ export class Venv extends Component implements IPythonEnv {
    */
   private readonly envdir: string;
 
-  constructor(project: PythonProject, options: VenvOptions = {}) {
+  constructor(project: Project, options: VenvOptions = {}) {
     super(project);
 
     this.envdir = options.envdir ?? ".env";

@@ -44,7 +44,10 @@ jobs:
             echo $HELLOW_WORLD
             echo this is multiline
     parameters:
-      job1Param: fluffy
+      job1Param:
+        description: job1Param description
+        type: string
+        default: job1Param default
 workflows:
   workflow1:
     when:
@@ -66,10 +69,6 @@ workflows:
     jobs:
       - job1:
           name: renamedJob2
-          parameters:
-            hello-world-1: 12
-            hello_world_2: true
-            helloWorld3: pansen
           matrix:
             parameters:
               version:

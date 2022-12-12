@@ -2,6 +2,7 @@ import { Component } from "../component";
 import {
   BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
+  PERMISSION_BACKUP_FILE,
 } from "../github/constants";
 import {
   Job,
@@ -59,6 +60,15 @@ export interface PublisherOptions {
    * @deprecated use `publibVersion` instead
    */
   readonly jsiiReleaseVersion?: string;
+
+  /**
+   * Node version to setup in GitHub workflows if any node-based CLI utilities
+   * are needed. For example `publib`, the CLI projen uses to publish releases,
+   * is an npm library.
+   *
+   * @default 14.x
+   */
+  readonly workflowNodeVersion?: string;
 
   /**
    * Version requirement for `publib`.
@@ -134,6 +144,8 @@ export class Publisher extends Component {
 
   private readonly dryRun: boolean;
 
+  private readonly workflowNodeVersion: string;
+
   constructor(project: Project, options: PublisherOptions) {
     super(project);
 
@@ -144,6 +156,7 @@ export class Publisher extends Component {
     this.jsiiReleaseVersion = this.publibVersion;
     this.condition = options.condition;
     this.dryRun = options.dryRun ?? false;
+    this.workflowNodeVersion = options.workflowNodeVersion ?? "14.x";
 
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? "failed-release";
@@ -212,6 +225,7 @@ export class Publisher extends Component {
         PROJECT_CHANGELOG_FILE: projectChangelogFile ?? "",
         VERSION_FILE: versionFile,
       },
+      condition: '! git log --oneline -1 | grep -q "chore(release):"',
     });
     if (projectChangelogFile) {
       publishTask.builtin("release/update-changelog");
@@ -232,32 +246,7 @@ export class Publisher extends Component {
    * @param options Options
    */
   public publishToGitHubReleases(options: GitHubReleasesPublishOptions) {
-    const changelogFile = options.changelogFile;
-    const releaseTagFile = options.releaseTagFile;
-
-    // create a github release
-    const releaseTag = `$(cat ${releaseTagFile})`;
-
-    const ghRelease = [
-      `gh release create ${releaseTag}`,
-      "-R $GITHUB_REPOSITORY",
-      `-F ${changelogFile}`,
-      `-t ${releaseTag}`,
-      "--target $GITHUB_REF",
-    ].join(" ");
-
-    // release script that does not error when re-releasing a given version
-    const idempotentRelease = [
-      "errout=$(mktemp);",
-      `${ghRelease} 2> $errout && true;`,
-      "exitcode=$?;",
-      'if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then',
-      "cat $errout;",
-      "exit $exitcode;",
-      "fi",
-    ].join(" ");
-
-    this.addPublishJob((): PublishJobOptions => {
+    this.addPublishJob((_branch, branchOptions): PublishJobOptions => {
       return {
         name: "github",
         registryName: "GitHub Releases",
@@ -271,7 +260,7 @@ export class Publisher extends Component {
           GITHUB_REPOSITORY: "${{ github.repository }}",
           GITHUB_REF: "${{ github.ref }}",
         },
-        run: idempotentRelease,
+        run: this.githubReleaseCommand(options, branchOptions),
       };
     });
   }
@@ -285,12 +274,43 @@ export class Publisher extends Component {
       GITHUB_PACKAGES_REGISTRY
     );
     const isAwsCodeArtifact = isAwsCodeArtifactRegistry(options.registry);
+    const isAwsCodeArtifactWithOidc =
+      isAwsCodeArtifact &&
+      options.codeArtifactOptions?.authProvider ===
+        CodeArtifactAuthProvider.GITHUB_OIDC;
     const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
 
     if (options.distTag) {
       this.project.logger.warn(
         "The `distTag` option is deprecated. Use the npmDistTag option instead."
       );
+    }
+
+    const prePublishSteps: JobStep[] = options.prePublishSteps ?? [];
+
+    if (isAwsCodeArtifactWithOidc) {
+      if (
+        options.codeArtifactOptions?.accessKeyIdSecret ||
+        options.codeArtifactOptions?.secretAccessKeySecret
+      ) {
+        throw new Error(
+          "access and secret key pair should not be provided when using GITHUB_OIDC auth provider for AWS CodeArtifact"
+        );
+      } else if (!options.codeArtifactOptions?.roleToAssume) {
+        throw new Error(
+          '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options'
+        );
+      }
+      const regionCaptureRegex = /codeartifact\.(.+)\.amazonaws\.com/;
+      const region = options.registry?.match(regionCaptureRegex)?.[1];
+      prePublishSteps.push({
+        name: "Configure AWS Credentials via GitHub OIDC Provider",
+        uses: "aws-actions/configure-aws-credentials@v1",
+        with: {
+          "role-to-assume": options.codeArtifactOptions.roleToAssume,
+          "aws-region": region,
+        },
+      });
     }
 
     this.addPublishJob((_branch, branchOptions): PublishJobOptions => {
@@ -303,7 +323,7 @@ export class Publisher extends Component {
       return {
         name: "npm",
         publishTools: PUBLIB_TOOLCHAIN.js,
-        prePublishSteps: options.prePublishSteps ?? [],
+        prePublishSteps,
         run: this.publibCommand("publib-npm"),
         registryName: "npm",
         env: {
@@ -311,27 +331,31 @@ export class Publisher extends Component {
           NPM_REGISTRY: options.registry,
         },
         permissions: {
+          idToken: isAwsCodeArtifactWithOidc ? JobPermission.WRITE : undefined,
           contents: JobPermission.READ,
           packages: isGitHubPackages ? JobPermission.WRITE : undefined,
         },
         workflowEnv: {
           NPM_TOKEN: npmToken ? secret(npmToken) : undefined,
           // if we are publishing to AWS CodeArtifact, pass AWS access keys that will be used to generate NPM_TOKEN using AWS CLI.
-          AWS_ACCESS_KEY_ID: isAwsCodeArtifact
-            ? secret(
-                options.codeArtifactOptions?.accessKeyIdSecret ??
-                  "AWS_ACCESS_KEY_ID"
-              )
-            : undefined,
-          AWS_SECRET_ACCESS_KEY: isAwsCodeArtifact
-            ? secret(
-                options.codeArtifactOptions?.secretAccessKeySecret ??
-                  "AWS_SECRET_ACCESS_KEY"
-              )
-            : undefined,
-          AWS_ROLE_TO_ASSUME: isAwsCodeArtifact
-            ? options.codeArtifactOptions?.roleToAssume
-            : undefined,
+          AWS_ACCESS_KEY_ID:
+            isAwsCodeArtifact && !isAwsCodeArtifactWithOidc
+              ? secret(
+                  options.codeArtifactOptions?.accessKeyIdSecret ??
+                    "AWS_ACCESS_KEY_ID"
+                )
+              : undefined,
+          AWS_SECRET_ACCESS_KEY:
+            isAwsCodeArtifact && !isAwsCodeArtifactWithOidc
+              ? secret(
+                  options.codeArtifactOptions?.secretAccessKeySecret ??
+                    "AWS_SECRET_ACCESS_KEY"
+                )
+              : undefined,
+          AWS_ROLE_TO_ASSUME:
+            isAwsCodeArtifact && !isAwsCodeArtifactWithOidc
+              ? options.codeArtifactOptions?.roleToAssume
+              : undefined,
         },
       };
     });
@@ -564,6 +588,13 @@ export class Publisher extends Component {
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for publib
           },
         },
+        {
+          name: "Restore build artifact permissions",
+          continueOnError: true,
+          run: [
+            `cd ${ARTIFACTS_DOWNLOAD_DIR} && setfacl --restore=${PERMISSION_BACKUP_FILE}`,
+          ].join("\n"),
+        },
         ...opts.prePublishSteps,
         {
           name: "Release",
@@ -582,7 +613,7 @@ export class Publisher extends Component {
               name: "Extract Version",
               if: "${{ failure() }}",
               id: "extract-version",
-              run: 'echo "::set-output name=VERSION::$(cat dist/version.txt)"',
+              run: 'echo "VERSION=$(cat dist/version.txt)" >> $GITHUB_OUTPUT',
             },
             {
               name: "Create Issue",
@@ -605,7 +636,7 @@ export class Publisher extends Component {
       return {
         [jobname]: {
           tools: {
-            node: { version: "14.x" },
+            node: { version: this.workflowNodeVersion },
             ...opts.publishTools,
           },
           name: `Publish to ${opts.registryName}`,
@@ -621,6 +652,42 @@ export class Publisher extends Component {
 
   private publibCommand(command: string) {
     return `npx -p publib@${this.publibVersion} ${command}`;
+  }
+
+  private githubReleaseCommand(
+    options: GitHubReleasesPublishOptions,
+    branchOptions: Partial<BranchOptions>
+  ): string {
+    const changelogFile = options.changelogFile;
+    const releaseTagFile = options.releaseTagFile;
+
+    // create a github release
+    const releaseTag = `$(cat ${releaseTagFile})`;
+    const ghReleaseCommand = [
+      `gh release create ${releaseTag}`,
+      "-R $GITHUB_REPOSITORY",
+      `-F ${changelogFile}`,
+      `-t ${releaseTag}`,
+      "--target $GITHUB_REF",
+    ];
+
+    if (branchOptions.prerelease) {
+      ghReleaseCommand.push("-p");
+    }
+
+    const ghRelease = ghReleaseCommand.join(" ");
+
+    // release script that does not error when re-releasing a given version
+    const idempotentRelease = [
+      "errout=$(mktemp);",
+      `${ghRelease} 2> $errout && true;`,
+      "exitcode=$?;",
+      'if [ $exitcode -ne 0 ] && ! grep -q "Release.tag_name already exists" $errout; then',
+      "cat $errout;",
+      "exit $exitcode;",
+      "fi",
+    ].join(" ");
+    return idempotentRelease;
   }
 }
 
@@ -749,26 +816,60 @@ export interface NpmPublishOptions extends CommonPublishOptions {
   readonly codeArtifactOptions?: CodeArtifactOptions;
 }
 
+/**
+ * Options for authorizing requests to a AWS CodeArtifact npm repository.
+ */
+export enum CodeArtifactAuthProvider {
+  /**
+   * Fixed credentials provided via Github secrets.
+   */
+  ACCESS_AND_SECRET_KEY_PAIR = "ACCESS_AND_SECRET_KEY_PAIR",
+
+  /**
+   * Ephemeral credentials provided via Github's OIDC integration with an IAM role.
+   * See:
+   * https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html
+   * https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
+   */
+  GITHUB_OIDC = "GITHUB_OIDC",
+}
+
+/**
+ * Options for publishing packages to AWS CodeArtifact.
+ */
 export interface CodeArtifactOptions {
   /**
-   * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
-   * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+   * Provider to use for authorizing requests to AWS CodeArtifact.
    *
-   * @default "AWS_ACCESS_KEY_ID"
+   * @default CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
+   */
+  readonly authProvider?: CodeArtifactAuthProvider;
+  /**
+   * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
+   * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
+   *
+   * @default - When the `authProvider` value is set to
+   * `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is
+   * "AWS_ACCESS_KEY_ID". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this
+   * value must be left undefined.
    */
   readonly accessKeyIdSecret?: string;
 
   /**
    * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
-   * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+   * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
    *
-   * @default "AWS_SECRET_ACCESS_KEY"
+   * @default - When the `authProvider` value is set to
+   * `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is
+   * "AWS_SECRET_ACCESS_KEY". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this
+   * value must be left undefined.
    */
   readonly secretAccessKeySecret?: string;
 
   /**
    * ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact
    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+   * When using the `CodeArtifactAuthProvider.GITHUB_OIDC` auth provider, this value must be defined.
    *
    * @default undefined
    */

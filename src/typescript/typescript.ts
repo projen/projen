@@ -293,6 +293,7 @@ export class TypeScriptProject extends NodeProject {
       // collocated, can only ignore the compiled output
       this.gitignore.exclude(`/${this.libdir}/**/*.js`);
       this.gitignore.exclude(`/${this.libdir}/**/*.d.ts`);
+      this.gitignore.exclude(`/${this.libdir}/**/*.d.ts.map`);
     }
 
     this.npmignore?.include(`/${this.libdir}/`);
@@ -379,7 +380,7 @@ export class TypeScriptProject extends NodeProject {
    * for us. just run them directly from javascript.
    */
   private addJestCompiled(jest: Jest) {
-    this.addDevDeps("@types/jest");
+    this.addDevDeps(`@types/jest${jest.jestVersion}`);
 
     const testout = path.posix.relative(this.srcdir, this.testdir);
     const libtest = path.posix.join(this.libdir, testout);
@@ -428,11 +429,14 @@ export class TypeScriptProject extends NodeProject {
   }
 
   private addJestNoCompile(jest: Jest) {
-    this.addDevDeps("@types/jest", "ts-jest@^27"); // pinning for now because of an issue: https://github.com/projen/projen/issues/1813
+    this.addDevDeps(
+      `@types/jest${jest.jestVersion}`,
+      `ts-jest${jest.jestVersion}`
+    );
 
     jest.addTestMatch(`<rootDir>/${this.srcdir}/**/__tests__/**/*.ts?(x)`);
     jest.addTestMatch(
-      `<rootDir>/(${this.testdir}|${this.srcdir})/**/?(*.)+(spec|test).ts?(x)`
+      `<rootDir>/(${this.testdir}|${this.srcdir})/**/*(*.)@(spec|test).ts?(x)`
     );
 
     // add relevant deps
@@ -470,11 +474,13 @@ class SampleCode extends Component {
       },
     });
 
-    new SampleDir(project, project.testdir, {
-      files: {
-        "hello.test.ts": testCode,
-      },
-    });
+    if (project.jest) {
+      new SampleDir(project, project.testdir, {
+        files: {
+          "hello.test.ts": testCode,
+        },
+      });
+    }
   }
 }
 

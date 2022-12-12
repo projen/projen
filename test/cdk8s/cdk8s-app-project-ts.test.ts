@@ -46,6 +46,7 @@ test("test if cdk8s synth is possible", () => {
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.18",
     constructs: "^3.3.75",
+    "cdk8s-plus-22": "^1.0.0-beta.222",
   });
 });
 
@@ -88,7 +89,8 @@ test("constructs version undefined", () => {
 
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.11",
-    constructs: "^3.2.34",
+    constructs: "^3.4.39",
+    "cdk8s-plus-22": "^1.0.0-beta.222",
   });
 });
 
@@ -107,6 +109,7 @@ test("constructs version pinning", () => {
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.18",
     constructs: "3.3.75",
+    "cdk8s-plus-22": "^1.0.0-beta.222",
   });
 });
 
@@ -124,6 +127,7 @@ test("cdk8sPlusVersion undefined", () => {
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.11",
     constructs: "^3.3.75",
+    "cdk8s-plus-22": "^1.0.0-beta.222",
   });
 });
 
@@ -134,6 +138,7 @@ test("cdk8sPlusVersion defined", () => {
     defaultReleaseBranch: "main",
     releaseWorkflow: true,
     constructsVersion: "3.3.75",
+    cdk8sPlusVersion: "1.0.0-beta.200",
   });
 
   const output = synthSnapshot(project);
@@ -141,6 +146,7 @@ test("cdk8sPlusVersion defined", () => {
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.11",
     constructs: "^3.3.75",
+    "cdk8s-plus-22": "^1.0.0-beta.200",
   });
 });
 
@@ -159,6 +165,7 @@ test("cdk8sPlusVersion pinning", () => {
   expect(output["package.json"].dependencies).toStrictEqual({
     cdk8s: "^1.0.0-beta.11",
     constructs: "^3.3.75",
+    "cdk8s-plus-22": "1.0.0-beta.222",
   });
 });
 
@@ -169,11 +176,13 @@ test("upgrade task ignores pinned versions", () => {
     defaultReleaseBranch: "main",
     constructsVersionPinning: true,
     cdk8sVersionPinning: true,
+    cdk8sCliVersionPinning: true,
+    cdk8sPlusVersionPinning: true,
     releaseWorkflow: true,
     constructsVersion: "3.3.75",
   });
   const tasks = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE].tasks;
   expect(tasks.upgrade.steps[1].exec).toStrictEqual(
-    "npm-check-updates --dep dev --upgrade --target=minor --reject='cdk8s-cli,cdk8s,constructs'"
+    "npm-check-updates --dep dev --upgrade --target=minor --reject='cdk8s-cli,cdk8s-plus-22,cdk8s,constructs'"
   );
 });

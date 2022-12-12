@@ -24,6 +24,8 @@ import {
   Publisher,
   Release,
   ReleaseProjectOptions,
+  NpmPublishOptions,
+  CodeArtifactAuthProvider as ReleaseCodeArtifactAuthProvider,
 } from "../release";
 import { Task } from "../task";
 import { deepMerge } from "../util";
@@ -31,6 +33,7 @@ import { Version } from "../version";
 import { Bundler, BundlerOptions } from "./bundler";
 import { Jest, JestOptions } from "./jest";
 import {
+  CodeArtifactAuthProvider as NodePackageCodeArtifactAuthProvider,
   CodeArtifactOptions,
   NodePackage,
   NodePackageManager,
@@ -91,7 +94,7 @@ export interface NodeProjectOptions
 
   /**
    * Define a GitHub workflow step for sending code coverage metrics to https://codecov.io/
-   * Uses codecov/codecov-action@v1
+   * Uses codecov/codecov-action@v3
    * A secret is required for private repos. Configured with @codeCovTokenSecret
    * @default false
    */
@@ -374,7 +377,7 @@ export class NodeProject extends GitHubProject {
     return this.package.maxNodeVersion;
   }
 
-  private readonly nodeVersion?: string;
+  protected readonly nodeVersion?: string;
 
   /**
    * The package manager to use.
@@ -526,25 +529,9 @@ export class NodeProject extends GitHubProject {
         workflowTriggers: options.buildWorkflowTriggers,
       });
 
-      // run codecov if enabled or a secret token name is passed in
-      // AND jest must be configured
-      if (
-        (options.codeCov || options.codeCovTokenSecret) &&
-        this.jest?.config
-      ) {
-        this.buildWorkflow.addPostBuildSteps({
-          name: "Upload coverage to Codecov",
-          uses: "codecov/codecov-action@v1",
-          with: options.codeCovTokenSecret
-            ? {
-                token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
-                directory: this.jest.config.coverageDirectory,
-              }
-            : {
-                directory: this.jest.config.coverageDirectory,
-              },
-        });
-      }
+      this.buildWorkflow.addPostBuildSteps(
+        ...this.renderUploadCoverageJobStep(options)
+      );
     }
 
     const release =
@@ -565,21 +552,42 @@ export class NodeProject extends GitHubProject {
           ...this.renderWorkflowSetup({ mutable: false }),
           ...(options.releaseWorkflowSetupSteps ?? []),
         ],
+        postBuildSteps: [
+          ...(options.postBuildSteps ?? []),
+          ...this.renderUploadCoverageJobStep(options),
+        ],
+
+        workflowNodeVersion: this.nodeVersion,
       });
 
       this.publisher = this.release.publisher;
 
+      const nodePackageToReleaseCodeArtifactAuthProviderMapping: Record<
+        NodePackageCodeArtifactAuthProvider,
+        ReleaseCodeArtifactAuthProvider
+      > = {
+        [NodePackageCodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR]:
+          ReleaseCodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR,
+        [NodePackageCodeArtifactAuthProvider.GITHUB_OIDC]:
+          ReleaseCodeArtifactAuthProvider.GITHUB_OIDC,
+      };
+
       if (options.releaseToNpm ?? false) {
-        const codeArtifactOptions = isAwsCodeArtifactRegistry(
-          this.package.npmRegistry
-        )
-          ? {
-              accessKeyIdSecret: options.codeArtifactOptions?.accessKeyIdSecret,
-              secretAccessKeySecret:
-                options.codeArtifactOptions?.secretAccessKeySecret,
-              roleToAssume: options.codeArtifactOptions?.roleToAssume,
-            }
-          : {};
+        const codeArtifactOptions: NpmPublishOptions["codeArtifactOptions"] =
+          isAwsCodeArtifactRegistry(this.package.npmRegistry)
+            ? {
+                accessKeyIdSecret:
+                  options.codeArtifactOptions?.accessKeyIdSecret,
+                secretAccessKeySecret:
+                  options.codeArtifactOptions?.secretAccessKeySecret,
+                roleToAssume: options.codeArtifactOptions?.roleToAssume,
+                authProvider: options.codeArtifactOptions?.authProvider
+                  ? nodePackageToReleaseCodeArtifactAuthProviderMapping[
+                      options.codeArtifactOptions.authProvider
+                    ]
+                  : ReleaseCodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR,
+              }
+            : {};
         this.release.publisher.publishToNpm({
           registry: this.package.npmRegistry,
           npmTokenSecret: this.package.npmTokenSecret,
@@ -695,6 +703,29 @@ export class NodeProject extends GitHubProject {
 
     if (options.prettier ?? false) {
       this.prettier = new Prettier(this, { ...options.prettierOptions });
+    }
+  }
+
+  private renderUploadCoverageJobStep(options: NodeProjectOptions): JobStep[] {
+    // run codecov if enabled or a secret token name is passed in
+    // AND jest must be configured
+    if ((options.codeCov || options.codeCovTokenSecret) && this.jest?.config) {
+      return [
+        {
+          name: "Upload coverage to Codecov",
+          uses: "codecov/codecov-action@v3",
+          with: options.codeCovTokenSecret
+            ? {
+                token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
+                directory: this.jest.config.coverageDirectory,
+              }
+            : {
+                directory: this.jest.config.coverageDirectory,
+              },
+        },
+      ];
+    } else {
+      return [];
     }
   }
 
@@ -841,7 +872,7 @@ export class NodeProject extends GitHubProject {
     if (this.nodeVersion) {
       install.push({
         name: "Setup Node.js",
-        uses: "actions/setup-node@v2.2.0",
+        uses: "actions/setup-node@v3",
         with: { "node-version": this.nodeVersion },
       });
     }
@@ -849,8 +880,8 @@ export class NodeProject extends GitHubProject {
     if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v2.0.1",
-        with: { version: "6.14.7" }, // current latest. Should probably become tunable.
+        uses: "pnpm/action-setup@v2.2.2",
+        with: { version: "7" }, // current latest. Should probably become tunable.
       });
     }
 

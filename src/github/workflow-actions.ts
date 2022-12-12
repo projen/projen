@@ -28,13 +28,13 @@ export class WorkflowActions {
         name: "Find mutations",
         run: [
           "git add .",
-          `git diff --staged --patch --exit-code > ${GIT_PATCH_FILE} || echo "::set-output name=${options.outputName}::true"`,
+          `git diff --staged --patch --exit-code > ${GIT_PATCH_FILE} || echo "${options.outputName}=true" >> $GITHUB_OUTPUT`,
         ].join("\n"),
       },
       {
         if: MUTATIONS_FOUND,
         name: "Upload patch",
-        uses: "actions/upload-artifact@v2",
+        uses: "actions/upload-artifact@v3",
         with: { name: GIT_PATCH_FILE, path: GIT_PATCH_FILE },
       },
     ];

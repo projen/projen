@@ -1,5 +1,6 @@
 import { Component } from "../component";
-import { PythonProject } from "./python-project";
+import { DependencyType } from "../dependencies";
+import { Project } from "../project";
 
 export interface PytestOptions {
   /**
@@ -25,14 +26,14 @@ export interface PytestOptions {
 export class Pytest extends Component {
   readonly testdir: string;
 
-  constructor(project: PythonProject, options: PytestOptions = {}) {
+  constructor(project: Project, options: PytestOptions = {}) {
     super(project);
 
     const version = options.version ?? "6.2.1";
 
     this.testdir = options.testdir ?? "tests";
 
-    project.addDevDependency(`pytest@${version}`);
+    project.deps.addDependency(`pytest@${version}`, DependencyType.TEST);
 
     project.testTask.exec(
       [

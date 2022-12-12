@@ -1,5 +1,5 @@
 import { PROJEN_RC } from "../../src/common";
-import { NodeProject, Jest } from "../../src/javascript";
+import { Jest, NodeProject, UpdateSnapshot } from "../../src/javascript";
 import * as logging from "../../src/logging";
 import { TypeScriptProject } from "../../src/typescript";
 import { mkdtemp, synthSnapshot } from "../util";
@@ -215,4 +215,68 @@ test("addTestMatch() can be used to add patterns", () => {
     "foo/**",
     "bar/baz/**",
   ]);
+});
+
+test("can set extra CLI options", () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+  });
+
+  // WHEN
+  new Jest(project, {
+    extraCliOptions: ["--json", "--outputFile=jest-report.json"],
+  });
+
+  // THEN
+  const clFragments = project.testTask.steps.pop()?.exec?.split(" ");
+  expect(clFragments).toContain("--json");
+  expect(clFragments).toContain("--outputFile=jest-report.json");
+});
+
+test("UpdateSnapshotOptions.ALWAYS adds --updateSnapshot to testTask and 'test:update' task is undefined", () => {
+  // WHEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+    jestOptions: {
+      updateSnapshot: UpdateSnapshot.ALWAYS,
+    },
+  });
+
+  // THEN
+  const testTask = project.testTask;
+  expect(testTask.steps[0].exec).toContain("--updateSnapshot");
+
+  const testUpdateTask = project.tasks.tryFind("test:update");
+  expect(testUpdateTask).toBeUndefined();
+});
+
+describe("UpdateSnapshotOptions.NEVER", () => {
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+    jestOptions: {
+      updateSnapshot: UpdateSnapshot.NEVER,
+    },
+  });
+
+  it("does not add --updateSnapshot", () => {
+    const testTask = project.testTask;
+    expect(testTask.steps[0].exec).not.toContain("--updateSnapshot");
+  });
+
+  it("adds --ci", () => {
+    const testTask = project.testTask;
+    expect(testTask.steps[0].exec).toContain("--ci");
+  });
+
+  it("creates a separate 'test:update' task", () => {
+    const testUpdateTask = project.tasks.tryFind("test:update");
+    expect(testUpdateTask?.steps[0]?.exec).toContain("--updateSnapshot");
+  });
 });

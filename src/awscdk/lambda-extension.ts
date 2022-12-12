@@ -97,6 +97,7 @@ export class LambdaExtension extends Component {
     }
 
     const compatibleRuntimes = options.compatibleRuntimes ?? [
+      LambdaRuntime.NODEJS_18_X,
       LambdaRuntime.NODEJS_16_X,
       LambdaRuntime.NODEJS_14_X,
       LambdaRuntime.NODEJS_12_X,
@@ -206,7 +207,9 @@ class LambdaLayerConstruct extends SourceCode {
 
     src.open("compatibleRuntimes: [");
     for (const runtime of options.compatibleRuntimes) {
-      src.line(`lambda.Runtime.${runtime.functionRuntime},`);
+      src.line(
+        `new lambda.Runtime('${runtime.functionRuntime}', lambda.RuntimeFamily.NODEJS),`
+      );
     }
     src.close("],");
 

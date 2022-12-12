@@ -12,12 +12,31 @@ either a Personal Access Token (PAT) or a GitHub App to provide API access.
 
 [GITHUB_TOKEN]: https://docs.github.com/en/actions/security-guides/automatic-token-authentication
 
-### Personal Access Token
+### Personal Access Token (classic)
 
 Follow the [GitHub docs
-instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
-for creating a personal access token. When creating the PAT, grant the token
-`repo`, `workflow` and `write:packages` and `admin:repo_hook` permissions.
+instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-personal-access-token-classic)
+for creating a personal access token (classic).
+When creating the classic PAT, grant the token `repo`, `workflow` and `write:packages` permissions.
+
+Add the token as a secret to your repo under the name `PROJEN_GITHUB_TOKEN`.
+
+### Fine-grained Personal Access Token (beta)
+
+Follow the [GitHub docs
+instructions](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-fine-grained-personal-access-token)
+for creating a fine-grained personal access token (beta).
+
+Select the repositories you want to use this token for.
+You can reuse the same token for multiple repositories if you select them here.
+However you should choose the minimal repository access that meets your needs.
+
+Under Permissions, select the following Repository Permissions:
+
+- `Contents` - Read and write
+- `Metadata` - Read-only (automatically added)
+- `Pull requests` - Read and write
+- `Workflows` - Read and write
 
 Add the token as a secret to your repo under the name `PROJEN_GITHUB_TOKEN`.
 
@@ -30,7 +49,7 @@ Add the App ID as a secret to your repo under the name `PROJEN_APP_ID` and the p
 Then, configure your projenrc file to use the GitHub app for API access:
 
 ```ts
-const { NodeProject } = require('projen/javascript');
+const { github, javascript } = require('projen');
 
 const project = new javascript.NodeProject({
   // ...other options

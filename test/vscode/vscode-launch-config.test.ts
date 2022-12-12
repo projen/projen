@@ -1,4 +1,4 @@
-import { InternalConsoleOptions } from "../../src/vscode";
+import { Console, InternalConsoleOptions } from "../../src/vscode";
 import { synthSnapshot, TestProject } from "../util";
 
 const VSCODE_DEBUGGER_FILE = ".vscode/launch.json";
@@ -31,6 +31,7 @@ test("adding a launch configuration entry", () => {
     skipFiles: ["<node_internals>/**"],
     runtimeArgs: ["-r", "./node_modules/ts-node/register/transpile-only"],
     args: ["${workspaceFolder}/src/main.ts"],
+    console: Console.EXTERNAL_TERMINAL,
   });
 
   // THEN
@@ -45,6 +46,7 @@ test("adding a launch configuration entry", () => {
         skipFiles: ["<node_internals>/**"],
         runtimeArgs: ["-r", "./node_modules/ts-node/register/transpile-only"],
         args: ["${workspaceFolder}/src/main.ts"],
+        console: "externalTerminal",
       },
     ],
   });
@@ -115,6 +117,40 @@ test("adding multiple launch configuration entries", () => {
         url: "http://localhost:8080",
         webRoot: "${workspaceFolder}",
         debugServer: 4711,
+      },
+    ],
+  });
+});
+
+test("check correct env output", () => {
+  // GIVEN
+  const project = new TestProject();
+
+  // WHEN
+  const launchConfig = project.vscode?.launchConfiguration;
+  launchConfig?.addConfiguration({
+    type: "node",
+    request: "launch",
+    name: "CDK Debugger",
+    env: {
+      ONE: "value",
+      TWO: false,
+    },
+  });
+
+  // THEN
+  expect(synthSnapshot(project)[VSCODE_DEBUGGER_FILE]).toStrictEqual({
+    "//": expect.anything(),
+    version: "0.2.0",
+    configurations: [
+      {
+        type: "node",
+        request: "launch",
+        name: "CDK Debugger",
+        env: {
+          ONE: "value",
+          TWO: null,
+        },
       },
     ],
   });

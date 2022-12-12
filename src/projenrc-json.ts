@@ -1,5 +1,5 @@
-import { existsSync, writeFileSync } from "fs";
 import { resolve } from "path";
+import { existsSync, outputFileSync } from "fs-extra";
 import { Component } from "./component";
 import { Project } from "./project";
 
@@ -45,7 +45,7 @@ export class Projenrc extends Component {
       ...bootstrap.args,
     };
 
-    writeFileSync(rcfile, JSON.stringify(json, null, 2));
+    outputFileSync(rcfile, JSON.stringify(json, null, 2));
     this.project.logger.info(
       `Project definition file was created at ${rcfile}`
     );

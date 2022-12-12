@@ -155,7 +155,7 @@ export class TaskWorkflow extends GithubWorkflow {
     if (this.artifactsDirectory) {
       postBuildSteps.push({
         name: "Upload artifact",
-        uses: "actions/upload-artifact@v2.1.1",
+        uses: "actions/upload-artifact@v3",
         // Setting to always will ensure that this step will run even if
         // the previous ones have failed (e.g. coverage report, internal logs, etc)
         if: "always()",

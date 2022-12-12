@@ -40,6 +40,7 @@ export class PostCss {
       config.plugins.tailwindcss = {};
       config.plugins.autoprefixer = {};
       this.tailwind = new TailwindConfig(project, options?.tailwindOptions);
+      config.plugins.tailwindcss.config = this.tailwind.fileName;
       project.addDeps("tailwindcss", "autoprefixer");
     }
 

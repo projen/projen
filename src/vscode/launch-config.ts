@@ -3,6 +3,16 @@ import { JsonFile } from "../json";
 import { VsCode } from "./vscode";
 
 /**
+ * Controls where to launch the debug target
+ * Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
+ */
+export enum Console {
+  INTERNAL_CONSOLE = "internalConsole",
+  INTEGRATED_TERMINAL = "integratedTerminal",
+  EXTERNAL_TERMINAL = "externalTerminal",
+}
+
+/**
  * Controls the visibility of the VSCode Debug Console panel during a debugging session
  * Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes
  */
@@ -57,12 +67,38 @@ export interface VsCodeLaunchConfigurationEntry {
   readonly outFiles?: string[];
   readonly url?: string;
   readonly webRoot?: string;
+  /**
+   * Set value to `false` to unset an existing environment variable
+   */
+  readonly env?: Record<string, string | false>;
+  readonly envFile?: string;
+  readonly cwd?: string;
+  readonly port?: number;
+  readonly stopOnEntry?: boolean; // Schema says `boolean | string`, but I cannot find a documented use case for string
+  readonly console?: Console;
+  readonly disableOptimisticBPs?: boolean; // undocumented option used by the jest extension, see https://github.com/microsoft/vscode/issues/64079#issuecomment-443304548
 }
 
 /**
  * VSCode launch configuration file (launch.json), useful for enabling in-editor debugger
  */
 export class VsCodeLaunchConfig extends Component {
+  private static renderLaunchConfig(cfg: VsCodeLaunchConfigurationEntry) {
+    if (!cfg.env) {
+      return cfg;
+    }
+
+    return {
+      ...cfg,
+      env: Object.fromEntries(
+        Object.entries(cfg.env).map(([key, value]) => [
+          key,
+          value === false ? null : value,
+        ])
+      ),
+    };
+  }
+
   private readonly content: VsCodeLaunchConfiguration;
 
   constructor(vscode: VsCode) {
@@ -74,7 +110,12 @@ export class VsCodeLaunchConfig extends Component {
     };
 
     new JsonFile(vscode.project, ".vscode/launch.json", {
-      obj: this.content,
+      obj: () => ({
+        ...this.content,
+        configurations: this.content.configurations.map(
+          VsCodeLaunchConfig.renderLaunchConfig
+        ),
+      }),
     });
   }
 

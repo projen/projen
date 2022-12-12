@@ -1,9 +1,9 @@
-import { Cdk8sTypeScriptApp, IntegrationTest } from "../../src/cdk8s";
+import { cdk8s } from "../../src";
 import { synthSnapshot } from "../util";
 
 describe("IntegrationTest", () => {
   test("adding an integration test", () => {
-    const project = new Cdk8sTypeScriptApp({
+    const project = new cdk8s.Cdk8sTypeScriptApp({
       cdk8sVersion: "1.0.0-beta.11",
       name: "project",
       defaultReleaseBranch: "main",
@@ -11,7 +11,7 @@ describe("IntegrationTest", () => {
     });
 
     // WHEN
-    new IntegrationTest(project, {
+    new cdk8s.IntegrationTest(project, {
       entrypoint: "test/my-test-name.integ.ts",
       tsconfigPath: project.tsconfigDev.fileName,
     });
@@ -27,7 +27,7 @@ describe("IntegrationTest", () => {
   });
 
   test("explicit name", () => {
-    const project = new Cdk8sTypeScriptApp({
+    const project = new cdk8s.Cdk8sTypeScriptApp({
       cdk8sVersion: "1.0.0-beta.11",
       name: "project",
       defaultReleaseBranch: "main",
@@ -35,7 +35,7 @@ describe("IntegrationTest", () => {
     });
 
     // WHEN
-    new IntegrationTest(project, {
+    new cdk8s.IntegrationTest(project, {
       name: "foobar",
       entrypoint: "test/my-test-name.integ.ts",
       tsconfigPath: project.tsconfigDev.fileName,

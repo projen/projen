@@ -4,6 +4,7 @@ import { GitHub, GithubWorkflow, GitIdentity } from "../github";
 import {
   BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
+  PERMISSION_BACKUP_FILE,
 } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
 import {
@@ -139,6 +140,10 @@ export class BuildWorkflow extends Component {
     if (mutableBuilds) {
       this.addSelfMutationJob(options);
     }
+
+    if (project instanceof NodeProject) {
+      project.addPackageIgnore(PERMISSION_BACKUP_FILE);
+    }
   }
 
   private addBuildJob(options: BuildWorkflowOptions) {
@@ -194,17 +199,26 @@ export class BuildWorkflow extends Component {
     const steps = [];
 
     if (this.artifactsDirectory) {
-      steps.push({
-        name: "Download build artifacts",
-        uses: "actions/download-artifact@v3",
-        with: {
-          name: BUILD_ARTIFACT_NAME,
-          path: this.artifactsDirectory,
+      steps.push(
+        {
+          name: "Download build artifacts",
+          uses: "actions/download-artifact@v3",
+          with: {
+            name: BUILD_ARTIFACT_NAME,
+            path: this.artifactsDirectory,
+          },
         },
-      });
+        {
+          name: "Restore build artifact permissions",
+          continueOnError: true,
+          run: [
+            `cd ${this.artifactsDirectory} && setfacl --restore=${PERMISSION_BACKUP_FILE}`,
+          ].join("\n"),
+        }
+      );
     }
 
-    steps.push(...job.steps);
+    steps.push(...(job.steps ?? []));
 
     this.workflow.addJob(id, {
       needs: [BUILD_JOBID],
@@ -363,8 +377,13 @@ export class BuildWorkflow extends Component {
         ? []
         : [
             {
+              name: "Backup artifact permissions",
+              continueOnError: true,
+              run: `cd ${this.artifactsDirectory} && getfacl -R . > ${PERMISSION_BACKUP_FILE}`,
+            },
+            {
               name: "Upload artifact",
-              uses: "actions/upload-artifact@v2.1.1",
+              uses: "actions/upload-artifact@v3",
               with: {
                 name: BUILD_ARTIFACT_NAME,
                 path: this.artifactsDirectory,

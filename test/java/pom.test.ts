@@ -66,6 +66,19 @@ test("addPlugin()", () => {
     },
   });
 
+  pom.addPlugin("org.apache.maven.plugins/maven-shade-plugin@3.2.2", {
+    configuration: {
+      createDependencyReducedPom: false,
+    },
+    executions: [
+      {
+        id: "shade-task",
+        phase: "package",
+        goals: ["shade"],
+      },
+    ],
+  });
+
   // alteratively
   pom.project.deps.addDependency(
     "org.codehaus.mojo/exec-maven-plugin@3.0.0",
@@ -76,6 +89,24 @@ test("addPlugin()", () => {
       },
     }
   );
+
+  expect(actualPom(pom)).toMatchSnapshot();
+});
+
+test("addRepository()", () => {
+  const pom = new TestPom();
+
+  pom.addRepository({
+    id: "my-local-repository",
+    url: "file://my/local/repository",
+  });
+
+  pom.addRepository({
+    id: "my-remote-repository",
+    name: "Remote Repo",
+    url: "https://myserver/repo",
+    layout: "default",
+  });
 
   expect(actualPom(pom)).toMatchSnapshot();
 });

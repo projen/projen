@@ -198,7 +198,7 @@ export interface NodePackageOptions {
   readonly authorUrl?: string;
 
   /**
-   * Author's Organization
+   * Is the author an organization
    */
   readonly authorOrganization?: boolean;
 
@@ -300,12 +300,43 @@ export interface NodePackageOptions {
   readonly scopedPackagesOptions?: ScopedPackagesOptions[];
 }
 
+/**
+ * Options for authorizing requests to a AWS CodeArtifact npm repository.
+ */
+export enum CodeArtifactAuthProvider {
+  /**
+   * Fixed credentials provided via Github secrets.
+   */
+  ACCESS_AND_SECRET_KEY_PAIR = "ACCESS_AND_SECRET_KEY_PAIR",
+
+  /**
+   * Ephemeral credentials provided via Github's OIDC integration with an IAM role.
+   * See:
+   * https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc.html
+   * https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
+   */
+  GITHUB_OIDC = "GITHUB_OIDC",
+}
+
+/**
+ * Options for publishing npm packages to AWS CodeArtifact.
+ */
 export interface CodeArtifactOptions {
+  /**
+   * Provider to use for authorizing requests to AWS CodeArtifact.
+   *
+   * @default CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR
+   */
+  readonly authProvider?: CodeArtifactAuthProvider;
+
   /**
    * GitHub secret which contains the AWS access key ID to use when publishing packages to AWS CodeArtifact.
    * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
    *
-   * @default "AWS_ACCESS_KEY_ID"
+   * @default - When the `authProvider` value is set to
+   * `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is
+   * "AWS_ACCESS_KEY_ID". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this
+   * value must be left undefined.
    */
   readonly accessKeyIdSecret?: string;
 
@@ -313,13 +344,17 @@ export interface CodeArtifactOptions {
    * GitHub secret which contains the AWS secret access key to use when publishing packages to AWS CodeArtifact.
    * This property must be specified only when publishing to AWS CodeArtifact (`npmRegistryUrl` contains AWS CodeArtifact URL).
    *
-   * @default "AWS_SECRET_ACCESS_KEY"
+   * @default - When the `authProvider` value is set to
+   * `CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR`, the default is
+   * "AWS_SECRET_ACCESS_KEY". For `CodeArtifactAuthProvider.GITHUB_OIDC`, this
+   * value must be left undefined.
    */
   readonly secretAccessKeySecret?: string;
 
   /**
    * ARN of AWS role to be assumed prior to get authorization token from AWS CodeArtifact
    * This property must be specified only when publishing to AWS CodeArtifact (`registry` contains AWS CodeArtifact URL).
+   * When using the `CodeArtifactAuthProvider.GITHUB_OIDC` auth provider, this value must be defined.
    *
    * @default undefined
    */
@@ -517,7 +552,8 @@ export class NodePackage extends Component {
     this.file = new JsonFile(this.project, "package.json", {
       obj: this.manifest,
       readonly: false, // we want "yarn add" to work and we have anti-tamper
-      newline: false, // when file is edited by npm/yarn it doesn't include a newline
+      newline: true, // all package managers prefer a newline, see https://github.com/projen/projen/issues/2076
+      committed: true, // needs to be committed so users can install the dependencies
     });
 
     this.addKeywords(...(options.keywords ?? []));
@@ -702,6 +738,7 @@ export class NodePackage extends Component {
     const fieldName = packageResolutionsFieldName(this.packageManager);
 
     for (const resolution of resolutions) {
+      this.project.deps.addDependency(resolution, DependencyType.OVERRIDE);
       const { name, version = "*" } = Dependencies.parseDependency(resolution);
       this.file.addOverride(`${fieldName}.${name}`, version);
     }
@@ -739,6 +776,7 @@ export class NodePackage extends Component {
 
         // filter by exclude and include.
         return `${command} ${project.deps.all
+          .filter((d) => d.type !== DependencyType.OVERRIDE)
           .map((d) => d.name)
           .filter((d) => (include ? include.includes(d) : true))
           .filter((d) => !exclude.includes(d))
@@ -859,6 +897,22 @@ export class NodePackage extends Component {
         throw new Error(
           '"npmTokenSecret" must not be specified when publishing AWS CodeArtifact.'
         );
+      } else if (
+        options.codeArtifactOptions?.authProvider ===
+        CodeArtifactAuthProvider.GITHUB_OIDC
+      ) {
+        if (
+          options.codeArtifactOptions.accessKeyIdSecret ||
+          options.codeArtifactOptions.secretAccessKeySecret
+        ) {
+          throw new Error(
+            "access and secret key pair should not be provided when using GITHUB_OIDC auth provider for AWS CodeArtifact"
+          );
+        } else if (!options.codeArtifactOptions.roleToAssume) {
+          throw new Error(
+            '"roleToAssume" property is required when using GITHUB_OIDC for AWS CodeArtifact options'
+          );
+        }
       }
     } else {
       if (
@@ -876,12 +930,19 @@ export class NodePackage extends Component {
     // apply defaults for AWS CodeArtifact
     let codeArtifactOptions: CodeArtifactOptions | undefined;
     if (isAwsCodeArtifact || hasScopedPackage) {
+      const authProvider =
+        options.codeArtifactOptions?.authProvider ??
+        CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR;
+      const isAccessSecretKeyPairAuth =
+        authProvider === CodeArtifactAuthProvider.ACCESS_AND_SECRET_KEY_PAIR;
       codeArtifactOptions = {
+        authProvider,
         accessKeyIdSecret:
-          options.codeArtifactOptions?.accessKeyIdSecret ?? "AWS_ACCESS_KEY_ID",
+          options.codeArtifactOptions?.accessKeyIdSecret ??
+          (isAccessSecretKeyPairAuth ? "AWS_ACCESS_KEY_ID" : undefined),
         secretAccessKeySecret:
           options.codeArtifactOptions?.secretAccessKeySecret ??
-          "AWS_SECRET_ACCESS_KEY",
+          (isAccessSecretKeyPairAuth ? "AWS_SECRET_ACCESS_KEY" : undefined),
         roleToAssume: options.codeArtifactOptions?.roleToAssume,
       };
     }
@@ -1240,12 +1301,7 @@ export class NodePackage extends Component {
     pkg.devDependencies = sorted(devDeps);
     pkg.peerDependencies = sorted(peerDeps);
 
-    const jsonContent = JSON.stringify(pkg, undefined, 2);
-
-    const updated =
-      this.packageManager === NodePackageManager.NPM
-        ? `${jsonContent}\n`
-        : jsonContent;
+    const updated = JSON.stringify(pkg, undefined, 2) + "\n";
 
     if (original === updated) {
       return false;

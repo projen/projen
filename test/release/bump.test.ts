@@ -124,6 +124,24 @@ test("select latest with major", async () => {
   expect(result10.tag).toStrictEqual("v10.21.1");
 });
 
+test("select latest, with prerelease", async () => {
+  const result = await testBump({
+    options: {
+      prerelease: "beta",
+    },
+    commits: [
+      { message: "first version", tag: "v1.1.0" },
+      { message: "feat: new feature" },
+    ],
+  });
+
+  expect(result.version).toEqual("1.2.0-beta.0");
+  expect(result.changelog.includes("Features")).toBeTruthy();
+  expect(result.changelog.includes("new feature")).toBeTruthy();
+  expect(result.bumpfile).toStrictEqual("1.2.0-beta.0");
+  expect(result.tag).toStrictEqual("v1.2.0-beta.0");
+});
+
 test("bump with major equal to 0", async () => {
   const commits = [
     { message: "first version", tag: "v0.1.0" },
@@ -192,6 +210,48 @@ test("customization to versionrc reflects to changelog", async () => {
   await expect(result.changelog).toContain("testCompareUrl");
 });
 
+test("minMajorVersion increases major version if current release is lower", async () => {
+  const result = await testBump({
+    options: { minMajorVersion: 1 },
+    commits: [{ message: "v0", tag: "v0.1.2" }, { message: "commit2" }],
+  });
+  expect(result.version).toStrictEqual("1.0.0");
+  expect(result.changelog.includes("## [1.0.0]")).toBeTruthy();
+  expect(result.bumpfile).toStrictEqual("1.0.0");
+  expect(result.tag).toStrictEqual("v1.0.0");
+});
+
+test("minMajorVersion keeps release version if version is equal", async () => {
+  const result = await testBump({
+    options: { minMajorVersion: 1 },
+    commits: [{ message: "v1", tag: "v1.2.3" }, { message: "commit2" }],
+  });
+  expect(result.version).toStrictEqual("1.2.4");
+  expect(result.changelog.includes("## [1.2.4]")).toBeTruthy();
+  expect(result.bumpfile).toStrictEqual("1.2.4");
+  expect(result.tag).toStrictEqual("v1.2.4");
+});
+
+test("minMajorVersion has no effect if version is higher", async () => {
+  const result = await testBump({
+    options: { minMajorVersion: 1 },
+    commits: [{ message: "v2", tag: "v2.3.3" }, { message: "commit2" }],
+  });
+  expect(result.version).toStrictEqual("2.3.4");
+  expect(result.changelog.includes("## [2.3.4]")).toBeTruthy();
+  expect(result.bumpfile).toStrictEqual("2.3.4");
+  expect(result.tag).toStrictEqual("v2.3.4");
+});
+
+test("minMajorVersion throws if set together with majorVersion", async () => {
+  await expect(
+    testBump({
+      options: { minMajorVersion: 1, majorVersion: 1 },
+      commits: [{ message: "v0", tag: "v0.1.2" }, { message: "commit2" }],
+    })
+  ).rejects.toThrow(/minMajorVersion and majorVersion cannot be used together/);
+});
+
 //----------------------------------------------------------------------------------------------------------------------------------
 
 async function testBump(
@@ -214,6 +274,7 @@ async function testBump(
   git('config user.email "you@example.com"');
   git('config user.name "Your Name"');
   git("config commit.gpgsign false");
+  git("config tag.gpgsign false");
 
   const commit = async (message: string) => {
     await writeFile(join(workdir, "dummy.txt"), message);
