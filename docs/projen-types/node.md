@@ -26,7 +26,7 @@ build workflows on every pull request, automatically upgrading dependencies, and
 other conveniences.
 
 For more general information about managing GitHub configuration, check out
-[GitHub](./github.md).
+[GitHub](github.md).
 
 ## Dependencies
 
@@ -106,10 +106,10 @@ You can also use dependabot or renovatebot to get Pull requests on dependency up
   })
   ```
 
-[task]: ./tasks.md
-[GitHub workflow]: ./github.md#workflows
+[task]: tasks.md
+[GitHub workflow]: github.mdorkflows
 [create-pull-request#48]: https://github.com/peter-evans/create-pull-request/issues/48
-[GitHub API access]: ./github.md#github-api-access
+[GitHub API access]: github.mdithub-api-access
 
 ## Pull Request Builds (CI)
 

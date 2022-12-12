@@ -4,7 +4,7 @@
 
 ## Creating a configuration
 
-We support the creation of GitLab CI/CD Configurations through a `CiConfiguration` class and a higher level `GitlabConfiguration` and `NestedConfiguration` classes. To create a GitLab configuration you must first create a [project](./project.md) to assign the configuration to.
+We support the creation of GitLab CI/CD Configurations through a `CiConfiguration` class and a higher level `GitlabConfiguration` and `NestedConfiguration` classes. To create a GitLab configuration you must first create a [project](../project.md) to assign the configuration to.
 
 When using GitLab for CI, the `.gitlab-ci.yml` is always located at the root of the project while other configuration files are located in the `.gitlab\ci-templates\` subdirectory.
 

@@ -18,11 +18,11 @@
 * [Programmatic API](programmatic-api.md)
 * [Publishing Modules](publisher.md)
 * [Python Projects](python.md)
-* [Releases and Versioning](releases.md)
-* [Subprojects](subproject.md)
-* [Tasks](tasks.md)
-* [TypeScript Projects](typescript.md)
+* [Releases and Versioning](../docs/projen-types/releases.md)
+* [Subprojects](../docs/projen-types/subproject.md)
+* [Tasks](../docs/projen-types/tasks.md)
+* [TypeScript Projects](../docs/projen-types/typescript.md)
 
 ## API Reference
 
-* [TypeScript](api/API.md)
+* [TypeScript](../docs/api/API.md)
