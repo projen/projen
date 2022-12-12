@@ -37,11 +37,9 @@ describe("renovatebot", () => {
 
     // WHEN
     const snapshot = synthSnapshot(p)["renovate.json5"];
-    const generatedJson = JSON.parse(snapshot);
-    console.log(generatedJson);
 
     // THEN
     expect(snapshot).toMatchSnapshot();
-    expect(generatedJson).toStrictEqual(overrideConfig);
+    expect(snapshot).toStrictEqual(overrideConfig);
   });
 });
