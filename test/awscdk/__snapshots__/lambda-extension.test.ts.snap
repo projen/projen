@@ -21,7 +21,6 @@ export class ExampleLayerVersion extends lambda.LayerVersion {
       description: 'Provides a Lambda Extension \`example\` from src/example.lambda-extension.ts',
       ...props,
       compatibleRuntimes: [
-        new lambda.Runtime('nodejs10.x', lambda.RuntimeFamily.NODEJS),
         new lambda.Runtime('nodejs12.x', lambda.RuntimeFamily.NODEJS),
         new lambda.Runtime('nodejs14.x', lambda.RuntimeFamily.NODEJS),
         new lambda.Runtime('nodejs16.x', lambda.RuntimeFamily.NODEJS),
