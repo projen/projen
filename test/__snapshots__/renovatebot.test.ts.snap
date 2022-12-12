@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renovatebot renovatebot: override renovatebot configuration 1`] = `
+"{
+  \\"labels\\": [],
+  \\"schedule\\": [],
+  \\"extends\\": [
+    \\"customExtend\\"
+  ],
+  \\"packageRules\\": [],
+  \\"ignoreDeps\\": [],
+  \\"prHourlyLimit\\": 10
+}
+"
+`;
