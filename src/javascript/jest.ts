@@ -751,7 +751,7 @@ export class Jest {
         ? ` -c ${this.file.path}`
         : "";
 
-    // as recommended in the jest docs, node > 14 may use native v8 coverage collection
+    // as recommended in the jest old-docs, node > 14 may use native v8 coverage collection
     // https://jestjs.io/docs/en/cli#--coverageproviderprovider
     if (
       this.project.package.minNodeVersion &&

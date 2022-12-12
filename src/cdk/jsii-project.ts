@@ -104,7 +104,7 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
   readonly excludeTypescript?: string[];
 
   /**
-   * File path for generated docs.
+   * File path for generated old-docs.
    * @default "API.md"
    */
   readonly docgenFilePath?: string;
