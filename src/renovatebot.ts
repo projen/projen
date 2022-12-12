@@ -44,6 +44,10 @@ export interface RenovatebotOptions {
    * List of labels to apply to the created PR's.
    */
   readonly labels?: string[];
+
+  readonly overrideConfig?: any;
+
+  readonly marker?: boolean;
 }
 
 /**
@@ -108,6 +112,10 @@ export class Renovatebot extends Component {
 
   private readonly labels?: string[];
 
+  private readonly marker?: boolean;
+
+  private readonly overrideConfig?: any;
+
   constructor(project: Project, options: RenovatebotOptions = {}) {
     super(project);
 
@@ -118,6 +126,8 @@ export class Renovatebot extends Component {
       RenovatebotScheduleInterval.ANY_TIME,
     ];
     (options.ignoreProjen ?? true) && this.explicitIgnores.push("projen");
+    this.overrideConfig = options.overrideConfig ?? {};
+    this.marker = options.marker ?? true;
   }
 
   // create actual file only here, so we know that all dependencies are added to the project
@@ -153,11 +163,13 @@ export class Renovatebot extends Component {
         },
       ],
       ignoreDeps: renovateIgnore,
+      ...this.overrideConfig,
     };
 
     new JsonFile(this._project, "renovate.json5", {
       obj: config,
       committed: true,
+      marker: this.marker,
     });
   }
 }

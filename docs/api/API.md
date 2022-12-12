@@ -2352,6 +2352,8 @@ new Renovatebot(project: Project, options?: RenovatebotOptions)
   * **ignore** (<code>Array<string></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
   * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
   * **labels** (<code>Array<string></code>)  List of labels to apply to the created PR's. __*Optional*__
+  * **marker** (<code>boolean</code>)  *No description* __*Optional*__
+  * **overrideConfig** (<code>any</code>)  *No description* __*Optional*__
   * **scheduleInterval** (<code>Array<string></code>)  How often to check for new versions and raise pull requests. __*Default*__: ["at any time"]
 
 
@@ -12323,6 +12325,8 @@ Name | Type | Description
 **ignore**?🔹 | <code>Array<string></code> | You can use the `ignore` option to customize which dependencies are updated.<br/>__*Default*__: []
 **ignoreProjen**?🔹 | <code>boolean</code> | Ignores updates to `projen`.<br/>__*Default*__: true
 **labels**?🔹 | <code>Array<string></code> | List of labels to apply to the created PR's.<br/>__*Optional*__
+**marker**?🔹 | <code>boolean</code> | __*Optional*__
+**overrideConfig**?🔹 | <code>any</code> | __*Optional*__
 **scheduleInterval**?🔹 | <code>Array<string></code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ["at any time"]
 
 

@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renovatebot renovatebot: override renovatebot configuration 1`] = `
+Object {
+  "extends": Array [
+    "customExtend",
+  ],
+  "ignoreDeps": Array [],
+  "labels": Array [],
+  "packageRules": Array [],
+  "prHourlyLimit": 10,
+  "schedule": Array [],
+}
+`;
+
+exports[`renovatebot renovatebot: true creates renovatebot configuration 1`] = `
+Object {
+  "extends": Array [
+    ":preserveSemverRanges",
+    "config:base",
+    "group:allNonMajor",
+    "group:recommended",
+    "group:monorepos",
+  ],
+  "ignoreDeps": Array [
+    "projen",
+  ],
+  "labels": Array [
+    "renotate",
+    "dependencies",
+  ],
+  "packageRules": Array [
+    Object {
+      "groupName": "devDependencies (non-major)",
+      "matchDepTypes": Array [
+        "devDependencies",
+      ],
+      "matchUpdateTypes": Array [
+        "patch",
+        "minor",
+      ],
+    },
+  ],
+  "schedule": Array [
+    "at any time",
+  ],
+}
+`;
