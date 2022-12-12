@@ -50,9 +50,6 @@ test("simplest LambdaExtension cdk v2", () => {
   );
   expect(generatedSource).toContain("export class ExampleLayerVersion");
   expect(generatedSource).toContain(
-    "new lambda.Runtime('nodejs10.x', lambda.RuntimeFamily.NODEJS)"
-  );
-  expect(generatedSource).toContain(
     "new lambda.Runtime('nodejs12.x', lambda.RuntimeFamily.NODEJS)"
   );
   expect(generatedSource).toContain(
