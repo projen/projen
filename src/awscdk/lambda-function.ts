@@ -289,7 +289,7 @@ export class LambdaFunction extends Component {
 export class LambdaRuntime {
   /**
    * Node.js 10.x
-   @deprecated NodeJS10 has been deprecated
+   * @deprecated NodeJS10 has been deprecated
    */
   public static readonly NODEJS_10_X = new LambdaRuntime(
     "nodejs10.x",

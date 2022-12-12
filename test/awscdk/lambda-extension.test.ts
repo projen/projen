@@ -34,8 +34,8 @@ test("simplest LambdaExtension cdk v2", () => {
     "--external:aws-sdk"
   );
   expect(bundleTaskExec).toContain(
-    // Supports node10
-    '--target="node10"'
+    // Supports node12
+    '--target="node12"'
   );
 
   const generatedSource = snapshot["src/example-layer-version.ts"];
