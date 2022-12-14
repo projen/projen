@@ -26,7 +26,10 @@ for (const projenrc of files) {
     sanitizeOutput(workdir);
 
     expect(
-      directorySnapshot(workdir, { excludeGlobs: ["node_modules/**"] })
+      directorySnapshot(workdir, {
+        excludeGlobs: ["node_modules/**"],
+        parseJson: false,
+      })
     ).toMatchSnapshot();
   });
 }

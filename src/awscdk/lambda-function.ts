@@ -289,6 +289,7 @@ export class LambdaFunction extends Component {
 export class LambdaRuntime {
   /**
    * Node.js 10.x
+   * @deprecated NodeJS10 has been deprecated
    */
   public static readonly NODEJS_10_X = new LambdaRuntime(
     "nodejs10.x",
@@ -317,6 +318,14 @@ export class LambdaRuntime {
   public static readonly NODEJS_16_X = new LambdaRuntime(
     "nodejs16.x",
     "node16"
+  );
+
+  /**
+   * Node.js 18.x
+   */
+  public static readonly NODEJS_18_X = new LambdaRuntime(
+    "nodejs18.x",
+    "node18"
   );
 
   public readonly esbuildPlatform = "node";

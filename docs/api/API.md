@@ -1339,6 +1339,14 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **newline** (<code>boolean</code>)  Adds a newline at the end of the file. __*Default*__: true
 
 
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**supportsComments**🔹 | <code>boolean</code> | <span></span>
+
 ### Methods
 
 
@@ -2060,6 +2068,7 @@ addTask(name: string, props?: TaskOptions): Task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+  * **receiveArgs** (<code>boolean</code>)  Should the provided `exec` shell command receive args passed to the task. __*Default*__: false
   * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
 
 __Returns__:
@@ -2343,6 +2352,8 @@ new Renovatebot(project: Project, options?: RenovatebotOptions)
   * **ignore** (<code>Array<string></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
   * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
   * **labels** (<code>Array<string></code>)  List of labels to apply to the created PR's. __*Optional*__
+  * **marker** (<code>boolean</code>)  *No description* __*Optional*__
+  * **overrideConfig** (<code>any</code>)  *No description* __*Optional*__
   * **scheduleInterval** (<code>Array<string></code>)  How often to check for new versions and raise pull requests. __*Default*__: ["at any time"]
 
 
@@ -2658,6 +2669,7 @@ new Task(name: string, props?: TaskOptions)
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+  * **receiveArgs** (<code>boolean</code>)  Should the provided `exec` shell command receive args passed to the task. __*Default*__: false
   * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
 
 
@@ -2719,6 +2731,7 @@ exec(command: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2747,6 +2760,7 @@ prepend(shell: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2763,6 +2777,7 @@ prependExec(shell: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2779,6 +2794,7 @@ prependSay(message: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2795,6 +2811,7 @@ prependSpawn(subtask: Task, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2811,6 +2828,7 @@ reset(command?: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2827,6 +2845,7 @@ say(message: string, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2843,6 +2862,7 @@ spawn(subtask: Task, options?: TaskStepOptions): void
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
 
 
 
@@ -2880,16 +2900,17 @@ Name | Type | Description
 ### Methods
 
 
-#### runTask(name, parents?)🔹 <a id="projen-taskruntime-runtask"></a>
+#### runTask(name, parents?, args?)🔹 <a id="projen-taskruntime-runtask"></a>
 
 Runs the task.
 
 ```ts
-runTask(name: string, parents?: Array<string>): void
+runTask(name: string, parents?: Array<string>, args?: Array<string &#124; number>): void
 ```
 
 * **name** (<code>string</code>)  The task name.
 * **parents** (<code>Array<string></code>)  *No description*
+* **args** (<code>Array<string &#124; number></code>)  *No description*
 
 
 
@@ -2972,6 +2993,7 @@ addTask(name: string, options?: TaskOptions): Task
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+  * **receiveArgs** (<code>boolean</code>)  Should the provided `exec` shell command receive args passed to the task. __*Default*__: false
   * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
 
 __Returns__:
@@ -4747,10 +4769,11 @@ Name | Type | Description
 **esbuildPlatform**🔹 | <code>string</code> | <span></span>
 **esbuildTarget**🔹 | <code>string</code> | The esbuild setting to use.
 **functionRuntime**🔹 | <code>string</code> | The Node.js runtime to use.
-*static* **NODEJS_10_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 10.x.
+*static* **NODEJS_10_X**⚠️ | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 10.x.
 *static* **NODEJS_12_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 12.x.
 *static* **NODEJS_14_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 14.x.
 *static* **NODEJS_16_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 16.x.
+*static* **NODEJS_18_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 18.x.
 
 
 
@@ -7840,9 +7863,9 @@ __Returns__:
 
 Installs the following npm scripts:.
 
-- `test` will run `jest --passWithNoTests`
-- `test:watch` will run `jest --watch`
-- `test:update` will run `jest -u`
+- `test`, intended for testing locally and in CI. Will update snapshots unless `updateSnapshot: UpdateSnapshot: NEVER` is set.
+- `test:watch`, intended for automatically rerunning tests when files change.
+- `test:update`, intended for testing locally and updating snapshots to match the latest unit under test. Only available when `updateSnapshot: UpdateSnapshot: NEVER`.
 
 __Submodule__: javascript
 
@@ -12302,6 +12325,8 @@ Name | Type | Description
 **ignore**?🔹 | <code>Array<string></code> | You can use the `ignore` option to customize which dependencies are updated.<br/>__*Default*__: []
 **ignoreProjen**?🔹 | <code>boolean</code> | Ignores updates to `projen`.<br/>__*Default*__: true
 **labels**?🔹 | <code>Array<string></code> | List of labels to apply to the created PR's.<br/>__*Optional*__
+**marker**?🔹 | <code>boolean</code> | __*Optional*__
+**overrideConfig**?🔹 | <code>any</code> | __*Optional*__
 **scheduleInterval**?🔹 | <code>Array<string></code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ["at any time"]
 
 
@@ -12436,6 +12461,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
 **env**?🔹 | <code>Map<string, string></code> | Defines environment variables for the execution of this task.<br/>__*Default*__: {}
 **exec**?🔹 | <code>string</code> | Shell command to execute as the first command of the task.<br/>__*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
+**receiveArgs**?🔹 | <code>boolean</code> | Should the provided `exec` shell command receive args passed to the task.<br/>__*Default*__: false
 **requiredEnv**?🔹 | <code>Array<string></code> | A set of environment variables that must be defined in order to execute this task.<br/>__*Optional*__
 **steps**?🔹 | <code>Array<[TaskStep](#projen-taskstep)></code> | List of task steps to run.<br/>__*Optional*__
 
@@ -12477,6 +12503,7 @@ Name | Type | Description
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
 **exec**?🔹 | <code>string</code> | Shell command to execute.<br/>__*Default*__: don't execute a shell command
 **name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
+**receiveArgs**?🔹 | <code>boolean</code> | Should this step receive args passed to the task.<br/>__*Default*__: false
 **say**?🔹 | <code>string</code> | Print a message.<br/>__*Default*__: don't say anything
 **spawn**?🔹 | <code>string</code> | Subtask to execute.<br/>__*Default*__: don't spawn a subtask
 
@@ -12493,6 +12520,7 @@ Name | Type | Description
 -----|------|-------------
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
 **name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
+**receiveArgs**?🔹 | <code>boolean</code> | Should this step receive args passed to the task.<br/>__*Default*__: false
 
 
 

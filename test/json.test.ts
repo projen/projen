@@ -106,7 +106,12 @@ test("json5 file can contain projen marker as comment", () => {
 
   const output = synthSnapshot(prj)["my/json/file-marker.json5"];
 
-  expect(output).toContain(`// ${file.marker}`);
+  expect(output[Symbol.for("before-all")]).toMatchObject([
+    {
+      type: "LineComment",
+      value: ` ${file.marker}`,
+    },
+  ]);
 });
 
 test("jsonc file can contain projen marker as comment", () => {
@@ -121,7 +126,12 @@ test("jsonc file can contain projen marker as comment", () => {
 
   const output = synthSnapshot(prj)["my/json/file-marker.jsonc"];
 
-  expect(output).toContain(`// ${file.marker}`);
+  expect(output[Symbol.for("before-all")]).toMatchObject([
+    {
+      type: "LineComment",
+      value: ` ${file.marker}`,
+    },
+  ]);
 });
 
 test("json file with allowComments can contain projen marker as comment", () => {
@@ -136,10 +146,15 @@ test("json file with allowComments can contain projen marker as comment", () => 
   });
 
   const output = synthSnapshot(prj, {
-    parseJson: false,
+    parseJson: true,
   })["my/json/file-marker.json"];
 
-  expect(output).toContain(`// ${file.marker}`);
+  expect(output[Symbol.for("before-all")]).toMatchObject([
+    {
+      type: "LineComment",
+      value: ` ${file.marker}`,
+    },
+  ]);
 });
 
 describe("newline", () => {

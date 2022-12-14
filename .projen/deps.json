@@ -109,10 +109,6 @@
       "type": "build"
     },
     {
-      "name": "json5",
-      "type": "build"
-    },
-    {
       "name": "markmac",
       "type": "build"
     },
@@ -149,6 +145,11 @@
     },
     {
       "name": "chalk",
+      "type": "bundled"
+    },
+    {
+      "name": "comment-json",
+      "version": "4.2.2",
       "type": "bundled"
     },
     {
@@ -196,6 +197,11 @@
     {
       "name": "zlib",
       "type": "bundled"
+    },
+    {
+      "name": "@types/babel__traverse",
+      "version": "7.18.2",
+      "type": "override"
     },
     {
       "name": "@types/prettier",
