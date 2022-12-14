@@ -266,7 +266,7 @@ app.synth();`;
       ".ts"
     );
     const testCode = `${testImports.join("\n")}
-import { MyStack } from '../src/${appEntrypointName}';
+import { MyStack } from '../${this.appProject.srcdir}/${appEntrypointName}';
 
 test('Snapshot', () => {
   const app = new App();
