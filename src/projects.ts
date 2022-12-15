@@ -12,8 +12,8 @@ export interface CreateProjectOptions {
 
   /**
    * Fully-qualified name of the project type (usually formatted
-   * as `module.ProjectType`).
-   * @example `projen.TypescriptProject`
+   * as `projen.module.ProjectType`).
+   * @example `projen.typescript.TypescriptProject`
    */
   readonly projectFqn: string;
 
