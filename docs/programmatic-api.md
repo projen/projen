@@ -11,7 +11,7 @@ const { Projects } = require('projen');
 
 Projects.createProject({
   dir: '/path/to/mydir',
-  projectFqn: 'projen.TypeScriptProject',
+  projectFqn: 'projen.typescript.TypeScriptProject',
   projectOptions: {
     name: 'my-test-project',
     defaultReleaseBranch: 'main',

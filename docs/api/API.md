@@ -2297,7 +2297,7 @@ static createProject(options: CreateProjectOptions): void
 
 * **options** (<code>[CreateProjectOptions](#projen-createprojectoptions)</code>)  *No description*
   * **dir** (<code>string</code>)  Directory that the project will be generated in. 
-  * **projectFqn** (<code>string</code>)  Fully-qualified name of the project type (usually formatted as `module.ProjectType`). 
+  * **projectFqn** (<code>string</code>)  Fully-qualified name of the project type (usually formatted as `projen.module.ProjectType`). 
   * **projectOptions** (<code>Map<string, any></code>)  Project options. 
   * **optionHints** (<code>[InitProjectOptionHints](#projen-initprojectoptionhints)</code>)  Should we render commented-out default options in the projenrc file? __*Default*__: InitProjectOptionHints.FEATURED
   * **post** (<code>boolean</code>)  Should we execute post synthesis hooks? __*Default*__: true
@@ -11702,7 +11702,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **dir**🔹 | <code>string</code> | Directory that the project will be generated in.
-**projectFqn**🔹 | <code>string</code> | Fully-qualified name of the project type (usually formatted as `module.ProjectType`).
+**projectFqn**🔹 | <code>string</code> | Fully-qualified name of the project type (usually formatted as `projen.module.ProjectType`).
 **projectOptions**🔹 | <code>Map<string, any></code> | Project options.
 **optionHints**?🔹 | <code>[InitProjectOptionHints](#projen-initprojectoptionhints)</code> | Should we render commented-out default options in the projenrc file?<br/>__*Default*__: InitProjectOptionHints.FEATURED
 **post**?🔹 | <code>boolean</code> | Should we execute post synthesis hooks?<br/>__*Default*__: true
