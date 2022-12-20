@@ -681,14 +681,12 @@ jobs:
     needs: upgrade
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: master
       - name: Download patch
         uses: actions/download-artifact@v3
@@ -1826,14 +1824,12 @@ jobs:
     needs: upgrade
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
+        with: {}
       - name: Download patch
         uses: actions/download-artifact@v3
         with:
@@ -3021,14 +3017,12 @@ jobs:
     needs: upgrade
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
+        with: {}
       - name: Download patch
         uses: actions/download-artifact@v3
         with:
@@ -4073,14 +4067,12 @@ jobs:
     needs: upgrade
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read
     if: \${{ needs.upgrade.outputs.patch_created }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          token: \${{ secrets.PROJEN_GITHUB_TOKEN }}
           ref: master
       - name: Download patch
         uses: actions/download-artifact@v3
