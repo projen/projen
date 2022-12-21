@@ -47,6 +47,13 @@ export interface CiConfigurationOptions {
    * An initial set of jobs to add to the configuration.
    */
   readonly jobs?: Record<string, Job>;
+
+  /**
+   * If true (default) all job names are snaked. If false job names are not changed.
+   *
+   * @default true
+   */
+  readonly snakeJobNames?: boolean;
 }
 
 /**
@@ -142,6 +149,8 @@ export class CiConfiguration extends Component {
    */
   public readonly jobs: Record<string, Job> = {};
 
+  private readonly snakeJobNames?: boolean;
+
   constructor(
     project: Project,
     name: string,
@@ -175,6 +184,7 @@ export class CiConfiguration extends Component {
     }
     this.pages = options?.pages;
     this.workflow = options?.workflow;
+    this.snakeJobNames = options?.snakeJobNames ?? true;
     if (options?.stages) {
       this.addStages(...options.stages);
     }
@@ -330,7 +340,7 @@ export class CiConfiguration extends Component {
         Object.entries(this.variables).length > 0 ? this.variables : undefined,
       workflow: snakeCaseKeys(this.workflow),
       stages: this.stages.length > 0 ? this.stages : undefined,
-      ...snakeCaseKeys(this.jobs),
+      ...snakeCaseKeys(this.jobs, !this.snakeJobNames),
     };
   }
 
@@ -360,13 +370,13 @@ export class CiConfiguration extends Component {
   }
 }
 
-function snakeCaseKeys<T = unknown>(obj: T): T {
+function snakeCaseKeys<T = unknown>(obj: T, skipTopLevel: boolean = false): T {
   if (typeof obj !== "object" || obj == null) {
     return obj;
   }
 
   if (Array.isArray(obj)) {
-    return obj.map(snakeCaseKeys) as any;
+    return obj.map((o) => snakeCaseKeys(o, false)) as any;
   }
 
   const result: Record<string, unknown> = {};
@@ -374,7 +384,7 @@ function snakeCaseKeys<T = unknown>(obj: T): T {
     if (typeof v === "object" && v != null && k !== "variables") {
       v = snakeCaseKeys(v);
     }
-    result[snake(k)] = v;
+    result[skipTopLevel ? k : snake(k)] = v;
   }
   return result as any;
 }

@@ -1,5 +1,22 @@
-import { CiConfiguration } from "../../src/gitlab";
+import { CiConfiguration, CiConfigurationOptions } from "../../src/gitlab";
 import { synthSnapshot, TestProject } from "../util";
+
+function ciConfigurationWith(
+  snakeJobNames: boolean | undefined
+): CiConfigurationOptions {
+  return {
+    snakeJobNames: snakeJobNames,
+    jobs: {
+      ".my-cache": {
+        script: ["echo Here goes caching"],
+      },
+      "my-job": {
+        extends: [".my-cache"],
+        script: ["echo Here is my-job"],
+      },
+    },
+  };
+}
 
 test("throws when adding an existing service with same name and alias", () => {
   // GIVEN
@@ -164,4 +181,41 @@ test("adds correct entries for file-based caching", () => {
   const snapshot = synthSnapshot(p);
   // THEN
   expect(snapshot[".gitlab/ci-templates/foo.yml"]).toMatchSnapshot();
+});
+
+test("snake original job names if `snake-job-names` option is omitted", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "snake-default", ciConfigurationWith(undefined));
+  const snapshot = synthSnapshot(p);
+  // THEN
+  expect(snapshot[".gitlab/ci-templates/snake-default.yml"]).toContain(
+    "_my_cache:"
+  );
+});
+
+test("snake original job names if `snake-job-names` option is true", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "snake-on", ciConfigurationWith(true));
+  const snapshot = synthSnapshot(p);
+  // THEN
+  expect(snapshot[".gitlab/ci-templates/snake-on.yml"]).toContain("_my_cache:");
+});
+
+test("preserves original job names if `snake-job-names` option is false", () => {
+  // GIVEN
+  const p = new TestProject({
+    stale: true,
+  });
+  new CiConfiguration(p, "snake-off", ciConfigurationWith(false));
+  const snapshot = synthSnapshot(p);
+  // THEN
+  expect(snapshot[".gitlab/ci-templates/snake-off.yml"]).toContain(
+    ".my-cache:"
+  );
 });
