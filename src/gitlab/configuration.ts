@@ -330,6 +330,9 @@ export class CiConfiguration extends Component {
         Object.entries(this.variables).length > 0 ? this.variables : undefined,
       workflow: snakeCaseKeys(this.workflow),
       stages: this.stages.length > 0 ? this.stages : undefined,
+      // we do not want to change job names
+      // as they can be hidden (https://docs.gitlab.com/ee/ci/jobs/index.html#hide-jobs)
+      // or referenced in extends
       ...snakeCaseKeys(this.jobs, true),
     };
   }
