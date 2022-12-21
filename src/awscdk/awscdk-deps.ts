@@ -399,6 +399,7 @@ const AWS_CDK_V1_V2_SCOPED_PACKAGES = [
   "@aws-cdk/cloud-assembly-schema",
   "@aws-cdk/assert",
   "@aws-cdk/cloudformation-diff",
+  "@aws-cdk/integ-runner",
 ];
 
 function determineFrameworkVersion(options: AwsCdkDepsOptions) {
