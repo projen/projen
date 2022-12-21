@@ -6412,6 +6412,7 @@ new github.Dependabot(github: GitHub, options?: DependabotOptions)
 * **options** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  *No description*
   * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
   * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
+  * **includeGithubActions** (<code>boolean</code>)  Includes updates to github-actions. __*Default*__: false
   * **labels** (<code>Array<string></code>)  List of labels to apply to the created PR's. __*Optional*__
   * **registries** (<code>Map<string, [github.DependabotRegistry](#projen-github-dependabotregistry)></code>)  Map of package registries to use. __*Default*__: use public registries
   * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
@@ -6426,6 +6427,7 @@ Name | Type | Description
 -----|------|-------------
 **config**🔹 | <code>any</code> | The raw dependabot configuration.
 **ignoresProjen**🔹 | <code>boolean</code> | Whether or not projen is also upgraded in this config,.
+**includeGithubActions**🔹 | <code>boolean</code> | Wether or not github actions also gets upgraded.
 
 ### Methods
 
@@ -6499,6 +6501,7 @@ addDependabot(options?: DependabotOptions): Dependabot
 * **options** (<code>[github.DependabotOptions](#projen-github-dependabotoptions)</code>)  *No description*
   * **ignore** (<code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
   * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
+  * **includeGithubActions** (<code>boolean</code>)  Includes updates to github-actions. __*Default*__: false
   * **labels** (<code>Array<string></code>)  List of labels to apply to the created PR's. __*Optional*__
   * **registries** (<code>Map<string, [github.DependabotRegistry](#projen-github-dependabotregistry)></code>)  Map of package registries to use. __*Default*__: use public registries
   * **scheduleInterval** (<code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code>)  How often to check for new versions and raise pull requests. __*Default*__: ScheduleInterval.DAILY
@@ -15123,6 +15126,7 @@ Name | Type | Description
 -----|------|-------------
 **ignore**?🔹 | <code>Array<[github.DependabotIgnore](#projen-github-dependabotignore)></code> | You can use the `ignore` option to customize which dependencies are updated.<br/>__*Default*__: []
 **ignoreProjen**?🔹 | <code>boolean</code> | Ignores updates to `projen`.<br/>__*Default*__: true
+**includeGithubActions**?🔹 | <code>boolean</code> | Includes updates to github-actions.<br/>__*Default*__: false
 **labels**?🔹 | <code>Array<string></code> | List of labels to apply to the created PR's.<br/>__*Optional*__
 **registries**?🔹 | <code>Map<string, [github.DependabotRegistry](#projen-github-dependabotregistry)></code> | Map of package registries to use.<br/>__*Default*__: use public registries
 **scheduleInterval**?🔹 | <code>[github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)</code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ScheduleInterval.DAILY

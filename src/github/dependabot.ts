@@ -40,6 +40,13 @@ export interface DependabotOptions {
   readonly ignoreProjen?: boolean;
 
   /**
+   * Includes updates to github-actions.
+   *
+   * @default false
+   */
+  readonly includeGithubActions?: boolean;
+
+  /**
    * List of labels to apply to the created PR's.
    */
   readonly labels?: string[];
@@ -269,6 +276,11 @@ export class Dependabot extends Component {
    */
   public readonly ignoresProjen: boolean;
 
+  /**
+   * Wether or not github actions also gets upgraded
+   */
+  public readonly includeGithubActions: boolean;
+
   private readonly ignore: any[];
 
   constructor(github: GitHub, options: DependabotOptions = {}) {
@@ -278,6 +290,7 @@ export class Dependabot extends Component {
 
     this.ignore = [];
     this.ignoresProjen = options.ignoreProjen ?? true;
+    this.includeGithubActions = options.includeGithubActions ?? false;
 
     const registries = options.registries
       ? kebabCaseKeys(options.registries)
@@ -301,6 +314,19 @@ export class Dependabot extends Component {
         },
       ],
     };
+
+    if (this.includeGithubActions) {
+      this.config.updates.push({
+        "package-ecosystem": "github-actions",
+        directory: "/",
+        schedule: {
+          interval:
+            options.scheduleInterval ?? DependabotScheduleInterval.DAILY,
+        },
+        ignore: () => (this.ignore.length > 0 ? this.ignore : undefined),
+        labels: options.labels ? options.labels : undefined,
+      });
+    }
 
     new YamlFile(project, ".github/dependabot.yml", {
       obj: this.config,

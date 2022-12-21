@@ -106,6 +106,20 @@ describe("dependabot", () => {
       expect(dependabot).toContain("20.x");
     });
   });
+
+  describe("github-actions", () => {
+    test("should include github actions", () => {
+      const project = createProject();
+
+      new Dependabot(project.github!, { includeGithubActions: true });
+
+      const snapshot = synthSnapshot(project);
+      const dependabot = snapshot[".github/dependabot.yml"];
+      expect(dependabot).toBeDefined();
+      expect(dependabot).toMatchSnapshot();
+      expect(dependabot).toContain("package-ecosystem: github-actions");
+    });
+  });
 });
 
 type ProjectOptions = Omit<
