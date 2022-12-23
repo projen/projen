@@ -27,6 +27,17 @@ majorVersion: 1
 For major versions 1 and above, if a release includes `fix` commits *only*, it will increase the *patch* version.
 If a release includes any `feat` commits, then the new version will be a *minor* version.
 
+## Prerelease Versions
+
+To release prerelease versions from the main branch, set the `prerelease` option to the desired prerelease prefix.
+For example:
+
+```js
+prerelease: 'pre'
+```
+
+You can also use this with release branches or manual releases (see example below).
+
 ## Breaking Changes
 
 Conventional Commits allows changes to be marked as breaking by appending a `!` after the type/scope in the commit message or adding a `BREAKING CHANGE:` footer ([see examples](https://www.conventionalcommits.org/en/v1.0.0/#examples)).
@@ -107,6 +118,15 @@ Or for a multi language jsii project, the necessary steps could look something l
 - `npx -p publib@latest publib-nuget`
 
 It is also your responsibility to ensure credentials are setup and available for each package repository published to.
+
+### Manual prereleases
+
+If you wanted to generate a manual prerelease you can set the `PRERELEASE` environment variables.
+
+For example in a Node.js project, you might run:
+
+- `PRERELEASE=pre projen release` *(runs tests & builds a releasable artifact)*
+- `npm publish dist/js/my-package-1.2.3-pre.0.tgz`
 
 ## FAQ
 
