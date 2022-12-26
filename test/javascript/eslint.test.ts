@@ -1,3 +1,4 @@
+import { TaskRuntime } from "../../src";
 import { Eslint, NodeProject } from "../../src/javascript";
 import { synthSnapshot } from "../util";
 
@@ -173,4 +174,22 @@ test("can override the parser", () => {
     files: ["*.json", "*.json5", "*.jsonc"],
     parser: "jsonc-eslint-parser",
   });
+});
+
+test("creates a eslint task", () => {
+  // GIVEN
+  const project = new NodeProject({
+    name: "test",
+    defaultReleaseBranch: "master",
+    prettier: true,
+  });
+
+  // WHEN
+  const eslint = new Eslint(project, {
+    dirs: ["src"],
+  });
+
+  // THEN
+  const manifest = synthSnapshot(project)[TaskRuntime.MANIFEST_FILE];
+  expect(eslint.eslintTask._renderSpec()).toMatchObject(manifest.tasks.eslint);
 });
