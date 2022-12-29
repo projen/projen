@@ -164,12 +164,12 @@ Please review this file regularly and document your constructs liberally.
 .
 |--lib/ (build output)
 |--src/
-   |--main.ts
+   |--index.ts
 |--test/
    |--main.test.ts
 ```
 
-Source .ts files should reside in the `src` directory. Constructs should be exported from the main.ts file.
+Source .ts files should reside in the `src` directory. Constructs should be exported from the index.ts file.
 Compiled files will be put in the `lib` directory. Tests are in the `test` directory. If you need additional
 resources that are packaged with your library, add those to a `resources` directory that is besides the `src` directory
 and modify your references accordingly:
@@ -187,7 +187,7 @@ are highly opinionated. There are a few expectations of this project you should 
 you can override this directory by setting `srcdir`.
 * Compiled .js and .d.ts files will go into the `lib/` directory. This directory will be removed and rebuilt each build.
 Do not store source .ts files in your `lib/` or 'libdir'.
-* The entrypoint file for all constructs should be `src/main.ts`. If your existing library is not in the main.ts file,
+* The entrypoint file for all constructs should be `src/index.ts`. If your existing library is not in the index.ts file,
 you can add the following to export it:
 
 ```typescript
