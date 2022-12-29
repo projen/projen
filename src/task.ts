@@ -163,6 +163,18 @@ export class Task {
   }
 
   /**
+   * Adds a command at the end of the task.
+   * @param shell The command to add.
+   */
+  public appendExec(shell: string, options: TaskStepOptions = {}) {
+    this.assertUnlocked();
+    this._steps.push({
+      exec: shell,
+      ...options,
+    });
+  }
+
+  /**
    * Adds a command at the beginning of the task.
    * @param shell The command to add.
    */
@@ -175,6 +187,18 @@ export class Task {
   }
 
   /**
+   * Adds a spawn instruction at the end of the task.
+   * @param subtask The subtask to execute.
+   */
+  public appendSpawn(subtask: Task, options: TaskStepOptions = {}) {
+    this.assertUnlocked();
+    this._steps.push({
+      spawn: subtask.name,
+      ...options,
+    });
+  }
+
+  /**
    * Adds a spawn instruction at the beginning of the task.
    * @param subtask The subtask to execute.
    */
@@ -182,6 +206,18 @@ export class Task {
     this.assertUnlocked();
     this._steps.unshift({
       spawn: subtask.name,
+      ...options,
+    });
+  }
+
+  /**
+   * Says something at the end of the task.
+   * @param message Your message
+   */
+  public appendSay(message: string, options: TaskStepOptions = {}) {
+    this.assertUnlocked();
+    this._steps.push({
+      say: message,
       ...options,
     });
   }

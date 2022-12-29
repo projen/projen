@@ -2687,6 +2687,57 @@ Name | Type | Description
 ### Methods
 
 
+#### appendExec(shell, options?)🔹 <a id="projen-task-appendexec"></a>
+
+Adds a command at the end of the task.
+
+```ts
+appendExec(shell: string, options?: TaskStepOptions): void
+```
+
+* **shell** (<code>string</code>)  The command to add.
+* **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
+  * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
+
+
+
+
+#### appendSay(message, options?)🔹 <a id="projen-task-appendsay"></a>
+
+Says something at the end of the task.
+
+```ts
+appendSay(message: string, options?: TaskStepOptions): void
+```
+
+* **message** (<code>string</code>)  Your message.
+* **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
+  * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
+
+
+
+
+#### appendSpawn(subtask, options?)🔹 <a id="projen-task-appendspawn"></a>
+
+Adds a spawn instruction at the end of the task.
+
+```ts
+appendSpawn(subtask: Task, options?: TaskStepOptions): void
+```
+
+* **subtask** (<code>[Task](#projen-task)</code>)  The subtask to execute.
+* **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
+  * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
+  * **name** (<code>string</code>)  Step name. __*Default*__: no name
+  * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
+
+
+
+
 #### builtin(name)🔹 <a id="projen-task-builtin"></a>
 
 Execute a builtin task.

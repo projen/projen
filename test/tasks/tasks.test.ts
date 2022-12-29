@@ -1,6 +1,6 @@
 import { Project, TaskRuntime } from "../../src";
 import { TasksManifest, TaskStep } from "../../src/task-model";
-import { TestProject, synthSnapshot } from "../util";
+import { synthSnapshot, TestProject } from "../util";
 
 test("default tasks", () => {
   const p = new TestProject();
@@ -168,6 +168,39 @@ test("reset() can be used to reset task steps", () => {
       "my-task": {
         name: "my-task",
         steps: [{ exec: "line3" }, { cwd: "foo", exec: "line4" }],
+      },
+    },
+  });
+});
+
+test("appendXXX() can be used to add steps from the top", () => {
+  // GIVEN
+  const p = new TestProject();
+  const sub = p.addTask("my-sub-task", { exec: "subexec" });
+
+  const t = p.addTask("my-task");
+  t.exec("line1");
+
+  // WHEN
+  t.appendExec("line2");
+  t.appendSpawn(sub);
+  t.appendSay("message");
+
+  // THEN
+  expectManifest(p, {
+    tasks: {
+      "my-sub-task": {
+        name: "my-sub-task",
+        steps: [{ exec: "subexec" }],
+      },
+      "my-task": {
+        name: "my-task",
+        steps: [
+          { exec: "line1" },
+          { exec: "line2" },
+          { spawn: "my-sub-task" },
+          { say: "message" },
+        ],
       },
     },
   });
