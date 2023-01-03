@@ -39,7 +39,8 @@
     "unbump": "/bin/bash ./projen.bash unbump",
     "upgrade": "/bin/bash ./projen.bash upgrade",
     "watch": "/bin/bash ./projen.bash watch",
-    "projen": "/bin/bash ./projen.bash"
+    "projen": "/bin/bash ./projen.bash",
+    "docs": "mkdocs serve"
   },
   "author": {
     "name": "Amazon Web Services",

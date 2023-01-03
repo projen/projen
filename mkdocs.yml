@@ -32,6 +32,7 @@ nav:
       - 'Subprojects': 'projen-types/subproject.md'
       - 'Tasks': 'projen-types/tasks.md'
       - 'TypeScript Projects': 'projen-types/typescript.md'
+  - 'API': 'api/API.md'
 
 plugins:
     - search
