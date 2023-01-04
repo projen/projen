@@ -119,15 +119,6 @@ Or for a multi language jsii project, the necessary steps could look something l
 
 It is also your responsibility to ensure credentials are setup and available for each package repository published to.
 
-### Manual prereleases
-
-If you wanted to generate a manual prerelease you can set the `PRERELEASE` environment variables.
-
-For example in a Node.js project, you might run:
-
-- `PRERELEASE=pre projen release` *(runs tests & builds a releasable artifact)*
-- `npm publish dist/js/my-package-1.2.3-pre.0.tgz`
-
 ## FAQ
 
 ### How can I force a different version?
@@ -160,3 +151,14 @@ To convey this message, the version in `package.json` is kept at `0.0.0`.
 Additionally, Node.js packages are often published directly by running `npm publish` in the root of the repository.
 This does not work in projen.
 Instead, projen requires you to run `projen release` to create releasable artifacts and manually publish these artifacts.
+
+### Can I do a manual one-off prerelease?
+
+If you wanted to generate a manual prerelease you can set the `PRERELEASE` environment variable.
+
+For example in a Node.js project, you might run:
+
+- `PRERELEASE=beta projen release` *(runs tests & builds a releasable artifact)*
+- `npm publish dist/js/my-package-1.2.3-beta.0.tgz`
+
+Make sure to also read the [Manual Releases](#manual-releases) section above.
