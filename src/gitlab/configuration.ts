@@ -330,7 +330,10 @@ export class CiConfiguration extends Component {
         Object.entries(this.variables).length > 0 ? this.variables : undefined,
       workflow: snakeCaseKeys(this.workflow),
       stages: this.stages.length > 0 ? this.stages : undefined,
-      ...snakeCaseKeys(this.jobs),
+      // we do not want to change job names
+      // as they can be hidden (https://docs.gitlab.com/ee/ci/jobs/index.html#hide-jobs)
+      // or referenced in extends
+      ...snakeCaseKeys(this.jobs, true),
     };
   }
 
@@ -360,13 +363,13 @@ export class CiConfiguration extends Component {
   }
 }
 
-function snakeCaseKeys<T = unknown>(obj: T): T {
+function snakeCaseKeys<T = unknown>(obj: T, skipTopLevel: boolean = false): T {
   if (typeof obj !== "object" || obj == null) {
     return obj;
   }
 
   if (Array.isArray(obj)) {
-    return obj.map(snakeCaseKeys) as any;
+    return obj.map((o) => snakeCaseKeys(o)) as any;
   }
 
   const result: Record<string, unknown> = {};
@@ -374,7 +377,7 @@ function snakeCaseKeys<T = unknown>(obj: T): T {
     if (typeof v === "object" && v != null && k !== "variables") {
       v = snakeCaseKeys(v);
     }
-    result[snake(k)] = v;
+    result[skipTopLevel ? k : snake(k)] = v;
   }
   return result as any;
 }
