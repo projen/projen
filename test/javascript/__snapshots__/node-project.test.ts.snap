@@ -6,8 +6,7 @@ Object {
   "name": "Create Pull Request",
   "needs": "upgrade",
   "permissions": Object {
-    "contents": "write",
-    "pull-requests": "write",
+    "contents": "read",
   },
   "runs-on": "ubuntu-latest",
   "steps": Array [
@@ -16,7 +15,6 @@ Object {
       "uses": "actions/checkout@v3",
       "with": Object {
         "ref": "main",
-        "token": "\${{ secrets.PROJEN_GITHUB_TOKEN }}",
       },
     },
     Object {
