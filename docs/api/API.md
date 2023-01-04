@@ -7756,6 +7756,7 @@ new javascript.Eslint(project: NodeProject, options: EslintOptions)
 Name | Type | Description 
 -----|------|-------------
 **config**🔹 | <code>any</code> | Direct access to the eslint configuration (escape hatch).
+**eslintTask**🔹 | <code>[Task](#projen-task)</code> | eslint task.
 **ignorePatterns**🔹 | <code>Array<string></code> | File patterns that should not be linted.
 **overrides**🔹 | <code>Array<[javascript.EslintOverride](#projen-javascript-eslintoverride)></code> | eslint overrides.
 **rules**🔹 | <code>Map<string, Array<any>></code> | eslint rules.
