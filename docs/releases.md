@@ -33,7 +33,7 @@ To release prerelease versions from the main branch, set the `prerelease` option
 For example:
 
 ```js
-prerelease: 'pre'
+prerelease: 'beta'
 ```
 
 You can also use this with release branches or manual releases (see example below).
