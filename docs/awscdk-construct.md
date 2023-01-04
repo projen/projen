@@ -166,7 +166,7 @@ Please review this file regularly and document your constructs liberally.
 |--src/
    |--index.ts
 |--test/
-   |--main.test.ts
+   |--hello.test.ts
 ```
 
 Source .ts files should reside in the `src` directory. Constructs should be exported from the index.ts file.
