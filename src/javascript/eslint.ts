@@ -3,6 +3,7 @@ import { PROJEN_RC } from "../common";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
+import { Task } from "../task";
 import { YamlFile } from "../yaml";
 import { Prettier } from "./prettier";
 
@@ -127,6 +128,11 @@ export class Eslint extends Component {
   public readonly overrides: EslintOverride[];
 
   /**
+   * eslint task.
+   */
+  public readonly eslintTask: Task;
+
+  /**
    * Direct access to the eslint configuration (escape hatch)
    */
   public readonly config: any;
@@ -171,7 +177,7 @@ export class Eslint extends Component {
     const lintProjenRc = options.lintProjenRc ?? true;
     const lintProjenRcFile = options.lintProjenRcFile ?? PROJEN_RC;
 
-    const eslint = project.addTask("eslint", {
+    this.eslintTask = project.addTask("eslint", {
       description: "Runs eslint against the codebase",
       exec: [
         "eslint",
@@ -183,7 +189,7 @@ export class Eslint extends Component {
       ].join(" "),
     });
 
-    project.testTask.spawn(eslint);
+    project.testTask.spawn(this.eslintTask);
 
     // exclude some files
     project.npmignore?.exclude("/.eslintrc.json");
