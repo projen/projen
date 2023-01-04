@@ -7756,6 +7756,7 @@ new javascript.Eslint(project: NodeProject, options: EslintOptions)
 Name | Type | Description 
 -----|------|-------------
 **config**🔹 | <code>any</code> | Direct access to the eslint configuration (escape hatch).
+**eslintTask**🔹 | <code>[Task](#projen-task)</code> | eslint task.
 **ignorePatterns**🔹 | <code>Array<string></code> | File patterns that should not be linted.
 **overrides**🔹 | <code>Array<[javascript.EslintOverride](#projen-javascript-eslintoverride)></code> | eslint overrides.
 **rules**🔹 | <code>Map<string, Array<any>></code> | eslint rules.
@@ -8427,6 +8428,7 @@ Name | Type | Description
 **package**🔹 | <code>[javascript.NodePackage](#projen-javascript-nodepackage)</code> | API for managing the node package.
 **packageManager**⚠️ | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The package manager to use.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
+**workflowBootstrapSteps**🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | <span></span>
 **autoMerge**?🔹 | <code>[github.AutoMerge](#projen-github-automerge)</code> | Component that sets up mergify for merging approved pull requests.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>[build.BuildWorkflow](#projen-build-buildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **buildWorkflowJobId**?🔹 | <code>string</code> | The job ID of the build workflow.<br/>__*Optional*__
