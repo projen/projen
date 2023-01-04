@@ -67,7 +67,7 @@ releaseBranches: {
   },
   '3.x': {
     majorVersion: 3,
-    prerelease: true,
+    prerelease: 'beta',
   },
 }
 ```
