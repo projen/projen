@@ -289,6 +289,36 @@ describe("publish to go", () => {
     );
   });
 
+  test("workflowBootstrap steps", () => {
+    const workflowBootstrapStep = {
+      id: "test_setup",
+      env: {
+        TEST: "TEST_VALUE",
+      },
+      name: "Workflow setup step",
+    };
+    const project = new JsiiProject({
+      authorAddress: "https://foo.bar",
+      authorUrl: "https://foo.bar",
+      repositoryUrl: "https://github.com/foo/bar.git",
+      author: "My Name",
+      name: "testproject",
+      defaultReleaseBranch: "main",
+      releaseToNpm: true,
+      publishTasks: true,
+      workflowBootstrapSteps: [workflowBootstrapStep],
+    });
+
+    const output = synthSnapshot(project);
+    const build = yaml.parse(output[".github/workflows/build.yml"]);
+    const release = yaml.parse(output[".github/workflows/release.yml"]);
+    expect(build.jobs.build.steps).toContainEqual(workflowBootstrapStep);
+    expect(release.jobs.release.steps).toContainEqual(workflowBootstrapStep);
+    expect(release.jobs.release_npm.steps).toContainEqual(
+      workflowBootstrapStep
+    );
+  });
+
   test("customizations", () => {
     const project = new JsiiProject({
       authorAddress: "https://foo.bar",

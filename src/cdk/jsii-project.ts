@@ -434,6 +434,8 @@ export class JsiiProject extends TypeScriptProject {
     // so we move the repo, create the artifact, and put it in the expected place.
     const prePublishSteps: Array<Step> = [];
 
+    prePublishSteps.push(...this.workflowBootstrapSteps);
+
     if (this.package.packageManager === NodePackageManager.PNPM) {
       prePublishSteps.push({
         name: "Setup pnpm",
