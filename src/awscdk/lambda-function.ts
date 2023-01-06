@@ -1,4 +1,4 @@
-import { basename, dirname, extname, join, relative } from "path";
+import * as path from "path";
 import { pascal } from "case";
 import { Component } from "../component";
 import { Bundler, BundlingOptions, Eslint } from "../javascript";
@@ -152,16 +152,16 @@ export class LambdaFunction extends Component {
       );
     }
 
-    const basePath = join(
-      dirname(entrypoint),
-      basename(
+    const basePath = path.posix.join(
+      path.dirname(entrypoint),
+      path.basename(
         entrypoint,
         options.edgeLambda ? TYPESCRIPT_EDGE_LAMBDA_EXT : TYPESCRIPT_LAMBDA_EXT
       )
     );
     const constructFile = options.constructFile ?? `${basePath}-function.ts`;
 
-    if (extname(constructFile) !== ".ts") {
+    if (path.extname(constructFile) !== ".ts") {
       throw new Error(
         `Construct file name "${constructFile}" must have a .ts extension`
       );
@@ -169,7 +169,7 @@ export class LambdaFunction extends Component {
 
     // type names
     const constructName =
-      options.constructName ?? pascal(basename(basePath)) + "Function";
+      options.constructName ?? pascal(path.basename(basePath)) + "Function";
     const propsType = `${constructName}Props`;
 
     const bundle = bundler.addBundle(entrypoint, {
@@ -186,11 +186,11 @@ export class LambdaFunction extends Component {
     // e.g:
     //  - outfileAbs => `/project-outdir/assets/foo/bar/baz/foo-function/index.js`
     //  - constructAbs => `/project-outdir/src/foo/bar/baz/foo-function.ts`
-    const outfileAbs = join(project.outdir, bundle.outfile);
-    const constructAbs = join(project.outdir, constructFile);
-    const relativeOutfile = relative(
-      dirname(constructAbs),
-      dirname(outfileAbs)
+    const outfileAbs = path.join(project.outdir, bundle.outfile);
+    const constructAbs = path.join(project.outdir, constructFile);
+    const relativeOutfile = path.relative(
+      path.dirname(constructAbs),
+      path.dirname(outfileAbs)
     );
 
     const src = new SourceCode(project, constructFile);
