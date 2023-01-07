@@ -12,8 +12,8 @@ export interface CreateProjectOptions {
 
   /**
    * Fully-qualified name of the project type (usually formatted
-   * as `module.ProjectType`).
-   * @example `projen.TypescriptProject`
+   * as `projen.module.ProjectType`).
+   * @example `projen.typescript.TypescriptProject`
    */
   readonly projectFqn: string;
 
@@ -64,6 +64,10 @@ export class Projects {
    * At the moment, it also generates a `.projenrc.js` file with the same code
    * that was just executed. In the future, this will also be done by the project
    * type, so we can easily support multiple languages of projenrc.
+   *
+   * An environment variable (PROJEN_CREATE_PROJECT=true) is set within the VM
+   * so that custom project types can detect whether the current synthesis is the
+   * result of a new project creation (and take additional steps accordingly)
    */
   public static createProject(options: CreateProjectOptions) {
     createProject(options);
@@ -122,6 +126,7 @@ function createProject(opts: CreateProjectOptions) {
   const synth = opts.synth ?? true;
   const postSynth = opts.post ?? true;
   process.env.PROJEN_DISABLE_POST = (!postSynth).toString();
+  process.env.PROJEN_CREATE_PROJECT = "true";
   vm.runInContext(
     [initProjectCode, synth ? `${varName}.synth();` : ""].join("\n"),
     ctx

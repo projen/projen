@@ -1339,6 +1339,14 @@ new JsonFile(project: Project, filePath: string, options: JsonFileOptions)
   * **newline** (<code>boolean</code>)  Adds a newline at the end of the file. __*Default*__: true
 
 
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**supportsComments**🔹 | <code>boolean</code> | <span></span>
+
 ### Methods
 
 
@@ -2284,13 +2292,17 @@ At the moment, it also generates a `.projenrc.js` file with the same code
 that was just executed. In the future, this will also be done by the project
 type, so we can easily support multiple languages of projenrc.
 
+An environment variable (PROJEN_CREATE_PROJECT=true) is set within the VM
+so that custom project types can detect whether the current synthesis is the
+result of a new project creation (and take additional steps accordingly)
+
 ```ts
 static createProject(options: CreateProjectOptions): void
 ```
 
 * **options** (<code>[CreateProjectOptions](#projen-createprojectoptions)</code>)  *No description*
   * **dir** (<code>string</code>)  Directory that the project will be generated in. 
-  * **projectFqn** (<code>string</code>)  Fully-qualified name of the project type (usually formatted as `module.ProjectType`). 
+  * **projectFqn** (<code>string</code>)  Fully-qualified name of the project type (usually formatted as `projen.module.ProjectType`). 
   * **projectOptions** (<code>Map<string, any></code>)  Project options. 
   * **optionHints** (<code>[InitProjectOptionHints](#projen-initprojectoptionhints)</code>)  Should we render commented-out default options in the projenrc file? __*Default*__: InitProjectOptionHints.FEATURED
   * **post** (<code>boolean</code>)  Should we execute post synthesis hooks? __*Default*__: true
@@ -2345,6 +2357,8 @@ new Renovatebot(project: Project, options?: RenovatebotOptions)
   * **ignore** (<code>Array<string></code>)  You can use the `ignore` option to customize which dependencies are updated. __*Default*__: []
   * **ignoreProjen** (<code>boolean</code>)  Ignores updates to `projen`. __*Default*__: true
   * **labels** (<code>Array<string></code>)  List of labels to apply to the created PR's. __*Optional*__
+  * **marker** (<code>boolean</code>)  *No description* __*Optional*__
+  * **overrideConfig** (<code>any</code>)  *No description* __*Optional*__
   * **scheduleInterval** (<code>Array<string></code>)  How often to check for new versions and raise pull requests. __*Default*__: ["at any time"]
 
 
@@ -4760,10 +4774,11 @@ Name | Type | Description
 **esbuildPlatform**🔹 | <code>string</code> | <span></span>
 **esbuildTarget**🔹 | <code>string</code> | The esbuild setting to use.
 **functionRuntime**🔹 | <code>string</code> | The Node.js runtime to use.
-*static* **NODEJS_10_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 10.x.
+*static* **NODEJS_10_X**⚠️ | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 10.x.
 *static* **NODEJS_12_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 12.x.
 *static* **NODEJS_14_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 14.x.
 *static* **NODEJS_16_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 16.x.
+*static* **NODEJS_18_X**🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | Node.js 18.x.
 
 
 
@@ -7746,6 +7761,7 @@ new javascript.Eslint(project: NodeProject, options: EslintOptions)
 Name | Type | Description 
 -----|------|-------------
 **config**🔹 | <code>any</code> | Direct access to the eslint configuration (escape hatch).
+**eslintTask**🔹 | <code>[Task](#projen-task)</code> | eslint task.
 **ignorePatterns**🔹 | <code>Array<string></code> | File patterns that should not be linted.
 **overrides**🔹 | <code>Array<[javascript.EslintOverride](#projen-javascript-eslintoverride)></code> | eslint overrides.
 **rules**🔹 | <code>Map<string, Array<any>></code> | eslint rules.
@@ -8417,6 +8433,7 @@ Name | Type | Description
 **package**🔹 | <code>[javascript.NodePackage](#projen-javascript-nodepackage)</code> | API for managing the node package.
 **packageManager**⚠️ | <code>[javascript.NodePackageManager](#projen-javascript-nodepackagemanager)</code> | The package manager to use.
 **runScriptCommand**🔹 | <code>string</code> | The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
+**workflowBootstrapSteps**🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | <span></span>
 **autoMerge**?🔹 | <code>[github.AutoMerge](#projen-github-automerge)</code> | Component that sets up mergify for merging approved pull requests.<br/>__*Optional*__
 **buildWorkflow**?🔹 | <code>[build.BuildWorkflow](#projen-build-buildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **buildWorkflowJobId**?🔹 | <code>string</code> | The job ID of the build workflow.<br/>__*Optional*__
@@ -11692,7 +11709,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **dir**🔹 | <code>string</code> | Directory that the project will be generated in.
-**projectFqn**🔹 | <code>string</code> | Fully-qualified name of the project type (usually formatted as `module.ProjectType`).
+**projectFqn**🔹 | <code>string</code> | Fully-qualified name of the project type (usually formatted as `projen.module.ProjectType`).
 **projectOptions**🔹 | <code>Map<string, any></code> | Project options.
 **optionHints**?🔹 | <code>[InitProjectOptionHints](#projen-initprojectoptionhints)</code> | Should we render commented-out default options in the projenrc file?<br/>__*Default*__: InitProjectOptionHints.FEATURED
 **post**?🔹 | <code>boolean</code> | Should we execute post synthesis hooks?<br/>__*Default*__: true
@@ -12316,6 +12333,8 @@ Name | Type | Description
 **ignore**?🔹 | <code>Array<string></code> | You can use the `ignore` option to customize which dependencies are updated.<br/>__*Default*__: []
 **ignoreProjen**?🔹 | <code>boolean</code> | Ignores updates to `projen`.<br/>__*Default*__: true
 **labels**?🔹 | <code>Array<string></code> | List of labels to apply to the created PR's.<br/>__*Optional*__
+**marker**?🔹 | <code>boolean</code> | __*Optional*__
+**overrideConfig**?🔹 | <code>any</code> | __*Optional*__
 **scheduleInterval**?🔹 | <code>Array<string></code> | How often to check for new versions and raise pull requests.<br/>__*Default*__: ["at any time"]
 
 

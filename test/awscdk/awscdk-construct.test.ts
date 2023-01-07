@@ -175,7 +175,7 @@ describe("lambda functions", () => {
         assetsDir: "resources",
       },
       lambdaOptions: {
-        runtime: awscdk.LambdaRuntime.NODEJS_10_X,
+        runtime: awscdk.LambdaRuntime.NODEJS_18_X,
         bundlingOptions: {
           externals: ["foo", "bar"],
           sourcemap: true,
@@ -190,7 +190,7 @@ describe("lambda functions", () => {
       snapshot[".projen/tasks.json"].tasks["bundle:my.lambda"].steps
     ).toStrictEqual([
       {
-        exec: 'esbuild --bundle src/my.lambda.ts --target="node10" --platform="node" --outfile="resources/my.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:foo --external:bar --sourcemap',
+        exec: 'esbuild --bundle src/my.lambda.ts --target="node18" --platform="node" --outfile="resources/my.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:foo --external:bar --sourcemap',
       },
     ]);
   });

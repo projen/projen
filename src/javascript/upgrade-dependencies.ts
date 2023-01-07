@@ -367,14 +367,13 @@ export class UpgradeDependencies extends Component {
     const steps: workflows.JobStep[] = [
       ...apiAccess.setupSteps,
       ...WorkflowActions.checkoutWithPatch({
-        token: apiAccess.tokenRef,
         ref: upgrade.ref,
       }),
       ...WorkflowActions.setGitIdentity(this.gitIdentity),
       {
         name: "Create Pull Request",
         id: prStepId,
-        uses: "peter-evans/create-pull-request@v3",
+        uses: "peter-evans/create-pull-request@v4",
         with: {
           // the pr can modify workflow files, so we need to use the custom
           // secret if one is configured.
@@ -399,8 +398,7 @@ export class UpgradeDependencies extends Component {
         if: `\${{ needs.${upgrade.jobId}.outputs.${PATCH_CREATED_OUTPUT} }}`,
         needs: [upgrade.jobId],
         permissions: {
-          contents: workflows.JobPermission.WRITE,
-          pullRequests: workflows.JobPermission.WRITE,
+          contents: workflows.JobPermission.READ,
         },
         runsOn: runsOn ?? ["ubuntu-latest"],
         steps: steps,

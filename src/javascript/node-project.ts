@@ -424,7 +424,7 @@ export class NodeProject extends GitHubProject {
    */
   public readonly upgradeWorkflow?: UpgradeDependencies;
 
-  private readonly workflowBootstrapSteps: JobStep[];
+  protected readonly workflowBootstrapSteps: JobStep[];
   private readonly workflowGitIdentity: GitIdentity;
   public readonly prettier?: Prettier;
 

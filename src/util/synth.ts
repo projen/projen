@@ -1,7 +1,10 @@
 import * as os from "os";
 import * as path from "path";
+import * as JSONC from "comment-json";
+import { CommentArray } from "comment-json";
 import * as fs from "fs-extra";
 import { glob } from "glob";
+import { JsonFile } from "../json";
 import { Project } from "../project";
 
 /**
@@ -54,6 +57,10 @@ export function synthSnapshot(
     return directorySnapshot(project.outdir, {
       ...options,
       excludeGlobs: ignoreExts.map((ext) => `**/*.${ext}`),
+      supportJsonComments: project.files.some(
+        // At least one json file in project supports comments
+        (file) => file instanceof JsonFile && file.supportsComments
+      ),
     });
   } finally {
     fs.removeSync(project.outdir);
@@ -81,6 +88,20 @@ export interface DirectorySnapshotOptions extends SnapshotOptions {
    * @default false include file content
    */
   readonly onlyFileNames?: boolean;
+
+  /**
+   * Parses files with different parser, supporting comments
+   * inside .json files.
+   * @default false
+   */
+  readonly supportJsonComments?: boolean;
+}
+
+function isJsonLikeFile(filePath: string): boolean {
+  const file = filePath.toLowerCase();
+  return (
+    file.endsWith(".json") || file.endsWith(".json5") || file.endsWith(".jsonc")
+  );
 }
 
 export function directorySnapshot(
@@ -103,10 +124,11 @@ export function directorySnapshot(
 
     let content;
     if (!options.onlyFileNames) {
-      if (parseJson && path.extname(filePath) === ".json") {
-        content = fs.readJsonSync(filePath);
-      } else {
-        content = fs.readFileSync(filePath, "utf-8");
+      content = fs.readFileSync(filePath, "utf-8");
+      if (parseJson && isJsonLikeFile(filePath)) {
+        content = cleanCommentArrays(
+          JSONC.parse(content, undefined, !options.supportJsonComments)
+        );
       }
     } else {
       content = true;
@@ -116,4 +138,37 @@ export function directorySnapshot(
   }
 
   return output;
+}
+
+/**
+ * Converts type "CommentArray" back to regular JS "Array"
+ * if there are no comments stored in it.
+ * Prevents strict checks from failing.
+ */
+function cleanCommentArrays(obj: any): typeof obj {
+  if (Array.isArray(obj) || isCommentArrayWithoutComments(obj)) {
+    return Array.from(obj).map(cleanCommentArrays);
+  }
+
+  if (obj instanceof Object) {
+    for (const p of Object.keys(obj)) {
+      if (isCommentArrayWithoutComments(obj[p])) {
+        obj[p] = Array.from(obj[p]).map(cleanCommentArrays);
+      } else if (obj[p] instanceof Object) {
+        obj[p] = cleanCommentArrays(obj[p]);
+      }
+    }
+  }
+
+  return obj;
+}
+
+/**
+ * Checks if a "CommentArray" has no comments stored in it.
+ */
+function isCommentArrayWithoutComments(obj: any): boolean {
+  return (
+    obj instanceof CommentArray &&
+    Object.getOwnPropertySymbols(obj).length === 0
+  );
 }

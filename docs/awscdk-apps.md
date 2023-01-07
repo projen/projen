@@ -8,6 +8,9 @@ CDK application projects produce complete cloud applications. When a commit is
 merged into the default branch, the app is rolled out by the release workflow to
 AWS environments.
 
+Possible implementation:
+ - [Deployable Typescript AWS CDK App](https://github.com/AminFazlMondo/deployable-awscdk-app-ts)
+
 ## Dev Stage (NOT IMPLEMENTED YET)
 
 Every app includes an instance of the application stage which can be deployed to

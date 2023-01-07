@@ -109,10 +109,6 @@
       "type": "build"
     },
     {
-      "name": "json5",
-      "type": "build"
-    },
-    {
       "name": "markmac",
       "type": "build"
     },
@@ -149,6 +145,11 @@
     },
     {
       "name": "chalk",
+      "type": "bundled"
+    },
+    {
+      "name": "comment-json",
+      "version": "4.2.2",
       "type": "bundled"
     },
     {
