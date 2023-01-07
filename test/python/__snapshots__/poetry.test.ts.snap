@@ -327,7 +327,7 @@ exclude = [ \\"my_package/excluded.py\\" ]
   [tool.poetry.dependencies]
   package1 = \\"0.0.1\\"
   package2 = \\"0.0.2\\"
-  python = \\"^3.6\\"
+  python = \\"^3.7\\"
 
   [tool.poetry.dev-dependencies]
   projen = \\"99.99.99\\"
