@@ -58,7 +58,7 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "all-contributors-cli": "^6.24.0",
-    "esbuild": "^0.16.14",
+    "esbuild": "^0.16.15",
     "eslint": "^8",
     "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-node": "^0.3.6",
@@ -74,7 +74,7 @@
     "json-schema": "^0.4.0",
     "markmac": "^0.1.146",
     "npm-check-updates": "^16",
-    "prettier": "^2.8.1",
+    "prettier": "^2.8.2",
     "standard-version": "^9",
     "ts-jest": "^27",
     "typescript": "^3.9.10"
