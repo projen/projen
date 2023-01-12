@@ -1,8 +1,8 @@
 import { join } from "path";
+import { Pom } from "./pom";
 import { Component } from "../component";
 import { Project } from "../project";
 import { SampleDir } from "../sample-file";
-import { Pom } from "./pom";
 
 const TESTDIR = join("src", "test", "java");
 

@@ -1,7 +1,7 @@
+import { synthSnapshot, TestProject } from "./util";
 import { ObjectFile } from "../src";
 import { JsonFile } from "../src/json";
 import { JsonPatch } from "../src/json-patch";
-import { synthSnapshot, TestProject } from "./util";
 
 class ChildObjectFile extends ObjectFile {}
 

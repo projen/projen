@@ -1,6 +1,6 @@
+import { GitHub } from "./github";
 import { Component } from "../component";
 import { YamlFile } from "../yaml";
-import { GitHub } from "./github";
 
 /**
  * The Mergify conditional operators that can be used are: `or` and `and`.

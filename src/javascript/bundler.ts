@@ -1,9 +1,9 @@
 import * as path from "path";
+import { renderBundleName } from "./util";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
 import { Task } from "../task";
-import { renderBundleName } from "./util";
 
 /**
  * Options for `Bundler`.

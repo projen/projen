@@ -1,6 +1,6 @@
+import { VsCode } from "./vscode";
 import { Component } from "../component";
 import { JsonFile } from "../json";
-import { VsCode } from "./vscode";
 
 /**
  * Controls where to launch the debug target

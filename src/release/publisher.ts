@@ -1,3 +1,4 @@
+import { BranchOptions } from "./release";
 import { Component } from "../component";
 import {
   BUILD_ARTIFACT_NAME,
@@ -13,7 +14,6 @@ import {
 } from "../github/workflows-model";
 import { defaultNpmToken } from "../javascript/node-package";
 import { Project } from "../project";
-import { BranchOptions } from "./release";
 
 const PUBLIB_VERSION = "latest";
 const GITHUB_PACKAGES_REGISTRY = "npm.pkg.github.com";

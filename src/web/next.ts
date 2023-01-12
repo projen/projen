@@ -1,3 +1,4 @@
+import { PostCss } from "./postcss";
 import { Component } from "../component";
 import {
   NodeProject,
@@ -8,7 +9,6 @@ import {
 import { SampleDir, SampleFile } from "../sample-file";
 import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 import { deepMerge } from "../util";
-import { PostCss } from "./postcss";
 
 export interface NextJsCommonProjectOptions {
   /**

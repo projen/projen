@@ -1,10 +1,10 @@
 import * as semver from "semver";
-import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
-import { DependencyType } from "../dependencies";
 import { AutoDiscover } from "./auto-discover";
 import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsJs } from "./awscdk-deps-js";
 import { LambdaFunctionCommonOptions } from "./lambda-function";
+import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
+import { DependencyType } from "../dependencies";
 
 /**
  * Options for `AwsCdkConstructLibrary`.

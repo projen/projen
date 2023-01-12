@@ -1,12 +1,11 @@
 import { snake } from "case";
+import { GitHub } from "./github";
+import { GithubCredentials } from "./github-credentials";
+import * as workflows from "./workflows-model";
 import { resolve } from "../_resolve";
 import { Component } from "../component";
 import { kebabCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
-import { GitHub } from "./github";
-import { GithubCredentials } from "./github-credentials";
-
-import * as workflows from "./workflows-model";
 
 /**
  * Options for `GithubWorkflow`.

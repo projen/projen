@@ -1,9 +1,9 @@
 import * as path from "path";
 import * as fs from "fs-extra";
+import { IPythonEnv } from "./python-env";
 import { Component } from "../component";
 import { Project } from "../project";
 import { exec } from "../util";
-import { IPythonEnv } from "./python-env";
 
 /**
  * Options for venv.

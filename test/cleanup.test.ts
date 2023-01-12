@@ -1,9 +1,9 @@
 import { join } from "path";
 import { readJsonSync } from "fs-extra";
+import { directorySnapshot, TestProject } from "./util";
 import { DependencyType, JsonFile, SampleFile, TextFile } from "../src";
 import { cleanup, FILE_MANIFEST } from "../src/cleanup";
 import { PROJEN_MARKER } from "../src/common";
-import { directorySnapshot, TestProject } from "./util";
 
 test("cleanup uses cache file", () => {
   // GIVEN

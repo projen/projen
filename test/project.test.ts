@@ -1,6 +1,6 @@
 import * as path from "path";
-import { JsonFile, Project, Testing, TextFile } from "../src";
 import { synthSnapshot, TestProject } from "./util";
+import { JsonFile, Project, Testing, TextFile } from "../src";
 
 test("file paths are relative to the project outdir", () => {
   // GIVEN

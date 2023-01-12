@@ -1,8 +1,5 @@
 import * as path from "path";
 import { snake } from "case";
-import { Component } from "../component";
-import { Project } from "../project";
-import { YamlFile } from "../yaml";
 import {
   Artifacts,
   Cache,
@@ -15,6 +12,9 @@ import {
   VariableConfig,
   Workflow,
 } from "./configuration-model";
+import { Component } from "../component";
+import { Project } from "../project";
+import { YamlFile } from "../yaml";
 
 /**
  * Options for `CiConfiguration`.

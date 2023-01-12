@@ -1,6 +1,6 @@
 import * as semver from "semver";
-import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
 import { AutoDiscover } from "./auto-discover";
+import { ConstructLibrary, ConstructLibraryOptions } from "../cdk";
 
 export interface ConstructLibraryCdk8sOptions extends ConstructLibraryOptions {
   /**

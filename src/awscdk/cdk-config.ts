@@ -1,7 +1,7 @@
+import { FEATURE_FLAGS } from "./internal";
 import { Component } from "../component";
 import { JsonFile } from "../json";
 import { Project } from "../project";
-import { FEATURE_FLAGS } from "./internal";
 
 /**
  * Common options for `cdk.json`.

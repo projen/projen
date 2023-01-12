@@ -1,6 +1,6 @@
 import { GitHub } from ".";
-import { Component } from "../component";
 import { Job, JobPermission } from "./workflows-model";
+import { Component } from "../component";
 
 /**
  * Options for PullRequestLint

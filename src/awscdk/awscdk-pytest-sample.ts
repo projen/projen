@@ -1,5 +1,5 @@
-import { Component, SampleDir } from "..";
 import { AwsCdkPythonApp } from "./awscdk-app-py";
+import { Component, SampleDir } from "..";
 
 export class AwsCdkPytestSample extends Component {
   constructor(project: AwsCdkPythonApp, testdir: string) {

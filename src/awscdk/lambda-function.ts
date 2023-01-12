@@ -1,16 +1,16 @@
 import * as path from "path";
 import { pascal } from "case";
-import { Component } from "../component";
-import { Bundler, BundlingOptions, Eslint } from "../javascript";
-import { Project } from "../project";
-import { SourceCode } from "../source-code";
-import { TypeScriptProject } from "../typescript";
 import { AwsCdkDeps } from "./awscdk-deps";
 import {
   convertToPosixPath,
   TYPESCRIPT_EDGE_LAMBDA_EXT,
   TYPESCRIPT_LAMBDA_EXT,
 } from "./internal";
+import { Component } from "../component";
+import { Bundler, BundlingOptions, Eslint } from "../javascript";
+import { Project } from "../project";
+import { SourceCode } from "../source-code";
+import { TypeScriptProject } from "../typescript";
 
 /**
  * Common options for `LambdaFunction`. Applies to all functions in

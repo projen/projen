@@ -1,11 +1,11 @@
 import { dirname, join } from "path";
 import { existsSync, mkdirpSync, outputFileSync } from "fs-extra";
+import { Pom } from "./pom";
 import { PROJEN_VERSION } from "../common";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { ProjectOption, readJsiiManifest } from "../inventory";
 import { Project } from "../project";
-import { Pom } from "./pom";
 
 /**
  * Options for `Projenrc`.

@@ -1,11 +1,11 @@
-import { GitHubProject, GitHubProjectOptions } from "../github";
-import { anySelected, multipleSelected } from "../util";
 import { Junit, JunitOptions } from "./junit";
 import { MavenCompile, MavenCompileOptions } from "./maven-compile";
 import { MavenPackaging, MavenPackagingOptions } from "./maven-packaging";
 import { MavenSample } from "./maven-sample";
 import { PluginOptions, Pom, PomOptions } from "./pom";
 import { Projenrc as ProjenrcJava, ProjenrcOptions } from "./projenrc";
+import { GitHubProject, GitHubProjectOptions } from "../github";
+import { anySelected, multipleSelected } from "../util";
 
 /**
  * Options for `JavaProject`.

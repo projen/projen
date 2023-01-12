@@ -1,7 +1,7 @@
-import { Component } from "../component";
 import { GitHub } from "./github";
 import { renderBehavior } from "./stale-util";
 import { JobPermission } from "./workflows-model";
+import { Component } from "../component";
 
 /**
  * Options for `Stale`.

@@ -1,5 +1,5 @@
-import { Component } from "../component";
 import { GitHub } from "./github";
+import { Component } from "../component";
 
 export interface AutoMergeOptions {
   /**
