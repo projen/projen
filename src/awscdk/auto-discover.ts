@@ -1,10 +1,3 @@
-import {
-  AutoDiscoverBase,
-  IntegrationTestAutoDiscoverBase,
-  IntegrationTestAutoDiscoverBaseOptions,
-} from "../cdk";
-import { Component } from "../component";
-import { Project } from "../project";
 import { AwsCdkDeps } from "./awscdk-deps";
 import {
   IntegrationTest,
@@ -20,6 +13,13 @@ import {
   LambdaExtensionCommonOptions,
 } from "./lambda-extension";
 import { LambdaFunction, LambdaFunctionCommonOptions } from "./lambda-function";
+import {
+  AutoDiscoverBase,
+  IntegrationTestAutoDiscoverBase,
+  IntegrationTestAutoDiscoverBaseOptions,
+} from "../cdk";
+import { Component } from "../component";
+import { Project } from "../project";
 
 /**
  * Common options for auto discovering project subcomponents.

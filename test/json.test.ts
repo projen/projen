@@ -1,8 +1,8 @@
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
+import { synthSnapshot, TestProject } from "./util";
 import { JsonFile } from "../src";
 import { writeFile } from "../src/util";
-import { synthSnapshot, TestProject } from "./util";
 
 test("json object can be mutated before synthesis", () => {
   const prj = new TestProject();

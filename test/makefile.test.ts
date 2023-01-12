@@ -1,5 +1,5 @@
-import { Makefile } from "../src";
 import { synthSnapshot, TestProject } from "./util";
+import { Makefile } from "../src";
 
 test("makefile synthesizes correctly", () => {
   const prj = new TestProject();

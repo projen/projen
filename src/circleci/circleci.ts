@@ -1,8 +1,8 @@
+import { WorkflowJob, Workflow, Job } from "./model";
 import { Component } from "../component";
 import { Project } from "../project";
 import { snakeCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
-import { WorkflowJob, Workflow, Job } from "./model";
 
 /**
  * Options for class {@link Circleci}

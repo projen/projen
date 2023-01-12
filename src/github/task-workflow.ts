@@ -1,4 +1,3 @@
-import { Task } from "../task";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { GitHub } from "./github";
 import { WorkflowActions } from "./workflow-actions";
@@ -11,6 +10,7 @@ import {
   JobStepOutput,
   Triggers,
 } from "./workflows-model";
+import { Task } from "../task";
 
 const DEFAULT_JOB_ID = "build";
 

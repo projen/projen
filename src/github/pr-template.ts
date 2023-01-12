@@ -1,5 +1,5 @@
-import { TextFile } from "../textfile";
 import { GitHub } from "./github";
+import { TextFile } from "../textfile";
 
 /**
  * Options for `PullRequestTemplate`.

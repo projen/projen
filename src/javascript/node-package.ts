@@ -8,6 +8,11 @@ import {
   readdirSync,
   readJsonSync,
 } from "fs-extra";
+import {
+  extractCodeArtifactDetails,
+  minVersion,
+  packageResolutionsFieldName,
+} from "./util";
 import { resolve as resolveJson } from "../_resolve";
 import { Component } from "../component";
 import { Dependencies, DependencyType } from "../dependencies";
@@ -16,11 +21,6 @@ import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
 import { exec, isTruthy, sorted, writeFile } from "../util";
-import {
-  extractCodeArtifactDetails,
-  minVersion,
-  packageResolutionsFieldName,
-} from "./util";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";

@@ -1,10 +1,3 @@
-import { GitHubProject, GitHubProjectOptions } from "../github";
-import {
-  Projenrc as ProjenrcJs,
-  ProjenrcOptions as ProjenrcJsOptions,
-} from "../javascript/projenrc";
-import { ProjectType } from "../project";
-import { anySelected, multipleSelected } from "../util";
 import { Pip } from "./pip";
 import { Poetry } from "./poetry";
 import {
@@ -19,6 +12,13 @@ import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
 import { PythonSample } from "./python-sample";
 import { Setuptools } from "./setuptools";
 import { Venv, VenvOptions } from "./venv";
+import { GitHubProject, GitHubProjectOptions } from "../github";
+import {
+  Projenrc as ProjenrcJs,
+  ProjenrcOptions as ProjenrcJsOptions,
+} from "../javascript/projenrc";
+import { ProjectType } from "../project";
+import { anySelected, multipleSelected } from "../util";
 
 /** Allowed characters in python project names */
 const PYTHON_PROJECT_NAME_REGEX = /^[A-Za-z0-9-_\.]+$/;

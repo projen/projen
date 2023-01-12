@@ -1,3 +1,4 @@
+import { TestProject } from "./util";
 import { JsonFile } from "../src/json";
 import {
   decamelizeKeysRecursively,
@@ -8,7 +9,6 @@ import {
   formatAsPythonModule,
   getGitVersion,
 } from "../src/util";
-import { TestProject } from "./util";
 
 describe("decamelizeRecursively", () => {
   test("decamel recurses an object structure", () => {

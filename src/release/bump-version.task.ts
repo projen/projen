@@ -16,8 +16,8 @@
  * - RELEASE_TAG_PREFIX: (optional) a prefix to apply to the release tag
  *
  */
-import * as logging from "../logging";
 import { bump, BumpOptions } from "./bump-version";
+import * as logging from "../logging";
 
 const versionFile = process.env.OUTFILE;
 const prerelease = process.env.PRERELEASE;

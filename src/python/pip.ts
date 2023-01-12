@@ -1,10 +1,10 @@
+import { IPackageProvider, IPythonDeps } from "./python-deps";
+import { RequirementsFile } from "./requirements-file";
 import { Component } from "../component";
 import { Dependency, DependencyType } from "../dependencies";
 import { Project } from "../project";
 import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
-import { IPackageProvider, IPythonDeps } from "./python-deps";
-import { RequirementsFile } from "./requirements-file";
 
 /**
  * Options for pip
