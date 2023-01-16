@@ -367,4 +367,4 @@ async function initProject(
   }
 }
 
-module.exports = new Command();
+export default new Command();
