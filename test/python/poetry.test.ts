@@ -22,7 +22,7 @@ test("poetry enabled", () => {
   expect(snapshot["pyproject.toml"]).toContain(
     "Development Status :: 4 - Beta"
   );
-  expect(snapshot["pyproject.toml"]).toContain('python = "^3.6"'); // default python version
+  expect(snapshot["pyproject.toml"]).toContain('python = "^3.7"'); // default python version
 });
 
 test("poetry enabled with specified python version", () => {
