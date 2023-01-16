@@ -216,6 +216,7 @@ Name|Description
 [awscdk.LambdaExtensionOptions](#projen-awscdk-lambdaextensionoptions)|Options for creating lambda extensions.
 [awscdk.LambdaFunctionCommonOptions](#projen-awscdk-lambdafunctioncommonoptions)|Common options for `LambdaFunction`.
 [awscdk.LambdaFunctionOptions](#projen-awscdk-lambdafunctionoptions)|Options for `Function`.
+[awscdk.LambdaRuntimeOptions](#projen-awscdk-lambdaruntimeoptions)|Options for the AWS Lambda function runtime.
 [build.AddPostBuildJobCommandsOptions](#projen-build-addpostbuildjobcommandsoptions)|Options for `BuildWorkflow.addPostBuildJobCommands`.
 [build.AddPostBuildJobTaskOptions](#projen-build-addpostbuildjobtaskoptions)|Options for `BuildWorkflow.addPostBuildJobTask`.
 [build.BuildWorkflowOptions](#projen-build-buildworkflowoptions)|*No description*
@@ -4757,11 +4758,13 @@ __Submodule__: awscdk
 
 
 ```ts
-new awscdk.LambdaRuntime(functionRuntime: string, esbuildTarget: string)
+new awscdk.LambdaRuntime(functionRuntime: string, esbuildTarget: string, options?: LambdaRuntimeOptions)
 ```
 
 * **functionRuntime** (<code>string</code>)  The Node.js runtime to use.
 * **esbuildTarget** (<code>string</code>)  The esbuild setting to use.
+* **options** (<code>[awscdk.LambdaRuntimeOptions](#projen-awscdk-lambdaruntimeoptions)</code>)  Options for this runtime.
+  * **defaultExternals** (<code>Array<string></code>)  Packages that are considered externals by default when bundling. __*Default*__: ['
 
 
 
@@ -4770,6 +4773,7 @@ new awscdk.LambdaRuntime(functionRuntime: string, esbuildTarget: string)
 
 Name | Type | Description 
 -----|------|-------------
+**defaultExternals**🔹 | <code>Array<string></code> | <span></span>
 **esbuildPlatform**🔹 | <code>string</code> | <span></span>
 **esbuildTarget**🔹 | <code>string</code> | The esbuild setting to use.
 **functionRuntime**🔹 | <code>string</code> | The Node.js runtime to use.
@@ -13601,6 +13605,19 @@ Name | Type | Description
 **constructName**?🔹 | <code>string</code> | The name of the generated `lambda.Function` subclass.<br/>__*Default*__: A pascal cased version of the name of the entrypoint file, with the extension `Function` (e.g. `ResizeImageFunction`).
 **edgeLambda**?🔹 | <code>boolean</code> | Whether to create a `cloudfront.experimental.EdgeFunction` instead of a `lambda.Function`.<br/>__*Default*__: false
 **runtime**?🔹 | <code>[awscdk.LambdaRuntime](#projen-awscdk-lambdaruntime)</code> | The node.js version to target.<br/>__*Default*__: Runtime.NODEJS_14_X
+
+
+
+## struct LambdaRuntimeOptions 🔹 <a id="projen-awscdk-lambdaruntimeoptions"></a>
+
+
+Options for the AWS Lambda function runtime.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**defaultExternals**?🔹 | <code>Array<string></code> | Packages that are considered externals by default when bundling.<br/>__*Default*__: ['
 
 
 

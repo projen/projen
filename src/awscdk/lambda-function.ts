@@ -175,7 +175,7 @@ export class LambdaFunction extends Component {
     const bundle = bundler.addBundle(entrypoint, {
       target: runtime.esbuildTarget,
       platform: runtime.esbuildPlatform,
-      externals: ["aws-sdk"],
+      externals: runtime.defaultExternals,
       ...options.bundlingOptions,
       tsconfigPath: (project as TypeScriptProject)?.tsconfigDev?.fileName,
     });
@@ -284,6 +284,18 @@ export class LambdaFunction extends Component {
 }
 
 /**
+ * Options for the AWS Lambda function runtime
+ */
+export interface LambdaRuntimeOptions {
+  /**
+   * Packages that are considered externals by default when bundling
+   *
+   * @default ['@aws-sdk/*']
+   */
+  readonly defaultExternals?: string[];
+}
+
+/**
  * The runtime for the AWS Lambda function.
  */
 export class LambdaRuntime {
@@ -293,7 +305,8 @@ export class LambdaRuntime {
    */
   public static readonly NODEJS_10_X = new LambdaRuntime(
     "nodejs10.x",
-    "node10"
+    "node10",
+    { defaultExternals: ["aws-sdk"] }
   );
 
   /**
@@ -301,7 +314,8 @@ export class LambdaRuntime {
    */
   public static readonly NODEJS_12_X = new LambdaRuntime(
     "nodejs12.x",
-    "node12"
+    "node12",
+    { defaultExternals: ["aws-sdk"] }
   );
 
   /**
@@ -309,7 +323,8 @@ export class LambdaRuntime {
    */
   public static readonly NODEJS_14_X = new LambdaRuntime(
     "nodejs14.x",
-    "node14"
+    "node14",
+    { defaultExternals: ["aws-sdk"] }
   );
 
   /**
@@ -317,7 +332,8 @@ export class LambdaRuntime {
    */
   public static readonly NODEJS_16_X = new LambdaRuntime(
     "nodejs16.x",
-    "node16"
+    "node16",
+    { defaultExternals: ["aws-sdk"] }
   );
 
   /**
@@ -330,6 +346,8 @@ export class LambdaRuntime {
 
   public readonly esbuildPlatform = "node";
 
+  public readonly defaultExternals: string[];
+
   public constructor(
     /**
      * The Node.js runtime to use
@@ -339,6 +357,13 @@ export class LambdaRuntime {
     /**
      * The esbuild setting to use.
      */
-    public readonly esbuildTarget: string
-  ) {}
+    public readonly esbuildTarget: string,
+
+    /**
+     * Options for this runtime.
+     */
+    options?: LambdaRuntimeOptions
+  ) {
+    this.defaultExternals = options?.defaultExternals ?? ["@aws-sdk/*"];
+  }
 }
