@@ -1,3 +1,6 @@
+import { IPythonDeps } from "./python-deps";
+import { IPythonEnv } from "./python-env";
+import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
@@ -5,9 +8,6 @@ import { Task } from "../task";
 import { TaskRuntime } from "../task-runtime";
 import { TomlFile } from "../toml";
 import { decamelizeKeysRecursively, exec, execOrUndefined } from "../util";
-import { IPythonDeps } from "./python-deps";
-import { IPythonEnv } from "./python-env";
-import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
 
 /**
  * Manage project dependencies, virtual environments, and packaging through the

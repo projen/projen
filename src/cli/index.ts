@@ -1,11 +1,11 @@
 import { resolve } from "path";
 import * as yargs from "yargs";
+import { synth } from "./synth";
+import { discoverTaskCommands } from "./tasks";
 import { PROJEN_RC, PROJEN_VERSION } from "../common";
 import * as logging from "../logging";
 import { TaskRuntime } from "../task-runtime";
 import { getNodeMajorVersion } from "../util";
-import { synth } from "./synth";
-import { discoverTaskCommands } from "./tasks";
 
 const DEFAULT_RC = resolve(PROJEN_RC);
 

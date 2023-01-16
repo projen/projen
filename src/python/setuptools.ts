@@ -1,9 +1,9 @@
+import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
+import { SetupPy } from "./setuppy";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
 import { Task } from "../task";
-import { IPythonPackaging, PythonPackagingOptions } from "./python-packaging";
-import { SetupPy } from "./setuppy";
 
 /**
  * Manages packaging through setuptools with a setup.py script.

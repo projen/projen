@@ -1,6 +1,6 @@
+import { directorySnapshot, withProjectDir } from "./util";
 import { InitProjectOptionHints } from "../src/option-hints";
 import { Projects } from "../src/projects";
-import { directorySnapshot, withProjectDir } from "./util";
 
 describe("createProject", () => {
   test("creates a project in a directory", () => {

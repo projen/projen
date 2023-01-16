@@ -1,5 +1,5 @@
-import { License } from "../src/license";
 import { synthSnapshot, TestProject } from "./util";
+import { License } from "../src/license";
 
 test("apache with defaults", () => {
   const project = new TestProject();

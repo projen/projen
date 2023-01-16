@@ -1,3 +1,4 @@
+import { Prettier } from "./prettier";
 import { Project } from "..";
 import { PROJEN_RC } from "../common";
 import { Component } from "../component";
@@ -5,7 +6,6 @@ import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 import { Task } from "../task";
 import { YamlFile } from "../yaml";
-import { Prettier } from "./prettier";
 
 export interface EslintOptions {
   /**

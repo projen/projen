@@ -1,8 +1,8 @@
 import * as path from "path";
 import * as fs from "fs-extra";
+import { synthSnapshot, TestProject } from "./util";
 import { Project, TextFile, ProjectOptions, JsonFile } from "../src";
 import { PROJEN_MARKER } from "../src/common";
-import { synthSnapshot, TestProject } from "./util";
 
 test("composing projects declaratively", () => {
   const comp = new TestProject();

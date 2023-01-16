@@ -1,5 +1,5 @@
-import { XmlFile } from "../src";
 import { synthSnapshot, TestProject } from "./util";
+import { XmlFile } from "../src";
 
 test("simple use", () => {
   // WHEN

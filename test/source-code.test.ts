@@ -1,5 +1,5 @@
-import { SourceCode } from "../src";
 import { synthSnapshot, TestProject } from "./util";
+import { SourceCode } from "../src";
 
 test("lines", () => {
   const project = new TestProject();

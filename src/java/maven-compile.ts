@@ -1,6 +1,6 @@
+import { Pom } from "./pom";
 import { Component } from "../component";
 import { Project } from "../project";
-import { Pom } from "./pom";
 
 /**
  * Options for `MavenCompile`.

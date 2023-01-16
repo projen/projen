@@ -2,8 +2,6 @@
 // and compare against a golden snapshot.
 import { join } from "path";
 import { pathExistsSync } from "fs-extra";
-import * as inventory from "../src/inventory";
-import { execCapture } from "../src/util";
 import {
   directorySnapshot,
   execProjenCLI,
@@ -12,6 +10,8 @@ import {
   TestProject,
   withProjectDir,
 } from "./util";
+import * as inventory from "../src/inventory";
+import { execCapture } from "../src/util";
 
 for (const type of inventory.discover()) {
   test(`projen new ${type.pjid}`, () => {

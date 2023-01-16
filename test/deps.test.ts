@@ -1,8 +1,8 @@
 import { join } from "path";
 import { existsSync, readFileSync } from "fs-extra";
+import { TestProject } from "./util";
 import { Project } from "../src";
 import { Dependencies, DependencyType } from "../src/dependencies";
-import { TestProject } from "./util";
 
 test("no dependencies, no manifest", () => {
   // GIVEN

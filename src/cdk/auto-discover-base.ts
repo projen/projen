@@ -1,8 +1,8 @@
 import * as path from "path";
 import * as glob from "glob";
+import { TYPESCRIPT_INTEG_EXT } from "./internal";
 import { Component } from "../component";
 import { Project } from "../project";
-import { TYPESCRIPT_INTEG_EXT } from "./internal";
 
 /**
  * Options for `AutoDiscoverBase`

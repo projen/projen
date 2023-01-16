@@ -1,4 +1,6 @@
 import * as path from "path";
+import { Publisher } from "./publisher";
+import { ReleaseTrigger } from "./release-trigger";
 import { Component } from "../component";
 import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from "../github";
 import {
@@ -8,8 +10,6 @@ import {
 import { Job, JobPermission, JobStep } from "../github/workflows-model";
 import { Task } from "../task";
 import { Version } from "../version";
-import { Publisher } from "./publisher";
-import { ReleaseTrigger } from "./release-trigger";
 
 const BUILD_JOBID = "release";
 const GIT_REMOTE_STEPID = "git_remote";

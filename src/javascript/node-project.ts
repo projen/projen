@@ -1,4 +1,14 @@
 import { join } from "path";
+import { Bundler, BundlerOptions } from "./bundler";
+import { Jest, JestOptions } from "./jest";
+import {
+  CodeArtifactAuthProvider as NodePackageCodeArtifactAuthProvider,
+  CodeArtifactOptions,
+  NodePackage,
+  NodePackageManager,
+  NodePackageOptions,
+} from "./node-package";
+import { Projenrc, ProjenrcOptions } from "./projenrc";
 import { BuildWorkflow } from "../build";
 import { PROJEN_DIR, PROJEN_RC } from "../common";
 import {
@@ -30,16 +40,6 @@ import {
 import { Task } from "../task";
 import { deepMerge } from "../util";
 import { Version } from "../version";
-import { Bundler, BundlerOptions } from "./bundler";
-import { Jest, JestOptions } from "./jest";
-import {
-  CodeArtifactAuthProvider as NodePackageCodeArtifactAuthProvider,
-  CodeArtifactOptions,
-  NodePackage,
-  NodePackageManager,
-  NodePackageOptions,
-} from "./node-package";
-import { Projenrc, ProjenrcOptions } from "./projenrc";
 
 const PROJEN_SCRIPT = "projen";
 

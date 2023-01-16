@@ -1,12 +1,12 @@
 import * as path from "path";
 import * as fs from "fs-extra";
+import { AutoDiscover } from "./auto-discover";
+import { Cdk8sDeps, Cdk8sDepsCommonOptions } from "./cdk8s-deps";
+import { Cdk8sDepsJs } from "./cdk8s-deps-js";
 import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 import { YamlFile } from "../yaml";
-import { AutoDiscover } from "./auto-discover";
-import { Cdk8sDeps, Cdk8sDepsCommonOptions } from "./cdk8s-deps";
-import { Cdk8sDepsJs } from "./cdk8s-deps-js";
 
 export interface Cdk8sTypeScriptAppOptions
   extends TypeScriptProjectOptions,

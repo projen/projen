@@ -1,14 +1,14 @@
 import * as path from "path";
 import * as fs from "fs-extra";
-import { Component } from "../component";
-import { DependencyType } from "../dependencies";
-import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 import { AutoDiscover } from "./auto-discover";
 import { AwsCdkDeps, AwsCdkDepsCommonOptions } from "./awscdk-deps";
 import { AwsCdkDepsJs } from "./awscdk-deps-js";
 import { CdkConfig, CdkConfigCommonOptions } from "./cdk-config";
 import { CdkTasks } from "./cdk-tasks";
 import { LambdaFunctionCommonOptions } from "./lambda-function";
+import { Component } from "../component";
+import { DependencyType } from "../dependencies";
+import { TypeScriptAppProject, TypeScriptProjectOptions } from "../typescript";
 
 export interface AwsCdkTypeScriptAppOptions
   extends TypeScriptProjectOptions,

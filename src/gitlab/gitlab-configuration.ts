@@ -1,7 +1,7 @@
 import { CiConfigurationOptions } from ".";
-import { Project } from "../project";
 import { CiConfiguration } from "./configuration";
 import { NestedConfiguration } from "./nested-configuration";
+import { Project } from "../project";
 
 /**
  * A GitLab CI for the main `.gitlab-ci.yml` file.
