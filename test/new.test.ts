@@ -301,6 +301,35 @@ test("python project can include .projenrc.js", () => {
   });
 });
 
+test("python project can define an array option", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, [
+      "new",
+      "python",
+      "--no-synth",
+      "--deps",
+      "python@^3.9",
+    ]);
+
+    const output = directorySnapshot(projectdir);
+    expect(output[".projenrc.py"]).toBeDefined();
+    expect(output[".projenrc.py"]).toMatchInlineSnapshot(`
+      "from projen.python import PythonProject
+
+      project = PythonProject(
+          author_email=\\"my@user.email.com\\",
+          author_name=\\"My User Name\\",
+          module_name=\\"my_project\\",
+          name=\\"my-project\\",
+          version=\\"0.1.0\\",
+          deps=[\\"python@^3.9\\"],
+      )
+
+      project.synth()"
+    `);
+  });
+});
+
 // test("projen new node --outdir path/to/mydir", () => {
 //   withProjectDir((projectdir) => {
 //     // GIVEN

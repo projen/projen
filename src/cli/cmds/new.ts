@@ -59,7 +59,8 @@ class Command implements yargs.CommandModule {
               option.simpleType !== "string" &&
               option.simpleType !== "number" &&
               option.simpleType !== "boolean" &&
-              option.kind !== "enum"
+              option.kind !== "enum" &&
+              !isPrimitiveArrayOption(option)
             ) {
               continue; // we only support primitive and enum fields as command line options
             }
@@ -85,15 +86,13 @@ class Command implements yargs.CommandModule {
               }
             }
 
-            const argType =
-              option.kind === "enum" ? "string" : option.simpleType;
-
             cargs.option(option.switch, {
               group: required ? "Required:" : "Optional:",
-              type: argType as "string" | "boolean" | "number",
+              type: argType(option),
               description: desc.join(" "),
-              default: defaultValue,
               required,
+              // yargs behaves differently for arrays if the defaultValue property is present or not
+              ...(defaultValue ? { default: defaultValue } : {}),
             });
           }
 
@@ -130,6 +129,37 @@ class Command implements yargs.CommandModule {
 }
 
 /**
+ * Returns the yargs option type for a given project option
+ */
+function argType(
+  option: inventory.ProjectOption
+): "string" | "boolean" | "number" | "array" {
+  if (option.kind === "enum") {
+    return "string";
+  }
+
+  if (isPrimitiveArrayOption(option)) {
+    return "array";
+  }
+
+  return option.simpleType as "string" | "boolean" | "number";
+}
+
+/**
+ * Checks if the given option is a primitive array
+ */
+function isPrimitiveArrayOption(option: inventory.ProjectOption): boolean {
+  return Boolean(
+    option.jsonLike &&
+      option.fullType.collection?.kind === "array" &&
+      option.fullType.collection.elementtype.primitive &&
+      ["string", "number"].includes(
+        option.fullType.collection.elementtype.primitive
+      )
+  );
+}
+
+/**
  * Given a value from "@default", processes macros and returns a stringified
  * (quoted) result.
  *
@@ -150,7 +180,6 @@ function commandLineToProps(
   argv: Record<string, unknown>
 ): Record<string, any> {
   const props: Record<string, any> = {};
-
   // initialize props with default values
   for (const prop of type.options) {
     if (prop.default && prop.default !== "undefined" && !prop.optional) {
@@ -178,7 +207,7 @@ function commandLineToProps(
       }
     }
   }
-
+  console.log(props);
   return props;
 }
 
