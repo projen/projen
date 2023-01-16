@@ -67,6 +67,29 @@ test("projen new --from external", () => {
   });
 });
 
+test("projen new --from external can use array option", () => {
+  withProjectDir((projectdir) => {
+    // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
+    execProjenCLI(projectdir, [
+      "new",
+      "--from",
+      "@pepperize/projen-awscdk-app-ts@0.0.333",
+      "--no-post",
+      "--deps",
+      "glob@8",
+      "--deps",
+      "lodash@4",
+    ]);
+
+    // compare generated .projenrc.js to the snapshot
+    const actual = directorySnapshot(projectdir, {
+      excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
+    });
+
+    expect(actual[".projenrc.js"]).toContain('deps: ["glob@8","lodash@4"]');
+  });
+});
+
 test("projen new --from external tarball", () => {
   withProjectDir((projectdir) => {
     const shell = (command: string) => execSync(command, { cwd: projectdir });
