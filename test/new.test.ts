@@ -1,10 +1,12 @@
 // tests for `projen new`: we run `projen new` for each supported project type
 // and compare against a golden snapshot.
+import { execSync } from "child_process";
 import { join } from "path";
 import { pathExistsSync } from "fs-extra";
 import {
   directorySnapshot,
   execProjenCLI,
+  sanitizeOutput,
   synthSnapshot,
   synthSnapshotWithPost,
   TestProject,
@@ -41,14 +43,15 @@ test("post-synthesis option disabled", () => {
   expect(synthSnapshot(project)[".postsynth"]).toBeUndefined();
 });
 
-/**
- * commented out due to breaking changes in projen@0.37.0
-
-test('projen new --from external', () => {
-  withProjectDir(projectdir => {
-
-    // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.3', '--no-post', MIN_NODE_VERSION_OPTION]);
+test("projen new --from external", () => {
+  withProjectDir((projectdir) => {
+    // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
+    execProjenCLI(projectdir, [
+      "new",
+      "--from",
+      "@pepperize/projen-awscdk-app-ts@0.0.333",
+      "--no-post",
+    ]);
 
     // patch the projen version in package.json to match the current version
     // otherwise, every bump would need to update these snapshots.
@@ -56,27 +59,26 @@ test('projen new --from external', () => {
 
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
-      excludeGlobs: [
-        '.git/**',
-        '.github/**',
-        'node_modules/**',
-        'yarn.lock',
-      ],
+      excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
     });
 
-    expect(actual).toMatchSnapshot();
-    expect(actual['schema.graphql']).toBeDefined();
-
+    expect(actual["package.json"]).toMatchSnapshot();
+    expect(actual[".projenrc.js"]).toMatchSnapshot();
   });
 });
 
-test('projen new --from external tarball', () => {
-  withProjectDir(projectdir => {
+test("projen new --from external tarball", () => {
+  withProjectDir((projectdir) => {
     const shell = (command: string) => execSync(command, { cwd: projectdir });
-    // downloads cdk-appsync-project-1.1.3.tgz
-    shell('npm pack cdk-appsync-project@1.1.3');
+    // downloads pepperize-projen-awscdk-app-ts-0.0.333.tgz
+    shell("npm pack @pepperize/projen-awscdk-app-ts@0.0.333");
 
-    execProjenCLI(projectdir, ['new', '--from', './cdk-appsync-project-1.1.3.tgz', '--no-post', MIN_NODE_VERSION_OPTION]);
+    execProjenCLI(projectdir, [
+      "new",
+      "--from",
+      "./pepperize-projen-awscdk-app-ts-0.0.333.tgz",
+      "--no-post",
+    ]);
 
     // patch the projen version in package.json to match the current version
     // otherwise, every bump would need to update these snapshots.
@@ -84,84 +86,73 @@ test('projen new --from external tarball', () => {
 
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
-      excludeGlobs: [
-        '.git/**',
-        '.github/**',
-        'node_modules/**',
-        'yarn.lock',
-      ],
+      excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
     });
 
-    expect(actual['package.json']).toMatchSnapshot();
-    expect(actual['.projenrc.js']).toMatchSnapshot();
-    expect(actual['schema.graphql']).toBeDefined();
+    expect(actual["package.json"]).toMatchSnapshot();
+    expect(actual[".projenrc.js"]).toMatchSnapshot();
   });
 });
 
-test('projen new --from external dist tag', () => {
-  withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@latest', '--no-post', MIN_NODE_VERSION_OPTION]);
+test("projen new --from external dist tag", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, [
+      "new",
+      "--from",
+      "@pepperize/projen-awscdk-app-ts@latest",
+      "--no-post",
+    ]);
 
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
-      excludeGlobs: [
-        '.git/**',
-        '.github/**',
-        'node_modules/**',
-        'yarn.lock',
-      ],
+      excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
     });
 
     // Not doing a snapshot test because @latest is used
-    expect(actual['schema.graphql']).toBeDefined();
+    expect(actual[".projenrc.js"]).toBeDefined();
   });
 });
 
-test('options are not overwritten when creating from external project types', () => {
-  withProjectDir(projectdir => {
-
-    // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.3', '--no-synth', '--cdk-version', '1.63.0', MIN_NODE_VERSION_OPTION]);
+test("options are not overwritten when creating from external project types", () => {
+  withProjectDir((projectdir) => {
+    // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
+    execProjenCLI(projectdir, [
+      "new",
+      "--from",
+      "@pepperize/projen-awscdk-app-ts@0.0.333",
+      "--no-synth",
+      "--cdk-version",
+      "2.50.0",
+    ]);
 
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
-      excludeGlobs: [
-        '.git/**',
-        '.github/**',
-        'node_modules/**',
-        'yarn.lock',
-      ],
+      excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
     });
 
-    expect(actual['.projenrc.js']).toContain('cdkVersion: \'1.63.0\'');
+    expect(actual[".projenrc.js"]).toContain('cdkVersion: "2.50.0"');
   });
 });
 
-test('can choose from one of multiple external project types', () => {
-  withProjectDir(projectdir => {
-
-    // execute `projen new --from cdk-appsync-project` in the project directory
-    execProjenCLI(projectdir, ['new', '--from', '@taimos/projen@0.0.126', 'taimos-ts-lib', '--no-post', MIN_NODE_VERSION_OPTION]);
-
-    // patch the projen version in package.json to match the current version
-    // otherwise, every bump would need to update these snapshots.
-    sanitizeOutput(projectdir);
+test("can choose from one of multiple external project types", () => {
+  withProjectDir((projectdir) => {
+    // execute `projen new --from @taimos/projen@0.0.187 taimos-ts-lib` in the project directory
+    execProjenCLI(projectdir, [
+      "new",
+      "--from",
+      "@taimos/projen@0.0.187",
+      "taimos-ts-lib",
+      "--no-post",
+    ]);
 
     // compare generated .projenrc.js to the snapshot
     const actual = directorySnapshot(projectdir, {
-      excludeGlobs: [
-        '.git/**',
-        '.github/**',
-        'node_modules/**',
-        'yarn.lock',
-      ],
+      excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
     });
 
-    expect(actual['.projenrc.js']).toContain('@taimos/projen@0.0.126');
+    expect(actual[".projenrc.js"]).toContain("@taimos/projen@0.0.187");
   });
 });
-
-**/
 
 test("projen new --no-comments", () => {
   withProjectDir((projectdir) => {
@@ -253,21 +244,24 @@ test("projenrc-json creates java project", () => {
   });
 });
 
-/**
- * commented out due to breaking changes in projen@0.37.0
-
-test('projenrc-json creates external project type', () => {
-  withProjectDir(projectdir => {
-    execProjenCLI(projectdir, ['new', '--from', 'cdk-appsync-project@1.1.3', '--cdk-version', '1.63.0', '--projenrc-json', '--no-synth', MIN_NODE_VERSION_OPTION]);
+test("projenrc-json creates external project type", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, [
+      "new",
+      "--from",
+      "@pepperize/projen-awscdk-app-ts@0.0.333",
+      "--projenrc-json",
+      "--no-synth",
+    ]);
 
     // exclude node_modules to work around bug where node_modules is generated AND one of the
     // dependencies includes a file with .json extension that isn't valid JSON
-    const projenrc = directorySnapshot(projectdir, { excludeGlobs: ['node_modules/**'] })['.projenrc.json'];
+    const projenrc = directorySnapshot(projectdir, {
+      excludeGlobs: ["node_modules/**"],
+    })[".projenrc.json"];
     expect(projenrc).toMatchSnapshot();
   });
 });
-
-*/
 
 test("projenrc-ts creates typescript projenrc", () => {
   withProjectDir((projectdir) => {
@@ -330,24 +324,24 @@ test("python project can define an array option", () => {
   });
 });
 
-// test("projen new node --outdir path/to/mydir", () => {
-//   withProjectDir((projectdir) => {
-//     // GIVEN
-//     const shell = (command: string) => execSync(command, { cwd: projectdir });
-//     shell(`mkdir -p ${join("path", "to", "mydir")}`);
+test("projen new node --outdir path/to/mydir", () => {
+  withProjectDir((projectdir) => {
+    // GIVEN
+    const shell = (command: string) => execSync(command, { cwd: projectdir });
+    shell(`mkdir -p ${join("path", "to", "mydir")}`);
 
-//     // WHEN
-//     execProjenCLI(projectdir, ["new", "node", "--outdir", "path/to/mydir"]);
+    // WHEN
+    execProjenCLI(projectdir, ["new", "node", "--outdir", "path/to/mydir"]);
 
-//     // THEN
-//     const targetDirSnapshot = directorySnapshot(
-//       join(projectdir, "path", "to", "mydir"),
-//       { excludeGlobs: ["node_modules/**"] }
-//     );
-//     expect(targetDirSnapshot[".projenrc.js"]).toMatchSnapshot();
-//     expect(targetDirSnapshot["package.json"]).toBeDefined();
-//   });
-// });
+    // THEN
+    const targetDirSnapshot = directorySnapshot(
+      join(projectdir, "path", "to", "mydir"),
+      { excludeGlobs: ["node_modules/**"] }
+    );
+    expect(targetDirSnapshot[".projenrc.js"]).toMatchSnapshot();
+    expect(targetDirSnapshot["package.json"]).toBeDefined();
+  });
+});
 
 describe("git", () => {
   test("--git (default) will initialize a git repo and create a commit", () => {
