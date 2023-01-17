@@ -62,7 +62,13 @@ class Command implements yargs.CommandModule {
               option.kind !== "enum" &&
               !isPrimitiveArrayOption(option)
             ) {
-              continue; // we only support primitive and enum fields as command line options
+              /**
+               * Currently we only support these field types as command line options:
+               * - primitives (string, number, boolean)
+               * - lists of primitives
+               * - enums
+               */
+              continue;
             }
 
             let desc = [option.docs?.replace(/\ *\.$/, "") ?? ""];
@@ -180,6 +186,7 @@ function commandLineToProps(
   argv: Record<string, unknown>
 ): Record<string, any> {
   const props: Record<string, any> = {};
+
   // initialize props with default values
   for (const prop of type.options) {
     if (prop.default && prop.default !== "undefined" && !prop.optional) {
@@ -207,7 +214,7 @@ function commandLineToProps(
       }
     }
   }
-  console.log(props);
+
   return props;
 }
 
