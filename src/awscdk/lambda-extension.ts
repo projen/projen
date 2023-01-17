@@ -120,7 +120,7 @@ export class LambdaExtension extends Component {
     const bundle = bundler.addBundle(options.entrypoint, {
       platform: bundlerRuntime.esbuildPlatform,
       target: bundlerRuntime.esbuildTarget,
-      externals: ["aws-sdk"],
+      externals: bundlerRuntime.defaultExternals,
       outfile: `extensions/${name}`,
       // Make the output executable because Lambda expects to run
       // extensions as stand-alone programs alongside the main lambda
