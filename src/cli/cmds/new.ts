@@ -59,9 +59,16 @@ class Command implements yargs.CommandModule {
               option.simpleType !== "string" &&
               option.simpleType !== "number" &&
               option.simpleType !== "boolean" &&
-              option.kind !== "enum"
+              option.kind !== "enum" &&
+              !isPrimitiveArrayOption(option)
             ) {
-              continue; // we only support primitive and enum fields as command line options
+              /**
+               * Currently we only support these field types as command line options:
+               * - primitives (string, number, boolean)
+               * - lists of primitives
+               * - enums
+               */
+              continue;
             }
 
             let desc = [option.docs?.replace(/\ *\.$/, "") ?? ""];
@@ -85,15 +92,13 @@ class Command implements yargs.CommandModule {
               }
             }
 
-            const argType =
-              option.kind === "enum" ? "string" : option.simpleType;
-
             cargs.option(option.switch, {
               group: required ? "Required:" : "Optional:",
-              type: argType as "string" | "boolean" | "number",
+              type: argType(option),
               description: desc.join(" "),
-              default: defaultValue,
               required,
+              // yargs behaves differently for arrays if the defaultValue property is present or not
+              ...(defaultValue ? { default: defaultValue } : {}),
             });
           }
 
@@ -127,6 +132,37 @@ class Command implements yargs.CommandModule {
     // Handles the use case that nothing was specified since PROJECT-TYPE is now an optional positional parameter
     yargs.showHelp();
   }
+}
+
+/**
+ * Returns the yargs option type for a given project option
+ */
+function argType(
+  option: inventory.ProjectOption
+): "string" | "boolean" | "number" | "array" {
+  if (option.kind === "enum") {
+    return "string";
+  }
+
+  if (isPrimitiveArrayOption(option)) {
+    return "array";
+  }
+
+  return option.simpleType as "string" | "boolean" | "number";
+}
+
+/**
+ * Checks if the given option is a primitive array
+ */
+function isPrimitiveArrayOption(option: inventory.ProjectOption): boolean {
+  return Boolean(
+    option.jsonLike &&
+      option.fullType.collection?.kind === "array" &&
+      option.fullType.collection.elementtype.primitive &&
+      ["string", "number"].includes(
+        option.fullType.collection.elementtype.primitive
+      )
+  );
 }
 
 /**
@@ -338,4 +374,4 @@ async function initProject(
   }
 }
 
-module.exports = new Command();
+export default new Command();

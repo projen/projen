@@ -131,17 +131,16 @@ export function sanitizeOutput(dir: string) {
     );
   }
 
-  // replace the current projen version with 999.999.999 for deterministic output.
-  // this will preserve any semantic version requirements (e.g. "^", "~", etc).
-  pkg.devDependencies.projen = prev.replace(/\d+\.\d+\.\d+/, "999.999.999");
+  // replace the current projen version with * for deterministic output.
+  pkg.devDependencies.projen = "*";
   fs.writeJsonSync(filepath, pkg);
 
-  // we will also patch deps.json so that all projen deps will be set to 999.999.999
+  // we will also patch deps.json so that all projen deps will be set to *
   const depsPath = path.join(dir, ".projen", "deps.json");
   const deps = fs.readJsonSync(depsPath);
   for (const dep of deps.dependencies) {
     if (dep.name === "projen" && dep.version) {
-      dep.version = dep.version.replace(/\d+\.\d+\.\d+/, "999.999.999");
+      dep.version = "*";
     }
   }
   fs.chmodSync(depsPath, "777");

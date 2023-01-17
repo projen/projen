@@ -1,5 +1,6 @@
 import { resolve } from "path";
 import * as yargs from "yargs";
+import newCommand from "./cmds/new";
 import { synth } from "./synth";
 import { discoverTaskCommands } from "./tasks";
 import { PROJEN_RC, PROJEN_VERSION } from "../common";
@@ -11,7 +12,7 @@ const DEFAULT_RC = resolve(PROJEN_RC);
 
 async function main() {
   const ya = yargs;
-  ya.commandDir("cmds");
+  ya.command(newCommand);
 
   const runtime = new TaskRuntime(".");
   discoverTaskCommands(runtime, ya);
