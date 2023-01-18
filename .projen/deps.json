@@ -166,7 +166,7 @@
     },
     {
       "name": "glob",
-      "version": "^7",
+      "version": "^8",
       "type": "bundled"
     },
     {

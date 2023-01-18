@@ -2998,7 +2998,7 @@ glob-parent@^6.0.2:
   dependencies:
     is-glob "^4.0.3"
 
-glob@^7, glob@^7.0.0, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.2.0:
+glob@^7.0.0, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^7.2.0:
   version "7.2.3"
   resolved "https://registry.yarnpkg.com/glob/-/glob-7.2.3.tgz#b8df0fb802bbfa8e89bd1d938b4e16578ed44f2b"
   integrity sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==
@@ -3010,7 +3010,7 @@ glob@^7, glob@^7.0.0, glob@^7.1.1, glob@^7.1.2, glob@^7.1.3, glob@^7.1.4, glob@^
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^8.0.1:
+glob@^8, glob@^8.0.1:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/glob/-/glob-8.1.0.tgz#d388f656593ef708ee3e34640fdfb99a9fd1c33e"
   integrity sha512-r8hpEjiQEYlF2QU0df3dS+nxxSIreXQS1qRhMJM0Q5NDdR386C7jb7Hwwod8Fgiuex+k0GFjgft18yvxm5XoCQ==
@@ -4544,9 +4544,9 @@ map-obj@^4.0.0:
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
 markmac@^0.1.146:
-  version "0.1.412"
-  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.412.tgz#57af7acc92350e1991cda5e08ee5c4404f4b40e7"
-  integrity sha512-4QvO/aLdsnzltDBY9E+iPjq/eFCdKFlAGMkGG02odU6SXSXljyktxdqy+QL2nZxmeh/rPmD5NtRBg4iB24DNug==
+  version "0.1.489"
+  resolved "https://registry.yarnpkg.com/markmac/-/markmac-0.1.489.tgz#766498540afb4887c8f98154ef3a2fff09db41b6"
+  integrity sha512-C0chxRt6dibyMpxYNMKZHs82HuV7CKcm0YlsljpZLVe9SsfOwAmLGZZpbbs88WQ/o8nJ6GomXysNz9UebD6QHA==
 
 mdurl@~1.0.1:
   version "1.0.1"
