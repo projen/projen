@@ -102,6 +102,9 @@ export interface PythonProjectOptions
    * Use poetry to manage your project dependencies, virtual environment, and
    * (optional) packaging/publishing.
    *
+   * Please note that this feature is incompatible with pip, setuptools, and venv.
+   * If you set this option to true, then pip, setuptools, and venv will be set to false.
+   *
    * @default false
    * @featured
    */
@@ -222,6 +225,15 @@ export class PythonProject extends GitHubProject {
       );
     }
 
+    let poetry = options.poetry ?? false;
+    let pip = options.pip ?? true;
+    let venv = options.venv ?? true;
+    let setuptools = options.setuptools ?? this.projectType === ProjectType.LIB;
+    // If we select poetry, then pip/venv/setuptools must be set to false
+    if (options.poetry) {
+      pip = venv = setuptools = false;
+    }
+
     // default to projenrc.py if no other projenrc type was elected
     if (options.projenrcPython ?? !anySelected(rcFileTypeOptions)) {
       new ProjenrcPython(this, options.projenrcPythonOptions);
@@ -231,15 +243,15 @@ export class PythonProject extends GitHubProject {
       new ProjenrcJs(this, options.projenrcJsOptions);
     }
 
-    if (options.venv ?? true) {
+    if (venv) {
       this.envManager = new Venv(this, options.venvOptions);
     }
 
-    if (options.pip ?? true) {
+    if (pip) {
       this.depsManager = new Pip(this);
     }
 
-    if (options.setuptools ?? this.projectType === ProjectType.LIB) {
+    if (setuptools) {
       this.packagingManager = new Setuptools(this, {
         version: options.version,
         description: options.description,
@@ -262,8 +274,8 @@ export class PythonProject extends GitHubProject {
     //   this.envManager = this.depsManager;
     // }
 
-    if (options.poetry ?? false) {
-      const poetry = new Poetry(this, {
+    if (poetry) {
+      const poetryProject = new Poetry(this, {
         version: options.version,
         description: options.description,
         authorName: options.authorName,
@@ -276,9 +288,9 @@ export class PythonProject extends GitHubProject {
           ...options.poetryOptions,
         },
       });
-      this.depsManager = poetry;
-      this.envManager = poetry;
-      this.packagingManager = poetry;
+      this.depsManager = poetryProject;
+      this.envManager = poetryProject;
+      this.packagingManager = poetryProject;
     }
 
     if (!this.envManager) {
@@ -299,22 +311,19 @@ export class PythonProject extends GitHubProject {
       );
     }
 
-    if (Number(options.venv ?? true) + Number(options.poetry ?? false) > 1) {
+    if (Number(venv) + Number(poetry) > 1) {
       throw new Error(
         "More than one component has been chosen for managing the environment (venv, conda, pipenv, or poetry)"
       );
     }
 
-    if (Number(options.pip ?? true) + Number(options.poetry ?? false) > 1) {
+    if (Number(pip) + Number(poetry) > 1) {
       throw new Error(
         "More than one component has been chosen for managing dependencies (pip, conda, pipenv, or poetry)"
       );
     }
 
-    if (
-      Number(options.setuptools ?? true) + Number(options.poetry ?? false) >
-      1
-    ) {
+    if (Number(setuptools) + Number(poetry) > 1) {
       throw new Error(
         "More than one component has been chosen for managing packaging (setuptools or poetry)"
       );

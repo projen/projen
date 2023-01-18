@@ -3,9 +3,6 @@ import { synthSnapshot } from "../util";
 
 test("poetry enabled", () => {
   const p = new TestPythonProject({
-    venv: false,
-    pip: false,
-    setuptools: false,
     poetry: true,
     homepage: "http://www.example.com",
     description: "a short project description",
@@ -27,9 +24,6 @@ test("poetry enabled", () => {
 
 test("poetry enabled with specified python version", () => {
   const p = new TestPythonProject({
-    venv: false,
-    pip: false,
-    setuptools: false,
     poetry: true,
     homepage: "http://www.example.com",
     description: "a short project description",
@@ -44,9 +38,6 @@ test("poetry enabled with specified python version", () => {
 
 test("poetry enabled with poetry-specific options", () => {
   const p = new TestPythonProject({
-    venv: false,
-    pip: false,
-    setuptools: false,
     poetry: true,
     homepage: "http://www.example.com",
     description: "a short project description",
