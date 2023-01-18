@@ -31,7 +31,7 @@ const project = new cdk.JsiiProject({
     "fs-extra",
     "yargs",
     "case",
-    "glob@^7",
+    "glob@^8",
     "semver",
     "chalk",
     "@iarna/toml",
