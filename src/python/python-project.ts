@@ -71,7 +71,7 @@ export interface PythonProjectOptions
   /**
    * Use pip with a requirements.txt file to track project dependencies.
    *
-   * @default true
+   * @default - true, unless poetry is true, then false
    * @featured
    */
   readonly pip?: boolean;
@@ -79,7 +79,7 @@ export interface PythonProjectOptions
   /**
    * Use venv to manage a virtual environment for installing dependencies inside.
    *
-   * @default true
+   * @default - true, unless poetry is true, then false
    * @featured
    */
   readonly venv?: boolean;
@@ -93,7 +93,7 @@ export interface PythonProjectOptions
   /**
    * Use setuptools with a setup.py script for packaging and publishing.
    *
-   * @default - true if the project type is library
+   * @default - true, unless poetry is true, then false
    * @featured
    */
   readonly setuptools?: boolean;
@@ -228,7 +228,8 @@ export class PythonProject extends GitHubProject {
     const poetry = options.poetry ?? false;
     const pip = options.pip ?? !poetry;
     const venv = options.venv ?? !poetry;
-    const setuptools = options.setuptools ?? !poetry && this.projectType === ProjectType.LIB;
+    const setuptools =
+      options.setuptools ?? (!poetry && this.projectType === ProjectType.LIB);
 
     // default to projenrc.py if no other projenrc type was elected
     if (options.projenrcPython ?? !anySelected(rcFileTypeOptions)) {
