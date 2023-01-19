@@ -225,14 +225,10 @@ export class PythonProject extends GitHubProject {
       );
     }
 
-    let poetry = options.poetry ?? false;
-    let pip = options.pip ?? true;
-    let venv = options.venv ?? true;
-    let setuptools = options.setuptools ?? this.projectType === ProjectType.LIB;
-    // If we select poetry, then pip/venv/setuptools must be set to false
-    if (options.poetry) {
-      pip = venv = setuptools = false;
-    }
+    const poetry = options.poetry ?? false;
+    const pip = options.pip ?? !poetry;
+    const venv = options.venv ?? !poetry;
+    const setuptools = options.setuptools ?? !poetry && this.projectType === ProjectType.LIB;
 
     // default to projenrc.py if no other projenrc type was elected
     if (options.projenrcPython ?? !anySelected(rcFileTypeOptions)) {
