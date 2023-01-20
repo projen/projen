@@ -102,8 +102,8 @@ export interface PythonProjectOptions
    * Use poetry to manage your project dependencies, virtual environment, and
    * (optional) packaging/publishing.
    *
-   * Please note that this feature is incompatible with pip, setuptools, and venv.
-   * If you set this option to true, then pip, setuptools, and venv will be set to false.
+   * This feature is incompatible with pip, setuptools, or venv.
+   * If you set this option to `true`, then pip, setuptools, and venv must be set to `false`.
    *
    * @default false
    * @featured
@@ -230,6 +230,12 @@ export class PythonProject extends GitHubProject {
     const venv = options.venv ?? !poetry;
     const setuptools =
       options.setuptools ?? (!poetry && this.projectType === ProjectType.LIB);
+
+    if (poetry && (pip || venv || setuptools)) {
+      throw new Error(
+        "poetry is true - pip, venv, and setuptools must be undefined or false"
+      );
+    }
 
     // default to projenrc.py if no other projenrc type was elected
     if (options.projenrcPython ?? !anySelected(rcFileTypeOptions)) {
