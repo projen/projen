@@ -1786,7 +1786,7 @@ Array [
         "switch": "parent",
       },
       Object {
-        "default": "true",
+        "default": "- true, unless poetry is true, then false",
         "docs": "Use pip with a requirements.txt file to track project dependencies.",
         "featured": true,
         "fullType": Object {
@@ -2168,7 +2168,7 @@ Array [
         "switch": "setup-config",
       },
       Object {
-        "default": "- true if the project type is library",
+        "default": "- true, unless poetry is true, then false",
         "docs": "Use setuptools with a setup.py script for packaging and publishing.",
         "featured": true,
         "fullType": Object {
@@ -2238,7 +2238,7 @@ Array [
         "switch": "testdir",
       },
       Object {
-        "default": "true",
+        "default": "- true, unless poetry is true, then false",
         "docs": "Use venv to manage a virtual environment for installing dependencies inside.",
         "featured": true,
         "fullType": Object {
@@ -8705,7 +8705,7 @@ Array [
         "switch": "parent",
       },
       Object {
-        "default": "true",
+        "default": "- true, unless poetry is true, then false",
         "docs": "Use pip with a requirements.txt file to track project dependencies.",
         "featured": true,
         "fullType": Object {
@@ -9068,7 +9068,7 @@ Array [
         "switch": "setup-config",
       },
       Object {
-        "default": "- true if the project type is library",
+        "default": "- true, unless poetry is true, then false",
         "docs": "Use setuptools with a setup.py script for packaging and publishing.",
         "featured": true,
         "fullType": Object {
@@ -9121,7 +9121,7 @@ Array [
         "switch": "stale-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, unless poetry is true, then false",
         "docs": "Use venv to manage a virtual environment for installing dependencies inside.",
         "featured": true,
         "fullType": Object {
@@ -28075,7 +28075,7 @@ Array [
         "switch": "parent",
       },
       Object {
-        "default": "true",
+        "default": "- true, unless poetry is true, then false",
         "docs": "Use pip with a requirements.txt file to track project dependencies.",
         "featured": true,
         "fullType": Object {
@@ -28438,7 +28438,7 @@ Array [
         "switch": "setup-config",
       },
       Object {
-        "default": "- true if the project type is library",
+        "default": "- true, unless poetry is true, then false",
         "docs": "Use setuptools with a setup.py script for packaging and publishing.",
         "featured": true,
         "fullType": Object {
@@ -28491,7 +28491,7 @@ Array [
         "switch": "stale-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, unless poetry is true, then false",
         "docs": "Use venv to manage a virtual environment for installing dependencies inside.",
         "featured": true,
         "fullType": Object {
