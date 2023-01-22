@@ -233,6 +233,51 @@ export interface JobPermissions {
 }
 
 /**
+ * The permissions available to a GitHub App.
+ *
+ * Typically a token for a GitHub App has all the available scopes/permissions available to the app
+ * itself; however, a more limited set of permissions can be specified. When permissions are provided,
+ * **only** the specified permissions are granted to the token.
+ *
+ * @see https://docs.github.com/en/rest/apps/apps?apiVersion=2022-11-28#create-an-installation-access-token-for-an-app
+ */
+export interface AppPermissions {
+  readonly actions?: AppPermission;
+  readonly administration?: AppPermission;
+  readonly checks?: AppPermission;
+  readonly contents?: AppPermission;
+  readonly deployments?: AppPermission;
+  readonly environments?: AppPermission;
+  readonly issues?: AppPermission;
+  readonly metadata?: AppPermission;
+  readonly packages?: AppPermission;
+  readonly pages?: AppPermission;
+  readonly pullRequests?: AppPermission;
+  readonly repositoryAnnouncementBanners?: AppPermission;
+  readonly repositoryHooks?: AppPermission;
+  readonly repositoryProject?: AppPermission;
+  readonly secretScanningAlerts?: AppPermission;
+  readonly secrets?: AppPermission;
+  readonly securityEvents?: AppPermission;
+  readonly singleFile?: AppPermission;
+  readonly statuses?: AppPermission;
+  readonly vulnerabilityAlerts?: AppPermission;
+  readonly workflows?: AppPermission;
+  readonly members?: AppPermission;
+  readonly organizationAdministration?: AppPermission;
+  readonly organizationCustomRoles?: AppPermission;
+  readonly organizationAnnouncementBanners?: AppPermission;
+  readonly organizationHooks?: AppPermission;
+  readonly organizationPlan?: AppPermission;
+  readonly organizationProjects?: AppPermission;
+  readonly organizationPackages?: AppPermission;
+  readonly organizationSecrets?: AppPermission;
+  readonly organizationSelfHostedRunners?: AppPermission;
+  readonly orgnaizationUserBlocking?: AppPermission;
+  readonly teamDiscussions?: AppPermission;
+}
+
+/**
  * Access level for workflow permission scopes.
  */
 export enum JobPermission {
@@ -244,6 +289,22 @@ export enum JobPermission {
 
   /** No access at all */
   NONE = "none",
+}
+
+/**
+ * The permissions available for an access token for a GitHub App.
+ */
+export enum AppPermission {
+  /** Read-only acccess */
+  READ = "read",
+  /** Read-write access */
+  WRITE = "write",
+  /**
+   * Read-write and admin access.
+   *
+   * Not all permissions support `admin`.
+   */
+  ADMIN = "admin",
 }
 
 /**
