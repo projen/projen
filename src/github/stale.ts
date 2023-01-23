@@ -1,3 +1,4 @@
+import { findActionBy } from "./actions";
 import { GitHub } from "./github";
 import { renderBehavior } from "./stale-util";
 import { JobPermission } from "./workflows-model";
@@ -130,7 +131,7 @@ export class Stale extends Component {
         },
         steps: [
           {
-            uses: "actions/stale@v4",
+            uses: findActionBy({ name: "actions/stale" }),
             with: {
               // disable global
               "days-before-stale": -1,

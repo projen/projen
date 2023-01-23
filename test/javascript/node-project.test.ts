@@ -2,6 +2,7 @@ import * as yaml from "yaml";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
 import { GithubCredentials } from "../../src/github";
+import { findActionBy, toUsesString } from "../../src/github/actions";
 import { secretToString } from "../../src/github/util";
 import { JobPermission } from "../../src/github/workflows-model";
 import {
@@ -661,11 +662,13 @@ test("extend github release workflow", () => {
       steps: [
         {
           name: "Check out the repo",
-          uses: "actions/checkout@v3",
+          uses: toUsesString(findActionBy({ name: "actions/checkout" })),
         },
         {
           name: "Push to Docker Hub",
-          uses: "docker/build-push-action@v1",
+          uses: toUsesString(
+            findActionBy({ name: "docker/build-push-action" })
+          ),
           with: {
             username: "${{ secrets.DOCKER_USERNAME }}",
             password: "${{ secrets.DOCKER_PASSWORD }}",
@@ -692,7 +695,9 @@ test("codecov upload added to github release workflow", () => {
   });
 
   const workflow = synthSnapshot(project)[".github/workflows/release.yml"];
-  expect(workflow).toContain("uses: codecov/codecov-action@v3");
+  expect(workflow).toContain(
+    `uses: ${toUsesString(findActionBy({ name: "codecov/codecov-action" }))}`
+  );
 });
 
 test("codecov upload not added to github release workflow", () => {
@@ -1218,7 +1223,9 @@ describe("scoped private packages", () => {
       expect.arrayContaining([
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v1",
+          uses: toUsesString(
+            findActionBy({ name: "aws-actions/configure-aws-credentials" })
+          ),
           with: {
             "aws-access-key-id": secretToString(defaultAccessKeyIdSecret),
             "aws-secret-access-key": secretToString(

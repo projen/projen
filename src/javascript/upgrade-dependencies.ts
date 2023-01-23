@@ -7,6 +7,7 @@ import {
   GitIdentity,
   workflows,
 } from "../github";
+import { findActionBy } from "../github/actions";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
 import { ContainerOptions, JobStep } from "../github/workflows-model";
@@ -302,7 +303,7 @@ export class UpgradeDependencies extends Component {
     const steps: workflows.JobStep[] = [
       {
         name: "Checkout",
-        uses: "actions/checkout@v3",
+        uses: findActionBy({ name: "actions/checkout" }),
         with: branch ? { ref: branch } : undefined,
       },
       ...this._project.renderWorkflowSetup({ mutable: false }),
@@ -373,7 +374,7 @@ export class UpgradeDependencies extends Component {
       {
         name: "Create Pull Request",
         id: prStepId,
-        uses: "peter-evans/create-pull-request@v4",
+        uses: findActionBy({ name: "peter-evans/create-pull-request" }),
         with: {
           // the pr can modify workflow files, so we need to use the custom
           // secret if one is configured.

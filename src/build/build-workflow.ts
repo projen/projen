@@ -1,6 +1,7 @@
 import { Task } from "..";
 import { Component } from "../component";
 import { GitHub, GithubWorkflow, GitIdentity } from "../github";
+import { findActionBy } from "../github/actions";
 import {
   BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
@@ -202,7 +203,7 @@ export class BuildWorkflow extends Component {
       steps.push(
         {
           name: "Download build artifacts",
-          uses: "actions/download-artifact@v3",
+          uses: findActionBy({ name: "actions/download-artifact" }),
           with: {
             name: BUILD_ARTIFACT_NAME,
             path: this.artifactsDirectory,
@@ -281,7 +282,7 @@ export class BuildWorkflow extends Component {
     if (options?.checkoutRepo) {
       steps.push({
         name: "Checkout",
-        uses: "actions/checkout@v3",
+        uses: findActionBy({ name: "actions/checkout" }),
         with: {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
@@ -348,7 +349,7 @@ export class BuildWorkflow extends Component {
     return [
       {
         name: "Checkout",
-        uses: "actions/checkout@v3",
+        uses: findActionBy({ name: "actions/checkout" }),
         with: {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
@@ -383,7 +384,7 @@ export class BuildWorkflow extends Component {
             },
             {
               name: "Upload artifact",
-              uses: "actions/upload-artifact@v3",
+              uses: findActionBy({ name: "actions/upload-artifact" }),
               with: {
                 name: BUILD_ARTIFACT_NAME,
                 path: this.artifactsDirectory,

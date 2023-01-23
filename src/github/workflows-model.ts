@@ -1,5 +1,7 @@
 // @see https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 
+import { GitHubAction } from "./actions";
+
 export interface CommonJobDefinition {
   /**
    * The name of the job displayed on GitHub.
@@ -314,7 +316,7 @@ export interface Step {
    * repository as the workflow, a public repository, or in a published Docker
    * container image.
    */
-  readonly uses?: string;
+  readonly uses?: string | GitHubAction;
 
   /**
    * Runs command-line programs using the operating system's shell. If you do

@@ -3,6 +3,7 @@ import { Publisher } from "./publisher";
 import { ReleaseTrigger } from "./release-trigger";
 import { Component } from "../component";
 import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from "../github";
+import { findActionBy } from "../github/actions";
 import {
   BUILD_ARTIFACT_NAME,
   PERMISSION_BACKUP_FILE,
@@ -593,7 +594,7 @@ export class Release extends Component {
       {
         name: "Upload artifact",
         if: noNewCommits,
-        uses: "actions/upload-artifact@v3",
+        uses: findActionBy({ name: "actions/upload-artifact" }),
         with: {
           name: BUILD_ARTIFACT_NAME,
           path: this.artifactsDirectory,

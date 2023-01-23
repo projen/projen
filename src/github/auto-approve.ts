@@ -1,3 +1,4 @@
+import { findActionBy } from "./actions";
 import { GitHub } from "./github";
 import { Job, JobPermission } from "./workflows-model";
 import { Component } from "../component";
@@ -72,7 +73,7 @@ export class AutoApprove extends Component {
       if: condition,
       steps: [
         {
-          uses: "hmarr/auto-approve-action@v2.2.1",
+          uses: findActionBy({ name: "hmarr/auto-approve-action" }),
           with: {
             "github-token": `\${{ secrets.${secret} }}`,
           },

@@ -1,4 +1,5 @@
 import { GitHub } from ".";
+import { findActionBy } from "./actions";
 import { Job, JobPermission } from "./workflows-model";
 import { Component } from "../component";
 
@@ -67,7 +68,9 @@ export class PullRequestLint extends Component {
         },
         steps: [
           {
-            uses: "amannn/action-semantic-pull-request@v5.0.2",
+            uses: findActionBy({
+              name: "amannn/action-semantic-pull-request",
+            }),
             env: {
               GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}",
             },

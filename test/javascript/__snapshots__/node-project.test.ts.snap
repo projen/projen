@@ -12,14 +12,14 @@ Object {
   "steps": Array [
     Object {
       "name": "Checkout",
-      "uses": "actions/checkout@v3",
+      "uses": "actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c",
       "with": Object {
         "ref": "main",
       },
     },
     Object {
       "name": "Download patch",
-      "uses": "actions/download-artifact@v3",
+      "uses": "actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a",
       "with": Object {
         "name": ".repo.patch",
         "path": "\${{ runner.temp }}",
@@ -37,7 +37,7 @@ git config user.email \\"github-actions@github.com\\"",
     Object {
       "id": "create-pr",
       "name": "Create Pull Request",
-      "uses": "peter-evans/create-pull-request@v4",
+      "uses": "peter-evans/create-pull-request@2b011faafdcbc9ceb11414d64d0573f37c774b04",
       "with": Object {
         "author": "github-actions <github-actions@github.com>",
         "body": "Upgrades project dependencies. See details in [workflow run].
@@ -71,7 +71,7 @@ exports[`disabling mutableBuild will skip pushing changes to PR branches 1`] = `
 Array [
   Object {
     "name": "Checkout",
-    "uses": "actions/checkout@v3",
+    "uses": "actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c",
     "with": Object {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -94,7 +94,7 @@ git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_hap
   Object {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
-    "uses": "actions/upload-artifact@v3",
+    "uses": "actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce",
     "with": Object {
       "name": ".repo.patch",
       "path": ".repo.patch",
@@ -147,7 +147,7 @@ exports[`mutableBuild will push changes to PR branches 1`] = `
 Array [
   Object {
     "name": "Checkout",
-    "uses": "actions/checkout@v3",
+    "uses": "actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c",
     "with": Object {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -170,7 +170,7 @@ git diff --staged --patch --exit-code > .repo.patch || echo \\"self_mutation_hap
   Object {
     "if": "steps.self_mutation.outputs.self_mutation_happened",
     "name": "Upload patch",
-    "uses": "actions/upload-artifact@v3",
+    "uses": "actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce",
     "with": Object {
       "name": ".repo.patch",
       "path": ".repo.patch",
@@ -190,7 +190,7 @@ exports[`mutableBuild will push changes to PR branches 2`] = `
 Array [
   Object {
     "name": "Checkout",
-    "uses": "actions/checkout@v3",
+    "uses": "actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c",
     "with": Object {
       "ref": "\${{ github.event.pull_request.head.ref }}",
       "repository": "\${{ github.event.pull_request.head.repo.full_name }}",
@@ -199,7 +199,7 @@ Array [
   },
   Object {
     "name": "Download patch",
-    "uses": "actions/download-artifact@v3",
+    "uses": "actions/download-artifact@9bc31d5ccc31df68ecc42ccf4149144866c47d8a",
     "with": Object {
       "name": ".repo.patch",
       "path": "\${{ runner.temp }}",

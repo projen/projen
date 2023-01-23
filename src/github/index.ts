@@ -1,5 +1,6 @@
 export * from "./github";
 
+export * from "./actions";
 export * from "./dependabot";
 export * from "./workflows";
 export * from "./mergify";

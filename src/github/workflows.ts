@@ -1,4 +1,9 @@
 import { snake } from "case";
+import {
+  findActionBy,
+  toUsesString,
+  GitHubActionVersionResolutionOptions,
+} from "./actions";
 import { GitHub } from "./github";
 import { GithubCredentials } from "./github-credentials";
 import * as workflows from "./workflows-model";
@@ -57,6 +62,8 @@ export class GithubWorkflow extends Component {
    */
   public readonly projenCredentials: GithubCredentials;
 
+  private readonly versionResolutionOptions?: GitHubActionVersionResolutionOptions;
+
   private events: workflows.Triggers = {};
   private jobs: Record<
     string,
@@ -73,6 +80,7 @@ export class GithubWorkflow extends Component {
     this.name = name;
     this.concurrency = options.concurrency;
     this.projenCredentials = github.projenCredentials;
+    this.versionResolutionOptions = github.versionResolutionOptions;
 
     const workflowsEnabled = github.workflowsEnabled || options.force;
 
@@ -153,7 +161,7 @@ export class GithubWorkflow extends Component {
       name: this.name,
       on: snakeCaseKeys(this.events),
       concurrency: this.concurrency,
-      jobs: renderJobs(this.jobs),
+      jobs: renderJobs(this.jobs, this.versionResolutionOptions),
     };
   }
 }
@@ -178,7 +186,8 @@ function snakeCaseKeys<T = unknown>(obj: T): T {
 }
 
 function renderJobs(
-  jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>
+  jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>,
+  versionResolutionOptions?: GitHubActionVersionResolutionOptions
 ) {
   const result: Record<string, unknown> = {};
   for (const [name, job] of Object.entries(jobs)) {
@@ -280,7 +289,10 @@ function renderJobs(
       name: step.name,
       id: step.id,
       if: step.if,
-      uses: step.uses,
+      uses:
+        !step.uses || typeof step.uses === "string"
+          ? step.uses
+          : toUsesString(step.uses, versionResolutionOptions),
       env: step.env,
       run: step.run,
       with: step.with,
@@ -313,35 +325,35 @@ function setupTools(tools: workflows.Tools) {
 
   if (tools.java) {
     steps.push({
-      uses: "actions/setup-java@v3",
+      uses: findActionBy({ name: "actions/setup-java" }),
       with: { distribution: "temurin", "java-version": tools.java.version },
     });
   }
 
   if (tools.node) {
     steps.push({
-      uses: "actions/setup-node@v3",
+      uses: findActionBy({ name: "actions/setup-node" }),
       with: { "node-version": tools.node.version },
     });
   }
 
   if (tools.python) {
     steps.push({
-      uses: "actions/setup-python@v4",
+      uses: findActionBy({ name: "actions/setup-python" }),
       with: { "python-version": tools.python.version },
     });
   }
 
   if (tools.go) {
     steps.push({
-      uses: "actions/setup-go@v3",
+      uses: findActionBy({ name: "actions/setup-go" }),
       with: { "go-version": tools.go.version },
     });
   }
 
   if (tools.dotnet) {
     steps.push({
-      uses: "actions/setup-dotnet@v3",
+      uses: findActionBy({ name: "actions/setup-dotnet" }),
       with: { "dotnet-version": tools.dotnet.version },
     });
   }

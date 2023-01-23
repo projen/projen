@@ -1,3 +1,4 @@
+import { findActionBy } from "./actions";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { GitHub } from "./github";
 import { WorkflowActions } from "./workflow-actions";
@@ -155,7 +156,7 @@ export class TaskWorkflow extends GithubWorkflow {
     if (this.artifactsDirectory) {
       postBuildSteps.push({
         name: "Upload artifact",
-        uses: "actions/upload-artifact@v3",
+        uses: findActionBy({ name: "actions/upload-artifact" }),
         // Setting to always will ensure that this step will run even if
         // the previous ones have failed (e.g. coverage report, internal logs, etc)
         if: "always()",
@@ -179,7 +180,7 @@ export class TaskWorkflow extends GithubWorkflow {
         // check out sources.
         {
           name: "Checkout",
-          uses: "actions/checkout@v3",
+          uses: findActionBy({ name: "actions/checkout" }),
           ...checkoutWith,
         },
 

@@ -1,6 +1,7 @@
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
 import { Task } from "..";
+import { findActionBy } from "../github/actions";
 import { Job, Step } from "../github/workflows-model";
 import { Eslint, NodePackageManager } from "../javascript";
 import {
@@ -439,7 +440,7 @@ export class JsiiProject extends TypeScriptProject {
     if (this.package.packageManager === NodePackageManager.PNPM) {
       prePublishSteps.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v2.2.2",
+        uses: findActionBy({ name: "pnpm/action-setup" }),
         with: { version: "7" },
       });
     }

@@ -1,5 +1,6 @@
 import { BranchOptions } from "./release";
 import { Component } from "../component";
+import { findActionBy } from "../github/actions";
 import {
   BUILD_ARTIFACT_NAME,
   DEFAULT_GITHUB_ACTIONS_USER,
@@ -305,7 +306,7 @@ export class Publisher extends Component {
       const region = options.registry?.match(regionCaptureRegex)?.[1];
       prePublishSteps.push({
         name: "Configure AWS Credentials via GitHub OIDC Provider",
-        uses: "aws-actions/configure-aws-credentials@v1",
+        uses: findActionBy({ name: "aws-actions/configure-aws-credentials" }),
         with: {
           "role-to-assume": options.codeArtifactOptions.roleToAssume,
           "aws-region": region,
@@ -582,7 +583,7 @@ export class Publisher extends Component {
       const steps: JobStep[] = [
         {
           name: "Download build artifacts",
-          uses: "actions/download-artifact@v3",
+          uses: findActionBy({ name: "actions/download-artifact" }),
           with: {
             name: BUILD_ARTIFACT_NAME,
             path: ARTIFACTS_DOWNLOAD_DIR, // this must be "dist" for publib
@@ -618,7 +619,7 @@ export class Publisher extends Component {
             {
               name: "Create Issue",
               if: "${{ failure() }}",
-              uses: "imjohnbo/issue-bot@v3",
+              uses: findActionBy({ name: "imjohnbo/issue-bot" }),
               with: {
                 labels: this.failureIssueLabel,
                 title: `Publishing v\${{ steps.extract-version.outputs.VERSION }} to ${opts.registryName} failed`,

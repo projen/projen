@@ -1,4 +1,5 @@
 import { GitIdentity } from ".";
+import { findActionBy } from "./actions";
 import { JobStep } from "./workflows-model";
 
 const GIT_PATCH_FILE = ".repo.patch";
@@ -34,7 +35,7 @@ export class WorkflowActions {
       {
         if: MUTATIONS_FOUND,
         name: "Upload patch",
-        uses: "actions/upload-artifact@v3",
+        uses: findActionBy({ name: "actions/upload-artifact" }),
         with: { name: GIT_PATCH_FILE, path: GIT_PATCH_FILE },
       },
     ];
@@ -67,7 +68,7 @@ export class WorkflowActions {
     return [
       {
         name: "Checkout",
-        uses: "actions/checkout@v3",
+        uses: findActionBy({ name: "actions/checkout" }),
         with: {
           token: options.token,
           ref: options.ref,
@@ -76,7 +77,7 @@ export class WorkflowActions {
       },
       {
         name: "Download patch",
-        uses: "actions/download-artifact@v3",
+        uses: findActionBy({ name: "actions/download-artifact" }),
         with: { name: GIT_PATCH_FILE, path: RUNNER_TEMP },
       },
       {

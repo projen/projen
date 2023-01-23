@@ -1,3 +1,4 @@
+import { findActionBy } from "./actions";
 import { JobStep } from "./workflows-model";
 
 /**
@@ -58,7 +59,7 @@ export class GithubCredentials {
         {
           name: "Generate token",
           id: "generate_token",
-          uses: "tibdex/github-app-token@7ce9ffdcdeb2ba82b01b51d6584a6a85872336d4",
+          uses: findActionBy({ name: "tibdex/github-app-token" }),
           with: {
             app_id: `\${{ secrets.${appIdSecret} }}`,
             private_key: `\${{ secrets.${privateKeySecret} }}`,

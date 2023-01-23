@@ -1,5 +1,6 @@
 import * as YAML from "yaml";
 import { StaleBehavior } from "../../src/github";
+import { findActionBy, toUsesString } from "../../src/github/actions";
 import { renderBehavior } from "../../src/github/stale-util";
 import { synthSnapshot, TestProject } from "../util";
 
@@ -135,7 +136,7 @@ describe("exempt labels in workflow output", () => {
   );
 
   expect(workflow.jobs.stale.steps[0]).toStrictEqual({
-    uses: "actions/stale@v4",
+    uses: toUsesString(findActionBy({ name: "actions/stale" })),
     with: {
       "close-issue-message":
         "Closing this issue as it hasn't seen activity for a while. Please add a comment @mentioning a maintainer to reopen.",

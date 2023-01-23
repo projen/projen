@@ -261,6 +261,9 @@ Name|Description
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
 [github.DependabotRegistry](#projen-github-dependabotregistry)|Use to add private registry support for dependabot.
+[github.GitHubAction](#projen-github-githubaction)|*No description*
+[github.GitHubActionFilter](#projen-github-githubactionfilter)|The filter to use for finding a pre-known GitHub Action.
+[github.GitHubActionVersionResolutionOptions](#projen-github-githubactionversionresolutionoptions)|Options for rendering the version string for a GitHub Action.
 [github.GitHubOptions](#projen-github-githuboptions)|*No description*
 [github.GitHubProjectOptions](#projen-github-githubprojectoptions)|Options for `GitHubProject`.
 [github.GitIdentity](#projen-github-gitidentity)|Represents the git identity.
@@ -435,6 +438,7 @@ Name|Description
 [circleci.ResourceClass](#projen-circleci-resourceclass)|The resource_class feature allows configuring CPU and RAM resources for each job.
 [github.DependabotRegistryType](#projen-github-dependabotregistrytype)|Each configuration type requires you to provide particular settings.
 [github.DependabotScheduleInterval](#projen-github-dependabotscheduleinterval)|How often to check for new versions and raise pull requests for version updates.
+[github.VersionRepresentation](#projen-github-versionrepresentation)|Ways to represent versions in the `uses` key for a step.
 [github.VersioningStrategy](#projen-github-versioningstrategy)|The strategy to use when edits manifest and lock files.
 [gitlab.Action](#projen-gitlab-action)|Specifies what this job will do.
 [gitlab.CachePolicy](#projen-gitlab-cachepolicy)|Configure the upload and download behaviour of a cache.
@@ -4922,7 +4926,7 @@ addPostBuildSteps(...steps: JobStep[]): void
   * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
   * **name** (<code>string</code>)  A name for your step to display on GitHub. __*Optional*__
   * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
-  * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
+  * **uses** (<code>string &#124; [github.GitHubAction](#projen-github-githubaction)</code>)  Selects an action to run as part of a step in your job. __*Optional*__
   * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
   * **workingDirectory** (<code>string</code>)  Specifies a working directory for a step. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
@@ -6479,6 +6483,7 @@ new github.GitHub(project: Project, options?: GitHubOptions)
   * **projenTokenSecret** (<code>string</code>)  The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows. __*Default*__: "PROJEN_GITHUB_TOKEN"
   * **pullRequestLint** (<code>boolean</code>)  Add a workflow that performs basic checks for pull requests, like validating that PRs follow Conventional Commits. __*Default*__: true
   * **pullRequestLintOptions** (<code>[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)</code>)  Options for configuring a pull request linter. __*Default*__: see defaults in `PullRequestLintOptions`
+  * **versionResolutionOptions** (<code>[github.GitHubActionVersionResolutionOptions](#projen-github-githubactionversionresolutionoptions)</code>)  The representation to use for versions of GitHub Actions within Workflows. __*Default*__: use a specific SHA for all Actions
   * **workflows** (<code>boolean</code>)  Enables GitHub workflows. __*Default*__: true
 
 
@@ -6492,6 +6497,7 @@ Name | Type | Description
 **workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | All workflows.
 **workflowsEnabled**🔹 | <code>boolean</code> | Are workflows enabled?
 **mergify**?🔹 | <code>[github.Mergify](#projen-github-mergify)</code> | The `Mergify` configured on this repository.<br/>__*Optional*__
+**versionResolutionOptions**?🔹 | <code>[github.GitHubActionVersionResolutionOptions](#projen-github-githubactionversionresolutionoptions)</code> | __*Optional*__
 
 ### Methods
 
@@ -8960,7 +8966,7 @@ addPostBuildSteps(...steps: JobStep[]): void
   * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
   * **name** (<code>string</code>)  A name for your step to display on GitHub. __*Optional*__
   * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
-  * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
+  * **uses** (<code>string &#124; [github.GitHubAction](#projen-github-githubaction)</code>)  Selects an action to run as part of a step in your job. __*Optional*__
   * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
   * **workingDirectory** (<code>string</code>)  Specifies a working directory for a step. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
@@ -9724,7 +9730,7 @@ addGitHubPrePublishingSteps(...steps: JobStep[]): void
   * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
   * **name** (<code>string</code>)  A name for your step to display on GitHub. __*Optional*__
   * **run** (<code>string</code>)  Runs command-line programs using the operating system's shell. __*Optional*__
-  * **uses** (<code>string</code>)  Selects an action to run as part of a step in your job. __*Optional*__
+  * **uses** (<code>string &#124; [github.GitHubAction](#projen-github-githubaction)</code>)  Selects an action to run as part of a step in your job. __*Optional*__
   * **with** (<code>Map<string, any></code>)  A map of the input parameters defined by the action. __*Optional*__
   * **workingDirectory** (<code>string</code>)  Specifies a working directory for a step. __*Optional*__
   * **continueOnError** (<code>boolean</code>)  Prevents a job from failing when a step fails. __*Optional*__
@@ -15173,6 +15179,55 @@ Name | Type | Description
 
 
 
+## struct GitHubAction 🔹 <a id="projen-github-githubaction"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | <span></span>
+**majorVersion**?🔹 | <code>string</code> | __*Optional*__
+**minorVersion**?🔹 | <code>string</code> | __*Optional*__
+**sha**?🔹 | <code>string</code> | __*Optional*__
+
+
+
+## struct GitHubActionFilter 🔹 <a id="projen-github-githubactionfilter"></a>
+
+
+The filter to use for finding a pre-known GitHub Action.
+
+This allows for filtering to a specific major or minor version. The filters are
+applied as an AND operation; all fields must match in order for an Action to
+be a match.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | The fully-qualified name of the action, including the publisher and repository.
+**majorVersion**?🔹 | <code>string</code> | The "major version" tag.<br/>__*Optional*__
+**minorVersion**?🔹 | <code>string</code> | The "minor version" tag.<br/>__*Optional*__
+
+
+
+## struct GitHubActionVersionResolutionOptions 🔹 <a id="projen-github-githubactionversionresolutionoptions"></a>
+
+
+Options for rendering the version string for a GitHub Action.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**format**?🔹 | <code>[github.VersionRepresentation](#projen-github-versionrepresentation)</code> | The format that should be used.<br/>__*Default*__: Use the major version for trusted publishers and SHA for all others
+**trustedPublishers**?🔹 | <code>Array<string></code> | Actions with a publisher in this list will use the major version instead of a SHA when `format` is set to `AUTO`.<br/>__*Default*__: no publishers are trusted
+
+
+
 ## struct GitHubOptions 🔹 <a id="projen-github-githuboptions"></a>
 
 
@@ -15188,6 +15243,7 @@ Name | Type | Description
 **projenTokenSecret**?⚠️ | <code>string</code> | The name of a secret which includes a GitHub Personal Access Token to be used by projen workflows.<br/>__*Default*__: "PROJEN_GITHUB_TOKEN"
 **pullRequestLint**?🔹 | <code>boolean</code> | Add a workflow that performs basic checks for pull requests, like validating that PRs follow Conventional Commits.<br/>__*Default*__: true
 **pullRequestLintOptions**?🔹 | <code>[github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)</code> | Options for configuring a pull request linter.<br/>__*Default*__: see defaults in `PullRequestLintOptions`
+**versionResolutionOptions**?🔹 | <code>[github.GitHubActionVersionResolutionOptions](#projen-github-githubactionversionresolutionoptions)</code> | The representation to use for versions of GitHub Actions within Workflows.<br/>__*Default*__: use a specific SHA for all Actions
 **workflows**?🔹 | <code>boolean</code> | Enables GitHub workflows.<br/>__*Default*__: true
 
 
@@ -18974,6 +19030,18 @@ Name | Description
 **DAILY** 🔹|Runs on every weekday, Monday to Friday.
 **WEEKLY** 🔹|Runs once each week.
 **MONTHLY** 🔹|Runs once each month.
+
+
+## enum VersionRepresentation 🔹 <a id="projen-github-versionrepresentation"></a>
+
+Ways to represent versions in the `uses` key for a step.
+
+Name | Description
+-----|-----
+**MAJOR_VERSION** 🔹|Specify only the major version.
+**MINOR_VERSION** 🔹|Specify the full version number.
+**SHA** 🔹|Specify the commit hash.
+**AUTO** 🔹|Automatically determine the best format for the version string.
 
 
 ## enum VersioningStrategy 🔹 <a id="projen-github-versioningstrategy"></a>

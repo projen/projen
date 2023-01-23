@@ -1,3 +1,4 @@
+import { GitHubActionVersionResolutionOptions } from "./actions";
 import { Dependabot, DependabotOptions } from "./dependabot";
 import { GithubCredentials } from "./github-credentials";
 import { Mergify, MergifyOptions } from "./mergify";
@@ -60,6 +61,13 @@ export interface GitHubOptions {
    * @deprecated - use `projenCredentials`
    */
   readonly projenTokenSecret?: string;
+
+  /**
+   * The representation to use for versions of GitHub Actions within Workflows.
+   *
+   * @default use a specific SHA for all Actions
+   */
+  readonly versionResolutionOptions?: GitHubActionVersionResolutionOptions;
 }
 
 export class GitHub extends Component {
@@ -88,6 +96,8 @@ export class GitHub extends Component {
    */
   public readonly projenCredentials: GithubCredentials;
 
+  public readonly versionResolutionOptions?: GitHubActionVersionResolutionOptions;
+
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
 
@@ -110,6 +120,8 @@ export class GitHub extends Component {
         secret: "PROJEN_GITHUB_TOKEN",
       });
     }
+
+    this.versionResolutionOptions = options.versionResolutionOptions;
 
     if (options.mergify ?? true) {
       this.mergify = new Mergify(this, options.mergifyOptions);

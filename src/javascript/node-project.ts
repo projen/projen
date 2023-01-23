@@ -18,6 +18,7 @@ import {
   GitHubProjectOptions,
   GitIdentity,
 } from "../github";
+import { findActionBy } from "../github/actions";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { secretToString } from "../github/util";
 import { JobStep, Triggers } from "../github/workflows-model";
@@ -713,7 +714,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Upload coverage to Codecov",
-          uses: "codecov/codecov-action@v3",
+          uses: findActionBy({ name: "codecov/codecov-action" }),
           with: options.codeCovTokenSecret
             ? {
                 token: `\${{ secrets.${options.codeCovTokenSecret} }}`,
@@ -818,7 +819,9 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v1",
+          uses: findActionBy({
+            name: "aws-actions/configure-aws-credentials",
+          }),
           with: {
             "aws-access-key-id": secretToString(
               parsedCodeArtifactOptions.accessKeyIdSecret
@@ -872,7 +875,7 @@ export class NodeProject extends GitHubProject {
     if (this.nodeVersion) {
       install.push({
         name: "Setup Node.js",
-        uses: "actions/setup-node@v3",
+        uses: findActionBy({ name: "actions/setup-node" }),
         with: { "node-version": this.nodeVersion },
       });
     }
@@ -880,7 +883,7 @@ export class NodeProject extends GitHubProject {
     if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v2.2.2",
+        uses: findActionBy({ name: "pnpm/action-setup" }),
         with: { version: "7" }, // current latest. Should probably become tunable.
       });
     }
