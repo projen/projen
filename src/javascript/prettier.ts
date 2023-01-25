@@ -401,9 +401,9 @@ export class Prettier extends Component {
   }
 
   /**
-   *  Access to the Prettieroverrides to extend those
+   *  Returns all Prettier overrides
    */
-  public get overrides(): readonly PrettierOverride[] {
+  public get overrides() {
     return [...this._overrides];
   }
 

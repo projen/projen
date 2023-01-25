@@ -8750,7 +8750,7 @@ new javascript.Prettier(project: NodeProject, options: PrettierOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**overrides**🔹 | <code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code> | Access to the Prettieroverrides to extend those.
+**overrides**🔹 | <code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code> | Returns all Prettier overrides.
 **settings**🔹 | <code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code> | Direct access to the prettier settings.
 **ignoreFile**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .prettierIgnore file.<br/>__*Optional*__
 
