@@ -387,7 +387,7 @@ export class Prettier extends Component {
    * @param {PrettierOverride} override
    */
   public addOverride(override: PrettierOverride) {
-    this.overrides.push(override);
+    this._overrides.push(override);
   }
 
   /**
@@ -403,7 +403,7 @@ export class Prettier extends Component {
   /**
    *  Access to the Prettieroverrides to extend those
    */
-  public get overrides() {
+  public get overrides(): readonly PrettierOverride[] {
     return [...this._overrides];
   }
 
