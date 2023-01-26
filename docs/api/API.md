@@ -6686,6 +6686,7 @@ static fromApp(options?: GithubCredentialsAppOptions): GithubCredentials
 
 * **options** (<code>[github.GithubCredentialsAppOptions](#projen-github-githubcredentialsappoptions)</code>)  *No description*
   * **appIdSecret** (<code>string</code>)  *No description* __*Optional*__
+  * **permissions** (<code>[github.workflows.AppPermissions](#projen-github-workflows-apppermissions)</code>)  The permissions granted to the token. __*Default*__: all permissions granted to the app
   * **privateKeySecret** (<code>string</code>)  *No description* __*Optional*__
 
 __Returns__:
@@ -15255,6 +15256,7 @@ Options for `GithubCredentials.fromApp`.
 Name | Type | Description 
 -----|------|-------------
 **appIdSecret**?🔹 | <code>string</code> | __*Optional*__
+**permissions**?🔹 | <code>[github.workflows.AppPermissions](#projen-github-workflows-apppermissions)</code> | The permissions granted to the token.<br/>__*Default*__: all permissions granted to the app
 **privateKeySecret**?🔹 | <code>string</code> | __*Optional*__
 
 

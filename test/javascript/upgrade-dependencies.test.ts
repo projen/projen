@@ -1,5 +1,5 @@
 import * as yaml from "yaml";
-import { GithubCredentials } from "../../src/github";
+import { GithubCredentials, workflows } from "../../src/github";
 import {
   NodeProject,
   NodeProjectOptions,
@@ -123,6 +123,28 @@ test("with a GitHub app for authentication", () => {
   const project = createProject({
     githubOptions: {
       projenCredentials: GithubCredentials.fromApp(),
+    },
+    depsUpgradeOptions: {
+      workflowOptions: {
+        schedule: UpgradeDependenciesSchedule.MONTHLY,
+      },
+    },
+  });
+
+  const snapshot = synthSnapshot(project);
+  expect(snapshot[".github/workflows/upgrade-main.yml"]).toBeDefined();
+  expect(snapshot[".github/workflows/upgrade-main.yml"]).toMatchSnapshot();
+});
+
+test("with a GitHub app for authentication with limited permissions", () => {
+  const project = createProject({
+    githubOptions: {
+      projenCredentials: GithubCredentials.fromApp({
+        permissions: {
+          pullRequests: workflows.AppPermission.WRITE,
+          contents: workflows.AppPermission.WRITE,
+        },
+      }),
     },
     depsUpgradeOptions: {
       workflowOptions: {

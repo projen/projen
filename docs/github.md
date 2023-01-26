@@ -59,6 +59,25 @@ const project = new javascript.NodeProject({
 });
 ```
 
+If the GitHub app you are using has additional permissions assigned, you can limit the permissions used on the token within the jobs in the workflow to only allow access to write repository contents and create the pull request:
+
+```ts
+const { github, javascript } = require('projen');
+
+const project = new javascript.NodeProject({
+  // ...other options
+  githubOptions: {
+    projenCredentials: github.GithubCredentials.fromApp({
+      // ...other options
+      permissions: {
+        pullRequests: github.workflows.AppPermission.WRITE,
+        contents: github.workflows.AppPermission.WRITE,
+      }
+    }),
+  },
+});
+```
+
 ## Workflows
 
 TODO
