@@ -45,6 +45,20 @@ export enum TypeScriptModuleResolution {
    * @see https://www.typescriptlang.org/docs/handbook/module-resolution.html#node
    */
   NODE = "node",
+
+  /**
+   * Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards
+   *
+   * @see https://www.typescriptlang.org/tsconfig#moduleResolution
+   */
+  NODE16 = "node16",
+
+  /**
+   * Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards
+   *
+   * @see https://www.typescriptlang.org/tsconfig#moduleResolution
+   */
+  NODE_NEXT = "nodenext",
 }
 
 /**
@@ -160,6 +174,21 @@ export interface TypeScriptCompilerOptions {
   readonly inlineSources?: boolean;
 
   /**
+   * Enables the generation of sourcemap files.
+   *
+   * @default undefined
+   */
+  readonly sourceMap?: boolean;
+
+  /**
+   * Specify the location where a debugger should locate TypeScript files
+   * instead of relative source locations.
+   *
+   * @default undefined
+   */
+  readonly sourceRoot?: string;
+
+  /**
    * Perform additional checks to ensure that separate compilation (such as
    * with transpileModule or @babel/plugin-transform-typescript) would be safe.
    *
@@ -202,6 +231,13 @@ export interface TypeScriptCompilerOptions {
    * @default false
    */
   readonly noEmit?: boolean;
+
+  /**
+   * Only emit .d.ts files; do not emit .js files.
+   *
+   * @default false
+   */
+  readonly emitDeclarationOnly?: true;
 
   /**
    * Do not emit compiler output files like JavaScript source code, source-maps or
