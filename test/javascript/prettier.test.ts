@@ -1,5 +1,10 @@
 import { SourceCode } from "../../src";
-import { ArrowParens, NodeProject, TrailingComma } from "../../src/javascript";
+import {
+  ArrowParens,
+  NodeProject,
+  PrettierOverride,
+  TrailingComma,
+} from "../../src/javascript";
 import { synthSnapshot } from "../util";
 
 describe("prettier", () => {
@@ -77,5 +82,25 @@ describe("prettier", () => {
 
     // THEN
     expect(synthSnapshot(project)[".prettierignore"]).toMatchSnapshot();
+  });
+
+  test("overrides", () => {
+    // GIVEN
+    const override: PrettierOverride = {
+      files: "*.js",
+      settings: { parser: "typescript" },
+    };
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "master",
+      prettier: true,
+    });
+    project.prettier?.addOverride(override);
+
+    // THEN
+    expect(synthSnapshot(project)[".prettierrc.json"]).toHaveProperty(
+      "overrides",
+      [override]
+    );
   });
 });
