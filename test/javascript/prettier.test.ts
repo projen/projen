@@ -88,7 +88,7 @@ describe("prettier", () => {
     // GIVEN
     const override: PrettierOverride = {
       files: "*.js",
-      settings: { parser: "typescript" },
+      options: { parser: "typescript" },
     };
     const project = new NodeProject({
       name: "test",
