@@ -8743,6 +8743,7 @@ new javascript.Prettier(project: NodeProject, options: PrettierOptions)
   * **ignoreFile** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: true
   * **overrides** (<code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code>)  Provide a list of patterns to override prettier configuration. __*Default*__: []
   * **settings** (<code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code>)  Prettier settings. __*Default*__: default settings
+  * **yaml** (<code>boolean</code>)  Write prettier configuration as YAML instead of JSON. __*Default*__: false
 
 
 
@@ -16751,6 +16752,7 @@ Name | Type | Description
 **ignoreFile**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: true
 **overrides**?🔹 | <code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code> | Provide a list of patterns to override prettier configuration.<br/>__*Default*__: []
 **settings**?🔹 | <code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code> | Prettier settings.<br/>__*Default*__: default settings
+**yaml**?🔹 | <code>boolean</code> | Write prettier configuration as YAML instead of JSON.<br/>__*Default*__: false
 
 
 

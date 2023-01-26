@@ -4,6 +4,7 @@ import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 import { Project } from "../project";
 import { SourceCode } from "../source-code";
+import { YamlFile } from "../yaml";
 /**
  * Options for Prettier
  *
@@ -29,6 +30,12 @@ export interface PrettierOptions {
    * @see https://prettier.io/docs/en/configuration.html#configuration-overrides
    */
   readonly overrides?: PrettierOverride[];
+
+  /**
+   * Write prettier configuration as YAML instead of JSON
+   * @default false
+   */
+  readonly yaml?: boolean;
 }
 /**
  * Options to set in Prettier directly or through overrides
@@ -375,10 +382,17 @@ export class Prettier extends Component {
       ...options.settings,
     };
 
-    new JsonFile(project, ".prettierrc.json", {
-      obj: () => ({ ...this.settings, overrides: [...this._overrides] }),
-      marker: false,
-    });
+    if (options.yaml) {
+      new YamlFile(project, ".prettierrc.yml", {
+        obj: () => ({ ...this.settings, overrides: [...this._overrides] }),
+        marker: true,
+      });
+    } else {
+      new JsonFile(project, ".prettierrc.json", {
+        obj: () => ({ ...this.settings, overrides: [...this._overrides] }),
+        marker: false,
+      });
+    }
   }
 
   /**
