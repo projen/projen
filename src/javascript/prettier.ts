@@ -281,7 +281,7 @@ export interface PrettierOverride {
   /**
    * The options to apply for this override.
    */
-  readonly settings: PrettierSettings;
+  readonly options: PrettierSettings;
 }
 
 /**
