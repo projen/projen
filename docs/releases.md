@@ -140,7 +140,7 @@ releaseTagPrefix: 'stable/'
 Please note that this also changes the behavior of finding existing tags and projen will now be looking for tags like `stable/1.2.3` to determine the current version.
 If you are migrating to a new tag format, make sure to re-tag at least the current version with the new format.
 
-It's important to note that the default prefix tag is ``v*`` so if ``releaseTagPrefix`` is not defined in your ``.projenrc.js`` configuration you must define your tags as ``v1.0.0``, ``v2.0.0.0`` and so on.
+The default prefix for release tags is `v*`. So if `releaseTagPrefix` is not defined in your `.projenrc.js` configuration you must define your tags as `v1.0.0`, `v2.0.0.0` and so on.
 
 ### Why is the version in `package.json` set to `0.0.0`?
 
