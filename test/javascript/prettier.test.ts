@@ -103,4 +103,21 @@ describe("prettier", () => {
       [override]
     );
   });
+
+  test("can output yml instead of json", () => {
+    // GIVEN
+    const project = new NodeProject({
+      name: "test",
+      defaultReleaseBranch: "main",
+      prettier: true,
+      prettierOptions: {
+        yaml: true,
+      },
+    });
+
+    // THEN
+    const output = synthSnapshot(project);
+    expect(output[".prettierrc.yml"]).toBeDefined();
+    expect(output[".prettierrc.json"]).toBeUndefined();
+  });
 });
