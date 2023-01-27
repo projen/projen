@@ -14,7 +14,6 @@ Anything may change at any time and public APIs should not be considered stable.
 Commits marked as a breaking change will increase the *minor* version. All other commits will increase the *patch* version.
 
 Projen will **never** release `v1.0.0` without your intervention. Once the project is ready, you have to make a one-time change to bump the major version.
- 
 ## Major Versions
 
 To bump the major version for the default branch, set the `majorVersion` option to the desired version and push the change.
