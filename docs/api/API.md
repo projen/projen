@@ -8781,7 +8781,7 @@ addOverride(override: PrettierOverride): void
 
 * **override** (<code>[javascript.PrettierOverride](#projen-javascript-prettieroverride)</code>)  *No description*
   * **files** (<code>string &#124; Array<string></code>)  Include these files in this override. 
-  * **settings** (<code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code>)  The options to apply for this override. 
+  * **options** (<code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code>)  The options to apply for this override. 
   * **excludeFiles** (<code>string &#124; Array<string></code>)  Exclude these files from this override. __*Optional*__
 
 
@@ -16764,7 +16764,7 @@ Name | Type | Description
 Name | Type | Description 
 -----|------|-------------
 **files**🔹 | <code>string &#124; Array<string></code> | Include these files in this override.
-**settings**🔹 | <code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code> | The options to apply for this override.
+**options**🔹 | <code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code> | The options to apply for this override.
 **excludeFiles**?🔹 | <code>string &#124; Array<string></code> | Exclude these files from this override.<br/>__*Optional*__
 
 
@@ -16861,6 +16861,7 @@ Name | Type | Description
 **baseUrl**?🔹 | <code>string</code> | Lets you set a base directory to resolve non-absolute module names.<br/>__*Optional*__
 **declaration**?🔹 | <code>boolean</code> | To be specified along with the above.<br/>__*Optional*__
 **declarationDir**?🔹 | <code>string</code> | Offers a way to configure the root directory for where declaration files are emitted.<br/>__*Optional*__
+**emitDeclarationOnly**?🔹 | <code>boolean</code> | Only emit .d.ts files; do not emit .js files.<br/>__*Default*__: false
 **emitDecoratorMetadata**?🔹 | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.<br/>__*Default*__: undefined
 **esModuleInterop**?🔹 | <code>boolean</code> | Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.<br/>__*Default*__: false
 **experimentalDecorators**?🔹 | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.<br/>__*Default*__: true
@@ -16887,6 +16888,8 @@ Name | Type | Description
 **resolveJsonModule**?🔹 | <code>boolean</code> | Allows importing modules with a ‘.json’ extension, which is a common practice in node projects. This includes generating a type for the import based on the static JSON shape.<br/>__*Default*__: true
 **rootDir**?🔹 | <code>string</code> | Specifies the root directory of input files.<br/>__*Optional*__
 **skipLibCheck**?🔹 | <code>boolean</code> | Skip type checking of all declaration files (*.d.ts).<br/>__*Default*__: false
+**sourceMap**?🔹 | <code>boolean</code> | Enables the generation of sourcemap files.<br/>__*Default*__: undefined
+**sourceRoot**?🔹 | <code>string</code> | Specify the location where a debugger should locate TypeScript files instead of relative source locations.<br/>__*Default*__: undefined
 **strict**?🔹 | <code>boolean</code> | The strict flag enables a wide range of type checking behavior that results in stronger guarantees of program correctness.<br/>__*Default*__: true
 **strictNullChecks**?🔹 | <code>boolean</code> | When strictNullChecks is false, null and undefined are effectively ignored by the language.<br/>__*Default*__: true
 **strictPropertyInitialization**?🔹 | <code>boolean</code> | When set to true, TypeScript will raise an error when a class property was declared but not set in the constructor.<br/>__*Default*__: true
@@ -19256,6 +19259,8 @@ Name | Description
 -----|-----
 **CLASSIC** 🔹|TypeScript's former default resolution strategy.
 **NODE** 🔹|Resolution strategy which attempts to mimic the Node.js module resolution strategy at runtime.
+**NODE16** 🔹|Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards.
+**NODE_NEXT** 🔹|Node.js’ ECMAScript Module Support from TypeScript 4.7 onwards.
 
 
 ## enum UpdateSnapshot 🔹 <a id="projen-javascript-updatesnapshot"></a>
