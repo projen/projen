@@ -14,7 +14,7 @@ Anything may change at any time and public APIs should not be considered stable.
 Commits marked as a breaking change will increase the *minor* version. All other commits will increase the *patch* version.
 
 Projen will **never** release `v1.0.0` without your intervention. Once the project is ready, you have to make a one-time change to bump the major version.
-
+ 
 ## Major Versions
 
 To bump the major version for the default branch, set the `majorVersion` option to the desired version and push the change.
@@ -140,6 +140,8 @@ releaseTagPrefix: 'stable/'
 
 Please note that this also changes the behavior of finding existing tags and projen will now be looking for tags like `stable/1.2.3` to determine the current version.
 If you are migrating to a new tag format, make sure to re-tag at least the current version with the new format.
+
+It's important to note that the default prefix tag is ``v*`` so if ``releaseTagPrefix`` is not defined in your ``.projenrc.js`` configuration you must define your tags as ``v1.0.0``, ``v2.0.0.0`` and so on.
 
 ### Why is the version in `package.json` set to `0.0.0`?
 
