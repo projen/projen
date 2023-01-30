@@ -134,6 +134,11 @@ const project = new cdk.JsiiProject({
   autoApproveOptions: { allowedUsernames: ["cdklabs-automation"] },
 
   docgenFilePath: "docs/api/API.md",
+
+  // Only allow certain open source licenses
+  checkLicenses: {
+    allow: ["MIT", "ISC", "BSD", "BSD-2-Clause", "BSD-3-Clause", "Apache-2.0"],
+  },
 });
 
 // Upgrade Dependencies in two parts:

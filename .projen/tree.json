@@ -296,6 +296,12 @@
           "path": ".prettierrc.json"
         }
       },
+      "LicenseChecker#check-licenses": {
+        "metadata": {
+          "type": "component",
+          "construct": "LicenseChecker"
+        }
+      },
       "TypescriptConfig#AutoId23": {
         "metadata": {
           "type": "component",
