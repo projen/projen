@@ -1,7 +1,9 @@
 import * as path from "path";
 import * as semver from "semver";
+import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
+import { Project } from "../project";
 
 const DEFAULT_TEST_REPORTS_DIR = "test-reports";
 
@@ -590,26 +592,41 @@ type JestReporter = [string, { [key: string]: any }] | string;
  * - `test:update`, intended for testing locally and updating snapshots to match the latest unit under test. Only available when `updateSnapshot: UpdateSnapshot: NEVER`.
  *
  */
-export class Jest {
+export class Jest extends Component {
+  /**
+   * Returns the singletone Jest component of a project or undefined if there is none.
+   */
+  public static of(project: Project): Jest | undefined {
+    const isJest = (c: Component): c is Jest => c instanceof Jest;
+    return project.components.find(isJest);
+  }
+
   /**
    * Escape hatch.
    */
-  public readonly config: any;
-  public readonly jestVersion: string;
+  readonly config: any;
+
+  /**
+   * Jest version, including `@` symbol, like `@^29`
+   */
+  readonly jestVersion: string;
+
+  /**
+   * Jest config file. `undefined` if settings are written to `package.json`
+   */
+  readonly file?: JsonFile;
 
   private readonly testMatch: string[];
   private readonly ignorePatterns: string[];
   private readonly watchIgnorePatterns: string[];
   private readonly coverageReporters: string[];
-  private readonly project: NodeProject;
-  private readonly file?: JsonFile;
   private readonly reporters: JestReporter[];
   private readonly jestConfig?: JestConfigOptions;
   private readonly extraCliOptions: string[];
   private _snapshotResolver: string | undefined;
 
   constructor(project: NodeProject, options: JestOptions = {}) {
-    this.project = project;
+    super(project);
 
     // hard deprecation
     if ((options as any).typescriptConfig) {
@@ -703,6 +720,7 @@ export class Jest {
       this.file = new JsonFile(project, options.configFilePath, {
         obj: this.config,
       });
+      project.npmignore?.addPatterns(`/${this.file.path}`);
     } else {
       project.addFields({ jest: this.config });
     }
@@ -754,6 +772,7 @@ export class Jest {
     // as recommended in the jest docs, node > 14 may use native v8 coverage collection
     // https://jestjs.io/docs/en/cli#--coverageproviderprovider
     if (
+      this.project instanceof NodeProject &&
       this.project.package.minNodeVersion &&
       semver.gte(this.project.package.minNodeVersion, "14.0.0")
     ) {

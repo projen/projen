@@ -7879,6 +7879,7 @@ Installs the following npm scripts:.
 
 __Submodule__: javascript
 
+__Extends__: [Component](#projen-component)
 
 ### Initializer
 
@@ -7910,7 +7911,8 @@ new javascript.Jest(project: NodeProject, options?: JestOptions)
 Name | Type | Description 
 -----|------|-------------
 **config**🔹 | <code>any</code> | Escape hatch.
-**jestVersion**🔹 | <code>string</code> | <span></span>
+**jestVersion**🔹 | <code>string</code> | Jest version, including `@` symbol, like `@^29`.
+**file**?🔹 | <code>[JsonFile](#projen-jsonfile)</code> | Jest config file.<br/>__*Optional*__
 
 ### Methods
 
@@ -7979,6 +7981,19 @@ addWatchIgnorePattern(pattern: string): void
 
 
 
+
+#### *static* of(project)🔹 <a id="projen-javascript-jest-of"></a>
+
+Returns the singletone Jest component of a project or undefined if there is none.
+
+```ts
+static of(project: Project): Jest
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+__Returns__:
+* <code>[javascript.Jest](#projen-javascript-jest)</code>
 
 
 
