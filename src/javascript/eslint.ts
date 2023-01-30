@@ -159,8 +159,7 @@ export class Eslint extends Component {
       "@typescript-eslint/parser@^5",
       "eslint-import-resolver-node",
       "eslint-import-resolver-typescript",
-      "eslint-plugin-import",
-      "json-schema"
+      "eslint-plugin-import"
     );
 
     if (options.aliasMap) {
