@@ -1,9 +1,9 @@
 import * as child_process from "child_process";
 import * as path from "path";
 import * as fs from "fs-extra";
-import { TestProject } from "./util";
-import { DockerCompose, DockerComposeProtocol } from "../src";
-import * as logging from "../src/logging";
+import { DockerCompose, DockerComposeProtocol } from "../../src/";
+import * as logging from "../../src/logging";
+import { TestProject } from "../util";
 
 logging.disable();
 
