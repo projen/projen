@@ -10,6 +10,7 @@ import { WorkflowActions } from "../github/workflow-actions";
 import {
   Job,
   JobPermission,
+  JobPermissions,
   JobStep,
   Tools,
   Triggers,
@@ -95,6 +96,12 @@ export interface BuildWorkflowOptions {
    * @default "{ pullRequest: {}, workflowDispatch: {} }"
    */
   readonly workflowTriggers?: Triggers;
+
+  /**
+   * Additional permission that are required for the job
+   * @default - no additional permission
+   */
+  readonly additionalPermissions?: JobPermissions;
 }
 
 export class BuildWorkflow extends Component {
@@ -157,6 +164,7 @@ export class BuildWorkflow extends Component {
         ...options.env,
       },
       permissions: {
+        ...options.additionalPermissions,
         contents: JobPermission.WRITE,
       },
       steps: (() => this.renderBuildSteps()) as any,

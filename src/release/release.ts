@@ -1,15 +1,20 @@
 import * as path from "path";
-import { Publisher } from "./publisher";
-import { ReleaseTrigger } from "./release-trigger";
 import { Component } from "../component";
 import { GitHub, GitHubProject, GithubWorkflow, TaskWorkflow } from "../github";
 import {
   BUILD_ARTIFACT_NAME,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
-import { Job, JobPermission, JobStep } from "../github/workflows-model";
+import {
+  Job,
+  JobPermission,
+  JobPermissions,
+  JobStep,
+} from "../github/workflows-model";
 import { Task } from "../task";
 import { Version } from "../version";
+import { Publisher } from "./publisher";
+import { ReleaseTrigger } from "./release-trigger";
 
 const BUILD_JOBID = "release";
 const GIT_REMOTE_STEPID = "git_remote";
@@ -243,6 +248,12 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    * @default 14.x
    */
   readonly workflowNodeVersion?: string;
+
+  /**
+   * Additional permission that are required for the job
+   * @default - no additional permission
+   */
+  readonly additionalPermissions?: JobPermissions;
 }
 
 /**
@@ -279,6 +290,7 @@ export class Release extends Component {
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
   private readonly workflowRunsOn?: string[];
+  private readonly additionalPermissions: JobPermissions;
 
   private readonly _branchHooks: BranchHook[];
 
@@ -305,6 +317,7 @@ export class Release extends Component {
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
     this.workflowRunsOn = options.workflowRunsOn;
+    this.additionalPermissions = options.additionalPermissions ?? {};
     this._branchHooks = [];
 
     /**
@@ -626,6 +639,7 @@ export class Release extends Component {
           CI: "true",
         },
         permissions: {
+          ...this.additionalPermissions,
           contents: JobPermission.WRITE,
         },
         checkoutWith: {

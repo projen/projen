@@ -1,14 +1,4 @@
 import { join } from "path";
-import { Bundler, BundlerOptions } from "./bundler";
-import { Jest, JestOptions } from "./jest";
-import {
-  CodeArtifactAuthProvider as NodePackageCodeArtifactAuthProvider,
-  CodeArtifactOptions,
-  NodePackage,
-  NodePackageManager,
-  NodePackageOptions,
-} from "./node-package";
-import { Projenrc, ProjenrcOptions } from "./projenrc";
 import { BuildWorkflow } from "../build";
 import { PROJEN_DIR, PROJEN_RC } from "../common";
 import {
@@ -20,7 +10,7 @@ import {
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { secretToString } from "../github/util";
-import { JobStep, Triggers } from "../github/workflows-model";
+import { JobPermission, JobStep, Triggers } from "../github/workflows-model";
 import { IgnoreFile } from "../ignore-file";
 import {
   Prettier,
@@ -36,10 +26,21 @@ import {
   ReleaseProjectOptions,
   NpmPublishOptions,
   CodeArtifactAuthProvider as ReleaseCodeArtifactAuthProvider,
+  CodeArtifactAuthProvider,
 } from "../release";
 import { Task } from "../task";
 import { deepMerge } from "../util";
 import { Version } from "../version";
+import { Bundler, BundlerOptions } from "./bundler";
+import { Jest, JestOptions } from "./jest";
+import {
+  CodeArtifactAuthProvider as NodePackageCodeArtifactAuthProvider,
+  CodeArtifactOptions,
+  NodePackage,
+  NodePackageManager,
+  NodePackageOptions,
+} from "./node-package";
+import { Projenrc, ProjenrcOptions } from "./projenrc";
 
 const PROJEN_SCRIPT = "projen";
 
@@ -514,6 +515,11 @@ export class NodeProject extends GitHubProject {
       this.jest = new Jest(this, options.jestOptions);
     }
 
+    const requiresIdTokenPermission =
+      (options.scopedPackagesOptions ?? []).length > 0 &&
+      options.codeArtifactOptions?.authProvider ===
+        CodeArtifactAuthProvider.GITHUB_OIDC;
+
     if (buildEnabled && this.github) {
       this.buildWorkflow = new BuildWorkflow(this, {
         buildTask: this.buildTask,
@@ -527,6 +533,9 @@ export class NodeProject extends GitHubProject {
         postBuildSteps: options.postBuildSteps,
         runsOn: options.workflowRunsOn,
         workflowTriggers: options.buildWorkflowTriggers,
+        additionalPermissions: {
+          idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
+        },
       });
 
       this.buildWorkflow.addPostBuildSteps(
@@ -558,6 +567,9 @@ export class NodeProject extends GitHubProject {
         ],
 
         workflowNodeVersion: this.nodeVersion,
+        additionalPermissions: {
+          idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
+        },
       });
 
       this.publisher = this.release.publisher;
@@ -812,7 +824,29 @@ export class NodeProject extends GitHubProject {
       secretAccessKeySecret:
         codeArtifactOptions?.secretAccessKeySecret ?? "AWS_SECRET_ACCESS_KEY",
       roleToAssume: codeArtifactOptions?.roleToAssume,
+      authProvider: codeArtifactOptions?.authProvider,
     };
+
+    if (
+      parsedCodeArtifactOptions.authProvider ===
+      NodePackageCodeArtifactAuthProvider.GITHUB_OIDC
+    ) {
+      return [
+        {
+          name: "Configure AWS Credentials",
+          uses: "aws-actions/configure-aws-credentials@v1",
+          with: {
+            "aws-region": "us-east-2",
+            "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
+            "role-duration-seconds": 900,
+          },
+        },
+        {
+          name: "AWS CodeArtifact Login",
+          run: `${this.runScriptCommand} ca:login`,
+        },
+      ];
+    }
 
     if (parsedCodeArtifactOptions.roleToAssume) {
       return [
