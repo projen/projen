@@ -609,6 +609,62 @@ describe("docker-compose", () => {
     });
   });
 
+  describe("can add a label", () => {
+    test("declaratively", () => {
+      const project = new TestProject();
+      const dc = new DockerCompose(project, {
+        services: {
+          myservice: {
+            image: "nginx",
+            labels: {
+              myLabel: "myvalue",
+            },
+          },
+        },
+      });
+
+      expect(dc._synthesizeDockerCompose()).toEqual({
+        version: "3.3",
+        services: {
+          myservice: {
+            image: "nginx",
+            labels: {
+              myLabel: "myvalue",
+            },
+          },
+        },
+      });
+
+      project.synth();
+      assertDockerComposeFileValidates(project.outdir);
+    });
+
+    test("imperatively", () => {
+      const project = new TestProject();
+      const dc = new DockerCompose(project);
+
+      const service = dc.addService("myservice", {
+        image: "nginx",
+      });
+      service.addLabel("my.label", "my_value");
+
+      expect(dc._synthesizeDockerCompose()).toEqual({
+        version: "3.3",
+        services: {
+          myservice: {
+            image: "nginx",
+            labels: {
+              "my.label": "my_value",
+            },
+          },
+        },
+      });
+
+      project.synth();
+      assertDockerComposeFileValidates(project.outdir);
+    });
+  });
+
   test("errors when a service reference by name does not exist", () => {
     const project = new TestProject();
 

@@ -739,6 +739,7 @@ addService(serviceName: string, description: DockerComposeServiceDescription): D
   * **environment** (<code>Map<string, string></code>)  Add environment variables. __*Default*__: no environment variables are provided
   * **image** (<code>string</code>)  Use a docker image. __*Optional*__
   * **imageBuild** (<code>[DockerComposeBuild](#projen-dockercomposebuild)</code>)  Build a docker image. __*Optional*__
+  * **labels** (<code>Map<string, string></code>)  Add labels. __*Default*__: no labels are provided
   * **networks** (<code>Array<[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)></code>)  Add some networks to the service. __*Optional*__
   * **ports** (<code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code>)  Map some ports. __*Default*__: no ports are mapped
   * **volumes** (<code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code>)  Mount some volumes into the service. __*Optional*__
@@ -864,6 +865,7 @@ new DockerComposeService(serviceName: string, serviceDescription: DockerComposeS
   * **environment** (<code>Map<string, string></code>)  Add environment variables. __*Default*__: no environment variables are provided
   * **image** (<code>string</code>)  Use a docker image. __*Optional*__
   * **imageBuild** (<code>[DockerComposeBuild](#projen-dockercomposebuild)</code>)  Build a docker image. __*Optional*__
+  * **labels** (<code>Map<string, string></code>)  Add labels. __*Default*__: no labels are provided
   * **networks** (<code>Array<[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)></code>)  Add some networks to the service. __*Optional*__
   * **ports** (<code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code>)  Map some ports. __*Default*__: no ports are mapped
   * **volumes** (<code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code>)  Mount some volumes into the service. __*Optional*__
@@ -877,6 +879,7 @@ Name | Type | Description
 -----|------|-------------
 **dependsOn**🔹 | <code>Array<[IDockerComposeServiceName](#projen-idockercomposeservicename)></code> | Other services that this service depends on.
 **environment**🔹 | <code>Map<string, string></code> | Environment variables.
+**labels**🔹 | <code>Map<string, string></code> | Attached labels.
 **networks**🔹 | <code>Array<[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)></code> | Networks mounted in the container.
 **ports**🔹 | <code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code> | Published ports.
 **serviceName**🔹 | <code>string</code> | Name of the service.
@@ -907,6 +910,20 @@ Add an environment variable.
 
 ```ts
 addEnvironment(name: string, value: string): void
+```
+
+* **name** (<code>string</code>)  environment variable name.
+* **value** (<code>string</code>)  value of the environment variable.
+
+
+
+
+#### addLabel(name, value)🔹 <a id="projen-dockercomposeservice-addlabel"></a>
+
+Add a label.
+
+```ts
+addLabel(name: string, value: string): void
 ```
 
 * **name** (<code>string</code>)  environment variable name.
@@ -11953,6 +11970,7 @@ Name | Type | Description
 **environment**?🔹 | <code>Map<string, string></code> | Add environment variables.<br/>__*Default*__: no environment variables are provided
 **image**?🔹 | <code>string</code> | Use a docker image.<br/>__*Optional*__
 **imageBuild**?🔹 | <code>[DockerComposeBuild](#projen-dockercomposebuild)</code> | Build a docker image.<br/>__*Optional*__
+**labels**?🔹 | <code>Map<string, string></code> | Add labels.<br/>__*Default*__: no labels are provided
 **networks**?🔹 | <code>Array<[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)></code> | Add some networks to the service.<br/>__*Optional*__
 **ports**?🔹 | <code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code> | Map some ports.<br/>__*Default*__: no ports are mapped
 **volumes**?🔹 | <code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code> | Mount some volumes into the service.<br/>__*Optional*__
