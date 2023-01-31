@@ -1,4 +1,8 @@
 import { DockerComposeBuild } from "./docker-compose";
+import {
+  DockerComposeNetworkConfig,
+  IDockerComposeNetworkConfig,
+} from "./docker-compose-network";
 import { DockerComposeServicePort } from "./docker-compose-port";
 import { DockerComposeService } from "./docker-compose-service";
 import {
@@ -18,6 +22,7 @@ interface DockerComposeFileServiceSchema {
   readonly image?: string;
   readonly command?: string[];
   readonly volumes?: DockerComposeVolumeMount[];
+  readonly networks?: string[];
   readonly ports?: DockerComposeServicePort[];
   readonly environment?: Record<string, string>;
 }
@@ -46,6 +51,19 @@ export function renderDockerComposeFile(
       if (!volumeConfig[volumeName]) {
         // First volume configuration takes precedence.
         volumeConfig[volumeName] = configuration;
+      }
+    },
+  };
+  // Record network configuration
+  const networkConfig: Record<string, DockerComposeNetworkConfig> = {};
+  const networkInfo: IDockerComposeNetworkConfig = {
+    addNetworkConfiguration(
+      networkName: string,
+      configuration: DockerComposeNetworkConfig
+    ) {
+      if (!networkConfig[networkName]) {
+        // First network configuration takes precedence.
+        networkConfig[networkName] = configuration;
       }
     },
   };
@@ -81,6 +99,13 @@ export function renderDockerComposeFile(
       volumes.push(volumeBinding.bind(volumeInfo));
     }
 
+    // Give each network binding a chance to bind any necessary network
+    // configuration and provide network mount information for the service.
+    const networks: string[] = [];
+    for (const networkBinding of serviceDescription.networks ?? []) {
+      networks.push(networkBinding.bind(networkInfo));
+    }
+
     // Create and store the service configuration, taking care not to create
     // object members with undefined values.
     services[serviceName] = {
@@ -104,6 +129,7 @@ export function renderDockerComposeFile(
         : {}),
       ...(dependsOn.length > 0 ? { dependsOn } : {}),
       ...(volumes.length > 0 ? { volumes } : {}),
+      ...(networks.length > 0 ? { networks } : {}),
     };
   }
 
@@ -113,6 +139,9 @@ export function renderDockerComposeFile(
     version,
     services,
     ...(Object.keys(volumeConfig).length > 0 ? { volumes: volumeConfig } : {}),
+    ...(Object.keys(networkConfig).length > 0
+      ? { networks: networkConfig }
+      : {}),
   };
 
   // Change most keys to snake case.
@@ -149,7 +178,8 @@ function shouldDecamelizeDockerComposeKey(path: string[]) {
   // Does not decamelize user's names.
   // services.namehere:
   // volumes.namehere:
-  if (/^(services|volumes)#[^#]+$/.test(poundPath)) {
+  // networks.namehere:
+  if (/^(services|volumes|networks)#[^#]+$/.test(poundPath)) {
     return false;
   }
 

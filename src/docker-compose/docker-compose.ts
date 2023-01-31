@@ -1,4 +1,9 @@
 import {
+  DockerComposeNetworkConfig,
+  IDockerComposeNetworkBinding,
+  IDockerComposeNetworkConfig,
+} from "./docker-compose-network";
+import {
   DockerComposePortMappingOptions,
   DockerComposeProtocol,
   DockerComposeServicePort,
@@ -119,6 +124,27 @@ export class DockerCompose extends Component {
           source: volumeName,
           target: targetPath,
         };
+      },
+    };
+  }
+
+  /**
+   * Create a named network and mount it to the target path. If you use this
+   * named network in several services, the network will be shared. In this
+   * case, the network configuration of the first-provided options are used.
+   *
+   * @param networkName Name of the network
+   * @param options network configuration
+   */
+  static network(
+    networkName: string,
+    options: DockerComposeNetworkConfig = {}
+  ): IDockerComposeNetworkBinding {
+    return {
+      bind(networkInfo: IDockerComposeNetworkConfig): string {
+        networkInfo.addNetworkConfiguration(networkName, options);
+
+        return networkName;
       },
     };
   }
