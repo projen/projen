@@ -1,7 +1,6 @@
 export * from "./component";
 export * from "./dev-env";
 export * from "./dependencies";
-export * from "./docker-compose";
 export * from "./file";
 export * from "./gitattributes";
 export * from "./gitpod";
@@ -33,6 +32,7 @@ export * from "./toml";
 export * from "./version";
 export * from "./yaml";
 export * from "./xmlfile";
+export * from "./docker-compose";
 
 // export submobules
 export * as web from "./web";
