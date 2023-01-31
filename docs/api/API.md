@@ -155,6 +155,9 @@ Name|Description
 [DepsManifest](#projen-depsmanifest)|*No description*
 [DevEnvironmentOptions](#projen-devenvironmentoptions)|Base options for configuring a container-based development environment.
 [DockerComposeBuild](#projen-dockercomposebuild)|Build arguments for creating a docker image.
+[DockerComposeNetworkConfig](#projen-dockercomposenetworkconfig)|Network configuration.
+[DockerComposeNetworkIpamConfig](#projen-dockercomposenetworkipamconfig)|IPAM configuration.
+[DockerComposeNetworkIpamSubnetConfig](#projen-dockercomposenetworkipamsubnetconfig)|IPAM subnet configuration.
 [DockerComposePortMappingOptions](#projen-dockercomposeportmappingoptions)|Options for port mappings.
 [DockerComposeProps](#projen-dockercomposeprops)|Props for DockerCompose.
 [DockerComposeServiceDescription](#projen-dockercomposeservicedescription)|Description of a docker-compose.yml service.
@@ -400,6 +403,8 @@ Name|Description
 Name|Description
 ----|-----------
 [IDevEnvironment](#projen-idevenvironment)|Abstract interface for container-based development environments, such as Gitpod and GitHub Codespaces.
+[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)|Network binding information.
+[IDockerComposeNetworkConfig](#projen-idockercomposenetworkconfig)|Storage for network configuration.
 [IDockerComposeServiceName](#projen-idockercomposeservicename)|An interface providing the name of a docker compose service.
 [IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)|Volume binding information.
 [IDockerComposeVolumeConfig](#projen-idockercomposevolumeconfig)|Storage for volume configuration.
@@ -734,6 +739,7 @@ addService(serviceName: string, description: DockerComposeServiceDescription): D
   * **environment** (<code>Map<string, string></code>)  Add environment variables. __*Default*__: no environment variables are provided
   * **image** (<code>string</code>)  Use a docker image. __*Optional*__
   * **imageBuild** (<code>[DockerComposeBuild](#projen-dockercomposebuild)</code>)  Build a docker image. __*Optional*__
+  * **networks** (<code>Array<[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)></code>)  Add some networks to the service. __*Optional*__
   * **ports** (<code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code>)  Map some ports. __*Default*__: no ports are mapped
   * **volumes** (<code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code>)  Mount some volumes into the service. __*Optional*__
 
@@ -776,6 +782,34 @@ static namedVolume(volumeName: string, targetPath: string, options?: DockerCompo
 
 __Returns__:
 * <code>[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)</code>
+
+#### *static* network(networkName, options?)🔹 <a id="projen-dockercompose-network"></a>
+
+Create a named network and mount it to the target path.
+
+If you use this
+named network in several services, the network will be shared. In this
+case, the network configuration of the first-provided options are used.
+
+```ts
+static network(networkName: string, options?: DockerComposeNetworkConfig): IDockerComposeNetworkBinding
+```
+
+* **networkName** (<code>string</code>)  Name of the network.
+* **options** (<code>[DockerComposeNetworkConfig](#projen-dockercomposenetworkconfig)</code>)  network configuration.
+  * **attachable** (<code>boolean</code>)  Set to true to indicate that standalone containers can attach to this network, in addition to services. __*Default*__: unset
+  * **bridge** (<code>boolean</code>)  Set to true to indicate that the network is a bridge network. __*Default*__: unset
+  * **driver** (<code>string</code>)  Driver to use for the network. __*Default*__: value is not provided
+  * **driverOpts** (<code>json</code>)  Options for the configured driver. __*Default*__: value is not provided
+  * **external** (<code>boolean</code>)  Set to true to indicate that the network is externally created. __*Default*__: unset, indicating that docker-compose creates the network
+  * **internal** (<code>boolean</code>)  Set to true to indicate that you want to create an externally isolated overlay network. __*Default*__: unset
+  * **ipam** (<code>[DockerComposeNetworkIpamConfig](#projen-dockercomposenetworkipamconfig)</code>)  Specify custom IPAM config. __*Default*__: unset
+  * **labels** (<code>Array<string></code>)  Attach labels to the network. __*Default*__: unset
+  * **name** (<code>string</code>)  Name of the network for when the network name isn't going to work in YAML. __*Default*__: unset, indicating that docker-compose creates networks as usual
+  * **overlay** (<code>boolean</code>)  Set to true to indicate that the network is an overlay network. __*Default*__: unset
+
+__Returns__:
+* <code>[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)</code>
 
 #### *static* portMapping(publishedPort, targetPort, options?)🔹 <a id="projen-dockercompose-portmapping"></a>
 
@@ -830,6 +864,7 @@ new DockerComposeService(serviceName: string, serviceDescription: DockerComposeS
   * **environment** (<code>Map<string, string></code>)  Add environment variables. __*Default*__: no environment variables are provided
   * **image** (<code>string</code>)  Use a docker image. __*Optional*__
   * **imageBuild** (<code>[DockerComposeBuild](#projen-dockercomposebuild)</code>)  Build a docker image. __*Optional*__
+  * **networks** (<code>Array<[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)></code>)  Add some networks to the service. __*Optional*__
   * **ports** (<code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code>)  Map some ports. __*Default*__: no ports are mapped
   * **volumes** (<code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code>)  Mount some volumes into the service. __*Optional*__
 
@@ -842,6 +877,7 @@ Name | Type | Description
 -----|------|-------------
 **dependsOn**🔹 | <code>Array<[IDockerComposeServiceName](#projen-idockercomposeservicename)></code> | Other services that this service depends on.
 **environment**🔹 | <code>Map<string, string></code> | Environment variables.
+**networks**🔹 | <code>Array<[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)></code> | Networks mounted in the container.
 **ports**🔹 | <code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code> | Published ports.
 **serviceName**🔹 | <code>string</code> | Name of the service.
 **volumes**🔹 | <code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code> | Volumes mounted in the container.
@@ -875,6 +911,19 @@ addEnvironment(name: string, value: string): void
 
 * **name** (<code>string</code>)  environment variable name.
 * **value** (<code>string</code>)  value of the environment variable.
+
+
+
+
+#### addNetwork(network)🔹 <a id="projen-dockercomposeservice-addnetwork"></a>
+
+Add a network to the service.
+
+```ts
+addNetwork(network: IDockerComposeNetworkBinding): void
+```
+
+* **network** (<code>[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)</code>)  *No description*
 
 
 
@@ -11813,6 +11862,55 @@ Name | Type | Description
 
 
 
+## struct DockerComposeNetworkConfig 🔹 <a id="projen-dockercomposenetworkconfig"></a>
+
+
+Network configuration.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**attachable**?🔹 | <code>boolean</code> | Set to true to indicate that standalone containers can attach to this network, in addition to services.<br/>__*Default*__: unset
+**bridge**?🔹 | <code>boolean</code> | Set to true to indicate that the network is a bridge network.<br/>__*Default*__: unset
+**driver**?🔹 | <code>string</code> | Driver to use for the network.<br/>__*Default*__: value is not provided
+**driverOpts**?🔹 | <code>json</code> | Options for the configured driver.<br/>__*Default*__: value is not provided
+**external**?🔹 | <code>boolean</code> | Set to true to indicate that the network is externally created.<br/>__*Default*__: unset, indicating that docker-compose creates the network
+**internal**?🔹 | <code>boolean</code> | Set to true to indicate that you want to create an externally isolated overlay network.<br/>__*Default*__: unset
+**ipam**?🔹 | <code>[DockerComposeNetworkIpamConfig](#projen-dockercomposenetworkipamconfig)</code> | Specify custom IPAM config.<br/>__*Default*__: unset
+**labels**?🔹 | <code>Array<string></code> | Attach labels to the network.<br/>__*Default*__: unset
+**name**?🔹 | <code>string</code> | Name of the network for when the network name isn't going to work in YAML.<br/>__*Default*__: unset, indicating that docker-compose creates networks as usual
+**overlay**?🔹 | <code>boolean</code> | Set to true to indicate that the network is an overlay network.<br/>__*Default*__: unset
+
+
+
+## struct DockerComposeNetworkIpamConfig 🔹 <a id="projen-dockercomposenetworkipamconfig"></a>
+
+
+IPAM configuration.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**config**?🔹 | <code>Array<[DockerComposeNetworkIpamSubnetConfig](#projen-dockercomposenetworkipamsubnetconfig)></code> | A list with zero or more config blocks specifying custom IPAM configuration.<br/>__*Default*__: value is not provided
+**driver**?🔹 | <code>string</code> | Driver to use for custom IPAM config.<br/>__*Default*__: value is not provided
+
+
+
+## struct DockerComposeNetworkIpamSubnetConfig 🔹 <a id="projen-dockercomposenetworkipamsubnetconfig"></a>
+
+
+IPAM subnet configuration.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**subnet**?🔹 | <code>string</code> | Subnet in CIDR format that represents a network segment.<br/>__*Default*__: value is not provided
+
+
+
 ## struct DockerComposePortMappingOptions 🔹 <a id="projen-dockercomposeportmappingoptions"></a>
 
 
@@ -11855,6 +11953,7 @@ Name | Type | Description
 **environment**?🔹 | <code>Map<string, string></code> | Add environment variables.<br/>__*Default*__: no environment variables are provided
 **image**?🔹 | <code>string</code> | Use a docker image.<br/>__*Optional*__
 **imageBuild**?🔹 | <code>[DockerComposeBuild](#projen-dockercomposebuild)</code> | Build a docker image.<br/>__*Optional*__
+**networks**?🔹 | <code>Array<[IDockerComposeNetworkBinding](#projen-idockercomposenetworkbinding)></code> | Add some networks to the service.<br/>__*Optional*__
 **ports**?🔹 | <code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code> | Map some ports.<br/>__*Default*__: no ports are mapped
 **volumes**?🔹 | <code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code> | Mount some volumes into the service.<br/>__*Optional*__
 
@@ -12062,6 +12161,62 @@ addVscodeExtensions(...extensions: string[]): void
 ```
 
 * **extensions** (<code>string</code>)  The extension IDs.
+
+
+
+
+
+
+## interface IDockerComposeNetworkBinding 🔹 <a id="projen-idockercomposenetworkbinding"></a>
+
+__Obtainable from__: [DockerCompose](#projen-dockercompose).[network](#projen-dockercompose#projen-dockercompose-network)()
+
+Network binding information.
+### Methods
+
+
+#### bind(networkConfig)🔹 <a id="projen-idockercomposenetworkbinding-bind"></a>
+
+Binds the requested network to the docker-compose network configuration and provide mounting instructions for synthesis.
+
+```ts
+bind(networkConfig: IDockerComposeNetworkConfig): string
+```
+
+* **networkConfig** (<code>[IDockerComposeNetworkConfig](#projen-idockercomposenetworkconfig)</code>)  the network configuration.
+
+__Returns__:
+* <code>string</code>
+
+
+
+## interface IDockerComposeNetworkConfig 🔹 <a id="projen-idockercomposenetworkconfig"></a>
+
+
+Storage for network configuration.
+### Methods
+
+
+#### addNetworkConfiguration(networkName, configuration)🔹 <a id="projen-idockercomposenetworkconfig-addnetworkconfiguration"></a>
+
+Add network configuration to the repository.
+
+```ts
+addNetworkConfiguration(networkName: string, configuration: DockerComposeNetworkConfig): void
+```
+
+* **networkName** (<code>string</code>)  *No description*
+* **configuration** (<code>[DockerComposeNetworkConfig](#projen-dockercomposenetworkconfig)</code>)  *No description*
+  * **attachable** (<code>boolean</code>)  Set to true to indicate that standalone containers can attach to this network, in addition to services. __*Default*__: unset
+  * **bridge** (<code>boolean</code>)  Set to true to indicate that the network is a bridge network. __*Default*__: unset
+  * **driver** (<code>string</code>)  Driver to use for the network. __*Default*__: value is not provided
+  * **driverOpts** (<code>json</code>)  Options for the configured driver. __*Default*__: value is not provided
+  * **external** (<code>boolean</code>)  Set to true to indicate that the network is externally created. __*Default*__: unset, indicating that docker-compose creates the network
+  * **internal** (<code>boolean</code>)  Set to true to indicate that you want to create an externally isolated overlay network. __*Default*__: unset
+  * **ipam** (<code>[DockerComposeNetworkIpamConfig](#projen-dockercomposenetworkipamconfig)</code>)  Specify custom IPAM config. __*Default*__: unset
+  * **labels** (<code>Array<string></code>)  Attach labels to the network. __*Default*__: unset
+  * **name** (<code>string</code>)  Name of the network for when the network name isn't going to work in YAML. __*Default*__: unset, indicating that docker-compose creates networks as usual
+  * **overlay** (<code>boolean</code>)  Set to true to indicate that the network is an overlay network. __*Default*__: unset
 
 
 

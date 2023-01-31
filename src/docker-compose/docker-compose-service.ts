@@ -1,4 +1,5 @@
 import { DockerCompose, DockerComposeBuild } from "./docker-compose";
+import { IDockerComposeNetworkBinding } from "./docker-compose-network";
 import {
   DockerComposePortMappingOptions,
   DockerComposeServicePort,
@@ -50,6 +51,11 @@ export class DockerComposeService implements IDockerComposeServiceName {
   public readonly volumes: IDockerComposeVolumeBinding[];
 
   /**
+   * Networks mounted in the container.
+   */
+  public readonly networks: IDockerComposeNetworkBinding[];
+
+  /**
    * Published ports.
    */
   public readonly ports: DockerComposeServicePort[];
@@ -78,6 +84,7 @@ export class DockerComposeService implements IDockerComposeServiceName {
     this.imageBuild = serviceDescription.imageBuild;
     this.dependsOn = serviceDescription.dependsOn ?? [];
     this.volumes = serviceDescription.volumes ?? [];
+    this.networks = serviceDescription.networks ?? [];
     this.ports = serviceDescription.ports ?? [];
     this.environment = serviceDescription.environment ?? {};
   }
@@ -122,6 +129,14 @@ export class DockerComposeService implements IDockerComposeServiceName {
   public addVolume(volume: IDockerComposeVolumeBinding) {
     this.volumes.push(volume);
   }
+
+  /**
+   * Add a network to the service.
+   * @param network
+   */
+  public addNetwork(network: IDockerComposeNetworkBinding) {
+    this.networks.push(network);
+  }
 }
 
 /**
@@ -161,6 +176,12 @@ export interface DockerComposeServiceDescription {
    * @see DockerCompose.namedVolume() to create & mount a named volume
    */
   readonly volumes?: IDockerComposeVolumeBinding[];
+
+  /**
+   * Add some networks to the service.
+   * @see DockerCompose.network() to create & mount a named network
+   */
+  readonly networks?: IDockerComposeNetworkBinding[];
 
   /**
    * Map some ports.
