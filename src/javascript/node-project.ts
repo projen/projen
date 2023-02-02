@@ -32,8 +32,8 @@ import { License } from "../license";
 import {
   isAwsCodeArtifactRegistry,
   Publisher,
-  Release,
-  ReleaseProjectOptions,
+  ReleaseWorkflow,
+  ReleaseWorkflowProjectOptions,
   NpmPublishOptions,
   CodeArtifactAuthProvider as ReleaseCodeArtifactAuthProvider,
   CodeArtifactAuthProvider,
@@ -47,7 +47,7 @@ const PROJEN_SCRIPT = "projen";
 export interface NodeProjectOptions
   extends GitHubProjectOptions,
     NodePackageOptions,
-    ReleaseProjectOptions {
+    ReleaseWorkflowProjectOptions {
   /**
    * License copyright owner.
    *
@@ -362,7 +362,7 @@ export class NodeProject extends GitHubProject {
   /**
    * Release management.
    */
-  public readonly release?: Release;
+  public readonly release?: ReleaseWorkflow;
 
   /**
    * Minimum node.js version required by this package.
@@ -550,7 +550,7 @@ export class NodeProject extends GitHubProject {
     if (release) {
       this.addDevDeps(Version.STANDARD_VERSION);
 
-      this.release = new Release(this, {
+      this.release = new ReleaseWorkflow(this, {
         versionFile: "package.json", // this is where "version" is set after bump
         task: this.buildTask,
         branch: options.defaultReleaseBranch ?? "main",

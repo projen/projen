@@ -1,4 +1,4 @@
-import { BranchOptions } from "./release";
+import { BranchOptions } from "./release-workflow";
 import { Component } from "../component";
 import {
   BUILD_ARTIFACT_NAME,

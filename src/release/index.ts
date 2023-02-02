@@ -1,3 +1,3 @@
-export * from "./release";
+export * from "./release-workflow";
 export * from "./publisher";
 export * from "./release-trigger";

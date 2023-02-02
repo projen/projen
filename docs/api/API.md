@@ -122,8 +122,8 @@ Name|Description
 [python.Setuptools](#projen-python-setuptools)|Manages packaging through setuptools with a setup.py script.
 [python.Venv](#projen-python-venv)|Manages a virtual environment through the Python venv module.
 [release.Publisher](#projen-release-publisher)|Implements GitHub jobs for publishing modules to package managers.
-[release.Release](#projen-release-release)|Manages releases (currently through GitHub workflows).
 [release.ReleaseTrigger](#projen-release-releasetrigger)|Used to manage release strategies.
+[release.ReleaseWorkflow](#projen-release-releaseworkflow)|Manages releases (currently through GitHub workflows).
 [typescript.Projenrc](#projen-typescript-projenrc)|Sets up a typescript project to use TypeScript for projenrc.
 [typescript.TypeScriptAppProject](#projen-typescript-typescriptappproject)|TypeScript app.
 [typescript.TypeScriptLibraryProject](#projen-typescript-typescriptlibraryproject)|*No description*
@@ -372,8 +372,8 @@ Name|Description
 [release.NugetPublishOptions](#projen-release-nugetpublishoptions)|Options for NuGet releases.
 [release.PublisherOptions](#projen-release-publisheroptions)|Options for `Publisher`.
 [release.PyPiPublishOptions](#projen-release-pypipublishoptions)|Options for PyPI release.
-[release.ReleaseOptions](#projen-release-releaseoptions)|Options for `Release`.
-[release.ReleaseProjectOptions](#projen-release-releaseprojectoptions)|Project options for release.
+[release.ReleaseWorkflowOptions](#projen-release-releaseworkflowoptions)|Options for `Release`.
+[release.ReleaseWorkflowProjectOptions](#projen-release-releaseworkflowprojectoptions)|Project options for release.
 [release.ScheduledReleaseOptions](#projen-release-scheduledreleaseoptions)|*No description*
 [typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)|*No description*
 [typescript.TypeScriptLibraryProjectOptions](#projen-typescript-typescriptlibraryprojectoptions)|*No description*
@@ -8464,7 +8464,7 @@ Name | Type | Description
 **npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
 **prettier**?🔹 | <code>[javascript.Prettier](#projen-javascript-prettier)</code> | __*Optional*__
 **publisher**?⚠️ | <code>[release.Publisher](#projen-release-publisher)</code> | Package publisher.<br/>__*Optional*__
-**release**?🔹 | <code>[release.Release](#projen-release-release)</code> | Release management.<br/>__*Optional*__
+**release**?🔹 | <code>[release.ReleaseWorkflow](#projen-release-releaseworkflow)</code> | Release management.<br/>__*Optional*__
 **upgradeWorkflow**?🔹 | <code>[javascript.UpgradeDependencies](#projen-javascript-upgradedependencies)</code> | The upgrade workflow.<br/>__*Optional*__
 
 ### Methods
@@ -9892,134 +9892,6 @@ publishToPyPi(options?: PyPiPublishOptions): void
 
 
 
-## class Release 🔹 <a id="projen-release-release"></a>
-
-Manages releases (currently through GitHub workflows).
-
-By default, no branches are released. To add branches, call `addBranch()`.
-
-__Submodule__: release
-
-__Extends__: [Component](#projen-component)
-
-### Initializer
-
-
-
-
-```ts
-new release.Release(project: GitHubProject, options: ReleaseOptions)
-```
-
-* **project** (<code>[github.GitHubProject](#projen-github-githubproject)</code>)  *No description*
-* **options** (<code>[release.ReleaseOptions](#projen-release-releaseoptions)</code>)  *No description*
-  * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
-  * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
-  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
-  * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
-  * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
-  * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
-  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
-  * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
-  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
-  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
-  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
-  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
-  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
-  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
-  * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
-  * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
-  * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
-  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
-  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
-  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
-  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. 
-  * **branch** (<code>string</code>)  The default branch name to release from. 
-  * **task** (<code>[Task](#projen-task)</code>)  The task to execute in order to create the release artifacts. 
-  * **versionFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
-  * **additionalPermissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Additional permission that are required for the job. __*Default*__: no additional permission
-  * **githubRelease** (<code>boolean</code>)  Create a GitHub release for each release. __*Default*__: true
-  * **workflowNodeVersion** (<code>string</code>)  Node version to setup in GitHub workflows if any node-based CLI utilities are needed. __*Default*__: 14.x
-
-
-
-### Properties
-
-
-Name | Type | Description 
------|------|-------------
-**artifactsDirectory**🔹 | <code>string</code> | Location of build artifacts.
-**branches**🔹 | <code>Array<string></code> | Retrieve all release branch names.
-**publisher**🔹 | <code>[release.Publisher](#projen-release-publisher)</code> | Package publisher.
-*static* **ANTI_TAMPER_CMD**🔹 | <code>string</code> | <span></span>
-
-### Methods
-
-
-#### addBranch(branch, options)🔹 <a id="projen-release-release-addbranch"></a>
-
-Adds a release branch.
-
-It is a git branch from which releases are published. If a project has more than one release
-branch, we require that `majorVersion` is also specified for the primary branch in order to
-ensure branches always release the correct version.
-
-```ts
-addBranch(branch: string, options: BranchOptions): void
-```
-
-* **branch** (<code>string</code>)  The branch to monitor (e.g. `main`, `v2.x`).
-* **options** (<code>[release.BranchOptions](#projen-release-branchoptions)</code>)  Branch definition.
-  * **majorVersion** (<code>number</code>)  The major versions released from this branch. 
-  * **minMajorVersion** (<code>number</code>)  The minimum major version to release. __*Optional*__
-  * **npmDistTag** (<code>string</code>)  The npm distribution tag to use for this branch. __*Default*__: "latest"
-  * **prerelease** (<code>string</code>)  Bump the version as a pre-release tag. __*Default*__: normal releases
-  * **tagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
-  * **workflowName** (<code>string</code>)  The name of the release workflow. __*Default*__: "release-BRANCH"
-
-
-
-
-#### addJobs(jobs)🔹 <a id="projen-release-release-addjobs"></a>
-
-Adds jobs to all release workflows.
-
-```ts
-addJobs(jobs: Map<string, Job>): void
-```
-
-* **jobs** (<code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>)  The jobs to add (name => job).
-
-
-
-
-#### preSynthesize()🔹 <a id="projen-release-release-presynthesize"></a>
-
-Called before synthesis.
-
-```ts
-preSynthesize(): void
-```
-
-
-
-
-
-#### *static* of(project)🔹 <a id="projen-release-release-of"></a>
-
-Returns the `Release` component of a project or `undefined` if the project does not have a Release component.
-
-```ts
-static of(project: GitHubProject): Release
-```
-
-* **project** (<code>[github.GitHubProject](#projen-github-githubproject)</code>)  *No description*
-
-__Returns__:
-* <code>[release.Release](#projen-release-release)</code>
-
-
-
 ## class ReleaseTrigger 🔹 <a id="projen-release-releasetrigger"></a>
 
 Used to manage release strategies.
@@ -10102,6 +9974,134 @@ static scheduled(options: ScheduledReleaseOptions): ReleaseTrigger
 
 __Returns__:
 * <code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>
+
+
+
+## class ReleaseWorkflow 🔹 <a id="projen-release-releaseworkflow"></a>
+
+Manages releases (currently through GitHub workflows).
+
+By default, no branches are released. To add branches, call `addBranch()`.
+
+__Submodule__: release
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new release.ReleaseWorkflow(project: GitHubProject, options: ReleaseWorkflowOptions)
+```
+
+* **project** (<code>[github.GitHubProject](#projen-github-githubproject)</code>)  *No description*
+* **options** (<code>[release.ReleaseWorkflowOptions](#projen-release-releaseworkflowoptions)</code>)  *No description*
+  * **jsiiReleaseVersion** (<code>string</code>)  Version requirement of `publib` which is used to publish modules to npm. __*Default*__: "latest"
+  * **majorVersion** (<code>number</code>)  Major version to release from the default branch. __*Default*__: Major version is not enforced.
+  * **minMajorVersion** (<code>number</code>)  Minimal Major version to release. __*Default*__: No minimum version is being enforced
+  * **npmDistTag** (<code>string</code>)  The npmDistTag to use when publishing from the default branch. __*Default*__: "latest"
+  * **postBuildSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  Steps to execute after build as part of the release workflow. __*Default*__: []
+  * **prerelease** (<code>string</code>)  Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre"). __*Default*__: normal semantic versions
+  * **publishDryRun** (<code>boolean</code>)  Instead of actually publishing to package managers, just print the publishing command. __*Default*__: false
+  * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
+  * **releaseBranches** (<code>Map<string, [release.BranchOptions](#projen-release-branchoptions)></code>)  Defines additional release branches. __*Default*__: no additional branches are used for release. you can use `addBranch()` to add additional branches.
+  * **releaseEveryCommit** (<code>boolean</code>)  Automatically release new versions every commit to one of branches in `releaseBranches`. __*Default*__: true
+  * **releaseFailureIssue** (<code>boolean</code>)  Create a github issue on every failed publishing task. __*Default*__: false
+  * **releaseFailureIssueLabel** (<code>string</code>)  The label to apply to issues indicating publish failures. __*Default*__: "failed-release"
+  * **releaseSchedule** (<code>string</code>)  CRON schedule to trigger new releases. __*Default*__: no scheduled releases
+  * **releaseTagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: "v"
+  * **releaseTrigger** (<code>[release.ReleaseTrigger](#projen-release-releasetrigger)</code>)  The release trigger to use. __*Default*__: Continuous releases (`ReleaseTrigger.continuous()`)
+  * **releaseWorkflowName** (<code>string</code>)  The name of the default release workflow. __*Default*__: "Release"
+  * **releaseWorkflowSetupSteps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A set of workflow steps to execute in order to setup the workflow container. __*Optional*__
+  * **versionrcOptions** (<code>Map<string, any></code>)  Custom configuration used when creating changelog with standard-version package. __*Default*__: standard configuration applicable for GitHub repositories
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
+  * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **artifactsDirectory** (<code>string</code>)  A directory which will contain build artifacts. 
+  * **branch** (<code>string</code>)  The default branch name to release from. 
+  * **task** (<code>[Task](#projen-task)</code>)  The task to execute in order to create the release artifacts. 
+  * **versionFile** (<code>string</code>)  A name of a .json file to set the `version` field in after a bump. 
+  * **additionalPermissions** (<code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code>)  Additional permission that are required for the job. __*Default*__: no additional permission
+  * **githubRelease** (<code>boolean</code>)  Create a GitHub release for each release. __*Default*__: true
+  * **workflowNodeVersion** (<code>string</code>)  Node version to setup in GitHub workflows if any node-based CLI utilities are needed. __*Default*__: 14.x
+
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**artifactsDirectory**🔹 | <code>string</code> | Location of build artifacts.
+**branches**🔹 | <code>Array<string></code> | Retrieve all release branch names.
+**publisher**🔹 | <code>[release.Publisher](#projen-release-publisher)</code> | Package publisher.
+*static* **ANTI_TAMPER_CMD**🔹 | <code>string</code> | <span></span>
+
+### Methods
+
+
+#### addBranch(branch, options)🔹 <a id="projen-release-releaseworkflow-addbranch"></a>
+
+Adds a release branch.
+
+It is a git branch from which releases are published. If a project has more than one release
+branch, we require that `majorVersion` is also specified for the primary branch in order to
+ensure branches always release the correct version.
+
+```ts
+addBranch(branch: string, options: BranchOptions): void
+```
+
+* **branch** (<code>string</code>)  The branch to monitor (e.g. `main`, `v2.x`).
+* **options** (<code>[release.BranchOptions](#projen-release-branchoptions)</code>)  Branch definition.
+  * **majorVersion** (<code>number</code>)  The major versions released from this branch. 
+  * **minMajorVersion** (<code>number</code>)  The minimum major version to release. __*Optional*__
+  * **npmDistTag** (<code>string</code>)  The npm distribution tag to use for this branch. __*Default*__: "latest"
+  * **prerelease** (<code>string</code>)  Bump the version as a pre-release tag. __*Default*__: normal releases
+  * **tagPrefix** (<code>string</code>)  Automatically add the given prefix to release tags. Useful if you are releasing on multiple branches with overlapping version numbers. __*Default*__: no prefix
+  * **workflowName** (<code>string</code>)  The name of the release workflow. __*Default*__: "release-BRANCH"
+
+
+
+
+#### addJobs(jobs)🔹 <a id="projen-release-releaseworkflow-addjobs"></a>
+
+Adds jobs to all release workflows.
+
+```ts
+addJobs(jobs: Map<string, Job>): void
+```
+
+* **jobs** (<code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>)  The jobs to add (name => job).
+
+
+
+
+#### preSynthesize()🔹 <a id="projen-release-releaseworkflow-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
+
+
+
+
+#### *static* of(project)🔹 <a id="projen-release-releaseworkflow-of"></a>
+
+Returns the `Release` component of a project or `undefined` if the project does not have a Release component.
+
+```ts
+static of(project: GitHubProject): ReleaseWorkflow
+```
+
+* **project** (<code>[github.GitHubProject](#projen-github-githubproject)</code>)  *No description*
+
+__Returns__:
+* <code>[release.ReleaseWorkflow](#projen-release-releaseworkflow)</code>
 
 
 
@@ -17652,7 +17652,7 @@ Name | Type | Description
 
 
 
-## struct ReleaseOptions 🔹 <a id="projen-release-releaseoptions"></a>
+## struct ReleaseWorkflowOptions 🔹 <a id="projen-release-releaseworkflowoptions"></a>
 
 
 Options for `Release`.
@@ -17691,7 +17691,7 @@ Name | Type | Description
 
 
 
-## struct ReleaseProjectOptions 🔹 <a id="projen-release-releaseprojectoptions"></a>
+## struct ReleaseWorkflowProjectOptions 🔹 <a id="projen-release-releaseworkflowprojectoptions"></a>
 
 
 Project options for release.

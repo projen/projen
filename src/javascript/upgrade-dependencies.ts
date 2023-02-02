@@ -11,7 +11,7 @@ import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
 import { ContainerOptions, JobStep } from "../github/workflows-model";
 import { NodeProject } from "../javascript";
-import { Release } from "../release";
+import { ReleaseWorkflow } from "../release";
 import { Task } from "../task";
 import { TaskStep } from "../task-model";
 
@@ -149,8 +149,8 @@ export class UpgradeDependencies extends Component {
             this.createWorkflow(this.upgradeTask, project.github, branch)
           );
         }
-      } else if (Release.of(project)) {
-        const release = Release.of(project)!;
+      } else if (ReleaseWorkflow.of(project)) {
+        const release = ReleaseWorkflow.of(project)!;
         release._forEachBranch((branch: string) => {
           this.workflows.push(
             this.createWorkflow(this.upgradeTask, project.github!, branch)
