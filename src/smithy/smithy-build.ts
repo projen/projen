@@ -1,4 +1,5 @@
 import { Component } from "../component";
+import { MavenRepository } from "../java";
 import { JsonFile } from "../json";
 import { Project } from "../project";
 
@@ -22,6 +23,23 @@ export type ProjectionKey = string;
 export type ProjectionsType = Record<ProjectionKey, ProjectionValue>;
 export type PluginKey = string;
 export type PluginsType = Record<PluginKey, PluginValue>;
+
+/**
+ * Maven repository definition for a smithy build file
+ */
+export type SmithyMavenRepository = Partial<MavenRepository> &
+  Pick<MavenRepository, "url">;
+
+export interface SmithyMavenConfig {
+  /**
+   * List of smithy dependencies, for example ["software.amazon.smithy:smithy-cli:1.27.2"]
+   */
+  readonly dependencies: string[];
+  /**
+   * List of maven repositories for smithy dependencies
+   */
+  readonly repositories: SmithyMavenRepository[];
+}
 
 /**
  * Options for `SmithyBuild`
@@ -51,6 +69,12 @@ export interface SmithyBuildOptions extends SmithyCommon {
    * @default - no ignoreMissingPlugins set in the smithy-build.json file
    */
   readonly ignoreMissingPlugins?: boolean;
+  /**
+   * Maven configuration, used to declare dependencies for the smithy vs-code plugin
+   * @see https://github.com/awslabs/smithy-vscode/blob/main/README.md#authoring-a-model
+   * @default - no maven configuration set in the smithy-build.json file
+   */
+  readonly maven?: SmithyMavenConfig;
 }
 
 /**
@@ -96,6 +120,11 @@ export class SmithyBuild extends Component {
    * @default - no plugins
    */
   private _plugins?: PluginsType;
+  /**
+   * Maven configuration for the Smithy vs-code extension
+   * https://github.com/awslabs/smithy-vscode/blob/main/README.md#authoring-a-model
+   */
+  private _maven?: SmithyMavenConfig;
 
   private readonly manifest: any;
 
@@ -108,6 +137,7 @@ export class SmithyBuild extends Component {
     this._projections = options.projections;
     this._plugins = options.plugins;
     this.ignoreMissingPlugins = options.ignoreMissingPlugins;
+    this._maven = options.maven;
 
     this.manifest = {
       version: this.version,
@@ -116,6 +146,7 @@ export class SmithyBuild extends Component {
       projections: () => this._projections,
       plugins: () => this._plugins,
       ignoreMissingPlugins: this.ignoreMissingPlugins,
+      maven: () => this._maven,
     };
 
     new JsonFile(this.project, "smithy-build.json", {
@@ -171,5 +202,25 @@ export class SmithyBuild extends Component {
     for (const [k, v] of Object.entries(plugins)) {
       this._plugins ? (this._plugins[k] = v) : (this._plugins = { [k]: v });
     }
+  }
+
+  /**
+   * Add maven dependencies to the smithy build for the vs-code plugin
+   */
+  public addMavenDependencies(...dependencies: string[]) {
+    this._maven = {
+      dependencies: [...(this._maven?.dependencies ?? []), ...dependencies],
+      repositories: this._maven?.repositories ?? [],
+    };
+  }
+
+  /**
+   * Add maven repositories to the smithy build for the vs-code plugin
+   */
+  public addMavenRepositories(...repositories: SmithyMavenRepository[]) {
+    this._maven = {
+      dependencies: this._maven?.dependencies ?? [],
+      repositories: [...(this._maven?.repositories ?? []), ...repositories],
+    };
   }
 }
