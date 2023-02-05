@@ -250,10 +250,10 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
   readonly workflowNodeVersion?: string;
 
   /**
-   * Additional permission that are required for the job
-   * @default - no additional permission
+   * Permission that are required for the job
+   * @default `{contents: 'write'}`
    */
-  readonly additionalPermissions?: JobPermissions;
+  readonly workflowPermissions?: JobPermissions;
 }
 
 /**
@@ -290,7 +290,7 @@ export class Release extends Component {
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
   private readonly workflowRunsOn?: string[];
-  private readonly additionalPermissions: JobPermissions;
+  private readonly workflowPermissions: JobPermissions;
 
   private readonly _branchHooks: BranchHook[];
 
@@ -317,7 +317,9 @@ export class Release extends Component {
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
     this.workflowRunsOn = options.workflowRunsOn;
-    this.additionalPermissions = options.additionalPermissions ?? {};
+    this.workflowPermissions = options.workflowPermissions ?? {
+      contents: JobPermission.WRITE,
+    };
     this._branchHooks = [];
 
     /**
@@ -638,10 +640,7 @@ export class Release extends Component {
         env: {
           CI: "true",
         },
-        permissions: {
-          ...this.additionalPermissions,
-          contents: JobPermission.WRITE,
-        },
+        permissions: this.workflowPermissions,
         checkoutWith: {
           // we must use 'fetch-depth=0' in order to fetch all tags
           // otherwise tags are not checked out

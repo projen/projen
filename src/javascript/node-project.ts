@@ -20,7 +20,12 @@ import {
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { secretToString } from "../github/util";
-import { JobPermission, JobStep, Triggers } from "../github/workflows-model";
+import {
+  JobPermission,
+  JobPermissions,
+  JobStep,
+  Triggers,
+} from "../github/workflows-model";
 import { IgnoreFile } from "../ignore-file";
 import {
   Prettier,
@@ -520,6 +525,11 @@ export class NodeProject extends GitHubProject {
       options.codeArtifactOptions?.authProvider ===
         CodeArtifactAuthProvider.GITHUB_OIDC;
 
+    const workflowPermissions: JobPermissions = {
+      contents: JobPermission.WRITE,
+      idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
+    };
+
     if (buildEnabled && this.github) {
       this.buildWorkflow = new BuildWorkflow(this, {
         buildTask: this.buildTask,
@@ -533,9 +543,7 @@ export class NodeProject extends GitHubProject {
         postBuildSteps: options.postBuildSteps,
         runsOn: options.workflowRunsOn,
         workflowTriggers: options.buildWorkflowTriggers,
-        additionalPermissions: {
-          idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
-        },
+        workflowPermissions,
       });
 
       this.buildWorkflow.addPostBuildSteps(
@@ -567,9 +575,7 @@ export class NodeProject extends GitHubProject {
         ],
 
         workflowNodeVersion: this.nodeVersion,
-        additionalPermissions: {
-          idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
-        },
+        workflowPermissions,
       });
 
       this.publisher = this.release.publisher;

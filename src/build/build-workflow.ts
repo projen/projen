@@ -98,10 +98,10 @@ export interface BuildWorkflowOptions {
   readonly workflowTriggers?: Triggers;
 
   /**
-   * Additional permission that are required for the job
-   * @default - no additional permission
+   * Permission that are required for the job
+   * @default `{contents: 'write'}`
    */
-  readonly additionalPermissions?: JobPermissions;
+  readonly workflowPermissions?: JobPermissions;
 }
 
 export class BuildWorkflow extends Component {
@@ -163,8 +163,7 @@ export class BuildWorkflow extends Component {
         CI: "true",
         ...options.env,
       },
-      permissions: {
-        ...options.additionalPermissions,
+      permissions: options.workflowPermissions ?? {
         contents: JobPermission.WRITE,
       },
       steps: (() => this.renderBuildSteps()) as any,
