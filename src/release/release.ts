@@ -25,7 +25,7 @@ type BranchHook = (branch: string) => void;
 /**
  * Project options for release.
  */
-export interface ReleaseWorkflowProjectOptions {
+export interface ReleaseProjectOptions {
   /**
    * Automatically release new versions every commit to one of branches in `releaseBranches`.
    *
@@ -201,7 +201,7 @@ export interface ReleaseWorkflowProjectOptions {
 /**
  * Options for `Release`.
  */
-export interface ReleaseWorkflowOptions extends ReleaseWorkflowProjectOptions {
+export interface ReleaseOptions extends ReleaseProjectOptions {
   /**
    * The task to execute in order to create the release artifacts. Artifacts are
    * expected to reside under `artifactsDirectory` (defaults to `dist/`) once
@@ -261,16 +261,15 @@ export interface ReleaseWorkflowOptions extends ReleaseWorkflowProjectOptions {
  *
  * By default, no branches are released. To add branches, call `addBranch()`.
  */
-export class ReleaseWorkflow extends Component {
+export class Release extends Component {
   public static readonly ANTI_TAMPER_CMD =
     "git diff --ignore-space-at-eol --exit-code";
   /**
    * Returns the `Release` component of a project or `undefined` if the project
    * does not have a Release component.
    */
-  public static of(project: GitHubProject): ReleaseWorkflow | undefined {
-    const isRelease = (c: Component): c is ReleaseWorkflow =>
-      c instanceof ReleaseWorkflow;
+  public static of(project: GitHubProject): Release | undefined {
+    const isRelease = (c: Component): c is Release => c instanceof Release;
     return project.components.find(isRelease);
   }
 
@@ -300,7 +299,7 @@ export class ReleaseWorkflow extends Component {
    */
   public readonly artifactsDirectory: string;
 
-  constructor(project: GitHubProject, options: ReleaseWorkflowOptions) {
+  constructor(project: GitHubProject, options: ReleaseOptions) {
     super(project);
 
     if (Array.isArray(options.releaseBranches)) {
@@ -563,7 +562,7 @@ export class ReleaseWorkflow extends Component {
 
     // anti-tamper check (fails if there were changes to committed files)
     // this will identify any non-committed files generated during build (e.g. test snapshots)
-    releaseTask.exec(ReleaseWorkflow.ANTI_TAMPER_CMD);
+    releaseTask.exec(Release.ANTI_TAMPER_CMD);
 
     if (this.releaseTrigger.isManual) {
       const publishTask = this.publisher.publishToGit({
