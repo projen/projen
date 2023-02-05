@@ -2,7 +2,7 @@ import * as YAML from "yaml";
 import { JobPermission } from "../../src/github/workflows-model";
 import {
   Publisher,
-  ReleaseWorkflow,
+  Release,
   ReleaseTrigger,
   CodeArtifactAuthProvider,
 } from "../../src/release";
@@ -13,7 +13,7 @@ test("minimal", () => {
   const project = new TestProject();
 
   // WHEN
-  new ReleaseWorkflow(project, {
+  new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -30,7 +30,7 @@ test("with major version filter", () => {
   const project = new TestProject();
 
   // WHEN
-  new ReleaseWorkflow(project, {
+  new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "10.x",
@@ -51,7 +51,7 @@ test("with release tag prefix", () => {
   const project = new TestProject();
 
   // WHEN
-  new ReleaseWorkflow(project, {
+  new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "10.x",
@@ -72,7 +72,7 @@ test("addBranch() can be used for additional release branches", () => {
   // GIVEN
   const project = new TestProject();
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -97,7 +97,7 @@ test('if multiple branches are defined, the default branch requires a "majorVers
   // GIVEN
   const project = new TestProject();
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -118,7 +118,7 @@ test("publisher (defaults)", () => {
   // GIVEN
   const project = new TestProject();
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -143,7 +143,7 @@ test("publishers are added as jobs to all release workflows", () => {
   // GIVEN
   const project = new TestProject();
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -187,7 +187,7 @@ test("manual releases do not generate a release workflow", () => {
   const project = new TestProject();
 
   // WHEN
-  new ReleaseWorkflow(project, {
+  new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -207,7 +207,7 @@ test("releaseSchedule schedules releases", () => {
   const project = new TestProject();
 
   // WHEN
-  new ReleaseWorkflow(project, {
+  new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -232,7 +232,7 @@ test("manual release publish happens after anti-tamper check", () => {
   const project = new TestProject();
 
   // WHEN
-  new ReleaseWorkflow(project, {
+  new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -244,7 +244,7 @@ test("manual release publish happens after anti-tamper check", () => {
   const outdir = synthSnapshot(project);
   const steps: Object[] = outdir[".projen/tasks.json"].tasks.release.steps;
   const antiTamperStepIndex = steps.findIndex(
-    (obj: any) => obj.exec === ReleaseWorkflow.ANTI_TAMPER_CMD
+    (obj: any) => obj.exec === Release.ANTI_TAMPER_CMD
   );
   const publishGitStepIndex = steps.findIndex(
     (obj: any) => obj.spawn === Publisher.PUBLISH_GIT_TASK_NAME
@@ -255,7 +255,7 @@ test("manual release publish happens after anti-tamper check", () => {
 test("manual release with custom git-push", () => {
   // GIVEN
   const project = new TestProject();
-  new ReleaseWorkflow(project, {
+  new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -283,7 +283,7 @@ test("addJobs() can be used to add arbitrary jobs to the release workflows", () 
   // GIVEN
   const project = new TestProject();
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -316,7 +316,7 @@ test("majorVersion can be 0", () => {
   const project = new TestProject();
 
   // WHEN
-  new ReleaseWorkflow(project, {
+  new Release(project, {
     task: project.buildTask,
     versionFile: "goo.json",
     branch: "main",
@@ -336,7 +336,7 @@ test("minMajorVersion can be 1", () => {
   const project = new TestProject();
 
   // WHEN
-  new ReleaseWorkflow(project, {
+  new Release(project, {
     task: project.buildTask,
     versionFile: "goo.json",
     branch: "main",
@@ -355,7 +355,7 @@ test("prerelease can be specified per branch", () => {
   const project = new TestProject();
 
   // WHEN
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "goo.json",
     branch: "main",
@@ -378,7 +378,7 @@ test("releaseBranches can be use to define additional branches", () => {
   const project = new TestProject();
 
   // WHEN
-  new ReleaseWorkflow(project, {
+  new Release(project, {
     task: project.buildTask,
     versionFile: "goo.json",
     branch: "main",
@@ -400,7 +400,7 @@ test("releaseBranches can be defined with different tag prefixes to the same maj
   const project = new TestProject();
 
   // WHEN
-  new ReleaseWorkflow(project, {
+  new Release(project, {
     task: project.buildTask,
     versionFile: "goo.json",
     branch: "firefox",
@@ -425,7 +425,7 @@ test("releaseBranches as an array throws an error since type was changed", () =>
   // WHEN
   expect(
     () =>
-      new ReleaseWorkflow(project, {
+      new Release(project, {
         task: project.buildTask,
         versionFile: "goo.json",
         branch: "main",
@@ -440,7 +440,7 @@ test("github packages are supported by npm, maven, and nuget", () => {
   // GIVEN
   const project = new TestProject();
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -467,7 +467,7 @@ test("github packages are supported by npm, maven, and nuget", () => {
 test("can enable issue creation on failed releases with a custom label", () => {
   const project = new TestProject();
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -490,7 +490,7 @@ test("AWS CodeArtifact is supported by npm", () => {
   // GIVEN
   const project = new TestProject();
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -513,7 +513,7 @@ test("AWS CodeArtifact is supported by npm with AWS access keys", () => {
   // GIVEN
   const project = new TestProject();
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -541,7 +541,7 @@ test("AWS CodeArtifact is supported with role to assume", () => {
   const project = new TestProject();
   const roleArn = "role-arn";
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -568,7 +568,7 @@ test("AWS CodeArtifact is supported with Github OIDC auth", () => {
   const project = new TestProject();
   const roleArn = "role-arn";
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -594,7 +594,7 @@ test("AWS CodeArtifact is supported with Github OIDC auth", () => {
 test("can be modified with escape hatches", () => {
   // GIVEN
   const project = new TestProject();
-  new ReleaseWorkflow(project, {
+  new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -621,7 +621,7 @@ test("publisher can use custom github runner", () => {
   // GIVEN
   const project = new TestProject();
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -651,7 +651,7 @@ describe("npmDistTag", () => {
     const project = new TestProject();
 
     // WHEN
-    const release = new ReleaseWorkflow(project, {
+    const release = new Release(project, {
       releaseBranches: {
         "main-3": { majorVersion: 3, npmDistTag: "latest-3" },
       },
@@ -684,7 +684,7 @@ describe("npmDistTag", () => {
     const project = new TestProject();
 
     // WHEN
-    const release = new ReleaseWorkflow(project, {
+    const release = new Release(project, {
       releaseBranches: {
         "main-3": { majorVersion: 3, npmDistTag: "latest-3" },
       },
@@ -718,7 +718,7 @@ describe("npmDistTag", () => {
     const project = new TestProject();
 
     // WHEN
-    const release = new ReleaseWorkflow(project, {
+    const release = new Release(project, {
       releaseBranches: {
         "main-3": { majorVersion: 3, npmDistTag: "latest-3" },
       },
@@ -742,7 +742,7 @@ test("if publishTasks is disabled, no publish tasks are created", () => {
   // GIVEN
   const project = new TestProject();
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
@@ -769,7 +769,7 @@ test("dryRun", () => {
   // GIVEN
   const project = new TestProject();
 
-  const release = new ReleaseWorkflow(project, {
+  const release = new Release(project, {
     task: project.buildTask,
     versionFile: "version.json",
     branch: "main",
