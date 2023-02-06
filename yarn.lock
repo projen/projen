@@ -4709,9 +4709,9 @@ minipass@^3.0.0, minipass@^3.1.1, minipass@^3.1.6:
     yallist "^4.0.0"
 
 minipass@^4.0.0:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/minipass/-/minipass-4.0.1.tgz#2b9408c6e81bb8b338d600fb3685e375a370a057"
-  integrity sha512-V9esFpNbK0arbN3fm2sxDKqMYgIp7XtVdE4Esj+PE4Qaaxdg1wIw48ITQIOn1sc8xXSmUviVL3cyjMqPlrVkiA==
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/minipass/-/minipass-4.0.2.tgz#26fc3364d5ea6cb971c6e5259eac67a0887510d1"
+  integrity sha512-4Hbzei7ZyBp+1aw0874YWpKOubZd/jc53/XU+gkYry1QV+VvrbO8icLM5CUtm4F0hyXn85DXYKEMIS26gitD3A==
 
 minizlib@^2.1.1, minizlib@^2.1.2:
   version "2.1.2"
@@ -4854,9 +4854,9 @@ npm-bundled@^3.0.0:
     npm-normalize-package-bin "^3.0.0"
 
 npm-check-updates@^16:
-  version "16.6.3"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-16.6.3.tgz#2c1930a163ff3e681f6206f69878f9fca2d71c42"
-  integrity sha512-EKhsCbBcVrPlYKzaYQtRhGv9fxpexwROcvl5HebCUNpiCSlOWrzaJvrMlwi9i9GCyJCnH+YAeBPYdqnArA390A==
+  version "16.6.4"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-16.6.4.tgz#5e8c266b12f6250b31ee8cff9c661ed90ecdc0fc"
+  integrity sha512-YZ99u6l7GFG5y1/XapEqlMwUWVEJfwXbOsf6SU5X1YuKEHpWbC+98cL/F7TALKjVAMwOrx43WopeBspatxh/Kw==
   dependencies:
     chalk "^5.2.0"
     cli-table "^0.3.11"
