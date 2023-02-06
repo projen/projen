@@ -98,10 +98,11 @@ export interface BuildWorkflowOptions {
   readonly workflowTriggers?: Triggers;
 
   /**
-   * Permission that are required for the job
-   * @default `{contents: 'write'}`
+   * Permissions granted to the build job
+   * To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`
+   * @default `{ contents: JobPermission.WRITE }`
    */
-  readonly workflowPermissions?: JobPermissions;
+  readonly permissions?: JobPermissions;
 }
 
 export class BuildWorkflow extends Component {
@@ -163,8 +164,9 @@ export class BuildWorkflow extends Component {
         CI: "true",
         ...options.env,
       },
-      permissions: options.workflowPermissions ?? {
+      permissions: {
         contents: JobPermission.WRITE,
+        ...options.permissions,
       },
       steps: (() => this.renderBuildSteps()) as any,
       outputs: {

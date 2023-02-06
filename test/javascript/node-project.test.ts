@@ -1142,8 +1142,8 @@ describe("scoped private packages", () => {
     });
 
     test("does not add id-token permission to release workflow", () => {
-      const buildWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
-      expect(Object.keys(buildWorkflow.jobs.release.permissions)).not.toContain(
+      const workflow = yaml.parse(output[".github/workflows/release.yml"]);
+      expect(Object.keys(workflow.jobs.release.permissions)).not.toContain(
         "id-token"
       );
     });
@@ -1226,8 +1226,8 @@ describe("scoped private packages", () => {
     });
 
     test("adds id-token permission to release workflow", () => {
-      const buildWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
-      expect(buildWorkflow.jobs.release.permissions).toEqual(
+      const workflow = yaml.parse(output[".github/workflows/release.yml"]);
+      expect(workflow.jobs.release.permissions).toEqual(
         expect.objectContaining({
           "id-token": "write",
         })

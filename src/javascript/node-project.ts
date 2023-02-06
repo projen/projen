@@ -526,7 +526,6 @@ export class NodeProject extends GitHubProject {
         CodeArtifactAuthProvider.GITHUB_OIDC;
 
     const workflowPermissions: JobPermissions = {
-      contents: JobPermission.WRITE,
       idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
     };
 
@@ -543,7 +542,7 @@ export class NodeProject extends GitHubProject {
         postBuildSteps: options.postBuildSteps,
         runsOn: options.workflowRunsOn,
         workflowTriggers: options.buildWorkflowTriggers,
-        workflowPermissions,
+        permissions: workflowPermissions,
       });
 
       this.buildWorkflow.addPostBuildSteps(

@@ -250,8 +250,8 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
   readonly workflowNodeVersion?: string;
 
   /**
-   * Permission that are required for the job
-   * @default `{contents: 'write'}`
+   * Permissions granted to the release workflow job
+   * @default `{ contents: JobPermission.WRITE }`
    */
   readonly workflowPermissions?: JobPermissions;
 }
@@ -317,8 +317,9 @@ export class Release extends Component {
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
     this.workflowRunsOn = options.workflowRunsOn;
-    this.workflowPermissions = options.workflowPermissions ?? {
+    this.workflowPermissions = {
       contents: JobPermission.WRITE,
+      ...options.workflowPermissions,
     };
     this._branchHooks = [];
 
