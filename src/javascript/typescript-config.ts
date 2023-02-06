@@ -1,4 +1,5 @@
 import { NodeProject } from ".";
+import { Component } from "../component";
 import { JsonFile } from "../json";
 
 export interface TypescriptConfigOptions {
@@ -397,7 +398,7 @@ export interface TypeScriptCompilerOptions {
   readonly paths?: { [key: string]: string[] };
 }
 
-export class TypescriptConfig {
+export class TypescriptConfig extends Component {
   public readonly compilerOptions: TypeScriptCompilerOptions;
   public readonly include: string[];
   public readonly exclude: string[];
@@ -405,6 +406,7 @@ export class TypescriptConfig {
   public readonly file: JsonFile;
 
   constructor(project: NodeProject, options: TypescriptConfigOptions) {
+    super(project);
     const fileName = options.fileName ?? "tsconfig.json";
 
     this.include = options.include ?? ["**/*.ts"];
@@ -414,6 +416,7 @@ export class TypescriptConfig {
     this.compilerOptions = options.compilerOptions;
 
     this.file = new JsonFile(project, fileName, {
+      allowComments: true,
       obj: {
         compilerOptions: this.compilerOptions,
         include: () => this.include,
