@@ -261,8 +261,8 @@ test("labels and assignees can be customized", () => {
 
   const snapshot = synthSnapshot(project);
   const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
-  expect(upgrade.jobs.pr.steps[4].with.labels).toEqual("deps-upgrade-label");
-  expect(upgrade.jobs.pr.steps[4].with.assignees).toEqual("repo-maintainer");
+  expect(upgrade.jobs.pr.steps[5].with.labels).toEqual("deps-upgrade-label");
+  expect(upgrade.jobs.pr.steps[5].with.assignees).toEqual("repo-maintainer");
 });
 
 test("upgrade task created without projen defined versions at NodeProject", () => {

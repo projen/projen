@@ -102,6 +102,20 @@ export class WorkflowActions {
       },
     ];
   }
+
+  /**
+   * Configures the directory to be considered "safe" for git operations.
+   * @param dir Directory to set as safe
+   * @returns Job steps
+   */
+  public static setSafeDirectory(dir = "$(pwd)"): JobStep[] {
+    return [
+      {
+        name: "Set safe directory",
+        run: `git config --global --add safe.directory ${dir}`,
+      },
+    ];
+  }
 }
 
 /**

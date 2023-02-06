@@ -216,7 +216,7 @@ describe("deps upgrade", () => {
     const snapshot = yaml.parse(
       synthSnapshot(project)[".github/workflows/upgrade-main.yml"]
     );
-    expect(snapshot.jobs.pr.steps[4].with.labels).toStrictEqual(
+    expect(snapshot.jobs.pr.steps[5].with.labels).toStrictEqual(
       project.autoApprove?.label
     );
   });
@@ -275,7 +275,7 @@ describe("deps upgrade", () => {
     const upgrade = yaml.parse(snapshot[".github/workflows/upgrade-main.yml"]);
 
     // we expect the default auto-approve label to be applied
-    expect(upgrade.jobs.pr.steps[4].with.labels).toEqual("auto-approve");
+    expect(upgrade.jobs.pr.steps[5].with.labels).toEqual("auto-approve");
   });
 
   test("git identity of the upgrade workflow is customizable", () => {

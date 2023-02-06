@@ -35,6 +35,10 @@ Object {
 git config user.email \\"github-actions@github.com\\"",
     },
     Object {
+      "name": "Set safe directory",
+      "run": "git config --global --add safe.directory $(pwd)",
+    },
+    Object {
       "id": "create-pr",
       "name": "Create Pull Request",
       "uses": "peter-evans/create-pull-request@v4",
@@ -213,6 +217,10 @@ Array [
     "name": "Set git identity",
     "run": "git config user.name \\"github-actions\\"
 git config user.email \\"github-actions@github.com\\"",
+  },
+  Object {
+    "name": "Set safe directory",
+    "run": "git config --global --add safe.directory $(pwd)",
   },
   Object {
     "name": "Push changes",

@@ -329,6 +329,7 @@ export class BuildWorkflow extends Component {
           repository: PULL_REQUEST_REPOSITORY,
         }),
         ...WorkflowActions.setGitIdentity(this.gitIdentity),
+        ...WorkflowActions.setSafeDirectory(),
         {
           name: "Push changes",
           run: [

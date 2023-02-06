@@ -370,6 +370,7 @@ export class UpgradeDependencies extends Component {
         ref: upgrade.ref,
       }),
       ...WorkflowActions.setGitIdentity(this.gitIdentity),
+      ...WorkflowActions.setSafeDirectory(),
       {
         name: "Create Pull Request",
         id: prStepId,

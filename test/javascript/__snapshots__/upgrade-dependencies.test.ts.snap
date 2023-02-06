@@ -59,6 +59,8 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Set safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -149,6 +151,8 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Set safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -239,6 +243,8 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Set safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -329,6 +335,8 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Set safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -419,6 +427,8 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Set safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -509,6 +519,8 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Set safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -599,6 +611,8 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Set safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -689,6 +703,8 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Set safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -779,6 +795,8 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Set safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -869,6 +887,8 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Set safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -957,6 +977,8 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Set safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -1053,6 +1075,8 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Set safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
@@ -1150,6 +1174,8 @@ jobs:
         run: |-
           git config user.name \\"github-actions\\"
           git config user.email \\"github-actions@github.com\\"
+      - name: Set safe directory
+        run: git config --global --add safe.directory $(pwd)
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@v4
