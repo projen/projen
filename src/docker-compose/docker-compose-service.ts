@@ -65,6 +65,11 @@ export class DockerComposeService implements IDockerComposeServiceName {
    */
   public readonly environment: Record<string, string>;
 
+  /**
+   * Attached labels.
+   */
+  public readonly labels: Record<string, string>;
+
   constructor(
     serviceName: string,
     serviceDescription: DockerComposeServiceDescription
@@ -87,6 +92,7 @@ export class DockerComposeService implements IDockerComposeServiceName {
     this.networks = serviceDescription.networks ?? [];
     this.ports = serviceDescription.ports ?? [];
     this.environment = serviceDescription.environment ?? {};
+    this.labels = serviceDescription.labels ?? {};
   }
 
   /**
@@ -136,6 +142,15 @@ export class DockerComposeService implements IDockerComposeServiceName {
    */
   public addNetwork(network: IDockerComposeNetworkBinding) {
     this.networks.push(network);
+  }
+
+  /**
+   * Add a label
+   * @param name environment variable name
+   * @param value value of the environment variable
+   */
+  public addLabel(name: string, value: string) {
+    this.labels[name] = value;
   }
 }
 
@@ -194,4 +209,10 @@ export interface DockerComposeServiceDescription {
    * @default - no environment variables are provided
    */
   readonly environment?: Record<string, string>;
+
+  /**
+   * Add labels.
+   * @default - no labels are provided
+   */
+  readonly labels?: Record<string, string>;
 }

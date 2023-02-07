@@ -25,6 +25,7 @@ interface DockerComposeFileServiceSchema {
   readonly networks?: string[];
   readonly ports?: DockerComposeServicePort[];
   readonly environment?: Record<string, string>;
+  readonly labels?: Record<string, string>;
 }
 
 /**
@@ -127,6 +128,9 @@ export function renderDockerComposeFile(
       ...(serviceDescription.ports.length > 0
         ? { ports: serviceDescription.ports }
         : {}),
+      ...(Object.keys(serviceDescription.labels).length > 0
+        ? { labels: serviceDescription.labels }
+        : {}),
       ...(dependsOn.length > 0 ? { dependsOn } : {}),
       ...(volumes.length > 0 ? { volumes } : {}),
       ...(networks.length > 0 ? { networks } : {}),
@@ -183,9 +187,10 @@ function shouldDecamelizeDockerComposeKey(path: string[]) {
     return false;
   }
 
-  // Does not decamelize environment variables
+  // Does not decamelize environment variables and labels
   // services.namehere.environment.*
-  if (/^services#[^#]+#environment#/.test(poundPath)) {
+  // services.namehere.labels.*
+  if (/^services#[^#]+#(environment|labels)#/.test(poundPath)) {
     return false;
   }
 
