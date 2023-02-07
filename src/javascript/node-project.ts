@@ -919,7 +919,7 @@ export class NodeProject extends GitHubProject {
     if (this.package.packageManager === NodePackageManager.PNPM) {
       install.push({
         name: "Setup pnpm",
-        uses: "pnpm/action-setup@v2.2.2",
+        uses: "pnpm/action-setup@v2.2.4",
         with: { version: "7" }, // current latest. Should probably become tunable.
       });
     }
