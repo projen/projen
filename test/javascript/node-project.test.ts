@@ -1058,6 +1058,16 @@ test("node project can be ejected", () => {
   expect(outdir[".projen/files.json"]).toBeUndefined();
 });
 
+class TestNodeProject extends NodeProject {
+  constructor(options: Partial<NodeProjectOptions> = {}) {
+    super({
+      name: "test-node-project",
+      defaultReleaseBranch: "main",
+      ...options,
+    });
+  }
+}
+
 describe("scoped private packages", () => {
   const accountId = "123456789012";
   const domain = "my-domain";
@@ -1066,10 +1076,11 @@ describe("scoped private packages", () => {
   const scope = "@stub-scope";
   const defaultAccessKeyIdSecret = "AWS_ACCESS_KEY_ID";
   const defaultSecretAccessKeySecret = "AWS_SECRET_ACCESS_KEY";
+  const roleToAssume = `stub-role-to-assume`;
   const registry = `${domain}-${accountId}.d.codeartifact.${region}.amazonaws.com/npm/${repository}/`;
   const registryUrl = `https://${registry}`;
 
-  test("adds AWS Code Artifact Login step prior to install to build workflow", () => {
+  describe("Auth Provider ACCESS_AND_SECRET_KEY_PAIR", () => {
     const project = new TestNodeProject({
       scopedPackagesOptions: [
         {
@@ -1080,23 +1091,65 @@ describe("scoped private packages", () => {
     });
     const output = synthSnapshot(project);
 
-    const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
-    expect(buildWorkflow.jobs.build.steps).toEqual(
-      expect.arrayContaining([
-        {
-          name: "AWS CodeArtifact Login",
-          run: "yarn run ca:login",
-          env: {
-            AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
-            AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
+    test("adds AWS Code Artifact Login step prior to install to build workflow", () => {
+      const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+      expect(buildWorkflow.jobs.build.steps).toEqual(
+        expect.arrayContaining([
+          {
+            name: "AWS CodeArtifact Login",
+            run: "yarn run ca:login",
+            env: {
+              AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
+              AWS_SECRET_ACCESS_KEY: secretToString(
+                defaultSecretAccessKeySecret
+              ),
+            },
           },
-        },
-        { name: "Install dependencies", run: "yarn install --check-files" },
-      ])
-    );
+          { name: "Install dependencies", run: "yarn install --check-files" },
+        ])
+      );
+    });
+
+    test("does not add id-token permission to build workflow", () => {
+      const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+      expect(Object.keys(buildWorkflow.jobs.build.permissions)).not.toContain(
+        "id-token"
+      );
+    });
+
+    test("adds AWS Code Artifact Login step prior to install to release workflow", () => {
+      const releaseWorkflow = yaml.parse(
+        output[".github/workflows/release.yml"]
+      );
+      expect(releaseWorkflow.jobs.release.steps).toEqual(
+        expect.arrayContaining([
+          {
+            name: "AWS CodeArtifact Login",
+            run: "yarn run ca:login",
+            env: {
+              AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
+              AWS_SECRET_ACCESS_KEY: secretToString(
+                defaultSecretAccessKeySecret
+              ),
+            },
+          },
+          {
+            name: "Install dependencies",
+            run: "yarn install --check-files --frozen-lockfile",
+          },
+        ])
+      );
+    });
+
+    test("does not add id-token permission to release workflow", () => {
+      const workflow = yaml.parse(output[".github/workflows/release.yml"]);
+      expect(Object.keys(workflow.jobs.release.permissions)).not.toContain(
+        "id-token"
+      );
+    });
   });
 
-  test("adds AWS Code Artifact Login step prior to install to release workflow", () => {
+  describe("Auth Provider GITHUB_OIDC", () => {
     const project = new TestNodeProject({
       scopedPackagesOptions: [
         {
@@ -1104,25 +1157,82 @@ describe("scoped private packages", () => {
           scope,
         },
       ],
+      codeArtifactOptions: {
+        authProvider: CodeArtifactAuthProvider.GITHUB_OIDC,
+        roleToAssume,
+      },
     });
     const output = synthSnapshot(project);
-    const releaseWorkflow = yaml.parse(output[".github/workflows/release.yml"]);
-    expect(releaseWorkflow.jobs.release.steps).toEqual(
-      expect.arrayContaining([
-        {
-          name: "AWS CodeArtifact Login",
-          run: "yarn run ca:login",
-          env: {
-            AWS_ACCESS_KEY_ID: secretToString(defaultAccessKeyIdSecret),
-            AWS_SECRET_ACCESS_KEY: secretToString(defaultSecretAccessKeySecret),
+
+    test("adds AWS Code Artifact Login step prior to install to build workflow", () => {
+      const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+      expect(buildWorkflow.jobs.build.steps).toEqual(
+        expect.arrayContaining([
+          {
+            name: "Configure AWS Credentials",
+            uses: "aws-actions/configure-aws-credentials@v1",
+            with: {
+              "aws-region": "us-east-2",
+              "role-to-assume": roleToAssume,
+              "role-duration-seconds": 900,
+            },
           },
-        },
-        {
-          name: "Install dependencies",
-          run: "yarn install --check-files --frozen-lockfile",
-        },
-      ])
-    );
+          {
+            name: "AWS CodeArtifact Login",
+            run: "yarn run ca:login",
+          },
+          {
+            name: "Install dependencies",
+            run: "yarn install --check-files",
+          },
+        ])
+      );
+    });
+
+    test("adds id-token permission to build workflow", () => {
+      const buildWorkflow = yaml.parse(output[".github/workflows/build.yml"]);
+      expect(buildWorkflow.jobs.build.permissions).toEqual(
+        expect.objectContaining({
+          "id-token": "write",
+        })
+      );
+    });
+
+    test("adds AWS Code Artifact Login step prior to install to release workflow", () => {
+      const releaseWorkflow = yaml.parse(
+        output[".github/workflows/release.yml"]
+      );
+      expect(releaseWorkflow.jobs.release.steps).toEqual(
+        expect.arrayContaining([
+          {
+            name: "Configure AWS Credentials",
+            uses: "aws-actions/configure-aws-credentials@v1",
+            with: {
+              "aws-region": "us-east-2",
+              "role-to-assume": roleToAssume,
+              "role-duration-seconds": 900,
+            },
+          },
+          {
+            name: "AWS CodeArtifact Login",
+            run: "yarn run ca:login",
+          },
+          {
+            name: "Install dependencies",
+            run: "yarn install --check-files --frozen-lockfile",
+          },
+        ])
+      );
+    });
+
+    test("adds id-token permission to release workflow", () => {
+      const workflow = yaml.parse(output[".github/workflows/release.yml"]);
+      expect(workflow.jobs.release.permissions).toEqual(
+        expect.objectContaining({
+          "id-token": "write",
+        })
+      );
+    });
   });
 
   test("adds AWS Code Artifact Login step prior to install to workflow when multiple scoped packages defined", () => {
@@ -1200,7 +1310,6 @@ describe("scoped private packages", () => {
   });
 
   test("adds AWS assume role and Code Artifact Login step prior to install to workflow", () => {
-    const roleToAssume = `stub-role-to-assume`;
     const project = new TestNodeProject({
       scopedPackagesOptions: [
         {
@@ -1336,13 +1445,3 @@ describe("scoped private packages", () => {
     });
   });
 });
-
-class TestNodeProject extends NodeProject {
-  constructor(options: Partial<NodeProjectOptions> = {}) {
-    super({
-      name: "test-node-project",
-      defaultReleaseBranch: "main",
-      ...options,
-    });
-  }
-}

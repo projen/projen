@@ -7,7 +7,12 @@ import {
   BUILD_ARTIFACT_NAME,
   PERMISSION_BACKUP_FILE,
 } from "../github/constants";
-import { Job, JobPermission, JobStep } from "../github/workflows-model";
+import {
+  Job,
+  JobPermission,
+  JobPermissions,
+  JobStep,
+} from "../github/workflows-model";
 import { Task } from "../task";
 import { Version } from "../version";
 
@@ -243,6 +248,12 @@ export interface ReleaseOptions extends ReleaseProjectOptions {
    * @default 14.x
    */
   readonly workflowNodeVersion?: string;
+
+  /**
+   * Permissions granted to the release workflow job
+   * @default `{ contents: JobPermission.WRITE }`
+   */
+  readonly workflowPermissions?: JobPermissions;
 }
 
 /**
@@ -279,6 +290,7 @@ export class Release extends Component {
   private readonly defaultBranch: ReleaseBranch;
   private readonly github?: GitHub;
   private readonly workflowRunsOn?: string[];
+  private readonly workflowPermissions: JobPermissions;
 
   private readonly _branchHooks: BranchHook[];
 
@@ -305,6 +317,10 @@ export class Release extends Component {
     this.releaseTrigger = options.releaseTrigger ?? ReleaseTrigger.continuous();
     this.containerImage = options.workflowContainerImage;
     this.workflowRunsOn = options.workflowRunsOn;
+    this.workflowPermissions = {
+      contents: JobPermission.WRITE,
+      ...options.workflowPermissions,
+    };
     this._branchHooks = [];
 
     /**
@@ -625,9 +641,7 @@ export class Release extends Component {
         env: {
           CI: "true",
         },
-        permissions: {
-          contents: JobPermission.WRITE,
-        },
+        permissions: this.workflowPermissions,
         checkoutWith: {
           // we must use 'fetch-depth=0' in order to fetch all tags
           // otherwise tags are not checked out

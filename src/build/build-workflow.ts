@@ -10,6 +10,7 @@ import { WorkflowActions } from "../github/workflow-actions";
 import {
   Job,
   JobPermission,
+  JobPermissions,
   JobStep,
   Tools,
   Triggers,
@@ -95,6 +96,13 @@ export interface BuildWorkflowOptions {
    * @default "{ pullRequest: {}, workflowDispatch: {} }"
    */
   readonly workflowTriggers?: Triggers;
+
+  /**
+   * Permissions granted to the build job
+   * To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`
+   * @default `{ contents: JobPermission.WRITE }`
+   */
+  readonly permissions?: JobPermissions;
 }
 
 export class BuildWorkflow extends Component {
@@ -158,6 +166,7 @@ export class BuildWorkflow extends Component {
       },
       permissions: {
         contents: JobPermission.WRITE,
+        ...options.permissions,
       },
       steps: (() => this.renderBuildSteps()) as any,
       outputs: {

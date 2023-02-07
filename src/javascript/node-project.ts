@@ -20,7 +20,12 @@ import {
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { secretToString } from "../github/util";
-import { JobStep, Triggers } from "../github/workflows-model";
+import {
+  JobPermission,
+  JobPermissions,
+  JobStep,
+  Triggers,
+} from "../github/workflows-model";
 import { IgnoreFile } from "../ignore-file";
 import {
   Prettier,
@@ -36,6 +41,7 @@ import {
   ReleaseProjectOptions,
   NpmPublishOptions,
   CodeArtifactAuthProvider as ReleaseCodeArtifactAuthProvider,
+  CodeArtifactAuthProvider,
 } from "../release";
 import { Task } from "../task";
 import { deepMerge } from "../util";
@@ -514,6 +520,15 @@ export class NodeProject extends GitHubProject {
       this.jest = new Jest(this, options.jestOptions);
     }
 
+    const requiresIdTokenPermission =
+      (options.scopedPackagesOptions ?? []).length > 0 &&
+      options.codeArtifactOptions?.authProvider ===
+        CodeArtifactAuthProvider.GITHUB_OIDC;
+
+    const workflowPermissions: JobPermissions = {
+      idToken: requiresIdTokenPermission ? JobPermission.WRITE : undefined,
+    };
+
     if (buildEnabled && this.github) {
       this.buildWorkflow = new BuildWorkflow(this, {
         buildTask: this.buildTask,
@@ -527,6 +542,7 @@ export class NodeProject extends GitHubProject {
         postBuildSteps: options.postBuildSteps,
         runsOn: options.workflowRunsOn,
         workflowTriggers: options.buildWorkflowTriggers,
+        permissions: workflowPermissions,
       });
 
       this.buildWorkflow.addPostBuildSteps(
@@ -558,6 +574,7 @@ export class NodeProject extends GitHubProject {
         ],
 
         workflowNodeVersion: this.nodeVersion,
+        workflowPermissions,
       });
 
       this.publisher = this.release.publisher;
@@ -812,7 +829,29 @@ export class NodeProject extends GitHubProject {
       secretAccessKeySecret:
         codeArtifactOptions?.secretAccessKeySecret ?? "AWS_SECRET_ACCESS_KEY",
       roleToAssume: codeArtifactOptions?.roleToAssume,
+      authProvider: codeArtifactOptions?.authProvider,
     };
+
+    if (
+      parsedCodeArtifactOptions.authProvider ===
+      NodePackageCodeArtifactAuthProvider.GITHUB_OIDC
+    ) {
+      return [
+        {
+          name: "Configure AWS Credentials",
+          uses: "aws-actions/configure-aws-credentials@v1",
+          with: {
+            "aws-region": "us-east-2",
+            "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
+            "role-duration-seconds": 900,
+          },
+        },
+        {
+          name: "AWS CodeArtifact Login",
+          run: `${this.runScriptCommand} ca:login`,
+        },
+      ];
+    }
 
     if (parsedCodeArtifactOptions.roleToAssume) {
       return [
