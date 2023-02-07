@@ -8926,6 +8926,7 @@ new javascript.Projenrc(project: Project, options?: ProjenrcOptions)
 
 __Submodule__: javascript
 
+__Extends__: [Component](#projen-component)
 
 ### Initializer
 
