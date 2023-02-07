@@ -118,8 +118,7 @@ npm utility.
 ## Making a pull request
 
 - Commit title and message (and PR title and description) must adhere to [conventionalcommits](https://www.conventionalcommits.org).
-  - The title must begin with `feat(module): title`, `fix(module): title`,
-    `refactor(module): title` or `chore(module): title`, where the module refers
+  - The title must begin with `feat(module): title`, `fix(module): title` or `chore(module): title`, where the module refers
     to the projects or components that the change centers on.
     The module can be omitted, so "feat: title" is okay as well.
   - Title should be lowercase.

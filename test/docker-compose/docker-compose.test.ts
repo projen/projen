@@ -1,9 +1,9 @@
 import * as child_process from "child_process";
 import * as path from "path";
 import * as fs from "fs-extra";
-import { TestProject } from "./util";
-import { DockerCompose, DockerComposeProtocol } from "../src";
-import * as logging from "../src/logging";
+import { DockerCompose, DockerComposeProtocol } from "../../src/";
+import * as logging from "../../src/logging";
+import { TestProject } from "../util";
 
 logging.disable();
 
@@ -511,6 +511,154 @@ describe("docker-compose", () => {
       service.addEnvironment("Baz", "xyz");
 
       expect(dc._synthesizeDockerCompose()).toEqual(expected);
+
+      project.synth();
+      assertDockerComposeFileValidates(project.outdir);
+    });
+  });
+
+  describe("can add a network", () => {
+    test("declaratively", () => {
+      const project = new TestProject();
+      const dc = new DockerCompose(project, {
+        services: {
+          myservice: {
+            image: "nginx",
+            networks: [DockerCompose.network("webapp")],
+          },
+        },
+      });
+
+      expect(dc._synthesizeDockerCompose()).toEqual({
+        version: "3.3",
+        services: {
+          myservice: {
+            image: "nginx",
+            networks: ["webapp"],
+          },
+        },
+        networks: {
+          webapp: {},
+        },
+      });
+
+      project.synth();
+      assertDockerComposeFileValidates(project.outdir);
+    });
+
+    test("imperatively", () => {
+      const project = new TestProject();
+      const dc = new DockerCompose(project);
+
+      const service = dc.addService("myservice", {
+        image: "nginx",
+      });
+      service.addNetwork(
+        DockerCompose.network("webapp", {
+          attachable: true,
+          driver: "bridge",
+          driverOpts: {
+            test: "123",
+          },
+          labels: ["label1=value1"],
+          internal: true,
+          ipam: {
+            driver: "default",
+            config: [
+              {
+                subnet: "172.28.0.0/16",
+              },
+            ],
+          },
+          name: "webapp",
+        })
+      );
+
+      expect(dc._synthesizeDockerCompose()).toEqual({
+        version: "3.3",
+        services: {
+          myservice: {
+            image: "nginx",
+            networks: ["webapp"],
+          },
+        },
+        networks: {
+          webapp: {
+            attachable: true,
+            driver: "bridge",
+            driver_opts: {
+              test: "123",
+            },
+            labels: ["label1=value1"],
+            internal: true,
+            ipam: {
+              driver: "default",
+              config: [
+                {
+                  subnet: "172.28.0.0/16",
+                },
+              ],
+            },
+            name: "webapp",
+          },
+        },
+      });
+
+      project.synth();
+      assertDockerComposeFileValidates(project.outdir);
+    });
+  });
+
+  describe("can add a label", () => {
+    test("declaratively", () => {
+      const project = new TestProject();
+      const dc = new DockerCompose(project, {
+        services: {
+          myservice: {
+            image: "nginx",
+            labels: {
+              myLabel: "myvalue",
+            },
+          },
+        },
+      });
+
+      expect(dc._synthesizeDockerCompose()).toEqual({
+        version: "3.3",
+        services: {
+          myservice: {
+            image: "nginx",
+            labels: {
+              myLabel: "myvalue",
+            },
+          },
+        },
+      });
+
+      project.synth();
+      assertDockerComposeFileValidates(project.outdir);
+    });
+
+    test("imperatively", () => {
+      const project = new TestProject();
+      const dc = new DockerCompose(project);
+
+      const service = dc.addService("myservice", {
+        image: "nginx",
+      });
+      service.addLabel("my.label", "my_value");
+
+      expect(dc._synthesizeDockerCompose()).toEqual({
+        version: "3.3",
+        services: {
+          myservice: {
+            image: "nginx",
+            labels: {
+              "my.label": "my_value",
+            },
+          },
+        },
+      });
 
       project.synth();
       assertDockerComposeFileValidates(project.outdir);
