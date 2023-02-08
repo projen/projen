@@ -57,6 +57,19 @@ export class GithubWorkflow extends Component {
    */
   public readonly projenCredentials: GithubCredentials;
 
+  /**
+   * The name for workflow runs generated from the workflow. GitHub displays the
+   * workflow run name in the list of workflow runs on your repository's
+   * "Actions" tab. If `run-name` is omitted or is only whitespace, then the run
+   * name is set to event-specific information for the workflow run. For
+   * example, for a workflow triggered by a `push` or `pull_request` event, it
+   * is set as the commit message.
+   *
+   * This value can include expressions and can reference `github` and `inputs`
+   * contexts.
+   */
+  public runName?: string;
+
   private events: workflows.Triggers = {};
   private jobs: Record<
     string,
@@ -151,6 +164,7 @@ export class GithubWorkflow extends Component {
   private renderWorkflow() {
     return {
       name: this.name,
+      "run-name": this.runName,
       on: snakeCaseKeys(this.events),
       concurrency: this.concurrency,
       jobs: renderJobs(this.jobs),

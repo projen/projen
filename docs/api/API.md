@@ -6814,6 +6814,7 @@ Name | Type | Description
 **projenCredentials**🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | GitHub API authentication method used by projen workflows.
 **concurrency**?🔹 | <code>string</code> | Concurrency ensures that only a single job or workflow using the same concurrency group will run at a time.<br/>__*Default*__: disabled
 **file**?🔹 | <code>[YamlFile](#projen-yamlfile)</code> | The workflow YAML file.<br/>__*Optional*__
+**runName**?🔹 | <code>string</code> | The name for workflow runs generated from the workflow.<br/>__*Optional*__
 
 ### Methods
 

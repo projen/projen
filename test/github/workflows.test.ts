@@ -26,6 +26,19 @@ test("adding empty workflow", () => {
   expect(workflows[".github/workflows/my-workflow.yml"]).toMatchSnapshot();
 });
 
+test("setting runName", () => {
+  // GIVEN
+  const p = new TestProject();
+  const wf = p.github!.addWorkflow("run-name");
+
+  // WHEN
+  wf.runName = "This is a custom run-name";
+
+  // THEN
+  const workflows = synthWorkflows(p);
+  expect(workflows[".github/workflows/run-name.yml"]).toMatchSnapshot();
+});
+
 test("throws when adding workflow with existing name", () => {
   // GIVEN
   const p = new TestProject({
