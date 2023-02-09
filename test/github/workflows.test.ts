@@ -39,6 +39,53 @@ test("setting runName", () => {
   expect(workflows[".github/workflows/run-name.yml"]).toMatchSnapshot();
 });
 
+test("workflow triggers", () => {
+  // GIVEN
+  const p = new TestProject();
+  const wf = p.github!.addWorkflow("triggers");
+
+  // WHEN
+  wf.on({
+    schedule: [{ cron: "5 4 * * *" }],
+    workflowDispatch: {},
+    repositoryDispatch: {},
+    workflowCall: {},
+    branchProtectionRule: {},
+    checkRun: {},
+    checkSuite: {},
+    create: {},
+    delete: {},
+    deployment: {},
+    deploymentStatus: {},
+    discussion: {},
+    discussionComment: {},
+    fork: {},
+    gollum: {},
+    issueComment: {},
+    issues: {},
+    label: {},
+    mergeGroup: {
+      branches: ["main"],
+    },
+    milestone: {},
+    pageBuild: {},
+    pullRequest: {},
+    pullRequestReview: {},
+    pullRequestReviewComment: {},
+    pullRequestTarget: {},
+    push: {},
+    registryPackage: {},
+    release: {},
+    status: {},
+    watch: {},
+    workflowRun: {},
+  });
+
+  // THEN
+  const workflows = synthWorkflows(p);
+  expect(workflows[".github/workflows/triggers.yml"]).toMatchSnapshot();
+});
+
 test("throws when adding workflow with existing name", () => {
   // GIVEN
   const p = new TestProject({
