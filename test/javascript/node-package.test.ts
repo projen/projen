@@ -399,26 +399,30 @@ test("local dependencies can be specified using 'file:' prefix", () => {
   expect(pkgFile.peerDependencies).toStrictEqual({ "local-dep": localDepPath });
 });
 
-test("yarn resolutions", () => {
-  const project = new TestProject();
+[NodePackageManager.YARN, NodePackageManager.YARN2].forEach(
+  (packageManager) => {
+    test("yarn resolutions", () => {
+      const project = new TestProject();
 
-  const pkg = new NodePackage(project, {
-    packageManager: NodePackageManager.YARN,
-  });
+      const pkg = new NodePackage(project, {
+        packageManager,
+      });
 
-  pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
+      pkg.addPackageResolutions("some-dep@1.0.0", "other-dep");
 
-  expect(
-    project.deps.all.filter((dep) => dep.type === DependencyType.OVERRIDE)
-  ).toEqual([
-    { name: "other-dep", type: "override" },
-    { name: "some-dep", type: "override", version: "1.0.0" },
-  ]);
-  const snps = synthSnapshot(project);
+      expect(
+        project.deps.all.filter((dep) => dep.type === DependencyType.OVERRIDE)
+      ).toEqual([
+        { name: "other-dep", type: "override" },
+        { name: "some-dep", type: "override", version: "1.0.0" },
+      ]);
+      const snps = synthSnapshot(project);
 
-  expect(snps["package.json"].resolutions).toBeDefined();
-  expect(snps["package.json"]).toMatchSnapshot();
-});
+      expect(snps["package.json"].resolutions).toBeDefined();
+      expect(snps["package.json"]).toMatchSnapshot();
+    });
+  }
+);
 
 test("npm overrides", () => {
   const project = new TestProject();

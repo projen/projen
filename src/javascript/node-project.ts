@@ -449,6 +449,7 @@ export class NodeProject extends GitHubProject {
         case NodePackageManager.NPM:
           return "npm run";
         case NodePackageManager.YARN:
+        case NodePackageManager.YARN2:
           return "yarn run";
         case NodePackageManager.PNPM:
           return "pnpm run";
