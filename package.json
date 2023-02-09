@@ -73,7 +73,7 @@
     "jsii-pacmak": "^1.74.0",
     "markmac": "^0.1.146",
     "npm-check-updates": "^16",
-    "prettier": "^2.8.3",
+    "prettier": "^2.8.4",
     "standard-version": "^9",
     "ts-jest": "^27",
     "typescript": "^3.9.10"
