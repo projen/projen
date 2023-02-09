@@ -6869,6 +6869,7 @@ on(events: Triggers): void
   * **issueComment** (<code>[github.workflows.IssueCommentOptions](#projen-github-workflows-issuecommentoptions)</code>)  Runs your workflow anytime the issue_comment event occurs. __*Optional*__
   * **issues** (<code>[github.workflows.IssuesOptions](#projen-github-workflows-issuesoptions)</code>)  Runs your workflow anytime the issues event occurs. __*Optional*__
   * **label** (<code>[github.workflows.LabelOptions](#projen-github-workflows-labeloptions)</code>)  Runs your workflow anytime the label event occurs. __*Optional*__
+  * **mergeGroup** (<code>[github.workflows.MergeGroupOptions](#projen-github-workflows-mergegroupoptions)</code>)  Runs your workflow when a pull request is added to a merge queue, which adds the pull request to a merge group. __*Optional*__
   * **milestone** (<code>[github.workflows.MilestoneOptions](#projen-github-workflows-milestoneoptions)</code>)  Runs your workflow anytime the milestone event occurs. __*Optional*__
   * **pageBuild** (<code>[github.workflows.PageBuildOptions](#projen-github-workflows-pagebuildoptions)</code>)  Runs your workflow anytime someone pushes to a GitHub Pages-enabled branch, which triggers the page_build event. __*Optional*__
   * **project** (<code>[github.workflows.ProjectOptions](#projen-github-workflows-projectoptions)</code>)  Runs your workflow anytime the project event occurs. __*Optional*__

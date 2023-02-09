@@ -668,6 +668,14 @@ export interface Triggers {
   readonly label?: LabelOptions;
 
   /**
+   * Runs your workflow when a pull request is added to a merge queue, which
+   * adds the pull request to a merge group.
+   *
+   * @stability experimental
+   */
+  readonly mergeGroup?: MergeGroupOptions;
+
+  /**
    * Runs your workflow anytime the milestone event occurs.
    */
   readonly milestone?: MilestoneOptions;
@@ -912,7 +920,7 @@ export interface IssuesOptions {
 }
 
 /**
- * label options
+ * Label options
  */
 export interface LabelOptions {
   /**
@@ -921,6 +929,20 @@ export interface LabelOptions {
    * @defaults - all activity types
    */
   readonly types?: Array<"created" | "edited" | "deleted">;
+}
+
+/**
+ * Merge group options.
+ *
+ * @stability experimental
+ */
+export interface MergeGroupOptions {
+  /**
+   * When using the merge_group events, you can configure a workflow
+   * to run on specific base branches. If not specified, all branches will
+   * trigger the workflow.
+   */
+  readonly branches?: string[];
 }
 
 /**
