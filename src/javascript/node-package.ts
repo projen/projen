@@ -787,6 +787,7 @@ export class NodePackage extends Component {
     let lazy = undefined;
     switch (this.packageManager) {
       case NodePackageManager.YARN:
+      case NodePackageManager.YARN2:
         lazy = upgradePackages("yarn upgrade");
         break;
       case NodePackageManager.NPM:
@@ -1050,10 +1051,10 @@ export class NodePackage extends Component {
           "--check-files", // ensure all modules exist (especially projen which was just removed).
           ...(frozen ? ["--frozen-lockfile"] : []),
         ].join(" ");
-
+      case NodePackageManager.YARN2:
+        return ["yarn install", ...(frozen ? ["--immutable"] : [])].join(" ");
       case NodePackageManager.NPM:
         return frozen ? "npm ci" : "npm install";
-
       case NodePackageManager.PNPM:
         return frozen
           ? "pnpm i --frozen-lockfile"
@@ -1428,6 +1429,11 @@ export enum NodePackageManager {
   YARN = "yarn",
 
   /**
+   * Use `yarn` versions >= 2 as the package manager.
+   */
+  YARN2 = "yarn2",
+
+  /**
    * Use `npm` as the package manager.
    */
   NPM = "npm",
@@ -1488,7 +1494,10 @@ export function defaultNpmToken(
 }
 
 function determineLockfile(packageManager: NodePackageManager) {
-  if (packageManager === NodePackageManager.YARN) {
+  if (
+    packageManager === NodePackageManager.YARN ||
+    packageManager === NodePackageManager.YARN2
+  ) {
     return "yarn.lock";
   } else if (packageManager === NodePackageManager.NPM) {
     return "package-lock.json";
