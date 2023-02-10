@@ -16,7 +16,8 @@ project.synth();"
 `;
 
 exports[`createProject creates a project from an external project type, if it's installed 1`] = `
-"const { AwsCdkTypeScriptApp, javascript } = require(\\"@pepperize/projen-awscdk-app-ts\\");
+"const { javascript } = require(\\"projen\\");
+const { AwsCdkTypeScriptApp } = require(\\"@pepperize/projen-awscdk-app-ts\\");
 const project = new AwsCdkTypeScriptApp({
   cdkVersion: \\"2.50.0\\",
   defaultReleaseBranch: \\"main\\",
