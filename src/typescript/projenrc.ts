@@ -78,12 +78,10 @@ export class Projenrc extends Component {
       comments: bootstrap.comments,
     });
 
-    imports.add(importName);
+    imports.add(moduleName, importName);
 
     const lines = new Array<string>();
-    lines.push(
-      `import { ${[...imports].sort().join(", ")} } from "${moduleName}";`
-    );
+    lines.push(...imports.asEsmImports());
     lines.push();
     lines.push(`const project = new ${className}(${renderedOptions});`);
     lines.push();

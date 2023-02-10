@@ -39,6 +39,14 @@ export interface RenderProjectOptions {
    * @default - none
    */
   readonly omitFromBootstrap?: string[];
+
+  /**
+   * Prefix all imports with this string and the full module name
+   * This is required when executing options code in a vm
+   *
+   * @default - only use submodule as prefix
+   */
+  readonly prefixImports?: string;
 }
 
 /**
@@ -94,6 +102,62 @@ export function resolveInitProject(opts: any) {
   };
 }
 
+export class ModuleImports {
+  private imports: Map<string, Set<string>> = new Map();
+
+  /**
+   * Add a named import from a module
+   */
+  public add(moduleName: string, importName: string) {
+    const moduleImports = this.imports.get(moduleName) ?? new Set();
+    moduleImports.add(importName);
+    this.imports.set(moduleName, moduleImports);
+  }
+
+  /**
+   * Get all named imports for a module
+   */
+  public get(moduleName: string): string[] {
+    const moduleImports = this.imports.get(moduleName) ?? new Set();
+    return Array.from(moduleImports);
+  }
+
+  /**
+   * Get a list of all used modules
+   */
+  public get modules(): string[] {
+    return Array.from(this.imports.keys());
+  }
+
+  /**
+   * Return all imports as ESM import statements
+   */
+  public asEsmImports(): string[] {
+    return this.all().map(
+      ([moduleName, namedImports]) =>
+        `import { ${[...namedImports].join(", ")} } from "${moduleName}";`
+    );
+  }
+
+  /**
+   * Return all imports as CJS require statements
+   */
+  public asCjsRequire(): string[] {
+    return this.all().map(
+      ([moduleName, namedImports]) =>
+        `const { ${[...namedImports].join(", ")} } = require("${moduleName}");`
+    );
+  }
+
+  private all(): Array<[string, string[]]> {
+    const allImports = Object.fromEntries(this.imports);
+    return Object.entries(allImports).map(([key, value]) => [
+      key,
+      Array.from(value).sort(),
+    ]);
+  }
+}
+
 /**
  * Prints all parameters that can be used in a project type, alongside their descriptions.
  *
@@ -103,10 +167,13 @@ export function resolveInitProject(opts: any) {
  * Returns the printed output and a set of required imports as an object
  * in the form { options, imports }.
  */
-export function renderJavaScriptOptions(opts: RenderProjectOptions) {
+export function renderJavaScriptOptions(opts: RenderProjectOptions): {
+  renderedOptions: string;
+  imports: ModuleImports;
+} {
   const renders: Record<string, string> = {};
   const optionsWithDefaults: string[] = [];
-  const allImports = new Set();
+  const allImports = new ModuleImports();
 
   for (const option of opts.type.options) {
     if (option.deprecated) {
@@ -117,12 +184,18 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions) {
 
     if (opts.args[optionName] !== undefined) {
       const arg = opts.args[optionName];
-      const { js, imports } = renderArgAsJavaScript(arg, option);
-      for (const importStr of imports) {
-        allImports.add(importStr);
-      }
+      const { js, moduleName, importName } = renderArgAsJavaScript(arg, option);
+
       renders[optionName] = `${optionName}: ${js},`;
       optionsWithDefaults.push(optionName);
+
+      if (moduleName && importName) {
+        allImports.add(moduleName, importName);
+        if (opts.prefixImports) {
+          const prefix = `${opts.prefixImports}["${moduleName}"].`;
+          renders[optionName] = `${optionName}: ${prefix}${js},`;
+        }
+      }
     } else {
       const defaultValue = option.default?.startsWith("-")
         ? undefined
@@ -256,10 +329,11 @@ function renderArgAsJavaScript(arg: any, option: inventory.ProjectOption) {
     const parts = option.fqn.split("."); // -> ['projen', 'web', 'MyEnum']
     const enumChoice = String(arg).toUpperCase().replace(/-/g, "_"); // custom-value -> CUSTOM_VALUE
     const js = `${parts.slice(1).join(".")}.${enumChoice}`; // -> web.MyEnum.CUSTOM_VALUE
+    const moduleName = parts[0]; // -> projen
     const importName = parts[1]; // -> web
-    return { js, imports: [importName] };
+    return { js, moduleName, importName };
   } else if (option.jsonLike) {
-    return { js: JSON.stringify(arg), imports: [] };
+    return { js: JSON.stringify(arg) };
   } else {
     throw new Error(
       `Unexpected option ${option.name} - cannot render a value for this option because it does not have a JSON-like type.`
