@@ -50,12 +50,10 @@ export class Projenrc extends Component {
       type: bootstrap.type,
     });
 
-    imports.add(importName);
+    imports.add(moduleName, importName);
 
     const lines = new Array<string>();
-    lines.push(
-      `const { ${[...imports].sort().join(", ")} } = require("${moduleName}");`
-    );
+    lines.push(...imports.asCjsRequire());
     lines.push();
     lines.push(`const project = new ${className}(${renderedOptions});`);
     lines.push();

@@ -76,39 +76,49 @@ export class Projects {
   private constructor() {}
 }
 
-function createProject(opts: CreateProjectOptions) {
-  const projectType = resolveProjectType(opts.projectFqn);
-
+function resolveModulePath(moduleName: string) {
   // Default project resolution location
-  let mod = "./index";
+  if (moduleName === "projen") {
+    return "./index";
+  }
 
   // External projects need to load the module from the modules directory
-  if (projectType.moduleName !== "projen") {
-    try {
-      mod = path.dirname(
-        require.resolve(path.join(projectType.moduleName, "package.json"), {
-          paths: [process.cwd()],
-        })
-      );
-    } catch (err) {
-      throw new Error(
-        `External project module '${projectType.moduleName}' could not be resolved.`
-      );
-    }
+  try {
+    return path.dirname(
+      require.resolve(path.join(moduleName, "package.json"), {
+        paths: [process.cwd()],
+      })
+    );
+  } catch (err) {
+    throw new Error(
+      `External project module '${moduleName}' could not be resolved.`
+    );
   }
+}
+
+function createProject(opts: CreateProjectOptions) {
+  const projectType = resolveProjectType(opts.projectFqn);
+  const mod = resolveModulePath(projectType.moduleName);
 
   // "dir" is exposed as a top-level option to require users to specify a value for it
   opts.projectOptions.outdir = opts.dir;
 
+  // Generated a random name space for imports used by options
+  // This is so we can keep the top-level namespace as clean as possible
+  const optionsImports = "_options" + Math.random().toString(36).slice(2);
+
   // pass the FQN of the project type to the project initializer so it can
   // generate the projenrc file.
-  const { renderedOptions } = renderJavaScriptOptions({
+  const { renderedOptions, imports } = renderJavaScriptOptions({
     bootstrap: true,
     comments: opts.optionHints ?? InitProjectOptionHints.FEATURED,
     type: projectType,
     args: opts.projectOptions,
     omitFromBootstrap: ["outdir"],
+    prefixImports: optionsImports,
   });
+
+  const initProjectCode = new Array<string>();
 
   // generate a random variable name because jest tests appear to share
   // VM contexts, causing
@@ -117,18 +127,32 @@ function createProject(opts: CreateProjectOptions) {
   //
   // errors if this isn't unique
   const varName = "project" + Math.random().toString(36).slice(2);
-  const initProjectCode = `const ${varName} = new ${projectType.typename}(${renderedOptions});`;
+  initProjectCode.push(
+    `const ${varName} = new ${projectType.typename}(${renderedOptions});`
+  );
+
+  if (opts.synth ?? true) {
+    initProjectCode.push(`${varName}.synth();`);
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const module = require(mod);
-  const ctx = vm.createContext(module);
+  const mainModule = require(mod);
+  const ctx = vm.createContext({
+    ...mainModule,
+    [optionsImports]: {
+      ...imports.modules.reduce(
+        (optionsContext, currentModule) => ({
+          ...optionsContext,
+          // eslint-disable-next-line @typescript-eslint/no-require-imports
+          [currentModule]: require(resolveModulePath(currentModule)),
+        }),
+        {}
+      ),
+    },
+  });
 
-  const synth = opts.synth ?? true;
   const postSynth = opts.post ?? true;
   process.env.PROJEN_DISABLE_POST = (!postSynth).toString();
   process.env.PROJEN_CREATE_PROJECT = "true";
-  vm.runInContext(
-    [initProjectCode, synth ? `${varName}.synth();` : ""].join("\n"),
-    ctx
-  );
+  vm.runInContext(initProjectCode.join("\n"), ctx);
 }

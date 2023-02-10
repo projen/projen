@@ -1,4 +1,5 @@
 import { directorySnapshot, withProjectDir } from "./util";
+import { installPackage } from "../src/cli/util";
 import { InitProjectOptionHints } from "../src/option-hints";
 import { Projects } from "../src/projects";
 
@@ -63,37 +64,37 @@ describe("createProject", () => {
     );
   });
 
-  /**
-   * commented out due to breaking changes in projen@0.37.0
+  test("creates a project from an external project type, if it's installed", () => {
+    withProjectDir(
+      (projectdir) => {
+        // GIVEN
+        installPackage(projectdir, "@pepperize/projen-awscdk-app-ts@0.0.333");
 
-  test('creates a project from an external project type, if it\'s installed', () => {
-    withProjectDir(projectdir => {
-      // GIVEN
-      installPackage(projectdir, 'cdk-appsync-project@1.1.3');
+        // WHEN
+        Projects.createProject({
+          optionHints: InitProjectOptionHints.FEATURED,
+          dir: projectdir,
+          post: false,
+          synth: false,
+          projectFqn: "@pepperize/projen-awscdk-app-ts.AwsCdkTypeScriptApp",
+          projectOptions: {
+            name: "test-project",
+            defaultReleaseBranch: "main",
+            cdkVersion: "2.50.0",
+            packageManager: "npm",
+          },
+        });
 
-      // WHEN
-      Projects.createProject({
-        optionHints: InitProjectOptionHints.FEATURED,
-        dir: projectdir,
-        post: false,
-        synth: false,
-        projectFqn: 'cdk-appsync-project.AwsCdkAppSyncApp',
-        projectOptions: {
-          name: 'test-project',
-          defaultReleaseBranch: 'main',
-          cdkVersion: '1.63.0',
-          transformerVersion: '1.77.15',
-          devDeps: ['cdk-appsync-project@1.1.3'],
-        },
-      });
-
-      // THEN
-      const snapshot = directorySnapshot(projectdir, {
-        excludeGlobs: ['node_modules/**'],
-      });
-      expect(snapshot['.projenrc.js']).toMatchSnapshot();
-    }, { chdir: true });
+        // THEN
+        const snapshot = directorySnapshot(projectdir, {
+          excludeGlobs: ["node_modules/**"],
+        });
+        expect(snapshot[".projenrc.js"]).toMatchSnapshot();
+        expect(snapshot[".projenrc.js"]).toContain(
+          "javascript.NodePackageManager.NPM"
+        );
+      },
+      { chdir: true }
+    );
   });
-
-  */
 });

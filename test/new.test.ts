@@ -67,6 +67,32 @@ test("projen new --from external", () => {
   });
 });
 
+test("projen new --from external with enum values", () => {
+  withProjectDir((projectdir) => {
+    // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
+    execProjenCLI(projectdir, [
+      "new",
+      "--from",
+      "@pepperize/projen-awscdk-app-ts@0.0.333",
+      "--package-manager=npm",
+      "--no-post",
+    ]);
+
+    // patch the projen version in package.json to match the current version
+    // otherwise, every bump would need to update these snapshots.
+    sanitizeOutput(projectdir);
+
+    // compare generated .projenrc.js to the snapshot
+    const actual = directorySnapshot(projectdir, {
+      excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
+    });
+
+    expect(actual[".projenrc.js"]).toContain(
+      "javascript.NodePackageManager.NPM"
+    );
+  });
+});
+
 test("projen new --from external can use array option", () => {
   withProjectDir((projectdir) => {
     // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
