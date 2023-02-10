@@ -4913,6 +4913,7 @@ addPostBuildJob(id: string, job: Job): void
   * **if** (<code>string</code>)  You can use the if conditional to prevent a job from running unless a condition is met. __*Optional*__
   * **name** (<code>string</code>)  The name of the job displayed on GitHub. __*Optional*__
   * **needs** (<code>Array<string></code>)  Identifies any jobs that must complete successfully before this job will run. __*Optional*__
+  * **strategy** (<code>[github.workflows.JobStrategy](#projen-github-workflows-jobstrategy)</code>)  A strategy creates a build matrix for your jobs. __*Optional*__
   * **runsOn** (<code>Array<string></code>)  The type of machine to run the job on. 
   * **steps** (<code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>)  A job contains a sequence of tasks called steps. 
   * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  A container to run any steps in a job that don't already specify a container. __*Optional*__
@@ -4922,7 +4923,6 @@ addPostBuildJob(id: string, job: Job): void
   * **environment** (<code>any</code>)  The environment that the job references. __*Optional*__
   * **outputs** (<code>Map<string, [github.workflows.JobStepOutput](#projen-github-workflows-jobstepoutput)></code>)  A map of outputs for a job. __*Optional*__
   * **services** (<code>Map<string, [github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)></code>)  Used to host service containers for a job in a workflow. __*Optional*__
-  * **strategy** (<code>[github.workflows.JobStrategy](#projen-github-workflows-jobstrategy)</code>)  A strategy creates a build matrix for your jobs. __*Optional*__
   * **timeoutMinutes** (<code>number</code>)  The maximum number of minutes to let a job run before GitHub automatically cancels it. __*Default*__: 360
   * **tools** (<code>[github.workflows.Tools](#projen-github-workflows-tools)</code>)  Tools required for this job. __*Optional*__
 

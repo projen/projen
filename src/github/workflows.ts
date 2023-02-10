@@ -217,6 +217,7 @@ function renderJobs(
         uses: job.uses,
         with: job.with,
         secrets: job.secrets,
+        strategy: renderJobStrategy(job.strategy),
       };
     }
 

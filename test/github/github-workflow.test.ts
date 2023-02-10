@@ -89,4 +89,33 @@ describe("github-workflow", () => {
 
     expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
   });
+
+  test("workflow job calling a reusable workflow with a strategy matrix", () => {
+    // GIVEN
+    const project = new TestProject();
+
+    // WHEN
+    const workflow = new GithubWorkflow(project.github!, workflowName);
+
+    workflow.addJob("use-a-matrix", {
+      name: "Some reusable workflow",
+      uses: "some-user/example-action.yaml@v1",
+      permissions: {},
+      secrets: "inherit",
+      strategy: {
+        matrix: {
+          domain: {
+            fruit: ["apple", "orange", "banana"],
+          },
+        },
+      },
+      with: {
+        fruit: "${{ matrix.fruit }}",
+      },
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
+  });
 });
