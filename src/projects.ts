@@ -76,26 +76,29 @@ export class Projects {
   private constructor() {}
 }
 
-function createProject(opts: CreateProjectOptions) {
-  const projectType = resolveProjectType(opts.projectFqn);
-
+function resolveModulePath(moduleName: string) {
   // Default project resolution location
-  let mod = "./index";
+  if (moduleName === "projen") {
+    return "./index";
+  }
 
   // External projects need to load the module from the modules directory
-  if (projectType.moduleName !== "projen") {
-    try {
-      mod = path.dirname(
-        require.resolve(path.join(projectType.moduleName, "package.json"), {
-          paths: [process.cwd()],
-        })
-      );
-    } catch (err) {
-      throw new Error(
-        `External project module '${projectType.moduleName}' could not be resolved.`
-      );
-    }
+  try {
+    return path.dirname(
+      require.resolve(path.join(moduleName, "package.json"), {
+        paths: [process.cwd()],
+      })
+    );
+  } catch (err) {
+    throw new Error(
+      `External project module '${moduleName}' could not be resolved.`
+    );
   }
+}
+
+function createProject(opts: CreateProjectOptions) {
+  const projectType = resolveProjectType(opts.projectFqn);
+  const mod = resolveModulePath(projectType.moduleName);
 
   // "dir" is exposed as a top-level option to require users to specify a value for it
   opts.projectOptions.outdir = opts.dir;
@@ -141,7 +144,7 @@ function createProject(opts: CreateProjectOptions) {
         (optionsContext, currentModule) => ({
           ...optionsContext,
           // eslint-disable-next-line @typescript-eslint/no-require-imports
-          [currentModule]: require(currentModule),
+          [currentModule]: require(resolveModulePath(currentModule)),
         }),
         {}
       ),
