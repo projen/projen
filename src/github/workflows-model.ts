@@ -45,6 +45,12 @@ export interface CommonJobDefinition {
    * create a conditional.
    */
   readonly if?: string;
+
+  /**
+   * A strategy creates a build matrix for your jobs. You can define different
+   * variations to run each job in.
+   */
+  readonly strategy?: JobStrategy;
 }
 
 /**
@@ -132,12 +138,6 @@ export interface Job extends CommonJobDefinition {
    * @default 360
    */
   readonly timeoutMinutes?: number;
-
-  /**
-   * A strategy creates a build matrix for your jobs. You can define different
-   * variations to run each job in.
-   */
-  readonly strategy?: JobStrategy;
 
   /**
    * Prevents a workflow run from failing when a job fails. Set to true to
