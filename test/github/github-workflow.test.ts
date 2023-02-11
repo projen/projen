@@ -118,4 +118,64 @@ describe("github-workflow", () => {
 
     expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
   });
+
+  describe("reusable actions", () => {
+    test("can use an action on a step", () => {
+      const project = new TestProject();
+
+      const ghw = new GithubWorkflow(project.github!, workflowName);
+      ghw.addJob("working-dir", {
+        runsOn: ["ubuntu-latest"],
+        permissions: {},
+        steps: [{ uses: "actions/checkout@v3" }],
+      });
+
+      const snapshot = synthSnapshot(project);
+
+      expect(
+        snapshot[`.github/workflows/${workflowName}.yml`]
+      ).toMatchSnapshot();
+    });
+
+    test("can overwrite the action used in a step", () => {
+      const project = new TestProject();
+
+      const ghw = new GithubWorkflow(project.github!, workflowName);
+      ghw.addJob("working-dir", {
+        runsOn: ["ubuntu-latest"],
+        permissions: {},
+        steps: [{ uses: "actions/checkout@v3" }],
+      });
+
+      project.github?.actions.set(
+        "actions/checkout@v3",
+        "replacement/checkout"
+      );
+
+      const snapshot = synthSnapshot(project);
+      const wf = snapshot[`.github/workflows/${workflowName}.yml`];
+
+      expect(wf).not.toContain("actions/checkout@v3");
+      expect(wf).toContain("replacement/checkout");
+    });
+
+    test("can overwrite action without explicitly defining version", () => {
+      const project = new TestProject();
+
+      const ghw = new GithubWorkflow(project.github!, workflowName);
+      ghw.addJob("working-dir", {
+        runsOn: ["ubuntu-latest"],
+        permissions: {},
+        steps: [{ uses: "actions/checkout@v3" }],
+      });
+
+      project.github?.actions.set("actions/checkout", "replacement/checkout");
+
+      const snapshot = synthSnapshot(project);
+      const wf = snapshot[`.github/workflows/${workflowName}.yml`];
+
+      expect(wf).not.toContain("actions/checkout@v3");
+      expect(wf).toContain("replacement/checkout");
+    });
+  });
 });

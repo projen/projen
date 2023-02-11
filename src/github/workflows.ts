@@ -1,5 +1,5 @@
 import { snake } from "case";
-import { GitHub } from "./github";
+import { GitHub, GitHubActionsProvider } from "./github";
 import { GithubCredentials } from "./github-credentials";
 import * as workflows from "./workflows-model";
 import { resolve } from "../_resolve";
@@ -70,6 +70,7 @@ export class GithubWorkflow extends Component {
    */
   public runName?: string;
 
+  private actions: GitHubActionsProvider;
   private events: workflows.Triggers = {};
   private jobs: Record<
     string,
@@ -86,6 +87,7 @@ export class GithubWorkflow extends Component {
     this.name = name;
     this.concurrency = options.concurrency;
     this.projenCredentials = github.projenCredentials;
+    this.actions = github.actions;
 
     const workflowsEnabled = github.workflowsEnabled || options.force;
 
@@ -167,7 +169,7 @@ export class GithubWorkflow extends Component {
       "run-name": this.runName,
       on: snakeCaseKeys(this.events),
       concurrency: this.concurrency,
-      jobs: renderJobs(this.jobs),
+      jobs: renderJobs(this.jobs, this.actions),
     };
   }
 }
@@ -192,7 +194,8 @@ function snakeCaseKeys<T = unknown>(obj: T): T {
 }
 
 function renderJobs(
-  jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>
+  jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>,
+  actions: GitHubActionsProvider
 ) {
   const result: Record<string, unknown> = {};
   for (const [name, job] of Object.entries(jobs)) {
@@ -295,7 +298,7 @@ function renderJobs(
       name: step.name,
       id: step.id,
       if: step.if,
-      uses: step.uses,
+      uses: actions.get(step.uses),
       env: step.env,
       run: step.run,
       with: step.with,
@@ -314,13 +317,6 @@ function arrayOrScalar<T>(arr: T[] | undefined): T | T[] | undefined {
     return arr[0];
   }
   return arr;
-}
-
-export interface IJobProvider {
-  /**
-   * Generates a collection of named GitHub workflow jobs.
-   */
-  renderJobs(): Record<string, workflows.Job>;
 }
 
 function setupTools(tools: workflows.Tools) {

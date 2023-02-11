@@ -1,6 +1,6 @@
 # GitHub
 
-By default, many projects are initialized with `GitHub` component to enabled GitHub as the default provider for CI/CD workflows. See https://docs.github.com/en/actions for more information.
+By default, many projects are initialized with `GitHub` component to enabled GitHub as the default provider for CI/CD workflows. See <https://docs.github.com/en/actions> for more information.
 
 The use of GitHub (and generating corresponding files in `.github`) can be disabled by specifying `github: false` in your project options.
 
@@ -80,13 +80,51 @@ const project = new javascript.NodeProject({
 
 ## Workflows
 
-TODO
-
 See the `GitHub`, `GithubWorkflow`, and `Job` types in the [API
 reference](./api/API.md) for currently available APIs.
 
 Example code of creating a GitHub workflow:
 <https://github.com/projen/projen/blob/65b4194c163f47ba4842981b0c92dbe516be787b/src/github/auto-approve.ts#L67-L105>
+
+### Actions versions
+
+Most workflows included with projen are constraint to a major version, in order for updates to be available immediately.
+However it is a good security practice to lock versions of GitHub Actions down to explicit commit hashes.
+To achieve this, you can define explicit overrides for any action used in workflows.
+
+The replace all occurrences of an action can be overridden, irregardless of the action version:
+
+```ts
+project.github.actions.set("actions/checkout", "actions/checkout@ac59398");
+```
+
+Any use of `actions/checkout` is now changed to this:
+
+```yaml
+steps:
+  - uses: actions/checkout@ac59398
+```
+
+Alternatively, any specific action version can be overridden.
+This can be useful when a specific version of an action must be used due to incompatible changes:
+
+```ts
+project.github.actions.set("actions/checkout@v3", "actions/checkout@ac59398");
+```
+
+Only explicit usages of `actions/checkout@v3` are changed:
+
+```yaml
+steps:
+  # Was: actions/checkout@v3
+  - uses: actions/checkout@ac59398
+
+  # Unchanged:
+  - uses: actions/checkout@v2
+```
+
+Workflow creators are encouraged to use commit hashes and keep them updated, or major versions.
+Sensitive workflow actions should always use commit hashes.
 
 ### Stale workflow
 
