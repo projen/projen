@@ -179,7 +179,7 @@ export class CiConfiguration extends Component {
       this.addStages(...options.stages);
     }
     if (options?.variables) {
-      this.addJobs(options.variables);
+      this.addGlobalVariables(options.variables);
     }
     if (options?.jobs) {
       this.addJobs(options.jobs);
