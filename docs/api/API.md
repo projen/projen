@@ -17073,6 +17073,7 @@ Name | Type | Description
 **noEmitOnError**?🔹 | <code>boolean</code> | Do not emit compiler output files like JavaScript source code, source-maps or declarations if any errors were reported.<br/>__*Default*__: true
 **noFallthroughCasesInSwitch**?🔹 | <code>boolean</code> | Report errors for fallthrough cases in switch statements.<br/>__*Default*__: true
 **noImplicitAny**?🔹 | <code>boolean</code> | In some cases where no type annotations are present, TypeScript will fall back to a type of any for a variable when it cannot infer the type.<br/>__*Default*__: true
+**noImplicitOverride**?🔹 | <code>boolean</code> | Using `noImplicitOverride`, you can ensure that sub-classes never go out of sync as they are required to explicitly declare that they are overriding a member using the `override` keyword.<br/>__*Default*__: false
 **noImplicitReturns**?🔹 | <code>boolean</code> | When enabled, TypeScript will check all code paths in a function to ensure they return a value.<br/>__*Default*__: true
 **noImplicitThis**?🔹 | <code>boolean</code> | Raise error on ‘this’ expressions with an implied ‘any’ type.<br/>__*Default*__: true
 **noPropertyAccessFromIndexSignature**?🔹 | <code>boolean</code> | Raise error on use of the dot syntax to access fields which are not defined.<br/>__*Default*__: true
