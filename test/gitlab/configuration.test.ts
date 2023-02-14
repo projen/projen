@@ -1,3 +1,4 @@
+import * as YAML from "yaml";
 import { CiConfiguration } from "../../src/gitlab";
 import { synthSnapshot, TestProject } from "../util";
 
@@ -105,11 +106,10 @@ test("respected the original format when variables are added to jobs", () => {
       },
     },
   });
-  const snapshot = synthSnapshot(p);
   // THEN
-  expect(snapshot[".gitlab/ci-templates/foo.yml"]).toContain(
-    "AWS_REGION: eu-central-1"
-  );
+  expect(
+    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).build.variables
+  ).toStrictEqual({ AWS_REGION: "eu-central-1" });
 });
 
 test("respect the original format when adding global variables", () => {
@@ -117,15 +117,19 @@ test("respect the original format when adding global variables", () => {
   const p = new TestProject({
     stale: true,
   });
-  const c = new CiConfiguration(p, "foo", {});
+  const c = new CiConfiguration(p, "foo", {
+    variables: { AWS_DEFAULT_OUTPUT: "json" },
+  });
   c.addGlobalVariables({
     AWS_REGION: "eu-central-1",
   });
-  const snapshot = synthSnapshot(p);
   // THEN
-  expect(snapshot[".gitlab/ci-templates/foo.yml"]).toContain(
-    "AWS_REGION: eu-central-1"
-  );
+  expect(
+    YAML.parse(synthSnapshot(p)[".gitlab/ci-templates/foo.yml"]).variables
+  ).toStrictEqual({
+    AWS_DEFAULT_OUTPUT: "json",
+    AWS_REGION: "eu-central-1",
+  });
 });
 
 test("adds correct entries for path-based caching", () => {
