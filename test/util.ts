@@ -77,10 +77,10 @@ export function synthSnapshotWithPost(project: Project) {
 
 export function withProjectDir(
   code: (workdir: string) => void,
-  options: { git?: boolean; chdir?: boolean } = {}
+  options: { git?: boolean; chdir?: boolean; tmpdir?: string } = {}
 ) {
   const origDir = process.cwd();
-  const outdir = mkdtemp();
+  const outdir = options.tmpdir ?? mkdtemp();
   try {
     // create project under "my-project" so that basedir is deterministic
     const projectdir = path.join(outdir, "my-project");

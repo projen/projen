@@ -52,5 +52,5 @@ export function installPackage(baseDir: string, spec: string): string {
  * @returns The string that includes the install command ("npm install ...")
  */
 export function renderInstallCommand(dir: string, module: string): string {
-  return `npm install --save-dev -f --no-package-lock --prefix=${dir} ${module}`;
+  return `npm install --save-dev -f --no-package-lock --prefix="${dir}" ${module}`;
 }
