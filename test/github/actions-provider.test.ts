@@ -61,3 +61,21 @@ describe("override github action", () => {
     }
   );
 });
+
+describe("version-specific override is preferred over general override", () => {
+  const actions = new GitHubActionsProvider();
+  const v1 = `${action}@v1`;
+  const v1WithHash = `${action}@ffffff`;
+  actions.set(v1, v1WithHash);
+  actions.set(action, replacement);
+
+  test(`uses=${v1} is replaced with uses=${v1WithHash}`, () => {
+    expect(actions.get(v1)).toBe(v1WithHash);
+  });
+
+  describe("should be unchanged for", () => {
+    test.each([any, "v1.1", "v2", "main"].map(actionFor))("uses=%s", (uses) => {
+      expect(actions.get(uses)).toBe(replacement);
+    });
+  });
+});

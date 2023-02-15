@@ -137,7 +137,7 @@ describe("github-workflow", () => {
       ).toMatchSnapshot();
     });
 
-    test("can overwrite the action used in a step", () => {
+    test("can override the action used in a step", () => {
       const project = new TestProject();
 
       const ghw = new GithubWorkflow(project.github!, workflowName);
@@ -159,7 +159,7 @@ describe("github-workflow", () => {
       expect(wf).toContain("replacement/checkout");
     });
 
-    test("can overwrite action without explicitly defining version", () => {
+    test("can override action without explicitly defining version", () => {
       const project = new TestProject();
 
       const ghw = new GithubWorkflow(project.github!, workflowName);
@@ -176,6 +176,38 @@ describe("github-workflow", () => {
 
       expect(wf).not.toContain("actions/checkout@v3");
       expect(wf).toContain("replacement/checkout");
+    });
+
+    test("can override multiple versions and the default", () => {
+      const project = new TestProject();
+
+      const ghw = new GithubWorkflow(project.github!, workflowName);
+      ghw.addJob("working-dir", {
+        runsOn: ["ubuntu-latest"],
+        permissions: {},
+        steps: [
+          { uses: "actions/checkout@v2" },
+          { uses: "actions/checkout@v3" },
+        ],
+      });
+
+      project.github?.actions.set(
+        "actions/checkout@v2",
+        "actions/checkout@explicit-v2"
+      );
+      project.github?.actions.set(
+        "actions/checkout",
+        "actions/checkout@generic-override"
+      );
+
+      const snapshot = synthSnapshot(project);
+      const wf = snapshot[`.github/workflows/${workflowName}.yml`];
+
+      expect(wf).toMatchSnapshot();
+      expect(wf).not.toContain("actions/checkout@v2");
+      expect(wf).not.toContain("actions/checkout@v3");
+      expect(wf).toContain("actions/checkout@explicit-v2");
+      expect(wf).toContain("actions/checkout@generic-override");
     });
   });
 });

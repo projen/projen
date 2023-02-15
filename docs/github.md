@@ -106,10 +106,12 @@ steps:
 ```
 
 Alternatively, any specific action version can be overridden.
-This can be useful when a specific version of an action must be used due to incompatible changes:
+This can be useful when a specific version of an action must be used due to incompatible changes.
+Specific overrides take precedence over overrides without a version.
 
 ```ts
 project.github.actions.set("actions/checkout@v3", "actions/checkout@ac59398");
+project.github.actions.set("actions/checkout", "actions/checkout@main");
 ```
 
 Only explicit usages of `actions/checkout@v3` are changed:
@@ -119,8 +121,8 @@ steps:
   # Was: actions/checkout@v3
   - uses: actions/checkout@ac59398
 
-  # Unchanged:
-  - uses: actions/checkout@v2
+  # Was: actions/checkout@v2
+  - uses: actions/checkout@main
 ```
 
 Workflow creators are encouraged to use commit hashes and keep them updated, or major versions.
