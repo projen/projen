@@ -6660,12 +6660,12 @@ new github.GitHubActionsProvider()
 ### Methods
 
 
-#### get(action?)🔹 <a id="projen-github-githubactionsprovider-get"></a>
+#### get(action)🔹 <a id="projen-github-githubactionsprovider-get"></a>
 
 Resolve an action name to the version that should be used, taking into account any overrides.
 
 ```ts
-get(action?: string): string
+get(action: string): string
 ```
 
 * **action** (<code>string</code>)  *No description*
