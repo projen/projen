@@ -114,7 +114,7 @@ project.github.actions.set("actions/checkout@v3", "actions/checkout@ac59398");
 project.github.actions.set("actions/checkout", "actions/checkout@main");
 ```
 
-Only explicit usages of `actions/checkout@v3` are changed:
+Different versions of `actions/checkout` are resolved to different overrides:
 
 ```yaml
 steps:

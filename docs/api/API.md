@@ -6677,8 +6677,11 @@ __Returns__:
 
 Define an override for a given action.
 
-Setting an override for a specific action version will only override the exact same action version.
-To override all usages of an action, do not set version constraint.
+Specify the action name without a version to override all usages of the action.
+You can also override a specific action version, by providing the version string.
+Specific overrides take precedence over overrides without a version.
+
+If an override for the same action name is set multiple times, the last override is used.
 
 ```ts
 set(action: string, override: string): void

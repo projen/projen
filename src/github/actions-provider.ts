@@ -6,15 +6,19 @@ export class GitHubActionsProvider {
 
   /**
    * Define an override for a given action.
-   * Setting an override for a specific action version will only override the exact same action version.
-   * To override all usages of an action, do not set version constraint.
+   *
+   * Specify the action name without a version to override all usages of the action.
+   * You can also override a specific action version, by providing the version string.
+   * Specific overrides take precedence over overrides without a version.
+   *
+   * If an override for the same action name is set multiple times, the last override is used.
    *
    * @example
-   * // Force any use of `actions/checkout` to use a specific commit
-   * project.github.actions.set("actions/checkout", "actions/checkout@ac59398");
+   * // Force any use of `actions/checkout` to use a pin a specific commit
+   * project.github.actions.set("actions/checkout", "actions/checkout@aaaaaa");
    *
-   * // Only replace usage of `v3` with a specific commit
-   * project.github.actions.set("actions/checkout@v3", "actions/checkout@ac59398");
+   * // But pin usage of `v3` to a different commit
+   * project.github.actions.set("actions/checkout@v3", "actions/checkout@ffffff");
    */
   public set(action: string, override: string): void {
     this.actions.set(action, override);
