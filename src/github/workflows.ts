@@ -299,7 +299,7 @@ function renderJobs(
       name: step.name,
       id: step.id,
       if: step.if,
-      uses: actions.get(step.uses),
+      uses: step.uses && actions.get(step.uses),
       env: step.env,
       run: step.run,
       with: step.with,

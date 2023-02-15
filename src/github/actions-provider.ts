@@ -24,9 +24,9 @@ export class GitHubActionsProvider {
    * Resolve an action name to the version that should be used,
    * taking into account any overrides.
    */
-  public get(action?: string): string | undefined {
-    const parts = action?.split("@", 1);
+  public get(action: string): string {
+    const parts = action.split("@", 1);
     // return this.actions.get(parts?.[0]) ?? this.actions.get(action) ?? action;
-    return this.actions.get(action) ?? this.actions.get(parts?.[0]) ?? action;
+    return this.actions.get(action) ?? this.actions.get(parts[0]) ?? action;
   }
 }
