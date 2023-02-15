@@ -235,7 +235,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
   } else {
     // do not overwrite existing installation
     exec(
-      `npm ls --prefix=${baseDir} --depth=0 --pattern projen || ${installCommand}`,
+      `npm ls --prefix="${baseDir}" --depth=0 --pattern projen || ${installCommand}`,
       { cwd: baseDir }
     );
   }

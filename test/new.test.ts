@@ -2,10 +2,11 @@
 // and compare against a golden snapshot.
 import { execSync } from "child_process";
 import { join } from "path";
-import { pathExistsSync } from "fs-extra";
+import { mkdirSync, pathExistsSync } from "fs-extra";
 import {
   directorySnapshot,
   execProjenCLI,
+  mkdtemp,
   sanitizeOutput,
   synthSnapshot,
   synthSnapshotWithPost,
@@ -390,6 +391,30 @@ test("projen new node --outdir path/to/mydir", () => {
     expect(targetDirSnapshot[".projenrc.js"]).toMatchSnapshot();
     expect(targetDirSnapshot["package.json"]).toBeDefined();
   });
+});
+
+test("can create external  project in directory path containing a space", () => {
+  const pathWithSpace = join(mkdtemp(), "path with space");
+  mkdirSync(pathWithSpace, { recursive: true });
+
+  withProjectDir(
+    (projectdir) => {
+      execProjenCLI(projectdir, [
+        "new",
+        "--from",
+        "@pepperize/projen-awscdk-app-ts@latest",
+        "--no-post",
+      ]);
+      const actual = directorySnapshot(projectdir, {
+        excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
+      });
+      expect(actual[".projenrc.js"]).toBeDefined();
+    },
+    {
+      chdir: true,
+      tmpdir: pathWithSpace,
+    }
+  );
 });
 
 describe("git", () => {
