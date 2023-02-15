@@ -2,7 +2,7 @@
  * Manage the versions used for GitHub Actions used in steps
  */
 export class GitHubActionsProvider {
-  private actions = new Map();
+  private actions = new Map<string, string>();
 
   /**
    * Define an override for a given action.
