@@ -1,5 +1,6 @@
 import { snake } from "case";
-import { GitHub, GitHubActionsProvider } from "./github";
+import { GitHubActionsProvider } from "./actions-provider";
+import { GitHub } from "./github";
 import { GithubCredentials } from "./github-credentials";
 import * as workflows from "./workflows-model";
 import { resolve } from "../_resolve";

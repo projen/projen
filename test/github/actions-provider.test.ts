@@ -1,4 +1,4 @@
-import { GitHubActionsProvider } from "../../src/github";
+import { GitHubActionsProvider } from "../../src/github/actions-provider";
 
 const action = "action/name";
 const replacement = "replacement-action@explicit";
