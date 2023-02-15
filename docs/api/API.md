@@ -80,6 +80,7 @@ Name|Description
 [github.AutoMerge](#projen-github-automerge)|Sets up mergify to merging approved pull requests.
 [github.Dependabot](#projen-github-dependabot)|Defines dependabot configuration for node projects.
 [github.GitHub](#projen-github-github)|*No description*
+[github.GitHubActionsProvider](#projen-github-githubactionsprovider)|Manage the versions used for GitHub Actions used in steps.
 [github.GitHubProject](#projen-github-githubproject)|GitHub-based project.
 [github.GithubCredentials](#projen-github-githubcredentials)|Represents a method of providing GitHub API access for projen workflows.
 [github.GithubWorkflow](#projen-github-githubworkflow)|Workflow for GitHub.
@@ -411,7 +412,6 @@ Name|Description
 [IResolvable](#projen-iresolvable)|*No description*
 [IResolver](#projen-iresolver)|API for resolving tokens when synthesizing file content.
 [github.IAddConditionsLater](#projen-github-iaddconditionslater)|*No description*
-[github.IJobProvider](#projen-github-ijobprovider)|*No description*
 [python.IPackageProvider](#projen-python-ipackageprovider)|*No description*
 [python.IPythonDeps](#projen-python-ipythondeps)|*No description*
 [python.IPythonEnv](#projen-python-ipythonenv)|*No description*
@@ -6555,6 +6555,7 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**actions**🔹 | <code>[github.GitHubActionsProvider](#projen-github-githubactionsprovider)</code> | <span></span>
 **projenCredentials**🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | GitHub API authentication method used by projen workflows.
 **workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | All workflows.
 **workflowsEnabled**🔹 | <code>boolean</code> | Are workflows enabled?
@@ -6635,6 +6636,62 @@ static of(project: Project): GitHub
 
 __Returns__:
 * <code>[github.GitHub](#projen-github-github)</code>
+
+
+
+## class GitHubActionsProvider 🔹 <a id="projen-github-githubactionsprovider"></a>
+
+Manage the versions used for GitHub Actions used in steps.
+
+__Submodule__: github
+
+
+### Initializer
+
+
+
+
+```ts
+new github.GitHubActionsProvider()
+```
+
+
+
+### Methods
+
+
+#### get(action)🔹 <a id="projen-github-githubactionsprovider-get"></a>
+
+Resolve an action name to the version that should be used, taking into account any overrides.
+
+```ts
+get(action: string): string
+```
+
+* **action** (<code>string</code>)  *No description*
+
+__Returns__:
+* <code>string</code>
+
+#### set(action, override)🔹 <a id="projen-github-githubactionsprovider-set"></a>
+
+Define an override for a given action.
+
+Specify the action name without a version to override all usages of the action.
+You can also override a specific action version, by providing the version string.
+Specific overrides take precedence over overrides without a version.
+
+If an override for the same action name is set multiple times, the last override is used.
+
+```ts
+set(action: string, override: string): void
+```
+
+* **action** (<code>string</code>)  *No description*
+* **override** (<code>string</code>)  *No description*
+
+
+
 
 
 
@@ -15501,27 +15558,6 @@ render(): Array<string>
 
 __Returns__:
 * <code>Array<string></code>
-
-
-
-## interface IJobProvider 🔹 <a id="projen-github-ijobprovider"></a>
-
-
-
-### Methods
-
-
-#### renderJobs()🔹 <a id="projen-github-ijobprovider-renderjobs"></a>
-
-Generates a collection of named GitHub workflow jobs.
-
-```ts
-renderJobs(): Map<string, Job>
-```
-
-
-__Returns__:
-* <code>Map<string, [github.workflows.Job](#projen-github-workflows-job)></code>
 
 
 
