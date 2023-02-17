@@ -7,6 +7,7 @@ import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
 import { GithubWorkflow } from "./workflows";
 import { Component } from "../component";
 import { Project } from "../project";
+import { GitAttributesFile } from "../gitattributes";
 
 export interface GitHubOptions {
   /**
@@ -63,11 +64,11 @@ export interface GitHubOptions {
   readonly projenTokenSecret?: string;
 
   /**
-   * Whether LFS is used in this repository or not
+   * File patterns to mark as stored in Git LFS
    *
-   * @default false
+   * @default - Git LFS disabled
    */
-  readonly lfs?: boolean;
+  readonly lfsPatterns?: string[];
 }
 
 export class GitHub extends Component {
@@ -112,7 +113,7 @@ export class GitHub extends Component {
     this.actions = new GitHubActionsProvider();
 
     this.workflowsEnabled = options.workflows ?? true;
-    this.lfs = options.lfs ?? false;
+    this.lfs = options.lfsPatterns !== undefined;
 
     if (options.projenCredentials && options.projenTokenSecret) {
       throw new Error(
@@ -138,6 +139,15 @@ export class GitHub extends Component {
 
     if (options.pullRequestLint ?? true) {
       new PullRequestLint(this, options.pullRequestLintOptions);
+    }
+
+    if (options.lfsPatterns && options.lfsPatterns.length > 0) {
+      const attrs = GitAttributesFile.of(this.project)
+      if (!attrs) {
+        for (const pattern of options.lfsPatterns) {
+          project.gitattributes.addAttributes(pattern, 'filter=lfs', 'diff=lfs', 'merge=lfs', '-text');
+        }
+      }
     }
   }
 

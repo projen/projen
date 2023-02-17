@@ -71,7 +71,7 @@ describe("task-workflow", () => {
   test('enabling LFS on a GitHub repo adds the lfs property to workflows', () => {
     const project = new TestProject({
       githubOptions: {
-        lfs: true,
+        lfsPatterns: ['*.bin'],
       },
     });
 
@@ -83,8 +83,12 @@ describe("task-workflow", () => {
 
     const snapshot = synthSnapshot(project);
 
+    // LFS is enabled in the workflows
     expect(snapshot[".github/workflows/task-workflow.yml"]).toContain(
-      "lfs: true"
+      "lfs: true",
+    );
+    expect(snapshot[".gitattributes"]).toContain(
+      "*.bin filter=lfs",
     );
   });
 

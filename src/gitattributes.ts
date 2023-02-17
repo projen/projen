@@ -7,6 +7,19 @@ import { Project } from "./project";
  * @see https://git-scm.com/docs/gitattributes
  */
 export class GitAttributesFile extends FileBase {
+  public static of(project: Project): GitAttributesFile | undefined {
+    const existing = project.root.tryFindFile(".gitattributes");
+    if (!existing) {
+      return undefined;
+    }
+
+    if (!(existing instanceof GitAttributesFile)) {
+      return undefined;
+    }
+
+    return existing;
+  }
+
   private readonly attributes = new Map<string, Set<string>>();
 
   public constructor(project: Project) {
