@@ -1,6 +1,3 @@
-import { Component } from "../component";
-import { GitAttributesFile } from "../gitattributes";
-import { Project } from "../project";
 import { GitHubActionsProvider } from "./actions-provider";
 import { Dependabot, DependabotOptions } from "./dependabot";
 import { GithubCredentials } from "./github-credentials";
@@ -8,6 +5,9 @@ import { Mergify, MergifyOptions } from "./mergify";
 import { PullRequestTemplate } from "./pr-template";
 import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
 import { GithubWorkflow } from "./workflows";
+import { Component } from "../component";
+import { GitAttributesFile } from "../gitattributes";
+import { Project } from "../project";
 
 export interface GitHubOptions {
   /**
