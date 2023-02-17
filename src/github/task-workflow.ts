@@ -1,3 +1,4 @@
+import { Task } from "../task";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { GitHub } from "./github";
 import { WorkflowActions } from "./workflow-actions";
@@ -10,7 +11,6 @@ import {
   JobStepOutput,
   Triggers,
 } from "./workflows-model";
-import { Task } from "../task";
 
 const DEFAULT_JOB_ID = "build";
 
@@ -145,12 +145,12 @@ export class TaskWorkflow extends GithubWorkflow {
     });
 
     const preCheckoutSteps = options.preCheckoutSteps ?? [];
-    const checkoutWith = options.checkoutWith
-      ? { with: options.checkoutWith }
-      : {};
-    const checkoutLfs = this.github.lfs
-      ? { lfs: true }
-      : {};
+
+    const checkoutWith: Record<string, any> = {};
+    Object.assign(checkoutWith, options.checkoutWith ?? {});
+    if (this.github.lfs) {
+      checkoutWith.lfs = true;
+    }
 
     const preBuildSteps = options.preBuildSteps ?? [];
     const postBuildSteps = options.postBuildSteps ?? [];
@@ -184,8 +184,9 @@ export class TaskWorkflow extends GithubWorkflow {
         {
           name: "Checkout",
           uses: "actions/checkout@v3",
-          ...checkoutWith,
-          ...checkoutLfs,
+          ...(Object.keys(checkoutWith).length > 0
+            ? { with: checkoutWith }
+            : {}),
         },
 
         // sets git identity so we can push later

@@ -72,7 +72,7 @@ export class WorkflowActions {
           token: options.token,
           ref: options.ref,
           repository: options.repository,
-          ...options.lfs ? { lfs: true } : {},
+          ...(options.lfs ? { lfs: true } : {}),
         },
       },
       {

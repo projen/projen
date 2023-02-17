@@ -1094,6 +1094,19 @@ protected synthesizeContent(_: IResolver): string
 __Returns__:
 * <code>string</code>
 
+#### *static* of(project)🔹 <a id="projen-gitattributesfile-of"></a>
+
+
+
+```ts
+static of(project: Project): GitAttributesFile
+```
+
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
+
+__Returns__:
+* <code>[GitAttributesFile](#projen-gitattributesfile)</code>
+
 
 
 ## class Gitpod 🔹 <a id="projen-gitpod"></a>
@@ -6540,6 +6553,7 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  *No description*
+  * **lfsPatterns** (<code>Array<string></code>)  File patterns to mark as stored in Git LFS. __*Default*__: Git LFS disabled
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for Mergify. __*Default*__: default options
   * **projenCredentials** (<code>[github.GithubCredentials](#projen-github-githubcredentials)</code>)  Choose a method of providing GitHub API access for projen workflows. __*Default*__: use a personal access token named PROJEN_GITHUB_TOKEN
@@ -6556,6 +6570,7 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 Name | Type | Description 
 -----|------|-------------
 **actions**🔹 | <code>[github.GitHubActionsProvider](#projen-github-githubactionsprovider)</code> | <span></span>
+**lfs**🔹 | <code>boolean</code> | Whether LFS is enabled on the repository.
 **projenCredentials**🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | GitHub API authentication method used by projen workflows.
 **workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | All workflows.
 **workflowsEnabled**🔹 | <code>boolean</code> | Are workflows enabled?
@@ -15435,6 +15450,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**lfsPatterns**?🔹 | <code>Array<string></code> | File patterns to mark as stored in Git LFS.<br/>__*Default*__: Git LFS disabled
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for Mergify.<br/>__*Default*__: default options
 **projenCredentials**?🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | Choose a method of providing GitHub API access for projen workflows.<br/>__*Default*__: use a personal access token named PROJEN_GITHUB_TOKEN

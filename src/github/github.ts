@@ -1,3 +1,6 @@
+import { Component } from "../component";
+import { GitAttributesFile } from "../gitattributes";
+import { Project } from "../project";
 import { GitHubActionsProvider } from "./actions-provider";
 import { Dependabot, DependabotOptions } from "./dependabot";
 import { GithubCredentials } from "./github-credentials";
@@ -5,9 +8,6 @@ import { Mergify, MergifyOptions } from "./mergify";
 import { PullRequestTemplate } from "./pr-template";
 import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
 import { GithubWorkflow } from "./workflows";
-import { Component } from "../component";
-import { Project } from "../project";
-import { GitAttributesFile } from "../gitattributes";
 
 export interface GitHubOptions {
   /**
@@ -142,11 +142,20 @@ export class GitHub extends Component {
     }
 
     if (options.lfsPatterns && options.lfsPatterns.length > 0) {
-      const attrs = GitAttributesFile.of(this.project)
+      const attrs = GitAttributesFile.of(this.project);
       if (!attrs) {
-        for (const pattern of options.lfsPatterns) {
-          project.gitattributes.addAttributes(pattern, 'filter=lfs', 'diff=lfs', 'merge=lfs', '-text');
-        }
+        throw new Error(
+          "Cannot add lfsPatterns: no .gitattributes file found in project"
+        );
+      }
+      for (const pattern of options.lfsPatterns) {
+        attrs.addAttributes(
+          pattern,
+          "filter=lfs",
+          "diff=lfs",
+          "merge=lfs",
+          "-text"
+        );
       }
     }
   }

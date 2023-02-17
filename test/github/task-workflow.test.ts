@@ -68,10 +68,10 @@ describe("task-workflow", () => {
     );
   });
 
-  test('enabling LFS on a GitHub repo adds the lfs property to workflows', () => {
+  test("enabling LFS on a GitHub repo adds the lfs property to workflows", () => {
     const project = new TestProject({
       githubOptions: {
-        lfsPatterns: ['*.bin'],
+        lfsPatterns: ["*.bin"],
       },
     });
 
@@ -85,11 +85,9 @@ describe("task-workflow", () => {
 
     // LFS is enabled in the workflows
     expect(snapshot[".github/workflows/task-workflow.yml"]).toContain(
-      "lfs: true",
+      "lfs: true"
     );
-    expect(snapshot[".gitattributes"]).toContain(
-      "*.bin filter=lfs",
-    );
+    expect(snapshot[".gitattributes"]).toContain("*.bin filter=lfs");
   });
 
   test("with custom runner, multiple labels", () => {

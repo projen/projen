@@ -301,7 +301,7 @@ export class UpgradeDependencies extends Component {
 
     const github = GitHub.of(this.project);
     if (!github) {
-      throw new Error('UpgradeDependencies must be used in a GitHub project');
+      throw new Error("UpgradeDependencies must be used in a GitHub project");
     }
 
     const steps: workflows.JobStep[] = [
@@ -309,7 +309,7 @@ export class UpgradeDependencies extends Component {
         name: "Checkout",
         uses: "actions/checkout@v3",
         with: branch ? { ref: branch } : undefined,
-        ...github.lfs ? { lfs: true } : {},
+        ...(github.lfs ? { lfs: true } : {}),
       },
       ...this._project.renderWorkflowSetup({ mutable: false }),
       {

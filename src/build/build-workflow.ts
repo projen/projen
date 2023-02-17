@@ -294,7 +294,7 @@ export class BuildWorkflow extends Component {
         with: {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
-          ...this.github.lfs ? { lfs: true } : {},
+          ...(this.github.lfs ? { lfs: true } : {}),
         },
       });
     }
@@ -363,7 +363,7 @@ export class BuildWorkflow extends Component {
         with: {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
-          ...this.github.lfs ? { lfs: true } : {},
+          ...(this.github.lfs ? { lfs: true } : {}),
         },
       },
 
