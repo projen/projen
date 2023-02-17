@@ -1096,7 +1096,7 @@ __Returns__:
 
 #### *static* of(project)🔹 <a id="projen-gitattributesfile-of"></a>
 
-
+Return the gitattributes file for the given repository.
 
 ```ts
 static of(project: Project): GitAttributesFile
