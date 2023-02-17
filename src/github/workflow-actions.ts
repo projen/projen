@@ -72,6 +72,7 @@ export class WorkflowActions {
           token: options.token,
           ref: options.ref,
           repository: options.repository,
+          ...options.lfs ? { lfs: true } : {},
         },
       },
       {
@@ -128,6 +129,13 @@ export interface CheckoutWithPatchOptions {
    * @default - the default repository is implicitly used
    */
   readonly repository?: string;
+
+  /**
+   * Whether LFS is enabled for the GitHub repository
+   *
+   * @default false
+   */
+  readonly lfs?: boolean;
 }
 
 /**

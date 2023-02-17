@@ -366,7 +366,7 @@ test("python project can define an array option", () => {
           module_name=\\"my_project\\",
           name=\\"my-project\\",
           version=\\"0.1.0\\",
-          deps=[\\"python@^3.9\\"],
+          deps=\\"python@^3.9\\",
       )
 
       project.synth()"

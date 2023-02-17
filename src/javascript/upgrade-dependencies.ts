@@ -299,11 +299,17 @@ export class UpgradeDependencies extends Component {
       contents: workflows.JobPermission.READ,
     };
 
+    const github = GitHub.of(this.project);
+    if (!github) {
+      throw new Error('UpgradeDependencies must be used in a GitHub project');
+    }
+
     const steps: workflows.JobStep[] = [
       {
         name: "Checkout",
         uses: "actions/checkout@v3",
         with: branch ? { ref: branch } : undefined,
+        ...github.lfs ? { lfs: true } : {},
       },
       ...this._project.renderWorkflowSetup({ mutable: false }),
       {

@@ -61,6 +61,13 @@ export interface GitHubOptions {
    * @deprecated - use `projenCredentials`
    */
   readonly projenTokenSecret?: string;
+
+  /**
+   * Whether LFS is used in this repository or not
+   *
+   * @default false
+   */
+  readonly lfs?: boolean;
 }
 
 export class GitHub extends Component {
@@ -94,12 +101,18 @@ export class GitHub extends Component {
    */
   public readonly actions: GitHubActionsProvider;
 
+  /**
+   * Whether LFS is enabled on the repository
+   */
+  public readonly lfs: boolean;
+
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
 
     this.actions = new GitHubActionsProvider();
 
     this.workflowsEnabled = options.workflows ?? true;
+    this.lfs = options.lfs ?? false;
 
     if (options.projenCredentials && options.projenTokenSecret) {
       throw new Error(

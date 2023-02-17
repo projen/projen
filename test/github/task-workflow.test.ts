@@ -68,6 +68,26 @@ describe("task-workflow", () => {
     );
   });
 
+  test('enabling LFS on a GitHub repo adds the lfs property to workflows', () => {
+    const project = new TestProject({
+      githubOptions: {
+        lfs: true,
+      },
+    });
+
+    new TaskWorkflow(project.github!, {
+      name: "task-workflow",
+      task,
+      permissions: {},
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot[".github/workflows/task-workflow.yml"]).toContain(
+      "lfs: true"
+    );
+  });
+
   test("with custom runner, multiple labels", () => {
     const project = new TestProject();
 

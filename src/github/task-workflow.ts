@@ -148,6 +148,10 @@ export class TaskWorkflow extends GithubWorkflow {
     const checkoutWith = options.checkoutWith
       ? { with: options.checkoutWith }
       : {};
+    const checkoutLfs = this.github.lfs
+      ? { lfs: true }
+      : {};
+
     const preBuildSteps = options.preBuildSteps ?? [];
     const postBuildSteps = options.postBuildSteps ?? [];
     const gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
@@ -181,6 +185,7 @@ export class TaskWorkflow extends GithubWorkflow {
           name: "Checkout",
           uses: "actions/checkout@v3",
           ...checkoutWith,
+          ...checkoutLfs,
         },
 
         // sets git identity so we can push later
