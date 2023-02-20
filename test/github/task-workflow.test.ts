@@ -70,7 +70,7 @@ describe("task-workflow", () => {
 
   test("enabling LFS on a GitHub repo adds the lfs property to workflows", () => {
     const project = new TestProject({
-      githubOptions: {
+      gitOptions: {
         lfsPatterns: ["*.bin"],
       },
     });

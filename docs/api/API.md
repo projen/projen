@@ -166,6 +166,7 @@ Name|Description
 [DockerComposeVolumeConfig](#projen-dockercomposevolumeconfig)|Volume configuration.
 [DockerComposeVolumeMount](#projen-dockercomposevolumemount)|Service volume mounting information.
 [FileBaseOptions](#projen-filebaseoptions)|*No description*
+[GitOptions](#projen-gitoptions)|Git configuration options.
 [GitpodOptions](#projen-gitpodoptions)|Constructor options for the Gitpod component.
 [GitpodPort](#projen-gitpodport)|Options for an exposed port on Gitpod.
 [GitpodPrebuilds](#projen-gitpodprebuilds)|Configure the Gitpod App for prebuilds.
@@ -1064,6 +1065,14 @@ new GitAttributesFile(project: Project)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 
 
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**hasLfsPatterns**🔹 | <code>boolean</code> | Whether the current gitattributes file has any LFS patterns.
+
 ### Methods
 
 
@@ -1081,6 +1090,19 @@ addAttributes(glob: string, ...attributes: string[]): void
 
 
 
+#### addLfsPattern(glob)🔹 <a id="projen-gitattributesfile-addlfspattern"></a>
+
+Add attributes necessary to mark these files as stored in LFS.
+
+```ts
+addLfsPattern(glob: string): void
+```
+
+* **glob** (<code>string</code>)  *No description*
+
+
+
+
 #### protected synthesizeContent(_)🔹 <a id="projen-gitattributesfile-synthesizecontent"></a>
 
 Implemented by derived classes and returns the contents of the file to emit.
@@ -1093,19 +1115,6 @@ protected synthesizeContent(_: IResolver): string
 
 __Returns__:
 * <code>string</code>
-
-#### *static* of(project)🔹 <a id="projen-gitattributesfile-of"></a>
-
-
-
-```ts
-static of(project: Project): GitAttributesFile
-```
-
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-
-__Returns__:
-* <code>[GitAttributesFile](#projen-gitattributesfile)</code>
 
 
 
@@ -2040,6 +2049,7 @@ new Project(options: ProjectOptions)
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -3449,6 +3459,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 * **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -3919,6 +3930,7 @@ new awscdk.AwsCdkJavaApp(options: AwsCdkJavaAppOptions)
 * **options** (<code>[awscdk.AwsCdkJavaAppOptions](#projen-awscdk-awscdkjavaappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -4030,6 +4042,7 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
 * **options** (<code>[awscdk.AwsCdkPythonAppOptions](#projen-awscdk-awscdkpythonappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -4134,6 +4147,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 * **options** (<code>[awscdk.AwsCdkTypeScriptAppOptions](#projen-awscdk-awscdktypescriptappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -4443,6 +4457,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 * **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -5068,6 +5083,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
 * **options** (<code>[cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -5325,6 +5341,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
 * **options** (<code>[cdk.JsiiProjectOptions](#projen-cdk-jsiiprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -5639,6 +5656,7 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
 * **options** (<code>[cdk8s.Cdk8sPythonOptions](#projen-cdk8s-cdk8spythonoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -5735,6 +5753,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 * **options** (<code>[cdk8s.Cdk8sTypeScriptAppOptions](#projen-cdk8s-cdk8stypescriptappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -5916,6 +5935,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 * **options** (<code>[cdk8s.ConstructLibraryCdk8sOptions](#projen-cdk8s-constructlibrarycdk8soptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -6156,6 +6176,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
 * **options** (<code>[cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -6553,7 +6574,7 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[github.GitHubOptions](#projen-github-githuboptions)</code>)  *No description*
-  * **lfsPatterns** (<code>Array<string></code>)  File patterns to mark as stored in Git LFS. __*Default*__: Git LFS disabled
+  * **downloadLfs** (<code>boolean</code>)  Download files in LFS in workflows. __*Default*__: true if the associated project has `lfsPatterns`, `false` otherwise
   * **mergify** (<code>boolean</code>)  Whether mergify should be enabled on this repository or not. __*Default*__: true
   * **mergifyOptions** (<code>[github.MergifyOptions](#projen-github-mergifyoptions)</code>)  Options for Mergify. __*Default*__: default options
   * **projenCredentials** (<code>[github.GithubCredentials](#projen-github-githubcredentials)</code>)  Choose a method of providing GitHub API access for projen workflows. __*Default*__: use a personal access token named PROJEN_GITHUB_TOKEN
@@ -6570,7 +6591,7 @@ new github.GitHub(project: Project, options?: GitHubOptions)
 Name | Type | Description 
 -----|------|-------------
 **actions**🔹 | <code>[github.GitHubActionsProvider](#projen-github-githubactionsprovider)</code> | <span></span>
-**lfs**🔹 | <code>boolean</code> | Whether LFS is enabled on the repository.
+**downloadLfs**🔹 | <code>boolean</code> | Whether downloading from LFS is enabled for this GitHub project.
 **projenCredentials**🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | GitHub API authentication method used by projen workflows.
 **workflows**🔹 | <code>Array<[github.GithubWorkflow](#projen-github-githubworkflow)></code> | All workflows.
 **workflowsEnabled**🔹 | <code>boolean</code> | Are workflows enabled?
@@ -6730,6 +6751,7 @@ new github.GitHubProject(options: GitHubProjectOptions)
 * **options** (<code>[github.GitHubProjectOptions](#projen-github-githubprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -7137,6 +7159,7 @@ new github.TaskWorkflow(github: GitHub, options: TaskWorkflowOptions)
   * **checkoutWith** (<code>Map<string, any></code>)  Override for the `with` property of the source code checkout step. __*Default*__: not set
   * **condition** (<code>string</code>)  Adds an 'if' condition to the workflow. __*Optional*__
   * **container** (<code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code>)  *No description* __*Default*__: default image
+  * **downloadLfs** (<code>boolean</code>)  Whether to download files from Git LFS for this workflow. __*Default*__: Use the setting on the corresponding GitHub project
   * **env** (<code>Map<string, string></code>)  Workflow environment variables. __*Default*__: {}
   * **gitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity to use in this workflow. __*Optional*__
   * **jobId** (<code>string</code>)  The primary job id. __*Default*__: "build"
@@ -7411,6 +7434,7 @@ new java.JavaProject(options: JavaProjectOptions)
 * **options** (<code>[java.JavaProjectOptions](#projen-java-javaprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -8462,6 +8486,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
 * **options** (<code>[javascript.NodeProjectOptions](#projen-javascript-nodeprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -9498,6 +9523,7 @@ new python.PythonProject(options: PythonProjectOptions)
 * **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -10291,6 +10317,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -10445,6 +10472,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -10599,6 +10627,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -11114,6 +11143,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -11266,6 +11296,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -11490,6 +11521,7 @@ new web.ReactProject(options: ReactProjectOptions)
 * **options** (<code>[web.ReactProjectOptions](#projen-web-reactprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -11684,6 +11716,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 * **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
   * **parent** (<code>[Project](#projen-project)</code>)  The parent project, if this project is part of a bigger project. __*Optional*__
@@ -12116,6 +12149,19 @@ Name | Type | Description
 **executable**?🔹 | <code>boolean</code> | Whether the generated file should be marked as executable.<br/>__*Default*__: false
 **marker**?🔹 | <code>boolean</code> | Adds the projen marker to the file.<br/>__*Default*__: marker will be included as long as the project is not ejected
 **readonly**?🔹 | <code>boolean</code> | Whether the generated file should be readonly.<br/>__*Default*__: true
+
+
+
+## struct GitOptions 🔹 <a id="projen-gitoptions"></a>
+
+
+Git configuration options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**lfsPatterns**?🔹 | <code>Array<string></code> | File patterns to mark as stored in Git LFS.<br/>__*Default*__: No files stored in LFS
 
 
 
@@ -12566,6 +12612,7 @@ Name | Type | Description
 -----|------|-------------
 **name**🔹 | <code>string</code> | This is the name of your project.
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
@@ -13014,6 +13061,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -13194,6 +13242,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **distdir**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
 **featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
@@ -13285,6 +13334,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
 **featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
@@ -13394,6 +13444,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -13603,6 +13654,7 @@ Name | Type | Description
 **eslint**?⚠️ | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?⚠️ | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?⚠️ | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitOptions**?⚠️ | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?⚠️ | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?⚠️ | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -14030,6 +14082,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -14298,6 +14351,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -14529,6 +14583,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
@@ -14633,6 +14688,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -14795,6 +14851,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -14987,6 +15044,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -15450,7 +15508,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**lfsPatterns**?🔹 | <code>Array<string></code> | File patterns to mark as stored in Git LFS.<br/>__*Default*__: Git LFS disabled
+**downloadLfs**?🔹 | <code>boolean</code> | Download files in LFS in workflows.<br/>__*Default*__: true if the associated project has `lfsPatterns`, `false` otherwise
 **mergify**?🔹 | <code>boolean</code> | Whether mergify should be enabled on this repository or not.<br/>__*Default*__: true
 **mergifyOptions**?🔹 | <code>[github.MergifyOptions](#projen-github-mergifyoptions)</code> | Options for Mergify.<br/>__*Default*__: default options
 **projenCredentials**?🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | Choose a method of providing GitHub API access for projen workflows.<br/>__*Default*__: use a personal access token named PROJEN_GITHUB_TOKEN
@@ -15477,6 +15535,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
@@ -15728,6 +15787,7 @@ Name | Type | Description
 **checkoutWith**?🔹 | <code>Map<string, any></code> | Override for the `with` property of the source code checkout step.<br/>__*Default*__: not set
 **condition**?🔹 | <code>string</code> | Adds an 'if' condition to the workflow.<br/>__*Optional*__
 **container**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | __*Default*__: default image
+**downloadLfs**?🔹 | <code>boolean</code> | Whether to download files from Git LFS for this workflow.<br/>__*Default*__: Use the setting on the corresponding GitHub project
 **env**?🔹 | <code>Map<string, string></code> | Workflow environment variables.<br/>__*Default*__: {}
 **gitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use in this workflow.<br/>__*Optional*__
 **jobId**?🔹 | <code>string</code> | The primary job id.<br/>__*Default*__: "build"
@@ -16306,6 +16366,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **distdir**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
@@ -16360,6 +16421,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **distdir**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
@@ -16877,6 +16939,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -17470,6 +17533,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitpod**?🔹 | <code>boolean</code> | Add a Gitpod development environment.<br/>__*Default*__: false
@@ -18030,6 +18094,7 @@ Name | Type | Description
 **entrypointTypes**?⚠️ | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?⚠️ | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?⚠️ | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitOptions**?⚠️ | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?⚠️ | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?⚠️ | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?⚠️ | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -18174,6 +18239,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -18424,6 +18490,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -18562,6 +18629,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -18730,6 +18798,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__
@@ -18897,6 +18966,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
 **gitignore**?🔹 | <code>Array<string></code> | Additional entries to .gitignore.<br/>__*Optional*__

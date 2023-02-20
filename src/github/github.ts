@@ -1,6 +1,3 @@
-import { Component } from "../component";
-import { GitAttributesFile } from "../gitattributes";
-import { Project } from "../project";
 import { GitHubActionsProvider } from "./actions-provider";
 import { Dependabot, DependabotOptions } from "./dependabot";
 import { GithubCredentials } from "./github-credentials";
@@ -8,6 +5,8 @@ import { Mergify, MergifyOptions } from "./mergify";
 import { PullRequestTemplate } from "./pr-template";
 import { PullRequestLint, PullRequestLintOptions } from "./pull-request-lint";
 import { GithubWorkflow } from "./workflows";
+import { Component } from "../component";
+import { Project } from "../project";
 
 export interface GitHubOptions {
   /**
@@ -64,11 +63,11 @@ export interface GitHubOptions {
   readonly projenTokenSecret?: string;
 
   /**
-   * File patterns to mark as stored in Git LFS
+   * Download files in LFS in workflows
    *
-   * @default - Git LFS disabled
+   * @default true if the associated project has `lfsPatterns`, `false` otherwise
    */
-  readonly lfsPatterns?: string[];
+  readonly downloadLfs?: boolean;
 }
 
 export class GitHub extends Component {
@@ -102,10 +101,7 @@ export class GitHub extends Component {
    */
   public readonly actions: GitHubActionsProvider;
 
-  /**
-   * Whether LFS is enabled on the repository
-   */
-  public readonly lfs: boolean;
+  private readonly _downloadLfs?: boolean;
 
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
@@ -113,7 +109,8 @@ export class GitHub extends Component {
     this.actions = new GitHubActionsProvider();
 
     this.workflowsEnabled = options.workflows ?? true;
-    this.lfs = options.lfsPatterns !== undefined;
+
+    this._downloadLfs = options.downloadLfs;
 
     if (options.projenCredentials && options.projenTokenSecret) {
       throw new Error(
@@ -139,24 +136,6 @@ export class GitHub extends Component {
 
     if (options.pullRequestLint ?? true) {
       new PullRequestLint(this, options.pullRequestLintOptions);
-    }
-
-    if (options.lfsPatterns && options.lfsPatterns.length > 0) {
-      const attrs = GitAttributesFile.of(this.project);
-      if (!attrs) {
-        throw new Error(
-          "Cannot add lfsPatterns: no .gitattributes file found in project"
-        );
-      }
-      for (const pattern of options.lfsPatterns) {
-        attrs.addAttributes(
-          pattern,
-          "filter=lfs",
-          "diff=lfs",
-          "merge=lfs",
-          "-text"
-        );
-      }
     }
   }
 
@@ -195,5 +174,12 @@ export class GitHub extends Component {
    */
   public tryFindWorkflow(name: string): undefined | GithubWorkflow {
     return this.workflows.find((w) => w.name === name);
+  }
+
+  /**
+   * Whether downloading from LFS is enabled for this GitHub project
+   */
+  public get downloadLfs() {
+    return this._downloadLfs ?? this.project.gitattributes.hasLfsPatterns;
   }
 }

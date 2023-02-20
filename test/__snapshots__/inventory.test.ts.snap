@@ -461,6 +461,24 @@ Array [
         "switch": "github-options",
       },
       Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
+      },
+      Object {
         "default": "false",
         "docs": "Add a Gitpod development environment.",
         "featured": false,
@@ -1595,6 +1613,24 @@ Array [
         ],
         "simpleType": "GitHubOptions",
         "switch": "github-options",
+      },
+      Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
       },
       Object {
         "default": "false",
@@ -3392,6 +3428,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
       },
       Object {
         "default": "false",
@@ -6234,6 +6288,24 @@ Array [
         "switch": "gitignore",
       },
       Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
+      },
+      Object {
         "default": "false",
         "docs": "Add a Gitpod development environment.",
         "featured": false,
@@ -8482,6 +8554,24 @@ Array [
         "switch": "github-options",
       },
       Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
+      },
+      Object {
         "default": "false",
         "docs": "Add a Gitpod development environment.",
         "featured": false,
@@ -10168,6 +10258,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
       },
       Object {
         "default": "false",
@@ -12846,6 +12954,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
       },
       Object {
         "default": "false",
@@ -15567,6 +15693,24 @@ Array [
         "switch": "gitignore",
       },
       Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
+      },
+      Object {
         "default": "false",
         "docs": "Add a Gitpod development environment.",
         "featured": false,
@@ -17531,6 +17675,24 @@ Array [
         "switch": "github-options",
       },
       Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
+      },
+      Object {
         "default": "false",
         "docs": "Add a Gitpod development environment.",
         "featured": false,
@@ -19012,6 +19174,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
       },
       Object {
         "default": "false",
@@ -21438,6 +21618,24 @@ Array [
         "switch": "gitignore",
       },
       Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
+      },
+      Object {
         "default": "false",
         "docs": "Add a Gitpod development environment.",
         "featured": false,
@@ -23714,6 +23912,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
       },
       Object {
         "default": "false",
@@ -26014,6 +26230,24 @@ Array [
         "switch": "gitignore",
       },
       Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
+      },
+      Object {
         "default": "false",
         "docs": "Add a Gitpod development environment.",
         "featured": false,
@@ -27462,6 +27696,24 @@ Array [
         "switch": "commit-generated",
       },
       Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
+      },
+      Object {
         "default": "{}",
         "docs": "Configure logging options such as verbosity.",
         "featured": false,
@@ -27884,6 +28136,24 @@ Array [
         ],
         "simpleType": "GitHubOptions",
         "switch": "github-options",
+      },
+      Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
       },
       Object {
         "default": "false",
@@ -29243,6 +29513,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
       },
       Object {
         "default": "false",
@@ -31509,6 +31797,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
       },
       Object {
         "default": "false",
@@ -33918,6 +34224,24 @@ Array [
         "switch": "gitignore",
       },
       Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
+      },
+      Object {
         "default": "false",
         "docs": "Add a Gitpod development environment.",
         "featured": false,
@@ -36301,6 +36625,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for git.",
+        "featured": false,
+        "fqn": "projen.GitOptions",
+        "fullType": Object {
+          "fqn": "projen.GitOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitOptions",
+        ],
+        "simpleType": "GitOptions",
+        "switch": "git-options",
       },
       Object {
         "default": "false",

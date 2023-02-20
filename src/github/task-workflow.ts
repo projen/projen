@@ -1,4 +1,3 @@
-import { Task } from "../task";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "./constants";
 import { GitHub } from "./github";
 import { WorkflowActions } from "./workflow-actions";
@@ -11,6 +10,7 @@ import {
   JobStepOutput,
   Triggers,
 } from "./workflows-model";
+import { Task } from "../task";
 
 const DEFAULT_JOB_ID = "build";
 
@@ -113,6 +113,13 @@ export interface TaskWorkflowOptions {
    * @default ["ubuntu-latest"]
    */
   readonly runsOn?: string[];
+
+  /**
+   * Whether to download files from Git LFS for this workflow
+   *
+   * @default - Use the setting on the corresponding GitHub project
+   */
+  readonly downloadLfs?: boolean;
 }
 
 /**
@@ -147,10 +154,11 @@ export class TaskWorkflow extends GithubWorkflow {
     const preCheckoutSteps = options.preCheckoutSteps ?? [];
 
     const checkoutWith: Record<string, any> = {};
-    Object.assign(checkoutWith, options.checkoutWith ?? {});
-    if (this.github.lfs) {
+    if (options.downloadLfs ?? github.downloadLfs) {
       checkoutWith.lfs = true;
     }
+    // 'checkoutWith' can override 'lfs'
+    Object.assign(checkoutWith, options.checkoutWith ?? {});
 
     const preBuildSteps = options.preBuildSteps ?? [];
     const postBuildSteps = options.postBuildSteps ?? [];

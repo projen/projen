@@ -7,13 +7,6 @@ import { Project } from "./project";
  * @see https://git-scm.com/docs/gitattributes
  */
 export class GitAttributesFile extends FileBase {
-  /**
-   * Return the gitattributes file for the given repository
-   */
-  public static of(project: Project): GitAttributesFile | undefined {
-    return project.root.gitattributes;
-  }
-
   private readonly attributes = new Map<string, Set<string>>();
 
   public constructor(project: Project) {
@@ -35,6 +28,22 @@ export class GitAttributesFile extends FileBase {
     for (const attribute of attributes) {
       set.add(attribute);
     }
+  }
+
+  /**
+   * Add attributes necessary to mark these files as stored in LFS
+   */
+  public addLfsPattern(glob: string) {
+    this.addAttributes(glob, "filter=lfs", "diff=lfs", "merge=lfs", "-text");
+  }
+
+  /**
+   * Whether the current gitattributes file has any LFS patterns
+   */
+  public get hasLfsPatterns() {
+    return Array.from(this.attributes.values()).some((attrs) =>
+      attrs.has("filter=lfs")
+    );
   }
 
   protected synthesizeContent(_: IResolver): string | undefined {
