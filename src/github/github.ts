@@ -61,6 +61,13 @@ export interface GitHubOptions {
    * @deprecated - use `projenCredentials`
    */
   readonly projenTokenSecret?: string;
+
+  /**
+   * Download files in LFS in workflows
+   *
+   * @default true if the associated project has `lfsPatterns`, `false` otherwise
+   */
+  readonly downloadLfs?: boolean;
 }
 
 export class GitHub extends Component {
@@ -94,12 +101,16 @@ export class GitHub extends Component {
    */
   public readonly actions: GitHubActionsProvider;
 
+  private readonly _downloadLfs?: boolean;
+
   public constructor(project: Project, options: GitHubOptions = {}) {
     super(project);
 
     this.actions = new GitHubActionsProvider();
 
     this.workflowsEnabled = options.workflows ?? true;
+
+    this._downloadLfs = options.downloadLfs;
 
     if (options.projenCredentials && options.projenTokenSecret) {
       throw new Error(
@@ -163,5 +174,12 @@ export class GitHub extends Component {
    */
   public tryFindWorkflow(name: string): undefined | GithubWorkflow {
     return this.workflows.find((w) => w.name === name);
+  }
+
+  /**
+   * Whether downloading from LFS is enabled for this GitHub project
+   */
+  public get downloadLfs() {
+    return this._downloadLfs ?? this.project.gitattributes.hasLfsPatterns;
   }
 }

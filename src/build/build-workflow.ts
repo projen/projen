@@ -294,6 +294,7 @@ export class BuildWorkflow extends Component {
         with: {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
+          ...(this.github.downloadLfs ? { lfs: true } : {}),
         },
       });
     }
@@ -336,6 +337,7 @@ export class BuildWorkflow extends Component {
           token: this.workflow.projenCredentials.tokenRef,
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
+          lfs: this.github.downloadLfs,
         }),
         ...WorkflowActions.setGitIdentity(this.gitIdentity),
         {
@@ -361,6 +363,7 @@ export class BuildWorkflow extends Component {
         with: {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
+          ...(this.github.downloadLfs ? { lfs: true } : {}),
         },
       },
 

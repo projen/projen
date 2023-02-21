@@ -278,7 +278,7 @@ export class UpgradeDependencies extends Component {
     };
     workflow.on(triggers);
 
-    const upgrade = this.createUpgrade(task, branch);
+    const upgrade = this.createUpgrade(task, github, branch);
     const pr = this.createPr(workflow, upgrade);
 
     const jobs: Record<string, workflows.Job> = {};
@@ -289,7 +289,7 @@ export class UpgradeDependencies extends Component {
     return workflow;
   }
 
-  private createUpgrade(task: Task, branch?: string): Upgrade {
+  private createUpgrade(task: Task, github: GitHub, branch?: string): Upgrade {
     const runsOn = this.options.workflowOptions?.runsOn ?? ["ubuntu-latest"];
 
     // thats all we should need at this stage since all we do is clone.
@@ -299,11 +299,16 @@ export class UpgradeDependencies extends Component {
       contents: workflows.JobPermission.READ,
     };
 
+    const with_ = {
+      ...(branch ? { ref: branch } : {}),
+      ...(github.downloadLfs ? { lfs: true } : {}),
+    };
+
     const steps: workflows.JobStep[] = [
       {
         name: "Checkout",
         uses: "actions/checkout@v3",
-        with: branch ? { ref: branch } : undefined,
+        with: Object.keys(with_).length > 0 ? with_ : undefined,
       },
       ...this._project.renderWorkflowSetup({ mutable: false }),
       {

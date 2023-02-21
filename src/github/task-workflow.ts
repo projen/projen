@@ -113,6 +113,13 @@ export interface TaskWorkflowOptions {
    * @default ["ubuntu-latest"]
    */
   readonly runsOn?: string[];
+
+  /**
+   * Whether to download files from Git LFS for this workflow
+   *
+   * @default - Use the setting on the corresponding GitHub project
+   */
+  readonly downloadLfs?: boolean;
 }
 
 /**
@@ -145,9 +152,14 @@ export class TaskWorkflow extends GithubWorkflow {
     });
 
     const preCheckoutSteps = options.preCheckoutSteps ?? [];
-    const checkoutWith = options.checkoutWith
-      ? { with: options.checkoutWith }
-      : {};
+
+    const checkoutWith: Record<string, any> = {};
+    if (options.downloadLfs ?? github.downloadLfs) {
+      checkoutWith.lfs = true;
+    }
+    // 'checkoutWith' can override 'lfs'
+    Object.assign(checkoutWith, options.checkoutWith ?? {});
+
     const preBuildSteps = options.preBuildSteps ?? [];
     const postBuildSteps = options.postBuildSteps ?? [];
     const gitIdentity = options.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
@@ -180,7 +192,9 @@ export class TaskWorkflow extends GithubWorkflow {
         {
           name: "Checkout",
           uses: "actions/checkout@v3",
-          ...checkoutWith,
+          ...(Object.keys(checkoutWith).length > 0
+            ? { with: checkoutWith }
+            : {}),
         },
 
         // sets git identity so we can push later

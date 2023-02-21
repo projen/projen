@@ -30,6 +30,22 @@ export class GitAttributesFile extends FileBase {
     }
   }
 
+  /**
+   * Add attributes necessary to mark these files as stored in LFS
+   */
+  public addLfsPattern(glob: string) {
+    this.addAttributes(glob, "filter=lfs", "diff=lfs", "merge=lfs", "-text");
+  }
+
+  /**
+   * Whether the current gitattributes file has any LFS patterns
+   */
+  public get hasLfsPatterns() {
+    return Array.from(this.attributes.values()).some((attrs) =>
+      attrs.has("filter=lfs")
+    );
+  }
+
   protected synthesizeContent(_: IResolver): string | undefined {
     // We can assume the file map is never empty.
     const entries = Array.from(this.attributes.entries()).sort(([l], [r]) =>
