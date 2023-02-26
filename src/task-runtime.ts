@@ -6,16 +6,31 @@ import * as path from "path";
 import { format } from "util";
 import * as chalk from "chalk";
 import { PROJEN_DIR } from "./common";
+import { Component } from "./component";
+import { JsonFile } from "./json";
 import * as logging from "./logging";
+import { Project } from "./project";
 import { TasksManifest, TaskSpec } from "./task-model";
 
 const ENV_TRIM_LEN = 20;
 const ARGS_MARKER = "$@";
 
+export interface ITaskRuntime {
+  /**
+   * Runs the task.
+   * @param name The task name.
+   */
+  runTask(
+    name: string,
+    parents?: string[],
+    args?: Array<string | number>
+  ): void;
+}
+
 /**
  * The runtime component of the tasks engine.
  */
-export class TaskRuntime {
+export class TaskRuntime extends Component implements ITaskRuntime {
   /**
    * The project-relative path of the tasks manifest file.
    */
@@ -34,8 +49,9 @@ export class TaskRuntime {
    */
   public readonly workdir: string;
 
-  constructor(workdir: string) {
-    this.workdir = resolve(workdir);
+  constructor(project: Project) {
+    super(project);
+    this.workdir = resolve(project.outdir);
     const manifestPath = join(this.workdir, TaskRuntime.MANIFEST_FILE);
     this.manifest = existsSync(manifestPath)
       ? JSON.parse(readFileSync(manifestPath, "utf-8"))
@@ -74,6 +90,16 @@ export class TaskRuntime {
     }
 
     new RunTask(this, task, parents, args);
+  }
+
+  /**
+   * Synthesize the task manifest
+   */
+  public synthesize(): void {
+    new JsonFile(this.project, TaskRuntime.MANIFEST_FILE, {
+      omitEmpty: true,
+      obj: this.project.tasks.renderTaskRuntimeManifest(),
+    });
   }
 }
 

@@ -5,6 +5,7 @@ import { synth } from "./synth";
 import { discoverTaskCommands } from "./tasks";
 import { PROJEN_RC, PROJEN_VERSION } from "../common";
 import * as logging from "../logging";
+import { Project } from "../project";
 import { TaskRuntime } from "../task-runtime";
 import { getNodeMajorVersion } from "../util";
 
@@ -14,8 +15,10 @@ async function main() {
   const ya = yargs;
   ya.command(newCommand);
 
-  const runtime = new TaskRuntime(".");
-  discoverTaskCommands(runtime, ya);
+  const runtime = new Project({
+    name: "task-runner",
+  }).taskRuntime;
+  discoverTaskCommands(runtime as TaskRuntime, ya);
 
   ya.recommendCommands();
   ya.strictCommands();
@@ -69,7 +72,7 @@ async function main() {
       console.log(PROJEN_VERSION);
       process.exit(0);
     }
-    await synth(runtime, {
+    await synth(runtime as TaskRuntime, {
       post: args.post as boolean,
       watch: args.watch as boolean,
       rcfile: args.rc as string,

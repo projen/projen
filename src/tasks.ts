@@ -1,11 +1,9 @@
 import * as path from "path";
 import * as fs from "fs-extra";
 import { Component } from "./component";
-import { JsonFile } from "./json";
 import { Project } from "./project";
 import { Task, TaskOptions } from "./task";
 import { TasksManifest, TaskSpec } from "./task-model";
-import { TaskRuntime } from "./task-runtime";
 
 /**
  * Defines project tasks.
@@ -22,14 +20,6 @@ export class Tasks extends Component {
 
     this._tasks = {};
     this._env = {};
-
-    new JsonFile(project, TaskRuntime.MANIFEST_FILE, {
-      omitEmpty: true,
-      obj: {
-        tasks: (() => this.renderTasks()) as any,
-        env: (() => this._env) as any,
-      } as TasksManifest,
-    });
   }
 
   /**
@@ -121,6 +111,13 @@ export class Tasks extends Component {
         "755"
       );
     }
+  }
+
+  public renderTaskRuntimeManifest(): TasksManifest {
+    return {
+      tasks: (() => this.renderTasks()) as any,
+      env: (() => this._env) as any,
+    } as TasksManifest;
   }
 
   private renderTasks() {
