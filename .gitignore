@@ -61,3 +61,4 @@ tsconfig.json
 !/.markdownlint.json
 !/.vscode/launch.json
 !/.projen/tasks.json
+!/.replica.yaml

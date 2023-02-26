@@ -21,6 +21,7 @@
 /.projen/deps.json linguist-generated
 /.projen/files.json linguist-generated
 /.projen/tasks.json linguist-generated
+/.replica.yaml linguist-generated
 /.vscode/launch.json linguist-generated
 /docs/api/API.md linguist-generated
 /LICENSE linguist-generated

@@ -1,6 +1,7 @@
 import * as path from "path";
 import * as fs from "fs-extra";
 import { Component } from "./component";
+import { IResolver } from "./file";
 import { Project } from "./project";
 import { Task, TaskOptions } from "./task";
 import { TasksManifest, TaskSpec } from "./task-model";
@@ -113,11 +114,17 @@ export class Tasks extends Component {
     }
   }
 
-  public renderTaskRuntimeManifest(): TasksManifest {
-    return {
+  public resolveTasksManifest(resolver: IResolver): TasksManifest {
+    const obj = {
       tasks: (() => this.renderTasks()) as any,
       env: (() => this._env) as any,
-    } as TasksManifest;
+    };
+
+    return (
+      resolver.resolve(obj, {
+        omitEmpty: true,
+      }) ?? undefined
+    );
   }
 
   private renderTasks() {

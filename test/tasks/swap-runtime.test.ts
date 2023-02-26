@@ -1,33 +1,14 @@
 import path from "path";
 import { mkdirpSync } from "fs-extra";
-import { Component, ITaskRuntime, Project, YamlFile } from "../../src";
+import { CustomTaskRuntime, Project } from "../../src";
 import { synthSnapshot, TestProject } from "../util";
-
-class MockRuntime extends Component implements ITaskRuntime {
-  public static MANIFEST_FILE = "tasks.yaml";
-
-  runTask(
-    name: string,
-    _parents?: string[] | undefined,
-    _args?: (string | number)[] | undefined
-  ): void {
-    console.log("running:", name);
-  }
-
-  public synthesize(): void {
-    new YamlFile(this.project, MockRuntime.MANIFEST_FILE, {
-      omitEmpty: true,
-      obj: this.project.tasks.renderTaskRuntimeManifest(),
-    });
-  }
-}
 
 test("minimal case", () => {
   // GIVEN
   const p = new TestProject({
     services: {
       taskRuntime: {
-        produce: (project) => new MockRuntime(project),
+        produce: (project) => new CustomTaskRuntime(project),
       },
     },
   });
@@ -63,5 +44,5 @@ test("minimal case", () => {
 });
 
 function synthTasksManifest(p: Project) {
-  return synthSnapshot(p)[MockRuntime.MANIFEST_FILE];
+  return synthSnapshot(p)[CustomTaskRuntime.MANIFEST_FILE];
 }

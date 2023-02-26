@@ -1,10 +1,16 @@
-const { cdk, JsonFile, TextFile } = require("./lib");
+const { cdk, JsonFile, TextFile, ReplicaTaskRuntime } = require("./lib");
 const { PROJEN_MARKER } = require("./lib/common");
 
 const project = new cdk.JsiiProject({
   name: "projen",
   description: "CDK for software projects",
   repository: "https://github.com/projen/projen.git",
+
+  services: {
+    taskRuntime: {
+      produce: (p) => new ReplicaTaskRuntime(p),
+    },
+  },
 
   authorName: "Amazon Web Services",
   authorUrl: "https://aws.amazon.com",
