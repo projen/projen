@@ -116,6 +116,7 @@ export class BuildWorkflow extends Component {
   private readonly defaultRunners: string[] = ["ubuntu-latest"];
 
   private readonly _postBuildJobs: string[] = [];
+  private _cloneOptions: Record<string, any> = {};
 
   constructor(project: Project, options: BuildWorkflowOptions) {
     super(project);
@@ -322,6 +323,13 @@ export class BuildWorkflow extends Component {
     });
   }
 
+  /**
+   * Adds a clone option to the checkout step.
+   */
+  public addCloneOptions(optionKey: string, optionValue: any) {
+    this._cloneOptions[optionKey] = optionValue;
+  }
+
   private addSelfMutationJob(options: BuildWorkflowOptions) {
     this.workflow.addJob("self-mutation", {
       runsOn: options.runsOn ?? this.defaultRunners,
@@ -364,6 +372,7 @@ export class BuildWorkflow extends Component {
           ref: PULL_REQUEST_REF,
           repository: PULL_REQUEST_REPOSITORY,
           ...(this.github.downloadLfs ? { lfs: true } : {}),
+          ...this._cloneOptions,
         },
       },
 

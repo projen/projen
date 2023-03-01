@@ -1,3 +1,4 @@
+import { BuildWorkflow } from "../../src/build";
 import { Project } from "../../src/project";
 import { synthSnapshot, TestProject } from "../util";
 
@@ -143,3 +144,22 @@ function synthWorkflows(p: Project): any {
     }, {});
   return filtered;
 }
+
+test("build workflow can set clone options", () => {
+  // GIVEN
+  const p = new TestProject();
+
+  // WHEN
+  const buildWorkflow = new BuildWorkflow(p, {
+    buildTask: p.buildTask,
+    artifactsDirectory: "dist",
+  });
+  buildWorkflow.addCloneOptions("fetch-depth", 0);
+
+  // THEN
+  const workflows = synthWorkflows(p);
+  expect(workflows[".github/workflows/build.yml"]).toBeDefined();
+  expect(workflows[".github/workflows/build.yml"]).toEqual(
+    expect.stringContaining("fetch-depth: 0")
+  );
+});

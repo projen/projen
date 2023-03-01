@@ -4922,6 +4922,20 @@ Name | Type | Description
 ### Methods
 
 
+#### addCloneOptions(optionKey, optionValue)🔹 <a id="projen-build-buildworkflow-addcloneoptions"></a>
+
+Adds a clone option to the checkout step.
+
+```ts
+addCloneOptions(optionKey: string, optionValue: any): void
+```
+
+* **optionKey** (<code>string</code>)  *No description*
+* **optionValue** (<code>any</code>)  *No description*
+
+
+
+
 #### addPostBuildJob(id, job)🔹 <a id="projen-build-buildworkflow-addpostbuildjob"></a>
 
 Adds another job to the build workflow which is executed after the build job succeeded.
