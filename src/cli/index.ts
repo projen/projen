@@ -1,4 +1,5 @@
 import { resolve } from "path";
+import * as fs from "fs-extra";
 import * as yargs from "yargs";
 import newCommand from "./cmds/new";
 import { synth } from "./synth";
@@ -8,7 +9,7 @@ import * as logging from "../logging";
 import { TaskRuntime } from "../task-runtime";
 import { getNodeMajorVersion } from "../util";
 
-const DEFAULT_RC = resolve(PROJEN_RC);
+const DEFAULT_RC = findProjenRc(process.cwd());
 
 async function main() {
   const ya = yargs;
@@ -81,3 +82,22 @@ main().catch((e) => {
   console.error(e.stack);
   process.exit(1);
 });
+
+/**
+ * Run up project tree to find .projenrc.js
+ *
+ * @param cwd current working directory
+ * @returns path to .projenrc.js or undefined if not found
+ */
+function findProjenRc(cwd: string): string | undefined {
+  if (cwd === "/") {
+    return undefined;
+  }
+
+  const projenrc = resolve(cwd, PROJEN_RC);
+  if (fs.existsSync(projenrc)) {
+    return projenrc;
+  }
+
+  return findProjenRc(resolve(cwd, ".."));
+}
