@@ -229,7 +229,7 @@ export interface NodePackageOptions {
   /**
    * The version of PNPM to use if using PNPM as a package manager.
    *
-   * @default "latest"
+   * @default "7"
    */
   readonly pnpmVersion?: string;
 
@@ -429,13 +429,9 @@ export class NodePackage extends Component {
   /**
    * The version of PNPM to use if using PNPM as a package manager.
    *
-   * @default "latest"
+   * @default "7"
    */
-  public get pnpmVersion(): string {
-    return this._pnpmVersion ?? "latest";
-  }
-
-  private readonly _pnpmVersion?: string;
+  public readonly pnpmVersion?: string;
 
   /**
    * The SPDX license of this module. `undefined` if this package is not licensed.
@@ -585,7 +581,7 @@ export class NodePackage extends Component {
     // node version
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
-    this._pnpmVersion = options.pnpmVersion;
+    this.pnpmVersion = options.pnpmVersion ?? "7";
     this.addNodeEngine();
 
     // license
