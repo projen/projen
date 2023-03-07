@@ -377,7 +377,7 @@ export class NodeProject extends GitHubProject {
   }
 
   /**
-   * Maximum node version required by this pacakge.
+   * Maximum node version required by this package.
    */
   public get maxNodeVersion(): string | undefined {
     return this.package.maxNodeVersion;
@@ -921,7 +921,7 @@ export class NodeProject extends GitHubProject {
       install.push({
         name: "Setup pnpm",
         uses: "pnpm/action-setup@v2.2.4",
-        with: { version: "7" }, // current latest. Should probably become tunable.
+        with: { version: this.package.pnpmVersion },
       });
     }
 
