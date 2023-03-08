@@ -3514,6 +3514,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -4202,6 +4203,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -4512,6 +4514,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -5138,6 +5141,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -5396,6 +5400,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -5808,6 +5813,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -5990,6 +5996,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -6231,6 +6238,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -8263,6 +8271,7 @@ new javascript.NodePackage(project: Project, options?: NodePackageOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -8290,9 +8299,10 @@ Name | Type | Description
 **projenCommand**🔹 | <code>string</code> | The command which executes "projen".
 **codeArtifactOptions**?🔹 | <code>[javascript.CodeArtifactOptions](#projen-javascript-codeartifactoptions)</code> | Options for npm packages using AWS CodeArtifact.<br/>__*Default*__: undefined
 **license**?🔹 | <code>string</code> | The SPDX license of this module.<br/>__*Optional*__
-**maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Default*__: no maximum.
+**maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this package.<br/>__*Default*__: no maximum.
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Default*__: no minimum
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Optional*__
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: undefined
 
 ### Methods
@@ -8594,6 +8604,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -8676,7 +8687,7 @@ Name | Type | Description
 **buildWorkflow**?🔹 | <code>[build.BuildWorkflow](#projen-build-buildworkflow)</code> | The PR build GitHub workflow.<br/>__*Optional*__
 **buildWorkflowJobId**?🔹 | <code>string</code> | The job ID of the build workflow.<br/>__*Optional*__
 **jest**?🔹 | <code>[javascript.Jest](#projen-javascript-jest)</code> | The Jest configuration (if enabled).<br/>__*Optional*__
-**maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this pacakge.<br/>__*Optional*__
+**maxNodeVersion**?🔹 | <code>string</code> | Maximum node version required by this package.<br/>__*Optional*__
 **minNodeVersion**?🔹 | <code>string</code> | Minimum node.js version required by this package.<br/>__*Optional*__
 **nodeVersion**?🔹 | <code>string</code> | __*Optional*__
 **npmignore**?🔹 | <code>[IgnoreFile](#projen-ignorefile)</code> | The .npmignore file.<br/>__*Optional*__
@@ -10425,6 +10436,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -10580,6 +10592,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -10735,6 +10748,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -11251,6 +11265,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -11404,6 +11419,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -11629,6 +11645,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -11824,6 +11841,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **packageName** (<code>string</code>)  The "name" in package.json. __*Default*__: defaults to project name
   * **peerDependencyOptions** (<code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code>)  Options for `peerDeps`. __*Optional*__
   * **peerDeps** (<code>Array<string></code>)  Peer dependencies for this module. __*Default*__: []
+  * **pnpmVersion** (<code>string</code>)  The version of PNPM to use if using PNPM as a package manager. __*Default*__: "7"
   * **repository** (<code>string</code>)  The repository is the location where the actual code for your package lives. __*Optional*__
   * **repositoryDirectory** (<code>string</code>)  If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives. __*Optional*__
   * **scopedPackagesOptions** (<code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code>)  Options for privately hosted scoped packages. __*Default*__: fetch all scoped packages from the public npm registry
@@ -13153,6 +13171,7 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -13536,6 +13555,7 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -13746,6 +13766,7 @@ Name | Type | Description
 **parent**?⚠️ | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?⚠️ | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?⚠️ | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?⚠️ | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?⚠️ | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?⚠️ | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -14170,6 +14191,7 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -14439,6 +14461,7 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -14779,6 +14802,7 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -14940,6 +14964,7 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -15132,6 +15157,7 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -16939,6 +16965,7 @@ Name | Type | Description
 **packageName**?🔹 | <code>string</code> | The "name" in package.json.<br/>__*Default*__: defaults to project name
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **repository**?🔹 | <code>string</code> | The repository is the location where the actual code for your package lives.<br/>__*Optional*__
 **repositoryDirectory**?🔹 | <code>string</code> | If the package.json for your package is not in the root directory (for example if it is part of a monorepo), you can specify the directory in which it lives.<br/>__*Optional*__
 **scopedPackagesOptions**?🔹 | <code>Array<[javascript.ScopedPackagesOptions](#projen-javascript-scopedpackagesoptions)></code> | Options for privately hosted scoped packages.<br/>__*Default*__: fetch all scoped packages from the public npm registry
@@ -17026,6 +17053,7 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -18182,6 +18210,7 @@ Name | Type | Description
 **parent**?⚠️ | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?⚠️ | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?⚠️ | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?⚠️ | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?⚠️ | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?⚠️ | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?⚠️ | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -18327,6 +18356,7 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -18577,6 +18607,7 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -18717,6 +18748,7 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -18885,6 +18917,7 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
@@ -19054,6 +19087,7 @@ Name | Type | Description
 **parent**?🔹 | <code>[Project](#projen-project)</code> | The parent project, if this project is part of a bigger project.<br/>__*Optional*__
 **peerDependencyOptions**?🔹 | <code>[javascript.PeerDependencyOptions](#projen-javascript-peerdependencyoptions)</code> | Options for `peerDeps`.<br/>__*Optional*__
 **peerDeps**?🔹 | <code>Array<string></code> | Peer dependencies for this module.<br/>__*Default*__: []
+**pnpmVersion**?🔹 | <code>string</code> | The version of PNPM to use if using PNPM as a package manager.<br/>__*Default*__: "7"
 **postBuildSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Steps to execute after build as part of the release workflow.<br/>__*Default*__: []
 **prerelease**?🔹 | <code>string</code> | Bump versions from the default branch as pre-releases (e.g. "beta", "alpha", "pre").<br/>__*Default*__: normal semantic versions
 **prettier**?🔹 | <code>boolean</code> | Setup prettier.<br/>__*Default*__: false
