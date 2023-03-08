@@ -199,14 +199,7 @@ export class GithubWorkflow extends Component {
    * @param id The job name (unique within the workflow)
    */
   public removeJob(id: string) {
-    const updatedJobs = Object.entries(this.jobs).filter(
-      ([jobId, _job]: [
-        string,
-        workflows.Job | workflows.JobCallingReusableWorkflow
-      ]) => {
-        return jobId !== id;
-      }
-    );
+    const updatedJobs = Object.entries(this.jobs).filter(([jobId]: [string]) => jobId !== id);
     this.jobs = {
       ...Object.fromEntries(updatedJobs),
     };
