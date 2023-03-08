@@ -227,6 +227,13 @@ export interface NodePackageOptions {
   readonly maxNodeVersion?: string;
 
   /**
+   * The version of PNPM to use if using PNPM as a package manager.
+   *
+   * @default "7"
+   */
+  readonly pnpmVersion?: string;
+
+  /**
    * License's SPDX identifier.
    * See https://github.com/projen/projen/tree/main/license-text for a list of supported licenses.
    * Use the `licensed` option if you want to no license to be specified.
@@ -414,10 +421,17 @@ export class NodePackage extends Component {
   public readonly minNodeVersion?: string;
 
   /**
-   * Maximum node version required by this pacakge.
+   * Maximum node version required by this package.
    * @default - no maximum.
    */
   public readonly maxNodeVersion?: string;
+
+  /**
+   * The version of PNPM to use if using PNPM as a package manager.
+   *
+   * @default "7"
+   */
+  public readonly pnpmVersion?: string;
 
   /**
    * The SPDX license of this module. `undefined` if this package is not licensed.
@@ -567,6 +581,7 @@ export class NodePackage extends Component {
     // node version
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
+    this.pnpmVersion = options.pnpmVersion ?? "7";
     this.addNodeEngine();
 
     // license

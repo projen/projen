@@ -4090,6 +4090,23 @@ Array [
         "switch": "peer-deps",
       },
       Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
+      },
+      Object {
         "default": "[]",
         "docs": "Steps to execute after build as part of the release workflow.",
         "featured": false,
@@ -6946,6 +6963,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -10901,6 +10935,23 @@ Array [
         "switch": "peer-deps",
       },
       Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
+      },
+      Object {
         "default": "[]",
         "docs": "Steps to execute after build as part of the release workflow.",
         "featured": false,
@@ -13561,6 +13612,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -16281,6 +16349,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -19766,6 +19851,23 @@ Array [
         "switch": "peer-deps",
       },
       Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
+      },
+      Object {
         "default": "[]",
         "docs": "Steps to execute after build as part of the release workflow.",
         "featured": false,
@@ -22191,6 +22293,23 @@ Array [
         "switch": "peer-deps",
       },
       Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
+      },
+      Object {
         "default": "[]",
         "docs": "Steps to execute after build as part of the release workflow.",
         "featured": false,
@@ -24504,6 +24623,23 @@ Array [
         "switch": "peer-deps",
       },
       Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
+      },
+      Object {
         "default": "[]",
         "docs": "Steps to execute after build as part of the release workflow.",
         "featured": false,
@@ -26801,6 +26937,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -30088,6 +30241,23 @@ Array [
         "switch": "peer-deps",
       },
       Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
+      },
+      Object {
         "default": "[]",
         "docs": "Steps to execute after build as part of the release workflow.",
         "featured": false,
@@ -32387,6 +32557,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -34814,6 +35001,23 @@ Array [
         "switch": "peer-deps",
       },
       Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
+      },
+      Object {
         "default": "[]",
         "docs": "Steps to execute after build as part of the release workflow.",
         "featured": false,
@@ -37215,6 +37419,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
