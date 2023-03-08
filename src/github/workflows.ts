@@ -178,17 +178,12 @@ export class GithubWorkflow extends Component {
     verifyJobConstraints(jobs);
 
     const newJobIds = Object.keys(jobs);
-    const updatedJobs = Object.entries(this.jobs).map(
-      ([jobId, job]: [
-        string,
-        workflows.Job | workflows.JobCallingReusableWorkflow
-      ]) => {
-        if (newJobIds.includes(jobId)) {
-          return [jobId, jobs[jobId]];
-        }
-        return [jobId, job];
+    const updatedJobs = Object.entries(this.jobs).map(([jobId, job]) => {
+      if (newJobIds.includes(jobId)) {
+        return [jobId, jobs[jobId]];
       }
-    );
+      return [jobId, job];
+    });
     this.jobs = {
       ...Object.fromEntries(updatedJobs),
     };
@@ -199,7 +194,9 @@ export class GithubWorkflow extends Component {
    * @param id The job name (unique within the workflow)
    */
   public removeJob(id: string) {
-    const updatedJobs = Object.entries(this.jobs).filter(([jobId]: [string]) => jobId !== id);
+    const updatedJobs = Object.entries(this.jobs).filter(
+      ([jobId]) => jobId !== id
+    );
     this.jobs = {
       ...Object.fromEntries(updatedJobs),
     };
