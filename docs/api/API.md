@@ -6948,6 +6948,19 @@ addJobs(jobs: Map<string, JobCallingReusableWorkflow &#124; Job>): void
 
 
 
+#### getJob(id)🔹 <a id="projen-github-githubworkflow-getjob"></a>
+
+Get a single job from the workflow.
+
+```ts
+getJob(id: string): JobCallingReusableWorkflow &#124; Job
+```
+
+* **id** (<code>string</code>)  The job name (unique within the workflow).
+
+__Returns__:
+* <code>[github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow) &#124; [github.workflows.Job](#projen-github-workflows-job)</code>
+
 #### on(events)🔹 <a id="projen-github-githubworkflow-on"></a>
 
 Add events to triggers the workflow.
@@ -6992,6 +7005,46 @@ on(events: Triggers): void
   * **workflowCall** (<code>[github.workflows.WorkflowCallOptions](#projen-github-workflows-workflowcalloptions)</code>)  Can be called from another workflow. __*Optional*__
   * **workflowDispatch** (<code>[github.workflows.WorkflowDispatchOptions](#projen-github-workflows-workflowdispatchoptions)</code>)  You can configure custom-defined input properties, default input values, and required inputs for the event directly in your workflow. __*Optional*__
   * **workflowRun** (<code>[github.workflows.WorkflowRunOptions](#projen-github-workflows-workflowrunoptions)</code>)  This event occurs when a workflow run is requested or completed, and allows you to execute a workflow based on the finished result of another workflow. __*Optional*__
+
+
+
+
+#### removeJob(id)🔹 <a id="projen-github-githubworkflow-removejob"></a>
+
+Removes a single job to the workflow.
+
+```ts
+removeJob(id: string): void
+```
+
+* **id** (<code>string</code>)  The job name (unique within the workflow).
+
+
+
+
+#### updateJob(id, job)🔹 <a id="projen-github-githubworkflow-updatejob"></a>
+
+Updates a single job to the workflow.
+
+```ts
+updateJob(id: string, job: JobCallingReusableWorkflow &#124; Job): void
+```
+
+* **id** (<code>string</code>)  The job name (unique within the workflow).
+* **job** (<code>[github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow) &#124; [github.workflows.Job](#projen-github-workflows-job)</code>)  *No description*
+
+
+
+
+#### updateJobs(jobs)🔹 <a id="projen-github-githubworkflow-updatejobs"></a>
+
+Updates jobs for this worklow Does a complete replace, it does not try to merge the jobs.
+
+```ts
+updateJobs(jobs: Map<string, JobCallingReusableWorkflow &#124; Job>): void
+```
+
+* **jobs** (<code>Map<string, [github.workflows.JobCallingReusableWorkflow](#projen-github-workflows-jobcallingreusableworkflow) &#124; [github.workflows.Job](#projen-github-workflows-job)></code>)  Jobs to update.
 
 
 

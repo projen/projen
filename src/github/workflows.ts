@@ -137,30 +137,68 @@ export class GithubWorkflow extends Component {
   public addJobs(
     jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>
   ) {
-    // verify that job has a "permissions" statement to ensure workflow can
-    // operate in repos with default tokens set to readonly
-    for (const [id, job] of Object.entries(jobs)) {
-      if (!job.permissions) {
-        throw new Error(
-          `${id}: all workflow jobs must have a "permissions" clause to ensure workflow can operate in restricted repositories`
-        );
-      }
-    }
-
-    // verify that job has a "runsOn" statement to ensure a worker can be selected appropriately
-    for (const [id, job] of Object.entries(jobs)) {
-      if (!("uses" in job)) {
-        if ("runsOn" in job && job.runsOn.length === 0) {
-          throw new Error(
-            `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
-          );
-        }
-      }
-    }
+    verifyJobConstraints(jobs);
 
     this.jobs = {
       ...this.jobs,
       ...jobs,
+    };
+  }
+
+  /**
+   * Get a single job from the workflow.
+   * @param id The job name (unique within the workflow)
+   */
+  public getJob(
+    id: string
+  ): workflows.Job | workflows.JobCallingReusableWorkflow {
+    return this.jobs[id];
+  }
+
+  /**
+   * Updates a single job to the workflow.
+   * @param id The job name (unique within the workflow)
+   */
+  public updateJob(
+    id: string,
+    job: workflows.Job | workflows.JobCallingReusableWorkflow
+  ) {
+    this.updateJobs({ [id]: job });
+  }
+
+  /**
+   * Updates jobs for this worklow
+   * Does a complete replace, it does not try to merge the jobs
+   *
+   * @param jobs Jobs to update.
+   */
+  public updateJobs(
+    jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>
+  ) {
+    verifyJobConstraints(jobs);
+
+    const newJobIds = Object.keys(jobs);
+    const updatedJobs = Object.entries(this.jobs).map(([jobId, job]) => {
+      if (newJobIds.includes(jobId)) {
+        return [jobId, jobs[jobId]];
+      }
+      return [jobId, job];
+    });
+    this.jobs = {
+      ...Object.fromEntries(updatedJobs),
+    };
+  }
+
+  /**
+   * Removes a single job to the workflow.
+   * @param id The job name (unique within the workflow)
+   */
+  public removeJob(id: string) {
+    const updatedJobs = Object.entries(this.jobs).filter(
+      ([jobId]) => jobId !== id
+    );
+    this.jobs = {
+      ...Object.fromEntries(updatedJobs),
     };
   }
 
@@ -359,4 +397,29 @@ function setupTools(tools: workflows.Tools) {
   }
 
   return steps;
+}
+
+function verifyJobConstraints(
+  jobs: Record<string, workflows.Job | workflows.JobCallingReusableWorkflow>
+) {
+  // verify that job has a "permissions" statement to ensure workflow can
+  // operate in repos with default tokens set to readonly
+  for (const [id, job] of Object.entries(jobs)) {
+    if (!job.permissions) {
+      throw new Error(
+        `${id}: all workflow jobs must have a "permissions" clause to ensure workflow can operate in restricted repositories`
+      );
+    }
+  }
+
+  // verify that job has a "runsOn" statement to ensure a worker can be selected appropriately
+  for (const [id, job] of Object.entries(jobs)) {
+    if (!("uses" in job)) {
+      if ("runsOn" in job && job.runsOn.length === 0) {
+        throw new Error(
+          `${id}: at least one runner selector labels must be provided in "runsOn" to ensure a runner instance can be selected`
+        );
+      }
+    }
+  }
 }
