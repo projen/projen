@@ -66,6 +66,70 @@ test("execution stops if a step fails", () => {
   );
 });
 
+describe("environment variables", () => {
+  test("are accessible from exec", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // WHEN
+    p.addTask("test:env", {
+      exec: "echo ${VALUE}!",
+      env: {
+        VALUE: "my_environment_var",
+      },
+    });
+
+    // THEN
+    expect(executeTask(p, "test:env")).toEqual(["my_environment_var!"]);
+  });
+
+  test("are resolved dynamically", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // WHEN
+    p.addTask("test:env", {
+      exec: "echo ${VALUE}!",
+      env: {
+        VALUE: '$(echo "dynamic_value")',
+      },
+    });
+
+    // THEN
+    expect(executeTask(p, "test:env")).toEqual(["dynamic_value!"]);
+  });
+
+  test("numerics are converted properly (task vars)", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // WHEN
+    p.addTask("test:env", {
+      exec: "echo ${VALUE}!",
+      env: {
+        VALUE: 1 as unknown as string,
+      },
+    });
+
+    // THEN
+    expect(executeTask(p, "test:env")).toEqual(["1!"]);
+  });
+
+  test("numerics are converted properly (global vars)", () => {
+    // GIVEN
+    const p = new TestProject();
+
+    // WHEN
+    p.addTask("test:env", {
+      exec: "echo ${VALUE}!",
+    });
+    p.tasks.addEnvironment("VALUE", 1 as unknown as string);
+
+    // THEN
+    expect(executeTask(p, "test:env")).toEqual(["1!"]);
+  });
+});
+
 describe("condition", () => {
   test("zero exit code means that steps should be executed", () => {
     // GIVEN

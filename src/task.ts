@@ -1,3 +1,4 @@
+import { warn } from "./logging";
 import {
   TaskCommonOptions,
   TaskSpec,
@@ -57,6 +58,7 @@ export class Task {
     this._locked = false;
 
     this._env = props.env ?? {};
+
     this._steps = props.steps ?? [];
     this.requiredEnv = props.requiredEnv;
 
@@ -207,7 +209,14 @@ export class Task {
    */
   public env(name: string, value: string) {
     this.assertUnlocked();
-    this._env[name] = value;
+    if (typeof value !== "string" && value !== undefined) {
+      warn(
+        `Received non-string value for environment variable ${name}. Value will be stringified.`
+      );
+      this._env[name] = String(value);
+    } else {
+      this._env[name] = value;
+    }
   }
 
   /**
