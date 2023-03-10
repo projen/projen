@@ -4,7 +4,7 @@ import { platform } from "os";
 import { dirname, join, resolve } from "path";
 import * as path from "path";
 import { format } from "util";
-import * as chalk from "chalk";
+import { gray, underline } from "chalk";
 import { PROJEN_DIR } from "./common";
 import * as logging from "./logging";
 import { TasksManifest, TaskSpec } from "./task-model";
@@ -94,9 +94,7 @@ class RunTask {
     this.parents = parents;
 
     if (!task.steps || task.steps.length === 0) {
-      this.logDebug(
-        chalk.gray("No actions have been specified for this task.")
-      );
+      this.logDebug(gray("No actions have been specified for this task."));
       return;
     }
 
@@ -111,9 +109,7 @@ class RunTask {
     }
 
     if (envlogs.length) {
-      this.logDebug(
-        chalk.gray(`${chalk.underline("env")}: ${envlogs.join(" ")}`)
-      );
+      this.logDebug(gray(`${underline("env")}: ${envlogs.join(" ")}`));
     }
 
     // evaluate condition
@@ -217,7 +213,7 @@ class RunTask {
       return true;
     }
 
-    this.log(chalk.gray(`${chalk.underline("condition")}: ${task.condition}`));
+    this.log(gray(`${underline("condition")}: ${task.condition}`));
     const result = this.shell({
       command: task.condition,
       logprefix: "condition: ",
@@ -291,7 +287,7 @@ class RunTask {
   }
 
   private fmtLog(...args: any[]) {
-    return format(`${chalk.underline(this.fullname)} |`, ...args);
+    return format(`${underline(this.fullname)} |`, ...args);
   }
 
   private shell(options: ShellOptions) {
