@@ -3,6 +3,7 @@ import { EOL } from "os";
 import { basename, join } from "path";
 import { mkdirpSync } from "fs-extra";
 import { Project } from "../../src";
+import * as logging from "../../src/logging";
 import { TaskRuntime } from "../../src/task-runtime";
 import { TestProject } from "../util";
 
@@ -101,6 +102,7 @@ describe("environment variables", () => {
 
   test("numerics are converted properly (task vars)", () => {
     // GIVEN
+    const warn = jest.spyOn(logging, "warn");
     const p = new TestProject();
 
     // WHEN
@@ -113,6 +115,10 @@ describe("environment variables", () => {
 
     // THEN
     expect(executeTask(p, "test:env")).toEqual(["1!"]);
+    expect(warn).toBeCalledWith(
+      "Received non-string value for environment variable VALUE. Value will be stringified."
+    );
+    warn.mockRestore();
   });
 
   test("numerics are converted properly (global vars)", () => {
