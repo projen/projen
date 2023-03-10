@@ -35,13 +35,18 @@ test('running "projen" for projects with a "default" task will execute it', () =
   expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual("foo\n");
 });
 
-test('running "projen" in a subdirectory will execute .projenrc.js in parent directory', () => {
-  const dir1 = mkdtemp();
-  const dir2 = mkdtemp({ dir: dir1 });
+test('running "projen" in a subdirectory for projects with a "default" task will execute it from parent .projenrc', () => {
+  const project = new Project({ name: "my-project" });
+  const subProject = new Project({
+    name: "my-sub-project",
+    parent: project,
+    outdir: "sub-project",
+  });
+  subProject.defaultTask?.exec('echo "foo" > bar.txt');
+  project.synth();
 
-  const rcfile = join(dir1, ".projenrc.js");
-  writeFileSync(rcfile, MOCK_PROJENRC);
-
-  execProjenCLI(dir2);
-  expect(directorySnapshot(dir2)).toMatchSnapshot();
+  execProjenCLI(subProject.outdir);
+  expect(directorySnapshot(subProject.outdir)["bar.txt"]).toStrictEqual(
+    "foo\n"
+  );
 });

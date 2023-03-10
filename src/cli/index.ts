@@ -9,13 +9,15 @@ import * as logging from "../logging";
 import { TaskRuntime } from "../task-runtime";
 import { getNodeMajorVersion } from "../util";
 
-const DEFAULT_RC = findProjenRc(process.cwd());
+const DEFAULT_RC = resolve(PROJEN_RC);
 
 async function main() {
   const ya = yargs;
   ya.command(newCommand);
 
-  const runtime = new TaskRuntime(".");
+  let pathToProjenRc = findProjenRc(process.cwd());
+
+  const runtime = new TaskRuntime(pathToProjenRc ?? ".");
   discoverTaskCommands(runtime, ya);
 
   ya.recommendCommands();
@@ -96,7 +98,7 @@ function findProjenRc(cwd: string): string | undefined {
 
   const projenrc = resolve(cwd, PROJEN_RC);
   if (fs.existsSync(projenrc)) {
-    return projenrc;
+    return cwd;
   }
 
   return findProjenRc(resolve(cwd, ".."));

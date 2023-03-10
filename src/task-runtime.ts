@@ -35,7 +35,7 @@ export class TaskRuntime {
   public readonly workdir: string;
 
   constructor(workdir: string) {
-    this.workdir = resolve(workdir);
+    this.workdir = workdir;
     const manifestPath = join(this.workdir, TaskRuntime.MANIFEST_FILE);
     this.manifest = existsSync(manifestPath)
       ? JSON.parse(readFileSync(manifestPath, "utf-8"))
