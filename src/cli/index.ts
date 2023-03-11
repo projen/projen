@@ -4,20 +4,26 @@ import * as yargs from "yargs";
 import newCommand from "./cmds/new";
 import { synth } from "./synth";
 import { discoverTaskCommands } from "./tasks";
-import { PROJEN_RC, PROJEN_VERSION } from "../common";
+import {
+  PROJEN_RC,
+  PROJEN_RC_JAVA,
+  PROJEN_RC_JSON,
+  PROJEN_RC_PY,
+  PROJEN_RC_TS,
+  PROJEN_VERSION,
+} from "../common";
 import * as logging from "../logging";
 import { TaskRuntime } from "../task-runtime";
 import { getNodeMajorVersion } from "../util";
 
-const DEFAULT_RC = resolve(PROJEN_RC);
+const DEFAULT_RC = findProjenRcJs(process.cwd());
 
 async function main() {
   const ya = yargs;
   ya.command(newCommand);
 
-  let pathToProjenRc = findProjenRc(process.cwd());
-
-  const runtime = new TaskRuntime(pathToProjenRc ?? ".");
+  const pathToProjenRcDir = resolve(DEFAULT_RC ?? resolve(PROJEN_RC), "..");
+  const runtime = new TaskRuntime(pathToProjenRcDir ?? ".");
   discoverTaskCommands(runtime, ya);
 
   ya.recommendCommands();
@@ -38,7 +44,7 @@ async function main() {
   ya.options("debug", { type: "boolean", default: false, desc: "Debug logs" });
   ya.options("rc", {
     desc: "path to .projenrc.js file",
-    default: DEFAULT_RC,
+    default: DEFAULT_RC ?? PROJEN_RC,
     type: "string",
   });
   ya.completion();
@@ -85,21 +91,27 @@ main().catch((e) => {
   process.exit(1);
 });
 
-/**
- * Run up project tree to find .projenrc.js
+/** Run up project tree to find .projenrc
  *
  * @param cwd current working directory
- * @returns path to .projenrc.js or undefined if not found
+ * @returns file path to .projenrc or undefined if not found
  */
-function findProjenRc(cwd: string): string | undefined {
+function findProjenRcJs(cwd: string): string | undefined {
   if (cwd === "/") {
     return undefined;
   }
 
-  const projenrc = resolve(cwd, PROJEN_RC);
-  if (fs.existsSync(projenrc)) {
-    return cwd;
+  if (fs.existsSync(resolve(cwd, PROJEN_RC))) {
+    return resolve(cwd, PROJEN_RC);
+  } else if (fs.existsSync(resolve(cwd, PROJEN_RC_TS))) {
+    return resolve(cwd, PROJEN_RC_TS);
+  } else if (fs.existsSync(resolve(cwd, PROJEN_RC_PY))) {
+    return resolve(cwd, PROJEN_RC_PY);
+  } else if (fs.existsSync(resolve(cwd, PROJEN_RC_JAVA))) {
+    return resolve(cwd, PROJEN_RC_JAVA);
+  } else if (fs.existsSync(resolve(cwd, PROJEN_RC_JSON))) {
+    return resolve(cwd, PROJEN_RC_JSON);
   }
 
-  return findProjenRc(resolve(cwd, ".."));
+  return findProjenRcJs(resolve(cwd, ".."));
 }
