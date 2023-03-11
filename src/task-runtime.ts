@@ -255,7 +255,7 @@ class RunTask {
     const output: { [name: string]: string | undefined } = {};
 
     for (const [key, value] of Object.entries(env ?? {})) {
-      if (value.startsWith("$(") && value.endsWith(")")) {
+      if (String(value).startsWith("$(") && String(value).endsWith(")")) {
         const query = value.substring(2, value.length - 1);
         const result = this.shellEval({ command: query });
         if (result.status !== 0) {
