@@ -4,26 +4,19 @@ import * as yargs from "yargs";
 import newCommand from "./cmds/new";
 import { synth } from "./synth";
 import { discoverTaskCommands } from "./tasks";
-import {
-  PROJEN_RC,
-  PROJEN_RC_JAVA,
-  PROJEN_RC_JSON,
-  PROJEN_RC_PY,
-  PROJEN_RC_TS,
-  PROJEN_VERSION,
-} from "../common";
+import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from "../common";
 import * as logging from "../logging";
 import { TaskRuntime } from "../task-runtime";
 import { getNodeMajorVersion } from "../util";
 
-const DEFAULT_RC = findProjenRcJs(process.cwd());
+const DEFAULT_RC = resolve(PROJEN_RC);
 
 async function main() {
   const ya = yargs;
   ya.command(newCommand);
 
-  const pathToProjenRcDir = resolve(DEFAULT_RC ?? resolve(PROJEN_RC), "..");
-  const runtime = new TaskRuntime(pathToProjenRcDir ?? ".");
+  const pathToProjenDir = findProjenDir(process.cwd());
+  const runtime = new TaskRuntime(pathToProjenDir ?? ".");
   discoverTaskCommands(runtime, ya);
 
   ya.recommendCommands();
@@ -91,27 +84,19 @@ main().catch((e) => {
   process.exit(1);
 });
 
-/** Run up project tree to find .projenrc
+/** Run up project tree to find .projen directory
  *
  * @param cwd current working directory
- * @returns file path to .projenrc or undefined if not found
+ * @returns path to .projen directory or undefined if not found
  */
-function findProjenRcJs(cwd: string): string | undefined {
+function findProjenDir(cwd: string): string | undefined {
   if (cwd === "/") {
     return undefined;
   }
 
-  if (fs.existsSync(resolve(cwd, PROJEN_RC))) {
-    return resolve(cwd, PROJEN_RC);
-  } else if (fs.existsSync(resolve(cwd, PROJEN_RC_TS))) {
-    return resolve(cwd, PROJEN_RC_TS);
-  } else if (fs.existsSync(resolve(cwd, PROJEN_RC_PY))) {
-    return resolve(cwd, PROJEN_RC_PY);
-  } else if (fs.existsSync(resolve(cwd, PROJEN_RC_JAVA))) {
-    return resolve(cwd, PROJEN_RC_JAVA);
-  } else if (fs.existsSync(resolve(cwd, PROJEN_RC_JSON))) {
-    return resolve(cwd, PROJEN_RC_JSON);
+  if (fs.existsSync(resolve(cwd, PROJEN_DIR))) {
+    return cwd;
   }
 
-  return findProjenRcJs(resolve(cwd, ".."));
+  return findProjenDir(resolve(cwd, ".."));
 }
