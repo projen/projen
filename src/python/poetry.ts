@@ -5,7 +5,6 @@ import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { Project } from "../project";
 import { Task } from "../task";
-import { TaskRuntime } from "../task-runtime";
 import { TomlFile } from "../toml";
 import { decamelizeKeysRecursively, exec, execOrUndefined } from "../util";
 
@@ -155,8 +154,7 @@ export class Poetry
    */
   public installDependencies() {
     this.project.logger.info("Installing dependencies...");
-    const runtime = new TaskRuntime(this.project.outdir);
-    runtime.runTask(this.installTask.name);
+    this.project.taskRuntime.runTask(this.installTask.name);
   }
 }
 

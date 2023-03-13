@@ -18,14 +18,16 @@ import { InitProjectOptionHints } from "./option-hints";
 import { ProjectBuild as ProjectBuild } from "./project-build";
 import { Projenrc, ProjenrcOptions } from "./projenrc-json";
 import { Renovatebot, RenovatebotOptions } from "./renovatebot";
+import { ServiceConfiguration, ServiceLocator } from "./services";
 import { Task, TaskOptions } from "./task";
+import { ITaskRuntime, TaskRuntime } from "./task-runtime";
 import { Tasks } from "./tasks";
 import { isTruthy } from "./util";
 
 /**
  * Options for `Project`.
  */
-export interface ProjectOptions {
+export interface ProjectOptions extends ServiceConfiguration {
   /**
    * This is the name of your project.
    *
@@ -123,7 +125,7 @@ export interface GitOptions {
 /**
  * Base project
  */
-export class Project {
+export class Project extends ServiceLocator {
   /**
    * The name of the default task (the task executed when `projen` is run without arguments). Normally
    * this task should synthesize the project files.
@@ -211,6 +213,11 @@ export class Project {
    */
   public readonly commitGenerated: boolean;
 
+  /**
+   * The task runtime implementation used.
+   */
+  public readonly taskRuntime: ITaskRuntime;
+
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
   private readonly tips = new Array<string>();
@@ -218,6 +225,7 @@ export class Project {
   private readonly _ejected: boolean;
 
   constructor(options: ProjectOptions) {
+    super();
     this.initProject = resolveInitProject(options);
 
     this.name = options.name;
@@ -234,6 +242,9 @@ export class Project {
 
     this.outdir = this.determineOutdir(options.outdir);
     this.root = this.parent ? this.parent.root : this;
+
+    this.taskRuntime =
+      options.services?.taskRuntime?.produce?.(this) ?? new TaskRuntime(this);
 
     // must happen after this.outdir, this.parent and this.root are initialized
     this.parent?._addSubProject(this);

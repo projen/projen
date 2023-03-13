@@ -1,21 +1,38 @@
 import { SpawnOptions, spawnSync } from "child_process";
 import { existsSync, readFileSync, statSync } from "fs";
 import { platform } from "os";
-import { dirname, join, resolve } from "path";
 import * as path from "path";
 import { format } from "util";
 import * as chalk from "chalk";
+import { resolve } from "./_resolve";
 import { PROJEN_DIR } from "./common";
+import { Component } from "./component";
+import { IResolver } from "./file";
+import { JsonFile } from "./json";
 import * as logging from "./logging";
+import { Project } from "./project";
 import { TasksManifest, TaskSpec } from "./task-model";
+import { YamlFile } from "./yaml";
 
 const ENV_TRIM_LEN = 20;
 const ARGS_MARKER = "$@";
 
+export interface ITaskRuntime {
+  /**
+   * Runs the task.
+   * @param name The task name.
+   */
+  runTask(
+    name: string,
+    parents?: string[],
+    args?: Array<string | number>
+  ): void;
+}
+
 /**
  * The runtime component of the tasks engine.
  */
-export class TaskRuntime {
+export class TaskRuntime extends Component implements ITaskRuntime {
   /**
    * The project-relative path of the tasks manifest file.
    */
@@ -34,9 +51,10 @@ export class TaskRuntime {
    */
   public readonly workdir: string;
 
-  constructor(workdir: string) {
-    this.workdir = resolve(workdir);
-    const manifestPath = join(this.workdir, TaskRuntime.MANIFEST_FILE);
+  constructor(project: Project) {
+    super(project);
+    this.workdir = path.resolve(project.outdir);
+    const manifestPath = path.join(this.workdir, TaskRuntime.MANIFEST_FILE);
     this.manifest = existsSync(manifestPath)
       ? JSON.parse(readFileSync(manifestPath, "utf-8"))
       : { tasks: {} };
@@ -74,6 +92,24 @@ export class TaskRuntime {
     }
 
     new RunTask(this, task, parents, args);
+  }
+
+  protected get tasksManifest(): TasksManifest {
+    const resolver: IResolver = {
+      resolve: (obj, options) => resolve(obj, options),
+    };
+
+    return this.project.tasks.resolveTasksManifest(resolver);
+  }
+
+  /**
+   * Synthesize the task manifest
+   */
+  public synthesize(): void {
+    new JsonFile(this.project, TaskRuntime.MANIFEST_FILE, {
+      omitEmpty: true,
+      obj: this.tasksManifest,
+    });
   }
 }
 
@@ -195,7 +231,7 @@ class RunTask {
           throw new Error(
             `Task "${
               this.fullname
-            }" failed when executing "${command}" (cwd: ${resolve(
+            }" failed when executing "${command}" (cwd: ${path.resolve(
               cwd ?? this.workdir
             )})`
           );
@@ -343,9 +379,9 @@ class RunTask {
   }
 
   private renderBuiltin(builtin: string) {
-    const moduleRoot = dirname(require.resolve("../package.json"));
+    const moduleRoot = path.dirname(require.resolve("../package.json"));
     const program = require.resolve(
-      join(moduleRoot, "lib", `${builtin}.task.js`)
+      path.join(moduleRoot, "lib", `${builtin}.task.js`)
     );
     return `${process.execPath} ${program}`;
   }
@@ -361,4 +397,100 @@ interface ShellOptions {
   readonly spawnOptions?: SpawnOptions;
   /** @default false */
   readonly quiet?: boolean;
+}
+
+export class CustomTaskRuntime extends Component implements ITaskRuntime {
+  public static readonly MANIFEST_FILE = ".custom.yaml";
+
+  runTask(
+    name: string,
+    _parents?: string[] | undefined,
+    _args?: (string | number)[] | undefined
+  ): void {
+    console.log("running:", name);
+  }
+
+  public synthesize(): void {
+    const resolver: IResolver = {
+      resolve: (obj, options) => resolve(obj, options),
+    };
+
+    new YamlFile(this.project, CustomTaskRuntime.MANIFEST_FILE, {
+      omitEmpty: true,
+      obj: this.project.tasks.resolveTasksManifest(resolver),
+    });
+  }
+}
+
+export class HybridTaskRuntime extends TaskRuntime {
+  public static readonly OTHER_MANIFEST_FILE = ".hybrid.yaml";
+
+  protected get tasksManifest(): TasksManifest {
+    const taskManifest = super.tasksManifest;
+
+    return {
+      tasks: Object.fromEntries(
+        Object.entries(taskManifest.tasks ?? {}).filter(
+          ([name]) => name === "default"
+        )
+      ),
+      env: taskManifest.env,
+    };
+  }
+
+  public synthesize(): void {
+    super.synthesize();
+
+    new YamlFile(this.project, HybridTaskRuntime.OTHER_MANIFEST_FILE, {
+      omitEmpty: true,
+      obj: super.tasksManifest,
+    });
+  }
+}
+
+export class ProxyTaskRuntime extends TaskRuntime {
+  public static readonly OTHER_MANIFEST_FILE = ".proxy.yaml";
+
+  protected get tasksManifest(): TasksManifest {
+    const taskManifest = super.tasksManifest;
+
+    return {
+      tasks: Object.fromEntries(
+        Object.entries(taskManifest.tasks ?? {}).map(([name]) => [
+          name,
+          {
+            name,
+            steps: [
+              {
+                exec: `proxy ${name}`,
+              },
+            ],
+          },
+        ])
+      ),
+      env: taskManifest.env,
+    };
+  }
+
+  public synthesize(): void {
+    super.synthesize();
+
+    new YamlFile(this.project, ProxyTaskRuntime.OTHER_MANIFEST_FILE, {
+      omitEmpty: true,
+      obj: super.tasksManifest,
+    });
+  }
+}
+
+export class ReplicaTaskRuntime extends TaskRuntime {
+  public static readonly OTHER_MANIFEST_FILE = ".replica.yaml";
+
+  public synthesize(): void {
+    super.synthesize();
+
+    new YamlFile(this.project, ReplicaTaskRuntime.OTHER_MANIFEST_FILE, {
+      omitEmpty: true,
+      obj: this.tasksManifest,
+    });
+  }
 }

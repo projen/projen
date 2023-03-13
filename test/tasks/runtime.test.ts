@@ -249,7 +249,7 @@ describe("say", () => {
 
     p.synth();
 
-    const rt = new TaskRuntime(p.outdir);
+    const rt = new TaskRuntime(p);
     expect(rt.tasks.find((t) => t.name === "say")).toStrictEqual({
       name: "say",
       steps: [{ say: "hello, world" }],
