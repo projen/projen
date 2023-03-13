@@ -994,6 +994,24 @@ tsconfig.tsbuildinfo
         }
       ]
     },
+    \\"install\\": {
+      \\"name\\": \\"install\\",
+      \\"description\\": \\"Install project dependencies and update lockfile (non-frozen)\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"yarn install --check-files\\"
+        }
+      ]
+    },
+    \\"install:ci\\": {
+      \\"name\\": \\"install:ci\\",
+      \\"description\\": \\"Install project dependencies using frozen lockfile\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"yarn install --check-files --frozen-lockfile\\"
+        }
+      ]
+    },
     \\"package\\": {
       \\"name\\": \\"package\\",
       \\"description\\": \\"Creates the distribution package\\",
@@ -2072,6 +2090,24 @@ tsconfig.tsbuildinfo
       \\"steps\\": [
         {
           \\"exec\\": \\"eslint --ext .ts,.tsx --fix --no-error-on-unmatched-pattern src test build-tools .projenrc.js\\"
+        }
+      ]
+    },
+    \\"install\\": {
+      \\"name\\": \\"install\\",
+      \\"description\\": \\"Install project dependencies and update lockfile (non-frozen)\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"yarn install --check-files\\"
+        }
+      ]
+    },
+    \\"install:ci\\": {
+      \\"name\\": \\"install:ci\\",
+      \\"description\\": \\"Install project dependencies using frozen lockfile\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"yarn install --check-files --frozen-lockfile\\"
         }
       ]
     },
@@ -3245,6 +3281,24 @@ tsconfig.tsbuildinfo
         }
       ]
     },
+    \\"install\\": {
+      \\"name\\": \\"install\\",
+      \\"description\\": \\"Install project dependencies and update lockfile (non-frozen)\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"yarn install --check-files\\"
+        }
+      ]
+    },
+    \\"install:ci\\": {
+      \\"name\\": \\"install:ci\\",
+      \\"description\\": \\"Install project dependencies using frozen lockfile\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"yarn install --check-files --frozen-lockfile\\"
+        }
+      ]
+    },
     \\"package\\": {
       \\"name\\": \\"package\\",
       \\"description\\": \\"Creates the distribution package\\",
@@ -4311,6 +4365,24 @@ permissions-backup.acl
       \\"steps\\": [
         {
           \\"spawn\\": \\"default\\"
+        }
+      ]
+    },
+    \\"install\\": {
+      \\"name\\": \\"install\\",
+      \\"description\\": \\"Install project dependencies and update lockfile (non-frozen)\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"pnpm i --no-frozen-lockfile\\"
+        }
+      ]
+    },
+    \\"install:ci\\": {
+      \\"name\\": \\"install:ci\\",
+      \\"description\\": \\"Install project dependencies using frozen lockfile\\",
+      \\"steps\\": [
+        {
+          \\"exec\\": \\"pnpm i --frozen-lockfile\\"
         }
       ]
     },

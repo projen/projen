@@ -20,7 +20,8 @@ import { JsonFile } from "../json";
 import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
-import { exec, isTruthy, sorted, writeFile } from "../util";
+import { TaskRuntime } from "../task-runtime";
+import { isTruthy, sorted, writeFile } from "../util";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -478,6 +479,16 @@ export class NodePackage extends Component {
    */
   public readonly lockFile: string;
 
+  /**
+   * The task for installing project dependencies (non-frozen)
+   */
+  public readonly installTask: Task;
+
+  /**
+   * The task for installing project dependencies (frozen)
+   */
+  public readonly installCiTask: Task;
+
   private readonly keywords: Set<string> = new Set();
   private readonly bin: Record<string, string> = {};
   private readonly engines: Record<string, string> = {};
@@ -588,6 +599,17 @@ export class NodePackage extends Component {
     if (options.licensed ?? true) {
       this.license = options.license ?? "Apache-2.0";
     }
+
+    this.installTask = project.addTask("install", {
+      description:
+        "Install project dependencies and update lockfile (non-frozen)",
+      exec: this.installAndUpdateLockfileCommand,
+    });
+
+    this.installCiTask = project.addTask("install:ci", {
+      description: "Install project dependencies using frozen lockfile",
+      exec: this.installCommand,
+    });
   }
 
   /**
@@ -1397,9 +1419,15 @@ export class NodePackage extends Component {
 
   private renderScripts() {
     const result: any = {};
-    for (const task of this.project.tasks.all.sort((x, y) =>
-      x.name.localeCompare(y.name)
-    )) {
+    const tasks = this.project.tasks.all
+      .filter(
+        (t) =>
+          // Must remove to prevent overriding built-in npm command (which would loop)
+          t.name !== this.installTask.name && t.name !== this.installCiTask.name
+      )
+      .sort((x, y) => x.name.localeCompare(y.name));
+
+    for (const task of tasks) {
       result[task.name] = this.npmScriptForTask(task);
     }
 
@@ -1420,9 +1448,12 @@ export class NodePackage extends Component {
   }
 
   private installDependencies() {
-    exec(this.renderInstallCommand(this.isAutomatedBuild), {
-      cwd: this.project.outdir,
-    });
+    this.project.logger.info("Installing dependencies...");
+    const runtime = new TaskRuntime(this.project.outdir);
+    const taskToRun = this.isAutomatedBuild
+      ? this.installCiTask
+      : this.installTask;
+    runtime.runTask(taskToRun.name);
   }
 }
 
