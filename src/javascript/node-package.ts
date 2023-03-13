@@ -605,14 +605,11 @@ export class NodePackage extends Component {
         "Install project dependencies and update lockfile (non-frozen)",
       exec: this.installAndUpdateLockfileCommand,
     });
-    // Necessary to prevent infinite loop
-    this.removeScript(this.installTask.name);
 
     this.installCiTask = project.addTask("install:ci", {
       description: "Install project dependencies using frozen lockfile",
       exec: this.installCommand,
     });
-    this.removeScript(this.installCiTask.name);
   }
 
   /**
@@ -1422,9 +1419,15 @@ export class NodePackage extends Component {
 
   private renderScripts() {
     const result: any = {};
-    for (const task of this.project.tasks.all.sort((x, y) =>
-      x.name.localeCompare(y.name)
-    )) {
+    const tasks = this.project.tasks.all
+      .filter(
+        (t) =>
+          // Must remove to prevent overriding built-in npm command (which would loop)
+          t.name !== this.installTask.name && t.name !== this.installCiTask.name
+      )
+      .sort((x, y) => x.name.localeCompare(y.name));
+
+    for (const task of tasks) {
       result[task.name] = this.npmScriptForTask(task);
     }
 
