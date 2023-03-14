@@ -269,6 +269,16 @@ export class Project {
         description: "Synthesize project files",
       });
 
+      // Subtasks should call the root task for synth
+      if (this.parent) {
+        this.defaultTask.exec(
+          [
+            `cd ${path.relative(this.outdir, this.root.outdir)}`,
+            `${this.projenCommand} ${Project.DEFAULT_TASK}`,
+          ].join(" && ")
+        );
+      }
+
       if (!this.parent) {
         this.ejectTask = this.tasks.addTask("eject", {
           description: "Remove projen from the project",

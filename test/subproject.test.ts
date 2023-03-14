@@ -159,6 +159,32 @@ test("subprojects do not add a Projenrc component", () => {
   expect(rcFiles.length).toBe(0);
 });
 
+test("subprojects use root level default task", () => {
+  // GIVEN
+  const root = new TestProject();
+
+  const childOne = new TestProject({
+    parent: root,
+    outdir: "one",
+  });
+
+  new TestProject({
+    parent: childOne,
+    outdir: "two",
+  });
+
+  // THEN
+  const out = synthSnapshot(root);
+  expect(out["one/.projen/tasks.json"]).toMatchSnapshot();
+  expect(out["one/.projen/tasks.json"].tasks.default.steps).toEqual([
+    { exec: "cd .. && npx projen default" },
+  ]);
+  expect(out["one/two/.projen/tasks.json"]).toMatchSnapshot();
+  expect(out["one/two/.projen/tasks.json"].tasks.default.steps).toEqual([
+    { exec: "cd ../.. && npx projen default" },
+  ]);
+});
+
 // a project that depends on generated files during preSynthesize()
 class PreSynthProject extends Project {
   public file: TextFile;
