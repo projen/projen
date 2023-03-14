@@ -171,6 +171,7 @@ Name|Description
 [GitpodPort](#projen-gitpodport)|Options for an exposed port on Gitpod.
 [GitpodPrebuilds](#projen-gitpodprebuilds)|Configure the Gitpod App for prebuilds.
 [GitpodTask](#projen-gitpodtask)|Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
+[IgnoreFileOptions](#projen-ignorefileoptions)|*No description*
 [IniFileOptions](#projen-inifileoptions)|Options for `IniFile`.
 [InitProject](#projen-initproject)|Information passed from `projen new` to the project object when the project is first created.
 [JsonFileOptions](#projen-jsonfileoptions)|Options for `JsonFile`.
@@ -1269,12 +1270,24 @@ __Extends__: [FileBase](#projen-filebase)
 
 
 ```ts
-new IgnoreFile(project: Project, filePath: string)
+new IgnoreFile(project: Project, filePath: string, options?: IgnoreFileOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **filePath** (<code>string</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  The proejct to tie this file to.
+* **filePath** (<code>string</code>)  - the relative path in the project to put the file.
+* **options** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  *No description*
+  * **filterCommentLines** (<code>boolean</code>)  Filter out comment lines? __*Default*__: true
+  * **filterEmptyLines** (<code>boolean</code>)  Filter out blank/empty lines? __*Default*__: true
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**filterCommentLines**🔹 | <code>boolean</code> | <span></span>
+**filterEmptyLines**🔹 | <code>boolean</code> | <span></span>
 
 ### Methods
 
@@ -1287,7 +1300,7 @@ Files that match this pattern will be ignored. If the
 pattern starts with a negation mark `!`, files that match will _not_ be
 ignored.
 
-Comment lines (start with `#`) are ignored.
+Comment lines (start with `#`) and blank lines ("") are included.
 
 ```ts
 addPatterns(...patterns: string[]): void
@@ -12546,6 +12559,20 @@ resolve(value: any, options?: ResolveOptions): any
 
 __Returns__:
 * <code>any</code>
+
+
+
+## struct IgnoreFileOptions 🔹 <a id="projen-ignorefileoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**filterCommentLines**?🔹 | <code>boolean</code> | Filter out comment lines?<br/>__*Default*__: true
+**filterEmptyLines**?🔹 | <code>boolean</code> | Filter out blank/empty lines?<br/>__*Default*__: true
 
 
 
