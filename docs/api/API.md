@@ -738,6 +738,7 @@ addService(serviceName: string, description: DockerComposeServiceDescription): D
 * **description** (<code>[DockerComposeServiceDescription](#projen-dockercomposeservicedescription)</code>)  a service description.
   * **command** (<code>Array<string></code>)  Provide a command to the docker container. __*Default*__: use the container's default command
   * **dependsOn** (<code>Array<[IDockerComposeServiceName](#projen-idockercomposeservicename)></code>)  Names of other services this service depends on. __*Default*__: no dependencies
+  * **entrypoint** (<code>string &#124; Array<string></code>)  Entrypoint to run in the container. __*Optional*__
   * **environment** (<code>Map<string, string></code>)  Add environment variables. __*Default*__: no environment variables are provided
   * **image** (<code>string</code>)  Use a docker image. __*Optional*__
   * **imageBuild** (<code>[DockerComposeBuild](#projen-dockercomposebuild)</code>)  Build a docker image. __*Optional*__
@@ -864,6 +865,7 @@ new DockerComposeService(serviceName: string, serviceDescription: DockerComposeS
 * **serviceDescription** (<code>[DockerComposeServiceDescription](#projen-dockercomposeservicedescription)</code>)  *No description*
   * **command** (<code>Array<string></code>)  Provide a command to the docker container. __*Default*__: use the container's default command
   * **dependsOn** (<code>Array<[IDockerComposeServiceName](#projen-idockercomposeservicename)></code>)  Names of other services this service depends on. __*Default*__: no dependencies
+  * **entrypoint** (<code>string &#124; Array<string></code>)  Entrypoint to run in the container. __*Optional*__
   * **environment** (<code>Map<string, string></code>)  Add environment variables. __*Default*__: no environment variables are provided
   * **image** (<code>string</code>)  Use a docker image. __*Optional*__
   * **imageBuild** (<code>[DockerComposeBuild](#projen-dockercomposebuild)</code>)  Build a docker image. __*Optional*__
@@ -886,7 +888,8 @@ Name | Type | Description
 **ports**🔹 | <code>Array<[DockerComposeServicePort](#projen-dockercomposeserviceport)></code> | Published ports.
 **serviceName**🔹 | <code>string</code> | Name of the service.
 **volumes**🔹 | <code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code> | Volumes mounted in the container.
-**command**?🔹 | <code>Array<string></code> | Command to run in the container.<br/>__*Optional*__
+**command**?🔹 | <code>string &#124; Array<string></code> | Command to run in the container.<br/>__*Optional*__
+**entrypoint**?🔹 | <code>string &#124; Array<string></code> | Entrypoint to run in the container.<br/>__*Optional*__
 **image**?🔹 | <code>string</code> | Docker image.<br/>__*Optional*__
 **imageBuild**?🔹 | <code>[DockerComposeBuild](#projen-dockercomposebuild)</code> | Docker image build instructions.<br/>__*Optional*__
 
@@ -12204,6 +12207,7 @@ Name | Type | Description
 -----|------|-------------
 **command**?🔹 | <code>Array<string></code> | Provide a command to the docker container.<br/>__*Default*__: use the container's default command
 **dependsOn**?🔹 | <code>Array<[IDockerComposeServiceName](#projen-idockercomposeservicename)></code> | Names of other services this service depends on.<br/>__*Default*__: no dependencies
+**entrypoint**?🔹 | <code>string &#124; Array<string></code> | Entrypoint to run in the container.<br/>__*Optional*__
 **environment**?🔹 | <code>Map<string, string></code> | Add environment variables.<br/>__*Default*__: no environment variables are provided
 **image**?🔹 | <code>string</code> | Use a docker image.<br/>__*Optional*__
 **imageBuild**?🔹 | <code>[DockerComposeBuild](#projen-dockercomposebuild)</code> | Build a docker image.<br/>__*Optional*__

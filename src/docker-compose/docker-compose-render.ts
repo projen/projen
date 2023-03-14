@@ -20,12 +20,13 @@ interface DockerComposeFileServiceSchema {
   readonly dependsOn?: string[];
   readonly build?: DockerComposeBuild;
   readonly image?: string;
-  readonly command?: string[];
+  readonly command?: string | string[];
   readonly volumes?: DockerComposeVolumeMount[];
   readonly networks?: string[];
   readonly ports?: DockerComposeServicePort[];
   readonly environment?: Record<string, string>;
   readonly labels?: Record<string, string>;
+  readonly entrypoint?: string | string[];
 }
 
 /**
@@ -117,6 +118,10 @@ export function renderDockerComposeFile(
       ...getObjectWithKeyAndValueIfValueIsDefined(
         "build",
         serviceDescription.imageBuild
+      ),
+      ...getObjectWithKeyAndValueIfValueIsDefined(
+        "entrypoint",
+        serviceDescription.entrypoint
       ),
       ...getObjectWithKeyAndValueIfValueIsDefined(
         "command",
