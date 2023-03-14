@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
 import { readJsonSync } from "fs-extra";
-import semver from "semver";
+import * as semver from "semver";
 import * as YAML from "yaml";
 import { Project, DependencyType } from "../../src";
 import {
