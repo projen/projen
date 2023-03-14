@@ -237,13 +237,15 @@ export class PythonProject extends GitHubProject {
       );
     }
 
-    // default to projenrc.py if no other projenrc type was elected
-    if (options.projenrcPython ?? !anySelected(rcFileTypeOptions)) {
-      new ProjenrcPython(this, options.projenrcPythonOptions);
-    }
+    if (!this.parent) {
+      // default to projenrc.py if no other projenrc type was elected
+      if (options.projenrcPython ?? !anySelected(rcFileTypeOptions)) {
+        new ProjenrcPython(this, options.projenrcPythonOptions);
+      }
 
-    if (options.projenrcJs ?? false) {
-      new ProjenrcJs(this, options.projenrcJsOptions);
+      if (options.projenrcJs ?? false) {
+        new ProjenrcJs(this, options.projenrcJsOptions);
+      }
     }
 
     if (venv) {

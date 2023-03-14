@@ -702,7 +702,7 @@ export class NodeProject extends GitHubProject {
     }
 
     const projenrcJs = options.projenrcJs ?? !options.projenrcJson;
-    if (projenrcJs) {
+    if (!this.parent && projenrcJs) {
       new Projenrc(this, options.projenrcJsOptions);
     }
 

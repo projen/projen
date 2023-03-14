@@ -285,7 +285,7 @@ export class Project {
     this.logger = new Logger(this, options.logging);
 
     const projenrcJson = options.projenrcJson ?? false;
-    if (projenrcJson) {
+    if (!this.parent && projenrcJson) {
       new Projenrc(this, options.projenrcJsonOptions);
     }
 
