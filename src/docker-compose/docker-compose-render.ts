@@ -20,13 +20,13 @@ interface DockerComposeFileServiceSchema {
   readonly dependsOn?: string[];
   readonly build?: DockerComposeBuild;
   readonly image?: string;
-  readonly command?: string | string[];
+  readonly command?: string[];
   readonly volumes?: DockerComposeVolumeMount[];
   readonly networks?: string[];
   readonly ports?: DockerComposeServicePort[];
   readonly environment?: Record<string, string>;
   readonly labels?: Record<string, string>;
-  readonly entrypoint?: string | string[];
+  readonly entrypoint?: string[];
 }
 
 /**
