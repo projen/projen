@@ -8288,7 +8288,9 @@ Name | Type | Description
 **allowLibraryDependencies**🔹 | <code>boolean</code> | Allow project to take library dependencies.
 **entrypoint**🔹 | <code>string</code> | The module's entrypoint (e.g. `lib/index.js`).
 **installAndUpdateLockfileCommand**🔹 | <code>string</code> | Renders `yarn install` or `npm install` with lockfile update (not frozen).
+**installCiTask**🔹 | <code>[Task](#projen-task)</code> | The task for installing project dependencies (frozen).
 **installCommand**🔹 | <code>string</code> | Returns the command to execute in order to install all dependencies (always frozen).
+**installTask**🔹 | <code>[Task](#projen-task)</code> | The task for installing project dependencies (non-frozen).
 **lockFile**🔹 | <code>string</code> | The name of the lock file.
 **manifest**⚠️ | <code>any</code> | <span></span>
 **npmAccess**🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | npm package access level.

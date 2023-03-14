@@ -1,4 +1,4 @@
-import path from "path";
+import * as path from "path";
 import { Projenrc, TypeScriptProject } from "../../src/typescript";
 import { withProjectDir } from "../util";
 

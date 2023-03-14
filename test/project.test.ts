@@ -54,7 +54,7 @@ test("generated files are commited if commitGenerated is true", () => {
   expect(gitIgnoreContents).toMatchSnapshot();
 });
 
-test.only("generated files are ignored from git if commitGenerated is false", () => {
+test("generated files are ignored from git if commitGenerated is false", () => {
   // GIVEN
   const p = new TestProject({ commitGenerated: false });
   new TextFile(p, "my.txt");
