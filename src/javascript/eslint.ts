@@ -15,13 +15,14 @@ export interface EslintOptions {
   readonly tsconfigPath?: string;
 
   /**
-   * Directories with source files to lint (e.g. [ "src" ])
+   * Files or glob patterns or directories with source files to lint (e.g. [ "src" ])
    */
   readonly dirs: string[];
 
   /**
-   * Directories with source files that include tests and build tools. These
-   * sources are linted but may also import packages from `devDependencies`.
+   * Files or glob patterns or directories with source files that include tests and build tools
+   *
+   * These sources are linted but may also import packages from `devDependencies`.
    * @default []
    */
   readonly devdirs?: string[];
@@ -43,13 +44,15 @@ export interface EslintOptions {
   /**
    * Projenrc file to lint. Use empty string to disable.
    * @default PROJEN_RC
+   * @deprecated provide as `devdirs`
    */
   readonly lintProjenRcFile?: string;
 
   /**
    * Should we lint .projenrc.js
+   *
    * @default true
-   * @deprecated use lintProjenRcFile instead
+   * @deprecated set to `false` to remove any automatic rules and add manually
    */
   readonly lintProjenRc?: boolean;
 
@@ -125,7 +128,7 @@ export class Eslint extends Component {
   /**
    * eslint overrides.
    */
-  public readonly overrides: EslintOverride[];
+  public readonly overrides: EslintOverride[] = [];
 
   /**
    * eslint task.
@@ -146,6 +149,8 @@ export class Eslint extends Component {
   private readonly _allowDevDeps: Set<string>;
   private readonly _plugins = new Array<string>();
   private readonly _extends = new Array<string>();
+  private readonly _fileExtensions: string[];
+  private readonly _lintPatterns: string[];
   private readonly nodeProject: NodeProject;
 
   constructor(project: NodeProject, options: EslintOptions) {
@@ -166,27 +171,24 @@ export class Eslint extends Component {
       project.addDevDeps("eslint-import-resolver-alias");
     }
 
-    const devdirs = options.devdirs ?? [];
-
-    const dirs = [...options.dirs, ...devdirs];
-    const fileExtensions = options.fileExtensions ?? [".ts"];
-
-    this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
-
     const lintProjenRc = options.lintProjenRc ?? true;
     const lintProjenRcFile = options.lintProjenRcFile ?? PROJEN_RC;
 
+    const devdirs = options.devdirs ?? [];
+
+    this._lintPatterns = [
+      ...options.dirs,
+      ...devdirs,
+      ...(lintProjenRc && lintProjenRcFile ? [lintProjenRcFile] : []),
+    ];
+    this._fileExtensions = options.fileExtensions ?? [".ts"];
+
+    this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
+
     this.eslintTask = project.addTask("eslint", {
       description: "Runs eslint against the codebase",
-      exec: [
-        "eslint",
-        `--ext ${fileExtensions.join(",")}`,
-        "--fix",
-        "--no-error-on-unmatched-pattern",
-        ...dirs,
-        ...(lintProjenRc && lintProjenRcFile ? [lintProjenRcFile] : []),
-      ].join(" "),
     });
+    this.updateTask();
 
     project.testTask.spawn(this.eslintTask);
 
@@ -319,19 +321,23 @@ export class Eslint extends Component {
     };
 
     // Overrides for .projenrc.js
-    this.overrides = [
-      {
-        files: [lintProjenRcFile || PROJEN_RC],
-        rules: {
-          "@typescript-eslint/no-require-imports": "off",
-          "import/no-extraneous-dependencies": "off",
+    // @deprecated
+    if (lintProjenRc) {
+      this.overrides = [
+        {
+          files: [lintProjenRcFile || PROJEN_RC],
+          rules: {
+            "@typescript-eslint/no-require-imports": "off",
+            "import/no-extraneous-dependencies": "off",
+          },
         },
-      },
-    ];
+      ];
+    }
 
     this.ignorePatterns = options.ignorePatterns ?? [
       "*.js",
-      `!${lintProjenRcFile || PROJEN_RC}`,
+      // @deprecated
+      ...(lintProjenRc ? [`!${lintProjenRcFile || PROJEN_RC}`] : []),
       "*.d.ts",
       "node_modules/",
       "*.generated.ts",
@@ -403,6 +409,14 @@ export class Eslint extends Component {
   }
 
   /**
+   * Add a file, glob pattern or directory with source files to lint (e.g. [ "src" ])
+   */
+  public addLintPattern(pattern: string) {
+    this._lintPatterns.push(pattern);
+    this.updateTask();
+  }
+
+  /**
    * Add an eslint rule.
    */
   public addRules(rules: { [rule: string]: any }) {
@@ -470,5 +484,20 @@ export class Eslint extends Component {
 
   private renderDevDepsAllowList() {
     return Array.from(this._allowDevDeps);
+  }
+
+  /**
+   * Update the task with the current list of lint patterns and file extensions
+   */
+  private updateTask() {
+    this.eslintTask.reset(
+      [
+        "eslint",
+        `--ext ${this._fileExtensions.join(",")}`,
+        "--fix",
+        "--no-error-on-unmatched-pattern",
+        ...this._lintPatterns,
+      ].join(" ")
+    );
   }
 }

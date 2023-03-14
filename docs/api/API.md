@@ -7970,10 +7970,10 @@ new javascript.Eslint(project: NodeProject, options: EslintOptions)
 
 * **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
 * **options** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  *No description*
-  * **dirs** (<code>Array<string></code>)  Directories with source files to lint (e.g. [ "src" ]). 
+  * **dirs** (<code>Array<string></code>)  Files or glob patterns or directories with source files to lint (e.g. [ "src" ]). 
   * **aliasExtensions** (<code>Array<string></code>)  Enable import alias for module paths. __*Default*__: undefined
   * **aliasMap** (<code>Map<string, string></code>)  Enable import alias for module paths. __*Default*__: undefined
-  * **devdirs** (<code>Array<string></code>)  Directories with source files that include tests and build tools. __*Default*__: []
+  * **devdirs** (<code>Array<string></code>)  Files or glob patterns or directories with source files that include tests and build tools. __*Default*__: []
   * **fileExtensions** (<code>Array<string></code>)  File types that should be linted (e.g. [ ".js", ".ts" ]). __*Default*__: [".ts"]
   * **ignorePatterns** (<code>Array<string></code>)  List of file patterns that should not be linted, using the same syntax as .gitignore patterns. __*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
   * **lintProjenRc** (<code>boolean</code>)  Should we lint .projenrc.js. __*Default*__: true
@@ -8018,6 +8018,19 @@ Do not lint these files.
 
 ```ts
 addIgnorePattern(pattern: string): void
+```
+
+* **pattern** (<code>string</code>)  *No description*
+
+
+
+
+#### addLintPattern(pattern)🔹 <a id="projen-javascript-eslint-addlintpattern"></a>
+
+Add a file, glob pattern or directory with source files to lint (e.g. [ "src" ]).
+
+```ts
+addLintPattern(pattern: string): void
 ```
 
 * **pattern** (<code>string</code>)  *No description*
@@ -9082,6 +9095,21 @@ new javascript.Projenrc(project: Project, options?: ProjenrcOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.js"
+
+
+### Methods
+
+
+#### preSynthesize()🔹 <a id="projen-javascript-projenrc-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
+
+
 
 
 
@@ -10359,6 +10387,21 @@ new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
 * **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
   * **projenCodeDir** (<code>string</code>)  A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. __*Default*__: "projenrc"
+
+
+### Methods
+
+
+#### preSynthesize()🔹 <a id="projen-typescript-projenrc-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
+
+
 
 
 
@@ -16783,14 +16826,14 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**dirs**🔹 | <code>Array<string></code> | Directories with source files to lint (e.g. [ "src" ]).
+**dirs**🔹 | <code>Array<string></code> | Files or glob patterns or directories with source files to lint (e.g. [ "src" ]).
 **aliasExtensions**?🔹 | <code>Array<string></code> | Enable import alias for module paths.<br/>__*Default*__: undefined
 **aliasMap**?🔹 | <code>Map<string, string></code> | Enable import alias for module paths.<br/>__*Default*__: undefined
-**devdirs**?🔹 | <code>Array<string></code> | Directories with source files that include tests and build tools.<br/>__*Default*__: []
+**devdirs**?🔹 | <code>Array<string></code> | Files or glob patterns or directories with source files that include tests and build tools.<br/>__*Default*__: []
 **fileExtensions**?🔹 | <code>Array<string></code> | File types that should be linted (e.g. [ ".js", ".ts" ]).<br/>__*Default*__: [".ts"]
 **ignorePatterns**?🔹 | <code>Array<string></code> | List of file patterns that should not be linted, using the same syntax as .gitignore patterns.<br/>__*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
 **lintProjenRc**?⚠️ | <code>boolean</code> | Should we lint .projenrc.js.<br/>__*Default*__: true
-**lintProjenRcFile**?🔹 | <code>string</code> | Projenrc file to lint.<br/>__*Default*__: PROJEN_RC
+**lintProjenRcFile**?⚠️ | <code>string</code> | Projenrc file to lint.<br/>__*Default*__: PROJEN_RC
 **prettier**?🔹 | <code>boolean</code> | Enable prettier for code formatting.<br/>__*Default*__: false
 **tsAlwaysTryTypes**?🔹 | <code>boolean</code> | Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.<br/>__*Default*__: true
 **tsconfigPath**?🔹 | <code>string</code> | Path to `tsconfig.json` which should be used by eslint.<br/>__*Default*__: "./tsconfig.json"
