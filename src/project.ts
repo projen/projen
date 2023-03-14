@@ -269,13 +269,15 @@ export class Project {
         description: "Synthesize project files",
       });
 
-      this.ejectTask = this.tasks.addTask("eject", {
-        description: "Remove projen from the project",
-        env: {
-          PROJEN_EJECTING: "true",
-        },
-      });
-      this.ejectTask.spawn(this.defaultTask);
+      if (!this.parent) {
+        this.ejectTask = this.tasks.addTask("eject", {
+          description: "Remove projen from the project",
+          env: {
+            PROJEN_EJECTING: "true",
+          },
+        });
+        this.ejectTask.spawn(this.defaultTask);
+      }
     }
 
     this.projectBuild = new ProjectBuild(this);

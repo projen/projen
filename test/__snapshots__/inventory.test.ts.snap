@@ -243,7 +243,7 @@ Array [
         "switch": "cdk-version-pinning",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -1411,7 +1411,7 @@ Array [
         "switch": "classifiers",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -2892,7 +2892,7 @@ Array [
         "switch": "cdk-version-pinning",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -5699,7 +5699,7 @@ Array [
         "switch": "cdk-version-pinning",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -8407,7 +8407,7 @@ Array [
         "switch": "classifiers",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -9796,7 +9796,7 @@ Array [
         "switch": "cdk8s-version-pinning",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -12402,7 +12402,7 @@ Array [
         "switch": "cdk8s-version-pinning",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -15173,7 +15173,7 @@ Array [
         "switch": "cdktf-version",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -17599,7 +17599,7 @@ Array [
         "switch": "auto-merge-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -18690,7 +18690,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -21360,7 +21360,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -23569,7 +23569,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -26006,7 +26006,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -28144,7 +28144,7 @@ Array [
         "switch": "classifiers",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -29308,7 +29308,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -31505,7 +31505,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -33947,7 +33947,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -36367,7 +36367,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
