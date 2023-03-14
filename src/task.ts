@@ -1,3 +1,4 @@
+import { warn } from "./logging";
 import {
   TaskCommonOptions,
   TaskSpec,
@@ -55,8 +56,10 @@ export class Task {
     this.condition = props.condition;
     this.cwd = props.cwd;
     this._locked = false;
+    this._env = {};
 
-    this._env = props.env ?? {};
+    this.addEnv(props.env ?? {});
+
     this._steps = props.steps ?? [];
     this.requiredEnv = props.requiredEnv;
 
@@ -207,7 +210,7 @@ export class Task {
    */
   public env(name: string, value: string) {
     this.assertUnlocked();
-    this._env[name] = value;
+    this.addEnv({ [name]: value });
   }
 
   /**
@@ -243,5 +246,18 @@ export class Task {
     if (this._locked) {
       throw new Error(`Task "${this.name}" is locked for changes`);
     }
+  }
+
+  private addEnv(env: { [name: string]: string }) {
+    Object.entries(env).forEach(([name, value]) => {
+      if (typeof value !== "string" && value !== undefined) {
+        warn(
+          `Received non-string value for environment variable ${name}. Value will be stringified.`
+        );
+        this._env[name] = String(value);
+      } else {
+        this._env[name] = value;
+      }
+    });
   }
 }

@@ -1,4 +1,5 @@
 import * as yaml from "yaml";
+import { Component } from "../../src";
 import { PROJEN_MARKER } from "../../src/common";
 import { DependencyType } from "../../src/dependencies";
 import { GithubCredentials } from "../../src/github";
@@ -790,6 +791,20 @@ test("projen synth is only executed for subprojects", () => {
   });
 });
 
+test("javascript subprojects do not add a Projenrc component", () => {
+  // GIVEN
+  const root = new TestNodeProject();
+
+  // WHEN
+  const child = new TestNodeProject({ parent: root, outdir: "child" });
+
+  // THEN
+  const rcFiles = child.components.filter((o: Component) =>
+    o.constructor.name.toLowerCase().includes("projenrc")
+  );
+  expect(rcFiles.length).toBe(0);
+});
+
 test("enabling dependabot does not overturn mergify: false", () => {
   // WHEN
   const project = new TestNodeProject({
@@ -1170,7 +1185,7 @@ describe("scoped private packages", () => {
         expect.arrayContaining([
           {
             name: "Configure AWS Credentials",
-            uses: "aws-actions/configure-aws-credentials@v1",
+            uses: "aws-actions/configure-aws-credentials@v2",
             with: {
               "aws-region": "us-east-2",
               "role-to-assume": roleToAssume,
@@ -1206,7 +1221,7 @@ describe("scoped private packages", () => {
         expect.arrayContaining([
           {
             name: "Configure AWS Credentials",
-            uses: "aws-actions/configure-aws-credentials@v1",
+            uses: "aws-actions/configure-aws-credentials@v2",
             with: {
               "aws-region": "us-east-2",
               "role-to-assume": roleToAssume,
@@ -1327,7 +1342,7 @@ describe("scoped private packages", () => {
       expect.arrayContaining([
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v1",
+          uses: "aws-actions/configure-aws-credentials@v2",
           with: {
             "aws-access-key-id": secretToString(defaultAccessKeyIdSecret),
             "aws-secret-access-key": secretToString(

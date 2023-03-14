@@ -243,7 +243,7 @@ Array [
         "switch": "cdk-version-pinning",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -1411,7 +1411,7 @@ Array [
         "switch": "classifiers",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -2892,7 +2892,7 @@ Array [
         "switch": "cdk-version-pinning",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -4088,6 +4088,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -5682,7 +5699,7 @@ Array [
         "switch": "cdk-version-pinning",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -6946,6 +6963,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -8373,7 +8407,7 @@ Array [
         "switch": "classifiers",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -9762,7 +9796,7 @@ Array [
         "switch": "cdk8s-version-pinning",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -10899,6 +10933,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -12351,7 +12402,7 @@ Array [
         "switch": "cdk8s-version-pinning",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -13561,6 +13612,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -15105,7 +15173,7 @@ Array [
         "switch": "cdktf-version",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -16281,6 +16349,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -17514,7 +17599,7 @@ Array [
         "switch": "auto-merge-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -18605,7 +18690,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -19764,6 +19849,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -21258,7 +21360,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -22189,6 +22291,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -23450,7 +23569,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -24502,6 +24621,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -25870,7 +26006,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -26801,6 +26937,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -27991,7 +28144,7 @@ Array [
         "switch": "classifiers",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -29155,7 +29308,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -30086,6 +30239,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -31335,7 +31505,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -32387,6 +32557,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -33760,7 +33947,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -34812,6 +34999,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",
@@ -36163,7 +36367,7 @@ Array [
         "switch": "bundler-options",
       },
       Object {
-        "default": "true",
+        "default": "- true, but false for subprojects",
         "docs": "Add a \`clobber\` task which resets the repo to origin.",
         "featured": false,
         "fullType": Object {
@@ -37215,6 +37419,23 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "peer-deps",
+      },
+      Object {
+        "default": "\\"7\\"",
+        "docs": "The version of PNPM to use if using PNPM as a package manager.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "pnpmVersion",
+        "optional": true,
+        "parent": "NodePackageOptions",
+        "path": Array [
+          "pnpmVersion",
+        ],
+        "simpleType": "string",
+        "switch": "pnpm-version",
       },
       Object {
         "default": "[]",

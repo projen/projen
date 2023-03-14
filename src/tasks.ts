@@ -88,7 +88,14 @@ export class Tasks extends Component {
    * @param value Value
    */
   public addEnvironment(name: string, value: string) {
-    this._env[name] = value;
+    if (typeof value !== "string" && value !== undefined) {
+      this.project.logger.warn(
+        `Received non-string value for environment variable ${name}. Value will be stringified.`
+      );
+      this._env[name] = String(value);
+    } else {
+      this._env[name] = value;
+    }
   }
 
   /**

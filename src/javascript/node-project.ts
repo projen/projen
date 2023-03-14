@@ -377,7 +377,7 @@ export class NodeProject extends GitHubProject {
   }
 
   /**
-   * Maximum node version required by this pacakge.
+   * Maximum node version required by this package.
    */
   public get maxNodeVersion(): string | undefined {
     return this.package.maxNodeVersion;
@@ -702,7 +702,7 @@ export class NodeProject extends GitHubProject {
     }
 
     const projenrcJs = options.projenrcJs ?? !options.projenrcJson;
-    if (projenrcJs) {
+    if (!this.parent && projenrcJs) {
       new Projenrc(this, options.projenrcJsOptions);
     }
 
@@ -840,7 +840,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v1",
+          uses: "aws-actions/configure-aws-credentials@v2",
           with: {
             "aws-region": "us-east-2",
             "role-to-assume": parsedCodeArtifactOptions.roleToAssume,
@@ -858,7 +858,7 @@ export class NodeProject extends GitHubProject {
       return [
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v1",
+          uses: "aws-actions/configure-aws-credentials@v2",
           with: {
             "aws-access-key-id": secretToString(
               parsedCodeArtifactOptions.accessKeyIdSecret
@@ -921,7 +921,7 @@ export class NodeProject extends GitHubProject {
       install.push({
         name: "Setup pnpm",
         uses: "pnpm/action-setup@v2.2.4",
-        with: { version: "7" }, // current latest. Should probably become tunable.
+        with: { version: this.package.pnpmVersion },
       });
     }
 

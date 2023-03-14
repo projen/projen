@@ -1,3 +1,4 @@
+import * as YAML from "yaml";
 import { GithubWorkflow } from "../../src/github/workflows";
 import { synthSnapshot, TestProject } from "../util";
 
@@ -117,6 +118,53 @@ describe("github-workflow", () => {
     const snapshot = synthSnapshot(project);
 
     expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
+  });
+
+  test("workflow job can be removed after creation", () => {
+    const project = new TestProject();
+
+    const workflow = new GithubWorkflow(project.github!, workflowName);
+    workflow.addJob("working-dir", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      steps: [{ uses: "actions/checkout@v3" }],
+    });
+    workflow.removeJob("working-dir");
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
+
+    const workflowYAML = YAML.parse(
+      snapshot[`.github/workflows/${workflowName}.yml`]
+    );
+    expect(workflowYAML.jobs["working-dir"]).toBeUndefined();
+  });
+
+  test("workflow job can be updated after creation", () => {
+    const project = new TestProject();
+
+    const workflow = new GithubWorkflow(project.github!, workflowName);
+    workflow.addJob("working-dir", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      steps: [{ uses: "actions/checkout@v3" }],
+    });
+    workflow.updateJob("working-dir", {
+      runsOn: ["ubuntu-latest"],
+      permissions: {},
+      steps: [{ uses: "actions/checkout@v2" }],
+    });
+
+    const snapshot = synthSnapshot(project);
+
+    expect(snapshot[`.github/workflows/${workflowName}.yml`]).toMatchSnapshot();
+    const workflowYAML = YAML.parse(
+      snapshot[`.github/workflows/${workflowName}.yml`]
+    );
+    expect(workflowYAML.jobs["working-dir"].steps[0].uses).toEqual(
+      "actions/checkout@v2"
+    );
   });
 
   describe("reusable actions", () => {

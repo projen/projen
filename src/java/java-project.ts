@@ -157,7 +157,10 @@ export class JavaProject extends GitHubProject {
     }
 
     // default to projenrc.java if no other projenrc type was elected
-    if (options.projenrcJava ?? !anySelected(rcFileTypeOptions)) {
+    if (
+      !this.parent &&
+      (options.projenrcJava ?? !anySelected(rcFileTypeOptions))
+    ) {
       this.projenrc = new ProjenrcJava(
         this,
         this.pom,

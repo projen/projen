@@ -20,7 +20,8 @@ import { JsonFile } from "../json";
 import { Project } from "../project";
 import { isAwsCodeArtifactRegistry } from "../release";
 import { Task } from "../task";
-import { exec, isTruthy, sorted, writeFile } from "../util";
+import { TaskRuntime } from "../task-runtime";
+import { isTruthy, sorted, writeFile } from "../util";
 
 const UNLICENSED = "UNLICENSED";
 const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org/";
@@ -227,6 +228,13 @@ export interface NodePackageOptions {
   readonly maxNodeVersion?: string;
 
   /**
+   * The version of PNPM to use if using PNPM as a package manager.
+   *
+   * @default "7"
+   */
+  readonly pnpmVersion?: string;
+
+  /**
    * License's SPDX identifier.
    * See https://github.com/projen/projen/tree/main/license-text for a list of supported licenses.
    * Use the `licensed` option if you want to no license to be specified.
@@ -414,10 +422,17 @@ export class NodePackage extends Component {
   public readonly minNodeVersion?: string;
 
   /**
-   * Maximum node version required by this pacakge.
+   * Maximum node version required by this package.
    * @default - no maximum.
    */
   public readonly maxNodeVersion?: string;
+
+  /**
+   * The version of PNPM to use if using PNPM as a package manager.
+   *
+   * @default "7"
+   */
+  public readonly pnpmVersion?: string;
 
   /**
    * The SPDX license of this module. `undefined` if this package is not licensed.
@@ -463,6 +478,16 @@ export class NodePackage extends Component {
    * The name of the lock file.
    */
   public readonly lockFile: string;
+
+  /**
+   * The task for installing project dependencies (non-frozen)
+   */
+  public readonly installTask: Task;
+
+  /**
+   * The task for installing project dependencies (frozen)
+   */
+  public readonly installCiTask: Task;
 
   private readonly keywords: Set<string> = new Set();
   private readonly bin: Record<string, string> = {};
@@ -567,12 +592,24 @@ export class NodePackage extends Component {
     // node version
     this.minNodeVersion = options.minNodeVersion;
     this.maxNodeVersion = options.maxNodeVersion;
+    this.pnpmVersion = options.pnpmVersion ?? "7";
     this.addNodeEngine();
 
     // license
     if (options.licensed ?? true) {
       this.license = options.license ?? "Apache-2.0";
     }
+
+    this.installTask = project.addTask("install", {
+      description:
+        "Install project dependencies and update lockfile (non-frozen)",
+      exec: this.installAndUpdateLockfileCommand,
+    });
+
+    this.installCiTask = project.addTask("install:ci", {
+      description: "Install project dependencies using frozen lockfile",
+      exec: this.installCommand,
+    });
   }
 
   /**
@@ -1382,9 +1419,15 @@ export class NodePackage extends Component {
 
   private renderScripts() {
     const result: any = {};
-    for (const task of this.project.tasks.all.sort((x, y) =>
-      x.name.localeCompare(y.name)
-    )) {
+    const tasks = this.project.tasks.all
+      .filter(
+        (t) =>
+          // Must remove to prevent overriding built-in npm command (which would loop)
+          t.name !== this.installTask.name && t.name !== this.installCiTask.name
+      )
+      .sort((x, y) => x.name.localeCompare(y.name));
+
+    for (const task of tasks) {
       result[task.name] = this.npmScriptForTask(task);
     }
 
@@ -1405,9 +1448,12 @@ export class NodePackage extends Component {
   }
 
   private installDependencies() {
-    exec(this.renderInstallCommand(this.isAutomatedBuild), {
-      cwd: this.project.outdir,
-    });
+    this.project.logger.info("Installing dependencies...");
+    const runtime = new TaskRuntime(this.project.outdir);
+    const taskToRun = this.isAutomatedBuild
+      ? this.installCiTask
+      : this.installTask;
+    runtime.runTask(taskToRun.name);
   }
 }
 

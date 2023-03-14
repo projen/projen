@@ -36,6 +36,7 @@ async function main() {
   });
   ya.options("debug", { type: "boolean", default: false, desc: "Debug logs" });
   ya.options("rc", {
+    deprecated: true,
     desc: "path to .projenrc.js file",
     default: DEFAULT_RC,
     type: "string",
