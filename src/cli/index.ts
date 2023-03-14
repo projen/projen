@@ -37,7 +37,7 @@ async function main() {
   ya.options("debug", { type: "boolean", default: false, desc: "Debug logs" });
   ya.options("rc", {
     desc: "path to .projenrc.js file",
-    default: DEFAULT_RC ?? PROJEN_RC,
+    default: DEFAULT_RC,
     type: "string",
   });
   ya.completion();
@@ -84,18 +84,19 @@ main().catch((e) => {
   process.exit(1);
 });
 
-/** Run up project tree to find .projen directory
+/**
+ * Run up project tree to find .projen directory
  *
  * @param cwd current working directory
  * @returns path to .projen directory or undefined if not found
  */
 function findProjenDir(cwd: string): string | undefined {
-  if (cwd === "/") {
-    return undefined;
-  }
-
   if (fs.existsSync(resolve(cwd, PROJEN_DIR))) {
     return cwd;
+  }
+
+  if (cwd === "/") {
+    return undefined;
   }
 
   return findProjenDir(resolve(cwd, ".."));
