@@ -1,4 +1,4 @@
-import ts from "typescript";
+import * as ts from "typescript";
 import { NodeProject, TypescriptConfig } from "../../src/javascript";
 import { withProjectDir } from "../util";
 

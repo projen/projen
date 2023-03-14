@@ -1,4 +1,4 @@
-import path from "path";
+import * as path from "path";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { ProjectType } from "../../src/project";
 import { Projenrc, resolvePythonImportName } from "../../src/python/projenrc";
