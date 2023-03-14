@@ -461,6 +461,24 @@ Array [
         "switch": "github-options",
       },
       Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
+      },
+      Object {
         "docs": "Configuration options for git.",
         "featured": false,
         "fqn": "projen.GitOptions",
@@ -1613,6 +1631,24 @@ Array [
         ],
         "simpleType": "GitHubOptions",
         "switch": "github-options",
+      },
+      Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
       },
       Object {
         "docs": "Configuration options for git.",
@@ -3428,6 +3464,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
       },
       Object {
         "docs": "Configuration options for git.",
@@ -6305,6 +6359,24 @@ Array [
         "switch": "gitignore",
       },
       Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
+      },
+      Object {
         "docs": "Configuration options for git.",
         "featured": false,
         "fqn": "projen.GitOptions",
@@ -8588,6 +8660,24 @@ Array [
         "switch": "github-options",
       },
       Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
+      },
+      Object {
         "docs": "Configuration options for git.",
         "featured": false,
         "fqn": "projen.GitOptions",
@@ -10292,6 +10382,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
       },
       Object {
         "docs": "Configuration options for git.",
@@ -13005,6 +13113,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
       },
       Object {
         "docs": "Configuration options for git.",
@@ -15761,6 +15887,24 @@ Array [
         "switch": "gitignore",
       },
       Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
+      },
+      Object {
         "docs": "Configuration options for git.",
         "featured": false,
         "fqn": "projen.GitOptions",
@@ -17760,6 +17904,24 @@ Array [
         "switch": "github-options",
       },
       Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
+      },
+      Object {
         "docs": "Configuration options for git.",
         "featured": false,
         "fqn": "projen.GitOptions",
@@ -19259,6 +19421,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
       },
       Object {
         "docs": "Configuration options for git.",
@@ -21720,6 +21900,24 @@ Array [
         "switch": "gitignore",
       },
       Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
+      },
+      Object {
         "docs": "Configuration options for git.",
         "featured": false,
         "fqn": "projen.GitOptions",
@@ -24031,6 +24229,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
       },
       Object {
         "docs": "Configuration options for git.",
@@ -26366,6 +26582,24 @@ Array [
         "switch": "gitignore",
       },
       Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
+      },
+      Object {
         "docs": "Configuration options for git.",
         "featured": false,
         "fqn": "projen.GitOptions",
@@ -27849,6 +28083,24 @@ Array [
         "switch": "commit-generated",
       },
       Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
+      },
+      Object {
         "docs": "Configuration options for git.",
         "featured": false,
         "fqn": "projen.GitOptions",
@@ -28289,6 +28541,24 @@ Array [
         ],
         "simpleType": "GitHubOptions",
         "switch": "github-options",
+      },
+      Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
       },
       Object {
         "docs": "Configuration options for git.",
@@ -29666,6 +29936,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
       },
       Object {
         "docs": "Configuration options for git.",
@@ -31967,6 +32255,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
       },
       Object {
         "docs": "Configuration options for git.",
@@ -34411,6 +34717,24 @@ Array [
         "switch": "gitignore",
       },
       Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
+      },
+      Object {
         "docs": "Configuration options for git.",
         "featured": false,
         "fqn": "projen.GitOptions",
@@ -36829,6 +37153,24 @@ Array [
         ],
         "simpleType": "unknown",
         "switch": "gitignore",
+      },
+      Object {
+        "docs": "Configuration options for .gitignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "gitIgnoreOptions",
+        "optional": true,
+        "parent": "ProjectOptions",
+        "path": Array [
+          "gitIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "git-ignore-options",
       },
       Object {
         "docs": "Configuration options for git.",

@@ -1300,7 +1300,8 @@ Files that match this pattern will be ignored. If the
 pattern starts with a negation mark `!`, files that match will _not_ be
 ignored.
 
-Comment lines (start with `#`) and blank lines ("") are included.
+Comment lines (start with `#`) and blank lines ("") are filtered by default
+but can be included using options specified when instantiating the component.
 
 ```ts
 addPatterns(...patterns: string[]): void
@@ -2062,6 +2063,7 @@ new Project(options: ProjectOptions)
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -3472,6 +3474,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 * **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -3944,6 +3947,7 @@ new awscdk.AwsCdkJavaApp(options: AwsCdkJavaAppOptions)
 * **options** (<code>[awscdk.AwsCdkJavaAppOptions](#projen-awscdk-awscdkjavaappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -4056,6 +4060,7 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
 * **options** (<code>[awscdk.AwsCdkPythonAppOptions](#projen-awscdk-awscdkpythonappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -4161,6 +4166,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 * **options** (<code>[awscdk.AwsCdkTypeScriptAppOptions](#projen-awscdk-awscdktypescriptappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -4472,6 +4478,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 * **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -5099,6 +5106,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
 * **options** (<code>[cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -5358,6 +5366,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
 * **options** (<code>[cdk.JsiiProjectOptions](#projen-cdk-jsiiprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -5674,6 +5683,7 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
 * **options** (<code>[cdk8s.Cdk8sPythonOptions](#projen-cdk8s-cdk8spythonoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -5771,6 +5781,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 * **options** (<code>[cdk8s.Cdk8sTypeScriptAppOptions](#projen-cdk8s-cdk8stypescriptappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -5954,6 +5965,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 * **options** (<code>[cdk8s.ConstructLibraryCdk8sOptions](#projen-cdk8s-constructlibrarycdk8soptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -6196,6 +6208,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
 * **options** (<code>[cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -6772,6 +6785,7 @@ new github.GitHubProject(options: GitHubProjectOptions)
 * **options** (<code>[github.GitHubProjectOptions](#projen-github-githubprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -7508,6 +7522,7 @@ new java.JavaProject(options: JavaProjectOptions)
 * **options** (<code>[java.JavaProjectOptions](#projen-java-javaprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -8564,6 +8579,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
 * **options** (<code>[javascript.NodeProjectOptions](#projen-javascript-nodeprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -9602,6 +9618,7 @@ new python.PythonProject(options: PythonProjectOptions)
 * **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -10396,6 +10413,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -10552,6 +10570,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -10708,6 +10727,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -11225,6 +11245,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -11379,6 +11400,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -11605,6 +11627,7 @@ new web.ReactProject(options: ReactProjectOptions)
 * **options** (<code>[web.ReactProjectOptions](#projen-web-reactprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -11801,6 +11824,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 * **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -12712,6 +12736,7 @@ Name | Type | Description
 -----|------|-------------
 **name**🔹 | <code>string</code> | This is the name of your project.
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
@@ -13161,6 +13186,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -13343,6 +13369,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **distdir**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
 **featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -13435,6 +13462,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
 **featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -13545,6 +13573,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -13756,6 +13785,7 @@ Name | Type | Description
 **eslint**?⚠️ | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?⚠️ | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?⚠️ | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitIgnoreOptions**?⚠️ | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?⚠️ | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?⚠️ | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?⚠️ | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -14185,6 +14215,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -14455,6 +14486,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -14688,6 +14720,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -14793,6 +14826,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -14957,6 +14991,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -15151,6 +15186,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -15643,6 +15679,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -16474,6 +16511,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **distdir**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -16529,6 +16567,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **distdir**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -17048,6 +17087,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -17643,6 +17683,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -18204,6 +18245,7 @@ Name | Type | Description
 **entrypointTypes**?⚠️ | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?⚠️ | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?⚠️ | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitIgnoreOptions**?⚠️ | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?⚠️ | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?⚠️ | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?⚠️ | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -18350,6 +18392,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -18602,6 +18645,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -18742,6 +18786,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -18912,6 +18957,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -19081,6 +19127,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
