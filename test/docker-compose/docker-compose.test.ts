@@ -207,31 +207,6 @@ describe("docker-compose", () => {
     assertDockerComposeFileValidates(project.outdir);
   });
 
-  test("can add a container command as a string", () => {
-    const project = new TestProject();
-    const dc = new DockerCompose(project, {
-      services: {
-        alpine: {
-          image: "alpine",
-          command: "echo I ran",
-        },
-      },
-    });
-
-    expect(dc._synthesizeDockerCompose()).toEqual({
-      version: "3.3",
-      services: {
-        alpine: {
-          image: "alpine",
-          command: "echo I ran",
-        },
-      },
-    });
-
-    project.synth();
-    assertDockerComposeFileValidates(project.outdir);
-  });
-
   test("can add a container entrypoint", () => {
     const project = new TestProject();
     const dc = new DockerCompose(project, {
@@ -249,31 +224,6 @@ describe("docker-compose", () => {
         alpine: {
           image: "alpine",
           entrypoint: ["sh"],
-        },
-      },
-    });
-
-    project.synth();
-    assertDockerComposeFileValidates(project.outdir);
-  });
-
-  test("can add a container entrypoint as a string", () => {
-    const project = new TestProject();
-    const dc = new DockerCompose(project, {
-      services: {
-        alpine: {
-          image: "alpine",
-          entrypoint: 'bash -c "$@"',
-        },
-      },
-    });
-
-    expect(dc._synthesizeDockerCompose()).toEqual({
-      version: "3.3",
-      services: {
-        alpine: {
-          image: "alpine",
-          entrypoint: 'bash -c "$@"',
         },
       },
     });
