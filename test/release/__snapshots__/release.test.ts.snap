@@ -768,7 +768,7 @@ jobs:
         run: cd dist && setfacl --restore=permissions-backup.acl
         continue-on-error: true
       - name: Configure AWS Credentials via GitHub OIDC Provider
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: role-arn
           aws-region: us-west-2
