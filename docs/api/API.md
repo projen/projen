@@ -1273,7 +1273,7 @@ __Extends__: [FileBase](#projen-filebase)
 new IgnoreFile(project: Project, filePath: string, options?: IgnoreFileOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  The proejct to tie this file to.
+* **project** (<code>[Project](#projen-project)</code>)  The project to tie this file to.
 * **filePath** (<code>string</code>)  - the relative path in the project to put the file.
 * **options** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  *No description*
   * **filterCommentLines** (<code>boolean</code>)  Filter out comment lines? __*Default*__: true

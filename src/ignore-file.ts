@@ -24,7 +24,7 @@ export class IgnoreFile extends FileBase {
 
   /**
    *
-   * @param project The proejct to tie this file to.
+   * @param project The project to tie this file to.
    * @param filePath - the relative path in the project to put the file
    * @param minify - whether comments/blank lines should be filtered
    */
@@ -47,10 +47,16 @@ export class IgnoreFile extends FileBase {
   public addPatterns(...patterns: string[]) {
     for (const pattern of patterns) {
       const isComment = pattern.startsWith("#");
-      const isEmptyLine = pattern === "";
-      if (isComment && this.filterCommentLines) continue;
-      if (isEmptyLine && this.filterEmptyLines) continue;
-      if (!isComment && !isEmptyLine) this.normalizePatterns(pattern);
+      const isEmptyLine = Boolean(pattern.trim().length === 0);
+      if (isComment && this.filterCommentLines) {
+        continue;
+      }
+      if (isEmptyLine && this.filterEmptyLines) {
+        continue;
+      }
+      if (!isComment && !isEmptyLine) {
+        this.normalizePatterns(pattern);
+      }
       this._patterns.push(pattern);
     }
   }
