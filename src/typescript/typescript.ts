@@ -343,7 +343,7 @@ export class TypeScriptProject extends NodeProject {
       this.tsconfigEslint = this.tsconfigDev;
     }
 
-    if (projenrcTypeScript) {
+    if (!this.parent && projenrcTypeScript) {
       new ProjenrcTs(this, options.projenrcTsOptions);
     }
 

@@ -1,4 +1,4 @@
-import path from "path";
+import * as path from "path";
 import { Projenrc } from "../../src/javascript";
 import { renderProjenInitOptions } from "../../src/javascript/render-options";
 import { TestProject, withProjectDir } from "../util";

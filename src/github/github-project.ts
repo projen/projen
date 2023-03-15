@@ -71,7 +71,7 @@ export interface GitHubProjectOptions extends ProjectOptions {
 
   /**
    * Add a `clobber` task which resets the repo to origin.
-   * @default true
+   * @default - true, but false for subprojects
    */
   readonly clobber?: boolean;
 
@@ -217,7 +217,7 @@ export class GitHubProject extends Project {
       ? new DevContainer(this)
       : undefined;
 
-    if (options.clobber ?? true) {
+    if (options.clobber ?? !this.parent) {
       new Clobber(this);
     }
 

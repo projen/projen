@@ -278,13 +278,25 @@ export class Project {
         description: "Synthesize project files",
       });
 
-      this.ejectTask = this.tasks.addTask("eject", {
-        description: "Remove projen from the project",
-        env: {
-          PROJEN_EJECTING: "true",
-        },
-      });
-      this.ejectTask.spawn(this.defaultTask);
+      // Subtasks should call the root task for synth
+      if (this.parent) {
+        this.defaultTask.exec(
+          [
+            `cd ${path.relative(this.outdir, this.root.outdir)}`,
+            `${this.projenCommand} ${Project.DEFAULT_TASK}`,
+          ].join(" && ")
+        );
+      }
+
+      if (!this.parent) {
+        this.ejectTask = this.tasks.addTask("eject", {
+          description: "Remove projen from the project",
+          env: {
+            PROJEN_EJECTING: "true",
+          },
+        });
+        this.ejectTask.spawn(this.defaultTask);
+      }
     }
 
     this.projectBuild = new ProjectBuild(this);
@@ -294,7 +306,7 @@ export class Project {
     this.logger = new Logger(this, options.logging);
 
     const projenrcJson = options.projenrcJson ?? false;
-    if (projenrcJson) {
+    if (!this.parent && projenrcJson) {
       new Projenrc(this, options.projenrcJsonOptions);
     }
 

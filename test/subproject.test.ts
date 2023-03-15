@@ -1,7 +1,7 @@
 import * as path from "path";
 import * as fs from "fs-extra";
 import { synthSnapshot, TestProject } from "./util";
-import { Project, TextFile, ProjectOptions, JsonFile } from "../src";
+import { Project, TextFile, ProjectOptions, JsonFile, Component } from "../src";
 import { PROJEN_MARKER } from "../src/common";
 
 test("composing projects declaratively", () => {
@@ -140,6 +140,49 @@ test("subproject generated json files can be synthed", () => {
       "test": "data",
     }
   `);
+});
+
+test("subprojects do not add a Projenrc component", () => {
+  // GIVEN
+  const parent = new TestProject();
+
+  const child = new TestProject({
+    parent,
+    outdir: "sub",
+    projenrcJson: true,
+  });
+
+  // THEN
+  const rcFiles = child.components.filter((o: Component) =>
+    o.constructor.name.toLowerCase().includes("projenrc")
+  );
+  expect(rcFiles.length).toBe(0);
+});
+
+test("subprojects use root level default task", () => {
+  // GIVEN
+  const root = new TestProject();
+
+  const childOne = new TestProject({
+    parent: root,
+    outdir: "one",
+  });
+
+  new TestProject({
+    parent: childOne,
+    outdir: "two",
+  });
+
+  // THEN
+  const out = synthSnapshot(root);
+  expect(out["one/.projen/tasks.json"]).toMatchSnapshot();
+  expect(out["one/.projen/tasks.json"].tasks.default.steps).toEqual([
+    { exec: "cd .. && npx projen default" },
+  ]);
+  expect(out["one/two/.projen/tasks.json"]).toMatchSnapshot();
+  expect(out["one/two/.projen/tasks.json"].tasks.default.steps).toEqual([
+    { exec: "cd ../.. && npx projen default" },
+  ]);
 });
 
 // a project that depends on generated files during preSynthesize()
