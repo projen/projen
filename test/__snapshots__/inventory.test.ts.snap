@@ -3965,6 +3965,24 @@ Array [
         "switch": "npmignore-enabled",
       },
       Object {
+        "docs": "Configuration options for .npmignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "npmIgnoreOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "npmIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "npm-ignore-options",
+      },
+      Object {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -6856,6 +6874,24 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "npmignore-enabled",
+      },
+      Object {
+        "docs": "Configuration options for .npmignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "npmIgnoreOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "npmIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "npm-ignore-options",
       },
       Object {
         "deprecated": true,
@@ -10864,6 +10900,24 @@ Array [
         "switch": "npmignore-enabled",
       },
       Object {
+        "docs": "Configuration options for .npmignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "npmIgnoreOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "npmIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "npm-ignore-options",
+      },
+      Object {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -13559,6 +13613,24 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "npmignore-enabled",
+      },
+      Object {
+        "docs": "Configuration options for .npmignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "npmIgnoreOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "npmIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "npm-ignore-options",
       },
       Object {
         "deprecated": true,
@@ -16314,6 +16386,24 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "npmignore-enabled",
+      },
+      Object {
+        "docs": "Configuration options for .npmignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "npmIgnoreOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "npmIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "npm-ignore-options",
       },
       Object {
         "deprecated": true,
@@ -19852,6 +19942,24 @@ Array [
         "switch": "npmignore-enabled",
       },
       Object {
+        "docs": "Configuration options for .npmignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "npmIgnoreOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "npmIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "npm-ignore-options",
+      },
+      Object {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -22312,6 +22420,24 @@ Array [
         "switch": "npmignore-enabled",
       },
       Object {
+        "docs": "Configuration options for .npmignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "npmIgnoreOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "npmIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "npm-ignore-options",
+      },
+      Object {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -24660,6 +24786,24 @@ Array [
         "switch": "npmignore-enabled",
       },
       Object {
+        "docs": "Configuration options for .npmignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "npmIgnoreOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "npmIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "npm-ignore-options",
+      },
+      Object {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -26992,6 +27136,24 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "npmignore-enabled",
+      },
+      Object {
+        "docs": "Configuration options for .npmignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "npmIgnoreOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "npmIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "npm-ignore-options",
       },
       Object {
         "deprecated": true,
@@ -30350,6 +30512,24 @@ Array [
         "switch": "npmignore-enabled",
       },
       Object {
+        "docs": "Configuration options for .npmignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "npmIgnoreOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "npmIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "npm-ignore-options",
+      },
+      Object {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -32684,6 +32864,24 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "npmignore-enabled",
+      },
+      Object {
+        "docs": "Configuration options for .npmignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "npmIgnoreOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "npmIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "npm-ignore-options",
       },
       Object {
         "deprecated": true,
@@ -35146,6 +35344,24 @@ Array [
         "switch": "npmignore-enabled",
       },
       Object {
+        "docs": "Configuration options for .npmignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "npmIgnoreOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "npmIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "npm-ignore-options",
+      },
+      Object {
         "deprecated": true,
         "docs": "The host name of the npm registry to publish to.",
         "featured": false,
@@ -37582,6 +37798,24 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "npmignore-enabled",
+      },
+      Object {
+        "docs": "Configuration options for .npmignore file.",
+        "featured": false,
+        "fqn": "projen.IgnoreFileOptions",
+        "fullType": Object {
+          "fqn": "projen.IgnoreFileOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "npmIgnoreOptions",
+        "optional": true,
+        "parent": "NodeProjectOptions",
+        "path": Array [
+          "npmIgnoreOptions",
+        ],
+        "simpleType": "IgnoreFileOptions",
+        "switch": "npm-ignore-options",
       },
       Object {
         "deprecated": true,

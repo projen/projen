@@ -3576,6 +3576,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -4268,6 +4269,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -4580,6 +4582,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -5208,6 +5211,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -5468,6 +5472,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -5883,6 +5888,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -6067,6 +6073,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -6310,6 +6317,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -8681,6 +8689,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -9017,6 +9026,7 @@ new javascript.Prettier(project: NodeProject, options: PrettierOptions)
 * **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
 * **options** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  *No description*
   * **ignoreFile** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: true
+  * **ignoreFileOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .prettierignore file. __*Optional*__
   * **overrides** (<code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code>)  Provide a list of patterns to override prettier configuration. __*Default*__: []
   * **settings** (<code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code>)  Prettier settings. __*Default*__: default settings
   * **yaml** (<code>boolean</code>)  Write prettier configuration as YAML instead of JSON. __*Default*__: false
@@ -10515,6 +10525,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -10672,6 +10683,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -10829,6 +10841,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -11347,6 +11360,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -11502,6 +11516,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -11729,6 +11744,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -11926,6 +11942,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -13214,6 +13231,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -13601,6 +13619,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -13813,6 +13832,7 @@ Name | Type | Description
 **mutableBuild**?⚠️ | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?⚠️ | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?⚠️ | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?⚠️ | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?⚠️ | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?⚠️ | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -14239,6 +14259,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -14510,6 +14531,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -14853,6 +14875,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -15016,6 +15039,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -15210,6 +15234,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -17110,6 +17135,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -17209,6 +17235,7 @@ Options for Prettier.
 Name | Type | Description 
 -----|------|-------------
 **ignoreFile**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: true
+**ignoreFileOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .prettierignore file.<br/>__*Optional*__
 **overrides**?🔹 | <code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code> | Provide a list of patterns to override prettier configuration.<br/>__*Default*__: []
 **settings**?🔹 | <code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code> | Prettier settings.<br/>__*Default*__: default settings
 **yaml**?🔹 | <code>boolean</code> | Write prettier configuration as YAML instead of JSON.<br/>__*Default*__: false
@@ -18269,6 +18296,7 @@ Name | Type | Description
 **mutableBuild**?⚠️ | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?⚠️ | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?⚠️ | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?⚠️ | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?⚠️ | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?⚠️ | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -18416,6 +18444,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -18668,6 +18697,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -18810,6 +18840,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -18980,6 +19011,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -19151,6 +19183,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
