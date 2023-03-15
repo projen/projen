@@ -1185,7 +1185,7 @@ describe("scoped private packages", () => {
         expect.arrayContaining([
           {
             name: "Configure AWS Credentials",
-            uses: "aws-actions/configure-aws-credentials@v1",
+            uses: "aws-actions/configure-aws-credentials@v2",
             with: {
               "aws-region": "us-east-2",
               "role-to-assume": roleToAssume,
@@ -1221,7 +1221,7 @@ describe("scoped private packages", () => {
         expect.arrayContaining([
           {
             name: "Configure AWS Credentials",
-            uses: "aws-actions/configure-aws-credentials@v1",
+            uses: "aws-actions/configure-aws-credentials@v2",
             with: {
               "aws-region": "us-east-2",
               "role-to-assume": roleToAssume,
@@ -1342,7 +1342,7 @@ describe("scoped private packages", () => {
       expect.arrayContaining([
         {
           name: "Configure AWS Credentials",
-          uses: "aws-actions/configure-aws-credentials@v1",
+          uses: "aws-actions/configure-aws-credentials@v2",
           with: {
             "aws-access-key-id": secretToString(defaultAccessKeyIdSecret),
             "aws-secret-access-key": secretToString(

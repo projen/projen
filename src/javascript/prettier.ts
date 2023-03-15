@@ -1,5 +1,5 @@
 import { Component } from "../component";
-import { IgnoreFile } from "../ignore-file";
+import { IgnoreFile, IgnoreFileOptions } from "../ignore-file";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
 import { Project } from "../project";
@@ -16,6 +16,11 @@ export interface PrettierOptions {
    * @default true
    */
   readonly ignoreFile?: boolean;
+
+  /**
+   * Configuration options for .prettierignore file
+   */
+  readonly ignoreFileOptions?: IgnoreFileOptions;
 
   /**
    * Prettier settings.
@@ -373,7 +378,11 @@ export class Prettier extends Component {
     this._overrides = options.overrides ?? [];
 
     if (options.ignoreFile ?? true) {
-      this.ignoreFile = new IgnoreFile(project, ".prettierignore");
+      this.ignoreFile = new IgnoreFile(
+        project,
+        ".prettierignore",
+        options.ignoreFileOptions
+      );
     }
 
     project.addDevDeps("prettier");

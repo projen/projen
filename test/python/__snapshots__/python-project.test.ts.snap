@@ -126,7 +126,6 @@ venv.bak/
 dmypy.json
 .pyre/
 .pytype/
-
 cython_debug/
 ",
   ".projen/deps.json": Object {
@@ -420,7 +419,6 @@ venv.bak/
 dmypy.json
 .pyre/
 .pytype/
-
 cython_debug/
 ",
   ".projen/deps.json": Object {
@@ -732,7 +730,6 @@ venv.bak/
 dmypy.json
 .pyre/
 .pytype/
-
 cython_debug/
 ",
   ".projen/deps.json": Object {
@@ -1043,7 +1040,6 @@ venv.bak/
 dmypy.json
 .pyre/
 .pytype/
-
 cython_debug/
 ",
   ".projen/deps.json": Object {
