@@ -20,7 +20,7 @@ export interface LambdaFunctionCommonOptions {
   /**
    * The node.js version to target.
    *
-   * @default Runtime.NODEJS_14_X
+   * @default Runtime.NODEJS_16_X
    */
   readonly runtime?: LambdaRuntime;
 
@@ -134,7 +134,7 @@ export class LambdaFunction extends Component {
       );
     }
 
-    const runtime = options.runtime ?? LambdaRuntime.NODEJS_14_X;
+    const runtime = options.runtime ?? LambdaRuntime.NODEJS_16_X;
 
     // allow Lambda handler code to import dev-deps since they are only needed
     // during bundling
@@ -311,6 +311,7 @@ export class LambdaRuntime {
 
   /**
    * Node.js 12.x
+   * @deprecated NodeJS12 has been deprecated
    */
   public static readonly NODEJS_12_X = new LambdaRuntime(
     "nodejs12.x",
@@ -320,6 +321,7 @@ export class LambdaRuntime {
 
   /**
    * Node.js 14.x
+   * @deprecated NodeJS14 has been deprecated
    */
   public static readonly NODEJS_14_X = new LambdaRuntime(
     "nodejs14.x",

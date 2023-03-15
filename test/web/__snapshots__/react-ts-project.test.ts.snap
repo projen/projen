@@ -552,7 +552,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^14",
+        "version": "^16",
       },
       Object {
         "name": "@types/react",
@@ -1055,7 +1055,7 @@ tsconfig.tsbuildinfo
       "@testing-library/react": "*",
       "@testing-library/user-event": "*",
       "@types/jest": "*",
-      "@types/node": "^14",
+      "@types/node": "^16",
       "@types/react": "*",
       "@types/react-dom": "*",
       "@typescript-eslint/eslint-plugin": "^5",

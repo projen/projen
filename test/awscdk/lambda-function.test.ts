@@ -52,7 +52,7 @@ describe("bundled function", () => {
       name: "bundle:hello.lambda",
       steps: [
         {
-          exec: 'esbuild --bundle src/hello.lambda.ts --target="node14" --platform="node" --outfile="my-assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:aws-sdk',
+          exec: 'esbuild --bundle src/hello.lambda.ts --target="node16" --platform="node" --outfile="my-assets/hello.lambda/index.js" --tsconfig="tsconfig.dev.json" --external:aws-sdk',
         },
       ],
     });

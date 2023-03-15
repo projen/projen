@@ -78,10 +78,7 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
               pinnedDevDependency: false,
             }
           : undefined,
-      workflowContainerImage: determineWorkflowContainerImage(
-        options,
-        cdkMajorVersion
-      ),
+      workflowNodeVersion: options.minNodeVersion ?? "16.x",
       ...options,
     });
 
@@ -139,33 +136,6 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   public addCdkTestDependencies(...deps: string[]) {
     return this.cdkDeps.addV1DevDependencies(...deps);
   }
-}
-
-function determineWorkflowContainerImage(
-  options: AwsCdkConstructLibraryOptions,
-  cdkMajorVersion: number | undefined
-): string | undefined {
-  // if the user specifies the workflow container image explicitly, use that
-  if (options.workflowContainerImage) {
-    return options.workflowContainerImage;
-  }
-
-  // if the user specifies minimum node version, then JsiiProject will take care of
-  // determining the workflow container image from that, so we return "undefined"
-  if (options.minNodeVersion) {
-    return undefined;
-  }
-
-  // otherwise, choose a workflow container image based on the CDK version
-  if (cdkMajorVersion === 1) {
-    return "jsii/superchain:1-buster-slim";
-  }
-
-  if (cdkMajorVersion === 2) {
-    return "jsii/superchain:1-buster-slim-node14";
-  }
-
-  return undefined;
 }
 
 /** @deprecated use `AwsCdkConstructLibraryOptions` */

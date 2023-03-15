@@ -19,7 +19,7 @@ To add bundles, call `bundler.addBundle()`:
 ```ts
 project.bundler.addBundle('name-of-bundle', {
   entrypoint: 'src/foo.ts',
-  target: 'node14',
+  target: 'node18',
   platform: 'node',
   bundlingOptions: {
     externals: ['aws-sdk'], // modules not to include in bundles

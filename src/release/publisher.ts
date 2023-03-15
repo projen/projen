@@ -66,7 +66,7 @@ export interface PublisherOptions {
    * are needed. For example `publib`, the CLI projen uses to publish releases,
    * is an npm library.
    *
-   * @default 14.x
+   * @default 16.x
    */
   readonly workflowNodeVersion?: string;
 
@@ -156,7 +156,7 @@ export class Publisher extends Component {
     this.jsiiReleaseVersion = this.publibVersion;
     this.condition = options.condition;
     this.dryRun = options.dryRun ?? false;
-    this.workflowNodeVersion = options.workflowNodeVersion ?? "14.x";
+    this.workflowNodeVersion = options.workflowNodeVersion ?? "16.x";
 
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? "failed-release";
