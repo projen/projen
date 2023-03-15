@@ -319,31 +319,20 @@ export class TypeScriptProject extends NodeProject {
       }
     }
 
-    const projenrcTypeScript = options.projenrcTs ?? false;
-
-    const projenRcFilename = projenrcTypeScript
-      ? options.projenrcTsOptions?.filename ?? ".projenrc.ts"
-      : undefined;
-
     if (options.eslint ?? true) {
-      const devdirs = [this.testdir, "build-tools"];
-      if (projenrcTypeScript) {
-        devdirs.push(options.projenrcTsOptions?.projenCodeDir ?? "projenrc");
-      }
-
       this.eslint = new Eslint(this, {
         tsconfigPath: `./${this.tsconfigDev.fileName}`,
         dirs: [this.srcdir],
-        devdirs,
+        devdirs: [this.testdir, "build-tools"],
         fileExtensions: [".ts", ".tsx"],
-        lintProjenRcFile: projenRcFilename,
+        lintProjenRc: false,
         ...options.eslintOptions,
       });
 
       this.tsconfigEslint = this.tsconfigDev;
     }
 
-    if (!this.parent && projenrcTypeScript) {
+    if (!this.parent && options.projenrcTs) {
       new ProjenrcTs(this, options.projenrcTsOptions);
     }
 

@@ -1,5 +1,6 @@
 import { resolve } from "path";
 import { existsSync, outputFileSync } from "fs-extra";
+import { Eslint } from "./eslint";
 import { renderJavaScriptOptions } from "./render-options";
 import { Component } from "../component";
 import { Project } from "../project";
@@ -26,6 +27,19 @@ export class Projenrc extends Component {
     project.defaultTask?.exec(`node ${this.rcfile}`);
 
     this.generateProjenrc();
+  }
+
+  public preSynthesize(): void {
+    const eslint = Eslint.of(this.project);
+    eslint?.addLintPattern(this.rcfile);
+    eslint?.addIgnorePattern(`!${this.rcfile}`);
+    eslint?.addOverride({
+      files: [this.rcfile],
+      rules: {
+        "@typescript-eslint/no-require-imports": "off",
+        "import/no-extraneous-dependencies": "off",
+      },
+    });
   }
 
   private generateProjenrc() {
