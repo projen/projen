@@ -26,7 +26,7 @@ import {
   JobStep,
   Triggers,
 } from "../github/workflows-model";
-import { IgnoreFile } from "../ignore-file";
+import { IgnoreFile, IgnoreFileOptions } from "../ignore-file";
 import {
   Prettier,
   PrettierOptions,
@@ -209,6 +209,11 @@ export interface NodeProjectOptions
    * @default true
    */
   readonly npmignoreEnabled?: boolean;
+
+  /**
+   * Configuration options for .npmignore file
+   */
+  readonly npmIgnoreOptions?: IgnoreFileOptions;
 
   /**
    * Additional entries to .npmignore.
@@ -470,7 +475,11 @@ export class NodeProject extends GitHubProject {
     this.addLicense(options);
 
     if (options.npmignoreEnabled ?? true) {
-      this.npmignore = new IgnoreFile(this, ".npmignore");
+      this.npmignore = new IgnoreFile(
+        this,
+        ".npmignore",
+        options.npmIgnoreOptions
+      );
     }
 
     this.addDefaultGitIgnore();

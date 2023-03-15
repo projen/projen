@@ -8,7 +8,7 @@ import { Component } from "./component";
 import { Dependencies } from "./dependencies";
 import { FileBase } from "./file";
 import { GitAttributesFile } from "./gitattributes";
-import { IgnoreFile } from "./ignore-file";
+import { IgnoreFile, IgnoreFileOptions } from "./ignore-file";
 import * as inventory from "./inventory";
 import { resolveInitProject } from "./javascript/render-options";
 import { JsonFile } from "./json";
@@ -106,6 +106,11 @@ export interface ProjectOptions {
    * Configuration options for git
    */
   readonly gitOptions?: GitOptions;
+
+  /**
+   * Configuration options for .gitignore file
+   */
+  readonly gitIgnoreOptions?: IgnoreFileOptions;
 }
 
 /**
@@ -256,7 +261,11 @@ export class Project {
       }
     }
 
-    this.gitignore = new IgnoreFile(this, ".gitignore");
+    this.gitignore = new IgnoreFile(
+      this,
+      ".gitignore",
+      options.gitIgnoreOptions
+    );
     this.gitignore.exclude("node_modules/"); // created by running `npx projen`
     this.gitignore.include(`/${this.gitattributes.path}`);
 
