@@ -3,9 +3,6 @@
 exports[`running "projen" with no arguments in a subdirectory will execute .projenrc.js in parent directory 1`] = `
 Object {
   ".projen/tasks.json": Object {
-    "env": Object {
-      "PATH": "",
-    },
     "tasks": Object {
       "build": Object {
         "description": "mock build",

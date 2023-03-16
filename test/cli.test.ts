@@ -8,7 +8,7 @@ const MOCK_PROJENRC =
   "new (require('projen').Project)({ name: 'foo' }).synth()";
 
 const MOCK_TASKS =
-  '{"tasks":{"build":{"name":"build","description":"mock build","steps":[{"exec":"echo test"}]}},"env":{"PATH":""}}';
+  '{"tasks":{"build":{"name":"build","description":"mock build","steps":[{"exec":"echo test"}]}}}';
 
 test('the "--rc" option can be used to specify projenrc location', () => {
   const dir1 = mkdtemp();
@@ -45,14 +45,13 @@ test('running "projen" with no arguments in a subdirectory will execute .projenr
 
   const rcfile = join(dir1, ".projenrc.js");
   writeFileSync(rcfile, MOCK_PROJENRC);
+
   const projen = join(dir1, ".projen");
   fs.mkdirSync(projen);
+
   const tasks = join(projen, "tasks.json");
   writeFileSync(tasks, MOCK_TASKS);
 
-  process.env.PATH = dir1;
-
   execProjenCLI(dir2, ["build"]);
-  // execProjenCLI(dir1);
   expect(directorySnapshot(dir1)).toMatchSnapshot();
 });
