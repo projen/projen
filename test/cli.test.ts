@@ -1,10 +1,14 @@
 import { join } from "path";
 import { writeFileSync } from "fs-extra";
+import * as fs from "fs-extra";
 import { directorySnapshot, execProjenCLI, mkdtemp } from "./util";
 import { Project } from "../src/project";
 
 const MOCK_PROJENRC =
   "new (require('projen').Project)({ name: 'foo' }).synth()";
+
+const MOCK_TASKS =
+  '{"tasks":{"build":{"name":"build","description":"mock build","steps":[{"exec":"echo test"}]}},"env":{"PATH":""}}';
 
 test('the "--rc" option can be used to specify projenrc location', () => {
   const dir1 = mkdtemp();
@@ -33,4 +37,22 @@ test('running "projen" for projects with a "default" task will execute it', () =
 
   execProjenCLI(project.outdir);
   expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual("foo\n");
+});
+
+test('running "projen" with no arguments in a subdirectory will execute .projenrc.js in parent directory', () => {
+  const dir1 = mkdtemp();
+  const dir2 = mkdtemp({ dir: dir1 });
+
+  const rcfile = join(dir1, ".projenrc.js");
+  writeFileSync(rcfile, MOCK_PROJENRC);
+  const projen = join(dir1, ".projen");
+  fs.mkdirSync(projen);
+  const tasks = join(projen, "tasks.json");
+  writeFileSync(tasks, MOCK_TASKS);
+
+  process.env.PATH = dir1;
+
+  execProjenCLI(dir2, ["build"]);
+  // execProjenCLI(dir1);
+  expect(directorySnapshot(dir1)).toMatchSnapshot();
 });
