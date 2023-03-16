@@ -39,7 +39,7 @@ test('running "projen" for projects with a "default" task will execute it', () =
   expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual("foo\n");
 });
 
-test('running "projen" with no arguments in a subdirectory will execute .projenrc.js in parent directory', () => {
+test('running "projen" with task in a subdirectory will execute task', () => {
   const dir1 = mkdtemp();
   const dir2 = mkdtemp({ dir: dir1 });
 
@@ -53,5 +53,21 @@ test('running "projen" with no arguments in a subdirectory will execute .projenr
   writeFileSync(tasks, MOCK_TASKS);
 
   execProjenCLI(dir2, ["build"]);
+  expect(directorySnapshot(dir1)).toMatchSnapshot();
+});
+
+test('running "projen" with task in project root will execute task', () => {
+  const dir1 = mkdtemp();
+
+  const rcfile = join(dir1, ".projenrc.js");
+  writeFileSync(rcfile, MOCK_PROJENRC);
+
+  const projen = join(dir1, ".projen");
+  fs.mkdirSync(projen);
+
+  const tasks = join(projen, "tasks.json");
+  writeFileSync(tasks, MOCK_TASKS);
+
+  execProjenCLI(dir1, ["build"]);
   expect(directorySnapshot(dir1)).toMatchSnapshot();
 });
