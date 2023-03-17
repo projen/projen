@@ -8229,7 +8229,7 @@ Adds a a setup file to Jest's setupFiles configuration.
 addSetupFile(file: string): void
 ```
 
-* **file** (<code>string</code>)  *No description*
+* **file** (<code>string</code>)  File path to setup file.
 
 
 
@@ -8242,7 +8242,7 @@ Adds a a setup file to Jest's setupFilesAfterEnv configuration.
 addSetupFileAfterEnv(file: string): void
 ```
 
-* **file** (<code>string</code>)  *No description*
+* **file** (<code>string</code>)  File path to setup file.
 
 
 
