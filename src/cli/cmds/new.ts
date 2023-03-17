@@ -138,7 +138,7 @@ class Command implements yargs.CommandModule {
  * Returns the yargs option type for a given project option
  */
 function argType(
-  option: inventory.ProjectOption
+  option: inventory.InventoryProjectOption
 ): "string" | "boolean" | "number" | "array" {
   if (option.kind === "enum") {
     return "string";
@@ -154,13 +154,15 @@ function argType(
 /**
  * Checks if the given option is a primitive array
  */
-function isPrimitiveArrayOption(option: inventory.ProjectOption): boolean {
+function isPrimitiveArrayOption(
+  option: inventory.InventoryProjectOption
+): boolean {
   return Boolean(
     option.jsonLike &&
-      option.fullType.collection?.kind === "array" &&
-      option.fullType.collection.elementtype.primitive &&
+      option.type.collection?.kind === "array" &&
+      option.type.collection.elementtype.primitive &&
       ["string", "number"].includes(
-        option.fullType.collection.elementtype.primitive
+        option.type.collection.elementtype.primitive
       )
   );
 }
@@ -182,7 +184,7 @@ function renderDefault(cwd: string, value: string) {
  */
 function commandLineToProps(
   cwd: string,
-  type: inventory.ProjectType,
+  type: inventory.InventoryProjectType,
   argv: Record<string, unknown>
 ): Record<string, any> {
   const props: Record<string, any> = {};
@@ -330,7 +332,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
  */
 async function initProject(
   baseDir: string,
-  type: inventory.ProjectType,
+  type: inventory.InventoryProjectType,
   args: any
 ) {
   // convert command line arguments to project props using type information

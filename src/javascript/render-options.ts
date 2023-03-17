@@ -11,7 +11,7 @@ export interface RenderProjectOptions {
   /**
    * The project type to render.
    */
-  readonly type: inventory.ProjectType;
+  readonly type: inventory.InventoryProjectType;
 
   /**
    * Project arguments as passed to `projen new`.
@@ -255,9 +255,10 @@ export function renderJavaScriptOptions(opts: RenderProjectOptions): {
 
 function renderCommentedOptionsByModule(
   renders: Record<string, string>,
-  options: inventory.ProjectOption[]
+  options: inventory.InventoryProjectOption[]
 ) {
-  const optionsByModule: Record<string, inventory.ProjectOption[]> = {};
+  const optionsByModule: Record<string, inventory.InventoryProjectOption[]> =
+    {};
 
   for (const option of options) {
     const parentModule = option.parent;
@@ -321,7 +322,10 @@ function renderCommentedOptionsInOrder(
  * Returns a JavaScript expression as a string, and the names of any
  * necessary imports.
  */
-function renderArgAsJavaScript(arg: any, option: inventory.ProjectOption) {
+function renderArgAsJavaScript(
+  arg: any,
+  option: inventory.InventoryProjectOption
+) {
   if (option.kind === "enum") {
     if (!option.fqn) {
       throw new Error(`fqn field is missing from enum option ${option.name}`);
