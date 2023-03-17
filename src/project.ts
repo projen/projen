@@ -218,7 +218,6 @@ export class Project {
 
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
-  private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
   private readonly _ejected: boolean;
 

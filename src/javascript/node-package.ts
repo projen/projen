@@ -1,6 +1,5 @@
 import { readFileSync } from "fs";
 import { join, resolve } from "path";
-import { parse as urlparse } from "url";
 import {
   accessSync,
   constants,
@@ -187,6 +186,16 @@ export interface NodePackageOptions {
    * Author's name
    */
   readonly authorName?: string;
+
+  /**
+   * Author's e-mail
+   */
+  readonly authorEmail?: string;
+
+  /**
+   * Author's URL / Website
+   */
+  readonly authorUrl?: string;
 
   /**
    * Is the author an organization

@@ -143,9 +143,7 @@ export class Publisher extends Component {
 
     this.buildJobId = options.buildJobId;
     this.artifactName = options.artifactName;
-    this.publibVersion =
-      options.publibVersion ?? options.jsiiReleaseVersion ?? PUBLIB_VERSION;
-    this.jsiiReleaseVersion = this.publibVersion;
+    this.publibVersion = options.publibVersion ?? PUBLIB_VERSION;
     this.condition = options.condition;
     this.dryRun = options.dryRun ?? false;
     this.workflowNodeVersion = options.workflowNodeVersion ?? "14.x";
@@ -300,12 +298,6 @@ export class Publisher extends Component {
     }
 
     this.addPublishJob((_branch, branchOptions): PublishJobOptions => {
-      if (branchOptions.npmDistTag && options.distTag) {
-        throw new Error(
-          "cannot set branch-level npmDistTag and npmDistTag in publishToNpm()"
-        );
-      }
-
       return {
         name: "npm",
         publishTools: PUBLIB_TOOLCHAIN.js,
@@ -313,7 +305,7 @@ export class Publisher extends Component {
         run: this.publibCommand("publib-npm"),
         registryName: "npm",
         env: {
-          NPM_DIST_TAG: branchOptions.npmDistTag ?? options.distTag ?? "latest",
+          NPM_DIST_TAG: branchOptions.npmDistTag ?? "latest",
           NPM_REGISTRY: options.registry,
         },
         permissions: {

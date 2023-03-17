@@ -21,7 +21,6 @@ export * from "./projenrc-json";
 export * from "./readme";
 export * from "./renovatebot";
 export * from "./sample-file";
-export * from "./semver";
 export * from "./source-code";
 export * from "./task";
 export * from "./tasks";

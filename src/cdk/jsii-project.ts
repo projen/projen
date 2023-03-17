@@ -309,7 +309,7 @@ export class JsiiProject extends TypeScriptProject {
       this.addPackagingTarget("java", task, extraJobOptions);
     }
 
-    const pypi = options.publishToPypi ?? options.python;
+    const pypi = options.publishToPypi;
     if (pypi) {
       targets.python = {
         distName: pypi.distName,
@@ -325,7 +325,7 @@ export class JsiiProject extends TypeScriptProject {
       this.addPackagingTarget("python", task, extraJobOptions);
     }
 
-    const nuget = options.publishToNuget ?? options.dotnet;
+    const nuget = options.publishToNuget;
     if (nuget) {
       targets.dotnet = {
         namespace: nuget.dotNetNamespace,
@@ -460,6 +460,13 @@ export class JsiiProject extends TypeScriptProject {
 }
 
 function parseAuthorAddress(options: JsiiProjectOptions) {
+  // @deprecated @todo
+  if (options.authorUrl || options.authorEmail) {
+    throw new Error(
+      `authorUrl and authorEmail cannot be used on this project. Use authorAddress instead.`
+    );
+  }
+
   if (EMAIL_REGEX.test(options.authorAddress)) {
     return { authorEmail: options.authorAddress };
   }

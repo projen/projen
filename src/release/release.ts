@@ -308,23 +308,9 @@ export class Release extends Component {
     /**
      * Use manual releases with no changelog if releaseEveryCommit is explicitly
      * disabled and no other trigger is set.
-     *
-     * TODO: Remove this when releaseEveryCommit and releaseSchedule are removed
      */
-    if (
-      !(
-        (options.releaseEveryCommit ?? true) ||
-        options.releaseSchedule ||
-        options.releaseTrigger
-      )
-    ) {
+    if (!options.releaseTrigger) {
       this.releaseTrigger = ReleaseTrigger.manual({ changelog: false });
-    }
-
-    if (options.releaseSchedule) {
-      this.releaseTrigger = ReleaseTrigger.scheduled({
-        schedule: options.releaseSchedule,
-      });
     }
 
     this.version = new Version(project, {
@@ -338,7 +324,6 @@ export class Release extends Component {
       artifactName: this.artifactsDirectory,
       condition: `needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`,
       buildJobId: BUILD_JOBID,
-      jsiiReleaseVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
       failureIssueLabel: options.releaseFailureIssueLabel,
       workflowRunsOn: options.workflowRunsOn,

@@ -1,6 +1,5 @@
 import * as path from "path";
 import { Component } from "../component";
-import { FileBase, FileBaseOptions, IResolver } from "../file";
 import {
   NodeProject,
   NodeProjectOptions,

@@ -2,11 +2,10 @@ import { AutoApprove, AutoApproveOptions } from "./auto-approve";
 import { AutoMergeOptions } from "./auto-merge";
 import { GitHub, GitHubOptions } from "./github";
 import { GithubCredentials } from "./github-credentials";
-import { MergifyOptions } from "./mergify";
 import { Stale, StaleOptions } from "./stale";
 import { Clobber } from "../clobber";
 import { Gitpod } from "../gitpod";
-import { Project, ProjectOptions, ProjectType } from "../project";
+import { Project, ProjectOptions } from "../project";
 import { SampleReadme, SampleReadmeProps } from "../readme";
 import { DevContainer, VsCode } from "../vscode";
 

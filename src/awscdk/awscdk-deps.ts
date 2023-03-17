@@ -152,13 +152,11 @@ export abstract class AwsCdkDeps extends Component {
 
     this.addFrameworkDependency(options);
 
-    // assert/assertions library
-    this.addV1AssertionLibraryDependency(options);
-
     // constructs library
     this.addConstructsDependency(options.constructsVersion);
 
     // user-defined v1 dependencies (will only fail in CDK v2 if these have values)
+    // @deprecated
     this.addV1Dependencies(...(options.cdkDependencies ?? []));
     this.addV1DevDependencies(...(options.cdkTestDependencies ?? []));
   }
@@ -301,39 +299,6 @@ export abstract class AwsCdkDeps extends Component {
           `Unsupported AWS CDK major version ${this.cdkMajorVersion}.x`
         );
     }
-  }
-
-  private addV1AssertionLibraryDependency(options: AwsCdkDepsOptions) {
-    if (this.cdkMajorVersion !== 1) {
-      if (options.cdkAssert !== undefined) {
-        throw new Error(
-          "cdkAssert is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib"
-        );
-      }
-      if (options.cdkAssertions !== undefined) {
-        throw new Error(
-          "cdkAssertion is not used for CDK 2.x. Use the assertions library that is provided in aws-cdk-lib"
-        );
-      }
-
-      return;
-    }
-
-    const testDeps = new Array<string>();
-
-    if ((options.cdkAssert ?? true) && this._packageNames.assert) {
-      testDeps.push(this._packageNames.assert);
-    }
-
-    // @aws-cdk/assertions is only available starting v1.111.0
-    if (
-      semver.gte(this.cdkMinimumVersion, "1.111.0") &&
-      (options.cdkAssertions ?? true)
-    ) {
-      testDeps.push(this._packageNames.assertions);
-    }
-
-    this.addV1DependenciesByType(DependencyType.TEST, ...testDeps);
   }
 
   /**

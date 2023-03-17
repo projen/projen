@@ -210,13 +210,13 @@ export class TypeScriptProject extends NodeProject {
     // the javascript files and not let jest compile it for us.
     const compiledTests = this.testdir.startsWith(this.srcdir + path.posix.sep);
 
-    if (options.entrypointTypes || this.entrypoint !== "") {
+    if (options.entrypointTypes || this.package.entrypoint !== "") {
       const entrypointTypes =
         options.entrypointTypes ??
         `${path
           .join(
-            path.dirname(this.entrypoint),
-            path.basename(this.entrypoint, ".js")
+            path.dirname(this.package.entrypoint),
+            path.basename(this.package.entrypoint, ".js")
           )
           .replace(/\\/g, "/")}.d.ts`;
       this.package.addField("types", entrypointTypes);
@@ -325,7 +325,6 @@ export class TypeScriptProject extends NodeProject {
         dirs: [this.srcdir],
         devdirs: [this.testdir, "build-tools"],
         fileExtensions: [".ts", ".tsx"],
-        lintProjenRc: false,
         ...options.eslintOptions,
       });
 
@@ -482,7 +481,7 @@ export class TypeScriptAppProject extends TypeScriptProject {
   constructor(options: TypeScriptProjectOptions) {
     super({
       allowLibraryDependencies: false,
-      releaseWorkflow: false,
+      release: false,
       entrypoint: "", // "main" is not needed in typescript apps
       package: false,
       ...options,

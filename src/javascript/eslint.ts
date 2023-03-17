@@ -1,6 +1,5 @@
 import { Prettier } from "./prettier";
 import { Project } from "..";
-import { PROJEN_RC } from "../common";
 import { Component } from "../component";
 import { NodeProject } from "../javascript";
 import { JsonFile } from "../json";
