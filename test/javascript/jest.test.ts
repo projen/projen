@@ -217,6 +217,42 @@ test("addTestMatch() can be used to add patterns", () => {
   ]);
 });
 
+test("addSetupFile() can be used to add setup files", () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+  });
+  const jest = new Jest(project, {});
+
+  // WHEN
+  jest.addSetupFile("./mySetupFile.ts");
+
+  // THEN
+  expect(synthSnapshot(project)["package.json"].jest.setupFiles).toStrictEqual([
+    "./mySetupFile.ts",
+  ]);
+});
+
+test("addSetupFileAfterEnv() can be used to add setup files", () => {
+  // GIVEN
+  const project = new NodeProject({
+    outdir: mkdtemp(),
+    defaultReleaseBranch: "master",
+    name: "test",
+  });
+  const jest = new Jest(project, {});
+
+  // WHEN
+  jest.addSetupFileAfterEnv("./mySetupFileAfterEnv.ts");
+
+  // THEN
+  expect(
+    synthSnapshot(project)["package.json"].jest.setupFilesAfterEnv
+  ).toStrictEqual(["./mySetupFileAfterEnv.ts"]);
+});
+
 test("can set extra CLI options", () => {
   // GIVEN
   const project = new NodeProject({

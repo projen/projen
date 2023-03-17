@@ -1380,6 +1380,8 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
           },
         ],
       ],
+      "setupFiles": Array [],
+      "setupFilesAfterEnv": Array [],
       "testMatch": Array [
         "<rootDir>/src/**/__tests__/**/*.ts?(x)",
         "<rootDir>/(test|src)/**/*(*.)@(spec|test).ts?(x)",

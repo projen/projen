@@ -8221,6 +8221,32 @@ addReporter(reporter: string &#124; json): void
 
 
 
+#### addSetupFile(file)🔹 <a id="projen-javascript-jest-addsetupfile"></a>
+
+
+
+```ts
+addSetupFile(file: string): void
+```
+
+* **file** (<code>string</code>)  *No description*
+
+
+
+
+#### addSetupFileAfterEnv(file)🔹 <a id="projen-javascript-jest-addsetupfileafterenv"></a>
+
+
+
+```ts
+addSetupFileAfterEnv(file: string): void
+```
+
+* **file** (<code>string</code>)  *No description*
+
+
+
+
 #### addSnapshotResolver(file)🔹 <a id="projen-javascript-jest-addsnapshotresolver"></a>
 
 

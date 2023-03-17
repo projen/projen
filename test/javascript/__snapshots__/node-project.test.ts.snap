@@ -255,6 +255,8 @@ Object {
         },
       ],
     ],
+    "setupFiles": Array [],
+    "setupFilesAfterEnv": Array [],
     "testMatch": Array [
       "**/__tests__/**/*.[jt]s?(x)",
       "**/?(*.)+(spec|test).[tj]s?(x)",
