@@ -18,6 +18,10 @@ import {
   ProjenrcOptions as ProjenrcJsOptions,
 } from "../javascript/projenrc";
 import { ProjectType } from "../project";
+import {
+  Projenrc as ProjenrcTs,
+  ProjenrcOptions as ProjenrcTsOptions,
+} from "../typescript";
 import { anySelected, multipleSelected } from "../util";
 
 /** Allowed characters in python project names */
@@ -162,6 +166,22 @@ export interface PythonProjectOptions
    * @default - default options
    */
   readonly projenrcJsOptions?: ProjenrcJsOptions;
+
+  /**
+   * Use projenrc in TypeScript.
+   *
+   * This will create a `tsconfig.json` file and use `ts-node` in the
+   * default task to parse the project configuration file.
+   *
+   * @default false
+   */
+  readonly projenrcTs?: boolean;
+
+  /**
+   * Options related to projenrc in TypeScript.
+   * @default - default options
+   */
+  readonly projenrcTsOptions?: ProjenrcTsOptions;
 }
 
 /**
@@ -217,11 +237,12 @@ export class PythonProject extends GitHubProject {
       options.projenrcPython,
       options.projenrcJs,
       options.projenrcJson,
+      options.projenrcTs,
     ];
 
     if (multipleSelected(rcFileTypeOptions)) {
       throw new Error(
-        "Only one of projenrcPython, projenrcJs, and projenrcJson can be selected."
+        "Only one of projenrcPython, projenrcJs, projenrcTs, and projenrcJson can be selected."
       );
     }
 
@@ -245,6 +266,10 @@ export class PythonProject extends GitHubProject {
 
       if (options.projenrcJs ?? false) {
         new ProjenrcJs(this, options.projenrcJsOptions);
+      }
+
+      if (options.projenrcTs ?? false) {
+        new ProjenrcTs(this, options.projenrcTsOptions);
       }
     }
 
