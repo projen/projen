@@ -159,8 +159,6 @@
         }
       ]
     ],
-    "setupFiles": [],
-    "setupFilesAfterEnv": [],
     "preset": "ts-jest",
     "globals": {
       "ts-jest": {

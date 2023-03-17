@@ -620,8 +620,6 @@ export class Jest extends Component {
   private readonly ignorePatterns: string[];
   private readonly watchIgnorePatterns: string[];
   private readonly coverageReporters: string[];
-  private readonly setupFiles: string[];
-  private readonly setupFilesAfterEnv: string[];
   private readonly reporters: JestReporter[];
   private readonly jestConfig?: JestConfigOptions;
   private readonly extraCliOptions: string[];
@@ -669,9 +667,6 @@ export class Jest extends Component {
       this.reporters.unshift("default");
     }
 
-    this.setupFiles = this.jestConfig?.setupFiles ?? [];
-    this.setupFilesAfterEnv = this.jestConfig?.setupFilesAfterEnv ?? [];
-
     this.config = {
       ...this.jestConfig,
       clearMocks: this.jestConfig?.clearMocks ?? true,
@@ -685,8 +680,6 @@ export class Jest extends Component {
       watchPathIgnorePatterns: this.watchIgnorePatterns,
       testMatch: this.testMatch,
       reporters: this.reporters,
-      setupFiles: this.setupFiles,
-      setupFilesAfterEnv: this.setupFilesAfterEnv,
       snapshotResolver: (() => this._snapshotResolver) as any,
     } as JestConfigOptions;
 
@@ -770,7 +763,10 @@ export class Jest extends Component {
    * @param string File path to setup file
    */
   public addSetupFile(file: string) {
-    this.setupFiles.push(file);
+    if (!this.config.setupFiles) {
+      this.config.setupFiles = [];
+    }
+    this.config.setupFiles.push(file);
   }
 
   /**
@@ -778,7 +774,10 @@ export class Jest extends Component {
    * @param string File path to setup file
    */
   public addSetupFileAfterEnv(file: string) {
-    this.setupFilesAfterEnv.push(file);
+    if (!this.config.setupFilesAfterEnv) {
+      this.config.setupFilesAfterEnv = [];
+    }
+    this.config.setupFilesAfterEnv.push(file);
   }
 
   public addSnapshotResolver(file: string) {
