@@ -1002,7 +1002,7 @@ export interface ProjectColumnOptions {
 /**
  * Pull request options
  */
-export interface PullRequestOptions {
+export interface PullRequestOptions extends PushOptions {
   /**
    * Which activity types to trigger on.
    *
@@ -1082,7 +1082,7 @@ export interface PullRequestTargetOptions extends PushOptions {
  */
 export interface PushOptions {
   /**
-   * When using the push and pull_request events, you can configure a workflow
+   * When using the push, pull_request and pull_request_target events, you can configure a workflow
    * to run on specific branches or tags. For a pull_request event, only
    * branches and tags on the base are evaluated. If you define only tags or
    * only branches, the workflow won't run for events affecting the undefined
@@ -1093,7 +1093,7 @@ export interface PushOptions {
   readonly branches?: string[];
 
   /**
-   * When using the push and pull_request events, you can configure a workflow
+   * When using the push, pull_request and pull_request_target events, you can configure a workflow
    * to run on specific branches or tags. For a pull_request event, only
    * branches and tags on the base are evaluated. If you define only tags or
    * only branches, the workflow won't run for events affecting the undefined
@@ -1104,7 +1104,7 @@ export interface PushOptions {
   readonly tags?: string[];
 
   /**
-   * When using the push and pull_request events, you can configure a workflow
+   * When using the push, pull_request and pull_request_target events, you can configure a workflow
    * to run when at least one file does not match paths-ignore or at least one
    * modified file matches the configured paths. Path filters are not
    * evaluated for pushes to tags.
