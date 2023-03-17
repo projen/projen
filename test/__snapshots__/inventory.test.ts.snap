@@ -2094,9 +2094,9 @@ Array [
         "default": "- default options",
         "docs": "Options related to projenrc in TypeScript.",
         "featured": false,
-        "fqn": "projen.typescript.ProjenrcOptions",
+        "fqn": "projen.typescript.ProjenrcTsOptions",
         "fullType": Object {
-          "fqn": "projen.typescript.ProjenrcOptions",
+          "fqn": "projen.typescript.ProjenrcTsOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -2106,7 +2106,7 @@ Array [
         "path": Array [
           "projenrcTsOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcTsOptions",
         "switch": "projenrc-ts-options",
       },
       Object {
@@ -9227,9 +9227,9 @@ Array [
         "default": "- default options",
         "docs": "Options related to projenrc in TypeScript.",
         "featured": false,
-        "fqn": "projen.typescript.ProjenrcOptions",
+        "fqn": "projen.typescript.ProjenrcTsOptions",
         "fullType": Object {
-          "fqn": "projen.typescript.ProjenrcOptions",
+          "fqn": "projen.typescript.ProjenrcTsOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -9239,7 +9239,7 @@ Array [
         "path": Array [
           "projenrcTsOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcTsOptions",
         "switch": "projenrc-ts-options",
       },
       Object {
@@ -29238,9 +29238,9 @@ Array [
         "default": "- default options",
         "docs": "Options related to projenrc in TypeScript.",
         "featured": false,
-        "fqn": "projen.typescript.ProjenrcOptions",
+        "fqn": "projen.typescript.ProjenrcTsOptions",
         "fullType": Object {
-          "fqn": "projen.typescript.ProjenrcOptions",
+          "fqn": "projen.typescript.ProjenrcTsOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -29250,7 +29250,7 @@ Array [
         "path": Array [
           "projenrcTsOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcTsOptions",
         "switch": "projenrc-ts-options",
       },
       Object {

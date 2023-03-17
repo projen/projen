@@ -18,10 +18,7 @@ import {
   ProjenrcOptions as ProjenrcJsOptions,
 } from "../javascript/projenrc";
 import { ProjectType } from "../project";
-import {
-  Projenrc as ProjenrcTs,
-  ProjenrcOptions as ProjenrcTsOptions,
-} from "../typescript";
+import { ProjenrcTs, ProjenrcTsOptions } from "../typescript";
 import { anySelected, multipleSelected } from "../util";
 
 /** Allowed characters in python project names */

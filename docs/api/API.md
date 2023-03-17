@@ -125,7 +125,8 @@ Name|Description
 [release.Publisher](#projen-release-publisher)|Implements GitHub jobs for publishing modules to package managers.
 [release.Release](#projen-release-release)|Manages releases (currently through GitHub workflows).
 [release.ReleaseTrigger](#projen-release-releasetrigger)|Used to manage release strategies.
-[typescript.Projenrc](#projen-typescript-projenrc)|Sets up a project to use TypeScript for projenrc.
+[typescript.Projenrc](#projen-typescript-projenrc)|Sets up a typescript project to use TypeScript for projenrc.
+[typescript.ProjenrcTs](#projen-typescript-projenrcts)|A projenrc file written in TypeScript.
 [typescript.TypeScriptAppProject](#projen-typescript-typescriptappproject)|TypeScript app.
 [typescript.TypeScriptLibraryProject](#projen-typescript-typescriptlibraryproject)|*No description*
 [typescript.TypeScriptProject](#projen-typescript-typescriptproject)|TypeScript project.
@@ -382,6 +383,7 @@ Name|Description
 [release.ReleaseProjectOptions](#projen-release-releaseprojectoptions)|Project options for release.
 [release.ScheduledReleaseOptions](#projen-release-scheduledreleaseoptions)|*No description*
 [typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)|*No description*
+[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)|*No description*
 [typescript.TypeScriptLibraryProjectOptions](#projen-typescript-typescriptlibraryprojectoptions)|*No description*
 [typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)|*No description*
 [vscode.DevContainerOptions](#projen-vscode-devcontaineroptions)|Constructor options for the DevContainer component.
@@ -4111,7 +4113,7 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
   * **projenrcPython** (<code>boolean</code>)  Use projenrc in Python. __*Default*__: true
   * **projenrcPythonOptions** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  Options related to projenrc in python. __*Default*__: default options
   * **projenrcTs** (<code>boolean</code>)  Use projenrc in TypeScript. __*Default*__: false
-  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
@@ -5740,7 +5742,7 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
   * **projenrcPython** (<code>boolean</code>)  Use projenrc in Python. __*Default*__: true
   * **projenrcPythonOptions** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  Options related to projenrc in python. __*Default*__: default options
   * **projenrcTs** (<code>boolean</code>)  Use projenrc in TypeScript. __*Default*__: false
-  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
@@ -9736,7 +9738,7 @@ new python.PythonProject(options: PythonProjectOptions)
   * **projenrcPython** (<code>boolean</code>)  Use projenrc in Python. __*Default*__: true
   * **projenrcPythonOptions** (<code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code>)  Options related to projenrc in python. __*Default*__: default options
   * **projenrcTs** (<code>boolean</code>)  Use projenrc in TypeScript. __*Default*__: false
-  * **projenrcTsOptions** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
+  * **projenrcTsOptions** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  Options related to projenrc in TypeScript. __*Default*__: default options
   * **pytest** (<code>boolean</code>)  Include pytest tests. __*Default*__: true
   * **pytestOptions** (<code>[python.PytestOptions](#projen-python-pytestoptions)</code>)  pytest options. __*Default*__: defaults
   * **sample** (<code>boolean</code>)  Include sample code and test if the relevant directories don't exist. __*Default*__: true
@@ -10443,15 +10445,7 @@ __Returns__:
 
 ## class Projenrc 🔹 <a id="projen-typescript-projenrc"></a>
 
-Sets up a project to use TypeScript for projenrc.
-
-If the project is TypeScript-based, entries will
-be added to the tsconfig and eslint configurations.
-
-If the project is not TypeScript-based, npx will
-be used to invoke `ts-node` and a `tsconfig.projen.json`
-will be generated dynamically to support compiling of
-projen configuration files.
+Sets up a typescript project to use TypeScript for projenrc.
 
 __Submodule__: typescript
 
@@ -10463,11 +10457,56 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new typescript.Projenrc(project: Project, options?: ProjenrcOptions)
+new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
+```
+
+* **project** (<code>[typescript.TypeScriptProject](#projen-typescript-typescriptproject)</code>)  *No description*
+* **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
+  * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
+  * **projenCodeDir** (<code>string</code>)  A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. __*Default*__: "projenrc"
+
+
+### Methods
+
+
+#### preSynthesize()🔹 <a id="projen-typescript-projenrc-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
+
+
+
+
+
+
+## class ProjenrcTs 🔹 <a id="projen-typescript-projenrcts"></a>
+
+A projenrc file written in TypeScript.
+
+This component can be instantiated in any type of project
+and has no expectations around the project's main language.
+
+Requires that `npx` is available.
+
+__Submodule__: typescript
+
+__Extends__: [Component](#projen-component)
+
+### Initializer
+
+
+
+
+```ts
+new typescript.ProjenrcTs(project: Project, options?: ProjenrcTsOptions)
 ```
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
+* **options** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
   * **projenCodeDir** (<code>string</code>)  A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. __*Default*__: "projenrc"
 
@@ -10478,12 +10517,12 @@ new typescript.Projenrc(project: Project, options?: ProjenrcOptions)
 
 Name | Type | Description 
 -----|------|-------------
-**tsconfig**?🔹 | <code>[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)</code> | TypeScript configuration file used to compile projen configuration (`tsconfig.projen.json`).<br/>__*Optional*__
+**tsconfig**🔹 | <code>[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)</code> | TypeScript configuration file used to compile projen source files.
 
 ### Methods
 
 
-#### preSynthesize()🔹 <a id="projen-typescript-projenrc-presynthesize"></a>
+#### preSynthesize()🔹 <a id="projen-typescript-projenrcts-presynthesize"></a>
 
 Called before synthesis.
 
@@ -13602,7 +13641,7 @@ Name | Type | Description
 **projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in Python.<br/>__*Default*__: true
 **projenrcPythonOptions**?🔹 | <code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code> | Options related to projenrc in python.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use projenrc in TypeScript.<br/>__*Default*__: false
-**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
+**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
@@ -14868,7 +14907,7 @@ Name | Type | Description
 **projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in Python.<br/>__*Default*__: true
 **projenrcPythonOptions**?🔹 | <code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code> | Options related to projenrc in python.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use projenrc in TypeScript.<br/>__*Default*__: false
-**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
+**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
@@ -17836,7 +17875,7 @@ Name | Type | Description
 **projenrcPython**?🔹 | <code>boolean</code> | Use projenrc in Python.<br/>__*Default*__: true
 **projenrcPythonOptions**?🔹 | <code>[python.ProjenrcOptions](#projen-python-projenrcoptions)</code> | Options related to projenrc in python.<br/>__*Default*__: default options
 **projenrcTs**?🔹 | <code>boolean</code> | Use projenrc in TypeScript.<br/>__*Default*__: false
-**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
+**projenrcTsOptions**?🔹 | <code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code> | Options related to projenrc in TypeScript.<br/>__*Default*__: default options
 **pytest**?🔹 | <code>boolean</code> | Include pytest tests.<br/>__*Default*__: true
 **pytestOptions**?🔹 | <code>[python.PytestOptions](#projen-python-pytestoptions)</code> | pytest options.<br/>__*Default*__: defaults
 **readme**?🔹 | <code>[SampleReadmeProps](#projen-samplereadmeprops)</code> | The README setup.<br/>__*Default*__: { filename: 'README.md', contents: '# replace this' }
@@ -18309,6 +18348,20 @@ Name | Type | Description
 
 
 ## struct ProjenrcOptions 🔹 <a id="projen-typescript-projenrcoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
+**projenCodeDir**?🔹 | <code>string</code> | A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file.<br/>__*Default*__: "projenrc"
+
+
+
+## struct ProjenrcTsOptions 🔹 <a id="projen-typescript-projenrctsoptions"></a>
 
 
 

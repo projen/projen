@@ -1,10 +1,11 @@
 import { resolve } from "path";
 import { existsSync, outputFileSync } from "fs-extra";
 import { Component } from "../component";
+import { TypescriptConfig } from "../javascript";
 import { renderJavaScriptOptions } from "../javascript/render-options";
-import { TypeScriptProject } from "../typescript";
+import { Project } from "../project";
 
-export interface ProjenrcOptions {
+export interface ProjenrcTsOptions {
   /**
    * The name of the projenrc file.
    * @default ".projenrc.ts"
@@ -21,52 +22,46 @@ export interface ProjenrcOptions {
 }
 
 /**
- * Sets up a typescript project to use TypeScript for projenrc.
+ * A projenrc file written in TypeScript
+ *
+ * This component can be instantiated in any type of project
+ * and has no expectations around the project's main language.
+ *
+ * Requires that `npx` is available.
  */
-export class Projenrc extends Component {
+export class ProjenrcTs extends Component {
+  /**
+   * TypeScript configuration file used to compile projen source files
+   */
+  public readonly tsconfig: TypescriptConfig;
+
   private readonly rcfile: string;
   private readonly _projenCodeDir: string;
-  private readonly _tsProject: TypeScriptProject;
+  private readonly tsconfigFileName = "tsconfig.projen.json";
 
-  constructor(project: TypeScriptProject, options: ProjenrcOptions = {}) {
+  constructor(project: Project, options: ProjenrcTsOptions = {}) {
     super(project);
-    this._tsProject = project;
 
     this.rcfile = options.filename ?? ".projenrc.ts";
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
 
-    // this is the task projen executes when running `projen` without a
-    // specific task (if this task is not defined, projen falls back to
-    // running "node .projenrc.js").
-    project.addDevDeps("ts-node");
+    // Create a dedicated tsconfig for projen source files
+    this.tsconfig = new TypescriptConfig(project, {
+      fileName: this.tsconfigFileName,
+      compilerOptions: {},
+    });
 
-    // we use "tsconfig.dev.json" here to allow projen source files to reside
-    // anywhere in the project tree.
+    // Use npx since project's deps manager is not guaranteed to be JS-based
     project.defaultTask?.exec(
-      `ts-node --project ${project.tsconfigDev.fileName} ${this.rcfile}`
+      `npx -y ts-node --project ${this.tsconfig.fileName} ${this.rcfile}`
     );
 
     this.generateProjenrc();
   }
 
   public preSynthesize(): void {
-    this._tsProject.tsconfigDev.addInclude(this.rcfile);
-    this._tsProject.tsconfigDev.addInclude(`${this._projenCodeDir}/**/*.ts`);
-
-    this._tsProject.eslint?.addLintPattern(this._projenCodeDir);
-    this._tsProject.eslint?.addLintPattern(this.rcfile);
-    this._tsProject.eslint?.allowDevDeps(this.rcfile);
-    this._tsProject.eslint?.allowDevDeps(`${this._projenCodeDir}/**/*.ts`);
-    this._tsProject.eslint?.addIgnorePattern(`!${this.rcfile}`);
-    this._tsProject.eslint?.addIgnorePattern(`!${this._projenCodeDir}/**/*.ts`);
-
-    this._tsProject.eslint?.addOverride({
-      files: [this.rcfile],
-      rules: {
-        "@typescript-eslint/no-require-imports": "off",
-        "import/no-extraneous-dependencies": "off",
-      },
-    });
+    this.tsconfig.addInclude(this.rcfile);
+    this.tsconfig.addInclude(`${this._projenCodeDir}/**/*.ts`);
   }
 
   private generateProjenrc() {
