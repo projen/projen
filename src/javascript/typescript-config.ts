@@ -439,7 +439,6 @@ export class TypescriptConfig extends Component {
     if (project instanceof NodeProject) {
       project.npmignore?.exclude(`/${fileName}`);
     }
-
   }
 
   public addInclude(pattern: string) {

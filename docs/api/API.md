@@ -125,7 +125,7 @@ Name|Description
 [release.Publisher](#projen-release-publisher)|Implements GitHub jobs for publishing modules to package managers.
 [release.Release](#projen-release-release)|Manages releases (currently through GitHub workflows).
 [release.ReleaseTrigger](#projen-release-releasetrigger)|Used to manage release strategies.
-[typescript.Projenrc](#projen-typescript-projenrc)|Sets up a typescript project to use TypeScript for projenrc.
+[typescript.Projenrc](#projen-typescript-projenrc)|Sets up a project to use TypeScript for projenrc.
 [typescript.TypeScriptAppProject](#projen-typescript-typescriptappproject)|TypeScript app.
 [typescript.TypeScriptLibraryProject](#projen-typescript-typescriptlibraryproject)|*No description*
 [typescript.TypeScriptProject](#projen-typescript-typescriptproject)|TypeScript project.
@@ -9196,10 +9196,10 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new javascript.TypescriptConfig(project: NodeProject, options: TypescriptConfigOptions)
+new javascript.TypescriptConfig(project: Project, options: TypescriptConfigOptions)
 ```
 
-* **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[javascript.TypescriptConfigOptions](#projen-javascript-typescriptconfigoptions)</code>)  *No description*
   * **compilerOptions** (<code>[javascript.TypeScriptCompilerOptions](#projen-javascript-typescriptcompileroptions)</code>)  Compiler options to use. 
   * **exclude** (<code>Array<string></code>)  Filters results from the "include" option. __*Default*__: node_modules is excluded by default
@@ -10437,7 +10437,15 @@ __Returns__:
 
 ## class Projenrc 🔹 <a id="projen-typescript-projenrc"></a>
 
-Sets up a typescript project to use TypeScript for projenrc.
+Sets up a project to use TypeScript for projenrc.
+
+If the project is TypeScript-based, entries will
+be added to the tsconfig and eslint configurations.
+
+If the project is not TypeScript-based, npx will
+be used to invoke `ts-node` and a `tsconfig.projen.json`
+will be generated dynamically to support compiling of
+projen configuration files.
 
 __Submodule__: typescript
 
@@ -10449,14 +10457,22 @@ __Extends__: [Component](#projen-component)
 
 
 ```ts
-new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
+new typescript.Projenrc(project: Project, options?: ProjenrcOptions)
 ```
 
-* **project** (<code>[typescript.TypeScriptProject](#projen-typescript-typescriptproject)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[typescript.ProjenrcOptions](#projen-typescript-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
   * **projenCodeDir** (<code>string</code>)  A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. __*Default*__: "projenrc"
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**tsconfig**?🔹 | <code>[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)</code> | TypeScript configuration file used to compile projen configuration (`tsconfig.projen.json`).<br/>__*Optional*__
 
 ### Methods
 
