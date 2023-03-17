@@ -159,6 +159,14 @@ export interface TypeScriptCompilerOptions {
   readonly forceConsistentCasingInFileNames?: boolean;
 
   /**
+   * This flag controls how `import` works, because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues
+   * @default "remove"
+   */
+  readonly importsNotUsedAsValues?: "remove" | "preserve" | "error";
+
+  /**
    * When set, instead of writing out a .js.map file to provide source maps,
    * TypeScript will embed the source map content in the .js files.
    *
