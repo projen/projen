@@ -42,21 +42,6 @@ export interface EslintOptions {
   readonly ignorePatterns?: string[];
 
   /**
-   * Projenrc file to lint. Use empty string to disable.
-   * @default PROJEN_RC
-   * @deprecated provide as `devdirs`
-   */
-  readonly lintProjenRcFile?: string;
-
-  /**
-   * Should we lint .projenrc.js
-   *
-   * @default true
-   * @deprecated set to `false` to remove any automatic rules and add manually
-   */
-  readonly lintProjenRc?: boolean;
-
-  /**
    * Enable prettier for code formatting
    * @default false
    */
@@ -171,19 +156,12 @@ export class Eslint extends Component {
       project.addDevDeps("eslint-import-resolver-alias");
     }
 
-    const lintProjenRc = options.lintProjenRc ?? true;
-    const lintProjenRcFile = options.lintProjenRcFile ?? PROJEN_RC;
-
     const devdirs = options.devdirs ?? [];
 
-    this._lintPatterns = [
-      ...options.dirs,
-      ...devdirs,
-      ...(lintProjenRc && lintProjenRcFile ? [lintProjenRcFile] : []),
-    ];
+    this._lintPatterns = [...options.dirs, ...devdirs];
     this._fileExtensions = options.fileExtensions ?? [".ts"];
 
-    this._allowDevDeps = new Set((devdirs ?? []).map((dir) => `**/${dir}/**`));
+    this._allowDevDeps = new Set(devdirs.map((dir) => `**/${dir}/**`));
 
     this.eslintTask = project.addTask("eslint", {
       description: "Runs eslint against the codebase",
@@ -320,24 +298,8 @@ export class Eslint extends Component {
       ],
     };
 
-    // Overrides for .projenrc.js
-    // @deprecated
-    if (lintProjenRc) {
-      this.overrides = [
-        {
-          files: [lintProjenRcFile || PROJEN_RC],
-          rules: {
-            "@typescript-eslint/no-require-imports": "off",
-            "import/no-extraneous-dependencies": "off",
-          },
-        },
-      ];
-    }
-
     this.ignorePatterns = options.ignorePatterns ?? [
       "*.js",
-      // @deprecated
-      ...(lintProjenRc ? [`!${lintProjenRcFile || PROJEN_RC}`] : []),
       "*.d.ts",
       "node_modules/",
       "*.generated.ts",

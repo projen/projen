@@ -33,12 +33,6 @@ async function main() {
     alias: "w",
   });
   ya.options("debug", { type: "boolean", default: false, desc: "Debug logs" });
-  ya.options("rc", {
-    deprecated: true,
-    desc: "path to .projenrc.js file",
-    default: DEFAULT_RC,
-    type: "string",
-  });
   ya.completion();
   ya.help();
 
@@ -73,7 +67,6 @@ async function main() {
     await synth(runtime, {
       post: args.post as boolean,
       watch: args.watch as boolean,
-      rcfile: args.rc as string,
     });
   }
 }

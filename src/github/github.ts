@@ -53,16 +53,6 @@ export interface GitHubOptions {
   readonly projenCredentials?: GithubCredentials;
 
   /**
-   * The name of a secret which includes a GitHub Personal Access Token to be
-   * used by projen workflows. This token needs to have the `repo`, `workflows`
-   * and `packages` scope.
-   *
-   * @default "PROJEN_GITHUB_TOKEN"
-   * @deprecated - use `projenCredentials`
-   */
-  readonly projenTokenSecret?: string;
-
-  /**
    * Download files in LFS in workflows
    *
    * @default true if the associated project has `lfsPatterns`, `false` otherwise
@@ -112,17 +102,7 @@ export class GitHub extends Component {
 
     this._downloadLfs = options.downloadLfs;
 
-    if (options.projenCredentials && options.projenTokenSecret) {
-      throw new Error(
-        "projenTokenSecret is deprecated, please use projenCredentials instead"
-      );
-    }
-
-    if (options.projenTokenSecret) {
-      this.projenCredentials = GithubCredentials.fromPersonalAccessToken({
-        secret: options.projenTokenSecret,
-      });
-    } else if (options.projenCredentials) {
+    if (options.projenCredentials) {
       this.projenCredentials = options.projenCredentials;
     } else {
       this.projenCredentials = GithubCredentials.fromPersonalAccessToken({

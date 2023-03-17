@@ -27,24 +27,6 @@ type BranchHook = (branch: string) => void;
  */
 export interface ReleaseProjectOptions {
   /**
-   * Automatically release new versions every commit to one of branches in `releaseBranches`.
-   *
-   * @default true
-   *
-   * @deprecated Use `releaseTrigger: ReleaseTrigger.continuous()` instead
-   */
-  readonly releaseEveryCommit?: boolean;
-
-  /**
-   * CRON schedule to trigger new releases.
-   *
-   * @default - no scheduled releases
-   *
-   * @deprecated Use `releaseTrigger: ReleaseTrigger.scheduled()` instead
-   */
-  readonly releaseSchedule?: string;
-
-  /**
    * The release trigger to use.
    *
    * @default - Continuous releases (`ReleaseTrigger.continuous()`)

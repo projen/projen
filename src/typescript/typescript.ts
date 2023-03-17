@@ -491,17 +491,6 @@ export class TypeScriptAppProject extends TypeScriptProject {
 }
 
 /**
- * @deprecated use `TypeScriptProject`
- */
-export class TypeScriptLibraryProject extends TypeScriptProject {}
-
-/**
- * @deprecated use TypeScriptProjectOptions
- */
-export interface TypeScriptLibraryProjectOptions
-  extends TypeScriptProjectOptions {}
-
-/**
  * @internal
  */
 export function mergeTsconfigOptions(

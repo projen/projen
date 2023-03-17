@@ -57,11 +57,6 @@ export interface PublisherOptions {
   readonly artifactName: string;
 
   /**
-   * @deprecated use `publibVersion` instead
-   */
-  readonly jsiiReleaseVersion?: string;
-
-  /**
    * Node version to setup in GitHub workflows if any node-based CLI utilities
    * are needed. For example `publib`, the CLI projen uses to publish releases,
    * is an npm library.
@@ -128,9 +123,6 @@ export class Publisher extends Component {
   public readonly artifactName: string;
   public readonly publibVersion: string;
   public readonly condition?: string;
-
-  /** @deprecated use `publibVersion` */
-  public readonly jsiiReleaseVersion: string;
 
   private readonly failureIssue: boolean;
   private readonly failureIssueLabel: string;
@@ -279,12 +271,6 @@ export class Publisher extends Component {
       options.codeArtifactOptions?.authProvider ===
         CodeArtifactAuthProvider.GITHUB_OIDC;
     const npmToken = defaultNpmToken(options.npmTokenSecret, options.registry);
-
-    if (options.distTag) {
-      this.project.logger.warn(
-        "The `distTag` option is deprecated. Use the npmDistTag option instead."
-      );
-    }
 
     const prePublishSteps: JobStep[] = options.prePublishSteps ?? [];
 
@@ -761,33 +747,9 @@ export interface CommonPublishOptions {
 }
 
 /**
- * @deprecated Use `NpmPublishOptions` instead.
- */
-export interface JsiiReleaseNpm extends NpmPublishOptions {}
-
-/**
  * Options for npm release
  */
 export interface NpmPublishOptions extends CommonPublishOptions {
-  /**
-   * Tags can be used to provide an alias instead of version numbers.
-   *
-   * For example, a project might choose to have multiple streams of development
-   * and use a different tag for each stream, e.g., stable, beta, dev, canary.
-   *
-   * By default, the `latest` tag is used by npm to identify the current version
-   * of a package, and `npm install <pkg>` (without any `@<version>` or `@<tag>`
-   * specifier) installs the latest tag. Typically, projects only use the
-   * `latest` tag for stable release versions, and use other tags for unstable
-   * versions such as prereleases.
-   *
-   * The `next` tag is used by some projects to identify the upcoming version.
-   *
-   * @default "latest"
-   * @deprecated Use `npmDistTag` for each release branch instead.
-   */
-  readonly distTag?: string;
-
   /**
    * The domain name of the npm package registry.
    *
@@ -877,11 +839,6 @@ export interface CodeArtifactOptions {
 }
 
 /**
- * @deprecated Use `PyPiPublishOptions` instead.
- */
-export interface JsiiReleasePyPi extends PyPiPublishOptions {}
-
-/**
  * Options for PyPI release
  */
 export interface PyPiPublishOptions extends CommonPublishOptions {
@@ -906,11 +863,6 @@ export interface PyPiPublishOptions extends CommonPublishOptions {
 }
 
 /**
- * @deprecated Use `NugetPublishOptions` instead.
- */
-export interface JsiiReleaseNuget extends NugetPublishOptions {}
-
-/**
  * Options for NuGet releases
  */
 export interface NugetPublishOptions extends CommonPublishOptions {
@@ -926,11 +878,6 @@ export interface NugetPublishOptions extends CommonPublishOptions {
    */
   readonly nugetServer?: string;
 }
-
-/**
- * @deprecated Use `MavenPublishOptions` instead.
- */
-export interface JsiiReleaseMaven extends MavenPublishOptions {}
 
 /**
  * Options for Maven releases
@@ -1013,11 +960,6 @@ export interface MavenPublishOptions extends CommonPublishOptions {
    */
   readonly mavenStagingProfileId?: string;
 }
-
-/**
- * @deprecated Use `GoPublishOptions` instead.
- */
-export interface JsiiReleaseGo extends GoPublishOptions {}
 
 /**
  * Options for Go releases.

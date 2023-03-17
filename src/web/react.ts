@@ -481,25 +481,3 @@ class ReactSampleCode extends Component {
     });
   }
 }
-
-/**
- * @deprecated No longer used.
- */
-export interface ReactTypeDefOptions extends FileBaseOptions {}
-
-/**
- * @deprecated No longer used.
- */
-export class ReactTypeDef extends FileBase {
-  constructor(
-    project: ReactTypeScriptProject,
-    filePath: string,
-    options: ReactTypeDefOptions = {}
-  ) {
-    super(project, filePath, options);
-  }
-
-  protected synthesizeContent(_: IResolver): string | undefined {
-    return ['/// <reference types="react-scripts" />'].join("\n");
-  }
-}

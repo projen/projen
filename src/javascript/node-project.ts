@@ -114,14 +114,6 @@ export interface NodeProjectOptions
   readonly codeCovTokenSecret?: string;
 
   /**
-   * DEPRECATED: renamed to `release`.
-   *
-   * @default - true if not a subproject
-   * @deprecated see `release`.
-   */
-  readonly releaseWorkflow?: boolean;
-
-  /**
    * Add release management to this project.
    *
    * @default - true (false for subprojects)
@@ -214,12 +206,6 @@ export interface NodeProjectOptions
    * Configuration options for .npmignore file
    */
   readonly npmIgnoreOptions?: IgnoreFileOptions;
-
-  /**
-   * Additional entries to .npmignore.
-   * @deprecated - use `project.addPackageIgnore`
-   */
-  readonly npmignore?: string[];
 
   /**
    * Include a GitHub pull request template.
@@ -338,20 +324,6 @@ export class NodeProject extends GitHubProject {
   public readonly npmignore?: IgnoreFile;
 
   /**
-   * @deprecated use `package.allowLibraryDependencies`
-   */
-  public get allowLibraryDependencies(): boolean {
-    return this.package.allowLibraryDependencies;
-  }
-
-  /**
-   * @deprecated use `package.entrypoint`
-   */
-  public get entrypoint(): string {
-    return this.package.entrypoint;
-  }
-
-  /**
    * Component that sets up mergify for merging approved pull requests.
    */
   public readonly autoMerge?: AutoMerge;
@@ -360,14 +332,6 @@ export class NodeProject extends GitHubProject {
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
    */
   public readonly buildWorkflow?: BuildWorkflow;
-
-  /**
-   * Package publisher. This will be `undefined` if the project does not have a
-   * release workflow.
-   *
-   * @deprecated use `release.publisher`.
-   */
-  public readonly publisher?: Publisher;
 
   /**
    * Release management.
@@ -389,15 +353,6 @@ export class NodeProject extends GitHubProject {
   }
 
   protected readonly nodeVersion?: string;
-
-  /**
-   * The package manager to use.
-   *
-   * @deprecated use `package.packageManager`
-   */
-  public get packageManager(): NodePackageManager {
-    return this.package.packageManager;
-  }
 
   /**
    * The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
@@ -781,29 +736,10 @@ export class NodeProject extends GitHubProject {
   /**
    * Indicates if a script by the name name is defined.
    * @param name The name of the script
+   * @deprecated @todo
    */
   public hasScript(name: string) {
     return this.package.hasScript(name);
-  }
-
-  /**
-   * DEPRECATED
-   * @deprecated use `project.compileTask.exec()`
-   */
-  public addCompileCommand(...commands: string[]) {
-    for (const c of commands) {
-      this.compileTask.exec(c);
-    }
-  }
-
-  /**
-   * DEPRECATED
-   * @deprecated use `project.testTask.exec()`
-   */
-  public addTestCommand(...commands: string[]) {
-    for (const c of commands) {
-      this.testTask.exec(c);
-    }
   }
 
   /**

@@ -54,16 +54,6 @@ export interface AwsCdkDepsCommonOptions {
   readonly cdkDependenciesAsDeps?: boolean;
 
   /**
-   * Warning: NodeJS only.
-   * Install the @aws-cdk/assert library?
-   *
-   * @default - will be included by default for AWS CDK >= 1.0.0 < 2.0.0
-   * @deprecated The @aws-cdk/assert library is deprecated in favor of
-   * @aws-cdk/assertions (in V1) and included in `aws-cdk-lib` for V2.
-   */
-  readonly cdkAssert?: boolean;
-
-  /**
    * Install the assertions library?
    *
    * Only needed for CDK 1.x. If using CDK 2.x then

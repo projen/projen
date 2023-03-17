@@ -110,35 +110,6 @@ export class AwsCdkConstructLibrary extends ConstructLibrary {
   public get cdkVersion() {
     return this.cdkDeps.cdkVersion;
   }
-
-  /**
-   * @deprecated use `cdkVersion`
-   */
-  public get version() {
-    return this.cdkVersion;
-  }
-
-  /**
-   * Adds dependencies to AWS CDK modules.
-   *
-   * Since this is a library project, dependencies will be added as peer dependencies.
-   *
-   * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
-   * @deprecated Not supported in v2. For v1, use `project.cdkDeps.addV1Dependencies()`
-   */
-  public addCdkDependencies(...deps: string[]) {
-    return this.cdkDeps.addV1Dependencies(...deps);
-  }
-
-  /**
-   * Adds AWS CDK modules as dev dependencies.
-   *
-   * @param deps names of cdk modules (e.g. `@aws-cdk/aws-lambda`).
-   * @deprecated Not supported in v2. For v1, use `project.cdkDeps.addV1DevDependencies()`
-   */
-  public addCdkTestDependencies(...deps: string[]) {
-    return this.cdkDeps.addV1DevDependencies(...deps);
-  }
 }
 
 function determineWorkflowContainerImage(
@@ -167,10 +138,3 @@ function determineWorkflowContainerImage(
 
   return undefined;
 }
-
-/** @deprecated use `AwsCdkConstructLibraryOptions` */
-export interface ConstructLibraryAwsOptions
-  extends AwsCdkConstructLibraryOptions {}
-
-/** @deprecated use `AwsCdkConstructLibrary` */
-export class ConstructLibraryAws extends AwsCdkConstructLibrary {}
