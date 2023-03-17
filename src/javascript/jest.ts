@@ -766,7 +766,7 @@ export class Jest extends Component {
   }
 
   /**
-   * Adds a a setup file to setupFiles configuration array.
+   * Adds a a setup file to Jest's setupFiles configuration, written to package.json.
    * @param string File path to setup file
    */
   public addSetupFile(file: string) {
@@ -774,7 +774,7 @@ export class Jest extends Component {
   }
 
   /**
-   * Adds a a setup file to setupFilesAfterEnv configuration array.
+   * Adds a a setup file to Jest's setupFilesAfterEnv configuration, written to package.json.
    * @param string File path to setup file
    */
   public addSetupFileAfterEnv(file: string) {

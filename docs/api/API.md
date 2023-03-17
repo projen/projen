@@ -8223,7 +8223,7 @@ addReporter(reporter: string &#124; json): void
 
 #### addSetupFile(file)🔹 <a id="projen-javascript-jest-addsetupfile"></a>
 
-
+Adds a a setup file to Jest's setupFiles configuration, written to package.json.
 
 ```ts
 addSetupFile(file: string): void
@@ -8236,7 +8236,7 @@ addSetupFile(file: string): void
 
 #### addSetupFileAfterEnv(file)🔹 <a id="projen-javascript-jest-addsetupfileafterenv"></a>
 
-
+Adds a a setup file to Jest's setupFilesAfterEnv configuration, written to package.json.
 
 ```ts
 addSetupFileAfterEnv(file: string): void
