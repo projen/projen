@@ -5,6 +5,7 @@ exports[`mergify default 1`] = `
 
 queue_rules:
   - name: default
+    update_method: merge
     conditions:
       - \\"#approved-reviews-by>=1\\"
       - -label~=(do-not-merge)
@@ -32,6 +33,7 @@ exports[`mergify with automerge options 1`] = `
 
 queue_rules:
   - name: default
+    update_method: merge
     conditions:
       - \\"#approved-reviews-by>=3\\"
       - -label~=(do-not-merge|missing-tests)

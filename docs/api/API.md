@@ -7126,6 +7126,8 @@ addQueue(queue: MergifyQueue): void
 * **queue** (<code>[github.MergifyQueue](#projen-github-mergifyqueue)</code>)  *No description*
   * **conditions** (<code>Array<string &#124; [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)></code>)  A list of Conditions string that must match against the pull request for the pull request to be added to the queue. 
   * **name** (<code>string</code>)  The name of the queue. 
+  * **mergeMethod** (<code>string</code>)  Merge method to use. __*Default*__: "merge"
+  * **updateMethod** (<code>string</code>)  Method to use to update the pull request with its base branch when the speculative check is done in-place. __*Default*__: `merge` for all merge methods except `fast-forward` where `rebase` is used
 
 
 
@@ -15894,6 +15896,8 @@ Name | Type | Description
 -----|------|-------------
 **conditions**🔹 | <code>Array<string &#124; [github.MergifyConditionalOperator](#projen-github-mergifyconditionaloperator)></code> | A list of Conditions string that must match against the pull request for the pull request to be added to the queue.
 **name**🔹 | <code>string</code> | The name of the queue.
+**mergeMethod**?🔹 | <code>string</code> | Merge method to use.<br/>__*Default*__: "merge"
+**updateMethod**?🔹 | <code>string</code> | Method to use to update the pull request with its base branch when the speculative check is done in-place.<br/>__*Default*__: `merge` for all merge methods except `fast-forward` where `rebase` is used
 
 
 
