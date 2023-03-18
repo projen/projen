@@ -7,9 +7,6 @@ import { Project } from "../src/project";
 const MOCK_PROJENRC =
   "new (require('projen').Project)({ name: 'foo' }).synth()";
 
-const MOCK_TASKS =
-  '{"tasks":{"build":{"name":"build","description":"mock build","steps":[{"exec":"echo test"}]}}}';
-
 test('the "--rc" option can be used to specify projenrc location', () => {
   const dir1 = mkdtemp();
   const dir2 = mkdtemp();
@@ -39,35 +36,66 @@ test('running "projen" for projects with a "default" task will execute it', () =
   expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual("foo\n");
 });
 
-test('running "projen" with task in a subdirectory will execute task', () => {
-  const dir1 = mkdtemp();
-  const dir2 = mkdtemp({ dir: dir1 });
+test('running "projen" with task in root of a project will execute task of the project', () => {
+  const project = new Project({ name: "my-project" });
+  project.testTask?.exec('echo "foo" > bar.txt');
+  project.synth();
 
-  const rcfile = join(dir1, ".projenrc.js");
-  writeFileSync(rcfile, MOCK_PROJENRC);
-
-  const projen = join(dir1, ".projen");
-  fs.mkdirSync(projen);
-
-  const tasks = join(projen, "tasks.json");
-  writeFileSync(tasks, MOCK_TASKS);
-
-  execProjenCLI(dir2, ["build"]);
-  expect(directorySnapshot(dir1)).toMatchSnapshot();
+  execProjenCLI(project.outdir, ["test"]);
+  expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual("foo\n");
 });
 
-test('running "projen" with task in project root will execute task', () => {
-  const dir1 = mkdtemp();
+test('running "projen" with task in subdirectory of a project will execute task of the project', () => {
+  const project = new Project({ name: "my-project" });
+  project.testTask?.exec('echo "foo" > bar.txt');
+  project.synth();
+  const subdirectory = mkdtemp({ dir: project.outdir });
 
-  const rcfile = join(dir1, ".projenrc.js");
-  writeFileSync(rcfile, MOCK_PROJENRC);
+  execProjenCLI(subdirectory, ["test"]);
+  expect(directorySnapshot(project.outdir)["bar.txt"]).toStrictEqual("foo\n");
+});
 
-  const projen = join(dir1, ".projen");
+test('running "projen" with task in root of a subproject will execute task of the subproject', () => {
+  const project = new Project({ name: "my-project" });
+  const subProject = new Project({
+    name: "my-sub-project",
+    parent: project,
+    outdir: "sub-project",
+  });
+  subProject.testTask?.exec('echo "foo" > bar.txt');
+  project.synth();
+
+  execProjenCLI(subProject.outdir, ["test"]);
+  expect(directorySnapshot(subProject.outdir)["bar.txt"]).toStrictEqual(
+    "foo\n"
+  );
+});
+
+test('running "projen" with task in subdirectory of a subproject will execute task of the subproject', () => {
+  const project = new Project({ name: "my-project" });
+  const subProject = new Project({
+    name: "my-sub-project",
+    parent: project,
+    outdir: "sub-project",
+  });
+  subProject.testTask?.exec('echo "foo" > bar.txt');
+  project.synth();
+  const subdirectory = mkdtemp({ dir: subProject.outdir });
+
+  execProjenCLI(subdirectory, ["test"]);
+  expect(directorySnapshot(subProject.outdir)["bar.txt"]).toStrictEqual(
+    "foo\n"
+  );
+});
+
+test('running "projen" with task if there is no tasks.json', () => {
+  const dir = mkdtemp();
+
+  const projen = join(dir, ".projen");
   fs.mkdirSync(projen);
 
-  const tasks = join(projen, "tasks.json");
-  writeFileSync(tasks, MOCK_TASKS);
-
-  execProjenCLI(dir1, ["build"]);
-  expect(directorySnapshot(dir1)).toMatchSnapshot();
+  const t = () => {
+    execProjenCLI(dir, ["build"]);
+  };
+  expect(t).toThrowError("Unknown command: build");
 });
