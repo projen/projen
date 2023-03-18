@@ -63,7 +63,7 @@ export enum TypeScriptModuleResolution {
 }
 
 /**
- * This flag controls how import works, there are 3 different options.
+ * This flag controls how `import` works, there are 3 different options.
  *
  * @see https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues
  */
