@@ -464,7 +464,7 @@ Name|Description
 [javascript.ProseWrap](#projen-javascript-prosewrap)|*No description*
 [javascript.QuoteProps](#projen-javascript-quoteprops)|*No description*
 [javascript.TrailingComma](#projen-javascript-trailingcomma)|*No description*
-[javascript.TypeScriptImportsNotUsedAsValues](#projen-javascript-typescriptimportsnotusedasvalues)|This flag controls how import works, there are 3 different options.
+[javascript.TypeScriptImportsNotUsedAsValues](#projen-javascript-typescriptimportsnotusedasvalues)|This flag controls how `import` works, there are 3 different options.
 [javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)|Determines how modules get resolved.
 [javascript.UpdateSnapshot](#projen-javascript-updatesnapshot)|*No description*
@@ -19832,7 +19832,7 @@ Name | Description
 
 ## enum TypeScriptImportsNotUsedAsValues 🔹 <a id="projen-javascript-typescriptimportsnotusedasvalues"></a>
 
-This flag controls how import works, there are 3 different options.
+This flag controls how `import` works, there are 3 different options.
 
 Name | Description
 -----|-----
