@@ -1,13 +1,7 @@
-import { spawnSync } from "child_process";
-import * as os from "os";
-import * as path from "path";
 import * as fs from "fs-extra";
-import { PROJEN_RC } from "../common";
 import * as logging from "../logging";
 import { Project } from "../project";
 import { TaskRuntime } from "../task-runtime";
-
-const projenModule = path.dirname(require.resolve("../../package.json"));
 
 export interface SynthOptions {
   /**
@@ -21,30 +15,19 @@ export interface SynthOptions {
    * @default false
    */
   readonly watch?: boolean;
-
-  /**
-   * The name of the .projenrc.js file  to use instead of the default.
-   * @default ".projenrc.js"
-   */
-  readonly rcfile?: string;
 }
 
 export async function synth(runtime: TaskRuntime, options: SynthOptions) {
   const workdir = runtime.workdir;
-  const rcfile = path.resolve(workdir, options.rcfile ?? PROJEN_RC); // TODO: support non javascript projenrc (e.g. java projects)
-
-  // if --rc points to .projenrc.js, then behave as if it wasn't specified.
-  if (rcfile === path.resolve(workdir, PROJEN_RC)) {
-    delete (options as any).rcfile;
-  }
 
   // if there are no tasks, we assume this is not a projen project (modern
   // projects must at least have the "default" task).
-  if (runtime.tasks.length === 0 && !fs.existsSync(rcfile)) {
+  if (runtime.tasks.length === 0) {
     logging.error(
       'Unable to find projen project. Use "projen new" to create a new project.'
     );
-    process.exit(1);
+    process.exitCode = 1;
+    return;
   }
 
   // run synth once
@@ -55,7 +38,8 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
     watchLoop();
   } else if (!success) {
     // make sure exit code is non-zero if we are not in watch mode
-    process.exit(1);
+    process.exitCode = 1;
+    return;
   }
 
   async function trySynth() {
@@ -66,24 +50,12 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
         (t) => t.name === Project.DEFAULT_TASK
       );
 
-      // if "--rc" is specified, ignore the default task
-      if (defaultTask) {
-        if (!options.rcfile) {
-          runtime.runTask(defaultTask.name);
-          return true;
-        } else {
-          logging.warn(
-            "Default task skipped. Trying legacy synthesis since --rc is specified"
-          );
-        }
+      if (!defaultTask) {
+        throw new Error('Unable to find a task named "default"');
       }
 
-      // for backwards compatibility, if there is a .projenrc.js file, default to "node .projenrc.js"
-      if (tryLegacySynth()) {
-        return true;
-      }
-
-      throw new Error('Unable to find a task named "default"');
+      runtime.runTask(defaultTask.name);
+      return true;
     } catch (e) {
       logging.error(`Synthesis failed: ${(e as any).message}`);
       return false;
@@ -105,45 +77,5 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
         .then(() => watchLoop())
         .catch(() => watchLoop());
     });
-  }
-
-  function tryLegacySynth() {
-    const rcdir = path.dirname(rcfile);
-
-    if (!fs.existsSync(rcfile)) {
-      return false;
-    }
-
-    // if node_modules/projen is not a directory or does not exist, create a
-    // temporary symlink to the projen that we are currently running in order to
-    // allow .projenrc.js to `require()` it.
-    const nodeModules = path.resolve(rcdir, "node_modules");
-    const projenModulePath = path.resolve(nodeModules, "projen");
-    if (
-      !fs.existsSync(path.join(projenModulePath, "package.json")) ||
-      !fs.statSync(projenModulePath).isDirectory()
-    ) {
-      fs.removeSync(projenModulePath);
-      fs.mkdirpSync(nodeModules);
-      fs.symlinkSync(
-        projenModule,
-        projenModulePath,
-        os.platform() === "win32" ? "junction" : null
-      );
-    }
-
-    const ret = spawnSync(process.execPath, [rcfile], {
-      stdio: ["inherit", "inherit", "pipe"],
-    });
-    if (ret.error) {
-      throw new Error(`Synthesis failed: ${ret.error}`);
-    } else if (ret.status !== 0) {
-      logging.error(ret.stderr.toString());
-      throw new Error(
-        `Synthesis failed: calling "${process.execPath} ${rcfile}" exited with status=${ret.status}`
-      );
-    }
-
-    return true;
   }
 }

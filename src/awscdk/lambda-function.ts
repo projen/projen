@@ -311,6 +311,7 @@ export class LambdaRuntime {
 
   /**
    * Node.js 12.x
+   * @deprecated NodeJS12 has been deprecated
    */
   public static readonly NODEJS_12_X = new LambdaRuntime(
     "nodejs12.x",
@@ -320,6 +321,7 @@ export class LambdaRuntime {
 
   /**
    * Node.js 14.x
+   * @deprecated NodeJS14 has been deprecated
    */
   public static readonly NODEJS_14_X = new LambdaRuntime(
     "nodejs14.x",

@@ -27,24 +27,6 @@ type BranchHook = (branch: string) => void;
  */
 export interface ReleaseProjectOptions {
   /**
-   * Automatically release new versions every commit to one of branches in `releaseBranches`.
-   *
-   * @default true
-   *
-   * @deprecated Use `releaseTrigger: ReleaseTrigger.continuous()` instead
-   */
-  readonly releaseEveryCommit?: boolean;
-
-  /**
-   * CRON schedule to trigger new releases.
-   *
-   * @default - no scheduled releases
-   *
-   * @deprecated Use `releaseTrigger: ReleaseTrigger.scheduled()` instead
-   */
-  readonly releaseSchedule?: string;
-
-  /**
    * The release trigger to use.
    *
    * @default - Continuous releases (`ReleaseTrigger.continuous()`)
@@ -326,23 +308,9 @@ export class Release extends Component {
     /**
      * Use manual releases with no changelog if releaseEveryCommit is explicitly
      * disabled and no other trigger is set.
-     *
-     * TODO: Remove this when releaseEveryCommit and releaseSchedule are removed
      */
-    if (
-      !(
-        (options.releaseEveryCommit ?? true) ||
-        options.releaseSchedule ||
-        options.releaseTrigger
-      )
-    ) {
+    if (!options.releaseTrigger) {
       this.releaseTrigger = ReleaseTrigger.manual({ changelog: false });
-    }
-
-    if (options.releaseSchedule) {
-      this.releaseTrigger = ReleaseTrigger.scheduled({
-        schedule: options.releaseSchedule,
-      });
     }
 
     this.version = new Version(project, {
@@ -356,7 +324,6 @@ export class Release extends Component {
       artifactName: this.artifactsDirectory,
       condition: `needs.${BUILD_JOBID}.outputs.${LATEST_COMMIT_OUTPUT} == github.sha`,
       buildJobId: BUILD_JOBID,
-      jsiiReleaseVersion: options.jsiiReleaseVersion,
       failureIssue: options.releaseFailureIssue,
       failureIssueLabel: options.releaseFailureIssueLabel,
       workflowRunsOn: options.workflowRunsOn,

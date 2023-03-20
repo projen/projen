@@ -3,6 +3,7 @@ import { existsSync, outputFileSync } from "fs-extra";
 import { Eslint } from "./eslint";
 import { renderJavaScriptOptions } from "./render-options";
 import { Component } from "../component";
+import { InventoryProjectType } from "../inventory";
 import { Project } from "../project";
 export interface ProjenrcOptions {
   /**
@@ -61,7 +62,7 @@ export class Projenrc extends Component {
     const { renderedOptions, imports } = renderJavaScriptOptions({
       comments: bootstrap.comments,
       args: bootstrap.args,
-      type: bootstrap.type,
+      type: bootstrap.type as InventoryProjectType,
     });
 
     imports.add(moduleName, importName);

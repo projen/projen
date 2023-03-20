@@ -9,30 +9,43 @@ const PROJECT_BASE_FQN = "projen.Project";
 type JsiiTypes = { [name: string]: JsiiType };
 
 export interface ProjectOption {
-  path: string[];
-  name: string;
-  fqn?: string;
-  switch: string;
-  /** Simple type name, e.g. "string", "boolean", "number", "EslintOptions", "MyEnum". Collections are "unknown" */
-  simpleType: string;
-  /** Full JSII type, e.g. { primitive: "string" } or { collection: { elementtype: { primitive: 'string' }, kind: 'map' } } */
-  fullType: JsiiPropertyType;
-  kind?: "class" | "enum" | "interface";
-  jsonLike?: boolean;
-  parent: string;
-  docs?: string;
-  default?: string;
-  optional?: boolean;
-  deprecated?: boolean;
-  featured?: boolean;
+  readonly name: string;
+  readonly fqn?: string;
+  readonly docs?: string;
+  readonly default?: string;
+  readonly optional?: boolean;
+  readonly deprecated?: boolean;
+  readonly featured?: boolean;
+  readonly type: any;
 }
 
 export interface ProjectType {
+  readonly moduleName: string;
+  readonly pjid: string;
+  readonly fqn: string;
+  readonly typename: string;
+  readonly options: ProjectOption[];
+  readonly docs?: string;
+  readonly docsurl: string;
+}
+
+export interface InventoryProjectOption extends ProjectOption {
+  readonly path: string[];
+  readonly parent: string;
+  readonly switch: string;
+  readonly jsonLike?: boolean;
+  /** Full JSII type, e.g. { primitive: "string" } or { collection: { elementtype: { primitive: 'string' }, kind: 'map' } } */
+  readonly simpleType: string;
+  readonly type: JsiiPropertyType;
+  readonly kind?: "class" | "enum" | "interface";
+}
+
+export interface InventoryProjectType extends ProjectType {
   moduleName: string;
   pjid: string;
   fqn: string;
   typename: string;
-  options: ProjectOption[];
+  options: InventoryProjectOption[];
   docs?: string;
   docsurl: string;
 }
@@ -91,7 +104,7 @@ export interface JsiiPropertyType {
 export function discover(...moduleDirs: string[]) {
   const jsii = discoverJsiiTypes(...moduleDirs);
 
-  const result = new Array<ProjectType>();
+  const result = new Array<InventoryProjectType>();
 
   for (const fqn of Object.keys(jsii)) {
     if (isProjectType(jsii, fqn)) {
@@ -196,7 +209,7 @@ function discoverJsiiTypes(...moduleDirs: string[]) {
   return jsii;
 }
 
-export function resolveProjectType(projectFqn: string): ProjectType {
+export function resolveProjectType(projectFqn: string): InventoryProjectType {
   let [moduleName] = projectFqn.split(".");
   if (moduleName === "projen") {
     moduleName = PROJEN_MODULE_ROOT;
@@ -213,7 +226,7 @@ export function resolveProjectType(projectFqn: string): ProjectType {
   return toProjectType(jsii, projectFqn);
 }
 
-function toProjectType(jsii: JsiiTypes, fqn: string): ProjectType {
+function toProjectType(jsii: JsiiTypes, fqn: string): InventoryProjectType {
   if (!isProjectType(jsii, fqn)) {
     throw new Error(
       `Fully qualified name "${fqn}" is not a valid project type.`
@@ -240,7 +253,7 @@ function toProjectType(jsii: JsiiTypes, fqn: string): ProjectType {
     ),
     docs: typeinfo.docs?.summary,
     docsurl,
-  } as ProjectType;
+  } as InventoryProjectType;
 }
 
 export function readJsiiManifest(jsiiFqn: string): any {
@@ -254,7 +267,7 @@ export function readJsiiManifest(jsiiFqn: string): any {
 }
 
 function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
-  const options: { [name: string]: ProjectOption } = {};
+  const options: { [name: string]: InventoryProjectOption } = {};
   const params = jsii[fqn]?.initializer?.parameters ?? [];
   const optionsParam = params[0];
   const optionsTypeFqn = optionsParam?.type?.fqn;

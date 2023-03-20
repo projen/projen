@@ -218,7 +218,6 @@ export class Project {
 
   private readonly _components = new Array<Component>();
   private readonly subprojects = new Array<Project>();
-  private readonly tips = new Array<string>();
   private readonly excludeFromCleanup: string[];
   private readonly _ejected: boolean;
 
@@ -418,26 +417,6 @@ export class Project {
   }
 
   /**
-   * Finds a json file by name.
-   * @param filePath The file path.
-   * @deprecated use `tryFindObjectFile`
-   */
-  public tryFindJsonFile(filePath: string): JsonFile | undefined {
-    const file = this.tryFindObjectFile(filePath);
-    if (!file) {
-      return undefined;
-    }
-
-    if (!(file instanceof JsonFile)) {
-      throw new Error(
-        `found file ${filePath} but it is not a JsonFile. got: ${file.constructor.name}`
-      );
-    }
-
-    return file;
-  }
-
-  /**
    * Finds an object file (like JsonFile, YamlFile, etc.) by name.
    * @param filePath The file path.
    */
@@ -486,15 +465,6 @@ export class Project {
     }
 
     return undefined;
-  }
-
-  /**
-   * Prints a "tip" message during synthesis.
-   * @param message The message
-   * @deprecated - use `project.logger.info(message)` to show messages during synthesis
-   */
-  public addTip(message: string) {
-    this.tips.push(message);
   }
 
   /**
@@ -699,30 +669,6 @@ export class Project {
 
     return path.resolve(outdirOption ?? ".");
   }
-}
-
-/**
- * Which type of project this is.
- *
- * @deprecated no longer supported at the base project level
- */
-export enum ProjectType {
-  /**
-   * This module may be a either a library or an app.
-   */
-  UNKNOWN = "unknown",
-
-  /**
-   * This is a library, intended to be published to a package manager and
-   * consumed by other projects.
-   */
-  LIB = "lib",
-
-  /**
-   * This is an app (service, tool, website, etc). Its artifacts are intended to
-   * be deployed or published for end-user consumption.
-   */
-  APP = "app",
 }
 
 /**

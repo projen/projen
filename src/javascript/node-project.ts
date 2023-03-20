@@ -36,7 +36,6 @@ import {
 import { License } from "../license";
 import {
   isAwsCodeArtifactRegistry,
-  Publisher,
   Release,
   ReleaseProjectOptions,
   NpmPublishOptions,
@@ -112,14 +111,6 @@ export interface NodeProjectOptions
    * @default - if this option is not specified, only public repositories are supported
    */
   readonly codeCovTokenSecret?: string;
-
-  /**
-   * DEPRECATED: renamed to `release`.
-   *
-   * @default - true if not a subproject
-   * @deprecated see `release`.
-   */
-  readonly releaseWorkflow?: boolean;
 
   /**
    * Add release management to this project.
@@ -214,12 +205,6 @@ export interface NodeProjectOptions
    * Configuration options for .npmignore file
    */
   readonly npmIgnoreOptions?: IgnoreFileOptions;
-
-  /**
-   * Additional entries to .npmignore.
-   * @deprecated - use `project.addPackageIgnore`
-   */
-  readonly npmignore?: string[];
 
   /**
    * Include a GitHub pull request template.
@@ -338,20 +323,6 @@ export class NodeProject extends GitHubProject {
   public readonly npmignore?: IgnoreFile;
 
   /**
-   * @deprecated use `package.allowLibraryDependencies`
-   */
-  public get allowLibraryDependencies(): boolean {
-    return this.package.allowLibraryDependencies;
-  }
-
-  /**
-   * @deprecated use `package.entrypoint`
-   */
-  public get entrypoint(): string {
-    return this.package.entrypoint;
-  }
-
-  /**
    * Component that sets up mergify for merging approved pull requests.
    */
   public readonly autoMerge?: AutoMerge;
@@ -360,14 +331,6 @@ export class NodeProject extends GitHubProject {
    * The PR build GitHub workflow. `undefined` if `buildWorkflow` is disabled.
    */
   public readonly buildWorkflow?: BuildWorkflow;
-
-  /**
-   * Package publisher. This will be `undefined` if the project does not have a
-   * release workflow.
-   *
-   * @deprecated use `release.publisher`.
-   */
-  public readonly publisher?: Publisher;
 
   /**
    * Release management.
@@ -389,15 +352,6 @@ export class NodeProject extends GitHubProject {
   }
 
   protected readonly nodeVersion?: string;
-
-  /**
-   * The package manager to use.
-   *
-   * @deprecated use `package.packageManager`
-   */
-  public get packageManager(): NodePackageManager {
-    return this.package.packageManager;
-  }
 
   /**
    * The command to use to run scripts (e.g. `yarn run` or `npm run` depends on the package manager).
@@ -450,7 +404,7 @@ export class NodeProject extends GitHubProject {
     this.artifactsJavascriptDirectory = join(this.artifactsDirectory, "js");
 
     this.runScriptCommand = (() => {
-      switch (this.packageManager) {
+      switch (this.package.packageManager) {
         case NodePackageManager.NPM:
           return "npm run";
         case NodePackageManager.YARN:
@@ -459,7 +413,9 @@ export class NodeProject extends GitHubProject {
         case NodePackageManager.PNPM:
           return "pnpm run";
         default:
-          throw new Error(`unexpected package manager ${this.packageManager}`);
+          throw new Error(
+            `unexpected package manager ${this.package.packageManager}`
+          );
       }
     })();
 
@@ -487,18 +443,6 @@ export class NodeProject extends GitHubProject {
     if (options.gitignore?.length) {
       for (const i of options.gitignore) {
         this.gitignore.exclude(i);
-      }
-    }
-
-    if (options.npmignore?.length) {
-      if (!this.npmignore) {
-        throw new Error(
-          '.npmignore is not defined for an APP project type. Add "npmIgnore: true" to override this'
-        );
-      }
-
-      for (const i of options.npmignore) {
-        this.npmignore.exclude(i);
       }
     }
 
@@ -560,10 +504,7 @@ export class NodeProject extends GitHubProject {
       );
     }
 
-    const release =
-      options.release ??
-      options.releaseWorkflow ??
-      (this.parent ? false : true);
+    const release = options.release ?? (this.parent ? false : true);
     if (release) {
       this.addDevDeps(Version.STANDARD_VERSION);
 
@@ -586,8 +527,6 @@ export class NodeProject extends GitHubProject {
         workflowNodeVersion: this.nodeVersion,
         workflowPermissions,
       });
-
-      this.publisher = this.release.publisher;
 
       const nodePackageToReleaseCodeArtifactAuthProviderMapping: Record<
         NodePackageCodeArtifactAuthProvider,
@@ -626,18 +565,6 @@ export class NodeProject extends GitHubProject {
       if (options.releaseToNpm) {
         throw new Error(
           '"releaseToNpm" is not supported if "release" is not set'
-        );
-      }
-
-      if (options.releaseEveryCommit) {
-        throw new Error(
-          '"releaseEveryCommit" is not supported if "release" is not set'
-        );
-      }
-
-      if (options.releaseSchedule) {
-        throw new Error(
-          '"releaseSchedule" is not supported if "release" is not set'
         );
       }
     }
@@ -776,34 +703,6 @@ export class NodeProject extends GitHubProject {
    */
   public removeScript(name: string) {
     this.package.removeScript(name);
-  }
-
-  /**
-   * Indicates if a script by the name name is defined.
-   * @param name The name of the script
-   */
-  public hasScript(name: string) {
-    return this.package.hasScript(name);
-  }
-
-  /**
-   * DEPRECATED
-   * @deprecated use `project.compileTask.exec()`
-   */
-  public addCompileCommand(...commands: string[]) {
-    for (const c of commands) {
-      this.compileTask.exec(c);
-    }
-  }
-
-  /**
-   * DEPRECATED
-   * @deprecated use `project.testTask.exec()`
-   */
-  public addTestCommand(...commands: string[]) {
-    for (const c of commands) {
-      this.testTask.exec(c);
-    }
   }
 
   /**

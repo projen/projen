@@ -481,26 +481,12 @@ export interface JestConfigOptions {
 
 export interface JestOptions {
   /**
-   * Collect coverage. Deprecated
-   * @default true
-   * @deprecated use jestConfig.collectCoverage
-   */
-  readonly coverage?: boolean;
-
-  /**
    * Include the `text` coverage reporter, which means that coverage summary is printed
    * at the end of the jest execution.
    *
    * @default true
    */
   readonly coverageText?: boolean;
-
-  /**
-   * Defines `testPathIgnorePatterns` and `coveragePathIgnorePatterns`
-   * @default ["/node_modules/"]
-   * @deprecated use jestConfig.coveragePathIgnorePatterns or jestConfig.testPathIgnorePatterns respectively
-   */
-  readonly ignorePatterns?: string[];
 
   /**
    * Result processing with jest-junit.
@@ -628,13 +614,6 @@ export class Jest extends Component {
   constructor(project: NodeProject, options: JestOptions = {}) {
     super(project);
 
-    // hard deprecation
-    if ((options as any).typescriptConfig) {
-      throw new Error(
-        '"jestOptions.typescriptConfig" is deprecated. Use "typescriptProject.tsconfigDev" instead'
-      );
-    }
-
     // Jest snapshot files are generated files!
     project.root.annotateGenerated("*.snap");
     this.jestVersion = options.jestVersion ? `@${options.jestVersion}` : "";
@@ -643,8 +622,9 @@ export class Jest extends Component {
     this.jestConfig = options.jestConfig;
     this.extraCliOptions = options.extraCliOptions ?? [];
 
-    this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ??
-      options.ignorePatterns ?? ["/node_modules/"];
+    this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ?? [
+      "/node_modules/",
+    ];
     this.watchIgnorePatterns = this.jestConfig?.watchPathIgnorePatterns ?? [
       "/node_modules/",
     ];
@@ -670,8 +650,7 @@ export class Jest extends Component {
     this.config = {
       ...this.jestConfig,
       clearMocks: this.jestConfig?.clearMocks ?? true,
-      collectCoverage:
-        options.coverage ?? this.jestConfig?.collectCoverage ?? true,
+      collectCoverage: this.jestConfig?.collectCoverage ?? true,
       coverageReporters: this.coverageReporters,
       coverageDirectory: coverageDirectory,
       coveragePathIgnorePatterns:

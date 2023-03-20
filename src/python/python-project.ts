@@ -17,7 +17,6 @@ import {
   Projenrc as ProjenrcJs,
   ProjenrcOptions as ProjenrcJsOptions,
 } from "../javascript/projenrc";
-import { ProjectType } from "../project";
 import { anySelected, multipleSelected } from "../util";
 
 /** Allowed characters in python project names */
@@ -228,8 +227,7 @@ export class PythonProject extends GitHubProject {
     const poetry = options.poetry ?? false;
     const pip = options.pip ?? !poetry;
     const venv = options.venv ?? !poetry;
-    const setuptools =
-      options.setuptools ?? (!poetry && this.projectType === ProjectType.LIB);
+    const setuptools = options.setuptools ?? !poetry;
 
     if (poetry && (pip || venv || setuptools)) {
       throw new Error(
@@ -269,16 +267,6 @@ export class PythonProject extends GitHubProject {
       });
     }
 
-    // if (options.conda ?? false) {
-    //   this.depsManager = new Conda(this, options);
-    //   this.envManager = this.depsManager;
-    // }
-
-    // if (options.pipenv ?? false) {
-    //   this.depsManager = new Pipenv(this, options);
-    //   this.envManager = this.depsManager;
-    // }
-
     if (poetry) {
       const poetryProject = new Poetry(this, {
         version: options.version,
@@ -307,12 +295,6 @@ export class PythonProject extends GitHubProject {
     if (!this.depsManager) {
       throw new Error(
         "At least one tool must be chosen for managing dependencies (pip, conda, pipenv, or poetry)."
-      );
-    }
-
-    if (!this.packagingManager && this.projectType === ProjectType.LIB) {
-      throw new Error(
-        "At least one tool must be chosen for managing packaging (setuptools or poetry)."
       );
     }
 

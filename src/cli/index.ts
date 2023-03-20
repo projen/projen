@@ -1,14 +1,11 @@
-import { resolve } from "path";
 import * as yargs from "yargs";
 import newCommand from "./cmds/new";
 import { synth } from "./synth";
 import { discoverTaskCommands } from "./tasks";
-import { PROJEN_RC, PROJEN_VERSION } from "../common";
+import { PROJEN_VERSION } from "../common";
 import * as logging from "../logging";
 import { TaskRuntime } from "../task-runtime";
 import { getNodeMajorVersion } from "../util";
-
-const DEFAULT_RC = resolve(PROJEN_RC);
 
 async function main() {
   const ya = yargs;
@@ -33,12 +30,6 @@ async function main() {
     alias: "w",
   });
   ya.options("debug", { type: "boolean", default: false, desc: "Debug logs" });
-  ya.options("rc", {
-    deprecated: true,
-    desc: "path to .projenrc.js file",
-    default: DEFAULT_RC,
-    type: "string",
-  });
   ya.completion();
   ya.help();
 
@@ -73,7 +64,6 @@ async function main() {
     await synth(runtime, {
       post: args.post as boolean,
       watch: args.watch as boolean,
-      rcfile: args.rc as string,
     });
   }
 }

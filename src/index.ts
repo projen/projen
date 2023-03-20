@@ -21,7 +21,6 @@ export * from "./projenrc-json";
 export * from "./readme";
 export * from "./renovatebot";
 export * from "./sample-file";
-export * from "./semver";
 export * from "./source-code";
 export * from "./task";
 export * from "./tasks";
@@ -33,6 +32,9 @@ export * from "./toml";
 export * from "./version";
 export * from "./yaml";
 export * from "./xmlfile";
+
+// only export a few public types
+export { ProjectType, ProjectOption } from "./inventory";
 
 // export submobules
 export * as web from "./web";

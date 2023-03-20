@@ -62,20 +62,10 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
   readonly publishToGo?: JsiiGoTarget;
 
   /**
-   * @deprecated use `publishToPyPi`
-   */
-  readonly python?: JsiiPythonTarget;
-
-  /**
    * Publish to NuGet
    * @default - no publishing
    */
   readonly publishToNuget?: JsiiDotNetTarget;
-
-  /**
-   * @deprecated use `publishToNuget`
-   */
-  readonly dotnet?: JsiiDotNetTarget;
 
   /**
    * Automatically run API compatibility test against the latest version published to npm after compilation.
@@ -319,7 +309,7 @@ export class JsiiProject extends TypeScriptProject {
       this.addPackagingTarget("java", task, extraJobOptions);
     }
 
-    const pypi = options.publishToPypi ?? options.python;
+    const pypi = options.publishToPypi;
     if (pypi) {
       targets.python = {
         distName: pypi.distName,
@@ -335,7 +325,7 @@ export class JsiiProject extends TypeScriptProject {
       this.addPackagingTarget("python", task, extraJobOptions);
     }
 
-    const nuget = options.publishToNuget ?? options.dotnet;
+    const nuget = options.publishToNuget;
     if (nuget) {
       targets.dotnet = {
         namespace: nuget.dotNetNamespace,
@@ -470,30 +460,20 @@ export class JsiiProject extends TypeScriptProject {
 }
 
 function parseAuthorAddress(options: JsiiProjectOptions) {
-  let authorEmail = options.authorEmail;
-  let authorUrl = options.authorUrl;
-  if (options.authorAddress) {
-    if (options.authorEmail && options.authorEmail !== options.authorAddress) {
-      throw new Error(
-        "authorEmail is deprecated and cannot be used in conjunction with authorAddress"
-      );
-    }
-
-    if (options.authorUrl && options.authorUrl !== options.authorAddress) {
-      throw new Error(
-        "authorUrl is deprecated and cannot be used in conjunction with authorAddress."
-      );
-    }
-
-    if (EMAIL_REGEX.test(options.authorAddress)) {
-      authorEmail = options.authorAddress;
-    } else if (URL_REGEX.test(options.authorAddress)) {
-      authorUrl = options.authorAddress;
-    } else {
-      throw new Error(
-        `authorAddress must be either an email address or a URL: ${options.authorAddress}`
-      );
-    }
+  // @deprecated @todo
+  if (options.authorUrl || options.authorEmail) {
+    throw new Error(
+      `authorUrl and authorEmail cannot be used on this project. Use authorAddress instead.`
+    );
   }
-  return { authorEmail, authorUrl };
+
+  if (EMAIL_REGEX.test(options.authorAddress)) {
+    return { authorEmail: options.authorAddress };
+  }
+  if (URL_REGEX.test(options.authorAddress)) {
+    return { authorUrl: options.authorAddress };
+  }
+  throw new Error(
+    `authorAddress must be either an email address or a URL: ${options.authorAddress}`
+  );
 }

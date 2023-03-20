@@ -1,6 +1,7 @@
 import { resolve } from "path";
 import { existsSync, outputFileSync } from "fs-extra";
 import { Component } from "../component";
+import { InventoryProjectType } from "../inventory";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import { TypeScriptProject } from "../typescript";
 
@@ -87,7 +88,7 @@ export class Projenrc extends Component {
 
     const { renderedOptions, imports } = renderJavaScriptOptions({
       args: bootstrap.args,
-      type: bootstrap.type,
+      type: bootstrap.type as InventoryProjectType,
       comments: bootstrap.comments,
     });
 
