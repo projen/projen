@@ -63,6 +63,29 @@ export enum TypeScriptModuleResolution {
 }
 
 /**
+ * This flag controls how `import` works, there are 3 different options.
+ *
+ * @see https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues
+ */
+export enum TypeScriptImportsNotUsedAsValues {
+  /**
+   * The default behavior of dropping `import` statements which only reference types.
+   */
+  REMOVE = "remove",
+
+  /**
+   * Preserves all `import` statements whose values or types are never used. This can cause imports/side-effects to be preserved.
+   */
+  PRESERVE = "preserve",
+
+  /**
+   * This preserves all imports (the same as the preserve option), but will error when a value import is only used as a type.
+   * This might be useful if you want to ensure no values are being accidentally imported, but still make side-effect imports explicit.
+   */
+  ERROR = "error",
+}
+
+/**
  * Determines how JSX should get transformed into valid JavaScript.
  *
  * @see https://www.typescriptlang.org/docs/handbook/jsx.html
@@ -157,6 +180,14 @@ export interface TypeScriptCompilerOptions {
    * @default false
    */
   readonly forceConsistentCasingInFileNames?: boolean;
+
+  /**
+   * This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues
+   * @default "remove"
+   */
+  readonly importsNotUsedAsValues?: TypeScriptImportsNotUsedAsValues;
 
   /**
    * When set, instead of writing out a .js.map file to provide source maps,

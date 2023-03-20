@@ -467,6 +467,7 @@ Name|Description
 [javascript.ProseWrap](#projen-javascript-prosewrap)|*No description*
 [javascript.QuoteProps](#projen-javascript-quoteprops)|*No description*
 [javascript.TrailingComma](#projen-javascript-trailingcomma)|*No description*
+[javascript.TypeScriptImportsNotUsedAsValues](#projen-javascript-typescriptimportsnotusedasvalues)|This flag controls how `import` works, there are 3 different options.
 [javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)|Determines how modules get resolved.
 [javascript.UpdateSnapshot](#projen-javascript-updatesnapshot)|*No description*
@@ -17543,6 +17544,7 @@ Name | Type | Description
 **esModuleInterop**?🔹 | <code>boolean</code> | Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.<br/>__*Default*__: false
 **experimentalDecorators**?🔹 | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.<br/>__*Default*__: true
 **forceConsistentCasingInFileNames**?🔹 | <code>boolean</code> | Disallow inconsistently-cased references to the same file.<br/>__*Default*__: false
+**importsNotUsedAsValues**?🔹 | <code>[javascript.TypeScriptImportsNotUsedAsValues](#projen-javascript-typescriptimportsnotusedasvalues)</code> | This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.<br/>__*Default*__: "remove"
 **inlineSourceMap**?🔹 | <code>boolean</code> | When set, instead of writing out a .js.map file to provide source maps, TypeScript will embed the source map content in the .js files.<br/>__*Default*__: true
 **inlineSources**?🔹 | <code>boolean</code> | When set, TypeScript will include the original content of the .ts file as an embedded string in the source map. This is often useful in the same cases as inlineSourceMap.<br/>__*Default*__: true
 **isolatedModules**?🔹 | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or @babel/plugin-transform-typescript) would be safe.<br/>__*Default*__: false
@@ -19942,6 +19944,17 @@ Name | Description
 **ALL** 🔹|Trailing commas wherever possible (including function arguments).
 **ES5** 🔹|Trailing commas where valid in ES5 (objects, arrays, etc.).
 **NONE** 🔹|No trailing commas.
+
+
+## enum TypeScriptImportsNotUsedAsValues 🔹 <a id="projen-javascript-typescriptimportsnotusedasvalues"></a>
+
+This flag controls how `import` works, there are 3 different options.
+
+Name | Description
+-----|-----
+**REMOVE** 🔹|The default behavior of dropping `import` statements which only reference types.
+**PRESERVE** 🔹|Preserves all `import` statements whose values or types are never used.
+**ERROR** 🔹|This preserves all imports (the same as the preserve option), but will error when a value import is only used as a type.
 
 
 ## enum TypeScriptJsxMode 🔹 <a id="projen-javascript-typescriptjsxmode"></a>
