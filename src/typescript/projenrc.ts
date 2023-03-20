@@ -25,22 +25,15 @@ export interface ProjenrcOptions {
  */
 export class Projenrc extends Component {
   private readonly rcfile: string;
+  private readonly _projenCodeDir: string;
+  private readonly _tsProject: TypeScriptProject;
 
   constructor(project: TypeScriptProject, options: ProjenrcOptions = {}) {
     super(project);
+    this._tsProject = project;
 
     this.rcfile = options.filename ?? ".projenrc.ts";
-
-    const projensrc = options.projenCodeDir ?? "projenrc";
-
-    // tell eslint to take .projenrc.ts and *.ts files under `projen` into account as a dev-dependency
-    project.tsconfigDev.addInclude(this.rcfile);
-    project.eslint?.allowDevDeps(this.rcfile);
-    project.eslint?.addIgnorePattern(`!${this.rcfile}`);
-
-    project.tsconfigDev.addInclude(`${projensrc}/**/*.ts`);
-    project.eslint?.allowDevDeps(`${projensrc}/**/*.ts`);
-    project.eslint?.addIgnorePattern(`!${projensrc}/**/*.ts`);
+    this._projenCodeDir = options.projenCodeDir ?? "projenrc";
 
     // this is the task projen executes when running `projen` without a
     // specific task (if this task is not defined, projen falls back to
@@ -54,6 +47,26 @@ export class Projenrc extends Component {
     );
 
     this.generateProjenrc();
+  }
+
+  public preSynthesize(): void {
+    this._tsProject.tsconfigDev.addInclude(this.rcfile);
+    this._tsProject.tsconfigDev.addInclude(`${this._projenCodeDir}/**/*.ts`);
+
+    this._tsProject.eslint?.addLintPattern(this._projenCodeDir);
+    this._tsProject.eslint?.addLintPattern(this.rcfile);
+    this._tsProject.eslint?.allowDevDeps(this.rcfile);
+    this._tsProject.eslint?.allowDevDeps(`${this._projenCodeDir}/**/*.ts`);
+    this._tsProject.eslint?.addIgnorePattern(`!${this.rcfile}`);
+    this._tsProject.eslint?.addIgnorePattern(`!${this._projenCodeDir}/**/*.ts`);
+
+    this._tsProject.eslint?.addOverride({
+      files: [this.rcfile],
+      rules: {
+        "@typescript-eslint/no-require-imports": "off",
+        "import/no-extraneous-dependencies": "off",
+      },
+    });
   }
 
   private generateProjenrc() {

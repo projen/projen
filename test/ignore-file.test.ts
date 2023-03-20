@@ -95,7 +95,7 @@ test("removePatters() can be used to remove previously added patters", () => {
   ).toStrictEqual(["my_file", "*.zz", "boom/bam"]);
 });
 
-test("comments are filtered out", () => {
+test("comments are filtered out by default", () => {
   // GIVEN
   const prj = new TestProject();
   const ignore = new IgnoreFile(prj, ".myignorefile");
@@ -110,6 +110,44 @@ test("comments are filtered out", () => {
   expect(
     splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
   ).toStrictEqual(["*.js", "!foo", "bar"]);
+});
+
+test("comments are included when option specified", () => {
+  // GIVEN
+  const prj = new TestProject();
+  const ignore = new IgnoreFile(prj, ".myignorefile", {
+    filterCommentLines: false,
+  });
+
+  // WHEN
+  ignore.addPatterns("*.js", "#comment");
+  ignore.addPatterns("!foo");
+  ignore.addPatterns("# hello world");
+  ignore.addPatterns("bar");
+
+  // THEN
+  expect(
+    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+  ).toStrictEqual(["*.js", "#comment", "!foo", "# hello world", "bar"]);
+});
+
+test("empty lines are included when option specified", () => {
+  // GIVEN
+  const prj = new TestProject();
+  const ignore = new IgnoreFile(prj, ".myignorefile", {
+    filterEmptyLines: false,
+  });
+
+  // WHEN
+  ignore.addPatterns("*.js");
+  ignore.addPatterns("");
+  ignore.addPatterns("# some title");
+  ignore.addPatterns("bar");
+
+  // THEN
+  expect(
+    splitAndIgnoreMarker(synthSnapshot(prj)[".myignorefile"])
+  ).toStrictEqual(["*.js", "", "bar"]);
 });
 
 test("included directories are removed when a parent directory is excluded", () => {

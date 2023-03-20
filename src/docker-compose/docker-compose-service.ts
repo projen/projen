@@ -41,6 +41,11 @@ export class DockerComposeService implements IDockerComposeServiceName {
   public readonly command?: string[];
 
   /**
+   * Entrypoint to run in the container.
+   */
+  public readonly entrypoint?: string[];
+
+  /**
    * Other services that this service depends on.
    */
   public readonly dependsOn: IDockerComposeServiceName[];
@@ -93,6 +98,7 @@ export class DockerComposeService implements IDockerComposeServiceName {
     this.ports = serviceDescription.ports ?? [];
     this.environment = serviceDescription.environment ?? {};
     this.labels = serviceDescription.labels ?? {};
+    this.entrypoint = serviceDescription.entrypoint;
   }
 
   /**
@@ -177,6 +183,11 @@ export interface DockerComposeServiceDescription {
    * @default - use the container's default command
    */
   readonly command?: string[];
+
+  /**
+   * Entrypoint to run in the container.
+   */
+  readonly entrypoint?: string[];
 
   /**
    * Names of other services this service depends on.

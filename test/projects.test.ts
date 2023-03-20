@@ -68,7 +68,7 @@ describe("createProject", () => {
     withProjectDir(
       (projectdir) => {
         // GIVEN
-        installPackage(projectdir, "@pepperize/projen-awscdk-app-ts@0.0.333");
+        installPackage(projectdir, "cdklabs-projen-project-types@0.1.48");
 
         // WHEN
         Projects.createProject({
@@ -76,7 +76,7 @@ describe("createProject", () => {
           dir: projectdir,
           post: false,
           synth: false,
-          projectFqn: "@pepperize/projen-awscdk-app-ts.AwsCdkTypeScriptApp",
+          projectFqn: "cdklabs-projen-project-types.CdklabsTypeScriptProject",
           projectOptions: {
             name: "test-project",
             defaultReleaseBranch: "main",

@@ -171,6 +171,7 @@ Name|Description
 [GitpodPort](#projen-gitpodport)|Options for an exposed port on Gitpod.
 [GitpodPrebuilds](#projen-gitpodprebuilds)|Configure the Gitpod App for prebuilds.
 [GitpodTask](#projen-gitpodtask)|Configure options for a task to be run when opening a Gitpod workspace (e.g. running tests, or starting a dev server).
+[IgnoreFileOptions](#projen-ignorefileoptions)|*No description*
 [IniFileOptions](#projen-inifileoptions)|Options for `IniFile`.
 [InitProject](#projen-initproject)|Information passed from `projen new` to the project object when the project is first created.
 [JsonFileOptions](#projen-jsonfileoptions)|Options for `JsonFile`.
@@ -463,6 +464,7 @@ Name|Description
 [javascript.ProseWrap](#projen-javascript-prosewrap)|*No description*
 [javascript.QuoteProps](#projen-javascript-quoteprops)|*No description*
 [javascript.TrailingComma](#projen-javascript-trailingcomma)|*No description*
+[javascript.TypeScriptImportsNotUsedAsValues](#projen-javascript-typescriptimportsnotusedasvalues)|This flag controls how `import` works, there are 3 different options.
 [javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)|Determines how JSX should get transformed into valid JavaScript.
 [javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)|Determines how modules get resolved.
 [javascript.UpdateSnapshot](#projen-javascript-updatesnapshot)|*No description*
@@ -737,6 +739,7 @@ addService(serviceName: string, description: DockerComposeServiceDescription): D
 * **description** (<code>[DockerComposeServiceDescription](#projen-dockercomposeservicedescription)</code>)  a service description.
   * **command** (<code>Array<string></code>)  Provide a command to the docker container. __*Default*__: use the container's default command
   * **dependsOn** (<code>Array<[IDockerComposeServiceName](#projen-idockercomposeservicename)></code>)  Names of other services this service depends on. __*Default*__: no dependencies
+  * **entrypoint** (<code>Array<string></code>)  Entrypoint to run in the container. __*Optional*__
   * **environment** (<code>Map<string, string></code>)  Add environment variables. __*Default*__: no environment variables are provided
   * **image** (<code>string</code>)  Use a docker image. __*Optional*__
   * **imageBuild** (<code>[DockerComposeBuild](#projen-dockercomposebuild)</code>)  Build a docker image. __*Optional*__
@@ -863,6 +866,7 @@ new DockerComposeService(serviceName: string, serviceDescription: DockerComposeS
 * **serviceDescription** (<code>[DockerComposeServiceDescription](#projen-dockercomposeservicedescription)</code>)  *No description*
   * **command** (<code>Array<string></code>)  Provide a command to the docker container. __*Default*__: use the container's default command
   * **dependsOn** (<code>Array<[IDockerComposeServiceName](#projen-idockercomposeservicename)></code>)  Names of other services this service depends on. __*Default*__: no dependencies
+  * **entrypoint** (<code>Array<string></code>)  Entrypoint to run in the container. __*Optional*__
   * **environment** (<code>Map<string, string></code>)  Add environment variables. __*Default*__: no environment variables are provided
   * **image** (<code>string</code>)  Use a docker image. __*Optional*__
   * **imageBuild** (<code>[DockerComposeBuild](#projen-dockercomposebuild)</code>)  Build a docker image. __*Optional*__
@@ -886,6 +890,7 @@ Name | Type | Description
 **serviceName**🔹 | <code>string</code> | Name of the service.
 **volumes**🔹 | <code>Array<[IDockerComposeVolumeBinding](#projen-idockercomposevolumebinding)></code> | Volumes mounted in the container.
 **command**?🔹 | <code>Array<string></code> | Command to run in the container.<br/>__*Optional*__
+**entrypoint**?🔹 | <code>Array<string></code> | Entrypoint to run in the container.<br/>__*Optional*__
 **image**?🔹 | <code>string</code> | Docker image.<br/>__*Optional*__
 **imageBuild**?🔹 | <code>[DockerComposeBuild](#projen-dockercomposebuild)</code> | Docker image build instructions.<br/>__*Optional*__
 
@@ -1269,12 +1274,24 @@ __Extends__: [FileBase](#projen-filebase)
 
 
 ```ts
-new IgnoreFile(project: Project, filePath: string)
+new IgnoreFile(project: Project, filePath: string, options?: IgnoreFileOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
-* **filePath** (<code>string</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  The project to tie this file to.
+* **filePath** (<code>string</code>)  - the relative path in the project to put the file.
+* **options** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  *No description*
+  * **filterCommentLines** (<code>boolean</code>)  Filter out comment lines? __*Default*__: true
+  * **filterEmptyLines** (<code>boolean</code>)  Filter out blank/empty lines? __*Default*__: true
 
+
+
+### Properties
+
+
+Name | Type | Description 
+-----|------|-------------
+**filterCommentLines**🔹 | <code>boolean</code> | <span></span>
+**filterEmptyLines**🔹 | <code>boolean</code> | <span></span>
 
 ### Methods
 
@@ -1287,7 +1304,8 @@ Files that match this pattern will be ignored. If the
 pattern starts with a negation mark `!`, files that match will _not_ be
 ignored.
 
-Comment lines (start with `#`) are ignored.
+Comment lines (start with `#`) and blank lines ("") are filtered by default
+but can be included using options specified when instantiating the component.
 
 ```ts
 addPatterns(...patterns: string[]): void
@@ -2049,6 +2067,7 @@ new Project(options: ProjectOptions)
 * **options** (<code>[ProjectOptions](#projen-projectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -3459,6 +3478,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
 * **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -3560,6 +3580,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -3931,6 +3952,7 @@ new awscdk.AwsCdkJavaApp(options: AwsCdkJavaAppOptions)
 * **options** (<code>[awscdk.AwsCdkJavaAppOptions](#projen-awscdk-awscdkjavaappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -4043,6 +4065,7 @@ new awscdk.AwsCdkPythonApp(options: AwsCdkPythonAppOptions)
 * **options** (<code>[awscdk.AwsCdkPythonAppOptions](#projen-awscdk-awscdkpythonappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -4148,6 +4171,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
 * **options** (<code>[awscdk.AwsCdkTypeScriptAppOptions](#projen-awscdk-awscdktypescriptappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -4249,6 +4273,7 @@ new awscdk.AwsCdkTypeScriptApp(options: AwsCdkTypeScriptAppOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -4459,6 +4484,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
 * **options** (<code>[awscdk.AwsCdkConstructLibraryOptions](#projen-awscdk-awscdkconstructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -4560,6 +4586,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -5086,6 +5113,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
 * **options** (<code>[cdk.ConstructLibraryOptions](#projen-cdk-constructlibraryoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -5187,6 +5215,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -5345,6 +5374,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
 * **options** (<code>[cdk.JsiiProjectOptions](#projen-cdk-jsiiprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -5446,6 +5476,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -5661,6 +5692,7 @@ new cdk8s.Cdk8sPythonApp(options: Cdk8sPythonOptions)
 * **options** (<code>[cdk8s.Cdk8sPythonOptions](#projen-cdk8s-cdk8spythonoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -5758,6 +5790,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
 * **options** (<code>[cdk8s.Cdk8sTypeScriptAppOptions](#projen-cdk8s-cdk8stypescriptappoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -5859,6 +5892,7 @@ new cdk8s.Cdk8sTypeScriptApp(options: Cdk8sTypeScriptAppOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -5941,6 +5975,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
 * **options** (<code>[cdk8s.ConstructLibraryCdk8sOptions](#projen-cdk8s-constructlibrarycdk8soptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -6042,6 +6077,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -6183,6 +6219,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
 * **options** (<code>[cdktf.ConstructLibraryCdktfOptions](#projen-cdktf-constructlibrarycdktfoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -6284,6 +6321,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -6759,6 +6797,7 @@ new github.GitHubProject(options: GitHubProjectOptions)
 * **options** (<code>[github.GitHubProjectOptions](#projen-github-githubprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -7495,6 +7534,7 @@ new java.JavaProject(options: JavaProjectOptions)
 * **options** (<code>[java.JavaProjectOptions](#projen-java-javaprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -7970,10 +8010,10 @@ new javascript.Eslint(project: NodeProject, options: EslintOptions)
 
 * **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
 * **options** (<code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code>)  *No description*
-  * **dirs** (<code>Array<string></code>)  Directories with source files to lint (e.g. [ "src" ]). 
+  * **dirs** (<code>Array<string></code>)  Files or glob patterns or directories with source files to lint (e.g. [ "src" ]). 
   * **aliasExtensions** (<code>Array<string></code>)  Enable import alias for module paths. __*Default*__: undefined
   * **aliasMap** (<code>Map<string, string></code>)  Enable import alias for module paths. __*Default*__: undefined
-  * **devdirs** (<code>Array<string></code>)  Directories with source files that include tests and build tools. __*Default*__: []
+  * **devdirs** (<code>Array<string></code>)  Files or glob patterns or directories with source files that include tests and build tools. __*Default*__: []
   * **fileExtensions** (<code>Array<string></code>)  File types that should be linted (e.g. [ ".js", ".ts" ]). __*Default*__: [".ts"]
   * **ignorePatterns** (<code>Array<string></code>)  List of file patterns that should not be linted, using the same syntax as .gitignore patterns. __*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
   * **lintProjenRc** (<code>boolean</code>)  Should we lint .projenrc.js. __*Default*__: true
@@ -8018,6 +8058,19 @@ Do not lint these files.
 
 ```ts
 addIgnorePattern(pattern: string): void
+```
+
+* **pattern** (<code>string</code>)  *No description*
+
+
+
+
+#### addLintPattern(pattern)🔹 <a id="projen-javascript-eslint-addlintpattern"></a>
+
+Add a file, glob pattern or directory with source files to lint (e.g. [ "src" ]).
+
+```ts
+addLintPattern(pattern: string): void
 ```
 
 * **pattern** (<code>string</code>)  *No description*
@@ -8165,6 +8218,32 @@ addReporter(reporter: string &#124; json): void
 ```
 
 * **reporter** (<code>string &#124; json</code>)  *No description*
+
+
+
+
+#### addSetupFile(file)🔹 <a id="projen-javascript-jest-addsetupfile"></a>
+
+Adds a a setup file to Jest's setupFiles configuration.
+
+```ts
+addSetupFile(file: string): void
+```
+
+* **file** (<code>string</code>)  File path to setup file.
+
+
+
+
+#### addSetupFileAfterEnv(file)🔹 <a id="projen-javascript-jest-addsetupfileafterenv"></a>
+
+Adds a a setup file to Jest's setupFilesAfterEnv configuration.
+
+```ts
+addSetupFileAfterEnv(file: string): void
+```
+
+* **file** (<code>string</code>)  File path to setup file.
 
 
 
@@ -8551,6 +8630,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
 * **options** (<code>[javascript.NodeProjectOptions](#projen-javascript-nodeprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -8652,6 +8732,7 @@ new javascript.NodeProject(options: NodeProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -8988,6 +9069,7 @@ new javascript.Prettier(project: NodeProject, options: PrettierOptions)
 * **project** (<code>[javascript.NodeProject](#projen-javascript-nodeproject)</code>)  *No description*
 * **options** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  *No description*
   * **ignoreFile** (<code>boolean</code>)  Defines an .prettierIgnore file. __*Default*__: true
+  * **ignoreFileOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .prettierignore file. __*Optional*__
   * **overrides** (<code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code>)  Provide a list of patterns to override prettier configuration. __*Default*__: []
   * **settings** (<code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code>)  Prettier settings. __*Default*__: default settings
   * **yaml** (<code>boolean</code>)  Write prettier configuration as YAML instead of JSON. __*Default*__: false
@@ -9082,6 +9164,21 @@ new javascript.Projenrc(project: Project, options?: ProjenrcOptions)
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[javascript.ProjenrcOptions](#projen-javascript-projenrcoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.js"
+
+
+### Methods
+
+
+#### preSynthesize()🔹 <a id="projen-javascript-projenrc-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
+
+
 
 
 
@@ -9589,6 +9686,7 @@ new python.PythonProject(options: PythonProjectOptions)
 * **options** (<code>[python.PythonProjectOptions](#projen-python-pythonprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -10361,6 +10459,21 @@ new typescript.Projenrc(project: TypeScriptProject, options?: ProjenrcOptions)
   * **projenCodeDir** (<code>string</code>)  A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. __*Default*__: "projenrc"
 
 
+### Methods
+
+
+#### preSynthesize()🔹 <a id="projen-typescript-projenrc-presynthesize"></a>
+
+Called before synthesis.
+
+```ts
+preSynthesize(): void
+```
+
+
+
+
+
 
 
 ## class TypeScriptAppProject 🔹 <a id="projen-typescript-typescriptappproject"></a>
@@ -10383,6 +10496,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -10484,6 +10598,7 @@ new typescript.TypeScriptAppProject(options: TypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -10539,6 +10654,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -10640,6 +10756,7 @@ new typescript.TypeScriptLibraryProject(options: TypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -10695,6 +10812,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
 * **options** (<code>[typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -10796,6 +10914,7 @@ new typescript.TypeScriptProject(options: TypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -11212,6 +11331,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -11313,6 +11433,7 @@ new web.NextJsProject(options: NextJsProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -11366,6 +11487,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **tailwind** (<code>boolean</code>)  Setup Tailwind CSS as a PostCSS plugin. __*Default*__: true
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -11467,6 +11589,7 @@ new web.NextJsTypeScriptProject(options: NextJsTypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -11592,6 +11715,7 @@ new web.ReactProject(options: ReactProjectOptions)
 * **options** (<code>[web.ReactProjectOptions](#projen-web-reactprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -11693,6 +11817,7 @@ new web.ReactProject(options: ReactProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -11788,6 +11913,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
 * **options** (<code>[web.ReactTypeScriptProjectOptions](#projen-web-reacttypescriptprojectoptions)</code>)  *No description*
   * **name** (<code>string</code>)  This is the name of your project. 
   * **commitGenerated** (<code>boolean</code>)  Whether to commit the managed files by default. __*Default*__: true
+  * **gitIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .gitignore file. __*Optional*__
   * **gitOptions** (<code>[GitOptions](#projen-gitoptions)</code>)  Configuration options for git. __*Optional*__
   * **logging** (<code>[LoggerOptions](#projen-loggeroptions)</code>)  Configure logging options such as verbosity. __*Default*__: {}
   * **outdir** (<code>string</code>)  The root directory of the project. __*Default*__: "."
@@ -11889,6 +12015,7 @@ new web.ReactTypeScriptProject(options: ReactTypeScriptProjectOptions)
   * **mutableBuild** (<code>boolean</code>)  Automatically update files modified during builds to pull-request branches. __*Default*__: true
   * **npmignore** (<code>Array<string></code>)  Additional entries to .npmignore. __*Optional*__
   * **npmignoreEnabled** (<code>boolean</code>)  Defines an .npmignore file. Normally this is only needed for libraries that are packaged as tarballs. __*Default*__: true
+  * **npmIgnoreOptions** (<code>[IgnoreFileOptions](#projen-ignorefileoptions)</code>)  Configuration options for .npmignore file. __*Optional*__
   * **package** (<code>boolean</code>)  Defines a `package` task that will produce an npm tarball under the artifacts directory (e.g. `dist`). __*Default*__: true
   * **prettier** (<code>boolean</code>)  Setup prettier. __*Default*__: false
   * **prettierOptions** (<code>[javascript.PrettierOptions](#projen-javascript-prettieroptions)</code>)  Prettier options. __*Default*__: default options
@@ -12150,6 +12277,7 @@ Name | Type | Description
 -----|------|-------------
 **command**?🔹 | <code>Array<string></code> | Provide a command to the docker container.<br/>__*Default*__: use the container's default command
 **dependsOn**?🔹 | <code>Array<[IDockerComposeServiceName](#projen-idockercomposeservicename)></code> | Names of other services this service depends on.<br/>__*Default*__: no dependencies
+**entrypoint**?🔹 | <code>Array<string></code> | Entrypoint to run in the container.<br/>__*Optional*__
 **environment**?🔹 | <code>Map<string, string></code> | Add environment variables.<br/>__*Default*__: no environment variables are provided
 **image**?🔹 | <code>string</code> | Use a docker image.<br/>__*Optional*__
 **imageBuild**?🔹 | <code>[DockerComposeBuild](#projen-dockercomposebuild)</code> | Build a docker image.<br/>__*Optional*__
@@ -12549,6 +12677,20 @@ __Returns__:
 
 
 
+## struct IgnoreFileOptions 🔹 <a id="projen-ignorefileoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**filterCommentLines**?🔹 | <code>boolean</code> | Filter out comment lines?<br/>__*Default*__: true
+**filterEmptyLines**?🔹 | <code>boolean</code> | Filter out blank/empty lines?<br/>__*Default*__: true
+
+
+
 ## struct IniFileOptions 🔹 <a id="projen-inifileoptions"></a>
 
 
@@ -12685,6 +12827,7 @@ Name | Type | Description
 -----|------|-------------
 **name**🔹 | <code>string</code> | This is the name of your project.
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **logging**?🔹 | <code>[LoggerOptions](#projen-loggeroptions)</code> | Configure logging options such as verbosity.<br/>__*Default*__: {}
 **outdir**?🔹 | <code>string</code> | The root directory of the project.<br/>__*Default*__: "."
@@ -13134,6 +13277,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -13161,6 +13305,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -13316,6 +13461,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **distdir**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
 **featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -13408,6 +13554,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
 **featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -13518,6 +13665,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **featureFlags**?🔹 | <code>boolean</code> | Include all feature flags in cdk.json.<br/>__*Default*__: true
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -13545,6 +13693,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -13729,6 +13878,7 @@ Name | Type | Description
 **eslint**?⚠️ | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?⚠️ | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?⚠️ | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitIgnoreOptions**?⚠️ | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?⚠️ | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?⚠️ | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?⚠️ | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -13756,6 +13906,7 @@ Name | Type | Description
 **mutableBuild**?⚠️ | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?⚠️ | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?⚠️ | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?⚠️ | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?⚠️ | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?⚠️ | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -14158,6 +14309,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -14181,6 +14333,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -14428,6 +14581,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -14451,6 +14605,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -14661,6 +14816,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -14766,6 +14922,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -14792,6 +14949,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -14930,6 +15088,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -14954,6 +15113,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -15124,6 +15284,7 @@ Name | Type | Description
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
 **excludeTypescript**?🔹 | <code>Array<string></code> | Accepts a list of glob patterns.<br/>__*Optional*__
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -15147,6 +15308,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -15616,6 +15778,7 @@ Name | Type | Description
 **clobber**?🔹 | <code>boolean</code> | Add a `clobber` task which resets the repo to origin.<br/>__*Default*__: true, but false for subprojects
 **commitGenerated**?🔹 | <code>boolean</code> | Whether to commit the managed files by default.<br/>__*Default*__: true
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -16447,6 +16610,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **distdir**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -16502,6 +16666,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | Description of a project is always good.<br/>__*Default*__: undefined
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **distdir**?🔹 | <code>string</code> | Final artifact output directory.<br/>__*Default*__: "dist/java"
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -16783,14 +16948,14 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
-**dirs**🔹 | <code>Array<string></code> | Directories with source files to lint (e.g. [ "src" ]).
+**dirs**🔹 | <code>Array<string></code> | Files or glob patterns or directories with source files to lint (e.g. [ "src" ]).
 **aliasExtensions**?🔹 | <code>Array<string></code> | Enable import alias for module paths.<br/>__*Default*__: undefined
 **aliasMap**?🔹 | <code>Map<string, string></code> | Enable import alias for module paths.<br/>__*Default*__: undefined
-**devdirs**?🔹 | <code>Array<string></code> | Directories with source files that include tests and build tools.<br/>__*Default*__: []
+**devdirs**?🔹 | <code>Array<string></code> | Files or glob patterns or directories with source files that include tests and build tools.<br/>__*Default*__: []
 **fileExtensions**?🔹 | <code>Array<string></code> | File types that should be linted (e.g. [ ".js", ".ts" ]).<br/>__*Default*__: [".ts"]
 **ignorePatterns**?🔹 | <code>Array<string></code> | List of file patterns that should not be linted, using the same syntax as .gitignore patterns.<br/>__*Default*__: [ '*.js', '*.d.ts', 'node_modules/', '*.generated.ts', 'coverage' ]
 **lintProjenRc**?⚠️ | <code>boolean</code> | Should we lint .projenrc.js.<br/>__*Default*__: true
-**lintProjenRcFile**?🔹 | <code>string</code> | Projenrc file to lint.<br/>__*Default*__: PROJEN_RC
+**lintProjenRcFile**?⚠️ | <code>string</code> | Projenrc file to lint.<br/>__*Default*__: PROJEN_RC
 **prettier**?🔹 | <code>boolean</code> | Enable prettier for code formatting.<br/>__*Default*__: false
 **tsAlwaysTryTypes**?🔹 | <code>boolean</code> | Always try to resolve types under `<root>@types` directory even it doesn't contain any source code.<br/>__*Default*__: true
 **tsconfigPath**?🔹 | <code>string</code> | Path to `tsconfig.json` which should be used by eslint.<br/>__*Default*__: "./tsconfig.json"
@@ -17021,6 +17186,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -17043,6 +17209,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -17142,6 +17309,7 @@ Options for Prettier.
 Name | Type | Description 
 -----|------|-------------
 **ignoreFile**?🔹 | <code>boolean</code> | Defines an .prettierIgnore file.<br/>__*Default*__: true
+**ignoreFileOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .prettierignore file.<br/>__*Optional*__
 **overrides**?🔹 | <code>Array<[javascript.PrettierOverride](#projen-javascript-prettieroverride)></code> | Provide a list of patterns to override prettier configuration.<br/>__*Default*__: []
 **settings**?🔹 | <code>[javascript.PrettierSettings](#projen-javascript-prettiersettings)</code> | Prettier settings.<br/>__*Default*__: default settings
 **yaml**?🔹 | <code>boolean</code> | Write prettier configuration as YAML instead of JSON.<br/>__*Default*__: false
@@ -17260,6 +17428,7 @@ Name | Type | Description
 **esModuleInterop**?🔹 | <code>boolean</code> | Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.<br/>__*Default*__: false
 **experimentalDecorators**?🔹 | <code>boolean</code> | Enables experimental support for decorators, which is in stage 2 of the TC39 standardization process.<br/>__*Default*__: true
 **forceConsistentCasingInFileNames**?🔹 | <code>boolean</code> | Disallow inconsistently-cased references to the same file.<br/>__*Default*__: false
+**importsNotUsedAsValues**?🔹 | <code>[javascript.TypeScriptImportsNotUsedAsValues](#projen-javascript-typescriptimportsnotusedasvalues)</code> | This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.<br/>__*Default*__: "remove"
 **inlineSourceMap**?🔹 | <code>boolean</code> | When set, instead of writing out a .js.map file to provide source maps, TypeScript will embed the source map content in the .js files.<br/>__*Default*__: true
 **inlineSources**?🔹 | <code>boolean</code> | When set, TypeScript will include the original content of the .ts file as an embedded string in the source map. This is often useful in the same cases as inlineSourceMap.<br/>__*Default*__: true
 **isolatedModules**?🔹 | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or @babel/plugin-transform-typescript) would be safe.<br/>__*Default*__: false
@@ -17616,6 +17785,7 @@ Name | Type | Description
 **description**?🔹 | <code>string</code> | A short description of the package.<br/>__*Optional*__
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | List of dev dependencies for this project.<br/>__*Default*__: []
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -18177,6 +18347,7 @@ Name | Type | Description
 **entrypointTypes**?⚠️ | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?⚠️ | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?⚠️ | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitIgnoreOptions**?⚠️ | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?⚠️ | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?⚠️ | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?⚠️ | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -18200,6 +18371,7 @@ Name | Type | Description
 **mutableBuild**?⚠️ | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?⚠️ | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?⚠️ | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?⚠️ | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?⚠️ | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?⚠️ | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -18323,6 +18495,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -18346,6 +18519,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -18575,6 +18749,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -18597,6 +18772,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -18715,6 +18891,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -18738,6 +18915,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -18885,6 +19063,7 @@ Name | Type | Description
 **devContainer**?🔹 | <code>boolean</code> | Add a VSCode development environment (used for GitHub Codespaces).<br/>__*Default*__: false
 **devDeps**?🔹 | <code>Array<string></code> | Build dependencies for this module.<br/>__*Default*__: []
 **entrypoint**?🔹 | <code>string</code> | Module entrypoint (`main` in `package.json`).<br/>__*Default*__: "lib/index.js"
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -18907,6 +19086,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -19054,6 +19234,7 @@ Name | Type | Description
 **entrypointTypes**?🔹 | <code>string</code> | The .d.ts file that includes the type declarations for this module.<br/>__*Default*__: .d.ts file derived from the project's entrypoint (usually lib/index.d.ts)
 **eslint**?🔹 | <code>boolean</code> | Setup eslint.<br/>__*Default*__: true
 **eslintOptions**?🔹 | <code>[javascript.EslintOptions](#projen-javascript-eslintoptions)</code> | Eslint options.<br/>__*Default*__: opinionated default options
+**gitIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .gitignore file.<br/>__*Optional*__
 **gitOptions**?🔹 | <code>[GitOptions](#projen-gitoptions)</code> | Configuration options for git.<br/>__*Optional*__
 **github**?🔹 | <code>boolean</code> | Enable GitHub integration.<br/>__*Default*__: true
 **githubOptions**?🔹 | <code>[github.GitHubOptions](#projen-github-githuboptions)</code> | Options for GitHub integration.<br/>__*Default*__: see GitHubOptions
@@ -19077,6 +19258,7 @@ Name | Type | Description
 **mutableBuild**?🔹 | <code>boolean</code> | Automatically update files modified during builds to pull-request branches.<br/>__*Default*__: true
 **npmAccess**?🔹 | <code>[javascript.NpmAccess](#projen-javascript-npmaccess)</code> | Access level of the npm package.<br/>__*Default*__: for scoped packages (e.g. `foo@bar`), the default is `NpmAccess.RESTRICTED`, for non-scoped packages, the default is `NpmAccess.PUBLIC`.
 **npmDistTag**?🔹 | <code>string</code> | The npmDistTag to use when publishing from the default branch.<br/>__*Default*__: "latest"
+**npmIgnoreOptions**?🔹 | <code>[IgnoreFileOptions](#projen-ignorefileoptions)</code> | Configuration options for .npmignore file.<br/>__*Optional*__
 **npmRegistry**?⚠️ | <code>string</code> | The host name of the npm registry to publish to.<br/>__*Optional*__
 **npmRegistryUrl**?🔹 | <code>string</code> | The base URL of the npm package registry.<br/>__*Default*__: "https://registry.npmjs.org"
 **npmTokenSecret**?🔹 | <code>string</code> | GitHub secret which contains the NPM token to use when publishing packages.<br/>__*Default*__: "NPM_TOKEN"
@@ -19646,6 +19828,17 @@ Name | Description
 **ALL** 🔹|Trailing commas wherever possible (including function arguments).
 **ES5** 🔹|Trailing commas where valid in ES5 (objects, arrays, etc.).
 **NONE** 🔹|No trailing commas.
+
+
+## enum TypeScriptImportsNotUsedAsValues 🔹 <a id="projen-javascript-typescriptimportsnotusedasvalues"></a>
+
+This flag controls how `import` works, there are 3 different options.
+
+Name | Description
+-----|-----
+**REMOVE** 🔹|The default behavior of dropping `import` statements which only reference types.
+**PRESERVE** 🔹|Preserves all `import` statements whose values or types are never used.
+**ERROR** 🔹|This preserves all imports (the same as the preserve option), but will error when a value import is only used as a type.
 
 
 ## enum TypeScriptJsxMode 🔹 <a id="projen-javascript-typescriptjsxmode"></a>

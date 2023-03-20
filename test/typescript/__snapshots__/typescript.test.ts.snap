@@ -12,11 +12,11 @@ Object {
     ],
     "ignorePatterns": Array [
       "*.js",
-      "!.projenrc.js",
       "*.d.ts",
       "node_modules/",
       "*.generated.ts",
       "coverage",
+      "!.projenrc.js",
     ],
     "overrides": Array [
       Object {
