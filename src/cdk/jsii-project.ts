@@ -177,9 +177,6 @@ export class JsiiProject extends TypeScriptProject {
       authorName: options.author,
       authorEmail,
       authorUrl,
-      jestOptions: {
-        jestVersion: "^27",
-      },
     };
 
     const forcedOptions = {
@@ -381,12 +378,6 @@ export class JsiiProject extends TypeScriptProject {
     if (this.npmignore) {
       this.npmignore.readonly = false;
     }
-
-    // https://github.com/projen/projen/issues/2165
-    this.package.addPackageResolutions("@types/prettier@2.6.0");
-
-    // https://github.com/projen/projen/issues/2264
-    this.package.addPackageResolutions("@types/babel__traverse@7.18.2");
   }
 
   /**

@@ -659,7 +659,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "jest-junit",
         "type": "build",
-        "version": "^13",
+        "version": "^15",
       },
       Object {
         "name": "npm-check-updates",
@@ -1194,7 +1194,7 @@ tsconfig.tsbuildinfo
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
       "jest": "*",
-      "jest-junit": "^13",
+      "jest-junit": "^15",
       "npm-check-updates": "^16",
       "projen": "*",
       "standard-version": "^9",
