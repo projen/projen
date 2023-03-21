@@ -19,6 +19,14 @@ export interface ProjenrcTsOptions {
    * @default "projenrc"
    */
   readonly projenCodeDir?: string;
+
+  /**
+   * The name of the tsconfig file that will be used by ts-node
+   * when compiling projen source files.
+   *
+   * @default "tsconfig.projen.json"
+   */
+  readonly tsconfigFileName?: string;
 }
 
 /**
@@ -37,7 +45,6 @@ export class ProjenrcTs extends Component {
 
   private readonly rcfile: string;
   private readonly _projenCodeDir: string;
-  private readonly tsconfigFileName = "tsconfig.projen.json";
 
   constructor(project: Project, options: ProjenrcTsOptions = {}) {
     super(project);
@@ -47,7 +54,7 @@ export class ProjenrcTs extends Component {
 
     // Create a dedicated tsconfig for projen source files
     this.tsconfig = new TypescriptConfig(project, {
-      fileName: this.tsconfigFileName,
+      fileName: options.tsconfigFileName ?? "tsconfig.projen.json",
       compilerOptions: {},
     });
 

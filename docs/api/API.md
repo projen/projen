@@ -10613,6 +10613,7 @@ new typescript.ProjenrcTs(project: Project, options?: ProjenrcTsOptions)
 * **options** (<code>[typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)</code>)  *No description*
   * **filename** (<code>string</code>)  The name of the projenrc file. __*Default*__: ".projenrc.ts"
   * **projenCodeDir** (<code>string</code>)  A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file. __*Default*__: "projenrc"
+  * **tsconfigFileName** (<code>string</code>)  The name of the tsconfig file that will be used by ts-node when compiling projen source files. __*Default*__: "tsconfig.projen.json"
 
 
 
@@ -18491,6 +18492,7 @@ Name | Type | Description
 -----|------|-------------
 **filename**?🔹 | <code>string</code> | The name of the projenrc file.<br/>__*Default*__: ".projenrc.ts"
 **projenCodeDir**?🔹 | <code>string</code> | A directory tree that may contain *.ts files that can be referenced from your projenrc typescript file.<br/>__*Default*__: "projenrc"
+**tsconfigFileName**?🔹 | <code>string</code> | The name of the tsconfig file that will be used by ts-node when compiling projen source files.<br/>__*Default*__: "tsconfig.projen.json"
 
 
 

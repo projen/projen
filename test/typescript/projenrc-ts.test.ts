@@ -33,6 +33,7 @@ describe("Creating rc file within a non-TypeScript project", () => {
     const rc = new ProjenrcTs(p, {
       filename: ".projenrc.foo.ts",
       projenCodeDir: ".projenrc",
+      tsconfigFileName: "tsconfig.foo.json",
     });
 
     // THEN
@@ -43,7 +44,7 @@ describe("Creating rc file within a non-TypeScript project", () => {
       name: "default",
       steps: [
         {
-          exec: "npx -y ts-node --project tsconfig.projen.json .projenrc.foo.ts",
+          exec: "npx -y ts-node --project tsconfig.foo.json .projenrc.foo.ts",
         },
       ],
     });
