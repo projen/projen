@@ -343,7 +343,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -443,7 +443,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -472,7 +472,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -640,6 +640,7 @@ tsconfig.json
 
 queue_rules:
   - name: default
+    update_method: merge
     conditions:
       - \\"#approved-reviews-by>=1\\"
       - -label~=(do-not-merge)
@@ -698,7 +699,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^14",
+        "version": "^16",
       },
       Object {
         "name": "@typescript-eslint/eslint-plugin",
@@ -1333,7 +1334,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     },
     "devDependencies": Object {
       "@types/jest": "^27",
-      "@types/node": "^14",
+      "@types/node": "^16",
       "@typescript-eslint/eslint-plugin": "^5",
       "@typescript-eslint/parser": "^5",
       "eslint": "^8",
@@ -1830,7 +1831,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -1930,7 +1931,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -1959,7 +1960,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -2127,6 +2128,7 @@ tsconfig.json
 
 queue_rules:
   - name: default
+    update_method: merge
     conditions:
       - \\"#approved-reviews-by>=1\\"
       - -label~=(do-not-merge)
@@ -2184,7 +2186,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^14",
+        "version": "^16",
       },
       Object {
         "name": "@typescript-eslint/eslint-plugin",
@@ -2806,7 +2808,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     },
     "devDependencies": Object {
       "@types/jest": "*",
-      "@types/node": "^14",
+      "@types/node": "^16",
       "@typescript-eslint/eslint-plugin": "^5",
       "@typescript-eslint/parser": "^5",
       "eslint": "^8",
@@ -3299,7 +3301,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -3399,7 +3401,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -3428,7 +3430,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -3596,6 +3598,7 @@ tsconfig.json
 
 queue_rules:
   - name: default
+    update_method: merge
     conditions:
       - \\"#approved-reviews-by>=1\\"
       - -label~=(do-not-merge)
@@ -3654,7 +3657,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^14",
+        "version": "^16",
       },
       Object {
         "name": "@typescript-eslint/eslint-plugin",
@@ -4289,7 +4292,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     },
     "devDependencies": Object {
       "@types/jest": "^27",
-      "@types/node": "^14",
+      "@types/node": "^16",
       "@typescript-eslint/eslint-plugin": "^5",
       "@typescript-eslint/parser": "^5",
       "eslint": "^8",
@@ -4786,7 +4789,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -4886,7 +4889,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -4915,7 +4918,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -5083,6 +5086,7 @@ tsconfig.json
 
 queue_rules:
   - name: default
+    update_method: merge
     conditions:
       - \\"#approved-reviews-by>=1\\"
       - -label~=(do-not-merge)
@@ -5140,7 +5144,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^14",
+        "version": "^16",
       },
       Object {
         "name": "@typescript-eslint/eslint-plugin",
@@ -5763,7 +5767,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     },
     "devDependencies": Object {
       "@types/jest": "*",
-      "@types/node": "^14",
+      "@types/node": "^16",
       "@typescript-eslint/eslint-plugin": "^5",
       "@typescript-eslint/parser": "^5",
       "eslint": "^8",

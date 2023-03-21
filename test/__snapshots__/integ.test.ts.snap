@@ -789,6 +789,7 @@ example/*.d.ts
 
 queue_rules:
   - name: default
+    update_method: merge
     conditions:
       - \\"#approved-reviews-by>=1\\"
       - -label~=(do-not-merge)
@@ -4055,7 +4056,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -4210,6 +4211,7 @@ junit.xml
 
 queue_rules:
   - name: default
+    update_method: merge
     conditions:
       - \\"#approved-reviews-by>=1\\"
       - -label~=(do-not-merge)

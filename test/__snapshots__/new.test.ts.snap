@@ -68,7 +68,7 @@ Object {
   "devDependencies": Object {
     "@pepperize/projen-awscdk-app-ts": "0.0.333",
     "@types/jest": "*",
-    "@types/node": "^14",
+    "@types/node": "^16",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "aws-cdk": "^2.1.0",
@@ -191,7 +191,7 @@ Object {
   "devDependencies": Object {
     "./pepperize-projen-awscdk-app-ts-0.0.333.tgz": "*",
     "@types/jest": "*",
-    "@types/node": "^14",
+    "@types/node": "^16",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "aws-cdk": "^2.1.0",
