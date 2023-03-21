@@ -75,16 +75,12 @@
     },
     {
       "name": "jest-junit",
-      "version": "^13",
+      "version": "^15",
       "type": "build"
     },
     {
       "name": "jest",
       "version": "^27",
-      "type": "build"
-    },
-    {
-      "name": "jsii",
       "type": "build"
     },
     {
@@ -97,6 +93,11 @@
     },
     {
       "name": "jsii-pacmak",
+      "type": "build"
+    },
+    {
+      "name": "jsii",
+      "version": "1.x",
       "type": "build"
     },
     {

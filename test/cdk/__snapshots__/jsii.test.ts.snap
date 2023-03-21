@@ -731,16 +731,12 @@ tsconfig.tsbuildinfo
       Object {
         "name": "jest-junit",
         "type": "build",
-        "version": "^13",
+        "version": "^15",
       },
       Object {
         "name": "jest",
         "type": "build",
         "version": "^27",
-      },
-      Object {
-        "name": "jsii",
-        "type": "build",
       },
       Object {
         "name": "jsii-diff",
@@ -753,6 +749,11 @@ tsconfig.tsbuildinfo
       Object {
         "name": "jsii-pacmak",
         "type": "build",
+      },
+      Object {
+        "name": "jsii",
+        "type": "build",
+        "version": "1.x",
       },
       Object {
         "name": "npm-check-updates",
@@ -1081,19 +1082,19 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "yarn upgrade npm-check-updates",
           },
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii'",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii'",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii'",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii'",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii'",
           },
           Object {
             "exec": "yarn install --check-files",
@@ -1341,8 +1342,8 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
       "jest": "^27",
-      "jest-junit": "^13",
-      "jsii": "*",
+      "jest-junit": "^15",
+      "jsii": "1.x",
       "jsii-diff": "*",
       "jsii-docgen": "*",
       "jsii-pacmak": "*",
