@@ -1,5 +1,5 @@
-import { resolve } from "path";
-import { existsSync, outputFileSync } from "fs-extra";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { dirname, resolve } from "path";
 import { Project } from "./project";
 import { ProjenrcFile } from "./projenrc";
 
@@ -45,7 +45,8 @@ export class ProjenrcJson extends ProjenrcFile {
       ...bootstrap.args,
     };
 
-    outputFileSync(rcfile, JSON.stringify(json, null, 2));
+    mkdirSync(dirname(rcfile), { recursive: true });
+    writeFileSync(rcfile, JSON.stringify(json, null, 2));
     this.project.logger.info(
       `Project definition file was created at ${rcfile}`
     );

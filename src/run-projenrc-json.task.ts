@@ -7,7 +7,7 @@
  * - PROJENRC_FILE: (optional) the name of the JSON file to parse from.
  *   Defaults to `.projenrc.json`.
  */
-import * as fs from "fs-extra";
+import * as fs from "fs";
 import { InitProjectOptionHints } from "./option-hints";
 import { Projects } from "./projects";
 
@@ -17,7 +17,7 @@ if (!filename || filename == "") {
   filename = ".projenrc.json";
 }
 
-const { type, ...json } = fs.readJsonSync(filename, { encoding: "utf8" });
+const { type, ...json } = JSON.parse(fs.readFileSync(filename, "utf8"));
 if (!type) {
   throw new Error(
     'projenrc.json requires a "type" field with the fully qualified type name. e.g. projen.web.ReactProject'

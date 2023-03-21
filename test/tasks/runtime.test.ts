@@ -1,7 +1,7 @@
 import { spawnSync } from "child_process";
+import { mkdirSync } from "fs";
 import { EOL } from "os";
 import { basename, join } from "path";
-import { mkdirpSync } from "fs-extra";
 import { Project } from "../../src";
 import * as logging from "../../src/logging";
 import { TaskRuntime } from "../../src/task-runtime";
@@ -196,7 +196,7 @@ describe("cwd", () => {
   test("cwd can be set at the task level", () => {
     const p = new TestProject();
     const cwd = join(p.outdir, "mypwd");
-    mkdirpSync(cwd);
+    mkdirSync(cwd, { recursive: true });
     const task = p.addTask("testme", {
       cwd,
     });
@@ -211,8 +211,8 @@ describe("cwd", () => {
     const p = new TestProject();
     const taskcwd = join(p.outdir, "mypwd");
     const stepcwd = join(p.outdir, "yourpwd");
-    mkdirpSync(taskcwd);
-    mkdirpSync(stepcwd);
+    mkdirSync(taskcwd, { recursive: true });
+    mkdirSync(stepcwd, { recursive: true });
     const task = p.addTask("testme", { cwd: taskcwd });
     task.exec("echo step1=$PWD");
     task.exec("echo step2=$PWD", { cwd: stepcwd });

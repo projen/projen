@@ -1,6 +1,6 @@
+import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
 import { snake } from "case";
-import { existsSync, mkdirpSync, outputFileSync } from "fs-extra";
 import { PROJEN_VERSION } from "../common";
 import { DependencyType } from "../dependencies";
 import { readJsiiManifest } from "../inventory";
@@ -109,8 +109,8 @@ export class Projenrc extends ProjenrcFile {
     emit();
     emit("project.synth()");
 
-    mkdirpSync(dirname(pythonFile));
-    outputFileSync(pythonFile, lines.join("\n"));
+    mkdirSync(dirname(pythonFile), { recursive: true });
+    writeFileSync(pythonFile, lines.join("\n"));
 
     this.project.logger.info(
       `Project definition file was created at ${pythonFile}`

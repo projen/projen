@@ -1,7 +1,7 @@
 import { spawnSync } from "child_process";
+import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import * as fs from "fs-extra";
 import { PROJEN_RC } from "../common";
 import * as logging from "../logging";
 import { Project } from "../project";
@@ -123,8 +123,8 @@ export async function synth(runtime: TaskRuntime, options: SynthOptions) {
       !fs.existsSync(path.join(projenModulePath, "package.json")) ||
       !fs.statSync(projenModulePath).isDirectory()
     ) {
-      fs.removeSync(projenModulePath);
-      fs.mkdirpSync(nodeModules);
+      fs.rmSync(projenModulePath, { force: true, recursive: true });
+      fs.mkdirSync(nodeModules, { recursive: true });
       fs.symlinkSync(
         projenModule,
         projenModulePath,

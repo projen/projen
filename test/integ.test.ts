@@ -1,5 +1,5 @@
+import { copyFileSync, mkdirSync, readdirSync, statSync } from "fs";
 import { join, dirname, basename } from "path";
-import { copySync } from "fs-extra";
 import { glob } from "glob";
 import {
   mkdtemp,
@@ -16,9 +16,9 @@ for (const projenrc of files) {
     const workdir = mkdtemp();
     const base = join(samples, dirname(projenrc));
     if (base !== samples) {
-      copySync(base, workdir, { recursive: true });
+      copyDirSync(base, workdir);
     }
-    copySync(join(samples, projenrc), join(workdir, ".projenrc.js"));
+    copyFileSync(join(samples, projenrc), join(workdir, ".projenrc.js"));
     execProjenCLI(workdir, ["--no-post"]);
 
     // patch the projen version in package.json to match the current version
@@ -32,4 +32,18 @@ for (const projenrc of files) {
       })
     ).toMatchSnapshot();
   });
+}
+
+function copyDirSync(from: string, to: string) {
+  mkdirSync(to, { recursive: true });
+  for (const file of readdirSync(from)) {
+    const filePath = join(from, file);
+    const stat = statSync(filePath);
+    const toFilePath = join(to, file);
+    if (stat.isDirectory()) {
+      copyDirSync(filePath, toFilePath);
+    } else {
+      copyFileSync(filePath, toFilePath);
+    }
+  }
 }
