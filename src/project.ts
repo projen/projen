@@ -280,12 +280,9 @@ export class Project {
 
       // Subtasks should call the root task for synth
       if (this.parent) {
-        this.defaultTask.exec(
-          [
-            `cd ${path.relative(this.outdir, this.root.outdir)}`,
-            `${this.projenCommand} ${Project.DEFAULT_TASK}`,
-          ].join(" && ")
-        );
+        this.defaultTask.exec(`${this.projenCommand} ${Project.DEFAULT_TASK}`, {
+          cwd: path.relative(this.outdir, this.root.outdir),
+        });
       }
 
       if (!this.parent) {

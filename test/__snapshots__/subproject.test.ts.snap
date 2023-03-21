@@ -34,7 +34,8 @@ Object {
       "name": "default",
       "steps": Array [
         Object {
-          "exec": "cd .. && npx projen default",
+          "cwd": "..",
+          "exec": "npx projen default",
         },
       ],
     },
@@ -92,7 +93,8 @@ Object {
       "name": "default",
       "steps": Array [
         Object {
-          "exec": "cd ../.. && npx projen default",
+          "cwd": "../..",
+          "exec": "npx projen default",
         },
       ],
     },
