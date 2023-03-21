@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 import { synthSnapshot, TestProject } from "./util";
-import { JsonFile } from "../src";
+import { JsonFile, LogLevel } from "../src";
 import { writeFile } from "../src/util";
 
 test("json object can be mutated before synthesis", () => {
@@ -211,7 +211,7 @@ describe("changed", () => {
   });
 
   it('is set to "true" if the file permissions changed', () => {
-    const prj = new TestProject();
+    const prj = new TestProject({ logging: { level: LogLevel.VERBOSE } });
     const file = new JsonFile(prj, "hello.json", {
       obj,
       newline: false,

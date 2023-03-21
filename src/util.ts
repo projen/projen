@@ -2,6 +2,7 @@ import * as child_process from "child_process";
 import {
   accessSync,
   chmodSync,
+  constants as fs_constants,
   existsSync,
   mkdirSync,
   promises as fs,
@@ -406,7 +407,7 @@ export function tryReadFileSync(file: string) {
 
 export function isWritable(file: string) {
   try {
-    accessSync(file, fs.constants.W_OK);
+    accessSync(file, fs_constants.W_OK);
     return true;
   } catch {
     return false;
@@ -415,9 +416,9 @@ export function isWritable(file: string) {
 
 export function isExecutable(file: string) {
   try {
-    accessSync(file, fs.constants.X_OK);
+    accessSync(file, fs_constants.X_OK);
     return true;
-  } catch {
+  } catch (e) {
     return false;
   }
 }
