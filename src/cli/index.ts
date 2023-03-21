@@ -1,5 +1,5 @@
-import { resolve } from "path";
 import { existsSync } from "fs";
+import { resolve } from "path";
 import * as yargs from "yargs";
 import newCommand from "./cmds/new";
 import { synth } from "./synth";
