@@ -58,8 +58,10 @@ afterAll((done) => {
   done();
 });
 
-export function mkdtemp(opts: { cleanup?: boolean } = {}) {
-  const tmpdir = fs.mkdtempSync(path.join(os.tmpdir(), "projen-test-"));
+export function mkdtemp(opts: { cleanup?: boolean; dir?: string } = {}) {
+  const tmpdir = fs.mkdtempSync(
+    path.join(opts.dir ?? os.tmpdir(), "projen-test-")
+  );
   if (opts.cleanup ?? true) {
     autoRemove.add(tmpdir);
   }

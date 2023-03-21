@@ -1,9 +1,10 @@
+import { existsSync } from "fs";
 import { resolve } from "path";
 import * as yargs from "yargs";
 import newCommand from "./cmds/new";
 import { synth } from "./synth";
 import { discoverTaskCommands } from "./tasks";
-import { PROJEN_RC, PROJEN_VERSION } from "../common";
+import { PROJEN_DIR, PROJEN_RC, PROJEN_VERSION } from "../common";
 import * as logging from "../logging";
 import { TaskRuntime } from "../task-runtime";
 import { getNodeMajorVersion } from "../util";
@@ -14,7 +15,8 @@ async function main() {
   const ya = yargs;
   ya.command(newCommand);
 
-  const runtime = new TaskRuntime(".");
+  const pathToProjenDir = findProjenDir(process.cwd());
+  const runtime = new TaskRuntime(pathToProjenDir ?? ".");
   discoverTaskCommands(runtime, ya);
 
   ya.recommendCommands();
@@ -82,3 +84,21 @@ main().catch((e) => {
   console.error(e.stack);
   process.exit(1);
 });
+
+/**
+ * Run up project tree to find .projen directory
+ *
+ * @param cwd current working directory
+ * @returns path to .projen directory or undefined if not found
+ */
+function findProjenDir(cwd: string): string | undefined {
+  if (existsSync(resolve(cwd, PROJEN_DIR))) {
+    return cwd;
+  }
+
+  if (cwd === "/") {
+    return undefined;
+  }
+
+  return findProjenDir(resolve(cwd, ".."));
+}
