@@ -1,3 +1,4 @@
+import { Range } from "semver";
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
 import { Task } from "..";
@@ -114,6 +115,20 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
    * @default false
    */
   readonly compressAssembly?: boolean;
+
+  /**
+   * Version of the jsii compiler to use.
+   *
+   * Set to "*" if you want to manually manage the version of jsii in your
+   * project by managing updates to `package.json` on your own.
+   *
+   * NOTE: The jsii compiler releases since 5.0.0 are not semantically versioned
+   * and should remain on the same minor, so we recommend using a `~` dependency
+   * (e.g. `~5.0.0`).
+   *
+   * @default "1.x"
+   */
+  readonly jsiiVersion?: string;
 }
 
 export enum Stability {
@@ -172,11 +187,18 @@ export class JsiiProject extends TypeScriptProject {
   constructor(options: JsiiProjectOptions) {
     const { authorEmail, authorUrl } = parseAuthorAddress(options);
 
-    const defaultOptions = {
+    // True if jsii version 1.x is compatible with the requested version range.
+    const usesLegacyJsii =
+      options.jsiiVersion == null ||
+      (options.jsiiVersion !== "*" &&
+        new Range(options.jsiiVersion).intersects(new Range("1.x")));
+
+    const defaultOptions: Partial<TypeScriptProjectOptions> = {
       repository: options.repositoryUrl,
       authorName: options.author,
       authorEmail,
       authorUrl,
+      jestOptions: usesLegacyJsii ? { jestVersion: "^27" } : undefined,
     };
 
     const forcedOptions = {
@@ -365,7 +387,13 @@ export class JsiiProject extends TypeScriptProject {
       this.addPackagingTarget("go", task, extraJobOptions);
     }
 
-    this.addDevDeps("jsii", "jsii-diff", "jsii-pacmak");
+    const jsiiSuffix =
+      options.jsiiVersion === "*"
+        ? // If jsiiVersion is "*", don't specify anything so the user can manage.
+          ""
+        : // Otherwise, use `jsiiVersion` or fall back to `1.x`.
+          `@${options.jsiiVersion ?? "1.x"}`;
+    this.addDevDeps(`jsii${jsiiSuffix}`, "jsii-diff", "jsii-pacmak");
 
     this.gitignore.exclude(".jsii", "tsconfig.json");
     this.npmignore?.include(".jsii");
@@ -377,6 +405,16 @@ export class JsiiProject extends TypeScriptProject {
     // jsii updates .npmignore, so we make it writable
     if (this.npmignore) {
       this.npmignore.readonly = false;
+    }
+
+    // When using jsii@1,x, we need to add some resolutions to avoid including
+    // TypeScript-3.9-incompatble dependencies that break the compiler.
+    if (usesLegacyJsii) {
+      // https://github.com/projen/projen/issues/2165
+      this.package.addPackageResolutions("@types/prettier@2.6.0");
+
+      // https://github.com/projen/projen/issues/2264
+      this.package.addPackageResolutions("@types/babel__traverse@7.18.2");
     }
   }
 

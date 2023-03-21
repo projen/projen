@@ -6552,6 +6552,23 @@ Array [
         "switch": "jsii-release-version",
       },
       Object {
+        "default": "\\"1.x\\"",
+        "docs": "Version of the jsii compiler to use.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "jsiiVersion",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "jsiiVersion",
+        ],
+        "simpleType": "string",
+        "switch": "jsii-version",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "featured": false,
         "fullType": Object {
@@ -13380,6 +13397,23 @@ Array [
         "switch": "jsii-release-version",
       },
       Object {
+        "default": "\\"1.x\\"",
+        "docs": "Version of the jsii compiler to use.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "jsiiVersion",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "jsiiVersion",
+        ],
+        "simpleType": "string",
+        "switch": "jsii-version",
+      },
+      Object {
         "docs": "Keywords to include in \`package.json\`.",
         "featured": false,
         "fullType": Object {
@@ -16151,6 +16185,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "jsii-release-version",
+      },
+      Object {
+        "default": "\\"1.x\\"",
+        "docs": "Version of the jsii compiler to use.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "jsiiVersion",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "jsiiVersion",
+        ],
+        "simpleType": "string",
+        "switch": "jsii-version",
       },
       Object {
         "docs": "Keywords to include in \`package.json\`.",
@@ -19705,6 +19756,23 @@ Array [
         ],
         "simpleType": "string",
         "switch": "jsii-release-version",
+      },
+      Object {
+        "default": "\\"1.x\\"",
+        "docs": "Version of the jsii compiler to use.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "string",
+        },
+        "jsonLike": true,
+        "name": "jsiiVersion",
+        "optional": true,
+        "parent": "JsiiProjectOptions",
+        "path": Array [
+          "jsiiVersion",
+        ],
+        "simpleType": "string",
+        "switch": "jsii-version",
       },
       Object {
         "docs": "Keywords to include in \`package.json\`.",

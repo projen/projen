@@ -694,6 +694,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "@types/node",
@@ -728,17 +729,14 @@ tsconfig.tsbuildinfo
         "version": "^8",
       },
       Object {
-        "name": "jest",
-        "type": "build",
-      },
-      Object {
         "name": "jest-junit",
         "type": "build",
         "version": "^15",
       },
       Object {
-        "name": "jsii",
+        "name": "jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "jsii-diff",
@@ -751,6 +749,11 @@ tsconfig.tsbuildinfo
       Object {
         "name": "jsii-pacmak",
         "type": "build",
+      },
+      Object {
+        "name": "jsii",
+        "type": "build",
+        "version": "1.x",
       },
       Object {
         "name": "npm-check-updates",
@@ -769,10 +772,21 @@ tsconfig.tsbuildinfo
       Object {
         "name": "ts-jest",
         "type": "build",
+        "version": "^27",
       },
       Object {
         "name": "typescript",
         "type": "build",
+      },
+      Object {
+        "name": "@types/babel__traverse",
+        "type": "override",
+        "version": "7.18.2",
+      },
+      Object {
+        "name": "@types/prettier",
+        "type": "override",
+        "version": "2.6.0",
       },
     ],
   },
@@ -1068,19 +1082,19 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
             "exec": "yarn upgrade npm-check-updates",
           },
           Object {
-            "exec": "npm-check-updates --dep dev --upgrade --target=minor",
+            "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii'",
           },
           Object {
-            "exec": "npm-check-updates --dep optional --upgrade --target=minor",
+            "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii'",
           },
           Object {
-            "exec": "npm-check-updates --dep peer --upgrade --target=minor",
+            "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii'",
           },
           Object {
-            "exec": "npm-check-updates --dep prod --upgrade --target=minor",
+            "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii'",
           },
           Object {
-            "exec": "npm-check-updates --dep bundle --upgrade --target=minor",
+            "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii'",
           },
           Object {
             "exec": "yarn install --check-files",
@@ -1319,7 +1333,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "organization": false,
     },
     "devDependencies": Object {
-      "@types/jest": "*",
+      "@types/jest": "^27",
       "@types/node": "^16",
       "@typescript-eslint/eslint-plugin": "^5",
       "@typescript-eslint/parser": "^5",
@@ -1327,16 +1341,16 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
       "eslint-import-resolver-node": "*",
       "eslint-import-resolver-typescript": "*",
       "eslint-plugin-import": "*",
-      "jest": "*",
+      "jest": "^27",
       "jest-junit": "^15",
-      "jsii": "*",
+      "jsii": "1.x",
       "jsii-diff": "*",
       "jsii-docgen": "*",
       "jsii-pacmak": "*",
       "npm-check-updates": "^16",
       "projen": "*",
       "standard-version": "^9",
-      "ts-jest": "*",
+      "ts-jest": "^27",
       "typescript": "*",
     },
     "jest": Object {
@@ -1393,6 +1407,10 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     "repository": Object {
       "type": "git",
       "url": "https://github.com/foo/bar.git",
+    },
+    "resolutions": Object {
+      "@types/babel__traverse": "7.18.2",
+      "@types/prettier": "2.6.0",
     },
     "scripts": Object {
       "build": "npx projen build",
