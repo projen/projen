@@ -758,6 +758,28 @@ export class Jest extends Component {
     this.reporters.push(reporter);
   }
 
+  /**
+   * Adds a a setup file to Jest's setupFiles configuration.
+   * @param file File path to setup file
+   */
+  public addSetupFile(file: string) {
+    if (!this.config.setupFiles) {
+      this.config.setupFiles = [];
+    }
+    this.config.setupFiles.push(file);
+  }
+
+  /**
+   * Adds a a setup file to Jest's setupFilesAfterEnv configuration.
+   * @param file File path to setup file
+   */
+  public addSetupFileAfterEnv(file: string) {
+    if (!this.config.setupFilesAfterEnv) {
+      this.config.setupFilesAfterEnv = [];
+    }
+    this.config.setupFilesAfterEnv.push(file);
+  }
+
   public addSnapshotResolver(file: string) {
     this._snapshotResolver = file;
   }

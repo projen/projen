@@ -1,5 +1,5 @@
+import * as fs from "fs";
 import * as path from "path";
-import * as fs from "fs-extra";
 import { IPythonEnv } from "./python-env";
 import { Component } from "../component";
 import { Project } from "../project";
@@ -47,7 +47,7 @@ export class Venv extends Component implements IPythonEnv {
    */
   public setupEnvironment() {
     const absoluteEnvdir = path.join(this.project.outdir, this.envdir);
-    if (!fs.pathExistsSync(absoluteEnvdir)) {
+    if (!fs.existsSync(absoluteEnvdir)) {
       this.project.logger.info("Setting up a virtual environment...");
       exec(`python -m venv ${this.envdir}`, { cwd: this.project.outdir });
       this.project.logger.info(

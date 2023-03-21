@@ -1,5 +1,5 @@
+import * as fs from "fs";
 import * as path from "path";
-import * as fs from "fs-extra";
 import * as glob from "glob";
 import { Component } from "./component";
 import { Project } from "./project";
@@ -136,7 +136,7 @@ export class SampleDir extends Component {
 
   public synthesize() {
     const fullOutdir = path.join(this.project.outdir, this.dir);
-    if (fs.pathExistsSync(fullOutdir)) {
+    if (fs.existsSync(fullOutdir)) {
       return;
     }
 
@@ -152,7 +152,7 @@ export class SampleDir extends Component {
         const sourcePath = path.join(basedir, file);
         const targetPath = path.join(fullOutdir, file);
 
-        fs.mkdirpSync(path.dirname(targetPath));
+        fs.mkdirSync(path.dirname(targetPath), { recursive: true });
         fs.copyFileSync(sourcePath, targetPath);
         fs.chmodSync(
           targetPath,

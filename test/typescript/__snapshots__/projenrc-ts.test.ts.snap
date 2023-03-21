@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Creating rc file within a non-TypeScript project works with defaults 1`] = `
+Object {
+  "compilerOptions": Object {},
+  "exclude": Array [
+    "node_modules",
+  ],
+  "include": Array [
+    "**/*.ts",
+    ".projenrc.ts",
+    "projenrc/**/*.ts",
+  ],
+}
+`;

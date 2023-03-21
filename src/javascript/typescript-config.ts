@@ -1,6 +1,7 @@
 import { NodeProject } from ".";
 import { Component } from "../component";
 import { JsonFile } from "../json";
+import { Project } from "../project";
 
 export interface TypescriptConfigOptions {
   /**
@@ -60,6 +61,29 @@ export enum TypeScriptModuleResolution {
    * @see https://www.typescriptlang.org/tsconfig#moduleResolution
    */
   NODE_NEXT = "nodenext",
+}
+
+/**
+ * This flag controls how `import` works, there are 3 different options.
+ *
+ * @see https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues
+ */
+export enum TypeScriptImportsNotUsedAsValues {
+  /**
+   * The default behavior of dropping `import` statements which only reference types.
+   */
+  REMOVE = "remove",
+
+  /**
+   * Preserves all `import` statements whose values or types are never used. This can cause imports/side-effects to be preserved.
+   */
+  PRESERVE = "preserve",
+
+  /**
+   * This preserves all imports (the same as the preserve option), but will error when a value import is only used as a type.
+   * This might be useful if you want to ensure no values are being accidentally imported, but still make side-effect imports explicit.
+   */
+  ERROR = "error",
 }
 
 /**
@@ -157,6 +181,14 @@ export interface TypeScriptCompilerOptions {
    * @default false
    */
   readonly forceConsistentCasingInFileNames?: boolean;
+
+  /**
+   * This flag works because you can use `import type` to explicitly create an `import` statement which should never be emitted into JavaScript.
+   *
+   * @see https://www.typescriptlang.org/tsconfig#importsNotUsedAsValues
+   * @default "remove"
+   */
+  readonly importsNotUsedAsValues?: TypeScriptImportsNotUsedAsValues;
 
   /**
    * When set, instead of writing out a .js.map file to provide source maps,
@@ -416,7 +448,7 @@ export class TypescriptConfig extends Component {
   public readonly fileName: string;
   public readonly file: JsonFile;
 
-  constructor(project: NodeProject, options: TypescriptConfigOptions) {
+  constructor(project: Project, options: TypescriptConfigOptions) {
     super(project);
     const fileName = options.fileName ?? "tsconfig.json";
 
@@ -435,7 +467,9 @@ export class TypescriptConfig extends Component {
       },
     });
 
-    project.npmignore?.exclude(`/${fileName}`);
+    if (project instanceof NodeProject) {
+      project.npmignore?.exclude(`/${fileName}`);
+    }
   }
 
   public addInclude(pattern: string) {

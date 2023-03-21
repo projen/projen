@@ -17,9 +17,8 @@ project.synth();"
 
 exports[`createProject creates a project from an external project type, if it's installed 1`] = `
 "const { javascript } = require(\\"projen\\");
-const { AwsCdkTypeScriptApp } = require(\\"@pepperize/projen-awscdk-app-ts\\");
-const project = new AwsCdkTypeScriptApp({
-  cdkVersion: \\"2.50.0\\",
+const { CdklabsTypeScriptProject } = require(\\"cdklabs-projen-project-types\\");
+const project = new CdklabsTypeScriptProject({
   defaultReleaseBranch: \\"main\\",
   name: \\"test-project\\",
   packageManager: javascript.NodePackageManager.NPM,

@@ -5,11 +5,6 @@
       "type": "build"
     },
     {
-      "name": "@types/fs-extra",
-      "version": "^8",
-      "type": "build"
-    },
-    {
       "name": "@types/glob",
       "type": "build"
     },
@@ -154,10 +149,6 @@
     },
     {
       "name": "fast-json-patch",
-      "type": "bundled"
-    },
-    {
-      "name": "fs-extra",
       "type": "bundled"
     },
     {

@@ -1,8 +1,8 @@
 // tests for `projen new`: we run `projen new` for each supported project type
 // and compare against a golden snapshot.
 import { execSync } from "child_process";
+import { mkdirSync, existsSync } from "fs";
 import { join } from "path";
-import { mkdirSync, pathExistsSync } from "fs-extra";
 import {
   directorySnapshot,
   execProjenCLI,
@@ -345,6 +345,18 @@ test("python project can include .projenrc.js", () => {
   });
 });
 
+test("python project can include .projenrc.ts", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, ["new", "python", "--projenrc-ts", "--no-synth"]);
+
+    const output = directorySnapshot(projectdir);
+    expect(output[".projenrc.py"]).toBeUndefined();
+    expect(output[".projenrc.js"]).toBeUndefined();
+    expect(output[".projenrc.ts"]).toBeDefined();
+    expect(output[".projenrc.ts"]).toContain('import { python } from "projen"');
+  });
+});
+
 test("python project can define an array option", () => {
   withProjectDir((projectdir) => {
     execProjenCLI(projectdir, [
@@ -433,7 +445,7 @@ describe("git", () => {
     withProjectDir(
       (projectdir) => {
         execProjenCLI(projectdir, ["new", "project", "--no-git"]);
-        expect(pathExistsSync(join(projectdir, ".git"))).toBeFalsy();
+        expect(existsSync(join(projectdir, ".git"))).toBeFalsy();
       },
       { git: false }
     );

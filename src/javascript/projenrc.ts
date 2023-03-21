@@ -1,9 +1,10 @@
-import { resolve } from "path";
-import { existsSync, outputFileSync } from "fs-extra";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { dirname, resolve } from "path";
 import { Eslint } from "./eslint";
 import { renderJavaScriptOptions } from "./render-options";
-import { Component } from "../component";
 import { Project } from "../project";
+import { ProjenrcFile } from "../projenrc";
+
 export interface ProjenrcOptions {
   /**
    * The name of the projenrc file.
@@ -15,26 +16,26 @@ export interface ProjenrcOptions {
 /**
  * Sets up a javascript project to use TypeScript for projenrc.
  */
-export class Projenrc extends Component {
-  private readonly rcfile: string;
+export class Projenrc extends ProjenrcFile {
+  public readonly filePath: string;
 
   constructor(project: Project, options: ProjenrcOptions = {}) {
     super(project);
 
-    this.rcfile = options.filename ?? ".projenrc.js";
+    this.filePath = options.filename ?? ".projenrc.js";
 
     // this is the task projen executes when running `projen`
-    project.defaultTask?.exec(`node ${this.rcfile}`);
+    project.defaultTask?.exec(`node ${this.filePath}`);
 
     this.generateProjenrc();
   }
 
   public preSynthesize(): void {
     const eslint = Eslint.of(this.project);
-    eslint?.addLintPattern(this.rcfile);
-    eslint?.addIgnorePattern(`!${this.rcfile}`);
+    eslint?.addLintPattern(this.filePath);
+    eslint?.addIgnorePattern(`!${this.filePath}`);
     eslint?.addOverride({
-      files: [this.rcfile],
+      files: [this.filePath],
       rules: {
         "@typescript-eslint/no-require-imports": "off",
         "import/no-extraneous-dependencies": "off",
@@ -43,7 +44,7 @@ export class Projenrc extends Component {
   }
 
   private generateProjenrc() {
-    const rcfile = resolve(this.project.outdir, this.rcfile);
+    const rcfile = resolve(this.project.outdir, this.filePath);
     if (existsSync(rcfile)) {
       return; // already exists
     }
@@ -73,7 +74,8 @@ export class Projenrc extends Component {
     lines.push();
     lines.push("project.synth();");
 
-    outputFileSync(rcfile, lines.join("\n"));
+    mkdirSync(dirname(rcfile), { recursive: true });
+    writeFileSync(rcfile, lines.join("\n"));
     this.project.logger.info(
       `Project definition file was created at ${rcfile}`
     );
