@@ -1,6 +1,6 @@
 import * as child_process from "child_process";
+import * as fs from "fs";
 import * as path from "path";
-import * as fs from "fs-extra";
 import { DockerCompose, DockerComposeProtocol } from "../../src/";
 import * as logging from "../../src/logging";
 import { TestProject } from "../util";

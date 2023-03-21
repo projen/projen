@@ -1,7 +1,16 @@
 import * as child_process from "child_process";
+import {
+  accessSync,
+  chmodSync,
+  constants as fs_constants,
+  existsSync,
+  mkdirSync,
+  promises as fs,
+  readFileSync,
+  writeFileSync,
+} from "fs";
 import * as path from "path";
 import * as Case from "case";
-import * as fs from "fs-extra";
 import * as logging from "./logging";
 
 const MAX_BUFFER = 10 * 1024 * 1024;
@@ -91,14 +100,14 @@ export function writeFile(
   data: any,
   options: WriteFileOptions = {}
 ) {
-  if (fs.existsSync(filePath)) {
-    fs.chmodSync(filePath, "600");
+  if (existsSync(filePath)) {
+    chmodSync(filePath, "600");
   }
 
-  fs.mkdirpSync(path.dirname(filePath));
-  fs.writeFileSync(filePath, data);
+  mkdirSync(path.dirname(filePath), { recursive: true });
+  writeFileSync(filePath, data);
 
-  fs.chmodSync(filePath, getFilePermissions(options));
+  chmodSync(filePath, getFilePermissions(options));
 }
 
 /**
@@ -381,24 +390,24 @@ export function snakeCaseKeys<T = unknown>(
 }
 
 export async function tryReadFile(file: string) {
-  if (!(await fs.pathExists(file))) {
+  if (!existsSync(file)) {
     return "";
   }
 
-  return fs.readFile(file, "utf8");
+  return fs.readFile(file, "utf-8");
 }
 
 export function tryReadFileSync(file: string) {
-  if (!fs.pathExistsSync(file)) {
+  if (!existsSync(file)) {
     return undefined;
   }
 
-  return fs.readFileSync(file, "utf8");
+  return readFileSync(file, "utf-8");
 }
 
 export function isWritable(file: string) {
   try {
-    fs.accessSync(file, fs.constants.W_OK);
+    accessSync(file, fs_constants.W_OK);
     return true;
   } catch {
     return false;
@@ -407,9 +416,9 @@ export function isWritable(file: string) {
 
 export function isExecutable(file: string) {
   try {
-    fs.accessSync(file, fs.constants.X_OK);
+    accessSync(file, fs_constants.X_OK);
     return true;
-  } catch {
+  } catch (e) {
     return false;
   }
 }

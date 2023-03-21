@@ -1,6 +1,6 @@
+import { promises as fs, existsSync } from "fs";
 import { dirname, join } from "path";
 import { Config } from "conventional-changelog-config-spec";
-import { mkdirp, pathExists, readFile, remove, writeFile } from "fs-extra";
 import * as logging from "../logging";
 import { exec, execCapture } from "../util";
 
@@ -98,9 +98,9 @@ export async function bump(cwd: string, options: BumpOptions) {
     );
   }
 
-  await mkdirp(dirname(bumpFile));
-  await mkdirp(dirname(changelogFile));
-  await mkdirp(dirname(releaseTagFile));
+  await fs.mkdir(dirname(bumpFile), { recursive: true });
+  await fs.mkdir(dirname(changelogFile), { recursive: true });
+  await fs.mkdir(dirname(releaseTagFile), { recursive: true });
 
   const { latestVersion, latestTag, isFirstRelease } = determineLatestTag({
     cwd,
@@ -117,7 +117,7 @@ export async function bump(cwd: string, options: BumpOptions) {
   logging.info(
     `Update ${versionFile} to latest resolved version: ${latestVersion}`
   );
-  await writeFile(versionFile, JSON.stringify(content, undefined, 2));
+  await fs.writeFile(versionFile, JSON.stringify(content, undefined, 2));
 
   // check if the latest commit already has a version tag
   const currentTags = execCapture("git tag --points-at HEAD", { cwd })
@@ -169,7 +169,7 @@ export async function bump(cwd: string, options: BumpOptions) {
     exec(`git tag ${latestTag}`, { cwd });
   }
 
-  await remove(rcfile);
+  await fs.rm(rcfile, { force: true, recursive: true });
 
   const newVersion = (await tryReadVersionFile(versionFile)).version;
   if (!newVersion) {
@@ -185,18 +185,18 @@ export async function bump(cwd: string, options: BumpOptions) {
     }
   }
 
-  await writeFile(bumpFile, newVersion);
+  await fs.writeFile(bumpFile, newVersion);
 
   const newTag = `${prefix}v${newVersion}`;
-  await writeFile(releaseTagFile, newTag);
+  await fs.writeFile(releaseTagFile, newTag);
 }
 
 async function tryReadVersionFile(versionFile: string) {
-  if (!(await pathExists(versionFile))) {
+  if (!existsSync(versionFile)) {
     return {};
   }
 
-  return JSON.parse(await readFile(versionFile, "utf8"));
+  return JSON.parse(await fs.readFile(versionFile, "utf-8"));
 }
 
 interface LatestTagOptions {
@@ -226,7 +226,7 @@ function generateVersionrcFile(
   prerelease?: string,
   configOptions?: Config
 ) {
-  return writeFile(
+  return fs.writeFile(
     rcfile,
     JSON.stringify(
       {

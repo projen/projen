@@ -1,5 +1,5 @@
+import { writeFileSync } from "fs";
 import { join } from "path";
-import { writeFileSync } from "fs-extra";
 import { directorySnapshot, execProjenCLI, mkdtemp } from "./util";
 import { Project } from "../src/project";
 

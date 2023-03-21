@@ -1,5 +1,5 @@
+import * as fs from "fs";
 import * as path from "path";
-import * as fs from "fs-extra";
 import { synthSnapshot, TestProject } from "./util";
 import { Project, TextFile, ProjectOptions, JsonFile, Component } from "../src";
 import { PROJEN_MARKER } from "../src/common";
@@ -38,12 +38,12 @@ test("composing projects synthesizes to subdirs", () => {
   comp.synth();
 
   // THEN
-  expect(fs.pathExistsSync(path.join(comp.outdir, "README.md")));
+  expect(fs.existsSync(path.join(comp.outdir, "README.md")));
   expect(
-    fs.pathExistsSync(path.join(comp.outdir, "packages", "foo", ".gitignore"))
+    fs.existsSync(path.join(comp.outdir, "packages", "foo", ".gitignore"))
   );
   expect(
-    fs.pathExistsSync(path.join(comp.outdir, "packages", "bar", ".gitignore"))
+    fs.existsSync(path.join(comp.outdir, "packages", "bar", ".gitignore"))
   );
 });
 

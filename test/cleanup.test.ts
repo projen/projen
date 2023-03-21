@@ -1,5 +1,5 @@
+import { readFileSync } from "fs";
 import { join } from "path";
-import { readJsonSync } from "fs-extra";
 import { directorySnapshot, TestProject } from "./util";
 import { DependencyType, JsonFile, SampleFile, TextFile } from "../src";
 import { cleanup, FILE_MANIFEST } from "../src/cleanup";
@@ -20,7 +20,9 @@ test("cleanup uses cache file", () => {
   const preDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const preFiles = Object.keys(preDirSnapshot);
 
-  const fileList: string[] = readJsonSync(join(p.outdir, FILE_MANIFEST)).files;
+  const fileList: string[] = JSON.parse(
+    readFileSync(join(p.outdir, FILE_MANIFEST), "utf-8")
+  ).files;
 
   cleanup(p.outdir, [], []);
 
@@ -80,7 +82,9 @@ test("cleanup only orphaned files", () => {
   const preDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const preFiles = Object.keys(preDirSnapshot);
 
-  const fileList: string[] = readJsonSync(join(p.outdir, FILE_MANIFEST)).files;
+  const fileList: string[] = JSON.parse(
+    readFileSync(join(p.outdir, FILE_MANIFEST), "utf-8")
+  ).files;
 
   cleanup(p.outdir, ["keep-this"], []);
 
@@ -109,7 +113,9 @@ test("cleanup empty files", () => {
 
   const preDirSnapshot = directorySnapshot(p.outdir, { onlyFileNames: true });
   const preFiles = Object.keys(preDirSnapshot);
-  const fileList: string[] = readJsonSync(join(p.outdir, FILE_MANIFEST)).files;
+  const fileList: string[] = JSON.parse(
+    readFileSync(join(p.outdir, FILE_MANIFEST), "utf-8")
+  ).files;
 
   p.synth();
 

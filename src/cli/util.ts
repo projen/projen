@@ -1,5 +1,5 @@
+import * as fs from "fs";
 import * as path from "path";
-import * as fs from "fs-extra";
 import * as logging from "../logging";
 import { exec } from "../util";
 
@@ -21,7 +21,7 @@ export function installPackage(baseDir: string, spec: string): string {
   exec(renderInstallCommand(baseDir, spec), { cwd: baseDir });
 
   // Get the true installed package name
-  const packageJson = fs.readJsonSync(packageJsonPath);
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
   const packageName = Object.keys(packageJson.devDependencies).find(
     (name) => name !== "projen"
   );
@@ -33,7 +33,7 @@ export function installPackage(baseDir: string, spec: string): string {
   // if package.json did not exist before calling `npm install`, we should remove it
   // so we can start off clean.
   if (!packageJsonExisted) {
-    fs.removeSync(packageJsonPath);
+    fs.rmSync(packageJsonPath, { force: true, recursive: true });
   }
 
   return packageName;

@@ -1,5 +1,5 @@
+import { existsSync, readFileSync } from "fs";
 import { join } from "path";
-import { existsSync, readFileSync } from "fs-extra";
 import { TestProject } from "./util";
 import { Project } from "../src";
 import { Dependencies, DependencyType } from "../src/dependencies";

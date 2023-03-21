@@ -1,5 +1,5 @@
+import { existsSync } from "fs";
 import { join } from "path";
-import { pathExists } from "fs-extra";
 import * as utils from "../util";
 
 export interface TagOptions {
@@ -40,11 +40,11 @@ export async function tag(cwd: string, options: TagOptions) {
   const releaseTagFilePath = join(cwd, options.releaseTagFile);
   const changelogFilePath = join(cwd, options.changelog);
 
-  if (!pathExists(releaseTagFilePath)) {
+  if (!existsSync(releaseTagFilePath)) {
     throw new Error(`No release tag file present at ${releaseTagFilePath}`);
   }
 
-  if (!pathExists(changelogFilePath)) {
+  if (!existsSync(changelogFilePath)) {
     throw new Error(`No changelog file present at ${changelogFilePath}`);
   }
 

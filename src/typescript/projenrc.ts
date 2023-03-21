@@ -1,5 +1,5 @@
-import { resolve } from "path";
-import { existsSync, outputFileSync } from "fs-extra";
+import { existsSync, writeFileSync, mkdirSync } from "fs";
+import { dirname, resolve } from "path";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import { ProjenrcFile } from "../projenrc";
 import { TypeScriptProject } from "../typescript";
@@ -100,7 +100,8 @@ export class Projenrc extends ProjenrcFile {
     lines.push();
     lines.push("project.synth();");
 
-    outputFileSync(rcfile, lines.join("\n"));
+    mkdirSync(dirname(rcfile), { recursive: true });
+    writeFileSync(rcfile, lines.join("\n"));
     this.project.logger.info(
       `Project definition file was created at ${rcfile}`
     );
