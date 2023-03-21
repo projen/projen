@@ -1,5 +1,6 @@
 import { GitHub } from "./github";
 import { Component } from "../component";
+import { snakeCaseKeys } from "../util";
 import { YamlFile } from "../yaml";
 
 /**
@@ -39,6 +40,32 @@ export interface MergifyQueue {
    * The name of the queue.
    */
   readonly name: string;
+
+  /**
+   * Merge method to use.
+   *
+   * Possible values are `merge`, `squash`, `rebase` or `fast-forward`.
+   * `fast-forward` is not supported on queues with `speculative_checks` > 1, `batch_size` > 1, or with `allow_inplace_checks` set to false.
+   *
+   * @default "merge"
+   */
+  readonly mergeMethod?: string;
+
+  /**
+   * Method to use to update the pull request with its base branch when the speculative check is done in-place.
+   *
+   * Possible values:
+   *  - `merge` to merge the base branch into the pull request.
+   *  - `rebase` to rebase the pull request against its base branch.
+   *
+   * Note that the `rebase` method has some drawbacks, see Mergify docs for details.
+   *
+   * @see https://docs.mergify.com/actions/queue/#queue-rules
+   *
+   * @default - `merge` for all merge methods except `fast-forward` where `rebase` is used
+   */
+  readonly updateMethod?: string;
+
   /**
    * A list of Conditions string that must match against the
    * pull request for the pull request to be added to the queue.
@@ -74,7 +101,7 @@ export class Mergify extends Component {
     if (this.yamlFile == null) {
       this.yamlFile = new YamlFile(this.project, ".mergify.yml", {
         obj: {
-          queue_rules: this.queues,
+          queue_rules: () => this.queues.map((q) => snakeCaseKeys(q, false)),
           pull_request_rules: this.rules,
         },
         // Mergify needs to read the file from the repository in order to work.

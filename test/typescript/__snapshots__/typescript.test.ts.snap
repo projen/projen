@@ -568,6 +568,7 @@ junit.xml
 
 queue_rules:
   - name: default
+    update_method: merge
     conditions:
       - \\"#approved-reviews-by>=1\\"
       - -label~=(do-not-merge)
