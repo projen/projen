@@ -55,7 +55,7 @@ const project = new awscdk.ConstructLibraryAws({
     module: 'cdk_watchful',
   },
 
-  minNodeVersion: '14.0.0',
+  minNodeVersion: '16.0.0',
 });
 
 project.gitignore.exclude('.env', '.idea');

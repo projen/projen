@@ -216,23 +216,79 @@ describe("lambda functions", () => {
   });
 });
 
-describe("workflow container image", () => {
-  it("uses jsii/superchain:1-buster-slim for cdk v1", () => {
-    const project = new TestProject({ cdkVersion: "1.100.0" });
-    const snapshot = synthSnapshot(project);
-    const buildWorkflow = YAML.parse(snapshot[".github/workflows/build.yml"]);
-    expect(buildWorkflow.jobs.build.container.image).toStrictEqual(
-      "jsii/superchain:1-buster-slim"
-    );
-  });
-
-  it("uses jsii/superchain:1-buster-slim-node14 for cdk v2", () => {
+describe("node version in workflow", () => {
+  it("does setup default version", () => {
     const project = new TestProject({ cdkVersion: "2.12.0" });
     const snapshot = synthSnapshot(project);
     const buildWorkflow = YAML.parse(snapshot[".github/workflows/build.yml"]);
-    expect(buildWorkflow.jobs.build.container.image).toStrictEqual(
-      "jsii/superchain:1-buster-slim-node14"
+    expect(buildWorkflow.jobs.build).toMatchSnapshot();
+    expect(buildWorkflow.jobs.build.steps).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          uses: "actions/setup-node@v3",
+          with: {
+            "node-version": "16.x",
+          },
+        }),
+      ])
     );
+  });
+
+  it("does use minNodeVersion", () => {
+    const project = new TestProject({
+      cdkVersion: "2.12.0",
+      minNodeVersion: "18.0.0",
+    });
+    const snapshot = synthSnapshot(project);
+    const buildWorkflow = YAML.parse(snapshot[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build).toMatchSnapshot();
+    expect(buildWorkflow.jobs.build.steps).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          uses: "actions/setup-node@v3",
+          with: {
+            "node-version": "18.0.0",
+          },
+        }),
+      ])
+    );
+  });
+
+  it("does setup a custom version", () => {
+    const project = new TestProject({
+      cdkVersion: "2.12.0",
+      minNodeVersion: "16.0.0",
+      workflowNodeVersion: "18.x",
+    });
+    const snapshot = synthSnapshot(project);
+    const buildWorkflow = YAML.parse(snapshot[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build).toMatchSnapshot();
+    expect(buildWorkflow.jobs.build.steps).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          uses: "actions/setup-node@v3",
+          with: {
+            "node-version": "18.x",
+          },
+        }),
+      ])
+    );
+  });
+});
+
+describe("workflow container image", () => {
+  it("does not use an image by default for cdk v1", () => {
+    const project = new TestProject({ cdkVersion: "1.100.0" });
+    const snapshot = synthSnapshot(project);
+    const buildWorkflow = YAML.parse(snapshot[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build).not.toHaveProperty("container");
+  });
+
+  it("does not use an image by default for cdk v2", () => {
+    const project = new TestProject({ cdkVersion: "2.12.0" });
+    const snapshot = synthSnapshot(project);
+    const buildWorkflow = YAML.parse(snapshot[".github/workflows/build.yml"]);
+    expect(buildWorkflow.jobs.build).not.toHaveProperty("container");
   });
 
   it("uses the user-defined image if specified", () => {

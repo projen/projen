@@ -30,12 +30,12 @@ test("bundler.addBundle() defines a bundle", () => {
 
   const hello = p.bundler.addBundle("./src/hello.ts", {
     platform: "node",
-    target: "node12",
+    target: "node16",
   });
 
   const world = p.bundler.addBundle("./src/foo/world.ts", {
     platform: "node",
-    target: "node14",
+    target: "node18",
     externals: ["aws-sdk", "request"],
     sourcemap: true,
   });
@@ -66,7 +66,7 @@ test("bundler.addBundle() defines a bundle", () => {
     name: "bundle:hello",
     steps: [
       {
-        exec: 'esbuild --bundle ./src/hello.ts --target="node12" --platform="node" --outfile="assets/hello/index.js"',
+        exec: 'esbuild --bundle ./src/hello.ts --target="node16" --platform="node" --outfile="assets/hello/index.js"',
       },
     ],
   });
@@ -76,7 +76,7 @@ test("bundler.addBundle() defines a bundle", () => {
     name: "bundle:foo/world",
     steps: [
       {
-        exec: 'esbuild --bundle ./src/foo/world.ts --target="node14" --platform="node" --outfile="assets/foo/world/index.js" --external:aws-sdk --external:request --sourcemap',
+        exec: 'esbuild --bundle ./src/foo/world.ts --target="node18" --platform="node" --outfile="assets/foo/world/index.js" --external:aws-sdk --external:request --sourcemap',
       },
     ],
   });

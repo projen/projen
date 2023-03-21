@@ -343,7 +343,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -443,7 +443,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -472,7 +472,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -699,7 +699,7 @@ tsconfig.tsbuildinfo
       Object {
         "name": "@types/node",
         "type": "build",
-        "version": "^14",
+        "version": "^16",
       },
       Object {
         "name": "@typescript-eslint/eslint-plugin",
@@ -1333,7 +1333,7 @@ UNEXPECTED BREAKING CHANGES: add keys such as 'removed:constructs.Node.of' to .c
     },
     "devDependencies": Object {
       "@types/jest": "^27",
-      "@types/node": "^14",
+      "@types/node": "^16",
       "@typescript-eslint/eslint-plugin": "^5",
       "@typescript-eslint/parser": "^5",
       "eslint": "^8",
@@ -1584,7 +1584,7 @@ Object {
     Object {
       "uses": "actions/setup-node@v3",
       "with": Object {
-        "node-version": "14.x",
+        "node-version": "16.x",
       },
     },
     Object {
@@ -1655,7 +1655,7 @@ Object {
     Object {
       "uses": "actions/setup-node@v3",
       "with": Object {
-        "node-version": "14.x",
+        "node-version": "16.x",
       },
     },
     Object {
@@ -1715,7 +1715,7 @@ Object {
     Object {
       "uses": "actions/setup-node@v3",
       "with": Object {
-        "node-version": "14.x",
+        "node-version": "16.x",
       },
     },
     Object {
@@ -1773,7 +1773,7 @@ Object {
     Object {
       "uses": "actions/setup-node@v3",
       "with": Object {
-        "node-version": "14.x",
+        "node-version": "16.x",
       },
     },
     Object {
@@ -1835,7 +1835,7 @@ Object {
     Object {
       "uses": "actions/setup-node@v3",
       "with": Object {
-        "node-version": "14.x",
+        "node-version": "16.x",
       },
     },
     Object {
@@ -1895,7 +1895,7 @@ Object {
     Object {
       "uses": "actions/setup-node@v3",
       "with": Object {
-        "node-version": "14.x",
+        "node-version": "16.x",
       },
     },
     Object {
@@ -1947,7 +1947,7 @@ Object {
     Object {
       "uses": "actions/setup-node@v3",
       "with": Object {
-        "node-version": "14.x",
+        "node-version": "16.x",
       },
     },
     Object {
@@ -2006,7 +2006,7 @@ Object {
     Object {
       "uses": "actions/setup-node@v3",
       "with": Object {
-        "node-version": "14.x",
+        "node-version": "16.x",
       },
     },
     Object {
@@ -2052,7 +2052,7 @@ Object {
     Object {
       "uses": "actions/setup-node@v3",
       "with": Object {
-        "node-version": "14.x",
+        "node-version": "16.x",
       },
     },
     Object {
@@ -2098,7 +2098,7 @@ Object {
     Object {
       "uses": "actions/setup-node@v3",
       "with": Object {
-        "node-version": "14.x",
+        "node-version": "16.x",
       },
     },
     Object {
@@ -2194,7 +2194,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -2223,7 +2223,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -2256,7 +2256,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - uses: actions/setup-go@v3
         with:
           go-version: ^1.16.0
@@ -2342,7 +2342,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -2371,7 +2371,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -2404,7 +2404,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - uses: actions/setup-go@v3
         with:
           go-version: ^1.16.0
@@ -2487,7 +2487,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -2516,7 +2516,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -2549,7 +2549,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 3.x
@@ -2630,7 +2630,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -2659,7 +2659,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - name: Download build artifacts
         uses: actions/download-artifact@v3
         with:
@@ -2692,7 +2692,7 @@ jobs:
     steps:
       - uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 3.x

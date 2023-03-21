@@ -72,7 +72,7 @@ new AwsCdkConstructLibrary({
   // ...
   lambdaOptions: {
     // target node.js runtime
-    runtime: awscdk.LambdaRuntime.NODEJS_14_X,
+    runtime: awscdk.LambdaRuntime.NODEJS_18_X,
 
     bundlingOptions: {
       // list of node modules to exclude from the bundle
@@ -259,12 +259,12 @@ the captured snapshot. The build will fail if the output differs.
 
 For each integration test, the following set of tasks are created:
 
-|Task|Description|
-|----|-----------|
-|`integ:NAME:deploy`|Deploys & destroys the test app and updates the snapshot.|
-|`integ:NAME:assert`|Synthesizes the test app and compares it with the snapshot (this is the task that runs during build)|
-|`integ:NAME:snapshot`|Synthesizes the test app and updates the snapshot (not recommended to use because it bypasses deployment).|
-|`integ:NAME:destroy`|Destroys a previously deployed test app.|
+| Task                  | Description                                                                                                |
+| --------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `integ:NAME:deploy`   | Deploys & destroys the test app and updates the snapshot.                                                  |
+| `integ:NAME:assert`   | Synthesizes the test app and compares it with the snapshot (this is the task that runs during build)       |
+| `integ:NAME:snapshot` | Synthesizes the test app and updates the snapshot (not recommended to use because it bypasses deployment). |
+| `integ:NAME:destroy`  | Destroys a previously deployed test app.                                                                   |
 
 ### Writing test assertions
 
