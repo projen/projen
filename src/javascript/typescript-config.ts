@@ -1,6 +1,7 @@
 import { NodeProject } from ".";
 import { Component } from "../component";
 import { JsonFile } from "../json";
+import { Project } from "../project";
 
 export interface TypescriptConfigOptions {
   /**
@@ -447,7 +448,7 @@ export class TypescriptConfig extends Component {
   public readonly fileName: string;
   public readonly file: JsonFile;
 
-  constructor(project: NodeProject, options: TypescriptConfigOptions) {
+  constructor(project: Project, options: TypescriptConfigOptions) {
     super(project);
     const fileName = options.fileName ?? "tsconfig.json";
 
@@ -466,7 +467,9 @@ export class TypescriptConfig extends Component {
       },
     });
 
-    project.npmignore?.exclude(`/${fileName}`);
+    if (project instanceof NodeProject) {
+      project.npmignore?.exclude(`/${fileName}`);
+    }
   }
 
   public addInclude(pattern: string) {

@@ -345,6 +345,18 @@ test("python project can include .projenrc.js", () => {
   });
 });
 
+test("python project can include .projenrc.ts", () => {
+  withProjectDir((projectdir) => {
+    execProjenCLI(projectdir, ["new", "python", "--projenrc-ts", "--no-synth"]);
+
+    const output = directorySnapshot(projectdir);
+    expect(output[".projenrc.py"]).toBeUndefined();
+    expect(output[".projenrc.js"]).toBeUndefined();
+    expect(output[".projenrc.ts"]).toBeDefined();
+    expect(output[".projenrc.ts"]).toContain('import { python } from "projen"');
+  });
+});
+
 test("python project can define an array option", () => {
   withProjectDir((projectdir) => {
     execProjenCLI(projectdir, [
