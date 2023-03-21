@@ -1,7 +1,7 @@
 import { resolve } from "path";
 import { existsSync, outputFileSync } from "fs-extra";
-import { Component } from "../component";
 import { renderJavaScriptOptions } from "../javascript/render-options";
+import { ProjenrcFile } from "../projenrc";
 import { TypeScriptProject } from "../typescript";
 
 export interface ProjenrcOptions {
@@ -23,8 +23,8 @@ export interface ProjenrcOptions {
 /**
  * Sets up a typescript project to use TypeScript for projenrc.
  */
-export class Projenrc extends Component {
-  private readonly rcfile: string;
+export class Projenrc extends ProjenrcFile {
+  public readonly filePath: string;
   private readonly _projenCodeDir: string;
   private readonly _tsProject: TypeScriptProject;
 
@@ -32,7 +32,7 @@ export class Projenrc extends Component {
     super(project);
     this._tsProject = project;
 
-    this.rcfile = options.filename ?? ".projenrc.ts";
+    this.filePath = options.filename ?? ".projenrc.ts";
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
 
     // this is the task projen executes when running `projen` without a
@@ -43,25 +43,25 @@ export class Projenrc extends Component {
     // we use "tsconfig.dev.json" here to allow projen source files to reside
     // anywhere in the project tree.
     project.defaultTask?.exec(
-      `ts-node --project ${project.tsconfigDev.fileName} ${this.rcfile}`
+      `ts-node --project ${project.tsconfigDev.fileName} ${this.filePath}`
     );
 
     this.generateProjenrc();
   }
 
   public preSynthesize(): void {
-    this._tsProject.tsconfigDev.addInclude(this.rcfile);
+    this._tsProject.tsconfigDev.addInclude(this.filePath);
     this._tsProject.tsconfigDev.addInclude(`${this._projenCodeDir}/**/*.ts`);
 
     this._tsProject.eslint?.addLintPattern(this._projenCodeDir);
-    this._tsProject.eslint?.addLintPattern(this.rcfile);
-    this._tsProject.eslint?.allowDevDeps(this.rcfile);
+    this._tsProject.eslint?.addLintPattern(this.filePath);
+    this._tsProject.eslint?.allowDevDeps(this.filePath);
     this._tsProject.eslint?.allowDevDeps(`${this._projenCodeDir}/**/*.ts`);
-    this._tsProject.eslint?.addIgnorePattern(`!${this.rcfile}`);
+    this._tsProject.eslint?.addIgnorePattern(`!${this.filePath}`);
     this._tsProject.eslint?.addIgnorePattern(`!${this._projenCodeDir}/**/*.ts`);
 
     this._tsProject.eslint?.addOverride({
-      files: [this.rcfile],
+      files: [this.filePath],
       rules: {
         "@typescript-eslint/no-require-imports": "off",
         "import/no-extraneous-dependencies": "off",
@@ -70,7 +70,7 @@ export class Projenrc extends Component {
   }
 
   private generateProjenrc() {
-    const rcfile = resolve(this.project.outdir, this.rcfile);
+    const rcfile = resolve(this.project.outdir, this.filePath);
     if (existsSync(rcfile)) {
       return; // already exists
     }

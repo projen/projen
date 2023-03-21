@@ -696,6 +696,7 @@ export class NodeProject extends GitHubProject {
             : undefined,
           labels: autoApproveLabel(depsAutoApprove),
           gitIdentity: this.workflowGitIdentity,
+          permissions: workflowPermissions,
         },
       };
       this.upgradeWorkflow = new UpgradeDependencies(

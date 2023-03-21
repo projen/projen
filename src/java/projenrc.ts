@@ -1,11 +1,11 @@
-import { dirname, join } from "path";
-import { existsSync, mkdirpSync, outputFileSync } from "fs-extra";
+import { join, relative } from "path";
+import { existsSync, outputFileSync } from "fs-extra";
 import { Pom } from "./pom";
 import { PROJEN_VERSION } from "../common";
-import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { ProjectOption, readJsiiManifest } from "../inventory";
 import { Project } from "../project";
+import { ProjenrcFile } from "../projenrc";
 
 /**
  * Options for `Projenrc`.
@@ -45,7 +45,7 @@ export interface ProjenrcOptions {
  * `synth` task which will compile & execute `main()` from
  * `src/main/java/projenrc.java`.
  */
-export class Projenrc extends Component {
+export class Projenrc extends ProjenrcFile {
   /**
    * The name of the java class that includes the projen entrypoint.
    */
@@ -87,6 +87,38 @@ export class Projenrc extends Component {
     this.generateProjenrc();
   }
 
+  private get javaClass(): string {
+    const split = this.className.split(".");
+    if (split.length === 1) {
+      return split[0];
+    }
+    return split[split.length - 1];
+  }
+
+  private get javaPackage(): string[] {
+    const split = this.className.split(".");
+    if (split.length === 1) {
+      return [];
+    }
+    return split.slice(0, split.length - 2);
+  }
+
+  /**
+   * The path of the projenrc file.
+   */
+  public get filePath(): string {
+    const dir = this.testScope ? "src/test/java" : "src/main/java";
+
+    const javaFile = join(
+      this.project.outdir,
+      dir,
+      ...this.javaPackage,
+      this.javaClass + ".java"
+    );
+
+    return relative(this.project.outdir, javaFile);
+  }
+
   private generateProjenrc() {
     const bootstrap = this.project.initProject;
     if (!bootstrap) {
@@ -110,27 +142,8 @@ export class Projenrc extends Component {
       );
       return;
     }
-
-    const dir = this.testScope ? "src/test/java" : "src/main/java";
-    const split = this.className.split(".");
-    let javaClass: string, javaPackage: string[];
-    if (split.length === 1) {
-      javaClass = split[0];
-      javaPackage = [];
-    } else {
-      javaPackage = split.slice(0, split.length - 2);
-      javaClass = split[split.length - 1];
-    }
-
-    const javaFile = join(
-      this.project.outdir,
-      dir,
-      ...javaPackage,
-      javaClass + ".java"
-    );
-
     // skip if file exists
-    if (existsSync(javaFile)) {
+    if (existsSync(this.filePath)) {
       return;
     }
 
@@ -153,8 +166,8 @@ export class Projenrc extends Component {
       jsiiManifest
     );
 
-    if (javaPackage.length > 0) {
-      emit(`package ${javaPackage.join(".")};`);
+    if (this.javaPackage.length > 0) {
+      emit(`package ${this.javaPackage.join(".")};`);
       emit();
     }
 
@@ -171,7 +184,7 @@ export class Projenrc extends Component {
       emit(`import ${javaTarget.package}.${optionTypeName};`);
     }
     emit();
-    openBlock(`public class ${javaClass}`);
+    openBlock(`public class ${this.javaClass}`);
     openBlock("public static void main(String[] args)");
     emit(
       `${jsiiType.name} project = new ${jsiiType.name}(${renderedOptions});`
@@ -180,11 +193,10 @@ export class Projenrc extends Component {
     closeBlock();
     closeBlock();
 
-    mkdirpSync(dirname(javaFile));
-    outputFileSync(javaFile, lines.join("\n"));
+    outputFileSync(join(this.project.outdir, this.filePath), lines.join("\n"));
 
     this.project.logger.info(
-      `Project definition file was created at ${javaFile}`
+      `Project definition file was created at ${this.filePath}`
     );
   }
 }

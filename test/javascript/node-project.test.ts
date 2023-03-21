@@ -1162,6 +1162,13 @@ describe("scoped private packages", () => {
         "id-token"
       );
     });
+
+    test("does not add id-token permission to upgrade workflow", () => {
+      const workflow = yaml.parse(output[".github/workflows/upgrade-main.yml"]);
+      expect(Object.keys(workflow.jobs.upgrade.permissions)).not.toContain(
+        "id-token"
+      );
+    });
   });
 
   describe("Auth Provider GITHUB_OIDC", () => {
@@ -1245,6 +1252,16 @@ describe("scoped private packages", () => {
       expect(workflow.jobs.release.permissions).toEqual(
         expect.objectContaining({
           "id-token": "write",
+        })
+      );
+    });
+
+    test("adds id-token permission to upgrade workflow", () => {
+      const workflow = yaml.parse(output[".github/workflows/upgrade-main.yml"]);
+      expect(workflow.jobs.upgrade.permissions).toEqual(
+        expect.objectContaining({
+          "id-token": "write",
+          contents: "read",
         })
       );
     });
