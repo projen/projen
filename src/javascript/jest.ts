@@ -428,7 +428,7 @@ export interface JestConfigOptions {
    * synchronous function for transforming source files.
    * @default - {"\\.[jt]sx?$": "babel-jest"}
    */
-  readonly transform?: { [key: string]: string | [string, any] };
+  readonly transform?: { [key: string]: Transform };
 
   /**
    * An array of regexp pattern strings that are matched against all source file paths before transformation.
@@ -465,7 +465,7 @@ export interface JestConfigOptions {
    *
    * @default -
    */
-  readonly watchPlugins?: [string | [string, any]];
+  readonly watchPlugins?: WatchPlugin[];
 
   /**
    * Whether to use watchman for file crawling.
@@ -476,7 +476,52 @@ export interface JestConfigOptions {
   /**
    * Escape hatch to allow any value
    */
+  readonly additionalOptions?: { [name: string]: any };
+
+  /**
+   * Escape hatch to allow any value (JS/TS only)
+   *
+   * @deprecated use `additionalOptions` instead.
+   *
+   * @jsii ignore
+   */
   readonly [name: string]: any;
+}
+
+export class Transform {
+  public constructor(
+    private readonly name: string,
+    private readonly options?: any
+  ) {}
+
+  /**
+   * @jsii ignore
+   * @internal
+   */
+  public toJSON() {
+    if (this.options != null) {
+      return [this.name, this.options];
+    }
+    return this.name;
+  }
+}
+
+export class WatchPlugin {
+  public constructor(
+    private readonly name: string,
+    private readonly options?: any
+  ) {}
+
+  /**
+   * @jsii ignore
+   * @internal
+   */
+  public toJSON() {
+    if (this.options != null) {
+      return [this.name, this.options];
+    }
+    return this.name;
+  }
 }
 
 export interface JestOptions {
@@ -582,7 +627,23 @@ export interface HasteConfig {
   readonly throwOnModuleCollision?: boolean;
 }
 
-type JestReporter = [string, { [key: string]: any }] | string;
+export class JestReporter {
+  public constructor(
+    private readonly name: string,
+    private readonly options?: { [key: string]: any }
+  ) {}
+
+  /**
+   * @jsii ignore
+   * @internal
+   */
+  public toJSON(): any {
+    if (this.options == null) {
+      return this.name;
+    }
+    return [this.name, this.options];
+  }
+}
 
 /**
  * Installs the following npm scripts:
@@ -621,7 +682,10 @@ export class Jest extends Component {
   private readonly watchIgnorePatterns: string[];
   private readonly coverageReporters: string[];
   private readonly reporters: JestReporter[];
-  private readonly jestConfig?: JestConfigOptions;
+  private readonly jestConfig?: JestConfigOptions & {
+    readonly additionalOptions: undefined;
+    [key: string]: unknown;
+  };
   private readonly extraCliOptions: string[];
   private _snapshotResolver: string | undefined;
 
@@ -640,7 +704,11 @@ export class Jest extends Component {
     this.jestVersion = options.jestVersion ? `@${options.jestVersion}` : "";
     project.addDevDeps(`jest${this.jestVersion}`);
 
-    this.jestConfig = options.jestConfig;
+    this.jestConfig = {
+      ...options.jestConfig,
+      additionalOptions: undefined,
+      ...options.jestConfig?.additionalOptions,
+    };
     this.extraCliOptions = options.extraCliOptions ?? [];
 
     this.ignorePatterns = this.jestConfig?.testPathIgnorePatterns ??
@@ -664,7 +732,7 @@ export class Jest extends Component {
     this.reporters = [];
 
     if (options.preserveDefaultReporters ?? true) {
-      this.reporters.unshift("default");
+      this.reporters.unshift(new JestReporter("default"));
     }
 
     this.config = {
@@ -681,12 +749,14 @@ export class Jest extends Component {
       testMatch: this.testMatch,
       reporters: this.reporters,
       snapshotResolver: (() => this._snapshotResolver) as any,
-    } as JestConfigOptions;
+    } satisfies JestConfigOptions;
 
     if (options.junitReporting ?? true) {
       const reportsDir = DEFAULT_TEST_REPORTS_DIR;
 
-      this.addReporter(["jest-junit", { outputDirectory: reportsDir }]);
+      this.addReporter(
+        new JestReporter("jest-junit", { outputDirectory: reportsDir })
+      );
 
       project.addDevDeps("jest-junit@^15");
 

@@ -384,25 +384,25 @@
           "exec": "yarn upgrade npm-check-updates"
         },
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii,comment-json,yaml,markmac'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='jsii,typescript,comment-json,yaml,markmac'"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii,comment-json,yaml,markmac'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='jsii,typescript,comment-json,yaml,markmac'"
         },
         {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii,comment-json,yaml,markmac'"
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='jsii,typescript,comment-json,yaml,markmac'"
         },
         {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii,comment-json,yaml,markmac'"
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='jsii,typescript,comment-json,yaml,markmac'"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii,comment-json,yaml,markmac'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='jsii,typescript,comment-json,yaml,markmac'"
         },
         {
           "exec": "yarn install --check-files"
         },
         {
-          "exec": "yarn upgrade @types/conventional-changelog-config-spec @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest-junit jest jsii-diff jsii-docgen jsii-pacmak jsii npm-check-updates prettier standard-version ts-jest typescript @iarna/toml case chalk comment-json conventional-changelog-config-spec fast-json-patch glob ini semver shx xmlbuilder2 yaml yargs zlib"
+          "exec": "yarn upgrade @types/conventional-changelog-config-spec @types/glob @types/ini @types/jest @types/node @types/semver @types/yargs @typescript-eslint/eslint-plugin @typescript-eslint/parser all-contributors-cli esbuild eslint-config-prettier eslint-import-resolver-node eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint jest jest-junit jsii-diff jsii-docgen jsii-pacmak jsii npm-check-updates prettier standard-version ts-jest typescript @iarna/toml case chalk comment-json conventional-changelog-config-spec fast-json-patch glob ini semver shx xmlbuilder2 yaml yargs zlib"
         },
         {
           "exec": "/bin/bash ./projen.bash"
