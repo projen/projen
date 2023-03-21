@@ -9,7 +9,12 @@ import {
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
-import { ContainerOptions, JobStep } from "../github/workflows-model";
+import {
+  ContainerOptions,
+  JobStep,
+  JobPermission,
+  JobPermissions,
+} from "../github/workflows-model";
 import { NodeProject } from "../javascript";
 import { Release } from "../release";
 import { Task } from "../task";
@@ -114,6 +119,7 @@ export class UpgradeDependencies extends Component {
 
   private readonly gitIdentity: GitIdentity;
   private readonly postBuildSteps: JobStep[];
+  private readonly permissions: JobPermissions;
 
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
@@ -123,6 +129,10 @@ export class UpgradeDependencies extends Component {
     this.pullRequestTitle = options.pullRequestTitle ?? "upgrade dependencies";
     this.gitIdentity =
       options.workflowOptions?.gitIdentity ?? DEFAULT_GITHUB_ACTIONS_USER;
+    this.permissions = {
+      contents: JobPermission.READ,
+      ...options.workflowOptions?.permissions,
+    };
     this.postBuildSteps = [];
     this.containerOptions = options.workflowOptions?.container;
     project.addDevDeps("npm-check-updates@^16");
@@ -292,13 +302,6 @@ export class UpgradeDependencies extends Component {
   private createUpgrade(task: Task, github: GitHub, branch?: string): Upgrade {
     const runsOn = this.options.workflowOptions?.runsOn ?? ["ubuntu-latest"];
 
-    // thats all we should need at this stage since all we do is clone.
-    // note that this also prevents new code that is introduced in the upgrade
-    // to have write access to anything, in case its somehow executed. (for example during build)
-    const permissions: workflows.JobPermissions = {
-      contents: workflows.JobPermission.READ,
-    };
-
     const with_ = {
       ...(branch ? { ref: branch } : {}),
       ...(github.downloadLfs ? { lfs: true } : {}),
@@ -329,7 +332,7 @@ export class UpgradeDependencies extends Component {
       job: {
         name: "Upgrade",
         container: this.containerOptions,
-        permissions: permissions,
+        permissions: this.permissions,
         runsOn: runsOn ?? ["ubuntu-latest"],
         steps: steps,
         outputs: {
@@ -487,6 +490,13 @@ export interface UpgradeDependenciesWorkflowOptions {
    * @default ["ubuntu-latest"]
    */
   readonly runsOn?: string[];
+
+  /**
+   * Permissions granted to the upgrade job
+   * To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`
+   * @default `{ contents: JobPermission.READ }`
+   */
+  readonly permissions?: JobPermissions;
 }
 
 /**
