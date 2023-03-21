@@ -177,11 +177,17 @@ test("subprojects use root level default task", () => {
   const out = synthSnapshot(root);
   expect(out["one/.projen/tasks.json"]).toMatchSnapshot();
   expect(out["one/.projen/tasks.json"].tasks.default.steps).toEqual([
-    { exec: "cd .. && npx projen default" },
+    {
+      cwd: "..",
+      exec: "npx projen default",
+    },
   ]);
   expect(out["one/two/.projen/tasks.json"]).toMatchSnapshot();
   expect(out["one/two/.projen/tasks.json"].tasks.default.steps).toEqual([
-    { exec: "cd ../.. && npx projen default" },
+    {
+      cwd: "../..",
+      exec: "npx projen default",
+    },
   ]);
 });
 
