@@ -1,6 +1,5 @@
 import { readFileSync, writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
-import { readJsonSync } from "fs-extra";
 import * as semver from "semver";
 import * as YAML from "yaml";
 import { Project, DependencyType } from "../../src";
@@ -24,7 +23,9 @@ function mockYarnInstall(
   outdir: string,
   latestPackages: Record<string, string>
 ) {
-  const pkgJson = readJsonSync(join(outdir, "package.json"));
+  const pkgJson = JSON.parse(
+    readFileSync(join(outdir, "package.json"), "utf-8")
+  );
   const yarnLock: Record<string, string> = {};
   const depRanges: Record<string, string[]> = {};
   const depVersions: Record<string, string[]> = {};
@@ -253,7 +254,9 @@ test('"*" peer dependencies are pinned in devDependencies', () => {
 
   project.synth();
 
-  const pkgFile = readJsonSync(join(project.outdir, "package.json"));
+  const pkgFile = JSON.parse(
+    readFileSync(join(project.outdir, "package.json"), "utf-8")
+  );
 
   expect(pkgFile.peerDependencies).toStrictEqual({ ms: "^1.2.3" });
   expect(pkgFile.devDependencies).toStrictEqual({ ms: "1.2.3" });
@@ -297,7 +300,9 @@ test("manually set devDependencies are not changed when a peerDependency is adde
 
   project.synth();
 
-  const pkgFile = readJsonSync(join(project.outdir, "package.json"));
+  const pkgFile = JSON.parse(
+    readFileSync(join(project.outdir, "package.json"), "utf-8")
+  );
 
   expect(pkgFile.peerDependencies).toStrictEqual({ ms: "^1.3.4" });
   expect(pkgFile.devDependencies).toStrictEqual({ ms: "^1.3.0" });
@@ -326,7 +331,9 @@ test("devDependencies are not pinned by peerDependencies if a regular (runtime) 
 
   project.synth();
 
-  const pkgFile = readJsonSync(join(project.outdir, "package.json"));
+  const pkgFile = JSON.parse(
+    readFileSync(join(project.outdir, "package.json"), "utf-8")
+  );
 
   expect(pkgFile.peerDependencies).toStrictEqual({ ms: "^1.3.8" });
   expect(pkgFile.dependencies).toStrictEqual({ ms: "^1.3.8" });
@@ -355,7 +362,9 @@ test("devDependencies are not pinned by peerDependencies if pinnedDevDependency 
 
   project.synth();
 
-  const pkgFile = readJsonSync(join(project.outdir, "package.json"));
+  const pkgFile = JSON.parse(
+    readFileSync(join(project.outdir, "package.json"), "utf-8")
+  );
 
   expect(pkgFile.peerDependencies).toStrictEqual({ ms: "^1.4.0" });
   expect(pkgFile.devDependencies).toBeUndefined();
@@ -383,7 +392,9 @@ test("file path dependencies are respected", () => {
 
   project.synth();
 
-  const pkgFile = readJsonSync(join(project.outdir, "package.json"));
+  const pkgFile = JSON.parse(
+    readFileSync(join(project.outdir, "package.json"), "utf-8")
+  );
 
   expect(pkgFile.peerDependencies).toStrictEqual({ ms: "file:../ms" });
   expect(pkgFile.devDependencies).toBeUndefined();
@@ -414,7 +425,9 @@ test("local dependencies can be specified using 'file:' prefix", () => {
 
   project.synth();
 
-  const pkgFile = readJsonSync(join(project.outdir, "package.json"));
+  const pkgFile = JSON.parse(
+    readFileSync(join(project.outdir, "package.json"), "utf-8")
+  );
 
   expect(pkgFile.peerDependencies).toStrictEqual({ "local-dep": localDepPath });
 });

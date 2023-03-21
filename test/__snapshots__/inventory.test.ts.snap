@@ -838,9 +838,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -850,7 +850,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -2003,9 +2003,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -2015,7 +2015,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -2072,6 +2072,42 @@ Array [
         ],
         "simpleType": "ProjenrcOptions",
         "switch": "projenrc-python-options",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use projenrc in TypeScript.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projenrcTs",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcTs",
+        ],
+        "simpleType": "boolean",
+        "switch": "projenrc-ts",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options related to projenrc in TypeScript.",
+        "featured": false,
+        "fqn": "projen.typescript.ProjenrcTsOptions",
+        "fullType": Object {
+          "fqn": "projen.typescript.ProjenrcTsOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "projenrcTsOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcTsOptions",
+        ],
+        "simpleType": "ProjenrcTsOptions",
+        "switch": "projenrc-ts-options",
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
@@ -4364,9 +4400,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -4376,7 +4412,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -7275,9 +7311,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -7287,7 +7323,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -9100,9 +9136,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -9112,7 +9148,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -9169,6 +9205,42 @@ Array [
         ],
         "simpleType": "ProjenrcOptions",
         "switch": "projenrc-python-options",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use projenrc in TypeScript.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projenrcTs",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcTs",
+        ],
+        "simpleType": "boolean",
+        "switch": "projenrc-ts",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options related to projenrc in TypeScript.",
+        "featured": false,
+        "fqn": "projen.typescript.ProjenrcTsOptions",
+        "fullType": Object {
+          "fqn": "projen.typescript.ProjenrcTsOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "projenrcTsOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcTsOptions",
+        ],
+        "simpleType": "ProjenrcTsOptions",
+        "switch": "projenrc-ts-options",
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
@@ -11299,9 +11371,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -11311,7 +11383,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -14014,9 +14086,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -14026,7 +14098,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -16787,9 +16859,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -16799,7 +16871,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -18355,9 +18427,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -18367,7 +18439,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -20341,9 +20413,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -20353,7 +20425,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -22819,9 +22891,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -22831,7 +22903,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -25185,9 +25257,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -25197,7 +25269,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -27537,9 +27609,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -27549,7 +27621,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -28388,9 +28460,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -28400,7 +28472,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -29075,9 +29147,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -29087,7 +29159,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -29144,6 +29216,42 @@ Array [
         ],
         "simpleType": "ProjenrcOptions",
         "switch": "projenrc-python-options",
+      },
+      Object {
+        "default": "false",
+        "docs": "Use projenrc in TypeScript.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "projenrcTs",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcTs",
+        ],
+        "simpleType": "boolean",
+        "switch": "projenrc-ts",
+      },
+      Object {
+        "default": "- default options",
+        "docs": "Options related to projenrc in TypeScript.",
+        "featured": false,
+        "fqn": "projen.typescript.ProjenrcTsOptions",
+        "fullType": Object {
+          "fqn": "projen.typescript.ProjenrcTsOptions",
+        },
+        "jsonLike": true,
+        "kind": "interface",
+        "name": "projenrcTsOptions",
+        "optional": true,
+        "parent": "PythonProjectOptions",
+        "path": Array [
+          "projenrcTsOptions",
+        ],
+        "simpleType": "ProjenrcTsOptions",
+        "switch": "projenrc-ts-options",
       },
       Object {
         "default": "\\"PROJEN_GITHUB_TOKEN\\"",
@@ -30911,9 +31019,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -30923,7 +31031,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -33265,9 +33373,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -33277,7 +33385,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -35743,9 +35851,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -35755,7 +35863,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {
@@ -38199,9 +38307,9 @@ Array [
         "default": "- default options",
         "docs": "Options for .projenrc.json.",
         "featured": false,
-        "fqn": "projen.ProjenrcOptions",
+        "fqn": "projen.ProjenrcJsonOptions",
         "fullType": Object {
-          "fqn": "projen.ProjenrcOptions",
+          "fqn": "projen.ProjenrcJsonOptions",
         },
         "jsonLike": true,
         "kind": "interface",
@@ -38211,7 +38319,7 @@ Array [
         "path": Array [
           "projenrcJsonOptions",
         ],
-        "simpleType": "ProjenrcOptions",
+        "simpleType": "ProjenrcJsonOptions",
         "switch": "projenrc-json-options",
       },
       Object {

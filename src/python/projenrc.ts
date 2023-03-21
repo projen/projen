@@ -1,11 +1,11 @@
+import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { dirname, join } from "path";
 import { snake } from "case";
-import { existsSync, mkdirpSync, outputFileSync } from "fs-extra";
 import { PROJEN_VERSION } from "../common";
-import { Component } from "../component";
 import { DependencyType } from "../dependencies";
 import { readJsiiManifest } from "../inventory";
 import { Project } from "../project";
+import { ProjenrcFile } from "../projenrc";
 
 /**
  * Options for `Projenrc`.
@@ -30,17 +30,17 @@ export interface ProjenrcOptions {
  * This will install `projen` as a Python dependency and will add a
  * `synth` task which will run `.projenrc.py`.
  */
-export class Projenrc extends Component {
+export class Projenrc extends ProjenrcFile {
   /**
    * The name of the projenrc file.
    */
-  private readonly rcfile: string;
+  public readonly filePath: string;
 
   constructor(project: Project, options: ProjenrcOptions = {}) {
     super(project);
 
     const projenVersion = options.projenVersion ?? PROJEN_VERSION;
-    this.rcfile = options.filename ?? ".projenrc.py";
+    this.filePath = options.filename ?? ".projenrc.py";
 
     project.deps.addDependency(
       `projen@${projenVersion}`,
@@ -70,7 +70,7 @@ export class Projenrc extends Component {
       return;
     }
 
-    const pythonFile = join(this.project.outdir, this.rcfile);
+    const pythonFile = join(this.project.outdir, this.filePath);
 
     // skip if file exists
     if (existsSync(pythonFile)) {
@@ -109,8 +109,8 @@ export class Projenrc extends Component {
     emit();
     emit("project.synth()");
 
-    mkdirpSync(dirname(pythonFile));
-    outputFileSync(pythonFile, lines.join("\n"));
+    mkdirSync(dirname(pythonFile), { recursive: true });
+    writeFileSync(pythonFile, lines.join("\n"));
 
     this.project.logger.info(
       `Project definition file was created at ${pythonFile}`

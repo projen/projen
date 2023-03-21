@@ -1,6 +1,5 @@
+import { mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
-import { writeFileSync } from "fs-extra";
-import * as fs from "fs-extra";
 import { directorySnapshot, execProjenCLI, mkdtemp } from "./util";
 import { Project } from "../src/project";
 
@@ -92,7 +91,7 @@ test('running "projen" with task if there is no tasks.json', () => {
   const dir = mkdtemp();
 
   const projen = join(dir, ".projen");
-  fs.mkdirSync(projen);
+  mkdirSync(projen);
 
   const t = () => {
     execProjenCLI(dir, ["build"]);

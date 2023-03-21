@@ -1,15 +1,14 @@
 // a builtin task that sets the "version" field of the file
 // specified in OUTFILE to "0.0.0"
 
-import { readFileSync, writeFileSync } from "fs";
-import { pathExistsSync } from "fs-extra";
+import { existsSync, readFileSync, writeFileSync } from "fs";
 
 const outfile = process.env.OUTFILE;
 if (!outfile) {
   throw new Error("OUTFILE is required");
 }
 
-if (!pathExistsSync(outfile)) {
+if (!existsSync(outfile)) {
   process.exit(0); // nothing to do
 }
 

@@ -28,7 +28,6 @@ const project = new cdk.JsiiProject({
   bundledDeps: [
     "conventional-changelog-config-spec",
     "yaml@2.0.0",
-    "fs-extra",
     "yargs",
     "case",
     "glob@^8",
@@ -45,7 +44,6 @@ const project = new cdk.JsiiProject({
 
   devDeps: [
     "@types/conventional-changelog-config-spec",
-    "@types/fs-extra@^8",
     "@types/yargs",
     "@types/glob",
     "@types/semver",

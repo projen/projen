@@ -1,8 +1,7 @@
 import { execSync } from "child_process";
-import { mkdtempSync } from "fs";
+import { promises as fs, mkdtempSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
-import { readFile, readJson, writeFile } from "fs-extra";
 import * as logging from "../../src/logging";
 import { bump, BumpOptions } from "../../src/release/bump-version";
 
@@ -277,7 +276,7 @@ async function testBump(
   git("config tag.gpgsign false");
 
   const commit = async (message: string) => {
-    await writeFile(join(workdir, "dummy.txt"), message);
+    await fs.writeFile(join(workdir, "dummy.txt"), message);
     git("add .");
     git(`commit -m "${message}"`);
   };
@@ -300,9 +299,11 @@ async function testBump(
   });
 
   return {
-    version: (await readJson(join(workdir, "version.json"))).version,
-    changelog: await readFile(join(workdir, "changelog.md"), "utf8"),
-    bumpfile: await readFile(join(workdir, "bump.txt"), "utf8"),
-    tag: await readFile(join(workdir, "releasetag.txt"), "utf8"),
+    version: JSON.parse(
+      await fs.readFile(join(workdir, "version.json"), "utf-8")
+    ).version,
+    changelog: await fs.readFile(join(workdir, "changelog.md"), "utf8"),
+    bumpfile: await fs.readFile(join(workdir, "bump.txt"), "utf8"),
+    tag: await fs.readFile(join(workdir, "releasetag.txt"), "utf8"),
   };
 }

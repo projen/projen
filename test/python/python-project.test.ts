@@ -50,7 +50,7 @@ test("cannot specify multiple projenrc types", () => {
         projenrcJs: true,
       })
   ).toThrow(
-    /Only one of projenrcPython, projenrcJs, and projenrcJson can be selected./
+    /Only one of projenrcPython, projenrcJs, projenrcTs, and projenrcJson can be selected./
   );
 });
 

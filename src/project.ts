@@ -16,7 +16,7 @@ import { Logger, LoggerOptions } from "./logger";
 import { ObjectFile } from "./object-file";
 import { InitProjectOptionHints } from "./option-hints";
 import { ProjectBuild as ProjectBuild } from "./project-build";
-import { Projenrc, ProjenrcOptions } from "./projenrc-json";
+import { ProjenrcJson, ProjenrcJsonOptions } from "./projenrc-json";
 import { Renovatebot, RenovatebotOptions } from "./renovatebot";
 import { Task, TaskOptions } from "./task";
 import { Tasks } from "./tasks";
@@ -70,7 +70,7 @@ export interface ProjectOptions {
    * Options for .projenrc.json
    * @default - default options
    */
-  readonly projenrcJsonOptions?: ProjenrcOptions;
+  readonly projenrcJsonOptions?: ProjenrcJsonOptions;
 
   /**
    * The shell command to use in order to run the projen CLI.
@@ -270,7 +270,7 @@ export class Project {
     this.gitignore.include(`/${this.gitattributes.path}`);
 
     // oh no: tasks depends on gitignore so it has to be initialized after
-    // smells like dep injectionn but god forbid.
+    // smells like dep injection but god forbid.
     this.tasks = new Tasks(this);
 
     if (!this.ejected) {
@@ -307,7 +307,7 @@ export class Project {
 
     const projenrcJson = options.projenrcJson ?? false;
     if (!this.parent && projenrcJson) {
-      new Projenrc(this, options.projenrcJsonOptions);
+      new ProjenrcJson(this, options.projenrcJsonOptions);
     }
 
     if (options.renovatebot) {

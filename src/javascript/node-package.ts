@@ -1,13 +1,12 @@
-import { readFileSync } from "fs";
-import { join, resolve } from "path";
-import { parse as urlparse } from "url";
 import {
+  readFileSync,
   accessSync,
   constants,
   existsSync,
   readdirSync,
-  readJsonSync,
-} from "fs-extra";
+} from "fs";
+import { join, resolve } from "path";
+import { parse as urlparse } from "url";
 import {
   extractCodeArtifactDetails,
   minVersion,
@@ -1271,7 +1270,7 @@ export class NodePackage extends Component {
             const modulePath = require.resolve(`${name}/package.json`, {
               paths: [outdir],
             });
-            const module = readJsonSync(modulePath);
+            const module = JSON.parse(readFileSync(modulePath, "utf-8"));
             desiredVersion = `^${module.version}`;
           } catch (e) {}
 
@@ -1444,7 +1443,7 @@ export class NodePackage extends Component {
       return undefined;
     }
 
-    return readJsonSync(file);
+    return JSON.parse(readFileSync(file, "utf-8"));
   }
 
   private installDependencies() {

@@ -1,8 +1,7 @@
 import { execSync } from "child_process";
-import { mkdtempSync } from "fs";
+import { promises as fs, mkdtempSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
-import { writeFile, mkdir } from "fs-extra";
 import * as logging from "../../src/logging";
 import {
   updateChangelog,
@@ -134,11 +133,11 @@ async function testUpdateChangelog(opts: TestUpdateChangelogOpts = {}) {
     git('config user.email "you@example.com"');
     git('config user.name "Your Name"');
     git("config commit.gpgsign false");
-    await mkdir(join(workdir, "dist"));
-    await writeFile(join(workdir, versionFile), version);
-    await writeFile(inputChangelogFullPath, inputChangelogContent);
+    await fs.mkdir(join(workdir, "dist"));
+    await fs.writeFile(join(workdir, versionFile), version);
+    await fs.writeFile(inputChangelogFullPath, inputChangelogContent);
     if (!skipOutputChangelog) {
-      await writeFile(outputChangelogFullPath, outputChangelogContent);
+      await fs.writeFile(outputChangelogFullPath, outputChangelogContent);
       git(`add ${outputChangelogFullPath}`);
       git('commit -m "chore: setup"');
     }

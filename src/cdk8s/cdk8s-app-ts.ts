@@ -1,5 +1,5 @@
+import * as fs from "fs";
 import * as path from "path";
-import * as fs from "fs-extra";
 import { AutoDiscover } from "./auto-discover";
 import { Cdk8sDeps, Cdk8sDepsCommonOptions } from "./cdk8s-deps";
 import { Cdk8sDepsJs } from "./cdk8s-deps-js";
@@ -140,7 +140,7 @@ class SampleCode extends Component {
     const outdir = this.project.outdir;
     const srcdir = path.join(outdir, this.appProject.srcdir);
     if (
-      fs.pathExistsSync(srcdir) &&
+      fs.existsSync(srcdir) &&
       fs.readdirSync(srcdir).filter((x) => x.endsWith(".ts"))
     ) {
       return;
@@ -185,7 +185,7 @@ const app = new App();
 new MyChart(app, 'hello');
 app.synth();`;
 
-    fs.mkdirpSync(srcdir);
+    fs.mkdirSync(srcdir, { recursive: true });
     fs.writeFileSync(path.join(srcdir, this.appProject.appEntrypoint), srcCode);
   }
 }

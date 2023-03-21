@@ -17,6 +17,7 @@ export * from "./option-hints";
 export * from "./project";
 export * from "./project-build";
 export * from "./projects";
+export * from "./projenrc";
 export * from "./projenrc-json";
 export * from "./readme";
 export * from "./renovatebot";

@@ -1,9 +1,10 @@
+import { rmSync } from "fs";
 import * as path from "path";
-import { removeSync } from "fs-extra";
 import { resolve } from "./_resolve";
 import { PROJEN_MARKER, PROJEN_RC } from "./common";
 import { Component } from "./component";
 import { Project } from "./project";
+import { ProjenrcFile } from "./projenrc";
 import { isExecutable, isWritable, tryReadFileSync, writeFile } from "./util";
 
 export interface FileBaseOptions {
@@ -86,10 +87,11 @@ export abstract class FileBase extends Component {
     this.path = filePath;
 
     // `marker` is empty if project is being ejected or if explicitly disabled
+    const projenrc = ProjenrcFile.of(project)?.filePath ?? PROJEN_RC;
     this.marker =
       project.ejected || options.marker === false
         ? undefined
-        : `${PROJEN_MARKER}. To modify, edit ${PROJEN_RC} and run "npx projen".`;
+        : `${PROJEN_MARKER}. To modify, edit ${projenrc} and run "npx projen".`;
 
     const globPattern = `/${this.path}`;
     const committed = options.committed ?? project.commitGenerated ?? true;
@@ -143,7 +145,7 @@ export abstract class FileBase extends Component {
     const content = this.synthesizeContent(resolver);
     if (content === undefined) {
       // remove file (if exists) and skip rest of synthesis
-      removeSync(filePath);
+      rmSync(filePath, { force: true, recursive: true });
       return;
     }
 
