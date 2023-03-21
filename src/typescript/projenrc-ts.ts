@@ -1,9 +1,9 @@
 import { resolve } from "path";
 import { existsSync, outputFileSync } from "fs-extra";
-import { Component } from "../component";
 import { TypescriptConfig } from "../javascript";
 import { renderJavaScriptOptions } from "../javascript/render-options";
 import { Project } from "../project";
+import { ProjenrcFile } from "../projenrc";
 
 export interface ProjenrcTsOptions {
   /**
@@ -37,19 +37,18 @@ export interface ProjenrcTsOptions {
  *
  * Requires that `npx` is available.
  */
-export class ProjenrcTs extends Component {
+export class ProjenrcTs extends ProjenrcFile {
   /**
    * TypeScript configuration file used to compile projen source files
    */
   public readonly tsconfig: TypescriptConfig;
-
-  private readonly rcfile: string;
+  public readonly filePath: string;
   private readonly _projenCodeDir: string;
 
   constructor(project: Project, options: ProjenrcTsOptions = {}) {
     super(project);
 
-    this.rcfile = options.filename ?? ".projenrc.ts";
+    this.filePath = options.filename ?? ".projenrc.ts";
     this._projenCodeDir = options.projenCodeDir ?? "projenrc";
 
     // Create a dedicated tsconfig for projen source files
@@ -60,19 +59,19 @@ export class ProjenrcTs extends Component {
 
     // Use npx since project's deps manager is not guaranteed to be JS-based
     project.defaultTask?.exec(
-      `npx -y ts-node --project ${this.tsconfig.fileName} ${this.rcfile}`
+      `npx -y ts-node --project ${this.tsconfig.fileName} ${this.filePath}`
     );
 
     this.generateProjenrc();
   }
 
   public preSynthesize(): void {
-    this.tsconfig.addInclude(this.rcfile);
+    this.tsconfig.addInclude(this.filePath);
     this.tsconfig.addInclude(`${this._projenCodeDir}/**/*.ts`);
   }
 
   private generateProjenrc() {
-    const rcfile = resolve(this.project.outdir, this.rcfile);
+    const rcfile = resolve(this.project.outdir, this.filePath);
     if (existsSync(rcfile)) {
       return; // already exists
     }

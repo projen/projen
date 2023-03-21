@@ -2453,7 +2453,7 @@ new Projenrc(project: Project, options?: ProjenrcJsonOptions)
 A component representing the projen runtime configuration.
 
 __Extends__: [Component](#projen-component)
-__Implemented by__: [java.Projenrc](#projen-java-projenrc), [javascript.Projenrc](#projen-javascript-projenrc), [python.Projenrc](#projen-python-projenrc), [typescript.Projenrc](#projen-typescript-projenrc), [Projenrc](#projen-projenrc), [ProjenrcJson](#projen-projenrcjson)
+__Implemented by__: [java.Projenrc](#projen-java-projenrc), [javascript.Projenrc](#projen-javascript-projenrc), [python.Projenrc](#projen-python-projenrc), [typescript.Projenrc](#projen-typescript-projenrc), [typescript.ProjenrcTs](#projen-typescript-projenrcts), [Projenrc](#projen-projenrc), [ProjenrcJson](#projen-projenrcjson)
 
 ### Initializer
 
@@ -10598,7 +10598,7 @@ Requires that `npx` is available.
 
 __Submodule__: typescript
 
-__Extends__: [Component](#projen-component)
+__Extends__: [ProjenrcFile](#projen-projenrcfile)
 
 ### Initializer
 
@@ -10622,6 +10622,7 @@ new typescript.ProjenrcTs(project: Project, options?: ProjenrcTsOptions)
 
 Name | Type | Description 
 -----|------|-------------
+**filePath**🔹 | <code>string</code> | The path of the projenrc file.
 **tsconfig**🔹 | <code>[javascript.TypescriptConfig](#projen-javascript-typescriptconfig)</code> | TypeScript configuration file used to compile projen source files.
 
 ### Methods
