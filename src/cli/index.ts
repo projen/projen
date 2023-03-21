@@ -1,5 +1,5 @@
 import { resolve } from "path";
-import * as fs from "fs-extra";
+import { existsSync } from "fs";
 import * as yargs from "yargs";
 import newCommand from "./cmds/new";
 import { synth } from "./synth";
@@ -92,7 +92,7 @@ main().catch((e) => {
  * @returns path to .projen directory or undefined if not found
  */
 function findProjenDir(cwd: string): string | undefined {
-  if (fs.existsSync(resolve(cwd, PROJEN_DIR))) {
+  if (existsSync(resolve(cwd, PROJEN_DIR))) {
     return cwd;
   }
 
