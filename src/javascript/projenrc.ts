@@ -1,5 +1,5 @@
-import { resolve } from "path";
-import { existsSync, outputFileSync } from "fs-extra";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { dirname, resolve } from "path";
 import { Eslint } from "./eslint";
 import { renderJavaScriptOptions } from "./render-options";
 import { Project } from "../project";
@@ -74,7 +74,8 @@ export class Projenrc extends ProjenrcFile {
     lines.push();
     lines.push("project.synth();");
 
-    outputFileSync(rcfile, lines.join("\n"));
+    mkdirSync(dirname(rcfile), { recursive: true });
+    writeFileSync(rcfile, lines.join("\n"));
     this.project.logger.info(
       `Project definition file was created at ${rcfile}`
     );

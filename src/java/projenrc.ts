@@ -1,5 +1,5 @@
-import { join, relative } from "path";
-import { existsSync, outputFileSync } from "fs-extra";
+import { existsSync, mkdirSync, writeFileSync } from "fs";
+import { dirname, join, relative } from "path";
 import { Pom } from "./pom";
 import { PROJEN_VERSION } from "../common";
 import { DependencyType } from "../dependencies";
@@ -193,7 +193,9 @@ export class Projenrc extends ProjenrcFile {
     closeBlock();
     closeBlock();
 
-    outputFileSync(join(this.project.outdir, this.filePath), lines.join("\n"));
+    const filePath = join(this.project.outdir, this.filePath);
+    mkdirSync(dirname(filePath), { recursive: true });
+    writeFileSync(filePath, lines.join("\n"));
 
     this.project.logger.info(
       `Project definition file was created at ${this.filePath}`

@@ -1,8 +1,7 @@
 import { execSync } from "child_process";
-import { mkdtempSync } from "fs";
+import { promises as fs, mkdtempSync } from "fs";
 import { tmpdir } from "os";
 import { join } from "path";
-import { writeFile } from "fs-extra";
 import * as logging from "../../src/logging";
 import { tag, TagOptions } from "../../src/release/tag-version";
 import { execCapture } from "../../src/util";
@@ -66,11 +65,11 @@ async function testTag(opts: TestTagOpts = {}) {
   git('config user.name "Your Name"');
   git("config commit.gpgsign false");
   git("config tag.gpgsign false");
-  await writeFile(
+  await fs.writeFile(
     join(workdir, opts.testOptions?.releaseTagPath || "", releaseTagFile),
     releaseTag
   );
-  await writeFile(
+  await fs.writeFile(
     join(workdir, opts.testOptions?.changelogPath || "", changelog),
     changelogContent
   );

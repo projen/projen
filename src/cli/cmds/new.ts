@@ -1,5 +1,5 @@
+import * as fs from "fs";
 import * as path from "path";
-import * as fs from "fs-extra";
 import * as semver from "semver";
 import * as yargs from "yargs";
 import * as inventory from "../../inventory";

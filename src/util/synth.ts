@@ -1,8 +1,8 @@
+import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
 import * as JSONC from "comment-json";
 import { CommentArray } from "comment-json";
-import * as fs from "fs-extra";
 import { glob } from "glob";
 import { JsonFile } from "../json";
 import { Project } from "../project";
@@ -63,7 +63,7 @@ export function synthSnapshot(
       ),
     });
   } finally {
-    fs.removeSync(project.outdir);
+    fs.rmSync(project.outdir, { force: true, recursive: true });
 
     // values assigned to process.env.XYZ are automatically converted to strings
     if (ENV_PROJEN_DISABLE_POST === undefined) {

@@ -1,4 +1,4 @@
-import * as fs from "fs-extra";
+import * as fs from "fs";
 import { FileBase, IResolver } from "./file";
 import { Project } from "./project";
 

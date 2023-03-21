@@ -1,7 +1,7 @@
+import * as fs from "fs";
 import * as path from "path";
 import { unzipSync } from "zlib";
 import { snake } from "case";
-import * as fs from "fs-extra";
 
 const PROJEN_MODULE_ROOT = path.join(__dirname, "..");
 const PROJECT_BASE_FQN = "projen.Project";
@@ -108,7 +108,7 @@ export function readManifest(dir: string) {
   if (!fs.existsSync(jsiiFile)) {
     return undefined;
   } // no jsii manifest
-  let manifest = fs.readJsonSync(jsiiFile);
+  let manifest = JSON.parse(fs.readFileSync(jsiiFile, "utf-8"));
 
   if (manifest.schema === "jsii/file-redirect") {
     const compressedFile = path.join(dir, manifest.filename);
@@ -250,7 +250,7 @@ export function readJsiiManifest(jsiiFqn: string): any {
   }
 
   const jsiiManifestFile = require.resolve(`${moduleName}/.jsii`);
-  return fs.readJsonSync(jsiiManifestFile);
+  return JSON.parse(fs.readFileSync(jsiiManifestFile, "utf-8"));
 }
 
 function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {

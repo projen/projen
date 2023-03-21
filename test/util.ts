@@ -1,7 +1,7 @@
 import * as cp from "child_process";
+import * as fs from "fs";
 import * as os from "os";
 import * as path from "path";
-import * as fs from "fs-extra";
 import { Project } from "../src";
 import { GitHubProject, GitHubProjectOptions } from "../src/github";
 import * as logging from "../src/logging";
@@ -49,7 +49,7 @@ afterAll((done) => {
     try {
       // Note - fs-extra.removeSync is idempotent, so we're safe if the
       // directory has already been cleaned up before we get there!
-      fs.removeSync(dir);
+      fs.rmSync(dir, { force: true, recursive: true });
     } catch (e) {
       done.fail(e);
     }
@@ -71,7 +71,7 @@ export function synthSnapshotWithPost(project: Project) {
     project.synth();
     return directorySnapshot(project.outdir);
   } finally {
-    fs.removeSync(project.outdir);
+    fs.rmSync(project.outdir, { force: true, recursive: true });
   }
 }
 
@@ -113,7 +113,7 @@ export function withProjectDir(
     code(projectdir);
   } finally {
     process.chdir(origDir);
-    fs.removeSync(outdir);
+    fs.rmSync(outdir, { force: true, recursive: true });
   }
 }
 
@@ -123,7 +123,7 @@ export function withProjectDir(
  */
 export function sanitizeOutput(dir: string) {
   const filepath = path.join(dir, "package.json");
-  const pkg = fs.readJsonSync(filepath);
+  const pkg = JSON.parse(fs.readFileSync(filepath, "utf-8"));
   const prev = pkg.devDependencies.projen;
   if (!prev) {
     throw new Error(
@@ -133,18 +133,18 @@ export function sanitizeOutput(dir: string) {
 
   // replace the current projen version with * for deterministic output.
   pkg.devDependencies.projen = "*";
-  fs.writeJsonSync(filepath, pkg);
+  fs.writeFileSync(filepath, JSON.stringify(pkg));
 
   // we will also patch deps.json so that all projen deps will be set to *
   const depsPath = path.join(dir, ".projen", "deps.json");
-  const deps = fs.readJsonSync(depsPath);
+  const deps = JSON.parse(fs.readFileSync(depsPath, "utf-8"));
   for (const dep of deps.dependencies) {
     if (dep.name === "projen" && dep.version) {
       dep.version = "*";
     }
   }
   fs.chmodSync(depsPath, "777");
-  fs.writeJsonSync(depsPath, deps);
+  fs.writeFileSync(depsPath, JSON.stringify(deps));
 }
 
 export {

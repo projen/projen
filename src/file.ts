@@ -1,5 +1,5 @@
+import { rmSync } from "fs";
 import * as path from "path";
-import { removeSync } from "fs-extra";
 import { resolve } from "./_resolve";
 import { PROJEN_MARKER, PROJEN_RC } from "./common";
 import { Component } from "./component";
@@ -145,7 +145,7 @@ export abstract class FileBase extends Component {
     const content = this.synthesizeContent(resolver);
     if (content === undefined) {
       // remove file (if exists) and skip rest of synthesis
-      removeSync(filePath);
+      rmSync(filePath, { force: true, recursive: true });
       return;
     }
 

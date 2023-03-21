@@ -1,5 +1,5 @@
+import { promises as fs } from "fs";
 import { join } from "path";
-import { readFile, writeFile } from "fs-extra";
 import * as logging from "../logging";
 import * as utils from "../util";
 
@@ -57,7 +57,7 @@ export async function updateChangelog(
     );
   }
 
-  const inputChangelogContent = await readFile(inputChangelog, "utf-8");
+  const inputChangelogContent = await fs.readFile(inputChangelog, "utf-8");
   const changelogVersionSearchPattern = `${version}`;
 
   if (!inputChangelogContent.includes(changelogVersionSearchPattern)) {
@@ -66,7 +66,7 @@ export async function updateChangelog(
     );
   }
 
-  const outputChangelogContent = await readFile(outputChangelog, {
+  const outputChangelogContent = await fs.readFile(outputChangelog, {
     encoding: "utf-8",
     flag: "a+",
   });
@@ -83,7 +83,7 @@ export async function updateChangelog(
     "\n\n" +
     outputChangelogContent.trimStart();
 
-  await writeFile(outputChangelog, newChangelog);
+  await fs.writeFile(outputChangelog, newChangelog);
 
   utils.exec(
     `git add ${outputChangelog} && git commit -m "chore(release): ${version}"`,

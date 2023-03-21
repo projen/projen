@@ -1,8 +1,8 @@
 // tests for `projen new`: we run `projen new` for each supported project type
 // and compare against a golden snapshot.
 import { execSync } from "child_process";
+import { mkdirSync, existsSync } from "fs";
 import { join } from "path";
-import { mkdirSync, pathExistsSync } from "fs-extra";
 import {
   directorySnapshot,
   execProjenCLI,
@@ -445,7 +445,7 @@ describe("git", () => {
     withProjectDir(
       (projectdir) => {
         execProjenCLI(projectdir, ["new", "project", "--no-git"]);
-        expect(pathExistsSync(join(projectdir, ".git"))).toBeFalsy();
+        expect(existsSync(join(projectdir, ".git"))).toBeFalsy();
       },
       { git: false }
     );

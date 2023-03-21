@@ -1,5 +1,5 @@
+import * as fs from "fs";
 import * as path from "path";
-import * as fs from "fs-extra";
 import { Component } from "./component";
 import { JsonFile } from "./json";
 import { Project } from "./project";
@@ -118,7 +118,9 @@ export class Tasks extends Component {
   public synthesize(): void {
     if (this.project.ejected) {
       // Insert a task-runner script so that tasks can be run after ejecting
-      fs.mkdirpSync(path.join(this.project.outdir, "scripts"));
+      fs.mkdirSync(path.join(this.project.outdir, "scripts"), {
+        recursive: true,
+      });
       fs.copyFileSync(
         path.join(__dirname, "..", "lib", "run-task.js"),
         path.join(this.project.outdir, "scripts", "run-task")
