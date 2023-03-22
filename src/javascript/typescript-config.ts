@@ -237,6 +237,13 @@ export interface TypeScriptCompilerOptions {
   readonly jsx?: TypeScriptJsxMode;
 
   /**
+   * Declares the module specifier to be used for importing the jsx and jsxs factory functions when using jsx.
+   *
+   * @default undefined
+   */
+  readonly jsxImportSource?: string;
+
+  /**
    * Reference for type definitions / libraries to use (eg. ES2016, ES5, ES2018).
    *
    * @default [ "es2018" ]
