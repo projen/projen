@@ -25,6 +25,7 @@ export interface ProjectOption {
   optional?: boolean;
   deprecated?: boolean;
   featured?: boolean;
+  overrides?: boolean;
 }
 
 export interface ProjectType {
@@ -295,13 +296,32 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
 
       // protect against double-booking
       if (prop.name in options) {
-        throw new Error(
-          `duplicate option "${prop.name}" in ${fqn} (already declared in ${
-            options[prop.name].parent
-          })`
-        );
-      }
+        console.log(prop);
+        console.log(options[prop.name]);
 
+        if (prop.docs?.custom?.overrides === "true") {
+          // If both option has the overrides flag
+          if (options[prop.name].overrides) {
+            throw new Error(
+              `duplicate option "${prop.name}" in ${fqn} (already declared in ${
+                options[prop.name].parent
+              }). Both options use overrides flag`
+            );
+          }
+        } else {
+          // If existing prop has an override flag and the new one does not, simply ignore
+          if (options[prop.name].overrides) {
+            continue;
+          } else {
+            // same prop name appears twice non of them uses overrides flag
+            throw new Error(
+              `duplicate option "${prop.name}" in ${fqn} (already declared in ${
+                options[prop.name].parent
+              }). None of the options use overrides flag`
+            );
+          }
+        }
+      }
       let jsiiKind;
       if (prop.type?.fqn) {
         jsiiKind = jsii[prop.type?.fqn].kind; // e.g. 'class', 'interface', 'enum'
@@ -344,6 +364,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         optional: isOptional,
         featured: prop.docs?.custom?.featured === "true",
         deprecated: prop.docs.stability === "deprecated" ? true : undefined,
+        overrides: prop.docs?.custom?.overrides === "true",
       });
     }
 
