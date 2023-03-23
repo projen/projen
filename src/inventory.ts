@@ -296,9 +296,6 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
 
       // protect against double-booking
       if (prop.name in options) {
-        console.log(prop);
-        console.log(options[prop.name]);
-
         if (prop.docs?.custom?.overrides === "true") {
           // If both option has the overrides flag
           if (options[prop.name].overrides) {
