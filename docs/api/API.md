@@ -17632,6 +17632,7 @@ Name | Type | Description
 **inlineSources**?🔹 | <code>boolean</code> | When set, TypeScript will include the original content of the .ts file as an embedded string in the source map. This is often useful in the same cases as inlineSourceMap.<br/>__*Default*__: true
 **isolatedModules**?🔹 | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or @babel/plugin-transform-typescript) would be safe.<br/>__*Default*__: false
 **jsx**?🔹 | <code>[javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)</code> | Support JSX in .tsx files: "react", "preserve", "react-native" etc.<br/>__*Default*__: undefined
+**jsxImportSource**?🔹 | <code>string</code> | Declares the module specifier to be used for importing the jsx and jsxs factory functions when using jsx.<br/>__*Default*__: undefined
 **lib**?🔹 | <code>Array<string></code> | Reference for type definitions / libraries to use (eg.<br/>__*Default*__: [ "es2018" ]
 **module**?🔹 | <code>string</code> | Sets the module system for the program.<br/>__*Default*__: "CommonJS"
 **moduleResolution**?🔹 | <code>[javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)</code> | Determine how modules get resolved.<br/>__*Default*__: "node"
