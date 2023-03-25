@@ -104,6 +104,73 @@ describe("all default values in docstrings are renderable JS values", () => {
   });
 });
 
+describe("different overrides annotation permutations. Project A's interface extends Project B's interface with the same variable testVarToOverride", () => {
+  test("The parameter has overrides annotation in Project A but not B", () => {
+    expect(() =>
+      inventory.resolveProjectType(
+        "test/inventory/no_compression/overrides_directive/projectA-yes_projectB-no"
+      )
+    ).not.toThrowError();
+    expect(
+      inventory
+        .resolveProjectType(
+          "test/inventory/no_compression/overrides_directive/projectA-yes_projectB-no"
+        )
+        .options.filter((option) => {
+          return option.name === "testVarToOverride";
+        }).length
+    ).toBe(1);
+    expect(
+      inventory
+        .resolveProjectType(
+          "test/inventory/no_compression/overrides_directive/projectA-no_projectB-yes"
+        )
+        .options.filter((option) => {
+          return option.name === "testVarToOverride";
+        })[0].overrides
+    ).toBe(true);
+  });
+  test("The parameter has overrides annotation in Project B but not A", () => {
+    expect(() =>
+      inventory.resolveProjectType(
+        "test/inventory/no_compression/overrides_directive/projectA-no_projectB-yes"
+      )
+    ).not.toThrowError();
+    expect(
+      inventory
+        .resolveProjectType(
+          "test/inventory/no_compression/overrides_directive/projectA-no_projectB-yes"
+        )
+        .options.filter((option) => {
+          return option.name === "testVarToOverride";
+        }).length
+    ).toBe(1);
+    expect(
+      inventory
+        .resolveProjectType(
+          "test/inventory/no_compression/overrides_directive/projectA-no_projectB-yes"
+        )
+        .options.filter((option) => {
+          return option.name === "testVarToOverride";
+        })[0].overrides
+    ).toBe(true);
+  });
+  test("The parameter has overrides annotation in Project A and B", () => {
+    expect(() =>
+      inventory.resolveProjectType(
+        "test/inventory/no_compression/overrides_directive/projectA-yes_projectB-yes"
+      )
+    ).toThrowError(/^duplicate option.*Both options use overrides flag/);
+  });
+  test("The parameter has no overrides annotation in Project A and B", () => {
+    expect(() =>
+      inventory.resolveProjectType(
+        "test/inventory/no_compression/overrides_directive/projectA-no_projectB-no"
+      )
+    ).toThrowError(/^duplicate option.*None of the options use overrides flag/);
+  });
+});
+
 function throwIfNotRenderable(option: inventory.ProjectOption) {
   return (
     option.default === undefined ||

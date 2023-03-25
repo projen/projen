@@ -1,0 +1,276 @@
+{
+  "author": {
+    "name": "Abdullah Sahin",
+    "roles": [
+      "author"
+    ]
+  },
+  "dependencies": {
+    "projen": "^0.68.16"
+  },
+  "dependencyClosure": {
+    "projen": {
+      "submodules": {
+        "projen.awscdk": {},
+        "projen.build": {},
+        "projen.cdk": {},
+        "projen.cdk8s": {},
+        "projen.cdktf": {},
+        "projen.circleci": {},
+        "projen.github": {},
+        "projen.github.workflows": {},
+        "projen.gitlab": {},
+        "projen.java": {},
+        "projen.javascript": {},
+        "projen.python": {},
+        "projen.release": {},
+        "projen.typescript": {},
+        "projen.vscode": {},
+        "projen.web": {}
+      },
+      "targets": {
+        "go": {
+          "moduleName": "github.com/projen/projen-go"
+        },
+        "java": {
+          "maven": {
+            "artifactId": "projen",
+            "groupId": "io.github.cdklabs"
+          },
+          "package": "io.github.cdklabs.projen"
+        },
+        "js": {
+          "npm": "projen"
+        },
+        "python": {
+          "distName": "projen",
+          "module": "projen"
+        }
+      }
+    }
+  },
+  "description": "Project to test the overrides functionality for overrides projen directive",
+  "docs": {
+    "stability": "stable"
+  },
+  "homepage": "https://github.com/abdsahin/projen-overrides-directive.git",
+  "jsiiVersion": "5.0.0 (build 4ff1caa)",
+  "license": "UNLICENSED",
+  "metadata": {
+    "jsii": {
+      "pacmak": {
+        "hasDefaultInterfaces": true
+      }
+    },
+    "tscRootDir": "src"
+  },
+  "name": "overrides-directive",
+  "readme": {
+    "markdown": "# replace this"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abdsahin/projen-overrides-directive.git"
+  },
+  "schema": "jsii/0.10.0",
+  "submodules": {
+    "overrides-directive.overridesDirectiveTest": {
+      "locationInModule": {
+        "filename": "src/index.ts",
+        "line": 5
+      },
+      "symbolId": "src/override-directive-test/index:"
+    }
+  },
+  "targets": {
+    "js": {
+      "npm": "overrides-directive"
+    }
+  },
+  "types": {
+    "test/inventory/no_compression/overrides_directive/projectA-no_projectB-no": {
+      "assembly": "overrides-directive",
+      "base": "overrides-directive.overridesDirectiveTest.ProjectB",
+      "docs": {
+        "custom": {
+          "pjid": "project-a"
+        },
+        "stability": "stable",
+        "summary": "Multi-language jsii library project."
+      },
+      "fqn": "overrides-directive.overridesDirectiveTest.ProjectA",
+      "initializer": {
+        "docs": {
+          "stability": "stable"
+        },
+        "locationInModule": {
+          "filename": "src/override-directive-test/ProjectA.ts",
+          "line": 18
+        },
+        "parameters": [
+          {
+            "name": "options",
+            "type": {
+              "fqn": "overrides-directive.overridesDirectiveTest.ProjectAOptions"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/override-directive-test/ProjectA.ts",
+        "line": 17
+      },
+      "name": "ProjectA",
+      "namespace": "overridesDirectiveTest",
+      "symbolId": "src/override-directive-test/ProjectA:ProjectA"
+    },
+    "overrides-directive.overridesDirectiveTest.ProjectAOptions": {
+      "assembly": "overrides-directive",
+      "datatype": true,
+      "docs": {
+        "stability": "stable"
+      },
+      "fqn": "overrides-directive.overridesDirectiveTest.ProjectAOptions",
+      "interfaces": [
+        "overrides-directive.overridesDirectiveTest.ProjectBOptions",
+        "overrides-directive.overridesDirectiveTest.ProjectAOptionsOverrides"
+      ],
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/override-directive-test/ProjectA.ts",
+        "line": 8
+      },
+      "name": "ProjectAOptions",
+      "namespace": "overridesDirectiveTest",
+      "symbolId": "src/override-directive-test/ProjectA:ProjectAOptions"
+    },
+    "overrides-directive.overridesDirectiveTest.ProjectAOptionsOverrides": {
+      "assembly": "overrides-directive",
+      "datatype": true,
+      "docs": {
+        "stability": "stable"
+      },
+      "fqn": "overrides-directive.overridesDirectiveTest.ProjectAOptionsOverrides",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/override-directive-test/ProjectA.ts",
+        "line": 3
+      },
+      "name": "ProjectAOptionsOverrides",
+      "namespace": "overridesDirectiveTest",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "stable"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/override-directive-test/ProjectA.ts",
+            "line": 4
+          },
+          "name": "testVarToOverride",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        }
+      ],
+      "symbolId": "src/override-directive-test/ProjectA:ProjectAOptionsOverrides"
+    },
+    "overrides-directive.overridesDirectiveTest.ProjectB": {
+      "assembly": "overrides-directive",
+      "base": "projen.cdk.JsiiProject",
+      "docs": {
+        "custom": {
+          "pjid": "project-b"
+        },
+        "stability": "stable",
+        "summary": "Multi-language jsii library project."
+      },
+      "fqn": "overrides-directive.overridesDirectiveTest.ProjectB",
+      "initializer": {
+        "docs": {
+          "stability": "stable"
+        },
+        "locationInModule": {
+          "filename": "src/override-directive-test/ProjectB.ts",
+          "line": 18
+        },
+        "parameters": [
+          {
+            "name": "options",
+            "type": {
+              "fqn": "overrides-directive.overridesDirectiveTest.ProjectBOptions"
+            }
+          }
+        ]
+      },
+      "kind": "class",
+      "locationInModule": {
+        "filename": "src/override-directive-test/ProjectB.ts",
+        "line": 17
+      },
+      "name": "ProjectB",
+      "namespace": "overridesDirectiveTest",
+      "symbolId": "src/override-directive-test/ProjectB:ProjectB"
+    },
+    "overrides-directive.overridesDirectiveTest.ProjectBOptions": {
+      "assembly": "overrides-directive",
+      "datatype": true,
+      "docs": {
+        "stability": "stable"
+      },
+      "fqn": "overrides-directive.overridesDirectiveTest.ProjectBOptions",
+      "interfaces": [
+        "projen.cdk.JsiiProjectOptions",
+        "overrides-directive.overridesDirectiveTest.ProjectBOptionsOverrides"
+      ],
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/override-directive-test/ProjectB.ts",
+        "line": 8
+      },
+      "name": "ProjectBOptions",
+      "namespace": "overridesDirectiveTest",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "stability": "stable"
+          },
+          "immutable": true,
+          "locationInModule": {
+            "filename": "src/override-directive-test/ProjectB.ts",
+            "line": 9
+          },
+          "name": "testVarToOverride",
+          "optional": true,
+          "type": {
+            "primitive": "boolean"
+          }
+        }
+      ],
+      "symbolId": "src/override-directive-test/ProjectB:ProjectBOptions"
+    },
+    "overrides-directive.overridesDirectiveTest.ProjectBOptionsOverrides": {
+      "assembly": "overrides-directive",
+      "datatype": true,
+      "docs": {
+        "stability": "stable"
+      },
+      "fqn": "overrides-directive.overridesDirectiveTest.ProjectBOptionsOverrides",
+      "kind": "interface",
+      "locationInModule": {
+        "filename": "src/override-directive-test/ProjectB.ts",
+        "line": 3
+      },
+      "name": "ProjectBOptionsOverrides",
+      "namespace": "overridesDirectiveTest",
+      "symbolId": "src/override-directive-test/ProjectB:ProjectBOptionsOverrides"
+    }
+  },
+  "version": "0.0.0",
+  "fingerprint": "LhJfsMALAkULRrz9bPccHJE2z7X9KreqUKQ22xcxXYA="
+}
