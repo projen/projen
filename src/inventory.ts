@@ -235,9 +235,7 @@ function toProjectType(jsii: JsiiTypes, fqn: string): ProjectType {
     typename,
     pjid,
     fqn,
-    options: discoverOptions(jsii, fqn).sort((o1, o2) =>
-      o1.name.localeCompare(o2.name)
-    ),
+    options: discoverOptions(jsii, fqn),
     docs: typeinfo.docs?.summary,
     docsurl,
   } as ProjectType;
