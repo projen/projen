@@ -163,6 +163,24 @@ test("projen new --from external dist tag", () => {
   });
 });
 
+test("projen new --from can use pjid that is similar to a built-in one", () => {
+  withProjectDir((projectdir) => {
+    try {
+      execProjenCLI(projectdir, [
+        "new",
+        "--from",
+        "cdklabs-projen-project-types@0.1.48",
+        "jsi", // almost jsii on purpose
+        "--no-post",
+      ]);
+    } catch (error) {
+      // expect an error since this project type doesn't exist in the package
+      // however it is important that the project type is passe to the package
+      expect(error).toContain("Error: Project type jsi not found.");
+    }
+  });
+});
+
 test("options are not overwritten when creating from external project types", () => {
   withProjectDir((projectdir) => {
     // execute `projen new --from @pepperize/projen-awscdk-app-ts@0.0.333` in the project directory
