@@ -6,10 +6,8 @@ test("no devcontainer configured", () => {
   // GIVEN
   const project = new TestProject();
 
-  // WHEN
-  project.devContainer;
-
   // THEN
+  expect(project.devContainer).toBe(undefined);
   expect(synthSnapshot(project)).not.toHaveProperty(DEVCONTAINER_FILE);
 });
 
@@ -106,8 +104,8 @@ test("add features", () => {
 
   // WHEN
   project.devContainer?.addFeatures(
-    { featureName: "ghcr.io/devcontainers/features/aws-cli", version: "1" },
-    { featureName: "ghcr.io/devcontainers-contrib/features/aws-cdk" }
+    { name: "ghcr.io/devcontainers/features/aws-cli", version: "1" },
+    { name: "ghcr.io/devcontainers-contrib/features/aws-cdk" }
   );
 
   // THEN

@@ -16,11 +16,9 @@ const DEVCONTAINER_FILE = ".devcontainer.json";
 /**
  * devcontainer features options
  */
-export class DevEnvironmentFeature {
-  public readonly featureName?: string;
-  public readonly version?: string;
-
-  private constructor() {}
+export interface DevContainerFeature {
+  readonly name: string;
+  readonly version?: string;
 }
 
 /**
@@ -34,7 +32,7 @@ export interface DevContainerOptions extends DevEnvironmentOptions {
    * An array of VSCode features that specify the features that should be
    * installed inside the container when it is created.
    */
-  readonly features?: DevEnvironmentFeature[];
+  readonly features?: DevContainerFeature[];
 }
 
 export interface IDevContainerEnvironment extends IDevEnvironment {
@@ -44,7 +42,7 @@ export interface IDevContainerEnvironment extends IDevEnvironment {
    *
    * @param features featureName and version(optional default: latest)
    */
-  addFeatures(...features: DevEnvironmentFeature[]): void;
+  addFeatures(...features: DevContainerFeature[]): void;
 }
 
 /**
@@ -59,7 +57,7 @@ export class DevContainer
   private readonly postCreateTasks: Task[];
   private readonly ports: string[];
   private readonly vscodeExtensions: string[];
-  private readonly features: DevEnvironmentFeature[];
+  private readonly features: DevContainerFeature[];
 
   /**
    * Direct access to the devcontainer configuration (escape hatch)
@@ -72,7 +70,7 @@ export class DevContainer
     this.postCreateTasks = new Array<Task>();
     this.ports = new Array<string>();
     this.vscodeExtensions = new Array<string>();
-    this.features = new Array<DevEnvironmentFeature>();
+    this.features = new Array<DevContainerFeature>();
 
     this.dockerImage = options?.dockerImage;
 
@@ -149,7 +147,7 @@ export class DevContainer
    *
    * @param features featureName and version(optional default: latest)
    */
-  public addFeatures(...features: DevEnvironmentFeature[]): void {
+  public addFeatures(...features: DevContainerFeature[]): void {
     this.features.push(...features);
   }
 
@@ -171,8 +169,8 @@ export class DevContainer
     return this.features.reduce<{
       [key: string]: () => { version: string };
     }>((pv, feature) => {
-      if (feature.featureName) {
-        pv[feature.featureName] = () => ({
+      if (feature.name) {
+        pv[feature.name] = () => ({
           version: feature.version ?? "latest",
         });
       }
