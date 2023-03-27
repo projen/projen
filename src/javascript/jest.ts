@@ -688,7 +688,7 @@ export class Jest extends Component {
 
       this.addReporter(["jest-junit", { outputDirectory: reportsDir }]);
 
-      project.addDevDeps("jest-junit@^13");
+      project.addDevDeps("jest-junit@^15");
 
       project.gitignore.exclude(
         "# jest-junit artifacts",

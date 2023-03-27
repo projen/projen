@@ -3701,6 +3701,7 @@ new awscdk.AwsCdkConstructLibrary(options: AwsCdkConstructLibraryOptions)
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
+  * **jsiiVersion** (<code>string</code>)  Version of the jsii compiler to use. __*Default*__: "1.x"
   * **publishToGo** (<code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code>)  Publish Go bindings to a git repository. __*Default*__: no publishing
   * **publishToMaven** (<code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
@@ -4709,6 +4710,7 @@ new awscdk.ConstructLibraryAws(options: AwsCdkConstructLibraryOptions)
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
+  * **jsiiVersion** (<code>string</code>)  Version of the jsii compiler to use. __*Default*__: "1.x"
   * **publishToGo** (<code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code>)  Publish Go bindings to a git repository. __*Default*__: no publishing
   * **publishToMaven** (<code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
@@ -5338,6 +5340,7 @@ new cdk.ConstructLibrary(options: ConstructLibraryOptions)
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
+  * **jsiiVersion** (<code>string</code>)  Version of the jsii compiler to use. __*Default*__: "1.x"
   * **publishToGo** (<code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code>)  Publish Go bindings to a git repository. __*Default*__: no publishing
   * **publishToMaven** (<code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
@@ -5599,6 +5602,7 @@ new cdk.JsiiProject(options: JsiiProjectOptions)
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
+  * **jsiiVersion** (<code>string</code>)  Version of the jsii compiler to use. __*Default*__: "1.x"
   * **publishToGo** (<code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code>)  Publish Go bindings to a git repository. __*Default*__: no publishing
   * **publishToMaven** (<code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
@@ -6202,6 +6206,7 @@ new cdk8s.ConstructLibraryCdk8s(options: ConstructLibraryCdk8sOptions)
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
+  * **jsiiVersion** (<code>string</code>)  Version of the jsii compiler to use. __*Default*__: "1.x"
   * **publishToGo** (<code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code>)  Publish Go bindings to a git repository. __*Default*__: no publishing
   * **publishToMaven** (<code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
@@ -6446,6 +6451,7 @@ new cdktf.ConstructLibraryCdktf(options: ConstructLibraryCdktfOptions)
   * **docgenFilePath** (<code>string</code>)  File path for generated docs. __*Default*__: "API.md"
   * **dotnet** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  *No description* __*Optional*__
   * **excludeTypescript** (<code>Array<string></code>)  Accepts a list of glob patterns. __*Optional*__
+  * **jsiiVersion** (<code>string</code>)  Version of the jsii compiler to use. __*Default*__: "1.x"
   * **publishToGo** (<code>[cdk.JsiiGoTarget](#projen-cdk-jsiigotarget)</code>)  Publish Go bindings to a git repository. __*Default*__: no publishing
   * **publishToMaven** (<code>[cdk.JsiiJavaTarget](#projen-cdk-jsiijavatarget)</code>)  Publish to maven. __*Default*__: no publishing
   * **publishToNuget** (<code>[cdk.JsiiDotNetTarget](#projen-cdk-jsiidotnettarget)</code>)  Publish to NuGet. __*Default*__: no publishing
@@ -13469,6 +13475,7 @@ Name | Type | Description
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm.<br/>__*Default*__: "latest"
+**jsiiVersion**?🔹 | <code>string</code> | Version of the jsii compiler to use.<br/>__*Default*__: "1.x"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **lambdaAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler.<br/>__*Default*__: true
 **lambdaExtensionAutoDiscover**?🔹 | <code>boolean</code> | Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
@@ -14072,6 +14079,7 @@ Name | Type | Description
 **jest**?⚠️ | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?⚠️ | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm.<br/>__*Default*__: "latest"
+**jsiiVersion**?⚠️ | <code>string</code> | Version of the jsii compiler to use.<br/>__*Default*__: "1.x"
 **keywords**?⚠️ | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **lambdaAutoDiscover**?⚠️ | <code>boolean</code> | Automatically adds an `aws_lambda.Function` for each `.lambda.ts` handler in your source tree. If this is disabled, you either need to explicitly call `aws_lambda.Function.autoDiscover()` or define a `new aws_lambda.Function()` for each handler.<br/>__*Default*__: true
 **lambdaExtensionAutoDiscover**?⚠️ | <code>boolean</code> | Automatically adds an `awscdk.LambdaExtension` for each `.lambda-extension.ts` entrypoint in your source tree. If this is disabled, you can manually add an `awscdk.AutoDiscover` component to your project.<br/>__*Default*__: true
@@ -14502,6 +14510,7 @@ Name | Type | Description
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm.<br/>__*Default*__: "latest"
+**jsiiVersion**?🔹 | <code>string</code> | Version of the jsii compiler to use.<br/>__*Default*__: "1.x"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
@@ -14774,6 +14783,7 @@ Name | Type | Description
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm.<br/>__*Default*__: "latest"
+**jsiiVersion**?🔹 | <code>string</code> | Version of the jsii compiler to use.<br/>__*Default*__: "1.x"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
@@ -15284,6 +15294,7 @@ Name | Type | Description
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm.<br/>__*Default*__: "latest"
+**jsiiVersion**?🔹 | <code>string</code> | Version of the jsii compiler to use.<br/>__*Default*__: "1.x"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
@@ -15479,6 +15490,7 @@ Name | Type | Description
 **jest**?🔹 | <code>boolean</code> | Setup jest unit tests.<br/>__*Default*__: true
 **jestOptions**?🔹 | <code>[javascript.JestOptions](#projen-javascript-jestoptions)</code> | Jest options.<br/>__*Default*__: default options
 **jsiiReleaseVersion**?🔹 | <code>string</code> | Version requirement of `publib` which is used to publish modules to npm.<br/>__*Default*__: "latest"
+**jsiiVersion**?🔹 | <code>string</code> | Version of the jsii compiler to use.<br/>__*Default*__: "1.x"
 **keywords**?🔹 | <code>Array<string></code> | Keywords to include in `package.json`.<br/>__*Optional*__
 **libdir**?🔹 | <code>string</code> | Typescript  artifacts output directory.<br/>__*Default*__: "lib"
 **license**?🔹 | <code>string</code> | License's SPDX identifier.<br/>__*Default*__: "Apache-2.0"
@@ -17620,6 +17632,7 @@ Name | Type | Description
 **inlineSources**?🔹 | <code>boolean</code> | When set, TypeScript will include the original content of the .ts file as an embedded string in the source map. This is often useful in the same cases as inlineSourceMap.<br/>__*Default*__: true
 **isolatedModules**?🔹 | <code>boolean</code> | Perform additional checks to ensure that separate compilation (such as with transpileModule or @babel/plugin-transform-typescript) would be safe.<br/>__*Default*__: false
 **jsx**?🔹 | <code>[javascript.TypeScriptJsxMode](#projen-javascript-typescriptjsxmode)</code> | Support JSX in .tsx files: "react", "preserve", "react-native" etc.<br/>__*Default*__: undefined
+**jsxImportSource**?🔹 | <code>string</code> | Declares the module specifier to be used for importing the jsx and jsxs factory functions when using jsx.<br/>__*Default*__: undefined
 **lib**?🔹 | <code>Array<string></code> | Reference for type definitions / libraries to use (eg.<br/>__*Default*__: [ "es2018" ]
 **module**?🔹 | <code>string</code> | Sets the module system for the program.<br/>__*Default*__: "CommonJS"
 **moduleResolution**?🔹 | <code>[javascript.TypeScriptModuleResolution](#projen-javascript-typescriptmoduleresolution)</code> | Determine how modules get resolved.<br/>__*Default*__: "node"
