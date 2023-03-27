@@ -108,6 +108,7 @@ class Command implements yargs.CommandModule {
       });
     }
 
+    // Disable strict mode, otherwise the catch-all doesn't work
     args.strictCommands(false);
     args
       .command({
@@ -116,6 +117,7 @@ class Command implements yargs.CommandModule {
         handler,
       })
       .middleware((argv) => {
+        // manually set the matched command as the project type
         argv.projectTypeName = argv._[1];
       }, true);
 

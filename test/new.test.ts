@@ -176,7 +176,7 @@ test("projen new --from can use pjid that is similar to a built-in one", () => {
     } catch (error) {
       // expect an error since this project type doesn't exist in the package
       // however it is important that the project type is passed to the package
-      expect(error).toContain("Error: Project type jsi not found.");
+      expect(error.message).toContain("Error: Project type jsi not found.");
     }
   });
 });
