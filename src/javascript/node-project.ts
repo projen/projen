@@ -775,7 +775,7 @@ export class NodeProject extends GitHubProject {
    * Replaces the contents of multiple npm package.json scripts.
    * @param scripts The scripts to set
    */
-  public setScripts(scripts: { [name: string]: string }) {
+  public addScripts(scripts: { [name: string]: string }) {
     for (const [name, command] of Object.entries(scripts)) {
       this.package.setScript(name, command);
     }
