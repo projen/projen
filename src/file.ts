@@ -96,7 +96,7 @@ export abstract class FileBase extends Component {
     const globPattern = `/${this.path}`;
     const committed = options.committed ?? project.commitGenerated ?? true;
     if (committed && filePath !== ".gitattributes") {
-      project.root.annotateGenerated(`/${filePath}`);
+      project.annotateGenerated(`/${filePath}`);
     }
 
     this.absolutePath = path.resolve(project.outdir, filePath);
