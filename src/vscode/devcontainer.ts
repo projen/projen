@@ -169,13 +169,12 @@ export class DevContainer
     }
 
     return this.features.reduce<{
-      [key: string]: () => { version?: string };
+      [key: string]: () => { version: string };
     }>((pv, feature) => {
       if (feature.featureName) {
-        pv[feature.featureName] = () => ({ version: "latest" });
-        if (feature.version) {
-          pv[feature.featureName] = () => ({ version: feature.version });
-        }
+        pv[feature.featureName] = () => ({
+          version: feature.version ?? "latest",
+        });
       }
       return pv;
     }, {});
