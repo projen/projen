@@ -191,6 +191,30 @@ test("subprojects use root level default task", () => {
   ]);
 });
 
+test("files are annotated as generated on subproject", () => {
+  // GIVEN
+  const parent = new Project({ name: "parent" });
+  const child = new Project({
+    parent,
+    name: "child",
+    outdir: path.join("packages", "child"),
+  });
+
+  const parentAnnotateGenerated = jest.spyOn(parent, "annotateGenerated");
+  const childAnnotateGenerated = jest.spyOn(child, "annotateGenerated");
+
+  // WHEN
+  new TextFile(child, "file.txt", { lines: ["Content"] });
+
+  // THEN
+  expect(parentAnnotateGenerated).not.toHaveBeenCalledWith("/file.txt");
+  expect(childAnnotateGenerated).toHaveBeenCalledWith("/file.txt");
+
+  // CLEAN
+  parentAnnotateGenerated.mockRestore();
+  childAnnotateGenerated.mockRestore();
+});
+
 // a project that depends on generated files during preSynthesize()
 class PreSynthProject extends Project {
   public file: TextFile;
