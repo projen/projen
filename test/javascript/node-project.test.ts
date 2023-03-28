@@ -727,7 +727,7 @@ describe("scripts", () => {
     expect(pkg.scripts).not.toHaveProperty("slithy-toves");
   });
 
-  test("addScripts will replace multiple scripts", () => {
+  test("addScripts will add multiple scripts", () => {
     const p = new TestNodeProject();
 
     p.addScripts({
