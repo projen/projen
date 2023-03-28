@@ -420,10 +420,7 @@ function isProjectType(jsii: JsiiTypes, fqn: string) {
 
 function isPrimitiveArray({ collection }: JsiiPropertyType) {
   return Boolean(
-    collection &&
-      collection?.kind === "array" &&
-      collection.elementtype.primitive &&
-      ["string", "number"].includes(collection.elementtype.primitive)
+    collection?.kind === "array" && collection?.elementtype.primitive
   );
 }
 
