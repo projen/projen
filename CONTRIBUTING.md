@@ -16,11 +16,13 @@ The following tools need to be installed to develop on projen locally.
 - [Yarn]
 - [Maven]
 - [Go]
+- [git] >= 2.28
 
 [node]: https://nodejs.org/en/download/
 [yarn]: https://yarnpkg.com/en/docs/install
 [maven]: https://maven.apache.org/install
 [go]: https://go.dev/doc/install
+[git]: https://git-scm.com/downloads
 
 ## Getting Started
 
