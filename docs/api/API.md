@@ -389,6 +389,7 @@ Name|Description
 [typescript.ProjenrcTsOptions](#projen-typescript-projenrctsoptions)|*No description*
 [typescript.TypeScriptLibraryProjectOptions](#projen-typescript-typescriptlibraryprojectoptions)|*No description*
 [typescript.TypeScriptProjectOptions](#projen-typescript-typescriptprojectoptions)|*No description*
+[vscode.DevContainerFeature](#projen-vscode-devcontainerfeature)|devcontainer features options.
 [vscode.DevContainerOptions](#projen-vscode-devcontaineroptions)|Constructor options for the DevContainer component.
 [vscode.Presentation](#projen-vscode-presentation)|VSCode launch configuration Presentation interface "using the order, group, and hidden attributes in the presentation object you can sort, group, and hide configurations and compounds in the Debug configuration dropdown and in the Debug quick pick." Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
 [vscode.ServerReadyAction](#projen-vscode-serverreadyaction)|VSCode launch configuration ServerReadyAction interface "if you want to open a URL in a web browser whenever the program under debugging outputs a specific message to the debug console or integrated terminal." Source: https://code.visualstudio.com/docs/editor/debugging#_launchjson-attributes.
@@ -423,6 +424,7 @@ Name|Description
 [python.IPythonDeps](#projen-python-ipythondeps)|*No description*
 [python.IPythonEnv](#projen-python-ipythonenv)|*No description*
 [python.IPythonPackaging](#projen-python-ipythonpackaging)|*No description*
+[vscode.IDevContainerEnvironment](#projen-vscode-idevcontainerenvironment)|*No description*
 
 
 **Enums**
@@ -11182,7 +11184,7 @@ A development environment running VSCode in a container;
 used by GitHub
 codespaces.
 
-__Implements__: [IDevEnvironment](#projen-idevenvironment)
+__Implements__: [vscode.IDevContainerEnvironment](#projen-vscode-idevcontainerenvironment), [IDevEnvironment](#projen-idevenvironment)
 __Submodule__: vscode
 
 __Extends__: [Component](#projen-component)
@@ -11202,6 +11204,7 @@ new vscode.DevContainer(project: Project, options?: DevContainerOptions)
   * **ports** (<code>Array<string></code>)  An array of ports that should be exposed from the container. __*Optional*__
   * **tasks** (<code>Array<[Task](#projen-task)></code>)  An array of tasks that should be run when the container starts. __*Optional*__
   * **vscodeExtensions** (<code>Array<string></code>)  An array of extension IDs that specify the extensions that should be installed inside the container when it is created. __*Optional*__
+  * **features** (<code>Array<[vscode.DevContainerFeature](#projen-vscode-devcontainerfeature)></code>)  An array of VSCode features that specify the features that should be installed inside the container when it is created. __*Optional*__
 
 
 
@@ -11224,6 +11227,21 @@ addDockerImage(image: DevEnvironmentDockerImage): void
 ```
 
 * **image** (<code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code>)  *No description*
+
+
+
+
+#### addFeatures(...features)🔹 <a id="projen-vscode-devcontainer-addfeatures"></a>
+
+Adds a list of VSCode features that should be automatically installed in the container.
+
+```ts
+addFeatures(...features: DevContainerFeature[]): void
+```
+
+* **features** (<code>[vscode.DevContainerFeature](#projen-vscode-devcontainerfeature)</code>)  featureName and version(optional default: latest).
+  * **name** (<code>string</code>)  feature name. 
+  * **version** (<code>string</code>)  feature version. __*Default*__: latest
 
 
 
@@ -18823,6 +18841,20 @@ Name | Type | Description
 
 
 
+## struct DevContainerFeature 🔹 <a id="projen-vscode-devcontainerfeature"></a>
+
+
+devcontainer features options.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**name**🔹 | <code>string</code> | feature name.
+**version**?🔹 | <code>string</code> | feature version.<br/>__*Default*__: latest
+
+
+
 ## struct DevContainerOptions 🔹 <a id="projen-vscode-devcontaineroptions"></a>
 
 
@@ -18835,9 +18867,87 @@ The default docker image used for GitHub Codespaces is defined here:
 Name | Type | Description 
 -----|------|-------------
 **dockerImage**?🔹 | <code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code> | A Docker image or Dockerfile for the container.<br/>__*Optional*__
+**features**?🔹 | <code>Array<[vscode.DevContainerFeature](#projen-vscode-devcontainerfeature)></code> | An array of VSCode features that specify the features that should be installed inside the container when it is created.<br/>__*Optional*__
 **ports**?🔹 | <code>Array<string></code> | An array of ports that should be exposed from the container.<br/>__*Optional*__
 **tasks**?🔹 | <code>Array<[Task](#projen-task)></code> | An array of tasks that should be run when the container starts.<br/>__*Optional*__
 **vscodeExtensions**?🔹 | <code>Array<string></code> | An array of extension IDs that specify the extensions that should be installed inside the container when it is created.<br/>__*Optional*__
+
+
+
+## interface IDevContainerEnvironment 🔹 <a id="projen-vscode-idevcontainerenvironment"></a>
+
+__Implemented by__: [vscode.DevContainer](#projen-vscode-devcontainer)
+
+
+### Methods
+
+
+#### addDockerImage(image)🔹 <a id="projen-vscode-idevcontainerenvironment-adddockerimage"></a>
+
+Add a custom Docker image or Dockerfile for the container.
+
+```ts
+addDockerImage(image: DevEnvironmentDockerImage): void
+```
+
+* **image** (<code>[DevEnvironmentDockerImage](#projen-devenvironmentdockerimage)</code>)  The Docker image.
+
+
+
+
+#### addFeatures(...features)🔹 <a id="projen-vscode-idevcontainerenvironment-addfeatures"></a>
+
+Adds a list of VSCode features that should be automatically installed in the container.
+
+```ts
+addFeatures(...features: DevContainerFeature[]): void
+```
+
+* **features** (<code>[vscode.DevContainerFeature](#projen-vscode-devcontainerfeature)</code>)  featureName and version(optional default: latest).
+  * **name** (<code>string</code>)  feature name. 
+  * **version** (<code>string</code>)  feature version. __*Default*__: latest
+
+
+
+
+#### addPorts(...ports)🔹 <a id="projen-vscode-idevcontainerenvironment-addports"></a>
+
+Adds ports that should be exposed (forwarded) from the container.
+
+```ts
+addPorts(...ports: string[]): void
+```
+
+* **ports** (<code>string</code>)  The new ports.
+
+
+
+
+#### addTasks(...tasks)🔹 <a id="projen-vscode-idevcontainerenvironment-addtasks"></a>
+
+Adds tasks to run when the container starts.
+
+```ts
+addTasks(...tasks: Task[]): void
+```
+
+* **tasks** (<code>[Task](#projen-task)</code>)  The new tasks.
+
+
+
+
+#### addVscodeExtensions(...extensions)🔹 <a id="projen-vscode-idevcontainerenvironment-addvscodeextensions"></a>
+
+Adds a list of VSCode extensions that should be automatically installed in the container.
+
+```ts
+addVscodeExtensions(...extensions: string[]): void
+```
+
+* **extensions** (<code>string</code>)  The extension IDs.
+
+
+
 
 
 
