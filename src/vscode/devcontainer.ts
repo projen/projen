@@ -15,9 +15,17 @@ const DEVCONTAINER_FILE = ".devcontainer.json";
 
 /**
  * devcontainer features options
+ * @see https://containers.dev/implementors/features/#devcontainer-json-properties
  */
 export interface DevContainerFeature {
+  /**
+   * feature name
+   */
   readonly name: string;
+  /**
+   * feature version
+   * @default latest
+   */
   readonly version?: string;
 }
 
@@ -167,13 +175,11 @@ export class DevContainer
     }
 
     return this.features.reduce<{
-      [key: string]: () => { version: string };
+      [key: string]: { version: string };
     }>((pv, feature) => {
-      if (feature.name) {
-        pv[feature.name] = () => ({
-          version: feature.version ?? "latest",
-        });
-      }
+      pv[feature.name] = {
+        version: feature.version ?? "latest",
+      };
       return pv;
     }, {});
   }
