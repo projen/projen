@@ -726,6 +726,18 @@ describe("scripts", () => {
     expect(pkg.scripts).not.toHaveProperty("chortle");
     expect(pkg.scripts).not.toHaveProperty("slithy-toves");
   });
+
+  test("addScripts will add multiple scripts", () => {
+    const p = new TestNodeProject();
+
+    p.addScripts({
+      "slithy-toves": "gyre && gimble",
+      chortle: 'echo "frabjous day!"',
+    });
+    const pkg = packageJson(p);
+    expect(pkg.scripts).toHaveProperty("slithy-toves");
+    expect(pkg.scripts).toHaveProperty("chortle");
+  });
 });
 
 test("mutableBuild will push changes to PR branches", () => {

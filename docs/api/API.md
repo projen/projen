@@ -9004,6 +9004,19 @@ addPeerDeps(...deps: string[]): void
 
 
 
+#### addScripts(scripts)🔹 <a id="projen-javascript-nodeproject-addscripts"></a>
+
+Replaces the contents of multiple npm package.json scripts.
+
+```ts
+addScripts(scripts: Map<string, string>): void
+```
+
+* **scripts** (<code>Map<string, string></code>)  The scripts to set.
+
+
+
+
 #### addTestCommand(...commands)⚠️ <a id="projen-javascript-nodeproject-addtestcommand"></a>
 
 DEPRECATED.
