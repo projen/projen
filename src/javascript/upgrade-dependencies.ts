@@ -92,14 +92,13 @@ export interface UpgradeDependenciesOptions {
 /**
  * Upgrade node project dependencies.
  */
-export class UpgradeDependencies extends Component {
+export class UpgradeDependencies extends Component<NodeProject> {
   /**
    * The workflows that execute the upgrades. One workflow per branch.
    */
   public readonly workflows: GithubWorkflow[] = [];
 
   private readonly options: UpgradeDependenciesOptions;
-  private readonly _project: NodeProject;
   private readonly pullRequestTitle: string;
 
   /**
@@ -124,7 +123,6 @@ export class UpgradeDependencies extends Component {
   constructor(project: NodeProject, options: UpgradeDependenciesOptions = {}) {
     super(project);
 
-    this._project = project;
     this.options = options;
     this.pullRequestTitle = options.pullRequestTitle ?? "upgrade dependencies";
     this.gitIdentity =
@@ -223,7 +221,7 @@ export class UpgradeDependencies extends Component {
     // in it or one of its dependencies. This will make upgrade workflows
     // slightly more stable and resilient to upstream changes.
     steps.push({
-      exec: this._project.package.renderUpgradePackagesCommand(
+      exec: this.project.package.renderUpgradePackagesCommand(
         [],
         ["npm-check-updates"]
       ),
@@ -248,18 +246,18 @@ export class UpgradeDependencies extends Component {
     }
 
     // run "yarn/npm install" to update the lockfile and install any deps (such as projen)
-    steps.push({ exec: this._project.package.installAndUpdateLockfileCommand });
+    steps.push({ exec: this.project.package.installAndUpdateLockfileCommand });
 
     // run upgrade command to upgrade transitive deps as well
     steps.push({
-      exec: this._project.package.renderUpgradePackagesCommand(
+      exec: this.project.package.renderUpgradePackagesCommand(
         exclude,
         this.options.include
       ),
     });
 
     // run "projen" to give projen a chance to update dependencies (it will also run "yarn install")
-    steps.push({ exec: this._project.projenCommand });
+    steps.push({ exec: this.project.projenCommand });
 
     steps.push({ spawn: this.postUpgradeTask.name });
 
@@ -313,10 +311,10 @@ export class UpgradeDependencies extends Component {
         uses: "actions/checkout@v3",
         with: Object.keys(with_).length > 0 ? with_ : undefined,
       },
-      ...this._project.renderWorkflowSetup({ mutable: false }),
+      ...this.project.renderWorkflowSetup({ mutable: false }),
       {
         name: "Upgrade dependencies",
-        run: this._project.runTaskCommand(task),
+        run: this.project.runTaskCommand(task),
       },
     ];
 

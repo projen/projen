@@ -3,8 +3,8 @@ import { Project } from "./project";
 /**
  * Represents a project component.
  */
-export class Component {
-  constructor(public readonly project: Project) {
+export class Component<T extends Project = Project> {
+  constructor(public readonly project: T) {
     project._addComponent(this);
   }
 
