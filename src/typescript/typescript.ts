@@ -20,6 +20,7 @@ import {
   ProjenrcOptions as ProjenrcTsOptions,
   TypedocDocgen,
 } from "../typescript";
+import { deepMerge } from "../util";
 
 export interface TypeScriptProjectOptions extends NodeProjectOptions {
   /**
@@ -445,12 +446,17 @@ export class TypeScriptProject extends NodeProject {
     );
 
     // add relevant deps
-    jest.config.preset = "ts-jest";
-    jest.config.globals = {
-      "ts-jest": {
-        tsconfig: this.tsconfigDev.fileName,
+    if (!jest.config.preset) {
+      jest.config.preset = "ts-jest";
+    }
+    jest.config.globals = deepMerge([
+      {
+        "ts-jest": {
+          tsconfig: this.tsconfigDev.fileName,
+        },
       },
-    };
+      jest.config.globals,
+    ]);
   }
 }
 
