@@ -108,30 +108,47 @@ class Command implements yargs.CommandModule {
       });
     }
 
+    // Disable strict mode, otherwise the catch-all doesn't work
+    args.strictCommands(false);
+    args
+      .command({
+        command: "*",
+        describe: false,
+        handler,
+      })
+      .middleware((argv) => {
+        // manually set the matched command as the project type
+        argv.projectTypeName = argv._[1];
+      }, true);
+
     return args;
   }
 
   public async handler(args: any) {
-    // handle --from which means we want to first install a jsii module and then
-    // create a project defined within this module.
-    if (args.from) {
-      return initProjectFromModule(process.cwd(), args.from, args);
-    }
-
-    // project type is defined but was not matched by yargs, so print the list of supported types
-    if (args.projectTypeName) {
-      console.log(
-        `Invalid project type ${args.projectTypeName}. Supported types:`
-      );
-      for (const pjid of inventory.discover().map((x) => x.pjid)) {
-        console.log(`  ${pjid}`);
-      }
-      return;
-    }
-
-    // Handles the use case that nothing was specified since PROJECT-TYPE is now an optional positional parameter
-    yargs.showHelp();
+    return handler(args);
   }
+}
+
+async function handler(args: any) {
+  // handle --from which means we want to first install a jsii module and then
+  // create a project defined within this module.
+  if (args.from) {
+    return initProjectFromModule(process.cwd(), args.from, args);
+  }
+
+  // project type is defined but was not matched by yargs, so print the list of supported types
+  if (args.projectTypeName) {
+    console.log(
+      `Invalid project type ${args.projectTypeName}. Supported types:`
+    );
+    for (const pjid of inventory.discover().map((x) => x.pjid)) {
+      console.log(`  ${pjid}`);
+    }
+    return;
+  }
+
+  // Handles the use case that nothing was specified since PROJECT-TYPE is now an optional positional parameter
+  yargs.showHelp();
 }
 
 /**
