@@ -40,7 +40,7 @@ export function discoverTaskCommands(runtime: TaskRuntime, ya: yargs.Argv) {
       } else {
         try {
           runtime.runTask(task.name, [], taskArgs);
-        } catch (e) {
+        } catch (e: any) {
           logging.error(e.message);
           process.exit(1);
         }

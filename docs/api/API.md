@@ -104,14 +104,17 @@ Name|Description
 [javascript.Bundler](#projen-javascript-bundler)|Adds support for bundling JavaScript applications and dependencies into a single file.
 [javascript.Eslint](#projen-javascript-eslint)|Represents eslint configuration.
 [javascript.Jest](#projen-javascript-jest)|Installs the following npm scripts:.
+[javascript.JestReporter](#projen-javascript-jestreporter)|*No description*
 [javascript.NodePackage](#projen-javascript-nodepackage)|Represents the npm `package.json` file.
 [javascript.NodeProject](#projen-javascript-nodeproject)|Node.js project.
 [javascript.NpmConfig](#projen-javascript-npmconfig)|File representing the local NPM config in .npmrc.
 [javascript.Prettier](#projen-javascript-prettier)|Represents prettier configuration.
 [javascript.Projenrc](#projen-javascript-projenrc)|Sets up a javascript project to use TypeScript for projenrc.
+[javascript.Transform](#projen-javascript-transform)|*No description*
 [javascript.TypescriptConfig](#projen-javascript-typescriptconfig)|*No description*
 [javascript.UpgradeDependencies](#projen-javascript-upgradedependencies)|Upgrade node project dependencies.
 [javascript.UpgradeDependenciesSchedule](#projen-javascript-upgradedependenciesschedule)|How often to check for new versions and raise pull requests for version upgrades.
+[javascript.WatchPlugin](#projen-javascript-watchplugin)|*No description*
 [python.Pip](#projen-python-pip)|Manages dependencies using a requirements.txt file and the pip CLI tool.
 [python.Poetry](#projen-python-poetry)|Manage project dependencies, virtual environments, and packaging through the poetry CLI tool.
 [python.PoetryPyproject](#projen-python-poetrypyproject)|Represents configuration of a pyproject.toml file for a Poetry project.
@@ -869,7 +872,7 @@ __Implements__: [IDockerComposeServiceName](#projen-idockercomposeservicename)
 new DockerComposeService(serviceName: string, serviceDescription: DockerComposeServiceDescription)
 ```
 
-* **serviceName** (<code>string</code>)  *No description*
+* **serviceName** (<code>string</code>)  The name of the docker compose service.
 * **serviceDescription** (<code>[DockerComposeServiceDescription](#projen-dockercomposeservicedescription)</code>)  *No description*
   * **command** (<code>Array<string></code>)  Provide a command to the docker container. __*Default*__: use the container's default command
   * **dependsOn** (<code>Array<[IDockerComposeServiceName](#projen-idockercomposeservicename)></code>)  Names of other services this service depends on. __*Default*__: no dependencies
@@ -1939,13 +1942,13 @@ project.tsconfig.file.addOverride('compilerOptions.lib', ['dom', 'dom.iterable',
 would add the overrides
 ```json
 "compilerOptions": {
-   "alwaysStrict": true,
-   "lib": [
-     "dom",
-     "dom.iterable",
-     "esnext"
-   ]
-   ...
+  "alwaysStrict": true,
+  "lib": [
+    "dom",
+    "dom.iterable",
+    "esnext"
+  ]
+  ...
 }
 ...
 ```
@@ -1974,9 +1977,9 @@ programming languages you will need to write this as `"\\."` because the
 For example, with the following object file
 ```json
 "compilerOptions": {
-   "exclude": ["node_modules"],
-   "lib": ["es2019"]
-   ...
+  "exclude": ["node_modules"],
+  "lib": ["es2019"]
+  ...
 }
 ...
 ```
@@ -1988,9 +1991,9 @@ project.tsconfig.file.addToArray('compilerOptions.lib', 'dom', 'dom.iterable', '
 would result in the following object file
 ```json
 "compilerOptions": {
-   "exclude": ["node_modules", "coverage"],
-   "lib": ["es2019", "dom", "dom.iterable", "esnext"]
-   ...
+  "exclude": ["node_modules", "coverage"],
+  "lib": ["es2019", "dom", "dom.iterable", "esnext"]
+  ...
 }
 ...
 ```
@@ -2012,9 +2015,9 @@ Applies an RFC 6902 JSON-patch to the synthesized object file. See https://datat
 For example, with the following object file
 ```json
 "compilerOptions": {
-   "exclude": ["node_modules"],
-   "lib": ["es2019"]
-   ...
+  "exclude": ["node_modules"],
+  "lib": ["es2019"]
+  ...
 }
 ...
 ```
@@ -2026,9 +2029,9 @@ project.tsconfig.file.patch(JsonPatch.replace("/compilerOptions/lib", ["dom", "d
 would result in the following object file
 ```json
 "compilerOptions": {
-   "exclude": ["node_modules", "coverage"],
-   "lib": ["dom", "dom.iterable", "esnext"]
-   ...
+  "exclude": ["node_modules", "coverage"],
+  "lib": ["dom", "dom.iterable", "esnext"]
+  ...
 }
 ...
 ```
@@ -4974,7 +4977,7 @@ new awscdk.LambdaRuntime(functionRuntime: string, esbuildTarget: string, options
 * **functionRuntime** (<code>string</code>)  The Node.js runtime to use.
 * **esbuildTarget** (<code>string</code>)  The esbuild setting to use.
 * **options** (<code>[awscdk.LambdaRuntimeOptions](#projen-awscdk-lambdaruntimeoptions)</code>)  Options for this runtime.
-  * **defaultExternals** (<code>Array<string></code>)  Packages that are considered externals by default when bundling. __*Default*__: ['
+  * **defaultExternals** (<code>Array<string></code>)  Packages that are considered externals by default when bundling. __*Default*__: ['@aws-sdk/*']
 
 
 
@@ -6486,11 +6489,11 @@ new circleci.Circleci(project: Project, options?: CircleCiProps)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[circleci.CircleCiProps](#projen-circleci-circleciprops)</code>)  *No description*
-  * **jobs** (<code>Array<[circleci.Job](#projen-circleci-job)></code>)  List of Jobs to create unique steps per pipeline, e.g. ```json jobs: [{   identifier: "compile",   docker: { image: "golang:alpine" }   steps: ["checkout", run: {command: "go build ."}] }] ```. __*Optional*__
-  * **orbs** (<code>Map<string, string></code>)  Contains a map of CirclCi Orbs ```json orbs: {   node: "circleci/node@5.0.1"   slack: "circleci/slack@4.8.3" } ```. __*Optional*__
+  * **jobs** (<code>Array<[circleci.Job](#projen-circleci-job)></code>)  List of Jobs to create unique steps per pipeline, e.g. ```json jobs: [{  identifier: "compile",  docker: { image: "golang:alpine" }  steps: ["checkout", run: {command: "go build ."}] }] ```. __*Optional*__
+  * **orbs** (<code>Map<string, string></code>)  Contains a map of CirclCi Orbs ```json orbs: {  node: "circleci/node@5.0.1"  slack: "circleci/slack@4.8.3" } ```. __*Optional*__
   * **setup** (<code>boolean</code>)  The setup field enables you to conditionally trigger configurations from outside the primary .circleci parent directory, update pipeline parameters, or generate customized configurations. __*Optional*__
   * **version** (<code>number</code>)  pipeline version. __*Default*__: 2.1
-  * **workflows** (<code>Array<[circleci.Workflow](#projen-circleci-workflow)></code>)  List of Workflows of pipeline, e.g. ```json workflows: {    {      identifier: "build",        jobs: [{           identifier: "node/install",           context: ["npm"],        }]    } } ```. __*Optional*__
+  * **workflows** (<code>Array<[circleci.Workflow](#projen-circleci-workflow)></code>)  List of Workflows of pipeline, e.g. ```json workflows: {   {     identifier: "build",       jobs: [{          identifier: "node/install",          context: ["npm"],       }]   } } ```. __*Optional*__
 
 
 
@@ -7301,9 +7304,9 @@ Warns and then closes issues and PRs that have had no activity for a specified a
 
 The default configuration will:
 
-  * Add a "Stale" label to pull requests after 14 days and closed after 2 days
-  * Add a "Stale" label to issues after 60 days and closed after 7 days
-  * If a comment is added, the label will be removed and timer is restarted.
+ * Add a "Stale" label to pull requests after 14 days and closed after 2 days
+ * Add a "Stale" label to issues after 60 days and closed after 7 days
+ * If a comment is added, the label will be removed and timer is restarted.
 
 __Submodule__: github
 
@@ -7529,7 +7532,7 @@ __Extends__: [gitlab.CiConfiguration](#projen-gitlab-ciconfiguration)
 new gitlab.GitlabConfiguration(project: Project, options?: CiConfigurationOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  The project the configuration belongs to.
 * **options** (<code>[gitlab.CiConfigurationOptions](#projen-gitlab-ciconfigurationoptions)</code>)  *No description*
   * **default** (<code>[gitlab.Default](#projen-gitlab-default)</code>)  Default settings for the CI Configuration. __*Optional*__
   * **jobs** (<code>Map<string, [gitlab.Job](#projen-gitlab-job)></code>)  An initial set of jobs to add to the configuration. __*Optional*__
@@ -7586,9 +7589,9 @@ __Extends__: [gitlab.CiConfiguration](#projen-gitlab-ciconfiguration)
 new gitlab.NestedConfiguration(project: Project, parent: GitlabConfiguration, name: string, options?: CiConfigurationOptions)
 ```
 
-* **project** (<code>[Project](#projen-project)</code>)  *No description*
+* **project** (<code>[Project](#projen-project)</code>)  The project the configuration belongs to.
 * **parent** (<code>[gitlab.GitlabConfiguration](#projen-gitlab-gitlabconfiguration)</code>)  *No description*
-* **name** (<code>string</code>)  *No description*
+* **name** (<code>string</code>)  The name of the configuration.
 * **options** (<code>[gitlab.CiConfigurationOptions](#projen-gitlab-ciconfigurationoptions)</code>)  *No description*
   * **default** (<code>[gitlab.Default](#projen-gitlab-default)</code>)  Default settings for the CI Configuration. __*Optional*__
   * **jobs** (<code>Map<string, [gitlab.Job](#projen-gitlab-job)></code>)  An initial set of jobs to add to the configuration. __*Optional*__
@@ -8309,10 +8312,10 @@ addIgnorePattern(pattern: string): void
 
 
 ```ts
-addReporter(reporter: string &#124; json): void
+addReporter(reporter: JestReporter): void
 ```
 
-* **reporter** (<code>string &#124; json</code>)  *No description*
+* **reporter** (<code>[javascript.JestReporter](#projen-javascript-jestreporter)</code>)  *No description*
 
 
 
@@ -8394,6 +8397,28 @@ static of(project: Project): Jest
 
 __Returns__:
 * <code>[javascript.Jest](#projen-javascript-jest)</code>
+
+
+
+## class JestReporter 🔹 <a id="projen-javascript-jestreporter"></a>
+
+
+
+__Submodule__: javascript
+
+
+### Initializer
+
+
+
+
+```ts
+new javascript.JestReporter(name: string, options?: Map<string, any>)
+```
+
+* **name** (<code>string</code>)  *No description*
+* **options** (<code>Map<string, any></code>)  *No description*
+
 
 
 
@@ -9299,6 +9324,28 @@ preSynthesize(): void
 
 
 
+## class Transform 🔹 <a id="projen-javascript-transform"></a>
+
+
+
+__Submodule__: javascript
+
+
+### Initializer
+
+
+
+
+```ts
+new javascript.Transform(name: string, options?: any)
+```
+
+* **name** (<code>string</code>)  *No description*
+* **options** (<code>any</code>)  *No description*
+
+
+
+
 ## class TypescriptConfig 🔹 <a id="projen-javascript-typescriptconfig"></a>
 
 
@@ -9469,6 +9516,28 @@ static expressions(cron: Array<string>): UpgradeDependenciesSchedule
 
 __Returns__:
 * <code>[javascript.UpgradeDependenciesSchedule](#projen-javascript-upgradedependenciesschedule)</code>
+
+
+
+## class WatchPlugin 🔹 <a id="projen-javascript-watchplugin"></a>
+
+
+
+__Submodule__: javascript
+
+
+### Initializer
+
+
+
+
+```ts
+new javascript.WatchPlugin(name: string, options?: any)
+```
+
+* **name** (<code>string</code>)  *No description*
+* **options** (<code>any</code>)  *No description*
+
 
 
 
@@ -10023,6 +10092,7 @@ new python.SetupPy(project: Project, options: SetupPyOptions)
 
 * **project** (<code>[Project](#projen-project)</code>)  *No description*
 * **options** (<code>[python.SetupPyOptions](#projen-python-setuppyoptions)</code>)  *No description*
+  * **additionalOptions** (<code>Map<string, any></code>)  Escape hatch to allow any value. __*Optional*__
   * **authorEmail** (<code>string</code>)  Author's e-mail. __*Optional*__
   * **authorName** (<code>string</code>)  Author's name. __*Optional*__
   * **classifiers** (<code>Array<string></code>)  A list of PyPI trove classifiers that describe the project. __*Optional*__
@@ -10264,7 +10334,7 @@ publishToGo(options?: GoPublishOptions): void
   * **githubRepo** (<code>string</code>)  GitHub repository to push to. __*Default*__: derived from `moduleName`
   * **githubTokenSecret** (<code>string</code>)  The name of the secret that includes a personal GitHub access token used to push to the GitHub repository. __*Default*__: "GO_GITHUB_TOKEN"
   * **githubUseSsh** (<code>boolean</code>)  Use SSH to push to GitHub instead of a personal accses token. __*Default*__: false
-  * **gitUserEmail** (<code>string</code>)  The email to use in the release git commit. __*Default*__: "github-actions
+  * **gitUserEmail** (<code>string</code>)  The email to use in the release git commit. __*Default*__: "github-actions@github.com"
   * **gitUserName** (<code>string</code>)  The user name to use for the release git commit. __*Default*__: "github-actions"
 
 
@@ -14385,7 +14455,7 @@ Options for the AWS Lambda function runtime.
 
 Name | Type | Description 
 -----|------|-------------
-**defaultExternals**?🔹 | <code>Array<string></code> | Packages that are considered externals by default when bundling.<br/>__*Default*__: ['
+**defaultExternals**?🔹 | <code>Array<string></code> | Packages that are considered externals by default when bundling.<br/>__*Default*__: ['@aws-sdk/*']
 
 
 
@@ -14707,7 +14777,7 @@ Name | Type | Description
 **moduleName**🔹 | <code>string</code> | The name of the target go module.
 **gitBranch**?🔹 | <code>string</code> | Branch to push to.<br/>__*Default*__: "main"
 **gitCommitMessage**?🔹 | <code>string</code> | The commit message.<br/>__*Default*__: "chore(release): $VERSION"
-**gitUserEmail**?🔹 | <code>string</code> | The email to use in the release git commit.<br/>__*Default*__: "github-actions
+**gitUserEmail**?🔹 | <code>string</code> | The email to use in the release git commit.<br/>__*Default*__: "github-actions@github.com"
 **gitUserName**?🔹 | <code>string</code> | The user name to use for the release git commit.<br/>__*Default*__: "github-actions"
 **githubDeployKeySecret**?🔹 | <code>string</code> | The name of the secret that includes a GitHub deploy key used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_DEPLOY_KEY"
 **githubRepo**?🔹 | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
@@ -15624,11 +15694,11 @@ Options for class {@link Circleci}.
 
 Name | Type | Description 
 -----|------|-------------
-**jobs**?🔹 | <code>Array<[circleci.Job](#projen-circleci-job)></code> | List of Jobs to create unique steps per pipeline, e.g. ```json jobs: [{   identifier: "compile",   docker: { image: "golang:alpine" }   steps: ["checkout", run: {command: "go build ."}] }] ```.<br/>__*Optional*__
-**orbs**?🔹 | <code>Map<string, string></code> | Contains a map of CirclCi Orbs ```json orbs: {   node: "circleci/node@5.0.1"   slack: "circleci/slack@4.8.3" } ```.<br/>__*Optional*__
+**jobs**?🔹 | <code>Array<[circleci.Job](#projen-circleci-job)></code> | List of Jobs to create unique steps per pipeline, e.g. ```json jobs: [{  identifier: "compile",  docker: { image: "golang:alpine" }  steps: ["checkout", run: {command: "go build ."}] }] ```.<br/>__*Optional*__
+**orbs**?🔹 | <code>Map<string, string></code> | Contains a map of CirclCi Orbs ```json orbs: {  node: "circleci/node@5.0.1"  slack: "circleci/slack@4.8.3" } ```.<br/>__*Optional*__
 **setup**?🔹 | <code>boolean</code> | The setup field enables you to conditionally trigger configurations from outside the primary .circleci parent directory, update pipeline parameters, or generate customized configurations.<br/>__*Optional*__
 **version**?🔹 | <code>number</code> | pipeline version.<br/>__*Default*__: 2.1
-**workflows**?🔹 | <code>Array<[circleci.Workflow](#projen-circleci-workflow)></code> | List of Workflows of pipeline, e.g. ```json workflows: {    {      identifier: "build",        jobs: [{           identifier: "node/install",           context: ["npm"],        }]    } } ```.<br/>__*Optional*__
+**workflows**?🔹 | <code>Array<[circleci.Workflow](#projen-circleci-workflow)></code> | List of Workflows of pipeline, e.g. ```json workflows: {   {     identifier: "build",       jobs: [{          identifier: "node/install",          context: ["npm"],       }]   } } ```.<br/>__*Optional*__
 
 
 
@@ -16539,13 +16609,13 @@ Name | Type | Description
 **coverage**?🔹 | <code>string</code> | Must be a regular expression, optionally but recommended to be quoted, and must be surrounded with '/'.<br/>__*Optional*__
 **dependencies**?🔹 | <code>Array<string></code> | Specify a list of job names from earlier stages from which artifacts should be loaded.<br/>__*Optional*__
 **environment**?🔹 | <code>string &#124; [gitlab.Environment](#projen-gitlab-environment)</code> | Used to associate environment metadata with a deploy.<br/>__*Optional*__
-**except**?🔹 | <code>[gitlab.Filter](#projen-gitlab-filter) &#124; Array<string></code> | Job will run *except* for when these filtering options match.<br/>__*Optional*__
+**except**?🔹 | <code>Array<string> &#124; [gitlab.Filter](#projen-gitlab-filter)</code> | Job will run *except* for when these filtering options match.<br/>__*Optional*__
 **extends**?🔹 | <code>Array<string></code> | The name of one or more jobs to inherit configuration from.<br/>__*Optional*__
 **image**?🔹 | <code>[gitlab.Image](#projen-gitlab-image)</code> | __*Optional*__
 **inherit**?🔹 | <code>[gitlab.Inherit](#projen-gitlab-inherit)</code> | Controls inheritance of globally-defined defaults and variables.<br/>__*Optional*__
 **interruptible**?🔹 | <code>boolean</code> | __*Optional*__
 **needs**?🔹 | <code>Array<string &#124; [gitlab.Need](#projen-gitlab-need)></code> | The list of jobs in previous stages whose sole completion is needed to start the current job.<br/>__*Optional*__
-**only**?🔹 | <code>[gitlab.Filter](#projen-gitlab-filter) &#124; Array<string></code> | Job will run *only* when these filtering options match.<br/>__*Optional*__
+**only**?🔹 | <code>Array<string> &#124; [gitlab.Filter](#projen-gitlab-filter)</code> | Job will run *only* when these filtering options match.<br/>__*Optional*__
 **parallel**?🔹 | <code>number &#124; [gitlab.Parallel](#projen-gitlab-parallel)</code> | Parallel will split up a single job into several, and provide `CI_NODE_INDEX` and `CI_NODE_TOTAL` environment variables for the running jobs.<br/>__*Optional*__
 **release**?🔹 | <code>[gitlab.Release](#projen-gitlab-release)</code> | Indicates that the job creates a Release.<br/>__*Optional*__
 **resourceGroup**?🔹 | <code>string</code> | Limit job concurrency.<br/>__*Optional*__
@@ -17234,6 +17304,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**additionalOptions**?🔹 | <code>Map<string, any></code> | Escape hatch to allow any value.<br/>__*Optional*__
 **automock**?🔹 | <code>boolean</code> | This option tells Jest that all imported modules in your tests should be mocked automatically.<br/>__*Default*__: false
 **bail**?🔹 | <code>number &#124; boolean</code> | By default, Jest runs all tests and produces all errors into the console upon completion.<br/>__*Default*__: 0
 **cacheDirectory**?🔹 | <code>string</code> | The directory where Jest should store its cached dependency information.<br/>__*Default*__: "/tmp/<path>"
@@ -17267,7 +17338,7 @@ Name | Type | Description
 **preset**?🔹 | <code>string</code> | A preset that is used as a base for Jest's configuration.<br/>__*Default*__: undefined
 **prettierPath**?🔹 | <code>string</code> | Sets the path to the prettier node module used to update inline snapshots.<br/>__*Default*__: "prettier"
 **projects**?🔹 | <code>Array<string &#124; Map<string, any>></code> | When the projects configuration is provided with an array of paths or glob patterns, Jest will run tests in all of the specified projects at the same time.<br/>__*Default*__: undefined
-**reporters**?🔹 | <code>Array<string &#124; json></code> | Use this configuration option to add custom reporters to Jest.<br/>__*Default*__: undefined
+**reporters**?🔹 | <code>Array<[javascript.JestReporter](#projen-javascript-jestreporter)></code> | Use this configuration option to add custom reporters to Jest.<br/>__*Default*__: undefined
 **resetMocks**?🔹 | <code>boolean</code> | Automatically reset mock state before every test.<br/>__*Default*__: false
 **resetModules**?🔹 | <code>boolean</code> | By default, each test file gets its own independent module registry.<br/>__*Default*__: false
 **resolver**?🔹 | <code>string</code> | This option allows the use of a custom resolver.<br/>__*Default*__: undefined
@@ -17288,16 +17359,16 @@ Name | Type | Description
 **testRegex**?🔹 | <code>string &#124; Array<string></code> | The pattern or patterns Jest uses to detect test files.<br/>__*Default*__: (/__tests__/.*|(\\.|/)(test|spec))\\.[jt]sx?$
 **testResultsProcessor**?🔹 | <code>string</code> | This option allows the use of a custom results processor.<br/>__*Default*__: undefined
 **testRunner**?🔹 | <code>string</code> | This option allows the use of a custom test runner.<br/>__*Default*__: "jasmine2"
-**testSequencer**?🔹 | <code>string</code> | This option allows you to use a custom sequencer instead of Jest's default.<br/>__*Default*__: "
+**testSequencer**?🔹 | <code>string</code> | This option allows you to use a custom sequencer instead of Jest's default.<br/>__*Default*__: "@jest/test-sequencer"
 **testTimeout**?🔹 | <code>number</code> | Default timeout of a test in milliseconds.<br/>__*Default*__: 5000
 **testURL**?🔹 | <code>string</code> | This option sets the URL for the jsdom environment.<br/>__*Default*__: "http://localhost"
 **timers**?🔹 | <code>string</code> | Setting this value to legacy or fake allows the use of fake timers for functions such as setTimeout.<br/>__*Default*__: "real"
-**transform**?🔹 | <code>Map<string, string &#124; json></code> | A map from regular expressions to paths to transformers.<br/>__*Default*__: {"\\.[jt]sx?$": "babel-jest"}
+**transform**?🔹 | <code>Map<string, [javascript.Transform](#projen-javascript-transform)></code> | A map from regular expressions to paths to transformers.<br/>__*Default*__: {"\\.[jt]sx?$": "babel-jest"}
 **transformIgnorePatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all source file paths before transformation.<br/>__*Default*__: ["/node_modules/", "\\.pnp\\.[^\\\/]+$"]
 **unmockedModulePathPatterns**?🔹 | <code>Array<string></code> | An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them.<br/>__*Default*__: []
 **verbose**?🔹 | <code>boolean</code> | Indicates whether each individual test should be reported during the run.<br/>__*Default*__: false
 **watchPathIgnorePatterns**?🔹 | <code>Array<string></code> | An array of RegExp patterns that are matched against all source file paths before re-running tests in watch mode.<br/>__*Default*__: []
-**watchPlugins**?🔹 | <code>json</code> | __*Default*__: -
+**watchPlugins**?🔹 | <code>Array<[javascript.WatchPlugin](#projen-javascript-watchplugin)></code> | __*Default*__: -
 **watchman**?🔹 | <code>boolean</code> | Whether to use watchman for file crawling.<br/>__*Default*__: true
 
 
@@ -17740,7 +17811,7 @@ Name | Type | Description
 **assignees**?🔹 | <code>Array<string></code> | Assignees to add on the PR.<br/>__*Default*__: no assignees
 **branches**?🔹 | <code>Array<string></code> | List of branches to create PR's for.<br/>__*Default*__: All release branches configured for the project.
 **container**?🔹 | <code>[github.workflows.ContainerOptions](#projen-github-workflows-containeroptions)</code> | Job container options.<br/>__*Default*__: defaults
-**gitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use for commits.<br/>__*Default*__: "github-actions
+**gitIdentity**?🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity to use for commits.<br/>__*Default*__: "github-actions@github.com"
 **labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: no labels.
 **permissions**?🔹 | <code>[github.workflows.JobPermissions](#projen-github-workflows-jobpermissions)</code> | Permissions granted to the upgrade job To limit job permissions for `contents`, the desired permissions have to be explicitly set, e.g.: `{ contents: JobPermission.NONE }`.<br/>__*Default*__: `{ contents: JobPermission.READ }`
 **projenCredentials**?🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | Choose a method for authenticating with GitHub for creating the PR.<br/>__*Default*__: personal access token named PROJEN_GITHUB_TOKEN
@@ -18096,6 +18167,7 @@ Fields to pass in the setup() function of setup.py.
 
 Name | Type | Description 
 -----|------|-------------
+**additionalOptions**?🔹 | <code>Map<string, any></code> | Escape hatch to allow any value.<br/>__*Optional*__
 **authorEmail**?🔹 | <code>string</code> | Author's e-mail.<br/>__*Optional*__
 **authorName**?🔹 | <code>string</code> | Author's name.<br/>__*Optional*__
 **classifiers**?🔹 | <code>Array<string></code> | A list of PyPI trove classifiers that describe the project.<br/>__*Optional*__
@@ -18215,7 +18287,7 @@ Name | Type | Description
 -----|------|-------------
 **gitBranch**?🔹 | <code>string</code> | Branch to push to.<br/>__*Default*__: "main"
 **gitCommitMessage**?🔹 | <code>string</code> | The commit message.<br/>__*Default*__: "chore(release): $VERSION"
-**gitUserEmail**?🔹 | <code>string</code> | The email to use in the release git commit.<br/>__*Default*__: "github-actions
+**gitUserEmail**?🔹 | <code>string</code> | The email to use in the release git commit.<br/>__*Default*__: "github-actions@github.com"
 **gitUserName**?🔹 | <code>string</code> | The user name to use for the release git commit.<br/>__*Default*__: "github-actions"
 **githubDeployKeySecret**?🔹 | <code>string</code> | The name of the secret that includes a GitHub deploy key used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_DEPLOY_KEY"
 **githubRepo**?🔹 | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`
@@ -18237,7 +18309,7 @@ Name | Type | Description
 -----|------|-------------
 **gitBranch**?⚠️ | <code>string</code> | Branch to push to.<br/>__*Default*__: "main"
 **gitCommitMessage**?⚠️ | <code>string</code> | The commit message.<br/>__*Default*__: "chore(release): $VERSION"
-**gitUserEmail**?⚠️ | <code>string</code> | The email to use in the release git commit.<br/>__*Default*__: "github-actions
+**gitUserEmail**?⚠️ | <code>string</code> | The email to use in the release git commit.<br/>__*Default*__: "github-actions@github.com"
 **gitUserName**?⚠️ | <code>string</code> | The user name to use for the release git commit.<br/>__*Default*__: "github-actions"
 **githubDeployKeySecret**?⚠️ | <code>string</code> | The name of the secret that includes a GitHub deploy key used to push to the GitHub repository.<br/>__*Default*__: "GO_GITHUB_DEPLOY_KEY"
 **githubRepo**?⚠️ | <code>string</code> | GitHub repository to push to.<br/>__*Default*__: derived from `moduleName`

@@ -16,7 +16,7 @@ export function cleanup(dir: string, newFiles: string[], exclude: string[]) {
       // Remove all files managed by projen with legacy logic
       removeFiles(findGeneratedFiles(dir, exclude));
     }
-  } catch (e) {
+  } catch (e: any) {
     logging.warn(`warning: failed to clean up generated files: ${e.stack}`);
   }
 }
@@ -77,7 +77,7 @@ function getFilesFromManifest(dir: string): string[] {
         return fileManifest.files;
       }
     }
-  } catch (e) {
+  } catch (e: any) {
     logging.warn(
       `warning: unable to get files to clean from file manifest: ${e.stack}`
     );
