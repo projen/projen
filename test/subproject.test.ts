@@ -3,6 +3,7 @@ import * as path from "path";
 import { synthSnapshot, TestProject } from "./util";
 import { Project, TextFile, ProjectOptions, JsonFile, Component } from "../src";
 import { PROJEN_MARKER } from "../src/common";
+import { GitHubProject } from "../src/github";
 
 test("composing projects declaratively", () => {
   const comp = new TestProject();
@@ -193,26 +194,23 @@ test("subprojects use root level default task", () => {
 
 test("files are annotated as generated on subproject", () => {
   // GIVEN
-  const parent = new Project({ name: "parent" });
-  const child = new Project({
+
+  // Currently `Project` has an empty implementation of `annotateGenerated`,
+  // so we use `GitHubProject` to observe the resulting `.gitattributes`
+  const parent = new GitHubProject({ name: "parent" });
+  const child = new GitHubProject({
     parent,
     name: "child",
     outdir: path.join("packages", "child"),
   });
 
-  const parentAnnotateGenerated = jest.spyOn(parent, "annotateGenerated");
-  const childAnnotateGenerated = jest.spyOn(child, "annotateGenerated");
-
   // WHEN
   new TextFile(child, "file.txt", { lines: ["Content"] });
 
   // THEN
-  expect(parentAnnotateGenerated).not.toHaveBeenCalledWith("/file.txt");
-  expect(childAnnotateGenerated).toHaveBeenCalledWith("/file.txt");
-
-  // CLEAN
-  parentAnnotateGenerated.mockRestore();
-  childAnnotateGenerated.mockRestore();
+  const out = synthSnapshot(parent);
+  expect(out[".gitattributes"].includes("file.txt")).toBe(false);
+  expect(out["packages/child/.gitattributes"].includes("file.txt")).toBe(true);
 });
 
 // a project that depends on generated files during preSynthesize()
