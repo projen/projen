@@ -641,23 +641,14 @@ export class Publisher extends Component {
         );
         Object.assign(perms, { issues: JobPermission.WRITE });
       }
-
-      // Disable node tool if we use a custom container image and don't explicitly pass a workflow node version
-      const disableSetupNode =
-        !!this.workflowContainerImage && !this.workflowNodeVersion;
-
-      const tools: Tools = disableSetupNode
-        ? {
-            ...opts.publishTools,
-          }
-        : {
-            node: { version: this.workflowNodeVersion ?? "16.x" },
-            ...opts.publishTools,
-          };
-
       return {
         [jobname]: {
-          tools,
+          tools: {
+            ...(this.workflowNodeVersion ?? !this.workflowContainerImage
+              ? { node: { version: this.workflowNodeVersion ?? "16.x" } }
+              : {}),
+            ...opts.publishTools,
+          },
           name: `Publish to ${opts.registryName}`,
           permissions: perms,
           if: this.condition,

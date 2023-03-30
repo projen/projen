@@ -439,7 +439,7 @@ export class JsiiProject extends TypeScriptProject {
       runsOn: ["ubuntu-latest"],
       permissions: {},
       tools: {
-        ...(!!this.nodeVersion || !extraJobOptions.container
+        ...(this.nodeVersion ?? !extraJobOptions.container
           ? { node: { version: this.nodeVersion ?? "16.x" } }
           : {}),
         ...pacmak.publishTools,
