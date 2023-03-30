@@ -25,6 +25,9 @@ const project = new cdk.JsiiProject({
     "By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.",
   ],
 
+  jsiiVersion: "5.x",
+  typescriptVersion: "5.x",
+
   bundledDeps: [
     "conventional-changelog-config-spec",
     "yaml@2.0.0",

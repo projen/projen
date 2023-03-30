@@ -47,10 +47,8 @@ afterAll((done) => {
   // Array.from used to get a copy, so we can safely remove from the set
   for (const dir of Array.from(autoRemove)) {
     try {
-      // Note - fs-extra.removeSync is idempotent, so we're safe if the
-      // directory has already been cleaned up before we get there!
       fs.rmSync(dir, { force: true, recursive: true });
-    } catch (e) {
+    } catch (e: any) {
       done.fail(e);
     }
     autoRemove.delete(dir);
