@@ -298,12 +298,10 @@ export class JsiiProject extends TypeScriptProject {
     );
 
     const extraJobOptions: Partial<Job> = {
-      runsOn: options.workflowRunsOn,
-      container: options.workflowContainerImage
-        ? {
-            image: options.workflowContainerImage,
-          }
-        : undefined,
+      ...(options.workflowRunsOn ? { runsOn: options.workflowRunsOn } : {}),
+      ...(options.workflowContainerImage
+        ? { container: { image: options.workflowContainerImage } }
+        : {}),
     };
 
     if (options.releaseToNpm != false) {
