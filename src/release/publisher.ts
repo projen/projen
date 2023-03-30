@@ -99,6 +99,13 @@ export interface PublisherOptions {
   readonly workflowRunsOn?: string[];
 
   /**
+   * Container image to use for GitHub workflows.
+   *
+   * @default - default image
+   */
+  readonly workflowContainerImage?: string;
+
+  /**
    * Define publishing tasks that can be executed manually as well as workflows.
    *
    * Normally, publishing only happens within automated workflows. Enable this
@@ -144,7 +151,8 @@ export class Publisher extends Component {
 
   private readonly dryRun: boolean;
 
-  private readonly workflowNodeVersion: string;
+  private readonly workflowNodeVersion?: string;
+  private readonly workflowContainerImage?: string;
 
   constructor(project: Project, options: PublisherOptions) {
     super(project);
@@ -156,7 +164,8 @@ export class Publisher extends Component {
     this.jsiiReleaseVersion = this.publibVersion;
     this.condition = options.condition;
     this.dryRun = options.dryRun ?? false;
-    this.workflowNodeVersion = options.workflowNodeVersion ?? "16.x";
+    this.workflowNodeVersion = options.workflowNodeVersion;
+    this.workflowContainerImage = options.workflowContainerImage;
 
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? "failed-release";
@@ -633,17 +642,32 @@ export class Publisher extends Component {
         Object.assign(perms, { issues: JobPermission.WRITE });
       }
 
+      // Disable node tool if we use a custom container image and don't explicitly pass a workflow node version
+      const disableSetupNode =
+        !!this.workflowContainerImage && !this.workflowNodeVersion;
+
+      const tools: Tools = disableSetupNode
+        ? {
+            ...opts.publishTools,
+          }
+        : {
+            node: { version: this.workflowNodeVersion ?? "16.x" },
+            ...opts.publishTools,
+          };
+
       return {
         [jobname]: {
-          tools: {
-            node: { version: this.workflowNodeVersion },
-            ...opts.publishTools,
-          },
+          tools,
           name: `Publish to ${opts.registryName}`,
           permissions: perms,
           if: this.condition,
           needs: [this.buildJobId],
           runsOn: this.runsOn,
+          container: this.workflowContainerImage
+            ? {
+                image: this.workflowContainerImage,
+              }
+            : undefined,
           steps,
         },
       };

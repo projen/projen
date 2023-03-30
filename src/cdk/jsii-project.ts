@@ -2,7 +2,7 @@ import { Range } from "semver";
 import { JsiiPacmakTarget, JSII_TOOLCHAIN } from "./consts";
 import { JsiiDocgen } from "./jsii-docgen";
 import { Task } from "..";
-import { Job, Step } from "../github/workflows-model";
+import { Job, Step, Tools } from "../github/workflows-model";
 import { Eslint, NodePackageManager } from "../javascript";
 import {
   CommonPublishOptions,
@@ -297,9 +297,14 @@ export class JsiiProject extends TypeScriptProject {
       }
     );
 
-    const extraJobOptions: Partial<Job> = options.workflowRunsOn
-      ? { runsOn: options.workflowRunsOn }
-      : {};
+    const extraJobOptions: Partial<Job> = {
+      runsOn: options.workflowRunsOn,
+      container: options.workflowContainerImage
+        ? {
+            image: options.workflowContainerImage,
+          }
+        : undefined,
+    };
 
     if (options.releaseToNpm != false) {
       const task = this.addPackagingTask("js");
@@ -433,13 +438,22 @@ export class JsiiProject extends TypeScriptProject {
     }
     const pacmak = this.pacmakForLanguage(language, packTask);
 
+    // Disable node tool if we use a custom container image and don't explicitly pass a workflow node version
+    const disableSetupNode = !!extraJobOptions.container && !this.nodeVersion;
+
+    const tools: Tools = disableSetupNode
+      ? {
+          ...pacmak.publishTools,
+        }
+      : {
+          node: { version: this.nodeVersion ?? "16.x" },
+          ...pacmak.publishTools,
+        };
+
     this.buildWorkflow.addPostBuildJob(`package-${language}`, {
       runsOn: ["ubuntu-latest"],
       permissions: {},
-      tools: {
-        node: { version: this.nodeVersion ?? "16.x" },
-        ...pacmak.publishTools,
-      },
+      tools,
       steps: pacmak.prePublishSteps ?? [],
       ...extraJobOptions,
     });
