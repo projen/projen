@@ -435,18 +435,15 @@ export class JsiiProject extends TypeScriptProject {
       return;
     }
     const pacmak = this.pacmakForLanguage(language, packTask);
-
-    const tools = {
-      ...(!!this.nodeVersion || !extraJobOptions.container
-        ? { node: { version: this.nodeVersion ?? "16.x" } }
-        : {}),
-      ...pacmak.publishTools,
-    };
-
     this.buildWorkflow.addPostBuildJob(`package-${language}`, {
       runsOn: ["ubuntu-latest"],
       permissions: {},
-      tools,
+      tools: {
+        ...(!!this.nodeVersion || !extraJobOptions.container
+          ? { node: { version: this.nodeVersion ?? "16.x" } }
+          : {}),
+        ...pacmak.publishTools,
+      },
       steps: pacmak.prePublishSteps ?? [],
       ...extraJobOptions,
     });
