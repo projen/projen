@@ -614,6 +614,11 @@ export class Publisher extends Component {
       ];
 
       const perms = opts.permissions ?? { contents: JobPermission.READ };
+      const container = this.workflowContainerImage
+        ? {
+            image: this.workflowContainerImage,
+          }
+        : undefined;
 
       if (this.failureIssue) {
         steps.push(
@@ -654,11 +659,7 @@ export class Publisher extends Component {
           if: this.condition,
           needs: [this.buildJobId],
           runsOn: this.runsOn,
-          container: this.workflowContainerImage
-            ? {
-                image: this.workflowContainerImage,
-              }
-            : undefined,
+          container,
           steps,
         },
       };
