@@ -598,6 +598,56 @@ describe("workflows use global workflowRunsOn option", () => {
   );
 });
 
+describe("workflows use global workflowContainerImage option", () => {
+  const project = new JsiiProject({
+    author: "My name",
+    name: "testproject",
+    authorAddress: "https://foo.bar",
+    defaultReleaseBranch: "main",
+    repositoryUrl: "https://github.com/foo/bar.git",
+    publishToGo: { moduleName: "github.com/foo/bar" },
+    publishToMaven: {
+      javaPackage: "io.github.cdklabs.watchful",
+      mavenGroupId: "io.github.cdklabs",
+      mavenArtifactId: "cdk-watchful",
+    },
+    publishToNuget: {
+      dotNetNamespace: "DotNet.Namespace",
+      packageId: "PackageId",
+    },
+    publishToPypi: { distName: "dist-name", module: "module-name" },
+    workflowContainerImage: "node:16",
+  });
+
+  const output = synthSnapshot(project);
+  const build = yaml.parse(output[".github/workflows/build.yml"]);
+  const release = yaml.parse(output[".github/workflows/release.yml"]);
+
+  const EXPECTED_CONTAINER = { image: "node:16" };
+
+  expect(build).toHaveProperty("jobs.build.container", EXPECTED_CONTAINER);
+
+  test.each(["js", "java", "python", "dotnet", "go"])(
+    "snapshot %s",
+    (language) => {
+      expect(build).toHaveProperty(
+        `jobs.package-${language}.container`,
+        EXPECTED_CONTAINER
+      );
+    }
+  );
+
+  test.each(["pypi", "nuget", "npm", "maven", "golang"])(
+    "release workflow includes release_%s job",
+    (language) => {
+      expect(release).toHaveProperty(
+        `jobs.release_${language}.container`,
+        EXPECTED_CONTAINER
+      );
+    }
+  );
+});
+
 describe("release workflow use packageManager option", () => {
   const project = new JsiiProject({
     author: "My name",

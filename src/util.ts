@@ -447,3 +447,38 @@ export function anySelected(options: (boolean | undefined)[]): boolean {
 export function multipleSelected(options: (boolean | undefined)[]): boolean {
   return options.filter((opt) => opt).length > 1;
 }
+
+/**
+ * Checks if a path is a FS root
+ *
+ * Optional uses a provided OS specific path implementation,
+ * defaults to use the implementation for the current OS.
+ *
+ * @internal
+ */
+export function isRoot(dir: string, osPathLib: typeof path = path): boolean {
+  const parent = osPathLib.dirname(dir);
+  return parent === dir;
+}
+
+/**
+ * Run up project tree to find a file or directory
+ *
+ * @param lookFor the file or directory to look for
+ * @param cwd current working directory, must be an absolute path
+ * @returns path to the file or directory we are looking for, undefined if not found
+ */
+export function findUp(
+  lookFor: string,
+  cwd: string = process.cwd()
+): string | undefined {
+  if (existsSync(path.join(cwd, lookFor))) {
+    return cwd;
+  }
+
+  if (isRoot(cwd)) {
+    // This is a root
+    return undefined;
+  }
+  return findUp(lookFor, path.dirname(cwd));
+}

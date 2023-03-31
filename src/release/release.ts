@@ -363,6 +363,7 @@ export class Release extends Component {
       publishTasks: options.publishTasks,
       dryRun: options.publishDryRun,
       workflowNodeVersion: options.workflowNodeVersion,
+      workflowContainerImage: options.workflowContainerImage,
     });
 
     const githubRelease = options.githubRelease ?? true;

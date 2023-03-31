@@ -1,3 +1,4 @@
+import { posix, win32 } from "path";
 import { TestProject } from "./util";
 import { JsonFile } from "../src/json";
 import {
@@ -8,6 +9,7 @@ import {
   getFilePermissions,
   formatAsPythonModule,
   getGitVersion,
+  isRoot,
 } from "../src/util";
 
 describe("decamelizeRecursively", () => {
@@ -255,4 +257,26 @@ test("getGitVersion", () => {
 test("formatAsPythonModule", () => {
   expect(formatAsPythonModule("foo-bar-baz")).toEqual("foo_bar_baz");
   expect(formatAsPythonModule("foo.bar.baz")).toEqual("foo_bar_baz");
+});
+
+describe("isRoot", () => {
+  describe("unix", () => {
+    test("will detect root", () => {
+      expect(isRoot("/", posix)).toBe(true);
+    });
+
+    test("will return false for path to dir", () => {
+      expect(isRoot("/home/me/code", posix)).toBe(false);
+    });
+  });
+
+  describe("windows", () => {
+    test("will detect root", () => {
+      expect(isRoot("C:\\", win32)).toBe(true);
+    });
+
+    test("will return false for path to dir", () => {
+      expect(isRoot("C:\\Users\\me\\code", win32)).toBe(false);
+    });
+  });
 });
