@@ -237,3 +237,57 @@ test("upgrade task ignores pinned versions", () => {
     "npm-check-updates --dep dev --upgrade --target=minor --reject='typescript'"
   );
 });
+
+describe("tsconfigDev", () => {
+  test("uses tsconfig.dev.json by default", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(prj.tsconfigDev.fileName).toBe("tsconfig.dev.json");
+    expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual(
+      expect.objectContaining({
+        steps: [{ exec: "ts-node --project tsconfig.dev.json .projenrc.ts" }],
+      })
+    );
+  });
+
+  test("uses tsconfig.json when disableTsconfigDev is passed", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+      disableTsconfigDev: true,
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(prj.tsconfigDev.fileName).toBe("tsconfig.json");
+    expect(snapshot["tsconfig.dev.json"]).toBeUndefined();
+    expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual(
+      expect.objectContaining({
+        steps: [{ exec: "ts-node --project tsconfig.json .projenrc.ts" }],
+      })
+    );
+  });
+
+  test("uses tsconfig.dev.json when both disableTsconfig and disableTsconfigDev is passed", () => {
+    const prj = new TypeScriptProject({
+      name: "test",
+      projenrcTs: true,
+      defaultReleaseBranch: "main",
+      disableTsconfig: true,
+      disableTsconfigDev: true,
+    });
+
+    const snapshot = synthSnapshot(prj);
+    expect(prj.tsconfigDev.fileName).toBe("tsconfig.dev.json");
+    expect(snapshot[".projen/tasks.json"].tasks.default).toStrictEqual(
+      expect.objectContaining({
+        steps: [{ exec: "ts-node --project tsconfig.dev.json .projenrc.ts" }],
+      })
+    );
+  });
+});
