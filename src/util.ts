@@ -476,10 +476,9 @@ export function findUp(
     return cwd;
   }
 
-  const parent = path.dirname(cwd);
-  if (parent === cwd) {
+  if (isRoot(cwd)) {
     // This is a root
     return undefined;
   }
-  return findUp(lookFor, parent);
+  return findUp(lookFor, path.dirname(cwd));
 }
