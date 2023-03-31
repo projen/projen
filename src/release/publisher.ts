@@ -71,6 +71,13 @@ export interface PublisherOptions {
   readonly workflowNodeVersion?: string;
 
   /**
+   * Container image to use for GitHub workflows.
+   *
+   * @default - default image
+   */
+  readonly workflowContainerImage?: string;
+
+  /**
    * Version requirement for `publib`.
    *
    * @default "latest"
@@ -145,6 +152,7 @@ export class Publisher extends Component {
   private readonly dryRun: boolean;
 
   private readonly workflowNodeVersion: string;
+  private readonly workflowContainerImage?: string;
 
   constructor(project: Project, options: PublisherOptions) {
     super(project);
@@ -157,6 +165,7 @@ export class Publisher extends Component {
     this.condition = options.condition;
     this.dryRun = options.dryRun ?? false;
     this.workflowNodeVersion = options.workflowNodeVersion ?? "16.x";
+    this.workflowContainerImage = options.workflowContainerImage;
 
     this.failureIssue = options.failureIssue ?? false;
     this.failureIssueLabel = options.failureIssueLabel ?? "failed-release";
@@ -605,6 +614,11 @@ export class Publisher extends Component {
       ];
 
       const perms = opts.permissions ?? { contents: JobPermission.READ };
+      const container = this.workflowContainerImage
+        ? {
+            image: this.workflowContainerImage,
+          }
+        : undefined;
 
       if (this.failureIssue) {
         steps.push(
@@ -644,6 +658,7 @@ export class Publisher extends Component {
           if: this.condition,
           needs: [this.buildJobId],
           runsOn: this.runsOn,
+          container,
           steps,
         },
       };
