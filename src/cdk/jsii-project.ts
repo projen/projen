@@ -297,9 +297,12 @@ export class JsiiProject extends TypeScriptProject {
       }
     );
 
-    const extraJobOptions: Partial<Job> = options.workflowRunsOn
-      ? { runsOn: options.workflowRunsOn }
-      : {};
+    const extraJobOptions: Partial<Job> = {
+      ...(options.workflowRunsOn ? { runsOn: options.workflowRunsOn } : {}),
+      ...(options.workflowContainerImage
+        ? { container: { image: options.workflowContainerImage } }
+        : {}),
+    };
 
     if (options.releaseToNpm != false) {
       const task = this.addPackagingTask("js");

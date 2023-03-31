@@ -10235,6 +10235,7 @@ new release.Publisher(project: Project, options: PublisherOptions)
   * **jsiiReleaseVersion** (<code>string</code>)  *No description* __*Optional*__
   * **publibVersion** (<code>string</code>)  Version requirement for `publib`. __*Default*__: "latest"
   * **publishTasks** (<code>boolean</code>)  Define publishing tasks that can be executed manually as well as workflows. __*Default*__: false
+  * **workflowContainerImage** (<code>string</code>)  Container image to use for GitHub workflows. __*Default*__: default image
   * **workflowNodeVersion** (<code>string</code>)  Node version to setup in GitHub workflows if any node-based CLI utilities are needed. __*Default*__: 16.x
   * **workflowRunsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
 
@@ -18482,6 +18483,7 @@ Name | Type | Description
 **jsiiReleaseVersion**?⚠️ | <code>string</code> | __*Optional*__
 **publibVersion**?🔹 | <code>string</code> | Version requirement for `publib`.<br/>__*Default*__: "latest"
 **publishTasks**?🔹 | <code>boolean</code> | Define publishing tasks that can be executed manually as well as workflows.<br/>__*Default*__: false
+**workflowContainerImage**?🔹 | <code>string</code> | Container image to use for GitHub workflows.<br/>__*Default*__: default image
 **workflowNodeVersion**?🔹 | <code>string</code> | Node version to setup in GitHub workflows if any node-based CLI utilities are needed.<br/>__*Default*__: 16.x
 **workflowRunsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 
