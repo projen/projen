@@ -272,7 +272,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
 
   const opts = Object.values(options);
 
-  return opts.sort((a, b) => a.switch.localeCompare(b.switch));
+  return opts.sort((a, b) => a.name.localeCompare(b.name));
 
   function addOptions(
     ofqn?: string,
