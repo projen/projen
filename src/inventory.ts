@@ -88,7 +88,7 @@ export interface JsiiPropertyType {
  *
  * @param moduleDirs A list of npm module directories
  */
-export function discover(...moduleDirs: string[]) {
+export function discover(...moduleDirs: string[]): ProjectType[] {
   const jsii = discoverJsiiTypes(...moduleDirs);
 
   const result = new Array<ProjectType>();
@@ -213,7 +213,7 @@ export function resolveProjectType(projectFqn: string): ProjectType {
   return toProjectType(jsii, projectFqn);
 }
 
-function toProjectType(jsii: JsiiTypes, fqn: string): ProjectType {
+export function toProjectType(jsii: JsiiTypes, fqn: string): ProjectType {
   if (!isProjectType(jsii, fqn)) {
     throw new Error(
       `Fully qualified name "${fqn}" is not a valid project type.`
