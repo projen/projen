@@ -328,6 +328,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     if (args[option.name] !== undefined) {
       args[option.name] = parseArg(args[option.name], argType(option), option);
       args[option.switch] = args[option.name];
+      continue;
     }
 
     // Required option with a default
