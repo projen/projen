@@ -189,6 +189,19 @@ test("projenrc.ts", () => {
   });
 });
 
+test("mentions .projenrc.ts in the file marker", () => {
+  // GIVEN
+  const p = new TypeScriptProject({
+    name: "test",
+    defaultReleaseBranch: "main",
+    projenrcTs: true,
+  });
+
+  // THEN
+  const snapshot = synthSnapshot(p);
+  expect(snapshot[".gitignore"]).toContain("To modify, edit .projenrc.ts");
+});
+
 test("eslint configured to support .projenrc.ts and projenrc src dir", () => {
   const prj = new TypeScriptProject({
     name: "test",

@@ -62,18 +62,27 @@ export abstract class FileBase extends Component {
   public executable: boolean;
 
   /**
-   * The projen marker, used to identify files as projen-generated.
-   *
-   * Value is undefined if the project is being ejected.
-   */
-  public readonly marker: string | undefined;
-
-  /**
    * The absolute path of this file.
    */
   public readonly absolutePath: string;
 
   private _changed?: boolean;
+  private shouldAddMarker: boolean;
+
+  /**
+   * The projen marker, used to identify files as projen-generated.
+   *
+   * Value is undefined if the project is being ejected.
+   */
+  public get marker(): string | undefined {
+    if (this.project.ejected || !this.shouldAddMarker) {
+      return undefined;
+    }
+
+    // `marker` is empty if project is being ejected or if explicitly disabled
+    const projenrc = ProjenrcFile.of(this.project)?.filePath ?? PROJEN_RC;
+    return `${PROJEN_MARKER}. To modify, edit ${projenrc} and run "npx projen".`;
+  }
 
   constructor(
     project: Project,
@@ -85,13 +94,7 @@ export abstract class FileBase extends Component {
     this.readonly = !project.ejected && (options.readonly ?? true);
     this.executable = options.executable ?? false;
     this.path = filePath;
-
-    // `marker` is empty if project is being ejected or if explicitly disabled
-    const projenrc = ProjenrcFile.of(project)?.filePath ?? PROJEN_RC;
-    this.marker =
-      project.ejected || options.marker === false
-        ? undefined
-        : `${PROJEN_MARKER}. To modify, edit ${projenrc} and run "npx projen".`;
+    this.shouldAddMarker = options.marker ?? true;
 
     const globPattern = `/${this.path}`;
     const committed = options.committed ?? project.commitGenerated ?? true;
