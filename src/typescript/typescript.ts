@@ -252,6 +252,12 @@ export class TypeScriptProject extends NodeProject {
       target: "ES2019",
     };
 
+    if (options.disableTsconfigDev && options.disableTsconfig) {
+      throw new Error(
+        "Cannot specify both 'disableTsconfigDev' and 'disableTsconfig' fields."
+      );
+    }
+
     if (!options.disableTsconfig) {
       this.tsconfig = new TypescriptConfig(
         this,
@@ -270,7 +276,7 @@ export class TypeScriptProject extends NodeProject {
       );
     }
 
-    if (options.disableTsconfigDev && !options.disableTsconfig) {
+    if (options.disableTsconfigDev) {
       this.tsconfigDev = this.tsconfig!;
     } else {
       const tsconfigDevFile = options.tsconfigDevFile ?? "tsconfig.dev.json";
