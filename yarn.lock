@@ -3069,12 +3069,12 @@ glob@^8, glob@^8.0.1:
     once "^1.3.0"
 
 glob@^9.2.0, glob@^9.3.0, glob@^9.3.1:
-  version "9.3.2"
-  resolved "https://registry.yarnpkg.com/glob/-/glob-9.3.2.tgz#8528522e003819e63d11c979b30896e0eaf52eda"
-  integrity sha512-BTv/JhKXFEHsErMte/AnfiSv8yYOLLiyH2lTg8vn02O21zWFgHPTfxtgn1QRe7NRgggUhC8hacR2Re94svHqeA==
+  version "9.3.4"
+  resolved "https://registry.yarnpkg.com/glob/-/glob-9.3.4.tgz#e75dee24891a80c25cc7ee1dd327e126b98679af"
+  integrity sha512-qaSc49hojMOv1EPM4EuyITjDSgSKI0rthoHnvE81tcOi1SCVndHko7auqxdQ14eiQG2NDBJBE86+2xIrbIvrbA==
   dependencies:
     fs.realpath "^1.0.0"
-    minimatch "^7.4.1"
+    minimatch "^8.0.2"
     minipass "^4.2.4"
     path-scurry "^1.6.1"
 
@@ -4284,9 +4284,9 @@ jsii@1.79.0:
     yargs "^16.2.0"
 
 jsii@5.x:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.0.2.tgz#d8d7252583a73d7812b3d8a58ad22d4b71ce4170"
-  integrity sha512-5L9Kl11jGS9Iikf0Ran/Vv1CYHAkTfeuRs9JPj9x8qvwJxMQwhQDwEiz6RqT1ekAxZs6syknpa077/Yt+l4ifQ==
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.0.3.tgz#d295468577a3c6731aa7a7c81af07dc701e65f5f"
+  integrity sha512-2JydAAF+yzoHW0bZiDwBDhYPwGQRegxaCuWc9CCze2hT3RvvpagLkQ+QCxmRxSyiU8dOTJMYdETl13RTSFUxkg==
   dependencies:
     "@jsii/check-node" "1.79.0"
     "@jsii/spec" "^1.79.0"
@@ -4299,7 +4299,7 @@ jsii@5.x:
     semver-intersect "^1.4.0"
     sort-json "^2.0.1"
     spdx-license-list "^6.6.0"
-    typescript "~5.0.2"
+    typescript "~5.0.3"
     yargs "^17.7.1"
 
 json-buffer@3.0.1:
@@ -4709,10 +4709,17 @@ minimatch@^5.0.1:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimatch@^7.4.1, minimatch@^7.4.2, minimatch@^7.4.3:
+minimatch@^7.4.2, minimatch@^7.4.3:
   version "7.4.4"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-7.4.4.tgz#e15a8ab56cc5469eca75a26a1319e5c00900824a"
   integrity sha512-T+8B3kNrLP7jDb5eaC4rUIp6DKoeTSb6f9SwF2phcY2gxJUA0GEf1i29/FHxBMEfx0ppWlr434/D0P+6jb8bOQ==
+  dependencies:
+    brace-expansion "^2.0.1"
+
+minimatch@^8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-8.0.2.tgz#ba35f8afeb255a4cbad4b6677b46132f3278c469"
+  integrity sha512-ikHGF67ODxj7vS5NKU2wvTsFLbExee+KXVCnBWh8Cg2hVJfBMQIrlo50qru/09E0EifjnU8dZhJ/iHhyXJM6Mw==
   dependencies:
     brace-expansion "^2.0.1"
 
@@ -4941,9 +4948,9 @@ npm-bundled@^3.0.0:
     npm-normalize-package-bin "^3.0.0"
 
 npm-check-updates@^16:
-  version "16.9.0"
-  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-16.9.0.tgz#eead7405cc272ca11ae18408f6007afe4d75479d"
-  integrity sha512-AOAAre4AAPzB5p41E8vbkisx7FypdNCy4mkiF4mMUl6ptOUVkaMGlWVx1eqgmaoraeAnvhyByIGS+4LN7U+XHg==
+  version "16.10.0"
+  resolved "https://registry.yarnpkg.com/npm-check-updates/-/npm-check-updates-16.10.0.tgz#6bd5c76eedd231248a4d8cf5c1b20cd6f19d5164"
+  integrity sha512-xtTm38/94u9BhFbIuq1yxjKs+lmXQK+RnzxgfMVzRhz9vRXgcuC9ZsSw8hormmrmVtIZ8yG0At80d1R5vRf6rQ==
   dependencies:
     chalk "^5.2.0"
     cli-table3 "^0.6.3"
@@ -6440,15 +6447,15 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha512-/aCDEGatGvZ2BIk+HmLf4ifCJFwvKFNb9/JeZPMulfgFracn9QFcAf5GO8B/mweUjSoblS5In0cWhqpfs/5PQA==
 
-typescript@5.x, typescript@~5.0.2:
+typescript@5.x, typescript@~5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.0.3.tgz#fe976f0c826a88d0a382007681cbb2da44afdedf"
   integrity sha512-xv8mOEDnigb/tN9PSMTwSEqAnUvkoXMQlicOb0IUVDBSQCgBSaAAROUZYy2IcUy5qU6XajK5jjjO7TMWqBTKZA==
 
 typescript@next:
-  version "5.1.0-dev.20230401"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.0-dev.20230401.tgz#7b4ac44cc2e3788bfae70fe8e2afd0fa2fa7319e"
-  integrity sha512-8rkgjswK/GejHMcnHvn9hGZHollSLEx4LSoVdSe9kZygAfxqwf1KymVtWF4Gs3AyQiKTX9oDALvgjsgC9V/U8w==
+  version "5.1.0-dev.20230402"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.0-dev.20230402.tgz#16b098c94cb05fd7232e1f09583b25c42f83b84f"
+  integrity sha512-YivJhKi6iTmS5qfkSuv/p1NYZtlQLexIHIF25kXxYkpjcs6jEtbLEctviQYTrzGVMq+R0QCTRW5EQtp+NLwtnA==
 
 typescript@~3.9.10:
   version "3.9.10"
