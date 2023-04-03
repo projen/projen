@@ -111,6 +111,12 @@ export interface TypeScriptProjectOptions extends NodeProjectOptions {
    * @default false
    */
   readonly disableTsconfig?: boolean;
+  /**
+   * Do not generate a `tsconfig.dev.json` file.
+   *
+   * @default false
+   */
+  readonly disableTsconfigDev?: boolean;
 
   /**
    * Generate one-time sample in `src/` and `test/` if there are no files there.
@@ -246,6 +252,12 @@ export class TypeScriptProject extends NodeProject {
       target: "ES2019",
     };
 
+    if (options.disableTsconfigDev && options.disableTsconfig) {
+      throw new Error(
+        "Cannot specify both 'disableTsconfigDev' and 'disableTsconfig' fields."
+      );
+    }
+
     if (!options.disableTsconfig) {
       this.tsconfig = new TypescriptConfig(
         this,
@@ -264,24 +276,28 @@ export class TypeScriptProject extends NodeProject {
       );
     }
 
-    const tsconfigDevFile = options.tsconfigDevFile ?? "tsconfig.dev.json";
-    this.tsconfigDev = new TypescriptConfig(
-      this,
-      mergeTsconfigOptions(
-        {
-          fileName: tsconfigDevFile,
-          include: [
-            PROJEN_RC,
-            `${this.srcdir}/**/*.ts`,
-            `${this.testdir}/**/*.ts`,
-          ],
-          exclude: ["node_modules"],
-          compilerOptions: compilerOptionDefaults,
-        },
-        options.tsconfig,
-        options.tsconfigDev
-      )
-    );
+    if (options.disableTsconfigDev) {
+      this.tsconfigDev = this.tsconfig!;
+    } else {
+      const tsconfigDevFile = options.tsconfigDevFile ?? "tsconfig.dev.json";
+      this.tsconfigDev = new TypescriptConfig(
+        this,
+        mergeTsconfigOptions(
+          {
+            fileName: tsconfigDevFile,
+            include: [
+              PROJEN_RC,
+              `${this.srcdir}/**/*.ts`,
+              `${this.testdir}/**/*.ts`,
+            ],
+            exclude: ["node_modules"],
+            compilerOptions: compilerOptionDefaults,
+          },
+          options.tsconfig,
+          options.tsconfigDev
+        )
+      );
+    }
 
     this.gitignore.include(`/${this.srcdir}/`);
     this.npmignore?.exclude(`/${this.srcdir}/`);
