@@ -3308,6 +3308,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "disableTsconfigDev",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "disableTsconfigDev",
+        ],
+        "simpleType": "boolean",
+        "switch": "disable-tsconfig-dev",
+      },
+      Object {
+        "default": "false",
         "docs": "Docgen by Typedoc.",
         "featured": false,
         "fullType": Object {
@@ -6177,6 +6194,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "disable-tsconfig",
+      },
+      Object {
+        "default": "false",
+        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "disableTsconfigDev",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "disableTsconfigDev",
+        ],
+        "simpleType": "boolean",
+        "switch": "disable-tsconfig-dev",
       },
       Object {
         "default": "false",
@@ -10349,6 +10383,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "disableTsconfigDev",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "disableTsconfigDev",
+        ],
+        "simpleType": "boolean",
+        "switch": "disable-tsconfig-dev",
+      },
+      Object {
+        "default": "false",
         "docs": "Docgen by Typedoc.",
         "featured": false,
         "fullType": Object {
@@ -13039,6 +13090,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "disable-tsconfig",
+      },
+      Object {
+        "default": "false",
+        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "disableTsconfigDev",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "disableTsconfigDev",
+        ],
+        "simpleType": "boolean",
+        "switch": "disable-tsconfig-dev",
       },
       Object {
         "default": "false",
@@ -15846,6 +15914,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "disable-tsconfig",
+      },
+      Object {
+        "default": "false",
+        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "disableTsconfigDev",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "disableTsconfigDev",
+        ],
+        "simpleType": "boolean",
+        "switch": "disable-tsconfig-dev",
       },
       Object {
         "default": "false",
@@ -19417,6 +19502,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "disable-tsconfig",
+      },
+      Object {
+        "default": "false",
+        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "disableTsconfigDev",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "disableTsconfigDev",
+        ],
+        "simpleType": "boolean",
+        "switch": "disable-tsconfig-dev",
       },
       Object {
         "default": "false",
@@ -24334,6 +24436,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "disable-tsconfig",
+      },
+      Object {
+        "default": "false",
+        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "disableTsconfigDev",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "disableTsconfigDev",
+        ],
+        "simpleType": "boolean",
+        "switch": "disable-tsconfig-dev",
       },
       Object {
         "default": "false",
@@ -32453,6 +32572,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "disableTsconfigDev",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "disableTsconfigDev",
+        ],
+        "simpleType": "boolean",
+        "switch": "disable-tsconfig-dev",
+      },
+      Object {
+        "default": "false",
         "docs": "Docgen by Typedoc.",
         "featured": false,
         "fullType": Object {
@@ -34931,6 +35067,23 @@ Array [
       },
       Object {
         "default": "false",
+        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "disableTsconfigDev",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "disableTsconfigDev",
+        ],
+        "simpleType": "boolean",
+        "switch": "disable-tsconfig-dev",
+      },
+      Object {
+        "default": "false",
         "docs": "Docgen by Typedoc.",
         "featured": false,
         "fullType": Object {
@@ -37384,6 +37537,23 @@ Array [
         ],
         "simpleType": "boolean",
         "switch": "disable-tsconfig",
+      },
+      Object {
+        "default": "false",
+        "docs": "Do not generate a \`tsconfig.dev.json\` file.",
+        "featured": false,
+        "fullType": Object {
+          "primitive": "boolean",
+        },
+        "jsonLike": true,
+        "name": "disableTsconfigDev",
+        "optional": true,
+        "parent": "TypeScriptProjectOptions",
+        "path": Array [
+          "disableTsconfigDev",
+        ],
+        "simpleType": "boolean",
+        "switch": "disable-tsconfig-dev",
       },
       Object {
         "default": "false",

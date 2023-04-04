@@ -55,4 +55,16 @@ describe("Creating rc file within a non-TypeScript project", () => {
       ]),
     });
   });
+
+  test("mentions .projenrc.ts in the file marker", () => {
+    // GIVEN
+    const p = new TestProject({});
+
+    // WHEN
+    new ProjenrcTs(p, {});
+
+    // THEN
+    const snapshot = synthSnapshot(p);
+    expect(snapshot[".gitignore"]).toContain("To modify, edit .projenrc.ts");
+  });
 });
