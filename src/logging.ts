@@ -36,6 +36,10 @@ export function warn(...text: any[]) {
   log(false, chalk.yellow, ...text);
 }
 
+export function empty(count: number = 1) {
+  console.log("\n".repeat(count - 1));
+}
+
 export function disable() {
   enabled = false;
 }

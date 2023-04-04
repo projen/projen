@@ -55,48 +55,17 @@ class Command implements yargs.CommandModule {
           cargs.showHelpOnFail(false);
 
           for (const option of type.options ?? []) {
-            if (
-              option.simpleType !== "string" &&
-              option.simpleType !== "number" &&
-              option.simpleType !== "boolean" &&
-              option.kind !== "enum" &&
-              !isPrimitiveArrayOption(option)
-            ) {
-              /**
-               * Currently we only support these field types as command line options:
-               * - primitives (string, number, boolean)
-               * - lists of primitives
-               * - enums
-               */
+            // not all types can be represented in the cli
+            if (!argTypeSupported(option)) {
               continue;
             }
 
-            let desc = [option.docs?.replace(/\ *\.$/, "") ?? ""];
-
-            const required = !option.optional;
-            let defaultValue;
-
-            if (option.default && option.default !== "undefined") {
-              if (!required) {
-                // if the field is not required, just describe the default but don't actually assign a value
-                desc.push(
-                  `[default: ${option.default
-                    .replace(/^\ *-/, "")
-                    .replace(/\.$/, "")
-                    .trim()}]`
-                );
-              } else {
-                // if the field is required and we have a @default, then assign
-                // the value here so it appears in `--help`
-                defaultValue = renderDefault(process.cwd(), option.default);
-              }
-            }
-
+            const defaultValue = argDefault(option);
             cargs.option(option.switch, {
-              group: required ? "Required:" : "Optional:",
+              group: !option.optional ? "Required:" : "Optional:",
               type: argType(option),
-              description: desc.join(" "),
-              required,
+              description: argDesc(option),
+              required: !option.optional,
               // yargs behaves differently for arrays if the defaultValue property is present or not
               ...(defaultValue ? { default: defaultValue } : {}),
             });
@@ -166,6 +135,51 @@ function argType(
   }
 
   return option.simpleType as "string" | "boolean" | "number";
+}
+
+/**
+ * Returns the description for a given project option
+ */
+function argDesc(option: inventory.ProjectOption): string {
+  let desc = [option.docs?.replace(/\ *\.$/, "") ?? ""];
+
+  if (option.optional && option.default && option.default !== "undefined") {
+    desc.push(
+      `[default: ${option.default
+        .replace(/^\ *-/, "")
+        .replace(/\.$/, "")
+        .trim()}]`
+    );
+  }
+
+  return desc.join(" ");
+}
+
+/**
+ * Compute the default value for a given project option
+ */
+function argDefault(option: inventory.ProjectOption): any {
+  // if the field is required and we have a @default, then assign
+  // we can show the default value in --help
+  if (!option.optional && option.default && option.default !== "undefined") {
+    return renderDefault(process.cwd(), option.default);
+  }
+}
+
+/**
+ * Currently we only support these field types as command line options:
+ * - primitives (string, number, boolean)
+ * - lists of primitives
+ * - enums
+ */
+function argTypeSupported(option: inventory.ProjectOption): boolean {
+  return (
+    option.simpleType === "string" ||
+    option.simpleType === "number" ||
+    option.simpleType === "boolean" ||
+    option.kind === "enum" ||
+    isPrimitiveArrayOption(option)
+  );
 }
 
 /**
@@ -258,6 +272,7 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
   }
 
   const moduleName = installPackage(baseDir, spec);
+  logging.empty();
 
   // Find the just installed package and discover the rest recursively from this package folder
   const moduleDir = path.dirname(
@@ -301,35 +316,46 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
     );
   }
 
+  const missingOptions = [];
+
   for (const option of type.options ?? []) {
-    if (
-      option.simpleType !== "string" &&
-      option.simpleType !== "number" &&
-      option.simpleType !== "boolean"
-    ) {
-      continue; // we don't support non-primitive fields as command line options
+    // not all types can be represented in the cli
+    if (!argTypeSupported(option)) {
+      continue;
     }
 
+    // parse allowed types
     if (args[option.name] !== undefined) {
-      if (option.simpleType === "number") {
-        args[option.name] = parseInt(args[option.name]);
-        args[option.switch] = args[option.name];
-      } else if (option.simpleType === "boolean") {
-        const raw = args[option.name];
-        const safe = typeof raw === "string" ? isTruthy(raw) : raw;
-        args[option.name] = safe;
-        args[option.switch] = safe;
-      }
-      continue; // do not overwrite passed arguments
+      args[option.name] = parseArg(args[option.name], argType(option), option);
+      args[option.switch] = args[option.name];
+      continue;
     }
 
-    if (option.default && option.default !== "undefined") {
-      if (!option.optional) {
-        const defaultValue = renderDefault(baseDir, option.default);
-        args[option.name] = defaultValue;
-        args[option.switch] = defaultValue;
-      }
+    // Required option with a default
+    if (!option.optional && option.default && option.default !== "undefined") {
+      const defaultValue = renderDefault(baseDir, option.default);
+      args[option.name] = defaultValue;
+      args[option.switch] = defaultValue;
     }
+
+    // Required option, but we could not find a value
+    if (!option.optional && !args[option.name]) {
+      missingOptions.push(
+        `--${option.switch} [${argType(option)}] ${argDesc(option)}`
+      );
+    }
+  }
+
+  // We are missing some required options
+  if (missingOptions.length) {
+    logging.error(
+      `Cannot create "${type.fqn}". Missing required option${
+        missingOptions.length > 1 ? "s" : ""
+      }:\n`,
+      ...missingOptions.map((m) => `    ${m}\n`)
+    );
+    process.exitCode = 1;
+    return;
   }
 
   // include a dev dependency for the external module
@@ -337,6 +363,40 @@ async function initProjectFromModule(baseDir: string, spec: string, args: any) {
   args["dev-deps"] = [spec];
 
   await initProject(baseDir, type, args);
+}
+
+/**
+ * Parse command line value as option type
+ */
+function parseArg(
+  value: any,
+  type: string,
+  option?: inventory.ProjectOption
+): any {
+  switch (type) {
+    case "number":
+      return parseInt(value);
+    case "boolean":
+      return typeof value === "string" ? isTruthy(value) : value;
+    case "array":
+      if (!Array.isArray(value)) {
+        value = [value];
+      }
+      return value.map((v: any) =>
+        parseArg(
+          v,
+          option?.fullType.collection?.elementtype.primitive || "string"
+        )
+      );
+    // return value unchanged
+    case "string":
+    default:
+      // if we have an unexpected array, use the first element
+      if (Array.isArray(value)) {
+        return value[0];
+      }
+      return value;
+  }
 }
 
 /**

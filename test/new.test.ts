@@ -202,6 +202,18 @@ test("options are not overwritten when creating from external project types", ()
   });
 });
 
+test("projen new --from will fail when a required option without a default is not provided", () => {
+  withProjectDir((projectdir) => {
+    try {
+      execProjenCLI(projectdir, ["new", "--from", "mrpj@0.0.1", "projen"]);
+    } catch (error: any) {
+      expect(error.message).toMatch('Cannot create "mrpj.ProjenProject"');
+      expect(error.message).toMatch("Missing required option:");
+      expect(error.message).toMatch("--repo [string]");
+    }
+  });
+});
+
 test("can choose from one of multiple external project types", () => {
   withProjectDir((projectdir) => {
     // execute `projen new --from @taimos/projen@0.0.187 taimos-ts-lib` in the project directory

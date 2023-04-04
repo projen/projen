@@ -1,0 +1,135 @@
+{
+  "name": "test-project",
+  "schema": "jsii/0.10.0",
+  "types": {
+    "projen.Project": {
+      "assembly": "projen",
+      "name": "Project",
+      "fqn": "projen.Project",
+      "kind": "class"
+    },
+    "test.TestProject": {
+      "assembly": "test",
+      "name": "TestProject",
+      "fqn": "test.TestProject",
+      "kind": "class",
+      "base": "projen.Project",
+      "initializer": {
+        "parameters": [
+          {
+            "name": "options",
+            "type": {
+              "fqn": "test.TestProjectOptions"
+            }
+          }
+        ]
+      }
+    },
+    "test.TestProjectOptions": {
+      "assembly": "test",
+      "datatype": true,
+      "fqn": "test.TestProjectOptions",
+      "kind": "interface",
+      "name": "TestProjectOptions",
+      "properties": [
+        {
+          "abstract": true,
+          "docs": {
+            "default": "$GIT_USER_NAME"
+          },
+          "immutable": true,
+          "name": "macroOption",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "\"test-value\""
+          },
+          "immutable": true,
+          "name": "stringOption",
+          "type": {
+            "primitive": "string"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "42"
+          },
+          "immutable": true,
+          "name": "numberOption",
+          "type": {
+            "primitive": "number"
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "[\"a\", \"b\", \"c\"]"
+          },
+          "immutable": true,
+          "name": "stringArrayOption",
+          "type": {
+            "collection": {
+              "kind": "array",
+              "elementtype": {
+                "primitive": "string"
+              }
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "[1, 2, 3]"
+          },
+          "immutable": true,
+          "name": "numberArrayOption",
+          "type": {
+            "collection": {
+              "kind": "array",
+              "elementtype": {
+                "primitive": "number"
+              }
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "[true, false, true]"
+          },
+          "immutable": true,
+          "name": "booleanArrayOption",
+          "type": {
+            "collection": {
+              "kind": "array",
+              "elementtype": {
+                "primitive": "boolean"
+              }
+            }
+          }
+        },
+        {
+          "abstract": true,
+          "docs": {
+            "default": "[]"
+          },
+          "immutable": true,
+          "name": "emptyArrayOption",
+          "type": {
+            "collection": {
+              "kind": "array",
+              "elementtype": {
+                "primitive": "string"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

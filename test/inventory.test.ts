@@ -1,5 +1,6 @@
 import * as path from "path";
 import * as inventory from "../src/inventory";
+import { toProjectType } from "../src/inventory";
 
 const result = inventory.discover();
 
@@ -67,6 +68,18 @@ test("renderable default values simulation", () => {
   expect(() =>
     throwIfNotRenderable({ ...baseOption, default: "true" })
   ).not.toThrowError();
+  expect(() =>
+    throwIfNotRenderable({ ...baseOption, default: '["a", "b", "c"]' })
+  ).not.toThrowError();
+  expect(() =>
+    throwIfNotRenderable({ ...baseOption, default: "[1, 2, 3]" })
+  ).not.toThrowError();
+  expect(() =>
+    throwIfNotRenderable({ ...baseOption, default: "[true, false, true]" })
+  ).not.toThrowError();
+  expect(() =>
+    throwIfNotRenderable({ ...baseOption, default: "[]" })
+  ).not.toThrowError();
 
   expect(() =>
     throwIfNotRenderable({
@@ -101,6 +114,19 @@ describe("all default values in docstrings are renderable JS values", () => {
         expect(() => throwIfNotRenderable(option)).not.toThrowError();
       });
     });
+  });
+});
+
+test("all allowed default values can be discovered and rendered", () => {
+  const defaultOptionsManifest = inventory.readManifest(
+    path.join(__dirname, "inventory/renderable-defaults")
+  );
+  const testProject = toProjectType(
+    defaultOptionsManifest.types,
+    "test.TestProject"
+  );
+  testProject.options.forEach((option) => {
+    expect(() => throwIfNotRenderable(option)).not.toThrowError();
   });
 });
 
