@@ -348,6 +348,28 @@ test("spawn can receive args", () => {
   ]);
 });
 
+test("spawn can receive fixed args", () => {
+  const p = new TestProject();
+  const parent = p.addTask("parent");
+  const child = p.addTask("child", {
+    exec: 'echo "child: [$@]"',
+    receiveArgs: true,
+  });
+  parent.spawn(child, { args: ["one", "--two", "-3"] });
+
+  expect(executeTask(p, "parent", {})).toStrictEqual(["child: [one --two -3]"]);
+});
+
+test("exec can receive fixed args", () => {
+  const p = new TestProject();
+  const t = p.addTask("test1");
+  t.exec('echo "child: [$@]"', {
+    args: ["one", "--two", "-3"],
+  });
+
+  expect(executeTask(p, "test1")).toStrictEqual(["child: [one --two -3]"]);
+});
+
 function executeTask(
   p: Project,
   taskName: string,
