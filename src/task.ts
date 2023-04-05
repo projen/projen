@@ -25,6 +25,14 @@ export interface TaskOptions extends TaskCommonOptions {
    * @default false
    */
   readonly receiveArgs?: boolean;
+
+  /**
+   * Should the provided `exec` shell command receive fixed args.
+   * @see {@link TaskStepOptions.args}
+   *
+   * @default - no arguments are passed to the step
+   */
+  readonly args?: string[];
 }
 
 /**

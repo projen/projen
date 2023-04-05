@@ -2192,6 +2192,7 @@ addTask(name: string, props?: TaskOptions): Task
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
+  * **args** (<code>Array<string></code>)  Should the provided `exec` shell command receive fixed args. __*Default*__: no arguments are passed to the step
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
   * **receiveArgs** (<code>boolean</code>)  Should the provided `exec` shell command receive args passed to the task. __*Default*__: false
   * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
@@ -2872,6 +2873,7 @@ new Task(name: string, props?: TaskOptions)
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
+  * **args** (<code>Array<string></code>)  Should the provided `exec` shell command receive fixed args. __*Default*__: no arguments are passed to the step
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
   * **receiveArgs** (<code>boolean</code>)  Should the provided `exec` shell command receive args passed to the task. __*Default*__: false
   * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
@@ -2933,6 +2935,7 @@ exec(command: string, options?: TaskStepOptions): void
 
 * **command** (<code>string</code>)  Shell command.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
+  * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
@@ -2962,6 +2965,7 @@ prepend(shell: string, options?: TaskStepOptions): void
 
 * **shell** (<code>string</code>)  The command to add.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
+  * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
@@ -2979,6 +2983,7 @@ prependExec(shell: string, options?: TaskStepOptions): void
 
 * **shell** (<code>string</code>)  The command to add.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
+  * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
@@ -2996,6 +3001,7 @@ prependSay(message: string, options?: TaskStepOptions): void
 
 * **message** (<code>string</code>)  Your message.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
+  * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
@@ -3013,6 +3019,7 @@ prependSpawn(subtask: Task, options?: TaskStepOptions): void
 
 * **subtask** (<code>[Task](#projen-task)</code>)  The subtask to execute.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
+  * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
@@ -3030,6 +3037,7 @@ reset(command?: string, options?: TaskStepOptions): void
 
 * **command** (<code>string</code>)  the first command to add to the task after it was cleared.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
+  * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
@@ -3047,6 +3055,7 @@ say(message: string, options?: TaskStepOptions): void
 
 * **message** (<code>string</code>)  Your message.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  Options.
+  * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
@@ -3064,6 +3073,7 @@ spawn(subtask: Task, options?: TaskStepOptions): void
 
 * **subtask** (<code>[Task](#projen-task)</code>)  The subtask to execute.
 * **options** (<code>[TaskStepOptions](#projen-taskstepoptions)</code>)  *No description*
+  * **args** (<code>Array<string></code>)  A list of fixed arguments always passed to the step. __*Default*__: no arguments are passed to the step
   * **cwd** (<code>string</code>)  The working directory for this step. __*Default*__: determined by the task
   * **name** (<code>string</code>)  Step name. __*Default*__: no name
   * **receiveArgs** (<code>boolean</code>)  Should this step receive args passed to the task. __*Default*__: false
@@ -3196,6 +3206,7 @@ addTask(name: string, options?: TaskOptions): Task
   * **description** (<code>string</code>)  The description of this build command. __*Default*__: the task name
   * **env** (<code>Map<string, string></code>)  Defines environment variables for the execution of this task. __*Default*__: {}
   * **requiredEnv** (<code>Array<string></code>)  A set of environment variables that must be defined in order to execute this task. __*Optional*__
+  * **args** (<code>Array<string></code>)  Should the provided `exec` shell command receive fixed args. __*Default*__: no arguments are passed to the step
   * **exec** (<code>string</code>)  Shell command to execute as the first command of the task. __*Default*__: add steps using `task.exec(command)` or `task.spawn(subtask)`
   * **receiveArgs** (<code>boolean</code>)  Should the provided `exec` shell command receive args passed to the task. __*Default*__: false
   * **steps** (<code>Array<[TaskStep](#projen-taskstep)></code>)  List of task steps to run. __*Optional*__
@@ -13427,6 +13438,7 @@ Name | Type | Description
 
 Name | Type | Description 
 -----|------|-------------
+**args**?🔹 | <code>Array<string></code> | Should the provided `exec` shell command receive fixed args.<br/>__*Default*__: no arguments are passed to the step
 **condition**?🔹 | <code>string</code> | A shell command which determines if the this task should be executed.<br/>__*Optional*__
 **cwd**?🔹 | <code>string</code> | The working directory for all steps in this task (unless overridden by the step).<br/>__*Default*__: process.cwd()
 **description**?🔹 | <code>string</code> | The description of this build command.<br/>__*Default*__: the task name
@@ -13470,6 +13482,7 @@ shell command or execution of a sub-task, by name.
 
 Name | Type | Description 
 -----|------|-------------
+**args**?🔹 | <code>Array<string></code> | A list of fixed arguments always passed to the step.<br/>__*Default*__: no arguments are passed to the step
 **builtin**?🔹 | <code>string</code> | The name of a built-in task to execute.<br/>__*Default*__: do not execute a builtin task
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
 **exec**?🔹 | <code>string</code> | Shell command to execute.<br/>__*Default*__: don't execute a shell command
@@ -13489,6 +13502,7 @@ Options for task steps.
 
 Name | Type | Description 
 -----|------|-------------
+**args**?🔹 | <code>Array<string></code> | A list of fixed arguments always passed to the step.<br/>__*Default*__: no arguments are passed to the step
 **cwd**?🔹 | <code>string</code> | The working directory for this step.<br/>__*Default*__: determined by the task
 **name**?🔹 | <code>string</code> | Step name.<br/>__*Default*__: no name
 **receiveArgs**?🔹 | <code>boolean</code> | Should this step receive args passed to the task.<br/>__*Default*__: false
