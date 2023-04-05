@@ -91,6 +91,8 @@ Name|Description
 [github.PullRequestTemplate](#projen-github-pullrequesttemplate)|Template for GitHub pull requests.
 [github.Stale](#projen-github-stale)|Warns and then closes issues and PRs that have had no activity for a specified amount of time.
 [github.TaskWorkflow](#projen-github-taskworkflow)|A GitHub workflow for common build tasks within a project.
+[github.WorkflowActions](#projen-github-workflowactions)|A set of utility functions for creating GitHub actions in workflows.
+[github.WorkflowJobs](#projen-github-workflowjobs)|A set of utility functions for creating jobs in GitHub Workflows.
 [gitlab.CiConfiguration](#projen-gitlab-ciconfiguration)|CI for GitLab.
 [gitlab.GitlabConfiguration](#projen-gitlab-gitlabconfiguration)|A GitLab CI for the main `.gitlab-ci.yml` file.
 [gitlab.NestedConfiguration](#projen-gitlab-nestedconfiguration)|A GitLab CI for templates that are created and included in the `.gitlab-ci.yml` file.
@@ -271,6 +273,7 @@ Name|Description
 [circleci.WorkflowJob](#projen-circleci-workflowjob)|A Job is part of Workflow.
 [github.AutoApproveOptions](#projen-github-autoapproveoptions)|Options for 'AutoApprove'.
 [github.AutoMergeOptions](#projen-github-automergeoptions)|*No description*
+[github.CheckoutWithPatchOptions](#projen-github-checkoutwithpatchoptions)|Options for `checkoutWithPatch`.
 [github.DependabotIgnore](#projen-github-dependabotignore)|You can use the `ignore` option to customize which dependencies are updated.
 [github.DependabotOptions](#projen-github-dependabotoptions)|*No description*
 [github.DependabotRegistry](#projen-github-dependabotregistry)|Use to add private registry support for dependabot.
@@ -284,12 +287,15 @@ Name|Description
 [github.MergifyOptions](#projen-github-mergifyoptions)|*No description*
 [github.MergifyQueue](#projen-github-mergifyqueue)|*No description*
 [github.MergifyRule](#projen-github-mergifyrule)|*No description*
+[github.PullRequestFromPatchOptions](#projen-github-pullrequestfrompatchoptions)|*No description*
 [github.PullRequestLintOptions](#projen-github-pullrequestlintoptions)|Options for PullRequestLint.
+[github.PullRequestPatchSource](#projen-github-pullrequestpatchsource)|*No description*
 [github.PullRequestTemplateOptions](#projen-github-pullrequesttemplateoptions)|Options for `PullRequestTemplate`.
 [github.SemanticTitleOptions](#projen-github-semantictitleoptions)|Options for linting that PR titles follow Conventional Commits.
 [github.StaleBehavior](#projen-github-stalebehavior)|Stale behavior.
 [github.StaleOptions](#projen-github-staleoptions)|Options for `Stale`.
 [github.TaskWorkflowOptions](#projen-github-taskworkflowoptions)|*No description*
+[github.UploadGitPatchOptions](#projen-github-uploadgitpatchoptions)|Options for `uploadGitPatch`.
 [gitlab.AllowFailure](#projen-gitlab-allowfailure)|Exit code that are not considered failure.
 [gitlab.Artifacts](#projen-gitlab-artifacts)|Used to specify a list of files and directories that should be attached to the job if it succeeds.
 [gitlab.Assets](#projen-gitlab-assets)|Asset configuration for a release.
@@ -7395,6 +7401,129 @@ Name | Type | Description
 -----|------|-------------
 **jobId**🔹 | <code>string</code> | <span></span>
 **artifactsDirectory**?🔹 | <code>string</code> | __*Optional*__
+
+
+
+## class WorkflowActions 🔹 <a id="projen-github-workflowactions"></a>
+
+A set of utility functions for creating GitHub actions in workflows.
+
+__Submodule__: github
+
+
+### Initializer
+
+
+
+
+```ts
+new github.WorkflowActions()
+```
+
+
+
+### Methods
+
+
+#### *static* checkoutWithPatch(options?)🔹 <a id="projen-github-workflowactions-checkoutwithpatch"></a>
+
+Checks out a repository and applies a git patch that was created using `uploadGitPatch`.
+
+```ts
+static checkoutWithPatch(options?: CheckoutWithPatchOptions): Array<JobStep>
+```
+
+* **options** (<code>[github.CheckoutWithPatchOptions](#projen-github-checkoutwithpatchoptions)</code>)  Options.
+  * **lfs** (<code>boolean</code>)  Whether LFS is enabled for the GitHub repository. __*Default*__: false
+  * **patchFile** (<code>string</code>)  The name of the artifact the patch is stored as. __*Default*__: ".repo.patch"
+  * **ref** (<code>string</code>)  Branch or tag name. __*Default*__: the default branch is implicitly used
+  * **repository** (<code>string</code>)  The repository (owner/repo) to use. __*Default*__: the default repository is implicitly used
+  * **token** (<code>string</code>)  A GitHub token to use when checking out the repository. __*Default*__: the default GITHUB_TOKEN is implicitly used
+
+__Returns__:
+* <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>
+
+#### *static* setupGitIdentity(id)🔹 <a id="projen-github-workflowactions-setupgitidentity"></a>
+
+Configures the git identity (user name and email).
+
+```ts
+static setupGitIdentity(id: GitIdentity): Array<JobStep>
+```
+
+* **id** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The identity to use.
+  * **email** (<code>string</code>)  The email address of the git user. 
+  * **name** (<code>string</code>)  The name of the user. 
+
+__Returns__:
+* <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>
+
+#### *static* uploadGitPatch(options)🔹 <a id="projen-github-workflowactions-uploadgitpatch"></a>
+
+Creates a .patch file from the current git diff and uploads it as an artifact. Use `checkoutWithPatch` to download and apply in another job.
+
+If a patch was uploaded, the action can optionally fail the job.
+
+```ts
+static uploadGitPatch(options: UploadGitPatchOptions): Array<JobStep>
+```
+
+* **options** (<code>[github.UploadGitPatchOptions](#projen-github-uploadgitpatchoptions)</code>)  Options.
+  * **outputName** (<code>string</code>)  The name of the output to emit. 
+  * **stepId** (<code>string</code>)  The step ID which produces the output which indicates if a patch was created. 
+  * **mutationError** (<code>string</code>)  Fail if a mutation was found and print this error message. __*Default*__: do not fail upon mutation
+  * **patchFile** (<code>string</code>)  The name of the artifact the patch is stored as. __*Default*__: ".repo.patch"
+  * **stepName** (<code>string</code>)  The name of the step. __*Default*__: "Find mutations"
+
+__Returns__:
+* <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code>
+
+
+
+## class WorkflowJobs 🔹 <a id="projen-github-workflowjobs"></a>
+
+A set of utility functions for creating jobs in GitHub Workflows.
+
+__Submodule__: github
+
+
+### Initializer
+
+
+
+
+```ts
+new github.WorkflowJobs()
+```
+
+
+
+### Methods
+
+
+#### *static* pullRequestFromPatch(options)🔹 <a id="projen-github-workflowjobs-pullrequestfrompatch"></a>
+
+Creates a pull request with the changes of a patch file.
+
+```ts
+static pullRequestFromPatch(options: PullRequestFromPatchOptions): Job
+```
+
+* **options** (<code>[github.PullRequestFromPatchOptions](#projen-github-pullrequestfrompatchoptions)</code>)  *No description*
+  * **credentials** (<code>[github.GithubCredentials](#projen-github-githubcredentials)</code>)  The job credentials used to create the pull request. 
+  * **gitIdentity** (<code>[github.GitIdentity](#projen-github-gitidentity)</code>)  The git identity used to create the commit. 
+  * **patch** (<code>[github.PullRequestPatchSource](#projen-github-pullrequestpatchsource)</code>)  Information about the patch that is used to create the pull request. 
+  * **pullRequestDescription** (<code>string</code>)  Description added to the pull request. 
+  * **pullRequestTitle** (<code>string</code>)  The full title used to create the pull request. 
+  * **assignees** (<code>Array<string></code>)  Assignees to add on the PR. __*Default*__: no assignees
+  * **jobName** (<code>string</code>)  The name of the job displayed on GitHub. __*Default*__: "Create Pull Request"
+  * **labels** (<code>Array<string></code>)  Labels to apply on the PR. __*Default*__: no labels.
+  * **ref** (<code>string</code>)  Branch or tag name. __*Default*__: the default branch is implicitly used
+  * **runsOn** (<code>Array<string></code>)  Github Runner selection labels. __*Default*__: ["ubuntu-latest"]
+  * **signoff** (<code>boolean</code>)  Add Signed-off-by line by the committer at the end of the commit log message. __*Default*__: true
+
+__Returns__:
+* <code>[github.workflows.Job](#projen-github-workflows-job)</code>
 
 
 
@@ -16022,6 +16151,23 @@ Name | Type | Description
 
 
 
+## struct CheckoutWithPatchOptions 🔹 <a id="projen-github-checkoutwithpatchoptions"></a>
+
+
+Options for `checkoutWithPatch`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**lfs**?🔹 | <code>boolean</code> | Whether LFS is enabled for the GitHub repository.<br/>__*Default*__: false
+**patchFile**?🔹 | <code>string</code> | The name of the artifact the patch is stored as.<br/>__*Default*__: ".repo.patch"
+**ref**?🔹 | <code>string</code> | Branch or tag name.<br/>__*Default*__: the default branch is implicitly used
+**repository**?🔹 | <code>string</code> | The repository (owner/repo) to use.<br/>__*Default*__: the default repository is implicitly used
+**token**?🔹 | <code>string</code> | A GitHub token to use when checking out the repository.<br/>__*Default*__: the default GITHUB_TOKEN is implicitly used
+
+
+
 ## struct DependabotIgnore 🔹 <a id="projen-github-dependabotignore"></a>
 
 
@@ -16275,6 +16421,29 @@ Name | Type | Description
 
 
 
+## struct PullRequestFromPatchOptions 🔹 <a id="projen-github-pullrequestfrompatchoptions"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**credentials**🔹 | <code>[github.GithubCredentials](#projen-github-githubcredentials)</code> | The job credentials used to create the pull request.
+**gitIdentity**🔹 | <code>[github.GitIdentity](#projen-github-gitidentity)</code> | The git identity used to create the commit.
+**patch**🔹 | <code>[github.PullRequestPatchSource](#projen-github-pullrequestpatchsource)</code> | Information about the patch that is used to create the pull request.
+**pullRequestDescription**🔹 | <code>string</code> | Description added to the pull request.
+**pullRequestTitle**🔹 | <code>string</code> | The full title used to create the pull request.
+**assignees**?🔹 | <code>Array<string></code> | Assignees to add on the PR.<br/>__*Default*__: no assignees
+**jobName**?🔹 | <code>string</code> | The name of the job displayed on GitHub.<br/>__*Default*__: "Create Pull Request"
+**labels**?🔹 | <code>Array<string></code> | Labels to apply on the PR.<br/>__*Default*__: no labels.
+**ref**?🔹 | <code>string</code> | Branch or tag name.<br/>__*Default*__: the default branch is implicitly used
+**runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
+**signoff**?🔹 | <code>boolean</code> | Add Signed-off-by line by the committer at the end of the commit log message.<br/>__*Default*__: true
+
+
+
 ## struct PullRequestLintOptions 🔹 <a id="projen-github-pullrequestlintoptions"></a>
 
 
@@ -16287,6 +16456,22 @@ Name | Type | Description
 **runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **semanticTitle**?🔹 | <code>boolean</code> | Validate that pull request titles follow Conventional Commits.<br/>__*Default*__: true
 **semanticTitleOptions**?🔹 | <code>[github.SemanticTitleOptions](#projen-github-semantictitleoptions)</code> | Options for validating the conventional commit title linter.<br/>__*Default*__: title must start with "feat", "fix", or "chore"
+
+
+
+## struct PullRequestPatchSource 🔹 <a id="projen-github-pullrequestpatchsource"></a>
+
+
+
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**jobId**🔹 | <code>string</code> | The id of the job that created the patch file.
+**outputName**🔹 | <code>string</code> | The name of the output that indicates if a patch has been created.
+**workflowName**🔹 | <code>string</code> | The name of the workflow that will create the PR.
+**patchFile**?🔹 | <code>string</code> | The name of the artifact the patch is stored as.<br/>__*Default*__: ".repo.patch"
 
 
 
@@ -16377,6 +16562,23 @@ Name | Type | Description
 **preCheckoutSteps**?🔹 | <code>Array<[github.workflows.JobStep](#projen-github-workflows-jobstep)></code> | Initial steps to run before the source code checkout.<br/>__*Default*__: not set
 **runsOn**?🔹 | <code>Array<string></code> | Github Runner selection labels.<br/>__*Default*__: ["ubuntu-latest"]
 **triggers**?🔹 | <code>[github.workflows.Triggers](#projen-github-workflows-triggers)</code> | The triggers for the workflow.<br/>__*Default*__: by default workflows can only be triggered by manually.
+
+
+
+## struct UploadGitPatchOptions 🔹 <a id="projen-github-uploadgitpatchoptions"></a>
+
+
+Options for `uploadGitPatch`.
+
+
+
+Name | Type | Description 
+-----|------|-------------
+**outputName**🔹 | <code>string</code> | The name of the output to emit.
+**stepId**🔹 | <code>string</code> | The step ID which produces the output which indicates if a patch was created.
+**mutationError**?🔹 | <code>string</code> | Fail if a mutation was found and print this error message.<br/>__*Default*__: do not fail upon mutation
+**patchFile**?🔹 | <code>string</code> | The name of the artifact the patch is stored as.<br/>__*Default*__: ".repo.patch"
+**stepName**?🔹 | <code>string</code> | The name of the step.<br/>__*Default*__: "Find mutations"
 
 
 

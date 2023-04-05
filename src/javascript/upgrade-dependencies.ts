@@ -6,6 +6,7 @@ import {
   GithubWorkflow,
   GitIdentity,
   workflows,
+  WorkflowJobs,
 } from "../github";
 import { DEFAULT_GITHUB_ACTIONS_USER } from "../github/constants";
 import { WorkflowActions } from "../github/workflow-actions";
@@ -20,13 +21,6 @@ import { Release } from "../release";
 import { Task } from "../task";
 import { TaskStep } from "../task-model";
 
-function context(value: string) {
-  return `\${{ ${value} }}`;
-}
-
-const REPO = context("github.repository");
-const RUN_ID = context("github.run_id");
-const RUN_URL = `https://github.com/${REPO}/actions/runs/${RUN_ID}`;
 const CREATE_PATCH_STEP_ID = "create_patch";
 const PATCH_CREATED_OUTPUT = "patch_created";
 
@@ -322,7 +316,7 @@ export class UpgradeDependencies extends Component {
 
     steps.push(...this.postBuildSteps);
     steps.push(
-      ...WorkflowActions.createUploadGitPatch({
+      ...WorkflowActions.uploadGitPatch({
         stepId: CREATE_PATCH_STEP_ID,
         outputName: PATCH_CREATED_OUTPUT,
       })
@@ -348,69 +342,27 @@ export class UpgradeDependencies extends Component {
   }
 
   private createPr(workflow: GithubWorkflow, upgrade: Upgrade): PR {
-    // default to API access method used by all GitHub workflows, unless a
-    // custom one is specified
-    const apiAccess =
+    const credentials =
       this.options.workflowOptions?.projenCredentials ??
       workflow.projenCredentials;
-    const token = apiAccess.tokenRef;
-    const runsOn = this.options.workflowOptions?.runsOn ?? ["ubuntu-latest"];
-    const workflowName = workflow.name;
-    const branchName = `github-actions/${workflowName}`;
-    const prStepId = "create-pr";
-
-    const title = `chore(deps): ${this.pullRequestTitle}`;
-    const description = [
-      "Upgrades project dependencies. See details in [workflow run].",
-      "",
-      `[Workflow Run]: ${RUN_URL}`,
-      "",
-      "------",
-      "",
-      `*Automatically created by projen via the "${workflow.name}" workflow*`,
-    ].join("\n");
-
-    const committer = `${this.gitIdentity.name} <${this.gitIdentity.email}>`;
-
-    const steps: workflows.JobStep[] = [
-      ...apiAccess.setupSteps,
-      ...WorkflowActions.checkoutWithPatch({
-        ref: upgrade.ref,
-      }),
-      ...WorkflowActions.setGitIdentity(this.gitIdentity),
-      {
-        name: "Create Pull Request",
-        id: prStepId,
-        uses: "peter-evans/create-pull-request@v4",
-        with: {
-          // the pr can modify workflow files, so we need to use the custom
-          // secret if one is configured.
-          token: token,
-          "commit-message": `${title}\n\n${description}`,
-          branch: branchName,
-          title: title,
-          labels: this.options.workflowOptions?.labels?.join(",") || undefined,
-          assignees:
-            this.options.workflowOptions?.assignees?.join(",") || undefined,
-          body: description,
-          author: committer,
-          committer: committer,
-          signoff: this.options.signoff ?? true,
-        },
-      },
-    ];
 
     return {
-      job: {
-        name: "Create Pull Request",
-        if: `\${{ needs.${upgrade.jobId}.outputs.${PATCH_CREATED_OUTPUT} }}`,
-        needs: [upgrade.jobId],
-        permissions: {
-          contents: workflows.JobPermission.READ,
+      job: WorkflowJobs.pullRequestFromPatch({
+        patch: {
+          jobId: upgrade.jobId,
+          outputName: PATCH_CREATED_OUTPUT,
+          workflowName: workflow.name,
         },
-        runsOn: runsOn ?? ["ubuntu-latest"],
-        steps: steps,
-      },
+        credentials,
+        runsOn: this.options.workflowOptions?.runsOn,
+        ref: upgrade.ref,
+        pullRequestTitle: `chore(deps): ${this.pullRequestTitle}`,
+        pullRequestDescription: "Upgrades project dependencies.",
+        gitIdentity: this.gitIdentity,
+        assignees: this.options.workflowOptions?.assignees,
+        labels: this.options.workflowOptions?.labels,
+        signoff: this.options.signoff,
+      }),
       jobId: "pr",
     };
   }
