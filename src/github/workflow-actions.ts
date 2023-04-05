@@ -1,7 +1,7 @@
 import { GitIdentity } from ".";
 import { JobStep } from "./workflows-model";
 
-const GIT_PATCH_FILE = ".repo.patch";
+const GIT_PATCH_FILE_DEFAULT = ".repo.patch";
 const RUNNER_TEMP = "${{ runner.temp }}";
 
 /**
@@ -12,20 +12,19 @@ export class WorkflowActions {
    * Creates a .patch file from the current git diff and uploads it as an
    * artifact. Use `checkoutWithPatch` to download and apply in another job.
    *
-   * If a patch was uploaded,
+   * If a patch was uploaded, the action can optionally fail the job.
    *
    * @param options Options
    * @returns Job steps
    */
-  public static createUploadGitPatch(
-    options: CreateUploadGitPatchOptions
-  ): JobStep[] {
+  public static uploadGitPatch(options: UploadGitPatchOptions): JobStep[] {
     const MUTATIONS_FOUND = `steps.${options.stepId}.outputs.${options.outputName}`;
+    const GIT_PATCH_FILE = options.patchFile ?? GIT_PATCH_FILE_DEFAULT;
 
     const steps: JobStep[] = [
       {
         id: options.stepId,
-        name: "Find mutations",
+        name: options.stepName ?? "Find mutations",
         run: [
           "git add .",
           `git diff --staged --patch --exit-code > ${GIT_PATCH_FILE} || echo "${options.outputName}=true" >> $GITHUB_OUTPUT`,
@@ -56,7 +55,7 @@ export class WorkflowActions {
 
   /**
    * Checks out a repository and applies a git patch that was created using
-   * `createUploadGitPatch`.
+   * `uploadGitPatch`.
    *
    * @param options Options
    * @returns Job steps
@@ -64,6 +63,8 @@ export class WorkflowActions {
   public static checkoutWithPatch(
     options: CheckoutWithPatchOptions = {}
   ): JobStep[] {
+    const GIT_PATCH_FILE = options.patchFile ?? GIT_PATCH_FILE_DEFAULT;
+
     return [
       {
         name: "Checkout",
@@ -92,7 +93,7 @@ export class WorkflowActions {
    * @param id The identity to use
    * @returns Job steps
    */
-  public static setGitIdentity(id: GitIdentity): JobStep[] {
+  public static setupGitIdentity(id: GitIdentity): JobStep[] {
     return [
       {
         name: "Set git identity",
@@ -109,6 +110,12 @@ export class WorkflowActions {
  * Options for `checkoutWithPatch`.
  */
 export interface CheckoutWithPatchOptions {
+  /**
+   * The name of the artifact the patch is stored as.
+   * @default ".repo.patch"
+   */
+  readonly patchFile?: string;
+
   /**
    * A GitHub token to use when checking out the repository.
    *
@@ -139,13 +146,25 @@ export interface CheckoutWithPatchOptions {
 }
 
 /**
- * Options for `createUploadGitPatch`.
+ * Options for `uploadGitPatch`.
  */
-export interface CreateUploadGitPatchOptions {
+export interface UploadGitPatchOptions {
   /**
    * The step ID which produces the output which indicates if a patch was created.
    */
   readonly stepId: string;
+
+  /**
+   * The name of the step.
+   * @default "Find mutations"
+   */
+  readonly stepName?: string;
+
+  /**
+   * The name of the artifact the patch is stored as.
+   * @default ".repo.patch"
+   */
+  readonly patchFile?: string;
 
   /**
    * The name of the output to emit. It will be set to `true` if there was a diff.

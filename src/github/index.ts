@@ -11,6 +11,8 @@ export * from "./auto-approve";
 export * from "./stale";
 export * from "./pull-request-lint";
 export * from "./github-credentials";
+export * from "./workflow-actions";
+export * from "./workflow-jobs";
 
 export * from "./task-workflow";
 

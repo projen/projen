@@ -339,7 +339,7 @@ export class BuildWorkflow extends Component {
           repository: PULL_REQUEST_REPOSITORY,
           lfs: this.github.downloadLfs,
         }),
-        ...WorkflowActions.setGitIdentity(this.gitIdentity),
+        ...WorkflowActions.setupGitIdentity(this.gitIdentity),
         {
           name: "Push changes",
           run: [
@@ -377,7 +377,7 @@ export class BuildWorkflow extends Component {
       ...this.postBuildSteps,
 
       // check for mutations and upload a git patch file as an artifact
-      ...WorkflowActions.createUploadGitPatch({
+      ...WorkflowActions.uploadGitPatch({
         stepId: SELF_MUTATION_STEP,
         outputName: SELF_MUTATION_HAPPENED_OUTPUT,
         mutationError:

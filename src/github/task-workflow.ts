@@ -198,7 +198,7 @@ export class TaskWorkflow extends GithubWorkflow {
         },
 
         // sets git identity so we can push later
-        ...WorkflowActions.setGitIdentity(gitIdentity),
+        ...WorkflowActions.setupGitIdentity(gitIdentity),
 
         ...preBuildSteps,
 
