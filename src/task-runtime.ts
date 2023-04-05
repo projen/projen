@@ -134,6 +134,11 @@ class RunTask {
     }
 
     for (const step of task.steps) {
+      const argsList: string[] = [
+        ...(step.args || []),
+        ...(step.receiveArgs ? args : []),
+      ].map((a) => a.toString());
+
       if (step.say) {
         logging.info(this.fmtLog(step.say));
       }
@@ -142,7 +147,7 @@ class RunTask {
         this.runtime.runTask(
           step.spawn,
           [...this.parents, this.task.name],
-          step.receiveArgs ? args : []
+          argsList
         );
       }
 
@@ -165,12 +170,10 @@ class RunTask {
           command = exec;
         }
 
-        if (step.receiveArgs) {
-          if (command.includes(ARGS_MARKER)) {
-            command = command.replace(ARGS_MARKER, args.join(" "));
-          } else {
-            command = [command, ...args].join(" ");
-          }
+        if (command.includes(ARGS_MARKER)) {
+          command = command.replace(ARGS_MARKER, argsList.join(" "));
+        } else {
+          command = [command, ...argsList].join(" ");
         }
 
         const cwd = step.cwd;
