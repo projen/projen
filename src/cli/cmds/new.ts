@@ -60,14 +60,16 @@ class Command implements yargs.CommandModule {
               continue;
             }
 
-            const defaultValue = argDefault(option);
+            const defaultValue = argInitialValue(option);
             cargs.option(option.switch, {
               group: !option.optional ? "Required:" : "Optional:",
               type: argType(option),
               description: argDesc(option),
               required: !option.optional,
               // yargs behaves differently for arrays if the defaultValue property is present or not
-              ...(defaultValue ? { default: defaultValue } : {}),
+              ...(!option.optional && defaultValue
+                ? { default: defaultValue }
+                : {}),
             });
           }
 
@@ -143,12 +145,10 @@ function argType(
 function argDesc(option: inventory.ProjectOption): string {
   let desc = [option.docs?.replace(/\ *\.$/, "") ?? ""];
 
-  if (option.optional && option.default && option.default !== "undefined") {
+  const helpDefault = option.initialValue ?? option.default;
+  if (option.optional && helpDefault) {
     desc.push(
-      `[default: ${option.default
-        .replace(/^\ *-/, "")
-        .replace(/\.$/, "")
-        .trim()}]`
+      `[default: ${helpDefault.replace(/^\ *-/, "").replace(/\.$/, "").trim()}]`
     );
   }
 
@@ -156,13 +156,16 @@ function argDesc(option: inventory.ProjectOption): string {
 }
 
 /**
- * Compute the default value for a given project option
+ * Compute the initial value for a given project option
  */
-function argDefault(option: inventory.ProjectOption): any {
-  // if the field is required and we have a @default, then assign
-  // we can show the default value in --help
-  if (!option.optional && option.default && option.default !== "undefined") {
-    return renderDefault(process.cwd(), option.default);
+function argInitialValue(
+  option: inventory.ProjectOption,
+  cwd = process.cwd()
+): any {
+  // if we have determined an initial value for the field
+  // we can show that value in --help
+  if (option.initialValue) {
+    return renderDefault(cwd, option.initialValue);
   }
 }
 
@@ -220,9 +223,7 @@ function commandLineToProps(
 
   // initialize props with default values
   for (const prop of type.options) {
-    if (prop.default && prop.default !== "undefined" && !prop.optional) {
-      props[prop.name] = renderDefault(cwd, prop.default);
-    }
+    props[prop.name] = argInitialValue(prop, cwd);
   }
 
   for (const [arg, value] of Object.entries(argv)) {

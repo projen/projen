@@ -127,6 +127,7 @@ export interface JsiiProjectOptions extends TypeScriptProjectOptions {
    * (e.g. `~5.0.0`).
    *
    * @default "1.x"
+   * @pjnew "~5.0.0"
    */
   readonly jsiiVersion?: string;
 }

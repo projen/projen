@@ -22,6 +22,10 @@ export interface ProjectOption {
   parent: string;
   docs?: string;
   default?: string;
+  /**
+   * The value that will be used at initial project creation
+   */
+  initialValue?: string;
   optional?: boolean;
   deprecated?: boolean;
   featured?: boolean;
@@ -68,6 +72,7 @@ interface JsiiType {
     deprecated?: string;
     custom?: {
       pjid?: string;
+      pjnew?: string;
     };
   };
 }
@@ -306,15 +311,15 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
       }
 
       const isOptional = optional || prop.optional;
-      let defaultValue = prop.docs?.default;
+      const defaultValue = sanitizeValue(prop.docs?.default);
+      const pjnew = sanitizeValue(prop.docs?.custom?.pjnew);
 
-      if (defaultValue === "undefined") {
-        defaultValue = undefined;
-      }
-
-      // if this is a mandatory option and we have a default value, it has to be JSON-parsable to the correct type
-      if (!isOptional && defaultValue) {
-        checkDefaultIsParsable(prop.name, defaultValue, prop.type);
+      // if this is a mandatory option and we have a default value,
+      // or the option is tagged to be rendered with an initial value,
+      // the value has to be JSON-parsable to the correct type
+      const initialValue = getInitialValue(defaultValue, pjnew, isOptional);
+      if (initialValue) {
+        checkDefaultIsParsable(prop.name, initialValue, prop.type);
       }
 
       options[prop.name] = filterUndefined({
@@ -329,6 +334,7 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
         jsonLike: prop.type ? isJsonLike(jsii, prop.type) : undefined,
         switch: propPath.map((p) => snake(p).replace(/_/g, "-")).join("-"),
         default: defaultValue,
+        initialValue: initialValue,
         optional: isOptional,
         featured: prop.docs?.custom?.featured === "true",
         deprecated: prop.docs.stability === "deprecated" ? true : undefined,
@@ -339,6 +345,30 @@ function discoverOptions(jsii: JsiiTypes, fqn: string): ProjectOption[] {
       addOptions(ifc);
     }
   }
+}
+
+function getInitialValue(
+  defaultValue?: string,
+  pjnew?: string,
+  isOptional: boolean = false
+) {
+  if (pjnew) {
+    return pjnew;
+  }
+
+  if (!isOptional) {
+    return defaultValue;
+  }
+
+  return undefined;
+}
+
+function sanitizeValue(val?: string) {
+  if (val === "undefined") {
+    return undefined;
+  }
+
+  return val;
 }
 
 function getSimpleTypeName(type: JsiiPropertyType): string {
