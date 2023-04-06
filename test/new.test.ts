@@ -22,7 +22,7 @@ for (const type of inventory.discover()) {
       // execute `projen new PJID --no-synth` in the project directory
       execProjenCLI(projectdir, ["new", "--no-synth", type.pjid]);
 
-      // compare generated .projenrc.js to the snapshot
+      // compare generated snapshot
       const actual = directorySnapshot(projectdir, {
         excludeGlobs: [".git/**"],
       });
@@ -58,13 +58,15 @@ test("projen new --from external", () => {
     // otherwise, every bump would need to update these snapshots.
     sanitizeOutput(projectdir);
 
-    // compare generated .projenrc.js to the snapshot
+    // compare generated snapshot
     const actual = directorySnapshot(projectdir, {
       excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
     });
 
+    expect(actual["package.json"]).toBeDefined();
     expect(actual["package.json"]).toMatchSnapshot();
-    expect(actual[".projenrc.js"]).toMatchSnapshot();
+    expect(actual[".projenrc.ts"]).toBeDefined();
+    expect(actual[".projenrc.ts"]).toMatchSnapshot();
   });
 });
 
@@ -83,12 +85,12 @@ test("projen new --from external with enum values", () => {
     // otherwise, every bump would need to update these snapshots.
     sanitizeOutput(projectdir);
 
-    // compare generated .projenrc.js to the snapshot
+    // compare generated snapshot
     const actual = directorySnapshot(projectdir, {
       excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
     });
 
-    expect(actual[".projenrc.js"]).toContain(
+    expect(actual[".projenrc.ts"]).toContain(
       "javascript.NodePackageManager.NPM"
     );
   });
@@ -108,12 +110,12 @@ test("projen new --from external can use array option", () => {
       "lodash@4",
     ]);
 
-    // compare generated .projenrc.js to the snapshot
+    // compare generated snapshot
     const actual = directorySnapshot(projectdir, {
       excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
     });
 
-    expect(actual[".projenrc.js"]).toContain('deps: ["glob@8","lodash@4"]');
+    expect(actual[".projenrc.ts"]).toContain('deps: ["glob@8","lodash@4"]');
   });
 });
 
@@ -134,13 +136,15 @@ test("projen new --from external tarball", () => {
     // otherwise, every bump would need to update these snapshots.
     sanitizeOutput(projectdir);
 
-    // compare generated .projenrc.js to the snapshot
+    // compare generated to the snapshot
     const actual = directorySnapshot(projectdir, {
       excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
     });
 
+    expect(actual["package.json"]).toBeDefined();
     expect(actual["package.json"]).toMatchSnapshot();
-    expect(actual[".projenrc.js"]).toMatchSnapshot();
+    expect(actual[".projenrc.ts"]).toBeDefined();
+    expect(actual[".projenrc.ts"]).toMatchSnapshot();
   });
 });
 
@@ -153,13 +157,13 @@ test("projen new --from external dist tag", () => {
       "--no-post",
     ]);
 
-    // compare generated .projenrc.js to the snapshot
+    // compare generated to the snapshot
     const actual = directorySnapshot(projectdir, {
       excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
     });
 
     // Not doing a snapshot test because @latest is used
-    expect(actual[".projenrc.js"]).toBeDefined();
+    expect(actual[".projenrc.ts"]).toBeDefined();
   });
 });
 
@@ -193,12 +197,12 @@ test("options are not overwritten when creating from external project types", ()
       "2.50.0",
     ]);
 
-    // compare generated .projenrc.js to the snapshot
+    // compare generated to the snapshot
     const actual = directorySnapshot(projectdir, {
       excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
     });
 
-    expect(actual[".projenrc.js"]).toContain('cdkVersion: "2.50.0"');
+    expect(actual[".projenrc.ts"]).toContain('cdkVersion: "2.50.0"');
   });
 });
 
@@ -225,12 +229,12 @@ test("can choose from one of multiple external project types", () => {
       "--no-post",
     ]);
 
-    // compare generated .projenrc.js to the snapshot
+    // compare generated to the snapshot
     const actual = directorySnapshot(projectdir, {
       excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
     });
 
-    expect(actual[".projenrc.js"]).toContain("@taimos/projen@0.0.187");
+    expect(actual[".projenrc.ts"]).toContain("@taimos/projen@0.0.187");
   });
 });
 
@@ -352,6 +356,7 @@ test("projenrc-ts creates typescript projenrc", () => {
       "--no-synth",
     ]);
     const projenrc = directorySnapshot(projectdir)[".projenrc.ts"];
+    expect(projenrc).toBeDefined();
     expect(projenrc).toMatchSnapshot();
   });
 });
@@ -435,7 +440,7 @@ test("projen new node --outdir path/to/mydir", () => {
   });
 });
 
-test("can create external  project in directory path containing a space", () => {
+test("can create external project in directory path containing a space", () => {
   const pathWithSpace = join(mkdtemp(), "path with space");
   mkdirSync(pathWithSpace, { recursive: true });
 
@@ -450,7 +455,7 @@ test("can create external  project in directory path containing a space", () => 
       const actual = directorySnapshot(projectdir, {
         excludeGlobs: [".git/**", ".github/**", "node_modules/**", "yarn.lock"],
       });
-      expect(actual[".projenrc.js"]).toBeDefined();
+      expect(actual[".projenrc.ts"]).toBeDefined();
     },
     {
       chdir: true,
