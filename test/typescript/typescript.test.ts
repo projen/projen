@@ -251,6 +251,52 @@ test("upgrade task ignores pinned versions", () => {
   );
 });
 
+describe("jestConfig", () => {
+  test("uses default values", () => {
+    const prj = new TypeScriptProject({
+      defaultReleaseBranch: "main",
+      name: "test",
+      jestOptions: {
+        jestConfig: {
+          globals: {
+            "ts-jest": {
+              shouldBePreserved: true,
+            },
+          },
+        },
+      },
+    });
+    const snapshot = synthSnapshot(prj);
+    const jest = snapshot["package.json"].jest;
+    expect(jest.preset).toStrictEqual("ts-jest");
+    expect(jest.globals["ts-jest"].tsconfig).toStrictEqual("tsconfig.dev.json");
+    expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
+  });
+
+  test("overrides default values", () => {
+    const prj = new TypeScriptProject({
+      defaultReleaseBranch: "main",
+      name: "test",
+      jestOptions: {
+        jestConfig: {
+          preset: "foo",
+          globals: {
+            "ts-jest": {
+              shouldBePreserved: true,
+              tsconfig: "bar",
+            },
+          },
+        },
+      },
+    });
+    const snapshot = synthSnapshot(prj);
+    const jest = snapshot["package.json"].jest;
+    expect(jest.preset).toStrictEqual("foo");
+    expect(jest.globals["ts-jest"].tsconfig).toStrictEqual("bar");
+    expect(jest.globals["ts-jest"].shouldBePreserved).toStrictEqual(true);
+  });
+});
+
 describe("tsconfigDev", () => {
   test("uses tsconfig.dev.json by default", () => {
     const prj = new TypeScriptProject({
